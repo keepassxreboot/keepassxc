@@ -16,9 +16,9 @@
  */
 
 #include "TestHashedBlockStream.h"
+#include "TestGlobal.h"
 
 #include <QBuffer>
-#include <QTest>
 
 #include "FailDevice.h"
 #include "crypto/Crypto.h"

@@ -43,6 +43,7 @@ public:
     AutoTypeAssociations::Association get(int index) const;
     QList<AutoTypeAssociations::Association> getAll() const;
     int size() const;
+    int associationsSize() const;
     void clear();
 
 private:

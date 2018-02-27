@@ -18,20 +18,69 @@
 
 #include "MessageWidget.h"
 
-MessageWidget::MessageWidget(QWidget* parent)
-    :KMessageWidget(parent)
-{
+#include <QTimer>
+#include <QDesktopServices>
+#include <QUrl>
 
+const int MessageWidget::DefaultAutoHideTimeout = 6000;
+const int MessageWidget::DisableAutoHide = -1;
+
+MessageWidget::MessageWidget(QWidget* parent)
+    : KMessageWidget(parent)
+    , m_autoHideTimer(new QTimer(this))
+    , m_autoHideTimeout(DefaultAutoHideTimeout)
+{
+    m_autoHideTimer->setSingleShot(true);
+    connect(m_autoHideTimer, SIGNAL(timeout()), this, SLOT(animatedHide()));
+    connect(this, SIGNAL(hideAnimationFinished()), m_autoHideTimer, SLOT(stop()));
+}
+
+int MessageWidget::autoHideTimeout() const
+{
+    return m_autoHideTimeout;
 }
 
 void MessageWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
+    showMessage(text, type, m_autoHideTimeout);
+}
+
+void MessageWidget::showMessage(const QString &text, KMessageWidget::MessageType type, int autoHideTimeout)
+{
     setMessageType(type);
     setText(text);
+    emit showAnimationStarted();
     animatedShow();
+    if (autoHideTimeout > 0) {
+        m_autoHideTimer->start(autoHideTimeout);
+    } else {
+        m_autoHideTimer->stop();
+    }
 }
 
 void MessageWidget::hideMessage()
 {
     animatedHide();
+    m_autoHideTimer->stop();
+}
+
+void MessageWidget::setAutoHideTimeout(int autoHideTimeout)
+{
+    m_autoHideTimeout = autoHideTimeout;
+    if (autoHideTimeout <= 0) {
+        m_autoHideTimer->stop();
+    }
+}
+
+/**
+ * Open a link using the system's default handler.
+ * Links that are not HTTP(S) links are ignored.
+ *
+ * @param link link URL
+ */
+void MessageWidget::openHttpUrl(const QString& link)
+{
+    if (link.startsWith("http://") || link.startsWith("https://")) {
+        QDesktopServices::openUrl(QUrl(link));
+    }
 }

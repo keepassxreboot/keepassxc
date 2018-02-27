@@ -20,75 +20,71 @@
 
 #include "List.h"
 
-#include <QApplication>
 #include <QCommandLineParser>
-#include <QCoreApplication>
-#include <QStringList>
 #include <QTextStream>
 
-#include "gui/UnlockDatabaseDialog.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "keys/CompositeKey.h"
 
-
-int List::execute(int argc, char** argv)
+List::List()
 {
-    QStringList arguments;
-    for (int i = 0; i < argc; ++i) {
-        arguments << QString(argv[i]);
-    }
+    name = QString("ls");
+    description = QObject::tr("List database entries.");
+}
+
+List::~List()
+{
+}
+
+int List::execute(const QStringList& arguments)
+{
     QTextStream out(stdout);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "List database entries."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    parser.addPositionalArgument("group",
-                                 QCoreApplication::translate("main", "Path of the group to list. Default is /"),
-                                 QString("[group]"));
-    QCommandLineOption printUuidsOption(
-        QStringList() << "u"
-                      << "print-uuids",
-        QCoreApplication::translate("main", "Print the UUIDs of the entries and groups."));
-    parser.addOption(printUuidsOption);
-    QCommandLineOption guiPrompt(
-        QStringList() << "g"
-                      << "gui-prompt",
-        QCoreApplication::translate("main", "Use a GUI prompt unlocking the database."));
-    parser.addOption(guiPrompt);
+    parser.setApplicationDescription(this->description);
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addPositionalArgument("group", QObject::tr("Path of the group to list. Default is /"), QString("[group]"));
+    QCommandLineOption keyFile(QStringList() << "k"
+                                             << "key-file",
+                               QObject::tr("Key file of the database."),
+                               QObject::tr("path"));
+    parser.addOption(keyFile);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
-        QCoreApplication app(argc, argv);
-        parser.showHelp(EXIT_FAILURE);
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
+        return EXIT_FAILURE;
     }
 
-    Database* db = nullptr;
-    if (parser.isSet("gui-prompt")) {
-        QApplication app(argc, argv);
-        db = UnlockDatabaseDialog::openDatabasePrompt(args.at(0));
-    } else {
-        QCoreApplication app(argc, argv);
-        db = Database::unlockFromStdin(args.at(0));
-    }
-
+    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db == nullptr) {
         return EXIT_FAILURE;
     }
 
-    Group* group = db->rootGroup();
     if (args.size() == 2) {
-        QString groupPath = args.at(1);
-        group = db->rootGroup()->findGroupByPath(groupPath);
-        if (group == nullptr) {
-            qCritical("Cannot find group %s.", qPrintable(groupPath));
-            return EXIT_FAILURE;
-        }
+        return this->listGroup(db, args.at(1));
+    }
+    return this->listGroup(db);
+}
+
+int List::listGroup(Database* database, QString groupPath)
+{
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    if (groupPath.isEmpty()) {
+        outputTextStream << database->rootGroup()->print();
+        outputTextStream.flush();
+        return EXIT_SUCCESS;
     }
 
-    out << group->print(parser.isSet("print-uuids"));
-    out.flush();
+    Group* group = database->rootGroup()->findGroupByPath(groupPath);
+    if (group == nullptr) {
+        qCritical("Cannot find group %s.", qPrintable(groupPath));
+        return EXIT_FAILURE;
+    }
+
+    outputTextStream << group->print();
+    outputTextStream.flush();
     return EXIT_SUCCESS;
 }

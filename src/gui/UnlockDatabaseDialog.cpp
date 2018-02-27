@@ -30,9 +30,9 @@ UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 
-void UnlockDatabaseDialog::setDBFilename(const QString& filename)
+void UnlockDatabaseDialog::setFilePath(const QString &filePath)
 {
-    m_view->load(filename);
+    m_view->load(filePath);
 }
 
 void UnlockDatabaseDialog::clearForms()
@@ -53,21 +53,4 @@ void UnlockDatabaseDialog::complete(bool r)
     } else {
         reject();
     }
-}
-
-Database* UnlockDatabaseDialog::openDatabasePrompt(QString databaseFilename)
-{
-
-    UnlockDatabaseDialog* unlockDatabaseDialog = new UnlockDatabaseDialog();
-    unlockDatabaseDialog->setObjectName("Open database");
-    unlockDatabaseDialog->setDBFilename(databaseFilename);
-    unlockDatabaseDialog->show();
-    unlockDatabaseDialog->exec();
-
-    Database* db = unlockDatabaseDialog->database();
-    if (!db) {
-        qWarning("Could not open database %s.", qPrintable(databaseFilename));
-    }
-    delete unlockDatabaseDialog;
-    return db;
 }

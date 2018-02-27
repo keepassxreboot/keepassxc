@@ -28,19 +28,9 @@ CsvImportWizard::CsvImportWizard(QWidget *parent)
     : DialogyWidget(parent)
 {
     m_layout = new QGridLayout(this);
-    m_pages = new QStackedWidget(parent);
-    m_layout->addWidget(m_pages, 0, 0);
+    m_layout->addWidget(m_parse = new CsvImportWidget(this), 0, 0);
 
-    m_pages->addWidget(key = new ChangeMasterKeyWidget(m_pages));
-    m_pages->addWidget(parse = new CsvImportWidget(m_pages));
-    key->headlineLabel()->setText(tr("Import CSV file"));
-    QFont headLineFont = key->headlineLabel()->font();
-    headLineFont.setBold(true);
-    headLineFont.setPointSize(headLineFont.pointSize() + 2);
-    key->headlineLabel()->setFont(headLineFont);
-
-    connect(key, SIGNAL(editFinished(bool)), this, SLOT(keyFinished(bool)));
-    connect(parse, SIGNAL(editFinished(bool)), this, SLOT(parseFinished(bool)));
+    connect(m_parse, SIGNAL(editFinished(bool)), this, SLOT(parseFinished(bool)));
 }
 
 CsvImportWizard::~CsvImportWizard()
@@ -49,30 +39,27 @@ CsvImportWizard::~CsvImportWizard()
 void CsvImportWizard::load(const QString& filename, Database* database)
 {
     m_db = database;
-    parse->load(filename, database);
-    key->clearForms();
+    m_parse->load(filename, database);
 }
 
-void CsvImportWizard::keyFinished(bool accepted)
+void CsvImportWizard::keyFinished(bool accepted, CompositeKey key)
 {
     if (!accepted) {
-        emit(importFinished(false));
+        emit importFinished(false);
         return;
     }
 
-    m_pages->setCurrentIndex(m_pages->currentIndex()+1);
-
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    bool result = m_db->setKey(key->newMasterKey());
+    bool result = m_db->setKey(key);
     QApplication::restoreOverrideCursor();
 
     if (!result) {
         MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
-        emit(importFinished(false));
+        emit importFinished(false);
     }
 }
 
 void CsvImportWizard::parseFinished(bool accepted)
 {
-    emit(importFinished(accepted));
+    emit importFinished(accepted);
 }

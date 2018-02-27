@@ -27,6 +27,7 @@ const int Metadata::DefaultHistoryMaxSize = 6 * 1024 * 1024;
 
 Metadata::Metadata(QObject* parent)
     : QObject(parent)
+    , m_customData(new CustomData(this))
     , m_updateDatetime(true)
 {
     m_data.generator = "KeePassXC";
@@ -41,7 +42,6 @@ Metadata::Metadata(QObject* parent)
     m_data.protectPassword = true;
     m_data.protectUrl = false;
     m_data.protectNotes = false;
-    // m_data.autoEnableVisualHiding = false;
 
     QDateTime now = QDateTime::currentDateTimeUtc();
     m_data.nameChanged = now;
@@ -50,6 +50,9 @@ Metadata::Metadata(QObject* parent)
     m_recycleBinChanged = now;
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
+    m_settingsChanged = now;
+
+    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
@@ -157,11 +160,6 @@ bool Metadata::protectNotes() const
 {
     return m_data.protectNotes;
 }
-
-/*bool Metadata::autoEnableVisualHiding() const
-{
-    return m_autoEnableVisualHiding;
-}*/
 
 QImage Metadata::customIcon(const Uuid& uuid) const
 {
@@ -296,9 +294,14 @@ int Metadata::historyMaxSize() const
     return m_data.historyMaxSize;
 }
 
-QHash<QString, QString> Metadata::customFields() const
+CustomData* Metadata::customData()
 {
-    return m_customFields;
+    return m_customData;
+}
+
+const CustomData* Metadata::customData() const
+{
+    return m_customData;
 }
 
 void Metadata::setGenerator(const QString& value)
@@ -375,11 +378,6 @@ void Metadata::setProtectNotes(bool value)
 {
     set(m_data.protectNotes, value);
 }
-
-/*void Metadata::setAutoEnableVisualHiding(bool value)
-{
-    set(m_autoEnableVisualHiding, value);
-}*/
 
 void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
 {
@@ -521,18 +519,13 @@ void Metadata::setHistoryMaxSize(int value)
     set(m_data.historyMaxSize, value);
 }
 
-void Metadata::addCustomField(const QString& key, const QString& value)
+QDateTime Metadata::settingsChanged() const
 {
-    Q_ASSERT(!m_customFields.contains(key));
-
-    m_customFields.insert(key, value);
-    emit modified();
+    return m_settingsChanged;
 }
 
-void Metadata::removeCustomField(const QString& key)
+void Metadata::setSettingsChanged(const QDateTime& value)
 {
-    Q_ASSERT(m_customFields.contains(key));
-
-    m_customFields.remove(key);
-    emit modified();
+    Q_ASSERT(value.timeSpec() == Qt::UTC);
+    m_settingsChanged = value;
 }

@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QPixmap>
 
 class Entry;
 class Group;
@@ -33,7 +34,15 @@ public:
         ParentGroup = 0,
         Title = 1,
         Username = 2,
-        Url = 3
+        Password = 3,
+        Url = 4,
+        Notes = 5,
+        Expires = 6,
+        Created = 7,
+        Modified = 8,
+        Accessed = 9,
+        Paperclip = 10,
+        Attachments = 11
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -52,12 +61,23 @@ public:
 
     void setEntryList(const QList<Entry*>& entries);
 
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
+
+    void setPaperClipPixmap(const QPixmap& paperclip);
+
 signals:
-    void switchedToEntryListMode();
-    void switchedToGroupMode();
+    void switchedToListMode();
+    void switchedToSearchMode();
+    void usernamesHiddenChanged();
+    void passwordsHiddenChanged();
 
 public slots:
     void setGroup(Group* group);
+    void toggleUsernamesHidden(const bool hide);
+    void togglePasswordsHidden(const bool hide);
 
 private slots:
     void entryAboutToAdd(Entry* entry);
@@ -74,6 +94,14 @@ private:
     QList<Entry*> m_entries;
     QList<Entry*> m_orgEntries;
     QList<const Group*> m_allGroups;
+
+    bool m_hideUsernames;
+    bool m_hidePasswords;
+
+    QPixmap m_paperClipPixmap;
+
+    static const QString HiddenContentDisplay;
+    static const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

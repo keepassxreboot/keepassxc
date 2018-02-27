@@ -27,7 +27,7 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
            2013, Laszlo Papp <lpapp@kde.org>
            2013, David Faure <faure@kde.org>
-           2016-2017, KeePassXC Team <team@keepassxc.org>
+           2016-2018, KeePassXC Team <team@keepassxc.org>
 License: GPL-2 or GPL-3
 
 Comment: The "KeePassXC Team" in every copyright notice is formed by the following people:
@@ -54,10 +54,6 @@ License: GPL-2 or GPL-3
 Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT
-
-Files: cmake/CodeCoverage.cmake
-Copyright: 2012 - 2015, Lars Bilke
-License: BSD-3-clause
 
 Files: share/icons/application/*/apps/keepassxc.png
        share/icons/application/scalable/apps/keepassxc.svgz
@@ -156,6 +152,7 @@ License: LGPL-2.1
 Comment: based on Nuvola icon theme
 
 Files: share/icons/application/*/actions/application-exit.png
+       share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
        share/icons/application/*/actions/dialog-close.png
        share/icons/application/*/actions/dialog-ok.png
@@ -178,6 +175,7 @@ Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/view-history.png
        share/icons/application/*/apps/internet-web-browser.png
        share/icons/application/*/apps/preferences-desktop-icons.png
+       share/icons/application/*/apps/utilities-terminal.png
        share/icons/application/*/categories/preferences-other.png
        share/icons/application/*/status/dialog-error.png
        share/icons/application/*/status/dialog-information.png
@@ -225,8 +223,8 @@ Copyright: 2009-2010, Iowa State University
 License: Boost-1.0
 
 Files: src/zxcvbn/zxcvbn.*
-Copyright: 2015, Tony Evans
-License: BSD 3-clause
+Copyright: 2015-2017, Tony Evans
+License: MIT
 
 Files: src/http/qhttp/*
 Copyright: 2014, Amir Zamani
@@ -237,3 +235,7 @@ Files: src/gui/KMessageWidget.h
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
+
+Files: share/macosx/dmg-background.tiff
+Copyright: 2008-2014, Andrey Tarantsov
+License: MIT

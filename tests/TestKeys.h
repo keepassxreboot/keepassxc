@@ -28,10 +28,11 @@ class TestKeys : public QObject
 private slots:
     void initTestCase();
     void testComposite();
-    void testCompositeKeyReadFromLine();
     void testFileKey();
     void testFileKey_data();
     void testCreateFileKey();
+    void testCreateAndOpenFileKey();
+    void testFileKeyHash();
     void testFileKeyError();
     void benchmarkTransformKey();
 };

@@ -26,7 +26,6 @@ SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, Sy
     , m_algo(gcryptAlgo(algo))
     , m_mode(gcryptMode(mode))
     , m_direction(direction)
-    , m_blockSize(-1)
 {
 }
 
@@ -38,6 +37,9 @@ SymmetricCipherGcrypt::~SymmetricCipherGcrypt()
 int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
 {
     switch (algo) {
+    case SymmetricCipher::Aes128:
+        return GCRY_CIPHER_AES128;
+
     case SymmetricCipher::Aes256:
         return GCRY_CIPHER_AES256;
 
@@ -46,6 +48,9 @@ int SymmetricCipherGcrypt::gcryptAlgo(SymmetricCipher::Algorithm algo)
 
     case SymmetricCipher::Salsa20:
         return GCRY_CIPHER_SALSA20;
+
+    case SymmetricCipher::ChaCha20:
+        return GCRY_CIPHER_CHACHA20;
 
     default:
         Q_ASSERT(false);
@@ -61,6 +66,9 @@ int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
 
     case SymmetricCipher::Cbc:
         return GCRY_CIPHER_MODE_CBC;
+
+    case SymmetricCipher::Ctr:
+        return GCRY_CIPHER_MODE_CTR;
 
     case SymmetricCipher::Stream:
         return GCRY_CIPHER_MODE_STREAM;
@@ -94,14 +102,6 @@ bool SymmetricCipherGcrypt::init()
         return false;
     }
 
-    size_t blockSizeT;
-    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, nullptr, &blockSizeT);
-    if (error != 0) {
-        setErrorString(error);
-        return false;
-    }
-
-    m_blockSize = blockSizeT;
     return true;
 }
 
@@ -121,7 +121,13 @@ bool SymmetricCipherGcrypt::setKey(const QByteArray& key)
 bool SymmetricCipherGcrypt::setIv(const QByteArray& iv)
 {
     m_iv = iv;
-    gcry_error_t error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
+    gcry_error_t error;
+
+    if (m_mode == GCRY_CIPHER_MODE_CTR) {
+        error = gcry_cipher_setctr(m_ctx, m_iv.constData(), m_iv.size());
+    } else {
+        error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
+    }
 
     if (error != 0) {
         setErrorString(error);
@@ -142,8 +148,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         error = gcry_cipher_decrypt(m_ctx, result.data(), data.size(), data.constData(), data.size());
-    }
-    else {
+    } else {
         error = gcry_cipher_encrypt(m_ctx, result.data(), data.size(), data.constData(), data.size());
     }
 
@@ -151,7 +156,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
         setErrorString(error);
         *ok = false;
     } else {
-      *ok = true;
+        *ok = true;
     }
 
     return result;
@@ -165,8 +170,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 
     if (m_direction == SymmetricCipher::Decrypt) {
         error = gcry_cipher_decrypt(m_ctx, data.data(), data.size(), nullptr, 0);
-    }
-    else {
+    } else {
         error = gcry_cipher_encrypt(m_ctx, data.data(), data.size(), nullptr, 0);
     }
 
@@ -196,8 +200,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
                 return false;
             }
         }
-    }
-    else {
+    } else {
         for (quint64 i = 0; i != rounds; ++i) {
             error = gcry_cipher_encrypt(m_ctx, rawData, size, nullptr, 0);
 
@@ -230,9 +233,28 @@ bool SymmetricCipherGcrypt::reset()
     return true;
 }
 
+int SymmetricCipherGcrypt::keySize() const
+{
+    gcry_error_t error;
+    size_t keySizeT;
+
+    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_KEYLEN, nullptr, &keySizeT);
+    if (error != 0)
+        return -1;
+
+    return keySizeT;
+}
+
 int SymmetricCipherGcrypt::blockSize() const
 {
-    return m_blockSize;
+    gcry_error_t error;
+    size_t blockSizeT;
+
+    error = gcry_cipher_algo_info(m_algo, GCRYCTL_GET_BLKLEN, nullptr, &blockSizeT);
+    if (error != 0)
+        return -1;
+
+    return blockSizeT;
 }
 
 QString SymmetricCipherGcrypt::errorString() const

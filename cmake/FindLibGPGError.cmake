@@ -14,10 +14,10 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 find_path(GPGERROR_INCLUDE_DIR gpg-error.h)
-
 find_library(GPGERROR_LIBRARIES gpg-error)
 
 mark_as_advanced(GPGERROR_LIBRARIES GPGERROR_INCLUDE_DIR)
 
 include(FindPackageHandleStandardArgs)
+include_directories(${GPGERROR_INCLUDE_DIR})
 find_package_handle_standard_args(LibGPGError DEFAULT_MSG GPGERROR_LIBRARIES GPGERROR_INCLUDE_DIR)

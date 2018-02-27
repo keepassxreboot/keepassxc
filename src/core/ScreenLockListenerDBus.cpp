@@ -20,6 +20,7 @@
 #include <QDBusConnection>
 #include <QDBusInterface>
 #include <QDBusReply>
+#include <QProcessEnvironment>
 
 ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
     ScreenLockListenerPrivate(parent)
@@ -34,7 +35,15 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
                 "ActiveChanged", // signal name
                 this, //receiver
                 SLOT(freedesktopScreenSaver(bool)));
-    
+
+    sessionBus.connect(
+                "org.gnome.ScreenSaver", // service
+                "/org/gnome/ScreenSaver", // path
+                "org.gnome.ScreenSaver", // interface
+                "ActiveChanged", // signal name
+                this, //receiver
+                SLOT(freedesktopScreenSaver(bool)));
+
     sessionBus.connect(
                 "org.gnome.SessionManager", // service
                 "/org/gnome/SessionManager/Presence", // path
@@ -50,6 +59,15 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
                 "PrepareForSleep", // signal name
                 this, //receiver
                 SLOT(logindPrepareForSleep(bool)));
+
+    QString sessionId = QProcessEnvironment::systemEnvironment().value("XDG_SESSION_ID");
+    systemBus.connect(
+                "", // service
+                QString("/org/freedesktop/login1/session/") + sessionId, // path
+                "org.freedesktop.login1.Session", // interface
+                "Lock", // signal name
+                this, //receiver
+                SLOT(unityLocked()));
 
     sessionBus.connect(
                 "com.canonical.Unity", // service

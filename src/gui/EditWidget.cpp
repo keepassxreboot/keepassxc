@@ -119,7 +119,8 @@ bool EditWidget::readOnly() const
 
 void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
-    m_ui->messageWidget->showMessage(text, type);
+    m_ui->messageWidget->setCloseButtonVisible(false);
+    m_ui->messageWidget->showMessage(text, type, 2000);
 }
 
 void EditWidget::hideMessage()

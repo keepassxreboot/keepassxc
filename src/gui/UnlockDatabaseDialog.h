@@ -31,11 +31,10 @@ class UnlockDatabaseDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit UnlockDatabaseDialog(QWidget* parent = Q_NULLPTR);
-    void setDBFilename(const QString& filename);
+    explicit UnlockDatabaseDialog(QWidget* parent = nullptr);
+    void setFilePath(const QString &filePath);
     void clearForms();
     Database* database();
-    static Database* openDatabasePrompt(QString databaseFilename);
 
 signals:
     void unlockDone(bool);

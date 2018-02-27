@@ -20,13 +20,9 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
-
-#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS)
-#include <QList>
-#include <QtDBus/QtDBus>
-#endif
 
 #include "config-keepassx.h"
 
@@ -49,6 +45,23 @@
 #include "http/OptionDialog.h"
 #endif
 
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/AgentSettingsPage.h"
+#include "sshagent/SSHAgent.h"
+#endif
+
+#ifdef WITH_XC_BROWSER
+#include "browser/NativeMessagingHost.h"
+#include "browser/BrowserSettings.h"
+#include "browser/BrowserOptionDialog.h"
+#endif
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#include <QList>
+#include <QtDBus/QtDBus>
+#include "gui/MainWindowAdaptor.h"
+#endif
+
 #include "gui/SettingsWidget.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -56,7 +69,7 @@
 class HttpPlugin: public ISettingsPage
 {
 public:
-    HttpPlugin(DatabaseTabWidget * tabWidget)
+    HttpPlugin(DatabaseTabWidget* tabWidget)
     {
         m_service = new Service(tabWidget);
     }
@@ -65,7 +78,7 @@ public:
 
     QString name() override
     {
-        return QObject::tr("Browser Integration");
+        return QObject::tr("Legacy Browser Integration");
     }
 
     QIcon icon() override
@@ -75,18 +88,18 @@ public:
 
     QWidget * createWidget() override
     {
-        OptionDialog * dlg = new OptionDialog();
+        OptionDialog* dlg = new OptionDialog();
         QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_service, SLOT(removeSharedEncryptionKeys()));
         QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_service, SLOT(removeStoredPermissions()));
         return dlg;
     }
 
-    void loadSettings(QWidget * widget) override
+    void loadSettings(QWidget* widget) override
     {
         qobject_cast<OptionDialog*>(widget)->loadSettings();
     }
 
-    void saveSettings(QWidget * widget) override
+    void saveSettings(QWidget* widget) override
     {
         qobject_cast<OptionDialog*>(widget)->saveSettings();
         if (HttpSettings::isEnabled())
@@ -95,7 +108,55 @@ public:
             m_service->stop();
     }
 private:
-    Service *m_service;
+    Service* m_service;
+};
+#endif
+
+#ifdef WITH_XC_BROWSER
+class BrowserPlugin: public ISettingsPage
+{
+    public:
+        BrowserPlugin(DatabaseTabWidget* tabWidget) {
+            m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget));
+        }
+
+        ~BrowserPlugin() {
+
+        }
+
+        QString name() override
+        {
+            return QObject::tr("Browser Integration");
+        }
+
+        QIcon icon() override
+        {
+            return FilePath::instance()->icon("apps", "internet-web-browser");
+        }
+
+        QWidget* createWidget() override {
+            BrowserOptionDialog* dlg = new BrowserOptionDialog();
+            QObject::connect(dlg, SIGNAL(removeSharedEncryptionKeys()), m_nativeMessagingHost.data(), SLOT(removeSharedEncryptionKeys()));
+            QObject::connect(dlg, SIGNAL(removeStoredPermissions()), m_nativeMessagingHost.data(), SLOT(removeStoredPermissions()));
+            return dlg;
+        }
+
+        void loadSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->loadSettings();
+        }
+
+        void saveSettings(QWidget* widget) override
+        {
+            qobject_cast<BrowserOptionDialog*>(widget)->saveSettings();
+            if (BrowserSettings::isEnabled()) {
+                m_nativeMessagingHost->run();
+            } else {
+                m_nativeMessagingHost->stop();
+            }
+        }
+    private:
+        QSharedPointer<NativeMessagingHost>  m_nativeMessagingHost;
 };
 #endif
 
@@ -108,6 +169,17 @@ MainWindow::MainWindow()
     , m_appExiting(false)
 {
     m_ui->setupUi(this);
+    
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+    new MainWindowAdaptor(this);
+    QDBusConnection dbus = QDBusConnection::sessionBus();
+    dbus.registerObject("/keepassxc", this);
+    dbus.registerService("org.keepassxc.KeePassXC.MainWindow");
+#endif
+
+    setAcceptDrops(true);
+
+    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
 
     // Setup the search widget in the toolbar
     SearchWidget *search = new SearchWidget();
@@ -118,18 +190,22 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
-    #ifdef WITH_XC_HTTP
+#ifdef WITH_XC_BROWSER
+    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
+#endif
+#ifdef WITH_XC_HTTP
     m_ui->settingsWidget->addSettingsPage(new HttpPlugin(m_ui->tabWidget));
-    #endif
+#endif
+#ifdef WITH_XC_SSHAGENT
+    SSHAgent::init(this);
+    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+#endif
 
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    QAction* toggleViewAction = m_ui->toolBar->toggleViewAction();
-    toggleViewAction->setText(tr("Show toolbar"));
-    m_ui->menuView->addAction(toggleViewAction);
-    bool showToolbar = config()->get("ShowToolbar").toBool();
-    m_ui->toolBar->setVisible(showToolbar);
-    connect(m_ui->toolBar, SIGNAL(visibilityChanged(bool)), this, SLOT(saveToolbarState(bool)));
+    connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
+    connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+    connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -167,6 +243,7 @@ MainWindow::MainWindow()
     setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
     m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
     m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
+    m_ui->actionEntryDelete->setShortcut(Qt::Key_Delete);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
@@ -187,7 +264,6 @@ MainWindow::MainWindow()
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
     m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt", false));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
-    m_ui->actionQuit->setMenuRole(QAction::QuitRole);
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
     m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
@@ -196,6 +272,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoType->setIcon(filePath()->icon("actions", "auto-type", false));
     m_ui->actionEntryCopyUsername->setIcon(filePath()->icon("actions", "username-copy", false));
     m_ui->actionEntryCopyPassword->setIcon(filePath()->icon("actions", "password-copy", false));
+    m_ui->actionEntryCopyURL->setIcon(filePath()->icon("actions", "url-copy", false));
 
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
@@ -203,11 +280,9 @@ MainWindow::MainWindow()
     m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash", false));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
-    m_ui->actionSettings->setMenuRole(QAction::PreferencesRole);
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
-    m_ui->actionAbout->setMenuRole(QAction::AboutRole);
 
     m_actionMultiplexer.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
                                 this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -343,11 +418,40 @@ MainWindow::MainWindow()
         m_ui->globalMessageWidget->showMessage(
             tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
+#ifdef WITH_XC_HTTP
+    if (config()->get("Http/Enabled", false).toBool() && config()->get("Http/DeprecationNoticeShown", 0).toInt() < 3) {
+        // show message after global widget dismissed all messages
+        connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
+    }
+#endif
 
+#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
+    m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"
+                                              "There is a high risk of corruption, maintain a backup of your databases.\n"
+                                              "This version is not meant for production use."),
+                                           MessageWidget::Warning, -1);
+#else
+    // Show the HTTP deprecation message if enabled above
+    emit m_ui->globalMessageWidget->hideAnimationFinished();
+#endif
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::showKeePassHTTPDeprecationNotice()
+{
+    int warningNum = config()->get("Http/DeprecationNoticeShown", 0).toInt();
+    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration. "
+                                "This feature has been deprecated and will be removed in the future.<br>"
+                                "Please switch to KeePassXC-Browser instead! For help with migration, "
+                                "visit our <a class=\"link\"  href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
+                                "migration guide</a> (warning %1 of 3).</p>").arg(warningNum + 1),
+                         MessageWidget::Warning, true, -1);
+
+    config()->set("Http/DeprecationNoticeShown", warningNum + 1);
+    disconnect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 
 void MainWindow::appExit()
@@ -429,13 +533,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::ViewMode: {
-            bool inSearch = dbWidget->isInSearchMode();
+            //bool inSearch = dbWidget->isInSearchMode();
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
-            m_ui->actionEntryNew->setEnabled(!inSearch);
+            m_ui->actionEntryNew->setEnabled(true);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
@@ -458,12 +562,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
-            m_ui->actionDatabaseSave->setEnabled(true);
+            m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
 
             m_searchWidgetAction->setEnabled(true);
+
             break;
         }
         case DatabaseWidget::EditMode:
@@ -563,6 +668,7 @@ void MainWindow::updateWindowTitle()
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
             customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
         }
+        m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
         customWindowTitlePart = tr("Settings");
     }
@@ -729,7 +835,9 @@ void MainWindow::changeEvent(QEvent* event)
 
 void MainWindow::saveWindowInformation()
 {
-    config()->set("GUI/MainWindowGeometry", saveGeometry());
+    if (isVisible()) {
+        config()->set("GUI/MainWindowGeometry", saveGeometry());
+    }
 }
 
 bool MainWindow::saveLastDatabases()
@@ -764,7 +872,6 @@ void MainWindow::updateTrayIcon()
     if (isTrayIconEnabled()) {
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
-
             QMenu* menu = new QMenu(this);
 
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
@@ -784,6 +891,7 @@ void MainWindow::updateTrayIcon()
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
+            
             m_trayIcon->setIcon(filePath()->applicationIcon());
             m_trayIcon->show();
         }
@@ -811,11 +919,6 @@ void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
     m_ui->menuGroups->popup(globalPos);
-}
-
-void MainWindow::saveToolbarState(bool value)
-{
-    config()->set("ShowToolbar", value);
 }
 
 void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
@@ -853,13 +956,14 @@ void MainWindow::applySettingsChanges()
 
 void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::Trigger) {
+    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::MiddleClick) {
         toggleWindow();
     }
 }
 
 void MainWindow::hideWindow()
 {
+    saveWindowInformation();
 #ifndef Q_OS_MAC
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif
@@ -875,13 +979,9 @@ void MainWindow::toggleWindow()
     if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
         hideWindow();
     } else {
-        ensurePolished();
-        setWindowState(windowState() & ~Qt::WindowMinimized);
-        show();
-        raise();
-        activateWindow();
+        bringToFront();
 
-#if defined(Q_OS_LINUX) && ! defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
@@ -949,16 +1049,17 @@ bool MainWindow::isTrayIconEnabled() const
             && QSystemTrayIcon::isSystemTrayAvailable();
 }
 
-void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                      int autoHideTimeout)
 {
     m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->globalMessageWidget->showMessage(text, type);
+    m_ui->globalMessageWidget->showMessage(text, type, autoHideTimeout);
 }
 
-void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton)
+void MainWindow::displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton,
+                                   int autoHideTimeout)
 {
-    m_ui->globalMessageWidget->setCloseButtonVisible(showClosebutton);
-    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type);
+    m_ui->tabWidget->currentDatabaseWidget()->showMessage(text, type, showClosebutton, autoHideTimeout);
 }
 
 void MainWindow::hideGlobalMessage()
@@ -975,7 +1076,8 @@ void MainWindow::hideTabMessage()
 
 void MainWindow::showYubiKeyPopup()
 {
-    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information, false);
+    displayGlobalMessage(tr("Please touch the button on your YubiKey!"), MessageWidget::Information,
+                         false, MessageWidget::DisableAutoHide);
     setEnabled(false);
 }
 
@@ -985,9 +1087,67 @@ void MainWindow::hideYubiKeyPopup()
     setEnabled(true);
 }
 
+void MainWindow::bringToFront()
+{
+    ensurePolished();
+    setWindowState(windowState() & ~Qt::WindowMinimized);
+    show();
+    raise();
+    activateWindow();
+}
+
 void MainWindow::handleScreenLock()
 {
     if (config()->get("security/lockdatabasescreenlock").toBool()){
         lockDatabasesAfterInactivity();
     }
+}
+
+QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)
+{
+    QStringList kdbxFiles;
+    for (const QUrl& url: urls) {
+        const QFileInfo fInfo(url.toLocalFile());
+        const bool isKdbxFile = fInfo.isFile() && fInfo.suffix().toLower() == "kdbx";
+        if (isKdbxFile) {
+            kdbxFiles.append(fInfo.absoluteFilePath());
+        }
+    }
+
+    return kdbxFiles;
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
+    }
+}
+
+void MainWindow::dropEvent(QDropEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+    if (mimeData->hasUrls()) {
+        const QStringList kdbxFiles = kdbxFilesFromUrls(mimeData->urls());
+        if (!kdbxFiles.isEmpty()) {
+            event->acceptProposedAction();
+        }
+        for (const QString& kdbxFile: kdbxFiles) {
+            openDatabase(kdbxFile);
+        }
+    }
+}
+
+void MainWindow::closeAllDatabases()
+{
+    m_ui->tabWidget->closeAllDatabases();
+}
+
+void MainWindow::lockAllDatabases()
+{
+    lockDatabasesAfterInactivity();
 }

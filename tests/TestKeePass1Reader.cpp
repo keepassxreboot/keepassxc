@@ -16,14 +16,11 @@
  */
 
 #include "TestKeePass1Reader.h"
+#include "TestGlobal.h"
 
 #include <QBuffer>
-#include <QTest>
 
 #include "config-keepassx-tests.h"
-#include "core/Database.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass1Reader.h"
@@ -110,7 +107,7 @@ void TestKeePass1Reader::testBasic()
 void TestKeePass1Reader::testMasterKey()
 {
     QVERIFY(m_db->hasKey());
-    QCOMPARE(m_db->transformRounds(), static_cast<quint64>(713));
+    QCOMPARE(m_db->kdf()->rounds(), 713);
 }
 
 void TestKeePass1Reader::testCustomIcons()

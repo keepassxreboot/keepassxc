@@ -28,6 +28,7 @@
 #include <QUrl>
 
 #include "core/AutoTypeAssociations.h"
+#include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/TimeInfo.h"
@@ -35,6 +36,17 @@
 
 class Database;
 class Group;
+
+enum class EntryReferenceType {
+    Unknown,
+    Title,
+    UserName,
+    Password,
+    Url,
+    Notes,
+    Uuid,
+    CustomAttributes
+};
 
 struct EntryData
 {
@@ -74,11 +86,13 @@ public:
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
+    QString effectiveNewAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
     QString url() const;
     QString webUrl() const;
+    QString displayUrl() const;
     QString username() const;
     QString password() const;
     QString notes() const;
@@ -94,8 +108,13 @@ public:
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
     const EntryAttachments* attachments() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultIconNumber;
+    static const int ResolveMaximumDepth;
+    static const QString AutoTypeSequenceUsername;
+    static const QString AutoTypeSequencePassword;
 
     void setUuid(const Uuid& uuid);
     void setIcon(int iconNumber);
@@ -129,10 +148,33 @@ public:
         CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
         CloneIncludeHistory = 4,  // clone the history items
         CloneRenameTitle    = 8,  // add "-Clone" after the original title
-        CloneUserAsRef      = 16, // Add the user as a refrence to the origional entry
-        ClonePassAsRef      = 32, // Add the password as a refrence to the origional entry
+        CloneUserAsRef      = 16, // Add the user as a reference to the original entry
+        ClonePassAsRef      = 32, // Add the password as a reference to the original entry
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
+
+    enum class PlaceholderType {
+        NotPlaceholder,
+        Unknown,
+        Title,
+        UserName,
+        Password,
+        Notes,
+        Totp,
+        Url,
+        UrlWithoutScheme,
+        UrlScheme,
+        UrlHost,
+        UrlPort,
+        UrlPath,
+        UrlQuery,
+        UrlFragment,
+        UrlUserInfo,
+        UrlUserName,
+        UrlPassword,
+        Reference,
+        CustomAttribute
+    };
 
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
@@ -145,6 +187,8 @@ public:
     QString maskPasswordPlaceholders(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
+    QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
+    PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
     /**
@@ -172,16 +216,25 @@ private slots:
     void emitDataChanged();
     void updateTimeinfo();
     void updateModifiedSinceBegin();
+    void updateTotp();
 
 private:
+    QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
+    QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+    QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
+    QString referenceFieldValue(EntryReferenceType referenceType) const;
+
+    static EntryReferenceType referenceType(const QString& referenceStr);
+
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 
     Uuid m_uuid;
     EntryData m_data;
-    EntryAttributes* const m_attributes;
-    EntryAttachments* const m_attachments;
-    AutoTypeAssociations* const m_autoTypeAssociations;
+    QPointer<EntryAttributes> m_attributes;
+    QPointer<EntryAttachments> m_attachments;
+    QPointer<AutoTypeAssociations> m_autoTypeAssociations;
+    QPointer<CustomData> m_customData;
 
     QList<Entry*> m_history;
     Entry* m_tmpHistoryItem;

@@ -17,15 +17,10 @@
  */
 
 #include "TestGroup.h"
+#include "TestGlobal.h"
 
-#include <QDebug>
-#include <QPointer>
-#include <QScopedPointer>
 #include <QSignalSpy>
-#include <QTest>
 
-#include "core/Database.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
@@ -384,6 +379,23 @@ void TestGroup::testClone()
     QScopedPointer<Group> clonedGroupKeepUuid(originalGroup->clone(Entry::CloneNoFlags));
     QCOMPARE(clonedGroupKeepUuid->entries().at(0)->uuid(), originalGroupEntry->uuid());
     QCOMPARE(clonedGroupKeepUuid->children().at(0)->entries().at(0)->uuid(), subGroupEntry->uuid());
+
+    QScopedPointer<Group> clonedGroupNoFlags(originalGroup->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
+    QCOMPARE(clonedGroupNoFlags->entries().size(), 0);
+    QVERIFY(clonedGroupNoFlags->uuid() == originalGroup->uuid());
+
+    QScopedPointer<Group> clonedGroupNewUuid(originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid));
+    QCOMPARE(clonedGroupNewUuid->entries().size(), 0);
+    QVERIFY(clonedGroupNewUuid->uuid() != originalGroup->uuid());
+
+    // Making sure the new modification date is not the same.
+    QTest::qSleep(1);
+
+    QScopedPointer<Group> clonedGroupResetTimeInfo(originalGroup->clone(Entry::CloneNoFlags,
+                                                                        Group::CloneNewUuid | Group::CloneResetTimeInfo));
+    QCOMPARE(clonedGroupResetTimeInfo->entries().size(), 0);
+    QVERIFY(clonedGroupResetTimeInfo->uuid() != originalGroup->uuid());
+    QVERIFY(clonedGroupResetTimeInfo->timeInfo().lastModificationTime() != originalGroup->timeInfo().lastModificationTime());
 }
 
 void TestGroup::testCopyCustomIcons()
@@ -437,114 +449,6 @@ void TestGroup::testCopyCustomIcons()
 
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));
-}
-
-void TestGroup::testMerge()
-{
-    QScopedPointer<Group> group1(new Group());
-    group1->setName("group 1");
-    QScopedPointer<Group> group2(new Group());
-    group2->setName("group 2");
-
-    QScopedPointer<Entry> entry1(new Entry());
-    QScopedPointer<Entry> entry2(new Entry());
-
-    entry1->setGroup(group1.data());
-    entry1->setUuid(Uuid::random());
-    entry2->setGroup(group1.data());
-    entry2->setUuid(Uuid::random());
-
-    group2->merge(group1.data());
-
-    QCOMPARE(group1->entries().size(), 2);
-    QCOMPARE(group2->entries().size(), 2);
-}
-
-void TestGroup::testMergeDatabase()
-{
-    QScopedPointer<Database> dbSource(createMergeTestDatabase());
-    QScopedPointer<Database> dbDest(new Database());
-
-    dbDest->merge(dbSource.data());
-
-    QCOMPARE(dbDest->rootGroup()->children().size(), 2);
-    QCOMPARE(dbDest->rootGroup()->children().at(0)->entries().size(), 2);
-}
-
-void TestGroup::testMergeConflict()
-{
-    QScopedPointer<Database> dbSource(createMergeTestDatabase());
-
-    // test merging updated entries
-    // falls back to KeepBoth mode
-    QScopedPointer<Database> dbCopy(new Database());
-    dbCopy->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags));
-
-    // sanity check
-    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
-
-    // make this entry newer than in original db
-    Entry* updatedEntry = dbCopy->rootGroup()->children().at(0)->entries().at(0);
-    TimeInfo updatedTimeInfo = updatedEntry->timeInfo();
-    updatedTimeInfo.setLastModificationTime(updatedTimeInfo.lastModificationTime().addYears(1));
-    updatedEntry->setTimeInfo(updatedTimeInfo);
-
-    dbCopy->merge(dbSource.data());
-
-    // one entry is duplicated because of mode
-    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
-}
-
-void TestGroup::testMergeConflictKeepBoth()
-{
-    QScopedPointer<Database> dbSource(createMergeTestDatabase());
-
-    // test merging updated entries
-    // falls back to KeepBoth mode
-    QScopedPointer<Database> dbCopy(new Database());
-    dbCopy->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags));
-
-    // sanity check
-    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 2);
-
-    // make this entry newer than in original db
-    Entry* updatedEntry = dbCopy->rootGroup()->children().at(0)->entries().at(0);
-    TimeInfo updatedTimeInfo = updatedEntry->timeInfo();
-    updatedTimeInfo.setLastModificationTime(updatedTimeInfo.lastModificationTime().addYears(1));
-    updatedEntry->setTimeInfo(updatedTimeInfo);
-
-    dbCopy->rootGroup()->setMergeMode(Group::MergeMode::KeepBoth);
-
-    dbCopy->merge(dbSource.data());
-
-    // one entry is duplicated because of mode
-    QCOMPARE(dbCopy->rootGroup()->children().at(0)->entries().size(), 3);
-    // the older entry was merged from the other db as last in the group
-    Entry* olderEntry = dbCopy->rootGroup()->children().at(0)->entries().at(2);
-    QVERIFY2(olderEntry->attributes()->hasKey("merged"), "older entry is marked with an attribute \"merged\"");
-}
-
-Database* TestGroup::createMergeTestDatabase()
-{
-    QScopedPointer<Database> db(new Database());
-
-    Group* group1 = new Group();
-    group1->setName("group 1");
-    Group* group2 = new Group();
-    group2->setName("group 2");
-
-    Entry* entry1 = new Entry();
-    Entry* entry2 = new Entry();
-
-    entry1->setGroup(group1);
-    entry1->setUuid(Uuid::random());
-    entry2->setGroup(group1);
-    entry2->setUuid(Uuid::random());
-
-    group1->setParent(db->rootGroup());
-    group2->setParent(db->rootGroup());
-
-    return db.take();
 }
 
 void TestGroup::testFindEntry()
@@ -702,9 +606,6 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print();
     QCOMPARE(output, QString("entry1\n"));
 
-    output = db->rootGroup()->print(true);
-    QCOMPARE(output, QString("entry1 " + entry1->uuid().toHex() + "\n"));
-
     Group* group1 = new Group();
     group1->setName("group1");
 
@@ -719,10 +620,122 @@ void TestGroup::testPrint()
     output = db->rootGroup()->print();
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
-    QVERIFY(output.contains(QString("  entry2\n")));
+    QVERIFY(!output.contains(QString("  entry2\n")));
 
     output = db->rootGroup()->print(true);
-    QVERIFY(output.contains(QString("entry1 " + entry1->uuid().toHex() + "\n")));
-    QVERIFY(output.contains(QString("group1/ " + group1->uuid().toHex() + "\n")));
-    QVERIFY(output.contains(QString("  entry2 " + entry2->uuid().toHex() + "\n")));
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("  entry2\n")));
+
+    output = group1->print();
+    QVERIFY(!output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("entry2\n")));
+}
+
+void TestGroup::testLocate()
+{
+    Database* db = new Database();
+
+    Entry* entry1 = new Entry();
+    entry1->setTitle("entry1");
+    entry1->setGroup(db->rootGroup());
+
+    Entry* entry2 = new Entry();
+    entry2->setTitle("entry2");
+    entry2->setGroup(db->rootGroup());
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Entry* entry3 = new Entry();
+    entry3->setTitle("entry3");
+    entry3->setGroup(group1);
+
+    Entry* entry43 = new Entry();
+    entry43->setTitle("entry43");
+    entry43->setGroup(group1);
+
+    Entry* google = new Entry();
+    google->setTitle("Google");
+    google->setGroup(group2);
+
+    QStringList results = db->rootGroup()->locate("entry");
+    QVERIFY(results.size() == 4);
+    QVERIFY(results.contains("/group1/entry43"));
+
+    results = db->rootGroup()->locate("entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("Entry1");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/entry1"));
+
+    results = db->rootGroup()->locate("invalid");
+    QVERIFY(results.size() == 0);
+
+    results = db->rootGroup()->locate("google");
+    QVERIFY(results.size() == 1);
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    results = db->rootGroup()->locate("group1");
+    QVERIFY(results.size() == 3);
+    QVERIFY(results.contains("/group1/entry3"));
+    QVERIFY(results.contains("/group1/entry43"));
+    QVERIFY(results.contains("/group1/group2/Google"));
+
+    delete db;
+}
+
+void TestGroup::testAddEntryWithPath()
+{
+    Database* db = new Database();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Entry* entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry != nullptr);
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("/entry1");
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->addEntryWithPath("entry2");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry2");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/entry3");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry3");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/entry4");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry4");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/group2/entry5");
+    QVERIFY(entry != nullptr);
+    QVERIFY(entry->title() == "entry5");
+    QVERIFY(!entry->uuid().isNull());
+
+    entry = db->rootGroup()->addEntryWithPath("/group1/invalid_group/entry6");
+    QVERIFY(entry == nullptr);
+
+    delete db;
 }

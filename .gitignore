@@ -7,3 +7,7 @@ release*/
 *.kdev4
 
 \.vscode/
+*.swp
+
+.DS_Store
+.version

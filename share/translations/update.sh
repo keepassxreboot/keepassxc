@@ -32,9 +32,11 @@ elif [ "$1" == "update" ]; then
     PULL=false
 elif [ "$1" != "" ]; then
     echo "Unknown command '${1}'"
-    echo "Usage: $(basename $0) [update|pull|push]"
+    echo "Usage: $(basename $0) [update|pull|push] [additional tx options]"
     exit 1
 fi
+
+shift
 
 cd "${BASEDIR}/../.."
 
@@ -47,18 +49,17 @@ if $UPDATE; then
         LUPDATE=lupdate
     fi
     $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -no-obsolete src -ts share/translations/keepassx_en.ts
-    $LUPDATE -no-ui-lines -disable-heuristic similartext -locations none -pluralonly src -ts share/translations/keepassx_en_plurals.ts
     echo
 fi
 
 if $PUSH; then
     echo "Pushing English source files to Transifex..."
-    tx push -s
+    tx push -s $@
     echo
 fi
 
 if $PULL; then
     echo "Pulling translations from Transifex..."
-    tx pull -af --minimum-perc=40
+    tx pull -af --minimum-perc=40 $@
     echo
 fi

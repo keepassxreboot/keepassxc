@@ -21,6 +21,8 @@
 
 #include "gui/KMessageWidget.h"
 
+class QTimer;
+
 class MessageWidget : public KMessageWidget
 {
     Q_OBJECT
@@ -28,10 +30,24 @@ class MessageWidget : public KMessageWidget
 public:
     explicit MessageWidget(QWidget* parent = 0);
 
+    int autoHideTimeout() const;
+
+    static const int DefaultAutoHideTimeout;
+    static const int DisableAutoHide;
+
+signals:
+    void showAnimationStarted();
+
 public slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
+    void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
     void hideMessage();
+    void setAutoHideTimeout(int autoHideTimeout);
+    static void openHttpUrl(QString const& url);
 
+private:
+    QTimer* m_autoHideTimer;
+    int m_autoHideTimeout;
 };
 
 #endif // MESSAGEWIDGET_H

@@ -21,6 +21,9 @@
     <bool>true</bool>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -34,13 +37,28 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="MessageWidget" name="globalMessageWidget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+     <widget class="QWidget" name="globalMessageWidgetContainer" native="true">
+      <layout class="QVBoxLayout" name="globalMessageWidgetLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="MessageWidget" name="globalMessageWidget" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">MessageWidget {margin: 90px}</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -162,7 +180,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>34</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -225,7 +243,7 @@
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>Timed one-time password</string>
+      <string>Time-based one-time password</string>
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
@@ -260,15 +278,9 @@
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>&amp;View</string>
-    </property>
-   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEntries"/>
    <addaction name="menuGroups"/>
-   <addaction name="menuView"/>
    <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -292,6 +304,8 @@
    <addaction name="separator"/>
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
+   <addaction name="actionEntryCopyURL"/>
+   <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionLockDatabases"/>
@@ -301,10 +315,16 @@
    <property name="text">
     <string>&amp;Quit</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::QuitRole</enum>
+   </property>
   </action>
   <action name="actionAbout">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
    </property>
   </action>
   <action name="actionDatabaseOpen">
@@ -412,6 +432,9 @@
    <property name="toolTip">
     <string>Database settings</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
   </action>
   <action name="actionEntryClone">
    <property name="enabled">
@@ -455,6 +478,9 @@
    <property name="text">
     <string>&amp;Settings</string>
    </property>
+   <property name="menuRole">
+    <enum>QAction::PreferencesRole</enum>
+   </property>
   </action>
   <action name="actionPasswordGenerator">
    <property name="checkable">
@@ -495,6 +521,9 @@
    <property name="text">
     <string>&amp;Title</string>
    </property>
+   <property name="toolTip">
+    <string>Copy title to clipboard</string>
+   </property>
   </action>
   <action name="actionEntryCopyURL">
    <property name="enabled">
@@ -503,6 +532,9 @@
    <property name="text">
     <string>&amp;URL</string>
    </property>
+   <property name="toolTip">
+    <string>Copy URL to clipboard</string>
+   </property>
   </action>
   <action name="actionEntryCopyNotes">
    <property name="enabled">
@@ -510,6 +542,9 @@
    </property>
    <property name="text">
     <string>&amp;Notes</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy notes to clipboard</string>
    </property>
   </action>
   <action name="actionExportCsv">
@@ -552,7 +587,7 @@
   </action>
   <action name="actionGroupEmptyRecycleBin">
    <property name="text">
-    <string>Empty recycle bin</string>
+    <string>E&amp;mpty recycle bin</string>
    </property>
    <property name="visible">
     <bool>false</bool>

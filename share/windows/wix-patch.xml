@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CPackWiXPatch>
+  <CPackWiXFragment Id="CM_FP_KeePassXC.exe">
+    <Shortcut Id="CM_SP_KeePassXC.exe" Directory="ProgramMenuFolder"
+              Name="KeePassXC" Icon="ProductIcon.ico"
+              WorkingDirectory="INSTALL_ROOT" Advertise="yes" />
+  </CPackWiXFragment>
+</CPackWiXPatch>

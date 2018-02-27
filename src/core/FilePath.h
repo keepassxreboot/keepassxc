@@ -27,6 +27,7 @@ class FilePath
 public:
     QString dataPath(const QString& name);
     QString pluginPath(const QString& name);
+    QString wordlistPath(const QString& name);
     QIcon applicationIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
@@ -38,6 +39,7 @@ public:
 private:
     FilePath();
     bool testSetDir(const QString& dir);
+    bool useDarkIcon();
 
     static FilePath* m_instance;
 

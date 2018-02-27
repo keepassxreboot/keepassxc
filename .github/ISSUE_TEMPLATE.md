@@ -24,9 +24,17 @@
 <!--- How has this issue affected you? What are you trying to accomplish? -->
 <!--- Providing context helps us come up with a solution that is most useful in the real world -->
 
-## Your Environment
-<!--- Include relevant details about the environment you experienced the bug in -->
-* KeePassXC version/commit used: (can be found under Help -> About)
-* Qt version (e.g. Qt 5.3): 
-* Compiler (e.g. Clang++3.6.0): 
-* Operating System and version: 
+## Debug Info
+<!--- Paste debug info from Help → About here -->
+KeePassXC - VERSION
+Revision: REVISION
+
+Libraries:
+- LIBS
+
+Operating system: OS
+CPU architecture: ARCH
+Kernel: KERNEL
+
+Enabled extensions:
+- EXTENSIONS

@@ -19,7 +19,7 @@
 #include "PasswordGenerator.h"
 
 #include "crypto/Random.h"
-#include "zxcvbn/zxcvbn.h"
+#include <zxcvbn.h>
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
@@ -35,11 +35,19 @@ double PasswordGenerator::calculateEntropy(QString password)
 
 void PasswordGenerator::setLength(int length)
 {
+    if (length <= 0) {
+        m_length = DefaultLength;
+        return;
+    }
     m_length = length;
 }
 
 void PasswordGenerator::setCharClasses(const CharClasses& classes)
 {
+    if (classes == 0) {
+        m_classes =  DefaultCharset;
+        return;
+    }
     m_classes = classes;
 }
 

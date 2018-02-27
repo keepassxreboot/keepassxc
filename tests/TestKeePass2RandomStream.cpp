@@ -16,13 +16,11 @@
  */
 
 #include "TestKeePass2RandomStream.h"
-
-#include <QTest>
+#include "TestGlobal.h"
 
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-#include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 
 QTEST_GUILESS_MAIN(TestKeePass2RandomStream)
@@ -58,7 +56,7 @@ void TestKeePass2RandomStream::test()
     }
 
 
-    KeePass2RandomStream randomStream;
+    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
     bool ok;
     QVERIFY(randomStream.init(key));
     QByteArray randomStreamData;

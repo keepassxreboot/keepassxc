@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
 <component type="desktop-application">
-    <id>org.keepassxc</id>
+    <id>org.keepassxc.KeePassXC.desktop</id>
     <name>KeePassXC</name>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <icon type="stock">keepassxc</icon>
-    <url type="homepage">https://keepassxc.org</url>
     <mimetypes>
         <mimetype>application/x-keepass2</mimetype>
     </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+    <developer_name>KeePassXC Team</developer_name>
     <description>
         <p>
             KeePassXC is an application for people with extremely high demands on secure
@@ -19,54 +18,92 @@
         </p>
     </description>
 
-    <launchable type="desktop-id">org.keepassxc.desktop</launchable>
+    <launchable type="desktop-id">org.keepassxc.KeePassXC.desktop</launchable>
+
+    <url type="homepage">https://keepassxc.org</url>
+    <url type="bugtracker">https://github.com/keepassxreboot/keepassxc/issues</url>
+    <url type="faq">https://keepassxc.org/docs#faq</url>
+    <url type="help">https://keepassxc.org/docs</url>
+    <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
 
     <screenshots>
         <screenshot type="default">
             <image>https://keepassxc.org/images/screenshots/linux/screen_001.png</image>
+            <caption>Create, Import or Open Databases</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_002.png</image>
+            <caption>Organize with Groups and Entries</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_003.png</image>
+            <caption>Database Entry</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_004.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_005.png</image>
+            <caption>Icon Selection for Entry</caption>
         </screenshot>
         <screenshot>
             <image>https://keepassxc.org/images/screenshots/linux/screen_006.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_007.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_008.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_009.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_010.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_011.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_012.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_013.png</image>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/linux/screen_014.png</image>
+            <caption>Password Generator</caption>
         </screenshot>
     </screenshots>
 
     <releases>
+        <release version="2.3.0" date="2018-02-27">
+            <description>
+                <ul>
+                    <li>Add support for KDBX 4.0, Argon2 and ChaCha20 [#148, #1179, #1230, #1494]</li>
+                    <li>Add SSH Agent feature [#1098, #1450, #1463]</li>
+                    <li>Add preview panel with details of the selected entry [#879, #1338]</li>
+                    <li>Add more and configurable columns to entry table and allow copying of values by double click [#1305]</li>
+                    <li>Add KeePassXC-Browser API as a replacement for KeePassHTTP [#608]</li>
+                    <li>Deprecate KeePassHTTP [#1392]</li>
+                    <li>Add support for Steam one-time passwords [#1206]</li>
+                    <li>Add support for multiple Auto-Type sequences for a single entry [#1390]</li>
+                    <li>Adjust YubiKey HMAC-SHA1 challenge-response key generation for KDBX 4.0 [#1060]</li>
+                    <li>Replace qHttp with cURL for website icon downloads [#1460]</li>
+                    <li>Remove lock file [#1231]</li>
+                    <li>Add option to create backup file before saving [#1385]</li>
+                    <li>Ask to save a generated password before closing the entry password generator [#1499]</li>
+                    <li>Resolve placeholders recursively [#1078]</li>
+                    <li>Add Auto-Type button to the toolbar [#1056]</li>
+                    <li>Improve window focus handling for Auto-Type dialogs [#1204, #1490]</li>
+                    <li>Auto-Type dialog and password generator can now be exited with ESC [#1252, #1412]</li>
+                    <li>Add optional dark tray icon [#1154]</li>
+                    <li>Add new "Unsafe saving" option to work around saving problems with file sync services [#1385]</li>
+                    <li>Add IBus support to AppImage and additional image formats to Windows builds [#1534, #1537]</li>
+                    <li>Add diceware password generator to CLI [#1406]</li>
+                    <li>Add --key-file option to CLI [#816, #824]</li>
+                    <li>Add DBus interface for opening and closing KeePassXC databases [#283]</li>
+                    <li>Add KDBX compression options to database settings [#1419]</li>
+                    <li>Discourage use of old fixed-length key files in favor of arbitrary files [#1326, #1327]</li>
+                    <li>Correct reference resolution in entry fields [#1486]</li>
+                    <li>Fix window state and recent databases not being remembered on exit [#1453]</li>
+                    <li>Correct history item generation when configuring TOTP for an entry [#1446]</li>
+                    <li>Correct multiple TOTP bugs [#1414]</li>
+                    <li>Automatic saving after every change is now a default [#279]</li>
+                    <li>Allow creation of new entries during search [#1398]</li>
+                    <li>Correct menu issues on macOS [#1335]</li>
+                    <li>Allow compilation on OpenBSD [#1328]</li>
+                    <li>Improve entry attachments view [#1139, #1298]</li>
+                    <li>Fix auto lock for Gnome and Xfce [#910, #1249]</li>
+                    <li>Don't remember key files in file dialogs when the setting is disabled [#1188]</li>
+                    <li>Improve database merging and conflict resolution [#807, #1165]</li>
+                    <li>Fix macOS pasteboard issues [#1202]</li>
+                    <li>Improve startup times on some platforms [#1205]</li>
+                    <li>Hide the notes field by default [#1124]</li>
+                    <li>Toggle main window by clicking tray icon with the middle mouse button [#992]</li>
+                    <li>Fix custom icons not copied over when databases are merged [#1008]</li>
+                    <li>Allow use of DEL key to delete entries [#914]</li>
+                    <li>Correct intermittent crash due to stale history items [#1527]</li>
+                    <li>Sanitize newline characters in title, username and URL fields [#1502]</li>
+                    <li>Reopen previously opened databases in correct order [#774]</li>
+                    <li>Use system's zxcvbn library if available [#701]</li>
+                    <li>Implement various i18n improvements [#690, #875, #1436]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.2.4" date="2017-12-13">
             <description>
                 <ul>
@@ -81,6 +118,7 @@
         </release>
         <release version="2.2.2" date="2017-10-22">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
                     <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
@@ -100,6 +138,7 @@
         </release>
         <release version="2.2.1" date="2017-10-01">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Corrected multiple snap issues [#934, #1011]</li>
                     <li>Corrected multiple custom icon issues [#708, #719, #994]</li>
@@ -116,6 +155,7 @@
         </release>
         <release version="2.2.0" date="2017-06-23">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Added YubiKey 2FA integration for unlocking databases [#127]</li>
                     <li>Added TOTP support [#519]</li>
@@ -151,6 +191,7 @@
         </release>
         <release version="2.1.4" date="2017-04-09">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Bumped KeePassHTTP version to 1.8.4.2</li>
                     <li>KeePassHTTP confirmation window comes to foreground [#466]</li>
@@ -159,6 +200,7 @@
         </release>
         <release version="2.1.3" date="2017-03-03">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Fix possible overflow in zxcvbn library [#363]</li>
                     <li>Revert HiDPI setting to avoid problems on laptop screens [#332]</li>
@@ -173,6 +215,7 @@
         </release>
         <release version="2.1.2" date="2017-02-17">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Ask for save location when creating a new database [#302]</li>
                     <li>Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]</li>
@@ -190,6 +233,7 @@
         </release>
         <release version="2.1.1" date="2017-02-06">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]</li>
                     <li>Escape HTML in dialog boxes [#247]</li>
@@ -202,6 +246,7 @@
         </release>
         <release version="2.1.0" date="2017-01-22">
             <description>
+                <p>Changes included in this release:</p>
                 <ul>
                     <li>Show unlock dialog when using autotype on a closed database [#10, #89]</li>
                     <li>Show different tray icon when database is locked [#37, #46]</li>

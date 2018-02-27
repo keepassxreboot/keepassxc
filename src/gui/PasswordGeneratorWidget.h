@@ -49,16 +49,18 @@ public:
     void saveSettings();
     void reset();
     void setStandaloneMode(bool standalone);
-public Q_SLOTS:
+    QString getGeneratedPassword();
+
+public slots:
     void regeneratePassword();
+    void applyPassword();
+    void copyPassword();
     
 signals:
     void appliedPassword(const QString& password);
     void dialogTerminated();
 
 private slots:
-    void applyPassword();
-    void copyPassword();
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);
@@ -81,6 +83,9 @@ private:
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
+
+protected:
+    void keyPressEvent(QKeyEvent* e) override;
 };
 
 #endif // KEEPASSX_PASSWORDGENERATORWIDGET_H

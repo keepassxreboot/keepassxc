@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>595</width>
-    <height>443</height>
+    <height>446</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -48,7 +48,7 @@
          </sizepolicy>
         </property>
         <property name="suffix">
-         <string> sec</string>
+         <string comment="Seconds"> sec</string>
         </property>
         <property name="minimum">
          <number>1</number>
@@ -86,7 +86,7 @@
          </sizepolicy>
         </property>
         <property name="suffix">
-         <string> sec</string>
+         <string comment="Seconds"> sec</string>
         </property>
         <property name="minimum">
          <number>10</number>
@@ -122,6 +122,13 @@
         </property>
        </widget>
       </item>
+      <item row="6" column="0">
+       <widget class="QCheckBox" name="relockDatabaseAutoTypeCheckBox">
+        <property name="text">
+         <string>Re-lock previously locked database after performing Auto-Type</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QCheckBox" name="passwordRepeatCheckBox">
         <property name="text">
@@ -133,6 +140,20 @@
        <widget class="QCheckBox" name="passwordCleartextCheckBox">
         <property name="text">
          <string>Show passwords in cleartext by default</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="passwordDetailsCleartextCheckBox">
+        <property name="text">
+         <string>Hide passwords in the preview panel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="hideNotesCheckBox">
+        <property name="text">
+         <string>Hide entry notes by default</string>
         </property>
        </widget>
       </item>

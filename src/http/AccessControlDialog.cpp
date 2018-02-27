@@ -44,7 +44,9 @@ void AccessControlDialog::setUrl(const QString &url)
 void AccessControlDialog::setItems(const QList<Entry*> &items)
 {
     for (Entry* entry: items) {
-        ui->itemsList->addItem(entry->title() + " - " + entry->username());
+        QString title = entry->resolveMultiplePlaceholders(entry->title());
+        QString username = entry->resolveMultiplePlaceholders(entry->username());
+        ui->itemsList->addItem(title + " - " + username);
     }
 }
 

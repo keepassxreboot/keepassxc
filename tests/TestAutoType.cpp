@@ -17,14 +17,12 @@
  */
 
 #include "TestAutoType.h"
+#include "TestGlobal.h"
 
 #include <QPluginLoader>
-#include <QTest>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
@@ -96,6 +94,9 @@ void TestAutoType::init()
     m_entry4->setGroup(m_group);
     m_entry4->setPassword("custom_attr");
     m_entry4->attributes()->set("CUSTOM","Attribute",false);
+    m_entry4->attributes()->set("CustomAttrFirst","AttrValueFirst",false);
+    m_entry4->attributes()->set("CustomAttrSecond","AttrValueSecond",false);
+    m_entry4->attributes()->set("CustomAttrThird","AttrValueThird",false);
     association.window = "//^CustomAttr1$//";
     association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
@@ -105,7 +106,16 @@ void TestAutoType::init()
     association.window = "//^CustomAttr3$//";
     association.sequence = "{PaSSworD}";
     m_entry4->autoTypeAssociations()->add(association);
-    
+    association.window = "//^{S:CustomAttrFirst}$//";
+    association.sequence = "custom_attr_first";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//{S:CustomAttrFirst}And{S:CustomAttrSecond}//";
+    association.sequence = "custom_attr_first_and_second";
+    m_entry4->autoTypeAssociations()->add(association);
+    association.window = "//{S:CustomAttrThird}//";
+    association.sequence = "custom_attr_third";
+    m_entry4->autoTypeAssociations()->add(association);
+
     m_entry5 = new Entry();
     m_entry5->setGroup(m_group);
     m_entry5->setPassword("example5");
@@ -126,7 +136,7 @@ void TestAutoType::testInternal()
     QCOMPARE(m_platform->activeWindowTitle(), QString("Test"));
 }
 
-void TestAutoType::testAutoTypeWithoutSequence()
+void TestAutoType::testSingleAutoType()
 {
     m_autoType->performAutoType(m_entry1, nullptr);
 
@@ -135,17 +145,6 @@ void TestAutoType::testAutoTypeWithoutSequence()
              QString("myuser%1mypass%2")
              .arg(m_test->keyToString(Qt::Key_Tab))
              .arg(m_test->keyToString(Qt::Key_Enter)));
-}
-
-void TestAutoType::testAutoTypeWithSequence()
-{
-    m_autoType->performAutoType(m_entry1, nullptr, "{Username}abc{PaSsWoRd}");
-
-    QCOMPARE(m_test->actionCount(), 15);
-    QCOMPARE(m_test->actionChars(),
-             QString("%1abc%2")
-             .arg(m_entry1->username())
-             .arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
@@ -253,4 +252,129 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_autoType->performGlobalAutoType(m_dbList);
     QCOMPARE(m_test->actionChars(), QString("custom_attr"));
     m_test->clearActions();
+
+    // with resolve placeholders in window association title
+    m_test->setActiveWindowTitle("AttrValueFirst");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_first"));
+    m_test->clearActions();
+
+    m_test->setActiveWindowTitle("lorem AttrValueFirstAndAttrValueSecond ipsum");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_first_and_second"));
+    m_test->clearActions();
+
+    m_test->setActiveWindowTitle("lorem AttrValueThird ipsum");
+    m_autoType->performGlobalAutoType(m_dbList);
+    QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
+    m_test->clearActions();
+}
+
+void TestAutoType::testAutoTypeSyntaxChecks()
+{
+    // Huge sequence
+    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{NUMPAD1 3}"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{BEEP 3 3}"));
+    QCOMPARE(false, AutoType::checkSyntax("{BEEP 3}"));
+
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY 0x01}"));
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
+    QCOMPARE(true, AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    // Bad sequence
+    QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    // Good sequence
+    QCOMPARE(true, AutoType::checkSyntax("{{}{}}{}}{{}"));
+    QCOMPARE(true, AutoType::checkSyntax("{]}{[}{[}{]}"));
+    QCOMPARE(true, AutoType::checkSyntax("{)}{(}{(}{)}"));
+    // High DelAY / low delay
+    QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
+    QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));
+    // Slow typing
+    QCOMPARE(true, AutoType::checkSlowKeypress("{DelAY=50000}"));
+    QCOMPARE(false, AutoType::checkSlowKeypress("{delay=50}"));
+    // Many repetition / few repetition / delay not repetition
+    QCOMPARE(true, AutoType::checkHighRepetition("{LEFT 50000000}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
+    QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
+}
+
+void TestAutoType::testAutoTypeEffectiveSequences()
+{
+    QString defaultSequence("{USERNAME}{TAB}{PASSWORD}{ENTER}");
+    QString sequenceG1("{TEST_GROUP1}");
+    QString sequenceG3("{TEST_GROUP3}");
+    QString sequenceE2("{TEST_ENTRY2}");
+    QString sequenceDisabled("{TEST_DISABLED}");
+    QString sequenceOrphan("{TEST_ORPHAN}");
+
+    QScopedPointer<Database> db(new Database());
+    QPointer<Group> rootGroup = db->rootGroup();
+
+    // Group with autotype enabled and custom default sequence
+    QPointer<Group> group1 = new Group();
+    group1->setParent(rootGroup);
+    group1->setDefaultAutoTypeSequence(sequenceG1);
+    
+    // Child group with inherit
+    QPointer<Group> group2 = new Group();
+    group2->setParent(group1);
+
+    // Group with autotype disabled and custom default sequence
+    QPointer<Group> group3 = new Group();
+    group3->setParent(group1);
+    group3->setAutoTypeEnabled(Group::Disable);
+    group3->setDefaultAutoTypeSequence(sequenceG3);
+
+    QCOMPARE(rootGroup->defaultAutoTypeSequence(), QString());
+    QCOMPARE(rootGroup->effectiveAutoTypeSequence(), defaultSequence);
+    QCOMPARE(group1->defaultAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group1->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group2->defaultAutoTypeSequence(), QString());
+    QCOMPARE(group2->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(group3->defaultAutoTypeSequence(), sequenceG3);
+    QCOMPARE(group3->effectiveAutoTypeSequence(), QString());
+
+    // Entry from root group
+    QPointer<Entry> entry1 = new Entry();
+    entry1->setGroup(rootGroup);
+
+    // Entry with custom default sequence
+    QPointer<Entry> entry2 = new Entry();
+    entry2->setDefaultAutoTypeSequence(sequenceE2);
+    entry2->setGroup(rootGroup);
+
+    // Entry from enabled child group
+    QPointer<Entry> entry3 = new Entry();
+    entry3->setGroup(group2);
+
+    // Entry from disabled group
+    QPointer<Entry> entry4 = new Entry();
+    entry4->setDefaultAutoTypeSequence(sequenceDisabled);
+    entry4->setGroup(group3);
+
+    // Entry from enabled group with disabled autotype
+    QPointer<Entry> entry5 = new Entry();
+    entry5->setGroup(group2);
+    entry5->setDefaultAutoTypeSequence(sequenceDisabled);
+    entry5->setAutoTypeEnabled(false);
+
+    // Entry with no parent
+    QScopedPointer<Entry> entry6(new Entry());
+    entry6->setDefaultAutoTypeSequence(sequenceOrphan);
+
+    QCOMPARE(entry1->defaultAutoTypeSequence(), QString());
+    QCOMPARE(entry1->effectiveAutoTypeSequence(), defaultSequence);
+    QCOMPARE(entry2->defaultAutoTypeSequence(), sequenceE2);
+    QCOMPARE(entry2->effectiveAutoTypeSequence(), sequenceE2);
+    QCOMPARE(entry3->defaultAutoTypeSequence(), QString());
+    QCOMPARE(entry3->effectiveAutoTypeSequence(), sequenceG1);
+    QCOMPARE(entry4->defaultAutoTypeSequence(), sequenceDisabled);
+    QCOMPARE(entry4->effectiveAutoTypeSequence(), QString());
+    QCOMPARE(entry5->defaultAutoTypeSequence(), sequenceDisabled);
+    QCOMPARE(entry5->effectiveAutoTypeSequence(), QString());
+    QCOMPARE(entry6->defaultAutoTypeSequence(), sequenceOrphan);
+    QCOMPARE(entry6->effectiveAutoTypeSequence(), QString());
 }

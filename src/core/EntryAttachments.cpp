@@ -17,6 +17,9 @@
 
 #include "EntryAttachments.h"
 
+#include <QStringList>
+#include <QSet>
+
 EntryAttachments::EntryAttachments(QObject* parent)
     : QObject(parent)
 {
@@ -29,12 +32,12 @@ QList<QString> EntryAttachments::keys() const
 
 bool EntryAttachments::hasKey(const QString& key) const
 {
-    return m_attachments.keys().contains(key);
+    return m_attachments.contains(key);
 }
 
-QList<QByteArray> EntryAttachments::values() const
+QSet<QByteArray> EntryAttachments::values() const
 {
-    return m_attachments.values();
+    return m_attachments.values().toSet();
 }
 
 QByteArray EntryAttachments::value(const QString& key) const
@@ -71,7 +74,8 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
 void EntryAttachments::remove(const QString& key)
 {
     if (!m_attachments.contains(key)) {
-        Q_ASSERT(false);
+        Q_ASSERT_X(false, "EntryAttachments::remove",
+                   qPrintable(QString("Can't find attachment for key %1").arg(key)));
         return;
     }
 
@@ -81,6 +85,36 @@ void EntryAttachments::remove(const QString& key)
 
     emit removed(key);
     emit modified();
+}
+
+void EntryAttachments::remove(const QStringList& keys)
+{
+    if (keys.isEmpty()) {
+        return;
+    }
+
+    bool isModified = false;
+    for (const QString &key: keys) {
+        if (!m_attachments.contains(key)) {
+            Q_ASSERT_X(false, "EntryAttachments::remove",
+                       qPrintable(QString("Can't find attachment for key %1").arg(key)));
+            continue;
+        }
+
+        isModified = true;
+        emit aboutToBeRemoved(key);
+        m_attachments.remove(key);
+        emit removed(key);
+    }
+
+    if (isModified) {
+        emit modified();
+    }
+}
+
+bool EntryAttachments::isEmpty() const
+{
+    return m_attachments.isEmpty();
 }
 
 void EntryAttachments::clear()
@@ -117,4 +151,13 @@ bool EntryAttachments::operator==(const EntryAttachments& other) const
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
     return m_attachments != other.m_attachments;
+}
+
+int EntryAttachments::attachmentsSize() const
+{
+    int size = 0;
+    for (auto it = m_attachments.constBegin(); it != m_attachments.constEnd(); ++it) {
+        size += it.key().toUtf8().size() + it.value().size();
+    }
+    return size;
 }

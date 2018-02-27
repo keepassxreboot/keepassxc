@@ -27,6 +27,7 @@
 #include <QPointer>
 
 #include "core/Uuid.h"
+#include "core/CustomData.h"
 
 class Database;
 class Group;
@@ -60,7 +61,6 @@ public:
         bool protectPassword;
         bool protectUrl;
         bool protectNotes;
-        // bool autoEnableVisualHiding;
     };
 
     QString generator() const;
@@ -70,6 +70,7 @@ public:
     QDateTime descriptionChanged() const;
     QString defaultUserName() const;
     QDateTime defaultUserNameChanged() const;
+    QDateTime settingsChanged() const;
     int maintenanceHistoryDays() const;
     QColor color() const;
     bool protectTitle() const;
@@ -77,7 +78,6 @@ public:
     bool protectPassword() const;
     bool protectUrl() const;
     bool protectNotes() const;
-    // bool autoEnableVisualHiding() const;
     QImage customIcon(const Uuid& uuid) const;
     QPixmap customIconPixmap(const Uuid& uuid) const;
     QPixmap customIconScaledPixmap(const Uuid& uuid) const;
@@ -98,7 +98,8 @@ public:
     int masterKeyChangeForce() const;
     int historyMaxItems() const;
     int historyMaxSize() const;
-    QHash<QString, QString> customFields() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultHistoryMaxItems;
     static const int DefaultHistoryMaxSize;
@@ -110,6 +111,7 @@ public:
     void setDescriptionChanged(const QDateTime& value);
     void setDefaultUserName(const QString& value);
     void setDefaultUserNameChanged(const QDateTime& value);
+    void setSettingsChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
     void setColor(const QColor& value);
     void setProtectTitle(bool value);
@@ -117,7 +119,6 @@ public:
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    // void setAutoEnableVisualHiding(bool value);
     void addCustomIcon(const Uuid& uuid, const QImage& icon);
     void addCustomIconScaled(const Uuid& uuid, const QImage& icon);
     void removeCustomIcon(const Uuid& uuid);
@@ -135,8 +136,6 @@ public:
     void setMasterKeyChangeForce(int value);
     void setHistoryMaxItems(int value);
     void setHistoryMaxSize(int value);
-    void addCustomField(const QString& key, const QString& value);
-    void removeCustomField(const QString& key);
     void setUpdateDatetime(bool value);
     /*
      * Copy all attributes from other except:
@@ -144,6 +143,7 @@ public:
      * - Master key changed date
      * - Custom icons
      * - Custom fields
+     * - Settings changed date
      */
     void copyAttributesFrom(const Metadata* other);
 
@@ -173,8 +173,9 @@ private:
     QPointer<Group> m_lastTopVisibleGroup;
 
     QDateTime m_masterKeyChanged;
+    QDateTime m_settingsChanged;
 
-    QHash<QString, QString> m_customFields;
+    QPointer<CustomData> m_customData;
 
     bool m_updateDatetime;
 };

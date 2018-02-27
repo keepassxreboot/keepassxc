@@ -47,6 +47,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class MessageWidget;
+class DetailsWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
@@ -81,16 +82,22 @@ public:
     void setCurrentWidget(QWidget* widget);
     DatabaseWidget::Mode currentMode() const;
     void lock();
-    void updateFilename(const QString& filename);
+    void updateFilePath(const QString &filePath);
     int numberOfSelectedEntries() const;
     QStringList customEntryAttributes() const;
     bool isGroupSelected() const;
     bool isInEditMode() const;
     bool isEditWidgetModified() const;
-    QList<int> splitterSizes() const;
-    void setSplitterSizes(const QList<int>& sizes);
-    QList<int> entryHeaderViewSizes() const;
-    void setEntryViewHeaderSizes(const QList<int>& sizes);
+    QList<int> mainSplitterSizes() const;
+    void setMainSplitterSizes(const QList<int>& sizes);
+    QList<int> detailSplitterSizes() const;
+    void setDetailSplitterSizes(const QList<int>& sizes);
+    bool isUsernamesHidden() const;
+    void setUsernamesHidden(const bool hide);
+    bool isPasswordsHidden() const;
+    void setPasswordsHidden(const bool hide);
+    QByteArray entryViewState() const;
+    bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
@@ -115,13 +122,16 @@ signals:
     void databaseMerged(Database* mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
+    void pressedEntry(Entry* selectedEntry);
+    void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
     void searchModeActivated();
-    void splitterSizesChanged();
-    void entryColumnSizesChanged();
+    void mainSplitterSizesChanged();
+    void detailSplitterSizesChanged();
+    void entryViewStateChanged();
     void updateSearch(QString text);
 
 public slots:
@@ -149,13 +159,13 @@ public slots:
     void switchToGroupEdit();
     void switchToMasterKeyChange(bool disableCancel = false);
     void switchToDatabaseSettings();
-    void switchToOpenDatabase(const QString& fileName);
-    void switchToOpenDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToImportCsv(const QString& fileName);
+    void switchToOpenDatabase(const QString& filePath);
+    void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
+    void switchToImportCsv(const QString& filePath);
     void csvImportFinished(bool accepted);
-    void switchToOpenMergeDatabase(const QString& fileName);
-    void switchToOpenMergeDatabase(const QString& fileName, const QString& password, const QString& keyFile);
-    void switchToImportKeepass1(const QString& fileName);
+    void switchToOpenMergeDatabase(const QString& filePath);
+    void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
+    void switchToImportKeepass1(const QString& filePath);
     void databaseModified();
     void databaseSaved();
     void emptyRecycleBin();
@@ -166,7 +176,9 @@ public slots:
     void setSearchLimitGroup(bool state);
     void endSearch();
 
-    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void showMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                     int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
+    void showErrorMessage(const QString& errorMessage);
     void hideMessage();
 
 private slots:
@@ -178,6 +190,9 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
+    void emitPressedEntry();
+    void emitPressedEntry(Entry* currentEntry);
+    void emitPressedGroup(Group* currentGroup);
     void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
@@ -207,22 +222,27 @@ private:
     KeePass1OpenWidget* m_keepass1OpenWidget;
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
-    QSplitter* m_splitter;
+    QSplitter* m_mainSplitter;
+    QSplitter* m_detailSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     QLabel* m_searchingLabel;
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
-    QString m_filename;
+    QString m_filePath;
     Uuid m_groupBeforeLock;
     Uuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
+    DetailsWidget* m_detailsView;
 
     // Search state
     QString m_lastSearchText;
     bool m_searchCaseSensitive;
     bool m_searchLimitGroup;
+
+    // CSV import state
+    bool m_importingCsv;
 
     // Autoreload
     QFileSystemWatcher m_fileWatcher;

@@ -32,14 +32,6 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 
-#ifdef WITH_XC_HTTP
-namespace qhttp {
-    namespace client {
-        class QHttpClient;
-    }
-}
-#endif
-
 namespace Ui {
     class EditWidgetIcons;
 }
@@ -73,10 +65,8 @@ signals:
 
 private slots:
     void downloadFavicon();
-#ifdef WITH_XC_HTTP
-    void fetchFavicon(const QUrl& url);
-    void fetchFaviconFromGoogle(const QString& domain);
-    void resetFaviconDownload(bool clearRedirect = true);
+#ifdef WITH_XC_NETWORKING
+    QImage fetchFavicon(const QUrl& url);
 #endif
     void addCustomIconFromFile();
     void addCustomIcon(const QImage& icon);
@@ -93,12 +83,6 @@ private:
     QString m_url;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
-#ifdef WITH_XC_HTTP
-    QUrl m_redirectUrl;
-    bool m_fallbackToGoogle;
-    unsigned short m_redirectCount;
-    qhttp::client::QHttpClient* m_httpClient;
-#endif
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };

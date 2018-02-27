@@ -54,6 +54,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 
     QString debugInfo = "KeePassXC - ";
     debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
+#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
+    debugInfo.append(tr("Build Type: %1\n").arg(KEEPASSXC_BUILD_TYPE));
+#endif
     if (!commitHash.isEmpty()) {
         debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
     }
@@ -69,20 +72,26 @@ AboutDialog::AboutDialog(QWidget* parent)
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-             .arg(QSysInfo::prettyProductName())
-             .arg(QSysInfo::currentCpuArchitecture())
-             .arg(QSysInfo::kernelType())
-             .arg(QSysInfo::kernelVersion()));
+             .arg(QSysInfo::prettyProductName(),
+                  QSysInfo::currentCpuArchitecture(),
+                  QSysInfo::kernelType(),
+                  QSysInfo::kernelVersion()));
 
     debugInfo.append("\n\n");
 #endif
 
     QString extensions;
-#ifdef WITH_XC_HTTP
-    extensions += "\n- KeePassHTTP";
-#endif
 #ifdef WITH_XC_AUTOTYPE
     extensions += "\n- Auto-Type";
+#endif
+#ifdef WITH_XC_BROWSER
+    extensions += "\n- Browser Integration";
+#endif
+#ifdef WITH_XC_HTTP
+    extensions += "\n- Legacy Browser Integration (KeePassHTTP)";
+#endif
+#ifdef WITH_XC_SSHAGENT
+    extensions += "\n- SSH Agent";
 #endif
 #ifdef WITH_XC_YUBIKEY
     extensions += "\n- YubiKey";

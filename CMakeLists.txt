@@ -1,5 +1,5 @@
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -14,15 +14,15 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+cmake_minimum_required(VERSION 3.1.0)
+
+project(KeePassXC)
+
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
       "Choose the type of build, options are: None Debug Release RelWithDebInfo Debug DebugFull Profile MinSizeRel."
       FORCE)
 endif()
-
-project(KeePassXC)
-
-cmake_minimum_required(VERSION 3.1.0)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -36,30 +36,89 @@ include(CheckCXXSourceCompiles)
 option(WITH_TESTS "Enable building of unit tests" ON)
 option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
 option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated methods." OFF)
-option(WITH_ASAN "Enable address sanitizer checks (Linux only)" OFF)
+option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
-option(WITH_APP_BUNDLE "Enable Application Bundle for OS X" ON)
+option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
+
+set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
-option(WITH_XC_HTTP "Include KeePassHTTP and Custom Icon Downloads." OFF)
+option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
+option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
+option(WITH_XC_HTTP "Include KeePassHTTP-compatible browser integration (deprecated, implies WITH_NETWORKING)." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
+option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
+
+if(WITH_XC_HTTP)
+  message(WARNING "KeePassHTTP support has been deprecated and will be removed in a future version. Please use WITH_XC_BROWSER instead!\n"
+          "For enabling / disabling network access code, WITH_XC_HTTP has been replaced by WITH_XC_NETWORKING.")
+  set(WITH_XC_NETWORKING ON CACHE BOOL "Include networking code (e.g. for downlading website icons)." FORCE)
+endif()
+
+if(WITH_XC_ALL)
+  # Enable all options
+  set(WITH_XC_AUTOTYPE ON)
+  set(WITH_XC_NETWORKING ON)
+  set(WITH_XC_BROWSER ON)
+  set(WITH_XC_HTTP ON) # Deprecated
+  set(WITH_XC_YUBIKEY ON)
+  set(WITH_XC_SSHAGENT ON)
+endif()
 
 # Process ui files automatically from source files
 set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
-set(KEEPASSXC_VERSION_MINOR "2")
-set(KEEPASSXC_VERSION_PATCH "4")
+set(KEEPASSXC_VERSION_MINOR "3")
+set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
+set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
+set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release PreRelease)
+
+# Check if on a tag, if so build as a release
+execute_process(COMMAND git tag --points-at HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_TAG)
+if(NOT GIT_TAG AND EXISTS ${CMAKE_SOURCE_DIR}/.version)
+  file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)
+endif()
+
+string(REGEX REPLACE "(\r?\n)+" "" OVERRIDE_VERSION "${OVERRIDE_VERSION}")
+if(OVERRIDE_VERSION)
+  if(OVERRIDE_VERSION MATCHES "^[\\.0-9]+-(alpha|beta)[0-9]+$")
+    set(KEEPASSXC_BUILD_TYPE PreRelease)
+    set(KEEPASSXC_VERSION ${OVERRIDE_VERSION})
+  elseif(OVERRIDE_VERSION MATCHES "^[\\.0-9]+$")
+    set(KEEPASSXC_BUILD_TYPE Release)
+    set(KEEPASSXC_VERSION ${OVERRIDE_VERSION})
+  endif()
+endif()
+
+if(KEEPASSXC_BUILD_TYPE STREQUAL "PreRelease" AND NOT OVERRIDE_VERSION)
+  set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-preview")
+elseif(KEEPASSXC_BUILD_TYPE STREQUAL "Snapshot")
+  set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+endif()
+
+if(KEEPASSXC_BUILD_TYPE STREQUAL "Release")
+  set(KEEPASSXC_BUILD_TYPE_RELEASE ON)
+elseif(KEEPASSXC_BUILD_TYPE STREQUAL "PreRelease")
+  set(KEEPASSXC_BUILD_TYPE_PRE_RELEASE ON)
+else()
+  set(KEEPASSXC_BUILD_TYPE_SNAPSHOT ON)
+endif()
+
+message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
+
 # Distribution info
-set(KEEPASSXC_DIST True)
-set(KEEPASSXC_DIST_TYPE "Other" CACHE STRING "KeePassXC Distribution type")
+set(KEEPASSXC_DIST ON)
+set(KEEPASSXC_DIST_TYPE "Other" CACHE STRING "KeePassXC Distribution Type")
 set_property(CACHE KEEPASSXC_DIST_TYPE PROPERTY STRINGS Snap AppImage Other)
 if(KEEPASSXC_DIST_TYPE STREQUAL "Snap")
-  set(KEEPASSXC_DIST_SNAP True)
+  set(KEEPASSXC_DIST_SNAP ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "AppImage")
-  set(KEEPASSXC_DIST_APPIMAGE True)
+  set(KEEPASSXC_DIST_APPIMAGE ON)
 elseif(KEEPASSXC_DIST_TYPE STREQUAL "Other")
   unset(KEEPASSXC_DIST)
 endif()
@@ -96,7 +155,7 @@ if(WITH_APP_BUNDLE)
 endif()
 
 add_gcc_compiler_flags("-fno-common")
-add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
+add_gcc_compiler_flags("-Wall -Werror -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
@@ -110,21 +169,25 @@ endif()
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
 add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
 add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
+
 if(WITH_ASAN)
-  if(NOT CMAKE_SYSTEM_NAME STREQUAL "Linux")
-      message(FATAL_ERROR "WITH_ASAN is only supported on Linux at the moment.")
+  if(NOT (CMAKE_SYSTEM_NAME STREQUAL "Linux" OR APPLE))
+      message(FATAL_ERROR "WITH_ASAN is only supported on Linux / macOS at the moment.")
   endif()
 
   add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
 
-  if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
-    add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    if(NOT (CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9))
+      add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
+    endif()
   endif()
+
 endif()
 
 string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 if (CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
-  add_gcc_compiler_flags("-D_FORTIFY_SOURCE=2")
+  add_gcc_compiler_flags("-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
 endif()
 
 check_c_compiler_flag("-Werror=format-security -Werror=implicit-function-declaration" WERROR_C_AVAILABLE)
@@ -159,13 +222,12 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
 endif()
 
+add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
 if(APPLE)
   add_gcc_compiler_cxxflags("-stdlib=libc++")
 endif()
-
-add_gcc_compiler_cflags("-ansi")
 
 if(WITH_DEV_BUILD)
   add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
@@ -190,15 +252,18 @@ endif()
 
 if(APPLE AND WITH_APP_BUNDLE AND "${CMAKE_INSTALL_PREFIX}" STREQUAL "/usr/local")
   set(CMAKE_INSTALL_PREFIX "/Applications")
+  set(CMAKE_INSTALL_MANDIR "/usr/local/share/man")
 endif()
 
 if(MINGW)
   set(CLI_INSTALL_DIR    ".")
+  set(PROXY_INSTALL_DIR  ".")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR ".")
   set(DATA_INSTALL_DIR   "share")
 elseif(APPLE AND WITH_APP_BUNDLE)
   set(CLI_INSTALL_DIR    "/usr/local/bin")
+  set(PROXY_INSTALL_DIR  "/usr/local/bin")
   set(BIN_INSTALL_DIR    ".")
   set(PLUGIN_INSTALL_DIR "${PROGNAME}.app/Contents/PlugIns")
   set(DATA_INSTALL_DIR   "${PROGNAME}.app/Contents/Resources")
@@ -206,6 +271,7 @@ else()
   include(GNUInstallDirs)
 
   set(CLI_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
+  set(PROXY_INSTALL_DIR  "${CMAKE_INSTALL_BINDIR}")
   set(BIN_INSTALL_DIR    "${CMAKE_INSTALL_BINDIR}")
   set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
   set(DATA_INSTALL_DIR   "${CMAKE_INSTALL_DATADIR}/keepassxc")
@@ -215,41 +281,53 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
-find_package(Qt5Core          5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-find_package(Qt5Concurrent    5.2 REQUIRED)
-find_package(Qt5Widgets       5.2 REQUIRED)
-find_package(Qt5Test          5.2 REQUIRED)
-find_package(Qt5LinguistTools 5.2 REQUIRED)
-find_package(Qt5Network       5.2 REQUIRED)
-if (UNIX AND NOT APPLE)
-    find_package(Qt5DBus 5.2 REQUIRED)
+if(UNIX AND NOT APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
+elseif(APPLE)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+  find_package(Qt5 COMPONENTS MacExtras
+    HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
+  )
+else()
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED)
 endif()
+
+if(Qt5Core_VERSION VERSION_LESS "5.2.0")
+  message(FATAL_ERROR "Qt version 5.2.0 or higher is required")
+endif()
+
+get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
+
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
+if(APPLE)
+  set(CMAKE_MACOSX_RPATH TRUE)
+  find_program(MACDEPLOYQT_EXE macdeployqt HINTS ${Qt5_PREFIX}/bin ENV PATH)
+  if(NOT MACDEPLOYQT_EXE)
+    message(FATAL_ERROR "macdeployqt is required to build in macOS")
+  else()
+    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
+  endif()
+endif()
 
 # Debian sets the the build type to None for package builds.
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
 find_package(LibGPGError REQUIRED)
-
-find_package(Gcrypt 1.6.0 REQUIRED)
+find_package(Gcrypt 1.7.0 REQUIRED)
+find_package(Argon2 REQUIRED)
 
 find_package(ZLIB REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
-check_cxx_source_compiles("
-  #include <zlib.h>
-
-  #if !defined(ZLIB_VERNUM) || (ZLIB_VERNUM < 0x1200)
-      #error zlib 1.2.x or higher is required to use the gzip format
-  #endif
-
-  int main() { return 0; }" ZLIB_SUPPORTS_GZIP)
-
-if(NOT ZLIB_SUPPORTS_GZIP)
-  message(FATAL_ERROR "zlib 1.2.x or higher is required to use the gzip format")
+if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
+  message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
 # Optional

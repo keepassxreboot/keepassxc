@@ -1,19 +1,19 @@
 /*
- *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 or (at your option)
- *  version 3 of the License.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 or (at your option)
+ * version 3 of the License.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef KEEPASSX_DATABASETABWIDGET_H
@@ -21,6 +21,7 @@
 
 #include <QHash>
 #include <QTabWidget>
+#include <QFileInfo>
 
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
@@ -29,7 +30,6 @@ class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
-class QLockFile;
 class MessageWidget;
 
 struct DatabaseManagerStruct
@@ -37,13 +37,10 @@ struct DatabaseManagerStruct
     DatabaseManagerStruct();
 
     DatabaseWidget* dbWidget;
-    QLockFile* lockFile;
-    QString filePath;
-    QString canonicalFilePath;
-    QString fileName;
-    bool saveToFilename;
+    QFileInfo fileInfo;
     bool modified;
     bool readOnly;
+    int saveAttempts;
 };
 
 Q_DECLARE_TYPEINFO(DatabaseManagerStruct, Q_MOVABLE_TYPE);
@@ -54,7 +51,7 @@ class DatabaseTabWidget : public QTabWidget
 
 public:
     explicit DatabaseTabWidget(QWidget* parent = nullptr);
-    ~DatabaseTabWidget();
+    ~DatabaseTabWidget() override;
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void mergeDatabase(const QString& fileName);
@@ -78,9 +75,11 @@ public slots:
     void changeMasterKey();
     void changeDatabaseSettings();
     bool readOnly(int index = -1);
+    bool canSave(int index = -1);
     bool isModified(int index = -1);
     void performGlobalAutoType();
     void lockDatabases();
+    void relockPendingDatabase();
     QString databasePath(int index = -1);
 
 signals:
@@ -105,7 +104,7 @@ private slots:
     void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
-    bool saveDatabase(Database* db);
+    bool saveDatabase(Database* db, QString filePath = "");
     bool saveDatabaseAs(Database* db);
     bool closeDatabase(Database* db);
     void deleteDatabase(Database* db);
@@ -118,7 +117,8 @@ private:
     void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
     QHash<Database*, DatabaseManagerStruct> m_dbList;
-    DatabaseWidgetStateSync* m_dbWidgetStateSync;
+    QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
+    QPointer<DatabaseWidget> m_dbPendingLock;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

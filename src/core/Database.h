@@ -23,13 +23,16 @@
 #include <QHash>
 #include <QObject>
 
+#include "crypto/kdf/Kdf.h"
 #include "core/Uuid.h"
 #include "keys/CompositeKey.h"
 
 class Entry;
+enum class EntryReferenceType;
 class Group;
 class Metadata;
 class QTimer;
+class QIODevice;
 
 struct DeletedObject
 {
@@ -55,17 +58,17 @@ public:
     {
         Uuid cipher;
         CompressionAlgorithm compressionAlgo;
-        QByteArray transformSeed;
-        quint64 transformRounds;
         QByteArray transformedMasterKey;
+        QSharedPointer<Kdf> kdf;
         CompositeKey key;
         bool hasKey;
         QByteArray masterSeed;
         QByteArray challengeResponseKey;
+        QVariantMap publicCustomData;
     };
 
     Database();
-    ~Database();
+    ~Database() override;
     Group* rootGroup();
     const Group* rootGroup() const;
 
@@ -81,6 +84,7 @@ public:
     Metadata* metadata();
     const Metadata* metadata() const;
     Entry* resolveEntry(const Uuid& uuid);
+    Entry* resolveEntry(const QString& text, EntryReferenceType referenceType);
     Group* resolveGroup(const Uuid& uuid);
     QList<DeletedObject> deletedObjects();
     void addDeletedObject(const DeletedObject& delObj);
@@ -88,8 +92,7 @@ public:
 
     Uuid cipher() const;
     Database::CompressionAlgorithm compressionAlgo() const;
-    QByteArray transformSeed() const;
-    quint64 transformRounds() const;
+    QSharedPointer<Kdf> kdf() const;
     QByteArray transformedMasterKey() const;
     const CompositeKey& key() const;
     QByteArray challengeResponseKey() const;
@@ -97,33 +100,29 @@ public:
 
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
-    bool setTransformRounds(quint64 rounds);
-    bool setKey(const CompositeKey& key, const QByteArray& transformSeed,
-                bool updateChangedTime = true);
-
-    /**
-     * Sets the database key and generates a random transform seed.
-     */
-    bool setKey(const CompositeKey& key);
+    void setKdf(QSharedPointer<Kdf> kdf);
+    bool setKey(const CompositeKey& key, bool updateChangedTime = true,
+                bool updateTransformSalt = false);
     bool hasKey() const;
-    bool transformKeyWithSeed(const QByteArray& transformSeed);
     bool verifyKey(const CompositeKey& key) const;
+    QVariantMap publicCustomData() const;
+    void setPublicCustomData(const QVariantMap& customData);
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);
     void emptyRecycleBin();
     void setEmitModified(bool value);
-    void copyAttributesFrom(const Database* other);
     void merge(const Database* other);
-    QString saveToFile(QString filePath);
+    QString saveToFile(QString filePath, bool atomic = true, bool backup = false);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
      */
     Uuid uuid();
+    bool changeKdf(QSharedPointer<Kdf> kdf);
 
     static Database* databaseByUuid(const Uuid& uuid);
     static Database* openDatabaseFile(QString fileName, CompositeKey key);
-    static Database* unlockFromStdin(QString databaseFilename);
+    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = QString(""));
 
 signals:
     void groupDataChanged(Group* group);
@@ -141,10 +140,13 @@ private slots:
     void startModifiedTimer();
 
 private:
-    Entry* recFindEntry(const Uuid& uuid, Group* group);
-    Group* recFindGroup(const Uuid& uuid, Group* group);
+    Entry* findEntryRecursive(const Uuid& uuid, Group* group);
+    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group);
+    Group* findGroupRecursive(const Uuid& uuid, Group* group);
 
     void createRecycleBin();
+    QString writeDatabase(QIODevice* device);
+    bool backupDatabase(QString filePath);
 
     Metadata* const m_metadata;
     Group* m_rootGroup;

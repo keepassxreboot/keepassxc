@@ -320,6 +320,7 @@ void TestCsvParser::testUnicode() {
     //ERROR QChar g("\u20AC");
     parser->setFieldSeparator(QChar('A'));
     QTextStream out(file.data());
+    out.setCodec("UTF-8");
     out << QString("€1A2śA\"3śAż\"Ażac");
 
     QVERIFY(parser->parse(file.data()));

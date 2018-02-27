@@ -16,13 +16,8 @@
  */
 
 #include "TestGuiPixmaps.h"
-
-#include <QTest>
-
-#include "core/Database.h"
+#include "TestGlobal.h"
 #include "core/DatabaseIcons.h"
-#include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 

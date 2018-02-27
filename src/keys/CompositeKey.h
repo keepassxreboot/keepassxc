@@ -23,6 +23,7 @@
 #include <QString>
 #include <QSharedPointer>
 
+#include "crypto/kdf/Kdf.h"
 #include "keys/Key.h"
 #include "keys/ChallengeResponseKey.h"
 
@@ -31,27 +32,21 @@ class CompositeKey : public Key
 public:
     CompositeKey();
     CompositeKey(const CompositeKey& key);
-    ~CompositeKey();
+    ~CompositeKey() override;
     void clear();
     bool isEmpty() const;
-    CompositeKey* clone() const;
+    CompositeKey* clone() const override;
     CompositeKey& operator=(const CompositeKey& key);
 
-    QByteArray rawKey() const;
-    QByteArray transform(const QByteArray& seed, quint64 rounds,
-                         bool* ok, QString* errorString) const;
+    QByteArray rawKey() const override;
+    QByteArray rawKey(const QByteArray* transformSeed) const;
+    bool transform(const Kdf& kdf, QByteArray& result) const Q_REQUIRED_RESULT;
     bool challenge(const QByteArray& seed, QByteArray &result) const;
 
     void addKey(const Key& key);
     void addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key);
 
-    static int transformKeyBenchmark(int msec);
-    static CompositeKey readFromLine(QString line);
-
 private:
-    static QByteArray transformKeyRaw(const QByteArray& key, const QByteArray& seed,
-                                      quint64 rounds, bool* ok, QString* errorString);
-
     QList<Key*> m_keys;
     QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };

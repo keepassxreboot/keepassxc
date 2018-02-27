@@ -24,22 +24,28 @@
 
 #include "crypto/SymmetricCipherBackend.h"
 #include "format/KeePass2.h"
+#include "core/Uuid.h"
 
 class SymmetricCipher
 {
 public:
     enum Algorithm
     {
+        Aes128,
         Aes256,
         Twofish,
-        Salsa20
+        Salsa20,
+        ChaCha20,
+        InvalidAlgorithm = -1
     };
 
     enum Mode
     {
         Cbc,
+        Ctr,
         Ecb,
-        Stream
+        Stream,
+        InvalidMode = -1
     };
 
     enum Direction
@@ -48,41 +54,46 @@ public:
         Encrypt
     };
 
-    SymmetricCipher(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                    SymmetricCipher::Direction direction);
+    SymmetricCipher(Algorithm algo, Mode mode, Direction direction);
     ~SymmetricCipher();
+    Q_DISABLE_COPY(SymmetricCipher)
 
     bool init(const QByteArray& key, const QByteArray& iv);
     bool isInitalized() const;
 
-    inline QByteArray process(const QByteArray& data, bool* ok) {
+    inline QByteArray process(const QByteArray& data, bool* ok)
+    {
         return m_backend->process(data, ok);
     }
 
-    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data) {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data)
+    {
         return m_backend->processInPlace(data);
     }
 
-    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data, quint64 rounds) {
+    Q_REQUIRED_RESULT inline bool processInPlace(QByteArray& data, quint64 rounds)
+    {
         Q_ASSERT(rounds > 0);
         return m_backend->processInPlace(data, rounds);
     }
 
     bool reset();
+    int keySize() const;
     int blockSize() const;
     QString errorString() const;
+    Algorithm algorithm() const;
 
-    static SymmetricCipher::Algorithm cipherToAlgorithm(Uuid cipher);
-    static Uuid algorithmToCipher(SymmetricCipher::Algorithm algo);
+    static Algorithm cipherToAlgorithm(Uuid cipher);
+    static Uuid algorithmToCipher(Algorithm algo);
+    static int algorithmIvSize(Algorithm algo);
+    static Mode algorithmMode(Algorithm algo);
 
 private:
-    static SymmetricCipherBackend* createBackend(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
-                                                 SymmetricCipher::Direction direction);
+    static SymmetricCipherBackend* createBackend(Algorithm algo, Mode mode, Direction direction);
 
     const QScopedPointer<SymmetricCipherBackend> m_backend;
     bool m_initialized;
-
-    Q_DISABLE_COPY(SymmetricCipher)
+    Algorithm m_algo;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHER_H

@@ -37,6 +37,10 @@ class InactivityTimer;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+    Q_CLASSINFO("D-Bus Interface", "org.keepassxc.KeePassXC.MainWindow")
+#endif
 
 public:
     MainWindow();
@@ -54,15 +58,20 @@ public slots:
     void openDatabase(const QString& fileName, const QString& pw = QString(),
                       const QString& keyFile = QString());
     void appExit();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true);
+    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                              int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
+    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+                           int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void bringToFront();
+    void closeAllDatabases();
+    void lockAllDatabases();
 
 protected:
-     void closeEvent(QCloseEvent* event) override;
-     void changeEvent(QEvent* event) override;
+    void closeEvent(QCloseEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
@@ -85,7 +94,6 @@ private slots:
     void updateCopyAttributesMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
-    void saveToolbarState(bool value);
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
@@ -95,6 +103,7 @@ private slots:
     void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
+    void showKeePassHTTPDeprecationNotice();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -105,6 +114,10 @@ private:
     bool saveLastDatabases();
     void updateTrayIcon();
     bool isTrayIconEnabled() const;
+
+    static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
+    void dragEnterEvent(QDragEnterEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;

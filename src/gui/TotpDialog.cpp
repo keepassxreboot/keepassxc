@@ -20,33 +20,24 @@
 #include "ui_TotpDialog.h"
 
 #include "core/Config.h"
-#include "core/Entry.h"
-#include "gui/DatabaseWidget.h"
 #include "gui/Clipboard.h"
-
-#include <QTimer>
-#include <QDateTime>
-#include <QPushButton>
 
 
 TotpDialog::TotpDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)
     , m_ui(new Ui::TotpDialog())
+    , m_totpUpdateTimer(new QTimer(entry))
+    , m_entry(entry)
 {
-    m_entry = entry;
-    m_parent = parent;
-    m_step = m_entry->totpStep();
-
     m_ui->setupUi(this);
 
+    m_step = m_entry->totpStep();
     uCounter = resetCounter();
     updateProgressBar();
 
-    QTimer* timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
-    connect(timer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
-    timer->start(m_step * 10);
-
+    connect(m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
+    connect(m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
+    m_totpUpdateTimer->start(m_step * 10);
     updateTotp();
 
     setAttribute(Qt::WA_DeleteOnClose);
@@ -61,7 +52,7 @@ void TotpDialog::copyToClipboard()
 {
     clipboard()->setText(m_entry->totp());
     if (config()->get("MinimizeOnCopy").toBool()) {
-        m_parent->window()->showMinimized();
+        qobject_cast<DatabaseWidget*>(parent())->window()->showMinimized();
     }
 }
 
@@ -87,8 +78,8 @@ void TotpDialog::updateSeconds()
 void TotpDialog::updateTotp()
 {
     QString totpCode = m_entry->totp();
-    QString firstHalf = totpCode.left(totpCode.size()/2);
-    QString secondHalf = totpCode.right(totpCode.size()/2);
+    QString firstHalf = totpCode.left(totpCode.size() / 2);
+    QString secondHalf = totpCode.mid(totpCode.size() / 2);
     m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
 }
 
@@ -101,4 +92,7 @@ double TotpDialog::resetCounter()
 
 TotpDialog::~TotpDialog()
 {
+    if (m_totpUpdateTimer) {
+        delete m_totpUpdateTimer;
+    }
 }

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>577</width>
-    <height>404</height>
+    <width>803</width>
+    <height>433</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,6 +37,9 @@
     </widget>
    </item>
    <item>
+    <widget class="MessageWidget" name="deprecationNotice" native="true"/>
+   </item>
+   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>0</number>
@@ -49,7 +52,7 @@
        <item>
         <widget class="QCheckBox" name="showNotification">
          <property name="text">
-          <string>Sh&amp;ow a notification when credentials are requested</string>
+          <string extracomment="Credentials mean login data requested via browser extension">Sh&amp;ow a notification when credentials are requested</string>
          </property>
          <property name="checked">
           <bool>true</bool>

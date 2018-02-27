@@ -27,7 +27,6 @@
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
-#include "gui/csvImport/CsvImportWizard.h"
 #include "gui/MessageBox.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
@@ -37,9 +36,9 @@
 #ifdef QT_STATIC
 #include <QtPlugin>
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN)
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif Q_OS_LINUX
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
@@ -57,22 +56,6 @@ int main(int argc, char** argv)
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
-    if (app.isAlreadyRunning()) {
-        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
-        return 0;
-    }
-    
-    QApplication::setQuitOnLastWindowClosed(false);
-
-    if (!Crypto::init()) {
-        QString error = QCoreApplication::translate("Main",
-                                                    "Fatal error while testing the cryptographic functions.");
-        error.append("\n");
-        error.append(Crypto::errorString());
-        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassXC - Error"), error);
-        return 1;
-    }
-
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
     parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"), "[filename(s)]");
@@ -85,21 +68,46 @@ int main(int argc, char** argv)
                                      "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
                                      QCoreApplication::translate("main", "read password of the database from stdin"));
+    // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
+    QCommandLineOption parentWindowOption(QStringList() << "pw"
+                                                        << "parent-window",
+                                                        QCoreApplication::translate("main", "Parent window handle"),
+                                                        "handle");
 
     parser.addHelpOption();
     parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
+    parser.addOption(parentWindowOption);
 
     parser.process(app);
-    const QStringList args = parser.positionalArguments();
+    const QStringList fileNames = parser.positionalArguments();
+
+    if (app.isAlreadyRunning()) {
+        if (!fileNames.isEmpty()) {
+            app.sendFileNamesToRunningInstance(fileNames);
+        }
+        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
+        return 0;
+    }
+
+    QApplication::setQuitOnLastWindowClosed(false);
+
+    if (!Crypto::init()) {
+        QString error = QCoreApplication::translate("Main",
+                                                    "Fatal error while testing the cryptographic functions.");
+        error.append("\n");
+        error.append(Crypto::errorString());
+        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassXC - Error"), error);
+        return 1;
+    }
 
     if (parser.isSet(configOption)) {
         Config::createConfigFromFile(parser.value(configOption));
     }
 
-    Translator::installTranslator();
+    Translator::installTranslators();
 
 #ifdef Q_OS_MAC
     // Don't show menu icons on OSX
@@ -109,16 +117,11 @@ int main(int argc, char** argv)
     MainWindow mainWindow;
     app.setMainWindow(&mainWindow);
 
-    QObject::connect(&app, &Application::anotherInstanceStarted,
-                    [&]() {
-                        mainWindow.ensurePolished();
-                        mainWindow.setWindowState(mainWindow.windowState() & ~Qt::WindowMinimized);
-                        mainWindow.show();
-                        mainWindow.raise();
-                        mainWindow.activateWindow();
-                    });
+    QObject::connect(&app, SIGNAL(anotherInstanceStarted()), &mainWindow, SLOT(bringToFront()));
+    QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
-    
+    QObject::connect(&app, SIGNAL(quitSignalReceived()), &mainWindow, SLOT(appExit()), Qt::DirectConnection);
+
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
     bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
@@ -128,25 +131,24 @@ int main(int argc, char** argv)
     if (!(minimizeOnStartup && minimizeToTray)) {
         mainWindow.show();
     }
-    
+
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-        const QStringList filenames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename : filenames) {
+        const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
+        for (const QString& filename: fileNames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
-                mainWindow.openDatabase(filename, QString(), QString());
+                mainWindow.openDatabase(filename);
             }
         }
     }
 
-    for (int ii=0; ii < args.length(); ii++) {
-        QString filename = args[ii];
-        if (!filename.isEmpty() && QFile::exists(filename)) {
+    const bool pwstdin = parser.isSet(pwstdinOption);
+    for (const QString& filename: fileNames) {
+        if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
             QString password;
-            if (parser.isSet(pwstdinOption)) {
+            if (pwstdin) {
                 static QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
-            mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
         }
     }
 

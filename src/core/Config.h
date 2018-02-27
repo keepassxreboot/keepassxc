@@ -26,15 +26,18 @@ class QSettings;
 
 class Config : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    ~Config();
+    Q_DISABLE_COPY(Config)
+
+    ~Config() override;
     QVariant get(const QString& key);
     QVariant get(const QString& key, const QVariant& defaultValue);
     QString getFileName();
     void set(const QString& key, const QVariant& value);
     bool hasAccessError();
+    void sync();
 
     static Config* instance();
     static void createConfigFromFile(const QString& file);
@@ -49,8 +52,6 @@ private:
 
     QScopedPointer<QSettings> m_settings;
     QHash<QString, QVariant> m_defaults;
-
-    Q_DISABLE_COPY(Config)
 };
 
 inline Config* config() {

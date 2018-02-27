@@ -26,6 +26,7 @@
 
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/CustomData.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
 
@@ -36,6 +37,14 @@ class Group : public QObject
 public:
     enum TriState { Inherit, Enable, Disable };
     enum MergeMode { ModeInherit, KeepBoth, KeepNewer, KeepExisting };
+
+    enum CloneFlag {
+        CloneNoFlags        = 0,
+        CloneNewUuid        = 1,  // generate a random uuid for the clone
+        CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
+        CloneIncludeEntries = 4,  // clone the group entries
+    };
+    Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
     struct GroupData
     {
@@ -75,15 +84,23 @@ public:
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
+    CustomData* customData();
+    const CustomData* customData() const;
 
     static const int DefaultIconNumber;
     static const int RecycleBinIconNumber;
+    static CloneFlags DefaultCloneFlags;
+    static Entry::CloneFlags DefaultEntryCloneFlags;
+    static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
+    Group* findChildByUuid(const Uuid& uuid);
     Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const Uuid& uuid);
     Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
     Group* findGroupByPath(QString groupPath, QString basePath = QString("/"));
+    QStringList locate(QString locateTerm, QString currentPath = QString("/"));
+    Entry* addEntryWithPath(QString entryPath);
     void setUuid(const Uuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
@@ -104,6 +121,7 @@ public:
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
+    QStringList hierarchy() const;
 
     Database* database();
     const Database* database() const;
@@ -116,16 +134,16 @@ public:
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<Uuid> customIconsRecursive() const;
     /**
-     * Creates a duplicate of this group including all child entries and groups.
-     * The exceptions are that the returned group doesn't have a parent group
-     * and all TimeInfo attributes are set to the current time.
+     * Creates a duplicate of this group.
      * Note that you need to copy the custom icons manually when inserting the
      * new group into another database.
      */
-    Group* clone(Entry::CloneFlags entryFlags = Entry::CloneNewUuid | Entry::CloneResetTimeInfo) const;
+    Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
+                 CloneFlags groupFlags = DefaultCloneFlags) const;
+
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
-    QString print(bool printUuids = false, QString baseName = QString(""), int depth = 0);
+    QString print(bool recursive = false, int depth = 0);
 
 signals:
     void dataChanged(Group* group);
@@ -149,6 +167,9 @@ signals:
 
     void modified();
 
+private slots:
+    void updateTimeinfo();
+
 private:
     template <class P, class V> bool set(P& property, const V& value);
 
@@ -156,12 +177,12 @@ private:
     void removeEntry(Entry* entry);
     void setParent(Database* db);
     void markOlderEntry(Entry* entry);
-    void resolveConflict(Entry* existingEntry, Entry* otherEntry);
+    void resolveEntryConflict(Entry* existingEntry, Entry* otherEntry);
+    void resolveGroupConflict(Group* existingGroup, Group* otherGroup);
 
     void recSetDatabase(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
-    void updateTimeinfo();
 
     QPointer<Database> m_db;
     Uuid m_uuid;
@@ -169,6 +190,8 @@ private:
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;
     QList<Entry*> m_entries;
+
+    QPointer<CustomData> m_customData;
 
     QPointer<Group> m_parent;
 
@@ -178,5 +201,7 @@ private:
     friend Entry::~Entry();
     friend void Entry::setGroup(Group* group);
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(Group::CloneFlags)
 
 #endif // KEEPASSX_GROUP_H

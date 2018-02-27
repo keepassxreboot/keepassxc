@@ -35,16 +35,11 @@ private slots:
     void testCopyCustomIcon();
     void testClone();
     void testCopyCustomIcons();
-    void testMerge();
-    void testMergeConflict();
-    void testMergeDatabase();
-    void testMergeConflictKeepBoth();
     void testFindEntry();
     void testFindGroupByPath();
     void testPrint();
-
-private:
-    Database* createMergeTestDatabase();
+    void testLocate();
+    void testAddEntryWithPath();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

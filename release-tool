@@ -37,9 +37,10 @@ DOCKER_CONTAINER_NAME="keepassxc-build-container"
 CMAKE_OPTIONS=""
 COMPILER="g++"
 MAKE_OPTIONS="-j8"
-BUILD_PLUGINS="autotype http yubikey"
+BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 BUILD_SOURCE_TARBALL=true
+BUILD_SNAPSHOT=false
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 
@@ -50,14 +51,14 @@ printUsage() {
     local cmd
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "sign" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
         cmd="COMMAND"
     fi
-    
-    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [--version x.y.z] [options]\n"
+
+    printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
     
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
@@ -66,7 +67,8 @@ Commands:
   check      Perform a dry-run check, nothing is changed
   merge      Merge release branch into main branch and create release tags
   build      Build and package binary release from sources
-  sign       Sign previously compiled release packages
+  gpgsign    Sign previously compiled release packages with GPG
+  appsign    Sign binaries with code signing certificates on Windows and macOS
   help       Show help for the given command
 EOF
     elif [ "merge" == "$cmd" ]; then
@@ -110,19 +112,29 @@ Options:
   -i, --install-prefix    Install prefix (default: '${INSTALL_PREFIX}')
   -p, --plugins           Space-separated list of plugins to build
                           (default: ${BUILD_PLUGINS})
+      --snapshot          Don't checkout the release tag
   -n, --no-source-tarball Don't build source tarball
   -h, --help              Show this help
 EOF
-    elif [ "sign" == "$cmd" ]; then
+    elif [ "gpgsign" == "$cmd" ]; then
         cat << EOF
 
-Sign previously compiled release packages
+Sign previously compiled release packages with GPG
 
 Options:
   -f, --files        Files to sign (required)
   -g, --gpg-key      GPG key used to sign the files (default: '${GPG_KEY}')
-      --signtool     Specify the signtool executable (default: 'signtool')
-      --signtool-key Provide a key to be used with signtool (for Windows EXE)
+  -h, --help         Show this help
+EOF
+    elif [ "appsign" == "$cmd" ]; then
+        cat << EOF
+
+Sign binaries with code signing certificates on Windows and macOS
+
+Options:
+  -f, --files        Files to sign (required)
+  -k, --signtool-key Key to be used with signtool (required for Windows EXE)
+  -i, --identity     Apple Developer ID to be used with codesign (required for macOS APP and DMG)
   -h, --help         Show this help
 EOF
     fi
@@ -234,7 +246,7 @@ checkVersionInCMake() {
     local app_name_upper="$(echo "$APP_NAME" | tr '[:lower:]' '[:upper:]')"
     local major_num="$(echo ${RELEASE_NAME} | cut -f1 -d.)"
     local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
-    local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d.)"
+    local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d. | cut -f1 -d-)"
 
     grep -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
@@ -289,7 +301,28 @@ checkSnapcraft() {
 checkTransifexCommandExists() {
     command -v tx > /dev/null
     if [ 0 -ne $? ]; then
-        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'"
+        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'."
+    fi
+}
+
+checkOsslsigncodeCommandExists() {
+    command -v osslsigncode > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
+    fi
+}
+
+checkSigntoolCommandExists() {
+    command -v signtool > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "signtool command not found on the PATH! Add the Windows SDK binary folder to your PATH."
+    fi
+}
+
+checkCodesignCommandExists() {
+    command -v codesign > /dev/null
+    if [ 0 -ne $? ]; then
+        exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
     fi
 }
 
@@ -434,7 +467,8 @@ merge() {
     performChecks
     
     logInfo "Updating language files..."
-    ./share/translations/update.sh
+    ./share/translations/update.sh update
+    ./share/translations/update.sh pull
     if [ 0 -ne $? ]; then
         exitError "Updating translations failed!"
     fi
@@ -531,6 +565,9 @@ build() {
             
             -n|--no-source-tarball)
                 BUILD_SOURCE_TARBALL=false ;;
+
+            --snapshot)
+                BUILD_SNAPSHOT=true ;;
             
             -h|--help)
                 printUsage "build"
@@ -545,12 +582,27 @@ build() {
     done
 
     init
-    checkWorkingTreeClean
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
-    logInfo "Checking out release tag '${TAG_NAME}'..."
-    git checkout "$TAG_NAME"
+    if ${BUILD_SNAPSHOT}; then
+        TAG_NAME="HEAD"
+        local branch=`git rev-parse --abbrev-ref HEAD`
+        logInfo "Using current branch ${branch} to build..."
+        RELEASE_NAME="${RELEASE_NAME}-snapshot"
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot"
+    else
+        checkWorkingTreeClean
+
+        if $(echo "$TAG_NAME" | grep -qP "\-(alpha|beta)\\d+\$"); then
+            CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=PreRelease"
+            logInfo "Checking out pre-release tag '${TAG_NAME}'..."
+        else
+            CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Release"
+            logInfo "Checking out release tag '${TAG_NAME}'..."
+        fi
+        git checkout "$TAG_NAME"
+    fi
 
     logInfo "Creating output directory..."
     mkdir -p "$OUTPUT_DIR"
@@ -559,20 +611,40 @@ build() {
         exitError "Failed to create output directory!"
     fi
 
-    if $BUILD_SOURCE_TARBALL; then
+    if ${BUILD_SOURCE_TARBALL}; then
         logInfo "Creating source tarball..."
         local app_name_lower="$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')"
-        TARBALL_NAME="${app_name_lower}-${RELEASE_NAME}-src.tar.xz"
-        git archive --format=tar "$TAG_NAME" --prefix="${app_name_lower}-${RELEASE_NAME}/" \
-            | xz -6 >  "${OUTPUT_DIR}/${TARBALL_NAME}"
+        local prefix="${app_name_lower}-${RELEASE_NAME}"
+        local tarball_name="${prefix}-src.tar"
+
+        git archive --format=tar "$TAG_NAME" --prefix="${prefix}/" --output="${OUTPUT_DIR}/${tarball_name}"
+
+        if ! ${BUILD_SNAPSHOT}; then
+            # add .version file to tar
+            mkdir "${prefix}"
+            echo -n ${RELEASE_NAME} > "${prefix}/.version"
+            tar --append --file="${OUTPUT_DIR}/${tarball_name}" "${prefix}/.version"
+            rm "${prefix}/.version"
+            rmdir "${prefix}" 2> /dev/null
+        fi
+
+        xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
-    
+
+    if ! ${BUILD_SNAPSHOT} && [ -e "${OUTPUT_DIR}/build-release" ]; then
+        logInfo "Cleaning existing build directory..."
+        rm -r "${OUTPUT_DIR}/build-release" 2> /dev/null
+        if [ $? -ne 0 ]; then
+            exitError "Failed to clean existing build directory, please do it manually."
+        fi
+    fi
+
     logInfo "Creating build directory..."
     mkdir -p "${OUTPUT_DIR}/build-release"
     cd "${OUTPUT_DIR}/build-release"
     
     logInfo "Configuring sources..."
-    for p in $BUILD_PLUGINS; do
+    for p in ${BUILD_PLUGINS}; do
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
     done
     
@@ -585,33 +657,33 @@ build() {
     
     if [ "" == "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
-            # Building on OS X
-            local qt_vers="$(ls /usr/local/Cellar/qt5 2> /dev/null | sort -r | head -n1)"
-            if [ "" == "$qt_vers" ]; then
-                exitError "Couldn't find Qt5! Please make sure it is available in '/usr/local/Cellar/qt5'."
-            fi
-            export MACOSX_DEPLOYMENT_TARGET=10.7
-            
+            # Building on macOS
+            export MACOSX_DEPLOYMENT_TARGET=10.10
+
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-                -DCMAKE_OSX_ARCHITECTURES=x86_64 -DWITH_CXX11=OFF \
-                -DCMAKE_PREFIX_PATH="/usr/local/Cellar/qt5/${qt_vers}/lib/cmake" \
-                -DQT_BINARY_DIR="/usr/local/Cellar/qt5/${qt_vers}/bin" $CMAKE_OPTIONS "$SRC_DIR"
-            
+            cmake -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
+              -DCMAKE_PREFIX_PATH="/usr/local/opt/qt/lib/cmake" \
+              ${CMAKE_OPTIONS} "$SRC_DIR"
+
             logInfo "Compiling and packaging sources..."
-            make $MAKE_OPTIONS package
+            make ${MAKE_OPTIONS} package
             
             mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
         elif [ "$(uname -o)" == "Msys" ]; then
-            # Building on Windows with Msys
+            # Building on Windows with Msys2
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
             
             logInfo "Compiling and packaging sources..."
-            make $MAKE_OPTIONS package
+            mingw32-make ${MAKE_OPTIONS} preinstall
+            # Call cpack directly instead of calling make package.
+            # This is important because we want to build the MSI when making a
+            # release.
+            cpack -G "NSIS;ZIP;${CPACK_GENERATORS}"
             
-            mv "./${APP_NAME}-${RELEASE_NAME}-"*.{exe,zip} ../
+            mv "./${APP_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             
@@ -643,7 +715,8 @@ build() {
             "$DOCKER_IMAGE" \
             bash -c "cd /keepassxc/out/build-release && \
                 cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" /keepassxc/src && \
+                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" \
+                    -DKEEPASSXC_DIST_TYPE=AppImage /keepassxc/src && \
                 make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
                 /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
         
@@ -661,87 +734,215 @@ build() {
 
 
 # -----------------------------------------------------------------------
-#                             sign command
+#                           gpgsign command
 # -----------------------------------------------------------------------
-sign() {
-    SIGN_FILES=()
-    SIGNTOOL="signtool"
-    SIGNTOOL_KEY=""
-    
+gpgsign() {
+    local sign_files=()
+
     while [ $# -ge 1 ]; do
         local arg="$1"
         case "$arg" in
             -f|--files)
                 while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
-                    SIGN_FILES+=("$2")
+                    sign_files+=("$2")
                     shift
                 done ;;
-                
+
             -g|--gpg-key)
                 GPG_KEY="$2"
                 shift ;;
 
-            --signtool)
-                SIGNTOOL="$2"
-                shift ;;
-
-            --signtool-key)
-                SIGNTOOL_KEY="$2"
-                shift ;;
-            
             -h|--help)
-                printUsage "sign"
+                printUsage "gpgsign"
                 exit ;;
-            
+
             *)
                 logError "Unknown option '$arg'\n"
-                printUsage "sign"
+                printUsage "gpgsign"
                 exit 1 ;;
         esac
         shift
     done
     
-    if [ -z "$SIGN_FILES" ]; then
+    if [ -z "${sign_files}" ]; then
         logError "Missing arguments, --files is required!\n"
-        printUsage "sign"
+        printUsage "gpgsign"
         exit 1
     fi
 
-    if [[ -n "$SIGNTOOL_KEY" && ! -f "$SIGNTOOL_KEY" ]]; then
-        exitError "Signtool Key was not found!"
-    elif [[ -f "$SIGNTOOL_KEY" && ! -x $(command -v "${SIGNTOOL}") ]]; then
-        exitError "signtool program not found on PATH!"
-    fi
-    
-    for f in "${SIGN_FILES[@]}"; do
+    for f in "${sign_files[@]}"; do
         if [ ! -f "$f" ]; then
-            exitError "File '${f}' does not exist!"
+            exitError "File '${f}' does not exist or is not a file!"
         fi
 
-        if [[ -n "$SIGNTOOL_KEY" && ${f: -4} == '.exe' ]]; then
-            logInfo "Signing file '${f}' using signtool...\n"
-            read -s -p "Signtool Key Password: " password
-            echo
-            "${SIGNTOOL}" sign -f "${SIGNTOOL_KEY}" -p ${password} -v -t http://timestamp.comodoca.com/authenticode ${f}
-
-            if [ 0 -ne $? ]; then
-                exitError "Signing failed!"
-            fi
-        fi
-        
         logInfo "Signing file '${f}' using release key..."
         gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
         
         if [ 0 -ne $? ]; then
             exitError "Signing failed!"
         fi
-        
+
         logInfo "Creating digest for file '${f}'..."
         local rp="$(realpath "$f")"
         local bname="$(basename "$f")"
         (cd "$(dirname "$rp")"; sha256sum "$bname"  > "${bname}.DIGEST")
     done
     
+    logInfo "All done!"
+}
+
+
+
+# -----------------------------------------------------------------------
+#                           appsign command
+# -----------------------------------------------------------------------
+appsign() {
+    local sign_files=()
+    local signtool_key
+    local codesign_identity
+
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -f|--files)
+                while [ "${2:0:1}" != "-" ] && [ $# -ge 2 ]; do
+                    sign_files+=("$2")
+                    shift
+                done ;;
+
+            -k|--signtool-key)
+                signtool_key="$2"
+                shift ;;
+
+            -i|--identity)
+                codesign_identity="$2"
+                shift ;;
+
+            -h|--help)
+                printUsage "appsign"
+                exit ;;
+
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "appsign"
+                exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ -z "${sign_files}" ]; then
+        logError "Missing arguments, --files is required!\n"
+        printUsage "appsign"
+        exit 1
+    fi
+
+    for f in "${sign_files[@]}"; do
+        if [ ! -f "${f}" ]; then
+            exitError "File '${f}' does not exist or is not a file!"
+        fi
+    done
+
+    if [ "$(uname -s)" == "Darwin" ]; then
+        if [ -z "${codesign_identity}" ]; then
+            logError "Missing arguments, --identity is required on macOS!\n"
+            printUsage "appsign"
+            exit 1
+        fi
+
+        checkCodesignCommandExists
+
+        local orig_dir="$(pwd)"
+        for f in "${sign_files[@]}"; do
+            if [[ ${f: -4} == '.dmg' ]]; then
+                logInfo "Unpacking disk image '${f}'..."
+                local tmp_dir="/tmp/KeePassXC_${RANDOM}"
+                mkdir -p ${tmp_dir}/mnt
+                hdiutil attach -quiet -noautoopen -mountpoint ${tmp_dir}/mnt "${f}"
+                cd ${tmp_dir}
+                cp -a ./mnt ./app
+                hdiutil detach -quiet ${tmp_dir}/mnt
+
+                if [ ! -d ./app/KeePassXC.app ]; then
+                    cd "${orig_dir}"
+                    exitError "Unpacking failed!"
+                fi
+
+                logInfo "Signing app using codesign..."
+                codesign --sign "${codesign_identity}" --verbose --deep ./app/KeePassXC.app
+
+                if [ 0 -ne $? ]; then
+                    cd "${orig_dir}"
+                    exitError "Signing failed!"
+                fi
+
+                logInfo "Repacking disk image..."
+                hdiutil create \
+                    -volname "KeePassXC" \
+                    -size $((1000 * ($(du -sk ./app | cut -f1) + 5000))) \
+                    -srcfolder ./app \
+                    -fs HFS+ \
+                    -fsargs "-c c=64,a=16,e=16" \
+                    -format UDBZ \
+                    "${tmp_dir}/$(basename "${f}")"
+                cd "${orig_dir}"
+                cp -f "${tmp_dir}/$(basename "${f}")" "${f}"
+                rm -Rf ${tmp_dir}
+            else
+                logInfo "Skipping non-DMG file '${f}'..."
+            fi
+        done
+
+    elif [ "$(uname -o)" == "Msys" ]; then
+        if [ -z "${signtool_key}" ]; then
+            logError "Missing arguments, --signtool-key is required on Windows!\n"
+            printUsage "appsign"
+            exit 1
+        fi
+
+        checkOsslsigncodeCommandExists
+
+        if [[ ! -f "${signtool_key}" ]]; then
+            exitError "Key file was not found!"
+        fi
+
+        read -s -p "Key password: " password
+        echo
+
+        for f in "${sign_files[@]}"; do
+            if [[ ${f: -4} == ".exe" ]]; then
+                logInfo "Signing file '${f}' using osslsigncode..."
+                # output a signed exe; we have to use a different name due to osslsigntool limitations
+                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" -n "KeePassXC" \
+                    -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
+
+                if [ 0 -ne $? ]; then
+                    rm -f "${f}.signed"
+                    exitError "Signing failed!"
+                fi
+
+                # overwrite the original exe with the signed exe
+                mv -f "${f}.signed" "${f}"
+            elif [[ ${f: -4} == ".msi" ]]; then
+                # Make sure we can find the signtool
+                checkSigntoolCommandExists
+
+                # osslsigncode does not succeed at signing MSI files at this time...
+                logInfo "Signing file '${f}' using Microsoft signtool..."
+                signtool sign -f "${signtool_key}" -p "${password}" -d "KeePassXC" \
+                    -t "http://timestamp.comodoca.com/authenticode" "${f}"
+                
+                if [ 0 -ne $? ]; then
+                    exitError "Signing failed!"
+                fi
+            else
+                logInfo "Skipping non-executable file '${f}'..."
+            fi
+        done
+
+    else
+        exitError "Unsupported platform for code signing!\n"
+    fi
+
     logInfo "All done!"
 }
 
@@ -758,8 +959,8 @@ if [ "" == "$MODE" ]; then
 elif [ "help" == "$MODE" ]; then
     printUsage "$1"
     exit
-elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "sign" == "$MODE" ]; then
-    $MODE "$@"
+elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]; then
+    ${MODE} "$@"
 else
     printUsage "$MODE"
 fi

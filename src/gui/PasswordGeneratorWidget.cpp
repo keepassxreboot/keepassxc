@@ -21,6 +21,7 @@
 
 #include <QLineEdit>
 #include <QDir>
+#include <QKeyEvent>
 
 #include "core/Config.h"
 #include "core/PasswordGenerator.h"
@@ -67,9 +68,9 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     }
 
     // set default separator to Space
-    m_ui->editWordSeparator->setText(" ");
+    m_ui->editWordSeparator->setText(PassphraseGenerator::DefaultSeparator);
 
-    QDir path(filePath()->dataPath("wordlists/"));
+    QDir path(filePath()->wordlistPath(""));
     QStringList files = path.entryList(QDir::Files);
     m_ui->comboBoxWordList->addItems(files);
     if (files.size() > 1) {
@@ -79,7 +80,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->comboBoxWordList->setVisible(false);
         m_ui->labelWordList->setVisible(false);
     }
-    
+
+    m_dicewareGenerator->setDefaultWordList();
     loadSettings();
     reset();
 }
@@ -91,19 +93,19 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget()
 void PasswordGeneratorWidget::loadSettings()
 {
     // Password config
-    m_ui->checkBoxLower->setChecked(config()->get("generator/LowerCase", true).toBool());
-    m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", true).toBool());
-    m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", true).toBool());
-    m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", false).toBool());
-    m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", false).toBool());
-    m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", true).toBool());
-    m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", true).toBool());
-    m_ui->spinBoxLength->setValue(config()->get("generator/Length", 16).toInt());
+    m_ui->checkBoxLower->setChecked(config()->get("generator/LowerCase", PasswordGenerator::DefaultLower).toBool());
+    m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", PasswordGenerator::DefaultUpper).toBool());
+    m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
+    m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", PasswordGenerator::DefaultEASCII).toBool());
+    m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", PasswordGenerator::DefaultLookAlike).toBool());
+    m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", PasswordGenerator::DefaultFromEveryGroup).toBool());
+    m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
 
     // Diceware config
-    m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", 6).toInt());
-    m_ui->editWordSeparator->setText(config()->get("generator/WordSeparator", " ").toString());
-    m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", "eff_large.wordlist").toString());
+    m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", PassphraseGenerator::DefaultWordCount).toInt());
+    m_ui->editWordSeparator->setText(config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
+    m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
 
     // Password or diceware?
     m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
@@ -149,8 +151,22 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
     }
 }
 
+QString PasswordGeneratorWidget::getGeneratedPassword()
+{
+    return m_ui->editNewPassword->text();
+}
+
+void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
+{
+    if (e->key() == Qt::Key_Escape && m_standalone == true) {
+        emit dialogTerminated();
+    } else {
+        e->ignore();
+    }
+}
+
 void PasswordGeneratorWidget::regeneratePassword()
-{   
+{
     if (m_ui->tabWidget->currentIndex() == Password) {
         if (m_passwordGenerator->isValid()) {
             QString password = m_passwordGenerator->generatePassword();
@@ -268,16 +284,16 @@ void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
     // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
     if (entropy < 40) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor", "Password quality")));
     } else if (entropy >= 40 && entropy < 65) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak", "Password quality")));
     } else if (entropy >= 65 && entropy < 100) {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good", "Password quality")));
     } else {
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
-        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent")));
+        m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent", "Password quality")));
     }
 }
 
@@ -383,7 +399,7 @@ void PasswordGeneratorWidget::updateGenerator()
 
         m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
         if (!m_ui->comboBoxWordList->currentText().isEmpty()) {
-            QString path = filePath()->dataPath("wordlists/" + m_ui->comboBoxWordList->currentText());
+            QString path = filePath()->wordlistPath(m_ui->comboBoxWordList->currentText());
             m_dicewareGenerator->setWordList(path);
         }
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());

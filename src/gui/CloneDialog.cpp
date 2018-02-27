@@ -63,7 +63,7 @@ void CloneDialog::cloneEntry()
     Entry* entry = m_entry->clone(flags);
     entry->setGroup(m_entry->group());
 
-    emit m_parent->refreshSearch();
+    m_parent->refreshSearch();
     close();
 }
 

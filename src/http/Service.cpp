@@ -259,13 +259,16 @@ Service::Access Service::checkAccess(const Entry *entry, const QString & host, c
 
 KeepassHttpProtocol::Entry Service::prepareEntry(const Entry* entry)
 {
-    KeepassHttpProtocol::Entry res(entry->resolvePlaceholder(entry->title()), entry->resolvePlaceholder(entry->username()), entry->resolvePlaceholder(entry->password()), entry->uuid().toHex());
+    KeepassHttpProtocol::Entry res(entry->resolveMultiplePlaceholders(entry->title()),
+                                   entry->resolveMultiplePlaceholders(entry->username()),
+                                   entry->resolveMultiplePlaceholders(entry->password()),
+                                   entry->uuid().toHex());
     if (HttpSettings::supportKphFields()) {
         const EntryAttributes * attr = entry->attributes();
         const auto keys = attr->keys();
         for (const QString& key: keys) {
             if (key.startsWith(QLatin1String("KPH: "))) {
-                res.addStringField(key, attr->value(key));
+                res.addStringField(key, entry->resolveMultiplePlaceholders(attr->value(key)));
             }
         }
     }
@@ -545,7 +548,7 @@ void Service::removeSharedEncryptionKeys()
 
             const int count = keysToRemove.count();
             QMessageBox::information(0, tr("KeePassXC: Removed keys from database"),
-                                     tr("Successfully removed %1 encryption-%2 from KeePassX/Http Settings.").arg(count).arg(count ? "keys" : "key"),
+                                     tr("Successfully removed %n encryption-key(s) from KeePassX/Http Settings.", "", count),
                                      QMessageBox::Ok);
         } else {
             QMessageBox::information(0, tr("KeePassXC: No keys found"),
@@ -589,7 +592,7 @@ void Service::removeStoredPermissions()
 
         if (counter > 0) {
             QMessageBox::information(0, tr("KeePassXC: Removed permissions"),
-                                     tr("Successfully removed permissions from %1 %2.").arg(counter).arg(counter ? "entries" : "entry"),
+                                     tr("Successfully removed permissions from %n entries.", "", counter),
                                      QMessageBox::Ok);
         } else {
             QMessageBox::information(0, tr("KeePassXC: No entry with permissions found!"),

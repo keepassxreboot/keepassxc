@@ -37,6 +37,8 @@ const QStringList CsvImportWidget::m_columnHeader = QStringList()
     << QObject::tr("Password")
     << QObject::tr("URL")
     << QObject::tr("Notes")
+    << QObject::tr("Last Modified")
+    << QObject::tr("Created")
 //  << QObject::tr("Future field1")
 //  << QObject::tr("Future field2")
 //  << QObject::tr("Future field3")
@@ -223,6 +225,21 @@ void CsvImportWidget::writeDatabase() {
         entry->setPassword(m_parserModel->data(m_parserModel->index(r, 3)).toString());
         entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
         entry->setNotes(m_parserModel->data(m_parserModel->index(r, 5)).toString());
+
+        TimeInfo timeInfo;
+        if (m_parserModel->data(m_parserModel->index(r, 6)).isValid()) {
+            qint64 lastModified = m_parserModel->data(m_parserModel->index(r, 6)).toString().toLongLong();
+            if (lastModified) {
+                timeInfo.setLastModificationTime(QDateTime::fromMSecsSinceEpoch(lastModified * 1000).toTimeSpec(Qt::UTC));
+            }
+        }
+        if (m_parserModel->data(m_parserModel->index(r, 7)).isValid()) {
+            qint64 created = m_parserModel->data(m_parserModel->index(r, 7)).toString().toLongLong();
+            if (created) {
+                timeInfo.setCreationTime(QDateTime::fromMSecsSinceEpoch(created * 1000).toTimeSpec(Qt::UTC));
+            }
+        }
+        entry->setTimeInfo(timeInfo);
     }
     QBuffer buffer;
     buffer.open(QBuffer::ReadWrite);

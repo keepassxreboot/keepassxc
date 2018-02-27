@@ -14,16 +14,30 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
+    Add.cpp
+    Add.h
     Clip.cpp
     Clip.h
-    EntropyMeter.cpp
-    EntropyMeter.h
+    Command.cpp
+    Command.h
+    Diceware.cpp
+    Diceware.h
+    Edit.cpp
+    Edit.h
+    Estimate.cpp
+    Estimate.h
     Extract.cpp
     Extract.h
+    Generate.cpp
+    Generate.h
     List.cpp
     List.h
+    Locate.cpp
+    Locate.h
     Merge.cpp
     Merge.h
+    Remove.cpp
+    Remove.h
     Show.cpp
     Show.h)
 
@@ -36,10 +50,16 @@ target_link_libraries(keepassxc-cli
                       keepassx_core
                       Qt5::Core
                       ${GCRYPT_LIBRARIES}
+                      ${ARGON2_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
                       ${ZLIB_LIBRARIES}
-                      zxcvbn)
+                      ${ZXCVBN_LIBRARIES})
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
+
+if(APPLE OR UNIX)
+    install(FILES keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
+    execute_process(COMMAND mandb -q)
+endif()

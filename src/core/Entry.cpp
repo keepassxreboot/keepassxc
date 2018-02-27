@@ -25,12 +25,19 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
+#include <QRegularExpression>
+
 const int Entry::DefaultIconNumber = 0;
+const int Entry::ResolveMaximumDepth = 10;
+const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
+const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
+
 
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
+    , m_customData(new CustomData(this))
     , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
@@ -38,13 +45,15 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
-    m_data.totpStep = QTotp::defaultStep;
-    m_data.totpDigits = QTotp::defaultDigits;
+    m_data.totpStep = Totp::defaultStep;
+    m_data.totpDigits = Totp::defaultDigits;
 
+    connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
+    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
 
     connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
     connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
@@ -86,6 +95,29 @@ void Entry::updateTimeinfo()
 void Entry::setUpdateTimeinfo(bool value)
 {
     m_updateTimeinfo = value;
+}
+
+EntryReferenceType Entry::referenceType(const QString& referenceStr)
+{
+    const QString referenceLowerStr = referenceStr.toLower();
+    EntryReferenceType result = EntryReferenceType::Unknown;
+    if (referenceLowerStr == QLatin1String("t")) {
+        result = EntryReferenceType::Title;
+    } else if (referenceLowerStr == QLatin1String("u")) {
+        result = EntryReferenceType::UserName;
+    } else if (referenceLowerStr == QLatin1String("p")) {
+        result = EntryReferenceType::Password;
+    } else if (referenceLowerStr == QLatin1String("a")) {
+        result = EntryReferenceType::Url;
+    } else if (referenceLowerStr == QLatin1String("n")) {
+        result = EntryReferenceType::Notes;
+    } else if (referenceLowerStr == QLatin1String("i")) {
+        result = EntryReferenceType::Uuid;
+    } else if (referenceLowerStr == QLatin1String("o")) {
+        result = EntryReferenceType::CustomAttributes;
+    }
+
+    return result;
 }
 
 Uuid Entry::uuid() const
@@ -190,30 +222,37 @@ QString Entry::defaultAutoTypeSequence() const
     return m_data.defaultAutoTypeSequence;
 }
 
+/**
+ * Determine the effective sequence that will be injected
+ * This function return an empty string if a parent group has autotype disabled or if the entry has no parent
+ */
 QString Entry::effectiveAutoTypeSequence() const
 {
+    if (!autoTypeEnabled()) {
+        return {};
+    }
+
+    const Group* parent = group();
+    if (!parent) {
+        return {};
+    }
+
+    QString sequence = parent->effectiveAutoTypeSequence();
+    if (sequence.isEmpty()) {
+        return {};
+    }
+
     if (!m_data.defaultAutoTypeSequence.isEmpty()) {
         return m_data.defaultAutoTypeSequence;
     }
-    QString sequence;
 
-    const Group* grp = group();
-    if(grp) {
-      sequence = grp->effectiveAutoTypeSequence();
-    } else {
-      return QString();
-    }
-
-    if (sequence.isEmpty() && (!username().isEmpty() || !password().isEmpty())) {
+    if (sequence == Group::RootAutoTypeSequence && (!username().isEmpty() || !password().isEmpty())) {
         if (username().isEmpty()) {
-            sequence = "{PASSWORD}{ENTER}";
+            return AutoTypeSequencePassword;
+        } else if (password().isEmpty()) {
+            return AutoTypeSequenceUsername;
         }
-       else if (password().isEmpty()) {
-          sequence = "{USERNAME}{ENTER}";
-        }
-        else {
-            sequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
-        }
+        return Group::RootAutoTypeSequence;
     }
 
     return sequence;
@@ -241,7 +280,15 @@ QString Entry::url() const
 
 QString Entry::webUrl() const
 {
-    return resolveUrl(m_attributes->value(EntryAttributes::URLKey));
+    QString url = resolveMultiplePlaceholders(m_attributes->value(EntryAttributes::URLKey));
+    return resolveUrl(url);
+}
+
+QString Entry::displayUrl() const
+{
+    QString url = maskPasswordPlaceholders(m_attributes->value(EntryAttributes::URLKey));
+    url = resolveMultiplePlaceholders(url);
+    return resolveUrl(url);
 }
 
 QString Entry::username() const
@@ -295,6 +342,16 @@ const EntryAttachments* Entry::attachments() const
     return m_attachments;
 }
 
+CustomData* Entry::customData()
+{
+    return m_customData;
+}
+
+const CustomData* Entry::customData() const
+{
+    return m_customData;
+}
+
 bool Entry::hasTotp() const
 {
     return m_attributes->hasKey("TOTP Seed") || m_attributes->hasKey("otp");
@@ -305,30 +362,43 @@ QString Entry::totp() const
     if (hasTotp()) {
         QString seed = totpSeed();
         quint64 time = QDateTime::currentDateTime().toTime_t();
-        QString output = QTotp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
+        QString output = Totp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
 
         return QString(output);
-    } else {
-        return QString("");
     }
+    return {};
 }
 
 void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
 {
+    beginUpdate();
     if (step == 0) {
-        step = QTotp::defaultStep;
+        step = Totp::defaultStep;
     }
 
     if (digits == 0) {
-        digits = QTotp::defaultDigits;
+        digits = Totp::defaultDigits;
     }
+    QString data;
+
+    const Totp::Encoder & enc = Totp::encoders.value(digits, Totp::defaultEncoder);
 
     if (m_attributes->hasKey("otp")) {
-        m_attributes->set("otp", QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(digits), true);
+        data = QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(enc.digits == 0 ? digits : enc.digits);
+        if (!enc.name.isEmpty()) {
+            data.append("&enocder=").append(enc.name);
+        }
+        m_attributes->set("otp", data, true);
     } else {
         m_attributes->set("TOTP Seed", seed, true);
-        m_attributes->set("TOTP Settings", QString("%1;%2").arg(step).arg(digits));
+        if (!enc.shortName.isEmpty()) {
+            data = QString("%1;%2").arg(step).arg(enc.shortName);
+        } else {
+            data = QString("%1;%2").arg(step).arg(digits);
+        }
+        m_attributes->set("TOTP Settings", data);
     }
+    endUpdate();
 }
 
 QString Entry::totpSeed() const
@@ -341,19 +411,7 @@ QString Entry::totpSeed() const
         secret = m_attributes->value("TOTP Seed");
     }
 
-    m_data.totpDigits = QTotp::defaultDigits;
-    m_data.totpStep = QTotp::defaultStep;
-
-    if (m_attributes->hasKey("TOTP Settings")) {
-        QRegExp rx("(\\d+);(\\d)", Qt::CaseInsensitive, QRegExp::RegExp);
-        int pos = rx.indexIn(m_attributes->value("TOTP Settings"));
-        if (pos > -1) {
-            m_data.totpStep = rx.cap(1).toUInt();
-            m_data.totpDigits = rx.cap(2).toUInt();
-        }
-    }
-
-    return QTotp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
+    return Totp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
 }
 
 quint8 Entry::totpStep() const
@@ -547,22 +605,25 @@ void Entry::truncateHistory()
     int histMaxSize = db->metadata()->historyMaxSize();
     if (histMaxSize > -1) {
         int size = 0;
-        QSet<QByteArray> foundAttachments = attachments()->values().toSet();
+        QSet<QByteArray> foundAttachments = attachments()->values();
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
+        const QRegularExpression delimiter(",|:|;");
         while (i.hasPrevious()) {
             Entry* historyItem = i.previous();
 
             // don't calculate size if it's already above the maximum
             if (size <= histMaxSize) {
                 size += historyItem->attributes()->attributesSize();
-
-                const QSet<QByteArray> newAttachments = historyItem->attachments()->values().toSet() - foundAttachments;
-                for (const QByteArray& attachment : newAttachments) {
-                    size += attachment.size();
+                size += historyItem->autoTypeAssociations()->associationsSize();
+                size += historyItem->attachments()->attachmentsSize();
+                size += historyItem->customData()->dataSize();
+                const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
+                for (const QString& tag : tags) {
+                    size += tag.toUtf8().size();
                 }
-                foundAttachments += newAttachments;
+                foundAttachments += historyItem->attachments()->values();
             }
 
             if (size > histMaxSize) {
@@ -584,11 +645,12 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_uuid = m_uuid;
     }
     entry->m_data = m_data;
+    entry->m_customData->copyDataFrom(m_customData);
     entry->m_attributes->copyDataFrom(m_attributes);
     entry->m_attachments->copyDataFrom(m_attachments);
 
     if (flags & CloneUserAsRef) {
-        // Build the username refrence
+        // Build the username reference
         QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
         entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
@@ -598,7 +660,7 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
-    entry->m_autoTypeAssociations->copyDataFrom(this->m_autoTypeAssociations);
+    entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
             Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
@@ -619,7 +681,7 @@ Entry* Entry::clone(CloneFlags flags) const
     }
 
     if (flags & CloneRenameTitle)
-        entry->setTitle(entry->title() + tr(" - Clone"));
+        entry->setTitle(entry->title() + tr(" - Clone", "Suffix added to cloned entries"));
 
     return entry;
 }
@@ -628,6 +690,7 @@ void Entry::copyDataFrom(const Entry* other)
 {
     setUpdateTimeinfo(false);
     m_data = other->m_data;
+    m_customData->copyDataFrom(other->m_customData);
     m_attributes->copyDataFrom(other->m_attributes);
     m_attachments->copyDataFrom(other->m_attachments);
     m_autoTypeAssociations->copyDataFrom(other->m_autoTypeAssociations);
@@ -644,6 +707,7 @@ void Entry::beginUpdate()
     m_tmpHistoryItem->m_data = m_data;
     m_tmpHistoryItem->m_attributes->copyDataFrom(m_attributes);
     m_tmpHistoryItem->m_attachments->copyDataFrom(m_attachments);
+    m_tmpHistoryItem->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
 
     m_modifiedSinceBegin = false;
 }
@@ -668,6 +732,180 @@ bool Entry::endUpdate()
 void Entry::updateModifiedSinceBegin()
 {
     m_modifiedSinceBegin = true;
+}
+
+/**
+ * Update TOTP data whenever entry attributes have changed.
+ */
+void Entry::updateTotp()
+{
+    m_data.totpDigits = Totp::defaultDigits;
+    m_data.totpStep = Totp::defaultStep;
+
+    if (!m_attributes->hasKey("TOTP Settings")) {
+        return;
+    }
+
+    // this regex must be kept in sync with the set of allowed short names Totp::shortNameToEncoder
+    QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
+    QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
+    if (!m.hasMatch()) {
+        return;
+    }
+
+    m_data.totpStep = static_cast<quint8>(m.captured(1).toUInt());
+    if (Totp::shortNameToEncoder.contains(m.captured(2))) {
+        m_data.totpDigits = Totp::shortNameToEncoder[m.captured(2)];
+    } else {
+        m_data.totpDigits = static_cast<quint8>(m.captured(2).toUInt());
+    }
+}
+
+QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
+{
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return str;
+    }
+
+    QString result = str;
+    QRegExp placeholderRegEx("(\\{[^\\}]+\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
+    placeholderRegEx.setMinimal(true);
+    int pos = 0;
+    while ((pos = placeholderRegEx.indexIn(str, pos)) != -1) {
+        const QString found = placeholderRegEx.cap(1);
+        result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
+        pos += placeholderRegEx.matchedLength();
+    }
+
+    if (result != str) {
+        result = resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
+    }
+
+    return result;
+}
+
+QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
+{
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
+    const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
+    switch (typeOfPlaceholder) {
+    case PlaceholderType::NotPlaceholder:
+    case PlaceholderType::Unknown:
+        return placeholder;
+    case PlaceholderType::Title:
+        if (placeholderType(title()) == PlaceholderType::Title) {
+            return title();
+        }
+        return resolvePlaceholderRecursive(title(), maxDepth - 1);
+    case PlaceholderType::UserName:
+        if (placeholderType(username()) == PlaceholderType::UserName) {
+            return username();
+        }
+        return resolvePlaceholderRecursive(username(), maxDepth - 1);
+    case PlaceholderType::Password:
+        if (placeholderType(password()) == PlaceholderType::Password) {
+            return password();
+        }
+        return resolvePlaceholderRecursive(password(), maxDepth - 1);
+    case PlaceholderType::Notes:
+        if (placeholderType(notes()) == PlaceholderType::Notes) {
+            return notes();
+        }
+        return resolvePlaceholderRecursive(notes(), maxDepth - 1);
+    case PlaceholderType::Url:
+        if (placeholderType(url()) == PlaceholderType::Url) {
+            return url();
+        }
+        return resolvePlaceholderRecursive(url(), maxDepth - 1);
+    case PlaceholderType::UrlWithoutScheme:
+    case PlaceholderType::UrlScheme:
+    case PlaceholderType::UrlHost:
+    case PlaceholderType::UrlPort:
+    case PlaceholderType::UrlPath:
+    case PlaceholderType::UrlQuery:
+    case PlaceholderType::UrlFragment:
+    case PlaceholderType::UrlUserInfo:
+    case PlaceholderType::UrlUserName:
+    case PlaceholderType::UrlPassword: {
+        const QString strUrl = resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
+        return resolveUrlPlaceholder(strUrl, typeOfPlaceholder);
+    }
+    case PlaceholderType::Totp:
+        // totp can't have placeholder inside
+        return totp();
+    case PlaceholderType::CustomAttribute: {
+        const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attr} => mid(3, len - 4)
+        return attributes()->hasKey(key) ? attributes()->value(key) : QString();
+    }
+    case PlaceholderType::Reference:
+        return resolveReferencePlaceholderRecursive(placeholder, maxDepth);
+    }
+
+    return placeholder;
+}
+
+QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
+{
+    if (maxDepth <= 0) {
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        return placeholder;
+    }
+
+    // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
+    // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
+
+    QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
+    if (!match.hasMatch()) {
+        return placeholder;
+    }
+
+    QString result;
+    const QString searchIn = match.captured(EntryAttributes::SearchInGroupName);
+    const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
+
+    const EntryReferenceType searchInType = Entry::referenceType(searchIn);
+
+    Q_ASSERT(m_group);
+    Q_ASSERT(m_group->database());
+    const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
+
+    if (refEntry) {
+        const QString wantedField = match.captured(EntryAttributes::WantedFieldGroupName);
+        result = refEntry->referenceFieldValue(Entry::referenceType(wantedField));
+
+        // Referencing fields of other entries only works with standard fields, not with custom user strings.
+        // If you want to reference a custom user string, you need to place a redirection in a standard field
+        // of the entry with the custom string, using {S:<Name>}, and reference the standard field.
+        result = refEntry->resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
+    }
+
+    return result;
+}
+
+QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
+{
+    switch (referenceType) {
+    case EntryReferenceType::Title:
+        return title();
+    case EntryReferenceType::UserName:
+        return username();
+    case EntryReferenceType::Password:
+        return password();
+    case EntryReferenceType::Url:
+        return url();
+    case EntryReferenceType::Notes:
+        return notes();
+    case EntryReferenceType::Uuid:
+        return uuid().toHex();
+    default:
+        break;
+    }
+    return QString();
 }
 
 Group* Entry::group()
@@ -727,7 +965,7 @@ const Database* Entry::database() const
     }
 }
 
-QString Entry::maskPasswordPlaceholders(const QString &str) const
+QString Entry::maskPasswordPlaceholders(const QString& str) const
 {
     QString result = str;
     result.replace(QRegExp("(\\{PASSWORD\\})", Qt::CaseInsensitive, QRegExp::RegExp2), "******");
@@ -736,67 +974,82 @@ QString Entry::maskPasswordPlaceholders(const QString &str) const
 
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
-    QString result = str;
-    QRegExp tmplRegEx("(\\{.*\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
-    tmplRegEx.setMinimal(true);
-    QStringList tmplList;
-    int pos = 0;
-
-    while ((pos = tmplRegEx.indexIn(str, pos)) != -1) {
-        QString found = tmplRegEx.cap(1);
-        result.replace(found,resolvePlaceholder(found));
-        pos += tmplRegEx.matchedLength();
-    }
-
-    return result;
+    return resolveMultiplePlaceholdersRecursive(str, ResolveMaximumDepth);
 }
 
-QString Entry::resolvePlaceholder(const QString& str) const
+QString Entry::resolvePlaceholder(const QString& placeholder) const
 {
-    QString result = str;
+    return resolvePlaceholderRecursive(placeholder, ResolveMaximumDepth);
+}
 
-    const QList<QString> keyList = attributes()->keys();
-    for (const QString& key : keyList) {
-        Qt::CaseSensitivity cs = Qt::CaseInsensitive;
-        QString k = key;
+QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
+{
+    if (str.isEmpty())
+        return QString();
 
-        if (!EntryAttributes::isDefaultAttribute(key)) {
-            cs = Qt::CaseSensitive;
-            k.prepend("{S:");
-        } else {
-            k.prepend("{");
-        }
-
-
-        k.append("}");
-        if (result.compare(k,cs)==0) {
-            result.replace(result,attributes()->value(key));
-            break;
-        }
+    const QUrl qurl(str);
+    switch (placeholderType) {
+    case PlaceholderType::UrlWithoutScheme:
+        return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
+    case PlaceholderType::UrlScheme:
+        return qurl.scheme();
+    case PlaceholderType::UrlHost:
+        return qurl.host();
+    case PlaceholderType::UrlPort:
+        return QString::number(qurl.port());
+    case PlaceholderType::UrlPath:
+        return qurl.path();
+    case PlaceholderType::UrlQuery:
+        return qurl.query();
+    case PlaceholderType::UrlFragment:
+        return qurl.fragment();
+    case PlaceholderType::UrlUserInfo:
+        return qurl.userInfo();
+    case PlaceholderType::UrlUserName:
+        return qurl.userName();
+    case PlaceholderType::UrlPassword:
+        return qurl.password();
+    default: {
+        Q_ASSERT_X(false, "Entry::resolveUrlPlaceholder", "Bad url placeholder type");
+        break;
+    }
     }
 
-    // resolving references in format: {REF:<WantedField>@I:<uuid of referenced entry>}
-    // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing,
-    // but supporting lookups of standard fields and references by UUID only
+    return QString();
+}
 
-    QRegExp* tmpRegExp = m_attributes->referenceRegExp();
-    if (tmpRegExp->indexIn(result) != -1) {
-        // cap(0) contains the whole reference
-        // cap(1) contains which field is wanted
-        // cap(2) contains the uuid of the referenced entry
-        Entry* tmpRefEntry = m_group->database()->resolveEntry(Uuid(QByteArray::fromHex(tmpRegExp->cap(2).toLatin1())));
-        if (tmpRefEntry) {
-            // entry found, get the relevant field
-            QString tmpRefField = tmpRegExp->cap(1).toLower();
-            if (tmpRefField == "t") result.replace(tmpRegExp->cap(0), tmpRefEntry->title(), Qt::CaseInsensitive);
-            else if (tmpRefField == "u") result.replace(tmpRegExp->cap(0), tmpRefEntry->username(), Qt::CaseInsensitive);
-            else if (tmpRefField == "p") result.replace(tmpRegExp->cap(0), tmpRefEntry->password(), Qt::CaseInsensitive);
-            else if (tmpRefField == "a") result.replace(tmpRegExp->cap(0), tmpRefEntry->url(), Qt::CaseInsensitive);
-            else if (tmpRefField == "n") result.replace(tmpRegExp->cap(0), tmpRefEntry->notes(), Qt::CaseInsensitive);
-        }
+Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
+{
+    if (!placeholder.startsWith(QLatin1Char('{')) || !placeholder.endsWith(QLatin1Char('}'))) {
+        return PlaceholderType::NotPlaceholder;
+    } else if (placeholder.startsWith(QLatin1Literal("{S:"))) {
+        return PlaceholderType::CustomAttribute;
+    } else if (placeholder.startsWith(QLatin1Literal("{REF:"))) {
+        return PlaceholderType::Reference;
     }
 
-    return result;
+    static const QMap<QString, PlaceholderType> placeholders {
+        { QStringLiteral("{TITLE}"), PlaceholderType::Title },
+        { QStringLiteral("{USERNAME}"), PlaceholderType::UserName },
+        { QStringLiteral("{PASSWORD}"), PlaceholderType::Password },
+        { QStringLiteral("{NOTES}"), PlaceholderType::Notes },
+        { QStringLiteral("{TOTP}"), PlaceholderType::Totp },
+        { QStringLiteral("{URL}"), PlaceholderType::Url },
+        { QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme },
+        { QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme },
+        { QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme },
+        { QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme },
+        { QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost },
+        { QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort },
+        { QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath },
+        { QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery },
+        { QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment },
+        { QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo },
+        { QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName },
+        { QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword }
+    };
+
+    return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
 
 QString Entry::resolveUrl(const QString& url) const

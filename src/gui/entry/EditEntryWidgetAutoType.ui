@@ -203,16 +203,9 @@
          </spacer>
         </item>
         <item>
-         <widget class="QRadioButton" name="defaultWindowSequenceButton">
+         <widget class="QCheckBox" name="customWindowSequenceButton">
           <property name="text">
-           <string>Use default se&amp;quence</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="customWindowSequenceButton">
-          <property name="text">
-           <string>Set custo&amp;m sequence:</string>
+           <string>Use a specific sequence for this association:</string>
           </property>
          </widget>
         </item>
@@ -277,7 +270,6 @@
   <tabstop>sequenceEdit</tabstop>
   <tabstop>assocView</tabstop>
   <tabstop>windowTitleCombo</tabstop>
-  <tabstop>defaultWindowSequenceButton</tabstop>
   <tabstop>customWindowSequenceButton</tabstop>
   <tabstop>windowSequenceEdit</tabstop>
   <tabstop>assocAddButton</tabstop>

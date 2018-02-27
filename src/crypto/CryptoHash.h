@@ -27,16 +27,19 @@ class CryptoHash
 public:
     enum Algorithm
     {
-        Sha256
+        Sha256,
+        Sha512
     };
 
-    explicit CryptoHash(CryptoHash::Algorithm algo);
+    explicit CryptoHash(Algorithm algo, bool hmac = false);
     ~CryptoHash();
     void addData(const QByteArray& data);
     void reset();
     QByteArray result() const;
+    void setKey(const QByteArray& data);
 
-    static QByteArray hash(const QByteArray& data, CryptoHash::Algorithm algo);
+    static QByteArray hash(const QByteArray& data, Algorithm algo);
+    static QByteArray hmac(const QByteArray& data, const QByteArray& key, Algorithm algo);
 
 private:
     CryptoHashPrivate* const d_ptr;

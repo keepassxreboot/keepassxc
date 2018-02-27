@@ -23,7 +23,7 @@
 #include "crypto/SymmetricCipher.h"
 #include "crypto/SymmetricCipherBackend.h"
 
-class SymmetricCipherGcrypt : public SymmetricCipherBackend
+class SymmetricCipherGcrypt: public SymmetricCipherBackend
 {
 public:
     SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
@@ -39,6 +39,7 @@ public:
     Q_REQUIRED_RESULT bool processInPlace(QByteArray& data, quint64 rounds);
 
     bool reset();
+    int keySize() const;
     int blockSize() const;
 
     QString errorString() const;
@@ -54,7 +55,6 @@ private:
     const SymmetricCipher::Direction m_direction;
     QByteArray m_key;
     QByteArray m_iv;
-    int m_blockSize;
     QString m_errorString;
 };
 

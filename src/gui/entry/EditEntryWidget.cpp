@@ -19,6 +19,7 @@
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
+#include "ui_EditEntryWidgetSSHAgent.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 
@@ -28,7 +29,11 @@
 #include <QMenu>
 #include <QSortFilterProxyModel>
 #include <QTemporaryFile>
+#include <QMimeData>
+#include <QEvent>
+#include <QColorDialog>
 
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -36,10 +41,17 @@
 #include "core/Metadata.h"
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/KeeAgentSettings.h"
+#include "sshagent/OpenSSHKey.h"
+#include "sshagent/SSHAgent.h"
+#endif
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+#include "gui/Clipboard.h"
+#include "gui/Font.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
 #include "gui/entry/EntryAttachmentsModel.h"
 #include "gui/entry/EntryAttributesModel.h"
@@ -51,15 +63,15 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_mainUi(new Ui::EditEntryWidgetMain())
     , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
+    , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_mainWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
+    , m_sshAgentWidget(new QWidget())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
-    , m_entryAttachments(new EntryAttachments(this))
-    , m_attachmentsModel(new EntryAttachmentsModel(m_advancedWidget))
     , m_entryAttributes(new EntryAttributes(this))
     , m_attributesModel(new EntryAttributesModel(m_advancedWidget))
     , m_historyModel(new EntryHistoryModel(this))
@@ -73,12 +85,20 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupAdvanced();
     setupIcon();
     setupAutoType();
+#ifdef WITH_XC_SSHAGENT
+    if (config()->get("SSHAgent", false).toBool()) {
+        setupSSHAgent();
+        m_sshAgentEnabled = true;
+    } else {
+        m_sshAgentEnabled = false;
+    }
+#endif
     setupProperties();
     setupHistory();
 
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
-    connect(this, SIGNAL(apply()), SLOT(saveEntry()));
+    connect(this, SIGNAL(apply()), SLOT(commitEntry()));
     connect(m_iconsWidget, SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)), SLOT(showMessage(QString, MessageWidget::MessageType)));
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
     
@@ -99,6 +119,7 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
 
@@ -107,7 +128,7 @@ void EditEntryWidget::setupMain()
 
     QAction *action = new QAction(this);
     action->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(action, SIGNAL(triggered()), this, SLOT(saveEntry()));
+    connect(action, SIGNAL(triggered()), this, SLOT(commitEntry()));
     this->addAction(action);
 
     m_mainUi->passwordGenerator->hide();
@@ -119,15 +140,12 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->setupUi(m_advancedWidget);
     addPage(tr("Advanced"), FilePath::instance()->icon("categories", "preferences-other"), m_advancedWidget);
 
-    m_attachmentsModel->setEntryAttachments(m_entryAttachments);
-    m_advancedUi->attachmentsView->setModel(m_attachmentsModel);
-    connect(m_advancedUi->attachmentsView->selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)),
-            SLOT(updateAttachmentButtonsEnabled(QModelIndex)));
-    connect(m_advancedUi->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
-    connect(m_advancedUi->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveCurrentAttachment()));
-    connect(m_advancedUi->openAttachmentButton, SIGNAL(clicked()), SLOT(openCurrentAttachment()));
-    connect(m_advancedUi->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachment()));
-    connect(m_advancedUi->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeCurrentAttachment()));
+    m_advancedUi->attachmentsWidget->setReadOnly(false);
+    m_advancedUi->attachmentsWidget->setButtonsVisible(true);
+
+    connect(m_advancedUi->attachmentsWidget, &EntryAttachmentsWidget::errorOccurred, this, [this](const QString &error) {
+        showMessage(error, MessageWidget::Error);
+    });
 
     m_attributesModel->setEntryAttributes(m_entryAttributes);
     m_advancedUi->attributesView->setModel(m_attributesModel);
@@ -139,6 +157,8 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
+    connect(m_advancedUi->fgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
+    connect(m_advancedUi->bgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
 }
 
 void EditEntryWidget::setupIcon()
@@ -153,8 +173,6 @@ void EditEntryWidget::setupAutoType()
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
-    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->defaultWindowSequenceButton);
-    m_autoTypeWindowSequenceGroup->addButton(m_autoTypeUi->customWindowSequenceButton);
     m_autoTypeAssocModel->setAutoTypeAssociations(m_autoTypeAssoc);
     m_autoTypeUi->assocView->setModel(m_autoTypeAssocModel);
     m_autoTypeUi->assocView->setColumnHidden(1, true);
@@ -173,7 +191,7 @@ void EditEntryWidget::setupAutoType()
     connect(m_autoTypeAssocModel, SIGNAL(modelReset()), SLOT(clearCurrentAssoc()));
     connect(m_autoTypeUi->windowTitleCombo, SIGNAL(editTextChanged(QString)),
             SLOT(applyCurrentAssoc()));
-    connect(m_autoTypeUi->defaultWindowSequenceButton, SIGNAL(toggled(bool)),
+    connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
             SLOT(applyCurrentAssoc()));
     connect(m_autoTypeUi->windowSequenceEdit, SIGNAL(textChanged(QString)),
             SLOT(applyCurrentAssoc()));
@@ -243,6 +261,257 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
     }
 }
 
+#ifdef WITH_XC_SSHAGENT
+void EditEntryWidget::setupSSHAgent()
+{
+    m_sshAgentUi->setupUi(m_sshAgentWidget);
+
+    QFont fixedFont = Font::fixedFont();
+    m_sshAgentUi->fingerprintTextLabel->setFont(fixedFont);
+    m_sshAgentUi->commentTextLabel->setFont(fixedFont);
+    m_sshAgentUi->publicKeyEdit->setFont(fixedFont);
+
+    connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateSSHAgentAttachment()));
+    connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(clicked(bool)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(QString)), SLOT(updateSSHAgentKeyInfo()));
+    connect(m_sshAgentUi->browseButton, SIGNAL(clicked()), SLOT(browsePrivateKey()));
+    connect(m_sshAgentUi->addToAgentButton, SIGNAL(clicked()), SLOT(addKeyToAgent()));
+    connect(m_sshAgentUi->removeFromAgentButton, SIGNAL(clicked()), SLOT(removeKeyFromAgent()));
+    connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
+    connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
+
+    addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
+}
+
+void EditEntryWidget::updateSSHAgent()
+{
+    KeeAgentSettings settings;
+    settings.fromXml(m_advancedUi->attachmentsWidget->getAttachment("KeeAgent.settings"));
+
+    m_sshAgentUi->addKeyToAgentCheckBox->setChecked(settings.addAtDatabaseOpen());
+    m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(settings.removeAtDatabaseClose());
+    m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(settings.useConfirmConstraintWhenAdding());
+    m_sshAgentUi->lifetimeCheckBox->setChecked(settings.useLifetimeConstraintWhenAdding());
+    m_sshAgentUi->lifetimeSpinBox->setValue(settings.lifetimeConstraintDuration());
+    m_sshAgentUi->attachmentComboBox->clear();
+    m_sshAgentUi->addToAgentButton->setEnabled(false);
+    m_sshAgentUi->removeFromAgentButton->setEnabled(false);
+    m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+
+    m_sshAgentUi->attachmentComboBox->addItem("");
+
+    auto attachments = m_advancedUi->attachmentsWidget->entryAttachments();
+    for (const QString& fileName : attachments->keys()) {
+        if (fileName == "KeeAgent.settings") {
+            continue;
+        }
+
+        m_sshAgentUi->attachmentComboBox->addItem(fileName);
+    }
+
+    m_sshAgentUi->attachmentComboBox->setCurrentText(settings.attachmentName());
+    m_sshAgentUi->externalFileEdit->setText(settings.fileName());
+
+    if (settings.selectedType() == "attachment") {
+        m_sshAgentUi->attachmentRadioButton->setChecked(true);
+    } else {
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
+    }
+
+    m_sshAgentSettings = settings;
+
+    updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentAttachment()
+{
+    m_sshAgentUi->attachmentRadioButton->setChecked(true);
+    updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentKeyInfo()
+{
+    m_sshAgentUi->addToAgentButton->setEnabled(false);
+    m_sshAgentUi->removeFromAgentButton->setEnabled(false);
+    m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+    m_sshAgentUi->fingerprintTextLabel->setText(tr("n/a"));
+    m_sshAgentUi->commentTextLabel->setText(tr("n/a"));
+    m_sshAgentUi->decryptButton->setEnabled(false);
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText("");
+
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
+
+    if (key.encrypted()) {
+        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
+        m_sshAgentUi->decryptButton->setEnabled(true);
+    } else {
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
+    }
+
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+
+    // enable agent buttons only if we have an agent running
+    if (SSHAgent::instance()->isAgentRunning()) {
+        m_sshAgentUi->addToAgentButton->setEnabled(true);
+        m_sshAgentUi->removeFromAgentButton->setEnabled(true);
+    }
+
+    m_sshAgentUi->copyToClipboardButton->setEnabled(true);
+}
+
+void EditEntryWidget::saveSSHAgentConfig()
+{
+    KeeAgentSettings settings;
+    QString privateKeyPath = m_sshAgentUi->attachmentComboBox->currentText();
+
+    settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
+    settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
+    settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
+    settings.setUseLifetimeConstraintWhenAdding(m_sshAgentUi->lifetimeCheckBox->isChecked());
+    settings.setLifetimeConstraintDuration(m_sshAgentUi->lifetimeSpinBox->value());
+
+    if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
+        settings.setSelectedType("attachment");
+    } else {
+        settings.setSelectedType("file");
+    }
+    settings.setAttachmentName(m_sshAgentUi->attachmentComboBox->currentText());
+    settings.setFileName(m_sshAgentUi->externalFileEdit->text());
+
+    // we don't use this as we don't run an agent but for compatibility we set it if necessary
+    settings.setAllowUseOfSshKey(settings.addAtDatabaseOpen() || settings.removeAtDatabaseClose());
+
+    // we don't use this either but we don't want it to dirty flag the config
+    settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
+
+    if (settings.isDefault()) {
+        m_advancedUi->attachmentsWidget->removeAttachment("KeeAgent.settings");
+    } else if (settings != m_sshAgentSettings) {
+        m_advancedUi->attachmentsWidget->setAttachment("KeeAgent.settings", settings.toXml());
+    }
+
+    m_sshAgentSettings = settings;
+}
+
+void EditEntryWidget::browsePrivateKey()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select private key"), "");
+    if (!fileName.isEmpty()) {
+        m_sshAgentUi->externalFileEdit->setText(fileName);
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
+        updateSSHAgentKeyInfo();
+    }
+}
+
+bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
+{
+    QByteArray privateKeyData;
+
+    if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
+        privateKeyData = m_advancedUi->attachmentsWidget->getAttachment(m_sshAgentUi->attachmentComboBox->currentText());
+    } else {
+        QFile localFile(m_sshAgentUi->externalFileEdit->text());
+
+        if (localFile.fileName().isEmpty()) {
+            return false;
+        }
+
+        if (localFile.size() > 1024 * 1024) {
+            showMessage(tr("File too large to be a private key"), MessageWidget::Error);
+            return false;
+        }
+
+        if (!localFile.open(QIODevice::ReadOnly)) {
+            showMessage(tr("Failed to open private key"), MessageWidget::Error);
+            return false;
+        }
+
+        privateKeyData = localFile.readAll();
+    }
+
+    if (privateKeyData.length() == 0) {
+        return false;
+    }
+
+    if (!key.parse(privateKeyData)) {
+        showMessage(key.errorString(), MessageWidget::Error);
+        return false;
+    }
+
+    if (key.comment().isEmpty()) {
+        key.setComment(m_entry->username());
+    }
+
+    return true;
+}
+
+void EditEntryWidget::addKeyToAgent()
+{
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    if (!key.openPrivateKey(m_entry->password())) {
+        showMessage(key.errorString(), MessageWidget::Error);
+    } else {
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    }
+
+    quint32 lifetime = 0;
+    bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
+
+    if (m_sshAgentUi->lifetimeCheckBox->isChecked()) {
+        lifetime = m_sshAgentUi->lifetimeSpinBox->value();
+    }
+
+    SSHAgent::instance()->addIdentity(key, lifetime, confirm);
+
+    if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
+        SSHAgent::instance()->removeIdentityAtLock(key, m_entry->uuid());
+    }
+}
+
+void EditEntryWidget::removeKeyFromAgent()
+{
+    OpenSSHKey key;
+
+    if (getOpenSSHKey(key)) {
+        SSHAgent::instance()->removeIdentity(key);
+    }
+}
+
+void EditEntryWidget::decryptPrivateKey()
+{
+    OpenSSHKey key;
+
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    if (!key.openPrivateKey(m_entry->password())) {
+        showMessage(key.errorString(), MessageWidget::Error);
+    } else {
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    }
+}
+
+void EditEntryWidget::copyPublicKey()
+{
+    clipboard()->setText(m_sshAgentUi->publicKeyEdit->document()->toPlainText());
+}
+#endif
+
 void EditEntryWidget::useExpiryPreset(QAction* action)
 {
     m_mainUi->expireCheck->setChecked(true);
@@ -252,13 +521,10 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
     m_mainUi->expireDatePicker->setDateTime(expiryDateTime);
 }
 
-void EditEntryWidget::updateAttachmentButtonsEnabled(const QModelIndex& current)
+void EditEntryWidget::toggleHideNotes(bool visible)
 {
-    bool enable = current.isValid();
-
-    m_advancedUi->saveAttachmentButton->setEnabled(enable);
-    m_advancedUi->openAttachmentButton->setEnabled(enable);
-    m_advancedUi->removeAttachmentButton->setEnabled(enable && !m_history);
+    m_mainUi->notesEdit->setVisible(visible);
+    m_mainUi->notesHint->setVisible(!visible);
 }
 
 QString EditEntryWidget::entryTitle() const
@@ -309,12 +575,15 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
+    m_mainUi->notesEnabled->setChecked(!config()->get("security/hidenotes").toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
+    m_mainUi->notesEdit->setVisible(!config()->get("security/hidenotes").toBool());
+    m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset();
-    m_advancedUi->addAttachmentButton->setEnabled(!m_history);
-    updateAttachmentButtonsEnabled(m_advancedUi->attachmentsView->currentIndex());
+
+    m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
@@ -327,6 +596,8 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
+    setupColorButton(true, entry->foregroundColor());
+    setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
     m_autoTypeUi->sequenceEdit->setReadOnly(m_history);
     m_autoTypeUi->windowTitleCombo->lineEdit()->setReadOnly(m_history);
@@ -345,7 +616,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
-    m_entryAttachments->copyDataFrom(entry->attachments());
+    m_advancedUi->attachmentsWidget->setEntryAttachments(entry->attachments());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
 
     if (m_attributesModel->rowCount() != 0) {
@@ -376,9 +647,10 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     m_autoTypeUi->sequenceEdit->setText(entry->effectiveAutoTypeSequence());
     m_autoTypeUi->windowTitleCombo->lineEdit()->clear();
-    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->customWindowSequenceButton->setChecked(false);
     m_autoTypeUi->windowSequenceEdit->setText("");
     m_autoTypeAssoc->copyDataFrom(entry->autoTypeAssociations());
+    m_autoTypeAssocModel->setEntry(entry);
     if (m_autoTypeAssoc->size() != 0) {
         m_autoTypeUi->assocView->setCurrentIndex(m_autoTypeAssocModel->index(0, 0));
     }
@@ -387,7 +659,14 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     }
     updateAutoTypeEnabled();
 
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        updateSSHAgent();
+    }
+#endif
+
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
+    m_editWidgetProperties->setCustomData(entry->customData());
 
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
@@ -405,19 +684,38 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->titleEdit->setFocus();
 }
 
-void EditEntryWidget::saveEntry()
+/**
+ * Commit the form values to in-memory database representation
+ *
+ * @return true is commit successful, otherwise false
+ */
+bool EditEntryWidget::commitEntry()
 {
     if (m_history) {
         clear();
         hideMessage();
         emit editFinished(false);
-        return;
+        return true;
     }
 
     if (!passwordsEqual()) {
         showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+        return false;
     }
+
+    // Ask the user to apply the generator password, if open
+    if (m_mainUi->togglePasswordGeneratorButton->isChecked() &&
+            m_mainUi->passwordGenerator->getGeneratedPassword() != m_mainUi->passwordEdit->text()) {
+        auto answer = MessageBox::question(this, tr("Apply generated password?"),
+                             tr("Do you want to apply the generated password to this entry?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+        if (answer == QMessageBox::Yes) {
+            m_mainUi->passwordGenerator->applyPassword();
+        }
+    }
+
+    // Hide the password generator
+    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
@@ -434,6 +732,12 @@ void EditEntryWidget::saveEntry()
 
     m_autoTypeAssoc->removeEmpty();
 
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        saveSSHAgentConfig();
+    }
+#endif
+
     if (!m_create) {
         m_entry->beginUpdate();
     }
@@ -444,52 +748,72 @@ void EditEntryWidget::saveEntry()
     if (!m_create) {
         m_entry->endUpdate();
     }
+
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        updateSSHAgent();
+    }
+#endif
+
+    m_historyModel->setEntries(m_entry->historyItems());
+
+    showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
+    return true;
 }
 
 void EditEntryWidget::acceptEntry()
 {
-    // Check if passwords are mismatched first to prevent saving
-    if (!passwordsEqual()) {
-        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return;
+    if (commitEntry()) {
+        clear();
+        hideMessage();
+        emit editFinished(true);
     }
-
-    saveEntry();
-    clear();
-    emit editFinished(true);
 }
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
+    QRegularExpression newLineRegex("(?:\r?\n|\r)");
+
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
-    entry->attachments()->copyDataFrom(m_entryAttachments);
-    
-    entry->setTitle(m_mainUi->titleEdit->text());
-    entry->setUsername(m_mainUi->usernameEdit->text());
-    entry->setUrl(m_mainUi->urlEdit->text());
+    entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
+    entry->customData()->copyDataFrom(m_editWidgetProperties->customData());
+    entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
+    entry->setUsername(m_mainUi->usernameEdit->text().replace(newLineRegex, " "));
+    entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
+    if (m_advancedUi->fgColorCheckBox->isChecked() &&
+            m_advancedUi->fgColorButton->property("color").isValid()) {
+        entry->setForegroundColor(QColor(m_advancedUi->fgColorButton->property("color").toString()));
+    } else {
+        entry->setForegroundColor(QColor());
+    }
+
+    if (m_advancedUi->bgColorCheckBox->isChecked() &&
+            m_advancedUi->bgColorButton->property("color").isValid()) {
+        entry->setBackgroundColor(QColor(m_advancedUi->bgColorButton->property("color").toString()));
+    } else {
+        entry->setBackgroundColor(QColor());
+    }
+
     IconStruct iconStruct = m_iconsWidget->state();
 
     if (iconStruct.number < 0) {
         entry->setIcon(Entry::DefaultIconNumber);
-    }
-    else if (iconStruct.uuid.isNull()) {
+    } else if (iconStruct.uuid.isNull()) {
         entry->setIcon(iconStruct.number);
-    }
-    else {
+    } else {
         entry->setIcon(iconStruct.uuid);
     }
 
     entry->setAutoTypeEnabled(m_autoTypeUi->enableButton->isChecked());
     if (m_autoTypeUi->inheritSequenceButton->isChecked()) {
         entry->setDefaultAutoTypeSequence(QString());
-    }
-    else {
+    } else if (AutoType::verifyAutoTypeSyntax(m_autoTypeUi->sequenceEdit->text())) {
         entry->setDefaultAutoTypeSequence(m_autoTypeUi->sequenceEdit->text());
     }
 
@@ -520,7 +844,7 @@ void EditEntryWidget::clear()
     m_entry = nullptr;
     m_database = nullptr;
     m_entryAttributes->clear();
-    m_entryAttachments->clear();
+    m_advancedUi->attachmentsWidget->clearAttachments();
     m_autoTypeAssoc->clear();
     m_historyModel->clear();
     m_iconsWidget->reset();
@@ -633,7 +957,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
-            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
+            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED]") + " " + tr("Press reveal to view or edit"));
             m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->revealAttributeButton->setEnabled(true);
             m_advancedUi->protectAttributeButton->setChecked(true);
@@ -693,123 +1017,6 @@ void EditEntryWidget::revealCurrentAttribute()
     }
 }
 
-void EditEntryWidget::insertAttachment()
-{
-    Q_ASSERT(!m_history);
-
-    QString defaultDir = config()->get("LastAttachmentDir").toString();
-    if (defaultDir.isEmpty() || !QDir(defaultDir).exists()) {
-        defaultDir = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).value(0);
-    }
-    QString filename = fileDialog()->getOpenFileName(this, tr("Select file"), defaultDir);
-    if (filename.isEmpty() || !QFile::exists(filename)) {
-        return;
-    }
-
-    QFile file(filename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        showMessage(tr("Unable to open file").append(":\n").append(file.errorString()), MessageWidget::Error);
-        return;
-    }
-
-    QByteArray data;
-    if (!Tools::readAllFromDevice(&file, data)) {
-        showMessage(tr("Unable to open file").append(":\n").append(file.errorString()), MessageWidget::Error);
-        return;
-    }
-
-    m_entryAttachments->set(QFileInfo(filename).fileName(), data);
-}
-
-void EditEntryWidget::saveCurrentAttachment()
-{
-    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
-    if (!index.isValid()) {
-        return;
-    }
-
-    QString filename = m_attachmentsModel->keyByIndex(index);
-    QString defaultDirName = config()->get("LastAttachmentDir").toString();
-    if (defaultDirName.isEmpty() || !QDir(defaultDirName).exists()) {
-        defaultDirName = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    }
-    QDir dir(defaultDirName);
-    QString savePath = fileDialog()->getSaveFileName(this, tr("Save attachment"),
-                                                       dir.filePath(filename));
-    if (!savePath.isEmpty()) {
-        QByteArray attachmentData = m_entryAttachments->value(filename);
-
-        QFile file(savePath);
-        if (!file.open(QIODevice::WriteOnly)) {
-            showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
-            return;
-        }
-        if (file.write(attachmentData) != attachmentData.size()) {
-            showMessage(tr("Unable to save the attachment:\n").append(file.errorString()), MessageWidget::Error);
-            return;
-        }
-    }
-}
-
-void EditEntryWidget::openAttachment(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        Q_ASSERT(false);
-        return;
-    }
-
-    QString filename = m_attachmentsModel->keyByIndex(index);
-    QByteArray attachmentData = m_entryAttachments->value(filename);
-
-    // tmp file will be removed once the database (or the application) has been closed
-    QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
-    QTemporaryFile* file = new QTemporaryFile(tmpFileTemplate, this);
-
-    if (!file->open()) {
-        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
-        return;
-    }
-
-    if (file->write(attachmentData) != attachmentData.size()) {
-        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
-        return;
-    }
-
-    if (!file->flush()) {
-        showMessage(tr("Unable to save the attachment:\n").append(file->errorString()), MessageWidget::Error);
-        return;
-    }
-
-    file->close();
-
-    QDesktopServices::openUrl(QUrl::fromLocalFile(file->fileName()));
-}
-
-void EditEntryWidget::openCurrentAttachment()
-{
-    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
-
-    openAttachment(index);
-}
-
-void EditEntryWidget::removeCurrentAttachment()
-{
-    Q_ASSERT(!m_history);
-
-    QModelIndex index = m_advancedUi->attachmentsView->currentIndex();
-    if (!index.isValid()) {
-        return;
-    }
-
-    QMessageBox::StandardButton ans = MessageBox::question(this, tr("Confirm Remove"),
-                                                           tr("Are you sure you want to remove this attachment?"),
-                                                           QMessageBox::Yes | QMessageBox::No);
-    if (ans == QMessageBox::Yes) {
-        QString key = m_attachmentsModel->keyByIndex(index);
-        m_entryAttachments->remove(key);
-    }
-}
-
 void EditEntryWidget::updateAutoTypeEnabled()
 {
     bool autoTypeEnabled = m_autoTypeUi->enableButton->isChecked();
@@ -826,7 +1033,6 @@ void EditEntryWidget::updateAutoTypeEnabled()
 
     m_autoTypeUi->windowTitleLabel->setEnabled(autoTypeEnabled && validIndex);
     m_autoTypeUi->windowTitleCombo->setEnabled(autoTypeEnabled && validIndex);
-    m_autoTypeUi->defaultWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->customWindowSequenceButton->setEnabled(!m_history && autoTypeEnabled && validIndex);
     m_autoTypeUi->windowSequenceEdit->setEnabled(autoTypeEnabled && validIndex
                                                  && m_autoTypeUi->customWindowSequenceButton->isChecked());
@@ -857,16 +1063,15 @@ void EditEntryWidget::loadCurrentAssoc(const QModelIndex& current)
         AutoTypeAssociations::Association assoc = m_autoTypeAssoc->get(current.row());
         m_autoTypeUi->windowTitleCombo->setEditText(assoc.window);
         if (assoc.sequence.isEmpty()) {
-            m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
-        }
-        else {
+            m_autoTypeUi->customWindowSequenceButton->setChecked(false);
+            m_autoTypeUi->windowSequenceEdit->setText(m_entry->effectiveAutoTypeSequence());
+        } else {
             m_autoTypeUi->customWindowSequenceButton->setChecked(true);
+            m_autoTypeUi->windowSequenceEdit->setText(assoc.sequence);
         }
-        m_autoTypeUi->windowSequenceEdit->setText(assoc.sequence);
 
         updateAutoTypeEnabled();
-    }
-    else {
+    } else {
         clearCurrentAssoc();
     }
 }
@@ -875,7 +1080,7 @@ void EditEntryWidget::clearCurrentAssoc()
 {
     m_autoTypeUi->windowTitleCombo->setEditText("");
 
-    m_autoTypeUi->defaultWindowSequenceButton->setChecked(true);
+    m_autoTypeUi->customWindowSequenceButton->setChecked(false);
     m_autoTypeUi->windowSequenceEdit->setText("");
 
     updateAutoTypeEnabled();
@@ -953,4 +1158,39 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("1 year"))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
     return expirePresetsMenu;
+}
+
+void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
+{
+    QWidget* button = m_advancedUi->fgColorButton;
+    QCheckBox* checkBox = m_advancedUi->fgColorCheckBox;
+    if (!foreground) {
+        button = m_advancedUi->bgColorButton;
+        checkBox = m_advancedUi->bgColorCheckBox;
+    }
+
+    if (color.isValid()) {
+        button->setStyleSheet(QString("background-color:%1").arg(color.name()));
+        button->setProperty("color", color.name());
+        checkBox->setChecked(true);
+    } else {
+        button->setStyleSheet("");
+        button->setProperty("color", QVariant());
+        checkBox->setChecked(false);
+    }
+}
+
+void EditEntryWidget::pickColor()
+{
+    bool isForeground = (sender() == m_advancedUi->fgColorButton);
+    QColor oldColor = QColor(m_advancedUi->fgColorButton->property("color").toString());
+    if (!isForeground) {
+        oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
+    }
+
+    QColorDialog colorDialog(this);
+    QColor newColor = colorDialog.getColor(oldColor);
+    if (newColor.isValid()) {
+        setupColorButton(isForeground, newColor);
+    }
 }

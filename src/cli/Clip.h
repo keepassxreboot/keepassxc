@@ -18,10 +18,15 @@
 #ifndef KEEPASSXC_CLIP_H
 #define KEEPASSXC_CLIP_H
 
-class Clip
+#include "Command.h"
+
+class Clip : public Command
 {
 public:
-    static int execute(int argc, char** argv);
+    Clip();
+    ~Clip();
+    int execute(const QStringList& arguments);
+    int clipEntry(Database* database, QString entryPath, QString timeout);
 };
 
 #endif // KEEPASSXC_CLIP_H
