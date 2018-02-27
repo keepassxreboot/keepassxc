@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # 
 # KeePassXC AppImage Recipe
-# Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
+# Copyright (C) 2017-2018 KeePassXC team <https://keepassxc.org/>
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -68,17 +68,17 @@ get_apprun
 copy_deps
 
 # protect our libgpg-error from being deleted
-mv ./opt/gpg-error-127/lib/x86_64-linux-gnu/libgpg-error.so.0 ./protected.so
+mv ./opt/keepassxc-libs/lib/x86_64-linux-gnu/libgpg-error.so.0 ./protected.so
 delete_blacklisted
-mv ./protected.so ./opt/gpg-error-127/lib/x86_64-linux-gnu/libgpg-error.so.0
+mv ./protected.so ./opt/keepassxc-libs/lib/x86_64-linux-gnu/libgpg-error.so.0
 
 get_desktop
 get_icon
 cat << EOF > ./usr/bin/keepassxc_env
 #!/usr/bin/env bash
-export LD_LIBRARY_PATH="../opt/libgcrypt20-18/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
-export LD_LIBRARY_PATH="../opt/gpg-error-127/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
 export LD_LIBRARY_PATH="..$(dirname ${QT_PLUGIN_PATH})/lib:\${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="../opt/keepassxc-libs/lib/x86_64-linux-gnu:\${LD_LIBRARY_PATH}"
+
 export QT_PLUGIN_PATH="..${QT_PLUGIN_PATH}:\${KPXC_QT_PLUGIN_PATH}"
 
 # unset XDG_DATA_DIRS to make tray icon work in Ubuntu Unity
