@@ -380,7 +380,8 @@ if(MINGW)
   " COMPONENT Runtime)
 
   include(DeployQt4)
-
+  install_qt4_executable(${PROGNAME}.exe)
+  
   # install Qt5 plugins
   set(PLUGINS_DIR ${Qt5_PREFIX}/share/qt5/plugins)
   install(FILES ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
