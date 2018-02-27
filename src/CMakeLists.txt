@@ -384,7 +384,11 @@ if(MINGW)
   
   # install Qt5 plugins
   set(PLUGINS_DIR ${Qt5_PREFIX}/share/qt5/plugins)
-  install(FILES ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
+  install(FILES
+          ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/platforms/qdirect2d$<$<CONFIG:Debug>:d>.dll
+        DESTINATION "platforms")
+  install(FILES ${PLUGINS_DIR}/styles/qwindowsvistastyle$<$<CONFIG:Debug>:d>.dll DESTINATION "styles")
   install(FILES ${PLUGINS_DIR}/platforminputcontexts/qtvirtualkeyboardplugin$<$<CONFIG:Debug>:d>.dll DESTINATION "platforminputcontexts")
   install(FILES ${PLUGINS_DIR}/iconengines/qsvgicon$<$<CONFIG:Debug>:d>.dll DESTINATION "iconengines")
   install(FILES
@@ -395,4 +399,7 @@ if(MINGW)
           ${PLUGINS_DIR}/imageformats/qsvg$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
         DESTINATION "imageformats")
+
+  # install CA cert chains
+  install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
 endif()
