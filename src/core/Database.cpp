@@ -537,11 +537,19 @@ QString Database::saveToFile(QString filePath, bool atomic, bool backup)
 
             // Delete the original db and move the temp file in place
             QFile::remove(filePath);
+#ifdef Q_OS_LINUX
+            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
+            if (tempFile.copy(filePath)) {
+                // successfully saved database file
+                return {};
+            }
+#else
             if (tempFile.rename(filePath)) {
                 // successfully saved database file
                 tempFile.setAutoRemove(false);
                 return {};
             }
+#endif
         }
         error = tempFile.errorString();
     }
