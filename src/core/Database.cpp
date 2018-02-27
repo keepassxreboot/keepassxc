@@ -570,10 +570,11 @@ QString Database::writeDatabase(QIODevice* device)
  * @param filePath Path to the file to backup
  * @return
  */
+
 bool Database::backupDatabase(QString filePath)
 {
     QString backupFilePath = filePath;
-    auto re = QRegularExpression("(?:\\.kdbx)?$", QRegularExpression::CaseInsensitiveOption);
+    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
     backupFilePath.replace(re, ".old.kdbx");
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);
