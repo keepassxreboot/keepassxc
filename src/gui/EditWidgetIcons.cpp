@@ -202,6 +202,13 @@ QImage EditWidgetIcons::fetchFavicon(const QUrl& url)
         curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &imagedata);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCurlResponse);
+        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
+#ifdef Q_OS_WIN
+        const QDir appDir = QFileInfo(QCoreApplication::applicationFilePath()).absoluteDir();
+        if (appDir.exists("ssl\\certs")) {
+            curl_easy_setopt(curl, CURLOPT_CAINFO, (appDir.absolutePath() + "\\ssl\\certs\\ca-bundle.crt").toLatin1().data());
+        }
+#endif
 
         // Perform the request in another thread
         CURLcode result = AsyncTask::runAndWaitForFuture([curl]() {
