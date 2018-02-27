@@ -18,7 +18,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=2
+ENV REBUILD_COUNTER=4
 
 ENV QT5_VERSION=53
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
@@ -43,7 +43,7 @@ RUN set -x \
       libgcrypt20-18-dev \
       libargon2-0-dev \
       libsodium-dev \
-      libcurl4-openssl-dev \
+      libcurl-no-gcrypt-dev \
       qt${QT5_VERSION}base \
       qt${QT5_VERSION}tools \
       qt${QT5_VERSION}x11extras \
@@ -56,13 +56,14 @@ RUN set -x \
       xvfb
 
 ENV CMAKE_PREFIX_PATH="/opt/qt${QT5_VERSION}/lib/cmake"
-ENV CMAKE_INCLUDE_PATH="/opt/libgcrypt20-18/include:/opt/gpg-error-127/include"
-ENV CMAKE_LIBRARY_PATH="/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
-ENV LD_LIBRARY_PATH="/opt/qt${QT5_VERSION}/lib:/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
+ENV CMAKE_INCLUDE_PATH="/opt/keepassxc-libs/include"
+ENV CMAKE_LIBRARY_PATH="/opt/keepassxc-libs/lib/x86_64-linux-gnu"
+ENV CPATH="${CMAKE_INCLUDE_PATH}"
+ENV LD_LIBRARY_PATH="${CMAKE_LIBRARY_PATH}:/opt/qt${QT5_VERSION}/lib"
+
 RUN set -x \
-    && echo "/opt/qt${QT_VERSION}/lib" > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf \
-    && echo "/opt/libgcrypt20-18/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgcrypt20-18.conf \
-    && echo "/opt/gpg-error-127/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgpg-error-127.conf
+    && echo "/opt/qt${QT5_VERSION}/lib" > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf \
+    && echo "/opt/keepassxc-libs/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/keepassxc.conf
 
 RUN set -x \
     && apt-get autoremove --purge \

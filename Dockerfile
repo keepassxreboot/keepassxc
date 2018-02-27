@@ -16,7 +16,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=6
+ENV REBUILD_COUNTER=8
 
 ENV QT5_VERSION=59
 ENV QT5_PPA_VERSION=${QT5_VERSION}4
@@ -42,6 +42,7 @@ RUN set -x \
         libgcrypt20-18-dev \
         libargon2-0-dev \
         libsodium-dev \
+        libcurl-no-gcrypt-dev \
         qt${QT5_VERSION}base \
         qt${QT5_VERSION}tools \
         qt${QT5_VERSION}x11extras \
@@ -51,17 +52,17 @@ RUN set -x \
         libxtst-dev \
         mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev \
-        libcurl4-openssl-dev
+        libykpers-1-dev
 
 ENV CMAKE_PREFIX_PATH="/opt/qt${QT5_VERSION}/lib/cmake"
-ENV CMAKE_INCLUDE_PATH="/opt/libgcrypt20-18/include:/opt/gpg-error-127/include"
-ENV CMAKE_LIBRARY_PATH="/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
-ENV LD_LIBRARY_PATH="/opt/qt${QT5_VERSION}/lib:/opt/libgcrypt20-18/lib/x86_64-linux-gnu:/opt/gpg-error-127/lib/x86_64-linux-gnu"
+ENV CMAKE_INCLUDE_PATH="/opt/keepassxc-libs/include"
+ENV CMAKE_LIBRARY_PATH="/opt/keepassxc-libs/lib/x86_64-linux-gnu"
+ENV CPATH="${CMAKE_INCLUDE_PATH}"
+ENV LD_LIBRARY_PATH="${CMAKE_LIBRARY_PATH}:/opt/qt${QT5_VERSION}/lib"
+
 RUN set -x \
-    && echo "/opt/qt${QT_VERSION}/lib" > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf \
-    && echo "/opt/libgcrypt20-18/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgcrypt20-18.conf \
-    && echo "/opt/gpg-error-127/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/libgpg-error-127.conf
+    && echo "/opt/qt${QT5_VERSION}/lib" > /etc/ld.so.conf.d/qt${QT5_VERSION}.conf \
+    && echo "/opt/keepassxc-libs/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/keepassxc.conf
 
 # AppImage dependencies
 RUN set -x \
