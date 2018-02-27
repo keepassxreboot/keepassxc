@@ -47,6 +47,7 @@ RUN set -x \
         qt${QT5_VERSION}tools \
         qt${QT5_VERSION}x11extras \
         qt${QT5_VERSION}translations \
+        qt${QT5_VERSION}imageformats \
         zlib1g-dev \
         libxi-dev \
         libxtst-dev \

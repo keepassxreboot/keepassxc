@@ -62,7 +62,9 @@ if [ "$QXCB_PLUGIN" == "" ]; then
 fi
 QT_PLUGIN_PATH="$(dirname $(dirname $QXCB_PLUGIN))"
 mkdir -p ".${QT_PLUGIN_PATH}/platforms"
-cp "$QXCB_PLUGIN" ".${QT_PLUGIN_PATH}/platforms/"
+cp -a "$QXCB_PLUGIN" ".${QT_PLUGIN_PATH}/platforms/"
+cp -a "${QT_PLUGIN_PATH}/platforminputcontexts/" ".${QT_PLUGIN_PATH}/platforminputcontexts/"
+cp -a "${QT_PLUGIN_PATH}/imageformats/" ".${QT_PLUGIN_PATH}/imageformats/"
 
 get_apprun
 copy_deps
