@@ -537,11 +537,19 @@ QString Database::saveToFile(QString filePath, bool atomic, bool backup)
 
             // Delete the original db and move the temp file in place
             QFile::remove(filePath);
+#ifdef Q_OS_LINUX
+            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
+            if (tempFile.copy(filePath)) {
+                // successfully saved database file
+                return {};
+            }
+#else
             if (tempFile.rename(filePath)) {
                 // successfully saved database file
                 tempFile.setAutoRemove(false);
                 return {};
             }
+#endif
         }
         error = tempFile.errorString();
     }
@@ -570,10 +578,11 @@ QString Database::writeDatabase(QIODevice* device)
  * @param filePath Path to the file to backup
  * @return
  */
+
 bool Database::backupDatabase(QString filePath)
 {
     QString backupFilePath = filePath;
-    auto re = QRegularExpression("(?:\\.kdbx)?$", QRegularExpression::CaseInsensitiveOption);
+    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
     backupFilePath.replace(re, ".old.kdbx");
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);

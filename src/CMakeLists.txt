@@ -362,6 +362,10 @@ if(MINGW)
   set(CPACK_NSIS_MUI_UNWELCOMEFINISHPAGE_BITMAP "${CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP}")
   set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROGNAME}.lnk' '$INSTDIR\\\\${PROGNAME}.exe'")
   set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROGNAME}.lnk'")
+  set(CPACK_NSIS_EXTRA_PREINSTALL_COMMANDS "ExecWait 'Taskkill /IM KeePassXC.exe'")
+  set(CPACK_NSIS_EXTRA_PREINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_PREINSTALL_COMMANDS}\nExecWait 'Taskkill /IM keepassxc-proxy.exe /F'")
+  set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "ExecWait 'Taskkill /IM KeePassXC.exe'")
+  set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\nExecWait 'Taskkill /IM keepassxc-proxy.exe /F'")
   set(CPACK_NSIS_URL_INFO_ABOUT "https://keepassxc.org")
   set(CPACK_NSIS_DISPLAY_NAME ${PROGNAME})
   set(CPACK_NSIS_PACKAGE_NAME "${PROGNAME} v${KEEPASSXC_VERSION}")
@@ -373,6 +377,7 @@ if(MINGW)
   set(CPACK_WIX_TEMPLATE "${CMAKE_SOURCE_DIR}/share/windows/wix-template.xml")
   set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/share/windows/wix-patch.xml")
   set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://keepassxc.org")
+  set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
   include(CPack)
 
   install(CODE "
@@ -381,8 +386,25 @@ if(MINGW)
 
   include(DeployQt4)
   install_qt4_executable(${PROGNAME}.exe)
-  add_custom_command(TARGET ${PROGNAME} POST_BUILD
-                     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${Qt5_PREFIX}/share/qt5/plugins/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
-                     $<TARGET_FILE_DIR:${PROGNAME}>)
-  install(FILES $<TARGET_FILE_DIR:${PROGNAME}>/qwindows$<$<CONFIG:Debug>:d>.dll DESTINATION "platforms")
+  
+  # install Qt5 plugins
+  set(PLUGINS_DIR ${Qt5_PREFIX}/share/qt5/plugins)
+  install(FILES
+          ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/platforms/qdirect2d$<$<CONFIG:Debug>:d>.dll
+        DESTINATION "platforms")
+  install(FILES ${PLUGINS_DIR}/styles/qwindowsvistastyle$<$<CONFIG:Debug>:d>.dll DESTINATION "styles")
+  install(FILES ${PLUGINS_DIR}/platforminputcontexts/qtvirtualkeyboardplugin$<$<CONFIG:Debug>:d>.dll DESTINATION "platforminputcontexts")
+  install(FILES ${PLUGINS_DIR}/iconengines/qsvgicon$<$<CONFIG:Debug>:d>.dll DESTINATION "iconengines")
+  install(FILES
+          ${PLUGINS_DIR}/imageformats/qgif$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/imageformats/qicns$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/imageformats/qico$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/imageformats/qjpeg$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/imageformats/qsvg$<$<CONFIG:Debug>:d>.dll
+          ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
+        DESTINATION "imageformats")
+
+  # install CA cert chains
+  install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
 endif()

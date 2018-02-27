@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contibuțiile pe GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contribuțiile pe GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -40,7 +40,7 @@
     <message>
         <source>Version %1
 </source>
-        <translation>Versiunea %1
+        <translation>Versiune %1
 </translation>
     </message>
     <message>
@@ -116,7 +116,7 @@ Please select whether you want to allow access.</source>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nu a putut fi gasită o intrare care să coincidă cu titlul ferestrei:</translation>
+        <translation>Nu a putut fi gasită nicio intrare care să coincidă cu titlul ferestrei:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -370,6 +370,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -467,7 +471,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Parolă</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>Enter password:</source>
@@ -680,11 +684,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n rând, </numerusform><numerusform>%n rânduri, </numerusform><numerusform>%n rânduri, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n coloană</numerusform><numerusform>%n coloane</numerusform><numerusform>%n coloane</numerusform></translation>
     </message>
 </context>
 <context>
@@ -765,7 +769,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nu pot deschide baza de date.</translation>
+        <translation>Baza de date nu poate fi deschisă.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -951,7 +955,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Nu pot deschide baza de date.</translation>
+        <translation>Baza de date nu poate fi deschisă.</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -971,7 +975,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Îmbină baza de date</translation>
+        <translation>Îmbina baza de date</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -1121,7 +1125,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Nu există o baza de date curentă.</translation>
+        <translation>Nu există o bază de date curentă.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -1164,16 +1168,12 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation>Genereaza token TOTP</translation>
+        <translation>Generează token TOTP</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1185,7 +1185,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parolă</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1328,7 +1328,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Sunteți sigur că doriți să eliminați acest atribut?</translation>
+        <translation>Sigur doriți să eliminați acest atribut?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -1344,11 +1344,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n săptămână</numerusform><numerusform>%n săptămâni</numerusform><numerusform>%n săptămâni</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n lună</numerusform><numerusform>%n luni</numerusform><numerusform>%n luni</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1767,7 +1767,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>De la</translation>
+        <translation>Formular</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1890,7 +1890,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parolă</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1941,6 +1941,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3247,7 +3251,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Calea către baza de date</translation>
+        <translation>Calea către baza de date.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>

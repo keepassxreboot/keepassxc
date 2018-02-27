@@ -118,7 +118,7 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nie mogę znaleźć wpisu, który by pasował do tytułu okna:</translation>
+        <translation>Nie mogę znaleźć wpisu, który by pasował do tytułu okna: </translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -373,6 +373,10 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
         <source>Select custom proxy location</source>
         <translation>Wybierz niestandardową lokalizację proxy</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>Przykro nam, ale KeePassXC-Browser obecnie nie obsługuje wydań Snap.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -460,7 +464,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu(ów).</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -519,7 +523,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nie można utworzyć pliku klucza : </translation>
+        <translation>Nie można utworzyć pliku klucza :</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -641,11 +645,11 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Puste pole tytuł </translation>
+        <translation>Puste pole tytuł</translation>
     </message>
     <message>
         <source>column </source>
-        <translation>kolumna </translation>
+        <translation>kolumna</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -653,7 +657,7 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Oryginalne dane: </translation>
+        <translation>Oryginalne dane:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -689,15 +693,15 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n bajt, </numerusform><numerusform>%n bajty, </numerusform><numerusform>%n bajtów, </numerusform><numerusform>%n bajtów, </numerusform></translation>
+        <translation><numerusform>%n bajt, </numerusform><numerusform>%n bajty, </numerusform><numerusform>%n bajtów, </numerusform><numerusform>%n bajt, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n rząd, </numerusform><numerusform>%n rzędy, </numerusform><numerusform>%n rzędów, </numerusform><numerusform>%n rzędów, </numerusform></translation>
+        <translation><numerusform>%n rząd, </numerusform><numerusform>%n rzędy, </numerusform><numerusform>%n rzędów, </numerusform><numerusform>%n rząd, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolumna</numerusform><numerusform>%n kolumny</numerusform><numerusform>%n kolumn</numerusform><numerusform>%n kolumn</numerusform></translation>
+        <translation><numerusform>%n kolumna</numerusform><numerusform>%n kolumny</numerusform><numerusform>%n kolumn</numerusform><numerusform>%n kolumna</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1024,7 +1028,7 @@ Zapisać zmiany?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Błąd przy zapisie bazy danych.</translation>
+        <translation>Błąd w zapisywaniu bazy danych.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1119,7 +1123,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisy do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
+        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1190,10 +1194,6 @@ Czy chcesz połączyć twoje zmiany?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Czy na pewno chcesz nieodwracalnie usunąć wszystko z twojego kosza?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1371,11 +1371,11 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n tydzień</numerusform><numerusform>%n tygodnie</numerusform><numerusform>%n tygodni</numerusform><numerusform>%n tygodni</numerusform></translation>
+        <translation><numerusform>%n tydzień</numerusform><numerusform>%n tygodni(e)</numerusform><numerusform>%n tygodni(e)</numerusform><numerusform>%n tygodni(e)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n miesiąc</numerusform><numerusform>%n miesiące</numerusform><numerusform>%n miesięcy</numerusform><numerusform>%n miesięcy</numerusform></translation>
+        <translation><numerusform>%n miesiąc</numerusform><numerusform>%n miesiąc(e)</numerusform><numerusform>%n miesiąc(e)</numerusform><numerusform>%n miesiąc(e)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1383,15 +1383,15 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Zastosować wygenerowane hasło?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz zastosować wygenerowane hasło do tego wpisu?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Wpis został pomyślnie zaktualizowany.</translation>
     </message>
 </context>
 <context>
@@ -1426,11 +1426,11 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Kolor pierwszego planu:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Kolor tła:</translation>
     </message>
 </context>
 <context>
@@ -1747,7 +1747,7 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Dane wtyczki</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1755,20 +1755,21 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Usunąć dane wtyczki?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć wybrane dane wtyczki?
+Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Klucz</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Wartość</translation>
     </message>
 </context>
 <context>
@@ -1898,7 +1899,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Odniesienie: </translation>
+        <translation>Odniesienie:</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1974,6 +1975,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Przywróć domyślne</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Załączniki (ikona)</translation>
     </message>
 </context>
 <context>
@@ -3118,7 +3123,7 @@ Używam domyślnego portu 19455.</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Wielkie litery</translation>
+        <translation>Duże litery</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -3321,7 +3326,7 @@ Używam domyślnego portu 19455.</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation>Długość wygenerowanego hasła.</translation>
+        <translation>Długość wygenerowanego hasła</translation>
     </message>
     <message>
         <source>length</source>
@@ -3422,7 +3427,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Szybkie wyszukiwanie wpisów.</translation>
+        <translation>Szybkie wyszukiwanie wpisów. </translation>
     </message>
     <message>
         <source>Search term.</source>
@@ -3613,34 +3618,34 @@ Dostępne polecenia:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Błąd wewnętrzny zlib podczas kompresowania: </translation>
+        <translation>Błąd wewnętrzny zlib podczas kompresowania:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Błąd w zapisie na urządzenie: </translation>
+        <translation>Błąd w zapisie na urządzenie:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Błąd w otwieraniu z urządzenia: </translation>
+        <translation>Błąd w otwieraniu z urządzenia:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Błąd w odczycie danych z urządzenia: </translation>
+        <translation>Błąd w odczycie danych z urządzenia:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Błąd wewnętrzny zlib podczas dekompresowania: </translation>
+        <translation>Błąd wewnętrzny zlib podczas dekompresowania:</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Format gzip nie wspierany przez tę wersję zlib.</translation>
+        <translation>Format gzip nie wspierany przez tą wersję zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Błąd wewnętrzny zlib: </translation>
+        <translation>Błąd wewnętrzny zlib:</translation>
     </message>
 </context>
 <context>
@@ -3714,7 +3719,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucze szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucze szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3746,7 +3751,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3765,7 +3770,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message>
         <source>General</source>
-        <translation>Ogólne</translation>
+        <translation>Główne</translation>
     </message>
     <message>
         <source>Security</source>

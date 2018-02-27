@@ -369,6 +369,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -1186,10 +1190,6 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1972,6 +1972,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

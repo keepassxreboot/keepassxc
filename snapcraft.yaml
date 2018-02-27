@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.3.0-beta1
+version: 2.3.0
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |

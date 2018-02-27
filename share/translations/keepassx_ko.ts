@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt; 사이트에 버그를 보고해 주십시오</translation>
+        <translation> &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt; 사이트에 버그를 보고해 주십시오</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -372,6 +372,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation>사용자 정의 프록시 위치 지정</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -443,7 +447,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>KeePassXC 설정에서 암호화 키 %n개를 삭제했습니다.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -459,7 +463,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>항목 %n개에 저장된 권한을 삭제했습니다.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -651,7 +655,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>원본 데이터: </translation>
+        <translation>원본 데이터:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -1140,7 +1144,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>마스터 키를 계산할 수 없습니다</translation>
+        <translation>마스터 키를 계산할 수 없음</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1187,10 +1191,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>휴지통에 있는 항목을 영원히 삭제하시겠습니까?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1815,7 +1815,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>첨부 항목 %n개를 삭제하시겠습니까?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1971,6 +1971,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>기본값으로 복원</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2476,7 +2480,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>마스터 키를 계산할 수 없습니다</translation>
+        <translation>마스터 키를 계산할 수 없음</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -3609,23 +3613,23 @@ Available commands:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>압축 중 내부 zlib 오류 발생: </translation>
+        <translation>압축 중 내부 zlib 오류 발생:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>장치에 기록하는 중 오류 발생: </translation>
+        <translation>장치에 기록하는 중 오류 발생:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>장치를 여는 중 오류 발생: </translation>
+        <translation>장치를 여는 중 오류 발생:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>장치에서 읽는 중 오류 발생: </translation>
+        <translation>장치에서 읽는 중 오류 발생:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>압축 푸는 중 내부 zlib 오류 발생: </translation>
+        <translation>압축 푸는 중 내부 zlib 오류 발생:</translation>
     </message>
 </context>
 <context>
@@ -4024,7 +4028,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Expires in</source>
-        <translation>만료 시간</translation>
+        <translation>만료 시간:</translation>
     </message>
     <message>
         <source>seconds</source>

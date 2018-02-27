@@ -372,6 +372,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -529,7 +533,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Παρέχονται διαφορετικοί κωδικοί.</translation>
+        <translation>Έχετε εισάγει διαφορετικούς κωδικούς.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
@@ -717,11 +721,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
+        <translation>Αδύνατο να ανοιχτεί η βάση δεδομένων.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Δεν είναι δυνατό να ανοίξει αρχείο κλειδιού</translation>
+        <translation>Αποτυχία ανοίγματος αρχείο κλειδιού</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -740,7 +744,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>Όλα τα αρχεία</translation>
+        <translation>Όλα τα αρχεία </translation>
     </message>
     <message>
         <source>Key files</source>
@@ -945,7 +949,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Άνοιγμα Βάσης Δεδομένων</translation>
+        <translation>Άνοιγμα βάσης δεδομένων</translation>
     </message>
     <message>
         <source>File not found!</source>
@@ -1013,7 +1017,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Αποθήκευση βάσης δεδομένων ως</translation>
+        <translation>Αποθήκευση βάσης δεδομένων σαν</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1025,7 +1029,7 @@ Save changes?</source>
     </message>
     <message>
         <source>New database</source>
-        <translation>Νέα Βάση Δεδομένων</translation>
+        <translation>Νέα βάση δεδομένων</translation>
     </message>
     <message>
         <source>locked</source>
@@ -1169,10 +1173,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Είστε σίγουροι ότι θέλετε να διαγράψετε μόνιμα τα πάντα από το κάδο ανακύκλωσής σας;</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1601,7 +1601,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Επεξεργασία Ομάδας</translation>
+        <translation>Επεξεργασία ομάδας</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -1947,6 +1947,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2394,7 +2398,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
+        <translation>Αποτυχία ανοίγματος βάσης δεδομένων.</translation>
     </message>
 </context>
 <context>
@@ -2405,7 +2409,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Δεν είναι βάση δεδομένων KeePass.</translation>
+        <translation>Δεν ειναι βάση δεδομένων KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>

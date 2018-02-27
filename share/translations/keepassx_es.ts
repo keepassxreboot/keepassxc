@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Información de depuración</translation>
+        <translation>Información de Depuración</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -73,12 +73,13 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Un agradecimiento especial del equipo de KeePassXC a debfx por crear el KeePassX original.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Tipo de compilación: %1
+</translation>
     </message>
 </context>
 <context>
@@ -372,6 +373,10 @@ Por favor seleccione si desea autorizar su acceso.</translation>
         <source>Select custom proxy location</source>
         <translation>Elegir una ubicación de proxy personalizada</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -460,7 +465,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Los permisos fueron eliminados exitosamente de %n entradas</numerusform><numerusform>Los permisos fueron eliminados exitosamente de %n entradas</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -491,7 +496,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message>
         <source>Browse</source>
-        <translation>Navegar</translation>
+        <translation>Abrir archivo</translation>
     </message>
     <message>
         <source>Create</source>
@@ -621,7 +626,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Cantidad de líneas a descartar de la cabecera</translation>
+        <translation>Cantidad de líneas a descartar del encabezado</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -689,15 +694,15 @@ Considere generar un nuevo archivo llave.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n byte(s), </numerusform><numerusform>%n byte(s), </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n fila(s), </numerusform><numerusform>%n fila(s), </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n columna(s)</numerusform><numerusform>%n columna(s) </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -728,7 +733,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>No se pudo abrir la base de datos.</translation>
+        <translation>Incapaz de abrir la base de datos.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -769,7 +774,7 @@ Considere generar un nuevo archivo llave.</translation>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Reparar la base de datos</translation>
+        <translation>Reparar base de datos</translation>
     </message>
     <message>
         <source>Error</source>
@@ -862,7 +867,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>hilo(s)</numerusform><numerusform>hilo(s)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -944,7 +949,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Habilitar &amp;compresión (recomendado)</translation>
     </message>
 </context>
 <context>
@@ -956,7 +961,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Base de datos de KeePass 2</translation>
+        <translation>Base de datos KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1024,7 +1029,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Fallo al escribir la base de datos.</translation>
+        <translation>La escritura de la base de datos falló.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1070,12 +1075,13 @@ De lo contrario se perderán los cambios.</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation type="unfinished"/>
+        <translation>¿Inhabilitar guardado seguro?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC no ha podido guardar varias veces la base de datos. Es probable que esto se deba a que los servicios de sincronización de archivos mantienen un bloqueo en el archivo guardado.
+¿Deshabilite las copias seguras y vuelva a intentarlo?</translation>
     </message>
 </context>
 <context>
@@ -1118,7 +1124,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Realmente quiere mover la entrada &quot;%1&quot; a la papelera de reciclaje?</numerusform><numerusform>¿Realmente quiere mover las entradas &quot;%1&quot; a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1142,7 +1148,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>No se puede calcular la llave maestra</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1188,10 +1194,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>¿Está seguro que quiere eliminar permanentemente todo de su papelera de reciclaje?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1369,11 +1371,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n semana</numerusform><numerusform>%n semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n mes</numerusform><numerusform>%n mes(es)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1381,15 +1383,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>¿Aplicar la contraseña generada?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>¿Desea aplicar la contraseña generada a esta entrada?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Entrada actualizada con éxito.</translation>
     </message>
 </context>
 <context>
@@ -1424,11 +1426,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Color de Primer Plano:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Color de Segundo Plano:</translation>
     </message>
 </context>
 <context>
@@ -1463,7 +1465,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation type="unfinished"/>
+        <translation>Usa una secuencia específica para esta asociación:</translation>
     </message>
 </context>
 <context>
@@ -1532,7 +1534,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation type="unfinished"/>
+        <translation>Eliminar después la clave del agente  </translation>
     </message>
     <message>
         <source> seconds</source>
@@ -1880,7 +1882,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>Nombre de usuario</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1967,6 +1969,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2417,7 +2423,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>No se pudo abrir la base de datos.</translation>
+        <translation>Incapaz de abrir la base de datos.</translation>
     </message>
 </context>
 <context>
@@ -3122,7 +3128,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caracteres especiales</translation>
+        <translation>Caracteres especiales:</translation>
     </message>
     <message>
         <source>Extended ASCII</source>

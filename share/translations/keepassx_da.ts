@@ -73,12 +73,13 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Særlig tak fra KeePassXC holdet går til debfx for at udvikle den oprindelige KeePassX.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Opret type:%1
+</translation>
     </message>
 </context>
 <context>
@@ -193,7 +194,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser Bekræft Adgang</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -218,7 +219,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     <name>BrowserOptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
@@ -238,24 +239,24 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Google Chrome</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Firefox</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Chromium</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vivaldi</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Vis en notifikation når legitimationsoplysninger forespørges</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -263,11 +264,11 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>Kun poster med samme skema (http://, https://, ftp://, ...) bliver returneret.</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Match URL skemaer</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -275,25 +276,25 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Returnér kun de bedst matchende poster</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sorter matchende poster efter &amp;navn</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sorter matchende poster efter &amp;brugernavn</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Fjern tilslutning til alle browsere</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>Fjern alle tilladelser fra hukommelse</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -302,7 +303,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Spørg aldrig om lov for hente leigitamationsoplysninger</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
@@ -324,15 +325,15 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vis avancerede tekst felter som begynder med &quot;KPH:&quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>Opdaterer KeePassXC eller keepassxc-proxy binære sti automatisk til beskedscript ved opstart</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Opdater besked manifest dokumenter ved opstart</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -340,7 +341,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Understøt en proxy applikation mellem KeePassXC og browser-udvidelse.</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -349,7 +350,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>Vælg en brugerdefineret proxy lokation</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -371,6 +372,10 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     <message>
         <source>Select custom proxy location</source>
         <translation>Vælg en brugerdefineret proxy lokation</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -405,7 +410,7 @@ Vil du overskrive den?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Opdater post</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
@@ -443,7 +448,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Succesfuldt fjernet %n kryptering nøgle(r) fra KeePassXC indstillinger.</numerusform><numerusform>Fjernede succesfuldt %n krypteringsnøgle(r) fra KeePassXC indstillinger.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -463,11 +468,11 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ingen nøgler fundet</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"/>
+        <translation>Den aktive database indholder ikke en post med tilladelser</translation>
     </message>
 </context>
 <context>
@@ -544,14 +549,16 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Forældet nøglefilformat</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Du benytter et forældet nøglefilformat, som muligvis ikke vil blive understøttet i fremtiden.
+
+Overvej at generere en ny nøglefil.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -684,15 +691,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte(s),</numerusform><numerusform>%n byte(s),</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n række(r),</numerusform><numerusform>%n række(r),</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n kolonne(r)</numerusform><numerusform>%n kolonne(r)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -731,18 +738,20 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Forældet nøglefilformat</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Du benytter et forældet nøglefilformat, som muligvis ikke vil blive understøttet i fremtiden.
+
+Overvej at generere en ny nøglefil.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>Vis ikke denne advarsel igen</translation>
     </message>
     <message>
         <source>All files</source>
@@ -828,7 +837,7 @@ Hvis du vil beholde antallet, så kan din database tage timer eller dage (eller 
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Antallet af runder er for lavt</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
@@ -859,7 +868,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsalgoritme</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -1014,7 +1023,7 @@ Gem disse ændringer?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Skrivning til database fejler.</translation>
+        <translation>Kan ikke skrive til databasen.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1108,7 +1117,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ønsker du virkelig at flytte %n post over i  papirkurven?</numerusform><numerusform>Ønsker du virkelig at flytte %n poster over i  papirkurven?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1132,7 +1141,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke beregne hovednøgle</translation>
+        <translation>Kan ikke  beregne hovednøgle</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1179,10 +1188,6 @@ Do you want to merge your changes?</source>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DetailsWidget</name>
@@ -1192,7 +1197,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Luk</translation>
     </message>
     <message>
         <source>General</source>
@@ -1359,11 +1364,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n uge</numerusform><numerusform>%n uger</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n måned</numerusform><numerusform>%n måneder</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1936,7 +1941,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation type="unfinished"/>
+        <translation>Tilpas visning</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -1957,6 +1962,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Nulstil til standard-indstillinger</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2073,7 +2082,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>Database headers mangler</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2081,11 +2090,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse for gruppefelt</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Header SHA256 stemmer ikke</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
@@ -2097,23 +2106,23 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse for gruppefelt</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse i headerfelt</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse i headerfelt</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke åbne buffer for KDF parametre i header</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Ikke understøtet nøgleafledningsfunktion (KDF) eller invalide parametre</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -2121,11 +2130,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse i indre headerfelt  id</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse i headerfelt</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -2417,7 +2426,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Dette er ikke en KeePass database.</translation>
+        <translation>Ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -2425,7 +2434,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>KeePass database version ikke understøttet.</translation>
+        <translation>Ikke understøttet KeePass database version</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -2506,15 +2515,15 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse for gruppefelt</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse for gruppefelt</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>Invalid type for gruppefelt</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
@@ -2522,19 +2531,19 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>Manglende type nummer for gruppefelt</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid størrelse for gruppefelt</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Postens data længde passer ikke</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>Invalid uuid værdi</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
@@ -2604,11 +2613,11 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation type="unfinished"/>
+        <translation>Poster</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiér att&amp;ribute til udklipsholder</translation>
     </message>
     <message>
         <source>Time-based one-time password</source>
@@ -2620,7 +2629,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Værktøj</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -2648,7 +2657,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation type="unfinished"/>
+        <translation>Flet og kombiner fra KeePassX database</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -2676,11 +2685,11 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation type="unfinished"/>
+        <translation>Gem database som</translation>
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation type="unfinished"/>
+        <translation>Skift &amp;hovednøgle...</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -2708,7 +2717,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation type="unfinished"/>
+        <translation>Kopier kodeord</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -2728,7 +2737,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>&amp;Åben URL</translation>
+        <translation>&amp;Åbn URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
@@ -2772,7 +2781,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Re&amp;pair database...</source>
-        <translation type="unfinished"/>
+        <translation>Reparer database</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -2780,7 +2789,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Set up TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>Indstil TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
@@ -2788,7 +2797,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Tøm skraldespand</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -2859,7 +2868,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
+        <translation>PEM grænse-mismatch</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -2871,7 +2880,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation type="unfinished"/>
+        <translation>Nøglefil magic i header er invalid</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -2887,7 +2896,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Der er ingen privat nøgle at dekryptere</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
@@ -2895,15 +2904,15 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation type="unfinished"/>
+        <translation>Kodefrase er nødvendig for at dekryptere denne nøgle </translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation type="unfinished"/>
+        <translation>Nøgleafledning fejlede, er nøglefilen korrupt? </translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation type="unfinished"/>
+        <translation>Dekryptering fejlede, forkert kodefrase? </translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -2915,19 +2924,19 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke skrive offentlig nøgle, da den er tom</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>Offentlig nøgle sluttede uventet under skrivning</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke skrive nøglen da den er tom</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
+        <translation>Privat nøgle sluttede uventet under skrivnig</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -2954,7 +2963,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
@@ -2971,7 +2980,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Vis en notifikation når legitimationsoplysninger forespørges</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -2995,19 +3004,19 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>Sorter matchende poster efter &amp;brugernavn</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation type="unfinished"/>
+        <translation>Sorter &amp;passende poster efter navn</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation type="unfinished"/>
+        <translation>Fjern alle delte krypteringsnøgler  i den aktive database</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
-        <translation type="unfinished"/>
+        <translation>Fjern alle gemte tilladelser fra poster i den aktive database</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -3019,11 +3028,11 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
-        <translation type="unfinished"/>
+        <translation>Tillad altid &amp;adgang til poster</translation>
     </message>
     <message>
         <source>Always allow &amp;updating entries</source>
-        <translation type="unfinished"/>
+        <translation>Tillad alltid &amp;optaterede poster</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -3031,7 +3040,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Returnér kun de bedst matchende poster</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -3039,19 +3048,19 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vis avancerede tekst felter som begynder med &quot;KPH:&quot;</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation type="unfinished"/>
+        <translation>HTTP Port:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation type="unfinished"/>
+        <translation>Standard port: 19455</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC vil lytte til dette port på 127.0.0.1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -3063,19 +3072,20 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke forbinde via priviligerede porte</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke forbinde til prioriterede port under 1024!
+Bruger standard port 19455.</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>%p%</source>
-        <translation type="unfinished"/>
+        <translation>%p%</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -3084,11 +3094,11 @@ Using default port 19455.</source>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation type="unfinished"/>
+        <translation>styrke</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>entropi:</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3124,35 +3134,35 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>Vælg tegn fra alle grupper:</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Længde:</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation type="unfinished"/>
+        <translation>Nøgleord sætning/frase:</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation type="unfinished"/>
+        <translation>Ordliste:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation type="unfinished"/>
+        <translation>Antal ord:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation type="unfinished"/>
+        <translation>Ord separator</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation type="unfinished"/>
+        <translation>Opret</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopier</translation>
     </message>
     <message>
         <source>Accept</source>
@@ -3160,46 +3170,46 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"/>
+        <translation>Luk</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation type="unfinished"/>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kodeord kvalitet: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Dårligt</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Svagt</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Godt</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>Udmærket</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>Databasen er ikke åbnet</translation>
     </message>
     <message>
         <source>Database hash not available</source>
@@ -3663,7 +3673,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Opdater post</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
@@ -3721,11 +3731,11 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ingen nøgler fundet</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"/>
+        <translation>Den aktive database indholder ikke en post med tilladelser</translation>
     </message>
 </context>
 <context>
@@ -3995,7 +4005,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished"/>
+        <translation>Kopier</translation>
     </message>
     <message>
         <source>Expires in</source>

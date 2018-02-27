@@ -275,7 +275,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>只返回最匹配的凭据</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
@@ -336,7 +336,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>支持KeePassXC和浏览器扩展之间的代理应用程序.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
@@ -370,6 +370,10 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Select custom proxy location</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -842,7 +846,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -917,7 +921,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1103,7 +1107,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>你确定要将 %n 个项目移到垃圾桶？</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1173,10 +1177,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>你确定要永久删除回收站中的所有内容？</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1354,11 +1354,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 周</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 个月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1951,6 +1951,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Lihat Semua Kontribusi di GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Lihat Semua Kontribusi pada GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -372,6 +372,10 @@ Silakan pilih apakah Anda ingin mengizinkannya.</translation>
         <source>Select custom proxy location</source>
         <translation>Pilih lokasi proksi khusus</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -443,7 +447,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Berhasil membuang %n kunci enkripsi dari pengaturan KeePassXC.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -459,7 +463,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Berhasil membuang perizinan dari %n entri.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -510,7 +514,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Create Key File...</source>
@@ -588,11 +592,11 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>nama berkas</translation>
+        <translation>filename</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>ukuran, baris, kolom</translation>
+        <translation>size, rows, columns</translation>
     </message>
     <message>
         <source>Encoding</source>
@@ -753,7 +757,7 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -852,7 +856,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -951,11 +955,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basis Data KeePass 2</translation>
+        <translation>Basis data KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Open database</source>
@@ -1019,7 +1023,7 @@ Simpan perubahan?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Gagal menyimpan basis data.</translation>
+        <translation>Gagal membuat basis data.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1185,10 +1189,6 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Apakah Anda yakin ingin menghapus semuanya secara permanen dari keranjang sampah?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1699,7 +1699,7 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Select Image</source>
@@ -1813,7 +1813,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Apakah Anda yakin ingin membuang %n lampiran?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1969,6 +1969,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Kembalikan ke setelan bawaan</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3708,7 +3712,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Berhasil membuang %n kunci enkripsi dari Pengaturan KeePassX/Http</numerusform></translation>
+        <translation><numerusform>Berhasil membuang %n kunci terenkripsi dari Pengaturan KeePassXC/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3740,7 +3744,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Berhasil membuang perizinan dari %n entri.</numerusform></translation>
+        <translation><numerusform>Berhasil membuang izin dari %n entri.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>

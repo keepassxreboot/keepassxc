@@ -3,7 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>Informazioni su KeePassXC</translation>
+        <translation>Info su KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Informazioni di debug</translation>
+        <translation>Informazioni debug</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -86,11 +86,11 @@ Kernel: %3 %4</translation>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>Conferma l&apos;accesso per KeePassXC HTTP</translation>
+        <translation>KeePassXC HTTP conferma accesso</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Ricorda questa scelta</translation>
+        <translation>Ricorda questa decisione</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -122,7 +122,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>KeePassXC - Completamento automatico</translation>
+        <translation>Auto-completamento - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -187,7 +187,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Seleziona una voce per il completamento automatico:</translation>
+        <translation>Seleziona una voce per l&apos;auto-completamento:</translation>
     </message>
 </context>
 <context>
@@ -198,7 +198,7 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Ricorda questa decisione</translation>
+        <translation>Ricorda questa scelta</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -373,6 +373,10 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
         <source>Select custom proxy location</source>
         <translation>Selezionare una posizione personalizzata per il proxy</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>Siamo spiacenti, ma KeePassXC-Browser non è supportato per i rilasci di Snap al momento.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -443,7 +447,7 @@ Sblocca il database selezionato o scegline un altro che sia sbloccato.</translat
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassXC.</numerusform><numerusform>Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassXC.</numerusform></translation>
+        <translation><numerusform>Rimosso con successo %n chiavi di crittografia da KeePassXC impostazioni.</numerusform><numerusform>Rimossa(e) con successo %n chiave(i) di crittografia dalle impostazioni di KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -459,7 +463,7 @@ Sblocca il database selezionato o scegline un altro che sia sbloccato.</translat
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Permessi rimossi con successo da %n voce.</numerusform><numerusform>Permessi rimossi con successo da %n voci.</numerusform></translation>
+        <translation><numerusform>Rimosso con successo le autorizzazioni da %n ha.</numerusform><numerusform>Rimossa(e) con successo le autorizzazioni da %n voce(i).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -861,7 +865,7 @@ Se continui con questo numero, il tuo database potrebbe essere decifrato molto f
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>thread</numerusform><numerusform>thread</numerusform></translation>
+        <translation><numerusform> iscritto (i)</numerusform><numerusform> thread(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -931,7 +935,7 @@ Se continui con questo numero, il tuo database potrebbe essere decifrato molto f
     </message>
     <message>
         <source> MiB</source>
-        <translation> MB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1023,7 +1027,7 @@ Vuoi salvare le modifiche?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Scrittura database non riuscita.</translation>
+        <translation>Scrittura del database non riuscita.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1039,7 +1043,7 @@ Vuoi salvare le modifiche?</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>Scrittura file CSV non riuscita.</translation>
+        <translation>Scrittura file CSV fallita.</translation>
     </message>
     <message>
         <source>New database</source>
@@ -1118,7 +1122,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Vuoi veramente cestinare %n voce?</numerusform><numerusform>Vuoi veramente cestinare %n voci?</numerusform></translation>
+        <translation><numerusform>Vuoi veramente spostare %n elemento nel Cestino?</numerusform><numerusform>Vuoi veramente cestinare %n voci?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1189,10 +1193,6 @@ Vuoi fondere i cambiamenti?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Sei sicuro di voler eliminare definitivamente tutto dal cestino?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1382,15 +1382,15 @@ Vuoi fondere i cambiamenti?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Applicare la password generata?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Desideri applicare la password generata a questa voce?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Voce aggiornata correttamente.</translation>
     </message>
 </context>
 <context>
@@ -1425,11 +1425,11 @@ Vuoi fondere i cambiamenti?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Colore di primo piano:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Colore di sfondo:</translation>
     </message>
 </context>
 <context>
@@ -1444,7 +1444,7 @@ Vuoi fondere i cambiamenti?</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Usa sequenza di completamento automatico personalizzata:</translation>
+        <translation>&amp;Usa sequenza di compeltamento automatico personalizzata:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1746,7 +1746,7 @@ Vuoi fondere i cambiamenti?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Dati del plugin</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1754,20 +1754,21 @@ Vuoi fondere i cambiamenti?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Eliminare i dati del plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi davvero eliminare i dati del plugin selezionato?
+Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Chiave</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valore</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1818,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sei sicuro di voler rimuovere %n allegato?</numerusform><numerusform>Sei sicuro di voler rimuovere %n allegati?</numerusform></translation>
+        <translation><numerusform>Sei sicuro di che voler rimuovere %n allegati?</numerusform><numerusform>Sei sicuro di voler rimuovere %n allegato(i)?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1974,6 +1975,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>Reset to defaults</source>
         <translation>Ripristina valori predefiniti</translation>
     </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Allegati (icona)</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -2001,7 +2006,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tipi di carattere</translation>
+        <translation>Tipi carattere</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
@@ -2907,7 +2912,7 @@ Questa versione non è pensata per essere utilizzata in ambito di produzione.</t
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation>Sto cercando di eseguire KDF senza cifratura</translation>
+        <translation>Tentativo di eseguire KDF senza crittografia</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -2987,7 +2992,7 @@ Questa versione non è pensata per essere utilizzata in ambito di produzione.</t
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Visualizza una n&amp;otifica quando sono richieste le credenziali</translation>
+        <translation>Visualizza una n&amp;otifica quando sono richeste le credenziali</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -3713,7 +3718,7 @@ Sblocca il database selezionato o scegline un altro che sia sbloccato.</translat
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassX/Http.</numerusform><numerusform>Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassX/Http.</numerusform><numerusform>Rimossa(e) con successo %n chiave(i) di cifratura dalle impostazioni di KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3831,15 +3836,15 @@ Sblocca il database selezionato o scegline un altro che sia sbloccato.</translat
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Visualizza un&apos;icona nell&apos;area di notifica di sistema</translation>
+        <translation>Visualizza un&apos;icona nell&apos;area di notifica del sistema</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Nascondi la finestra nell&apos;area di notifica di sistema quando viene minimizzata</translation>
+        <translation>Nascondi la finestra nell&apos;area di notifica del sistema quando viene minimizzata</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation>Nascondi la finestra nell&apos;area di notifica di sistema invece di chiudere l&apos;applicazione</translation>
+        <translation>Nascondi la finestra nella barra di sistema invece di chiudere l&apos;applicazione</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>

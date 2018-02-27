@@ -772,12 +772,14 @@ void EditEntryWidget::acceptEntry()
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
+    QRegularExpression newLineRegex("(?:\r?\n|\r)");
+
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
     entry->customData()->copyDataFrom(m_editWidgetProperties->customData());
-    entry->setTitle(m_mainUi->titleEdit->text());
-    entry->setUsername(m_mainUi->usernameEdit->text());
-    entry->setUrl(m_mainUi->urlEdit->text());
+    entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
+    entry->setUsername(m_mainUi->usernameEdit->text().replace(newLineRegex, " "));
+    entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());

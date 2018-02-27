@@ -372,6 +372,10 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
         <source>Select custom proxy location</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -1103,7 +1107,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n girdiyi geri dönüşüm kutusuna taşımak istediğinize emin misiniz?</numerusform><numerusform>%n girdiyi geri dönüşüm kutusuna taşımak istediğinize emin misiniz?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1173,10 +1177,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Geri dönüşüm kutunuzdaki her şeyi kalıcı olarak silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1354,11 +1354,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n hafta</numerusform><numerusform>%n hafta</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ay</numerusform><numerusform>%n ay</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1636,7 +1636,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Search</source>
-        <translation>Ara</translation>
+        <translation>Arama</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -1951,6 +1951,10 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Reset to defaults</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2457,7 +2461,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Ana anahtar hesaplanamıyor</translation>
+        <translation>Ana anahtar hesaplanamaz</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>

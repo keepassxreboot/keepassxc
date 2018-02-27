@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>حول</translation>
+        <translation>عن</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -122,7 +122,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>الطباعة التلقائية - KeePassXC</translation>
+        <translation>المكمل التلقائي - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -183,11 +183,11 @@ Please select whether you want to allow access.</source>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>الطباعة التلقائية - KeePassXC</translation>
+        <translation>المكمل التلقائي - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>حدد مدخل للطباعة التلقائية:</translation>
+        <translation>حدد مدخل للمكمل التلقائي:</translation>
     </message>
 </context>
 <context>
@@ -373,6 +373,10 @@ Please select whether you want to allow access.</source>
         <source>Select custom proxy location</source>
         <translation>حدد موقع خادم الوكيل المخصص</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>نحن متأسفون, ولكن KeePassXC-Browser غير مدعوم لإصدارات Snap في الوقت الراهن.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -475,7 +479,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>أدخل كلمة السر:</translation>
+        <translation>أدخل كلمة المرور:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
@@ -527,7 +531,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>هل تريد حقًا استخدام مُدخل فارغ ككلمة مرور؟</translation>
+        <translation>هل تريد حقًا استخدام كلمات فارغة ككلمة مرور؟</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -613,7 +617,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation type="unfinished"/>
+        <translation>عدد رؤوس الأسطر لتجاهلها</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -633,7 +637,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>إسم الحقل فارغ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>column </source>
@@ -1092,7 +1096,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>نقل المُدخل إلى سلة المهملات؟</translation>
+        <translation>نقل المدخل إلى سلة المحذوفات؟</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -1100,7 +1104,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>نقل المُدخلات إلى سلة المهملات؟</translation>
+        <translation>نقل المدخلات إلى سلة المحذوفات؟</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
@@ -1132,7 +1136,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>لا يوجد قاعدة بيانات حالية.</translation>
+        <translation>لا يوجد قاعدة بيانات حالية </translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -1174,10 +1178,6 @@ Do you want to merge your changes?</source>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>هل أنت متأكد من حذف كل شيء من سلة المهملات نهائيًا؟</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1279,7 +1279,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>الطباعة التلقائية</translation>
+        <translation>المكمل التلقائي</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1503,7 +1503,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Username:</source>
-        <translation>اسم المستخدم:</translation>
+        <translation>اسم المستخدم</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -1614,7 +1614,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Disable</source>
-        <translation>تعطيل</translation>
+        <translation>قم ب تعطيل</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
@@ -1641,7 +1641,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>الطباعة التلقائية</translation>
+        <translation>المكمل التلقائي</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
@@ -1959,6 +1959,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>Reset to defaults</source>
         <translation>إعادة التعيين إلى الإعدادات الافتراضية</translation>
     </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>المرفقات (رمز)</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -2185,24 +2189,24 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>نوع إدخال الخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>حقل حجم النوع للخريطة المتنوعة غير صحيح</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation type="unfinished"/>
+        <translation>خورزامية تشفير بالمفتاح المتناظر غير صحيحة</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>خطأ في الحجم الرابع بخورزامية تشفير بالمفتاح المتناظر </translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2218,7 +2222,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length</source>
-        <translation type="unfinished"/>
+        <translation>طول تشفير uuid غير صحيح</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
@@ -2226,35 +2230,35 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation type="unfinished"/>
+        <translation>طول علامات الضغط غير صحيح</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation type="unfinished"/>
+        <translation>خورزامية الضغط غير مدعومة</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation type="unfinished"/>
+        <translation>حجم seed الرئيسي غير صحيح</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>حجم seed للتحول غير صحيح</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation type="unfinished"/>
+        <translation>حجم جولات التحول غير صحيح</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation type="unfinished"/>
+        <translation>حجم بتات البداية غير صحيح</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation type="unfinished"/>
+        <translation>حجم معرف random stream غير صحيح</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>خطأ داخلي بخورزامية random stream</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2269,14 +2273,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation type="unfinished"/>
+        <translation>إصدار قاعدة بيانات 2 KeePass غير مدعوم.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation type="unfinished"/>
+        <translation>فشل تحليل XML: %1</translation>
     </message>
     <message>
         <source>No root group</source>
@@ -2284,11 +2288,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation type="unfinished"/>
+        <translation>uuid او بيانات الرمز مفقودة</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation type="unfinished"/>
+        <translation>مفتاح البيانات المخصص او  قيمته مفقودة</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
@@ -2296,11 +2300,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation type="unfinished"/>
+        <translation>uuid المجموعة غير معروف</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation type="unfinished"/>
+        <translation>رقم رمز المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -2308,59 +2312,59 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation type="unfinished"/>
+        <translation>قيمة EnableSearching غير صحيحة</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>لم يُعثر على uuid المجموعة</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>Null DeleteObject uuid</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation type="unfinished"/>
+        <translation>uuid او وقت DeletedObject مفقود</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation type="unfinished"/>
+        <translation>uuid الإدخال غير معروف</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation type="unfinished"/>
+        <translation>رقم الرمز المُدخل غير صحيح</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>سجل العنصر في سجل الإدخال</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation type="unfinished"/>
+        <translation>لم يُعثر على uuid المُدخل</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>سجل العنصر مع uuid مختلف</translation>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
-        <translation type="unfinished"/>
+        <translation>يتعذر فك تشفير سلسلة الإدخال</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>عُثر على خاصية مخصصة مكررة</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>مفتاح سلسلة الإدخال أو القيمة مفقودة</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation type="unfinished"/>
+        <translation>عُثر على مرفق مكرر</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>مُدخل المفتاح الثنائي او القيمة مفقودة</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -2368,11 +2372,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation type="unfinished"/>
+        <translation>مُدخل القيمة المنطقية غير صحيح</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation type="unfinished"/>
+        <translation>قيمة وقت التاريخ غير صحيحة</translation>
     </message>
     <message>
         <source>Invalid color value</source>
@@ -2380,7 +2384,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation type="unfinished"/>
+        <translation>جزء من لون rgb غير صحيح</translation>
     </message>
     <message>
         <source>Invalid number value</source>
@@ -2388,12 +2392,12 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation type="unfinished"/>
+        <translation>قيمة uuid غير صحيحة</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>تعذر فك ضغط القيمة الثنائية</translation>
     </message>
 </context>
 <context>
@@ -2428,27 +2432,27 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation type="unfinished"/>
+        <translation>غير قادر على قراءة قيمة التشفير الرابع</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation type="unfinished"/>
+        <translation>عدد غير صالح من المجموعات</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation type="unfinished"/>
+        <translation>عدد الإدخالات غير صالح</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation type="unfinished"/>
+        <translation>حجم محتوى الهاش غير صحيح</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>حجم seed للتحول غير صحيح</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>عدد جولات التحول غير صحيح</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
@@ -2602,7 +2606,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>المُدخلات</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
@@ -2750,7 +2754,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;الملاحظات</translation>
+        <translation>&amp;ملاحظات</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
@@ -3100,7 +3104,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>أحرف صغيرة</translation>
+        <translation>الحروف صغيرة</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -3267,7 +3271,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>ملف المفتاح لقاعدة البيانات.</translation>
+        <translation>ملف المفتاح لقاعدة البيانات</translation>
     </message>
     <message>
         <source>path</source>
@@ -3283,7 +3287,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>الرابط للمُدخل.</translation>
+        <translation>الرابط للمُدخل</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3360,7 +3364,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation>ادخل كلمة المرور لإلغاء قفل %1:</translation>
+        <translation>ادخل كلمة المرور لإلغاء القفل %1:</translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
@@ -3424,7 +3428,7 @@ Available commands:
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>ملف المفتاح لقاعدة البيانات للدمج منه.</translation>
+        <translation>ملف قاعدة البيانات للدمج منه.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
@@ -3692,7 +3696,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: لم يُعثر على أية مفاتيح</translation>
+        <translation>KeePassXC: لم يتم العثور على أية مفاتيح</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
@@ -3778,7 +3782,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>الحفظ تلقائيًا بعد كل تعديل</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -3826,7 +3830,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>الطباعة التلقائية</translation>
+        <translation>المكمل التلقائي</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -3895,7 +3899,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>أغلق قواعد البيانات بعد حالة عدم النشاط ل</translation>
+        <translation>أغلق قواعد البيانات بعد حالات عدم النشاط ل</translation>
     </message>
     <message>
         <source>Convenience</source>
@@ -3998,11 +4002,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Copy</source>
-        <translation>نسخ</translation>
+        <translation>نسخة</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation>تنتهي في</translation>
+        <translation>وتنتهي في</translation>
     </message>
     <message>
         <source>seconds</source>

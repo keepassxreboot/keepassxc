@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>A KeePassXC a GNU General Public License (GPL) 2-es vagy (válaszhatóan) 3-as verziója szerint kerül terjesztésre.</translation>
+        <translation>A KeePassXC a GNU General Public License (GPL) 2. vagy (válaszhatóan ) 3. verziója szerint kerül terjesztésre.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -371,6 +371,10 @@ Válassza ki, hogy engedélyezi-e a hozzáférést.</translation>
     <message>
         <source>Select custom proxy location</source>
         <translation>Egyedi proxyhely kijelölése</translation>
+    </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>Sajnáljuk, de a KeePassXC-Browser pillanatnyilag nem támogatja a Snap kiadásokat.</translation>
     </message>
 </context>
 <context>
@@ -773,7 +777,7 @@ Megfontolandó egy új kulcsfájl készítése.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nem lehet megnyitni a kulcsfájlt</translation>
+        <translation>Nem lehet megnyitni a kulcsfájl</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -988,7 +992,7 @@ Ezt a számot megtartva az adatbázis nagyon könnyen törhető lesz.</translati
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Adatbázis egyesítése</translation>
+        <translation>Adatbázis összeolvasztása</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -1167,7 +1171,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Egyesítési kérelem</translation>
+        <translation>Összeolvasztási kérelem</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
@@ -1186,10 +1190,6 @@ Egyesíti a módosításokat?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Valóban véglegesen töröl mindent a kukából?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1379,15 +1379,15 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Alkalmazható az előállított jelszó?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Valóban alkalmazható az előállított jelszó ehhez a bejegyzéshez?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzés sikeresen frissítve.</translation>
     </message>
 </context>
 <context>
@@ -1422,11 +1422,11 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Előtérszín:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Háttérszín:</translation>
     </message>
 </context>
 <context>
@@ -1739,11 +1739,11 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>UUID:</translation>
+        <translation>Uuid:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Bővítmény adati</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1751,20 +1751,21 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Törölhetők a bővítmény adatai?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Valóban törölhetők a kijelölt bővítmény adata?
+Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Kulcs</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Érték</translation>
     </message>
 </context>
 <context>
@@ -1971,6 +1972,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>Reset to defaults</source>
         <translation>Visszaállítás alapértelmezettre</translation>
     </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Mellékletek (ikon)</translation>
+    </message>
 </context>
 <context>
     <name>Group</name>
@@ -2030,7 +2035,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation>/*_&amp; …</translation>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -2661,7 +2666,7 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Egyesítés KeePassX adatbázisból</translation>
+        <translation>Összeolvasztás KeePassX adatbázisból</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>

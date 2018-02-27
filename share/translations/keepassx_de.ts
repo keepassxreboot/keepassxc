@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>In die Zwischenablage kopieren</translation>
+        <translation>In Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Version %1
@@ -373,6 +373,10 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
         <source>Select custom proxy location</source>
         <translation>Benutzerdefinierten Proxy-Pfad auswählen</translation>
     </message>
+    <message>
+        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
+        <translation>Sorry, aber KeePassXC-Browser wird derzeit für Snap-Releases nicht unterstützt.</translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -444,7 +448,7 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Es wurde erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform></translation>
+        <translation><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -557,7 +561,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Ändern des Master-Passworts fehlgeschlagen: kein YubiKey eingesteckt.</translation>
+        <translation>Ändern des Hauptschlüssels fehlgeschlagen: kein YubiKey eingesteckt.</translation>
     </message>
 </context>
 <context>
@@ -572,7 +576,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Benutzernamen und Passwort mit Referenzen ersetzen</translation>
+        <translation>Benutzernamen und Passwort mit Referencen ersetzen</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -679,14 +683,14 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Master-Passworts gescheitert</translation>
+        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n Byte</numerusform><numerusform>%n Bytes</numerusform></translation>
+        <translation><numerusform>%n Byte,</numerusform><numerusform>%n Byte,</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
@@ -701,7 +705,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Master-Passwort eingeben</translation>
+        <translation>Hauptschlüssel eingeben</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -725,7 +729,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
+        <translation>Öffnen der Datenbank nicht möglich.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -777,7 +781,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
+        <translation>Öffnen der Datenbank nicht möglich.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -858,7 +862,7 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> Thread</numerusform><numerusform> Threads</numerusform></translation>
+        <translation><numerusform>Thread</numerusform><numerusform>Threads</numerusform></translation>
     </message>
 </context>
 <context>
@@ -992,11 +996,11 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1-Datenbank öffnen</translation>
+        <translation>KeePass 1 Datenbank öffnen</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1-Datenbank</translation>
+        <translation>KeePass 1 Datenbank</translation>
     </message>
     <message>
         <source>Close?</source>
@@ -1028,7 +1032,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern als</translation>
+        <translation>Datenbank speichern unter</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1083,7 +1087,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Master-Passwort ändern</translation>
+        <translation>Hauptschlüssel ändern</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -1115,7 +1119,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Möchten Sie wirklich %n Eintrag aus dem Papierkorb löschen?</numerusform><numerusform>Möchten Sie wirklich %n Einträge aus dem Papierkorb löschen?</numerusform></translation>
+        <translation><numerusform>Wollen Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Wollen Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1139,7 +1143,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Master-Passworts gescheitert</translation>
+        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1186,10 +1190,6 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
         <translation>Sind Sie sicher, dass Sie den Inhalt des Papierkorbs unwiederbringlich löschen wollen?</translation>
-    </message>
-    <message>
-        <source>Entry updated successfully.</source>
-        <translation>Eintrag erfolgreich aktualisiert.</translation>
     </message>
 </context>
 <context>
@@ -1339,7 +1339,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Passwörter sind unterschiedlich</translation>
+        <translation>Unterschiedliche Passwörter eingegeben.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -1367,11 +1367,11 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n Woche</numerusform><numerusform>%n Wochen</numerusform></translation>
+        <translation><numerusform>%n Woche</numerusform><numerusform>%n Woche(n)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monate</numerusform></translation>
+        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monat(en)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1566,7 +1566,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>In Zwischenablage kopieren</translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -1645,7 +1645,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Verfällt</translation>
+        <translation>Erlischt</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1815,7 +1815,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sind Sie sicher, dass sie einen Anhang löschen möchten?</numerusform><numerusform>Sind Sie sicher, dass sie %n Anhänge löschen möchten?</numerusform></translation>
+        <translation><numerusform>Sind Sie sicher, dass Sie %n Anhang löschen wollen?</numerusform><numerusform>Sind Sie sicher, dass Sie %n Anhänge löschen möchten?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1970,6 +1970,10 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     <message>
         <source>Reset to defaults</source>
         <translation>Zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Attachments (icon)</source>
+        <translation>Anhänge (Icon)</translation>
     </message>
 </context>
 <context>
@@ -2419,7 +2423,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
+        <translation>Öffnen der Datenbank nicht möglich.</translation>
     </message>
 </context>
 <context>
@@ -2475,7 +2479,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Master-Passworts gescheitert</translation>
+        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2661,7 +2665,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Mit KeePassXC-Datenbank zusammenführen</translation>
+        <translation>Aus KeePassXC-Datenbank zusammenführen</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -2693,7 +2697,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation>&amp;Master-Passwort ändern...</translation>
+        <translation>Ha&amp;uptschlüssel ändern...</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -2717,7 +2721,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzernamen in die Zwischenablage kopieren</translation>
+        <translation>Benutzername in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -3008,7 +3012,7 @@ Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation>Sortiere gefundene Einträge nach &amp;Benutzernamen</translation>
+        <translation>Sortiere gefundene Einträge nach &amp;Benutzername</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
@@ -3293,11 +3297,11 @@ Es wird der Standard-Port 19455 verwendet.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Benutzername für den Eintrag</translation>
+        <translation>Nutzername für den Eintrag</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>Benutzername</translation>
+        <translation>Nutzername</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
