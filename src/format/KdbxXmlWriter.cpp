@@ -129,9 +129,7 @@ void KdbxXmlWriter::writeMetadata()
     if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
         writeBinaries();
     }
-    if (m_kdbxVersion >= KeePass2::FILE_VERSION_4) {
-        writeCustomData(m_meta->customData());
-    }
+    writeCustomData(m_meta->customData());
 
     m_xml.writeEndElement();
 }

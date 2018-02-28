@@ -42,6 +42,7 @@ public:
 
 private:
     void raiseError(const QString& errorMessage);
+    bool implicitUpgradeNeeded(Database const* db) const;
 
     bool m_error = false;
     QString m_errorStr = "";
