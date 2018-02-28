@@ -52,8 +52,5 @@ endforeach ()
 
 add_custom_target(
         format
-        COMMAND clang-format
-        -style=file
-        -i
-        ${ALL_SOURCE_FILES}
+        COMMAND echo ${ALL_SOURCE_FILES} | xargs clang-format -style=file -i
 )
