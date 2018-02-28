@@ -149,8 +149,10 @@ void TestKdbx4::testFormat400Upgrade()
     sourceDb->changeKdf(KeePass2::uuidToKdf(kdfUuid));
     sourceDb->setCipher(cipherUuid);
 
+    // CustomData in meta should not cause any version change
+    sourceDb->metadata()->customData()->set("CustomPublicData", "Hey look, I turned myself into a pickle!");
     if (addCustomData) {
-        sourceDb->metadata()->customData()->set("CustomPublicData", "Hey look, I turned myself into a pickle!");
+        // this, however, should
         sourceDb->rootGroup()->customData()->set("CustomGroupData", "I just killed my family! I don't care who they were!");
     }
 
