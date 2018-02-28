@@ -175,7 +175,7 @@ if(APPLE)
         core/MacPasteboard.cpp
         )
 endif()
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD" OR ${CMAKE_SYSTEM_NAME} STREQUAL "NetBSD")
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerDBus.h
         core/ScreenLockListenerDBus.cpp
