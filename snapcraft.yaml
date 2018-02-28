@@ -28,6 +28,7 @@ parts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DKEEPASSXC_DIST_TYPE=Snap
+      - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
     build-packages:
