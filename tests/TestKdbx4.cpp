@@ -20,6 +20,8 @@
 
 #include "core/Metadata.h"
 #include "keys/PasswordKey.h"
+#include "keys/FileKey.h"
+#include "mock/MockChallengeResponseKey.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -211,6 +213,106 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
 }
 
+void TestKdbx4::testUpgradeMasterKeyIntegrity()
+{
+    QFETCH(QString, upgradeAction);
+    QFETCH(quint32, expectedVersion);
+
+    // prepare composite key
+    PasswordKey passwordKey("turXpGMQiUE6CkPvWacydAKsnp4cxz");
+
+    QByteArray fileKeyBytes("Ma6hHov98FbPeyAL22XhcgmpJk8xjQ");
+    QBuffer fileKeyBuffer(&fileKeyBytes);
+    fileKeyBuffer.open(QBuffer::ReadOnly);
+    FileKey fileKey;
+    fileKey.load(&fileKeyBuffer);
+
+    auto crKey = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("azdJnbVCFE76vV6t9RJ2DS6xvSS93k"));
+
+    CompositeKey compositeKey;
+    compositeKey.addKey(passwordKey);
+    compositeKey.addKey(fileKey);
+    compositeKey.addChallengeResponseKey(crKey);
+
+    QScopedPointer<Database> db(new Database());
+    db->setKey(compositeKey);
+
+    // upgrade the database by a specific method
+    if (upgradeAction == "none") {
+        // do nothing
+    } else if (upgradeAction == "meta-customdata") {
+        db->metadata()->customData()->set("abc", "def");
+    } else if (upgradeAction == "kdf-aes-kdbx3") {
+        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3));
+    } else if (upgradeAction == "kdf-argon2") {
+        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    } else if (upgradeAction == "kdf-aes-kdbx4") {
+        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4));
+    } else if (upgradeAction == "public-customdata") {
+        db->publicCustomData().insert("abc", "def");
+    } else if (upgradeAction == "rootgroup-customdata") {
+        db->rootGroup()->customData()->set("abc", "def");
+    } else if (upgradeAction == "group-customdata") {
+        auto group = new Group();
+        group->setParent(db->rootGroup());
+        group->setUuid(Uuid::random());
+        group->customData()->set("abc", "def");
+    } else if (upgradeAction == "rootentry-customdata") {
+        auto entry = new Entry();
+        entry->setGroup(db->rootGroup());
+        entry->setUuid(Uuid::random());
+        entry->customData()->set("abc", "def");
+    } else if (upgradeAction == "entry-customdata") {
+        auto group = new Group();
+        group->setParent(db->rootGroup());
+        group->setUuid(Uuid::random());
+        auto entry = new Entry();
+        entry->setGroup(group);
+        entry->setUuid(Uuid::random());
+        entry->customData()->set("abc", "def");
+    } else {
+        QFAIL(qPrintable(QString("Unknown action: %s").arg(upgradeAction)));
+    }
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, db.data()));
+
+    // paranoid check that we cannot decrypt the database without a key
+    buffer.seek(0);
+    KeePass2Reader reader;
+    QScopedPointer<Database> db2;
+    db2.reset(reader.readDatabase(&buffer, CompositeKey()));
+    QVERIFY(reader.hasError());
+
+    // check that we can read back the database with the original composite key,
+    // i.e., no components have been lost on the way
+    buffer.seek(0);
+    db2.reset(reader.readDatabase(&buffer, compositeKey));
+    if (reader.hasError()) {
+        QFAIL(qPrintable(reader.errorString()));
+    }
+    QCOMPARE(reader.version(), expectedVersion & KeePass2::FILE_VERSION_CRITICAL_MASK);
+}
+
+void TestKdbx4::testUpgradeMasterKeyIntegrity_data()
+{
+    QTest::addColumn<QString>("upgradeAction");
+    QTest::addColumn<quint32>("expectedVersion");
+
+    QTest::newRow("Upgrade: none")                            << QString("none")                 << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade: none (meta-customdata)")          << QString("meta-customdata")      << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)")   << QString("kdf-aes-kdbx3")        << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade (explicit): kdf-argon2")           << QString("kdf-argon2")           << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4")        << QString("kdf-aes-kdbx4")        << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): public-customdata")    << QString("public-customdata")    << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootgroup-customdata") << QString("rootgroup-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): group-customdata")     << QString("group-customdata")     << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootentry-customdata") << QString("rootentry-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): entry-customdata")     << QString("entry-customdata")     << KeePass2::FILE_VERSION_4;
+}
+
 void TestKdbx4::testCustomData()
 {
     Database db;
@@ -220,8 +322,9 @@ void TestKdbx4::testCustomData()
     publicCustomData.insert("CD1", 123);
     publicCustomData.insert("CD2", true);
     publicCustomData.insert("CD3", "abcäöü");
-    publicCustomData.insert("CD4", QByteArray::fromHex("ababa123ff"));
     db.setPublicCustomData(publicCustomData);
+    publicCustomData.insert("CD4", QByteArray::fromHex("ababa123ff"));
+    db.publicCustomData().insert("CD4", publicCustomData.value("CD4"));
     QCOMPARE(db.publicCustomData(), publicCustomData);
 
     const QString customDataKey1 = "CD1";
@@ -229,7 +332,7 @@ void TestKdbx4::testCustomData()
     const QString customData1 = "abcäöü";
     const QString customData2 = "Hello World";
     const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() +
-            customData1.toUtf8().size() + customData2.toUtf8().size();
+        customData1.toUtf8().size() + customData2.toUtf8().size();
 
     // test custom database data
     db.metadata()->customData()->set(customDataKey1, customData1);

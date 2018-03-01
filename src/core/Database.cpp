@@ -320,7 +320,12 @@ bool Database::verifyKey(const CompositeKey& key) const
     return (m_data.key.rawKey() == key.rawKey());
 }
 
-QVariantMap Database::publicCustomData() const
+QVariantMap& Database::publicCustomData()
+{
+    return m_data.publicCustomData;
+}
+
+const QVariantMap& Database::publicCustomData() const
 {
     return m_data.publicCustomData;
 }
