@@ -94,6 +94,10 @@ int OpenSSHKey::keyLength() const
 
 const QString OpenSSHKey::fingerprint() const
 {
+    if (m_publicData.isEmpty()) {
+        return {};
+    }
+
     QByteArray publicKey;
     BinaryStream stream(&publicKey);
 
@@ -115,6 +119,10 @@ const QString OpenSSHKey::comment() const
 
 const QString OpenSSHKey::publicKey() const
 {
+    if (m_publicData.isEmpty()) {
+        return {};
+    }
+
     QByteArray publicKey;
     BinaryStream stream(&publicKey);
 
@@ -326,7 +334,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
             return false;
         }
 
-        if (passphrase.length() == 0) {
+        if (passphrase.isEmpty()) {
             m_error = tr("Passphrase is required to decrypt this key");
             return false;
         }
