@@ -17,8 +17,8 @@
 
 #include "MockChallengeResponseKey.h"
 
-MockChallengeResponseKey::MockChallengeResponseKey(const QByteArray& response)
-    : m_response(response)
+MockChallengeResponseKey::MockChallengeResponseKey(const QByteArray& secret)
+    : m_secret(secret)
 {
 }
 
@@ -28,12 +28,11 @@ MockChallengeResponseKey::~MockChallengeResponseKey()
 
 QByteArray MockChallengeResponseKey::rawKey() const
 {
-    return m_response;
+    return m_challenge + m_secret;
 }
 
 bool MockChallengeResponseKey::challenge(const QByteArray& challenge)
 {
-    Q_UNUSED(challenge);
+    m_challenge = challenge;
     return true;
 }
-
