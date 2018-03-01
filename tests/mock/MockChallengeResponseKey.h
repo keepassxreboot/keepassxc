@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,28 +13,26 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+#ifndef KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
+#define KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
+
+#include "keys/ChallengeResponseKey.h"
+
+/**
+ * Mock challenge-response key implementation that simply returns the a fixed response.
  */
-
-#ifndef KEEPASSX_TESTKEYS_H
-#define KEEPASSX_TESTKEYS_H
-
-#include <QObject>
-
-class TestKeys : public QObject
+class MockChallengeResponseKey : public ChallengeResponseKey
 {
-    Q_OBJECT
+public:
+    explicit MockChallengeResponseKey(const QByteArray& response);
+    ~MockChallengeResponseKey() override;
+    QByteArray rawKey() const override;
+    bool challenge(const QByteArray& challenge) override;
 
-private slots:
-    void initTestCase();
-    void testComposite();
-    void testFileKey();
-    void testFileKey_data();
-    void testCreateFileKey();
-    void testCreateAndOpenFileKey();
-    void testFileKeyHash();
-    void testFileKeyError();
-    void testCompositeKeyComponents();
-    void benchmarkTransformKey();
+private:
+    QByteArray m_response;
 };
 
-#endif // KEEPASSX_TESTKEYS_H
+#endif //KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
