@@ -80,7 +80,9 @@ set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release PreRel
 execute_process(COMMAND git tag --points-at HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         OUTPUT_VARIABLE GIT_TAG)
-if(NOT GIT_TAG AND EXISTS ${CMAKE_SOURCE_DIR}/.version)
+if(GIT_TAG)
+  set(OVERRIDE_VERSION ${GIT_TAG})
+elseif(EXISTS ${CMAKE_SOURCE_DIR}/.version)
   file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)
 endif()
 
