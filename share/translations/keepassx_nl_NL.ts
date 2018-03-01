@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC wordt verspreid onder de voorwaarden van de GNU General Public License (GPL) versie 2 of (als je wenst) versie 3.</translation>
+        <translation>KeePassXC wordt verspreid onder de voorwaarden van de GNU General Public License (GPL) versie 2 of (deswenst) versie 3.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Debug informatie</translation>
+        <translation>Debuginformatie</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -78,7 +78,7 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>Build Type: %1
 </source>
-        <translation>Bouw Type: %1
+        <translation>Bouwtype: %1
 </translation>
     </message>
 </context>
@@ -111,7 +111,7 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Activeer SSH Agent (vereist herstart)</translation>
+        <translation>Activeer SSH-agent (vereist herstart)</translation>
     </message>
 </context>
 <context>
@@ -134,15 +134,15 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Deze Auto-typen opdracht bevat een zeer lange vertraging. Wil je echt door gaan?</translation>
+        <translation>Deze Auto-typen opdracht bevat een zeer lange vertraging. Wil je echt doorgaan?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Deze Auto-typen opdracht bevat zeer traag toetsaanslagen. Wil je echt door gaan?</translation>
+        <translation>Deze Auto-typen opdracht bevat zeer trage toetsaanslagen. Wil je echt doorgaan?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Deze Auto-Type opdracht bevat argumenten die zeer vaak worden herhaald. Wil je echt door gaan?</translation>
+        <translation>Deze Auto-Type opdracht bevat argumenten die zeer vaak worden herhaald. Wil je echt doorgaan?</translation>
     </message>
 </context>
 <context>
@@ -227,7 +227,7 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>Activeer KeePassXC browser integratie</translation>
+        <translation>Activeer KeePassXC browserintegratie</translation>
     </message>
     <message>
         <source>General</source>
@@ -263,12 +263,12 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
         <translation>Verzoek om database te ontgrendelen als deze vergrendeld is</translation>
     </message>
     <message>
-        <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Alleen invoer van hetzelfde schema (http://, https://,...) worden gegeven.</translation>
+        <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
+        <translation>Alleen invoer van hetzelfde schema (http://, https://, …) worden gegeven.</translation>
     </message>
     <message>
-        <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>Vergelijk URL sche&amp;ma&apos;s (bijv. https://...)</translation>
+        <source>&amp;Match URL scheme (e.g., https://…)</source>
+        <translation>Vergelijk URL sche&amp;ma&apos;s (bijv. https://…)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -325,11 +325,11 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Geef geadvanceerde teken&amp;reeks velden die met &quot;KH: &quot; beginnen.</translation>
+        <translation>Geef geadvanceerde teken&amp;reeks velden die beginnen met &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Wijzig bij het opstarten automatisch het zoek pad van KeePassXC of keepassxc-proxy naar de native messaging scripts.</translation>
+        <translation>Wijzig bij het opstarten automatisch het zoekpad van KeePassXC of keepassxc-proxy naar de native messaging scripts.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
@@ -337,11 +337,11 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation>Ondersteun een proxy programma tussen KeePassXC en browser extensie.</translation>
+        <translation>Ondersteun een proxy-programma tussen KeePassXC en browserextensie.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>Gebruik een &amp;proxy programma tussen KeePassXC en browser extensie</translation>
+        <translation>Gebruik een &amp;proxy-programma tussen KeePassXC en browserextensie</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -350,12 +350,12 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Gebruik een &amp;aangepaste proxy locatie</translation>
+        <translation>Gebruik een &amp;aangepaste proxy-locatie</translation>
     </message>
     <message>
-        <source>Browse...</source>
+        <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren...</translation>
+        <translation>Bladeren…</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -371,32 +371,32 @@ Geef aan of je toegang wilt toestaan of niet.</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Selecteer aangepaste proxy locatie</translation>
+        <translation>Selecteer aangepaste proxy-locatie</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>Het spijt ons, maar KeePassXC-Browser wordt momenteel niet ondersteund voor Snap releases.</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Nieuw verzoek voor sleutel koppeling</translation>
+        <translation>KeePassXC: Nieuw verzoek voor sleutelkoppeling</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation>Je hebt een koppeling verzoek ontvangen voor bovenstaande sleutel.
+        <translation>Je hebt een koppelingsverzoek ontvangen voor bovenstaande sleutel.
 
-Als je de sleutel toegang tot jouw KeePassXC database wil geven,
-geef het dan een unieke naam ter identificatie, en accepteer het verzoek.</translation>
+Als je de sleutel toegang tot jouw KeePassXC-database wil geven,
+geef het dan een unieke naam ter identificatie en accepteer het verzoek.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Opslaan en sta toegang toe</translation>
+        <translation>Opslaan en toegang verlenen</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -406,7 +406,7 @@ geef het dan een unieke naam ter identificatie, en accepteer het verzoek.</trans
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Een gedeelde encryptiesleutel met de naam &quot;%1&quot; bestaat al.
-Wil je deze overschrjiven?</translation>
+Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -432,7 +432,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation>De actieve database bevat geen instellingen-item.</translation>
+        <translation>De actieve database bevat geen instellingen.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -440,7 +440,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation>Geen gedeelde encryptiesleutels gevonden in KeePassXC instellingen.</translation>
+        <translation>Geen gedeelde encryptiesleutels gevonden in KeePassXC-instellingen.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -452,7 +452,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Opgeslagen permissies verwijderen...</translation>
+        <translation>Opgeslagen permissies verwijderen…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -507,7 +507,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Vernieuw</translation>
+        <translation>Vernieuwen</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -518,8 +518,8 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
         <translation>Alle bestanden</translation>
     </message>
     <message>
-        <source>Create Key File...</source>
-        <translation>Sleutelbestand creëren...</translation>
+        <source>Create Key File…</source>
+        <translation>Sleutelbestand creëren…</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
@@ -539,7 +539,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>U heeft verschillende wachtwoorden opgegeven.</translation>
+        <translation>Er zijn verschillende wachtwoorden opgegeven.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
@@ -558,7 +558,7 @@ unsupported in the future.
 Please consider generating a new key file.</source>
         <translation>Je gebruikt een verouderd sleutelbestandsformaat welke in de toekomst niet ondersteund zal worden.
 
-Overweeg aub een nieuw sleutelbestand te genereren.</translation>
+Overweeg a.u.b. een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -569,11 +569,11 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation>Kloon Opties</translation>
+        <translation>Opties klonen</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Toevoegen&apos; - Kloon&apos; aan naam</translation>
+        <translation>Toevoegen &apos; - Klonen&apos; aan naam</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -581,14 +581,14 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Kopie historie</translation>
+        <translation>Historie kopiëren</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>Importeer CSV velden</translation>
+        <translation>Importeer CSV-velden</translation>
     </message>
     <message>
         <source>filename</source>
@@ -616,7 +616,7 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Kommentaar start met</translation>
+        <translation>Commentaar start met</translation>
     </message>
     <message>
         <source>First record has field names</source>
@@ -624,11 +624,11 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Aantal kopregels te negeren</translation>
+        <translation>Aantal te negeren kopregels</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Beschouw &apos;\&apos; als excape karacter</translation>
+        <translation>Beschouw &apos;\&apos; als escape-karakter</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -640,7 +640,7 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation>Niet aanwezig in CSV bestand</translation>
+        <translation>Niet aanwezig in CSV-bestand</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
@@ -652,15 +652,15 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>Geimporteerd uit CSV bestand</translation>
+        <translation>Geïmporteerd uit CSV-bestand</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Orginele gegevens:</translation>
+        <translation>Originele gegevens:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>Fout(en) gedetecteerd in CSV bestand!</translation>
+        <translation>Fout(en) gedetecteerd in CSV-bestand!</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
@@ -673,7 +673,7 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation>CSV import: uitvoer bevat fouten:
+        <translation>CSV-import: uitvoer bevat fouten:
 </translation>
     </message>
 </context>
@@ -723,7 +723,7 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Vernieuw</translation>
+        <translation>Vernieuwen</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
@@ -748,7 +748,7 @@ unsupported in the future.
 Please consider generating a new key file.</source>
         <translation>Je gebruikt een verouderd sleutelbestandsformaat welke in de toekomst niet ondersteund zal worden.
 
-Overweeg aub een nieuw sleutelbestand te genereren.</translation>
+Overweeg a.u.b. een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -787,7 +787,7 @@ Overweeg aub een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Database werd zonder problemen geopend. Niets te doen.</translation>
+        <translation>Database zonder problemen geopend. Niets te doen.</translation>
     </message>
     <message>
         <source>Success</source>
@@ -801,7 +801,7 @@ Je kunt deze nu opslaan.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Niet mogelijk om de database te repareren.</translation>
+        <translation>De database is niet te repareren.</translation>
     </message>
 </context>
 <context>
@@ -825,7 +825,7 @@ Je kunt deze nu opslaan.</translation>
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
         <translation>Je gebruikt een zeer groot aantal sleuteltransformatie rondes met Argon2.
 
-Als je dit aantal aanhoud, kan het uren, dagen –of zelfs meer– duren om de database te openen!</translation>
+Als je dit aantal aanhoudt, kan het uren, dagen (of zelfs langer) duren om de database te openen!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -846,7 +846,7 @@ Als je dit aantal aanhoud, kan het uren, dagen –of zelfs meer– duren om de d
 If you keep this number, your database may be too easy to crack!</source>
         <translation>Je gebruikt een zeer laag aantal sleuteltransformatie rondes met AES-KDF.
 
-Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kraken!</translation>
+Als je dit aantal aanhoudt is het mogelijk heel gemakkelijk om de database te kraken!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -854,7 +854,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Het transformeren van de sleutel met de nieuwe KDF parameters is mislukt; KDF is ongewijzigd.</translation>
+        <translation>Het transformeren van de sleutel met de nieuwe KDF-parameters is mislukt; KDF is ongewijzigd.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
@@ -864,7 +864,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>executie thread</numerusform><numerusform> executie threads</numerusform></translation>
+        <translation><numerusform>executie-thread</numerusform><numerusform> executie-threads</numerusform></translation>
     </message>
 </context>
 <context>
@@ -883,7 +883,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Key Derivation Function:</translation>
+        <translation>Sleutel-afleidingsfunctie:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -899,14 +899,14 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Parallellisme:</translation>
+        <translation>Parallelliteit:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>Database meta gegevens</translation>
+        <translation>Database metagegevens</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -922,7 +922,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Geschiedenis Instellingen</translation>
+        <translation>Geschiedenis-instellingen</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -942,7 +942,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Extra database instellingen</translation>
+        <translation>Extra database-instellingen</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
@@ -982,7 +982,7 @@ Als je dit aantal aanhoud is het mogelijk heel gemakkelijk om de database te kra
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation>Open CSV bestand</translation>
+        <translation>Open CSV-bestand</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -1059,8 +1059,8 @@ Opslaan?</translation>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Kan de database niet vergrendelen omdat je deze momenteel aan het bewerken bent.
-Druk op annuleren om je wijzigingen aan te passen of gooi de wijzigingen weg.</translation>
+        <translation>Kan de database niet vergrendelen omdat deze momenteel bewerkt wordt.
+Druk op annuleren om je wijzigingen te voltooien of af te danken.</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -1077,15 +1077,15 @@ Zo nee, dan gaan de wijzigingen verloren.</translation>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC heeft meerdere keren geprobeerd de database op te slaan. Dit wordt waarschijnlijk veroorzaakt door een lock op het op te slaan bestand door een bestanden-sync-service.
-Uitschakelen van veilig opslaan en opnieuw proberen?</translation>
+        <translation>KeePassXC heeft meerdere keren geprobeerd de database op te slaan. Dit wordt waarschijnlijk veroorzaakt door een blokkade op het bestand door een synchronisatie-dienst.
+Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Searching...</source>
-        <translation>Bezig met zoeken...</translation>
+        <source>Searching…</source>
+        <translation>Bezig met zoeken…</translation>
     </message>
     <message>
         <source>Change master key</source>
@@ -1125,11 +1125,11 @@ Uitschakelen van veilig opslaan en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>Commando uitvoeren?</translation>
+        <translation>Opdracht uitvoeren?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Weet je zeker dat je het volgende commando wil uitvoeren? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Weet je zeker dat je de volgende opdracht wil uitvoeren? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
@@ -1178,7 +1178,7 @@ Uitschakelen van veilig opslaan en opnieuw proberen?</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Het databasebestand is veranderd en er zijn niet opgeslagen wijzigingen.
+        <translation>Het databasebestand is veranderd en er zijn niet-opgeslagen wijzigingen.
 Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
@@ -1198,7 +1198,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation>TOTP Token genereren</translation>
+        <translation>TOTP-token genereren</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1293,7 +1293,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-typen - KeePassX</translation>
+        <translation>Auto-typen</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1305,7 +1305,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH Agent</translation>
+        <translation>SSH-agent</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1325,7 +1325,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Niet gelukt het sleutelbestand in openen</translation>
+        <translation>Niet gelukt het sleutelbestand te openen</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1361,7 +1361,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation>Druk Toon om te bekijken of bewerken</translation>
+        <translation>Druk Tonen om te bekijken of bewerken</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1381,7 +1381,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation>Pas gegenereerde wachtwoord toe?</translation>
+        <translation>Gegenereerd wachtwoord toepassen?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
@@ -1408,15 +1408,15 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Verander Naam</translation>
+        <translation>Naam bewerken</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Beveilig</translation>
+        <translation>Beveiligen</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Toon</translation>
+        <translation>Tonen</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1424,11 +1424,11 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Voorgrond kleur:</translation>
+        <translation>Voorgrondkleur:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Kleur achtergrond:</translation>
+        <translation>Achtergrondkleur:</translation>
     </message>
 </context>
 <context>
@@ -1439,7 +1439,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Erf standaard auto-typevolgorde van de &amp;groep</translation>
+        <translation>Standaard auto-typevolgorde erfen van de &amp;groep</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
@@ -1509,7 +1509,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Ingebouwd</translation>
+        <translation>Voorinstellingen</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
@@ -1564,7 +1564,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>niet van toepassing</translation>
+        <translation>n.v.t.</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -1579,9 +1579,9 @@ Wil je de wijzigingen samenvoegen?</translation>
         <translation>Extern bestand</translation>
     </message>
     <message>
-        <source>Browse...</source>
+        <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren...</translation>
+        <translation>Bladeren…</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -1597,7 +1597,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Vereis bevestiging van de gebruiker wanneer deze sleutel wordt gebruikt</translation>
+        <translation>Vraag om bevestiging van de gebruiker wanneer deze sleutel wordt gebruikt</translation>
     </message>
 </context>
 <context>
@@ -1632,7 +1632,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Erf van bovenliggende groep (%1)</translation>
+        <translation>Van bovenliggende groep erfen (%1)</translation>
     </message>
 </context>
 <context>
@@ -1655,15 +1655,15 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-typen - KeePassX</translation>
+        <translation>Auto-typen</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Gebruik de standaard autot-type volgorde van de bovenliggende groep</translation>
+        <translation>&amp;Gebruik de standaard auto-type volgorde van de bovenliggende groep</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Stel de standaard auto-type volgord&amp;e in</translation>
+        <translation>Stel de standaard auto-type volgorde in</translation>
     </message>
 </context>
 <context>
@@ -1718,11 +1718,11 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation>Bevestig Verwijder</translation>
+        <translation>Verwijderen bevestigen</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation>Dit icoon wordt gebruikt door %1 entries en zal worden vervangen door de standaard icoon. Weet je zeker dat je het wil verwijderen?</translation>
+        <translation>Dit icoon wordt gebruikt door %1 items en zal worden vervangen door de standaard icoon. Weet je zeker dat je het wil verwijderen?</translation>
     </message>
 </context>
 <context>
@@ -1805,7 +1805,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Open</translation>
+        <translation>Openen</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1830,7 +1830,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>Map maken is niet gelukt:
+        <translation>Map niet kunnen maken:
 %1</translation>
     </message>
     <message>
@@ -1844,25 +1844,25 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>Opslaan van bijlagen is niet gelukt:
+        <translation>Bijlagen niet kunnen opslaan:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>Openen van bijlage is niet gelukt:
+        <translation>Bijlage niet kunnen openen:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Openen van bijlagen is niet gelukt:
+        <translation>Bijlagen niet kunnen openen:
 %1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation>Openen van bestanden is niet gelukt:
+        <translation>Bestanden niet kunnen openen:
 %1</translation>
     </message>
 </context>
@@ -1897,7 +1897,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Ref:</translation>
+        <translation>Ref: </translation>
     </message>
     <message>
         <source>Group</source>
@@ -1952,7 +1952,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation>Pas weergave aan</translation>
+        <translation>Weergave aanpassen</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -1964,11 +1964,11 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation>Pas aan venster aan</translation>
+        <translation>Aanpassen aan venster</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Pas aan inhoud aan</translation>
+        <translation>Aanpassen aan inhoud</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
@@ -1976,7 +1976,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Bijlagen (icoon)</translation>
     </message>
 </context>
 <context>
@@ -2036,8 +2036,8 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
         <translation>Speciale tekens</translation>
     </message>
     <message>
-        <source>/*_&amp; ...</source>
-        <translation>/*_&amp; ...</translation>
+        <source>/*_&amp; …</source>
+        <translation>/*_&amp; …</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -2093,7 +2093,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>ontbrekende database headers</translation>
+        <translation>ontbrekende database-koppen</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2101,7 +2101,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Niet geldige grootte van header controlecijfer</translation>
+        <translation>Ongeldige grootte van header-controlecijfer</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
@@ -2109,31 +2109,31 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation>Verkeerde sleutel of database bestand is beschadigd. (HMAC mismatch)</translation>
+        <translation>Verkeerde sleutel of database-bestand is beschadigd. (HMAC mismatch)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Onbekend versleutel algoritme</translation>
+        <translation>Onbekend versleutelingsalgoritme</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Niet geldige grootte van header id</translation>
+        <translation>Ongeldige grootte van header-ID</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>Niet geldige lengte van header veld</translation>
+        <translation>Ongeldige lengte van header-veld</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Niet geldige lengte van header data</translation>
+        <translation>Ongeldige lengte van header-data</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Fout bij het openen van de buffer voor KDF parameters in header</translation>
+        <translation>Fout bij het openen van de buffer voor KDF-parameters in header</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Niet-ondersteunde key derivation function (KDF) of ongeldige parameters</translation>
+        <translation>Niet-ondersteunde sleutel-afleidingsfunctie (KDF) of ongeldige parameters</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -2141,15 +2141,15 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Niet geldige grootte van inner header id</translation>
+        <translation>Ongeldige grootte van inner header-id</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation>Niet geldige lengte van inner header veld</translation>
+        <translation>Ongeldige lengte van inner header-veld</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Niet geldige binaire grootte van inner header</translation>
+        <translation>Ongeldige binaire grootte van inner header</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -2159,69 +2159,69 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van de variant map entry</translation>
+        <translation>Ongeldige lengte van de variant map entry</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige data in de variant map entry name</translation>
+        <translation>Ongeldige data in de variant map entry name</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van de variant map waarde</translation>
+        <translation>Ongeldige lengte van de variant map waarde</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige data in de variant map waarde</translation>
+        <translation>Ongeldige data in de variant map waarde</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van een variant map Bool waarde</translation>
+        <translation>Ongeldige lengte van een variant map Bool waarde</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van een variant map Int32 waarde</translation>
+        <translation>Ongeldige lengte van een variant map Int32 waarde</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van een variant map UInt32 waarde</translation>
+        <translation>Ongeldige lengte van een variant map UInt32 waarde</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van een variant map Int64 waarde</translation>
+        <translation>Ongeldige lengte van een variant map Int64 waarde</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige lengte van een variant map UInt64 waarde</translation>
+        <translation>Ongeldige lengte van een variant map UInt64 waarde</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige item type in variant map</translation>
+        <translation>Ongeldige item type in variant map</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet geldige grootte van variant map veld type</translation>
+        <translation>Ongeldige grootte van variant map veld type</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>Niet geldige symmetrisch versleutel algoritme.</translation>
+        <translation>Ongeldig symmetrisch versleutelingsalgoritme.</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Niet geldig grootte IV van symmetrisch versleutel algoritme.</translation>
+        <translation>Ongeldige grootte van symmetrisch versleutelingsalgoritme IV.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2237,15 +2237,15 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length</source>
-        <translation>Niet geldige lengte versleutel uuid</translation>
+        <translation>Ongeldige lengte versleutel uuid</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Niet ondersteund versleutel algoritme</translation>
+        <translation>Niet ondersteund versleutelingsalgoritme</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Niet geldige lengte van compressie opties</translation>
+        <translation>Ongeldige lengte van compressie-opties</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
@@ -2253,40 +2253,40 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Niet geldige grootte van master seed</translation>
+        <translation>Ongeldige grootte van master seed</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Niet geldige grootte van transform seed</translation>
+        <translation>Ongeldige grootte van transform seed</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Niet geldige aantal transformatie rondes</translation>
+        <translation>Ongeldig aantal transformatie-rondes</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>Niet geldige grootte van start bytes</translation>
+        <translation>Ongeldige grootte van start-bytes</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Niet geldige grootte van random stream id</translation>
+        <translation>Ongeldige grootte van random stream-id</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Niet geldig inner-random-stream versleutel algoritme</translation>
+        <translation>Ongeldig inner-random-stream versleutelingsalgoritme</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Geen Keepass-database.</translation>
+        <translation>Geen KeePass-database.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>He gekozen bestand is een oude KeePass 1 database (.kdb)
+        <translation>Het gekozen bestand is een verouderde KeePass 1 database (.kdb)
 
-Je kunt het importeren door te klikken op Database&gt;&apos;KeePass 1 database importeren&apos;.
+Je kunt het importeren door te klikken op Database&gt;&apos;KeePass 1 database importeren…&apos;.
 Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer openen met de oude KeePassX 0.4 versie.</translation>
     </message>
     <message>
@@ -2322,15 +2322,15 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Niet geldig groep icon nummer</translation>
+        <translation>Ongeldig groepsicoon-nummer</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>Niet geldige EnableAutoType waarde</translation>
+        <translation>Ongeldige EnableAutoType waarde</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>Niet geldige EnableSearching waarde</translation>
+        <translation>Ongeldige EnableSearching waarde</translation>
     </message>
     <message>
         <source>No group uuid found</source>
@@ -2350,7 +2350,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Niet geldig icoon item nummer</translation>
+        <translation>Ongeldig icoonitem-nummer</translation>
     </message>
     <message>
         <source>History element in history entry</source>
@@ -2370,11 +2370,11 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Dubbel aangepaste eigenschap gevonden</translation>
+        <translation>Dubbele aangepaste eigenschap gevonden</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Item string sleutel of waarde ontbreekt</translation>
+        <translation>Item stringsleutel of -waarde ontbreekt</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
@@ -2390,27 +2390,27 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>Niet geldige bool waarde</translation>
+        <translation>Ongeldige bool waarde</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>Niet geldige datum-tijdwaarde</translation>
+        <translation>Ongeldige datum-tijdwaarde</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>Niet geldige kleurwaarde</translation>
+        <translation>Ongeldige kleurwaarde</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Niet geldige kleur in rgb deel</translation>
+        <translation>Ongeldige kleur in rgb deel</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>Niet geldig getal</translation>
+        <translation>Ongeldig getal</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>Niet geldige uuid-waarde</translation>
+        <translation>Ongeldige uuid-waarde</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
@@ -2422,7 +2422,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importeer Keepass 1-database</translation>
+        <translation>Keepass 1-database importeren</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -2441,11 +2441,11 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Niet-ondersteund encryptie-algoritme</translation>
+        <translation>Niet-ondersteund versleutelings-algoritme</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Niet-ondersteunde versie van Keepass-database</translation>
+        <translation>Niet-ondersteunde versie van KeePass-database</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -2454,27 +2454,27 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Niet geldig aantal groepen</translation>
+        <translation>Ongeldig aantal groepen</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Niet geldig aantal items</translation>
+        <translation>Ongeldig aantal items</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>Niet geldige grootte van inhoud-hash</translation>
+        <translation>Ongeldige grootte van inhoud-hash</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Niet geldige grootte van transform seed</translation>
+        <translation>Ongeldige grootte van transform seed</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Niet geldig aantal transformatie rondes</translation>
+        <translation>Ongeldig aantal transformatie rondes</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Opbouwen van de groepsboom is niet gelukt</translation>
+        <translation>Opbouwen van de groepsstructuur is niet gelukt</translation>
     </message>
     <message>
         <source>Root</source>
@@ -2482,7 +2482,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Niet mogelijk om hoofdsleutel te berekenen</translation>
+        <translation>Hoofdsleutel niet kunnen berekenen</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2490,15 +2490,15 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Sleutel transformatie is mislukt</translation>
+        <translation>Sleuteltransformatie is mislukt</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Niet geldig groep veld typenummer</translation>
+        <translation>Ongeldig groep veld typenummer</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>Niet geldige grootte van groep veld</translation>
+        <translation>Ongeldige grootte van groep veld</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
@@ -2534,7 +2534,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Niet geldig groep veldtype</translation>
+        <translation>Ongeldig groep veldtype</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
@@ -2546,7 +2546,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Niet geldige grootte van item veld</translation>
+        <translation>Ongeldige grootte van item veld</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
@@ -2554,31 +2554,31 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>Niet geldige grootte van uuid veld</translation>
+        <translation>Ongeldige grootte van uuid veld</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Niet geldige grootte van groep id veld</translation>
+        <translation>Ongeldige grootte van groep id veld</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Niet geldige grootte van icoon veld</translation>
+        <translation>Ongeldige grootte van icoon veld</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Niet geldige grootte van aanmaaktijd veld</translation>
+        <translation>Ongeldige grootte van aanmaaktijd veld</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Niet geldige grootte van wijzigingstijd veld</translation>
+        <translation>Ongeldige grootte van wijzigingstijd veld</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Niet geldige grootte van verloop-tijd veld</translation>
+        <translation>Ongeldige grootte van verloop-tijd veld</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Niet geldig item veld type</translation>
+        <translation>Ongeldig item veld type</translation>
     </message>
 </context>
 <context>
@@ -2632,7 +2632,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation>Tijd gebaseerd eenmalig wachtwoord</translation>
+        <translation>Tijd-gebaseerd eenmalig wachtwoord</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -2640,7 +2640,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Tools</translation>
+        <translation>&amp;Gereedschap</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -2651,16 +2651,16 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
         <translation>&amp;Over</translation>
     </message>
     <message>
-        <source>&amp;Open database...</source>
-        <translation>&amp;Open de database...</translation>
+        <source>&amp;Open database…</source>
+        <translation>Database &amp;Openen…</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation>&amp;Sla database op</translation>
+        <translation>Database Op&amp;slaan</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>&amp;Sluit database</translation>
+        <translation>Database &amp;Sluiten</translation>
     </message>
     <message>
         <source>&amp;New database</source>
@@ -2672,35 +2672,35 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation>&amp;Voeg nieuw item toe</translation>
+        <translation>Nieuw item toe&amp;voegen</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation>&amp;Bekijk/bewerk item</translation>
+        <translation>Item &amp;Bekijken/bewerken</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation>&amp;Verwijder item</translation>
+        <translation>Item &amp;Verwijderen<translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation>&amp;Voeg groep toe</translation>
+        <translation>Nieuwe groep Toe&amp;voegen</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation>&amp;Bewerk groep</translation>
+        <translation>Groep &amp;Bewerken</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation>&amp;Verwijder groep</translation>
+        <translation>Groep &amp;Verwijderen</translation>
     </message>
     <message>
-        <source>Sa&amp;ve database as...</source>
-        <translation>Be&amp;waar de database als...</translation>
+        <source>Sa&amp;ve database as…</source>
+        <translation>Database Opslaan &amp;als…</translation>
     </message>
     <message>
-        <source>Change &amp;master key...</source>
-        <translation>Wijzig het &amp;master wachtwoord...</translation>
+        <source>Change &amp;master key…</source>
+        <translation>&amp;Master wachtwoord wijzigen…</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -2712,7 +2712,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>&amp;Kloon item</translation>
+        <translation>Item &amp;Klonen</translation>
     </message>
     <message>
         <source>&amp;Find</source>
@@ -2740,7 +2740,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Wachtwoord generator</translation>
+        <translation>Wachtwoordgenerator</translation>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
@@ -2748,11 +2748,11 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>&amp;Open URL</translation>
+        <translation>URL &amp;Openen</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;Vergrendel databases</translation>
+        <translation>Databases &amp;Vergrendelen</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -2768,7 +2768,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>Kopieer URL naar klembord</translation>
+        <translation>URL naar klembord kopiëren</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -2776,43 +2776,43 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Kopieer notities naar klembord</translation>
+        <translation>Notities naar klembord kopiëren</translation>
     </message>
     <message>
-        <source>&amp;Export to CSV file...</source>
-        <translation>&amp;Exporteer naar een CSVbestand...</translation>
+        <source>&amp;Export to CSV file…</source>
+        <translation>&amp;Exporteren naar een CSV-bestand…</translation>
     </message>
     <message>
-        <source>Import KeePass 1 database...</source>
-        <translation>Importeer een KeePass 1 database...</translation>
+        <source>Import KeePass 1 database…</source>
+        <translation>Importeer een KeePass 1 database…</translation>
     </message>
     <message>
-        <source>Import CSV file...</source>
-        <translation>Importeer een CSV bestand...</translation>
+        <source>Import CSV file…</source>
+        <translation>Importeer een CSV bestand…</translation>
     </message>
     <message>
-        <source>Re&amp;pair database...</source>
-        <translation>Re&amp;pareer de database...</translation>
+        <source>Re&amp;pair database…</source>
+        <translation>Re&amp;pareer de database…</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>Laat het TOTP zien</translation>
+        <translation>Laat TOTP zien</translation>
     </message>
     <message>
-        <source>Set up TOTP...</source>
-        <translation>Stel TOTP in...</translation>
+        <source>Set up TOTP…</source>
+        <translation>TOTP instellen…</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>Kopieer &amp;TOTP</translation>
+        <translation>&amp;TOTP kopiëren</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>Leeg prullenbak</translation>
+        <translation>Prullenbak leegmaken</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Wis de geschiedenis</translation>
+        <translation>Geschiedenis wissen</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -2820,7 +2820,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Het lijkt erop dat je KeePassHTTP voor integratie met de browser gebruikt. Deze functie is verouderd en zal worden verwijderd. &lt;br&gt;Schakel aub over naar KeePassXC-Browser! Voor hulp bij migratie, bezoek onze &lt;a class=&quot;link&quot; href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt; migratiehandleiding&lt;/a&gt; (waarschuwing %1 van 3).&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Het lijkt erop dat je KeePassHTTP voor integratie met de browser gebruikt. Deze functie is verouderd en zal worden verwijderd. &lt;br&gt;Schakel a.u.b. over naar KeePassXC-Browser! Voor hulp bij migratie, bezoek onze &lt;a class=&quot;link&quot; href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt; migratiehandleiding&lt;/a&gt; (waarschuwing %1 van 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -2832,11 +2832,11 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Wissel venster</translation>
+        <translation>Venster wisselen</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Verlaat KeePassXC</translation>
+        <translation>KeePassXC afsluiten</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2848,7 +2848,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Open database</source>
-        <translation>Open database</translation>
+        <translation>Database openen</translation>
     </message>
     <message>
         <source>Save repaired database</source>
@@ -2860,26 +2860,26 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>Raak de knop op de YubiKey aan!</translation>
+        <translation>Druk de knop op uw YubiKey!</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>WAARSCHUWING: Je gebruikt een niet stabiele versie van KeePassXC!
-Er is een hoog risico op corruptie, beheer een back-up van jouw databases.
-Deze versie is niet bedoeld voor productie doeleinden.</translation>
+        <translation>WAARSCHUWING: Je gebruikt een niet-stabiele versie van KeePassXC!
+Er is een hoog risico op corruptie, bewaar een back-up van jouw databases.
+Deze versie is niet bedoeld voor dagelijks gebruik.</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Niet geldig sleutelbestand, er werd een OpenSSH sleutel verwacht</translation>
+        <translation>Ongeldig sleutelbestand, er werd een OpenSSH-sleutel verwacht</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>PEM grens fout</translation>
+        <translation>PEM-grens komt niet overeen</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -2891,7 +2891,7 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Niet geldig magic header-id in sleutelbestand</translation>
+        <translation>Ongeldig magic header-id in sleutelbestand</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -2919,7 +2919,7 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>Extractie sleutel mislukt, sleutelbestand corrupt?</translation>
+        <translation>Sleutelafleiding mislukt, corrupt sleutelbestand?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -2931,11 +2931,11 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>Onverwacht bestandseinde privesleutel</translation>
+        <translation>Onverwacht bestandseinde privésleutel</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>Kan publieke sleutel niet opslaan: lege sleutel</translation>
+        <translation>Kan publieke sleutel niet opslaan, aangezien deze leeg is</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
@@ -2943,31 +2943,31 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Kan privesleutel niet opslaan: lege sleutel</translation>
+        <translation>Kan privésleutel niet opslaan, aangezien deze leeg is</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>Onverwacht bestandseinde bij schrijven privesleutel</translation>
+        <translation>Onverwacht bestandseinde bij schrijven privésleutel</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>Sleutel type %1 is niet ondersteund.</translation>
+        <translation>Sleuteltype %1 is niet ondersteund.</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Onbekende cipher: %1</translation>
+        <translation>Onbekende versleuteling: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Codering IV is te kort voor MD5 sleutel te verkrijgen.</translation>
+        <translation>Codering IV is te kort om MD5 sleutel te verkrijgen.</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>Onbekende functie om sleutel te verkrijgen: %1</translation>
+        <translation>Onbekende sleutelafleidings-functie: %1</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>Sleutel type %1 is onbekend.</translation>
+        <translation>Onbekend sleuteltype: %1</translation>
     </message>
 </context>
 <context>
@@ -2982,7 +2982,7 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation>Activeer de KeePassHTTP server</translation>
+        <translation>KeePassHTTP-server activeren</translation>
     </message>
     <message>
         <source>General</source>
@@ -3006,8 +3006,8 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
         <translation>Verzoek om database te ontgrendelen als deze vergrendeld is</translation>
     </message>
     <message>
-        <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation>Alleen invoer van hetzelfde schema (http://, https://, ftp://,...) worden teruggegeven.</translation>
+        <source>Only entries with the same scheme (http://, https://, ftp://, …) are returned.</source>
+        <translation>Alleen invoer van hetzelfde schema (http://, https://, ftp://, …) worden teruggegeven.</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
@@ -3031,7 +3031,7 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Wachtwoord generator</translation>
+        <translation>Wachtwoordgenerator</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3055,11 +3055,11 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Het automatisch aanmaken of wijzigen van tekenreeks velden wordt niet ondersteund.</translation>
+        <translation>Het automatisch aanmaken of wijzigen van tekenreeks-velden wordt niet ondersteund.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&amp;Geef geadvanceerde tekenreeks velden terug die met &quot;KH: &quot; beginnen.</translation>
+        <translation>&amp;Geef geadvanceerde tekenreeks-velden terug die met &quot;KPH: &quot; beginnen.</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -3071,7 +3071,7 @@ Deze versie is niet bedoeld voor productie doeleinden.</translation>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation>KeePassXC zal op deze poort op 127.0.0.1 luisteren</translation>
+        <translation>KeePassXC zal deze poort op 127.0.0.1 beluisteren</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -3153,11 +3153,11 @@ Standaardpoort 19455 wordt gebruikt.</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Wachtwoord</translation>
+        <translation>Wachtwoordzin</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Woordenlijst</translation>
+        <translation>Woordenlijst:</translation>
     </message>
     <message>
         <source>Word Count:</source>
@@ -3193,7 +3193,7 @@ Standaardpoort 19455 wordt gebruikt.</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Wachtwoord kwaliteit: %1</translation>
+        <translation>Wachtwoordkwaliteit: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -3236,7 +3236,7 @@ Standaardpoort 19455 wordt gebruikt.</translation>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation>Timeout of kan geen verbinding maken met KeePassXC</translation>
+        <translation>Timeout of geen verbinding met KeePassXC</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
@@ -3385,7 +3385,7 @@ Standaardpoort 19455 wordt gebruikt.</translation>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation>Voor wachtwoord in voor ontsleutelen %1:</translation>
+        <translation>Geef het wachtwoord voor %1:</translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
@@ -3396,9 +3396,9 @@ Standaardpoort 19455 wordt gebruikt.</translation>
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>WAARSCHUWING: Je gebruikt een ouder sleutelbestandsformaat die in de toekomst mogelijk niet ondersteund zal worden.
+        <translation>WAARSCHUWING: Je gebruikt een verouderd sleutelbestandsformaat dat in de toekomst mogelijk niet ondersteund zal worden.
 
-Overweeg aub een nieuw sleutelbestand te genereren.</translation>
+Overweeg a.u.b. een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>
@@ -3407,7 +3407,7 @@ Available commands:
 </source>
         <translation>
 
-Beschikbare instructies:
+Beschikbare opdrachten:
 :</translation>
     </message>
     <message>
@@ -3424,7 +3424,7 @@ Beschikbare instructies:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Zoek ingang snel.</translation>
+        <translation>Items snel zoeken.</translation>
     </message>
     <message>
         <source>Search term.</source>
@@ -3468,7 +3468,7 @@ Beschikbare instructies:
     </message>
     <message>
         <source>NULL device</source>
-        <translation>NULL apparaat</translation>
+        <translation>NULL-apparaat</translation>
     </message>
     <message>
         <source>error reading from device</source>
@@ -3542,7 +3542,7 @@ Beschikbare instructies:
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation>Verouderde browser integratie</translation>
+        <translation>Verouderde browserintegratie</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -3562,15 +3562,15 @@ Beschikbare instructies:
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH Agent</translation>
+        <translation>SSH-agent</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Genereer een nieuw willekeurig diceware wachtwoord zin</translation>
+        <translation>Genereer een nieuwe willekeurige diceware wachtwoordzin</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Aantal woorden voor de Diceware wachtzin.</translation>
+        <translation>Aantal woorden voor de Diceware wachtwoordzin.</translation>
     </message>
     <message>
         <source>count</source>
@@ -3579,7 +3579,7 @@ Beschikbare instructies:
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Woordenlijst voor de Diceware generator.
+        <translation>Woordenlijst voor de Diceware-generator.
 [Standaard: EFF Engels]</translation>
     </message>
     <message>
@@ -3648,8 +3648,8 @@ Beschikbare instructies:
 <context>
     <name>SearchWidget</name>
     <message>
-        <source>Search...</source>
-        <translation>Zoek...</translation>
+        <source>Search…</source>
+        <translation>Zoeken…</translation>
     </message>
     <message>
         <source>Search</source>
@@ -3672,15 +3672,15 @@ Beschikbare instructies:
     <name>Service</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Nieuw verzoek voor sleutel koppeling</translation>
+        <translation>KeePassXC: Nieuw verzoek voor sleutelkoppeling</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
         <translation>Je hebt een koppeling verzoek ontvangen voor bovenstaande sleutel.
-Als je de sleutel toegang tot jouw KeePassXC database wil geven,
-geef het dan een unieke naam ter identificatie, en accepteer het verzoek.</translation>
+Als je de sleutel toegang tot jouw KeePassXC-database wil geven,
+geef het dan een unieke naam ter identificatie en accepteer het verzoek.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -3690,7 +3690,7 @@ geef het dan een unieke naam ter identificatie, en accepteer het verzoek.</trans
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Een gedeelde encryptiesleutel met de naam &quot;%1&quot; bestaat al.
-Wil je deze overschrjiven?</translation>
+Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -3724,7 +3724,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>Geen gedeelde encryptiesleutels gevonen in de KeePassHttp instellingen.</translation>
+        <translation>Geen gedeelde encryptiesleutels gevonen in de KeePassHttp-instellingen.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
@@ -3732,11 +3732,11 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation>De actieve database bevat geen KeePassHttp instellingen.</translation>
+        <translation>De actieve database bevat geen KeePassHttp-instellingen.</translation>
     </message>
     <message>
-        <source>Removing stored permissions...</source>
-        <translation>Opgeslagen permissies verwijderen...</translation>
+        <source>Removing stored permissions…</source>
+        <translation>Opgeslagen permissies verwijderen…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -3786,7 +3786,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Start slechts een enkele instance van KeePassXC</translation>
+        <translation>Slechts een enkele instantie van KeePassXC starten</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -3794,7 +3794,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>Onthou de laatste sleutelbestanden en beveiligingsdongles</translation>
+        <translation>Onthoud de laatste sleutelbestanden en beveiligingsdongles</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -3810,7 +3810,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Herlaad database automatisch als deze van buitenaf is gewijzigd</translation>
+        <translation>Database automatisch opnieuw laden als deze van buitenaf is gewijzigd</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
@@ -3822,7 +3822,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gebruik icoon van de groep voor nieuwe items</translation>
+        <translation>Gebruik groepsicoon voor nieuwe items</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
@@ -3830,7 +3830,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation>Detail weergave verbergen</translation>
+        <translation>Detailweergave verbergen</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -3854,7 +3854,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-typen - KeePassX</translation>
+        <translation>Auto-typen</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -3895,11 +3895,11 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Back-up het databasebestand voor het opslaan</translation>
+        <translation>Back-up databasebestand voor het opslaan</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Item beheer</translation>
+        <translation>Itembeheer</translation>
     </message>
     <message>
         <source>General</source>
@@ -3919,7 +3919,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>sec</translation>
+        <translation> sec</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -3943,15 +3943,15 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Laat wachtwoorden standaard zien</translation>
+        <translation>Wachtwoorden standaard weergeven</translation>
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation>Verberg wachtwoorden in informatiepaneel.</translation>
+        <translation>Wachtwoorden verbergen in informatiepaneel</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Verberg standaard item aantekeningen</translation>
+        <translation>Item-aantekeningen standaard verbergen</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -3959,7 +3959,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>Gebruik Google om op terug te vallen voor het downloaden van de websiteiconen</translation>
+        <translation>Gebruik Google om eventueel website-iconen te downloaden</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -3970,7 +3970,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>Stel TOTP in</translation>
+        <translation>TOTP instellen</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -3978,15 +3978,15 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation>Standaard &quot;RFC 6238 token&quot; instellingen</translation>
+        <translation>Standaard &quot;RFC 6238 token&quot;-instellingen</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation>&quot;Steam token&quot; instellingen</translation>
+        <translation>&quot;Steam token&quot;-instellingen</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation>Gebruik aangepaste instellingen</translation>
+        <translation>Aangepaste instellingen gebruiken</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
@@ -3998,11 +3998,11 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>8 digits</source>
-        <translation>8 digits</translation>
+        <translation>8 cijfers</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation>6 digits</translation>
+        <translation>6 cijfers</translation>
     </message>
     <message>
         <source>Code size:</source>
@@ -4030,7 +4030,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Expires in</source>
-        <translation>Verloopt binnen</translation>
+        <translation>Verloopt over</translation>
     </message>
     <message>
         <source>seconds</source>
@@ -4048,7 +4048,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Begin met het opslaan van jouw wachtwoorden in een KeePassXC database</translation>
+        <translation>Begin met het opslaan van jouw wachtwoorden in een KeePassXC-database</translation>
     </message>
     <message>
         <source>Create new database</source>
@@ -4064,7 +4064,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Uit CSV-bestand importeren</translation>
+        <translation>CSV-bestand importeren</translation>
     </message>
     <message>
         <source>Recent databases</source>
