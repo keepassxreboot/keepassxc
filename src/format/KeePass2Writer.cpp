@@ -85,7 +85,15 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
     m_error = false;
     m_errorStr.clear();
 
-    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && !implicitUpgradeNeeded(db)) {
+    bool upgradeNeeded = implicitUpgradeNeeded(db);
+    if (upgradeNeeded) {
+        // We MUST re-transform the key, because challenge-response hashing has changed in KDBX 4.
+        // If we forget to re-transform, the database will be saved WITHOUT a challenge-response key component!
+        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4));
+    }
+
+    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
+        Q_ASSERT(!upgradeNeeded);
         m_version = KeePass2::FILE_VERSION_3_1;
         m_writer.reset(new Kdbx3Writer());
     } else {
