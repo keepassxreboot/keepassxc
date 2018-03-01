@@ -260,6 +260,10 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
                 continue;
             }
 
+            if (!key.openPrivateKey(e->password())) {
+                continue;
+            }
+
             if (key.comment().isEmpty()) {
                 key.setComment(e->username());
             }
@@ -268,7 +272,7 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
                 removeIdentityAtLock(key, uuid);
             }
 
-            if (settings.addAtDatabaseOpen() && key.openPrivateKey(e->password())) {
+            if (settings.addAtDatabaseOpen()) {
                 int lifetime = 0;
 
                 if (settings.useLifetimeConstraintWhenAdding()) {

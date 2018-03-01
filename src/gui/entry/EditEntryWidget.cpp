@@ -346,24 +346,32 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
         return;
     }
 
-    m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
-
-    if (key.encrypted()) {
-        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
-        m_sshAgentUi->decryptButton->setEnabled(true);
+    if (!key.fingerprint().isEmpty()) {
+        m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
     } else {
-        m_sshAgentUi->commentTextLabel->setText(key.comment());
+        m_sshAgentUi->fingerprintTextLabel->setText(tr("(encrypted)"));
     }
 
-    m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    if (!key.comment().isEmpty() || !key.encrypted()) {
+        m_sshAgentUi->commentTextLabel->setText(key.comment());
+    } else {
+        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
+        m_sshAgentUi->decryptButton->setEnabled(true);
+    }
+
+    if (!key.publicKey().isEmpty()) {
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+        m_sshAgentUi->copyToClipboardButton->setEnabled(true);
+    } else {
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(tr("(encrypted)"));
+        m_sshAgentUi->copyToClipboardButton->setDisabled(true);
+    }
 
     // enable agent buttons only if we have an agent running
     if (SSHAgent::instance()->isAgentRunning()) {
         m_sshAgentUi->addToAgentButton->setEnabled(true);
         m_sshAgentUi->removeFromAgentButton->setEnabled(true);
     }
-
-    m_sshAgentUi->copyToClipboardButton->setEnabled(true);
 }
 
 void EditEntryWidget::saveSSHAgentConfig()
@@ -410,7 +418,7 @@ void EditEntryWidget::browsePrivateKey()
     }
 }
 
-bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
+bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
 {
     QByteArray privateKeyData;
 
@@ -436,13 +444,20 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key)
         privateKeyData = localFile.readAll();
     }
 
-    if (privateKeyData.length() == 0) {
+    if (privateKeyData.isEmpty()) {
         return false;
     }
 
     if (!key.parse(privateKeyData)) {
         showMessage(key.errorString(), MessageWidget::Error);
         return false;
+    }
+
+    if (key.encrypted() && (decrypt || key.publicKey().isEmpty())) {
+        if (!key.openPrivateKey(m_entry->password())) {
+            showMessage(key.errorString(), MessageWidget::Error);
+            return false;
+        }
     }
 
     if (key.comment().isEmpty()) {
@@ -456,16 +471,12 @@ void EditEntryWidget::addKeyToAgent()
 {
     OpenSSHKey key;
 
-    if (!getOpenSSHKey(key)) {
+    if (!getOpenSSHKey(key, true)) {
         return;
     }
 
-    if (!key.openPrivateKey(m_entry->password())) {
-        showMessage(key.errorString(), MessageWidget::Error);
-    } else {
-        m_sshAgentUi->commentTextLabel->setText(key.comment());
-        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
-    }
+    m_sshAgentUi->commentTextLabel->setText(key.comment());
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
 
     quint32 lifetime = 0;
     bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
@@ -494,16 +505,19 @@ void EditEntryWidget::decryptPrivateKey()
 {
     OpenSSHKey key;
 
-    if (!getOpenSSHKey(key)) {
+    if (!getOpenSSHKey(key, true)) {
         return;
     }
 
-    if (!key.openPrivateKey(m_entry->password())) {
-        showMessage(key.errorString(), MessageWidget::Error);
-    } else {
+    if (!key.comment().isEmpty()) {
         m_sshAgentUi->commentTextLabel->setText(key.comment());
-        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    } else {
+        m_sshAgentUi->commentTextLabel->setText(tr("n/a"));
     }
+
+    m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
+    m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
+    m_sshAgentUi->copyToClipboardButton->setEnabled(true);
 }
 
 void EditEntryWidget::copyPublicKey()
