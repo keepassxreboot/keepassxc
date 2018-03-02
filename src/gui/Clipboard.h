@@ -21,6 +21,7 @@
 #include <QObject>
 #ifdef Q_OS_MAC
 #include "core/MacPasteboard.h"
+#include <QPointer>
 #endif
 
 class QTimer;
@@ -47,7 +48,9 @@ private:
 
     QTimer* m_timer;
 #ifdef Q_OS_MAC
-    QScopedPointer<MacPasteboard> m_pasteboard;
+    // This object lives for the whole program lifetime and we cannot delete it on exit,
+    // so ignore leak warnings. See https://bugreports.qt.io/browse/QTBUG-54832
+    static QPointer<MacPasteboard> m_pasteboard;
 #endif
     QString m_lastCopied;
 };
