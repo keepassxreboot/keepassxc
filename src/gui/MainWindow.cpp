@@ -933,7 +933,7 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
 
 void MainWindow::rememberOpenDatabases(const QString& filePath)
 {
-    m_openDatabases.append(filePath);
+    m_openDatabases.prepend(filePath);
 }
 
 void MainWindow::applySettingsChanges()
