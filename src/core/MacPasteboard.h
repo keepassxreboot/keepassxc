@@ -20,8 +20,9 @@
 
 #include <QMacPasteboardMime>
 #include <QTextCodec>
+#include <QObject>
 
-class MacPasteboard : public QMacPasteboardMime
+class MacPasteboard : public QObject, public QMacPasteboardMime
 {
 public:
     explicit MacPasteboard() : QMacPasteboardMime(MIME_ALL) {}

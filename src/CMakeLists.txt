@@ -152,6 +152,7 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    keys/ChallengeResponseKey.h
     keys/CompositeKey.cpp
     keys/drivers/YubiKey.h
     keys/FileKey.cpp

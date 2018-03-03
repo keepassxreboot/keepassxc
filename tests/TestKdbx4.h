@@ -28,6 +28,8 @@ private slots:
     void testFormat400();
     void testFormat400Upgrade();
     void testFormat400Upgrade_data();
+    void testUpgradeMasterKeyIntegrity();
+    void testUpgradeMasterKeyIntegrity_data();
     void testCustomData();
 
 protected:

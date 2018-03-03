@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,28 +13,26 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+*/
 
-#ifndef KEEPASSX_TESTKEYS_H
-#define KEEPASSX_TESTKEYS_H
+#include "MockChallengeResponseKey.h"
 
-#include <QObject>
-
-class TestKeys : public QObject
+MockChallengeResponseKey::MockChallengeResponseKey(const QByteArray& secret)
+    : m_secret(secret)
 {
-    Q_OBJECT
+}
 
-private slots:
-    void initTestCase();
-    void testComposite();
-    void testFileKey();
-    void testFileKey_data();
-    void testCreateFileKey();
-    void testCreateAndOpenFileKey();
-    void testFileKeyHash();
-    void testFileKeyError();
-    void testCompositeKeyComponents();
-    void benchmarkTransformKey();
-};
+MockChallengeResponseKey::~MockChallengeResponseKey()
+{
+}
 
-#endif // KEEPASSX_TESTKEYS_H
+QByteArray MockChallengeResponseKey::rawKey() const
+{
+    return m_challenge + m_secret;
+}
+
+bool MockChallengeResponseKey::challenge(const QByteArray& challenge)
+{
+    m_challenge = challenge;
+    return true;
+}

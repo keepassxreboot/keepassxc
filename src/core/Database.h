@@ -105,7 +105,8 @@ public:
                 bool updateTransformSalt = false);
     bool hasKey() const;
     bool verifyKey(const CompositeKey& key) const;
-    QVariantMap publicCustomData() const;
+    QVariantMap& publicCustomData();
+    const QVariantMap& publicCustomData() const;
     void setPublicCustomData(const QVariantMap& customData);
     void recycleEntry(Entry* entry);
     void recycleGroup(Group* group);

@@ -83,7 +83,7 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned ret
         }
 
         // if challenge failed, retry to detect YubiKeys in the event the YubiKey was un-plugged and re-plugged
-        if (retries > 0 && YubiKey::instance()->init() != true) {
+        if (retries > 0 && !YubiKey::instance()->init()) {
             continue;
         }
 
