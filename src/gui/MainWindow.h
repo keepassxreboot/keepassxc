@@ -104,6 +104,7 @@ private slots:
     void hideTabMessage();
     void handleScreenLock();
     void showKeePassHTTPDeprecationNotice();
+    void showErrorMessage(const QString& message);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

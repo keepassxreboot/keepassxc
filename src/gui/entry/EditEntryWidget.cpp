@@ -485,7 +485,10 @@ void EditEntryWidget::addKeyToAgent()
         lifetime = m_sshAgentUi->lifetimeSpinBox->value();
     }
 
-    SSHAgent::instance()->addIdentity(key, lifetime, confirm);
+    if (!SSHAgent::instance()->addIdentity(key, lifetime, confirm)) {
+        showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
+        return;
+    }
 
     if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
         SSHAgent::instance()->removeIdentityAtLock(key, m_entry->uuid());
@@ -496,8 +499,13 @@ void EditEntryWidget::removeKeyFromAgent()
 {
     OpenSSHKey key;
 
-    if (getOpenSSHKey(key)) {
-        SSHAgent::instance()->removeIdentity(key);
+    if (!getOpenSSHKey(key)) {
+        return;
+    }
+
+    if (!SSHAgent::instance()->removeIdentity(key)) {
+        showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
+        return;
     }
 }
 
