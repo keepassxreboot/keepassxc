@@ -157,10 +157,14 @@ if(WITH_APP_BUNDLE)
 endif()
 
 add_gcc_compiler_flags("-fno-common")
-add_gcc_compiler_flags("-Wall -Werror -Wextra -Wundef -Wpointer-arith -Wno-long-long")
+add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_gcc_compiler_flags("-Werror")
+endif()
 
 if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_flags("-fstack-protector-strong")
