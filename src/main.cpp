@@ -149,6 +149,7 @@ int main(int argc, char** argv)
                 static QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
+            mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
         }
     }
 
