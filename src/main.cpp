@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     QCommandLineOption parentWindowOption(QStringList() << "pw"
                                                         << "parent-window",
                                                         QCoreApplication::translate("main", "Parent window handle"),
-                                                        "handle");
+                                    		        "handle");
 
     parser.addHelpOption();
     parser.addVersionOption();
@@ -149,6 +149,11 @@ int main(int argc, char** argv)
                 static QTextStream in(stdin, QIODevice::ReadOnly);
                 password = in.readLine();
             }
+	          #ifdef Q_OS_WIN
+		          mainWindow.openDatabase(filename, parser.value(pwstdinOption), parser.value(keyfileOption));
+	           #else
+		          mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+            #endif
         }
     }
 
