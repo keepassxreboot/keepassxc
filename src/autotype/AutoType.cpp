@@ -659,6 +659,7 @@ bool AutoType::checkSyntax(const QString& string)
     QString delay = "DELAY=\\d+";
     QString beep = "BEEP\\s\\d+\\s\\d+";
     QString vkey = "VKEY(?:-[EN]X)?\\s\\w+";
+    QString customAttributes = "S:(?:[^\\{\\}])+";
 
     // these chars aren't in parentheses
     QString shortcutKeys = "[\\^\\%~\\+@]";
@@ -666,7 +667,7 @@ bool AutoType::checkSyntax(const QString& string)
     QString fixedStrings = "[^\\^\\%~\\+@\\{\\}]*";
 
     QRegularExpression autoTypeSyntax("^(?:" + shortcutKeys + "|" + fixedStrings + "|\\{(?:" + normalCommands + "|" + specialLiterals +
-                           "|" + functionKeys + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\})*$",
+                           "|" + functionKeys + "|" + numpad + "|" + delay + "|" + beep + "|" + vkey + ")\\}|\\{" + customAttributes + "\\})*$",
                            QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match = autoTypeSyntax.match(string);
     return match.hasMatch();

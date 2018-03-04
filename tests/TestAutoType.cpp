@@ -273,32 +273,41 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
     // Huge sequence
-    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+    QVERIFY(AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{NUMPAD1 3}"));
+    QVERIFY(AutoType::checkSyntax("{NUMPAD1 3}"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{BEEP 3 3}"));
-    QCOMPARE(false, AutoType::checkSyntax("{BEEP 3}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIALTOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL-TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL:TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}{ENTER}"));
+    QVERIFY(AutoType::checkSyntax("{S:FOO}{S:HELLO WORLD}"));
+    QVERIFY(!AutoType::checkSyntax("{S:SPECIAL_TOKEN{}}"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY 0x01}"));
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    QVERIFY(AutoType::checkSyntax("{BEEP 3 3}"));
+    QVERIFY(!AutoType::checkSyntax("{BEEP 3}"));
+
+    QVERIFY(AutoType::checkSyntax("{VKEY 0x01}"));
+    QVERIFY(AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
+    QVERIFY(AutoType::checkSyntax("{VKEY-EX 0x01}"));
     // Bad sequence
-    QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    QVERIFY(!AutoType::checkSyntax("{{{}}{}{}}{{}}"));
     // Good sequence
-    QCOMPARE(true, AutoType::checkSyntax("{{}{}}{}}{{}"));
-    QCOMPARE(true, AutoType::checkSyntax("{]}{[}{[}{]}"));
-    QCOMPARE(true, AutoType::checkSyntax("{)}{(}{(}{)}"));
+    QVERIFY(AutoType::checkSyntax("{{}{}}{}}{{}"));
+    QVERIFY(AutoType::checkSyntax("{]}{[}{[}{]}"));
+    QVERIFY(AutoType::checkSyntax("{)}{(}{(}{)}"));
     // High DelAY / low delay
-    QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
-    QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));
+    QVERIFY(AutoType::checkHighDelay("{DelAY 50000}"));
+    QVERIFY(!AutoType::checkHighDelay("{delay 50}"));
     // Slow typing
-    QCOMPARE(true, AutoType::checkSlowKeypress("{DelAY=50000}"));
-    QCOMPARE(false, AutoType::checkSlowKeypress("{delay=50}"));
+    QVERIFY(AutoType::checkSlowKeypress("{DelAY=50000}"));
+    QVERIFY(!AutoType::checkSlowKeypress("{delay=50}"));
     // Many repetition / few repetition / delay not repetition
-    QCOMPARE(true, AutoType::checkHighRepetition("{LEFT 50000000}"));
-    QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
-    QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
+    QVERIFY(AutoType::checkHighRepetition("{LEFT 50000000}"));
+    QVERIFY(!AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
+    QVERIFY(!AutoType::checkHighRepetition("{delay 5000000000}"));
 }
 
 void TestAutoType::testAutoTypeEffectiveSequences()
