@@ -143,12 +143,15 @@ int main(int argc, char** argv)
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename: fileNames) {
+        QString password;
+        if (pwstdin) {
+            // we always need consume a line of STDIN if --pw-stdin is set to clear out the
+            // buffer for native messaging, even if the specified file does not exist
+            static QTextStream in(stdin, QIODevice::ReadOnly);
+            password = in.readLine();
+        }
+
         if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
-            QString password;
-            if (pwstdin) {
-                static QTextStream in(stdin, QIODevice::ReadOnly);
-                password = in.readLine();
-            }
             mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
         }
     }
