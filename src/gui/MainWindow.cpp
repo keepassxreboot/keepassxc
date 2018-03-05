@@ -499,6 +499,7 @@ void MainWindow::updateCopyAttributesMenu()
     const QStringList customEntryAttributes = dbWidget->customEntryAttributes();
     for (const QString& key : customEntryAttributes) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
+        action->setData(QVariant(key));
         m_copyAdditionalAttributeActions->addAction(action);
     }
 }
