@@ -2819,7 +2819,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Похоже вы используете KeePassHTTP для интеграции с браузером. Эта функция является устаревшей и будет удалена в будущем.&lt;br&gt;Пожалуйста перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt; (предупреждение %1 of 3).&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Похоже, вы используете KeePassHTTP для интеграции с браузером. Эта функция является устаревшей и будет удалена в будущем.&lt;br&gt;Пожалуйста, перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt; (предупреждение %1 of 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -3078,7 +3078,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;KeePassHTTP устарел и будет удален в будущем.&lt;br&gt;Поажлуйста перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;KeePassHTTP устарел и будет удален в будущем.&lt;br&gt;Пожалуйста, перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
