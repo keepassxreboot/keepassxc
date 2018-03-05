@@ -71,7 +71,9 @@ Database* KdbxReader::readDatabase(QIODevice* device, const CompositeKey& key, b
 
     // read KDBX magic numbers
     quint32 sig1, sig2;
-    readMagicNumbers(&headerStream, sig1, sig2, m_kdbxVersion);
+    if (!readMagicNumbers(&headerStream, sig1, sig2, m_kdbxVersion)) {
+        return nullptr;
+    }
     m_kdbxSignature = qMakePair(sig1, sig2);
 
     // mask out minor version
