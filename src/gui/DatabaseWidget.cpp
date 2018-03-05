@@ -598,7 +598,7 @@ void DatabaseWidget::copyAttribute(QAction* action)
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->text())));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
 }
 
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
