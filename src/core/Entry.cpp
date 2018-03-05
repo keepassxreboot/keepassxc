@@ -796,7 +796,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
     case PlaceholderType::Unknown:
-        return placeholder;
+        return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth - 1);
     case PlaceholderType::Title:
         if (placeholderType(title()) == PlaceholderType::Title) {
             return title();
