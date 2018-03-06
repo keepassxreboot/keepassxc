@@ -2583,6 +2583,33 @@ Si tratta di una migrazione unidirezionale. Non sarà possibile aprire il databa
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 bit</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – raccomandato)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -3491,30 +3518,6 @@ Comandi disponibili:
         <translation>virgoletta di chiusura mancante</translation>
     </message>
     <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 bit</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – raccomandato)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
         <source>Group</source>
         <translation>Gruppo</translation>
     </message>
@@ -3984,7 +3987,7 @@ Sblocca il database selezionato o scegline un altro che sia sbloccato.</translat
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation>Impostazioni del token di vapore</translation>
+        <translation>Impostazioni del token di Steam</translation>
     </message>
     <message>
         <source>Use custom settings</source>

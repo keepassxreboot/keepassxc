@@ -197,12 +197,12 @@ QImage EditWidgetIcons::fetchFavicon(const QUrl& url)
         curl_easy_setopt(curl, CURLOPT_URL, baUrl.data());
         curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 5L);
         curl_easy_setopt(curl, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl");
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_CONNECTTIMEOUT, 5L);
+        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);
         curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &imagedata);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCurlResponse);
-        curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L);
 #ifdef Q_OS_WIN
         const QDir appDir = QFileInfo(QCoreApplication::applicationFilePath()).absoluteDir();
         if (appDir.exists("ssl\\certs")) {

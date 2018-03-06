@@ -50,6 +50,31 @@
     </screenshots>
 
     <releases>
+        <release version="2.3.1" date="2018-03-06">
+            <description>
+                <ul>
+                    <li>Fix unnecessary automatic upgrade to KDBX 4.0 and prevent challenge-response key being stripped [#1568]</li>
+                    <li>Abort saving and show an error message when challenge-response fails [#1659]</li>
+                    <li>Support inner stream protection on all string attributes [#1646]</li>
+                    <li>Fix favicon downloads not finishing on some websites [#1657]</li>
+                    <li>Fix freeze due to invalid STDIN data [#1628]</li>
+                    <li>Correct issue with encrypted RSA SSH keys [#1587]</li>
+                    <li>Fix crash on macOS due to QTBUG-54832 [#1607]</li>
+                    <li>Show error message if ssh-agent communication fails [#1614]</li>
+                    <li>Fix --pw-stdin and filename parameters being ignored [#1608]</li>
+                    <li>Fix Auto-Type syntax check not allowing spaces and special characters [#1626]</li>
+                    <li>Fix reference placeholders in combination with Auto-Type [#1649]</li>
+                    <li>Fix qtbase translations not being loaded [#1611]</li>
+                    <li>Fix startup crash on Windows due to missing SVG libraries [#1662]</li>
+                    <li>Correct database tab order regression [#1610]</li>
+                    <li>Fix GCC 8 compilation error [#1612]</li>
+                    <li>Fix copying of advanced attributes on KDE [#1640]</li>
+                    <li>Fix member initialization of CategoryListWidgetDelegate [#1613]</li>
+                    <li>Fix inconsistent toolbar icon sizes and provide higher-quality icons [#1616]</li>
+                    <li>Improve preview panel geometry [#1609]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.3.0" date="2018-02-27">
             <description>
                 <ul>

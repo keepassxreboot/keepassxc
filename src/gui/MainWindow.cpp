@@ -198,6 +198,7 @@ MainWindow::MainWindow()
 #endif
 #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
+    connect(SSHAgent::instance(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
 #endif
 
@@ -454,6 +455,11 @@ void MainWindow::showKeePassHTTPDeprecationNotice()
     disconnect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 
+void MainWindow::showErrorMessage(const QString& message)
+{
+    m_ui->globalMessageWidget->showMessage(message, MessageWidget::Error);
+}
+
 void MainWindow::appExit()
 {
     m_appExitCalled = true;
@@ -493,6 +499,7 @@ void MainWindow::updateCopyAttributesMenu()
     const QStringList customEntryAttributes = dbWidget->customEntryAttributes();
     for (const QString& key : customEntryAttributes) {
         QAction* action = m_ui->menuEntryCopyAttribute->addAction(key);
+        action->setData(QVariant(key));
         m_copyAdditionalAttributeActions->addAction(action);
     }
 }

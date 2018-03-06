@@ -375,7 +375,7 @@ Por favor seleccione si desea autorizar su acceso.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>Lo sentimos, pero KeePassXC-Browser no está soportado en las versiones Snap por el momento.</translation>
     </message>
 </context>
 <context>
@@ -1764,11 +1764,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Clave</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
 </context>
 <context>
@@ -1818,7 +1818,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1930,11 +1930,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificado</translation>
     </message>
     <message>
         <source>Accessed</source>
@@ -1949,31 +1949,31 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation type="unfinished"/>
+        <translation>Personalizar Vista</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Ocultar nombres de usuario</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Ocultar Contraseñas</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished"/>
+        <translation>Ajustar a la ventana</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>Ajustar al contenido</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation type="unfinished"/>
+        <translation>Restaurar ajustes por defecto</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Adjuntos (icono)</translation>
     </message>
 </context>
 <context>
@@ -2575,6 +2575,33 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Invalid entry field type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3479,30 +3506,6 @@ Available commands:
         <translation>comilla de cierre faltante</translation>
     </message>
     <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Group</source>
         <translation>Grupo</translation>
     </message>
@@ -3528,7 +3531,7 @@ Available commands:
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creado</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>

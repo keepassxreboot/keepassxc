@@ -2558,6 +2558,33 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -3458,30 +3485,6 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation>недостаје завршни наводник</translation>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Group</source>

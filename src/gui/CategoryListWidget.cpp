@@ -152,8 +152,9 @@ void CategoryListWidget::emitCategoryChanged(int index)
 CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
     : QStyledItemDelegate(parent),
       m_listWidget(parent),
-      m_size(minWidth(), 96)
+      m_size(96, 96)
 {
+    m_size.setWidth(minWidth());
     if (m_listWidget && m_listWidget->width() > m_size.width()) {
         m_size.setWidth(m_listWidget->width());
     }

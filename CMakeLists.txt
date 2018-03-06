@@ -70,7 +70,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "3")
-set(KEEPASSXC_VERSION_PATCH "0")
+set(KEEPASSXC_VERSION_PATCH "1")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
@@ -157,10 +157,14 @@ if(WITH_APP_BUNDLE)
 endif()
 
 add_gcc_compiler_flags("-fno-common")
-add_gcc_compiler_flags("-Wall -Werror -Wextra -Wundef -Wpointer-arith -Wno-long-long")
+add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_gcc_compiler_flags("-Werror")
+endif()
 
 if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_flags("-fstack-protector-strong")
