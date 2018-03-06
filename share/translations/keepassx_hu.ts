@@ -2580,6 +2580,33 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 bites</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 bites</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 bites</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2912,7 +2939,7 @@ Ez a verzió nem felhasználóknak készült.</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Jelszó szükséges a kulcsfájl visszafejtéséhez</translation>
+        <translation>Jelmondat szükséges a kulcsfájl visszafejtéséhez</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
@@ -2920,7 +2947,7 @@ Ez a verzió nem felhasználóknak készült.</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Visszafejtés sikertelen, rossz a jelszó?</translation>
+        <translation>Visszafejtés sikertelen, rossz a jelmondat?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -3150,7 +3177,7 @@ Az alapértelmezett 19455 port lesz használva.</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Jelszó</translation>
+        <translation>Jelmondat</translation>
     </message>
     <message>
         <source>Wordlist:</source>
@@ -3486,30 +3513,6 @@ Elérhető parancsok:
         <translation>hiányzó lezáró idézőjel</translation>
     </message>
     <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 bites</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 bites</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 bites</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
         <source>Group</source>
         <translation>Csoport</translation>
     </message>
@@ -3563,11 +3566,11 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Véletlenszerű új diceware jelszó előállítása.</translation>
+        <translation>Véletlenszerű új diceware jelmondat előállítása.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Szavak számra a diceware jelszó számára.</translation>
+        <translation>Szavak számra a diceware jelmondat számára.</translation>
     </message>
     <message>
         <source>count</source>

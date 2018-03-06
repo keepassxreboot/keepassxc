@@ -53,6 +53,9 @@ void Translator::installTranslators()
     bool translationsLoaded = false;
     for (const QString& path : paths) {
         translationsLoaded |= installTranslator(language, path) || installTranslator("en_US", path);
+        if (!installQtTranslator(language, path)) {
+            installQtTranslator("en", path);
+        }
     }
     if (!translationsLoaded) {
         // couldn't load configured language or fallback

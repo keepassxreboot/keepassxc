@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.3.0
+version: 2.3.1
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -28,6 +28,7 @@ parts:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
       - -DKEEPASSXC_DIST_TYPE=Snap
+      - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
     build-packages:

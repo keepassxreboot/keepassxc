@@ -51,18 +51,25 @@ void NativeMessagingHost::readLength()
 
 void NativeMessagingHost::readStdIn(const quint32 length)
 {
-    if (length > 0) {
-        QByteArray arr;
-        arr.reserve(length);
+    if (length <= 0) {
+        return;
+    }
 
-        for (quint32 i = 0; i < length; ++i) {
-            arr.append(getchar());
-        }
+    QByteArray arr;
+    arr.reserve(length);
 
-        if (arr.length() > 0 && m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
-            m_localSocket->write(arr.constData(), arr.length());
-            m_localSocket->flush();
+    for (quint32 i = 0; i < length; ++i) {
+        int c = std::getchar();
+        if (c == EOF) {
+            // message ended prematurely, ignore it and return
+            return;
         }
+        arr.append(static_cast<char>(c));
+    }
+
+    if (arr.length() > 0 && m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
+        m_localSocket->write(arr.constData(), arr.length());
+        m_localSocket->flush();
     }
 }
 

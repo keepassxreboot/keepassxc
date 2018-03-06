@@ -129,6 +129,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_detailSplitter->setStretchFactor(0, 100);
     m_detailSplitter->setStretchFactor(1, 0);
+    m_detailSplitter->setSizes({1, 1});
 
     m_searchingLabel->setVisible(false);
 
@@ -597,7 +598,7 @@ void DatabaseWidget::copyAttribute(QAction* action)
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->text())));
+    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
 }
 
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)

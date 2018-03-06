@@ -317,7 +317,7 @@ Selecione se deseja permitir o acesso.</translation>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Procurar em todas as base de dados abertas por credenciais semel&amp;hantes</translation>
+        <translation>Pesquisar por credenciais semel&amp;hantes em todas as base de dados abertas</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -1087,7 +1087,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>A procurar...</translation>
+        <translation>Pesquisar...</translation>
     </message>
     <message>
         <source>Change master key</source>
@@ -1232,7 +1232,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>A procurar</translation>
+        <translation>Pesquisa</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1653,7 +1653,7 @@ Deseja juntar as suas alterações?</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Procurar</translation>
+        <translation>Pesquisa</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -2584,6 +2584,33 @@ Esta é uma migração unidirecional. Não será possível abrir a base de dados
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – recomendado)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -3053,7 +3080,7 @@ Esta versão não deve ser utilizada para uma utilização regular.</translation
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation>Procurar em todas as base de dados abertas por entradas semel&amp;hantes</translation>
+        <translation>Pesquisar por entradas semel&amp;hantes em todas as base de dados abertas</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -3490,30 +3517,6 @@ Comandos disponíveis:
     <message>
         <source>missing closing quote</source>
         <translation>carácter de fecho em falta</translation>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – recomendado)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

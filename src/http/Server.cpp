@@ -140,7 +140,11 @@ void Server::generatePassword(const Request &r, Response *protocolResp)
     protocolResp->setVerifier(key);
     protocolResp->setEntries(QList<Entry>() << Entry("generate-password", bits, password, "generate-password"));
 
-    memset(password.data(), 0, password.length());
+    int size = password.capacity();
+    volatile auto* mem = reinterpret_cast<volatile ushort*>(password.data());
+    while (size--) {
+        *mem++ = 0;
+    }
 }
 
 void Server::handleRequest(const QByteArray& data, QHttpResponse* response)

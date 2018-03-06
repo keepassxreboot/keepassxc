@@ -802,7 +802,7 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation>Encriptatge</translation>
+        <translation>Xifratge</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -857,7 +857,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Algorisme de d’encriptatge:</translation>
+        <translation>Algorisme de xifratge:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -1297,7 +1297,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(encriptat)</translation>
+        <translation>(xifrat)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -1544,7 +1544,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Desxifrar</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -2419,7 +2419,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Algoritme d&apos;encriptació no admès.</translation>
+        <translation>Algoritme de xifratge no admès.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
@@ -2556,6 +2556,33 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Invalid entry field type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2999,7 +3026,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation>Suprimeix totes les claus d&apos;encriptació compartides de la base de dades activa</translation>
+        <translation>Suprimeix totes les claus de xifratge compartides de la base de dades activa</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -3460,30 +3487,6 @@ Available commands:
         <translation>falta la cometa de tancament</translation>
     </message>
     <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Group</source>
         <translation>Grup</translation>
     </message>
@@ -3694,7 +3697,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>No s&apos;han trobat claus d&apos;encriptació compartides en la configuració de KeePassHttp.</translation>
+        <translation>No s&apos;han trobat claus de xifratge compartides en la configuració de KeePassHttp.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>

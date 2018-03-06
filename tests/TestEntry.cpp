@@ -279,6 +279,17 @@ void TestEntry::testResolveRecursivePlaceholders()
     QCOMPARE(entry6->resolvePlaceholder(entry6->title()), QString("Entry2Title"));
     QCOMPARE(entry6->resolvePlaceholder(entry6->username()), QString("Entry2Title"));
     QCOMPARE(entry6->resolvePlaceholder(entry6->password()), QString("{PASSWORD}"));
+
+    auto* entry7 = new Entry();
+    entry7->setGroup(root);
+    entry7->setUuid(Uuid::random());
+    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuid().toHex()));
+    entry7->setUsername(QString("{TITLE}"));
+    entry7->setPassword(QString("PASSWORD"));
+
+    QCOMPARE(entry7->resolvePlaceholder(entry7->title()), QString("Entry2Title and something else"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->username()), QString("Entry2Title and something else"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->password()), QString("PASSWORD"));
 }
 
 void TestEntry::testResolveReferencePlaceholders()

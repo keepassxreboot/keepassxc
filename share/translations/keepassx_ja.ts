@@ -2584,6 +2584,33 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 ビット</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 ビット</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 ビット</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – 推奨)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2822,7 +2849,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ブラウザー統合に KeePassHTTP を使用しています。この機能は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください (%1 / 3 回目の警告)。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;ブラウザー統合に KeePassHTTP を使用しています。この機能は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;移行ガイド&lt;/a&gt; を参照してください (%1 / 3 回目の警告)。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -3081,7 +3108,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;KeePassHTTP は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; を参照してください。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;KeePassHTTP は将来的に廃止され、削除されます。&lt;br&gt;代わりに KeePassXC-Browser を使用してください。移行に関するヘルプは &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;移行ガイド&lt;/a&gt; を参照してください。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3490,30 +3517,6 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation>閉じ引用符がありません</translation>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 ビット</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 ビット</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 ビット</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – 推奨)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

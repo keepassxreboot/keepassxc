@@ -33,10 +33,14 @@ public:
     static SSHAgent* instance();
     static void init(QObject* parent);
 
+    const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false) const;
-    bool removeIdentity(OpenSSHKey& key) const;
+    bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
+    bool removeIdentity(OpenSSHKey& key);
     void removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid);
+
+signals:
+    void error(const QString& message);
 
 public slots:
     void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::LockedMode);
@@ -56,7 +60,7 @@ private:
     explicit SSHAgent(QObject* parent = nullptr);
     ~SSHAgent();
 
-    bool sendMessage(const QByteArray& in, QByteArray& out) const;
+    bool sendMessage(const QByteArray& in, QByteArray& out);
 
     static SSHAgent* m_instance;
 
@@ -68,6 +72,7 @@ private:
 #endif
 
     QMap<QString, QSet<OpenSSHKey>> m_keys;
+    QString m_error;
 };
 
 #endif // AGENTCLIENT_H

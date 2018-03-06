@@ -24,14 +24,19 @@
 #include "core/Config.h"
 
 Clipboard* Clipboard::m_instance(nullptr);
+#ifdef Q_OS_MAC
+QPointer<MacPasteboard> Clipboard::m_pasteboard(nullptr);
+#endif
 
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
-#ifdef Q_OS_MAC
-    , m_pasteboard(new MacPasteboard)
-#endif
 {
+#ifdef Q_OS_MAC
+    if (!m_pasteboard) {
+        m_pasteboard = new MacPasteboard();
+    }
+#endif
     m_timer->setSingleShot(true);
     connect(m_timer, SIGNAL(timeout()), SLOT(clearClipboard()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));

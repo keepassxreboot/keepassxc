@@ -152,6 +152,7 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    keys/ChallengeResponseKey.h
     keys/CompositeKey.cpp
     keys/drivers/YubiKey.h
     keys/FileKey.cpp
@@ -175,7 +176,7 @@ if(APPLE)
         core/MacPasteboard.cpp
         )
 endif()
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux" OR ${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
+if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerDBus.h
         core/ScreenLockListenerDBus.cpp
@@ -401,7 +402,6 @@ if(MINGW)
           ${PLUGINS_DIR}/imageformats/qicns$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qico$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qjpeg$<$<CONFIG:Debug>:d>.dll
-          ${PLUGINS_DIR}/imageformats/qsvg$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
         DESTINATION "imageformats")
 

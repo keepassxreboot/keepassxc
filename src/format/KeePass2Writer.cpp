@@ -44,6 +44,36 @@ bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
 }
 
 /**
+ * @return true if the database should upgrade to KDBX4.
+ */
+bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
+{
+    if (!db->publicCustomData().isEmpty()) {
+        return true;
+    }
+
+    for (const auto& group: db->rootGroup()->groupsRecursive(true)) {
+        if (group->customData() && !group->customData()->isEmpty()) {
+            return true;
+        }
+
+        for (const auto& entry: group->entries()) {
+            if (entry->customData() && !entry->customData()->isEmpty()) {
+                return true;
+            }
+
+            for (const auto& historyItem: entry->historyItems()) {
+                if (historyItem->customData() && !historyItem->customData()->isEmpty()) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+/**
  * Write a database to a device in KDBX format.
  *
  * @param device output device
@@ -55,19 +85,15 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
     m_error = false;
     m_errorStr.clear();
 
-    // determine KDBX3 vs KDBX4
-    bool hasCustomData = !db->publicCustomData().isEmpty() || (db->metadata()->customData() && !db->metadata()->customData()->isEmpty());
-    if (!hasCustomData) {
-        for (const auto& entry: db->rootGroup()->entriesRecursive(true)) {
-            if ((entry->customData() && !entry->customData()->isEmpty()) ||
-                (entry->group() && entry->group()->customData() && !entry->group()->customData()->isEmpty())) {
-                hasCustomData = true;
-                break;
-            }
-        }
+    bool upgradeNeeded = implicitUpgradeNeeded(db);
+    if (upgradeNeeded) {
+        // We MUST re-transform the key, because challenge-response hashing has changed in KDBX 4.
+        // If we forget to re-transform, the database will be saved WITHOUT a challenge-response key component!
+        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4));
     }
 
-    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 && !hasCustomData) {
+    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
+        Q_ASSERT(!upgradeNeeded);
         m_version = KeePass2::FILE_VERSION_3_1;
         m_writer.reset(new Kdbx3Writer());
     } else {

@@ -796,32 +796,32 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
     case PlaceholderType::Unknown:
-        return placeholder;
+        return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth - 1);
     case PlaceholderType::Title:
         if (placeholderType(title()) == PlaceholderType::Title) {
             return title();
         }
-        return resolvePlaceholderRecursive(title(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(title(), maxDepth - 1);
     case PlaceholderType::UserName:
         if (placeholderType(username()) == PlaceholderType::UserName) {
             return username();
         }
-        return resolvePlaceholderRecursive(username(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(username(), maxDepth - 1);
     case PlaceholderType::Password:
         if (placeholderType(password()) == PlaceholderType::Password) {
             return password();
         }
-        return resolvePlaceholderRecursive(password(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(password(), maxDepth - 1);
     case PlaceholderType::Notes:
         if (placeholderType(notes()) == PlaceholderType::Notes) {
             return notes();
         }
-        return resolvePlaceholderRecursive(notes(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(notes(), maxDepth - 1);
     case PlaceholderType::Url:
         if (placeholderType(url()) == PlaceholderType::Url) {
             return url();
         }
-        return resolvePlaceholderRecursive(url(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
     case PlaceholderType::UrlWithoutScheme:
     case PlaceholderType::UrlScheme:
     case PlaceholderType::UrlHost:
