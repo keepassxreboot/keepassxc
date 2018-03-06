@@ -78,7 +78,8 @@ MİB mimarisi: %2
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>İnşa Türü: %1
+</translation>
     </message>
 </context>
 <context>
@@ -882,7 +883,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Bellek Kullanımı:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -909,7 +910,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Geçmiş Ayarları</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -1219,7 +1220,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Öznitelikler</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1247,11 +1248,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Asla</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[KORUMALI]</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1298,7 +1299,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>(şifrelenmiş)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -1342,7 +1343,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[KORUMALI]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
@@ -1896,7 +1897,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Asla</translation>
     </message>
     <message>
         <source>Password</source>
@@ -2558,6 +2559,33 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     <message>
         <source>Invalid entry field type</source>
         <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – önerilen)</translation>
     </message>
 </context>
 <context>
@@ -3459,30 +3487,6 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – önerilen)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

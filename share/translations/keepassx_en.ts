@@ -2362,10 +2362,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unable to decrypt entry string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Duplicate custom attribute found</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3632,6 +3628,33 @@ Available commands:
     </message>
     <message>
         <source>Internal zlib error: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SSHAgent</name>
+    <message>
+        <source>Agent connection failed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent protocol error.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No agent running, cannot add identity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent refused this identity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No agent running, cannot remove identity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent does not have this identity.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

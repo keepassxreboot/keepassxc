@@ -2581,6 +2581,33 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-бит</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-бит</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-бит</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – рекомендуемый)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2819,7 +2846,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Похоже вы используете KeePassHTTP для интеграции с браузером. Эта функция является устаревшей и будет удалена в будущем.&lt;br&gt;Пожалуйста перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt; (предупреждение %1 of 3).&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Похоже вы используете KeePassHTTP для интеграции с браузером. Эта функция является устаревшей и будет удалена в будущем.&lt;br&gt;Пожалуйста, перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt; (предупреждение %1 of 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -3078,7 +3105,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;KeePassHTTP устарел и будет удален в будущем.&lt;br&gt;Поажлуйста перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;KeePassHTTP устарел и будет удален в будущем.&lt;br&gt;Пожалуйста, перейдите на KeePassXC-Browser! Чтобы получить помощь прочтите наше &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;руководство по миграции&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3487,30 +3514,6 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation>Отсутствует закрывающая цитата</translation>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-бит</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-бит</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-бит</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – рекомендуемый)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

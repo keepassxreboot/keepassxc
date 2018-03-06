@@ -272,7 +272,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation type="unfinished"/>
+        <translation>لا تعرض سوى أفضل التطابقات للرابط المحدد بدلًا من جميع الإدخالات للنطاق بأكمله.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
@@ -321,11 +321,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>إنشاء او تحديث حقول التسلسل تلقائيًا غير مدعوم.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&amp;جلب حقول التسلسل المتقدمة التي تبدأ ب &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -468,7 +468,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"/>
+        <translation>لا تحتوي قاعدة البيانات النشطة على إدخال مع صلاحيات.</translation>
     </message>
 </context>
 <context>
@@ -1425,11 +1425,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation type="unfinished"/>
+        <translation>ورث تسلسل الطباعة التلقائية الإفتراضي من &amp;المجموعة</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;إستخدام تسلسل طباعة تلقائية مخصص:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1645,11 +1645,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;إستخدام تسلسل الطباعة التلقائية الإفتراضي للمجموعة الرئيسية</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation type="unfinished"/>
+        <translation>تعيين تسلسل الطباعة التلقائية الإفتراضي</translation>
     </message>
 </context>
 <context>
@@ -2026,7 +2026,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation type="unfinished"/>
+        <translation>استبعاد الرموز التي تبدو على حد سواء</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
@@ -2034,7 +2034,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>تمديد ASCII</translation>
     </message>
 </context>
 <context>
@@ -2368,7 +2368,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation type="unfinished"/>
+        <translation>نافذة الطباعة التلقائية المرتبطة او تسلسل الإرتباط مفقود</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -2456,7 +2456,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation type="unfinished"/>
+        <translation>تعذر إنشاء شجرة المجموعة</translation>
     </message>
     <message>
         <source>Root</source>
@@ -2472,15 +2472,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation type="unfinished"/>
+        <translation>فشل تحول المفتاح</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation type="unfinished"/>
+        <translation>حقل رقم نوع المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation type="unfinished"/>
+        <translation>حقل حجم المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
@@ -2488,43 +2488,43 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل معرف المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت إنشاء المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت تعديل المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت الوصول للمجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت انتهاء صلاحية المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل رمز المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل مستوى المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>نوع حقل المجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>معرف المجموعة أو المستوى مفقود</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>رقم نوع حقل إلمُدخل مفقود</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
@@ -2532,31 +2532,31 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>قراءة بيانات الحقل الإدخال لا تتطابق مع الحجم</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل المُدخل uuid غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation type="unfinished"/>
+        <translation>إدخال حجم حقل معرف مجموعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل رمز الإدخال غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت إنشاء الإدخال غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت تعديل الإدخال غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>حجم حقل وقت انتهاء صلاحية الإدخال غير صحيح</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
@@ -2564,22 +2564,49 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
+    <name>KeePass2</name>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – مستحسن)</translation>
+    </message>
+</context>
+<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation type="unfinished"/>
+        <translation>ملف القفل الحالي المثيل غير صحيح. سيُطلق مثيل جديد.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation type="unfinished"/>
+        <translation>تعذر إنشاء ملف القفل. تم تعطيل وضع المثيل الأحادي.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation type="unfinished"/>
+        <translation>نسخة أخرى من KeePassXC قيد التشغيل.</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation type="unfinished"/>
+        <translation>خطأ فادح أثناء اختبار وظائف التشفير.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
@@ -2614,7 +2641,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>كلمة مرور لمرة واحدة تعتمد على الوقت</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -2726,7 +2753,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>&amp;تنفيذ الضغط التلقائي</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2859,7 +2886,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation type="unfinished"/>
+        <translation>عدم تطابق حدود PEM</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -2867,15 +2894,15 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>طريق ملف المفتاح صغير جدًا.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation type="unfinished"/>
+        <translation>معرف رأس magic لملف المفتاح غير صحيح</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>لم يُعثر على أية مفاتيح</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
@@ -2887,11 +2914,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation type="unfinished"/>
+        <translation>لا يوجد حمولة المفتاح الخاص لفك التشفير</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation type="unfinished"/>
+        <translation>محاولة تشغيل KDF بدون تشفير</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -2907,11 +2934,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation type="unfinished"/>
+        <translation>نهاية الملف غير معروفة عند قراءة المفتاح العام</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation type="unfinished"/>
+        <translation>نهاية الملف غير معروفة عند قراءة المفتاح الخاص</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -2919,7 +2946,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation type="unfinished"/>
+        <translation>نهاية الملف غير معروفة عند كتابة المفتاح العام</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
@@ -2927,7 +2954,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation type="unfinished"/>
+        <translation>نهاية الملف غير معروفة عند قراءة المفتاح الخاص</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -2939,7 +2966,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation type="unfinished"/>
+        <translation>التشفير الرابع قصير جدًا ل MD5 kdf </translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -2958,7 +2985,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation type="unfinished"/>
+        <translation>هذا مطلوب للوصول إلى قواعد البيانات الخاصة بك من ChromeIPass أو PassIFox</translation>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
@@ -2975,11 +3002,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation type="unfinished"/>
+        <translation>لا تعرض سوى أفضل التطابقات للرابط المحدد بدلًا من جميع الإدخالات للنطاق بأكمله.</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation type="unfinished"/>
+        <translation>&amp;عرض أفضل إدخالات مطابقة فقط</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -2987,11 +3014,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>يُسترجع الإدخالات مع نفس المخطط (http://, https://, ftp://, ...) فقط.</translation>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation type="unfinished"/>
+        <translation>&amp;مطابقة مخططات الروابط</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
@@ -3035,11 +3062,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation type="unfinished"/>
+        <translation>إنشاء او تحديث حقول التسلسل تلقائيًا غير مدعوم.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>&amp;جلب حقول التسلسل المتقدمة التي تبدأ ب &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
@@ -3063,12 +3090,13 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن ربط المنافذ المميزة</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن ربط المنافذ المميزة أقل من 1024!
+استخدم المنفذ الإفتراضي 19455.</translation>
     </message>
 </context>
 <context>
@@ -3088,7 +3116,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>غير قادر</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3116,15 +3144,15 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>تمديد ASCII</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation type="unfinished"/>
+        <translation>استبعاد الرموز التي تبدو على حد سواء</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>إختيار أحرف من كل مجموعة</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
@@ -3168,7 +3196,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation type="unfinished"/>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -3203,7 +3231,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation type="unfinished"/>
+        <translation>لا يتوفر هاش قاعدة البيانات</translation>
     </message>
     <message>
         <source>Client public key not received</source>
@@ -3311,20 +3339,20 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation type="unfinished"/>
+        <translation>مسار المُدخل للإضافة.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>نسخ كلمة المرور الإدخال إلى الحافظة.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation type="unfinished"/>
+        <translation>مسار المُدخل للقص.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>مهلة بالثوان قبل مسح الحافظة.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -3344,19 +3372,19 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>تقدير الإنتروبيا لكلمة مرور.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>كلمة السر التي لتقدير الانتروبيا.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>إجراء تحليل متقدم على كلمة المرور.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation type="unfinished"/>
+        <translation>استخراج وطباعة محتوى قاعدة البيانات.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
@@ -3400,7 +3428,7 @@ Available commands:
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation type="unfinished"/>
+        <translation>مسار المجموعة للجدولة. الإفتراضي هو /</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
@@ -3424,7 +3452,7 @@ Available commands:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>استخدام نفس بيانات الاعتماد لكل من ملفات قاعدة البيانات.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -3466,30 +3494,6 @@ Available commands:
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -3587,14 +3591,14 @@ Available commands:
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>إستخدام ASCII الموسع في كلمة المرور التي المُنشئة.</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation type="unfinished"/>
+        <translation>خطأ zlib داخلي عند الضغط:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
@@ -3602,11 +3606,11 @@ Available commands:
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>حدث خطأ أثناء فتح الجهاز الأساسي:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>حدث خطأ أثناء قراءة البيانات من الجهاز الأساسي:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -3617,7 +3621,7 @@ Available commands:
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation type="unfinished"/>
+        <translation>تنسيق gzip غير مدعوم في ه</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
@@ -3640,7 +3644,7 @@ Available commands:
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation type="unfinished"/>
+        <translation>حالة الحساسية</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
@@ -3666,7 +3670,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>مفتاح التشفير المشترك مع إسم &quot;%1&quot; موجود بالفعل.
+هل تريد الكتابة عليه؟</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -3708,7 +3713,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation type="unfinished"/>
+        <translation>لا تحتوي قاعدة البيانات النشطة على إدخال لإعدادات KeePassHttp.</translation>
     </message>
     <message>
         <source>Removing stored permissions...</source>
@@ -3732,7 +3737,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation type="unfinished"/>
+        <translation>لا تحتوي قاعدة البيانات النشطة على إدخال مع صلاحيات.</translation>
     </message>
 </context>
 <context>
@@ -3762,7 +3767,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>شغل تطبيق واحد فقط من KeePassXC</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -3770,7 +3775,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>تذكر الملفات الرئيسية الأخيرة و قواعد الأمن</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -3786,7 +3791,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation type="unfinished"/>
+        <translation>إعادة تحميل قاعدة البيانات تلقائيا عند تعديلها خارجيًا</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
@@ -3798,11 +3803,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation type="unfinished"/>
+        <translation>استخدم رمز المجموعة عند إنشاء الإدخال</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
+        <translation>عدم وضع علامة على قاعدة البيانات المعدلة للتغييرات غير المتعلقة بالبيانات (مثال، توسيع المجموعات)</translation>
     </message>
     <message>
         <source>Hide the Details view</source>
@@ -3814,11 +3819,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation type="unfinished"/>
+        <translation>إخفاء النافذة إلى شريط المهام عند تصغيرها</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>إخفاء النافذة إلى شريط المهام بدلًا من إغلاق التطبيق</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
@@ -3834,19 +3839,19 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>استخدم عنوان الإدخال لمطابقة النوافذ للطباعة التلقائية بشكل عام</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>استخدم رابط الإدخال لمطابقة النوافذ للطباعة التلقائية بشكل عام</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>اسأل دائما قبل تنفيذ الطباعة التلقائية</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>المفتاح العام للطباعة التلقائية</translation>
     </message>
     <message>
         <source>Auto-Type delay</source>
@@ -3939,7 +3944,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>أعد قفل قاعدة البيانات التي تم تأمينها سابقًا بعد تنفيذ الطباعة التلقائية</translation>
     </message>
 </context>
 <context>
@@ -3954,11 +3959,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation type="unfinished"/>
+        <translation>الإعدادات الإفتراضية لرمز RFC 6238</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>اعدادات رمز Steam</translation>
     </message>
     <message>
         <source>Use custom settings</source>
@@ -3970,7 +3975,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Time step:</source>
-        <translation type="unfinished"/>
+        <translation>الخطوة الزمنية:</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -4087,7 +4092,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation type="unfinished"/>
+        <translation>زر النافذة الأم</translation>
     </message>
 </context>
 </TS>
