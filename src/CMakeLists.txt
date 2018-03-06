@@ -402,7 +402,6 @@ if(MINGW)
           ${PLUGINS_DIR}/imageformats/qicns$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qico$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qjpeg$<$<CONFIG:Debug>:d>.dll
-          ${PLUGINS_DIR}/imageformats/qsvg$<$<CONFIG:Debug>:d>.dll
           ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
         DESTINATION "imageformats")
 
