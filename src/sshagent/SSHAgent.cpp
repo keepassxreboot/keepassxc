@@ -186,7 +186,17 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
     }
 
     if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent refused this identity.");
+        m_error = tr("Agent refused this identity. Possible reasons include:")
+            + "\n" + tr("The key has already been added.");
+
+        if (lifetime > 0) {
+            m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
+        }
+
+        if (confirm) {
+            m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
+        }
+
         return false;
     }
 
