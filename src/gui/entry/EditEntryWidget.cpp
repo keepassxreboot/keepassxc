@@ -281,6 +281,8 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
     connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
 
+    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(modified()), SLOT(updateAttachments()));
+
     addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
 }
 
@@ -299,6 +301,27 @@ void EditEntryWidget::updateSSHAgent()
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
 
+    m_sshAgentSettings = settings;
+    updateSSHAgentAttachments();
+
+    if (settings.selectedType() == "attachment") {
+        m_sshAgentUi->attachmentRadioButton->setChecked(true);
+    } else {
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
+    }
+
+    updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentAttachment()
+{
+    m_sshAgentUi->attachmentRadioButton->setChecked(true);
+    updateSSHAgentKeyInfo();
+}
+
+void EditEntryWidget::updateSSHAgentAttachments()
+{
+    m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->attachmentComboBox->addItem("");
 
     auto attachments = m_advancedUi->attachmentsWidget->entryAttachments();
@@ -310,24 +333,8 @@ void EditEntryWidget::updateSSHAgent()
         m_sshAgentUi->attachmentComboBox->addItem(fileName);
     }
 
-    m_sshAgentUi->attachmentComboBox->setCurrentText(settings.attachmentName());
-    m_sshAgentUi->externalFileEdit->setText(settings.fileName());
-
-    if (settings.selectedType() == "attachment") {
-        m_sshAgentUi->attachmentRadioButton->setChecked(true);
-    } else {
-        m_sshAgentUi->externalFileRadioButton->setChecked(true);
-    }
-
-    m_sshAgentSettings = settings;
-
-    updateSSHAgentKeyInfo();
-}
-
-void EditEntryWidget::updateSSHAgentAttachment()
-{
-    m_sshAgentUi->attachmentRadioButton->setChecked(true);
-    updateSSHAgentKeyInfo();
+    m_sshAgentUi->attachmentComboBox->setCurrentText(m_sshAgentSettings.attachmentName());
+    m_sshAgentUi->externalFileEdit->setText(m_sshAgentSettings.fileName());
 }
 
 void EditEntryWidget::updateSSHAgentKeyInfo()
