@@ -409,10 +409,13 @@ void TestKdbx4::testCustomData()
 QSharedPointer<Kdf> TestKdbx4::fastKdf(QSharedPointer<Kdf> kdf)
 {
     kdf->setRounds(1);
-    kdf->processParameters({
-        {KeePass2::KDFPARAM_ARGON2_MEMORY, 1024},
-        {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}
-    });
+
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        kdf->processParameters({
+           {KeePass2::KDFPARAM_ARGON2_MEMORY, 1024},
+           {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}
+        });
+    }
 
     return kdf;
 }
