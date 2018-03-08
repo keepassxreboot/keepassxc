@@ -34,8 +34,8 @@ QTEST_GUILESS_MAIN(TestKdbx4)
 
 void TestKdbx4::initTestCaseImpl()
 {
-    m_xmlDb->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
-    m_kdbxSourceDb->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
+    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
 }
 
 Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
@@ -93,7 +93,7 @@ void TestKdbx4::readKdbx(const QString& path, CompositeKey const& key, QScopedPo
 void TestKdbx4::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
 {
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
     }
     KeePass2Writer writer;
     hasError = writer.writeDatabase(device, db);
@@ -137,6 +137,7 @@ void TestKdbx4::testFormat400Upgrade()
     QFETCH(quint32, expectedVersion);
 
     QScopedPointer<Database> sourceDb(new Database());
+    sourceDb->changeKdf(fastKdf(sourceDb->kdf()));
     sourceDb->metadata()->setName("Wubba lubba dub dub");
     QCOMPARE(sourceDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);    // default is legacy AES-KDF
 
@@ -148,7 +149,7 @@ void TestKdbx4::testFormat400Upgrade()
     buffer.open(QBuffer::ReadWrite);
 
     // upgrade to KDBX 4 by changing KDF and Cipher
-    sourceDb->changeKdf(KeePass2::uuidToKdf(kdfUuid));
+    sourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(kdfUuid)));
     sourceDb->setCipher(cipherUuid);
 
     // CustomData in meta should not cause any version change
@@ -235,6 +236,7 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     compositeKey.addChallengeResponseKey(crKey);
 
     QScopedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(db->kdf()));
     db->setKey(compositeKey);
 
     // upgrade the database by a specific method
@@ -243,11 +245,11 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     } else if (upgradeAction == "meta-customdata") {
         db->metadata()->customData()->set("abc", "def");
     } else if (upgradeAction == "kdf-aes-kdbx3") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
     } else if (upgradeAction == "kdf-argon2") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
     } else if (upgradeAction == "kdf-aes-kdbx4") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4)));
     } else if (upgradeAction == "public-customdata") {
         db->publicCustomData().insert("abc", "def");
     } else if (upgradeAction == "rootgroup-customdata") {
@@ -402,4 +404,18 @@ void TestKdbx4::testCustomData()
     auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
     QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
+}
+
+QSharedPointer<Kdf> TestKdbx4::fastKdf(QSharedPointer<Kdf> kdf)
+{
+    kdf->setRounds(1);
+
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        kdf->processParameters({
+           {KeePass2::KDFPARAM_ARGON2_MEMORY, 1024},
+           {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}
+        });
+    }
+
+    return kdf;
 }
