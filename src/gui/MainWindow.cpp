@@ -899,7 +899,7 @@ void MainWindow::updateTrayIcon()
 
             m_trayIcon->setContextMenu(menu);
             
-            m_trayIcon->setIcon(filePath()->applicationIcon());
+            m_trayIcon->setIcon(filePath()->trayIcon());
             m_trayIcon->show();
         }
         if (m_ui->tabWidget->hasLockableDatabases()) {
