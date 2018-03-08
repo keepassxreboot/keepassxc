@@ -420,12 +420,16 @@ void EditEntryWidget::browsePrivateKey()
 
 bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
 {
+    QString fileName;
     QByteArray privateKeyData;
 
     if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
-        privateKeyData = m_advancedUi->attachmentsWidget->getAttachment(m_sshAgentUi->attachmentComboBox->currentText());
+        fileName = m_sshAgentUi->attachmentComboBox->currentText();
+        privateKeyData = m_advancedUi->attachmentsWidget->getAttachment(fileName);
     } else {
         QFile localFile(m_sshAgentUi->externalFileEdit->text());
+        QFileInfo localFileInfo(localFile);
+        fileName = localFileInfo.fileName();
 
         if (localFile.fileName().isEmpty()) {
             return false;
@@ -462,6 +466,10 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
 
     if (key.comment().isEmpty()) {
         key.setComment(m_entry->username());
+    }
+
+    if (key.comment().isEmpty()) {
+        key.setComment(fileName);
     }
 
     return true;

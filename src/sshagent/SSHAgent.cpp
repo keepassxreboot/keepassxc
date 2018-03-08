@@ -268,10 +268,15 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
             }
 
             QByteArray keyData;
+            QString fileName;
             if (settings.selectedType() == "attachment") {
-                keyData = e->attachments()->value(settings.attachmentName());
+                fileName = settings.attachmentName();
+                keyData = e->attachments()->value(fileName);
             } else if (!settings.fileName().isEmpty()) {
                 QFile file(settings.fileName());
+                QFileInfo fileInfo(file);
+
+                fileName = fileInfo.fileName();
 
                 if (file.size() > 1024 * 1024) {
                     continue;
@@ -300,6 +305,10 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
 
             if (key.comment().isEmpty()) {
                 key.setComment(e->username());
+            }
+
+            if (key.comment().isEmpty()) {
+                key.setComment(fileName);
             }
 
             if (settings.removeAtDatabaseClose()) {
