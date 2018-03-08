@@ -319,9 +319,9 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
 
     if (m_cipherName.compare("aes-128-cbc", Qt::CaseInsensitive) == 0) {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes128, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
-    } else if (m_cipherName == "aes256-cbc") {
+    } else if (m_cipherName == "aes256-cbc" || m_cipherName.compare("aes-256-cbc", Qt::CaseInsensitive) == 0) {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
-    } else if (m_cipherName == "aes256-ctr") {
+    } else if (m_cipherName == "aes256-ctr" || m_cipherName.compare("aes-256-ctr", Qt::CaseInsensitive) == 0) {
         cipher.reset(new SymmetricCipher(SymmetricCipher::Aes256, SymmetricCipher::Ctr, SymmetricCipher::Decrypt));
     } else if (m_cipherName != "none") {
         m_error = tr("Unknown cipher: %1").arg(m_cipherName);
