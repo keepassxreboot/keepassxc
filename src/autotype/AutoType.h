@@ -69,7 +69,7 @@ signals:
 
 private slots:
     void performAutoTypeFromGlobal(AutoTypeMatch match);
-    void resetInAutoType();
+    void autoTypeRejectedFromGlobal();
     void unloadPlugin();
 
 private:
@@ -88,6 +88,7 @@ private:
     bool windowMatches(const QString& windowTitle, const QString& windowPattern);
 
     QMutex m_inAutoType;
+    QMutex m_inGlobalAutoTypeDialog;
     int m_autoTypeDelay;
     Qt::Key m_currentGlobalKey;
     Qt::KeyboardModifiers m_currentGlobalModifiers;
