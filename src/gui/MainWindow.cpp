@@ -971,9 +971,6 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
-#ifndef Q_OS_MAC
-    setWindowState(windowState() | Qt::WindowMinimized);
-#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
