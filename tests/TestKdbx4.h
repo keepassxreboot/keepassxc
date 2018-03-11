@@ -44,6 +44,8 @@ protected:
     void readKdbx(QIODevice* device, CompositeKey const& key, QScopedPointer<Database>& db,
                   bool& hasError, QString& errorString) override;
     void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) override;
+
+    QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf);
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H

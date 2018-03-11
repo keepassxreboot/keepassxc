@@ -35,8 +35,9 @@ void TestAutoType::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
-    AutoType::createTestInstance();
+    config()->set("AutoTypeDelay", 1);
     config()->set("security/autotypeask", false);
+    AutoType::createTestInstance();
 
     QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
