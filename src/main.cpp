@@ -127,7 +127,7 @@ int main(int argc, char** argv)
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
     bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
-    if (minimizeOnStartup) {
+    if (minimizeOnStartup && !minimizeToTray) {
         mainWindow.setWindowState(Qt::WindowMinimized);
     }
     if (!(minimizeOnStartup && minimizeToTray)) {
