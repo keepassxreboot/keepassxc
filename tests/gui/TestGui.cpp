@@ -1095,8 +1095,11 @@ void TestGui::testDragAndDropKdbxFiles()
 
 void TestGui::testTrayRestoreHide()
 {
-    QSystemTrayIcon *trayIcon = m_mainWindow->findChild<QSystemTrayIcon*>();
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test...");
+    }
 
+    QSystemTrayIcon* trayIcon = m_mainWindow->findChild<QSystemTrayIcon*>();
     QVERIFY(m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::Trigger);
