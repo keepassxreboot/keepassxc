@@ -63,6 +63,7 @@ private slots:
     void testKeePass1Import();
     void testDatabaseLocking();
     void testDragAndDropKdbxFiles();
+    void testTrayRestoreHide();
 
 private:
     int addCannedEntries();
