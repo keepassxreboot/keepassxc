@@ -980,7 +980,7 @@ void MainWindow::hideWindow()
 
 void MainWindow::toggleWindow()
 {
-    if ((QApplication::activeWindow() == this) && isVisible() && !isMinimized()) {
+    if (isVisible() && !isMinimized()) {
         hideWindow();
     } else {
         bringToFront();
