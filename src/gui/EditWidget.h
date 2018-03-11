@@ -47,6 +47,7 @@ public:
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
     bool readOnly() const;
+    void enableApplyButton(bool enabled);
 
 signals:
     void apply();

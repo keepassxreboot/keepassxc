@@ -62,6 +62,7 @@ public slots:
 signals:
     void messageEditEntry(QString, MessageWidget::MessageType);
     void messageEditEntryDismiss();
+    void widgetUpdated();
 
 private slots:
     void downloadFavicon();

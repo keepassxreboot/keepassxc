@@ -100,6 +100,7 @@ private slots:
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
     void pickColor();
+    void setUnsavedChanges(bool hasUnsaved = true);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
     void updateSSHAgentAttachment();
@@ -122,6 +123,7 @@ private:
 #endif
     void setupProperties();
     void setupHistory();
+    void setupEntryUpdate();
     void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();

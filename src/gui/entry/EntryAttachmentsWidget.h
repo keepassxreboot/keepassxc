@@ -39,6 +39,7 @@ signals:
     void errorOccurred(const QString& error);
     void readOnlyChanged(bool readOnly);
     void buttonsVisibleChanged(bool isButtonsVisible);
+    void widgetUpdated();
 
 private slots:
     void insertAttachments();

@@ -147,6 +147,7 @@ void EntryAttachmentsWidget::insertAttachments()
     if (!insertAttachments(filenames, errorMessage)) {
         errorOccurred(errorMessage);
     }
+    emit widgetUpdated();
 }
 
 void EntryAttachmentsWidget::removeSelectedAttachments()
@@ -170,6 +171,7 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
             keys.append(m_attachmentsModel->keyByIndex(index));
         }
         m_entryAttachments->remove(keys);
+        emit widgetUpdated();
     }
 }
 
