@@ -29,6 +29,8 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
+#include "cli/Utils.h"
+
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
 #endif
@@ -148,7 +150,9 @@ int main(int argc, char** argv)
             // we always need consume a line of STDIN if --pw-stdin is set to clear out the
             // buffer for native messaging, even if the specified file does not exist
             static QTextStream in(stdin, QIODevice::ReadOnly);
-            password = in.readLine();
+            static QTextStream out(stdout, QIODevice::WriteOnly);
+            out << QCoreApplication::translate("Main", "Database password: ") << flush;
+            password = Utils::getPassword();
         }
 
         if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {
