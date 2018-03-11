@@ -127,7 +127,14 @@ int main(int argc, char** argv)
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
     bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
+#ifndef Q_OS_LINUX
+    if (minimizeOnStartup) {
+#else
+    // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
+    // the same time (which would happen if both minimize on startup and minimize to tray are set)
+    // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
     if (minimizeOnStartup && !minimizeToTray) {
+#endif
         mainWindow.setWindowState(Qt::WindowMinimized);
     }
     if (!(minimizeOnStartup && minimizeToTray)) {
