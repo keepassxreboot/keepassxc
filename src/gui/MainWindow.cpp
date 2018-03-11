@@ -971,6 +971,12 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
+#ifndef Q_OS_LINUX
+    // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
+    // the same time (which would happen if both minimize on startup and minimize to tray are set)
+    // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
+    setWindowState(windowState() | Qt::WindowMinimized);
+#endif
     QTimer::singleShot(0, this, SLOT(hide()));
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
