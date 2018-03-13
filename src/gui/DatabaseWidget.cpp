@@ -479,22 +479,20 @@ void DatabaseWidget::deleteEntries()
 
     bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
     if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
-        QMessageBox::StandardButton result;
-
+        QString prompt;
         if (selected.size() == 1) {
-            result = MessageBox::question(
-                this, tr("Delete entry?"),
-                tr("Do you really want to delete the entry \"%1\" for good?")
-                .arg(selectedEntries.first()->title().toHtmlEscaped()),
-                QMessageBox::Yes | QMessageBox::No);
+            prompt = tr("Do you really want to delete the entry \"%1\" for good?")
+                    .arg(selectedEntries.first()->title().toHtmlEscaped());
         }
         else {
-            result = MessageBox::question(
-                this, tr("Delete entries?"),
-                tr("Do you really want to delete %1 entries for good?")
-                .arg(selected.size()),
-                QMessageBox::Yes | QMessageBox::No);
+            prompt = tr("Do you really want to delete %n entry(s) for good?", "", selected.size());
         }
+
+        QMessageBox::StandardButton result = MessageBox::question(
+                    this,
+                    tr("Delete entry(s)?", "", selected.size()),
+                    prompt,
+                    QMessageBox::Yes | QMessageBox::No);
 
         if (result == QMessageBox::Yes) {
             for (Entry* entry : asConst(selectedEntries)) {
@@ -504,21 +502,19 @@ void DatabaseWidget::deleteEntries()
         }
     }
     else {
-        QMessageBox::StandardButton result;
-
+        QString prompt;
         if (selected.size() == 1) {
-            result = MessageBox::question(
-                this, tr("Move entry to recycle bin?"),
-                tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                .arg(selectedEntries.first()->title().toHtmlEscaped()),
-                QMessageBox::Yes | QMessageBox::No);
+            prompt = tr("Do you really want to move entry \"%1\" to the recycle bin?")
+                    .arg(selectedEntries.first()->title().toHtmlEscaped());
+        } else {
+            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", selected.size());
         }
-        else {
-            result = MessageBox::question(
-                this, tr("Move entries to recycle bin?"),
-                tr("Do you really want to move %n entry(s) to the recycle bin?", 0, selected.size()),
-                QMessageBox::Yes | QMessageBox::No);
-        }
+
+        QMessageBox::StandardButton result = MessageBox::question(
+                    this,
+                    tr("Move entry(s) to recycle bin?", "", selected.size()),
+                    prompt,
+                    QMessageBox::Yes | QMessageBox::No);
 
         if (result == QMessageBox::No) {
             return;
