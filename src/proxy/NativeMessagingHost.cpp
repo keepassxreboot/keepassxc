@@ -22,6 +22,13 @@ NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase()
 {
     m_localSocket = new QLocalSocket();
     m_localSocket->connectToServer(getLocalServerPath());
+    m_localSocket->setReadBufferSize(NATIVE_MSG_MAX_LENGTH);
+  
+    int socketDesc = m_localSocket->socketDescriptor();
+    if (socketDesc) {
+        int max = NATIVE_MSG_MAX_LENGTH;
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, &max, sizeof(max));
+    }
 #ifdef Q_OS_WIN
     m_running.store(true);
     m_future = QtConcurrent::run(this, static_cast<void(NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));

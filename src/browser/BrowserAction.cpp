@@ -20,6 +20,7 @@
 #include <QJsonParseError>
 #include "BrowserAction.h"
 #include "BrowserSettings.h"
+#include "NativeMessagingBase.h"
 #include "sodium.h"
 #include "sodium/crypto_box.h"
 #include "sodium/randombytes.h"
@@ -456,7 +457,7 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
 
     std::vector<unsigned char> e;
-    e.resize(max_length);
+    e.resize(NATIVE_MSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
         return QString();
@@ -484,7 +485,7 @@ QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
     std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
 
     std::vector<unsigned char> d;
-    d.resize(max_length);
+    d.resize(NATIVE_MSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
         return QByteArray();

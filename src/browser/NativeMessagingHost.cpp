@@ -142,9 +142,15 @@ void NativeMessagingHost::newLocalConnection()
 void NativeMessagingHost::newLocalMessage()
 {
     QLocalSocket* socket = qobject_cast<QLocalSocket*>(QObject::sender());
-
     if (!socket || socket->bytesAvailable() <= 0) {
         return;
+    }
+
+    socket->setReadBufferSize(NATIVE_MSG_MAX_LENGTH);
+    int socketDesc = socket->socketDescriptor();
+    if (socketDesc) {
+        int max = NATIVE_MSG_MAX_LENGTH;
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, &max, sizeof(max));
     }
 
     QByteArray arr = socket->readAll();
