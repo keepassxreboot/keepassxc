@@ -181,8 +181,9 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
 void DatabaseTabWidget::importCsv()
 {
+    QString filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open CSV file"), QString(),
-            tr("CSV file") + " (*.csv);;" + tr("All files (*)"));
+                                                     filter);
 
     if (fileName.isEmpty()) {
         return;
@@ -213,8 +214,9 @@ void DatabaseTabWidget::mergeDatabase(const QString& fileName)
 
 void DatabaseTabWidget::importKeePass1Database()
 {
+    QString filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(),
-            tr("KeePass 1 database") + " (*.kdb);;" + tr("All files (*)"));
+                                                     filter);
 
     if (fileName.isEmpty()) {
         return;
