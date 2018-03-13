@@ -797,7 +797,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
                            config()->get("GUI/MinimizeOnClose").toBool();
     if (minimizeOnClose && !m_appExitCalled)
     {
-        event->ignore();
+        event->accept();
         hideWindow();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
