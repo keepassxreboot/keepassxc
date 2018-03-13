@@ -47,7 +47,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_ui->searchEdit->installEventFilter(this);
 
     QMenu* searchMenu = new QMenu();
-    m_actionCaseSensitive = searchMenu->addAction(tr("Case Sensitive"), this, SLOT(updateCaseSensitive()));
+    m_actionCaseSensitive = searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
 

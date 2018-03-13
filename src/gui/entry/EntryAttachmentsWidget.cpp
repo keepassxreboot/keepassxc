@@ -162,7 +162,7 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
     }
 
     const QString question = tr("Are you sure you want to remove %n attachment(s)?", "", indexes.count());
-    QMessageBox::StandardButton answer = MessageBox::question(this, tr("Confirm Remove"),
+    QMessageBox::StandardButton answer = MessageBox::question(this, tr("Confirm remove"),
                                                               question, QMessageBox::Yes | QMessageBox::No);
     if (answer == QMessageBox::Yes) {
         QStringList keys;

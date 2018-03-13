@@ -151,10 +151,10 @@ void CsvImportWidget::updatePreview() {
         if (m_ui->checkBoxFieldNames->isChecked()) {
             columnName = m_parserModel->getCsvTable().at(0).at(i);
             if (columnName.isEmpty())
-                columnName = "<" + tr("Empty fieldname ") + QString::number(++emptyId) + ">";
+                columnName = "<" + tr("Empty fieldname %1").arg(++emptyId) + ">";
             list << columnName;
         } else {
-            list << QString(tr("column ")) + QString::number(i);
+            list << QString(tr("column %1").arg(i));
         }
     }
     m_comboModel->setStringList(list);
@@ -176,7 +176,7 @@ void CsvImportWidget::load(const QString& filename, Database* const db) {
     m_ui->labelFilename->setText(filename);
     Group* group = m_db->rootGroup();
     group->setUuid(Uuid::random());
-    group->setNotes(tr("Imported from CSV file").append("\n").append(tr("Original data: ")) + filename);
+    group->setNotes(tr("Imported from CSV file\nOriginal data: %1").arg(filename));
     parse();
 }
 
@@ -188,7 +188,7 @@ void CsvImportWidget::parse() {
     updatePreview();
     QApplication::restoreOverrideCursor();
     if (!good)
-        m_ui->messageWidget->showMessage(tr("Error(s) detected in CSV file !").append("\n")
+        m_ui->messageWidget->showMessage(tr("Error(s) detected in CSV file!").append("\n")
                                          .append(formatStatusText()), MessageWidget::Warning);
     else
         m_ui->messageWidget->setHidden(true);
@@ -201,8 +201,8 @@ QString CsvImportWidget::formatStatusText() const {
     int items = text.count('\n');
     if (items > 2) {
         return text.section('\n', 0, 1)
-                .append("\n[").append(QString::number(items - 2))
-                .append(tr(" more messages skipped]"));
+                .append("\n")
+                .append(tr("[%n more message(s) skipped]", "", items - 2));
     }
     if (items == 1) {
         text.append(QString("\n"));
@@ -247,8 +247,8 @@ void CsvImportWidget::writeDatabase() {
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, m_db);
     if (writer.hasError())
-        MessageBox::warning(this, tr("Error"), tr("CSV import: writer has errors:\n")
-                   .append((writer.errorString())), QMessageBox::Ok, QMessageBox::Ok);
+        MessageBox::warning(this, tr("Error"), tr("CSV import: writer has errors:\n%1")
+                   .arg(writer.errorString()), QMessageBox::Ok, QMessageBox::Ok);
     emit editFinished(true);
 }
 

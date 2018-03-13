@@ -916,7 +916,7 @@ void EditEntryWidget::insertAttribute()
     int i = 1;
 
     while (m_entryAttributes->keys().contains(name)) {
-        name = QString("%1 %2").arg(tr("New attribute")).arg(i);
+        name = tr("New attribute %1").arg(i);
         i++;
     }
 
@@ -979,7 +979,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
-            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED]") + " " + tr("Press reveal to view or edit"));
+            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
             m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->revealAttributeButton->setEnabled(true);
             m_advancedUi->protectAttributeButton->setChecked(true);

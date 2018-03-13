@@ -50,7 +50,7 @@ void DatabaseRepairWidget::openDatabase()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            MessageBox::warning(this, tr("Error"), tr("Can't open key file").append(":\n").append(errorMsg));
+            MessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             emit editFinished(false);
             return;
         }

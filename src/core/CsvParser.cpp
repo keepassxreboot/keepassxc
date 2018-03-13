@@ -84,7 +84,7 @@ bool CsvParser::readFile(QFile *device) {
         m_array.replace("\r\n", "\n");
         m_array.replace("\r", "\n");
         if (0 == m_array.size())
-           appendStatusMsg(QObject::tr("file empty !\n"));
+           appendStatusMsg(QObject::tr("file empty").append("\n"));
         m_isFileLoaded = true;
     }
     return m_isFileLoaded;

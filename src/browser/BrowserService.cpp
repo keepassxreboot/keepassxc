@@ -437,7 +437,7 @@ void BrowserService::removeSharedEncryptionKeys()
 
     if (keysToRemove.isEmpty()) {
         QMessageBox::information(0, tr("KeePassXC: No keys found"),
-                                 tr("No shared encryption keys found in KeePassXC Settings."),
+                                 tr("No shared encryption keys found in KeePassXC settings."),
                                  QMessageBox::Ok);
         return;
     }
