@@ -42,7 +42,7 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
         || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
         || m_db->cipher().isNull()) {
-        raiseError("missing database headers");
+        raiseError(tr("missing database headers"));
         return nullptr;
     }
 
@@ -134,7 +134,7 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     if (!xmlReader.headerHash().isEmpty()) {
         QByteArray headerHash = CryptoHash::hash(headerData, CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
-            raiseError("Header doesn't match hash");
+            raiseError(tr("Header doesn't match hash"));
             return nullptr;
         }
     }
@@ -146,7 +146,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
 {
     QByteArray fieldIDArray = headerStream.read(1);
     if (fieldIDArray.size() != 1) {
-        raiseError("Invalid header id size");
+        raiseError(tr("Invalid header id size"));
         return false;
     }
     char fieldID = fieldIDArray.at(0);
@@ -154,7 +154,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint16>(&headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid header field length");
+        raiseError(tr("Invalid header field length"));
         return false;
     }
 
@@ -162,7 +162,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     if (fieldLen != 0) {
         fieldData = headerStream.read(fieldLen);
         if (fieldData.size() != fieldLen) {
-            raiseError("Invalid header data length");
+            raiseError(tr("Invalid header data length"));
             return false;
         }
     }

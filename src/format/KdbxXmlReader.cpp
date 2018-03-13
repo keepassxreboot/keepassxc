@@ -179,8 +179,9 @@ QString KdbxXmlReader::errorString() const
 {
     if (m_error) {
         return m_errorStr;
-    }if (m_xml.hasError()) {
-        return QString("XML error:\n%1\nLine %2, column %3")
+    }
+    if (m_xml.hasError()) {
+        return tr("XML error:\n%1\nLine %2, column %3")
             .arg(m_xml.errorString())
             .arg(m_xml.lineNumber())
             .arg(m_xml.columnNumber());

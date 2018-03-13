@@ -363,7 +363,7 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
         cipherStream->reset();
         cipherStream->close();
         if (!m_device->seek(contentPos)) {
-            QString msg = "unable to seek to content position";
+            QString msg = tr("unable to seek to content position");
             if (!m_device->errorString().isEmpty()) {
                 msg.append("\n").append(m_device->errorString());
             }

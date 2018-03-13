@@ -616,7 +616,7 @@ QString Group::print(bool recursive, int depth)
     QString indentation = QString("  ").repeated(depth);
 
     if (entries().isEmpty() && children().isEmpty()) {
-        response += indentation + "[empty]\n";
+        response += indentation + tr("[empty]", "group has no children") + "\n";
         return response;
     }
 
@@ -911,7 +911,7 @@ void Group::markOlderEntry(Entry* entry)
 {
     entry->attributes()->set(
         "merged",
-        QString("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
+        tr("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
 }
 
 bool Group::resolveSearchingEnabled() const

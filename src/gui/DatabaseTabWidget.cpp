@@ -534,12 +534,12 @@ void DatabaseTabWidget::updateTabName(Database* db)
         if (db->metadata()->name().isEmpty()) {
             tabName = tr("New database");
         } else {
-            tabName = QString("%1 [%2]").arg(db->metadata()->name(), tr("New database"));
+            tabName = tr("%1 [New database]", "tab modifier").arg(db->metadata()->name());
         }
     }
 
     if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
-        tabName.append(QString(" [%1]").arg(tr("locked")));
+        tabName = tr("%1 [locked]", "tab modifier").arg(tabName);
     }
 
     if (dbStruct.modified) {
