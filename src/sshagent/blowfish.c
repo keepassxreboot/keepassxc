@@ -39,7 +39,7 @@
  * Bruce Schneier.
  */
 
-#define HAVE_BLF_H
+#include "includes.h"
 
 #if !defined(HAVE_BCRYPT_PBKDF) && (!defined(HAVE_BLOWFISH_INITSTATE) || \
     !defined(HAVE_BLOWFISH_EXPAND0STATE) || !defined(HAVE_BLF_ENC))
@@ -51,7 +51,7 @@
 
 #include <sys/types.h>
 #ifdef HAVE_BLF_H
-#include "blf.h"
+#include <blf.h>
 #endif
 
 #undef inline
