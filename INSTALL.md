@@ -63,13 +63,9 @@ Navigate to the directory where you have downloaded KeePassXC and type these com
 
 ```
 cd directory-where-sources-live
-mkdir build
-cd build
 cmake -DWITH_TESTS=OFF ...and other options - see below...
 make
 ```
-These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
-(Note the cmake notes/options below.)
 
 **Cmake Notes:**
 
