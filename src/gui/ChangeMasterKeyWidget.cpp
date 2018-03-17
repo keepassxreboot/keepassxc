@@ -85,7 +85,7 @@ void ChangeMasterKeyWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            m_ui->messageWidget->showMessage(tr("Unable to create Key File : ").append(errorMsg), MessageWidget::Error);
+            m_ui->messageWidget->showMessage(tr("Unable to create key file: %1").arg(errorMsg), MessageWidget::Error);
         }
         else {
             m_ui->keyFileCombo->setEditText(fileName);
@@ -159,7 +159,7 @@ void ChangeMasterKeyWidget::generateKey()
         QString fileKeyName = m_ui->keyFileCombo->currentText();
         if (!fileKey.load(fileKeyName, &errorMsg)) {
             m_ui->messageWidget->showMessage(
-               tr("Failed to set %1 as the Key file:\n%2").arg(fileKeyName, errorMsg), MessageWidget::Error);
+               tr("Failed to set %1 as the key file:\n%2").arg(fileKeyName, errorMsg), MessageWidget::Error);
             return;
         }
         if (fileKey.type() != FileKey::Hashed) {

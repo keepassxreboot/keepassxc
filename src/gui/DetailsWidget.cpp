@@ -216,7 +216,7 @@ void DetailsWidget::updateEntryAttributesTab()
             if (m_currentEntry->attributes()->isProtected(key)) {
                 value = "<i>" + tr("[PROTECTED]") + "</i>";
             }
-            attributesText.append(QString("<b>%1</b>: %2<br/>").arg(key, value));
+            attributesText.append(tr("<b>%1</b>: %2", "attributes line").arg(key, value).append("<br/>"));
         }
         m_ui->entryAttributesEdit->setText(attributesText);
     }
