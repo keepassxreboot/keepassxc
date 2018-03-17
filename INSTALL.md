@@ -69,7 +69,9 @@ Navigate to the directory where you have downloaded KeePassXC and type these com
 
 ```
 cd directory-where-sources-live
-cmake -DWITH_TESTS=OFF ...and other options - see below...
+mkdir build
+cd build
+cmake -DWITH_XC_ALL=ON ..
 make
 ```
 
