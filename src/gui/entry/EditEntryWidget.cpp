@@ -927,6 +927,19 @@ void EditEntryWidget::cancel()
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
+    if (!m_saved) {
+        auto result = MessageBox::question(this, QString(), tr("Entry has unsaved changes"),
+                                           QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
+                                           QMessageBox::Cancel);
+        if (result == QMessageBox::Cancel) {
+            return;
+        }
+        if (result == QMessageBox::Save) {
+            commitEntry();
+            m_saved = true;
+        }
+    }
+
     clear();
 
     emit editFinished(m_saved);
