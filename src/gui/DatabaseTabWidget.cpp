@@ -181,8 +181,9 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 
 void DatabaseTabWidget::importCsv()
 {
+    QString filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open CSV file"), QString(),
-            tr("CSV file") + " (*.csv);;" + tr("All files (*)"));
+                                                     filter);
 
     if (fileName.isEmpty()) {
         return;
@@ -213,8 +214,9 @@ void DatabaseTabWidget::mergeDatabase(const QString& fileName)
 
 void DatabaseTabWidget::importKeePass1Database()
 {
+    QString filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), QString(),
-            tr("KeePass 1 database") + " (*.kdb);;" + tr("All files (*)"));
+                                                     filter);
 
     if (fileName.isEmpty()) {
         return;
@@ -532,12 +534,12 @@ void DatabaseTabWidget::updateTabName(Database* db)
         if (db->metadata()->name().isEmpty()) {
             tabName = tr("New database");
         } else {
-            tabName = QString("%1 [%2]").arg(db->metadata()->name(), tr("New database"));
+            tabName = tr("%1 [New database]", "tab modifier").arg(db->metadata()->name());
         }
     }
 
     if (dbStruct.dbWidget->currentMode() == DatabaseWidget::LockedMode) {
-        tabName.append(QString(" [%1]").arg(tr("locked")));
+        tabName = tr("%1 [locked]", "tab modifier").arg(tabName);
     }
 
     if (dbStruct.modified) {

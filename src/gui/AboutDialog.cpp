@@ -53,9 +53,9 @@ AboutDialog::AboutDialog(QWidget* parent)
     }
 
     QString debugInfo = "KeePassXC - ";
-    debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
+    debugInfo.append(tr("Version %1").arg(KEEPASSX_VERSION).append("\n"));
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-    debugInfo.append(tr("Build Type: %1\n").arg(KEEPASSXC_BUILD_TYPE));
+    debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
 #endif
     if (!commitHash.isEmpty()) {
         debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
@@ -82,23 +82,23 @@ AboutDialog::AboutDialog(QWidget* parent)
 
     QString extensions;
 #ifdef WITH_XC_AUTOTYPE
-    extensions += "\n- Auto-Type";
+    extensions += "\n- " + tr("Auto-Type");
 #endif
 #ifdef WITH_XC_BROWSER
-    extensions += "\n- Browser Integration";
+    extensions += "\n- " + tr("Browser Integration");
 #endif
 #ifdef WITH_XC_HTTP
-    extensions += "\n- Legacy Browser Integration (KeePassHTTP)";
+    extensions += "\n- " + tr("Legacy Browser Integration (KeePassHTTP)");
 #endif
 #ifdef WITH_XC_SSHAGENT
-    extensions += "\n- SSH Agent";
+    extensions += "\n- " + tr("SSH Agent");
 #endif
 #ifdef WITH_XC_YUBIKEY
-    extensions += "\n- YubiKey";
+    extensions += "\n- " + tr("YubiKey");
 #endif
 
     if (extensions.isEmpty())
-        extensions = " None";
+        extensions = " " + tr("None");
 
     debugInfo.append(tr("Enabled extensions:").append(extensions));
 

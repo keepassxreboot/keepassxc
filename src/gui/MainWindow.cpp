@@ -673,7 +673,7 @@ void MainWindow::updateWindowTitle()
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
         }
         if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-            customWindowTitlePart.append(QString(" [%1]").arg(tr("read-only")));
+            customWindowTitlePart = tr("%1 [read-only]", "window title modifier").arg(customWindowTitlePart);
         }
         m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {

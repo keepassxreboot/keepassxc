@@ -214,7 +214,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n").append(errorMsg),
+            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg),
                                              MessageWidget::Error);
             return QSharedPointer<CompositeKey>();
         }

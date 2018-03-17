@@ -72,7 +72,7 @@ void TotpDialog::updateProgressBar()
 void TotpDialog::updateSeconds()
 {
     uint epoch = QDateTime::currentDateTime().toTime_t() - 1;
-    m_ui->timerLabel->setText(tr("Expires in") + " <b>" + QString::number(m_step - (epoch % m_step)) + "</b> " + tr("seconds"));
+    m_ui->timerLabel->setText(tr("Expires in <b>%n</b> second(s)", "", m_step - (epoch % m_step)));
 }
 
 void TotpDialog::updateTotp()

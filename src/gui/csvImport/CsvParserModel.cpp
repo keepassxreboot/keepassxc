@@ -31,9 +31,10 @@ void CsvParserModel::setFilename(const QString& filename) {
 }
 
 QString CsvParserModel::getFileInfo(){
-    QString a(tr("%n byte(s), ", nullptr, getFileSize()));
-    a.append(tr("%n row(s), ", nullptr, getCsvRows()));
-    a.append(tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1)));
+    QString a(tr("%1, %2, %3", "file info: bytes, rows, columns")
+              .arg(tr("%n byte(s)", nullptr, getFileSize()))
+              .arg(tr("%n row(s)", nullptr, getCsvRows()))
+              .arg(tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1))));
     return a;
 }
 

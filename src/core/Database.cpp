@@ -477,7 +477,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
         FileKey fileKey;
         QString errorMessage;
         if (!fileKey.load(keyFilename, &errorMessage)) {
-            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilename, errorMessage);
+            errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage);
             errorTextStream << endl;
             return nullptr;
         }
