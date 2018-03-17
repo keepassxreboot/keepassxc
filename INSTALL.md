@@ -75,6 +75,9 @@ cmake -DWITH_XC_ALL=ON ..
 make
 ```
 
+These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
+(Note the cmake notes/options below.)
+
 **Cmake Notes:**
 
 * Common cmake parameters
