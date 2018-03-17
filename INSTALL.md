@@ -59,6 +59,12 @@ To update the project from within the project's folder, you can run the followin
 git pull
 ```
 
+For a stable build it is recommended to checkout the master branch.
+
+```bash
+git checkout master
+```
+
 Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
 ```
