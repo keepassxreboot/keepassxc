@@ -59,7 +59,7 @@ To update the project from within the project's folder, you can run the followin
 git pull
 ```
 
-For a stable build it is recommended to checkout the master branch.
+For a stable build, it is recommended to checkout the master branch.
 
 ```bash
 git checkout master
