@@ -226,10 +226,6 @@ Files: src/zxcvbn/zxcvbn.*
 Copyright: 2015-2017, Tony Evans
 License: MIT
 
-Files: src/http/qhttp/*
-Copyright: 2014, Amir Zamani
-License: MIT
-
 Files: src/gui/KMessageWidget.h
        src/gui/KMessageWidget.cpp
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
