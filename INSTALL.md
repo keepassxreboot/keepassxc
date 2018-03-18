@@ -59,15 +59,22 @@ To update the project from within the project's folder, you can run the followin
 git pull
 ```
 
+For a stable build, it is recommended to checkout the master branch.
+
+```bash
+git checkout master
+```
+
 Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
 ```
 cd directory-where-sources-live
 mkdir build
 cd build
-cmake -DWITH_TESTS=OFF ...and other options - see below...
+cmake -DWITH_XC_ALL=ON ..
 make
 ```
+
 These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
 (Note the cmake notes/options below.)
 
