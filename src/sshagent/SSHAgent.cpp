@@ -186,7 +186,17 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
     }
 
     if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent refused this identity.");
+        m_error = tr("Agent refused this identity. Possible reasons include:")
+            + "\n" + tr("The key has already been added.");
+
+        if (lifetime > 0) {
+            m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
+        }
+
+        if (confirm) {
+            m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
+        }
+
         return false;
     }
 
@@ -268,10 +278,15 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
             }
 
             QByteArray keyData;
+            QString fileName;
             if (settings.selectedType() == "attachment") {
-                keyData = e->attachments()->value(settings.attachmentName());
+                fileName = settings.attachmentName();
+                keyData = e->attachments()->value(fileName);
             } else if (!settings.fileName().isEmpty()) {
                 QFile file(settings.fileName());
+                QFileInfo fileInfo(file);
+
+                fileName = fileInfo.fileName();
 
                 if (file.size() > 1024 * 1024) {
                     continue;
@@ -300,6 +315,10 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
 
             if (key.comment().isEmpty()) {
                 key.setComment(e->username());
+            }
+
+            if (key.comment().isEmpty()) {
+                key.setComment(fileName);
             }
 
             if (settings.removeAtDatabaseClose()) {

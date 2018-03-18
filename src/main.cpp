@@ -29,6 +29,8 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 
+#include "cli/Utils.h"
+
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
 #endif
@@ -125,7 +127,14 @@ int main(int argc, char** argv)
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
     bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
+#ifndef Q_OS_LINUX
     if (minimizeOnStartup) {
+#else
+    // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
+    // the same time (which would happen if both minimize on startup and minimize to tray are set)
+    // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
+    if (minimizeOnStartup && !minimizeToTray) {
+#endif
         mainWindow.setWindowState(Qt::WindowMinimized);
     }
     if (!(minimizeOnStartup && minimizeToTray)) {
@@ -148,7 +157,9 @@ int main(int argc, char** argv)
             // we always need consume a line of STDIN if --pw-stdin is set to clear out the
             // buffer for native messaging, even if the specified file does not exist
             static QTextStream in(stdin, QIODevice::ReadOnly);
-            password = in.readLine();
+            static QTextStream out(stdout, QIODevice::WriteOnly);
+            out << QCoreApplication::translate("Main", "Database password: ") << flush;
+            password = Utils::getPassword();
         }
 
         if (!filename.isEmpty() && QFile::exists(filename) && !filename.endsWith(".json", Qt::CaseInsensitive)) {

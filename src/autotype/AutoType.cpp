@@ -140,13 +140,6 @@ QStringList AutoType::windowTitles()
     return m_plugin->windowTitles();
 }
 
-void AutoType::resetInAutoType()
-{
-    m_inAutoType.unlock();
-
-    emit autotypeRejected();
-}
-
 void AutoType::raiseWindow()
 {
 #if defined(Q_OS_MAC)
@@ -199,9 +192,14 @@ int AutoType::callEventFilter(void* event)
  */
 void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, const QString& sequence, WId window)
 {
+    if (!m_inAutoType.tryLock()) {
+        return;
+    }
+
     // no edit to the sequence beyond this point
     if (!verifyAutoTypeSyntax(sequence)) {
         emit autotypeRejected();
+        m_inAutoType.unlock();
         return;
     }
 
@@ -210,6 +208,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     if (!parseActions(sequence, entry, actions)) {
         emit autotypeRejected();
+        m_inAutoType.unlock();
         return;
     }
 
@@ -233,6 +232,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
             emit autotypeRejected();
+            m_inAutoType.unlock();
             return;
         }
 
@@ -242,6 +242,8 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     // emit signal only if autotype performed correctly
     emit autotypePerformed();
+
+    m_inAutoType.unlock();
 }
 
 /**
@@ -259,13 +261,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
         return;
     }
 
-    if (!m_inAutoType.tryLock()) {
-        return;
-    }
-
     executeAutoTypeActions(entry, hideWindow, sequences.first());
-
-    m_inAutoType.unlock();
 }
 
 /**
@@ -278,13 +274,14 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         return;
     }
 
-    QString windowTitle = m_plugin->activeWindowTitle();
-
-    if (windowTitle.isEmpty()) {
+    if (!m_inGlobalAutoTypeDialog.tryLock()) {
         return;
     }
 
-    if (!m_inAutoType.tryLock()) {
+    QString windowTitle = m_plugin->activeWindowTitle();
+
+    if (windowTitle.isEmpty()) {
+        m_inGlobalAutoTypeDialog.unlock();
         return;
     }
 
@@ -303,8 +300,6 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
     }
 
     if (matchList.isEmpty()) {
-        m_inAutoType.unlock();
-
         if (qobject_cast<QApplication*>(QCoreApplication::instance())) {
             auto* msgBox = new QMessageBox();
             msgBox->setAttribute(Qt::WA_DeleteOnClose);
@@ -318,16 +313,20 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
             msgBox->activateWindow();
         }
 
+        m_inGlobalAutoTypeDialog.unlock();
         emit autotypeRejected();
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
         executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
-        m_inAutoType.unlock();
+        m_inGlobalAutoTypeDialog.unlock();
     } else {
         m_windowFromGlobal = m_plugin->activeWindow();
         auto* selectDialog = new AutoTypeSelectDialog();
+
+        // connect slots, both of which must unlock the m_inGlobalAutoTypeDialog mutex
         connect(selectDialog, SIGNAL(matchActivated(AutoTypeMatch)),
                 SLOT(performAutoTypeFromGlobal(AutoTypeMatch)));
-        connect(selectDialog, SIGNAL(rejected()), SLOT(resetInAutoType()));
+        connect(selectDialog, SIGNAL(rejected()), SLOT(autoTypeRejectedFromGlobal()));
+
         selectDialog->setMatchList(matchList);
 #if defined(Q_OS_MAC)
         m_plugin->raiseOwnWindow();
@@ -341,14 +340,22 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
 void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 {
-    // We don't care about the result here, the mutex should already be locked. Now it's locked for sure
-    m_inAutoType.tryLock();
-
     m_plugin->raiseWindow(m_windowFromGlobal);
-
     executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
 
-    m_inAutoType.unlock();
+    // make sure the mutex is definitely locked before we unlock it
+    Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
+    m_inGlobalAutoTypeDialog.unlock();
+}
+
+void AutoType::autoTypeRejectedFromGlobal()
+{
+    // this slot can be called twice when the selection dialog is deleted,
+    // so make sure the mutex is locked before we try unlocking it
+    Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
+    m_inGlobalAutoTypeDialog.unlock();
+
+    emit autotypeRejected();
 }
 
 /**

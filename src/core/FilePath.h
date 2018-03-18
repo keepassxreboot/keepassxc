@@ -29,6 +29,7 @@ public:
     QString pluginPath(const QString& name);
     QString wordlistPath(const QString& name);
     QIcon applicationIcon();
+    QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);

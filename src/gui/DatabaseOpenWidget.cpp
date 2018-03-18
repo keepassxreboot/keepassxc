@@ -173,6 +173,9 @@ void DatabaseOpenWidget::openDatabase()
         return;
     }
 
+    m_ui->editPassword->setShowPassword(false);
+    QCoreApplication::processEvents();
+
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
         m_ui->messageWidget->showMessage(
