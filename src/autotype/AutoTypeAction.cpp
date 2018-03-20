@@ -17,6 +17,12 @@
 
 #include "AutoTypeAction.h"
 
+#include <QEventLoop>
+#include <QObject>
+
+#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePickCharsDialog.h"
+#include "core/Config.h"
 #include "core/Tools.h"
 
 AutoTypeChar::AutoTypeChar(const QChar& character)
@@ -82,6 +88,22 @@ void AutoTypeClearField::accept(AutoTypeExecutor* executor)
 }
 
 
+AutoTypePickChars::AutoTypePickChars(QString string, AutoTypePlatformInterface* plugin)
+    : string(string), plugin(plugin)
+{
+}
+
+AutoTypeAction* AutoTypePickChars::clone()
+{
+    return new AutoTypePickChars(string, plugin);
+}
+
+void AutoTypePickChars::accept(AutoTypeExecutor* executor)
+{
+    executor->execPickChars(this);
+}
+
+
 void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
 {
     Tools::wait(action->delayMs);
@@ -90,4 +112,53 @@ void AutoTypeExecutor::execDelay(AutoTypeDelay* action)
 void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
 {
     Q_UNUSED(action);
+}
+
+void AutoTypeExecutor::execPickChars(AutoTypePickChars* action)
+{
+    // save active window
+    WId previousWindow = action->plugin->activeWindow();
+
+    // create and show char picker dialog
+    AutoTypePickCharsDialog* pickCharsDialog = new AutoTypePickCharsDialog(action->string);
+#if defined(Q_OS_MAC)
+    action->plugin->raiseOwnWindow();
+    Tools::wait(500);
+#endif
+    pickCharsDialog->show();
+    pickCharsDialog->activateWindow();
+
+    // wait for dialog to finish
+    QEventLoop loop;
+    QObject::connect(pickCharsDialog, SIGNAL(accepted()), &loop, SLOT(quit()));
+    QObject::connect(pickCharsDialog, SIGNAL(rejected()), &loop, SLOT(quit()));
+    loop.exec();
+
+    // restore previous active window
+    action->plugin->raiseWindow(previousWindow);
+
+    // enter chars
+    QString chars = pickCharsDialog->chars();
+    int autoTypeDelay = config()->get("AutoTypeDelay").toInt();
+    for (const QChar& ch : chars) {
+        AutoTypeDelay* delayAction = new AutoTypeDelay(autoTypeDelay);
+        execDelay(delayAction);
+        delete delayAction;
+
+        if (ch == '\n') {
+            AutoTypeKey* keyAction = new AutoTypeKey(Qt::Key_Enter);
+            execKey(keyAction);
+            delete keyAction;
+        }
+        else if (ch == '\t') {
+            AutoTypeKey* keyAction = new AutoTypeKey(Qt::Key_Tab);
+            execKey(keyAction);
+            delete keyAction;
+        }
+        else {
+            AutoTypeChar* charAction = new AutoTypeChar(ch);
+            execChar(charAction);
+            delete charAction;
+        }
+    }
 }

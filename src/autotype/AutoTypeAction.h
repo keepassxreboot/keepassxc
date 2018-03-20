@@ -19,12 +19,14 @@
 #define KEEPASSX_AUTOTYPEACTION_H
 
 #include <QChar>
+#include <QString>
 #include <Qt>
 #include <QObject>
 
 #include "core/Global.h"
 
 class AutoTypeExecutor;
+class AutoTypePlatformInterface;
 
 class KEEPASSX_EXPORT AutoTypeAction
 {
@@ -72,6 +74,17 @@ public:
     void accept(AutoTypeExecutor* executor);
 };
 
+class KEEPASSX_EXPORT AutoTypePickChars : public AutoTypeAction
+{
+public:
+    AutoTypePickChars(QString string, AutoTypePlatformInterface* plugin);
+    AutoTypeAction* clone();
+    void accept(AutoTypeExecutor* executor);
+
+    const QString string;
+    AutoTypePlatformInterface* plugin;
+};
+
 class KEEPASSX_EXPORT AutoTypeExecutor
 {
 public:
@@ -80,6 +93,7 @@ public:
     virtual void execKey(AutoTypeKey* action) = 0;
     virtual void execDelay(AutoTypeDelay* action);
     virtual void execClearField(AutoTypeClearField* action);
+    virtual void execPickChars(AutoTypePickChars* action);
 };
 
 #endif // KEEPASSX_AUTOTYPEACTION_H
