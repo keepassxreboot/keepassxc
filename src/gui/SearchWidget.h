@@ -36,14 +36,16 @@ class SearchWidget : public QWidget
 
 public:
     explicit SearchWidget(QWidget* parent = nullptr);
-    ~SearchWidget();
+    ~SearchWidget() override;
+
+    Q_DISABLE_COPY(SearchWidget)
 
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
     void setLimitGroup(bool state);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* event);
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 signals:
     void search(const QString& text);
@@ -69,8 +71,6 @@ private:
     QTimer* m_searchTimer;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
-
-    Q_DISABLE_COPY(SearchWidget)
 };
 
 #endif // SEARCHWIDGET_H

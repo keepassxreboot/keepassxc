@@ -113,6 +113,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
+    mx.connect(SIGNAL(clearSearch()), m_ui->searchEdit, SLOT(clear()));
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 

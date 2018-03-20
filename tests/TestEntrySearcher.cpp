@@ -53,7 +53,6 @@ void TestEntrySearcher::testSearch()
     group2111->setParent(group211);
 
     group1->setSearchingEnabled(Group::Disable);
-    group11->setSearchingEnabled(Group::Enable);
 
     Entry* eRoot = new Entry();
     eRoot->setNotes("test search term test");
@@ -88,15 +87,13 @@ void TestEntrySearcher::testSearch()
     e3b->setGroup(group3);
 
     m_searchResult = m_entrySearcher.search("search term", m_groupRoot, Qt::CaseInsensitive);
-    QCOMPARE(m_searchResult.count(), 3);
+    QCOMPARE(m_searchResult.count(), 2);
 
     m_searchResult = m_entrySearcher.search("search term", group211, Qt::CaseInsensitive);
     QCOMPARE(m_searchResult.count(), 1);
 
+    // Parent group disabled search
     m_searchResult = m_entrySearcher.search("search term", group11, Qt::CaseInsensitive);
-    QCOMPARE(m_searchResult.count(), 1);
-
-    m_searchResult = m_entrySearcher.search("search term", group1, Qt::CaseInsensitive);
     QCOMPARE(m_searchResult.count(), 0);
 }
 

@@ -30,11 +30,9 @@ public:
     QList<Entry*> search(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
 
 private:
-    QList<Entry*> searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
-    QList<Entry*> matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity);
+    QList<Entry*> searchEntries(const QString& searchTerm, const QList<Entry*>& entries, Qt::CaseSensitivity caseSensitivity);
+    bool matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity);
     bool wordMatch(const QString& word, Entry* entry, Qt::CaseSensitivity caseSensitivity);
-    bool matchGroup(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity);
-    bool wordMatch(const QString& word, const Group* group, Qt::CaseSensitivity caseSensitivity);
 };
 
 #endif // KEEPASSX_ENTRYSEARCHER_H

@@ -1047,9 +1047,12 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
 
 void DatabaseWidget::onGroupChanged(Group* group)
 {
-    // Intercept group changes if in search mode
-    if (isInSearchMode()) {
+    if (isInSearchMode() && m_searchLimitGroup) {
+        // Perform new search if we are limiting search to the current group
         search(m_lastSearchText);
+    } else if (isInSearchMode()) {
+        // Otherwise cancel search
+        emit clearSearch();
     } else {
         m_entryView->setGroup(group);
     }
