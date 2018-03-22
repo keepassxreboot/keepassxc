@@ -93,9 +93,9 @@ public:
     QList<int> previewSplitterSizes() const;
     void setPreviewSplitterSizes(const QList<int>& sizes);
     bool isUsernamesHidden() const;
-    void setUsernamesHidden(const bool hide);
+    void setUsernamesHidden(bool hide);
     bool isPasswordsHidden() const;
-    void setPasswordsHidden(const bool hide);
+    void setPasswordsHidden(bool hide);
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
