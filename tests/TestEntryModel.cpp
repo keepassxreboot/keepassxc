@@ -217,15 +217,14 @@ void TestEntryModel::testCustomIconModel()
 
     QCOMPARE(model->rowCount(), 0);
 
-    QHash<Uuid, QPixmap> icons;
-    QList<Uuid> iconsOrder;
+    QHash<QUuid, QPixmap> icons;
+    QList<QUuid> iconsOrder;
 
-    Uuid iconUuid(QByteArray(16, '2'));
+    QUuid iconUuid(QByteArray(16, '2'));
     icons.insert(iconUuid, QPixmap());
     iconsOrder << iconUuid;
 
-    Uuid iconUuid2(QByteArray(16, '1'));
-    QImage icon2;
+    QUuid iconUuid2(QByteArray(16, '1'));
     icons.insert(iconUuid2, QPixmap());
     iconsOrder << iconUuid2;
 

@@ -133,7 +133,7 @@ bool Argon2Kdf::processParameters(const QVariantMap& p)
 QVariantMap Argon2Kdf::writeParameters()
 {
     QVariantMap p;
-    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2.toByteArray());
+    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2.toRfc4122());
     p.insert(KeePass2::KDFPARAM_ARGON2_VERSION, version());
     p.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, parallelism());
     p.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, memory() * 1024);

@@ -21,13 +21,15 @@
 #include "crypto/kdf/Argon2Kdf.h"
 #include <QSharedPointer>
 
-const Uuid KeePass2::CIPHER_AES = Uuid(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
-const Uuid KeePass2::CIPHER_TWOFISH = Uuid(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
-const Uuid KeePass2::CIPHER_CHACHA20 = Uuid(QByteArray::fromHex("D6038A2B8B6F4CB5A524339A31DBB59A"));
+#define UUID_LENGHT 16
 
-const Uuid KeePass2::KDF_AES_KDBX3 = Uuid(QByteArray::fromHex("C9D9F39A628A4460BF740D08C18A4FEA"));
-const Uuid KeePass2::KDF_AES_KDBX4 = Uuid(QByteArray::fromHex("7C02BB8279A74AC0927D114A00648238"));
-const Uuid KeePass2::KDF_ARGON2 = Uuid(QByteArray::fromHex("EF636DDF8C29444B91F7A9A403E30A0C"));
+const QUuid KeePass2::CIPHER_AES = QUuid::fromRfc4122(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
+const QUuid KeePass2::CIPHER_TWOFISH = QUuid::fromRfc4122(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
+const QUuid KeePass2::CIPHER_CHACHA20 = QUuid::fromRfc4122(QByteArray::fromHex("D6038A2B8B6F4CB5A524339A31DBB59A"));
+
+const QUuid KeePass2::KDF_AES_KDBX3 = QUuid::fromRfc4122(QByteArray::fromHex("C9D9F39A628A4460BF740D08C18A4FEA"));
+const QUuid KeePass2::KDF_AES_KDBX4 = QUuid::fromRfc4122(QByteArray::fromHex("7C02BB8279A74AC0927D114A00648238"));
+const QUuid KeePass2::KDF_ARGON2 = QUuid::fromRfc4122(QByteArray::fromHex("EF636DDF8C29444B91F7A9A403E30A0C"));
 
 const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
 
@@ -44,15 +46,17 @@ const QString KeePass2::KDFPARAM_ARGON2_VERSION("V");
 const QString KeePass2::KDFPARAM_ARGON2_SECRET("K");
 const QString KeePass2::KDFPARAM_ARGON2_ASSOCDATA("A");
 
-const QList<QPair<Uuid, QString>> KeePass2::CIPHERS{
-    qMakePair(KeePass2::CIPHER_AES, QString(QT_TRANSLATE_NOOP("KeePass2", "AES: 256-bit"))),
-    qMakePair(KeePass2::CIPHER_TWOFISH, QString(QT_TRANSLATE_NOOP("KeePass2", "Twofish: 256-bit"))),
-    qMakePair(KeePass2::CIPHER_CHACHA20, QString(QT_TRANSLATE_NOOP("KeePass2", "ChaCha20: 256-bit")))};
+const QList<QPair<QUuid, QString>> KeePass2::CIPHERS{
+    qMakePair(KeePass2::CIPHER_AES, QObject::tr("AES: 256-bit")),
+    qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish: 256-bit")),
+    qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20: 256-bit"))
+};
 
-const QList<QPair<Uuid, QString>> KeePass2::KDFS{
-    qMakePair(KeePass2::KDF_ARGON2, QString(QT_TRANSLATE_NOOP("KeePass2", "Argon2 (KDBX 4 – recommended)"))),
-    qMakePair(KeePass2::KDF_AES_KDBX4, QString(QT_TRANSLATE_NOOP("KeePass2", "AES-KDF (KDBX 4)"))),
-    qMakePair(KeePass2::KDF_AES_KDBX3, QString(QT_TRANSLATE_NOOP("KeePass2", "AES-KDF (KDBX 3.1)")))};
+const QList<QPair<QUuid, QString>> KeePass2::KDFS{
+    qMakePair(KeePass2::KDF_ARGON2, QObject::tr("Argon2 (KDBX 4 – recommended)")),
+    qMakePair(KeePass2::KDF_AES_KDBX4, QObject::tr("AES-KDF (KDBX 4)")),
+    qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3.1)"))
+};
 
 QByteArray KeePass2::hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey)
 {
@@ -72,11 +76,11 @@ QByteArray KeePass2::hmacKey(QByteArray masterSeed, QByteArray transformedMaster
 QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
 {
     QByteArray uuidBytes = p.value(KDFPARAM_UUID).toByteArray();
-    if (uuidBytes.size() != Uuid::Length) {
+    if (uuidBytes.size() != UUID_LENGHT) {
         return {};
     }
 
-    Uuid kdfUuid(uuidBytes);
+    QUuid kdfUuid = QUuid::fromRfc4122(uuidBytes);
     if (kdfUuid == KDF_AES_KDBX3) {
         // upgrade to non-legacy AES-KDF, since KDBX3 doesn't have any KDF parameters
         kdfUuid = KDF_AES_KDBX4;
@@ -98,7 +102,7 @@ QVariantMap KeePass2::kdfToParameters(QSharedPointer<Kdf> kdf)
     return kdf->writeParameters();
 }
 
-QSharedPointer<Kdf> KeePass2::uuidToKdf(const Uuid& uuid)
+QSharedPointer<Kdf> KeePass2::uuidToKdf(const QUuid& uuid)
 {
     if (uuid == KDF_AES_KDBX3) {
         return QSharedPointer<AesKdf>::create(true);

@@ -26,15 +26,7 @@
 
 namespace QTest
 {
-
-    template <> inline char* toString(const Uuid& uuid)
-    {
-        QByteArray ba = "Uuid(";
-        ba += uuid.toHex().toLatin1().constData();
-        ba += ")";
-        return qstrdup(ba.constData());
-    }
-
+  
     template <> inline char* toString(const Group::TriState& triState)
     {
         QString value;

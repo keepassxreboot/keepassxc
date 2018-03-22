@@ -224,8 +224,8 @@ bool GroupModel::dropMimeData(const QMimeData* data,
     Group* parentGroup = groupFromIndex(parent);
 
     if (isGroup) {
-        Uuid dbUuid;
-        Uuid groupUuid;
+        QUuid dbUuid;
+        QUuid groupUuid;
         stream >> dbUuid >> groupUuid;
 
         Database* db = Database::databaseByUuid(dbUuid);
@@ -257,7 +257,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         Database* targetDb = parentGroup->database();
 
         if (sourceDb != targetDb) {
-            QSet<Uuid> customIcons = group->customIconsRecursive();
+            QSet<QUuid> customIcons = group->customIconsRecursive();
             targetDb->metadata()->copyCustomIcons(customIcons, sourceDb->metadata());
         }
 
@@ -268,8 +268,8 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         }
 
         while (!stream.atEnd()) {
-            Uuid dbUuid;
-            Uuid entryUuid;
+            QUuid dbUuid;
+            QUuid entryUuid;
             stream >> dbUuid >> entryUuid;
 
             Database* db = Database::databaseByUuid(dbUuid);
@@ -291,7 +291,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
 
             Database* sourceDb = dragEntry->group()->database();
             Database* targetDb = parentGroup->database();
-            Uuid customIcon = entry->iconUuid();
+            QUuid customIcon = entry->iconUuid();
 
             if (sourceDb != targetDb && !customIcon.isNull() && !targetDb->metadata()->containsCustomIcon(customIcon)) {
                 targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));

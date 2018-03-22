@@ -160,12 +160,12 @@ bool Metadata::protectNotes() const
     return m_data.protectNotes;
 }
 
-QImage Metadata::customIcon(const Uuid& uuid) const
+QImage Metadata::customIcon(const QUuid& uuid) const
 {
     return m_customIcons.value(uuid);
 }
 
-QPixmap Metadata::customIconPixmap(const Uuid& uuid) const
+QPixmap Metadata::customIconPixmap(const QUuid& uuid) const
 {
     QPixmap pixmap;
 
@@ -183,7 +183,7 @@ QPixmap Metadata::customIconPixmap(const Uuid& uuid) const
     return pixmap;
 }
 
-QPixmap Metadata::customIconScaledPixmap(const Uuid& uuid) const
+QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid) const
 {
     QPixmap pixmap;
 
@@ -202,28 +202,28 @@ QPixmap Metadata::customIconScaledPixmap(const Uuid& uuid) const
     return pixmap;
 }
 
-bool Metadata::containsCustomIcon(const Uuid& uuid) const
+bool Metadata::containsCustomIcon(const QUuid& uuid) const
 {
     return m_customIcons.contains(uuid);
 }
 
-QHash<Uuid, QImage> Metadata::customIcons() const
+QHash<QUuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;
 }
 
-QHash<Uuid, QPixmap> Metadata::customIconsScaledPixmaps() const
+QHash<QUuid, QPixmap> Metadata::customIconsScaledPixmaps() const
 {
-    QHash<Uuid, QPixmap> result;
+    QHash<QUuid, QPixmap> result;
 
-    for (const Uuid& uuid : m_customIconsOrder) {
+    for (const QUuid& uuid : m_customIconsOrder) {
         result.insert(uuid, customIconScaledPixmap(uuid));
     }
 
     return result;
 }
 
-QList<Uuid> Metadata::customIconsOrder() const
+QList<QUuid> Metadata::customIconsOrder() const
 {
     return m_customIconsOrder;
 }
@@ -378,7 +378,7 @@ void Metadata::setProtectNotes(bool value)
     set(m_data.protectNotes, value);
 }
 
-void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
+void Metadata::addCustomIcon(const QUuid& uuid, const QImage& icon)
 {
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));
@@ -395,7 +395,7 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     emit modified();
 }
 
-void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
+void Metadata::addCustomIconScaled(const QUuid& uuid, const QImage& icon)
 {
     QImage iconScaled;
 
@@ -409,7 +409,7 @@ void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
     addCustomIcon(uuid, iconScaled);
 }
 
-void Metadata::removeCustomIcon(const Uuid& uuid)
+void Metadata::removeCustomIcon(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(m_customIcons.contains(uuid));
@@ -430,15 +430,15 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     emit modified();
 }
 
-Uuid Metadata::findCustomIcon(const QImage& candidate)
+QUuid Metadata::findCustomIcon(const QImage &candidate)
 {
     QByteArray hash = hashImage(candidate);
-    return m_customIconsHashes.value(hash, Uuid());
+    return m_customIconsHashes.value(hash, QUuid());
 }
 
-void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
+void Metadata::copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* otherMetadata)
 {
-    for (const Uuid& uuid : iconList) {
+    for (const QUuid& uuid : iconList) {
         Q_ASSERT(otherMetadata->containsCustomIcon(uuid));
 
         if (!containsCustomIcon(uuid) && otherMetadata->containsCustomIcon(uuid)) {

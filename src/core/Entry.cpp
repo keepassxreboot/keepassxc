@@ -25,6 +25,7 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
+#include <QDebug>
 #include <QRegularExpression>
 
 const int Entry::DefaultIconNumber = 0;
@@ -110,7 +111,7 @@ EntryReferenceType Entry::referenceType(const QString& referenceStr)
     } else if (referenceLowerStr == QLatin1String("n")) {
         result = EntryReferenceType::Notes;
     } else if (referenceLowerStr == QLatin1String("i")) {
-        result = EntryReferenceType::Uuid;
+        result = EntryReferenceType::QUuid;
     } else if (referenceLowerStr == QLatin1String("o")) {
         result = EntryReferenceType::CustomAttributes;
     }
@@ -118,7 +119,7 @@ EntryReferenceType Entry::referenceType(const QString& referenceStr)
     return result;
 }
 
-Uuid Entry::uuid() const
+const QUuid& Entry::uuid() const
 {
     return m_uuid;
 }
@@ -170,7 +171,7 @@ int Entry::iconNumber() const
     return m_data.iconNumber;
 }
 
-Uuid Entry::iconUuid() const
+const QUuid& Entry::iconUuid() const
 {
     return m_data.customIcon;
 }
@@ -417,7 +418,7 @@ quint8 Entry::totpDigits() const
     return m_data.totpDigits;
 }
 
-void Entry::setUuid(const Uuid& uuid)
+void Entry::setUuid(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
     set(m_uuid, uuid);
@@ -429,14 +430,14 @@ void Entry::setIcon(int iconNumber)
 
     if (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull()) {
         m_data.iconNumber = iconNumber;
-        m_data.customIcon = Uuid();
+        m_data.customIcon = QUuid();
 
         emit modified();
         emitDataChanged();
     }
 }
 
-void Entry::setIcon(const Uuid& uuid)
+void Entry::setIcon(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
 
@@ -632,7 +633,7 @@ Entry* Entry::clone(CloneFlags flags) const
     Entry* entry = new Entry();
     entry->setUpdateTimeinfo(false);
     if (flags & CloneNewUuid) {
-        entry->m_uuid = Uuid::random();
+        entry->m_uuid = QUuid::createUuid();
     } else {
         entry->m_uuid = m_uuid;
     }
@@ -643,15 +644,13 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneUserAsRef) {
         // Build the username reference
-        QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
-        entry->m_attributes->set(
-            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+        QString username = "{REF:U@I:" + m_uuid.toRfc4122().toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
-        QString password = "{REF:P@I:" + m_uuid.toHex() + "}";
-        entry->m_attributes->set(
-            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+        QString password = "{REF:P@I:" + m_uuid.toRfc4122().toHex() + "}";
+        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
@@ -757,7 +756,7 @@ void Entry::updateTotp()
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
         return str;
     }
 
@@ -781,7 +780,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
         return placeholder;
     }
 
@@ -845,7 +844,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", qPrintable(uuid().toHex()));
+        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
         return placeholder;
     }
 
@@ -893,8 +892,8 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
         return url();
     case EntryReferenceType::Notes:
         return notes();
-    case EntryReferenceType::Uuid:
-        return uuid().toHex();
+    case EntryReferenceType::QUuid:
+        return uuid().toRfc4122().toHex();
     default:
         break;
     }

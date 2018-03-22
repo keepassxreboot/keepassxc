@@ -369,7 +369,7 @@ void DatabaseWidget::createEntry()
         m_newEntry->setTitle(getCurrentSearch());
         endSearch();
     }
-    m_newEntry->setUuid(Uuid::random());
+    m_newEntry->setUuid(QUuid::createUuid());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
     setIconFromParent();
@@ -675,7 +675,7 @@ void DatabaseWidget::createGroup()
     }
 
     m_newGroup = new Group();
-    m_newGroup->setUuid(Uuid::random());
+    m_newGroup->setUuid(QUuid::createUuid());
     m_newParent = m_groupView->currentGroup();
     switchToGroupEdit(m_newGroup, true);
 }
@@ -905,8 +905,8 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     replaceDatabase(db);
 
     restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
-    m_groupBeforeLock = Uuid();
-    m_entryBeforeLock = Uuid();
+    m_groupBeforeLock = QUuid();
+    m_entryBeforeLock = QUuid();
 
     setCurrentWidget(m_mainWidget);
     m_unlockDatabaseWidget->clearForms();
@@ -1299,14 +1299,14 @@ void DatabaseWidget::reloadDatabaseFile()
                 }
             }
 
-            Uuid groupBeforeReload;
+            QUuid groupBeforeReload;
             if (m_groupView && m_groupView->currentGroup()) {
                 groupBeforeReload = m_groupView->currentGroup()->uuid();
             } else {
                 groupBeforeReload = m_db->rootGroup()->uuid();
             }
 
-            Uuid entryBeforeReload;
+            QUuid entryBeforeReload;
             if (m_entryView && m_entryView->currentEntry()) {
                 entryBeforeReload = m_entryView->currentEntry()->uuid();
             }
@@ -1348,7 +1348,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
  * Restores the focus on the group and entry that was focused
  * before the database was locked or reloaded.
  */
-void DatabaseWidget::restoreGroupEntryFocus(Uuid groupUuid, Uuid entryUuid)
+void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& entryUuid)
 {
     Group* restoredGroup = nullptr;
     const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);

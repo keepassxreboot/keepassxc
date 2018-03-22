@@ -18,6 +18,7 @@
 
 #include "Database.h"
 
+#include <QDebug>
 #include <QFile>
 #include <QSaveFile>
 #include <QTemporaryFile>
@@ -35,13 +36,13 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-QHash<Uuid, Database*> Database::m_uuidMap;
+QHash<QUuid, Database*> Database::m_uuidMap;
 
 Database::Database()
     : m_metadata(new Metadata(this))
     , m_timer(new QTimer(this))
     , m_emitModified(false)
-    , m_uuid(Uuid::random())
+    , m_uuid(QUuid::createUuid())
 {
     m_data.cipher = KeePass2::CIPHER_AES;
     m_data.compressionAlgo = CompressionGZip;
@@ -53,7 +54,7 @@ Database::Database()
     m_data.hasKey = false;
 
     setRootGroup(new Group());
-    rootGroup()->setUuid(Uuid::random());
+    rootGroup()->setUuid(QUuid::createUuid());
     m_timer->setSingleShot(true);
 
     m_uuidMap.insert(m_uuid, this);
@@ -97,7 +98,7 @@ const Metadata* Database::metadata() const
     return m_metadata;
 }
 
-Entry* Database::resolveEntry(const Uuid& uuid)
+Entry* Database::resolveEntry(const QUuid& uuid)
 {
     return findEntryRecursive(uuid, m_rootGroup);
 }
@@ -107,7 +108,7 @@ Entry* Database::resolveEntry(const QString& text, EntryReferenceType referenceT
     return findEntryRecursive(text, referenceType, m_rootGroup);
 }
 
-Entry* Database::findEntryRecursive(const Uuid& uuid, Group* group)
+Entry* Database::findEntryRecursive(const QUuid& uuid, Group* group)
 {
     const QList<Entry*> entryList = group->entries();
     for (Entry* entry : entryList) {
@@ -154,8 +155,8 @@ Entry* Database::findEntryRecursive(const QString& text, EntryReferenceType refe
         case EntryReferenceType::Notes:
             found = entry->notes() == text;
             break;
-        case EntryReferenceType::Uuid:
-            found = entry->uuid() == Uuid::fromHex(text);
+        case EntryReferenceType::QUuid:
+            found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(text.toLatin1()));
             break;
         case EntryReferenceType::CustomAttributes:
             found = entry->attributes()->containsValue(text);
@@ -178,12 +179,12 @@ Entry* Database::findEntryRecursive(const QString& text, EntryReferenceType refe
     return nullptr;
 }
 
-Group* Database::resolveGroup(const Uuid& uuid)
+Group* Database::resolveGroup(const QUuid& uuid)
 {
     return findGroupRecursive(uuid, m_rootGroup);
 }
 
-Group* Database::findGroupRecursive(const Uuid& uuid, Group* group)
+Group* Database::findGroupRecursive(const QUuid& uuid, Group* group)
 {
     if (group->uuid() == uuid) {
         return group;
@@ -211,7 +212,7 @@ void Database::addDeletedObject(const DeletedObject& delObj)
     m_deletedObjects.append(delObj);
 }
 
-void Database::addDeletedObject(const Uuid& uuid)
+void Database::addDeletedObject(const QUuid& uuid)
 {
     DeletedObject delObj;
     delObj.deletionTime = QDateTime::currentDateTimeUtc();
@@ -220,7 +221,7 @@ void Database::addDeletedObject(const Uuid& uuid)
     addDeletedObject(delObj);
 }
 
-Uuid Database::cipher() const
+const QUuid& Database::cipher() const
 {
     return m_data.cipher;
 }
@@ -246,7 +247,7 @@ bool Database::challengeMasterSeed(const QByteArray& masterSeed)
     return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
 }
 
-void Database::setCipher(const Uuid& cipher)
+void Database::setCipher(const QUuid& cipher)
 {
     Q_ASSERT(!cipher.isNull());
 
@@ -387,10 +388,10 @@ void Database::merge(const Database* other)
 {
     m_rootGroup->merge(other->rootGroup());
 
-    for (Uuid customIconId : other->metadata()->customIcons().keys()) {
+    for (const QUuid& customIconId : other->metadata()->customIcons().keys()) {
         QImage customIcon = other->metadata()->customIcon(customIconId);
         if (!this->metadata()->containsCustomIcon(customIconId)) {
-            qDebug("Adding custom icon %s to database.", qPrintable(customIconId.toHex()));
+            qDebug() << QString("Adding custom icon %1 to database.").arg(customIconId.toString());
             this->metadata()->addCustomIcon(customIconId, customIcon);
         }
     }
@@ -407,12 +408,12 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
-Uuid Database::uuid()
+const QUuid& Database::uuid()
 {
     return m_uuid;
 }
 
-Database* Database::databaseByUuid(const Uuid& uuid)
+Database* Database::databaseByUuid(const QUuid& uuid)
 {
     return m_uuidMap.value(uuid, 0);
 }

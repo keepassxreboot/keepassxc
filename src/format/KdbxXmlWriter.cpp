@@ -154,15 +154,15 @@ void KdbxXmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    const QList<Uuid> customIconsOrder = m_meta->customIconsOrder();
-    for (const Uuid& uuid : customIconsOrder) {
+    const QList<QUuid> customIconsOrder = m_meta->customIconsOrder();
+    for (const QUuid& uuid : customIconsOrder) {
         writeIcon(uuid, m_meta->customIcon(uuid));
     }
 
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
+void KdbxXmlWriter::writeIcon(const QUuid& uuid, const QImage& icon)
 {
     m_xml.writeStartElement("Icon");
 
@@ -502,9 +502,9 @@ void KdbxXmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime&
     writeString(qualifiedName, dateTimeStr);
 }
 
-void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
+void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const QUuid& uuid)
 {
-    writeString(qualifiedName, uuid.toBase64());
+    writeString(qualifiedName, uuid.toRfc4122().toBase64());
 }
 
 void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
@@ -512,7 +512,7 @@ void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
     if (group) {
         writeUuid(qualifiedName, group->uuid());
     } else {
-        writeUuid(qualifiedName, Uuid());
+        writeUuid(qualifiedName, QUuid());
     }
 }
 
@@ -521,7 +521,7 @@ void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
     if (entry) {
         writeUuid(qualifiedName, entry->uuid());
     } else {
-        writeUuid(qualifiedName, Uuid());
+        writeUuid(qualifiedName, QUuid());
     }
 }
 

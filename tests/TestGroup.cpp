@@ -93,7 +93,7 @@ void TestGroup::testParenting()
     g4->setName("test");
     g3->setName("test");
     g1->setName("test");
-    g3->setIcon(Uuid::random());
+    g3->setIcon(QUuid::createUuid());
     g1->setIcon(2);
     QCOMPARE(spy.count(), 6);
     delete db;
@@ -293,12 +293,12 @@ void TestGroup::testCopyCustomIcon()
 {
     QScopedPointer<Database> dbSource(new Database());
 
-    Uuid groupIconUuid = Uuid::random();
+    QUuid groupIconUuid = QUuid::createUuid();
     QImage groupIcon(16, 16, QImage::Format_RGB32);
     groupIcon.setPixel(0, 0, qRgb(255, 0, 0));
     dbSource->metadata()->addCustomIcon(groupIconUuid, groupIcon);
 
-    Uuid entryIconUuid = Uuid::random();
+    QUuid entryIconUuid = QUuid::createUuid();
     QImage entryIcon(16, 16, QImage::Format_RGB32);
     entryIcon.setPixel(0, 0, qRgb(255, 0, 0));
     dbSource->metadata()->addCustomIcon(entryIconUuid, entryIcon);
@@ -412,25 +412,25 @@ void TestGroup::testCopyCustomIcons()
 
     QScopedPointer<Group> group1(new Group());
     group1->setParent(dbSource->rootGroup());
-    Uuid group1Icon = Uuid::random();
+    QUuid group1Icon = QUuid::createUuid();
     dbSource->metadata()->addCustomIcon(group1Icon, iconImage1);
     group1->setIcon(group1Icon);
 
     QScopedPointer<Group> group2(new Group());
     group2->setParent(group1.data());
-    Uuid group2Icon = Uuid::random();
+    QUuid group2Icon = QUuid::createUuid();
     dbSource->metadata()->addCustomIcon(group2Icon, iconImage1);
     group2->setIcon(group2Icon);
 
     QScopedPointer<Entry> entry1(new Entry());
     entry1->setGroup(group2.data());
-    Uuid entry1IconOld = Uuid::random();
+    QUuid entry1IconOld = QUuid::createUuid();
     dbSource->metadata()->addCustomIcon(entry1IconOld, iconImage1);
     entry1->setIcon(entry1IconOld);
 
     // add history item
     entry1->beginUpdate();
-    Uuid entry1IconNew = Uuid::random();
+    QUuid entry1IconNew = QUuid::createUuid();
     dbSource->metadata()->addCustomIcon(entry1IconNew, iconImage1);
     entry1->setIcon(entry1IconNew);
     entry1->endUpdate();
@@ -459,7 +459,7 @@ void TestGroup::testFindEntry()
     Entry* entry1 = new Entry();
     entry1->setTitle(QString("entry1"));
     entry1->setGroup(db->rootGroup());
-    entry1->setUuid(Uuid::random());
+    entry1->setUuid(QUuid::createUuid());
 
     Group* group1 = new Group();
     group1->setName("group1");
@@ -468,13 +468,13 @@ void TestGroup::testFindEntry()
 
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
-    entry2->setUuid(Uuid::random());
+    entry2->setUuid(QUuid::createUuid());
 
     group1->setParent(db->rootGroup());
 
     Entry* entry;
 
-    entry = db->rootGroup()->findEntry(entry1->uuid().toHex());
+    entry = db->rootGroup()->findEntry(entry1->uuid().toRfc4122().toHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
@@ -491,7 +491,7 @@ void TestGroup::testFindEntry()
     entry = db->rootGroup()->findEntry(QString("//entry1"));
     QVERIFY(entry == nullptr);
 
-    entry = db->rootGroup()->findEntry(entry2->uuid().toHex());
+    entry = db->rootGroup()->findEntry(entry2->uuid().toRfc4122().toHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
@@ -602,7 +602,7 @@ void TestGroup::testPrint()
     Entry* entry1 = new Entry();
     entry1->setTitle(QString("entry1"));
     entry1->setGroup(db->rootGroup());
-    entry1->setUuid(Uuid::random());
+    entry1->setUuid(QUuid::createUuid());
 
     output = db->rootGroup()->print();
     QCOMPARE(output, QString("entry1\n"));
@@ -614,7 +614,7 @@ void TestGroup::testPrint()
 
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
-    entry2->setUuid(Uuid::random());
+    entry2->setUuid(QUuid::createUuid());
 
     group1->setParent(db->rootGroup());
 

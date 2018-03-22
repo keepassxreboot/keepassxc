@@ -36,8 +36,8 @@ public:
     const QString errorString() const;
     bool isAgentRunning() const;
     bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
-    bool removeIdentity(OpenSSHKey& key);
-    void removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid);
+    bool removeIdentity(OpenSSHKey& key) const;
+    void removeIdentityAtLock(const OpenSSHKey& key, const QUuid& uuid);
 
 signals:
     void error(const QString& message);
