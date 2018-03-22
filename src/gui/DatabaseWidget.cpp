@@ -633,23 +633,19 @@ void DatabaseWidget::openUrl()
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
-    QString urlString = entry->resolveMultiplePlaceholders(entry->url());
-    if (urlString.isEmpty()) {
-        return;
-    }
-
-    if (urlString.startsWith("cmd://")) {
+    if (entry->url().startsWith("cmd://")) {
+        QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
         // check if decision to execute command was stored
         if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
             if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
-                QProcess::startDetached(urlString.mid(6));
+                QProcess::startDetached(cmdString.mid(6));
             }
             return;
         }
 
         // otherwise ask user
-        if (urlString.length() > 6) {
-            QString cmdTruncated = urlString.mid(6);
+        if (cmdString.length() > 6) {
+            QString cmdTruncated = cmdString.mid(6);
             if (cmdTruncated.length() > 400)
                 cmdTruncated = cmdTruncated.left(400) + " […]";
             QMessageBox msgbox(QMessageBox::Icon::Question,
@@ -672,7 +668,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
 
             int result = msgbox.exec();
             if (result == QMessageBox::Yes) {
-                QProcess::startDetached(urlString.mid(6));
+                QProcess::startDetached(cmdString.mid(6));
             }
 
             if (remember) {
@@ -680,10 +676,11 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
                                          result == QMessageBox::Yes ? "1" : "0");
             }
         }
-    }
-    else {
-        QUrl url = QUrl::fromUserInput(urlString);
-        QDesktopServices::openUrl(url);
+    } else {
+        QString urlString = entry->webUrl();
+        if (!urlString.isEmpty()) {
+            QDesktopServices::openUrl(urlString);
+        }
     }
 }
 
