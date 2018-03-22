@@ -40,6 +40,8 @@ public:
     void setExpires(bool expires);
     void setUsageCount(int count);
     void setLocationChanged(const QDateTime& dateTime);
+    bool operator==(const TimeInfo& other) const;
+    bool operator!=(const TimeInfo& other) const;
 
 private:
     QDateTime m_lastModificationTime;

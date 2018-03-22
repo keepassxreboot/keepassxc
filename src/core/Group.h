@@ -57,6 +57,8 @@ public:
         Group::TriState autoTypeEnabled;
         Group::TriState searchingEnabled;
         Group::MergeMode mergeMode;
+        bool operator==(const GroupData& other) const;
+        bool operator!=(const GroupData& other) const;
     };
 
     Group();
@@ -140,6 +142,7 @@ public:
     void copyDataFrom(const Group* other);
     void merge(const Group* other);
     QString print(bool recursive = false, int depth = 0);
+    bool operator==(const Group& other) const;
 
 signals:
     void dataChanged(Group* group);

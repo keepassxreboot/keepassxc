@@ -622,6 +622,66 @@ QString Group::print(bool recursive, int depth)
     return response;
 }
 
+bool Group::operator==(const Group& other) const
+{
+    if (m_data != other.m_data) {
+        return false;
+    }
+
+    // Putting the comparison of the leaf nodes first because when we compare children that
+    // are not leaves, this operator will be called as the tree is traversed
+    if (m_children.size() == 0) {
+        if (m_entries.size() != other.m_entries.size()) {
+            return false;
+        }
+        QList<Entry*>::const_iterator i, j;
+        for (i = m_entries.begin(), j = other.m_entries.begin(); i != m_entries.end(), j != other.m_entries.end(); ++i, ++j) {
+            if (*(*i) != *(*j)) {
+                return false;
+            }
+        }
+    }
+
+    QList<Group*>::const_iterator i, j;
+    for (i = m_children.begin(), j = other.m_children.begin(); i != m_children.end(), j != other.m_children.end(); ++i, ++j) {
+        if (*(*i) == *(*j)) {
+            continue;
+        } else {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool Group::GroupData::operator==(const GroupData& other) const
+{
+    return (name == other.name
+            && notes == other.notes
+            && iconNumber == other.iconNumber
+            && customIcon == other.customIcon
+            && timeInfo == other.timeInfo
+            && isExpanded == other.isExpanded
+            && defaultAutoTypeSequence == other.defaultAutoTypeSequence
+            && autoTypeEnabled == other.autoTypeEnabled
+            && searchingEnabled == other.searchingEnabled
+            && mergeMode == other.mergeMode);
+}
+
+bool Group::GroupData::operator!=(const GroupData& other) const
+{
+    return (name != other.name
+            || notes != other.notes
+            || iconNumber != other.iconNumber
+            || customIcon != other.customIcon
+            || timeInfo != other.timeInfo
+            || isExpanded != other.isExpanded
+            || defaultAutoTypeSequence != other.defaultAutoTypeSequence
+            || autoTypeEnabled != other.autoTypeEnabled
+            || searchingEnabled != other.searchingEnabled
+            || mergeMode != other.mergeMode);
+}
+
 QList<const Group*> Group::groupsRecursive(bool includeSelf) const
 {
     QList<const Group*> groupList;

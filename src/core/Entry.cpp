@@ -92,6 +92,20 @@ void Entry::setUpdateTimeinfo(bool value)
     m_updateTimeinfo = value;
 }
 
+bool Entry::operator==(const Entry& other) const
+{
+    return (m_data == other.m_data
+            && *(m_attributes) == *(other.m_attributes)
+            && *(m_attachments) == *(other.m_attachments));
+}
+
+bool Entry::operator!=(const Entry& other) const
+{
+    return (m_data != other.m_data
+            || *m_attributes != *(other.m_attributes)
+            || *m_attachments != *(other.m_attachments));
+}
+
 EntryReferenceType Entry::referenceType(const QString& referenceStr)
 {
     const QString referenceLowerStr = referenceStr.toLower();
@@ -838,6 +852,49 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
         break;
     }
     return QString();
+}
+
+bool EntryData::operator==(const EntryData& other) const
+{
+    bool retVal =
+    (iconNumber == other.iconNumber
+            && customIcon == other.customIcon
+            && foregroundColor == other.foregroundColor
+            && backgroundColor == other.backgroundColor
+            && overrideUrl == other.overrideUrl
+            && tags == other.tags
+            && autoTypeEnabled == other.autoTypeEnabled
+            && autoTypeObfuscation == other.autoTypeObfuscation
+            && defaultAutoTypeSequence == other.defaultAutoTypeSequence
+            && timeInfo == other.timeInfo
+            && totpDigits == other.totpDigits
+            && totpStep == other.totpStep);
+
+    return retVal;
+}
+
+bool EntryData::operator!=(const EntryData& other) const
+{
+    int overrideUrlEquals = overrideUrl.localeAwareCompare(other.overrideUrl);
+    int tagsEquals = tags.localeAwareCompare(other.tags);
+    int defaultAutoEquals = defaultAutoTypeSequence.localeAwareCompare(other.defaultAutoTypeSequence);
+
+    overrideUrlEquals = overrideUrlEquals;
+    tagsEquals = tagsEquals;
+    defaultAutoEquals = defaultAutoEquals;
+
+    return (iconNumber != other.iconNumber
+            || customIcon != other.customIcon
+            || foregroundColor != other.foregroundColor
+            || backgroundColor != other.backgroundColor
+            || (overrideUrl.localeAwareCompare(other.overrideUrl) != 0)
+            || (tags.localeAwareCompare(other.tags) != 0)
+            || autoTypeEnabled != other.autoTypeEnabled
+            || autoTypeObfuscation != other.autoTypeObfuscation
+            || (defaultAutoTypeSequence.localeAwareCompare(other.defaultAutoTypeSequence) != 0)
+            || timeInfo != other.timeInfo
+            || totpDigits != other.totpDigits
+            || totpStep != other.totpStep);
 }
 
 Group* Entry::group()

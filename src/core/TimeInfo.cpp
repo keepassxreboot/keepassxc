@@ -105,3 +105,23 @@ void TimeInfo::setLocationChanged(const QDateTime& dateTime)
     Q_ASSERT(dateTime.timeSpec() == Qt::UTC);
     m_locationChanged = dateTime;
 }
+
+bool TimeInfo::operator==(const TimeInfo& other) const
+{
+    return (m_lastModificationTime == other.m_lastModificationTime
+            && m_creationTime == other.m_creationTime
+            && m_lastAccessTime == other.m_lastAccessTime
+            && m_expiryTime == other.m_expiryTime
+            && m_expires == other.m_expires
+            && m_locationChanged == other.m_locationChanged);
+}
+
+bool TimeInfo::operator!=(const TimeInfo& other) const
+{
+    return (m_lastModificationTime != other.m_lastModificationTime
+            || m_creationTime != other.m_creationTime
+            || m_lastAccessTime != other.m_lastAccessTime
+            || m_expiryTime != other.m_expiryTime
+            || m_expires != other.m_expires
+            || m_locationChanged != other.m_locationChanged);
+}

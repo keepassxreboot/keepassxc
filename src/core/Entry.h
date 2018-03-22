@@ -61,6 +61,8 @@ struct EntryData
     TimeInfo timeInfo;
     mutable quint8 totpDigits;
     mutable quint8 totpStep;
+    bool operator==(const EntryData& other) const;
+    bool operator!=(const EntryData& other) const;
 };
 
 class Entry : public QObject
@@ -198,6 +200,9 @@ public:
 
     void setUpdateTimeinfo(bool value);
 
+    bool operator==(const Entry& other) const;
+    bool operator!=(const Entry& other) const;
+    //bool equals(Entry* other);
 signals:
     /**
      * Emitted when a default attribute has been changed.
@@ -215,12 +220,12 @@ private:
     QString resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const;
     QString resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
     QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
-    QString referenceFieldValue(EntryReferenceType referenceType) const;
+    QString referenceFieldValue(EntryReferenceType referenceType) const; 
 
     static EntryReferenceType referenceType(const QString& referenceStr);
 
     const Database* database() const;
-    template <class T> bool set(T& property, const T& value);
+    template <class T> bool set(T& property, const T& value);    
 
     Uuid m_uuid;
     EntryData m_data;
