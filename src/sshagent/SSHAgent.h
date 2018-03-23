@@ -71,7 +71,7 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QMap<QString, QSet<OpenSSHKey>> m_keys;
+    QMap<QUuid, QSet<OpenSSHKey>> m_keys;
     QString m_error;
 };
 

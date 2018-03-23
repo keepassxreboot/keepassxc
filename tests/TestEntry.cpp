@@ -282,8 +282,8 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry7 = new Entry();
     entry7->setGroup(root);
-    entry7->setUuid(Uuid::random());
-    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuid().toHex()));
+    entry7->setUuid(QUuid::createUuid());
+    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(QString(entry3->uuid().toRfc4122().toHex())));
     entry7->setUsername(QString("{TITLE}"));
     entry7->setPassword(QString("PASSWORD"));
 

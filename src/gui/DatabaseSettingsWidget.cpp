@@ -105,9 +105,8 @@ void DatabaseSettingsWidget::load(Database* db)
     }
 
     m_uiEncryption->algorithmComboBox->clear();
-    for (auto& cipher : asConst(KeePass2::CIPHERS)) {
-        m_uiEncryption->algorithmComboBox->addItem(QCoreApplication::translate("KeePass2", cipher.second.toUtf8()),
-                                                   cipher.first.toByteArray());
+    for (auto& cipher: asConst(KeePass2::CIPHERS)) {
+        m_uiEncryption->algorithmComboBox->addItem(QCoreApplication::translate("KeePass2", cipher.second.toUtf8()), cipher.first);
     }
     int cipherIndex = m_uiEncryption->algorithmComboBox->findData(m_db->cipher().toRfc4122());
     if (cipherIndex > -1) {
@@ -118,12 +117,12 @@ void DatabaseSettingsWidget::load(Database* db)
     m_uiEncryption->kdfComboBox->blockSignals(true);
     m_uiEncryption->kdfComboBox->clear();
     for (auto& kdf: asConst(KeePass2::KDFS)) {
-        m_uiEncryption->kdfComboBox->addItem(kdf.second, kdf.first.toRfc4122());
+        m_uiEncryption->kdfComboBox->addItem(QCoreApplication::translate("KeePass2", kdf.second.toUtf8()), kdf.first);
     }
     m_uiEncryption->kdfComboBox->blockSignals(false);
 
     auto kdfUuid = m_db->kdf()->uuid();
-    int kdfIndex = m_uiEncryption->kdfComboBox->findData(kdfUuid.toRfc4122());
+    int kdfIndex = m_uiEncryption->kdfComboBox->findData(kdfUuid);
     if (kdfIndex > -1) {
         m_uiEncryption->kdfComboBox->setCurrentIndex(kdfIndex);
         kdfChanged(kdfIndex);

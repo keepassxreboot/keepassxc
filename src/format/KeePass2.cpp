@@ -21,7 +21,7 @@
 #include "crypto/kdf/Argon2Kdf.h"
 #include <QSharedPointer>
 
-#define UUID_LENGHT 16
+#define UUID_LENGTH 16
 
 const QUuid KeePass2::CIPHER_AES = QUuid::fromRfc4122(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
 const QUuid KeePass2::CIPHER_TWOFISH = QUuid::fromRfc4122(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
@@ -76,7 +76,7 @@ QByteArray KeePass2::hmacKey(QByteArray masterSeed, QByteArray transformedMaster
 QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
 {
     QByteArray uuidBytes = p.value(KDFPARAM_UUID).toByteArray();
-    if (uuidBytes.size() != UUID_LENGHT) {
+    if (uuidBytes.size() != UUID_LENGTH) {
         return {};
     }
 

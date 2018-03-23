@@ -577,12 +577,12 @@ void TestKeePass2Format::testDuplicateAttachments()
 
     auto entry1 = new Entry();
     entry1->setGroup(db->rootGroup());
-    entry1->setUuid(QUuid::fromRfc4122(QByteArray::fromHex("aaaaaaaaaaaaaaaa")));
+    entry1->setUuid(QUuid::fromRfc4122("aaaaaaaaaaaaaaaa"));
     entry1->attachments()->set("a", attachment1);
 
     auto entry2 = new Entry();
     entry2->setGroup(db->rootGroup());
-    entry2->setUuid(QUuid::fromRfc4122(QByteArray::fromHex("bbbbbbbbbbbbbbbb")));
+    entry2->setUuid(QUuid::fromRfc4122("bbbbbbbbbbbbbbbb"));
     entry2->attachments()->set("b1", attachment1);
     entry2->beginUpdate();
     entry2->attachments()->set("b2", attachment1);
@@ -596,7 +596,7 @@ void TestKeePass2Format::testDuplicateAttachments()
 
     auto entry3 = new Entry();
     entry3->setGroup(db->rootGroup());
-    entry3->setUuid(QUuid::fromRfc4122(QByteArray::fromHex("cccccccccccccccc")));
+    entry3->setUuid(QUuid::fromRfc4122("cccccccccccccccc"));
     entry3->attachments()->set("c1", attachment2);
     entry3->attachments()->set("c2", attachment2);
     entry3->attachments()->set("c3", attachment3);

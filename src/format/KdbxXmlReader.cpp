@@ -28,7 +28,7 @@
 #include <QBuffer>
 #include <QFile>
 
-#define UUID_LENGHT 16
+#define UUID_LENGTH 16
 
 /**
  * @param version KDBX version
@@ -1099,7 +1099,7 @@ QUuid KdbxXmlReader::readUuid()
     if (uuidBin.isEmpty()) {
         return QUuid();
     }
-    if (uuidBin.length() != UUID_LENGHT) {
+    if (uuidBin.length() != UUID_LENGTH) {
         if (m_strictMode) {
             raiseError(tr("Invalid uuid value"));
         }

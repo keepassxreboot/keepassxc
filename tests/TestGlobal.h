@@ -19,7 +19,6 @@
 #define KEEPASSXC_TESTGLOBAL_H
 
 #include "core/Group.h"
-#include "core/Uuid.h"
 
 #include <QDateTime>
 #include <QTest>

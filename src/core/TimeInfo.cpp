@@ -17,8 +17,6 @@
 
 #include "TimeInfo.h"
 
-#include "core/Tools.h"
-
 TimeInfo::TimeInfo()
     : m_expires(false)
     , m_usageCount(0)

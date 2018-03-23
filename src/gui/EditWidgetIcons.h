@@ -24,7 +24,7 @@
 #include <QUrl>
 #include <QWidget>
 #include <QNetworkAccessManager>
-#include <QUuid.h>
+#include <QUuid>
 
 #include "config-keepassx.h"
 #include "core/Global.h"

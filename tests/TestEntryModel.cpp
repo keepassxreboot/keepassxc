@@ -220,11 +220,11 @@ void TestEntryModel::testCustomIconModel()
     QHash<QUuid, QPixmap> icons;
     QList<QUuid> iconsOrder;
 
-    QUuid iconUuid(QByteArray(16, '2'));
+    QUuid iconUuid = QUuid::fromRfc4122(QByteArray(16, '2'));
     icons.insert(iconUuid, QPixmap());
     iconsOrder << iconUuid;
 
-    QUuid iconUuid2(QByteArray(16, '1'));
+    QUuid iconUuid2 = QUuid::fromRfc4122(QByteArray(16, '1'));
     icons.insert(iconUuid2, QPixmap());
     iconsOrder << iconUuid2;
 

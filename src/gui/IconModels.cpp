@@ -17,7 +17,7 @@
 
 #include "IconModels.h"
 
-#include <QUuid.h>
+#include <QUuid>
 
 #include "core/DatabaseIcons.h"
 

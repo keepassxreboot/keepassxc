@@ -73,7 +73,7 @@ void TestGuiPixmaps::testEntryIcons()
     QCOMPARE(pixmapCached1.cacheKey(), pixmap.cacheKey());
     QCOMPARE(pixmapCached2.cacheKey(), pixmap.cacheKey());
 
-    Uuid iconUuid = Uuid::random();
+    QUuid iconUuid = QUuid::createUuid();
     icon = QImage(2, 1, QImage::Format_RGB32);
     icon.setPixel(0, 0, qRgb(0, 0, 0));
     icon.setPixel(1, 0, qRgb(0, 0, 50));
@@ -116,7 +116,7 @@ void TestGuiPixmaps::testGroupIcons()
     QCOMPARE(pixmapCached1.cacheKey(), pixmap.cacheKey());
     QCOMPARE(pixmapCached2.cacheKey(), pixmap.cacheKey());
 
-    Uuid iconUuid = Uuid::random();
+    QUuid iconUuid = QUuid::createUuid();
     icon = QImage(2, 1, QImage::Format_RGB32);
     icon.setPixel(0, 0, qRgb(0, 0, 0));
     icon.setPixel(1, 0, qRgb(0, 0, 50));
