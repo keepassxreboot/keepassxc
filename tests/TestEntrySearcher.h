@@ -34,9 +34,10 @@ private slots:
     void testAndConcatenationInSearch();
     void testSearch();
     void testAllAttributesAreSearched();
+    void testSearchTermParser();
 
 private:
-    Group* m_groupRoot;
+    Group* m_rootGroup;
     EntrySearcher m_entrySearcher;
     QList<Entry*> m_searchResult;
 };

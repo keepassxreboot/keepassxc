@@ -390,7 +390,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         return entries;
     }
 
-    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup, Qt::CaseInsensitive)) {
+    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup)) {
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();

@@ -34,6 +34,9 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Minimum</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>30</width>
@@ -44,6 +47,18 @@
    </item>
    <item>
     <widget class="QLineEdit" name="searchEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">padding:3px</string>
      </property>

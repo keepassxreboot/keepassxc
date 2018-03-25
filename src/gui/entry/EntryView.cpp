@@ -58,9 +58,9 @@ EntryView::EntryView(QWidget* parent)
     m_headerMenu->setTitle(tr("Customize View"));
     m_headerMenu->addSection(tr("Customize View"));
 
-    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(setUsernamesHidden(bool)));
+    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), this, SLOT(setUsernamesHidden(bool)));
     m_hideUsernamesAction->setCheckable(true);
-    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(setPasswordsHidden(bool)));
+    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), this, SLOT(setPasswordsHidden(bool)));
     m_hidePasswordsAction->setCheckable(true);
     m_headerMenu->addSeparator();
 

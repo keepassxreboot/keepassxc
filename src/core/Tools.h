@@ -27,6 +27,7 @@
 #include <algorithm>
 
 class QIODevice;
+class QRegularExpression;
 
 namespace Tools
 {
@@ -38,6 +39,8 @@ bool isHex(const QByteArray& ba);
 bool isBase64(const QByteArray& ba);
 void sleep(int ms);
 void wait(int ms);
+QRegularExpression convertToRegex(const QString& string, bool useWildcards = false, bool exactMatch = false, 
+                                  bool caseSensitive = false);
 
 template <typename RandomAccessIterator, typename T>
 RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)

@@ -43,9 +43,7 @@ public:
     int numberOfSelectedEntries();
     void setFirstEntryActive();
     bool isUsernamesHidden() const;
-    void setUsernamesHidden(bool hide);
     bool isPasswordsHidden() const;
-    void setPasswordsHidden(bool hide);
     QByteArray viewState() const;
     bool setViewState(const QByteArray& state);
 
@@ -56,6 +54,10 @@ signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
     void entrySelectionChanged();
     void viewStateChanged();
+
+public slots:
+    void setUsernamesHidden(bool hide);
+    void setPasswordsHidden(bool hide);
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
