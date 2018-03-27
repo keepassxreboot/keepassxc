@@ -21,7 +21,6 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QFileDialog>
 
 #include "core/Config.h"
 #include "core/Group.h"
