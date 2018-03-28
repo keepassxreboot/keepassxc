@@ -75,6 +75,9 @@ int main(int argc, char** argv)
                                                         << "parent-window",
                                                         QCoreApplication::translate("main", "Parent window handle"),
                                                         "handle");
+    QCommandLineOption showDebugInfo(QStringList() << "d"
+                                                   << "debug-info",
+                                     QObject::tr("Show debugging information and exit."));
 
     parser.addHelpOption();
     parser.addVersionOption();
@@ -82,10 +85,16 @@ int main(int argc, char** argv)
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(parentWindowOption);
+    parser.addOption(showDebugInfo);
 
     parser.process(app);
-    const QStringList fileNames = parser.positionalArguments();
+    if (parser.isSet(showDebugInfo)) {
+        QTextStream out(stdout, QIODevice::WriteOnly);
+        out << Tools::getDebugInfo() << endl;
+        return EXIT_SUCCESS;
+    }
 
+    const QStringList fileNames = parser.positionalArguments();
     if (app.isAlreadyRunning()) {
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);

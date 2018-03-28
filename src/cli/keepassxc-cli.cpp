@@ -61,6 +61,10 @@ int main(int argc, char** argv)
     parser.setApplicationDescription(description);
 
     parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
+    QCommandLineOption showDebugInfo(QStringList() << "d"
+                                                   << "debug-info",
+                                     QObject::tr("Show debugging information and exit."));
+    parser.addOption(showDebugInfo);
 
     parser.addHelpOption();
     parser.addVersionOption();
@@ -73,6 +77,10 @@ int main(int argc, char** argv)
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
             out << KEEPASSX_VERSION << endl;
+            return EXIT_SUCCESS;
+        }
+        if (parser.isSet(showDebugInfo)) {
+            out << Tools::getDebugInfo() << endl;
             return EXIT_SUCCESS;
         }
         parser.showHelp();
