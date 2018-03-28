@@ -17,6 +17,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "crypto/Crypto.h"
+#include "config-keepassx.h"
+#include "version.h"
 #include "Tools.h"
 
 #include <QCoreApplication>
@@ -24,8 +27,10 @@
 #include <QIODevice>
 #include <QLocale>
 #include <QStringList>
+#include <QObject>
 
 #include <QElapsedTimer>
+#include <QSysInfo>
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
@@ -355,6 +360,69 @@ Cleanup:
 #endif
 
     return bSuccess;
+}
+
+QString getDebugInfo()
+{
+    QString commitHash;
+    if (!QString(GIT_HEAD).isEmpty()) {
+        commitHash = GIT_HEAD;
+    } else if (!QString(DIST_HASH).contains("Format")) {
+        commitHash = DIST_HASH;
+    }
+
+    QString debugInfo = "KeePassXC - ";
+    debugInfo.append(QObject::tr("Version %1").arg(KEEPASSX_VERSION).append("\n"));
+#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
+    debugInfo.append(QObject::tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
+#endif
+    if (!commitHash.isEmpty()) {
+        debugInfo.append(QObject::tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
+    }
+
+#ifdef KEEPASSXC_DIST
+    debugInfo.append(QObject::tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
+#endif
+
+    debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
+             .arg(QObject::tr("Libraries:"))
+             .arg(QString::fromLocal8Bit(qVersion()))
+             .arg(Crypto::backendVersion()));
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+    debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
+             .arg(QSysInfo::prettyProductName(),
+                  QSysInfo::currentCpuArchitecture(),
+                  QSysInfo::kernelType(),
+                  QSysInfo::kernelVersion()));
+
+    debugInfo.append("\n\n");
+#endif
+
+    QString extensions;
+#ifdef WITH_XC_AUTOTYPE
+    extensions += "\n- " + QObject::tr("Auto-Type");
+#endif
+#ifdef WITH_XC_BROWSER
+    extensions += "\n- " + QObject::tr("Browser Integration");
+#endif
+#ifdef WITH_XC_HTTP
+    extensions += "\n- " + QObject::tr("Legacy Browser Integration (KeePassHTTP)");
+#endif
+#ifdef WITH_XC_SSHAGENT
+    extensions += "\n- " + QObject::tr("SSH Agent");
+#endif
+#ifdef WITH_XC_YUBIKEY
+    extensions += "\n- " + QObject::tr("YubiKey");
+#endif
+
+    if (extensions.isEmpty()) {
+        extensions = " " + QObject::tr("None");
+    }
+
+    debugInfo.append(QObject::tr("Enabled extensions:").append(extensions));
+
+    return debugInfo;
 }
 
 } // namespace Tools

@@ -20,12 +20,10 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "version.h"
 #include "core/FilePath.h"
-#include "crypto/Crypto.h"
+#include "core/Tools.h"
 
 #include <QClipboard>
-#include <QSysInfo>
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent),
@@ -44,64 +42,7 @@ AboutDialog::AboutDialog(QWidget* parent)
 
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
-    QString commitHash;
-    if (!QString(GIT_HEAD).isEmpty()) {
-        commitHash = GIT_HEAD;
-    }
-    else if (!QString(DIST_HASH).contains("Format")) {
-        commitHash = DIST_HASH;
-    }
-
-    QString debugInfo = "KeePassXC - ";
-    debugInfo.append(tr("Version %1").arg(KEEPASSX_VERSION).append("\n"));
-#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-    debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
-#endif
-    if (!commitHash.isEmpty()) {
-        debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
-    }
-
-#ifdef KEEPASSXC_DIST
-    debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
-#endif
-
-    debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
-             .arg(tr("Libraries:"))
-             .arg(QString::fromLocal8Bit(qVersion()))
-             .arg(Crypto::backendVersion()));
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-             .arg(QSysInfo::prettyProductName(),
-                  QSysInfo::currentCpuArchitecture(),
-                  QSysInfo::kernelType(),
-                  QSysInfo::kernelVersion()));
-
-    debugInfo.append("\n\n");
-#endif
-
-    QString extensions;
-#ifdef WITH_XC_AUTOTYPE
-    extensions += "\n- " + tr("Auto-Type");
-#endif
-#ifdef WITH_XC_BROWSER
-    extensions += "\n- " + tr("Browser Integration");
-#endif
-#ifdef WITH_XC_HTTP
-    extensions += "\n- " + tr("Legacy Browser Integration (KeePassHTTP)");
-#endif
-#ifdef WITH_XC_SSHAGENT
-    extensions += "\n- " + tr("SSH Agent");
-#endif
-#ifdef WITH_XC_YUBIKEY
-    extensions += "\n- " + tr("YubiKey");
-#endif
-
-    if (extensions.isEmpty())
-        extensions = " " + tr("None");
-
-    debugInfo.append(tr("Enabled extensions:").append(extensions));
-
+    QString debugInfo = Tools::getDebugInfo();
     m_ui->debugInfo->setPlainText(debugInfo);
 
     setAttribute(Qt::WA_DeleteOnClose);
