@@ -281,7 +281,7 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
     connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
 
-    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(modified()), SLOT(updateAttachments()));
+    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(modified()), SLOT(updateSSHAgentAttachments()));
 
     addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
 }
