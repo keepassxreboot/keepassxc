@@ -99,10 +99,12 @@ private:
     Uuid m_currentUuid;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;
+    QUrl m_fetchUrl;
     QList<QUrl> m_urlsToTry;
     QByteArray m_bytesReceived;
     QNetworkAccessManager m_netMgr;
     QNetworkReply *m_reply;
+    int m_redirects;
 #endif
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;

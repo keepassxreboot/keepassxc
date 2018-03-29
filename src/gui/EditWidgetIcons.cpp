@@ -175,6 +175,21 @@ namespace {
         QString newdom = parts.takeLast() + url.topLevelDomain();
         return newdom;
     }
+
+    QUrl convertVariantToUrl(QVariant var)
+    {
+        QUrl url;
+        if (var.canConvert<QUrl>())
+            url = var.value<QUrl>();
+        return url;
+    }
+
+    QUrl getRedirectTarget(QNetworkReply *reply)
+    {
+        QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+        QUrl url = convertVariantToUrl(var);
+        return url;
+    }
 }
 #endif
 
@@ -183,6 +198,7 @@ void EditWidgetIcons::downloadFavicon()
 #ifdef WITH_XC_NETWORKING
     m_ui->faviconButton->setDisabled(true);
 
+    m_redirects = 0;
     m_urlsToTry.clear();
 
     QString fullyQualifiedDomain = m_url.host();
@@ -219,17 +235,32 @@ void EditWidgetIcons::fetchFinished()
     QImage image;
     bool googleFallbackEnabled = config()->get("security/IconDownloadFallbackToGoogle", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
+    QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
     m_reply = nullptr;
 
     if (!error) {
-        image.loadFromData(m_bytesReceived);
+        if (redirectTarget.isValid()) {
+            // Redirected, we need to follow it, or fall through if we have
+            // done too many redirects already.
+            if (m_redirects < 5) {
+                m_redirects++;
+                if (redirectTarget.isRelative())
+                    redirectTarget = m_fetchUrl.resolved(redirectTarget);
+                startFetchFavicon(redirectTarget);
+                return;
+            }
+        } else {
+            // No redirect, and we theoretically have some icon data now.
+            image.loadFromData(m_bytesReceived);
+        }
     }
 
     if (!image.isNull()) {
         addCustomIcon(image);
     } else if (!m_urlsToTry.empty()) {
+        m_redirects = 0;
         startFetchFavicon(m_urlsToTry.takeFirst());
         return;
     } else {
@@ -258,9 +289,9 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
 #ifdef WITH_XC_NETWORKING
     m_bytesReceived.clear();
 
+    m_fetchUrl = url;
+
     QNetworkRequest request(url);
-    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
-    request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 
     m_reply = m_netMgr.get(request);
     connect(m_reply, &QNetworkReply::finished, this, &EditWidgetIcons::fetchFinished);
