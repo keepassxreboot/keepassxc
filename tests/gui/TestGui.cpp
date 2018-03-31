@@ -492,6 +492,7 @@ void TestGui::testAddEntry()
     // Add entry "something 5" but click cancel button (does NOT add entry)
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 5");
+    MessageBox::setNextAnswer(QMessageBox::Discard);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
 
     QApplication::processEvents();

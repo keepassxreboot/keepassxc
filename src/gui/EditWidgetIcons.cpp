@@ -66,6 +66,13 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
 
+    connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
+    connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
+    connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            this, SIGNAL(widgetUpdated()));
+    connect(m_ui->customIconsView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            this, SIGNAL(widgetUpdated()));
+
     m_ui->faviconButton->setVisible(false);
 }
 
@@ -268,6 +275,8 @@ void EditWidgetIcons::addCustomIcon(const QImage& icon)
         updateRadioButtonCustomIcons();
         QModelIndex index = m_customIconModel->indexFromUuid(uuid);
         m_ui->customIconsView->setCurrentIndex(index);
+
+        emit widgetUpdated();
     }
 }
 
@@ -347,6 +356,8 @@ void EditWidgetIcons::removeCustomIcon()
             } else {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));
             }
+
+            emit widgetUpdated();
         }
     }
 }

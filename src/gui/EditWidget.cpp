@@ -117,6 +117,14 @@ bool EditWidget::readOnly() const
     return m_readOnly;
 }
 
+void EditWidget::enableApplyButton(bool enabled)
+{
+    QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+    if (applyButton) {
+        applyButton->setEnabled(enabled);
+    }
+}
+
 void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
     m_ui->messageWidget->setCloseButtonVisible(false);
