@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_TEMPORARYFILE_H
 #define KEEPASSX_TEMPORARYFILE_H
 
-#include <QObject>
 #include <QFile>
+#include <QObject>
 #include <QTemporaryFile>
 
 /**
@@ -48,8 +48,8 @@ public:
 
     bool open();
     void close();
-    qint64 write(const char *data, qint64 maxSize);
-    qint64 write(const QByteArray &byteArray);
+    qint64 write(const char* data, qint64 maxSize);
+    qint64 write(const QByteArray& byteArray);
 
     QString fileName() const;
     QString filePath() const;

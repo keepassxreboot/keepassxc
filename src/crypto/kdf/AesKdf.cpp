@@ -19,8 +19,8 @@
 
 #include <QtConcurrent>
 
-#include "format/KeePass2.h"
 #include "crypto/CryptoHash.h"
+#include "format/KeePass2.h"
 
 AesKdf::AesKdf()
     : Kdf::Kdf(KeePass2::KDF_AES_KDBX4)
@@ -35,7 +35,7 @@ AesKdf::AesKdf(bool legacyKdbx3)
 {
 }
 
-bool AesKdf::processParameters(const QVariantMap &p)
+bool AesKdf::processParameters(const QVariantMap& p)
 {
     bool ok;
     int rounds = p.value(KeePass2::KDFPARAM_AES_ROUNDS).toInt(&ok);
@@ -84,8 +84,7 @@ bool AesKdf::transform(const QByteArray& raw, QByteArray& result) const
 bool AesKdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds, QByteArray* result)
 {
     QByteArray iv(16, 0);
-    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb,
-                           SymmetricCipher::Encrypt);
+    SymmetricCipher cipher(SymmetricCipher::Aes256, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
     if (!cipher.init(seed, iv)) {
         qWarning("AesKdf::transformKeyRaw: error in SymmetricCipher::init: %s", cipher.errorString().toUtf8().data());
         return false;

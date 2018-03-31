@@ -30,20 +30,20 @@ class PasswordGenerator
 public:
     enum CharClass
     {
-        LowerLetters      = 0x1,
-        UpperLetters      = 0x2,
-        Numbers           = 0x4,
+        LowerLetters = 0x1,
+        UpperLetters = 0x2,
+        Numbers = 0x4,
         SpecialCharacters = 0x8,
-        EASCII            = 0x10,
-        DefaultCharset    = LowerLetters | UpperLetters | Numbers
+        EASCII = 0x10,
+        DefaultCharset = LowerLetters | UpperLetters | Numbers
     };
     Q_DECLARE_FLAGS(CharClasses, CharClass)
 
     enum GeneratorFlag
     {
-        ExcludeLookAlike   = 0x1,
+        ExcludeLookAlike = 0x1,
         CharFromEveryGroup = 0x2,
-        DefaultFlags       = ExcludeLookAlike | CharFromEveryGroup
+        DefaultFlags = ExcludeLookAlike | CharFromEveryGroup
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
 

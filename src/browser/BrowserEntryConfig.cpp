@@ -17,15 +17,14 @@
 */
 
 #include "BrowserEntryConfig.h"
-#include <QtCore>
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
+#include <QtCore>
 
 static const char KEEPASSBROWSER_NAME[] = "KeePassXC-Browser Settings";
 
-
-BrowserEntryConfig::BrowserEntryConfig(QObject* parent) :
-    QObject(parent)
+BrowserEntryConfig::BrowserEntryConfig(QObject* parent)
+    : QObject(parent)
 {
 }
 

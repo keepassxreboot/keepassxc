@@ -33,8 +33,7 @@ bool WildcardMatcher::match(const QString& pattern)
 
     if (patternContainsWildcard()) {
         return matchWithWildcards();
-    }
-    else {
+    } else {
         return patternEqualsText();
     }
 }
@@ -63,8 +62,7 @@ bool WildcardMatcher::matchWithWildcards()
 
 bool WildcardMatcher::startOrEndDoesNotMatch(const QStringList& parts)
 {
-    return !m_text.startsWith(parts.first(), Sensitivity) ||
-           !m_text.endsWith(parts.last(), Sensitivity);
+    return !m_text.startsWith(parts.first(), Sensitivity) || !m_text.endsWith(parts.last(), Sensitivity);
 }
 
 bool WildcardMatcher::partsMatch(const QStringList& parts)

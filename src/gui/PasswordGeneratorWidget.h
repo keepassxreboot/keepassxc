@@ -19,14 +19,15 @@
 #ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
-#include <QWidget>
 #include <QComboBox>
 #include <QLabel>
+#include <QWidget>
 
-#include "core/PasswordGenerator.h"
 #include "core/PassphraseGenerator.h"
+#include "core/PasswordGenerator.h"
 
-namespace Ui {
+namespace Ui
+{
     class PasswordGeneratorWidget;
 }
 
@@ -55,7 +56,7 @@ public slots:
     void regeneratePassword();
     void applyPassword();
     void copyPassword();
-    
+
 signals:
     void appliedPassword(const QString& password);
     void dialogTerminated();

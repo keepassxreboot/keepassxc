@@ -25,10 +25,11 @@
 
 class QIODevice;
 
-class FileKey: public Key
+class FileKey : public Key
 {
 public:
-    enum Type {
+    enum Type
+    {
         None,
         Hashed,
         KeePass2XML,

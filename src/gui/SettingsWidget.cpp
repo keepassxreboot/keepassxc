@@ -20,32 +20,35 @@
 #include "ui_SettingsWidgetGeneral.h"
 #include "ui_SettingsWidgetSecurity.h"
 
-#include "config-keepassx.h"
 #include "autotype/AutoType.h"
+#include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/Translator.h"
 #include "core/FilePath.h"
 #include "core/Global.h"
+#include "core/Translator.h"
 
 class SettingsWidget::ExtraPage
 {
-    public:
-        ExtraPage(ISettingsPage* page, QWidget* widget): settingsPage(page), widget(widget)
-        {}
+public:
+    ExtraPage(ISettingsPage* page, QWidget* widget)
+        : settingsPage(page)
+        , widget(widget)
+    {
+    }
 
-        void loadSettings() const
-        {
-            settingsPage->loadSettings(widget);
-        }
+    void loadSettings() const
+    {
+        settingsPage->loadSettings(widget);
+    }
 
-        void saveSettings() const
-        {
-            settingsPage->saveSettings(widget);
-        }
+    void saveSettings() const
+    {
+        settingsPage->saveSettings(widget);
+    }
 
-    private:
-        QSharedPointer<ISettingsPage> settingsPage;
-        QWidget* widget;
+private:
+    QSharedPointer<ISettingsPage> settingsPage;
+    QWidget* widget;
 };
 
 SettingsWidget::SettingsWidget(QWidget* parent)
@@ -72,15 +75,16 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     connect(this, SIGNAL(apply()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
-    connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableAutoSaveOnExit(bool)));
-    connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)),
-            this, SLOT(enableSystray(bool)));
+    connect(
+        m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableAutoSaveOnExit(bool)));
+    connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableSystray(bool)));
 
-    connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
-    connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
-            m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
+    connect(
+        m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)), m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
+    connect(m_secUi->lockDatabaseIdleCheckBox,
+            SIGNAL(toggled(bool)),
+            m_secUi->lockDatabaseIdleSpinBox,
+            SLOT(setEnabled(bool)));
 
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
@@ -103,8 +107,7 @@ void SettingsWidget::loadSettings()
 {
 
     if (config()->hasAccessError()) {
-        showMessage(
-            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+        showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }
 
 #ifdef QT_DEBUG
@@ -127,7 +130,7 @@ void SettingsWidget::loadSettings()
     m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
 
     m_generalUi->languageComboBox->clear();
-    QList<QPair<QString, QString> > languages = Translator::availableLanguages();
+    QList<QPair<QString, QString>> languages = Translator::availableLanguages();
     for (int i = 0; i < languages.size(); i++) {
         m_generalUi->languageComboBox->addItem(languages[i].second, languages[i].first);
     }
@@ -146,14 +149,14 @@ void SettingsWidget::loadSettings()
 
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
-        m_globalAutoTypeModifiers = static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
+        m_globalAutoTypeModifiers =
+            static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
         if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
         }
         m_generalUi->autoTypeShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get("AutoTypeDelay").toInt());
     }
-
 
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
@@ -170,8 +173,7 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
 
-
-    for (const ExtraPage& page: asConst(m_extraPages)) {
+    for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
 
@@ -182,8 +184,7 @@ void SettingsWidget::saveSettings()
 {
 
     if (config()->hasAccessError()) {
-        showMessage(
-            tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+        showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
         // We prevent closing the settings page if we could not write to
         // the config file.
         return;
@@ -192,23 +193,17 @@ void SettingsWidget::saveSettings()
     config()->set("SingleInstance", m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set("RememberLastDatabases", m_generalUi->rememberLastDatabasesCheckBox->isChecked());
     config()->set("RememberLastKeyFiles", m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
-    config()->set("OpenPreviousDatabasesOnStartup",
-                  m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
-    config()->set("AutoSaveAfterEveryChange",
-                  m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
+    config()->set("OpenPreviousDatabasesOnStartup", m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
+    config()->set("AutoSaveAfterEveryChange", m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
     config()->set("AutoSaveOnExit", m_generalUi->autoSaveOnExitCheckBox->isChecked());
     config()->set("BackupBeforeSave", m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set("UseAtomicSaves", m_generalUi->useAtomicSavesCheckBox->isChecked());
     config()->set("AutoReloadOnChange", m_generalUi->autoReloadOnChangeCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
-    config()->set("UseGroupIconOnEntryCreation",
-                  m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set("IgnoreGroupExpansion",
-                  m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
-    config()->set("AutoTypeEntryTitleMatch",
-                  m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
-    config()->set("AutoTypeEntryURLMatch",
-                  m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
+    config()->set("UseGroupIconOnEntryCreation", m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
+    config()->set("IgnoreGroupExpansion", m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
+    config()->set("AutoTypeEntryTitleMatch", m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
+    config()->set("AutoTypeEntryURLMatch", m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
 
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
@@ -224,8 +219,7 @@ void SettingsWidget::saveSettings()
 
     if (autoType()->isAvailable()) {
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
-        config()->set("GlobalAutoTypeModifiers",
-                      static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
         config()->set("AutoTypeDelay", m_generalUi->autoTypeDelaySpinBox->value());
     }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
@@ -253,7 +247,7 @@ void SettingsWidget::saveSettings()
         config()->set("LastDir", "");
     }
 
-    for (const ExtraPage& page: asConst(m_extraPages)) {
+    for (const ExtraPage& page : asConst(m_extraPages)) {
         page.saveSettings();
     }
 }
@@ -264,7 +258,6 @@ void SettingsWidget::reject()
     if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
         autoType()->registerGlobalShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
     }
-
 }
 
 void SettingsWidget::enableAutoSaveOnExit(bool checked)

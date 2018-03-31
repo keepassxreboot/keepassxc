@@ -56,9 +56,9 @@ bool InactivityTimer::eventFilter(QObject* watched, QEvent* event)
 {
     const QEvent::Type type = event->type();
 
-    if ( (type >= QEvent::MouseButtonPress && type <= QEvent::KeyRelease)
-         || (type >= QEvent::HoverEnter && type <= QEvent::HoverMove)
-         || (type == QEvent::Wheel) ) {
+    if ((type >= QEvent::MouseButtonPress && type <= QEvent::KeyRelease)
+        || (type >= QEvent::HoverEnter && type <= QEvent::HoverMove)
+        || (type == QEvent::Wheel)) {
         m_timer->start();
     }
 

@@ -55,7 +55,6 @@ protected:
 private:
     class BenchmarkThread;
     const Uuid m_uuid;
-
 };
 
 #endif // KEEPASSX_KDF_H

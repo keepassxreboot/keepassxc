@@ -23,8 +23,8 @@
 #include <QHash>
 #include <QObject>
 
-#include "crypto/kdf/Kdf.h"
 #include "core/Uuid.h"
+#include "crypto/kdf/Kdf.h"
 #include "keys/CompositeKey.h"
 
 class Entry;
@@ -101,8 +101,7 @@ public:
     void setCipher(const Uuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setKdf(QSharedPointer<Kdf> kdf);
-    bool setKey(const CompositeKey& key, bool updateChangedTime = true,
-                bool updateTransformSalt = false);
+    bool setKey(const CompositeKey& key, bool updateChangedTime = true, bool updateTransformSalt = false);
     bool hasKey() const;
     bool verifyKey(const CompositeKey& key) const;
     QVariantMap& publicCustomData();

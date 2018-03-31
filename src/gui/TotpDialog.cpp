@@ -22,7 +22,6 @@
 #include "core/Config.h"
 #include "gui/Clipboard.h"
 
-
 TotpDialog::TotpDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)
     , m_ui(new Ui::TotpDialog())
@@ -67,7 +66,6 @@ void TotpDialog::updateProgressBar()
         uCounter = resetCounter();
     }
 }
-
 
 void TotpDialog::updateSeconds()
 {

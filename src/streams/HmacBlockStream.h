@@ -22,9 +22,9 @@
 
 #include "streams/LayeredStream.h"
 
-class HmacBlockStream: public LayeredStream
+class HmacBlockStream : public LayeredStream
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit HmacBlockStream(QIODevice* baseDevice, QByteArray key);

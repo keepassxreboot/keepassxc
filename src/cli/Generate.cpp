@@ -42,24 +42,20 @@ int Generate::execute(const QStringList& arguments)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(this->description);
-    QCommandLineOption len(QStringList() << "L" << "length",
-                                QObject::tr("Length of the generated password."),
-                                QObject::tr("length"));
+    QCommandLineOption len(QStringList() << "L"
+                                         << "length",
+                           QObject::tr("Length of the generated password."),
+                           QObject::tr("length"));
     parser.addOption(len);
-    QCommandLineOption lower(QStringList() << "l",
-                               QObject::tr("Use lowercase characters in the generated password."));
+    QCommandLineOption lower(QStringList() << "l", QObject::tr("Use lowercase characters in the generated password."));
     parser.addOption(lower);
-    QCommandLineOption upper(QStringList() << "u",
-                               QObject::tr("Use uppercase characters in the generated password."));
+    QCommandLineOption upper(QStringList() << "u", QObject::tr("Use uppercase characters in the generated password."));
     parser.addOption(upper);
-    QCommandLineOption numeric(QStringList() << "n",
-                               QObject::tr("Use numbers in the generated password."));
+    QCommandLineOption numeric(QStringList() << "n", QObject::tr("Use numbers in the generated password."));
     parser.addOption(numeric);
-    QCommandLineOption special(QStringList() << "s",
-                               QObject::tr("Use special characters in the generated password."));
+    QCommandLineOption special(QStringList() << "s", QObject::tr("Use special characters in the generated password."));
     parser.addOption(special);
-    QCommandLineOption extended(QStringList() << "e",
-                               QObject::tr("Use extended ASCII in the generated password."));
+    QCommandLineOption extended(QStringList() << "e", QObject::tr("Use extended ASCII in the generated password."));
     parser.addOption(extended);
     parser.process(arguments);
 
@@ -81,19 +77,19 @@ int Generate::execute(const QStringList& arguments)
     PasswordGenerator::CharClasses classes = 0x0;
 
     if (parser.isSet(lower)) {
-        classes |= PasswordGenerator::LowerLetters; 
+        classes |= PasswordGenerator::LowerLetters;
     }
     if (parser.isSet(upper)) {
-        classes |= PasswordGenerator::UpperLetters; 
+        classes |= PasswordGenerator::UpperLetters;
     }
     if (parser.isSet(numeric)) {
-        classes |= PasswordGenerator::Numbers; 
+        classes |= PasswordGenerator::Numbers;
     }
     if (parser.isSet(special)) {
-        classes |= PasswordGenerator::SpecialCharacters; 
+        classes |= PasswordGenerator::SpecialCharacters;
     }
     if (parser.isSet(extended)) {
-        classes |= PasswordGenerator::EASCII; 
+        classes |= PasswordGenerator::EASCII;
     }
 
     passwordGenerator.setCharClasses(classes);

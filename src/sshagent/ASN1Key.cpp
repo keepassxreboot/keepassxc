@@ -19,10 +19,11 @@
 #include "ASN1Key.h"
 #include <gcrypt.h>
 
-namespace {
-    constexpr quint8 TAG_INT         = 0x02;
-    constexpr quint8 TAG_SEQUENCE    = 0x30;
-    constexpr quint8 KEY_ZERO        = 0x0;
+namespace
+{
+    constexpr quint8 TAG_INT = 0x02;
+    constexpr quint8 TAG_SEQUENCE = 0x30;
+    constexpr quint8 KEY_ZERO = 0x0;
 
     bool nextTag(BinaryStream& stream, quint8& tag, quint32& len)
     {
@@ -103,7 +104,8 @@ namespace {
         mpi_invm(u, q, p);
 
         iqmp_hex.resize((bap.length() + 1) * 2);
-        gcry_mpi_print(GCRYMPI_FMT_HEX, reinterpret_cast<unsigned char*>(iqmp_hex.data()), iqmp_hex.length(), nullptr, u);
+        gcry_mpi_print(
+            GCRYMPI_FMT_HEX, reinterpret_cast<unsigned char*>(iqmp_hex.data()), iqmp_hex.length(), nullptr, u);
 
         gcry_mpi_release(u);
         gcry_mpi_release(p);
@@ -121,7 +123,7 @@ bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
         return false;
     }
 
-    QByteArray p,q,g,y,x;
+    QByteArray p, q, g, y, x;
     readInt(stream, p);
     readInt(stream, q);
     readInt(stream, g);
@@ -156,7 +158,7 @@ bool ASN1Key::parseRSA(QByteArray& ba, OpenSSHKey& key)
         return false;
     }
 
-    QByteArray n,e,d,p,q,dp,dq,qinv;
+    QByteArray n, e, d, p, q, dp, dq, qinv;
     readInt(stream, n);
     readInt(stream, e);
     readInt(stream, d);

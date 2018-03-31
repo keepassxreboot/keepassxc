@@ -45,7 +45,7 @@ void PasswordGenerator::setLength(int length)
 void PasswordGenerator::setCharClasses(const CharClasses& classes)
 {
     if (classes == 0) {
-        m_classes =  DefaultCharset;
+        m_classes = DefaultCharset;
         return;
     }
     m_classes = classes;
@@ -92,8 +92,7 @@ QString PasswordGenerator::generatePassword() const
             password[i] = password[j];
             password[j] = tmp;
         }
-    }
-    else {
+    } else {
         for (int i = 0; i < m_length; i++) {
             int pos = randomGen()->randomUInt(passwordChars.size());
 
@@ -110,7 +109,7 @@ int PasswordGenerator::getbits() const
 
     int bits = 0;
     QVector<QChar> passwordChars;
-    for (const PasswordGroup& group: groups) {
+    for (const PasswordGroup& group : groups) {
         bits += group.size();
     }
 
@@ -119,13 +118,11 @@ int PasswordGenerator::getbits() const
     return bits;
 }
 
-
 bool PasswordGenerator::isValid() const
 {
     if (m_classes == 0) {
         return false;
-    }
-    else if (m_length == 0) {
+    } else if (m_length == 0) {
         return false;
     }
 

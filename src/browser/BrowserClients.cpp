@@ -16,13 +16,13 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QJsonValue>
-#include <QJsonParseError>
 #include "BrowserClients.h"
+#include <QJsonParseError>
+#include <QJsonValue>
 
-BrowserClients::BrowserClients(BrowserService& browserService) :
-    m_mutex(QMutex::Recursive),
-    m_browserService(browserService)
+BrowserClients::BrowserClients(BrowserService& browserService)
+    : m_mutex(QMutex::Recursive)
+    , m_browserService(browserService)
 {
     m_clients.reserve(1000);
 }
@@ -63,7 +63,7 @@ QString BrowserClients::getClientID(const QJsonObject& json) const
 BrowserClients::ClientPtr BrowserClients::getClient(const QString& clientID)
 {
     QMutexLocker locker(&m_mutex);
-    for (const auto &i : m_clients) {
+    for (const auto& i : m_clients) {
         if (i->clientID.compare(clientID, Qt::CaseSensitive) == 0) {
             return i;
         }

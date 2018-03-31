@@ -23,7 +23,6 @@ BinaryStream::BinaryStream(QObject* parent)
     : QObject(parent)
     , m_timeout(-1)
 {
-
 }
 
 BinaryStream::BinaryStream(QIODevice* device)
@@ -31,7 +30,6 @@ BinaryStream::BinaryStream(QIODevice* device)
     , m_timeout(-1)
     , m_device(device)
 {
-
 }
 
 BinaryStream::BinaryStream(QByteArray* ba, QObject* parent)
@@ -105,7 +103,7 @@ bool BinaryStream::read(QByteArray& ba)
 
 bool BinaryStream::read(quint32& i)
 {
-    if (read(reinterpret_cast<char *>(&i), sizeof(i))) {
+    if (read(reinterpret_cast<char*>(&i), sizeof(i))) {
         i = qFromBigEndian<quint32>(i);
         return true;
     }
@@ -115,7 +113,7 @@ bool BinaryStream::read(quint32& i)
 
 bool BinaryStream::read(quint16& i)
 {
-    if (read(reinterpret_cast<char *>(&i), sizeof(i))) {
+    if (read(reinterpret_cast<char*>(&i), sizeof(i))) {
         i = qFromBigEndian<quint16>(i);
         return true;
     }
@@ -125,24 +123,24 @@ bool BinaryStream::read(quint16& i)
 
 bool BinaryStream::read(quint8& i)
 {
-    return read(reinterpret_cast<char *>(&i), sizeof(i));
+    return read(reinterpret_cast<char*>(&i), sizeof(i));
 }
 
 bool BinaryStream::readString(QByteArray& ba)
 {
-   quint32 length;
+    quint32 length;
 
-   if (!read(length)) {
-       return false;
-   }
+    if (!read(length)) {
+        return false;
+    }
 
-   ba.resize(length);
+    ba.resize(length);
 
-   if (!read(ba.data(), ba.length())) {
-       return false;
-   }
+    if (!read(ba.data(), ba.length())) {
+        return false;
+    }
 
-   return true;
+    return true;
 }
 
 bool BinaryStream::readString(QString& str)
@@ -156,7 +154,6 @@ bool BinaryStream::readString(QString& str)
     str = str.fromLatin1(ba);
     return true;
 }
-
 
 bool BinaryStream::write(const char* ptr, qint64 size)
 {
@@ -186,18 +183,18 @@ bool BinaryStream::write(const QByteArray& ba)
 bool BinaryStream::write(quint32 i)
 {
     i = qToBigEndian<quint32>(i);
-    return write(reinterpret_cast<char *>(&i), sizeof(i));
+    return write(reinterpret_cast<char*>(&i), sizeof(i));
 }
 
 bool BinaryStream::write(quint16 i)
 {
     i = qToBigEndian<quint16>(i);
-    return write(reinterpret_cast<char *>(&i), sizeof(i));
+    return write(reinterpret_cast<char*>(&i), sizeof(i));
 }
 
 bool BinaryStream::write(quint8 i)
 {
-    return write(reinterpret_cast<char *>(&i), sizeof(i));
+    return write(reinterpret_cast<char*>(&i), sizeof(i));
 }
 
 bool BinaryStream::writeString(const QByteArray& ba)

@@ -19,16 +19,16 @@
 #ifndef NATIVEMESSAGINGBASE_H
 #define NATIVEMESSAGINGBASE_H
 
-#include <QObject>
-#include <QJsonObject>
-#include <QJsonDocument>
+#include <QAtomicInteger>
 #include <QFuture>
-#include <QtConcurrent/QtConcurrent>
-#include <QMutex>
-#include <QSocketNotifier>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <QLocalServer>
 #include <QLocalSocket>
-#include <QAtomicInteger>
+#include <QMutex>
+#include <QObject>
+#include <QSocketNotifier>
+#include <QtConcurrent/QtConcurrent>
 #include <iostream>
 #include <unistd.h>
 
@@ -41,21 +41,21 @@ public:
     ~NativeMessagingBase() = default;
 
 protected slots:
-    void            newNativeMessage();
+    void newNativeMessage();
 
 protected:
-    virtual void    readLength() = 0;
-    virtual void    readStdIn(const quint32 length) = 0;
-    void            readNativeMessages();
-    QString         jsonToString(const QJsonObject& json) const;
-    void            sendReply(const QJsonObject& json);
-    void            sendReply(const QString& reply);
-    QString         getLocalServerPath() const;
+    virtual void readLength() = 0;
+    virtual void readStdIn(const quint32 length) = 0;
+    void readNativeMessages();
+    QString jsonToString(const QJsonObject& json) const;
+    void sendReply(const QJsonObject& json);
+    void sendReply(const QString& reply);
+    QString getLocalServerPath() const;
 
 protected:
-    QAtomicInteger<quint8>          m_running;
+    QAtomicInteger<quint8> m_running;
     QSharedPointer<QSocketNotifier> m_notifier;
-    QFuture<void>                   m_future;
+    QFuture<void> m_future;
 };
 
-#endif  // NATIVEMESSAGINGBASE_H
+#endif // NATIVEMESSAGINGBASE_H

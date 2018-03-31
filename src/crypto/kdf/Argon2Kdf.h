@@ -20,7 +20,8 @@
 
 #include "Kdf.h"
 
-class Argon2Kdf : public Kdf {
+class Argon2Kdf : public Kdf
+{
 public:
     Argon2Kdf();
 

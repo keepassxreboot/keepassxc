@@ -4,8 +4,9 @@
 #include <QPointer>
 #include <QWidget>
 
-namespace Ui {
-class EntryAttachmentsWidget;
+namespace Ui
+{
+    class EntryAttachmentsWidget;
 }
 
 class QByteArray;

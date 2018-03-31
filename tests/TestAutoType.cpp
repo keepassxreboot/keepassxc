@@ -21,12 +21,12 @@
 
 #include <QPluginLoader>
 
-#include "core/Config.h"
-#include "core/FilePath.h"
-#include "crypto/Crypto.h"
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
+#include "core/Config.h"
+#include "core/FilePath.h"
+#include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 
 QTEST_GUILESS_MAIN(TestAutoType)
@@ -94,10 +94,10 @@ void TestAutoType::init()
     m_entry4 = new Entry();
     m_entry4->setGroup(m_group);
     m_entry4->setPassword("custom_attr");
-    m_entry4->attributes()->set("CUSTOM","Attribute",false);
-    m_entry4->attributes()->set("CustomAttrFirst","AttrValueFirst",false);
-    m_entry4->attributes()->set("CustomAttrSecond","AttrValueSecond",false);
-    m_entry4->attributes()->set("CustomAttrThird","AttrValueThird",false);
+    m_entry4->attributes()->set("CUSTOM", "Attribute", false);
+    m_entry4->attributes()->set("CustomAttrFirst", "AttrValueFirst", false);
+    m_entry4->attributes()->set("CustomAttrSecond", "AttrValueSecond", false);
+    m_entry4->attributes()->set("CustomAttrThird", "AttrValueThird", false);
     association.window = "//^CustomAttr1$//";
     association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
@@ -143,9 +143,7 @@ void TestAutoType::testSingleAutoType()
 
     QCOMPARE(m_test->actionCount(), 14);
     QCOMPARE(m_test->actionChars(),
-             QString("myuser%1mypass%2")
-             .arg(m_test->keyToString(Qt::Key_Tab))
-             .arg(m_test->keyToString(Qt::Key_Enter)));
+             QString("myuser%1mypass%2").arg(m_test->keyToString(Qt::Key_Tab)).arg(m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
@@ -162,10 +160,7 @@ void TestAutoType::testGlobalAutoTypeWithOneMatch()
     m_test->setActiveWindowTitle("custom window");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1association%2")
-             .arg(m_entry1->username())
-             .arg(m_entry1->password()));
+    QCOMPARE(m_test->actionChars(), QString("%1association%2").arg(m_entry1->username()).arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatch()
@@ -175,8 +170,7 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
     m_test->setActiveWindowTitle("An Entry Title!");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlMatch()
@@ -186,8 +180,7 @@ void TestAutoType::testGlobalAutoTypeUrlMatch()
     m_test->setActiveWindowTitle("Dummy - http://example.org/ - <My Browser>");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
@@ -197,8 +190,7 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
     m_test->setActiveWindowTitle("Dummy - http://sub.example.org/ - <My Browser>");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
@@ -274,7 +266,8 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
     // Huge sequence
-    QVERIFY(AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+    QVERIFY(AutoType::checkSyntax(
+        "{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
 
     QVERIFY(AutoType::checkSyntax("{NUMPAD1 3}"));
 
@@ -327,7 +320,7 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     QPointer<Group> group1 = new Group();
     group1->setParent(rootGroup);
     group1->setDefaultAutoTypeSequence(sequenceG1);
-    
+
     // Child group with inherit
     QPointer<Group> group2 = new Group();
     group2->setParent(group1);

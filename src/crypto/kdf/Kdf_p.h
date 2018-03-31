@@ -22,9 +22,9 @@
 #ifndef KEEPASSXC_KDF_P_H
 #define KEEPASSXC_KDF_P_H
 
-class Kdf::BenchmarkThread: public QThread
+class Kdf::BenchmarkThread : public QThread
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit BenchmarkThread(int msec, const Kdf* kdf);

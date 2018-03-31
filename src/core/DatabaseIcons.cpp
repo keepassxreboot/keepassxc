@@ -106,8 +106,7 @@ QImage DatabaseIcons::icon(int index)
 
     if (!m_iconCache[index].isNull()) {
         return m_iconCache[index];
-    }
-    else {
+    } else {
         QString iconPath = QString("icons/database/").append(m_indexToName[index]);
         QImage icon(filePath()->dataPath(iconPath));
 

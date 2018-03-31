@@ -20,16 +20,16 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "version.h"
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
+#include "version.h"
 
 #include <QClipboard>
 #include <QSysInfo>
 
 AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent),
-      m_ui(new Ui::AboutDialog())
+    : QDialog(parent)
+    , m_ui(new Ui::AboutDialog())
 {
     m_ui->setupUi(this);
 
@@ -47,8 +47,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     QString commitHash;
     if (!QString(GIT_HEAD).isEmpty()) {
         commitHash = GIT_HEAD;
-    }
-    else if (!QString(DIST_HASH).contains("Format")) {
+    } else if (!QString(DIST_HASH).contains("Format")) {
         commitHash = DIST_HASH;
     }
 
@@ -66,16 +65,16 @@ AboutDialog::AboutDialog(QWidget* parent)
 #endif
 
     debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
-             .arg(tr("Libraries:"))
-             .arg(QString::fromLocal8Bit(qVersion()))
-             .arg(Crypto::backendVersion()));
+                                      .arg(tr("Libraries:"))
+                                      .arg(QString::fromLocal8Bit(qVersion()))
+                                      .arg(Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-             .arg(QSysInfo::prettyProductName(),
-                  QSysInfo::currentCpuArchitecture(),
-                  QSysInfo::kernelType(),
-                  QSysInfo::kernelVersion()));
+                         .arg(QSysInfo::prettyProductName(),
+                              QSysInfo::currentCpuArchitecture(),
+                              QSysInfo::kernelType(),
+                              QSysInfo::kernelVersion()));
 
     debugInfo.append("\n\n");
 #endif

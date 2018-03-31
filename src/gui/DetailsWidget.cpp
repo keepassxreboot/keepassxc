@@ -20,16 +20,17 @@
 #include "ui_DetailsWidget.h"
 
 #include <QDebug>
-#include <QDir>
 #include <QDesktopServices>
+#include <QDir>
 
 #include "core/Config.h"
 #include "core/FilePath.h"
-#include "gui/Clipboard.h"
 #include "entry/EntryAttachmentsModel.h"
+#include "gui/Clipboard.h"
 
-namespace {
-constexpr int GeneralTabIndex = 0;
+namespace
+{
+    constexpr int GeneralTabIndex = 0;
 }
 
 DetailsWidget::DetailsWidget(QWidget* parent)
@@ -87,8 +88,7 @@ void DetailsWidget::setEntry(Entry* selectedEntry)
     setVisible(!config()->get("GUI/HideDetailsView").toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
-    const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry
-                                                                                : GeneralTabIndex;
+    const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
     Q_ASSERT(m_ui->entryTabWidget->isTabEnabled(GeneralTabIndex));
     m_ui->entryTabWidget->setCurrentIndex(tabIndex);
 }
@@ -108,8 +108,7 @@ void DetailsWidget::setGroup(Group* selectedGroup)
     setVisible(!config()->get("GUI/HideDetailsView").toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
-    const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup
-                                                                                : GeneralTabIndex;
+    const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
     Q_ASSERT(m_ui->groupTabWidget->isTabEnabled(GeneralTabIndex));
     m_ui->groupTabWidget->setCurrentIndex(tabIndex);
 }
@@ -188,8 +187,8 @@ void DetailsWidget::updateEntryGeneralTab()
     }
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
-    const QString expires = entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate)
-                                                : tr("Never");
+    const QString expires =
+        entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
 }
 
@@ -238,8 +237,8 @@ void DetailsWidget::updateEntryAutotypeTab()
     const AutoTypeAssociations* autotypeAssociations = m_currentEntry->autoTypeAssociations();
     const auto associations = autotypeAssociations->getAll();
     for (const auto& assoc : associations) {
-        const QString sequence = assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence()
-                                                          : assoc.sequence;
+        const QString sequence =
+            assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
         items.append(new QTreeWidgetItem(m_ui->entryAutotypeTree, {assoc.window, sequence}));
     }
 
@@ -264,8 +263,8 @@ void DetailsWidget::updateGroupGeneralTab()
     m_ui->groupAutotypeLabel->setText(autotypeText);
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
-    const QString expiresText = groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate)
-                                                    : tr("Never");
+    const QString expiresText =
+        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 }
 

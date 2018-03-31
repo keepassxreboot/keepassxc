@@ -15,16 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QIODevice>
 #include <QFile>
+#include <QIODevice>
 
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/kdf/AesKdf.h"
-#include "format/KeePass2Writer.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Writer.h"
+#include "format/KeePass2Writer.h"
 
 /**
  * Write a database to a KDBX file.
@@ -52,17 +52,17 @@ bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
         return true;
     }
 
-    for (const auto& group: db->rootGroup()->groupsRecursive(true)) {
+    for (const auto& group : db->rootGroup()->groupsRecursive(true)) {
         if (group->customData() && !group->customData()->isEmpty()) {
             return true;
         }
 
-        for (const auto& entry: group->entries()) {
+        for (const auto& entry : group->entries()) {
             if (entry->customData() && !entry->customData()->isEmpty()) {
                 return true;
             }
 
-            for (const auto& historyItem: entry->historyItems()) {
+            for (const auto& historyItem : entry->historyItems()) {
                 if (historyItem->customData() && !historyItem->customData()->isEmpty()) {
                     return true;
                 }
@@ -81,7 +81,8 @@ bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
  * @return true on success
  */
 
-bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db) {
+bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
+{
     m_error = false;
     m_errorStr.clear();
 

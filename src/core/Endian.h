@@ -20,59 +20,55 @@
 #define KEEPASSX_ENDIAN_H
 
 #include <QByteArray>
+#include <QIODevice>
 #include <QSysInfo>
 #include <QtEndian>
-#include <QIODevice>
 
 namespace Endian
 {
 
-template<typename SizedQInt>
-SizedQInt bytesToSizedInt(const QByteArray& ba, QSysInfo::Endian byteOrder)
-{
-    Q_ASSERT(ba.size() == sizeof(SizedQInt));
+    template <typename SizedQInt> SizedQInt bytesToSizedInt(const QByteArray& ba, QSysInfo::Endian byteOrder)
+    {
+        Q_ASSERT(ba.size() == sizeof(SizedQInt));
 
-    if (byteOrder == QSysInfo::LittleEndian) {
-        return qFromLittleEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
-    }
-    return qFromBigEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
-}
-
-template<typename SizedQInt>
-SizedQInt readSizedInt(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
-{
-    QByteArray ba = device->read(sizeof(SizedQInt));
-
-    if (ba.size() != sizeof(SizedQInt)) {
-        *ok = false;
-        return 0;
-    }
-    *ok = true;
-    return bytesToSizedInt<SizedQInt>(ba, byteOrder);
-}
-
-template<typename SizedQInt>
-QByteArray sizedIntToBytes(SizedQInt num, QSysInfo::Endian byteOrder)
-{
-    QByteArray ba;
-    ba.resize(sizeof(SizedQInt));
-
-    if (byteOrder == QSysInfo::LittleEndian) {
-        qToLittleEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
-    } else {
-        qToBigEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
+        if (byteOrder == QSysInfo::LittleEndian) {
+            return qFromLittleEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
+        }
+        return qFromBigEndian<SizedQInt>(reinterpret_cast<const uchar*>(ba.constData()));
     }
 
-    return ba;
-}
+    template <typename SizedQInt> SizedQInt readSizedInt(QIODevice* device, QSysInfo::Endian byteOrder, bool* ok)
+    {
+        QByteArray ba = device->read(sizeof(SizedQInt));
 
-template<typename SizedQInt>
-bool writeSizedInt(SizedQInt num, QIODevice* device, QSysInfo::Endian byteOrder)
-{
-    QByteArray ba = sizedIntToBytes<SizedQInt>(num, byteOrder);
-    qint64 bytesWritten = device->write(ba);
-    return (bytesWritten == ba.size());
-}
+        if (ba.size() != sizeof(SizedQInt)) {
+            *ok = false;
+            return 0;
+        }
+        *ok = true;
+        return bytesToSizedInt<SizedQInt>(ba, byteOrder);
+    }
+
+    template <typename SizedQInt> QByteArray sizedIntToBytes(SizedQInt num, QSysInfo::Endian byteOrder)
+    {
+        QByteArray ba;
+        ba.resize(sizeof(SizedQInt));
+
+        if (byteOrder == QSysInfo::LittleEndian) {
+            qToLittleEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
+        } else {
+            qToBigEndian<SizedQInt>(num, reinterpret_cast<uchar*>(ba.data()));
+        }
+
+        return ba;
+    }
+
+    template <typename SizedQInt> bool writeSizedInt(SizedQInt num, QIODevice* device, QSysInfo::Endian byteOrder)
+    {
+        QByteArray ba = sizedIntToBytes<SizedQInt>(num, byteOrder);
+        qint64 bytesWritten = device->write(ba);
+        return (bytesWritten == ba.size());
+    }
 
 } // namespace Endian
 

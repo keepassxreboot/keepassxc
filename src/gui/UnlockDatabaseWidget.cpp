@@ -17,9 +17,9 @@
 
 #include "UnlockDatabaseWidget.h"
 
-#include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "gui/MessageBox.h"
+#include "ui_DatabaseOpenWidget.h"
 
 UnlockDatabaseWidget::UnlockDatabaseWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)

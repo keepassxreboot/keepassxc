@@ -560,7 +560,6 @@ void TestMerge::testResolveGroupConflictOlder()
     delete dbSource;
 }
 
-
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();

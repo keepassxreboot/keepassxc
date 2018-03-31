@@ -50,7 +50,8 @@ EntryView::EntryView(QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
     connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
@@ -330,7 +331,7 @@ void EntryView::showHeaderMenu(const QPoint& position)
 /**
  * Toggle visibility of column referenced by triggering action
  */
-void EntryView::toggleColumnVisibility(QAction *action)
+void EntryView::toggleColumnVisibility(QAction* action)
 {
     // Verify action carries a column index as data. Since QVariant.toInt()
     // below will accept anything that's interpretable as int, perform a type
@@ -443,7 +444,8 @@ void EntryView::fillRemainingWidth(bool lastColumnOnly)
     }
 
     // Add remaining width to last column
-    header()->resizeSection(header()->logicalIndex(lastColumnIndex), header()->sectionSize(lastColumnIndex) + (header()->width() - width));
+    header()->resizeSection(header()->logicalIndex(lastColumnIndex),
+                            header()->sectionSize(lastColumnIndex) + (header()->width() - width));
 }
 
 void EntryView::resetFixedColumns()
@@ -451,4 +453,3 @@ void EntryView::resetFixedColumns()
     header()->setSectionResizeMode(EntryModel::Paperclip, QHeaderView::Fixed);
     header()->resizeSection(EntryModel::Paperclip, header()->minimumSectionSize());
 }
-

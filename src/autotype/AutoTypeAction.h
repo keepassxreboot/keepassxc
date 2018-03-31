@@ -19,8 +19,8 @@
 #define KEEPASSX_AUTOTYPEACTION_H
 
 #include <QChar>
-#include <Qt>
 #include <QObject>
+#include <Qt>
 
 #include "core/Global.h"
 
@@ -29,7 +29,9 @@ class AutoTypeExecutor;
 class KEEPASSX_EXPORT AutoTypeAction
 {
 public:
-    virtual ~AutoTypeAction() {}
+    virtual ~AutoTypeAction()
+    {
+    }
     virtual AutoTypeAction* clone() = 0;
     virtual void accept(AutoTypeExecutor* executor) = 0;
 };
@@ -75,7 +77,9 @@ public:
 class KEEPASSX_EXPORT AutoTypeExecutor
 {
 public:
-    virtual ~AutoTypeExecutor() {}
+    virtual ~AutoTypeExecutor()
+    {
+    }
     virtual void execChar(AutoTypeChar* action) = 0;
     virtual void execKey(AutoTypeKey* action) = 0;
     virtual void execDelay(AutoTypeDelay* action);

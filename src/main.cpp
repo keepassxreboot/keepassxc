@@ -59,22 +59,24 @@ int main(int argc, char** argv)
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
-    parser.addPositionalArgument("filename", QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"), "[filename(s)]");
+    parser.setApplicationDescription(
+        QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
+    parser.addPositionalArgument(
+        "filename",
+        QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"),
+        "[filename(s)]");
 
-    QCommandLineOption configOption("config",
-                                    QCoreApplication::translate("main", "path to a custom config file"),
-                                    "config");
-    QCommandLineOption keyfileOption("keyfile",
-                                     QCoreApplication::translate("main", "key file of the database"),
-                                     "keyfile");
+    QCommandLineOption configOption(
+        "config", QCoreApplication::translate("main", "path to a custom config file"), "config");
+    QCommandLineOption keyfileOption(
+        "keyfile", QCoreApplication::translate("main", "key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
                                      QCoreApplication::translate("main", "read password of the database from stdin"));
     // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
     QCommandLineOption parentWindowOption(QStringList() << "pw"
                                                         << "parent-window",
-                                                        QCoreApplication::translate("main", "Parent window handle"),
-                                                        "handle");
+                                          QCoreApplication::translate("main", "Parent window handle"),
+                                          "handle");
 
     parser.addHelpOption();
     parser.addVersionOption();
@@ -90,15 +92,16 @@ int main(int argc, char** argv)
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
-        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
+        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.")
+                          .toUtf8()
+                          .constData();
         return 0;
     }
 
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {
-        QString error = QCoreApplication::translate("Main",
-                                                    "Fatal error while testing the cryptographic functions.");
+        QString error = QCoreApplication::translate("Main", "Fatal error while testing the cryptographic functions.");
         error.append("\n");
         error.append(Crypto::errorString());
         MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassXC - Error"), error);
@@ -126,7 +129,7 @@ int main(int argc, char** argv)
 
     // start minimized if configured
     bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
-    bool minimizeToTray    = config()->get("GUI/MinimizeToTray").toBool();
+    bool minimizeToTray = config()->get("GUI/MinimizeToTray").toBool();
 #ifndef Q_OS_LINUX
     if (minimizeOnStartup) {
 #else
@@ -143,7 +146,7 @@ int main(int argc, char** argv)
 
     if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
         const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename: fileNames) {
+        for (const QString& filename : fileNames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
                 mainWindow.openDatabase(filename);
             }
@@ -151,7 +154,7 @@ int main(int argc, char** argv)
     }
 
     const bool pwstdin = parser.isSet(pwstdinOption);
-    for (const QString& filename: fileNames) {
+    for (const QString& filename : fileNames) {
         QString password;
         if (pwstdin) {
             // we always need consume a line of STDIN if --pw-stdin is set to clear out the

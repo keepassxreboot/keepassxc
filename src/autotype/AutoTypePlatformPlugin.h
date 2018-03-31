@@ -25,7 +25,9 @@
 class AutoTypePlatformInterface
 {
 public:
-    virtual ~AutoTypePlatformInterface() {}
+    virtual ~AutoTypePlatformInterface()
+    {
+    }
     virtual bool isAvailable() = 0;
     virtual QStringList windowTitles() = 0;
     virtual WId activeWindow() = 0;
@@ -35,7 +37,9 @@ public:
     virtual int platformEventFilter(void* event) = 0;
     virtual int initialTimeout() = 0;
     virtual bool raiseWindow(WId window) = 0;
-    virtual void unload() {}
+    virtual void unload()
+    {
+    }
 
     virtual AutoTypeExecutor* createExecutor() = 0;
 

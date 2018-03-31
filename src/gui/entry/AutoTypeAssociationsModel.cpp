@@ -49,7 +49,7 @@ void AutoTypeAssociationsModel::setAutoTypeAssociations(AutoTypeAssociations* au
     endResetModel();
 }
 
-void AutoTypeAssociationsModel::setEntry(const Entry *entry)
+void AutoTypeAssociationsModel::setEntry(const Entry* entry)
 {
     m_entry = entry;
 }
@@ -58,8 +58,7 @@ int AutoTypeAssociationsModel::rowCount(const QModelIndex& parent) const
 {
     if (!m_autoTypeAssociations || parent.isValid()) {
         return 0;
-    }
-    else {
+    } else {
         return m_autoTypeAssociations->size();
     }
 }
@@ -76,12 +75,10 @@ QVariant AutoTypeAssociationsModel::headerData(int section, Qt::Orientation orie
     if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) {
         if (section == 0) {
             return tr("Window");
-        }
-        else {
+        } else {
             return tr("Sequence");
         }
-    }
-    else {
+    } else {
         return QVariant();
     }
 }
@@ -100,16 +97,14 @@ QVariant AutoTypeAssociationsModel::data(const QModelIndex& index, int role) con
                 window = m_entry->resolveMultiplePlaceholders(window);
             }
             return window;
-        }
-        else {
+        } else {
             QString sequence = m_autoTypeAssociations->get(index.row()).sequence;
             if (sequence.isEmpty()) {
                 sequence = tr("Default sequence");
             }
             return sequence;
         }
-    }
-    else {
+    } else {
         return QVariant();
     }
 }

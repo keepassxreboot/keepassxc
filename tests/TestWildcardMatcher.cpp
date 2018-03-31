@@ -70,8 +70,7 @@ void TestWildcardMatcher::verifyMatchResult(QString pattern, bool expected)
 {
     if (expected) {
         verifyMatch(pattern);
-    }
-    else {
+    } else {
         verifyNoMatch(pattern);
     }
 }

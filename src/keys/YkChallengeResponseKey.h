@@ -29,7 +29,6 @@ class YkChallengeResponseKey : public QObject, public ChallengeResponseKey
     Q_OBJECT
 
 public:
-
     YkChallengeResponseKey(int slot = -1, bool blocking = false);
 
     QByteArray rawKey() const;

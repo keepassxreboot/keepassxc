@@ -28,7 +28,8 @@
 
 SSHAgent* SSHAgent::m_instance;
 
-SSHAgent::SSHAgent(QObject* parent) : QObject(parent)
+SSHAgent::SSHAgent(QObject* parent)
+    : QObject(parent)
 {
 #ifndef Q_OS_WIN
     m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
@@ -108,7 +109,8 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    QByteArray mapName = (QString("SSHAgentRequest") + reinterpret_cast<intptr_t>(QThread::currentThreadId())).toLatin1();
+    QByteArray mapName =
+        (QString("SSHAgentRequest") + reinterpret_cast<intptr_t>(QThread::currentThreadId())).toLatin1();
 
     HANDLE handle = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, AGENT_MAX_MSGLEN, mapName.data());
 
@@ -125,8 +127,8 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    quint32 *requestLength = reinterpret_cast<quint32*>(ptr);
-    void *requestData = reinterpret_cast<void*>(reinterpret_cast<char*>(ptr) + 4);
+    quint32* requestLength = reinterpret_cast<quint32*>(ptr);
+    void* requestData = reinterpret_cast<void*>(reinterpret_cast<char*>(ptr) + 4);
 
     *requestLength = qToBigEndian<quint32>(in.length());
     memcpy(requestData, in.data(), in.length());
@@ -157,7 +159,6 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
 #endif
 }
 
-
 bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
 {
     if (!isAgentRunning()) {
@@ -186,8 +187,8 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
     }
 
     if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent refused this identity. Possible reasons include:")
-            + "\n" + tr("The key has already been added.");
+        m_error =
+            tr("Agent refused this identity. Possible reasons include:") + "\n" + tr("The key has already been added.");
 
         if (lifetime > 0) {
             m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");

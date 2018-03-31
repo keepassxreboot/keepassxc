@@ -27,7 +27,8 @@
 class Database;
 class QFile;
 
-namespace Ui {
+namespace Ui
+{
     class DatabaseOpenWidget;
 }
 

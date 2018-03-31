@@ -17,8 +17,8 @@
 
 #include "EntryAttachments.h"
 
-#include <QStringList>
 #include <QSet>
+#include <QStringList>
 
 EntryAttachments::EntryAttachments(QObject* parent)
     : QObject(parent)
@@ -61,8 +61,7 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
 
     if (addAttachment) {
         emit added(key);
-    }
-    else {
+    } else {
         emit keyModified(key);
     }
 
@@ -74,8 +73,7 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
 void EntryAttachments::remove(const QString& key)
 {
     if (!m_attachments.contains(key)) {
-        Q_ASSERT_X(false, "EntryAttachments::remove",
-                   qPrintable(QString("Can't find attachment for key %1").arg(key)));
+        Q_ASSERT_X(false, "EntryAttachments::remove", qPrintable(QString("Can't find attachment for key %1").arg(key)));
         return;
     }
 
@@ -94,10 +92,10 @@ void EntryAttachments::remove(const QStringList& keys)
     }
 
     bool isModified = false;
-    for (const QString &key: keys) {
+    for (const QString& key : keys) {
         if (!m_attachments.contains(key)) {
-            Q_ASSERT_X(false, "EntryAttachments::remove",
-                       qPrintable(QString("Can't find attachment for key %1").arg(key)));
+            Q_ASSERT_X(
+                false, "EntryAttachments::remove", qPrintable(QString("Can't find attachment for key %1").arg(key)));
             continue;
         }
 

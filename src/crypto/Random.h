@@ -25,7 +25,9 @@ class RandomBackend
 {
 public:
     virtual void randomize(void* data, int len) = 0;
-    virtual ~RandomBackend() {}
+    virtual ~RandomBackend()
+    {
+    }
 };
 
 class Random
@@ -56,7 +58,8 @@ private:
     Q_DISABLE_COPY(Random)
 };
 
-inline Random* randomGen() {
+inline Random* randomGen()
+{
     return Random::instance();
 }
 

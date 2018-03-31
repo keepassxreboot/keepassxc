@@ -26,8 +26,8 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/FileKey.h"
@@ -231,7 +231,8 @@ void TestKeys::benchmarkTransformKey()
     kdf.setSeed(seed);
     kdf.setRounds(1e6);
 
-    QBENCHMARK {
+    QBENCHMARK
+    {
         Q_UNUSED(compositeKey.transform(kdf, result));
     };
 }

@@ -18,23 +18,24 @@
 */
 
 #include "BrowserOptionDialog.h"
-#include "ui_BrowserOptionDialog.h"
-#include "config-keepassx.h"
 #include "BrowserSettings.h"
+#include "config-keepassx.h"
 #include "core/FilePath.h"
+#include "ui_BrowserOptionDialog.h"
 
-#include <QMessageBox>
 #include <QFileDialog>
+#include <QMessageBox>
 
-BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
-    QWidget(parent),
-    m_ui(new Ui::BrowserOptionDialog())
+BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
+    : QWidget(parent)
+    , m_ui(new Ui::BrowserOptionDialog())
 {
     m_ui->setupUi(this);
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
-    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
+    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
+                                     MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(-1);
 
@@ -95,7 +96,8 @@ void BrowserOptionDialog::loadSettings()
     m_ui->enableBrowserSupport->setChecked(false);
     m_ui->enableBrowserSupport->setEnabled(false);
     m_ui->browserGlobalWarningWidget->showMessage(
-        tr("We're sorry, but KeePassXC-Browser is not supported for Snap releases at the moment."), MessageWidget::Warning);
+        tr("We're sorry, but KeePassXC-Browser is not supported for Snap releases at the moment."),
+        MessageWidget::Warning);
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
@@ -134,7 +136,8 @@ void BrowserOptionDialog::showProxyLocationFileDialog()
 #else
     QString fileTypeFilter(QString("%1 (*)").arg(tr("Executable Files")));
 #endif
-    auto proxyLocation = QFileDialog::getOpenFileName(this, tr("Select custom proxy location"),
+    auto proxyLocation = QFileDialog::getOpenFileName(this,
+                                                      tr("Select custom proxy location"),
                                                       QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
                                                       fileTypeFilter);
     m_ui->customProxyLocation->setText(proxyLocation);

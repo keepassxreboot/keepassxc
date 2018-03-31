@@ -19,13 +19,13 @@
 #include "PasswordGeneratorWidget.h"
 #include "ui_PasswordGeneratorWidget.h"
 
-#include <QLineEdit>
 #include <QDir>
 #include <QKeyEvent>
+#include <QLineEdit>
 
 #include "core/Config.h"
-#include "core/PasswordGenerator.h"
 #include "core/FilePath.h"
+#include "core/PasswordGenerator.h"
 #include "gui/Clipboard.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
@@ -96,16 +96,22 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxLower->setChecked(config()->get("generator/LowerCase", PasswordGenerator::DefaultLower).toBool());
     m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", PasswordGenerator::DefaultUpper).toBool());
     m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
-    m_ui->checkBoxSpecialChars->setChecked(config()->get("generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(
+        config()->get("generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
     m_ui->checkBoxExtASCII->setChecked(config()->get("generator/EASCII", PasswordGenerator::DefaultEASCII).toBool());
-    m_ui->checkBoxExcludeAlike->setChecked(config()->get("generator/ExcludeAlike", PasswordGenerator::DefaultLookAlike).toBool());
-    m_ui->checkBoxEnsureEvery->setChecked(config()->get("generator/EnsureEvery", PasswordGenerator::DefaultFromEveryGroup).toBool());
+    m_ui->checkBoxExcludeAlike->setChecked(
+        config()->get("generator/ExcludeAlike", PasswordGenerator::DefaultLookAlike).toBool());
+    m_ui->checkBoxEnsureEvery->setChecked(
+        config()->get("generator/EnsureEvery", PasswordGenerator::DefaultFromEveryGroup).toBool());
     m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
 
     // Diceware config
-    m_ui->spinBoxWordCount->setValue(config()->get("generator/WordCount", PassphraseGenerator::DefaultWordCount).toInt());
-    m_ui->editWordSeparator->setText(config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
-    m_ui->comboBoxWordList->setCurrentText(config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
+    m_ui->spinBoxWordCount->setValue(
+        config()->get("generator/WordCount", PassphraseGenerator::DefaultWordCount).toInt());
+    m_ui->editWordSeparator->setText(
+        config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
+    m_ui->comboBoxWordList->setCurrentText(
+        config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
 
     // Password or diceware?
     m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
@@ -275,8 +281,7 @@ void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
     // Take the existing stylesheet and convert the text and background color to arguments
     QString style = m_ui->entropyProgressBar->styleSheet();
     QRegularExpression re("(QProgressBar::chunk\\s*\\{.*?background-color:)[^;]+;",
-                          QRegularExpression::CaseInsensitiveOption |
-                          QRegularExpression::DotMatchesEverythingOption);
+                          QRegularExpression::CaseInsensitiveOption | QRegularExpression::DotMatchesEverythingOption);
     style.replace(re, "\\1 %1;");
 
     // Set the color and background based on entropy

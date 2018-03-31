@@ -30,7 +30,7 @@ UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
 }
 
-void UnlockDatabaseDialog::setFilePath(const QString &filePath)
+void UnlockDatabaseDialog::setFilePath(const QString& filePath)
 {
     m_view->load(filePath);
 }

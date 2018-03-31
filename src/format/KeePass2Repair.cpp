@@ -21,11 +21,11 @@
 #include <QBuffer>
 
 #include "core/Group.h"
+#include "format/Kdbx4Reader.h"
+#include "format/KdbxXmlReader.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
-#include "format/Kdbx4Reader.h"
-#include "format/KdbxXmlReader.h"
 
 KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
 {
@@ -51,8 +51,7 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
     QRegExp encodingRegExp("encoding=\"([^\"]+)\"", Qt::CaseInsensitive, QRegExp::RegExp2);
     if (encodingRegExp.indexIn(xmlStart) != -1) {
         if (encodingRegExp.cap(1).compare("utf-8", Qt::CaseInsensitive) != 0
-                && encodingRegExp.cap(1).compare("utf8", Qt::CaseInsensitive) != 0)
-        {
+            && encodingRegExp.cap(1).compare("utf8", Qt::CaseInsensitive) != 0) {
             // database is not utf-8 encoded, we don't support repairing that
             return qMakePair(RepairFailed, nullptr);
         }
@@ -92,8 +91,7 @@ KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, 
 
     if (hasError) {
         return qMakePair(RepairFailed, nullptr);
-    }
-    else {
+    } else {
         return qMakePair(RepairSuccess, db.take());
     }
 }

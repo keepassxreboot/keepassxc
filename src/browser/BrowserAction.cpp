@@ -16,21 +16,20 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QJsonDocument>
-#include <QJsonParseError>
 #include "BrowserAction.h"
 #include "BrowserSettings.h"
+#include "config-keepassx.h"
 #include "sodium.h"
 #include "sodium/crypto_box.h"
 #include "sodium/randombytes.h"
-#include "config-keepassx.h"
+#include <QJsonDocument>
+#include <QJsonParseError>
 
-BrowserAction::BrowserAction(BrowserService& browserService) :
-    m_mutex(QMutex::Recursive),
-    m_browserService(browserService),
-    m_associated(false)
+BrowserAction::BrowserAction(BrowserService& browserService)
+    : m_mutex(QMutex::Recursive)
+    , m_browserService(browserService)
+    , m_associated(false)
 {
-
 }
 
 QJsonObject BrowserAction::readResponse(const QJsonObject& json)
@@ -62,7 +61,6 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
     return handleAction(json);
 }
 
-
 // Private functions
 ///////////////////////
 
@@ -80,7 +78,7 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
     } else if (action.compare("associate", Qt::CaseSensitive) == 0) {
         return handleAssociate(json, action);
     } else if (action.compare("test-associate", Qt::CaseSensitive) == 0) {
-        return  handleTestAssociate(json, action);
+        return handleTestAssociate(json, action);
     } else if (action.compare("get-logins", Qt::CaseSensitive) == 0) {
         return handleGetLogins(json, action);
     } else if (action.compare("generate-password", Qt::CaseSensitive) == 0) {
@@ -270,7 +268,7 @@ QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const
 
     QJsonArray arr;
     QJsonObject passwd;
-    passwd["login"] = QString::number(password.length() * 8); //bits;
+    passwd["login"] = QString::number(password.length() * 8); // bits;
     passwd["password"] = password;
     arr.append(passwd);
 
@@ -386,31 +384,49 @@ QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObjec
 QString BrowserAction::getErrorMessage(const int errorCode) const
 {
     switch (errorCode) {
-    case ERROR_KEEPASS_DATABASE_NOT_OPENED:             return QObject::tr("Database not opened");
-    case ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED:      return QObject::tr("Database hash not available");
-    case ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED:  return QObject::tr("Client public key not received");
-    case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:          return QObject::tr("Cannot decrypt message");
-    case ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED:        return QObject::tr("Timeout or cannot connect to KeePassXC");
-    case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:      return QObject::tr("Action cancelled or denied");
-    case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:          return QObject::tr("Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?");
-    case ERROR_KEEPASS_ASSOCIATION_FAILED:              return QObject::tr("KeePassXC association failed, try again");
-    case ERROR_KEEPASS_KEY_CHANGE_FAILED:               return QObject::tr("Key change was not successful");
-    case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:     return QObject::tr("Encryption key is not recognized");
-    case ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND:        return QObject::tr("No saved databases found");
-    case ERROR_KEEPASS_INCORRECT_ACTION:                return QObject::tr("Incorrect action");
-    case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:          return QObject::tr("Empty message received");
-    case ERROR_KEEPASS_NO_URL_PROVIDED:                 return QObject::tr("No URL provided");
-    case ERROR_KEEPASS_NO_LOGINS_FOUND:                 return QObject::tr("No logins found");
-    default:                                            return QObject::tr("Unknown error");
+    case ERROR_KEEPASS_DATABASE_NOT_OPENED:
+        return QObject::tr("Database not opened");
+    case ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED:
+        return QObject::tr("Database hash not available");
+    case ERROR_KEEPASS_CLIENT_PUBLIC_KEY_NOT_RECEIVED:
+        return QObject::tr("Client public key not received");
+    case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:
+        return QObject::tr("Cannot decrypt message");
+    case ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED:
+        return QObject::tr("Timeout or cannot connect to KeePassXC");
+    case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:
+        return QObject::tr("Action cancelled or denied");
+    case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:
+        return QObject::tr("Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?");
+    case ERROR_KEEPASS_ASSOCIATION_FAILED:
+        return QObject::tr("KeePassXC association failed, try again");
+    case ERROR_KEEPASS_KEY_CHANGE_FAILED:
+        return QObject::tr("Key change was not successful");
+    case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:
+        return QObject::tr("Encryption key is not recognized");
+    case ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND:
+        return QObject::tr("No saved databases found");
+    case ERROR_KEEPASS_INCORRECT_ACTION:
+        return QObject::tr("Incorrect action");
+    case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:
+        return QObject::tr("Empty message received");
+    case ERROR_KEEPASS_NO_URL_PROVIDED:
+        return QObject::tr("No URL provided");
+    case ERROR_KEEPASS_NO_LOGINS_FOUND:
+        return QObject::tr("No logins found");
+    default:
+        return QObject::tr("Unknown error");
     }
 }
 
 QString BrowserAction::getDatabaseHash()
 {
     QMutexLocker locker(&m_mutex);
-    QByteArray hash = QCryptographicHash::hash(
-        (m_browserService.getDatabaseRootUuid() + m_browserService.getDatabaseRecycleBinUuid()).toUtf8(),
-         QCryptographicHash::Sha256).toHex();
+    QByteArray hash =
+        QCryptographicHash::hash(
+            (m_browserService.getDatabaseRootUuid() + m_browserService.getDatabaseRecycleBinUuid()).toUtf8(),
+            QCryptographicHash::Sha256)
+            .toHex();
     return QString(hash);
 }
 
@@ -463,8 +479,8 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     }
 
     if (crypto_box_easy(e.data(), m.data(), m.size(), n.data(), ck.data(), sk.data()) == 0) {
-       QByteArray res = getQByteArray(e.data(), (crypto_box_MACBYTES + ma.length()));
-       return res.toBase64();
+        QByteArray res = getQByteArray(e.data(), (crypto_box_MACBYTES + ma.length()));
+        return res.toBase64();
     }
 
     return QString();
@@ -491,7 +507,7 @@ QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
     }
 
     if (crypto_box_open_easy(d.data(), m.data(), ma.length(), n.data(), ck.data(), sk.data()) == 0) {
-        return getQByteArray(d.data(), std::char_traits<char>::length(reinterpret_cast<const char *>(d.data())));
+        return getQByteArray(d.data(), std::char_traits<char>::length(reinterpret_cast<const char*>(d.data())));
     }
 
     return QByteArray();

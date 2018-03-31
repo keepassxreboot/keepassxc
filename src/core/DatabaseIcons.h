@@ -46,7 +46,8 @@ private:
     Q_DISABLE_COPY(DatabaseIcons)
 };
 
-inline DatabaseIcons* databaseIcons() {
+inline DatabaseIcons* databaseIcons()
+{
     return DatabaseIcons::instance();
 }
 

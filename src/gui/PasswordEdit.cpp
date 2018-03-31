@@ -42,7 +42,7 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
     m_basePasswordEdit = basePasswordEdit;
 
     updateStylesheet();
-    
+
     connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(autocompletePassword(QString)));
     connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
     connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
@@ -54,13 +54,12 @@ void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     // if I have a parent, I'm the child
-    if (m_basePasswordEdit){
+    if (m_basePasswordEdit) {
         if (config()->get("security/passwordsrepeat").toBool()) {
             setEnabled(!show);
             setReadOnly(show);
             setText(m_basePasswordEdit->text());
-        }
-        else {
+        } else {
             // This fix a bug when the QLineEdit is disabled while switching config
             if (isEnabled() == false) {
                 setEnabled(true);
@@ -86,8 +85,7 @@ void PasswordEdit::updateStylesheet()
 
         if (m_basePasswordEdit->text().startsWith(text())) {
             stylesheet = stylesheet.arg(CorrectSoFarColor.name());
-        }
-        else {
+        } else {
             stylesheet = stylesheet.arg(ErrorColor.name());
         }
     }

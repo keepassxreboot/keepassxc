@@ -21,7 +21,8 @@
 
 class ScreenLockListenerPrivate;
 
-class ScreenLockListener : public QObject {
+class ScreenLockListener : public QObject
+{
     Q_OBJECT
 
 public:

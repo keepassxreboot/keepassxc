@@ -18,12 +18,12 @@
 #include "TestKdbx2.h"
 #include "TestGlobal.h"
 
+#include "config-keepassx-tests.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
-#include "keys/PasswordKey.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#include "core/Metadata.h"
-#include "config-keepassx-tests.h"
+#include "keys/PasswordKey.h"
 
 #include <QBuffer>
 

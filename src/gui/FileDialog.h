@@ -23,18 +23,29 @@
 class FileDialog
 {
 public:
-    QString getOpenFileName(QWidget* parent = nullptr, const QString& caption = QString(),
-                            QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = nullptr, QFileDialog::Options options = 0);
-    QStringList getOpenFileNames(QWidget* parent = nullptr, const QString& caption = QString(),
-                                 QString dir = QString(), const QString& filter = QString(),
-                                 QString* selectedFilter = nullptr, QFileDialog::Options options = 0);
-    QString getSaveFileName(QWidget* parent = nullptr, const QString& caption = QString(),
-                            QString dir = QString(), const QString& filter = QString(),
-                            QString* selectedFilter = nullptr, QFileDialog::Options options = 0,
+    QString getOpenFileName(QWidget* parent = nullptr,
+                            const QString& caption = QString(),
+                            QString dir = QString(),
+                            const QString& filter = QString(),
+                            QString* selectedFilter = nullptr,
+                            QFileDialog::Options options = 0);
+    QStringList getOpenFileNames(QWidget* parent = nullptr,
+                                 const QString& caption = QString(),
+                                 QString dir = QString(),
+                                 const QString& filter = QString(),
+                                 QString* selectedFilter = nullptr,
+                                 QFileDialog::Options options = 0);
+    QString getSaveFileName(QWidget* parent = nullptr,
+                            const QString& caption = QString(),
+                            QString dir = QString(),
+                            const QString& filter = QString(),
+                            QString* selectedFilter = nullptr,
+                            QFileDialog::Options options = 0,
                             const QString& defaultExtension = QString());
-    QString getExistingDirectory(QWidget* parent = nullptr, const QString& caption = QString(),
-                                 QString dir = QString(), QFileDialog::Options options = QFileDialog::ShowDirsOnly);
+    QString getExistingDirectory(QWidget* parent = nullptr,
+                                 const QString& caption = QString(),
+                                 QString dir = QString(),
+                                 QFileDialog::Options options = QFileDialog::ShowDirsOnly);
 
     void setNextForgetDialog();
     /**
@@ -61,7 +72,8 @@ private:
     Q_DISABLE_COPY(FileDialog)
 };
 
-inline FileDialog* fileDialog() {
+inline FileDialog* fileDialog()
+{
     return FileDialog::instance();
 }
 

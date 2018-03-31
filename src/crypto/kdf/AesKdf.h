@@ -20,7 +20,7 @@
 
 #include "Kdf.h"
 
-class AesKdf: public Kdf
+class AesKdf : public Kdf
 {
 public:
     AesKdf();
@@ -35,10 +35,8 @@ protected:
     int benchmarkImpl(int msec) const override;
 
 private:
-    static bool transformKeyRaw(const QByteArray& key,
-                                const QByteArray& seed,
-                                int rounds,
-                                QByteArray* result) Q_REQUIRED_RESULT;
+    static bool
+    transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds, QByteArray* result) Q_REQUIRED_RESULT;
 };
 
 #endif // KEEPASSX_AESKDF_H

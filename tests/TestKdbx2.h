@@ -24,7 +24,7 @@ class Database;
 
 class TestKdbx2 : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
     void initTestCase();

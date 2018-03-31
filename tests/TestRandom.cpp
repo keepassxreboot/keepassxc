@@ -20,7 +20,6 @@
 #include "core/Endian.h"
 #include "core/Global.h"
 
-
 QTEST_GUILESS_MAIN(TestRandom)
 
 void TestRandom::initTestCase()
@@ -69,7 +68,6 @@ void TestRandom::testUIntRange()
     m_backend->setNextBytes(nextBytes);
     QCOMPARE(randomGen()->randomUIntRange(100, 200), 142U);
 }
-
 
 RandomBackendTest::RandomBackendTest()
     : m_bytesIndex(0)

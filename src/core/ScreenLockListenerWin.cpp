@@ -25,7 +25,7 @@
  * See https://msdn.microsoft.com/en-us/library/aa383841(v=vs.85).aspx
  * See https://blogs.msdn.microsoft.com/oldnewthing/20060104-50/?p=32783
  */
-ScreenLockListenerWin::ScreenLockListenerWin(QWidget* parent) 
+ScreenLockListenerWin::ScreenLockListenerWin(QWidget* parent)
     : ScreenLockListenerPrivate(parent)
     , QAbstractNativeEventFilter()
 {
@@ -36,20 +36,17 @@ ScreenLockListenerWin::ScreenLockListenerWin(QWidget* parent)
 
     // This call requests a notification from windows when a laptop is closed
     HPOWERNOTIFY hPnotify = RegisterPowerSettingNotification(
-                reinterpret_cast<HWND>(parent->winId()),
-                &GUID_LIDSWITCH_STATE_CHANGE, DEVICE_NOTIFY_WINDOW_HANDLE);
+        reinterpret_cast<HWND>(parent->winId()), &GUID_LIDSWITCH_STATE_CHANGE, DEVICE_NOTIFY_WINDOW_HANDLE);
     m_powerNotificationHandle = reinterpret_cast<void*>(hPnotify);
 
     // This call requests a notification for session changes
-    if (!WTSRegisterSessionNotification(
-                reinterpret_cast<HWND>(parent->winId()),
-                NOTIFY_FOR_THIS_SESSION)) {
+    if (!WTSRegisterSessionNotification(reinterpret_cast<HWND>(parent->winId()), NOTIFY_FOR_THIS_SESSION)) {
     }
 }
 
 ScreenLockListenerWin::~ScreenLockListenerWin()
 {
-    HWND h= reinterpret_cast<HWND>(static_cast<QWidget*>(parent())->winId());
+    HWND h = reinterpret_cast<HWND>(static_cast<QWidget*>(parent())->winId());
     WTSUnRegisterSessionNotification(h);
 
     if (m_powerNotificationHandle) {

@@ -19,14 +19,16 @@
 #include "AutoTypeMatch.h"
 
 AutoTypeMatch::AutoTypeMatch()
-  : entry(nullptr),
-    sequence()
-{}
+    : entry(nullptr)
+    , sequence()
+{
+}
 
 AutoTypeMatch::AutoTypeMatch(Entry* entry, QString sequence)
-  : entry(entry),
-    sequence(sequence)
-{}
+    : entry(entry)
+    , sequence(sequence)
+{
+}
 
 bool AutoTypeMatch::operator==(const AutoTypeMatch& other) const
 {

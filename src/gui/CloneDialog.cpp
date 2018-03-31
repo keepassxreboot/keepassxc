@@ -19,12 +19,12 @@
 #include "ui_CloneDialog.h"
 
 #include "config-keepassx.h"
-#include "version.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
 #include "gui/DatabaseWidget.h"
+#include "version.h"
 
 CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     : QDialog(parent)

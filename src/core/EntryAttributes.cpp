@@ -23,8 +23,8 @@ const QString EntryAttributes::UserNameKey = "UserName";
 const QString EntryAttributes::PasswordKey = "Password";
 const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
-const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey
-                                                     << PasswordKey << URLKey << NotesKey);
+const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey << PasswordKey << URLKey
+                                                                   << NotesKey);
 
 const QString EntryAttributes::WantedFieldGroupName = "WantedField";
 const QString EntryAttributes::SearchInGroupName = "SearchIn";
@@ -113,8 +113,7 @@ void EntryAttributes::set(const QString& key, const QString& value, bool protect
             emitModified = true;
         }
         m_protectedAttributes.insert(key);
-    }
-    else if (m_protectedAttributes.remove(key)) {
+    } else if (m_protectedAttributes.remove(key)) {
         emitModified = true;
     }
 
@@ -124,11 +123,9 @@ void EntryAttributes::set(const QString& key, const QString& value, bool protect
 
     if (defaultAttribute && changeValue) {
         emit defaultKeyModified();
-    }
-    else if (addAttribute) {
+    } else if (addAttribute) {
         emit added(key);
-    }
-    else if (emitModified) {
+    } else if (emitModified) {
         emit customKeyModified(key);
     }
 }
@@ -249,21 +246,19 @@ void EntryAttributes::copyDataFrom(const EntryAttributes* other)
 
 bool EntryAttributes::operator==(const EntryAttributes& other) const
 {
-    return (m_attributes == other.m_attributes
-            && m_protectedAttributes == other.m_protectedAttributes);
+    return (m_attributes == other.m_attributes && m_protectedAttributes == other.m_protectedAttributes);
 }
 
 bool EntryAttributes::operator!=(const EntryAttributes& other) const
 {
-    return (m_attributes != other.m_attributes
-            || m_protectedAttributes != other.m_protectedAttributes);
+    return (m_attributes != other.m_attributes || m_protectedAttributes != other.m_protectedAttributes);
 }
 
 QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
 {
     static QRegularExpression referenceRegExp(
-                "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
-                QRegularExpression::CaseInsensitiveOption);
+        "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+        QRegularExpression::CaseInsensitiveOption);
 
     return referenceRegExp.match(text);
 }

@@ -249,8 +249,8 @@ void KdbxReader::setInnerRandomStreamID(const QByteArray& data)
     }
     auto id = Endian::bytesToSizedInt<quint32>(data, KeePass2::BYTEORDER);
     KeePass2::ProtectedStreamAlgo irsAlgo = KeePass2::idToProtectedStreamAlgo(id);
-    if (irsAlgo == KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo ||
-        irsAlgo == KeePass2::ProtectedStreamAlgo::ArcFourVariant) {
+    if (irsAlgo == KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo
+        || irsAlgo == KeePass2::ProtectedStreamAlgo::ArcFourVariant) {
         raiseError(tr("Invalid inner random stream cipher"));
         return;
     }

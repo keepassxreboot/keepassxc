@@ -19,9 +19,9 @@
 #ifndef NATIVEMESSAGINGHOST_H
 #define NATIVEMESSAGINGHOST_H
 
-#include "NativeMessagingBase.h"
 #include "BrowserClients.h"
 #include "BrowserService.h"
+#include "NativeMessagingBase.h"
 #include "gui/DatabaseTabWidget.h"
 
 class NativeMessagingHost : public NativeMessagingBase
@@ -31,37 +31,37 @@ class NativeMessagingHost : public NativeMessagingBase
     typedef QList<QLocalSocket*> SocketList;
 
 public:
-    explicit    NativeMessagingHost(DatabaseTabWidget* parent = 0);
+    explicit NativeMessagingHost(DatabaseTabWidget* parent = 0);
     ~NativeMessagingHost();
-    int         init();
-    void        run();
-    void        stop();
+    int init();
+    void run();
+    void stop();
 
 public slots:
-    void        removeSharedEncryptionKeys();
-    void        removeStoredPermissions();
+    void removeSharedEncryptionKeys();
+    void removeStoredPermissions();
 
 signals:
-    void        quit();
+    void quit();
 
 private:
-    void        readLength();
-    void        readStdIn(const quint32 length);
-    void        sendReplyToAllClients(const QJsonObject& json);
+    void readLength();
+    void readStdIn(const quint32 length);
+    void sendReplyToAllClients(const QJsonObject& json);
 
 private slots:
-    void        databaseLocked();
-    void        databaseUnlocked();
-    void        newLocalConnection();
-    void        newLocalMessage();
-    void        disconnectSocket();
+    void databaseLocked();
+    void databaseUnlocked();
+    void newLocalConnection();
+    void newLocalMessage();
+    void disconnectSocket();
 
 private:
-    QMutex                          m_mutex;
-    BrowserClients                  m_browserClients;
-    BrowserService                  m_browserService;
-    QSharedPointer<QLocalServer>    m_localServer;
-    SocketList                      m_socketList;
+    QMutex m_mutex;
+    BrowserClients m_browserClients;
+    BrowserService m_browserService;
+    QSharedPointer<QLocalServer> m_localServer;
+    SocketList m_socketList;
 };
 
 #endif // NATIVEMESSAGINGHOST_H

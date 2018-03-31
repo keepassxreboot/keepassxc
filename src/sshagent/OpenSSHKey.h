@@ -19,8 +19,8 @@
 #ifndef OPENSSHKEY_H
 #define OPENSSHKEY_H
 
-#include <QtCore>
 #include "BinaryStream.h"
+#include <QtCore>
 
 class OpenSSHKey : QObject
 {

@@ -84,8 +84,8 @@ int Extract::execute(const QStringList& arguments)
 
         if (fileKey.type() != FileKey::Hashed) {
             errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                                               "unsupported in the future.\n\n"
-                                               "Please consider generating a new key file.");
+                                           "unsupported in the future.\n\n"
+                                           "Please consider generating a new key file.");
             errorTextStream << endl;
         }
 

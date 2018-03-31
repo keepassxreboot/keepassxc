@@ -89,7 +89,6 @@ Random::Random(RandomBackend* backend)
 {
 }
 
-
 void RandomBackendGcrypt::randomize(void* data, int len)
 {
     Q_ASSERT(Crypto::initalized());

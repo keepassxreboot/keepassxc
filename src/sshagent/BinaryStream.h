@@ -19,9 +19,9 @@
 #ifndef BINARYSTREAM_H
 #define BINARYSTREAM_H
 
-#include <QObject>
-#include <QIODevice>
 #include <QBuffer>
+#include <QIODevice>
+#include <QObject>
 
 class BinaryStream : QObject
 {

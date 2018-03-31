@@ -20,8 +20,7 @@
 
 #include "core/Group.h"
 
-QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* group,
-                                    Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
 {
     if (!group->resolveSearchingEnabled()) {
         return QList<Entry*>();
@@ -30,14 +29,14 @@ QList<Entry*> EntrySearcher::search(const QString& searchTerm, const Group* grou
     return searchEntries(searchTerm, group, caseSensitivity);
 }
 
-QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Group* group,
-                                           Qt::CaseSensitivity caseSensitivity)
+QList<Entry*>
+EntrySearcher::searchEntries(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
 {
     QList<Entry*> searchResult;
 
     const QList<Entry*> entryList = group->entries();
     for (Entry* entry : entryList) {
-       searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
+        searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
     }
 
     const QList<Group*> children = group->children();
@@ -54,8 +53,7 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchTerm, const Grou
     return searchResult;
 }
 
-QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
-                                        Qt::CaseSensitivity caseSensitivity)
+QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry, Qt::CaseSensitivity caseSensitivity)
 {
     const QStringList wordList = searchTerm.split(QRegExp("\\s"), QString::SkipEmptyParts);
     for (const QString& word : wordList) {
@@ -69,10 +67,10 @@ QList<Entry*> EntrySearcher::matchEntry(const QString& searchTerm, Entry* entry,
 
 bool EntrySearcher::wordMatch(const QString& word, Entry* entry, Qt::CaseSensitivity caseSensitivity)
 {
-    return entry->resolvePlaceholder(entry->title()).contains(word, caseSensitivity) ||
-            entry->resolvePlaceholder(entry->username()).contains(word, caseSensitivity) ||
-            entry->resolvePlaceholder(entry->url()).contains(word, caseSensitivity) ||
-            entry->resolvePlaceholder(entry->notes()).contains(word, caseSensitivity);
+    return entry->resolvePlaceholder(entry->title()).contains(word, caseSensitivity)
+           || entry->resolvePlaceholder(entry->username()).contains(word, caseSensitivity)
+           || entry->resolvePlaceholder(entry->url()).contains(word, caseSensitivity)
+           || entry->resolvePlaceholder(entry->notes()).contains(word, caseSensitivity);
 }
 
 bool EntrySearcher::matchGroup(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
@@ -89,6 +87,5 @@ bool EntrySearcher::matchGroup(const QString& searchTerm, const Group* group, Qt
 
 bool EntrySearcher::wordMatch(const QString& word, const Group* group, Qt::CaseSensitivity caseSensitivity)
 {
-    return group->name().contains(word, caseSensitivity) ||
-            group->notes().contains(word, caseSensitivity);
+    return group->name().contains(word, caseSensitivity) || group->notes().contains(word, caseSensitivity);
 }

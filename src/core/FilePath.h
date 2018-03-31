@@ -50,7 +50,8 @@ private:
     Q_DISABLE_COPY(FilePath)
 };
 
-inline FilePath* filePath() {
+inline FilePath* filePath()
+{
     return FilePath::instance();
 }
 

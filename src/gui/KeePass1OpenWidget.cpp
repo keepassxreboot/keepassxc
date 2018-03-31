@@ -20,11 +20,11 @@
 #include <QFile>
 #include <QFileInfo>
 
-#include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass1Reader.h"
 #include "gui/MessageBox.h"
+#include "ui_DatabaseOpenWidget.h"
 
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
@@ -49,8 +49,8 @@ void KeePass1OpenWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        m_ui->messageWidget->showMessage( tr("Unable to open the database.").append("\n")
-            .append(file.errorString()), MessageWidget::Error);
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(file.errorString()),
+                                         MessageWidget::Error);
         return;
     }
     if (m_db) {
@@ -63,10 +63,9 @@ void KeePass1OpenWidget::openDatabase()
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());
         emit editFinished(true);
-    }
-    else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n")
-                                         .append(reader.errorString()), MessageWidget::Error);
+    } else {
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
+                                         MessageWidget::Error);
 
         m_ui->editPassword->clear();
     }

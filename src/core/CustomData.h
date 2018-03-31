@@ -25,7 +25,7 @@
 
 class CustomData : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit CustomData(QObject* parent = nullptr);
@@ -44,7 +44,6 @@ public:
     void copyDataFrom(const CustomData* other);
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
-
 
 signals:
     void modified();
