@@ -369,28 +369,11 @@ MainWindow::MainWindow()
                                               "There is a high risk of corruption, maintain a backup of your databases.\n"
                                               "This version is not meant for production use."),
                                            MessageWidget::Warning, -1);
-#else
-    // Show the HTTP deprecation message if enabled above
-    emit m_ui->globalMessageWidget->hideAnimationFinished();
 #endif
 }
 
 MainWindow::~MainWindow()
 {
-}
-
-void MainWindow::showKeePassHTTPDeprecationNotice()
-{
-    int warningNum = config()->get("Http/DeprecationNoticeShown", 0).toInt();
-    displayGlobalMessage(tr("<p>It looks like you are using KeePassHTTP for browser integration. "
-                                "This feature has been deprecated and will be removed in the future.<br>"
-                                "Please switch to KeePassXC-Browser instead! For help with migration, "
-                                "visit our <a class=\"link\"  href=\"https://keepassxc.org/docs/keepassxc-browser-migration\">"
-                                "migration guide</a> (warning %1 of 3).</p>").arg(warningNum + 1),
-                         MessageWidget::Warning, true, -1);
-
-    config()->set("Http/DeprecationNoticeShown", warningNum + 1);
-    disconnect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), this, SLOT(showKeePassHTTPDeprecationNotice()));
 }
 
 void MainWindow::showErrorMessage(const QString& message)
