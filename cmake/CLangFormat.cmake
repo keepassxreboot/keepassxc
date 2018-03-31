@@ -16,7 +16,6 @@
 set(EXCLUDED_DIRS
     # third-party directories
     zxcvbn/
-    http/
     streams/QtIOCompressor
     # objective-c directories
     autotype/mac
