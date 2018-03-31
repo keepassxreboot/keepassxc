@@ -43,6 +43,9 @@ Lists the contents of a group in a database. If no group is specified, it will d
 .IP "merge [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
 
+.IP "pawned [options] <database> <hibp-database>"
+Queries the database's passwords against the haveibeenpwned dump. This database can be found at https://haveibeenpwned.com/Passwords.
+
 .IP "rm [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
 

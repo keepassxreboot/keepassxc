@@ -32,6 +32,7 @@
 #include "List.h"
 #include "Locate.h"
 #include "Merge.h"
+#include "Pawned.h"
 #include "Remove.h"
 #include "Show.h"
 
@@ -71,6 +72,7 @@ void populateCommands()
         commands.insert(QString("locate"), new Locate());
         commands.insert(QString("ls"), new List());
         commands.insert(QString("merge"), new Merge());
+        commands.insert(QString("pawned"), new Pawned());
         commands.insert(QString("rm"), new Remove());
         commands.insert(QString("show"), new Show());
     }

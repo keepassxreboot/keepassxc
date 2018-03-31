@@ -47,6 +47,10 @@ CryptoHash::CryptoHash(Algorithm algo, bool hmac)
         algoGcrypt = GCRY_MD_SHA512;
         break;
 
+    case CryptoHash::Sha1:
+        algoGcrypt = GCRY_MD_SHA1;
+        break;
+
     default:
         Q_ASSERT(false);
         break;
