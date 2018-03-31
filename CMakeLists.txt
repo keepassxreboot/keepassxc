@@ -45,22 +45,14 @@ set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
-option(WITH_XC_HTTP "Include KeePassHTTP-compatible browser integration (deprecated, implies WITH_NETWORKING)." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-
-if(WITH_XC_HTTP)
-  message(WARNING "KeePassHTTP support has been deprecated and will be removed in a future version. Please use WITH_XC_BROWSER instead!\n"
-          "For enabling / disabling network access code, WITH_XC_HTTP has been replaced by WITH_XC_NETWORKING.")
-  set(WITH_XC_NETWORKING ON CACHE BOOL "Include networking code (e.g. for downlading website icons)." FORCE)
-endif()
 
 if(WITH_XC_ALL)
   # Enable all options
   set(WITH_XC_AUTOTYPE ON)
   set(WITH_XC_NETWORKING ON)
   set(WITH_XC_BROWSER ON)
-  set(WITH_XC_HTTP ON) # Deprecated
   set(WITH_XC_YUBIKEY ON)
   set(WITH_XC_SSHAGENT ON)
 endif()

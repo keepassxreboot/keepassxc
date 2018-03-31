@@ -103,7 +103,6 @@ private slots:
     void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
-    void showKeePassHTTPDeprecationNotice();
     void showErrorMessage(const QString& message);
 
 private:
