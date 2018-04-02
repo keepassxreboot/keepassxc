@@ -37,7 +37,7 @@ private:
     void readStdIn(const quint32 length);
 
 private:
-    QLocalSocket*                           m_localSocket;
+    QLocalSocket* m_localSocket;
 };
 
 #endif // NATIVEMESSAGINGHOST_H

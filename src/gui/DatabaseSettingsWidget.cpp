@@ -18,22 +18,22 @@
 
 #include "DatabaseSettingsWidget.h"
 #include "ui_DatabaseSettingsWidget.h"
-#include "ui_DatabaseSettingsWidgetGeneral.h"
 #include "ui_DatabaseSettingsWidgetEncryption.h"
+#include "ui_DatabaseSettingsWidgetGeneral.h"
 
 #include <QMessageBox>
 #include <QPushButton>
 #include <QThread>
 
-#include "core/Global.h"
-#include "core/FilePath.h"
+#include "MessageBox.h"
 #include "core/AsyncTask.h"
 #include "core/Database.h"
+#include "core/FilePath.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Argon2Kdf.h"
-#include "MessageBox.h"
 
 DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -50,10 +50,14 @@ DatabaseSettingsWidget::DatabaseSettingsWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-    connect(m_uiGeneral->historyMaxItemsCheckBox, SIGNAL(toggled(bool)),
-            m_uiGeneral->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
-    connect(m_uiGeneral->historyMaxSizeCheckBox, SIGNAL(toggled(bool)),
-            m_uiGeneral->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
+    connect(m_uiGeneral->historyMaxItemsCheckBox,
+            SIGNAL(toggled(bool)),
+            m_uiGeneral->historyMaxItemsSpinBox,
+            SLOT(setEnabled(bool)));
+    connect(m_uiGeneral->historyMaxSizeCheckBox,
+            SIGNAL(toggled(bool)),
+            m_uiGeneral->historyMaxSizeSpinBox,
+            SLOT(setEnabled(bool)));
     connect(m_uiEncryption->transformBenchmarkButton, SIGNAL(clicked()), SLOT(transformRoundsBenchmark()));
     connect(m_uiEncryption->kdfComboBox, SIGNAL(currentIndexChanged(int)), SLOT(kdfChanged(int)));
 
@@ -101,8 +105,9 @@ void DatabaseSettingsWidget::load(Database* db)
     }
 
     m_uiEncryption->algorithmComboBox->clear();
-    for (auto& cipher: asConst(KeePass2::CIPHERS)) {
-        m_uiEncryption->algorithmComboBox->addItem(QCoreApplication::translate("KeePass2", cipher.second.toUtf8()), cipher.first.toByteArray());
+    for (auto& cipher : asConst(KeePass2::CIPHERS)) {
+        m_uiEncryption->algorithmComboBox->addItem(QCoreApplication::translate("KeePass2", cipher.second.toUtf8()),
+                                                   cipher.first.toByteArray());
     }
     int cipherIndex = m_uiEncryption->algorithmComboBox->findData(m_db->cipher().toByteArray());
     if (cipherIndex > -1) {
@@ -112,8 +117,9 @@ void DatabaseSettingsWidget::load(Database* db)
     // Setup kdf combo box
     m_uiEncryption->kdfComboBox->blockSignals(true);
     m_uiEncryption->kdfComboBox->clear();
-    for (auto& kdf: asConst(KeePass2::KDFS)) {
-        m_uiEncryption->kdfComboBox->addItem(QCoreApplication::translate("KeePass2", kdf.second.toUtf8()), kdf.first.toByteArray());
+    for (auto& kdf : asConst(KeePass2::KDFS)) {
+        m_uiEncryption->kdfComboBox->addItem(QCoreApplication::translate("KeePass2", kdf.second.toUtf8()),
+                                             kdf.first.toByteArray());
     }
     m_uiEncryption->kdfComboBox->blockSignals(false);
 
@@ -158,7 +164,7 @@ void DatabaseSettingsWidget::save()
             return;
         }
     } else if ((kdf->uuid() == KeePass2::KDF_AES_KDBX3 || kdf->uuid() == KeePass2::KDF_AES_KDBX4)
-        && m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
+               && m_uiEncryption->transformRoundsSpinBox->value() < 100000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too low", "Key transformation rounds"));
@@ -173,7 +179,8 @@ void DatabaseSettingsWidget::save()
         }
     }
 
-    m_db->setCompressionAlgo(m_uiGeneral->compressionCheckbox->isChecked() ? Database::CompressionGZip : Database::CompressionNone);
+    m_db->setCompressionAlgo(m_uiGeneral->compressionCheckbox->isChecked() ? Database::CompressionGZip
+                                                                           : Database::CompressionNone);
 
     Metadata* meta = m_db->metadata();
 
@@ -228,7 +235,8 @@ void DatabaseSettingsWidget::save()
     QApplication::restoreOverrideCursor();
 
     if (!ok) {
-        MessageBox::warning(this, tr("KDF unchanged"),
+        MessageBox::warning(this,
+                            tr("KDF unchanged"),
                             tr("Failed to transform key with new KDF parameters; KDF unchanged."),
                             QMessageBox::Ok);
     }
@@ -261,9 +269,7 @@ void DatabaseSettingsWidget::transformRoundsBenchmark()
     }
 
     // Determine the number of rounds required to meet 1 second delay
-    int rounds = AsyncTask::runAndWaitForFuture([&kdf]() {
-        return kdf->benchmark(1000);
-    });
+    int rounds = AsyncTask::runAndWaitForFuture([&kdf]() { return kdf->benchmark(1000); });
 
     m_uiEncryption->transformRoundsSpinBox->setValue(rounds);
     m_uiEncryption->transformBenchmarkButton->setEnabled(true);
@@ -298,8 +304,7 @@ void DatabaseSettingsWidget::kdfChanged(int index)
  */
 void DatabaseSettingsWidget::memoryChanged(int value)
 {
-    m_uiEncryption->memorySpinBox->setSuffix(
-        tr(" MiB", "Abbreviation for Mebibytes (KDF settings)", value));
+    m_uiEncryption->memorySpinBox->setSuffix(tr(" MiB", "Abbreviation for Mebibytes (KDF settings)", value));
 }
 
 /**

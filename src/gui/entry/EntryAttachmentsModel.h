@@ -27,7 +27,8 @@ class EntryAttachmentsModel : public QAbstractListModel
     Q_OBJECT
 
 public:
-    enum Columns {
+    enum Columns
+    {
         NameColumn,
         SizeColumn,
         ColumnsCount

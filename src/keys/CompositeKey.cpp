@@ -22,8 +22,8 @@
 #include <format/KeePass2.h>
 
 #include "core/Global.h"
-#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 
 CompositeKey::CompositeKey()
 {

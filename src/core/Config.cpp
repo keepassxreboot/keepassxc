@@ -21,8 +21,8 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
-#include <QTemporaryFile>
 #include <QStandardPaths>
+#include <QTemporaryFile>
 
 Config* Config::m_instance(nullptr);
 
@@ -80,7 +80,7 @@ Config::Config(QObject* parent)
         QString userPath;
         QString homePath = QDir::homePath();
 
-    #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
         // we can't use QStandardPaths on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
         QByteArray env = qgetenv("XDG_CONFIG_HOME");
         if (env.isEmpty()) {
@@ -95,17 +95,17 @@ Config::Config(QObject* parent)
         }
 
         userPath += "/keepassxc/";
-    #else
+#else
         userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
         // storageLocation() appends the application name ("/keepassxc") to the end
         userPath += "/";
-    #endif
+#endif
 
-    #ifdef QT_DEBUG
+#ifdef QT_DEBUG
         userPath += "keepassxc_debug.ini";
-    #else
+#else
         userPath += "keepassxc.ini";
-    #endif
+#endif
 
         init(userPath);
     }

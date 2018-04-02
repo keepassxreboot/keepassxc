@@ -20,9 +20,9 @@
 
 #include <QSignalSpy>
 
-#include "modeltest.h"
 #include "crypto/Crypto.h"
 #include "gui/group/GroupModel.h"
+#include "modeltest.h"
 
 QTEST_GUILESS_MAIN(TestGroupModel)
 
@@ -76,18 +76,18 @@ void TestGroupModel::test()
     QCOMPARE(model->data(index12).toString(), QString("group12"));
     QCOMPARE(model->data(index121).toString(), QString("group121"));
 
-    QSignalSpy spy1(model, SIGNAL(dataChanged(QModelIndex,QModelIndex)));
+    QSignalSpy spy1(model, SIGNAL(dataChanged(QModelIndex, QModelIndex)));
     group11->setName("test");
     group121->setIcon(4);
     QCOMPARE(spy1.count(), 2);
     QCOMPARE(model->data(index11).toString(), QString("test"));
 
-    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)));
-    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex,int,int)));
-    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)));
-    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex,int,int)));
-    QSignalSpy spyAboutToMove(model, SIGNAL(rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)));
-    QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)));
+    QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)));
+    QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex, int, int)));
+    QSignalSpy spyAboutToRemove(model, SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)));
+    QSignalSpy spyRemoved(model, SIGNAL(rowsRemoved(QModelIndex, int, int)));
+    QSignalSpy spyAboutToMove(model, SIGNAL(rowsAboutToBeMoved(QModelIndex, int, int, QModelIndex, int)));
+    QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)));
 
     Group* group2 = new Group();
     group2->setObjectName("group2");

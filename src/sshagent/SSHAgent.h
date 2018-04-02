@@ -19,9 +19,9 @@
 #ifndef AGENTCLIENT_H
 #define AGENTCLIENT_H
 
-#include <QtCore>
-#include <QList>
 #include "OpenSSHKey.h"
+#include <QList>
+#include <QtCore>
 
 #include "gui/DatabaseWidget.h"
 
@@ -46,16 +46,16 @@ public slots:
     void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::LockedMode);
 
 private:
-    const quint8 SSH_AGENT_FAILURE              = 5;
-    const quint8 SSH_AGENT_SUCCESS              = 6;
-    const quint8 SSH_AGENTC_REQUEST_IDENTITIES  = 11;
-    const quint8 SSH_AGENT_IDENTITIES_ANSWER    = 12;
-    const quint8 SSH_AGENTC_ADD_IDENTITY        = 17;
-    const quint8 SSH_AGENTC_REMOVE_IDENTITY     = 18;
-    const quint8 SSH_AGENTC_ADD_ID_CONSTRAINED  = 25;
+    const quint8 SSH_AGENT_FAILURE = 5;
+    const quint8 SSH_AGENT_SUCCESS = 6;
+    const quint8 SSH_AGENTC_REQUEST_IDENTITIES = 11;
+    const quint8 SSH_AGENT_IDENTITIES_ANSWER = 12;
+    const quint8 SSH_AGENTC_ADD_IDENTITY = 17;
+    const quint8 SSH_AGENTC_REMOVE_IDENTITY = 18;
+    const quint8 SSH_AGENTC_ADD_ID_CONSTRAINED = 25;
 
-    const quint8 SSH_AGENT_CONSTRAIN_LIFETIME   = 1;
-    const quint8 SSH_AGENT_CONSTRAIN_CONFIRM    = 2;
+    const quint8 SSH_AGENT_CONSTRAIN_LIFETIME = 1;
+    const quint8 SSH_AGENT_CONSTRAIN_CONFIRM = 2;
 
     explicit SSHAgent(QObject* parent = nullptr);
     ~SSHAgent();

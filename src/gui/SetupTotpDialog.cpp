@@ -17,9 +17,8 @@
  */
 
 #include "SetupTotpDialog.h"
-#include "ui_SetupTotpDialog.h"
 #include "totp/totp.h"
-
+#include "ui_SetupTotpDialog.h"
 
 SetupTotpDialog::SetupTotpDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)
@@ -39,7 +38,6 @@ SetupTotpDialog::SetupTotpDialog(DatabaseWidget* parent, Entry* entry)
     connect(m_ui->radioSteam, SIGNAL(toggled(bool)), SLOT(toggleSteam(bool)));
     connect(m_ui->radioCustom, SIGNAL(toggled(bool)), SLOT(toggleCustom(bool)));
 }
-
 
 void SetupTotpDialog::setupTotp()
 {
@@ -86,17 +84,16 @@ void SetupTotpDialog::toggleCustom(bool status)
     m_ui->stepSpinBox->setEnabled(status);
 }
 
-
 void SetupTotpDialog::setSeed(QString value)
 {
     m_ui->seedEdit->setText(value);
 }
 
-void SetupTotpDialog::setSettings(quint8 digits) {
+void SetupTotpDialog::setSettings(quint8 digits)
+{
     quint8 step = m_ui->stepSpinBox->value();
 
-    bool isDefault = ((step == Totp::defaultStep) &&
-        (digits == Totp::defaultDigits));
+    bool isDefault = ((step == Totp::defaultStep) && (digits == Totp::defaultDigits));
     bool isSteam = (digits == Totp::ENCODER_STEAM);
 
     if (isSteam) {

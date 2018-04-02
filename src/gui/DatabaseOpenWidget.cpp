@@ -22,20 +22,19 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
-#include "gui/MainWindow.h"
-#include "gui/FileDialog.h"
-#include "gui/MessageBox.h"
+#include "crypto/Random.h"
 #include "format/KeePass2Reader.h"
+#include "gui/FileDialog.h"
+#include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "crypto/Random.h"
 #include "keys/YkChallengeResponseKey.h"
 
 #include "config-keepassx.h"
 
-#include <QtConcurrentRun>
 #include <QSharedPointer>
-
+#include <QtConcurrentRun>
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -52,8 +51,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->labelHeadline->setFont(font);
 
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
-            m_ui->editPassword, SLOT(setShowPassword(bool)));
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
@@ -97,8 +95,8 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 #ifdef WITH_XC_YUBIKEY
     // showEvent() may be called twice, so make sure we are only polling once
     if (!m_yubiKeyBeingPolled) {
-        connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)),
-                Qt::QueuedConnection);
+        connect(
+            YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 
@@ -147,7 +145,6 @@ void DatabaseOpenWidget::clearForms()
     m_db = nullptr;
 }
 
-
 Database* DatabaseOpenWidget::database()
 {
     return m_db;
@@ -178,8 +175,8 @@ void DatabaseOpenWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        m_ui->messageWidget->showMessage(
-            tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
+        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(file.errorString()),
+                                         MessageWidget::Error);
         return;
     }
     if (m_db) {
@@ -217,22 +214,21 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg),
-                                             MessageWidget::Error);
+            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg), MessageWidget::Error);
             return QSharedPointer<CompositeKey>();
         }
         if (key.type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
             QMessageBox legacyWarning;
             legacyWarning.setWindowTitle(tr("Legacy key file format"));
             legacyWarning.setText(tr("You are using a legacy key file format which may become\n"
-                                         "unsupported in the future.\n\n"
-                                         "Please consider generating a new key file."));
+                                     "unsupported in the future.\n\n"
+                                     "Please consider generating a new key file."));
             legacyWarning.setIcon(QMessageBox::Icon::Warning);
             legacyWarning.addButton(QMessageBox::Ok);
             legacyWarning.setDefaultButton(QMessageBox::Ok);
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
-            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state){
+            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state) {
                 config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
             });
 

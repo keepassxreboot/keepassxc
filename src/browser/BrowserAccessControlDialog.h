@@ -24,8 +24,9 @@
 
 class Entry;
 
-namespace Ui {
-class BrowserAccessControlDialog;
+namespace Ui
+{
+    class BrowserAccessControlDialog;
 }
 
 class BrowserAccessControlDialog : public QDialog

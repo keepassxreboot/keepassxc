@@ -20,8 +20,8 @@
 #include "ui_WelcomeWidget.h"
 
 #include "config-keepassx.h"
-#include "core/FilePath.h"
 #include "core/Config.h"
+#include "core/FilePath.h"
 
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
@@ -48,8 +48,10 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
     connect(m_ui->buttonImportCSV, SIGNAL(clicked()), SIGNAL(importCsv()));
-    connect(m_ui->recentListWidget, SIGNAL(itemActivated(QListWidgetItem*)), this, 
-    	SLOT(openDatabaseFromFile(QListWidgetItem*)));
+    connect(m_ui->recentListWidget,
+            SIGNAL(itemActivated(QListWidgetItem*)),
+            this,
+            SLOT(openDatabaseFromFile(QListWidgetItem*)));
 }
 
 WelcomeWidget::~WelcomeWidget()
@@ -58,10 +60,10 @@ WelcomeWidget::~WelcomeWidget()
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {
-	if (item->text().isEmpty()) {
-		return;
-	}
-	emit openDatabaseFile(item->text());
+    if (item->text().isEmpty()) {
+        return;
+    }
+    emit openDatabaseFile(item->text());
 }
 
 void WelcomeWidget::refreshLastDatabases()
@@ -69,7 +71,7 @@ void WelcomeWidget::refreshLastDatabases()
     m_ui->recentListWidget->clear();
     const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
     for (const QString& database : lastDatabases) {
-        QListWidgetItem *itm = new QListWidgetItem;
+        QListWidgetItem* itm = new QListWidgetItem;
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }

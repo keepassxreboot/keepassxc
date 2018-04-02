@@ -279,6 +279,8 @@ if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
 
+include(CLangFormat)
+
 if(UNIX AND NOT APPLE)
   find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
 elseif(APPLE)

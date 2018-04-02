@@ -21,7 +21,6 @@
 #include <QImage>
 #include <QTextCodec>
 
-#include "crypto/kdf/AesKdf.h"
 #include "core/Database.h"
 #include "core/Endian.h"
 #include "core/Entry.h"
@@ -29,6 +28,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 #include "format/KeePass1.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
@@ -47,7 +47,6 @@ private:
     QByteArray m_keyfileData;
 };
 
-
 KeePass1Reader::KeePass1Reader()
     : m_db(nullptr)
     , m_tmpParent(nullptr)
@@ -58,8 +57,7 @@ KeePass1Reader::KeePass1Reader()
 {
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password,
-                                       QIODevice* keyfileDevice)
+Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
 {
     m_error = false;
     m_errorStr.clear();
@@ -112,8 +110,9 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     }
 
     auto version = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
-    if (!ok || (version & KeePass1::FILE_VERSION_CRITICAL_MASK)
-            != (KeePass1::FILE_VERSION & KeePass1::FILE_VERSION_CRITICAL_MASK)) {
+    if (!ok
+        || (version & KeePass1::FILE_VERSION_CRITICAL_MASK)
+               != (KeePass1::FILE_VERSION & KeePass1::FILE_VERSION_CRITICAL_MASK)) {
         raiseError(tr("Unsupported KeePass database version."));
         return nullptr;
     }
@@ -200,8 +199,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
             parseMetaStream(entry);
 
             delete entry;
-        }
-        else {
+        } else {
             quint32 groupId = m_entryGroupIds.value(entry);
             if (!m_groupIds.contains(groupId)) {
                 qWarning("Orphaned entry found, assigning to root group.");
@@ -251,8 +249,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     return db.take();
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password,
-                                       const QString& keyfileName)
+Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
 {
     QScopedPointer<QFile> keyFile;
     if (!keyfileName.isEmpty()) {
@@ -268,8 +265,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     return db.take();
 }
 
-Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password,
-                                       const QString& keyfileName)
+Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
 {
     QFile dbFile(filename);
     if (!dbFile.open(QFile::ReadOnly)) {
@@ -297,10 +293,10 @@ QString KeePass1Reader::errorString()
     return m_errorStr;
 }
 
-SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData,
-                                                qint64 contentPos)
+SymmetricCipherStream*
+KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos)
 {
-    const QList<PasswordEncoding> encodings = { Windows1252, Latin1, UTF8 };
+    const QList<PasswordEncoding> encodings = {Windows1252, Latin1, UTF8};
 
     QScopedPointer<SymmetricCipherStream> cipherStream;
     QByteArray passwordData;
@@ -310,28 +306,24 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
     for (PasswordEncoding encoding : encodings) {
         if (encoding == Windows1252) {
             passwordData = passwordDataCorrect;
-        }
-        else if (encoding == Latin1) {
+        } else if (encoding == Latin1) {
             // KeePassX used Latin-1 encoding for passwords until version 0.3.1
             // but KeePass/Win32 uses Windows Codepage 1252.
             passwordData = password.toLatin1();
 
             if (passwordData == passwordDataCorrect) {
                 continue;
-            }
-            else {
+            } else {
                 qWarning("Testing password encoded as Latin-1.");
             }
-        }
-        else if (encoding == UTF8) {
+        } else if (encoding == UTF8) {
             // KeePassX used UTF-8 encoding for passwords until version 0.2.2
             // but KeePass/Win32 uses Windows Codepage 1252.
             passwordData = password.toUtf8();
 
             if (passwordData == passwordDataCorrect) {
                 continue;
-            }
-            else {
+            } else {
                 qWarning("Testing password encoded as UTF-8.");
             }
         }
@@ -341,12 +333,11 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
             return nullptr;
         }
         if (m_encryptionFlags & KeePass1::Rijndael) {
-            cipherStream.reset(new SymmetricCipherStream(m_device, SymmetricCipher::Aes256,
-                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
-        }
-        else {
-            cipherStream.reset(new SymmetricCipherStream(m_device, SymmetricCipher::Twofish,
-                    SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
+            cipherStream.reset(new SymmetricCipherStream(
+                m_device, SymmetricCipher::Aes256, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
+        } else {
+            cipherStream.reset(new SymmetricCipherStream(
+                m_device, SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt));
         }
 
         if (!cipherStream->init(finalKey, m_encryptionIV)) {
@@ -375,8 +366,7 @@ SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const Q
 
         if (success) {
             break;
-        }
-        else {
+        } else {
             cipherStream.reset();
         }
     }
@@ -476,8 +466,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0002:
             group->setName(QString::fromUtf8(fieldData.constData()));
             break;
-        case 0x0003:
-        {
+        case 0x0003: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group creation time field size"));
                 return nullptr;
@@ -488,8 +477,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x0004:
-        {
+        case 0x0004: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group modification time field size"));
                 return nullptr;
@@ -500,8 +488,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x0005:
-        {
+        case 0x0005: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group access time field size"));
             }
@@ -511,8 +498,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x0006:
-        {
+        case 0x0006: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group expiry time field size"));
             }
@@ -523,8 +509,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x0007:
-        {
+        case 0x0007: {
             if (fieldSize != 4) {
                 raiseError(tr("Incorrect group icon field size"));
                 return nullptr;
@@ -533,8 +518,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
             group->setIcon(iconNumber);
             break;
         }
-        case 0x0008:
-        {
+        case 0x0008: {
             if (fieldSize != 2) {
                 raiseError(tr("Incorrect group level field size"));
                 return nullptr;
@@ -610,8 +594,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             }
             m_entryUuids.insert(fieldData, entry.data());
             break;
-        case 0x0002:
-        {
+        case 0x0002: {
             if (fieldSize != 4) {
                 raiseError(tr("Invalid entry group id field size"));
                 return nullptr;
@@ -620,8 +603,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             m_entryGroupIds.insert(entry.data(), groupId);
             break;
         }
-        case 0x0003:
-        {
+        case 0x0003: {
             if (fieldSize != 4) {
                 raiseError(tr("Invalid entry icon field size"));
                 return nullptr;
@@ -645,8 +627,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
         case 0x0008:
             parseNotes(QString::fromUtf8(fieldData.constData()), entry.data());
             break;
-        case 0x0009:
-        {
+        case 0x0009: {
             if (fieldSize != 5) {
                 raiseError(tr("Invalid entry creation time field size"));
                 return nullptr;
@@ -657,8 +638,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x000A:
-        {
+        case 0x000A: {
             if (fieldSize != 5) {
                 raiseError(tr("Invalid entry modification time field size"));
                 return nullptr;
@@ -669,8 +649,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x000B:
-        {
+        case 0x000B: {
             if (fieldSize != 5) {
                 raiseError(tr("Invalid entry creation time field size"));
                 return nullptr;
@@ -681,8 +660,7 @@ Entry* KeePass1Reader::readEntry(QIODevice* cipherStream)
             }
             break;
         }
-        case 0x000C:
-        {
+        case 0x000C: {
             if (fieldSize != 5) {
                 raiseError(tr("Invalid entry expiry time field size"));
                 return nullptr;
@@ -734,27 +712,23 @@ void KeePass1Reader::parseNotes(const QString& rawNotes, Entry* entry)
         if (sequenceRegexp.exactMatch(line)) {
             if (sequenceRegexp.cap(1).isEmpty()) {
                 entry->setDefaultAutoTypeSequence(sequenceRegexp.cap(2));
-            }
-            else {
+            } else {
                 sequences[sequenceRegexp.cap(1).toInt()] = sequenceRegexp.cap(2);
             }
 
             lastLineAutoType = true;
-        }
-        else if (windowRegexp.exactMatch(line)) {
+        } else if (windowRegexp.exactMatch(line)) {
             int nr;
             if (windowRegexp.cap(1).isEmpty()) {
                 nr = -1; // special number that matches no other sequence
-            }
-            else {
+            } else {
                 nr = windowRegexp.cap(1).toInt();
             }
 
             windows[nr].append(windowRegexp.cap(2));
 
             lastLineAutoType = true;
-        }
-        else  {
+        } else {
             // don't add empty lines following a removed auto-type line
             if (!lastLineAutoType || !line.isEmpty()) {
                 notes.append(line);
@@ -788,8 +762,7 @@ bool KeePass1Reader::constructGroupTree(const QList<Group*>& groups)
 
         if (level == 0) {
             groups[i]->setParent(m_db->rootGroup());
-        }
-        else {
+        } else {
             for (int j = (i - 1); j >= 0; j--) {
                 if (m_groupLevels.value(groups[j]) < level) {
                     if ((level - m_groupLevels.value(groups[j])) != 1) {
@@ -818,13 +791,11 @@ void KeePass1Reader::parseMetaStream(const Entry* entry)
         if (!parseGroupTreeState(data)) {
             qWarning("Unable to parse group tree state metastream.");
         }
-    }
-    else if (entry->notes() == "KPX_CUSTOM_ICONS_4") {
+    } else if (entry->notes() == "KPX_CUSTOM_ICONS_4") {
         if (!parseCustomIcons4(data)) {
             qWarning("Unable to parse custom icons metastream.");
         }
-    }
-    else {
+    } else {
         qWarning("Ignoring unknown metastream \"%s\".", entry->notes().toLocal8Bit().constData());
     }
 }
@@ -962,20 +933,16 @@ QDateTime KeePass1Reader::dateFromPackedStruct(const QByteArray& data)
     // check for the special "never" datetime
     if (dateTime == QDateTime(QDate(2999, 12, 28), QTime(23, 59, 59), Qt::UTC)) {
         return QDateTime();
-    }
-    else {
+    } else {
         return dateTime;
     }
 }
 
 bool KeePass1Reader::isMetaStream(const Entry* entry)
 {
-    return entry->attachments()->keys().contains("bin-stream")
-            && !entry->notes().isEmpty()
-            && entry->title() == "Meta-Info"
-            && entry->username() == "SYSTEM"
-            && entry->url() == "$"
-            && entry->iconNumber() == 0;
+    return entry->attachments()->keys().contains("bin-stream") && !entry->notes().isEmpty()
+           && entry->title() == "Meta-Info" && entry->username() == "SYSTEM" && entry->url() == "$"
+           && entry->iconNumber() == 0;
 }
 
 QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
@@ -1002,8 +969,7 @@ QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
 
         if (Tools::isHex(data)) {
             return QByteArray::fromHex(data);
-        }
-        else {
+        } else {
             device->seek(0);
         }
     }
@@ -1021,16 +987,13 @@ QByteArray KeePass1Reader::readKeyfile(QIODevice* device)
     return cryptoHash.result();
 }
 
-
 QByteArray KeePass1Key::rawKey() const
 {
     if (m_keyfileData.isEmpty()) {
         return CryptoHash::hash(m_password, CryptoHash::Sha256);
-    }
-    else if (m_password.isEmpty()) {
+    } else if (m_password.isEmpty()) {
         return m_keyfileData;
-    }
-    else {
+    } else {
         CryptoHash keyHash(CryptoHash::Sha256);
         keyHash.addData(CryptoHash::hash(m_password, CryptoHash::Sha256));
         keyHash.addData(m_keyfileData);

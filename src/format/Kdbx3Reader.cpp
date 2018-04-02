@@ -18,19 +18,21 @@
 
 #include "Kdbx3Reader.h"
 
-#include "core/Group.h"
 #include "core/Endian.h"
+#include "core/Group.h"
 #include "crypto/CryptoHash.h"
-#include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
+#include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
 #include <QBuffer>
 
-Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
-                                        const CompositeKey& key, bool keepDatabase)
+Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device,
+                                        const QByteArray& headerData,
+                                        const CompositeKey& key,
+                                        bool keepDatabase)
 {
     Q_ASSERT(m_kdbxVersion <= KeePass2::FILE_VERSION_3_1);
 
@@ -39,8 +41,8 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     }
 
     // check if all required headers were present
-    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
-        || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
+    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_streamStartBytes.isEmpty()
+        || m_protectedStreamKey.isEmpty()
         || m_db->cipher().isNull()) {
         raiseError(tr("missing database headers"));
         return nullptr;
@@ -63,8 +65,8 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     QByteArray finalKey = hash.result();
 
     SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(m_db->cipher());
-    SymmetricCipherStream cipherStream(device, cipher,
-                                       SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
+    SymmetricCipherStream cipherStream(
+        device, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return nullptr;

@@ -19,22 +19,27 @@
 #ifndef BROWSERCLIENTS_H
 #define BROWSERCLIENTS_H
 
-#include <QJsonObject>
-#include <QMutex>
-#include <QVector>
-#include <QSharedPointer>
-#include <QLocalSocket>
 #include "BrowserAction.h"
+#include <QJsonObject>
+#include <QLocalSocket>
+#include <QMutex>
+#include <QSharedPointer>
+#include <QVector>
 
 class BrowserClients
 {
-    struct Client {
-        Client(const QString& id, QSharedPointer<BrowserAction> ba) : clientID(id), browserAction(ba) {}
-        QString                         clientID;
-        QSharedPointer<BrowserAction>   browserAction;
+    struct Client
+    {
+        Client(const QString& id, QSharedPointer<BrowserAction> ba)
+            : clientID(id)
+            , browserAction(ba)
+        {
+        }
+        QString clientID;
+        QSharedPointer<BrowserAction> browserAction;
     };
 
-    typedef QSharedPointer<Client>      ClientPtr;
+    typedef QSharedPointer<Client> ClientPtr;
 
 public:
     BrowserClients(BrowserService& browserService);
@@ -44,13 +49,13 @@ public:
 
 private:
     QJsonObject byteArrayToJson(const QByteArray& arr) const;
-    QString     getClientID(const QJsonObject& json) const;
-    ClientPtr   getClient(const QString& clientID);
+    QString getClientID(const QJsonObject& json) const;
+    ClientPtr getClient(const QString& clientID);
 
 private:
-    QMutex              m_mutex;
-    QVector<ClientPtr>  m_clients;
-    BrowserService&     m_browserService;
+    QMutex m_mutex;
+    QVector<ClientPtr> m_clients;
+    BrowserService& m_browserService;
 };
 
 #endif // BROWSERCLIENTS_H

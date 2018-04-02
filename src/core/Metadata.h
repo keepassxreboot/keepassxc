@@ -26,8 +26,8 @@
 #include <QPixmapCache>
 #include <QPointer>
 
-#include "core/Uuid.h"
 #include "core/CustomData.h"
+#include "core/Uuid.h"
 
 class Database;
 class Group;

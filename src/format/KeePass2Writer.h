@@ -28,7 +28,7 @@ class Database;
 
 class KeePass2Writer
 {
-Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
+    Q_DECLARE_TR_FUNCTIONS(KeePass2Writer)
 
 public:
     bool writeDatabase(const QString& filename, Database* db);

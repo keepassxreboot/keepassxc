@@ -21,22 +21,22 @@
 
 #include <QAction>
 #include <QApplication>
-#include <QDialogButtonBox>
-#include <QLineEdit>
-#include <QLabel>
-#include <QMimeData>
-#include <QPushButton>
 #include <QCheckBox>
-#include <QSpinBox>
-#include <QPlainTextEdit>
+#include <QClipboard>
 #include <QComboBox>
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMimeData>
+#include <QPlainTextEdit>
+#include <QPushButton>
+#include <QSignalSpy>
+#include <QSpinBox>
 #include <QTemporaryFile>
+#include <QTimer>
 #include <QToolBar>
 #include <QToolButton>
-#include <QTimer>
-#include <QSignalSpy>
-#include <QClipboard>
-#include <QDebug>
 
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
@@ -48,21 +48,21 @@
 #include "crypto/Crypto.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
+#include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/CloneDialog.h"
-#include "gui/PasswordEdit.h"
-#include "gui/TotpDialog.h"
-#include "gui/SetupTotpDialog.h"
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
+#include "gui/PasswordEdit.h"
 #include "gui/SearchWidget.h"
+#include "gui/SetupTotpDialog.h"
+#include "gui/TotpDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
+#include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
-#include "gui/group/EditGroupWidget.h"
 #include "keys/PasswordKey.h"
 
 void TestGui::initTestCase()
@@ -228,7 +228,7 @@ void TestGui::testAutoreloadDatabase()
 
     // the General group contains one entry from the new db data
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QVERIFY(! m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+    QVERIFY(!m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -252,7 +252,7 @@ void TestGui::testAutoreloadDatabase()
     cleanup();
     init();
 
-     // Test accepting a merge of edits into autoreload
+    // Test accepting a merge of edits into autoreload
     // Turn on autoload so we only get one messagebox (for the merge)
     config()->set("AutoReloadOnChange", true);
 
@@ -559,17 +559,17 @@ void TestGui::testPasswordEntryEntropy()
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
-    QCOMPARE(entropyLabel->text(),  QString("Entropy: 47.98 bit"));
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 47.98 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
-    QCOMPARE(entropyLabel->text(),  QString("Entropy: 95.83 bit"));
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 95.83 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
 
     editNewPassword->setText("");
     QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
-    QCOMPARE(entropyLabel->text(),  QString("Entropy: 174.59 bit"));
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 174.59 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
 }
 
@@ -613,7 +613,7 @@ void TestGui::testDicewareEntryEntropy()
     QLabel* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
     QLabel* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
 
-    QCOMPARE(entropyLabel->text(),  QString("Entropy: 77.55 bit"));
+    QCOMPARE(entropyLabel->text(), QString("Entropy: 77.55 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
 }
 
@@ -726,7 +726,7 @@ void TestGui::testSearch()
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
     // Test password copy
-    QClipboard *clipboard = QApplication::clipboard();
+    QClipboard* clipboard = QApplication::clipboard();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QModelIndex searchedItem = entryView->model()->index(0, 1);
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
@@ -744,7 +744,7 @@ void TestGui::testSearch()
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
     clickIndex(groupView->model()->index(0, 0, rootGroupIndex), groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), QString("General"));
-    
+
     searchWidget->setLimitGroup(false);
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
     searchWidget->setLimitGroup(true);
@@ -822,7 +822,8 @@ void TestGui::testDeleteEntry()
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
     clickIndex(groupView->model()->index(groupView->model()->rowCount(rootGroupIndex) - 1, 0, rootGroupIndex),
-               groupView, Qt::LeftButton);
+               groupView,
+               Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), m_db->metadata()->recycleBin()->name());
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
@@ -843,8 +844,7 @@ void TestGui::testDeleteEntry()
     QCOMPARE(entryView->model()->rowCount(), 0);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 0);
 
-    clickIndex(groupView->model()->index(0, 0),
-               groupView, Qt::LeftButton);
+    clickIndex(groupView->model()->index(0, 0), groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
 }
 
@@ -860,9 +860,9 @@ void TestGui::testCloneEntry()
 
     triggerAction("actionEntryClone");
 
-     CloneDialog* cloneDialog = m_dbWidget->findChild<CloneDialog*>("CloneDialog");
-     QDialogButtonBox* cloneButtonBox = cloneDialog->findChild<QDialogButtonBox*>("buttonBox");
-     QTest::mouseClick(cloneButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    CloneDialog* cloneDialog = m_dbWidget->findChild<CloneDialog*>("CloneDialog");
+    QDialogButtonBox* cloneButtonBox = cloneDialog->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(cloneButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     QCOMPARE(entryView->model()->rowCount(), 2);
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
@@ -909,7 +909,7 @@ void TestGui::testEntryPlaceholders()
     QCOMPARE(entry->url(), QString("{TITLE}.{USERNAME}"));
 
     // Test password copy
-    QClipboard *clipboard = QApplication::clipboard();
+    QClipboard* clipboard = QApplication::clipboard();
     m_dbWidget->copyURL();
     QTRY_COMPARE(clipboard->text(), QString("test.john"));
 }
@@ -941,22 +941,19 @@ void TestGui::testDragAndDropGroup()
     QAbstractItemModel* groupModel = m_dbWidget->findChild<GroupView*>("groupView")->model();
     QModelIndex rootIndex = groupModel->index(0, 0);
 
-    dragAndDropGroup(groupModel->index(0, 0, rootIndex),
-                     groupModel->index(1, 0, rootIndex),
-                     -1, true, "Windows", 0);
+    dragAndDropGroup(groupModel->index(0, 0, rootIndex), groupModel->index(1, 0, rootIndex), -1, true, "Windows", 0);
 
     // dropping parent on child is supposed to fail
     dragAndDropGroup(groupModel->index(0, 0, rootIndex),
                      groupModel->index(0, 0, groupModel->index(0, 0, rootIndex)),
-                     -1, false, "NewDatabase", 0);
+                     -1,
+                     false,
+                     "NewDatabase",
+                     0);
 
-    dragAndDropGroup(groupModel->index(1, 0, rootIndex),
-                     rootIndex,
-                     0, true, "NewDatabase", 0);
+    dragAndDropGroup(groupModel->index(1, 0, rootIndex), rootIndex, 0, true, "NewDatabase", 0);
 
-    dragAndDropGroup(groupModel->index(0, 0, rootIndex),
-                     rootIndex,
-                     -1, true, "NewDatabase", 4);
+    dragAndDropGroup(groupModel->index(0, 0, rootIndex), rootIndex, -1, true, "NewDatabase", 4);
 }
 
 void TestGui::testSaveAs()
@@ -1034,7 +1031,6 @@ void TestGui::testKeePass1Import()
     MessageBox::setNextAnswer(QMessageBox::No);
     triggerAction("actionDatabaseClose");
     Tools::wait(100);
-
 }
 
 void TestGui::testDatabaseLocking()
@@ -1059,7 +1055,7 @@ void TestGui::testDatabaseLocking()
 
 void TestGui::testDragAndDropKdbxFiles()
 {
-    const int openedDatabasesCount =  m_tabWidget->count();
+    const int openedDatabasesCount = m_tabWidget->count();
 
     const QString badDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NotDatabase.notkdbx"));
     QMimeData badMimeData;
@@ -1183,8 +1179,12 @@ void TestGui::triggerAction(const QString& name)
     action->trigger();
 }
 
-void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
-                               bool expectedResult, const QString& expectedParentName, int expectedPos)
+void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex,
+                               const QModelIndex& targetIndex,
+                               int row,
+                               bool expectedResult,
+                               const QString& expectedParentName,
+                               int expectedPos)
 {
     QVERIFY(sourceIndex.isValid());
     QVERIFY(targetIndex.isValid());
@@ -1203,7 +1203,9 @@ void TestGui::dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex
     QCOMPARE(group->parentGroup()->children().indexOf(group), expectedPos);
 }
 
-void TestGui::clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+void TestGui::clickIndex(const QModelIndex& index,
+                         QAbstractItemView* view,
+                         Qt::MouseButton button,
                          Qt::KeyboardModifiers stateKey)
 {
     QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());

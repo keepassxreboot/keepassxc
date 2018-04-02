@@ -20,14 +20,14 @@
 QMessageBox::StandardButton MessageBox::m_nextAnswer(QMessageBox::NoButton);
 
 QMessageBox::StandardButton MessageBox::critical(QWidget* parent,
-                                                 const QString& title, const QString& text,
+                                                 const QString& title,
+                                                 const QString& text,
                                                  QMessageBox::StandardButtons buttons,
                                                  QMessageBox::StandardButton defaultButton)
 {
     if (m_nextAnswer == QMessageBox::NoButton) {
         return QMessageBox::critical(parent, title, text, buttons, defaultButton);
-    }
-    else {
+    } else {
         QMessageBox::StandardButton returnButton = m_nextAnswer;
         m_nextAnswer = QMessageBox::NoButton;
         return returnButton;
@@ -35,14 +35,14 @@ QMessageBox::StandardButton MessageBox::critical(QWidget* parent,
 }
 
 QMessageBox::StandardButton MessageBox::information(QWidget* parent,
-                                                    const QString& title, const QString& text,
+                                                    const QString& title,
+                                                    const QString& text,
                                                     QMessageBox::StandardButtons buttons,
                                                     QMessageBox::StandardButton defaultButton)
 {
     if (m_nextAnswer == QMessageBox::NoButton) {
         return QMessageBox::information(parent, title, text, buttons, defaultButton);
-    }
-    else {
+    } else {
         QMessageBox::StandardButton returnButton = m_nextAnswer;
         m_nextAnswer = QMessageBox::NoButton;
         return returnButton;
@@ -50,14 +50,14 @@ QMessageBox::StandardButton MessageBox::information(QWidget* parent,
 }
 
 QMessageBox::StandardButton MessageBox::question(QWidget* parent,
-                                                 const QString& title, const QString& text,
+                                                 const QString& title,
+                                                 const QString& text,
                                                  QMessageBox::StandardButtons buttons,
                                                  QMessageBox::StandardButton defaultButton)
 {
     if (m_nextAnswer == QMessageBox::NoButton) {
         return QMessageBox::question(parent, title, text, buttons, defaultButton);
-    }
-    else {
+    } else {
         QMessageBox::StandardButton returnButton = m_nextAnswer;
         m_nextAnswer = QMessageBox::NoButton;
         return returnButton;
@@ -65,14 +65,14 @@ QMessageBox::StandardButton MessageBox::question(QWidget* parent,
 }
 
 QMessageBox::StandardButton MessageBox::warning(QWidget* parent,
-                                                const QString& title, const QString& text,
+                                                const QString& title,
+                                                const QString& text,
                                                 QMessageBox::StandardButtons buttons,
                                                 QMessageBox::StandardButton defaultButton)
 {
     if (m_nextAnswer == QMessageBox::NoButton) {
         return QMessageBox::warning(parent, title, text, buttons, defaultButton);
-    }
-    else {
+    } else {
         QMessageBox::StandardButton returnButton = m_nextAnswer;
         m_nextAnswer = QMessageBox::NoButton;
         return returnButton;

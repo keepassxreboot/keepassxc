@@ -19,8 +19,8 @@
 #ifndef KEEAGENTSETTINGS_H
 #define KEEAGENTSETTINGS_H
 
-#include <QtCore>
 #include <QXmlStreamReader>
+#include <QtCore>
 
 class KeeAgentSettings
 {
@@ -31,7 +31,7 @@ public:
     bool operator!=(KeeAgentSettings& other);
     bool isDefault();
 
-    bool fromXml(const QByteArray &ba);
+    bool fromXml(const QByteArray& ba);
     QByteArray toXml();
 
     bool allowUseOfSshKey() const;

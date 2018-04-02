@@ -29,8 +29,8 @@ class ElidedLabel : public QLabel
     Q_PROPERTY(QString rawText READ rawText WRITE setRawText NOTIFY rawTextChanged)
     Q_PROPERTY(QString url READ url WRITE setUrl NOTIFY urlChanged)
 public:
-    explicit ElidedLabel(QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags());
-    explicit ElidedLabel(const QString &text, QWidget *parent=nullptr, Qt::WindowFlags f=Qt::WindowFlags());
+    explicit ElidedLabel(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    explicit ElidedLabel(const QString& text, QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
 
     Qt::TextElideMode elideMode() const;
     QString rawText() const;

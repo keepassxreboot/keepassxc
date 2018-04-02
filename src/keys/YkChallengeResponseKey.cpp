@@ -23,16 +23,16 @@
 #include "crypto/Random.h"
 #include "gui/MainWindow.h"
 
-#include <QFile>
-#include <QXmlStreamReader>
-#include <QtConcurrent>
 #include <QApplication>
 #include <QEventLoop>
+#include <QFile>
 #include <QFutureWatcher>
+#include <QXmlStreamReader>
+#include <QtConcurrent>
 
 YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
-    : m_slot(slot),
-      m_blocking(blocking)
+    : m_slot(slot)
+    , m_blocking(blocking)
 {
     if (KEEPASSXC_MAIN_WINDOW) {
         connect(this, SIGNAL(userInteractionRequired()), KEEPASSXC_MAIN_WINDOW, SLOT(showYubiKeyPopup()));
@@ -64,9 +64,8 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned ret
             emit userInteractionRequired();
         }
 
-        QFuture<YubiKey::ChallengeResult> future = QtConcurrent::run([this, challenge]() {
-            return YubiKey::instance()->challenge(m_slot, true, challenge, m_key);
-        });
+        QFuture<YubiKey::ChallengeResult> future = QtConcurrent::run(
+            [this, challenge]() { return YubiKey::instance()->challenge(m_slot, true, challenge, m_key); });
 
         QEventLoop loop;
         QFutureWatcher<YubiKey::ChallengeResult> watcher;
@@ -99,9 +98,8 @@ QString YkChallengeResponseKey::getName() const
 
     YubiKey::instance()->getSerial(serial);
 
-    return fmt.arg(QString::number(serial),
-                   QString::number(m_slot),
-                   (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
+    return fmt.arg(
+        QString::number(serial), QString::number(m_slot), (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
 }
 
 bool YkChallengeResponseKey::isBlocking() const

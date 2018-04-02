@@ -23,7 +23,9 @@
 class SymmetricCipherBackend
 {
 public:
-    virtual ~SymmetricCipherBackend() {}
+    virtual ~SymmetricCipherBackend()
+    {
+    }
     virtual bool init() = 0;
     virtual bool setKey(const QByteArray& key) = 0;
     virtual bool setIv(const QByteArray& iv) = 0;

@@ -26,8 +26,7 @@ EntryAttachmentsModel::EntryAttachmentsModel(QObject* parent)
     : QAbstractListModel(parent)
     , m_entryAttachments(nullptr)
 {
-    m_headers << tr("Name")
-              << tr("Size");
+    m_headers << tr("Name") << tr("Size");
 }
 
 void EntryAttachmentsModel::setEntryAttachments(EntryAttachments* entryAttachments)
@@ -57,8 +56,7 @@ int EntryAttachmentsModel::rowCount(const QModelIndex& parent) const
 {
     if (!m_entryAttachments || parent.isValid()) {
         return 0;
-    }
-    else {
+    } else {
         return m_entryAttachments->keys().size();
     }
 }
@@ -115,7 +113,7 @@ QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const
 void EntryAttachmentsModel::attachmentChange(const QString& key)
 {
     int row = m_entryAttachments->keys().indexOf(key);
-    emit dataChanged(index(row, 0), index(row, columnCount()-1));
+    emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
 void EntryAttachmentsModel::attachmentAboutToAdd(const QString& key)

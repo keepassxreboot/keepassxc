@@ -22,8 +22,8 @@
 #include <QDir>
 #include <QLibraryInfo>
 #include <QLocale>
-#include <QTranslator>
 #include <QRegularExpression>
+#include <QTranslator>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
@@ -47,8 +47,7 @@ void Translator::installTranslators()
 #ifdef QT_DEBUG
         QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-        filePath()->dataPath("translations")
-    };
+        filePath()->dataPath("translations")};
 
     bool translationsLoaded = false;
     for (const QString& path : paths) {
@@ -72,10 +71,9 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
 #ifdef QT_DEBUG
         QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-        filePath()->dataPath("translations")
-    };
+        filePath()->dataPath("translations")};
 
-    QList<QPair<QString, QString> > languages;
+    QList<QPair<QString, QString>> languages;
     languages.append(QPair<QString, QString>("system", "System default"));
 
     QRegularExpression regExp("^keepassx_([a-zA-Z_]+)\\.qm$", QRegularExpression::CaseInsensitiveOption);
@@ -138,7 +136,8 @@ bool Translator::installQtTranslator(const QString& language, const QString& pat
     QScopedPointer<QTranslator> qtTranslator(new QTranslator(qApp));
     if (qtTranslator->load(QString("qtbase_%1").arg(language), path)) {
         return QCoreApplication::installTranslator(qtTranslator.take());
-    } else if (qtTranslator->load(QString("qtbase_%1").arg(language), QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+    } else if (qtTranslator->load(QString("qtbase_%1").arg(language),
+                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         return QCoreApplication::installTranslator(qtTranslator.take());
     }
     return false;

@@ -36,8 +36,7 @@ void AutoTypeSelectView::mouseMoveEvent(QMouseEvent* event)
     if (index.isValid()) {
         setCurrentIndex(index);
         setCursor(Qt::PointingHandCursor);
-    }
-    else {
+    } else {
         unsetCursor();
     }
 

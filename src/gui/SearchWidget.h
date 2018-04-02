@@ -25,7 +25,8 @@
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class SearchWidget;
 }
 

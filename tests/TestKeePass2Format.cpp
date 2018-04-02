@@ -20,8 +20,8 @@
 
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
-#include "keys/PasswordKey.h"
 #include "format/KdbxXmlReader.h"
+#include "keys/PasswordKey.h"
 
 #include "FailDevice.h"
 #include "config-keepassx-tests.h"
@@ -357,6 +357,7 @@ void TestKeePass2Format::testXmlBroken()
     QCOMPARE(hasError, expectError);
 }
 
+// clang-format off
 void TestKeePass2Format::testXmlBroken_data()
 {
     QTest::addColumn<QString>("baseName");
@@ -381,6 +382,7 @@ void TestKeePass2Format::testXmlBroken_data()
     QTest::newRow("BrokenDifferentEntryHistoryUuid     (strict)") << "BrokenDifferentEntryHistoryUuid" << true  << true;
     QTest::newRow("BrokenDifferentEntryHistoryUuid (not strict)") << "BrokenDifferentEntryHistoryUuid" << false << false;
 }
+// clang-format on
 
 void TestKeePass2Format::testXmlEmptyUuids()
 {
@@ -400,11 +402,15 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
 {
     QScopedPointer<Database> dbWrite(new Database());
 
-    QString strPlainInvalid = QString().append(QChar(0x02)).append(QChar(0x19))
-            .append(QChar(0xFFFE)).append(QChar(0xFFFF));
-    QString strPlainValid = QString().append(QChar(0x09)).append(QChar(0x0A))
-            .append(QChar(0x20)).append(QChar(0xD7FF))
-            .append(QChar(0xE000)).append(QChar(0xFFFD));
+    QString strPlainInvalid =
+        QString().append(QChar(0x02)).append(QChar(0x19)).append(QChar(0xFFFE)).append(QChar(0xFFFF));
+    QString strPlainValid = QString()
+                                .append(QChar(0x09))
+                                .append(QChar(0x0A))
+                                .append(QChar(0x20))
+                                .append(QChar(0xD7FF))
+                                .append(QChar(0xE000))
+                                .append(QChar(0xFFFD));
     // U+10437 in UTF-16: D801 DC37
     //                    high low  surrogate
     QString strSingleHighSurrogate1 = QString().append(QChar(0xD801));
@@ -414,8 +420,8 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
     QString strSingleLowSurrogate2 = QString().append(QChar((0x31))).append(QChar(0xDC37)).append(QChar(0x32));
     QString strLowLowSurrogate = QString().append(QChar(0xDC37)).append(QChar(0xDC37));
     QString strSurrogateValid1 = QString().append(QChar(0xD801)).append(QChar(0xDC37));
-    QString strSurrogateValid2 = QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37))
-            .append(QChar(0x32));
+    QString strSurrogateValid2 =
+        QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37)).append(QChar(0x32));
 
     auto entry = new Entry();
     entry->setUuid(Uuid::random());
@@ -530,7 +536,8 @@ void TestKeePass2Format::testKdbxAttachments()
 
 void TestKeePass2Format::testKdbxNonAsciiPasswords()
 {
-    QCOMPARE(m_kdbxTargetDb->rootGroup()->entries()[0]->password(), m_kdbxSourceDb->rootGroup()->entries()[0]->password());
+    QCOMPARE(m_kdbxTargetDb->rootGroup()->entries()[0]->password(),
+             m_kdbxSourceDb->rootGroup()->entries()[0]->password());
 }
 
 void TestKeePass2Format::testKdbxDeviceFailure()

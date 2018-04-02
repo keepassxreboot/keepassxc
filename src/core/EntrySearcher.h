@@ -21,7 +21,6 @@
 
 #include <QString>
 
-
 class Group;
 class Entry;
 

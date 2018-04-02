@@ -34,12 +34,9 @@ class KeePass1Reader
 
 public:
     KeePass1Reader();
-    Database* readDatabase(QIODevice* device, const QString& password,
-                           QIODevice* keyfileDevice);
-    Database* readDatabase(QIODevice* device, const QString& password,
-                           const QString& keyfileName);
-    Database* readDatabase(const QString& filename, const QString& password,
-                           const QString& keyfileName);
+    Database* readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice);
+    Database* readDatabase(QIODevice* device, const QString& password, const QString& keyfileName);
+    Database* readDatabase(const QString& filename, const QString& password, const QString& keyfileName);
     bool hasError();
     QString errorString();
 
@@ -51,8 +48,7 @@ private:
         UTF8
     };
 
-    SymmetricCipherStream* testKeys(const QString& password, const QByteArray& keyfileData,
-                                    qint64 contentPos);
+    SymmetricCipherStream* testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos);
     QByteArray key(const QByteArray& password, const QByteArray& keyfileData);
     bool verifyKey(SymmetricCipherStream* cipherStream);
     Group* readGroup(QIODevice* cipherStream);

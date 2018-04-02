@@ -26,7 +26,7 @@ const QSysInfo::Endian HashedBlockStream::ByteOrder = QSysInfo::LittleEndian;
 
 HashedBlockStream::HashedBlockStream(QIODevice* baseDevice)
     : LayeredStream(baseDevice)
-    , m_blockSize(1024*1024)
+    , m_blockSize(1024 * 1024)
 {
     init();
 }
@@ -94,8 +94,7 @@ qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
 {
     if (m_error) {
         return -1;
-    }
-    else if (m_eof) {
+    } else if (m_eof) {
         return 0;
     }
 
@@ -107,8 +106,7 @@ qint64 HashedBlockStream::readData(char* data, qint64 maxSize)
             if (!readHashedBlock()) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -204,8 +202,7 @@ qint64 HashedBlockStream::writeData(const char* data, qint64 maxSize)
             if (!writeHashedBlock()) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -227,8 +224,7 @@ bool HashedBlockStream::writeHashedBlock()
     QByteArray hash;
     if (!m_buffer.isEmpty()) {
         hash = CryptoHash::hash(m_buffer, CryptoHash::Sha256);
-    }
-    else {
+    } else {
         hash.fill(0, 32);
     }
 
@@ -257,6 +253,7 @@ bool HashedBlockStream::writeHashedBlock()
     return true;
 }
 
-bool HashedBlockStream::atEnd() const {
+bool HashedBlockStream::atEnd() const
+{
     return m_eof;
 }

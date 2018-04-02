@@ -1,4 +1,4 @@
- /*
+/*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
@@ -19,10 +19,10 @@
 #ifndef KEEPASSX_AUTOTYPE_H
 #define KEEPASSX_AUTOTYPE_H
 
+#include <QMutex>
 #include <QObject>
 #include <QStringList>
 #include <QWidget>
-#include <QMutex>
 
 #include "core/AutoTypeMatch.h"
 
@@ -47,8 +47,7 @@ public:
     static bool checkSlowKeypress(const QString& string);
     static bool checkHighDelay(const QString& string);
     static bool verifyAutoTypeSyntax(const QString& sequence);
-    void performAutoType(const Entry* entry,
-                         QWidget* hideWindow = nullptr);
+    void performAutoType(const Entry* entry, QWidget* hideWindow = nullptr);
 
     inline bool isAvailable()
     {

@@ -20,11 +20,12 @@
 #ifndef BROWSEROPTIONDIALOG_H
 #define BROWSEROPTIONDIALOG_H
 
-#include <QWidget>
 #include <QScopedPointer>
+#include <QWidget>
 
-namespace Ui {
-class BrowserOptionDialog;
+namespace Ui
+{
+    class BrowserOptionDialog;
 }
 
 class BrowserOptionDialog : public QWidget

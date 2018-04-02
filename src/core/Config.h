@@ -26,7 +26,7 @@ class QSettings;
 
 class Config : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     Q_DISABLE_COPY(Config)
@@ -54,7 +54,8 @@ private:
     QHash<QString, QVariant> m_defaults;
 };
 
-inline Config* config() {
+inline Config* config()
+{
     return Config::instance();
 }
 

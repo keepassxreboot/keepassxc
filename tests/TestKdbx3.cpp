@@ -18,16 +18,15 @@
 #include "TestKdbx3.h"
 #include "TestGlobal.h"
 
+#include "config-keepassx-tests.h"
 #include "core/Metadata.h"
-#include "keys/PasswordKey.h"
-#include "format/KeePass2.h"
-#include "format/KeePass2Reader.h"
-#include "format/KeePass2Writer.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KdbxXmlWriter.h"
+#include "format/KeePass2.h"
+#include "format/KeePass2Reader.h"
 #include "format/KeePass2Repair.h"
-#include "config-keepassx-tests.h"
-
+#include "format/KeePass2Writer.h"
+#include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestKdbx3)
 
@@ -63,8 +62,11 @@ void TestKdbx3::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
     errorString = writer.errorString();
 }
 
-void TestKdbx3::readKdbx(QIODevice* device, CompositeKey const& key, QScopedPointer<Database>& db,
-                         bool& hasError, QString& errorString)
+void TestKdbx3::readKdbx(QIODevice* device,
+                         CompositeKey const& key,
+                         QScopedPointer<Database>& db,
+                         bool& hasError,
+                         QString& errorString)
 {
     KeePass2Reader reader;
     db.reset(reader.readDatabase(device, key));
@@ -75,8 +77,11 @@ void TestKdbx3::readKdbx(QIODevice* device, CompositeKey const& key, QScopedPoin
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK);
 }
 
-void TestKdbx3::readKdbx(const QString& path, CompositeKey const& key, QScopedPointer<Database>& db,
-                         bool& hasError, QString& errorString)
+void TestKdbx3::readKdbx(const QString& path,
+                         CompositeKey const& key,
+                         QScopedPointer<Database>& db,
+                         bool& hasError,
+                         QString& errorString)
 {
     KeePass2Reader reader;
     db.reset(reader.readDatabase(path, key));

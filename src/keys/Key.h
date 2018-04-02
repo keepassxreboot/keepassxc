@@ -23,7 +23,9 @@
 class Key
 {
 public:
-    virtual ~Key() {}
+    virtual ~Key()
+    {
+    }
     virtual QByteArray rawKey() const = 0;
     virtual Key* clone() const = 0;
 };

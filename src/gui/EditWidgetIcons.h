@@ -19,9 +19,9 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
-#include <QWidget>
 #include <QSet>
 #include <QUrl>
+#include <QWidget>
 
 #include "config-keepassx.h"
 #include "core/Global.h"
@@ -32,7 +32,8 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 
-namespace Ui {
+namespace Ui
+{
     class EditWidgetIcons;
 }
 

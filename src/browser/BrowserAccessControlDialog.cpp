@@ -17,12 +17,12 @@
 */
 
 #include "BrowserAccessControlDialog.h"
-#include "ui_BrowserAccessControlDialog.h"
 #include "core/Entry.h"
+#include "ui_BrowserAccessControlDialog.h"
 
-BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent) :
-    QDialog(parent),
-    ui(new Ui::BrowserAccessControlDialog())
+BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::BrowserAccessControlDialog())
 {
     this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
@@ -38,7 +38,8 @@ BrowserAccessControlDialog::~BrowserAccessControlDialog()
 void BrowserAccessControlDialog::setUrl(const QString& url)
 {
     ui->label->setText(QString(tr("%1 has requested access to passwords for the following item(s).\n"
-                                  "Please select whether you want to allow access.")).arg(QUrl(url).host()));
+                                  "Please select whether you want to allow access."))
+                           .arg(QUrl(url).host()));
 }
 
 void BrowserAccessControlDialog::setItems(const QList<Entry*>& items)

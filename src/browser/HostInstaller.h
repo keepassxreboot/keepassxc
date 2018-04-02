@@ -19,8 +19,8 @@
 #ifndef HOSTINSTALLER_H
 #define HOSTINSTALLER_H
 
-#include <QObject>
 #include <QJsonObject>
+#include <QObject>
 #include <QSettings>
 
 class HostInstaller : public QObject
@@ -28,27 +28,31 @@ class HostInstaller : public QObject
     Q_OBJECT
 
 public:
-    enum SupportedBrowsers : int {
-        CHROME =    0,
-        CHROMIUM =  1,
-        FIREFOX =   2,
-        VIVALDI =   3
+    enum SupportedBrowsers : int
+    {
+        CHROME = 0,
+        CHROMIUM = 1,
+        FIREFOX = 2,
+        VIVALDI = 3
     };
 
 public:
     HostInstaller();
     bool checkIfInstalled(SupportedBrowsers browser);
-    void installBrowser(SupportedBrowsers browser, const bool& enabled, const bool& proxy = false, const QString& location = "");
+    void installBrowser(SupportedBrowsers browser,
+                        const bool& enabled,
+                        const bool& proxy = false,
+                        const QString& location = "");
     void updateBinaryPaths(const bool& proxy, const QString& location = "");
 
 private:
-    QString     getTargetPath(SupportedBrowsers browser) const;
-    QString     getBrowserName(SupportedBrowsers browser) const;
-    QString     getPath(SupportedBrowsers browser) const;
-    QString     getInstallDir(SupportedBrowsers browser) const;
+    QString getTargetPath(SupportedBrowsers browser) const;
+    QString getBrowserName(SupportedBrowsers browser) const;
+    QString getPath(SupportedBrowsers browser) const;
+    QString getInstallDir(SupportedBrowsers browser) const;
     QJsonObject constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location);
-    bool        registryEntryFound(const QSettings& settings);
-    bool        saveFile(SupportedBrowsers browser, const QJsonObject& script);
+    bool registryEntryFound(const QSettings& settings);
+    bool saveFile(SupportedBrowsers browser, const QJsonObject& script);
 
 private:
     static const QString HOST_NAME;

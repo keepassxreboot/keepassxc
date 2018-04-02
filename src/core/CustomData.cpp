@@ -54,7 +54,7 @@ void CustomData::set(const QString& key, const QString& value)
 
     if (addAttribute) {
         emit aboutToBeAdded(key);
-     }
+    }
 
     if (addAttribute || changeValue) {
         m_data.insert(key, value);

@@ -30,8 +30,7 @@ bool KeePass2RandomStream::init(const QByteArray& key)
 {
     switch (m_cipher.algorithm()) {
     case SymmetricCipher::Salsa20:
-        return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256),
-                             KeePass2::INNER_STREAM_SALSA20_IV);
+        return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
     case SymmetricCipher::ChaCha20: {
         QByteArray keyIv = CryptoHash::hash(key, CryptoHash::Sha512);
         return m_cipher.init(keyIv.left(32), keyIv.mid(32, 12));
@@ -121,7 +120,8 @@ bool KeePass2RandomStream::loadBlock()
     return true;
 }
 
-SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo) {
+SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo)
+{
     switch (algo) {
     case KeePass2::ProtectedStreamAlgo::ChaCha20:
         return SymmetricCipher::ChaCha20;

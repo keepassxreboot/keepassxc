@@ -35,7 +35,6 @@ void TestKeePass2RandomStream::test()
     const QByteArray key("\x11\x22\x33\x44\x55\x66\x77\x88");
     const int Size = 128;
 
-
     SymmetricCipher cipher(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
     QVERIFY(cipher.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV));
 
@@ -55,7 +54,6 @@ void TestKeePass2RandomStream::test()
         cipherData[i] = data[i] ^ cipherPad[i];
     }
 
-
     KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
     bool ok;
     QVERIFY(randomStream.init(key));
@@ -72,12 +70,10 @@ void TestKeePass2RandomStream::test()
     randomStreamData.append(randomStream.process(data.mid(64, 64), &ok));
     QVERIFY(ok);
 
-
     SymmetricCipher cipherEncrypt(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
     QVERIFY(cipherEncrypt.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV));
     QByteArray cipherDataEncrypt = cipherEncrypt.process(data, &ok);
     QVERIFY(ok);
-
 
     QCOMPARE(randomStreamData.size(), Size);
     QCOMPARE(cipherData, cipherDataEncrypt);

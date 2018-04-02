@@ -20,9 +20,9 @@
 #include <QStandardPaths>
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_LINUX)
-#include <sys/types.h>
 #include <sys/event.h>
 #include <sys/time.h>
+#include <sys/types.h>
 #include <unistd.h>
 #endif
 
@@ -51,7 +51,7 @@ void NativeMessagingBase::newNativeMessage()
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_LINUX)
     struct kevent ev[1];
-    struct timespec ts = { 5, 0 };
+    struct timespec ts = {5, 0};
 
     int fd = kqueue();
     if (fd == -1) {
@@ -123,7 +123,8 @@ void NativeMessagingBase::sendReply(const QString& reply)
     if (!reply.isEmpty()) {
         QByteArray bytes = reply.toUtf8();
         uint len = bytes.size();
-        std::cout << char(((len>>0) & 0xFF)) << char(((len>>8) & 0xFF)) << char(((len>>16) & 0xFF)) << char(((len>>24) & 0xFF));
+        std::cout << char(((len >> 0) & 0xFF)) << char(((len >> 8) & 0xFF)) << char(((len >> 16) & 0xFF))
+                  << char(((len >> 24) & 0xFF));
         std::cout << reply.toStdString() << std::flush;
     }
 }
@@ -136,7 +137,7 @@ QString NativeMessagingBase::getLocalServerPath() const
     // Use XDG_RUNTIME_DIR instead of /tmp/ if it's available
     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation) + "/kpxc_server";
     return path.isEmpty() ? "/tmp/kpxc_server" : path;
-#else   // Q_OS_MAC and others
+#else // Q_OS_MAC and others
     return "/tmp/kpxc_server";
 #endif
 }

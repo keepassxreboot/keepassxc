@@ -22,7 +22,8 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
     class DetailsWidget;
 }
 

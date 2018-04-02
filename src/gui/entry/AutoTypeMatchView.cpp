@@ -43,7 +43,8 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
     header()->setDefaultSectionSize(150);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
+    connect(
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(matchSelectionChanged()));
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)

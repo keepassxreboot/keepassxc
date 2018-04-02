@@ -19,20 +19,23 @@
 #define KEEPASSXC_MACPASTEBOARD_H
 
 #include <QMacPasteboardMime>
-#include <QTextCodec>
 #include <QObject>
+#include <QTextCodec>
 
 class MacPasteboard : public QObject, public QMacPasteboardMime
 {
 public:
-    explicit MacPasteboard() : QMacPasteboardMime(MIME_ALL) {}
+    explicit MacPasteboard()
+        : QMacPasteboardMime(MIME_ALL)
+    {
+    }
 
     QString convertorName() override;
-    bool canConvert(const QString &mime, QString flav) override;
+    bool canConvert(const QString& mime, QString flav) override;
     QString mimeFor(QString flav) override;
-    QString flavorFor(const QString &mime) override;
-    QVariant convertToMime(const QString &mime, QList<QByteArray> data, QString flav) override;
-    QList<QByteArray> convertFromMime(const QString &mime, QVariant data, QString flav) override;
+    QString flavorFor(const QString& mime) override;
+    QVariant convertToMime(const QString& mime, QList<QByteArray> data, QString flav) override;
+    QList<QByteArray> convertFromMime(const QString& mime, QVariant data, QString flav) override;
 };
 
 #endif // KEEPASSXC_MACPASTEBOARD_H

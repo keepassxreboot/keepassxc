@@ -136,6 +136,7 @@ void TestEntrySearcher::testAllAttributesAreSearched()
     entry->setUrl("testUrl");
     entry->setNotes("testNote");
 
-    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote", m_groupRoot, Qt::CaseInsensitive);
+    m_searchResult =
+        m_entrySearcher.search("testTitle testUsername testUrl testNote", m_groupRoot, Qt::CaseInsensitive);
     QCOMPARE(m_searchResult.count(), 1);
 }

@@ -163,11 +163,10 @@ void AutoTypeMatchModel::entryDataChanged(Entry* entry)
     for (int row = 0; row < m_matches.size(); ++row) {
         AutoTypeMatch match = m_matches[row];
         if (match.entry == entry) {
-            emit dataChanged(index(row, 0), index(row, columnCount()-1));
+            emit dataChanged(index(row, 0), index(row, columnCount() - 1));
         }
     }
 }
-
 
 void AutoTypeMatchModel::entryAboutToRemove(Entry* entry)
 {

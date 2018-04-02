@@ -23,8 +23,7 @@
 
 #include "gui/MessageBox.h"
 
-
-CsvImportWizard::CsvImportWizard(QWidget *parent)
+CsvImportWizard::CsvImportWizard(QWidget* parent)
     : DialogyWidget(parent)
 {
     m_layout = new QGridLayout(this);
@@ -34,7 +33,8 @@ CsvImportWizard::CsvImportWizard(QWidget *parent)
 }
 
 CsvImportWizard::~CsvImportWizard()
-{}
+{
+}
 
 void CsvImportWizard::load(const QString& filename, Database* database)
 {
