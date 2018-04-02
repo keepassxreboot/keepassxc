@@ -1066,7 +1066,7 @@ QString Entry::resolveUrl(const QString& url) const
 
     // Validate the URL
     QUrl tempUrl = QUrl(newUrl);
-    if (tempUrl.isValid() && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https")) {
+    if (tempUrl.isValid()) {
         return tempUrl.url();
     }
 
