@@ -173,7 +173,9 @@ void DetailsWidget::updateEntryGeneralTab()
         m_ui->entryPasswordLabel->setToolTip({});
     }
 
-    const QString url = m_currentEntry->webUrl();
+    m_ui->tagsLabel->setText(m_currentEntry->tags());
+
+    QString url = m_currentEntry->webUrl();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
         // create a new display url that masks password placeholders

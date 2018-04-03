@@ -70,7 +70,8 @@ bool EntrySearcher::wordMatch(const QString& word, Entry* entry, Qt::CaseSensiti
     return entry->resolvePlaceholder(entry->title()).contains(word, caseSensitivity)
            || entry->resolvePlaceholder(entry->username()).contains(word, caseSensitivity)
            || entry->resolvePlaceholder(entry->url()).contains(word, caseSensitivity)
-           || entry->resolvePlaceholder(entry->notes()).contains(word, caseSensitivity);
+           || entry->resolvePlaceholder(entry->notes()).contains(word, caseSensitivity)
+           || entry->resolvePlaceholder(entry->tags()).contains(word, caseSensitivity);
 }
 
 bool EntrySearcher::matchGroup(const QString& searchTerm, const Group* group, Qt::CaseSensitivity caseSensitivity)
