@@ -47,17 +47,13 @@ bool LayeredStream::open(QIODevice::OpenMode mode)
     if (readMode && writeMode) {
         qWarning("LayeredStream::open: Reading and writing at the same time is not supported.");
         return false;
-    }
-    else if (!readMode && !writeMode) {
+    } else if (!readMode && !writeMode) {
         qWarning("LayeredStream::open: Must be opened in read or write mode.");
         return false;
-    }
-    else if ((readMode && !m_baseDevice->isReadable()) ||
-             (writeMode && !m_baseDevice->isWritable())) {
+    } else if ((readMode && !m_baseDevice->isReadable()) || (writeMode && !m_baseDevice->isWritable())) {
         qWarning("LayeredStream::open: Base device is not opened correctly.");
         return false;
-    }
-    else {
+    } else {
         if (mode & QIODevice::Append) {
             qWarning("LayeredStream::open: QIODevice::Append is not supported.");
             mode = mode & ~QIODevice::Append;

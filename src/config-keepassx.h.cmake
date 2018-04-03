@@ -15,7 +15,6 @@
 #cmakedefine WITH_XC_AUTOTYPE
 #cmakedefine WITH_XC_NETWORKING
 #cmakedefine WITH_XC_BROWSER
-#cmakedefine WITH_XC_HTTP
 #cmakedefine WITH_XC_YUBIKEY
 #cmakedefine WITH_XC_SSHAGENT
 

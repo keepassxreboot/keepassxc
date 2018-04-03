@@ -4,8 +4,9 @@
 #include <QPointer>
 #include <QWidget>
 
-namespace Ui {
-class EntryAttachmentsWidget;
+namespace Ui
+{
+    class EntryAttachmentsWidget;
 }
 
 class QByteArray;
@@ -39,6 +40,7 @@ signals:
     void errorOccurred(const QString& error);
     void readOnlyChanged(bool readOnly);
     void buttonsVisibleChanged(bool isButtonsVisible);
+    void widgetUpdated();
 
 private slots:
     void insertAttachments();

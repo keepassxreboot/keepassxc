@@ -20,63 +20,86 @@
 #ifndef BROWSERSERVICE_H
 #define BROWSERSERVICE_H
 
-#include <QtCore>
-#include <QObject>
-#include "gui/DatabaseTabWidget.h"
 #include "core/Entry.h"
+#include "gui/DatabaseTabWidget.h"
+#include <QObject>
+#include <QtCore>
 
-enum { max_length = 16*1024 };
+enum
+{
+    max_length = 16 * 1024
+};
 
 class BrowserService : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit        BrowserService(DatabaseTabWidget* parent);
+    explicit BrowserService(DatabaseTabWidget* parent);
 
-    bool            isDatabaseOpened() const;
-    bool            openDatabase(bool triggerUnlock);
-    QString         getDatabaseRootUuid();
-    QString         getDatabaseRecycleBinUuid();
-    Entry*          getConfigEntry(bool create = false);
-    QString         getKey(const QString& id);
-    void            addEntry(const QString& id, const QString& login, const QString& password, const QString& url, const QString& submitUrl, const QString& realm);
-    QList<Entry*>   searchEntries(Database* db, const QString& hostname);
-    QList<Entry*>   searchEntries(const QString& text);
-    void            removeSharedEncryptionKeys();
-    void            removeStoredPermissions();
+    bool isDatabaseOpened() const;
+    bool openDatabase(bool triggerUnlock);
+    QString getDatabaseRootUuid();
+    QString getDatabaseRecycleBinUuid();
+    Entry* getConfigEntry(bool create = false);
+    QString getKey(const QString& id);
+    void addEntry(const QString& id,
+                  const QString& login,
+                  const QString& password,
+                  const QString& url,
+                  const QString& submitUrl,
+                  const QString& realm);
+    QList<Entry*> searchEntries(Database* db, const QString& hostname);
+    QList<Entry*> searchEntries(const QString& text);
+    void removeSharedEncryptionKeys();
+    void removeStoredPermissions();
 
 public slots:
-    QJsonArray      findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm);
-    QString         storeKey(const QString& key);
-    void            updateEntry(const QString& id, const QString& uuid, const QString& login, const QString& password, const QString& url);
-    void            databaseLocked(DatabaseWidget* dbWidget);
-    void            databaseUnlocked(DatabaseWidget* dbWidget);
-    void            activateDatabaseChanged(DatabaseWidget* dbWidget);
-    void            lockDatabase();
+    QJsonArray
+    findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm);
+    QString storeKey(const QString& key);
+    void updateEntry(const QString& id,
+                     const QString& uuid,
+                     const QString& login,
+                     const QString& password,
+                     const QString& url);
+    void databaseLocked(DatabaseWidget* dbWidget);
+    void databaseUnlocked(DatabaseWidget* dbWidget);
+    void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void lockDatabase();
 
 signals:
-    void            databaseLocked();
-    void            databaseUnlocked();
-    void            databaseChanged();
+    void databaseLocked();
+    void databaseUnlocked();
+    void databaseChanged();
 
 private:
-    enum Access     { Denied, Unknown, Allowed};
+    enum Access
+    {
+        Denied,
+        Unknown,
+        Allowed
+    };
 
 private:
-    QList<Entry*>   sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
-    bool            confirmEntries(QList<Entry*>& pwEntriesToConfirm, const QString& url, const QString& host, const QString& submitHost, const QString& realm);
-    QJsonObject     prepareEntry(const Entry* entry);
-    Access          checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group*          findCreateAddEntryGroup();
-    int             sortPriority(const Entry* entry, const QString &host, const QString& submitUrl, const QString& baseSubmitUrl) const;
-    bool            matchUrlScheme(const QString& url);
-    bool            removeFirstDomain(QString& hostname);
-    Database*       getDatabase();
+    QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
+    bool confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+                        const QString& url,
+                        const QString& host,
+                        const QString& submitHost,
+                        const QString& realm);
+    QJsonObject prepareEntry(const Entry* entry);
+    Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
+    Group* findCreateAddEntryGroup();
+    int
+    sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
+    bool matchUrlScheme(const QString& url);
+    bool removeFirstDomain(QString& hostname);
+    Database* getDatabase();
 
 private:
-    DatabaseTabWidget* const    m_dbTabWidget;
-    bool                        m_dialogActive;
+    DatabaseTabWidget* const m_dbTabWidget;
+    bool m_dialogActive;
 };
 
 #endif // BROWSERSERVICE_H

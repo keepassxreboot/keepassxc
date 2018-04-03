@@ -37,7 +37,9 @@ class KdbxXmlWriter
 public:
     explicit KdbxXmlWriter(quint32 version);
 
-    void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
+    void writeDatabase(QIODevice* device,
+                       Database* db,
+                       KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
     bool hasError();

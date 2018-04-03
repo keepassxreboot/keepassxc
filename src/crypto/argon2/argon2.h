@@ -31,4 +31,4 @@
 
 #include <argon2.h>
 
-#endif //KEEPASSXC_CRYPTO_ARGON2_H
+#endif // KEEPASSXC_CRYPTO_ARGON2_H

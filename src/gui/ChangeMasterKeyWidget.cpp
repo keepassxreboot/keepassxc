@@ -19,19 +19,19 @@
 #include "ChangeMasterKeyWidget.h"
 #include "ui_ChangeMasterKeyWidget.h"
 
+#include "MainWindow.h"
 #include "core/FilePath.h"
+#include "crypto/Random.h"
+#include "gui/FileDialog.h"
+#include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "keys/YkChallengeResponseKey.h"
-#include "gui/FileDialog.h"
-#include "gui/MessageBox.h"
-#include "crypto/Random.h"
-#include "MainWindow.h"
 
 #include "config-keepassx.h"
 
-#include <QtConcurrentRun>
 #include <QSharedPointer>
+#include <QtConcurrentRun>
 
 ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -65,7 +65,7 @@ ChangeMasterKeyWidget::ChangeMasterKeyWidget(QWidget* parent)
     connect(m_ui->challengeResponseGroup, SIGNAL(clicked(bool)), SLOT(setOkEnabled()));
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
 
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 #else
     m_ui->challengeResponseGroup->setVisible(false);
@@ -85,9 +85,8 @@ void ChangeMasterKeyWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            m_ui->messageWidget->showMessage(tr("Unable to create Key File : ").append(errorMsg), MessageWidget::Error);
-        }
-        else {
+            m_ui->messageWidget->showMessage(tr("Unable to create key file: %1").arg(errorMsg), MessageWidget::Error);
+        } else {
             m_ui->keyFileCombo->setEditText(fileName);
         }
     }
@@ -138,15 +137,16 @@ void ChangeMasterKeyWidget::generateKey()
     if (m_ui->passwordGroup->isChecked()) {
         if (m_ui->enterPasswordEdit->text() == m_ui->repeatPasswordEdit->text()) {
             if (m_ui->enterPasswordEdit->text().isEmpty()) {
-                if (MessageBox::warning(this, tr("Empty password"),
+                if (MessageBox::warning(this,
+                                        tr("Empty password"),
                                         tr("Do you really want to use an empty string as password?"),
-                                        QMessageBox::Yes | QMessageBox::No) != QMessageBox::Yes) {
+                                        QMessageBox::Yes | QMessageBox::No)
+                    != QMessageBox::Yes) {
                     return;
                 }
             }
             m_key.addKey(PasswordKey(m_ui->enterPasswordEdit->text()));
-        }
-        else {
+        } else {
             m_ui->messageWidget->showMessage(tr("Different passwords supplied."), MessageWidget::Error);
             m_ui->enterPasswordEdit->setText("");
             m_ui->repeatPasswordEdit->setText("");
@@ -158,16 +158,16 @@ void ChangeMasterKeyWidget::generateKey()
         QString errorMsg;
         QString fileKeyName = m_ui->keyFileCombo->currentText();
         if (!fileKey.load(fileKeyName, &errorMsg)) {
-            m_ui->messageWidget->showMessage(
-               tr("Failed to set %1 as the Key file:\n%2").arg(fileKeyName, errorMsg), MessageWidget::Error);
+            m_ui->messageWidget->showMessage(tr("Failed to set %1 as the key file:\n%2").arg(fileKeyName, errorMsg),
+                                             MessageWidget::Error);
             return;
         }
         if (fileKey.type() != FileKey::Hashed) {
             QMessageBox::warning(this,
                                  tr("Legacy key file format"),
                                  tr("You are using a legacy key file format which may become\n"
-                                        "unsupported in the future.\n\n"
-                                        "Please consider generating a new key file."),
+                                    "unsupported in the future.\n\n"
+                                    "Please consider generating a new key file."),
                                  QMessageBox::Ok);
         }
         m_key.addKey(fileKey);
@@ -186,8 +186,8 @@ void ChangeMasterKeyWidget::generateKey()
 
         // read blocking mode from LSB and slot index number from second LSB
         bool blocking = comboPayload & 1;
-        int slot      = comboPayload >> 1;
-        auto key      = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
+        int slot = comboPayload >> 1;
+        auto key = QSharedPointer<YkChallengeResponseKey>(new YkChallengeResponseKey(slot, blocking));
         m_key.addChallengeResponseKey(key);
     }
 #endif
@@ -195,7 +195,6 @@ void ChangeMasterKeyWidget::generateKey()
     m_ui->messageWidget->hideMessage();
     emit editFinished(true);
 }
-
 
 void ChangeMasterKeyWidget::reject()
 {
@@ -240,9 +239,9 @@ void ChangeMasterKeyWidget::noYubikeyFound()
 
 void ChangeMasterKeyWidget::setOkEnabled()
 {
-    bool ok = m_ui->passwordGroup->isChecked() ||
-              (m_ui->challengeResponseGroup->isChecked() && !m_ui->comboChallengeResponse->currentText().isEmpty()) ||
-              (m_ui->keyFileGroup->isChecked() && !m_ui->keyFileCombo->currentText().isEmpty());
+    bool ok = m_ui->passwordGroup->isChecked()
+              || (m_ui->challengeResponseGroup->isChecked() && !m_ui->comboChallengeResponse->currentText().isEmpty())
+              || (m_ui->keyFileGroup->isChecked() && !m_ui->keyFileCombo->currentText().isEmpty());
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(ok);
 }

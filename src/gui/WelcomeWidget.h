@@ -19,10 +19,11 @@
 #ifndef KEEPASSX_WELCOMEWIDGET_H
 #define KEEPASSX_WELCOMEWIDGET_H
 
-#include <QWidget>
 #include <QListWidgetItem>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
     class WelcomeWidget;
 }
 

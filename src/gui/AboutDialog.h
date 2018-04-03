@@ -22,7 +22,8 @@
 #include <QDialog>
 #include <QScopedPointer>
 
-namespace Ui {
+namespace Ui
+{
     class AboutDialog;
 }
 

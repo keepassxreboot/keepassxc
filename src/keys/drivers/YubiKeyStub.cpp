@@ -23,7 +23,9 @@
 
 #include "YubiKey.h"
 
-YubiKey::YubiKey() : m_yk_void(NULL), m_ykds_void(NULL)
+YubiKey::YubiKey()
+    : m_yk_void(NULL)
+    , m_ykds_void(NULL)
 {
 }
 

@@ -20,7 +20,8 @@
 #include "config-keepassx.h"
 #include "crypto/Crypto.h"
 
-SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo,
+                                             SymmetricCipher::Mode mode,
                                              SymmetricCipher::Direction direction)
     : m_ctx(nullptr)
     , m_algo(gcryptAlgo(algo))
@@ -84,8 +85,8 @@ void SymmetricCipherGcrypt::setErrorString(gcry_error_t err)
     const char* gcryptError = gcry_strerror(err);
     const char* gcryptErrorSource = gcry_strsource(err);
 
-    m_errorString = QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource),
-                                         QString::fromLocal8Bit(gcryptError));
+    m_errorString =
+        QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource), QString::fromLocal8Bit(gcryptError));
 }
 
 bool SymmetricCipherGcrypt::init()
@@ -94,7 +95,7 @@ bool SymmetricCipherGcrypt::init()
 
     gcry_error_t error;
 
-    if(m_ctx != nullptr)
+    if (m_ctx != nullptr)
         gcry_cipher_close(m_ctx);
     error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
     if (error != 0) {

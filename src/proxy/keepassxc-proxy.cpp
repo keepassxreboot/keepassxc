@@ -16,9 +16,9 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "NativeMessagingHost.h"
 #include <QCoreApplication>
 #include <iostream>
-#include "NativeMessagingHost.h"
 
 #ifndef Q_OS_WIN
 #include <initializer_list>
@@ -26,13 +26,15 @@
 #include <unistd.h>
 
 // (C) Gist: https://gist.github.com/azadkuh/a2ac6869661ebd3f8588
-void ignoreUnixSignals(std::initializer_list<int> ignoreSignals) {
+void ignoreUnixSignals(std::initializer_list<int> ignoreSignals)
+{
     for (int sig : ignoreSignals) {
         signal(sig, SIG_IGN);
     }
 }
 
-void catchUnixSignals(std::initializer_list<int> quitSignals) {
+void catchUnixSignals(std::initializer_list<int> quitSignals)
+{
     auto handler = [](int sig) -> void {
         std::cerr << sig;
         QCoreApplication::quit();
@@ -46,8 +48,8 @@ void catchUnixSignals(std::initializer_list<int> quitSignals) {
 
     struct sigaction sa;
     sa.sa_handler = handler;
-    sa.sa_mask    = blocking_mask;
-    sa.sa_flags   = 0;
+    sa.sa_mask = blocking_mask;
+    sa.sa_flags = 0;
 
     for (auto sig : quitSignals) {
         sigaction(sig, &sa, nullptr);
@@ -55,7 +57,7 @@ void catchUnixSignals(std::initializer_list<int> quitSignals) {
 }
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     QCoreApplication a(argc, argv);
 #if defined(Q_OS_UNIX) || defined(Q_OS_LINUX)

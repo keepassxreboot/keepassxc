@@ -82,20 +82,13 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 
         m_blockUpdates = false;
 
-        connect(m_activeDbWidget, SIGNAL(mainSplitterSizesChanged()),
-                SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()),
-                SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()),
-                SLOT(updateViewState()));
-        connect(m_activeDbWidget, SIGNAL(listModeActivated()),
-                SLOT(restoreListView()));
-        connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
-                SLOT(restoreSearchView()));
-        connect(m_activeDbWidget, SIGNAL(listModeAboutToActivate()),
-                SLOT(blockUpdates()));
-        connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()),
-                SLOT(blockUpdates()));
+        connect(m_activeDbWidget, SIGNAL(mainSplitterSizesChanged()), SLOT(updateSplitterSizes()));
+        connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()), SLOT(updateSplitterSizes()));
+        connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()), SLOT(updateViewState()));
+        connect(m_activeDbWidget, SIGNAL(listModeActivated()), SLOT(restoreListView()));
+        connect(m_activeDbWidget, SIGNAL(searchModeActivated()), SLOT(restoreSearchView()));
+        connect(m_activeDbWidget, SIGNAL(listModeAboutToActivate()), SLOT(blockUpdates()));
+        connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()), SLOT(blockUpdates()));
     }
 }
 

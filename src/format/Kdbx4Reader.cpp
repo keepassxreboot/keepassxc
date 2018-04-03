@@ -19,17 +19,19 @@
 
 #include <QBuffer>
 
-#include "core/Group.h"
 #include "core/Endian.h"
+#include "core/Group.h"
 #include "crypto/CryptoHash.h"
-#include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
+#include "format/KeePass2RandomStream.h"
 #include "streams/HmacBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
-Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
-                                        const CompositeKey& key, bool keepDatabase)
+Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device,
+                                        const QByteArray& headerData,
+                                        const CompositeKey& key,
+                                        bool keepDatabase)
 {
     Q_ASSERT(m_kdbxVersion == KeePass2::FILE_VERSION_4);
 
@@ -40,9 +42,7 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     }
 
     // check if all required headers were present
-    if (m_masterSeed.isEmpty()
-            || m_encryptionIV.isEmpty()
-            || m_db->cipher().isNull()) {
+    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_db->cipher().isNull()) {
         raiseError(tr("missing database headers"));
         return nullptr;
     }
@@ -69,8 +69,8 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     }
 
     QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, m_db->transformedMasterKey());
-    if (headerHmac != CryptoHash::hmac(headerData,
-                                       HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
+    if (headerHmac
+        != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
         raiseError(tr("Wrong key or database file is corrupt. (HMAC mismatch)"));
         return nullptr;
     }
@@ -85,8 +85,8 @@ Database* Kdbx4Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
         raiseError(tr("Unknown cipher"));
         return nullptr;
     }
-    SymmetricCipherStream cipherStream(&hmacStream, cipher,
-                                       SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
+    SymmetricCipherStream cipherStream(
+        &hmacStream, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return nullptr;
@@ -304,8 +304,8 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
 QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
 {
     bool ok;
-    quint16 version = Endian::readSizedInt<quint16>(device, KeePass2::BYTEORDER, &ok)
-            & KeePass2::VARIANTMAP_CRITICAL_MASK;
+    quint16 version =
+        Endian::readSizedInt<quint16>(device, KeePass2::BYTEORDER, &ok) & KeePass2::VARIANTMAP_CRITICAL_MASK;
     quint16 maxVersion = KeePass2::VARIANTMAP_VERSION & KeePass2::VARIANTMAP_CRITICAL_MASK;
     if (!ok || (version > maxVersion)) {
         //: Translation: variant map = data structure for storing meta data

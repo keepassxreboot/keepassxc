@@ -49,12 +49,14 @@ int Show::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
-    QCommandLineOption attributes(QStringList() << "a"
-                                                << "attributes",
-                                  QObject::tr("Names of the attributes to show. "
-                                              "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
-                                              "If no attributes are specified, a summary of the default attributes is given."),
-                                  QObject::tr("attribute"));
+    QCommandLineOption attributes(
+        QStringList() << "a"
+                      << "attributes",
+        QObject::tr(
+            "Names of the attributes to show. "
+            "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
+            "If no attributes are specified, a summary of the default attributes is given."),
+        QObject::tr("attribute"));
     parser.addOption(attributes);
     parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
     parser.process(arguments);

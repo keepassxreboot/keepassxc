@@ -16,9 +16,8 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 
-
-EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent) :
-    QWidget(parent)
+EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
+    : QWidget(parent)
     , m_ui(new Ui::EntryAttachmentsWidget)
     , m_entryAttachments(new EntryAttachments(this))
     , m_attachmentsModel(new EntryAttachmentsModel(this))
@@ -44,7 +43,8 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent) :
 
     connect(this, SIGNAL(readOnlyChanged(bool)), SLOT(updateButtonsEnabled()));
     connect(m_attachmentsModel, SIGNAL(modelReset()), SLOT(updateButtonsEnabled()));
-    connect(m_ui->attachmentsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+    connect(m_ui->attachmentsView->selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(updateButtonsEnabled()));
 
     connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
@@ -147,6 +147,7 @@ void EntryAttachmentsWidget::insertAttachments()
     if (!insertAttachments(filenames, errorMessage)) {
         errorOccurred(errorMessage);
     }
+    emit widgetUpdated();
 }
 
 void EntryAttachmentsWidget::removeSelectedAttachments()
@@ -162,14 +163,15 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
     }
 
     const QString question = tr("Are you sure you want to remove %n attachment(s)?", "", indexes.count());
-    QMessageBox::StandardButton answer = MessageBox::question(this, tr("Confirm Remove"),
-                                                              question, QMessageBox::Yes | QMessageBox::No);
+    QMessageBox::StandardButton answer =
+        MessageBox::question(this, tr("Confirm remove"), question, QMessageBox::Yes | QMessageBox::No);
     if (answer == QMessageBox::Yes) {
         QStringList keys;
-        for (const QModelIndex& index: indexes) {
+        for (const QModelIndex& index : indexes) {
             keys.append(m_attachmentsModel->keyByIndex(index));
         }
         m_entryAttachments->remove(keys);
+        emit widgetUpdated();
     }
 }
 
@@ -181,7 +183,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
     }
 
     QString defaultDirPath = config()->get("LastAttachmentDir").toString();
-    const bool dirExists  = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
+    const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     }
@@ -201,13 +203,16 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
     config()->set("LastAttachmentDir", QFileInfo(saveDir.absolutePath()).absolutePath());
 
     QStringList errors;
-    for (const QModelIndex& index: indexes) {
+    for (const QModelIndex& index : indexes) {
         const QString filename = m_attachmentsModel->keyByIndex(index);
         const QString attachmentPath = saveDir.absoluteFilePath(filename);
 
         if (QFileInfo::exists(attachmentPath)) {
-            const QString question(tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
-            auto answer = MessageBox::question(this, tr("Confirm overwrite"), question.arg(filename),
+            const QString question(
+                tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
+            auto answer = MessageBox::question(this,
+                                               tr("Confirm overwrite"),
+                                               question.arg(filename),
                                                QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
             if (answer == QMessageBox::No) {
                 continue;
@@ -250,7 +255,7 @@ void EntryAttachmentsWidget::openSelectedAttachments()
     }
 
     QStringList errors;
-    for (const QModelIndex& index: indexes) {
+    for (const QModelIndex& index : indexes) {
         QString errorMessage;
         if (!openAttachment(index, errorMessage)) {
             const QString filename = m_attachmentsModel->keyByIndex(index);
@@ -282,7 +287,7 @@ bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QSt
     }
 
     QStringList errors;
-    for (const QString &filename: filenames) {
+    for (const QString& filename : filenames) {
         QByteArray data;
         QFile file(filename);
         const QFileInfo fInfo(filename);
@@ -311,9 +316,7 @@ bool EntryAttachmentsWidget::openAttachment(const QModelIndex& index, QString& e
 
     QScopedPointer<QTemporaryFile> tmpFile(new QTemporaryFile(tmpFileTemplate, this));
 
-    const bool saveOk = tmpFile->open()
-                        && tmpFile->write(attachmentData) == attachmentData.size()
-                        && tmpFile->flush();
+    const bool saveOk = tmpFile->open() && tmpFile->write(attachmentData) == attachmentData.size() && tmpFile->flush();
     if (!saveOk) {
         errorMessage = QString("%1 - %2").arg(filename, tmpFile->errorString());
         return false;
@@ -349,7 +352,7 @@ bool EntryAttachmentsWidget::eventFilter(QObject* watched, QEvent* e)
                 dropEv->acceptProposedAction();
                 QStringList filenames;
                 const QList<QUrl> urls = mimeData->urls();
-                for (const QUrl& url: urls) {
+                for (const QUrl& url : urls) {
                     const QFileInfo fInfo(url.toLocalFile());
                     if (fInfo.isFile()) {
                         filenames.append(fInfo.absoluteFilePath());

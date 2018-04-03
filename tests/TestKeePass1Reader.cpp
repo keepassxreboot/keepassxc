@@ -133,8 +133,7 @@ void TestKeePass1Reader::testGroupExpanded()
 {
     QCOMPARE(m_db->rootGroup()->children().at(0)->isExpanded(), true);
     QCOMPARE(m_db->rootGroup()->children().at(0)->children().at(0)->isExpanded(), true);
-    QCOMPARE(m_db->rootGroup()->children().at(0)->children().at(0)->children().at(0)->isExpanded(),
-             false);
+    QCOMPARE(m_db->rootGroup()->children().at(0)->children().at(0)->children().at(0)->isExpanded(), false);
 }
 
 void TestKeePass1Reader::testAutoType()

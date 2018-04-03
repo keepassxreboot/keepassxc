@@ -45,22 +45,14 @@ set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
-option(WITH_XC_HTTP "Include KeePassHTTP-compatible browser integration (deprecated, implies WITH_NETWORKING)." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-
-if(WITH_XC_HTTP)
-  message(WARNING "KeePassHTTP support has been deprecated and will be removed in a future version. Please use WITH_XC_BROWSER instead!\n"
-          "For enabling / disabling network access code, WITH_XC_HTTP has been replaced by WITH_XC_NETWORKING.")
-  set(WITH_XC_NETWORKING ON CACHE BOOL "Include networking code (e.g. for downlading website icons)." FORCE)
-endif()
 
 if(WITH_XC_ALL)
   # Enable all options
   set(WITH_XC_AUTOTYPE ON)
   set(WITH_XC_NETWORKING ON)
   set(WITH_XC_BROWSER ON)
-  set(WITH_XC_HTTP ON) # Deprecated
   set(WITH_XC_YUBIKEY ON)
   set(WITH_XC_SSHAGENT ON)
 endif()
@@ -70,7 +62,7 @@ set(CMAKE_AUTOUIC ON)
 
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "3")
-set(KEEPASSXC_VERSION_PATCH "0")
+set(KEEPASSXC_VERSION_PATCH "1")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 
 set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
@@ -157,10 +149,14 @@ if(WITH_APP_BUNDLE)
 endif()
 
 add_gcc_compiler_flags("-fno-common")
-add_gcc_compiler_flags("-Wall -Werror -Wextra -Wundef -Wpointer-arith -Wno-long-long")
+add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+  add_gcc_compiler_flags("-Werror")
+endif()
 
 if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_flags("-fstack-protector-strong")
@@ -241,8 +237,8 @@ if(MINGW)
   set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
   if(NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
     # Enable DEP and ASLR
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase -Wl,--high-entropy-va")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase -Wl,--high-entropy-va")
   endif()
 endif()
 
@@ -282,6 +278,8 @@ endif()
 if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
+
+include(CLangFormat)
 
 if(UNIX AND NOT APPLE)
   find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)

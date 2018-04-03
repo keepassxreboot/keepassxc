@@ -17,12 +17,12 @@
 
 #include "PassphraseGenerator.h"
 
-#include <cmath>
 #include <QFile>
 #include <QTextStream>
+#include <cmath>
 
-#include "crypto/Random.h"
 #include "core/FilePath.h"
+#include "crypto/Random.h"
 
 const char* PassphraseGenerator::DefaultSeparator = " ";
 const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
@@ -52,7 +52,6 @@ void PassphraseGenerator::setWordCount(int wordCount)
         // safe default if something goes wrong
         m_wordCount = DefaultWordCount;
     }
-
 }
 
 void PassphraseGenerator::setWordList(const QString& path)
@@ -82,7 +81,8 @@ void PassphraseGenerator::setDefaultWordList()
     setWordList(path);
 }
 
-void PassphraseGenerator::setWordSeparator(const QString& separator) {
+void PassphraseGenerator::setWordSeparator(const QString& separator)
+{
     m_separator = separator;
 }
 
@@ -91,7 +91,7 @@ QString PassphraseGenerator::generatePassphrase() const
     Q_ASSERT(isValid());
 
     // In case there was an error loading the wordlist
-    if(m_wordlist.length() == 0) {
+    if (m_wordlist.length() == 0) {
         return QString();
     }
 
@@ -107,7 +107,7 @@ QString PassphraseGenerator::generatePassphrase() const
 bool PassphraseGenerator::isValid() const
 {
     if (m_wordCount == 0) {
-       return false;
+        return false;
     }
 
     return m_wordlist.size() >= 1000;

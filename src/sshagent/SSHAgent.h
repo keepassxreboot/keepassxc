@@ -19,9 +19,9 @@
 #ifndef AGENTCLIENT_H
 #define AGENTCLIENT_H
 
-#include <QtCore>
-#include <QList>
 #include "OpenSSHKey.h"
+#include <QList>
+#include <QtCore>
 
 #include "gui/DatabaseWidget.h"
 
@@ -33,30 +33,34 @@ public:
     static SSHAgent* instance();
     static void init(QObject* parent);
 
+    const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false) const;
-    bool removeIdentity(OpenSSHKey& key) const;
+    bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
+    bool removeIdentity(OpenSSHKey& key);
     void removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid);
+
+signals:
+    void error(const QString& message);
 
 public slots:
     void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::LockedMode);
 
 private:
-    const quint8 SSH_AGENT_FAILURE              = 5;
-    const quint8 SSH_AGENT_SUCCESS              = 6;
-    const quint8 SSH_AGENTC_REQUEST_IDENTITIES  = 11;
-    const quint8 SSH_AGENT_IDENTITIES_ANSWER    = 12;
-    const quint8 SSH_AGENTC_ADD_IDENTITY        = 17;
-    const quint8 SSH_AGENTC_REMOVE_IDENTITY     = 18;
-    const quint8 SSH_AGENTC_ADD_ID_CONSTRAINED  = 25;
+    const quint8 SSH_AGENT_FAILURE = 5;
+    const quint8 SSH_AGENT_SUCCESS = 6;
+    const quint8 SSH_AGENTC_REQUEST_IDENTITIES = 11;
+    const quint8 SSH_AGENT_IDENTITIES_ANSWER = 12;
+    const quint8 SSH_AGENTC_ADD_IDENTITY = 17;
+    const quint8 SSH_AGENTC_REMOVE_IDENTITY = 18;
+    const quint8 SSH_AGENTC_ADD_ID_CONSTRAINED = 25;
 
-    const quint8 SSH_AGENT_CONSTRAIN_LIFETIME   = 1;
-    const quint8 SSH_AGENT_CONSTRAIN_CONFIRM    = 2;
+    const quint8 SSH_AGENT_CONSTRAIN_LIFETIME = 1;
+    const quint8 SSH_AGENT_CONSTRAIN_CONFIRM = 2;
 
     explicit SSHAgent(QObject* parent = nullptr);
     ~SSHAgent();
 
-    bool sendMessage(const QByteArray& in, QByteArray& out) const;
+    bool sendMessage(const QByteArray& in, QByteArray& out);
 
     static SSHAgent* m_instance;
 
@@ -68,6 +72,7 @@ private:
 #endif
 
     QMap<QString, QSet<OpenSSHKey>> m_keys;
+    QString m_error;
 };
 
 #endif // AGENTCLIENT_H

@@ -391,11 +391,12 @@ void TestGroup::testClone()
     // Making sure the new modification date is not the same.
     QTest::qSleep(1);
 
-    QScopedPointer<Group> clonedGroupResetTimeInfo(originalGroup->clone(Entry::CloneNoFlags,
-                                                                        Group::CloneNewUuid | Group::CloneResetTimeInfo));
+    QScopedPointer<Group> clonedGroupResetTimeInfo(
+        originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid | Group::CloneResetTimeInfo));
     QCOMPARE(clonedGroupResetTimeInfo->entries().size(), 0);
     QVERIFY(clonedGroupResetTimeInfo->uuid() != originalGroup->uuid());
-    QVERIFY(clonedGroupResetTimeInfo->timeInfo().lastModificationTime() != originalGroup->timeInfo().lastModificationTime());
+    QVERIFY(clonedGroupResetTimeInfo->timeInfo().lastModificationTime()
+            != originalGroup->timeInfo().lastModificationTime());
 }
 
 void TestGroup::testCopyCustomIcons()

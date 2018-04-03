@@ -18,19 +18,21 @@
 
 #include "Kdbx3Reader.h"
 
-#include "core/Group.h"
 #include "core/Endian.h"
+#include "core/Group.h"
 #include "crypto/CryptoHash.h"
-#include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
+#include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
 #include <QBuffer>
 
-Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
-                                        const CompositeKey& key, bool keepDatabase)
+Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device,
+                                        const QByteArray& headerData,
+                                        const CompositeKey& key,
+                                        bool keepDatabase)
 {
     Q_ASSERT(m_kdbxVersion <= KeePass2::FILE_VERSION_3_1);
 
@@ -39,10 +41,10 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     }
 
     // check if all required headers were present
-    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
-        || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
+    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_streamStartBytes.isEmpty()
+        || m_protectedStreamKey.isEmpty()
         || m_db->cipher().isNull()) {
-        raiseError("missing database headers");
+        raiseError(tr("missing database headers"));
         return nullptr;
     }
 
@@ -63,8 +65,8 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     QByteArray finalKey = hash.result();
 
     SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(m_db->cipher());
-    SymmetricCipherStream cipherStream(device, cipher,
-                                       SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
+    SymmetricCipherStream cipherStream(
+        device, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return nullptr;
@@ -134,7 +136,7 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     if (!xmlReader.headerHash().isEmpty()) {
         QByteArray headerHash = CryptoHash::hash(headerData, CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
-            raiseError("Header doesn't match hash");
+            raiseError(tr("Header doesn't match hash"));
             return nullptr;
         }
     }
@@ -146,7 +148,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
 {
     QByteArray fieldIDArray = headerStream.read(1);
     if (fieldIDArray.size() != 1) {
-        raiseError("Invalid header id size");
+        raiseError(tr("Invalid header id size"));
         return false;
     }
     char fieldID = fieldIDArray.at(0);
@@ -154,7 +156,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint16>(&headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid header field length");
+        raiseError(tr("Invalid header field length"));
         return false;
     }
 
@@ -162,7 +164,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     if (fieldLen != 0) {
         fieldData = headerStream.read(fieldLen);
         if (fieldData.size() != fieldLen) {
-            raiseError("Invalid header data length");
+            raiseError(tr("Invalid header data length"));
             return false;
         }
     }

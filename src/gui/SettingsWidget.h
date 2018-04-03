@@ -21,19 +21,23 @@
 
 #include "gui/EditWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class SettingsWidgetGeneral;
     class SettingsWidgetSecurity;
 }
 
-class ISettingsPage {
+class ISettingsPage
+{
 public:
-    virtual ~ISettingsPage() {}
+    virtual ~ISettingsPage()
+    {
+    }
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
-    virtual QWidget * createWidget() = 0;
-    virtual void loadSettings(QWidget * widget) = 0;
-    virtual void saveSettings(QWidget * widget) = 0;
+    virtual QWidget* createWidget() = 0;
+    virtual void loadSettings(QWidget* widget) = 0;
+    virtual void saveSettings(QWidget* widget) = 0;
 };
 
 class SettingsWidget : public EditWidget
@@ -43,7 +47,7 @@ class SettingsWidget : public EditWidget
 public:
     explicit SettingsWidget(QWidget* parent = nullptr);
     ~SettingsWidget();
-    void addSettingsPage(ISettingsPage * page);
+    void addSettingsPage(ISettingsPage* page);
     void loadSettings();
 
 private slots:

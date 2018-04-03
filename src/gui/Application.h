@@ -56,7 +56,7 @@ private slots:
 
 private:
     QWidget* m_mainWindow;
-    
+
 #if defined(Q_OS_UNIX)
     /**
      * Register Unix signals such as SIGINT and SIGTERM for clean shutdown.

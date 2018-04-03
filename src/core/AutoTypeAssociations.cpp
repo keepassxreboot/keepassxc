@@ -27,7 +27,6 @@ bool AutoTypeAssociations::Association::operator!=(const AutoTypeAssociations::A
     return window != other.window || sequence != other.sequence;
 }
 
-
 AutoTypeAssociations::AutoTypeAssociations(QObject* parent)
     : QObject(parent)
 {
@@ -106,7 +105,7 @@ int AutoTypeAssociations::size() const
 int AutoTypeAssociations::associationsSize() const
 {
     int size = 0;
-    for (const Association &association : m_associations) {
+    for (const Association& association : m_associations) {
         size += association.sequence.toUtf8().size() + association.window.toUtf8().size();
     }
     return size;

@@ -56,7 +56,7 @@ void TemporaryFile::close()
 #endif
 }
 
-qint64 TemporaryFile::write(const char *data, qint64 maxSize)
+qint64 TemporaryFile::write(const char* data, qint64 maxSize)
 {
 #ifdef Q_OS_WIN
     return m_file.write(data, maxSize);
@@ -65,7 +65,7 @@ qint64 TemporaryFile::write(const char *data, qint64 maxSize)
 #endif
 }
 
-qint64 TemporaryFile::write(const QByteArray &byteArray)
+qint64 TemporaryFile::write(const QByteArray& byteArray)
 {
 #ifdef Q_OS_WIN
     return m_file.write(byteArray);

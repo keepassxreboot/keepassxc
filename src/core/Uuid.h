@@ -19,8 +19,8 @@
 #define KEEPASSX_UUID_H
 
 #include <QByteArray>
-#include <QString>
 #include <QRegExp>
+#include <QString>
 
 class Uuid
 {

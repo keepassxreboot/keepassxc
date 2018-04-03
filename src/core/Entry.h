@@ -37,7 +37,8 @@
 class Database;
 class Group;
 
-enum class EntryReferenceType {
+enum class EntryReferenceType
+{
     Unknown,
     Title,
     UserName,
@@ -142,18 +143,20 @@ public:
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
 
-    enum CloneFlag {
-        CloneNoFlags        = 0,
-        CloneNewUuid        = 1,  // generate a random uuid for the clone
-        CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
-        CloneIncludeHistory = 4,  // clone the history items
-        CloneRenameTitle    = 8,  // add "-Clone" after the original title
-        CloneUserAsRef      = 16, // Add the user as a reference to the original entry
-        ClonePassAsRef      = 32, // Add the password as a reference to the original entry
+    enum CloneFlag
+    {
+        CloneNoFlags = 0,
+        CloneNewUuid = 1, // generate a random uuid for the clone
+        CloneResetTimeInfo = 2, // set all TimeInfo attributes to the current time
+        CloneIncludeHistory = 4, // clone the history items
+        CloneRenameTitle = 8, // add "-Clone" after the original title
+        CloneUserAsRef = 16, // Add the user as a reference to the original entry
+        ClonePassAsRef = 32, // Add the password as a reference to the original entry
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
-    enum class PlaceholderType {
+    enum class PlaceholderType
+    {
         NotPlaceholder,
         Unknown,
         Title,

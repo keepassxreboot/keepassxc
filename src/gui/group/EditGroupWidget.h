@@ -27,7 +27,8 @@
 class EditWidgetIcons;
 class EditWidgetProperties;
 
-namespace Ui {
+namespace Ui
+{
     class EditGroupWidgetMain;
     class EditWidget;
 }

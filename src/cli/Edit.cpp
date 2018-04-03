@@ -115,8 +115,9 @@ int Edit::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty() &&
-        !parser.isSet(prompt) && !parser.isSet(generate)) {
+    if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty()
+        && !parser.isSet(prompt)
+        && !parser.isSet(generate)) {
         qCritical("Not changing any field for entry %s.", qPrintable(entryPath));
         return EXIT_FAILURE;
     }

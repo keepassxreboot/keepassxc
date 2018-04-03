@@ -34,13 +34,14 @@
 
 #if defined(Q_OS_UNIX)
 #include <signal.h>
-#include <unistd.h>
 #include <sys/socket.h>
+#include <unistd.h>
 #endif
 
-namespace {
-constexpr int WaitTimeoutMSec = 150;
-const char BlockSizeProperty[] = "blockSize";
+namespace
+{
+    constexpr int WaitTimeoutMSec = 150;
+    const char BlockSizeProperty[] = "blockSize";
 }
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
@@ -70,7 +71,7 @@ public:
         Q_UNUSED(result);
 
         if (eventType == QByteArrayLiteral("windows_generic_MSG")
-                || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
+            || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
             int retCode = autoType()->callEventFilter(message);
             if (retCode == 1) {
                 return true;
@@ -109,8 +110,8 @@ Application::Application(int& argc, char** argv)
         identifier += "-" + userName;
     }
 #ifdef QT_DEBUG
-        // In DEBUG mode don't interfere with Release instances
-        identifier += "-DEBUG";
+    // In DEBUG mode don't interfere with Release instances
+    identifier += "-DEBUG";
 #endif
     QString lockName = identifier + ".lock";
     m_socketName = identifier + ".socket";
@@ -146,9 +147,10 @@ Application::Application(int& argc, char** argv)
 
             if (!m_alreadyRunning) {
                 // If we get here then the original instance is likely dead
-                qWarning() << QCoreApplication::translate("Main",
-                                "Existing single-instance lock file is invalid. Launching new instance.")
-                                .toUtf8().constData();
+                qWarning() << QCoreApplication::translate(
+                                  "Main", "Existing single-instance lock file is invalid. Launching new instance.")
+                                  .toUtf8()
+                                  .constData();
 
                 // forceably reset the lock file
                 m_lockFile->removeStaleLockFile();
@@ -161,8 +163,9 @@ Application::Application(int& argc, char** argv)
     }
     default:
         qWarning() << QCoreApplication::translate("Main",
-                        "The lock file could not be created. Single-instance mode disabled.")
-                        .toUtf8().constData();
+                                                  "The lock file could not be created. Single-instance mode disabled.")
+                          .toUtf8()
+                          .constData();
     }
 }
 
@@ -214,17 +217,17 @@ void Application::registerUnixSignals()
         // application will be unresponsive to signals such as SIGINT or SIGTERM
         return;
     }
-    
-    QVector<int> const handledSignals = { SIGQUIT, SIGINT, SIGTERM, SIGHUP };
-    for (auto s: handledSignals) {
+
+    QVector<int> const handledSignals = {SIGQUIT, SIGINT, SIGTERM, SIGHUP};
+    for (auto s : handledSignals) {
         struct sigaction sigAction;
-        
+
         sigAction.sa_handler = handleUnixSignal;
         sigemptyset(&sigAction.sa_mask);
         sigAction.sa_flags = 0 | SA_RESTART;
         sigaction(s, &sigAction, nullptr);
     }
-    
+
     m_unixSignalNotifier = new QSocketNotifier(unixSignalSocket[1], QSocketNotifier::Read, this);
     connect(m_unixSignalNotifier, SIGNAL(activated(int)), this, SLOT(quitBySignal()));
 }
@@ -232,16 +235,15 @@ void Application::registerUnixSignals()
 void Application::handleUnixSignal(int sig)
 {
     switch (sig) {
-        case SIGQUIT:
-        case SIGINT:
-        case SIGTERM:
-        {
-            char buf = 0;
-            Q_UNUSED(::write(unixSignalSocket[0], &buf, sizeof(buf)));
-            return;
-        }
-        case SIGHUP:
-            return;
+    case SIGQUIT:
+    case SIGINT:
+    case SIGTERM: {
+        char buf = 0;
+        Q_UNUSED(::write(unixSignalSocket[0], &buf, sizeof(buf)));
+        return;
+    }
+    case SIGHUP:
+        return;
     }
 }
 
@@ -289,7 +291,7 @@ void Application::socketReadyRead()
 
     QStringList fileNames;
     in >> fileNames;
-    for (const QString& fileName: asConst(fileNames)) {
+    for (const QString& fileName : asConst(fileNames)) {
         const QFileInfo fInfo(fileName);
         if (fInfo.isFile() && fInfo.suffix().toLower() == "kdbx") {
             emit openFile(fileName);
@@ -319,8 +321,7 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_0);
-    out << quint32(0)
-        << fileNames;
+    out << quint32(0) << fileNames;
     out.device()->seek(0);
     out << quint32(data.size() - sizeof(quint32));
 
@@ -329,4 +330,3 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
     const bool disconnected = client.waitForDisconnected(WaitTimeoutMSec);
     return writeOk && disconnected;
 }
-

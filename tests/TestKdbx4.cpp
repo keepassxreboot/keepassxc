@@ -18,24 +18,23 @@
 #include "TestKdbx4.h"
 #include "TestGlobal.h"
 
+#include "config-keepassx-tests.h"
 #include "core/Metadata.h"
-#include "keys/PasswordKey.h"
-#include "keys/FileKey.h"
-#include "mock/MockChallengeResponseKey.h"
+#include "format/KdbxXmlReader.h"
+#include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
-#include "format/KdbxXmlReader.h"
-#include "format/KdbxXmlWriter.h"
-#include "config-keepassx-tests.h"
-
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
+#include "mock/MockChallengeResponseKey.h"
 
 QTEST_GUILESS_MAIN(TestKdbx4)
 
 void TestKdbx4::initTestCaseImpl()
 {
-    m_xmlDb->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
-    m_kdbxSourceDb->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
+    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
 }
 
 Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
@@ -66,8 +65,11 @@ void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
     errorString = writer.errorString();
 }
 
-void TestKdbx4::readKdbx(QIODevice* device, CompositeKey const& key, QScopedPointer<Database>& db,
-                         bool& hasError, QString& errorString)
+void TestKdbx4::readKdbx(QIODevice* device,
+                         CompositeKey const& key,
+                         QScopedPointer<Database>& db,
+                         bool& hasError,
+                         QString& errorString)
 {
     KeePass2Reader reader;
     db.reset(reader.readDatabase(device, key));
@@ -78,8 +80,11 @@ void TestKdbx4::readKdbx(QIODevice* device, CompositeKey const& key, QScopedPoin
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
 }
 
-void TestKdbx4::readKdbx(const QString& path, CompositeKey const& key, QScopedPointer<Database>& db,
-                         bool& hasError, QString& errorString)
+void TestKdbx4::readKdbx(const QString& path,
+                         CompositeKey const& key,
+                         QScopedPointer<Database>& db,
+                         bool& hasError,
+                         QString& errorString)
 {
     KeePass2Reader reader;
     db.reset(reader.readDatabase(path, key));
@@ -93,7 +98,7 @@ void TestKdbx4::readKdbx(const QString& path, CompositeKey const& key, QScopedPo
 void TestKdbx4::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
 {
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
     }
     KeePass2Writer writer;
     hasError = writer.writeDatabase(device, db);
@@ -137,8 +142,9 @@ void TestKdbx4::testFormat400Upgrade()
     QFETCH(quint32, expectedVersion);
 
     QScopedPointer<Database> sourceDb(new Database());
+    sourceDb->changeKdf(fastKdf(sourceDb->kdf()));
     sourceDb->metadata()->setName("Wubba lubba dub dub");
-    QCOMPARE(sourceDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);    // default is legacy AES-KDF
+    QCOMPARE(sourceDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3); // default is legacy AES-KDF
 
     CompositeKey key;
     key.addKey(PasswordKey("I am in great pain, please help me!"));
@@ -148,14 +154,15 @@ void TestKdbx4::testFormat400Upgrade()
     buffer.open(QBuffer::ReadWrite);
 
     // upgrade to KDBX 4 by changing KDF and Cipher
-    sourceDb->changeKdf(KeePass2::uuidToKdf(kdfUuid));
+    sourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(kdfUuid)));
     sourceDb->setCipher(cipherUuid);
 
     // CustomData in meta should not cause any version change
     sourceDb->metadata()->customData()->set("CustomPublicData", "Hey look, I turned myself into a pickle!");
     if (addCustomData) {
         // this, however, should
-        sourceDb->rootGroup()->customData()->set("CustomGroupData", "I just killed my family! I don't care who they were!");
+        sourceDb->rootGroup()->customData()->set("CustomGroupData",
+                                                 "I just killed my family! I don't care who they were!");
     }
 
     KeePass2Writer writer;
@@ -181,6 +188,7 @@ void TestKdbx4::testFormat400Upgrade()
     QCOMPARE(*targetDb->rootGroup()->customData(), *sourceDb->rootGroup()->customData());
 }
 
+// clang-format off
 void TestKdbx4::testFormat400Upgrade_data()
 {
     QTest::addColumn<Uuid>("kdfUuid");
@@ -212,6 +220,7 @@ void TestKdbx4::testFormat400Upgrade_data()
     QTest::newRow("AES-KDF          + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
     QTest::newRow("AES-KDF (legacy) + Twofish  + CustomData") << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_TWOFISH   << true  << kdbx4;
 }
+// clang-format on
 
 void TestKdbx4::testUpgradeMasterKeyIntegrity()
 {
@@ -235,6 +244,7 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     compositeKey.addChallengeResponseKey(crKey);
 
     QScopedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(db->kdf()));
     db->setKey(compositeKey);
 
     // upgrade the database by a specific method
@@ -243,11 +253,11 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     } else if (upgradeAction == "meta-customdata") {
         db->metadata()->customData()->set("abc", "def");
     } else if (upgradeAction == "kdf-aes-kdbx3") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
     } else if (upgradeAction == "kdf-argon2") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
     } else if (upgradeAction == "kdf-aes-kdbx4") {
-        db->changeKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4));
+        db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4)));
     } else if (upgradeAction == "public-customdata") {
         db->publicCustomData().insert("abc", "def");
     } else if (upgradeAction == "rootgroup-customdata") {
@@ -301,16 +311,18 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity_data()
     QTest::addColumn<QString>("upgradeAction");
     QTest::addColumn<quint32>("expectedVersion");
 
-    QTest::newRow("Upgrade: none")                            << QString("none")                 << KeePass2::FILE_VERSION_3;
-    QTest::newRow("Upgrade: none (meta-customdata)")          << QString("meta-customdata")      << KeePass2::FILE_VERSION_3;
-    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)")   << QString("kdf-aes-kdbx3")        << KeePass2::FILE_VERSION_3;
-    QTest::newRow("Upgrade (explicit): kdf-argon2")           << QString("kdf-argon2")           << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4")        << QString("kdf-aes-kdbx4")        << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): public-customdata")    << QString("public-customdata")    << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): rootgroup-customdata") << QString("rootgroup-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): group-customdata")     << QString("group-customdata")     << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): rootentry-customdata") << QString("rootentry-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): entry-customdata")     << QString("entry-customdata")     << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade: none") << QString("none") << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade: none (meta-customdata)") << QString("meta-customdata") << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)") << QString("kdf-aes-kdbx3") << KeePass2::FILE_VERSION_3;
+    QTest::newRow("Upgrade (explicit): kdf-argon2") << QString("kdf-argon2") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4") << QString("kdf-aes-kdbx4") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): public-customdata") << QString("public-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootgroup-customdata") << QString("rootgroup-customdata")
+                                                              << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): group-customdata") << QString("group-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootentry-customdata") << QString("rootentry-customdata")
+                                                              << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): entry-customdata") << QString("entry-customdata") << KeePass2::FILE_VERSION_4;
 }
 
 void TestKdbx4::testCustomData()
@@ -331,8 +343,8 @@ void TestKdbx4::testCustomData()
     const QString customDataKey2 = "CD2";
     const QString customData1 = "abcäöü";
     const QString customData2 = "Hello World";
-    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() +
-        customData1.toUtf8().size() + customData2.toUtf8().size();
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
+                         + customData2.toUtf8().size();
 
     // test custom database data
     db.metadata()->customData()->set(customDataKey1, customData1);
@@ -402,4 +414,15 @@ void TestKdbx4::testCustomData()
     auto* newEntry = newDb->rootGroup()->children()[0]->entries()[0];
     QCOMPARE(newEntry->customData()->value(customDataKey1), customData1);
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
+}
+
+QSharedPointer<Kdf> TestKdbx4::fastKdf(QSharedPointer<Kdf> kdf)
+{
+    kdf->setRounds(1);
+
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
+    }
+
+    return kdf;
 }

@@ -33,29 +33,27 @@ void DialogyWidget::keyPressEvent(QKeyEvent* e)
         if (!clickButton(QDialogButtonBox::Cancel)) {
             e->ignore();
         }
-    }
-    else
+    } else
 #endif
-    if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
+        if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
         switch (e->key()) {
-            case Qt::Key_Enter:
-            case Qt::Key_Return:
-                if (!clickButton(QDialogButtonBox::Ok)) {
+        case Qt::Key_Enter:
+        case Qt::Key_Return:
+            if (!clickButton(QDialogButtonBox::Ok)) {
+                e->ignore();
+            }
+            break;
+        case Qt::Key_Escape:
+            if (!clickButton(QDialogButtonBox::Cancel)) {
+                if (!clickButton(QDialogButtonBox::Close)) {
                     e->ignore();
                 }
-                break;
-            case Qt::Key_Escape:
-                if (!clickButton(QDialogButtonBox::Cancel)) {
-                    if (!clickButton(QDialogButtonBox::Close)) {
-                        e->ignore();
-                    }
-                }
-                break;
-            default:
-                e->ignore();
+            }
+            break;
+        default:
+            e->ignore();
         }
-    }
-    else {
+    } else {
         e->ignore();
     }
 }

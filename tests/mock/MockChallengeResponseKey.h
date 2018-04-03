@@ -37,4 +37,4 @@ private:
     QByteArray m_secret;
 };
 
-#endif //KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
+#endif // KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H

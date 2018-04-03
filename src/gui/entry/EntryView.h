@@ -68,7 +68,7 @@ private slots:
     void switchToListMode();
     void switchToSearchMode();
     void showHeaderMenu(const QPoint& position);
-    void toggleColumnVisibility(QAction *action);
+    void toggleColumnVisibility(QAction* action);
     void fitColumnsToWindow();
     void fitColumnsToContents();
     void resetViewToDefaults();
@@ -76,7 +76,7 @@ private slots:
 private:
     void fillRemainingWidth(bool lastColumnOnly);
     void resetFixedColumns();
-    
+
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inSearchMode;

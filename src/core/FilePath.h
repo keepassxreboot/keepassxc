@@ -29,6 +29,7 @@ public:
     QString pluginPath(const QString& name);
     QString wordlistPath(const QString& name);
     QIcon applicationIcon();
+    QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
     QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
@@ -49,7 +50,8 @@ private:
     Q_DISABLE_COPY(FilePath)
 };
 
-inline FilePath* filePath() {
+inline FilePath* filePath()
+{
     return FilePath::instance();
 }
 

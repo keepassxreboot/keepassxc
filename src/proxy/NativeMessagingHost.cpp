@@ -15,20 +15,25 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <QCoreApplication>
 #include "NativeMessagingHost.h"
+#include <QCoreApplication>
 
-NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase()
+NativeMessagingHost::NativeMessagingHost()
+    : NativeMessagingBase()
 {
     m_localSocket = new QLocalSocket();
     m_localSocket->connectToServer(getLocalServerPath());
 #ifdef Q_OS_WIN
     m_running.store(true);
-    m_future = QtConcurrent::run(this, static_cast<void(NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
+    m_future =
+        QtConcurrent::run(this, static_cast<void (NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
 #endif
     connect(m_localSocket, SIGNAL(readyRead()), this, SLOT(newLocalMessage()));
     connect(m_localSocket, SIGNAL(disconnected()), this, SLOT(deleteSocket()));
-    connect(m_localSocket, SIGNAL(stateChanged(QLocalSocket::LocalSocketState)), this, SLOT(socketStateChanged(QLocalSocket::LocalSocketState)));
+    connect(m_localSocket,
+            SIGNAL(stateChanged(QLocalSocket::LocalSocketState)),
+            this,
+            SLOT(socketStateChanged(QLocalSocket::LocalSocketState)));
 }
 
 NativeMessagingHost::~NativeMessagingHost()
@@ -45,24 +50,31 @@ void NativeMessagingHost::readLength()
     if (!std::cin.eof() && length > 0) {
         readStdIn(length);
     } else {
-    	QCoreApplication::quit();
+        QCoreApplication::quit();
     }
 }
 
 void NativeMessagingHost::readStdIn(const quint32 length)
 {
-    if (length > 0) {
-        QByteArray arr;
-        arr.reserve(length);
+    if (length <= 0) {
+        return;
+    }
 
-        for (quint32 i = 0; i < length; ++i) {
-            arr.append(getchar());
-        }
+    QByteArray arr;
+    arr.reserve(length);
 
-        if (arr.length() > 0 && m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
-            m_localSocket->write(arr.constData(), arr.length());
-            m_localSocket->flush();
+    for (quint32 i = 0; i < length; ++i) {
+        int c = std::getchar();
+        if (c == EOF) {
+            // message ended prematurely, ignore it and return
+            return;
         }
+        arr.append(static_cast<char>(c));
+    }
+
+    if (arr.length() > 0 && m_localSocket && m_localSocket->state() == QLocalSocket::ConnectedState) {
+        m_localSocket->write(arr.constData(), arr.length());
+        m_localSocket->flush();
     }
 }
 
@@ -74,7 +86,7 @@ void NativeMessagingHost::newLocalMessage()
 
     QByteArray arr = m_localSocket->readAll();
     if (!arr.isEmpty()) {
-       sendReply(arr);
+        sendReply(arr);
     }
 }
 

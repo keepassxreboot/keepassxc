@@ -18,10 +18,10 @@
 
 #include "OpenSSHKey.h"
 #include "ASN1Key.h"
+#include "crypto/SymmetricCipher.h"
+#include <QCryptographicHash>
 #include <QRegularExpression>
 #include <QStringList>
-#include <QCryptographicHash>
-#include "crypto/SymmetricCipher.h"
 
 const QString OpenSSHKey::TYPE_DSA = "DSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_RSA = "RSA PRIVATE KEY";
@@ -30,7 +30,7 @@ const QString OpenSSHKey::TYPE_OPENSSH = "OPENSSH PRIVATE KEY";
 // bcrypt_pbkdf.cpp
 int bcrypt_pbkdf(const QByteArray& pass, const QByteArray& salt, QByteArray& key, quint32 rounds);
 
-OpenSSHKey::OpenSSHKey(QObject *parent)
+OpenSSHKey::OpenSSHKey(QObject* parent)
     : QObject(parent)
     , m_type(QString())
     , m_cipherName(QString("none"))
@@ -43,7 +43,6 @@ OpenSSHKey::OpenSSHKey(QObject *parent)
     , m_comment(QString())
     , m_error(QString())
 {
-
 }
 
 OpenSSHKey::OpenSSHKey(const OpenSSHKey& other)
@@ -58,7 +57,6 @@ OpenSSHKey::OpenSSHKey(const OpenSSHKey& other)
     , m_comment(other.m_comment)
     , m_error(other.m_error)
 {
-
 }
 
 bool OpenSSHKey::operator==(const OpenSSHKey& other) const
@@ -94,6 +92,10 @@ int OpenSSHKey::keyLength() const
 
 const QString OpenSSHKey::fingerprint() const
 {
+    if (m_publicData.isEmpty()) {
+        return {};
+    }
+
     QByteArray publicKey;
     BinaryStream stream(&publicKey);
 
@@ -115,6 +117,10 @@ const QString OpenSSHKey::comment() const
 
 const QString OpenSSHKey::publicKey() const
 {
+    if (m_publicData.isEmpty()) {
+        return {};
+    }
+
     QByteArray publicKey;
     BinaryStream stream(&publicKey);
 
@@ -326,7 +332,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
             return false;
         }
 
-        if (passphrase.length() == 0) {
+        if (passphrase.isEmpty()) {
             m_error = tr("Passphrase is required to decrypt this key");
             return false;
         }

@@ -18,14 +18,14 @@
 #ifndef KEEPASSXC_KDBXXMLREADER_H
 #define KEEPASSXC_KDBXXMLREADER_H
 
+#include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/TimeInfo.h"
 #include "core/Uuid.h"
-#include "core/Database.h"
 
 #include <QCoreApplication>
-#include <QString>
 #include <QPair>
+#include <QString>
 #include <QXmlStreamReader>
 
 class QIODevice;
@@ -38,7 +38,7 @@ class KeePass2RandomStream;
  */
 class KdbxXmlReader
 {
-Q_DECLARE_TR_FUNCTIONS(KdbxXmlReader)
+    Q_DECLARE_TR_FUNCTIONS(KdbxXmlReader)
 
 public:
     explicit KdbxXmlReader(quint32 version);
@@ -81,6 +81,7 @@ protected:
     virtual TimeInfo parseTimes();
 
     virtual QString readString();
+    virtual QString readString(bool& isProtected, bool& protectInMemory);
     virtual bool readBool();
     virtual QDateTime readDateTime();
     virtual QColor readColor();
@@ -94,6 +95,7 @@ protected:
     virtual Group* getGroup(const Uuid& uuid);
     virtual Entry* getEntry(const Uuid& uuid);
 
+    virtual bool isTrueValue(const QStringRef& value);
     virtual void raiseError(const QString& errorMessage);
 
     const quint32 m_kdbxVersion;
@@ -110,11 +112,11 @@ protected:
     QHash<Uuid, Entry*> m_entries;
 
     QHash<QString, QByteArray> m_binaryPool;
-    QHash<QString, QPair<Entry*, QString> > m_binaryMap;
+    QHash<QString, QPair<Entry*, QString>> m_binaryMap;
     QByteArray m_headerHash;
 
     bool m_error = false;
     QString m_errorStr = "";
 };
 
-#endif //KEEPASSXC_KDBXXMLREADER_H
+#endif // KEEPASSXC_KDBXXMLREADER_H

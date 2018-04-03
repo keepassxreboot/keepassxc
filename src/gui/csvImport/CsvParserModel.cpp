@@ -18,26 +18,32 @@
 
 #include "CsvParserModel.h"
 
-CsvParserModel::CsvParserModel(QObject *parent)
+CsvParserModel::CsvParserModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_skipped(0)
-{}
+{
+}
 
 CsvParserModel::~CsvParserModel()
-{}
+{
+}
 
-void CsvParserModel::setFilename(const QString& filename) {
+void CsvParserModel::setFilename(const QString& filename)
+{
     m_filename = filename;
 }
 
-QString CsvParserModel::getFileInfo(){
-    QString a(tr("%n byte(s), ", nullptr, getFileSize()));
-    a.append(tr("%n row(s), ", nullptr, getCsvRows()));
-    a.append(tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1)));
+QString CsvParserModel::getFileInfo()
+{
+    QString a(tr("%1, %2, %3", "file info: bytes, rows, columns")
+                  .arg(tr("%n byte(s)", nullptr, getFileSize()))
+                  .arg(tr("%n row(s)", nullptr, getCsvRows()))
+                  .arg(tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1))));
     return a;
 }
 
-bool CsvParserModel::parse() {
+bool CsvParserModel::parse()
+{
     bool r;
     beginResetModel();
     m_columnMap.clear();
@@ -48,13 +54,14 @@ bool CsvParserModel::parse() {
         r = CsvParser::parse(&csv);
     }
     for (int i = 0; i < columnCount(); ++i)
-        m_columnMap.insert(i,0);
+        m_columnMap.insert(i, 0);
     addEmptyColumn();
     endResetModel();
     return r;
 }
 
-void CsvParserModel::addEmptyColumn() {
+void CsvParserModel::addEmptyColumn()
+{
     for (int i = 0; i < m_table.size(); ++i) {
         CsvRow r = m_table.at(i);
         r.prepend(QString(""));
@@ -62,65 +69,68 @@ void CsvParserModel::addEmptyColumn() {
     }
 }
 
-void CsvParserModel::mapColumns(int csvColumn, int dbColumn) {
+void CsvParserModel::mapColumns(int csvColumn, int dbColumn)
+{
     if ((csvColumn < 0) || (dbColumn < 0))
         return;
     beginResetModel();
     if (csvColumn >= getCsvCols())
-        m_columnMap[dbColumn] = 0; //map to the empty column
+        m_columnMap[dbColumn] = 0; // map to the empty column
     else
         m_columnMap[dbColumn] = csvColumn;
     endResetModel();
 }
 
-void CsvParserModel::setSkippedRows(int skipped) {
+void CsvParserModel::setSkippedRows(int skipped)
+{
     m_skipped = skipped;
-    QModelIndex topLeft = createIndex(skipped,0);
-    QModelIndex bottomRight = createIndex(m_skipped+rowCount(), columnCount());
+    QModelIndex topLeft = createIndex(skipped, 0);
+    QModelIndex bottomRight = createIndex(m_skipped + rowCount(), columnCount());
     emit dataChanged(topLeft, bottomRight);
     emit layoutChanged();
 }
 
-void CsvParserModel::setHeaderLabels(QStringList l) {
+void CsvParserModel::setHeaderLabels(QStringList l)
+{
     m_columnHeader = l;
 }
 
-int CsvParserModel::rowCount(const QModelIndex &parent) const {
+int CsvParserModel::rowCount(const QModelIndex& parent) const
+{
     if (parent.isValid())
         return 0;
     return getCsvRows();
 }
 
-int CsvParserModel::columnCount(const QModelIndex &parent) const {
+int CsvParserModel::columnCount(const QModelIndex& parent) const
+{
     if (parent.isValid())
         return 0;
     return m_columnHeader.size();
 }
 
-QVariant CsvParserModel::data(const QModelIndex &index, int role) const {
-    if ((index.column() >= m_columnHeader.size())
-        || (index.row()+m_skipped >= rowCount())
-        || !index.isValid()) {
+QVariant CsvParserModel::data(const QModelIndex& index, int role) const
+{
+    if ((index.column() >= m_columnHeader.size()) || (index.row() + m_skipped >= rowCount()) || !index.isValid()) {
         return QVariant();
     }
     if (role == Qt::DisplayRole)
-        return m_table.at(index.row()+m_skipped).at(m_columnMap[index.column()]);
+        return m_table.at(index.row() + m_skipped).at(m_columnMap[index.column()]);
     return QVariant();
 }
 
-QVariant CsvParserModel::headerData(int section, Qt::Orientation orientation, int role) const {
+QVariant CsvParserModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
             if ((section < 0) || (section >= m_columnHeader.size()))
                 return QVariant();
             return m_columnHeader.at(section);
         } else if (orientation == Qt::Vertical) {
-            if (section+m_skipped >= rowCount())
+            if (section + m_skipped >= rowCount())
                 return QVariant();
-            return QString::number(section+1);
+            return QString::number(section + 1);
         }
     }
     return QVariant();
 }
-
-

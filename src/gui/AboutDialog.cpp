@@ -20,16 +20,16 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "version.h"
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
+#include "version.h"
 
 #include <QClipboard>
 #include <QSysInfo>
 
 AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog(parent),
-      m_ui(new Ui::AboutDialog())
+    : QDialog(parent)
+    , m_ui(new Ui::AboutDialog())
 {
     m_ui->setupUi(this);
 
@@ -47,15 +47,14 @@ AboutDialog::AboutDialog(QWidget* parent)
     QString commitHash;
     if (!QString(GIT_HEAD).isEmpty()) {
         commitHash = GIT_HEAD;
-    }
-    else if (!QString(DIST_HASH).contains("Format")) {
+    } else if (!QString(DIST_HASH).contains("Format")) {
         commitHash = DIST_HASH;
     }
 
     QString debugInfo = "KeePassXC - ";
-    debugInfo.append(tr("Version %1\n").arg(KEEPASSX_VERSION));
+    debugInfo.append(tr("Version %1").arg(KEEPASSX_VERSION).append("\n"));
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-    debugInfo.append(tr("Build Type: %1\n").arg(KEEPASSXC_BUILD_TYPE));
+    debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
 #endif
     if (!commitHash.isEmpty()) {
         debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
@@ -66,39 +65,36 @@ AboutDialog::AboutDialog(QWidget* parent)
 #endif
 
     debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
-             .arg(tr("Libraries:"))
-             .arg(QString::fromLocal8Bit(qVersion()))
-             .arg(Crypto::backendVersion()));
+                                      .arg(tr("Libraries:"))
+                                      .arg(QString::fromLocal8Bit(qVersion()))
+                                      .arg(Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-             .arg(QSysInfo::prettyProductName(),
-                  QSysInfo::currentCpuArchitecture(),
-                  QSysInfo::kernelType(),
-                  QSysInfo::kernelVersion()));
+                         .arg(QSysInfo::prettyProductName(),
+                              QSysInfo::currentCpuArchitecture(),
+                              QSysInfo::kernelType(),
+                              QSysInfo::kernelVersion()));
 
     debugInfo.append("\n\n");
 #endif
 
     QString extensions;
 #ifdef WITH_XC_AUTOTYPE
-    extensions += "\n- Auto-Type";
+    extensions += "\n- " + tr("Auto-Type");
 #endif
 #ifdef WITH_XC_BROWSER
-    extensions += "\n- Browser Integration";
-#endif
-#ifdef WITH_XC_HTTP
-    extensions += "\n- Legacy Browser Integration (KeePassHTTP)";
+    extensions += "\n- " + tr("Browser Integration");
 #endif
 #ifdef WITH_XC_SSHAGENT
-    extensions += "\n- SSH Agent";
+    extensions += "\n- " + tr("SSH Agent");
 #endif
 #ifdef WITH_XC_YUBIKEY
-    extensions += "\n- YubiKey";
+    extensions += "\n- " + tr("YubiKey");
 #endif
 
     if (extensions.isEmpty())
-        extensions = " None";
+        extensions = " " + tr("None");
 
     debugInfo.append(tr("Enabled extensions:").append(extensions));
 

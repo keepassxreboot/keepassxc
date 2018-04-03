@@ -44,7 +44,8 @@ void TestCsvParser::cleanup()
 }
 
 /****************** TEST CASES ******************/
-void TestCsvParser::testMissingQuote() {
+void TestCsvParser::testMissingQuote()
+{
     parser->setTextQualifier(':');
     QTextStream out(file.data());
     out << "A,B\n:BM,1";
@@ -54,7 +55,8 @@ void TestCsvParser::testMissingQuote() {
     QWARN(parser->getStatus().toLatin1());
 }
 
-void TestCsvParser::testMalformed() {
+void TestCsvParser::testMalformed()
+{
     parser->setTextQualifier(':');
     QTextStream out(file.data());
     out << "A,B,C\n:BM::,1,:2:";
@@ -64,11 +66,12 @@ void TestCsvParser::testMalformed() {
     QWARN(parser->getStatus().toLatin1());
 }
 
-void TestCsvParser::testBackslashSyntax() {
+void TestCsvParser::testBackslashSyntax()
+{
     parser->setBackslashSyntax(true);
     parser->setTextQualifier(QChar('X'));
     QTextStream out(file.data());
-    //attended result: one"\t\"wo
+    // attended result: one"\t\"wo
     out << "Xone\\\"\\\\t\\\\\\\"w\noX\n"
         << "X13X,X2\\X,X,\"\"3\"X\r"
         << "3,X\"4\"X,,\n"
@@ -88,7 +91,8 @@ void TestCsvParser::testBackslashSyntax() {
     QVERIFY(t.size() == 4);
 }
 
-void TestCsvParser::testQuoted() {
+void TestCsvParser::testQuoted()
+{
     QTextStream out(file.data());
     out << "ro,w,\"end, of \"\"\"\"\"\"row\"\"\"\"\"\n"
         << "2\n";
@@ -101,25 +105,28 @@ void TestCsvParser::testQuoted() {
     QVERIFY(t.size() == 2);
 }
 
-void TestCsvParser::testEmptySimple() {
+void TestCsvParser::testEmptySimple()
+{
     QTextStream out(file.data());
-    out <<"";
+    out << "";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
     QVERIFY(t.size() == 0);
 }
 
-void TestCsvParser::testEmptyQuoted() {
+void TestCsvParser::testEmptyQuoted()
+{
     QTextStream out(file.data());
-    out <<"\"\"";
+    out << "\"\"";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
     QVERIFY(t.size() == 0);
 }
 
-void TestCsvParser::testEmptyNewline() {
+void TestCsvParser::testEmptyNewline()
+{
     QTextStream out(file.data());
-    out <<"\"\n\"";
+    out << "\"\n\"";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
     QVERIFY(t.size() == 0);
@@ -197,7 +204,8 @@ void TestCsvParser::testComments()
     QVERIFY(t.at(0).at(1) == "text #1!");
 }
 
-void TestCsvParser::testColumns() {
+void TestCsvParser::testColumns()
+{
     QTextStream out(file.data());
     out << "1,2\n"
         << ",,,,,,,,,a\n"
@@ -207,7 +215,8 @@ void TestCsvParser::testColumns() {
     QVERIFY(parser->getCsvCols() == 10);
 }
 
-void TestCsvParser::testSimple() {
+void TestCsvParser::testSimple()
+{
     QTextStream out(file.data());
     out << ",,2\r,2,3\n"
         << "A,,B\"\n"
@@ -229,7 +238,8 @@ void TestCsvParser::testSimple() {
     QVERIFY(t.at(3).at(2) == "");
 }
 
-void TestCsvParser::testSeparator() {
+void TestCsvParser::testSeparator()
+{
     parser->setFieldSeparator('\t');
     QTextStream out(file.data());
     out << "\t\t2\r\t2\t3\n"
@@ -296,7 +306,8 @@ void TestCsvParser::testReparsing()
     QVERIFY(t.size() == 2);
 }
 
-void TestCsvParser::testQualifier() {
+void TestCsvParser::testQualifier()
+{
     parser->setTextQualifier(QChar('X'));
     QTextStream out(file.data());
     out << "X1X,X2XX,X,\"\"3\"\"\"X\r"
@@ -313,11 +324,12 @@ void TestCsvParser::testQualifier() {
     QVERIFY(t.at(1).at(3) == "");
 }
 
-void TestCsvParser::testUnicode() {
-    //QString m("Texte en fran\u00e7ais");
-    //CORRECT QString g("\u20AC");
-    //CORRECT QChar g(0x20AC);
-    //ERROR QChar g("\u20AC");
+void TestCsvParser::testUnicode()
+{
+    // QString m("Texte en fran\u00e7ais");
+    // CORRECT QString g("\u20AC");
+    // CORRECT QChar g(0x20AC);
+    // ERROR QChar g("\u20AC");
     parser->setFieldSeparator(QChar('A'));
     QTextStream out(file.data());
     out.setCodec("UTF-8");

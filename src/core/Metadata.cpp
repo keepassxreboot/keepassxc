@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QCryptographicHash>
 #include "Metadata.h"
+#include <QtCore/QCryptographicHash>
 
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -61,13 +61,13 @@ template <class P, class V> bool Metadata::set(P& property, const V& value)
         property = value;
         emit modified();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-template <class P, class V> bool Metadata::set(P& property, const V& value, QDateTime& dateTime) {
+template <class P, class V> bool Metadata::set(P& property, const V& value, QDateTime& dateTime)
+{
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
@@ -75,8 +75,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
         }
         emit modified();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -402,10 +401,8 @@ void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
 
     // scale down to 128x128 if icon is larger
     if (icon.width() > 128 || icon.height() > 128) {
-        iconScaled = icon.scaled(QSize(128, 128), Qt::KeepAspectRatio,
-                                 Qt::SmoothTransformation);
-    }
-    else {
+        iconScaled = icon.scaled(QSize(128, 128), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    } else {
         iconScaled = icon;
     }
 
@@ -433,7 +430,7 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     emit modified();
 }
 
-Uuid Metadata::findCustomIcon(const QImage &candidate)
+Uuid Metadata::findCustomIcon(const QImage& candidate)
 {
     QByteArray hash = hashImage(candidate);
     return m_customIconsHashes.value(hash, Uuid());

@@ -22,8 +22,8 @@
 #include <format/KeePass2.h>
 
 #include "core/Global.h"
-#include "crypto/kdf/AesKdf.h"
 #include "crypto/CryptoHash.h"
+#include "crypto/kdf/AesKdf.h"
 
 CompositeKey::CompositeKey()
 {
@@ -81,13 +81,13 @@ CompositeKey& CompositeKey::operator=(const CompositeKey& key)
  * The key hash does not contain contributions by challenge-response components for
  * backwards compatibility with KeePassXC's pre-KDBX4 challenge-response
  * implementation. To include challenge-response in the raw key,
- * use \link CompositeKey::rawKey(const QByteArray*) instead.
+ * use \link CompositeKey::rawKey(const QByteArray*, bool*) instead.
  *
  * @return key hash
  */
 QByteArray CompositeKey::rawKey() const
 {
-    return rawKey(nullptr);
+    return rawKey(nullptr, nullptr);
 }
 
 /**
@@ -97,9 +97,10 @@ QByteArray CompositeKey::rawKey() const
  * as a challenge to acquire their key contribution.
  *
  * @param transformSeed transform seed to challenge or nullptr to exclude challenge-response components
+ * @param ok true if challenges were successful and all key components could be added to the composite key
  * @return key hash
  */
-QByteArray CompositeKey::rawKey(const QByteArray* transformSeed) const
+QByteArray CompositeKey::rawKey(const QByteArray* transformSeed, bool* ok) const
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
@@ -107,9 +108,16 @@ QByteArray CompositeKey::rawKey(const QByteArray* transformSeed) const
         cryptoHash.addData(key->rawKey());
     }
 
+    if (ok) {
+        *ok = true;
+    }
+
     if (transformSeed) {
         QByteArray challengeResult;
-        challenge(*transformSeed, challengeResult);
+        bool challengeOk = challenge(*transformSeed, challengeResult);
+        if (ok) {
+            *ok = challengeOk;
+        }
         cryptoHash.addData(challengeResult);
     }
 
@@ -138,7 +146,8 @@ bool CompositeKey::transform(const Kdf& kdf, QByteArray& result) const
 
     QByteArray seed = kdf.seed();
     Q_ASSERT(!seed.isEmpty());
-    return kdf.transform(rawKey(&seed), result);
+    bool ok = false;
+    return kdf.transform(rawKey(&seed, &ok), result) && ok;
 }
 
 bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
@@ -152,7 +161,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
 
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
-    for (const auto key : m_challengeResponseKeys) {
+    for (const auto& key : m_challengeResponseKeys) {
         // if the device isn't present or fails, return an error
         if (!key->challenge(seed)) {
             qWarning("Failed to issue challenge");

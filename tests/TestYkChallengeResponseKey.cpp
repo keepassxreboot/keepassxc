@@ -40,9 +40,7 @@ void TestYubiKeyChalResp::init()
 
 void TestYubiKeyChalResp::detectDevices()
 {
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)),
-                                 SLOT(ykDetected(int,bool)),
-                                 Qt::QueuedConnection);
+    connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(ykDetected(int, bool)), Qt::QueuedConnection);
     QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
 
     // need to wait for the hardware (that's hopefully plugged in)...

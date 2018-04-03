@@ -55,7 +55,8 @@ private:
     QString m_lastCopied;
 };
 
-inline Clipboard* clipboard() {
+inline Clipboard* clipboard()
+{
     return Clipboard::instance();
 }
 

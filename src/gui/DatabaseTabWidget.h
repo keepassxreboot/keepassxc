@@ -19,9 +19,9 @@
 #ifndef KEEPASSX_DATABASETABWIDGET_H
 #define KEEPASSX_DATABASETABWIDGET_H
 
+#include <QFileInfo>
 #include <QHash>
 #include <QTabWidget>
-#include <QFileInfo>
 
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
@@ -52,8 +52,7 @@ class DatabaseTabWidget : public QTabWidget
 public:
     explicit DatabaseTabWidget(QWidget* parent = nullptr);
     ~DatabaseTabWidget() override;
-    void openDatabase(const QString& fileName, const QString& pw = QString(),
-                      const QString& keyFile = QString());
+    void openDatabase(const QString& fileName, const QString& pw = QString(), const QString& keyFile = QString());
     void mergeDatabase(const QString& fileName);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases() const;

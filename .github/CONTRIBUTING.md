@@ -108,9 +108,12 @@ The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successf
 
 ### Coding styleguide
 
-This project follows the [Qt Coding Style](https://wiki.qt.io/Qt_Coding_Style). All submissions are expected to follow this style.
+The coding style of the project is enforced using llvm's `clang-format` formatting tool. A thorough description
+of the coding style can be found in the `.clang-format` file, but the main conventions are presented here.
 
-In particular, code must stick to the following rules:
+Formatting can be performed automatically by calling `make format` from the `build/` directory.
+
+Note that [formatting can be disabled on a piece of code](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code) if manual formatting is deemed more readable.
 
 #### Naming convention
 `lowerCamelCase`

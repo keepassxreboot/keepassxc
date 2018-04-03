@@ -177,36 +177,48 @@ void BrowserSettings::setUpdateBinaryPath(bool enabled)
     config()->set("Browser/UpdateBinaryPath", enabled);
 }
 
-bool BrowserSettings::chromeSupport() {
+bool BrowserSettings::chromeSupport()
+{
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::CHROME);
 }
 
-void BrowserSettings::setChromeSupport(bool enabled) {
-    m_hostInstaller.installBrowser(HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
+void BrowserSettings::setChromeSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
-bool BrowserSettings::chromiumSupport() {
+bool BrowserSettings::chromiumSupport()
+{
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::CHROMIUM);
 }
 
-void BrowserSettings::setChromiumSupport(bool enabled) {
-    m_hostInstaller.installBrowser(HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
+void BrowserSettings::setChromiumSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
-bool BrowserSettings::firefoxSupport() {
+bool BrowserSettings::firefoxSupport()
+{
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::FIREFOX);
 }
 
-void BrowserSettings::setFirefoxSupport(bool enabled) {
-    m_hostInstaller.installBrowser(HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
+void BrowserSettings::setFirefoxSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
-bool BrowserSettings::vivaldiSupport() {
+bool BrowserSettings::vivaldiSupport()
+{
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::VIVALDI);
 }
 
-void BrowserSettings::setVivaldiSupport(bool enabled) {
-    m_hostInstaller.installBrowser(HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
+void BrowserSettings::setVivaldiSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::passwordUseNumbers()

@@ -23,10 +23,10 @@
 #include <QTemporaryFile>
 
 #include "config-keepassx-tests.h"
-#include "crypto/Crypto.h"
-#include "keys/PasswordKey.h"
 #include "core/Metadata.h"
+#include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
+#include "keys/PasswordKey.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
 
@@ -46,7 +46,7 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     db->emptyRecycleBin();
-    //The database must be unmodified in this test after emptying the recycle bin.
+    // The database must be unmodified in this test after emptying the recycle bin.
     QCOMPARE(spyModified.count(), 0);
 
     delete db;
@@ -63,7 +63,7 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     db->emptyRecycleBin();
-    //The database must be unmodified in this test after emptying the recycle bin.
+    // The database must be unmodified in this test after emptying the recycle bin.
     QCOMPARE(spyModified.count(), 0);
 
     delete db;
@@ -80,7 +80,7 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     QSignalSpy spyModified(db, SIGNAL(modifiedImmediate()));
 
     db->emptyRecycleBin();
-    //The database must be unmodified in this test after emptying the recycle bin.
+    // The database must be unmodified in this test after emptying the recycle bin.
     QCOMPARE(spyModified.count(), 0);
 
     delete db;

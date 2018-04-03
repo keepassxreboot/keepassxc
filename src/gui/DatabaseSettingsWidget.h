@@ -18,26 +18,26 @@
 #ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
-#include <QScopedPointer>
-#include <QWidget>
-#include <QSpinBox>
 #include <QLayout>
+#include <QScopedPointer>
+#include <QSpinBox>
+#include <QWidget>
 
-#include "gui/DialogyWidget.h"
 #include "crypto/kdf/Kdf.h"
+#include "gui/DialogyWidget.h"
 
 class Database;
 
 namespace Ui
 {
-class DatabaseSettingsWidget;
-class DatabaseSettingsWidgetGeneral;
-class DatabaseSettingsWidgetEncryption;
+    class DatabaseSettingsWidget;
+    class DatabaseSettingsWidgetGeneral;
+    class DatabaseSettingsWidgetEncryption;
 }
 
-class DatabaseSettingsWidget: public DialogyWidget
+class DatabaseSettingsWidget : public DialogyWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DatabaseSettingsWidget(QWidget* parent = nullptr);

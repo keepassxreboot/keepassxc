@@ -81,64 +81,55 @@ void TestTotp::testTotpCode()
 
 void TestTotp::testEncoderData()
 {
-    for (quint8 key: Totp::encoders.keys()) {
+    for (quint8 key : Totp::encoders.keys()) {
         const Totp::Encoder& enc = Totp::encoders.value(key);
-        QVERIFY2(enc.digits != 0,
-            qPrintable(QString("Custom encoders cannot have zero-value for digits field: %1(%2)")
-                               .arg(enc.name)
-                               .arg(key)));
+        QVERIFY2(
+            enc.digits != 0,
+            qPrintable(
+                QString("Custom encoders cannot have zero-value for digits field: %1(%2)").arg(enc.name).arg(key)));
         QVERIFY2(!enc.name.isEmpty(),
-            qPrintable(QString("Custom encoders must have a name: %1(%2)")
-                               .arg(enc.name)
-                               .arg(key)));
+                 qPrintable(QString("Custom encoders must have a name: %1(%2)").arg(enc.name).arg(key)));
         QVERIFY2(!enc.shortName.isEmpty(),
-            qPrintable(QString("Custom encoders must have a shortName: %1(%2)")
-                               .arg(enc.name)
-                               .arg(key)));
+                 qPrintable(QString("Custom encoders must have a shortName: %1(%2)").arg(enc.name).arg(key)));
         QVERIFY2(Totp::shortNameToEncoder.contains(enc.shortName),
-            qPrintable(QString("No shortNameToEncoder entry found for custom encoder: %1(%2) %3")
-                               .arg(enc.name)
-                               .arg(key)
-                               .arg(enc.shortName)));
+                 qPrintable(QString("No shortNameToEncoder entry found for custom encoder: %1(%2) %3")
+                                .arg(enc.name)
+                                .arg(key)
+                                .arg(enc.shortName)));
         QVERIFY2(Totp::shortNameToEncoder[enc.shortName] == key,
-            qPrintable(QString("shortNameToEncoder doesn't reference this custome encoder: %1(%2) %3")
-                               .arg(enc.name)
-                               .arg(key)
-                               .arg(enc.shortName)));
+                 qPrintable(QString("shortNameToEncoder doesn't reference this custome encoder: %1(%2) %3")
+                                .arg(enc.name)
+                                .arg(key)
+                                .arg(enc.shortName)));
         QVERIFY2(Totp::nameToEncoder.contains(enc.name),
-            qPrintable(QString("No nameToEncoder entry found for custom encoder: %1(%2) %3")
-                               .arg(enc.name)
-                               .arg(key)
-                               .arg(enc.shortName)));
+                 qPrintable(QString("No nameToEncoder entry found for custom encoder: %1(%2) %3")
+                                .arg(enc.name)
+                                .arg(key)
+                                .arg(enc.shortName)));
         QVERIFY2(Totp::nameToEncoder[enc.name] == key,
-            qPrintable(QString("nameToEncoder doesn't reference this custome encoder: %1(%2) %3")
-                               .arg(enc.name)
-                               .arg(key)
-                               .arg(enc.shortName)));
+                 qPrintable(QString("nameToEncoder doesn't reference this custome encoder: %1(%2) %3")
+                                .arg(enc.name)
+                                .arg(key)
+                                .arg(enc.shortName)));
     }
 
-    for (const QString & key: Totp::nameToEncoder.keys()) {
+    for (const QString& key : Totp::nameToEncoder.keys()) {
         quint8 value = Totp::nameToEncoder.value(key);
         QVERIFY2(Totp::encoders.contains(value),
-                qPrintable(QString("No custom encoder found for encoder named %1(%2)")
-                                   .arg(value)
-                                   .arg(key)));
+                 qPrintable(QString("No custom encoder found for encoder named %1(%2)").arg(value).arg(key)));
         QVERIFY2(Totp::encoders[value].name == key,
-                qPrintable(QString("nameToEncoder doesn't reference the right custom encoder: %1(%2)")
-                                   .arg(value)
-                                   .arg(key)));
+                 qPrintable(
+                     QString("nameToEncoder doesn't reference the right custom encoder: %1(%2)").arg(value).arg(key)));
     }
 
-    for (const QString & key: Totp::shortNameToEncoder.keys()) {
+    for (const QString& key : Totp::shortNameToEncoder.keys()) {
         quint8 value = Totp::shortNameToEncoder.value(key);
         QVERIFY2(Totp::encoders.contains(value),
-                qPrintable(QString("No custom encoder found for short-name encoder %1(%2)")
-                                   .arg(value)
-                                   .arg(key)));
-        QVERIFY2(Totp::encoders[value].shortName == key,
-                qPrintable(QString("shortNameToEncoder doesn't reference the right custom encoder: %1(%2)")
-                                   .arg(value)
-                                   .arg(key)));
+                 qPrintable(QString("No custom encoder found for short-name encoder %1(%2)").arg(value).arg(key)));
+        QVERIFY2(
+            Totp::encoders[value].shortName == key,
+            qPrintable(
+                QString("shortNameToEncoder doesn't reference the right custom encoder: %1(%2)").arg(value).arg(key)));
     }
 }
 
@@ -152,7 +143,6 @@ void TestTotp::testSteamTotp()
     QCOMPARE(Totp::parseOtpString(secret, digits, step), QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
     QCOMPARE(digits, quint8(Totp::ENCODER_STEAM));
     QCOMPARE(step, quint8(30));
-
 
     QByteArray seed = QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK").toLatin1();
 

@@ -20,9 +20,9 @@
 #ifndef BROWSERSETTINGS_H
 #define BROWSERSETTINGS_H
 
-#include "core/PasswordGenerator.h"
-#include "core/PassphraseGenerator.h"
 #include "HostInstaller.h"
+#include "core/PassphraseGenerator.h"
+#include "core/PasswordGenerator.h"
 
 class BrowserSettings
 {
@@ -30,9 +30,9 @@ public:
     static bool isEnabled();
     static void setEnabled(bool enabled);
 
-    static bool showNotification();  //TODO!!
+    static bool showNotification(); // TODO!!
     static void setShowNotification(bool showNotification);
-    static bool bestMatchOnly();     //TODO!!
+    static bool bestMatchOnly(); // TODO!!
     static void setBestMatchOnly(bool bestMatchOnly);
     static bool unlockDatabase();
     static void setUnlockDatabase(bool unlockDatabase);
@@ -46,7 +46,7 @@ public:
     static void setAlwaysAllowAccess(bool alwaysAllowAccess);
     static bool alwaysAllowUpdate();
     static void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
-    static bool searchInAllDatabases();//TODO!!
+    static bool searchInAllDatabases(); // TODO!!
     static void setSearchInAllDatabases(bool searchInAllDatabases);
     static bool supportKphFields();
     static void setSupportKphFields(bool supportKphFields);
@@ -88,7 +88,7 @@ public:
     static void setPasswordEveryGroup(bool everyGroup);
     static bool passwordExcludeAlike();
     static void setPasswordExcludeAlike(bool excludeAlike);
-    static int  passwordLength();
+    static int passwordLength();
     static void setPasswordLength(int length);
     static PasswordGenerator::CharClasses passwordCharClasses();
     static PasswordGenerator::GeneratorFlags passwordGeneratorFlags();

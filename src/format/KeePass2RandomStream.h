@@ -20,8 +20,8 @@
 
 #include <QByteArray>
 
-#include "crypto/SymmetricCipher.h"
 #include "KeePass2.h"
+#include "crypto/SymmetricCipher.h"
 
 class KeePass2RandomStream
 {

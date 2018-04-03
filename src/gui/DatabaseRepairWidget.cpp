@@ -21,13 +21,13 @@
 #include <QFile>
 #include <QFileInfo>
 
-#include "ui_DatabaseOpenWidget.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "format/KeePass2Repair.h"
 #include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "ui_DatabaseOpenWidget.h"
 
 DatabaseRepairWidget::DatabaseRepairWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
@@ -50,7 +50,7 @@ void DatabaseRepairWidget::openDatabase()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key.load(keyFilename, &errorMsg)) {
-            MessageBox::warning(this, tr("Error"), tr("Can't open key file").append(":\n").append(errorMsg));
+            MessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             emit editFinished(false);
             return;
         }
@@ -61,8 +61,8 @@ void DatabaseRepairWidget::openDatabase()
 
     QFile file(m_filename);
     if (!file.open(QIODevice::ReadOnly)) {
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
-                            .append(file.errorString()));
+        MessageBox::warning(
+            this, tr("Error"), tr("Unable to open the database.").append("\n").append(file.errorString()));
         emit editFinished(false);
         return;
     }
@@ -80,13 +80,14 @@ void DatabaseRepairWidget::openDatabase()
         emit editFinished(false);
         return;
     case KeePass2Repair::UnableToOpen:
-        MessageBox::warning(this, tr("Error"), tr("Unable to open the database.").append("\n")
-                            .append(repair.errorString()));
+        MessageBox::warning(
+            this, tr("Error"), tr("Unable to open the database.").append("\n").append(repair.errorString()));
         emit editFinished(false);
         return;
     case KeePass2Repair::RepairSuccess:
         m_db = repairOutcome.second;
-        MessageBox::warning(this, tr("Success"), tr("The database has been successfully repaired\nYou can now save it."));
+        MessageBox::warning(
+            this, tr("Success"), tr("The database has been successfully repaired\nYou can now save it."));
         emit editFinished(true);
         return;
     case KeePass2Repair::RepairFailed:
@@ -100,8 +101,7 @@ void DatabaseRepairWidget::processEditFinished(bool result)
 {
     if (result) {
         emit success();
-    }
-    else {
+    } else {
         emit error();
     }
 }

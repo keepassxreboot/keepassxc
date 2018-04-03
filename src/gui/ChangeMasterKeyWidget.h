@@ -25,7 +25,8 @@
 #include "keys/CompositeKey.h"
 
 class QLabel;
-namespace Ui {
+namespace Ui
+{
     class ChangeMasterKeyWidget;
 }
 

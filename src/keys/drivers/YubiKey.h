@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_YUBIKEY_H
 #define KEEPASSX_YUBIKEY_H
 
-#include <QObject>
 #include <QMutex>
+#include <QObject>
 
 /**
  * Singleton class to manage the interface to the hardware
@@ -30,7 +30,13 @@ class YubiKey : public QObject
     Q_OBJECT
 
 public:
-    enum ChallengeResult { ERROR = -1, SUCCESS = 0, WOULDBLOCK, ALREADY_RUNNING };
+    enum ChallengeResult
+    {
+        ERROR = -1,
+        SUCCESS = 0,
+        WOULDBLOCK,
+        ALREADY_RUNNING
+    };
 
     /**
      * @brief YubiKey::instance - get instance of singleton

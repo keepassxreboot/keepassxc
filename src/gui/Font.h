@@ -24,8 +24,11 @@ class Font
 {
 public:
     static QFont fixedFont();
+
 private:
-    Font() {}
+    Font()
+    {
+    }
 };
 
 #endif // KEEPASSX_FONT_H

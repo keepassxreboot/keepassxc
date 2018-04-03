@@ -63,14 +63,21 @@ private slots:
     void testKeePass1Import();
     void testDatabaseLocking();
     void testDragAndDropKdbxFiles();
+    void testTrayRestoreHide();
 
 private:
     int addCannedEntries();
     void checkDatabase(QString dbFileName = "");
     void triggerAction(const QString& name);
-    void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
-                          bool expectedResult, const QString& expectedParentName, int expectedPos);
-    void clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+    void dragAndDropGroup(const QModelIndex& sourceIndex,
+                          const QModelIndex& targetIndex,
+                          int row,
+                          bool expectedResult,
+                          const QString& expectedParentName,
+                          int expectedPos);
+    void clickIndex(const QModelIndex& index,
+                    QAbstractItemView* view,
+                    Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
 
     QPointer<MainWindow> m_mainWindow;

@@ -22,16 +22,16 @@
 
 #include <QApplication>
 #include <QSet>
-#include <QtPlugin>
 #include <QWidget>
 #include <QX11Info>
+#include <QtPlugin>
 
+#include <X11/XKBlib.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>
-#include <X11/XKBlib.h>
 
-#include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
+#include "autotype/AutoTypePlatformPlugin.h"
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
@@ -81,8 +81,8 @@ private:
     void AddModifier(KeySym keysym);
     void SendKeyEvent(unsigned keycode, bool press);
     void SendModifiers(unsigned int mask, bool press);
-    int GetKeycode(KeySym keysym, unsigned int *mask);
-    bool keysymModifiers(KeySym keysym, int keycode, unsigned int *mask);
+    int GetKeycode(KeySym keysym, unsigned int* mask);
+    bool keysymModifiers(KeySym keysym, int keycode, unsigned int* mask);
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 

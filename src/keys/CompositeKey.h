@@ -20,12 +20,12 @@
 #define KEEPASSX_COMPOSITEKEY_H
 
 #include <QList>
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
 
 #include "crypto/kdf/Kdf.h"
-#include "keys/Key.h"
 #include "keys/ChallengeResponseKey.h"
+#include "keys/Key.h"
 
 class CompositeKey : public Key
 {
@@ -39,9 +39,9 @@ public:
     CompositeKey& operator=(const CompositeKey& key);
 
     QByteArray rawKey() const override;
-    QByteArray rawKey(const QByteArray* transformSeed) const;
+    QByteArray rawKey(const QByteArray* transformSeed, bool* ok = nullptr) const;
     bool transform(const Kdf& kdf, QByteArray& result) const Q_REQUIRED_RESULT;
-    bool challenge(const QByteArray& seed, QByteArray &result) const;
+    bool challenge(const QByteArray& seed, QByteArray& result) const;
 
     void addKey(const Key& key);
     void addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key);

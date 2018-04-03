@@ -40,9 +40,9 @@ const quint8 Totp::defaultDigits = 6;
  */
 const quint8 Totp::ENCODER_STEAM = 254;
 
-const Totp::Encoder Totp::defaultEncoder = { "", "", "0123456789", 0, 0, false };
+const Totp::Encoder Totp::defaultEncoder = {"", "", "0123456789", 0, 0, false};
 const QMap<quint8, Totp::Encoder> Totp::encoders{
-    { Totp::ENCODER_STEAM, { "steam", "S", "23456789BCDFGHJKMNPQRTVWXY", 5, 30, true } },
+    {Totp::ENCODER_STEAM, {"steam", "S", "23456789BCDFGHJKMNPQRTVWXY", 5, 30, true}},
 };
 
 /**
@@ -53,7 +53,7 @@ const QMap<quint8, Totp::Encoder> Totp::encoders{
  *       in Entry::totpSeed()
  */
 const QMap<QString, quint8> Totp::shortNameToEncoder{
-    { "S", Totp::ENCODER_STEAM },
+    {"S", Totp::ENCODER_STEAM},
 };
 /**
  * These map the "encoder=" URL parameter of the "otp" field to our internal encoder number
@@ -61,7 +61,7 @@ const QMap<QString, quint8> Totp::shortNameToEncoder{
  * in the corresponding Encoder
  */
 const QMap<QString, quint8> Totp::nameToEncoder{
-    { "steam", Totp::ENCODER_STEAM },
+    {"steam", Totp::ENCODER_STEAM},
 };
 
 Totp::Totp()
@@ -129,9 +129,9 @@ QString Totp::parseOtpString(QString key, quint8& digits, quint8& step)
 }
 
 QString Totp::generateTotp(const QByteArray key,
-                            quint64 time,
-                            const quint8 numDigits = defaultDigits,
-                            const quint8 step = defaultStep)
+                           quint64 time,
+                           const quint8 numDigits = defaultDigits,
+                           const quint8 step = defaultStep)
 {
     quint64 current = qToBigEndian(time / step);
 
@@ -177,12 +177,12 @@ QString Totp::generateTotp(const QByteArray key,
 
 // See: https://github.com/google/google-authenticator/wiki/Key-Uri-Format
 QUrl Totp::generateOtpString(const QString& secret,
-                              const QString& type,
-                              const QString& issuer,
-                              const QString& username,
-                              const QString& algorithm,
-                              quint8 digits,
-                              quint8 step)
+                             const QString& type,
+                             const QString& issuer,
+                             const QString& username,
+                             const QString& algorithm,
+                             quint8 digits,
+                             quint8 step)
 {
     QUrl keyUri;
     keyUri.setScheme("otpauth");

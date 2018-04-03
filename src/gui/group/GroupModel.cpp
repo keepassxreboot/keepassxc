@@ -44,11 +44,11 @@ void GroupModel::changeDatabase(Database* newDb)
     m_db = newDb;
 
     connect(m_db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
-    connect(m_db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
+    connect(m_db, SIGNAL(groupAboutToAdd(Group*, int)), SLOT(groupAboutToAdd(Group*, int)));
     connect(m_db, SIGNAL(groupAdded()), SLOT(groupAdded()));
     connect(m_db, SIGNAL(groupAboutToRemove(Group*)), SLOT(groupAboutToRemove(Group*)));
     connect(m_db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
-    connect(m_db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
+    connect(m_db, SIGNAL(groupAboutToMove(Group*, Group*, int)), SLOT(groupAboutToMove(Group*, Group*, int)));
     connect(m_db, SIGNAL(groupMoved()), SLOT(groupMoved()));
 
     endResetModel();
@@ -59,8 +59,7 @@ int GroupModel::rowCount(const QModelIndex& parent) const
     if (!parent.isValid()) {
         // we have exactly 1 root item
         return 1;
-    }
-    else {
+    } else {
         const Group* group = groupFromIndex(parent);
         return group->children().size();
     }
@@ -83,8 +82,7 @@ QModelIndex GroupModel::index(int row, int column, const QModelIndex& parent) co
 
     if (!parent.isValid()) {
         group = m_db->rootGroup();
-    }
-    else {
+    } else {
         group = groupFromIndex(parent)->children().at(row);
     }
 
@@ -107,14 +105,12 @@ QModelIndex GroupModel::parent(Group* group) const
     if (!parentGroup) {
         // index is already the root group
         return QModelIndex();
-    }
-    else {
+    } else {
         const Group* grandParentGroup = parentGroup->parentGroup();
         if (!grandParentGroup) {
             // parent is the root group
             return createIndex(0, 0, parentGroup);
-        }
-        else {
+        } else {
             return createIndex(grandParentGroup->children().indexOf(parentGroup), 0, parentGroup);
         }
     }
@@ -130,23 +126,19 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::DisplayRole) {
         return group->name();
-    }
-    else if (role == Qt::DecorationRole) {
+    } else if (role == Qt::DecorationRole) {
         if (group->isExpired()) {
             return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-        }
-        else {
+        } else {
             return group->iconScaledPixmap();
         }
-    }
-    else if (role == Qt::FontRole) {
+    } else if (role == Qt::FontRole) {
         QFont font;
         if (group->isExpired()) {
             font.setStrikeOut(true);
         }
         return font;
-    }
-    else {
+    } else {
         return QVariant();
     }
 }
@@ -166,8 +158,7 @@ QModelIndex GroupModel::index(Group* group) const
 
     if (!group->parentGroup()) {
         row = 0;
-    }
-    else {
+    } else {
         row = group->parentGroup()->children().indexOf(group);
     }
 
@@ -190,17 +181,18 @@ Qt::ItemFlags GroupModel::flags(const QModelIndex& modelIndex) const
 {
     if (!modelIndex.isValid()) {
         return Qt::NoItemFlags;
-    }
-    else if (modelIndex == index(0, 0)) {
+    } else if (modelIndex == index(0, 0)) {
         return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDropEnabled;
-    }
-    else {
+    } else {
         return QAbstractItemModel::flags(modelIndex) | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled;
     }
 }
 
-bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
-                              int row, int column, const QModelIndex& parent)
+bool GroupModel::dropMimeData(const QMimeData* data,
+                              Qt::DropAction action,
+                              int row,
+                              int column,
+                              const QModelIndex& parent)
 {
     Q_UNUSED(column);
 
@@ -228,7 +220,6 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
     // decode and insert
     QByteArray encoded = data->data(isGroup ? types.at(0) : types.at(1));
     QDataStream stream(&encoded, QIODevice::ReadOnly);
-
 
     Group* parentGroup = groupFromIndex(parent);
 
@@ -258,8 +249,7 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
         Group* group;
         if (action == Qt::MoveAction) {
             group = dragGroup;
-        }
-        else {
+        } else {
             group = dragGroup->clone();
         }
 
@@ -272,8 +262,7 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
         }
 
         group->setParent(parentGroup, row);
-    }
-    else {
+    } else {
         if (row != -1) {
             return false;
         }
@@ -296,8 +285,7 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
             Entry* entry;
             if (action == Qt::MoveAction) {
                 entry = dragEntry;
-            }
-            else {
+            } else {
                 entry = dragEntry->clone(Entry::CloneNewUuid | Entry::CloneResetTimeInfo);
             }
 
@@ -305,10 +293,8 @@ bool GroupModel::dropMimeData(const QMimeData* data, Qt::DropAction action,
             Database* targetDb = parentGroup->database();
             Uuid customIcon = entry->iconUuid();
 
-            if (sourceDb != targetDb && !customIcon.isNull()
-                    && !targetDb->metadata()->containsCustomIcon(customIcon)) {
-                targetDb->metadata()->addCustomIcon(customIcon,
-                                                    sourceDb->metadata()->customIcon(customIcon));
+            if (sourceDb != targetDb && !customIcon.isNull() && !targetDb->metadata()->containsCustomIcon(customIcon)) {
+                targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon));
             }
 
             entry->setGroup(parentGroup);
@@ -355,8 +341,7 @@ QMimeData* GroupModel::mimeData(const QModelIndexList& indexes) const
     if (seenGroups.isEmpty()) {
         delete data;
         return nullptr;
-    }
-    else {
+    } else {
         data->setData(mimeTypes().at(0), encoded);
         return data;
     }

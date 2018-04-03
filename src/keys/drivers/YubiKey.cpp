@@ -21,12 +21,12 @@
 #include <QDebug>
 
 #include <ykcore.h>
-#include <yubikey.h>
 #include <ykdef.h>
 #include <ykstatus.h>
+#include <yubikey.h>
 
-#include "core/Tools.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 #include "crypto/Random.h"
 
 #include "YubiKey.h"
@@ -36,7 +36,10 @@
 #define m_yk (static_cast<YK_KEY*>(m_yk_void))
 #define m_ykds (static_cast<YK_STATUS*>(m_ykds_void))
 
-YubiKey::YubiKey() : m_yk_void(NULL), m_ykds_void(NULL), m_mutex(QMutex::Recursive)
+YubiKey::YubiKey()
+    : m_yk_void(NULL)
+    , m_ykds_void(NULL)
+    , m_mutex(QMutex::Recursive)
 {
 }
 
@@ -188,8 +191,8 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
         paddedChallenge.append(QByteArray(padLen, padLen));
     }
 
-    const unsigned char *c;
-    unsigned char *r;
+    const unsigned char* c;
+    unsigned char* r;
     c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
     r = reinterpret_cast<unsigned char*>(response.data());
 

@@ -24,7 +24,8 @@
 class AttributesListView : public QListView
 {
 public:
-    explicit AttributesListView(QWidget* parent = 0) : QListView(parent)
+    explicit AttributesListView(QWidget* parent = 0)
+        : QListView(parent)
     {
         setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
     }

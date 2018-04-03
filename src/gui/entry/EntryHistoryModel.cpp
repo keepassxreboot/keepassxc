@@ -41,8 +41,7 @@ int EntryHistoryModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid()) {
         return m_historyEntries.count();
-    }
-    else {
+    } else {
         return 0;
     }
 }
@@ -61,8 +60,7 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
         case 0:
             if (role == Qt::DisplayRole) {
                 return lastModificationLocalTime.toString(Qt::SystemLocaleShortDate);
-            }
-            else {
+            } else {
                 return lastModificationLocalTime;
             }
         case 1:

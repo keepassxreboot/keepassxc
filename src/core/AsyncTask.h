@@ -22,42 +22,42 @@
 #include <QFutureWatcher>
 #include <QtConcurrent>
 
-
 /**
  * Asynchronously run computations outside the GUI thread.
  */
 namespace AsyncTask
 {
 
-/**
- * Wait for the given future without blocking the event loop.
- *
- * @param future future to wait for
- * @return async task result
- */
-template<typename FunctionObject>
-typename std::result_of<FunctionObject()>::type waitForFuture(QFuture<typename std::result_of<FunctionObject()>::type> future)
-{
-    QEventLoop loop;
-    QFutureWatcher<typename std::result_of<FunctionObject()>::type> watcher;
-    QObject::connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
-    watcher.setFuture(future);
-    loop.exec();
-    return future.result();
-}
+    /**
+     * Wait for the given future without blocking the event loop.
+     *
+     * @param future future to wait for
+     * @return async task result
+     */
+    template <typename FunctionObject>
+    typename std::result_of<FunctionObject()>::type
+    waitForFuture(QFuture<typename std::result_of<FunctionObject()>::type> future)
+    {
+        QEventLoop loop;
+        QFutureWatcher<typename std::result_of<FunctionObject()>::type> watcher;
+        QObject::connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
+        watcher.setFuture(future);
+        loop.exec();
+        return future.result();
+    }
 
-/**
- * Run a given task and wait for it to finish without blocking the event loop.
- *
- * @param task std::function object to run
- * @return async task result
- */
-template<typename FunctionObject>
-typename std::result_of<FunctionObject()>::type runAndWaitForFuture(FunctionObject task)
-{
-    return waitForFuture<FunctionObject>(QtConcurrent::run(task));
-}
+    /**
+     * Run a given task and wait for it to finish without blocking the event loop.
+     *
+     * @param task std::function object to run
+     * @return async task result
+     */
+    template <typename FunctionObject>
+    typename std::result_of<FunctionObject()>::type runAndWaitForFuture(FunctionObject task)
+    {
+        return waitForFuture<FunctionObject>(QtConcurrent::run(task));
+    }
 
-};  // namespace AsyncTask
+}; // namespace AsyncTask
 
-#endif //KEEPASSXC_ASYNCTASK_HPP
+#endif // KEEPASSXC_ASYNCTASK_HPP

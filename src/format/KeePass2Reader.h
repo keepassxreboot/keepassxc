@@ -18,21 +18,21 @@
 #ifndef KEEPASSX_KEEPASS2READER_H
 #define KEEPASSX_KEEPASS2READER_H
 
-#include "format/KeePass2.h"
-#include "core/Database.h"
-#include "keys/CompositeKey.h"
 #include "KdbxReader.h"
+#include "core/Database.h"
+#include "format/KeePass2.h"
+#include "keys/CompositeKey.h"
 
-#include <QtGlobal>
 #include <QByteArray>
-#include <QString>
 #include <QCoreApplication>
-#include <QScopedPointer>
 #include <QIODevice>
+#include <QScopedPointer>
+#include <QString>
+#include <QtGlobal>
 
 class KeePass2Reader
 {
-Q_DECLARE_TR_FUNCTIONS(KdbxReader)
+    Q_DECLARE_TR_FUNCTIONS(KdbxReader)
 
 public:
     Database* readDatabase(const QString& filename, const CompositeKey& key);
@@ -46,6 +46,7 @@ public:
 
     QSharedPointer<KdbxReader> reader() const;
     quint32 version() const;
+
 private:
     void raiseError(const QString& errorMessage);
 

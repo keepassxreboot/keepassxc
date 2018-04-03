@@ -116,7 +116,8 @@ bool Crypto::checkAlgorithms()
 
 bool Crypto::selfTest()
 {
-    return testSha256() && testSha512() && testAes256Cbc() && testAes256Ecb() && testTwofish() && testSalsa20() && testChaCha20();
+    return testSha256() && testSha512() && testAes256Cbc() && testAes256Ecb() && testTwofish() && testSalsa20()
+           && testChaCha20();
 }
 
 void Crypto::raiseError(const QString& str)
@@ -127,8 +128,8 @@ void Crypto::raiseError(const QString& str)
 
 bool Crypto::testSha256()
 {
-    QByteArray sha256Test = CryptoHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
-                                             CryptoHash::Sha256);
+    QByteArray sha256Test =
+        CryptoHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq", CryptoHash::Sha256);
 
     if (sha256Test != QByteArray::fromHex("248D6A61D20638B8E5C026930C3E6039A33CE45964FF2167F6ECEDD419DB06C1")) {
         raiseError("SHA-256 mismatch.");
@@ -140,10 +141,11 @@ bool Crypto::testSha256()
 
 bool Crypto::testSha512()
 {
-    QByteArray sha512Test = CryptoHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq",
-                                             CryptoHash::Sha512);
+    QByteArray sha512Test =
+        CryptoHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq", CryptoHash::Sha512);
 
-    if (sha512Test != QByteArray::fromHex("204a8fc6dda82f0a0ced7beb8e08a41657c16ef468b228a8279be331a703c33596fd15c13b1b07f9aa1d3bea57789ca031ad85c7a71dd70354ec631238ca3445")) {
+    if (sha512Test != QByteArray::fromHex("204a8fc6dda82f0a0ced7beb8e08a41657c16ef468b228a8279be331a703c33596fd15c13b1b"
+                                          "07f9aa1d3bea57789ca031ad85c7a71dd70354ec631238ca3445")) {
         raiseError("SHA-512 mismatch.");
         return false;
     }
@@ -262,7 +264,6 @@ bool Crypto::testTwofish()
         return false;
     }
 
-
     SymmetricCipher twofishDecrypt(SymmetricCipher::Twofish, SymmetricCipher::Cbc, SymmetricCipher::Decrypt);
     if (!twofishDecrypt.init(key, iv)) {
         raiseError(twofishEncrypt.errorString());
@@ -289,8 +290,7 @@ bool Crypto::testSalsa20()
     QByteArray salsa20Cipher = QByteArray::fromHex("B4C0AFA503BE7FC29A62058166D56F8F");
     bool ok;
 
-    SymmetricCipher salsa20Stream(SymmetricCipher::Salsa20, SymmetricCipher::Stream,
-                                  SymmetricCipher::Encrypt);
+    SymmetricCipher salsa20Stream(SymmetricCipher::Salsa20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
     if (!salsa20Stream.init(salsa20Key, salsa20iv)) {
         raiseError(salsa20Stream.errorString());
         return false;
@@ -309,15 +309,17 @@ bool Crypto::testSalsa20()
     return true;
 }
 
-bool Crypto::testChaCha20() {
+bool Crypto::testChaCha20()
+{
     QByteArray chacha20Key = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000");
     QByteArray chacha20iv = QByteArray::fromHex("0000000000000000");
-    QByteArray chacha20Plain = QByteArray::fromHex("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-    QByteArray chacha20Cipher = QByteArray::fromHex("76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7da41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586");
+    QByteArray chacha20Plain = QByteArray::fromHex("0000000000000000000000000000000000000000000000000000000000000000000"
+                                                   "0000000000000000000000000000000000000000000000000000000000000");
+    QByteArray chacha20Cipher = QByteArray::fromHex("76b8e0ada0f13d90405d6ae55386bd28bdd219b8a08ded1aa836efcc8b770dc7da"
+                                                    "41597c5157488d7724e03fb8d84a376a43b8f41518a11cc387b669b2ee6586");
     bool ok;
 
-    SymmetricCipher chacha20Stream(SymmetricCipher::ChaCha20, SymmetricCipher::Stream,
-                                  SymmetricCipher::Encrypt);
+    SymmetricCipher chacha20Stream(SymmetricCipher::ChaCha20, SymmetricCipher::Stream, SymmetricCipher::Encrypt);
     if (!chacha20Stream.init(chacha20Key, chacha20iv)) {
         raiseError(chacha20Stream.errorString());
         return false;

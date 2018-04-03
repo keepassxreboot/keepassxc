@@ -19,10 +19,9 @@
 
 #include <QDateTime>
 
-QDateTime operator+(const QDateTime& dateTime, const TimeDelta& delta) {
-    return dateTime.addDays(delta.getDays())
-           .addMonths(delta.getMonths())
-           .addYears(delta.getYears());
+QDateTime operator+(const QDateTime& dateTime, const TimeDelta& delta)
+{
+    return dateTime.addDays(delta.getDays()).addMonths(delta.getMonths()).addYears(delta.getYears());
 }
 
 TimeDelta TimeDelta::fromDays(int days)

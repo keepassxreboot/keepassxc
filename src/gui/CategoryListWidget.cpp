@@ -19,15 +19,15 @@
 #include "ui_CategoryListWidget.h"
 
 #include <QListWidget>
+#include <QPainter>
 #include <QScrollBar>
 #include <QSize>
 #include <QStyledItemDelegate>
-#include <QPainter>
 
 CategoryListWidget::CategoryListWidget(QWidget* parent)
-    : QWidget(parent),
-      m_itemDelegate(nullptr),
-      m_ui(new Ui::CategoryListWidget())
+    : QWidget(parent)
+    , m_itemDelegate(nullptr)
+    , m_ui(new Ui::CategoryListWidget())
 {
     m_ui->setupUi(this);
     m_itemDelegate = new CategoryListWidgetDelegate(m_ui->categoryList);
@@ -38,7 +38,8 @@ CategoryListWidget::CategoryListWidget(QWidget* parent)
     connect(m_ui->scrollUp, SIGNAL(clicked()), SLOT(scrollCategoriesUp()));
     connect(m_ui->scrollDown, SIGNAL(clicked()), SLOT(scrollCategoriesDown()));
     connect(m_ui->categoryList->verticalScrollBar(), SIGNAL(valueChanged(int)), SLOT(updateCategoryScrollButtons()));
-    connect(m_ui->categoryList->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), SLOT(updateCategoryScrollButtons()));
+    connect(
+        m_ui->categoryList->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), SLOT(updateCategoryScrollButtons()));
 }
 
 CategoryListWidget::~CategoryListWidget()
@@ -128,16 +129,14 @@ void CategoryListWidget::updateCategoryScrollButtons()
 
 void CategoryListWidget::scrollCategoriesUp()
 {
-    m_ui->categoryList->verticalScrollBar()->setValue(
-        m_ui->categoryList->verticalScrollBar()->value() - m_ui->categoryList->verticalScrollBar()->pageStep()
-    );
+    m_ui->categoryList->verticalScrollBar()->setValue(m_ui->categoryList->verticalScrollBar()->value()
+                                                      - m_ui->categoryList->verticalScrollBar()->pageStep());
 }
 
 void CategoryListWidget::scrollCategoriesDown()
 {
-    m_ui->categoryList->verticalScrollBar()->setValue(
-        m_ui->categoryList->verticalScrollBar()->value() + m_ui->categoryList->verticalScrollBar()->pageStep()
-    );
+    m_ui->categoryList->verticalScrollBar()->setValue(m_ui->categoryList->verticalScrollBar()->value()
+                                                      + m_ui->categoryList->verticalScrollBar()->pageStep());
 }
 
 void CategoryListWidget::emitCategoryChanged(int index)
@@ -145,15 +144,14 @@ void CategoryListWidget::emitCategoryChanged(int index)
     emit categoryChanged(index);
 }
 
-
 /* =============================================================================================== */
 
-
 CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
-    : QStyledItemDelegate(parent),
-      m_listWidget(parent),
-      m_size(minWidth(), 96)
+    : QStyledItemDelegate(parent)
+    , m_listWidget(parent)
+    , m_size(96, 96)
 {
+    m_size.setWidth(minWidth());
     if (m_listWidget && m_listWidget->width() > m_size.width()) {
         m_size.setWidth(m_listWidget->width());
     }
@@ -164,7 +162,10 @@ CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
 class WindowsCorrectedStyle : public QProxyStyle
 {
 public:
-    void drawPrimitive(PrimitiveElement element, const QStyleOption* option, QPainter* painter, const QWidget* widget) const override
+    void drawPrimitive(PrimitiveElement element,
+                       const QStyleOption* option,
+                       QPainter* painter,
+                       const QWidget* widget) const override
     {
         painter->save();
 
@@ -186,7 +187,9 @@ public:
 };
 #endif
 
-void CategoryListWidgetDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void CategoryListWidgetDelegate::paint(QPainter* painter,
+                                       const QStyleOptionViewItem& option,
+                                       const QModelIndex& index) const
 {
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
@@ -224,8 +227,8 @@ int CategoryListWidgetDelegate::minWidth() const
 
     for (int i = 0; i < c; ++i) {
         QFontMetrics fm(m_listWidget->font());
-        QRect fontRect = fm.boundingRect(
-            QRect(0, 0, 0, 0), Qt::TextWordWrap | Qt::ElideNone, m_listWidget->item(i)->text());
+        QRect fontRect =
+            fm.boundingRect(QRect(0, 0, 0, 0), Qt::TextWordWrap | Qt::ElideNone, m_listWidget->item(i)->text());
 
         if (fontRect.width() > maxWidth) {
             maxWidth = fontRect.width();
@@ -238,7 +241,7 @@ int CategoryListWidgetDelegate::minWidth() const
     return maxWidth < m_size.height() ? m_size.height() : maxWidth;
 }
 
-QSize CategoryListWidgetDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize CategoryListWidgetDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);

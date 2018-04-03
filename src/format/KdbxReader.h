@@ -33,7 +33,7 @@ class QIODevice;
  */
 class KdbxReader
 {
-Q_DECLARE_TR_FUNCTIONS(KdbxReader)
+    Q_DECLARE_TR_FUNCTIONS(KdbxReader)
 
 public:
     KdbxReader() = default;
@@ -61,8 +61,8 @@ protected:
      * @param keepDatabase keep database in case of read failure
      * @return pointer to the read database, nullptr on failure
      */
-    virtual Database* readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
-                                       const CompositeKey& key, bool keepDatabase) = 0;
+    virtual Database*
+    readDatabaseImpl(QIODevice* device, const QByteArray& headerData, const CompositeKey& key, bool keepDatabase) = 0;
 
     /**
      * Read next header field from stream.
@@ -103,5 +103,4 @@ private:
     QString m_errorStr = "";
 };
 
-
-#endif //KEEPASSXC_KDBXREADER_H
+#endif // KEEPASSXC_KDBXREADER_H

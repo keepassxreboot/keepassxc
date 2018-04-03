@@ -19,9 +19,9 @@
 #ifndef QTOTP_H
 #define QTOTP_H
 
-#include <QtCore/qglobal.h>
-#include <QString>
 #include <QMap>
+#include <QString>
+#include <QtCore/qglobal.h>
 
 class QUrl;
 

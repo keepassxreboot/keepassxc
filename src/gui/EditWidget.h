@@ -20,15 +20,16 @@
 #define KEEPASSX_EDITWIDGET_H
 
 #include <QScopedPointer>
-#include <QtWidgets/QStyledItemDelegate>
 #include <QStyledItemDelegate>
+#include <QtWidgets/QStyledItemDelegate>
 
 #include "gui/DialogyWidget.h"
 #include "gui/MessageWidget.h"
 
 class QLabel;
 
-namespace Ui {
+namespace Ui
+{
     class EditWidget;
 }
 
@@ -47,6 +48,7 @@ public:
     QLabel* headlineLabel();
     void setReadOnly(bool readOnly);
     bool readOnly() const;
+    void enableApplyButton(bool enabled);
 
 signals:
     void apply();

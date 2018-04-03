@@ -18,9 +18,9 @@
 #ifndef KEEPASSXC_TESTKEEPASS2FORMAT_H
 #define KEEPASSXC_TESTKEEPASS2FORMAT_H
 
+#include <QBuffer>
 #include <QDateTime>
 #include <QObject>
-#include <QBuffer>
 #include <QScopedPointer>
 
 #include "core/Database.h"
@@ -30,7 +30,7 @@
  */
 class TestKeePass2Format : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 private slots:
     void initTestCase();
@@ -71,10 +71,16 @@ protected:
     virtual Database* readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) = 0;
     virtual void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) = 0;
 
-    virtual void readKdbx(QIODevice* device, CompositeKey const& key, QScopedPointer<Database>& db,
-                          bool& hasError, QString& errorString) = 0;
-    virtual void readKdbx(const QString& path, CompositeKey const& key, QScopedPointer<Database>& db,
-                          bool& hasError, QString& errorString) = 0;
+    virtual void readKdbx(QIODevice* device,
+                          CompositeKey const& key,
+                          QScopedPointer<Database>& db,
+                          bool& hasError,
+                          QString& errorString) = 0;
+    virtual void readKdbx(const QString& path,
+                          CompositeKey const& key,
+                          QScopedPointer<Database>& db,
+                          bool& hasError,
+                          QString& errorString) = 0;
     virtual void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) = 0;
 
     QScopedPointer<Database> m_xmlDb;

@@ -22,8 +22,8 @@
 #include <QModelIndex>
 #include <QScopedPointer>
 
-#include "gui/EditWidget.h"
 #include "config-keepassx.h"
+#include "gui/EditWidget.h"
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
@@ -43,7 +43,8 @@ class QStackedLayout;
 class OpenSSHKey;
 #endif
 
-namespace Ui {
+namespace Ui
+{
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetAutoType;
     class EditEntryWidgetSSHAgent;
@@ -60,8 +61,7 @@ public:
     explicit EditEntryWidget(QWidget* parent = nullptr);
     ~EditEntryWidget();
 
-    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
-                   Database* database);
+    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName, Database* database);
 
     void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
@@ -100,9 +100,11 @@ private slots:
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
     void pickColor();
+    void setUnsavedChanges(bool hasUnsaved = true);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
     void updateSSHAgentAttachment();
+    void updateSSHAgentAttachments();
     void updateSSHAgentKeyInfo();
     void browsePrivateKey();
     void addKeyToAgent();
@@ -121,6 +123,7 @@ private:
 #endif
     void setupProperties();
     void setupHistory();
+    void setupEntryUpdate();
     void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();
@@ -128,7 +131,7 @@ private:
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
-    bool getOpenSSHKey(OpenSSHKey& key);
+    bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
     void saveSSHAgentConfig();
 #endif
 

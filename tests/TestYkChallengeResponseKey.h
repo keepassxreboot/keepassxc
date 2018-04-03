@@ -24,7 +24,7 @@
 
 #include "keys/YkChallengeResponseKey.h"
 
-class TestYubiKeyChalResp: public QObject
+class TestYubiKeyChalResp : public QObject
 {
     Q_OBJECT
 

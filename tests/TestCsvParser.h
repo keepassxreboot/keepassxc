@@ -19,10 +19,10 @@
 #ifndef KEEPASSX_TESTCSVPARSER_H
 #define KEEPASSX_TESTCSVPARSER_H
 
-#include <QObject>
 #include <QFile>
-#include <QTemporaryFile>
+#include <QObject>
 #include <QScopedPointer>
+#include <QTemporaryFile>
 
 #include "core/CsvParser.h"
 
@@ -33,7 +33,6 @@ class TestCsvParser : public QObject
     Q_OBJECT
 
 public:
-
 private slots:
     void init();
     void cleanup();

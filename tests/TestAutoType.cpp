@@ -21,12 +21,12 @@
 
 #include <QPluginLoader>
 
-#include "core/Config.h"
-#include "core/FilePath.h"
-#include "crypto/Crypto.h"
 #include "autotype/AutoType.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
+#include "core/Config.h"
+#include "core/FilePath.h"
+#include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 
 QTEST_GUILESS_MAIN(TestAutoType)
@@ -35,8 +35,9 @@ void TestAutoType::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
-    AutoType::createTestInstance();
+    config()->set("AutoTypeDelay", 1);
     config()->set("security/autotypeask", false);
+    AutoType::createTestInstance();
 
     QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
@@ -93,10 +94,10 @@ void TestAutoType::init()
     m_entry4 = new Entry();
     m_entry4->setGroup(m_group);
     m_entry4->setPassword("custom_attr");
-    m_entry4->attributes()->set("CUSTOM","Attribute",false);
-    m_entry4->attributes()->set("CustomAttrFirst","AttrValueFirst",false);
-    m_entry4->attributes()->set("CustomAttrSecond","AttrValueSecond",false);
-    m_entry4->attributes()->set("CustomAttrThird","AttrValueThird",false);
+    m_entry4->attributes()->set("CUSTOM", "Attribute", false);
+    m_entry4->attributes()->set("CustomAttrFirst", "AttrValueFirst", false);
+    m_entry4->attributes()->set("CustomAttrSecond", "AttrValueSecond", false);
+    m_entry4->attributes()->set("CustomAttrThird", "AttrValueThird", false);
     association.window = "//^CustomAttr1$//";
     association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);
@@ -142,9 +143,7 @@ void TestAutoType::testSingleAutoType()
 
     QCOMPARE(m_test->actionCount(), 14);
     QCOMPARE(m_test->actionChars(),
-             QString("myuser%1mypass%2")
-             .arg(m_test->keyToString(Qt::Key_Tab))
-             .arg(m_test->keyToString(Qt::Key_Enter)));
+             QString("myuser%1mypass%2").arg(m_test->keyToString(Qt::Key_Tab)).arg(m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
@@ -161,10 +160,7 @@ void TestAutoType::testGlobalAutoTypeWithOneMatch()
     m_test->setActiveWindowTitle("custom window");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1association%2")
-             .arg(m_entry1->username())
-             .arg(m_entry1->password()));
+    QCOMPARE(m_test->actionChars(), QString("%1association%2").arg(m_entry1->username()).arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatch()
@@ -174,8 +170,7 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
     m_test->setActiveWindowTitle("An Entry Title!");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlMatch()
@@ -185,8 +180,7 @@ void TestAutoType::testGlobalAutoTypeUrlMatch()
     m_test->setActiveWindowTitle("Dummy - http://example.org/ - <My Browser>");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
@@ -196,8 +190,7 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
     m_test->setActiveWindowTitle("Dummy - http://sub.example.org/ - <My Browser>");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(),
-             QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(), QString("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
@@ -273,32 +266,42 @@ void TestAutoType::testGlobalAutoTypeRegExp()
 void TestAutoType::testAutoTypeSyntaxChecks()
 {
     // Huge sequence
-    QCOMPARE(true, AutoType::checkSyntax("{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
+    QVERIFY(AutoType::checkSyntax(
+        "{word 23}{F1 23}{~ 23}{% 23}{^}{F12}{(}{) 23}{[}{[}{]}{Delay=23}{+}{SUBTRACT}~+%@fixedstring"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{NUMPAD1 3}"));
+    QVERIFY(AutoType::checkSyntax("{NUMPAD1 3}"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{BEEP 3 3}"));
-    QCOMPARE(false, AutoType::checkSyntax("{BEEP 3}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIALTOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL-TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL:TOKEN}"));
+    QVERIFY(AutoType::checkSyntax("{S:SPECIAL_TOKEN}{ENTER}"));
+    QVERIFY(AutoType::checkSyntax("{S:FOO}{S:HELLO WORLD}"));
+    QVERIFY(!AutoType::checkSyntax("{S:SPECIAL_TOKEN{}}"));
 
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY 0x01}"));
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
-    QCOMPARE(true, AutoType::checkSyntax("{VKEY-EX 0x01}"));
+    QVERIFY(AutoType::checkSyntax("{BEEP 3 3}"));
+    QVERIFY(!AutoType::checkSyntax("{BEEP 3}"));
+
+    QVERIFY(AutoType::checkSyntax("{VKEY 0x01}"));
+    QVERIFY(AutoType::checkSyntax("{VKEY VK_LBUTTON}"));
+    QVERIFY(AutoType::checkSyntax("{VKEY-EX 0x01}"));
     // Bad sequence
-    QCOMPARE(false, AutoType::checkSyntax("{{{}}{}{}}{{}}"));
+    QVERIFY(!AutoType::checkSyntax("{{{}}{}{}}{{}}"));
     // Good sequence
-    QCOMPARE(true, AutoType::checkSyntax("{{}{}}{}}{{}"));
-    QCOMPARE(true, AutoType::checkSyntax("{]}{[}{[}{]}"));
-    QCOMPARE(true, AutoType::checkSyntax("{)}{(}{(}{)}"));
+    QVERIFY(AutoType::checkSyntax("{{}{}}{}}{{}"));
+    QVERIFY(AutoType::checkSyntax("{]}{[}{[}{]}"));
+    QVERIFY(AutoType::checkSyntax("{)}{(}{(}{)}"));
     // High DelAY / low delay
-    QCOMPARE(true, AutoType::checkHighDelay("{DelAY 50000}"));
-    QCOMPARE(false, AutoType::checkHighDelay("{delay 50}"));
+    QVERIFY(AutoType::checkHighDelay("{DelAY 50000}"));
+    QVERIFY(!AutoType::checkHighDelay("{delay 50}"));
     // Slow typing
-    QCOMPARE(true, AutoType::checkSlowKeypress("{DelAY=50000}"));
-    QCOMPARE(false, AutoType::checkSlowKeypress("{delay=50}"));
+    QVERIFY(AutoType::checkSlowKeypress("{DelAY=50000}"));
+    QVERIFY(!AutoType::checkSlowKeypress("{delay=50}"));
     // Many repetition / few repetition / delay not repetition
-    QCOMPARE(true, AutoType::checkHighRepetition("{LEFT 50000000}"));
-    QCOMPARE(false, AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
-    QCOMPARE(false, AutoType::checkHighRepetition("{delay 5000000000}"));
+    QVERIFY(AutoType::checkHighRepetition("{LEFT 50000000}"));
+    QVERIFY(!AutoType::checkHighRepetition("{SPACE 10}{TAB 3}{RIGHT 50}"));
+    QVERIFY(!AutoType::checkHighRepetition("{delay 5000000000}"));
 }
 
 void TestAutoType::testAutoTypeEffectiveSequences()
@@ -317,7 +320,7 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     QPointer<Group> group1 = new Group();
     group1->setParent(rootGroup);
     group1->setDefaultAutoTypeSequence(sequenceG1);
-    
+
     // Child group with inherit
     QPointer<Group> group2 = new Group();
     group2->setParent(group1);

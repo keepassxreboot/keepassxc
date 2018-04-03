@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_TESTGROUP_H
 #define KEEPASSX_TESTGROUP_H
 
-#include <QObject>
 #include "core/Database.h"
+#include <QObject>
 
 class TestGroup : public QObject
 {

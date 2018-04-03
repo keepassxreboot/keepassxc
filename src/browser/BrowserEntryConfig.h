@@ -19,11 +19,11 @@
 #ifndef BROWSERENTRYCONFIG_H
 #define BROWSERENTRYCONFIG_H
 
+#include "Variant.h"
 #include <QtCore/QObject>
+#include <QtCore/QSet>
 #include <QtCore/QString>
 #include <QtCore/QStringList>
-#include <QtCore/QSet>
-#include "Variant.h"
 
 class Entry;
 
@@ -31,8 +31,8 @@ class BrowserEntryConfig : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList Allow READ allowedHosts WRITE setAllowedHosts)
-    Q_PROPERTY(QStringList Deny  READ deniedHosts  WRITE setDeniedHosts )
-    Q_PROPERTY(QString     Realm READ realm        WRITE setRealm       )
+    Q_PROPERTY(QStringList Deny READ deniedHosts WRITE setDeniedHosts)
+    Q_PROPERTY(QString Realm READ realm WRITE setRealm)
 
 public:
     BrowserEntryConfig(QObject* object = 0);
@@ -54,7 +54,7 @@ private:
 
     QSet<QString> m_allowedHosts;
     QSet<QString> m_deniedHosts;
-    QString       m_realm;
+    QString m_realm;
 };
 
 #endif // BROWSERENTRYCONFIG_H

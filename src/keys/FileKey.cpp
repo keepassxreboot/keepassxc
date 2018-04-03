@@ -347,8 +347,7 @@ bool FileKey::loadHashed(QIODevice* device)
             return false;
         }
         cryptoHash.addData(buffer);
-    }
-    while (!buffer.isEmpty());
+    } while (!buffer.isEmpty());
 
     m_key = cryptoHash.result();
 

@@ -25,7 +25,7 @@
 #endif
 
 ScreenLockListenerPrivate::ScreenLockListenerPrivate(QWidget* parent)
-	: QObject(parent)
+    : QObject(parent)
 {
 }
 

@@ -59,15 +59,22 @@ To update the project from within the project's folder, you can run the followin
 git pull
 ```
 
+For a stable build, it is recommended to checkout the master branch.
+
+```bash
+git checkout master
+```
+
 Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
 ```
 cd directory-where-sources-live
 mkdir build
 cd build
-cmake -DWITH_TESTS=OFF ...and other options - see below...
+cmake -DWITH_XC_ALL=ON ..
 make
 ```
+
 These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
 (Note the cmake notes/options below.)
 
@@ -86,10 +93,12 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 
 	```
 	  -DWITH_XC_AUTOTYPE=[ON|OFF] Enable/Disable Auto-Type (default: ON)
-	  -DWITH_XC_HTTP=[ON|OFF] Enable/Disable KeePassHTTP and custom icon downloads (default: OFF)
 	  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
 	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable KeePassXC-Browser extension support (default: OFF)
-
+	  -DWITH_XC_NETWORKING=[ON|OFF] Enable/Disable Networking support (favicon download) (default: OFF)
+	  
+	  -DWITH_XC_ALL=[ON|OFF] Enable/Disable compiling all plugins above (default: OFF)
+	  
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
 	  -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
 	  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)

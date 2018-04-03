@@ -23,12 +23,13 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-#include "core/SignalMultiplexer.h"
 #include "core/ScreenLockListener.h"
-#include "gui/DatabaseWidget.h"
+#include "core/SignalMultiplexer.h"
 #include "gui/Application.h"
+#include "gui/DatabaseWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class MainWindow;
 }
 
@@ -37,7 +38,7 @@ class InactivityTimer;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
     Q_CLASSINFO("D-Bus Interface", "org.keepassxc.KeePassXC.MainWindow")
 #endif
@@ -55,12 +56,15 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& fileName, const QString& pw = QString(),
-                      const QString& keyFile = QString());
+    void openDatabase(const QString& fileName, const QString& pw = QString(), const QString& keyFile = QString());
     void appExit();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+    void displayGlobalMessage(const QString& text,
+                              MessageWidget::MessageType type,
+                              bool showClosebutton = true,
                               int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+    void displayTabMessage(const QString& text,
+                           MessageWidget::MessageType type,
+                           bool showClosebutton = true,
                            int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideGlobalMessage();
     void showYubiKeyPopup();
@@ -86,7 +90,7 @@ private slots:
     void switchToKeePass1Database();
     void switchToImportCsv();
     void closePasswordGen();
-    void databaseStatusChanged(DatabaseWidget *dbWidget);
+    void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();
@@ -103,7 +107,7 @@ private slots:
     void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
-    void showKeePassHTTPDeprecationNotice();
+    void showErrorMessage(const QString& message);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -137,7 +141,8 @@ private:
     bool m_appExiting;
 };
 
-#define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \
-                               qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow()) : nullptr)
+#define KEEPASSXC_MAIN_WINDOW                                                                                          \
+    (qobject_cast<Application*>(qApp) ? qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow())      \
+                                      : nullptr)
 
 #endif // KEEPASSX_MAINWINDOW_H

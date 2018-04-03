@@ -32,7 +32,6 @@ const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
 const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
 
-
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
     , m_attachments(new EntryAttachments(this))
@@ -78,8 +77,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
         property = value;
         emit modified();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -129,14 +127,12 @@ QImage Entry::icon() const
 {
     if (m_data.customIcon.isNull()) {
         return databaseIcons()->icon(m_data.iconNumber);
-    }
-    else {
+    } else {
         Q_ASSERT(database());
 
         if (database()) {
             return database()->metadata()->customIcon(m_data.customIcon);
-        }
-        else {
+        } else {
             return QImage();
         }
     }
@@ -146,14 +142,12 @@ QPixmap Entry::iconPixmap() const
 {
     if (m_data.customIcon.isNull()) {
         return databaseIcons()->iconPixmap(m_data.iconNumber);
-    }
-    else {
+    } else {
         Q_ASSERT(database());
 
         if (database()) {
             return database()->metadata()->customIconPixmap(m_data.customIcon);
-        }
-        else {
+        } else {
             return QPixmap();
         }
     }
@@ -164,8 +158,7 @@ QPixmap Entry::iconScaledPixmap() const
     if (m_data.customIcon.isNull()) {
         // built-in icons are 16x16 so don't need to be scaled
         return databaseIcons()->iconPixmap(m_data.iconNumber);
-    }
-    else {
+    } else {
         Q_ASSERT(database());
 
         return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
@@ -381,7 +374,7 @@ void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
     }
     QString data;
 
-    const Totp::Encoder & enc = Totp::encoders.value(digits, Totp::defaultEncoder);
+    const Totp::Encoder& enc = Totp::encoders.value(digits, Totp::defaultEncoder);
 
     if (m_attributes->hasKey("otp")) {
         data = QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(enc.digits == 0 ? digits : enc.digits);
@@ -503,9 +496,9 @@ void Entry::setTitle(const QString& title)
 
 void Entry::setUrl(const QString& url)
 {
-    bool remove = url != m_attributes->value(EntryAttributes::URLKey) &&
-                  (m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "1" ||
-                   m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "0");
+    bool remove = url != m_attributes->value(EntryAttributes::URLKey)
+                  && (m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "1"
+                      || m_attributes->value(EntryAttributes::RememberCmdExecAttr) == "0");
     if (remove) {
         m_attributes->remove(EntryAttributes::RememberCmdExecAttr);
     }
@@ -640,8 +633,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->setUpdateTimeinfo(false);
     if (flags & CloneNewUuid) {
         entry->m_uuid = Uuid::random();
-    }
-    else {
+    } else {
         entry->m_uuid = m_uuid;
     }
     entry->m_data = m_data;
@@ -652,12 +644,14 @@ Entry* Entry::clone(CloneFlags flags) const
     if (flags & CloneUserAsRef) {
         // Build the username reference
         QString username = "{REF:U@I:" + m_uuid.toHex() + "}";
-        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+        entry->m_attributes->set(
+            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
         QString password = "{REF:P@I:" + m_uuid.toHex() + "}";
-        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+        entry->m_attributes->set(
+            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
@@ -681,7 +675,7 @@ Entry* Entry::clone(CloneFlags flags) const
     }
 
     if (flags & CloneRenameTitle)
-        entry->setTitle(entry->title() + tr(" - Clone", "Suffix added to cloned entries"));
+        entry->setTitle(tr("%1 - Clone").arg(entry->title()));
 
     return entry;
 }
@@ -719,8 +713,7 @@ bool Entry::endUpdate()
         m_tmpHistoryItem->setUpdateTimeinfo(true);
         addHistoryItem(m_tmpHistoryItem);
         truncateHistory();
-    }
-    else {
+    } else {
         delete m_tmpHistoryItem;
     }
 
@@ -796,32 +789,32 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
     case PlaceholderType::Unknown:
-        return placeholder;
+        return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth - 1);
     case PlaceholderType::Title:
         if (placeholderType(title()) == PlaceholderType::Title) {
             return title();
         }
-        return resolvePlaceholderRecursive(title(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(title(), maxDepth - 1);
     case PlaceholderType::UserName:
         if (placeholderType(username()) == PlaceholderType::UserName) {
             return username();
         }
-        return resolvePlaceholderRecursive(username(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(username(), maxDepth - 1);
     case PlaceholderType::Password:
         if (placeholderType(password()) == PlaceholderType::Password) {
             return password();
         }
-        return resolvePlaceholderRecursive(password(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(password(), maxDepth - 1);
     case PlaceholderType::Notes:
         if (placeholderType(notes()) == PlaceholderType::Notes) {
             return notes();
         }
-        return resolvePlaceholderRecursive(notes(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(notes(), maxDepth - 1);
     case PlaceholderType::Url:
         if (placeholderType(url()) == PlaceholderType::Url) {
             return url();
         }
-        return resolvePlaceholderRecursive(url(), maxDepth - 1);
+        return resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
     case PlaceholderType::UrlWithoutScheme:
     case PlaceholderType::UrlScheme:
     case PlaceholderType::UrlHost:
@@ -933,8 +926,8 @@ void Entry::setGroup(Group* group)
 
             // copy custom icon to the new database
             if (!iconUuid().isNull() && group->database()
-                    && m_group->database()->metadata()->containsCustomIcon(iconUuid())
-                    && !group->database()->metadata()->containsCustomIcon(iconUuid())) {
+                && m_group->database()->metadata()->containsCustomIcon(iconUuid())
+                && !group->database()->metadata()->containsCustomIcon(iconUuid())) {
                 group->database()->metadata()->addCustomIcon(iconUuid(), icon());
             }
         }
@@ -959,8 +952,7 @@ const Database* Entry::database() const
 {
     if (m_group) {
         return m_group->database();
-    }
-    else {
+    } else {
         return nullptr;
     }
 }
@@ -1028,26 +1020,25 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         return PlaceholderType::Reference;
     }
 
-    static const QMap<QString, PlaceholderType> placeholders {
-        { QStringLiteral("{TITLE}"), PlaceholderType::Title },
-        { QStringLiteral("{USERNAME}"), PlaceholderType::UserName },
-        { QStringLiteral("{PASSWORD}"), PlaceholderType::Password },
-        { QStringLiteral("{NOTES}"), PlaceholderType::Notes },
-        { QStringLiteral("{TOTP}"), PlaceholderType::Totp },
-        { QStringLiteral("{URL}"), PlaceholderType::Url },
-        { QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme },
-        { QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme },
-        { QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme },
-        { QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme },
-        { QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost },
-        { QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort },
-        { QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath },
-        { QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery },
-        { QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment },
-        { QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo },
-        { QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName },
-        { QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword }
-    };
+    static const QMap<QString, PlaceholderType> placeholders{
+        {QStringLiteral("{TITLE}"), PlaceholderType::Title},
+        {QStringLiteral("{USERNAME}"), PlaceholderType::UserName},
+        {QStringLiteral("{PASSWORD}"), PlaceholderType::Password},
+        {QStringLiteral("{NOTES}"), PlaceholderType::Notes},
+        {QStringLiteral("{TOTP}"), PlaceholderType::Totp},
+        {QStringLiteral("{URL}"), PlaceholderType::Url},
+        {QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme},
+        {QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme},
+        {QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme},
+        {QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme},
+        {QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost},
+        {QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort},
+        {QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath},
+        {QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery},
+        {QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment},
+        {QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo},
+        {QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName},
+        {QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword}};
 
     return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
@@ -1062,7 +1053,7 @@ QString Entry::resolveUrl(const QString& url) const
 
     if (newUrl.startsWith("cmd://")) {
         QStringList cmdList = newUrl.split(" ");
-        for (int i=1; i < cmdList.size(); ++i) {
+        for (int i = 1; i < cmdList.size(); ++i) {
             // Don't pass arguments to the resolveUrl function (they look like URL's)
             if (!cmdList[i].startsWith("-") && !cmdList[i].startsWith("/")) {
                 return resolveUrl(cmdList[i].remove(QRegExp("'|\"")));

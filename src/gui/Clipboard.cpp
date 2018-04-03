@@ -88,8 +88,7 @@ void Clipboard::clearClipboard()
         clipboard->clear(QClipboard::Clipboard);
     }
 
-    if (clipboard->supportsSelection()
-            && (clipboard->text(QClipboard::Selection) == m_lastCopied)) {
+    if (clipboard->supportsSelection() && (clipboard->text(QClipboard::Selection) == m_lastCopied)) {
         clipboard->clear(QClipboard::Selection);
     }
 

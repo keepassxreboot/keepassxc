@@ -20,12 +20,15 @@
 
 #include <QList>
 
-template <typename T>
-class ListDeleter
+template <typename T> class ListDeleter
 {
 public:
-    inline explicit ListDeleter(QList<T>* list) : m_list(list) {}
-    inline ~ListDeleter() {
+    inline explicit ListDeleter(QList<T>* list)
+        : m_list(list)
+    {
+    }
+    inline ~ListDeleter()
+    {
         qDeleteAll(*m_list);
     }
 

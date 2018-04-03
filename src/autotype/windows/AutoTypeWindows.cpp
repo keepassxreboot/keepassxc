@@ -94,7 +94,7 @@ void AutoTypePlatformWin::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
 //
 int AutoTypePlatformWin::platformEventFilter(void* event)
 {
-    MSG *msg = static_cast<MSG *>(event);
+    MSG* msg = static_cast<MSG*>(event);
 
     if (msg->message == WM_HOTKEY && msg->wParam == HOTKEY_ID) {
         emit globalShortcutTriggered();
@@ -173,6 +173,7 @@ void AutoTypePlatformWin::sendKey(Qt::Key key, bool isKeyDown)
     ::SendInput(1, &in, sizeof(INPUT));
 }
 
+// clang-format off
 //
 // Translate qt key code to windows virtual key code
 // see: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx
@@ -426,6 +427,7 @@ BOOL AutoTypePlatformWin::isExtendedKey(DWORD nativeKeyCode)
         return FALSE;
     }
 }
+// clang-format on
 
 //
 // Translate qt key modifiers to windows modifiers
@@ -478,17 +480,14 @@ BOOL AutoTypePlatformWin::isAltTabWindow(HWND hwnd)
 //
 // Window title enum proc
 //
-BOOL CALLBACK AutoTypePlatformWin::windowTitleEnumProc(
-    _In_ HWND   hwnd,
-    _In_ LPARAM lParam
-)
+BOOL CALLBACK AutoTypePlatformWin::windowTitleEnumProc(_In_ HWND hwnd, _In_ LPARAM lParam)
 {
     if (!isAltTabWindow(hwnd)) {
         // Skip window
         return TRUE;
     }
 
-    QStringList *list = reinterpret_cast<QStringList *>(lParam);
+    QStringList* list = reinterpret_cast<QStringList*>(lParam);
     QString title = windowTitle(hwnd);
 
     if (!title.isEmpty()) {
@@ -506,7 +505,7 @@ QString AutoTypePlatformWin::windowTitle(HWND hwnd)
     wchar_t title[MAX_WINDOW_TITLE_LENGTH];
     int count = ::GetWindowTextW(hwnd, title, MAX_WINDOW_TITLE_LENGTH);
 
-    return QString::fromUtf16(reinterpret_cast<const ushort *>(title), count);
+    return QString::fromUtf16(reinterpret_cast<const ushort*>(title), count);
 }
 
 //

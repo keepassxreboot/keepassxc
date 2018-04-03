@@ -19,10 +19,11 @@
 #ifndef AGENTSETTINGSWIDGET_H
 #define AGENTSETTINGSWIDGET_H
 
-#include <QWidget>
 #include <QScopedPointer>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
     class AgentSettingsWidget;
 }
 

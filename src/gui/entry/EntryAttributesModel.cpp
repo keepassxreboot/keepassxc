@@ -46,9 +46,9 @@ void EntryAttributesModel::setEntryAttributes(EntryAttributes* entryAttributes)
         connect(m_entryAttributes, SIGNAL(added(QString)), SLOT(attributeAdd()));
         connect(m_entryAttributes, SIGNAL(aboutToBeRemoved(QString)), SLOT(attributeAboutToRemove(QString)));
         connect(m_entryAttributes, SIGNAL(removed(QString)), SLOT(attributeRemove()));
-        connect(m_entryAttributes, SIGNAL(aboutToRename(QString,QString)),
-                SLOT(attributeAboutToRename(QString,QString)));
-        connect(m_entryAttributes, SIGNAL(renamed(QString,QString)), SLOT(attributeRename(QString,QString)));
+        connect(
+            m_entryAttributes, SIGNAL(aboutToRename(QString, QString)), SLOT(attributeAboutToRename(QString, QString)));
+        connect(m_entryAttributes, SIGNAL(renamed(QString, QString)), SLOT(attributeRename(QString, QString)));
         connect(m_entryAttributes, SIGNAL(aboutToBeReset()), SLOT(aboutToReset()));
         connect(m_entryAttributes, SIGNAL(reset()), SLOT(reset()));
     }
@@ -60,8 +60,7 @@ int EntryAttributesModel::rowCount(const QModelIndex& parent) const
 {
     if (!m_entryAttributes || parent.isValid()) {
         return 0;
-    }
-    else {
+    } else {
         return m_attributes.size();
     }
 }
@@ -77,8 +76,7 @@ QVariant EntryAttributesModel::headerData(int section, Qt::Orientation orientati
 {
     if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole) && (section == 0)) {
         return tr("Name");
-    }
-    else {
+    } else {
         return QVariant();
     }
 }
@@ -94,16 +92,14 @@ QVariant EntryAttributesModel::data(const QModelIndex& index, int role) const
 
 bool EntryAttributesModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
-    if (!index.isValid() || role != Qt::EditRole || value.type() != QVariant::String
-            || value.toString().isEmpty()) {
+    if (!index.isValid() || role != Qt::EditRole || value.type() != QVariant::String || value.toString().isEmpty()) {
         return false;
     }
 
     QString oldKey = m_attributes.at(index.row());
     QString newKey = value.toString();
 
-    if (EntryAttributes::isDefaultAttribute(newKey)
-            || m_entryAttributes->keys().contains(newKey)) {
+    if (EntryAttributes::isDefaultAttribute(newKey) || m_entryAttributes->keys().contains(newKey)) {
         return false;
     }
     m_entryAttributes->rename(oldKey, newKey);
@@ -115,8 +111,7 @@ Qt::ItemFlags EntryAttributesModel::flags(const QModelIndex& index) const
 {
     if (!index.isValid()) {
         return Qt::NoItemFlags;
-    }
-    else {
+    } else {
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
     }
 }
@@ -127,8 +122,7 @@ QModelIndex EntryAttributesModel::indexByKey(const QString& key) const
 
     if (row == -1) {
         return QModelIndex();
-    }
-    else {
+    } else {
         return index(row, 0);
     }
 }
@@ -137,8 +131,7 @@ QString EntryAttributesModel::keyByIndex(const QModelIndex& index) const
 {
     if (!index.isValid()) {
         return QString();
-    }
-    else {
+    } else {
         return m_attributes.at(index.row());
     }
 }
@@ -147,7 +140,7 @@ void EntryAttributesModel::attributeChange(const QString& key)
 {
     int row = m_attributes.indexOf(key);
     Q_ASSERT(row != -1);
-    emit dataChanged(index(row, 0), index(row, columnCount()-1));
+    emit dataChanged(index(row, 0), index(row, columnCount() - 1));
 }
 
 void EntryAttributesModel::attributeAboutToAdd(const QString& key)
@@ -194,8 +187,7 @@ void EntryAttributesModel::attributeAboutToRename(const QString& oldKey, const Q
         bool result = beginMoveRows(QModelIndex(), oldRow, oldRow, QModelIndex(), newRow);
         Q_UNUSED(result);
         Q_ASSERT(result);
-    }
-    else {
+    } else {
         m_nextRenameDataChange = true;
     }
 }
@@ -208,8 +200,7 @@ void EntryAttributesModel::attributeRename(const QString& oldKey, const QString&
 
     if (!m_nextRenameDataChange) {
         endMoveRows();
-    }
-    else {
+    } else {
         m_nextRenameDataChange = false;
 
         QModelIndex keyIndex = index(m_attributes.indexOf(newKey), 0);
