@@ -47,6 +47,9 @@ option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website 
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
+if(APPLE)
+  option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
+endif()
 
 if(WITH_XC_ALL)
   # Enable all options
@@ -55,6 +58,9 @@ if(WITH_XC_ALL)
   set(WITH_XC_BROWSER ON)
   set(WITH_XC_YUBIKEY ON)
   set(WITH_XC_SSHAGENT ON)
+  if(APPLE)
+    set(WITH_XC_TOUCHID ON)
+  endif()
 endif()
 
 # Process ui files automatically from source files

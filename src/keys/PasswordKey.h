@@ -31,6 +31,7 @@ public:
     void setPassword(const QString& password);
     PasswordKey* clone() const;
 
+    static PasswordKey fromRawKey(const QByteArray& rawKey);
 private:
     QByteArray m_key;
 };

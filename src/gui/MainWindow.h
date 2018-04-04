@@ -106,6 +106,7 @@ private slots:
     void hideWindow();
     void toggleWindow();
     void lockDatabasesAfterInactivity();
+    void forgetTouchIDAfterInactivity();
     void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
@@ -133,6 +134,7 @@ private:
     QActionGroup* m_copyAdditionalAttributeActions;
     QStringList m_openDatabases;
     InactivityTimer* m_inactivityTimer;
+    InactivityTimer* m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
     ScreenLockListener* m_screenLockListener;

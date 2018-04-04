@@ -198,6 +198,9 @@ add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network a
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+if(APPLE)
+    add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
+endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
 add_subdirectory(browser)
@@ -239,6 +242,10 @@ else()
   list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
 endif()
 
+if(WITH_XC_TOUCHID)
+  list(APPEND keepassx_SOURCES touchid/TouchID.mm)
+endif()
+
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
@@ -265,6 +272,10 @@ if(APPLE)
     target_link_libraries(keepassx_core "-framework Foundation")
     if(Qt5MacExtras_FOUND)
       target_link_libraries(keepassx_core Qt5::MacExtras)
+    endif()
+    if(WITH_XC_TOUCHID)
+      target_link_libraries(keepassx_core "-framework Security")
+      target_link_libraries(keepassx_core "-framework LocalAuthentication")
     endif()
 endif()
 if (UNIX AND NOT APPLE)
@@ -296,6 +307,11 @@ if(APPLE AND WITH_APP_BUNDLE)
   set_target_properties(${PROGNAME} PROPERTIES
                         MACOSX_BUNDLE ON
                         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+
+  if(WITH_XC_TOUCHID)
+    set_target_properties(${PROGNAME} PROPERTIES 
+                          CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements" )
+  endif()
 
   if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
     install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"

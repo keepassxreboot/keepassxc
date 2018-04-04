@@ -27,6 +27,8 @@
 #include "core/Global.h"
 #include "core/Translator.h"
 
+#include "touchid/TouchID.h"
+
 class SettingsWidget::ExtraPage
 {
 public:
@@ -86,9 +88,25 @@ SettingsWidget::SettingsWidget(QWidget* parent)
             m_secUi->lockDatabaseIdleSpinBox,
             SLOT(setEnabled(bool)));
 
+    connect(m_secUi->touchIDResetCheckBox,
+            SIGNAL(toggled(bool)),
+            m_secUi->touchIDResetSpinBox,
+            SLOT(setEnabled(bool)));
+
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
 #endif
+
+#ifndef WITH_XC_TOUCHID
+    bool hideTouchID = true;
+#else
+    bool hideTouchID = !TouchID::getInstance().isAvailable();
+#endif
+    if (hideTouchID) {
+        m_secUi->touchIDResetCheckBox->setVisible(false);
+        m_secUi->touchIDResetSpinBox->setVisible(false);
+        m_secUi->touchIDResetOnScreenLockCheckBox->setVisible(false);
+    }
 }
 
 SettingsWidget::~SettingsWidget()
@@ -175,6 +193,10 @@ void SettingsWidget::loadSettings()
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
 
+    m_secUi->touchIDResetCheckBox->setChecked(config()->get("security/resettouchid").toBool());
+    m_secUi->touchIDResetSpinBox->setValue(config()->get("security/resettouchidtimeout").toInt());
+    m_secUi->touchIDResetOnScreenLockCheckBox->setChecked(config()->get("security/resettouchidscreenlock").toBool());
+
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -240,6 +262,10 @@ void SettingsWidget::saveSettings()
     config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
     config()->set("security/hidenotes", m_secUi->hideNotesCheckBox->isChecked());
+
+    config()->set("security/resettouchid", m_secUi->touchIDResetCheckBox->isChecked());
+    config()->set("security/resettouchidtimeout", m_secUi->touchIDResetSpinBox->value());
+    config()->set("security/resettouchidscreenlock", m_secUi->touchIDResetOnScreenLockCheckBox->isChecked());
 
     // Security: clear storage if related settings are disabled
     if (!config()->get("RememberLastDatabases").toBool()) {
