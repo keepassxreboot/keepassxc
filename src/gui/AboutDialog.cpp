@@ -92,6 +92,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 #ifdef WITH_XC_YUBIKEY
     extensions += "\n- " + tr("YubiKey");
 #endif
+#ifdef WITH_XC_TOUCHID
+    extensions += "\n- " + tr("TouchID");
+#endif
 
     if (extensions.isEmpty())
         extensions = " " + tr("None");

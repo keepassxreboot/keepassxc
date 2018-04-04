@@ -30,6 +30,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "keys/YkChallengeResponseKey.h"
+#include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
 
@@ -82,6 +83,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->gridLayout->setContentsMargins(10, 0, 0, 0);
     m_ui->labelLayout->setContentsMargins(10, 0, 10, 0);
 #endif
+
+#ifndef WITH_XC_TOUCHID
+    m_ui->checkTouchID->setVisible(false);
+#else
+    if (!TouchID::getInstance().isAvailable()) {
+        m_ui->checkTouchID->setVisible(false);
+    }
+#endif
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -132,6 +141,9 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
+    QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+    m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
+    
     m_ui->editPassword->setFocus();
 }
 
@@ -142,6 +154,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->checkPassword->setChecked(true);
     m_ui->checkKeyFile->setChecked(false);
     m_ui->checkChallengeResponse->setChecked(false);
+    m_ui->checkTouchID->setChecked(false);
     m_ui->buttonTogglePassword->setChecked(false);
     m_db = nullptr;
 }
@@ -188,6 +201,24 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::restoreOverrideCursor();
 
     if (m_db) {
+#ifdef WITH_XC_TOUCHID
+        QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+
+        // check if TouchID can & should be used to unlock the database next time
+        if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
+            // encrypt and store key blob
+            if (TouchID::getInstance().storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
+                useTouchID.insert(m_filename, true);
+            }
+        } else {
+            // when TouchID not available or unchecked, reset for the current database
+            TouchID::getInstance().reset(m_filename);
+            useTouchID.insert(m_filename, false);
+        }
+
+        config()->set("UseTouchID", useTouchID);
+#endif
+
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
@@ -196,6 +227,11 @@ void DatabaseOpenWidget::openDatabase()
         m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
                                          MessageWidget::Error);
         m_ui->editPassword->clear();
+
+#ifdef WITH_XC_TOUCHID
+        // unable to unlock database, reset TouchID for the current database
+        TouchID::getInstance().reset(m_filename);
+#endif
     }
 }
 
@@ -206,6 +242,21 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     if (m_ui->checkPassword->isChecked()) {
         masterKey->addKey(PasswordKey(m_ui->editPassword->text()));
     }
+
+#ifdef WITH_XC_TOUCHID
+    // check if TouchID is available and enabled for unlocking the database
+    if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable() && masterKey->isEmpty()) {
+        // try to get, decrypt and use PasswordKey
+        QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
+        if (passwordKey != NULL) {
+            // check if the user cancelled the operation
+            if (passwordKey.isNull())
+                return QSharedPointer<CompositeKey>();
+            
+            masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
+        }
+    }
+#endif
 
     QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
     QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();

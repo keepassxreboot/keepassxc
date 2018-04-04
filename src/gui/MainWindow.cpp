@@ -60,6 +60,8 @@
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/SettingsWidget.h"
 
+#include "touchid/TouchID.h"
+
 #ifdef WITH_XC_BROWSER
 class BrowserPlugin : public ISettingsPage
 {
@@ -182,6 +184,10 @@ MainWindow::MainWindow()
 
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
+#ifdef WITH_XC_TOUCHID
+    m_touchIDinactivityTimer = new InactivityTimer(this);
+    connect(m_touchIDinactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(forgetTouchIDAfterInactivity()));
+#endif
     applySettingsChanges();
 
     m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
@@ -869,6 +875,21 @@ void MainWindow::applySettingsChanges()
         m_inactivityTimer->deactivate();
     }
 
+#ifdef WITH_XC_TOUCHID
+    // forget TouchID (in minutes)
+    timeout = config()->get("security/resettouchidtimeout").toInt() * 60 * 1000;
+    if (timeout <= 0) {
+        timeout = 30 * 60 * 1000;
+    }
+
+    m_touchIDinactivityTimer->setInactivityTimeout(timeout);
+    if (config()->get("security/resettouchid").toBool()) {
+        m_touchIDinactivityTimer->activate();
+    } else {
+        m_touchIDinactivityTimer->deactivate();
+    }
+#endif
+
     m_ui->toolBar->setHidden(config()->get("GUI/HideToolbar").toBool());
 
     updateTrayIcon();
@@ -933,6 +954,13 @@ void MainWindow::lockDatabasesAfterInactivity()
     }
 
     m_ui->tabWidget->lockDatabases();
+}
+
+void MainWindow::forgetTouchIDAfterInactivity()
+{
+#ifdef WITH_XC_TOUCHID
+    TouchID::getInstance().reset();
+#endif
 }
 
 void MainWindow::repairDatabase()
@@ -1031,6 +1059,12 @@ void MainWindow::handleScreenLock()
     if (config()->get("security/lockdatabasescreenlock").toBool()) {
         lockDatabasesAfterInactivity();
     }
+
+#ifdef WITH_XC_TOUCHID
+    if (config()->get("security/resettouchidscreenlock").toBool()) {
+        forgetTouchIDAfterInactivity();
+    }
+#endif
 }
 
 QStringList MainWindow::kdbxFilesFromUrls(const QList<QUrl>& urls)

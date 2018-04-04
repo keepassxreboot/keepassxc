@@ -768,6 +768,14 @@ Please consider generating a new key file.</translation>
         <source>Select key file</source>
         <translation>Select key file</translation>
     </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>authenticate to access the database</translation>
+    </message>
+    <message>
+        <source>authenticate a privileged operation</source>
+        <translation>authenticate a privileged operation</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseRepairWidget</name>

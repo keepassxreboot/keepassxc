@@ -28,6 +28,13 @@ PasswordKey::PasswordKey(const QString& password)
     setPassword(password);
 }
 
+PasswordKey PasswordKey::fromRawKey(const QByteArray& rawKey)
+{
+    PasswordKey result;
+    result.m_key = rawKey;
+    return result;
+}
+
 QByteArray PasswordKey::rawKey() const
 {
     return m_key;

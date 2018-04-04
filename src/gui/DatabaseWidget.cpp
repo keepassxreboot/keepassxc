@@ -55,6 +55,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
+#include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
 
@@ -820,6 +821,9 @@ void DatabaseWidget::updateMasterKey(bool accepted)
     if (accepted) {
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey(), true, true);
+#ifdef WITH_XC_TOUCHID
+        TouchID::getInstance().reset(m_filePath);
+#endif
         QApplication::restoreOverrideCursor();
 
         if (!result) {
