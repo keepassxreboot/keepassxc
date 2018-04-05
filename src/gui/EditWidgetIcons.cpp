@@ -21,7 +21,6 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QFileDialog>
 
 #include "core/Config.h"
 #include "core/Group.h"
@@ -31,9 +30,7 @@
 #include "gui/MessageBox.h"
 
 #ifdef WITH_XC_NETWORKING
-#include <curl/curl.h>
-#include "core/AsyncTask.h"
-#undef MessageBox
+#include <QtNetwork>
 #endif
 
 IconStruct::IconStruct()
@@ -42,10 +39,31 @@ IconStruct::IconStruct()
 {
 }
 
+UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
+  : QProgressDialog(parent)
+{
+    setWindowTitle(tr("Download Progress"));
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setLabelText(tr("Downloading %1.").arg(url.toDisplayString()));
+    setMinimum(0);
+    setValue(0);
+    setMinimumDuration(0);
+    setMinimumSize(QSize(400, 75));
+}
+
+void UrlFetchProgressDialog::networkReplyProgress(qint64 bytesRead, qint64 totalBytes)
+{
+    setMaximum(totalBytes);
+    setValue(bytesRead);
+}
+
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
     , m_database(nullptr)
+#ifdef WITH_XC_NETWORKING
+    , m_reply(nullptr)
+#endif
     , m_defaultIconModel(new DefaultIconModel(this))
     , m_customIconModel(new CustomIconModel(this))
 {
@@ -136,7 +154,7 @@ void EditWidgetIcons::load(const Uuid& currentUuid, Database* database, const Ic
 void EditWidgetIcons::setUrl(const QString& url)
 {
 #ifdef WITH_XC_NETWORKING
-    m_url = url;
+    m_url = QUrl(url);
     m_ui->faviconButton->setVisible(!url.isEmpty());
 #else
     Q_UNUSED(url);
@@ -144,87 +162,152 @@ void EditWidgetIcons::setUrl(const QString& url)
 #endif
 }
 
+#ifdef WITH_XC_NETWORKING
+namespace {
+    // Try to get the 2nd level domain of the host part of a QUrl. For example,
+    // "foo.bar.example.com" would become "example.com", and "foo.bar.example.co.uk"
+    // would become "example.co.uk".
+    QString getSecondLevelDomain(QUrl url)
+    {
+        QString fqdn = url.host();
+        fqdn.truncate(fqdn.length() - url.topLevelDomain().length());
+        QStringList parts = fqdn.split('.');
+        QString newdom = parts.takeLast() + url.topLevelDomain();
+        return newdom;
+    }
+
+    QUrl convertVariantToUrl(QVariant var)
+    {
+        QUrl url;
+        if (var.canConvert<QUrl>())
+            url = var.value<QUrl>();
+        return url;
+    }
+
+    QUrl getRedirectTarget(QNetworkReply *reply)
+    {
+        QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
+        QUrl url = convertVariantToUrl(var);
+        return url;
+    }
+}
+#endif
+
 void EditWidgetIcons::downloadFavicon()
 {
 #ifdef WITH_XC_NETWORKING
     m_ui->faviconButton->setDisabled(true);
 
-    QUrl url = QUrl(m_url);
-    url.setPath("/favicon.ico");
+    m_redirects = 0;
+    m_urlsToTry.clear();
+
+    QString fullyQualifiedDomain = m_url.host();
+    QString secondLevelDomain = getSecondLevelDomain(m_url);
+
     // Attempt to simply load the favicon.ico file
-    QImage image = fetchFavicon(url);
+    if (fullyQualifiedDomain != secondLevelDomain) {
+        m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+    }
+    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+
+    // Try to use Google fallback, if enabled
+    if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool()) {
+        QUrl urlGoogle = QUrl("https://www.google.com/s2/favicons");
+
+        urlGoogle.setQuery("domain=" + QUrl::toPercentEncoding(secondLevelDomain));
+        m_urlsToTry.append(urlGoogle);
+    }
+
+    startFetchFavicon(m_urlsToTry.takeFirst());
+#endif
+}
+
+void EditWidgetIcons::fetchReadyRead()
+{
+#ifdef WITH_XC_NETWORKING
+    m_bytesReceived += m_reply->readAll();
+#endif
+}
+
+void EditWidgetIcons::fetchFinished()
+{
+#ifdef WITH_XC_NETWORKING
+    QImage image;
+    bool googleFallbackEnabled = config()->get("security/IconDownloadFallbackToGoogle", false).toBool();
+    bool error = (m_reply->error() != QNetworkReply::NoError);
+    QUrl redirectTarget = getRedirectTarget(m_reply);
+
+    m_reply->deleteLater();
+    m_reply = nullptr;
+
+    if (!error) {
+        if (redirectTarget.isValid()) {
+            // Redirected, we need to follow it, or fall through if we have
+            // done too many redirects already.
+            if (m_redirects < 5) {
+                m_redirects++;
+                if (redirectTarget.isRelative())
+                    redirectTarget = m_fetchUrl.resolved(redirectTarget);
+                startFetchFavicon(redirectTarget);
+                return;
+            }
+        } else {
+            // No redirect, and we theoretically have some icon data now.
+            image.loadFromData(m_bytesReceived);
+        }
+    }
+
     if (!image.isNull()) {
         addCustomIcon(image);
-    } else if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool()) {
-        QUrl faviconUrl = QUrl("https://www.google.com/s2/favicons");
-        faviconUrl.setQuery("domain=" + QUrl::toPercentEncoding(url.host()));
-        // Attempt to load favicon from Google
-        image = fetchFavicon(faviconUrl);
-        if (!image.isNull()) {
-            addCustomIcon(image);
+    } else if (!m_urlsToTry.empty()) {
+        m_redirects = 0;
+        startFetchFavicon(m_urlsToTry.takeFirst());
+        return;
+    } else {
+        if (!googleFallbackEnabled) {
+            emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
+                                  tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"),
+                                  MessageWidget::Error);
         } else {
             emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);
         }
-    } else {
-        emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
-                              tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"),
-                              MessageWidget::Error);
     }
 
     m_ui->faviconButton->setDisabled(false);
 #endif
 }
 
+void EditWidgetIcons::fetchCanceled()
+{
 #ifdef WITH_XC_NETWORKING
-namespace {
-std::size_t writeCurlResponse(char* ptr, std::size_t size, std::size_t nmemb, void* data)
-{
-    QByteArray* response = static_cast<QByteArray*>(data);
-    std::size_t realsize = size * nmemb;
-    response->append(ptr, realsize);
-    return realsize;
-}
-}
-
-QImage EditWidgetIcons::fetchFavicon(const QUrl& url)
-{
-    QImage image;
-    CURL* curl = curl_easy_init();
-    if (curl) {
-        QByteArray imagedata;
-        QByteArray baUrl = url.url().toLatin1();
-
-        curl_easy_setopt(curl, CURLOPT_URL, baUrl.data());
-        curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 5L);
-        curl_easy_setopt(curl, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "curl");
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
-        curl_easy_setopt(curl, CURLOPT_TIMEOUT, 10L);
-        curl_easy_setopt(curl, CURLOPT_FAILONERROR, 1L);
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &imagedata);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCurlResponse);
-#ifdef Q_OS_WIN
-        const QDir appDir = QFileInfo(QCoreApplication::applicationFilePath()).absoluteDir();
-        if (appDir.exists("ssl\\certs")) {
-            curl_easy_setopt(curl, CURLOPT_CAINFO, (appDir.absolutePath() + "\\ssl\\certs\\ca-bundle.crt").toLatin1().data());
-        }
+    m_reply->abort();
 #endif
-
-        // Perform the request in another thread
-        CURLcode result = AsyncTask::runAndWaitForFuture([curl]() {
-            return curl_easy_perform(curl);
-        });
-
-        if (result == CURLE_OK) {
-            image.loadFromData(imagedata);
-        }
-
-        curl_easy_cleanup(curl);
-    }
-
-    return image;
 }
+
+void EditWidgetIcons::startFetchFavicon(const QUrl& url)
+{
+#ifdef WITH_XC_NETWORKING
+    m_bytesReceived.clear();
+
+    m_fetchUrl = url;
+
+    QNetworkRequest request(url);
+
+    m_reply = m_netMgr.get(request);
+    connect(m_reply, &QNetworkReply::finished, this, &EditWidgetIcons::fetchFinished);
+    connect(m_reply, &QIODevice::readyRead, this, &EditWidgetIcons::fetchReadyRead);
+
+    UrlFetchProgressDialog *progress = new UrlFetchProgressDialog(url, this);
+    progress->setAttribute(Qt::WA_DeleteOnClose);
+    connect(m_reply, &QNetworkReply::finished, progress, &QProgressDialog::hide);
+    connect(m_reply, &QNetworkReply::downloadProgress, progress, &UrlFetchProgressDialog::networkReplyProgress);
+    connect(progress, &QProgressDialog::canceled, this, &EditWidgetIcons::fetchCanceled);
+
+    progress->show();
+#else
+    Q_UNUSED(url);
 #endif
+}
 
 void EditWidgetIcons::addCustomIconFromFile()
 {
