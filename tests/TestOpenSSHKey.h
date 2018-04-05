@@ -31,9 +31,11 @@ private slots:
     void testParse();
     void testParseDSA();
     void testParseRSA();
-    void testDecryptAES128CBC();
-    void testDecryptAES256CBC();
-    void testDecryptAES256CTR();
+    void testDecryptRSAAES128CBC();
+    void testDecryptOpenSSHAES256CBC();
+    void testDecryptRSAAES256CBC();
+    void testDecryptOpenSSHAES256CTR();
+    void testDecryptRSAAES256CTR();
 };
 
 #endif // TESTOPENSSHKEY_H
