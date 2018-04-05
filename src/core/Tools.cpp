@@ -47,8 +47,8 @@
 #endif
 
 #ifdef HAVE_PT_DENY_ATTACH
-#include <sys/ptrace.h>
 #include <sys/types.h>
+#include <sys/ptrace.h>
 #endif
 
 namespace Tools
