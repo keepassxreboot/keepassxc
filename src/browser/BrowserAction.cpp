@@ -240,9 +240,17 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
+    const QJsonArray keys = decrypted.value("keys").toArray();
+
+    StringPairList keyList;
+    for (const QJsonValue val : keys) {
+        const QJsonObject keyObject = val.toObject();
+        keyList.push_back(qMakePair(keyObject.value("id").toString(), keyObject.value("key").toString()));
+    }
+
     const QString id = decrypted.value("id").toString();
     const QString submit = decrypted.value("submitUrl").toString();
-    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "");
+    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList);
 
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);

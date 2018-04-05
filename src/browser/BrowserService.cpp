@@ -224,7 +224,7 @@ QString BrowserService::getKey(const QString& id)
     return config->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
 }
 
-QJsonArray BrowserService::findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm)
+QJsonArray BrowserService::findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm, const StringPairList& keyList)
 {
     QJsonArray result;
     if (thread() != QThread::currentThread()) {
@@ -233,7 +233,8 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id, const QString&
                                   Q_ARG(const QString&, id),
                                   Q_ARG(const QString&, url),
                                   Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm));
+                                  Q_ARG(const QString&, realm),
+                                  Q_ARG(const StringPairList&, keyList));
         return result;
     }
 
@@ -244,7 +245,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id, const QString&
     // Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    for (Entry* entry : searchEntries(url)) {
+    for (Entry* entry : searchEntries(url, keyList)) {
         switch (checkAccess(entry, host, submitHost, realm)) {
         case Denied:
             continue;
@@ -381,7 +382,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& text)
+QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPairList& keyList)
 {
     // Get the list of databases to search
     QList<Database*> databases;
@@ -390,7 +391,16 @@ QList<Entry*> BrowserService::searchEntries(const QString& text)
         for (int i = 0; i < count; ++i) {
             if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (Database* db = dbWidget->database()) {
-                    databases << db;
+                     // Check if database is connected with KeePassXC-Browser
+                    for (const StringPair keyPair : keyList) {
+                        Entry* entry = db->resolveEntry(KEEPASSXCBROWSER_UUID);
+                        if (entry) {
+                            QString key = entry->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
+                            if (!key.isEmpty() && keyPair.second == key) {
+                                databases << db;
+                            }
+                        }
+                    }
                 }
             }
         }
