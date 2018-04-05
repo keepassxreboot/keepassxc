@@ -1,5 +1,5 @@
 # <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC
-[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(id:KeepassXC_TeamCityCi\)/statusIcon?guest=1)](https://ci.keepassxc.org/viewType.html?buildTypeId=KeepassXC_TeamCityCi&guest=1)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
+[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(id:KeepassXC_TeamCityCi\)/statusIcon?guest=1)](https://ci.keepassxc.org/viewType.html?buildTypeId=KeepassXC_TeamCityCi&guest=1)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc) [![Backers on Open Collective](https://opencollective.com/keepassxc/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/keepassxc/sponsors/badge.svg)](#sponsors) 
 
 ## About KeePassXC
 [KeePassXC](https://keepassxc.org) is a cross-platform community fork of
@@ -66,3 +66,33 @@ To minimize the risk, KeePassXC strictly limits communication between itself
 and the browser plugin to your local computer (localhost).
 This makes your passwords quite safe,
 but as with all open source software, use it at your own risk!
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](.github/CONTRIBUTING.md)].
+<a href="graphs/contributors"><img src="https://opencollective.com/keepassxc/contributors.svg?width=890&button=false" /></a>
+
+
+## Backers
+
+Thank you to all our backers! 🙏 [[Become a backer](https://opencollective.com/keepassxc#backer)]
+
+<a href="https://opencollective.com/keepassxc#backers" target="_blank"><img src="https://opencollective.com/keepassxc/backers.svg?width=890"></a>
+
+
+## Sponsors
+
+Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/keepassxc#sponsor)]
+
+<a href="https://opencollective.com/keepassxc/sponsor/0/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/1/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/2/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/3/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/4/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/5/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/6/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/7/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/8/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/keepassxc/sponsor/9/website" target="_blank"><img src="https://opencollective.com/keepassxc/sponsor/9/avatar.svg"></a>
+
+
