@@ -624,12 +624,15 @@ QString Group::print(bool recursive, int depth)
 
 bool Group::operator==(const Group& other) const
 {
+    if (m_children.size() != other.m_children.size()) {
+        return false;
+    }
+
     if (m_data != other.m_data) {
         return false;
     }
 
-    // Putting the comparison of the leaf nodes first because when we compare children that
-    // are not leaves, this operator will be called as the tree is traversed
+    // Base case for later recursive operator calls
     if (m_children.size() == 0) {
         if (m_entries.size() != other.m_entries.size()) {
             return false;
@@ -640,14 +643,14 @@ bool Group::operator==(const Group& other) const
                 return false;
             }
         }
-    }
-
-    QList<Group*>::const_iterator i, j;
-    for (i = m_children.begin(), j = other.m_children.begin(); i != m_children.end(), j != other.m_children.end(); ++i, ++j) {
-        if (*(*i) == *(*j)) {
-            continue;
-        } else {
-            return false;
+    } else {
+        QList<Group*>::const_iterator i, j;
+        for (i = m_children.begin(), j = other.m_children.begin(); i != m_children.end(), j != other.m_children.end(); ++i, ++j) {
+            if (*(*i) == *(*j)) {
+                continue;
+            } else {
+                return false;
+            }
         }
     }
 
