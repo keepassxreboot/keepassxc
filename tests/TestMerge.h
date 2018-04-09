@@ -42,7 +42,7 @@ private slots:
     void testUpdateGroupLocation();
     void testMergeAndSync();
     void testMergeCustomIcons();
-
+    void testModifiedEmission();
 private:
     Database* createTestDatabase();
 };
