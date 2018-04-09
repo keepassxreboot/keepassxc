@@ -133,7 +133,7 @@ MainWindow::MainWindow()
 
     setAcceptDrops(true);
 
-    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
+    m_ui->toolBar->setHidden(config()->get("GUI/HideToolbar").toBool());
 
     // Setup the search widget in the toolbar
     SearchWidget* search = new SearchWidget();
