@@ -133,8 +133,6 @@ MainWindow::MainWindow()
 
     setAcceptDrops(true);
 
-    m_ui->toolBar->setContextMenuPolicy(Qt::PreventContextMenu);
-
     // Setup the search widget in the toolbar
     SearchWidget* search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
@@ -840,6 +838,8 @@ void MainWindow::applySettingsChanges()
     } else {
         m_inactivityTimer->deactivate();
     }
+
+    m_ui->toolBar->setHidden(config()->get("GUI/HideToolbar").toBool());
 
     updateTrayIcon();
 }
