@@ -47,8 +47,10 @@
 #endif
 
 #ifdef HAVE_PT_DENY_ATTACH
-#include <sys/ptrace.h>
+// clang-format off
 #include <sys/types.h>
+#include <sys/ptrace.h>
+// clang-format on
 #endif
 
 namespace Tools
