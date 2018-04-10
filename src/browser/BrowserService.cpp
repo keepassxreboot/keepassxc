@@ -340,12 +340,18 @@ void BrowserService::updateEntry(const QString& id, const QString& uuid, const Q
     }
 
     if (username.compare(login, Qt::CaseSensitive) != 0 || entry->password().compare(password, Qt::CaseSensitive) != 0) {
-        QMessageBox::StandardButton dialogResult = QMessageBox::No;
+        int dialogResult = QMessageBox::No;
         if (!BrowserSettings::alwaysAllowUpdate()) {
-            dialogResult = QMessageBox::warning(0, tr("KeePassXC: Update Entry"),
-                                                tr("Do you want to update the information in %1 - %2?")
-                                                .arg(QUrl(url).host()).arg(username),
-                                                QMessageBox::Yes|QMessageBox::No);
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
+            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.addButton(QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::No);
+            msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
+            msgBox.activateWindow();
+            msgBox.raise();
+            dialogResult = msgBox.exec();
         }
 
         if (BrowserSettings::alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
