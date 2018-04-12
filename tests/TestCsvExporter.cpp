@@ -64,9 +64,10 @@ void TestCsvExporter::testExport()
     QVERIFY(buffer.open(QIODevice::ReadWrite));
     m_csvExporter->exportDatabase(&buffer, m_db);
 
-    QString expectedResult =
-        QString().append(ExpectedHeaderLine).append("\"Test Group Name\",\"Test Entry Title\",\"Test Username\",\"Test "
-                                                    "Password\",\"http://test.url\",\"Test Notes\"\n");
+    QString expectedResult = QString()
+                                 .append(ExpectedHeaderLine)
+                                 .append("\"Test Group Name\",\"Test Entry Title\",\"Test Username\",\"Test "
+                                         "Password\",\"http://test.url\",\"Test Notes\"\n");
 
     QCOMPARE(QString::fromUtf8(buffer.buffer().constData()), expectedResult);
 }

@@ -30,19 +30,26 @@ class PasswordGenerator
 public:
     enum CharClass
     {
-        LowerLetters = 0x1,
-        UpperLetters = 0x2,
-        Numbers = 0x4,
-        SpecialCharacters = 0x8,
-        EASCII = 0x10,
+        LowerLetters = (1 << 0),
+        UpperLetters = (1 << 1),
+        Numbers = (1 << 2),
+        Braces = (1 << 3),
+        Punctuation = (1 << 4),
+        Quotes = (1 << 5),
+        Dashes = (1 << 6),
+        Math = (1 << 7),
+        Logograms = (1 << 8),
+        SpecialCharacters = Braces | Punctuation | Quotes | Dashes | Math | Logograms,
+        EASCII = (1 << 9),
         DefaultCharset = LowerLetters | UpperLetters | Numbers
     };
     Q_DECLARE_FLAGS(CharClasses, CharClass)
 
     enum GeneratorFlag
     {
-        ExcludeLookAlike = 0x1,
-        CharFromEveryGroup = 0x2,
+        ExcludeLookAlike = (1 << 0),
+        CharFromEveryGroup = (1 << 1),
+        AdvancedMode = (1 << 2),
         DefaultFlags = ExcludeLookAlike | CharFromEveryGroup
     };
     Q_DECLARE_FLAGS(GeneratorFlags, GeneratorFlag)
@@ -54,6 +61,7 @@ public:
     void setLength(int length);
     void setCharClasses(const CharClasses& classes);
     void setFlags(const GeneratorFlags& flags);
+    void setExcludedChars(const QString& chars);
 
     bool isValid() const;
 
@@ -61,10 +69,18 @@ public:
     int getbits() const;
 
     static const int DefaultLength = 16;
+    static const char* DefaultExcludedChars;
     static constexpr bool DefaultLower = (DefaultCharset & LowerLetters) != 0;
     static constexpr bool DefaultUpper = (DefaultCharset & UpperLetters) != 0;
     static constexpr bool DefaultNumbers = (DefaultCharset & Numbers) != 0;
     static constexpr bool DefaultSpecial = (DefaultCharset & SpecialCharacters) != 0;
+    static constexpr bool DefaultAdvancedMode = (DefaultFlags & AdvancedMode) != 0;
+    static constexpr bool DefaultBraces = (DefaultCharset & Braces) != 0;
+    static constexpr bool DefaultPunctuation = (DefaultCharset & Punctuation) != 0;
+    static constexpr bool DefaultQuotes = (DefaultCharset & Quotes) != 0;
+    static constexpr bool DefaultDashes = (DefaultCharset & Dashes) != 0;
+    static constexpr bool DefaultMath = (DefaultCharset & Math) != 0;
+    static constexpr bool DefaultLogograms = (DefaultCharset & Logograms) != 0;
     static constexpr bool DefaultEASCII = (DefaultCharset & EASCII) != 0;
     static constexpr bool DefaultLookAlike = (DefaultFlags & ExcludeLookAlike) != 0;
     static constexpr bool DefaultFromEveryGroup = (DefaultFlags & CharFromEveryGroup) != 0;
@@ -76,6 +92,7 @@ private:
     int m_length;
     CharClasses m_classes;
     GeneratorFlags m_flags;
+    QString m_excluded;
 
     Q_DISABLE_COPY(PasswordGenerator)
 };

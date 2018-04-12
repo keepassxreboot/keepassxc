@@ -65,6 +65,8 @@ private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
     void togglePasswordShown(bool hidden);
+    void selectSimpleMode();
+    void selectAdvancedMode();
 
     void passwordSliderMoved();
     void passwordSpinBoxChanged();

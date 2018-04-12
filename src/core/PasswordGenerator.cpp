@@ -21,10 +21,13 @@
 #include "crypto/Random.h"
 #include <zxcvbn.h>
 
+const char* PasswordGenerator::DefaultExcludedChars = "";
+
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
     , m_classes(0)
     , m_flags(0)
+    , m_excluded(PasswordGenerator::DefaultExcludedChars)
 {
 }
 
@@ -54,6 +57,11 @@ void PasswordGenerator::setCharClasses(const CharClasses& classes)
 void PasswordGenerator::setFlags(const GeneratorFlags& flags)
 {
     m_flags = flags;
+}
+
+void PasswordGenerator::setExcludedChars(const QString& chars)
+{
+    m_excluded = chars;
 }
 
 QString PasswordGenerator::generatePassword() const
@@ -130,6 +138,10 @@ bool PasswordGenerator::isValid() const
         return false;
     }
 
+    if (passwordGroups().size() == 0) {
+        return false;
+    }
+
     return true;
 }
 
@@ -140,7 +152,8 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (m_classes & LowerLetters) {
         PasswordGroup group;
 
-        for (int i = 97; i < (97 + 26); i++) {
+        for (int i = 97; i <= (97 + 25); i++) {
+
             if ((m_flags & ExcludeLookAlike) && (i == 108)) { // "l"
                 continue;
             }
@@ -153,7 +166,8 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (m_classes & UpperLetters) {
         PasswordGroup group;
 
-        for (int i = 65; i < (65 + 26); i++) {
+        for (int i = 65; i <= (65 + 25); i++) {
+
             if ((m_flags & ExcludeLookAlike) && (i == 73 || i == 79)) { // "I" and "O"
                 continue;
             }
@@ -176,28 +190,79 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
 
         passwordGroups.append(group);
     }
-    if (m_classes & SpecialCharacters) {
+    if (m_classes & Braces) {
         PasswordGroup group;
 
-        for (int i = 33; i <= 47; i++) {
-            group.append(i);
+        // ()[]{}
+        group.append(40);
+        group.append(41);
+        group.append(91);
+        group.append(93);
+        group.append(123);
+        group.append(125);
+
+        passwordGroups.append(group);
+    }
+    if (m_classes & Punctuation) {
+        PasswordGroup group;
+
+        // .,:;
+        group.append(44);
+        group.append(46);
+        group.append(58);
+        group.append(59);
+
+        passwordGroups.append(group);
+    }
+    if (m_classes & Quotes) {
+        PasswordGroup group;
+
+        // "'
+        group.append(34);
+        group.append(39);
+
+        passwordGroups.append(group);
+    }
+    if (m_classes & Dashes) {
+        PasswordGroup group;
+
+        // -/\_|
+        group.append(45);
+        group.append(47);
+        group.append(92);
+        group.append(95);
+        if (!(m_flags & ExcludeLookAlike)) {
+            group.append(124); // "|"
         }
 
-        for (int i = 58; i <= 64; i++) {
+        passwordGroups.append(group);
+    }
+    if (m_classes & Math) {
+        PasswordGroup group;
+
+        // !*+-<=>?
+        group.append(33);
+        group.append(42);
+        group.append(43);
+        group.append(60);
+        group.append(61);
+        group.append(62);
+        group.append(63);
+
+        passwordGroups.append(group);
+    }
+    if (m_classes & Logograms) {
+        PasswordGroup group;
+
+        // #$%&
+        for (int i = 35; i <= 38; i++) {
             group.append(i);
         }
-
-        for (int i = 91; i <= 96; i++) {
-            group.append(i);
-        }
-
-        for (int i = 123; i <= 126; i++) {
-            if ((m_flags & ExcludeLookAlike) && (i == 124)) { // "|"
-                continue;
-            }
-
-            group.append(i);
-        }
+        // @^`~
+        group.append(64);
+        group.append(94);
+        group.append(96);
+        group.append(126);
 
         passwordGroups.append(group);
     }
@@ -220,6 +285,29 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
         passwordGroups.append(group);
     }
 
+    int i = 0;
+    while (1) {
+        if (i == passwordGroups.size()) {
+            break;
+        }
+
+        PasswordGroup group = passwordGroups[i];
+
+        for (QChar ch : m_excluded) {
+            int j = group.indexOf(ch);
+            while (j != -1) {
+                group.remove(j);
+                j = group.indexOf(ch);
+            }
+        }
+        if (group.size() > 0) {
+            passwordGroups.replace(i, group);
+            i++;
+        } else {
+            passwordGroups.remove(i);
+        }
+    }
+
     return passwordGroups;
 }
 
@@ -236,7 +324,22 @@ int PasswordGenerator::numCharClasses() const
     if (m_classes & Numbers) {
         numClasses++;
     }
-    if (m_classes & SpecialCharacters) {
+    if (m_classes & Braces) {
+        numClasses++;
+    }
+    if (m_classes & Punctuation) {
+        numClasses++;
+    }
+    if (m_classes & Quotes) {
+        numClasses++;
+    }
+    if (m_classes & Dashes) {
+        numClasses++;
+    }
+    if (m_classes & Math) {
+        numClasses++;
+    }
+    if (m_classes & Logograms) {
         numClasses++;
     }
     if (m_classes & EASCII) {
