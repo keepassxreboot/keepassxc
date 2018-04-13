@@ -27,8 +27,8 @@
 #include "gui/MessageBox.h"
 #include "gui/MessageWidget.h"
 
-// I wanted to make the CSV import GUI future-proof, so if one day you need entries
-// to have a new field, all you have to do is uncomment a row or two here, and the GUI will follow:
+// I wanted to make the CSV import GUI future-proof, so if one day you need a new field,
+// all you have to do is uncomment a row or two here, and the GUI will follow:
 // dynamic generation of comboBoxes, labels, placement and so on. Try it for immense fun!
 const QStringList CsvImportWidget::m_columnHeader =
     QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username") << QObject::tr("Password")
@@ -56,7 +56,14 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
                                                          << ";"
                                                          << "-"
                                                          << ":"
-                                                         << ".");
+                                                         << "."
+                                                         << "TAB (\\t)");
+    m_fieldSeparatorList = QStringList() << ","
+                                         << ";"
+                                         << "-"
+                                         << ":"
+                                         << "."
+                                         << "\t";
     m_ui->comboBoxTextQualifier->addItems(QStringList() << "\""
                                                         << "'"
                                                         << ":"
@@ -137,7 +144,7 @@ void CsvImportWidget::configParser()
     m_parserModel->setComment(m_ui->comboBoxComment->currentText().at(0));
     m_parserModel->setTextQualifier(m_ui->comboBoxTextQualifier->currentText().at(0));
     m_parserModel->setCodec(m_ui->comboBoxCodec->currentText());
-    m_parserModel->setFieldSeparator(m_ui->comboBoxFieldSeparator->currentText().at(0));
+    m_parserModel->setFieldSeparator(m_fieldSeparatorList.at(m_ui->comboBoxFieldSeparator->currentIndex()).at(0));
 }
 
 void CsvImportWidget::updateTableview()

@@ -67,6 +67,7 @@ private:
     Database* m_db;
 
     static const QStringList m_columnHeader;
+    QStringList m_fieldSeparatorList;
     void configParser();
     void updateTableview();
     Group* splitGroups(QString label);
