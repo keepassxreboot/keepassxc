@@ -276,7 +276,7 @@ if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
 if(MINGW)
-    target_link_libraries(keepassx_core Wtsapi32.lib)
+    target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
 endif()
 
 if(MINGW)

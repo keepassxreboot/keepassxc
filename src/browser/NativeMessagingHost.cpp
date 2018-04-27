@@ -23,6 +23,10 @@
 #include "NativeMessagingHost.h"
 #include "BrowserSettings.h"
 
+#ifdef Q_OS_WIN
+#include <Winsock2.h>
+#endif
+
 NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent) :
     NativeMessagingBase(),
     m_mutex(QMutex::Recursive),
@@ -150,7 +154,7 @@ void NativeMessagingHost::newLocalMessage()
     int socketDesc = socket->socketDescriptor();
     if (socketDesc) {
         int max = NATIVE_MSG_MAX_LENGTH;
-        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, &max, sizeof(max));
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
     QByteArray arr = socket->readAll();
