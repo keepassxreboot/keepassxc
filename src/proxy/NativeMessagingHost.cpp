@@ -18,6 +18,10 @@
 #include <QCoreApplication>
 #include "NativeMessagingHost.h"
 
+#ifdef Q_OS_WIN
+#include <Winsock2.h>
+#endif
+
 NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase()
 {
     m_localSocket = new QLocalSocket();
@@ -27,7 +31,7 @@ NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase()
     int socketDesc = m_localSocket->socketDescriptor();
     if (socketDesc) {
         int max = NATIVE_MSG_MAX_LENGTH;
-        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, &max, sizeof(max));
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 #ifdef Q_OS_WIN
     m_running.store(true);
