@@ -21,6 +21,8 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
+#include <QSignalSpy>
+
 QTEST_GUILESS_MAIN(TestMerge)
 
 void TestMerge::initTestCase()
@@ -559,6 +561,42 @@ void TestMerge::testResolveGroupConflictOlder()
     delete dbSource;
 }
 
+void TestMerge::testMergeNotModified()
+{
+    Database* dbSource = createTestDatabase();
+
+    Database* dbDestination = new Database();
+    dbDestination->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QSignalSpy modifiedSignalSpy(dbDestination, SIGNAL(modified()));
+
+    dbDestination->merge(dbSource);
+
+    QVERIFY(modifiedSignalSpy.empty());
+}
+
+void TestMerge::testMergeModified()
+{
+    Database* dbSource = createTestDatabase();
+
+    Database* dbDestination = new Database();
+    dbDestination->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QSignalSpy modifiedSignalSpy(dbDestination, SIGNAL(modified()));
+
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+
+    Entry* entry = dbSource->rootGroup()->findEntry("entry1");
+    entry->beginUpdate();
+    entry->setTitle("new title");
+    entry->endUpdate();
+
+    dbDestination->merge(dbSource);
+
+    QVERIFY(!modifiedSignalSpy.empty());
+}
+
 void TestMerge::testNeedsMergingNotModified()
 {
     Database* dbSource = createTestDatabase();
@@ -580,7 +618,9 @@ void TestMerge::testNeedsMergingEntryModified()
     QTest::qSleep(1);
 
     Entry* entry = dbSource->rootGroup()->findEntry("entry1");
+    entry->beginUpdate();
     entry->setTitle("new title");
+    entry->endUpdate();
 
     QVERIFY(dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
 }

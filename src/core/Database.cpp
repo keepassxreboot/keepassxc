@@ -403,10 +403,12 @@ void Database::merge(const Database* other)
     }
 
     if (wasModified) {
-        qInfo("Database was modified during merge operation.");
+        // FIXME use qInfo when available (QT5.5).
+        qDebug("Database was modified during merge operation.");
         emit modified();
     } else {
-        qInfo("Database was not modified during merge operation.");
+        // FIXME use qInfo when available (QT5.5).
+        qDebug("Database was not modified during merge operation.");
     }
 }
 
