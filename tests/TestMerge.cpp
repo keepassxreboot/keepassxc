@@ -565,30 +565,6 @@ void TestMerge::testResolveGroupConflictOlder()
     delete dbSource;
 }
 
-/**
-  * If identical databases are merged, the modified signal
-  * should not be emitted. If different databases are merged,
-  * the modified signal should be emitted.
-  */
-void TestMerge::testModifiedEmission()
-{
-    Database* dbDestination = createTestDatabase();
-    QSignalSpy spy(dbDestination, SIGNAL(modified()));
-    int spyCount = 0;
-
-    // Identical databases shouldn't emit a modified signal when merged
-    dbDestination->merge(dbDestination);
-    QCOMPARE(spy.count(), spyCount);
-
-    // Different databases should emit a modified signal when merged
-    Database* dbSource = new Database();
-    dbDestination->merge(dbSource);
-    QCOMPARE(spy.count(), spyCount);
-
-    delete dbDestination;
-    delete dbSource;
-}
-
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();

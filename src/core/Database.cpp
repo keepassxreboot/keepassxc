@@ -404,11 +404,6 @@ void Database::emptyRecycleBin()
 
 void Database::merge(const Database* other)
 {
-    // If root groups are equivalent no need to merge (databases are equivalent)
-    if (*m_rootGroup == *(other->rootGroup())) {
-        return;
-    }
-
     m_rootGroup->merge(other->rootGroup());
 
     for (Uuid customIconId : other->metadata()->customIcons().keys()) {
