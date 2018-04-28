@@ -710,6 +710,10 @@ bool Group::needsMerging(const Group* otherGroup)
         if (timeExisting < timeOther) {
             return true;
         }
+
+        if (timeExisting != timeOther && mergeMode() == KeepBoth) {
+            return true;
+        }
     }
 
     // detect changes in groups
@@ -731,7 +735,9 @@ bool Group::needsMerging(const Group* otherGroup)
             return true;
         }
 
-        return this->needsMerging(otherGroup);
+        if (this->needsMerging(otherGroup)) {
+            return true;
+        }
     }
     return false;
 };
