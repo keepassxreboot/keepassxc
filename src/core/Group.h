@@ -27,6 +27,7 @@
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 
 class Group : public QObject
