@@ -569,6 +569,22 @@ void TestMerge::testNeedsMergingNotModified()
     QVERIFY(!dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
 }
 
+void TestMerge::testNeedsMergingModified()
+{
+    Database* dbSource = createTestDatabase();
+
+    Database* dbDestination = new Database();
+    dbDestination->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+
+    Entry* entry = dbSource->rootGroup()->findEntry("entry1");
+    entry->setTitle("new title");
+
+    QVERIFY(dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
+}
+
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();

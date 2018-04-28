@@ -43,6 +43,7 @@ private slots:
     void testMergeAndSync();
     void testMergeCustomIcons();
     void testNeedsMergingNotModified();
+    void testNeedsMergingModified();
 
 private:
     Database* createTestDatabase();
