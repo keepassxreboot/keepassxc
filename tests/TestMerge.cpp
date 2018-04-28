@@ -559,6 +559,16 @@ void TestMerge::testResolveGroupConflictOlder()
     delete dbSource;
 }
 
+void TestMerge::testNeedsMergingNotModified()
+{
+    Database* dbSource = createTestDatabase();
+
+    Database* dbDestination = new Database();
+    dbDestination->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QVERIFY(!dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
+}
+
 Database* TestMerge::createTestDatabase()
 {
     Database* db = new Database();

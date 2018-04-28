@@ -683,6 +683,59 @@ QSet<QUuid> Group::customIconsRecursive() const
     return result;
 }
 
+bool Group::needsMerging(const Group* otherGroup)
+{
+
+    Group* rootGroup = this;
+    while (rootGroup->parentGroup()) {
+        rootGroup = rootGroup->parentGroup();
+    }
+
+    // detect changes in entries
+    const QList<Entry*> dbEntries = otherGroup->entries();
+    for (Entry* otherEntry : dbEntries) {
+        Entry* existingEntry = rootGroup->findEntryByUuid(otherEntry->uuid());
+        if (!existingEntry) {
+            return true;
+        }
+
+        // Entry is already present in the database.
+        bool locationChanged = existingEntry->timeInfo().locationChanged() < otherEntry->timeInfo().locationChanged();
+        if (locationChanged && existingEntry->group() != this) {
+            return true;
+        }
+
+        const QDateTime timeExisting = existingEntry->timeInfo().lastModificationTime();
+        const QDateTime timeOther = otherEntry->timeInfo().lastModificationTime();
+        if (timeExisting < timeOther) {
+            return true;
+        }
+    }
+
+    // detect changes in groups
+    const QList<Group*> dbChildren = otherGroup->children();
+    for (Group* otherGroup : dbChildren) {
+        Group* existingGroup = rootGroup->findChildByUuid(otherGroup->uuid());
+        if (!existingGroup) {
+            return true;
+        }
+
+        bool locationChanged = existingGroup->timeInfo().locationChanged() < otherGroup->timeInfo().locationChanged();
+        if (locationChanged && existingGroup->parent() != this) {
+            return true;
+        }
+
+        const QDateTime timeExisting = existingGroup->timeInfo().lastModificationTime();
+        const QDateTime timeOther = otherGroup->timeInfo().lastModificationTime();
+        if (timeExisting < timeOther) {
+            return true;
+        }
+
+        return this->needsMerging(otherGroup);
+    }
+    return false;
+};
+
 void Group::merge(const Group* other)
 {
 

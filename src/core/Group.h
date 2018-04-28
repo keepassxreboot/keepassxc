@@ -153,6 +153,7 @@ public:
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
     void copyDataFrom(const Group* other);
+    bool needsMerging(const Group* other);
     void merge(const Group* other);
     QString print(bool recursive = false, int depth = 0);
 
