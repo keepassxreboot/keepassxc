@@ -386,17 +386,28 @@ void Database::emptyRecycleBin()
 
 void Database::merge(const Database* other)
 {
-    m_rootGroup->merge(other->rootGroup());
+    bool wasModified = false;
 
     for (const QUuid& customIconId : other->metadata()->customIcons().keys()) {
         QImage customIcon = other->metadata()->customIcon(customIconId);
         if (!this->metadata()->containsCustomIcon(customIconId)) {
+            wasModified = true;
             qDebug() << QString("Adding custom icon %1 to database.").arg(customIconId.toString());
             this->metadata()->addCustomIcon(customIconId, customIcon);
         }
     }
 
-    emit modified();
+    if (m_rootGroup->needsMerging(other->rootGroup())) {
+        wasModified = true;
+        m_rootGroup->merge(other->rootGroup());
+    }
+
+    if (wasModified) {
+        qInfo("Database was modified during merge operation.");
+        emit modified();
+    } else {
+        qInfo("Database was not modified during merge operation.");
+    }
 }
 
 void Database::setEmitModified(bool value)
