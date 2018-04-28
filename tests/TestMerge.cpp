@@ -569,7 +569,7 @@ void TestMerge::testNeedsMergingNotModified()
     QVERIFY(!dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
 }
 
-void TestMerge::testNeedsMergingModified()
+void TestMerge::testNeedsMergingEntryModified()
 {
     Database* dbSource = createTestDatabase();
 
@@ -581,6 +581,22 @@ void TestMerge::testNeedsMergingModified()
 
     Entry* entry = dbSource->rootGroup()->findEntry("entry1");
     entry->setTitle("new title");
+
+    QVERIFY(dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
+}
+
+void TestMerge::testNeedsMergingGroupModified()
+{
+    Database* dbSource = createTestDatabase();
+
+    Database* dbDestination = new Database();
+    dbDestination->setRootGroup(dbSource->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+
+    Group* group = dbSource->rootGroup()->findChildByName("group2");
+    group->setName("new group name");
 
     QVERIFY(dbDestination->rootGroup()->needsMerging(dbSource->rootGroup()));
 }
