@@ -607,6 +607,10 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     res["name"] = entry->resolveMultiplePlaceholders(entry->title());
     res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuid().toHex());
 
+    if (entry->hasTotp()) {
+        res["totp"] = entry->totp();
+    }
+
     if (BrowserSettings::supportKphFields()) {
         const EntryAttributes* attr = entry->attributes();
         QJsonArray stringFields;
