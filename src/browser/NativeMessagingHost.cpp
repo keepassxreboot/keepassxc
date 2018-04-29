@@ -27,8 +27,8 @@
 #include <Winsock2.h>
 #endif
 
-NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent) :
-    NativeMessagingBase(),
+NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool enabled) :
+    NativeMessagingBase(enabled),
     m_mutex(QMutex::Recursive),
     m_browserClients(m_browserService),
     m_browserService(parent)
@@ -76,6 +76,11 @@ void NativeMessagingHost::run()
     if (BrowserSettings::supportBrowserProxy()) {
         QString serverPath = getLocalServerPath();
         QFile::remove(serverPath);
+
+        // Ensure that STDIN is not being listened when proxy is used
+        if (m_notifier->isEnabled()) {
+            m_notifier->setEnabled(false);
+        }
 
         if (m_localServer->isListening()) {
             m_localServer->close();
