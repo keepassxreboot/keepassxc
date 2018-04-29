@@ -78,6 +78,7 @@ private:
 private:
     DatabaseTabWidget* const    m_dbTabWidget;
     bool                        m_dialogActive;
+    bool                        m_bringToFrontRequested;
 };
 
 #endif // BROWSERSERVICE_H
