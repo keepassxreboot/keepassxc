@@ -44,7 +44,7 @@ class NativeMessagingBase : public QObject
     Q_OBJECT
 
 public:
-    explicit NativeMessagingBase();
+    explicit NativeMessagingBase(const bool enabled);
     ~NativeMessagingBase() = default;
 
 protected slots:

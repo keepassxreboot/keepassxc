@@ -22,7 +22,7 @@
 #include <Winsock2.h>
 #endif
 
-NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase()
+NativeMessagingHost::NativeMessagingHost() : NativeMessagingBase(true)
 {
     m_localSocket = new QLocalSocket();
     m_localSocket->connectToServer(getLocalServerPath());
