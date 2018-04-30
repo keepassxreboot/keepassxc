@@ -22,7 +22,8 @@
 
 #include <QCryptographicHash>
 #include <QMessageAuthenticationCode>
-#include <QRegExp>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QUrl>
 #include <QUrlQuery>
 #include <QVariant>
@@ -96,14 +97,14 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const ui
     });
 }
 
-QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, bool forceOtp)
 {
     if (settings.isNull()) {
         return {};
     }
 
     // OTP Url output
-    if (settings->otpUrl) {
+    if (settings->otpUrl || forceOtp) {
         auto urlstring = QString("key=%1&step=%2&size=%3").arg(settings->key).arg(settings->step).arg(settings->digits);
         if (!settings->encoder.name.isEmpty()) {
             urlstring.append("&encoder=").append(settings->encoder.name);

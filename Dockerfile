@@ -55,7 +55,8 @@ RUN set -x \
         libxtst-dev \
         mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev
+        libykpers-1-dev \
+        libqrencode-dev
 
 ENV PATH="/opt/${QT5_VERSION}/bin:${PATH}"
 ENV CMAKE_PREFIX_PATH="/opt/${QT5_VERSION}/lib/cmake"

@@ -54,6 +54,7 @@ RUN set -x \
         libykpers-1-dev \
         libxi-dev \
         libxtst-dev \
+        libqrencode-dev \
         xvfb
 
 ENV PATH="/opt/${QT5_VERSION}/bin:${PATH}"

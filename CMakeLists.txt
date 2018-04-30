@@ -294,16 +294,16 @@ endif(WITH_TESTS)
 include(CLangFormat)
 
 if(UNIX AND NOT APPLE)
-  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools DBus REQUIRED)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Svg Test LinguistTools DBus REQUIRED)
 elseif(APPLE)
-  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Svg Test LinguistTools REQUIRED
     HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
   )
   find_package(Qt5 COMPONENTS MacExtras
     HINTS /usr/local/Cellar/qt/*/lib/cmake ENV PATH
   )
 else()
-  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Test LinguistTools REQUIRED)
+  find_package(Qt5 COMPONENTS Core Network Concurrent Widgets Svg Test LinguistTools REQUIRED)
 endif()
 
 if(Qt5Core_VERSION VERSION_LESS "5.2.0")
@@ -338,6 +338,8 @@ find_package(Gcrypt 1.7.0 REQUIRED)
 find_package(Argon2 REQUIRED)
 
 find_package(ZLIB REQUIRED)
+
+find_package(QREncode REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 

@@ -251,6 +251,7 @@
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
+     <addaction name="actionEntryTotpDisplayKey"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
     <addaction name="actionEntryCopyUsername"/>
@@ -578,6 +579,11 @@
   <action name="actionEntryTotp">
    <property name="text">
     <string>Show TOTP</string>
+   </property>
+  </action>
+  <action name="actionEntryTotpDisplayKey">
+   <property name="text">
+    <string>Export TOTP settings</string>
    </property>
   </action>
   <action name="actionEntrySetupTotp">
