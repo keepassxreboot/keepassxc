@@ -25,6 +25,9 @@
 #include "gui/DatabaseTabWidget.h"
 #include "core/Entry.h"
 
+typedef QPair<QString, QString> StringPair;
+typedef QList<StringPair> StringPairList;
+
 class BrowserService : public QObject
 {
     Q_OBJECT
@@ -40,12 +43,12 @@ public:
     QString         getKey(const QString& id);
     void            addEntry(const QString& id, const QString& login, const QString& password, const QString& url, const QString& submitUrl, const QString& realm);
     QList<Entry*>   searchEntries(Database* db, const QString& hostname);
-    QList<Entry*>   searchEntries(const QString& text);
+    QList<Entry*>   searchEntries(const QString& text, const StringPairList& keyList);
     void            removeSharedEncryptionKeys();
     void            removeStoredPermissions();
 
 public slots:
-    QJsonArray      findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm);
+    QJsonArray      findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm, const StringPairList& keyList);
     QString         storeKey(const QString& key);
     void            updateEntry(const QString& id, const QString& uuid, const QString& login, const QString& password, const QString& url);
     void            databaseLocked(DatabaseWidget* dbWidget);
