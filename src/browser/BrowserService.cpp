@@ -47,7 +47,8 @@ static int        KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 
 BrowserService::BrowserService(DatabaseTabWidget* parent) :
     m_dbTabWidget(parent),
-    m_dialogActive(false)
+    m_dialogActive(false),
+    m_bringToFrontRequested(false)
 {
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
     connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
@@ -82,6 +83,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
 
     if (triggerUnlock) {
         KEEPASSXC_MAIN_WINDOW->bringToFront();
+        m_bringToFrontRequested = true;
     }
 
     return false;
@@ -743,6 +745,10 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
+        if (m_bringToFrontRequested) {
+            KEEPASSXC_MAIN_WINDOW->lower();
+            m_bringToFrontRequested = false;
+        }
         emit databaseUnlocked();
     }
 }
