@@ -32,7 +32,7 @@ public:
 
     static bool showNotification();  //TODO!!
     static void setShowNotification(bool showNotification);
-    static bool bestMatchOnly();     //TODO!!
+    static bool bestMatchOnly();
     static void setBestMatchOnly(bool bestMatchOnly);
     static bool unlockDatabase();
     static void setUnlockDatabase(bool unlockDatabase);
@@ -46,7 +46,7 @@ public:
     static void setAlwaysAllowAccess(bool alwaysAllowAccess);
     static bool alwaysAllowUpdate();
     static void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
-    static bool searchInAllDatabases();//TODO!!
+    static bool searchInAllDatabases();
     static void setSearchInAllDatabases(bool searchInAllDatabases);
     static bool supportKphFields();
     static void setSupportKphFields(bool supportKphFields);

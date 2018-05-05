@@ -530,21 +530,30 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     const QString submitUrl = url.toString(QUrl::StripTrailingSlash);
     const QString baseSubmitUrl = url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
 
-    QMultiMap<int, const Entry*> priorities;
-    for (const Entry* entry : pwEntries) {
+    // Build map of prioritized entries
+    QMultiMap<int, Entry*> priorities;
+    for (Entry* entry : pwEntries) {
         priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl), entry);
     }
 
+    QList<Entry*> results;
     QString field = BrowserSettings::sortByTitle() ? "Title" : "UserName";
-    std::sort(pwEntries.begin(), pwEntries.end(), [&priorities, &field](const Entry* left, const Entry* right) {
-        int res = priorities.key(left) - priorities.key(right);
-        if (res == 0) {
-            return QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0;
+    for (int i = 100; i >= 0; i -= 5) {
+        if (priorities.count(i) > 0) {
+            // Sort same priority entries by Title or UserName
+            auto entries = priorities.values(i);
+            std::sort(entries.begin(), entries.end(), [&priorities, &field](Entry* left, Entry* right) {
+                return QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0;
+            });
+            results << entries;
+            if (BrowserSettings::bestMatchOnly() && !pwEntries.isEmpty()) {
+                // Early out once we find the highest batch of matches
+                break;
+            }
         }
-        return res < 0;
-    });
+    }
 
-    return pwEntries;
+    return results;
 }
 
 bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm, const QString& url, const QString& host, const QString& submitHost, const QString& realm)
