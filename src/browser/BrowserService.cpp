@@ -533,15 +533,12 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     // Build map of prioritized entries
     QMultiMap<int, Entry*> priorities;
     for (Entry* entry : pwEntries) {
-        int priority = sortPriority(entry, host, submitUrl, baseSubmitUrl);
-        if (priority > 0) {
-            priorities.insert(priority, entry);
-        }
+        priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl), entry);
     }
 
     QList<Entry*> results;
     QString field = BrowserSettings::sortByTitle() ? "Title" : "UserName";
-    for (int i = 100; i > 0; i -= 5) {
+    for (int i = 100; i >= 0; i -= 5) {
         if (priorities.count(i) > 0) {
             // Sort same priority entries by Title or UserName
             auto entries = priorities.values(i);
