@@ -391,8 +391,8 @@ If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
         <translation>¿Quiere asociar la base de datos al navegador? 
 
-Si quiere autirizar el acceso a la base de datos de KeePassXC 
-de un nombre único para identificar la autorización
+Si quiere autorizar el acceso a la base de datos de KeePassXC,
+proporcione un nombre único para identificar la autorización
 (se guarda como una entrada más)</translation>
     </message>
     <message>
