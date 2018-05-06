@@ -154,11 +154,6 @@ AutoTypeExecutor* AutoTypePlatformMac::createExecutor()
     return new AutoTypeExecutorMac(this);
 }
 
-int AutoTypePlatformMac::initialTimeout()
-{
-    return 500;
-}
-
 //
 // Activate window by process id
 //
