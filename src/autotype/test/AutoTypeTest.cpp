@@ -103,11 +103,6 @@ void AutoTypePlatformTest::addActionKey(AutoTypeKey* action)
     m_actionChars.append(keyToString(action->key));
 }
 
-int AutoTypePlatformTest::initialTimeout()
-{
-    return 0;
-}
-
 bool AutoTypePlatformTest::raiseWindow(WId window)
 {
     Q_UNUSED(window);

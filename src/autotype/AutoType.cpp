@@ -220,7 +220,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 #endif
     }
 
-    Tools::wait(m_plugin->initialTimeout());
+    Tools::wait(qMax(100, config()->get("AutoTypeStartDelay", 500).toInt()));
 
     if (!window) {
         window = m_plugin->activeWindow();
@@ -365,7 +365,7 @@ bool AutoType::parseActions(const QString& actionSequence, const Entry* entry, Q
 {
     QString tmpl;
     bool inTmpl = false;
-    m_autoTypeDelay = config()->get("AutoTypeDelay").toInt();
+    m_autoTypeDelay = qMax(config()->get("AutoTypeDelay").toInt(), 0);
 
     QString sequence = actionSequence;
     sequence.replace("{{}", "{LEFTBRACE}");
