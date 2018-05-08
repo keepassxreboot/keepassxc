@@ -25,6 +25,9 @@
 #include <QObject>
 #include <QtCore>
 
+typedef QPair<QString, QString> StringPair;
+typedef QList<StringPair> StringPairList;
+
 enum
 {
     max_length = 16 * 1024
@@ -50,13 +53,16 @@ public:
                   const QString& submitUrl,
                   const QString& realm);
     QList<Entry*> searchEntries(Database* db, const QString& hostname);
-    QList<Entry*> searchEntries(const QString& text);
+    QList<Entry*> searchEntries(const QString& text, const StringPairList& keyList);
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
 
 public slots:
-    QJsonArray
-    findMatchingEntries(const QString& id, const QString& url, const QString& submitUrl, const QString& realm);
+    QJsonArray findMatchingEntries(const QString& id,
+                                   const QString& url,
+                                   const QString& submitUrl,
+                                   const QString& realm,
+                                   const StringPairList& keyList);
     QString storeKey(const QString& key);
     void updateEntry(const QString& id,
                      const QString& uuid,
@@ -100,6 +106,7 @@ private:
 private:
     DatabaseTabWidget* const m_dbTabWidget;
     bool m_dialogActive;
+    bool m_bringToFrontRequested;
 };
 
 #endif // BROWSERSERVICE_H

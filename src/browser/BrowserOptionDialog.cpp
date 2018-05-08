@@ -68,7 +68,6 @@ void BrowserOptionDialog::loadSettings()
     // hide unimplemented options
     // TODO: fix this
     m_ui->showNotification->hide();
-    m_ui->bestMatchOnly->hide();
 
     if (settings.sortByUsername()) {
         m_ui->sortByUsername->setChecked(true);

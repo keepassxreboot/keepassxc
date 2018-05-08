@@ -830,11 +830,6 @@ void AutoTypeExecutorX11::execClearField(AutoTypeClearField* action = nullptr)
     nanosleep(&ts, nullptr);
 }
 
-int AutoTypePlatformX11::initialTimeout()
-{
-    return 500;
-}
-
 bool AutoTypePlatformX11::raiseWindow(WId window)
 {
     if (m_atomNetActiveWindow == None) {

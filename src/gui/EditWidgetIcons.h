@@ -20,8 +20,10 @@
 #define KEEPASSX_EDITWIDGETICONS_H
 
 #include <QSet>
+#include <QProgressDialog>
 #include <QUrl>
 #include <QWidget>
+#include <QNetworkAccessManager>
 
 #include "config-keepassx.h"
 #include "core/Global.h"
@@ -31,6 +33,9 @@
 class Database;
 class DefaultIconModel;
 class CustomIconModel;
+#ifdef WITH_XC_NETWORKING
+class QNetworkReply;
+#endif
 
 namespace Ui
 {
@@ -43,6 +48,17 @@ struct IconStruct
 
     Uuid uuid;
     int number;
+};
+
+class UrlFetchProgressDialog : public QProgressDialog
+{
+    Q_OBJECT
+
+public:
+    explicit UrlFetchProgressDialog(const QUrl &url, QWidget *parent = nullptr);
+
+public slots:
+    void networkReplyProgress(qint64 bytesRead, qint64 totalBytes);
 };
 
 class EditWidgetIcons : public QWidget
@@ -67,9 +83,10 @@ signals:
 
 private slots:
     void downloadFavicon();
-#ifdef WITH_XC_NETWORKING
-    QImage fetchFavicon(const QUrl& url);
-#endif
+    void startFetchFavicon(const QUrl& url);
+    void fetchFinished();
+    void fetchReadyRead();
+    void fetchCanceled();
     void addCustomIconFromFile();
     void addCustomIcon(const QImage& icon);
     void removeCustomIcon();
@@ -82,7 +99,15 @@ private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     Database* m_database;
     Uuid m_currentUuid;
-    QString m_url;
+#ifdef WITH_XC_NETWORKING
+    QUrl m_url;
+    QUrl m_fetchUrl;
+    QList<QUrl> m_urlsToTry;
+    QByteArray m_bytesReceived;
+    QNetworkAccessManager m_netMgr;
+    QNetworkReply *m_reply;
+    int m_redirects;
+#endif
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
 

@@ -55,4 +55,7 @@ if(WITH_XC_BROWSER)
                            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
                            COMMENT "Changing linking of keepassxc-proxy")
     endif()
+    if(MINGW)
+      target_link_libraries(keepassxc-proxy Wtsapi32.lib Ws2_32.lib)
+    endif()
 endif()

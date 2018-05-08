@@ -1,84 +1,84 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="bn" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>Acerca de KeePassXC</translation>
+        <translation>KeePassXC সম্পর্কে</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Acerca de</translation>
+        <translation>সম্পর্কে</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Reporte errores al: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>বাগ রিপোর্ট করুন: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt; https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC se distribuye bajo la Licencia Pública General de GNU (GPL) versión 2 o versión 3 (si así lo prefiere).</translation>
+        <translation>GNU General Public License (GPL) সংস্করণ ২ বা (আপনার ইচ্ছানুসারে) সংস্করণ ৩ এর অধীনে KeePassXC বিনামূল্যে বিতরন করা হয়।</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Contribuidores</translation>
+        <translation>অবদানকারী</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver contribuciones en GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt; গিটহাবে আবদনকারীদের দেখুন&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Información de Depuración</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Incluya la información siguiente cuando informe sobre un error:</translation>
+        <translation>যখন আপনি একটি বাগ রিপোর্ট করুন নিচের তথ্যগুলো অন্তর্ভুক্ত করুন:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <translation>ক্লিপবোর্ডে কপি করুন</translation>
     </message>
     <message>
         <source>Version %1
 </source>
-        <translation>Versión %1
+        <translation>সংস্করণ %1
 </translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Revisión: %1</translation>
+        <translation>পরিমার্জনা %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Distribución: %1</translation>
+        <translation>বিতরণ: %1</translation>
     </message>
     <message>
         <source>Libraries:</source>
-        <translation>Librerías:</translation>
+        <translation>লাইব্রেরীসমূহ:</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Sistema operativo: %1
-Arquitectura de CPU: %2
-Núcleo: %3 %4</translation>
+        <translation>অপারেটিং সিস্টেম: %1
+সিপিইউ আর্কিটেক্সার: %2
+কার্নেল: %3 %4</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Extensiones habilitadas:</translation>
+        <translation>সক্রিয় এক্সটেনশনগুলি:</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Mantenedores del proyecto:</translation>
+        <translation>প্রকল্প রক্ষণাবেক্ষণকারী:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Un agradecimiento especial del equipo de KeePassXC a debfx por crear el KeePassX original.</translation>
+        <translation>KeePassXC টিম থেকে বিশেষ ধন্যবাদ debfx-কে মূল KeePassX তৈরি করার জন্য ।</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation>Tipo de compilación: %1
+        <translation>বিল্ড প্রকার: %1
 </translation>
     </message>
 </context>
@@ -86,596 +86,593 @@ Núcleo: %3 %4</translation>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>Confirmar acceso para KeePassXC HTTP</translation>
+        <translation>KeePassXC HTTP অ্যাক্সেস নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Recordar esta decisión</translation>
+        <translation>এই সিদ্ধান্ত মনে রাখুন</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation>Permitir</translation>
+        <translation>অনুমতি দিন</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Denegar</translation>
+        <translation>নাকচ করুন</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 ha solicitado acceso a las contraseñas de los siguientes item(s).
-Por favor seleccione si desea autorizar su acceso.</translation>
+        <translation>%1  নিম্নলিখিত আইটেম (গুলি) এর জন্য পাসওয়ার্ড অ্যাক্সেসের অনুরোধ জানিয়েছে
+আপনি প্রবেশাধিকার অনুমতি দিতে চান তা নির্বাচন করুন।</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Habilitar el Agente SSH (requiere reinicio)</translation>
+        <translation>SSH এজেন্ট সক্ষম করুন (পুনর্সূচনা প্রয়োজন)</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>No se puede encontrar una entrada que corresponda al título de la ventana:</translation>
+        <translation>উইন্ডো শিরোনামের সাথে সম্পর্কিক একটিও এন্ট্রি খুঁজে পাওয়া যায়নি:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Escritura - KeePassXC</translation>
+        <translation>অটো-টাইপ- KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>অটো-টাইপ</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>¡La sintaxis de la declaración de tu auto-escritura es incorrecta!</translation>
+        <translation>আপনার অটো টাইপ বিবৃতি সিনট্যাক্স সঠিক নয়!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene un retraso muy largo. ¿De verdad quieres continuar?</translation>
+        <translation>এই অটো-টাইপ কমান্ডের মধ্যে একটি খুব দীর্ঘ বিলম্ব রয়েছে। আপনি কি সত্যিই এগিয়ে যেতে চান?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene pulsaciones de teclas muy lentas. ¿De verdad quieres continuar?</translation>
+        <translation>এই অটো-টাইপ কমান্ডটি খুব ধীর গতির কী প্রেস রয়েছে। আপনি কি সত্যিই এগিয়ে যেতে চান?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene argumentos que se repiten muy a menudo. ¿De verdad quieres continuar?</translation>
+        <translation>এই অটো-টাইপ কমান্ডটি আর্গুমেন্টগুলির মধ্যে রয়েছে যা প্রায়শই পুনরাবৃত্তি হয়। আপনি কি সত্যিই এগিয়ে যেতে চান?</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Ventana</translation>
+        <translation>উইন্ডো</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Secuencia</translation>
+        <translation>অনুক্রম</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Secuencia por defecto</translation>
+        <translation>সচারচর অনুক্রম</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Grupo</translation>
+        <translation>দল</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Título</translation>
+        <translation>শিরোনাম</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>ব্যবহারকরীর নাম</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Secuencia</translation>
+        <translation>অনুক্রম</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Escritura - KeePassXC</translation>
+        <translation>অটো-টাইপ- KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Seleccionar entrada para Auto-Escritura:</translation>
+        <translation>অটো-টাইপের জন্য এন্ট্রি নির্বাচন করুন</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation>KeePassXC-Navegador Confirmar Acceso</translation>
+        <translation>KeePassXC- ব্রাউজার অ্যাক্সেস নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Recordar esta decisión</translation>
+        <translation>এই সিদ্ধান্ত মনে রাখুন</translation>
     </message>
     <message>
         <source>Allow</source>
-        <translation>Permitir</translation>
+        <translation>অনুমতি দিন</translation>
     </message>
     <message>
         <source>Deny</source>
-        <translation>Denegar</translation>
+        <translation>নাকচ করুন</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 ha solicitado acceso a las contraseñas de los siguientes ítems.
-Por favor seleccione si desea autorizar su acceso.</translation>
+        <translation>%1  নিম্নলিখিত আইটেম (গুলি) এর জন্য পাসওয়ার্ড অ্যাক্সেসের অনুরোধ জানিয়েছে
+আপনি প্রবেশাধিকার অনুমতি দিতে চান তা নির্বাচন করুন।</translation>
     </message>
 </context>
 <context>
     <name>BrowserOptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>Cuadro de diálogo</translation>
+        <translation>সংলাপ</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Esto es necesario para acceder a las bases de datos con KeePassXC-Navegador</translation>
+        <translation>KeePassXC- ব্রাউজারের সাথে আপনার ডেটাবেস অ্যাক্সেস করার জন্য এটি প্রয়োজনীয়</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>Permitir la integración de KeepassXC con el Navegador </translation>
+        <translation>ব্রাউজারের সাথে KeepassXC  ইন্টিগ্রেশন সচল করুন</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Permitir la integración con estos navegadores:</translation>
+        <translation>এইসব ব্রাউজারের সাথে ইন্টিগ্রেশন সচল করুন:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation>&amp;Google Chrome</translation>
+        <translation>&amp;গুগল ক্রোম</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation>&amp;Firefox</translation>
+        <translation>&amp;ফায়ারফক্স</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation>&amp;Chromium</translation>
+        <translation>&amp;ক্রোমিয়াম</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation>&amp;Vivaldi</translation>
+        <translation>&amp;ভিভালডি</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Mostrar una &amp;notificación cuando las credenciales son requeridas</translation>
+        <translation>প্রমাণপ্রত্রাদি অনুরোধ করা হলে একটি &amp;বিজ্ঞপ্তি দেখান</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Solicitar el desblo&amp;queo de la base de datos si se encuentra bloqueada</translation>
+        <translation>ডাটাবেস লক থাকলে আনলক করার অনুরোধ জানান</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Sólo se muestran las entradas con el mismo esquema (http://, https://,...)</translation>
+        <translation>শুধুমাত্র (http://, https://, ...) সম্বলিত এন্ট্রিগুলো এসেছে।</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>&amp;Coinciden con el esquema de URL (ej. https://...)</translation>
+        <translation>ইউআরএল সূচি মিলান (e.g., https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Sólo devolver los resultados similares para una URL específica en vez de todas las entradas para todo el dominio.</translation>
+        <translation>একটি নির্দিষ্ট URL জন্য সম্ভাব্য সর্ব্বোত্তম ফলাফলটি দেখাবে পুরো ডোমেইনের জন্য সকল এন্ট্রি না দেখিয়ে।</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation>&amp;Mostrar sólo las mejores credenciales</translation>
+        <translation>সম্ভাব্য সর্ব্বোত্তম ফলাফলটি দেখাবে</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ordenar las credenciales por &amp;título</translation>
+        <translation>সম্ভাব্য সর্ব্বোত্তম ফলাফলটি শিরোনাম অনুসারে সাজান</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ordenar las credenciales por &amp;usuario</translation>
+        <translation>সম্ভাব্য সর্ব্বোত্তম ফলাফলটি ব্যবহারকারী অনুসারে সাজান</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation>&amp;Desconectar todos los navegadores</translation>
+        <translation>সকল ব্রাউজারে সংযোগ বিচ্ছিন্ন করুন</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation>Olvidar todos las &amp;permisos recordados</translation>
+        <translation>মনে রাখা সকল অনুমতি ভুলে যান</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>উন্নততর</translation>
     </message>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Nunca &amp;pregunte antes de acceder a las credenciales</translation>
+        <translation>তথে প্রবেশ করার পূর্বে কখনোই জিজ্ঞাসা করবেন না</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>No preguntar y guardar los credenciales</translation>
+        <translation>তথ্য হালনাগাদ করার পূর্বে কখনোই জিজ্ঞাসা করবেন না</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation>Sólo las bases de datos seleccionadas se conectaran con el cliente.</translation>
+        <translation>শুধুমাত্র নির্বাচিত ডাটাবেসকে ক্লায়েন্টের সাথে সংযুক্ত করা উচিত।</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Buscar &amp;h en todas las bases de datos abiertas los credenciales correspondientes</translation>
+        <translation>এই ধরনের তথ্য সকল চালু থাকা ডাটেবেসে খূঁজে দেখুন</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>No se permite crear o actualizar campos de caracteres automáticamente.</translation>
+        <translation>স্বয়ংক্রিয়ভাবে তৈরি করা বা স্ট্রিং ফিল্ড আপডেট করা সমর্থন করে না।</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Mostra&amp;r campos de caracteres avanzados que comiencen con &quot;KPH: &quot;</translation>
+        <translation>&quot;KPH: &quot; দিয়ে শুরু হয়েছে এমন উন্নত স্ট্রিং ফিল্ডগুলি দেখান</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Actualizaciones KeePassXC o keepassxc-proxy binario automáticamente para obtener los mensajes nativos en el arranque.</translation>
+        <translation>KeePassXC অথবা keepassxc-proxy  বাইনারী পাথ হালনাগাদ রাখুন লোকাল মেসেজিং স্ক্রিপ্ট হিসেবে চালুর সময়</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation>Actualizar &amp;native mensajes al inicear</translation>
+        <translation>স্টার্ট-আপের সময় ন্যাটিভ ম্যাসেজিং ফাইল আপডেট করুন</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation>Apoya una aplicación proxy entre KeePassXC y una extensión de navegador.</translation>
+        <translation>KeePassXC এবং ব্রাউজার এক্সটেনশন এর মধ্যে প্রক্সি এ্যাপ সমর্থন করে।</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>Utilizar un &amp;proxy entre KeePassXC y la extensión del navegador</translation>
+        <translation>KeePassXC এবং ব্রাউজার এক্সটেনশন এর মধ্যে প্রক্সি ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Utilizar un proxy instalado manualmente</translation>
+        <translation>আপনি যদি ম্যানুয়ালী প্রক্সি যোগ করে থাকেন তবে তার স্থান ব্যাবহার করুন</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Usar una ubicación proxy &amp;personalizada</translation>
+        <translation>পরিবর্তিত প্রক্সি স্থান ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Navegar...</translation>
+        <translation>ব্রাউজ...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Advertencia:&lt;/b&gt; Las siguientes opciones pueden ser peligrosas.</translation>
+        <translation>&lt;b&gt;সতর্কতা:&lt;/b&gt; নিম্নোক্ত বিকল্পগুলি বিপজ্জনক হতে পারে।</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation>Archivos ejecutables (*.exe); Todos los archivos (*. *)</translation>
+        <translation>এক্সিকিউটেবল ফাইল (*.exe)।। সব ফাইল (*. *)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation>Archivos ejecutables (*)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Elegir una ubicación de proxy personalizada</translation>
+        <translation>স্বনির্বাচিত প্রক্সি অবস্থান নির্বাচন করুন</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Lo sentimos, pero KeePassXC-Browser no está soportado en las versiones Snap por el momento.</translation>
+        <translation>আমরা দুঃখিত, কিন্তু এই মুহূর্তে স্নাপ রিলিজ  KeePassXC ব্রাউজার সমর্থন করে না।</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Solicitud de asociación de nueva clave</translation>
+        <translation>KeePassXC: নতুন কী (key) যুক্ত করার আবেদন</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation>¿Quiere asociar la base de datos al navegador? 
+        <translation>আপনি উপরের কী যুক্ত করার অনুরোধ গ্রহণ করেছে।
 
-Si quiere autirizar el acceso a la base de datos de KeePassXC 
-de un nombre único para identificar la autorización
-(se guarda como una entrada más)</translation>
+যদি আপনি এটি আপনার KeePassXC ডাটাবেস প্রবেশের সম্মতি দিতে চান, তা শনাক্ত করা যায়  এমন একটি অনন্য নাম দিন।</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Guardar y permitir acceso</translation>
+        <translation>সংরক্ষণ করুন এবং প্রবেশে সম্মতি দিন</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: ¿Sobrescribir clave existente?</translation>
+        <translation>KeePassXC: বর্তমান কী উপরিলিখন করবেন?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Existe una llave con el nombre &quot;%1&quot;.
-¿Quiere sobreescribirlo?</translation>
+        <translation>শেয়ারকৃত এনক্রিপশন কী  &quot;%1&quot; নামটি ইতিমধ্যেই বিদ্যমান।
+এটির ওপর দিয়েই লিখতে চান?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Actualizar entrada</translation>
+        <translation>KeePassXC: হালনাগাদ এন্ট্রি</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>¿Desea actualizar la información en %1 - %2?</translation>
+        <translation>%1 - %2 এর মধ্যে তথ্য হালনাগাদ করতে চান?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ¡Base de datos bloqueada!</translation>
+        <translation>KeePassXC: ডাটাবেস তালাবদ্ধ !</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation>¡La base de datos activa está bloqueada!
-Por favor desbloquee la base de datos seleccionada o elija otra que esté desbloqueada.</translation>
+        <translation>সক্রিয় ডাটাবেজ বন্ধ রয়েছে।
+নির্বাচিত ডাটাবেস আনলক করুন বা খোলা আছে এমন অন্য একটি পছন্দ করুন।</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC: ¡Configuraciones no disponibles!</translation>
+        <translation>KeePassXC: সেটিংস সমূহ সুপ্রাপ্য নয়।</translation>
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation>La base de datos activa no contiene una entrada de configuraciones.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: No se encontró ninguna clave</translation>
+        <translation>KeePassXC: কোন কী পাওয়া যায়নি</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation>No se encontraron claves de cifrado en las configuraciones de KeePassXC.</translation>
+        <translation>কোন শেয়ারকৃত এনক্রিপশন কী KeePassXC সেটিংসে পাওয়া যায়নি।</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Las claves se eliminaron de la base de datos</translation>
+        <translation>KeePassXC: কী ডাটাবেস থেকে অপসারণ করা হয়েছে</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Quitado con éxito %n llaves de cifrado de configuración KeePassXC.</numerusform><numerusform>Quitado con éxito %n llaves de cifrado de configuración KeePassXC.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Eliminando permisos almacenados...</translation>
+        <translation>সঞ্চিত অনুমতিসমূহ অপসারণ করা হচ্ছে...</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Abortar</translation>
+        <translation>বাতিল</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Permisos eliminados</translation>
+        <translation>KeePassXC: অনুমতিসমূহ অপসারণ করা হয়েছে</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Con éxito quitar permisos de %n ello.</numerusform><numerusform>Removidos con éxito permisos de %n entrada(s).</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: ¡No se encontró ninguna entrada con permisos!</translation>
+        <translation>KeePassXC: অনুমতিসহ কোন এন্ট্রি পাওয়া যায়নি।</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>La base de datos activa no contiene una entrada con permisos.</translation>
+        <translation>সক্রিয় ডাটাবেজ প্রবেশের অনুমতিসহ কোর এন্ট্রি নেই।</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Ingrese la contraseña</translation>
+        <translation>পাসওয়ার্ড প্রবেশ করান:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Repita la contraseña:</translation>
+        <translation>পুনরায় পাসওয়ার্ড দিন:</translation>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation>&amp;Archivo llave</translation>
+        <translation>কী ফাইল</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Abrir archivo</translation>
+        <translation>ব্রাউজ করুন</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Crear</translation>
+        <translation>তৈরি করুন</translation>
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation>Desa&amp;fío/Respuesta</translation>
+        <translation>চ্যালেঞ্জ প্রতিক্রিয়া</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Actualizar</translation>
+        <translation>রিফ্রেশ</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Archivos llave</translation>
+        <translation>কী ফাইলগুলো</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Todos los archivos</translation>
+        <translation>সকল ফাইল</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Crear un Archivo Llave ....</translation>
+        <translation>কী ফাইল তৈরি করুন...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>No se puede crear el Archivo Llave:</translation>
+        <translation>কী ফাইল তৈরি করা যায়নি: </translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Seleccione un archivo llave</translation>
+        <translation>কী ফাইল নির্বাচন করুন</translation>
     </message>
     <message>
         <source>Empty password</source>
-        <translation>Contraseña vacía</translation>
+        <translation>পাসাওয়ার্ড খালি আছে</translation>
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>¿Realmente desea usar una cadena vacía como contraseña?</translation>
+        <translation>আপনি কি খালি স্ট্রিং পাসওয়ার্ড হিসেবে ব্যবহার করতে চান?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Las contraseñas ingresadas son distintas.</translation>
+        <translation>ভিন্ন ভিন্ন পাসওয়ার্ড সরবরাহ করা হয়েছে।</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>No se pudo establecer %1 como el Archivo llave:
-%2</translation>
+        <translation>কী ফাইল হিসেবে %1 সেট করতে ব্যর্থ হয়েছে:
+ %2</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Formato de archivo llave heredado</translation>
+        <translation>পূর্ববর্তী কী ফাইল ফরম্যাট</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>Está utilizando un formato de archivo llave heredado que puede convertirse
- en no soportado en el futuro.
-
-Considere generar un nuevo archivo llave.</translation>
+        <translation>আপনি পূর্ববর্তী কী ফাইল ফরম্যাট ব্যবহার করেছেন
+ যা ভবিষ্যতে অসমর্থিত হতে পারে ।
+নতুন কী (key) ফাইল তৈরি করুন।</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Falla en el cambio de la clave maestra: no se insertó una llave Yubikey.</translation>
+        <translation>মাস্টার কী পরিবর্তন হয়নি: কোন YubiKey বসানো হয়নি।</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Options</source>
-        <translation>Opciones de Clonado</translation>
+        <translation>ক্লোন বিকল্পসমূহ</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Añadir &apos; - Clon&apos; a título</translation>
+        <translation>&apos; - Clone&apos; শিরোনামে যোগ করুন</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Reemplaza nombre de usuario y contraseña con referencias</translation>
+        <translation>ব্যবহারকারীর নাম এবং পাসওয়ার্ড তথ্যসূত্র দ্বারা প্রতিস্থাপন করুন</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Copiar historial</translation>
+        <translation>ইতিহাস অনুলিপি করুন</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>Importar campos de CSV</translation>
+        <translation>CSV আমদানি করুন</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>nombre del archivo</translation>
+        <translation>ফাইলের নাম</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>tamaño, filas, columnas</translation>
+        <translation>আকার, সারি, কলাম</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>Codificación</translation>
+        <translation>এনকোডিং</translation>
     </message>
     <message>
         <source>Codec</source>
-        <translation>Códec</translation>
+        <translation>কোডেক</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Los textos están rodeado por</translation>
+        <translation>লেখা যোগ্য হয়েছে</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Los campos están separados por</translation>
+        <translation>ক্ষেত্র আলাদা করা হয়</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Los comentarios comienzan con</translation>
+        <translation>মন্তব্য দিয়ে শুরু</translation>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation>El primer registro tiene los nombres de los campos</translation>
+        <translation>প্রথম রেকর্ড রয়েছে ফিল্ডের নাম</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Cantidad de líneas a descartar del encabezado</translation>
+        <translation>হেডার লাইন সংখ্যা বাতিল করতে হবে</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Considerar &apos;\&apos; como un carácter de escape </translation>
+        <translation>&apos; \&apos; কে পালানোর চরিত্র বিবেচনা করুন </translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Vista anticipada</translation>
+        <translation>প্রাক্-দর্শন</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation>Distribución en columnas</translation>
+        <translation>কলাম বিন্যাস</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation>No presente en el archivo CSV</translation>
+        <translation>CSV ফাইলে উপস্থিত নয়</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Nombre de campo vacío</translation>
+        <translation>খালি ফিল্ডনেম</translation>
     </message>
     <message>
         <source>column </source>
-        <translation>columna</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>Importado de un archivo CSV</translation>
+        <translation>CSV ফাইল থেকে আমদানি করা।</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Dato original:</translation>
+        <translation>অরিজিনাল তথ্য: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>¡Error(es) detectado(s) en el archivo CSV!</translation>
+        <translation>ত্রুটি (গুলি) CSV ফাইলে শনাক্ত করা হয়েছে।</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation>más mensajes salteados]</translation>
+        <translation> একাধিক বার্তা এড়িয়ে গেছে।</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ত্রুটি</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation>La importación CSV: la escritura tiene errores:
+        <translation>CSV আমদানি: লেখক ভুল করেছেন।
 </translation>
     </message>
 </context>
@@ -683,273 +680,272 @@ Considere generar un nuevo archivo llave.</translation>
     <name>CsvImportWizard</name>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ত্রুটি</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n byte(s), </numerusform><numerusform>%n byte(s), </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>filas de %n, </numerusform><numerusform>%n fila(s), </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n columnas</numerusform><numerusform>%n columna(s)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Ingrese la clave maestra</translation>
+        <translation>মাস্টার কী প্রবেশ করান</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Archivo llave:</translation>
+        <translation>কী ফাইল:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>পাসওয়ার্ড:</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Navegar</translation>
+        <translation>ব্রাউজ করুন</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Actualizar</translation>
+        <translation>রিফ্রেশ</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation>Desafío/respuesta:</translation>
+        <translation>চ্যালেঞ্জের জবাব:</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Incapaz de abrir la base de datos.</translation>
+        <translation>ডাটাবেজ খুলে দিতে অক্ষম।</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>No se puede abrir el archivo llave</translation>
+        <translation>কী ফাইলটি খোলা যাচ্ছে না</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Formato de archivo llave heredado</translation>
+        <translation>পূর্ববর্তী কী ফাইল ফরম্যাট</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>Está utilizando un formato de archivo llave heredado que puede convertirse
- en no soportado en el futuro.
-
-Considere generar un nuevo archivo llave.</translation>
+        <translation>আপনি পূর্ববর্তী কী ফাইল ফরম্যাট ব্যবহার করেছেন
+ যা ভবিষ্যতে অসমর্থিত হতে পারে ।
+নতুন কী (key) ফাইল তৈরি করুন।</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>No mostrar nuevamente esta advertencia</translation>
+        <translation>আবার এই সতর্কীকরণ দেখাবেন না</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Todos los archivos</translation>
+        <translation>সকল ফাইল</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Archivos llave</translation>
+        <translation>কী ফাইলগুলো</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Seleccionar archivo llave</translation>
+        <translation>কী ফাইল নির্বাচন করুন</translation>
     </message>
 </context>
 <context>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Reparar base de datos</translation>
+        <translation>ডাটাবেস মেরামত</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Error</translation>
+        <translation>ত্রুটি</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>No se puede abrir el archivo llave</translation>
+        <translation>কী ফাইলটি খোলা যাচ্ছে না</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>No se pudo abrir la base de datos.</translation>
+        <translation>ডাটাবেজ খুলে দিতে অক্ষম।</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Base de datos abierta correctamente. Nada que hacer.</translation>
+        <translation>ডাটাবেজ ভালোভাবে খুলেছে। কিছুই করার নেই।</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Éxito</translation>
+        <translation>সফল</translation>
     </message>
     <message>
         <source>The database has been successfully repaired
 You can now save it.</source>
-        <translation>La base de datos ha sido reparada correctamente
-Ahora puede guardarla.</translation>
+        <translation>ডাটাবেজ সফলভাবে মেরামত করা হয়েছে 
+এখন আপনি তা সংরক্ষণ করতে পারবেন।</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>No se pudo reparar la base de datos.</translation>
+        <translation>ডাটাবেস মেরামত করতে পারছে না।</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation>Cifrado</translation>
+        <translation>এনক্রিপশন</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>Número de rondas demasiado altas</translation>
+        <translation>খুব বেশি রাউন্ড গণনা</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation>Está utilizando una gran cantidad de rondas de transformación de clave con Argon2.
+        <translation>Argon2 সাথে খুব বেশি সংখ্যক রূপান্তর কী রাউন্ডের ব্যবহার করছেন।
 
-Si conserva este número, ¡su base de datos puede tardar horas o días (o incluso más) en abrirse!</translation>
+আপনি এই সংখ্যা রাখতে চাইলে, ডাটাবেস খোলার জন্য সময় নেবে কয়েক ঘন্টা বা দিন (বা তারও বেশি) ।</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation>Entendido, mantenga el número</translation>
+        <translation>বোঝা যায়, নাম্বার রাখুন</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>বাতিল</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>Número de rondas demasiado bajas</translation>
+        <translation>রাউন্ড খুব কম সংখ্যক</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation>Está utilizando una cantidad muy baja de rondas de transformación de llave con AES-KDF.
+        <translation>আপনি খুব কম সংখ্যক রূপান্তর কী রাউন্ডের AES-KDF এর সাথে ব্যবহার করছে।
 
-Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!</translation>
+যদি আপনি এই নাম্বার রাখেন, আপনার ডাটাবেজ খুব সহজেই ক্রাক হতে পারে!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation>KDF sin cambios</translation>
+        <translation>KDF অপরিবর্তিত</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Error al transformar la llave con nuevos parámetros KDF; KDF sin cambios.</translation>
+        <translation>নতুন KDF প্যারামিটার দিয়ে কী পরিবর্তন করতে ব্যর্থ হয়েছে। KDF অপরিবর্তিত।</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> o de los hilos</numerusform><numerusform>hilo(s)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Algoritmo de cifrado:</translation>
+        <translation>এনক্রিপশন এ্যালগরিদম:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256-Bit  (por defecto)</translation>
+        <translation>AES: 256 Bit (default)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish:  256 Bit</translation>
+        <translation>Twofish: 256 Bit</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Función de derivación de la llave:</translation>
+        <translation>কী ডেরিভেশন ফাংশন:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Rondas de transformación:</translation>
+        <translation>রাউন্ড রূপান্তর করো:</translation>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation>Medición de retraso de un segundo</translation>
+        <translation>বেঞ্চমার্ক 1 সেকেন্ড দেরি</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>Memoria utilizada:</translation>
+        <translation>মেমোরি ব্যবহার:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Paralelismo:</translation>
+        <translation>সমান্তরালভাবে:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>Metadatos de la Base de Datos</translation>
+        <translation>ডাটাবেস মেটা ডাটা</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Nombre de la base de datos:</translation>
+        <translation>ডাটাবেজ নাম:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Descripción de la base de datos:</translation>
+        <translation>ডাটাবেস বিবরণ:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Nombre de usuario por defecto:</translation>
+        <translation>পূর্ব-নির্ধারিত ব্যবহারকারীর নাম:</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Configuración del Historial</translation>
+        <translation>ইতিহাস সেটিংস</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Elementos máximos del historial:</translation>
+        <translation>সর্বাধিত ঐতিহাসিক বিষয়:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Tamaño máximo del historial:</translation>
+        <translation>সর্বাধিত ঐতিহাসিক আকার:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Usar papelera de reciclaje</translation>
+        <translation>রিসাইকেল বিন ব্যবহার করুন </translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Configuraciones Adicionales de la Base de Datos</translation>
+        <translation>অতিরিক্ত ডাটাবেস সেটিংস</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation>Habilitar &amp;compresión (recomendado)</translation>
+        <translation>সংকোচন সক্রিয় করুন (প্রস্তাবিত)</translation>
     </message>
 </context>
 <context>
@@ -957,262 +953,262 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Raíz</translation>
+        <translation>রুট</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Base de datos KeePass 2</translation>
+        <translation>KeePass 2 ডাটাবেস</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Todos los archivos</translation>
+        <translation>সকল ফাইল</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Abrir base de datos</translation>
+        <translation>উন্মুক্ত ডাটাবেস</translation>
     </message>
     <message>
         <source>File not found!</source>
-        <translation>¡Archivo no encontrado!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>No se pudo abrir la base de datos.</translation>
+        <translation>ডাটাবেজ খুলে দিতে অক্ষম।</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation>Archivo abierto en modo sólo lectura.</translation>
+        <translation>ফাইলটি শুধুমাত্র পঠন পরিমণ্ডলে খোলা।</translation>
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation>Abrir archivo CSV</translation>
+        <translation>CSV ফাইল খুলুন</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>Archivo CSV</translation>
+        <translation>CSV ফাইল</translation>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Todos los archivos (*)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Unir base de datos</translation>
+        <translation>ডাটাবেস একত্রীকরণ</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Abrir base de datos KeePass 1</translation>
+        <translation>খোলা KeePass 1 তথ্যভাণ্ডার</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>Base de datos KeePass 1</translation>
+        <translation>KeePass 1 তথ্যভাণ্ডার</translation>
     </message>
     <message>
         <source>Close?</source>
-        <translation>¿Cerrar?</translation>
+        <translation>বন্ধ করুন?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>&quot;% 1&quot; está en el modo de edición.
-¿Descartar cambios y cerrar de todos modos?</translation>
+        <translation>&quot;%1&quot; সম্পাদনা মোডে আছে।
+পরিবর্তনগুলি পরিত্যাগ করা হবে, আর যাই হোক বন্ধ?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>¿Guardar cambios?</translation>
+        <translation>পরিবর্তন সংরক্ষণ করব?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; ha sido modificado.
-¿Guardar cambios?</translation>
+        <translation>&apos;%1&apos; পরিবর্তিত হয়েছে।
+পরিবর্তন সংরক্ষণ করব?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>La escritura de la base de datos falló.</translation>
+        <translation>এই ডাটাবেসে লেখা ব্যর্থ হয়েছে।</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Contraseñas</translation>
+        <translation>পাসওয়ার্ডসমূহ</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Guardar base de datos como</translation>
+        <translation>ডাটাবেজ হিসেবে সংরক্ষণ করুন</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Exportar base de datos a un archivo CSV</translation>
+        <translation>ডাটাবেস CSV ফাইল হিসেবে রপ্তানি করুন</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>La escritura del archivo CSV falló.</translation>
+        <translation> CSV ফাইলে লেখা ব্যর্থ হয়েছে।</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Nueva base de datos</translation>
+        <translation>নতুন ডাটাবেস</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation>bloqueado</translation>
+        <translation>আটকানো</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Bloquear base de datos</translation>
+        <translation>তালাবদ্ধ ডাকাবেস</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>No se puede bloquear la base de datos porque actualmente está editándola.
-Por favor, pulse cancelar para terminar sus cambios o descartarlos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Esta base de datos ha sido modificada.
-¿Desea guardar la base de datos antes de bloquearla?
-De lo contrario se perderán los cambios.</translation>
+        <translation>এই ডাটাবেজ সংশোধন করা হয়েছে।
+লক করার আগে  ডাটাবেস সংরক্ষণ করতে চান?
+তা না হলে আপনার করা কোন পরিবর্তন সংরক্ষিত হবেনা।</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>¿Inhabilitar guardado seguro?</translation>
+        <translation>নিরাপদ সংরক্ষণ অক্ষম?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC no ha podido guardar varias veces la base de datos. Es probable que esto se deba a que los servicios de sincronización de archivos mantienen un bloqueo en el archivo guardado.
-¿Deshabilite las copias seguras y vuelva a intentarlo?</translation>
+        <translation>KeePassXC একাধিক বার ডাটাবেস সংরক্ষণ করতে ব্যর্থ হয়েছে। ফাইল সিংক্রোনাইজ সেবা ফাইলটি লক ধরে রাখলে এমনটি হতে পারে।
+নিরাপদ সংরক্ষণ অক্ষম করুন এবং আবার চেষ্টা করুন।</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>Buscando...</translation>
+        <translation>সন্ধান করা হচ্ছে...</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Cambiar la clave maestra</translation>
+        <translation>মাস্টার কী পরিবর্তন করুন</translation>
     </message>
     <message>
         <source>Delete entry?</source>
-        <translation>¿Eliminar la entrada?</translation>
+        <translation>এন্ট্রি মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>¿Realmente quiere eliminar la entrada &quot;%1&quot; de forma definitiva?</translation>
+        <translation>আপনি কি সত্যিই এন্ট্রি &quot;%1&quot; মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
-        <translation>¿Eliminar entradas?</translation>
+        <translation>এন্ট্রিসমূহ মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>¿Realmente quiere eliminar las entradas &quot;%1&quot; de forma definitiva?</translation>
+        <translation>আপনি সত্যিই  %1 এন্ট্রিসমূহ মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>¿Mover entrada a la papelera de reciclaje?</translation>
+        <translation>এন্ট্রি রিসাইকেল বিনে সরাবে?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>¿Realmente quiere mover la entrada &quot;%1&quot; a la papelera de reciclaje?</translation>
+        <translation>আপনি কি &quot;%1&quot; এন্ট্রিটি রিসাইকেল বিনে সরাতে চান?</translation>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>¿Mover entradas a la papelera de reciclaje?</translation>
+        <translation>রিসাইকেল বিনে এন্ট্রিসমূহ সরাবেন?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>¿Realmente quiere mover la entrada &quot;%1&quot; a la papelera de reciclaje?</numerusform><numerusform>¿Realmente quiere mover las entradas &quot;%1&quot; a la papelera de reciclaje?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>¿Ejecutar comando?</translation>
+        <translation>কমান্ড চালাও?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>¿Realmente desea ejecutar el siguiente comando?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>আপনি কি নিচের কমান্ড সঞ্চালন করতে চান? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Recordar mi elección</translation>
+        <translation>আমার পছন্দ মনে রাখুন</translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>¿Eliminar grupo?</translation>
+        <translation>দল মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>¿Realmente quiere eliminar el grupo &quot;%1&quot; de forma definitiva?</translation>
+        <translation>আপনি কি গ্রুপ &apos;%1&apos; মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la llave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>No hay una base de datos actualmente.</translation>
+        <translation>কোন বর্তমান ডাকাবেস নেই।</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>No hay una base de datos de origen, nada para hacer.</translation>
+        <translation>কোন উৎস ডাটাবেস নেই, কিছুই করা যাবেনা।</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>Resultado de búsqueda (%1)</translation>
+        <translation>অনুসন্ধানের ফলাফল (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>No hay resultados</translation>
+        <translation>কোনো ফলাফল নেই</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>El archivo ha cambiado</translation>
+        <translation>ফাইলটি পরিবর্তিত হয়েছে</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>El archivo de la base de datos ha cambiado. ¿Desea cargar los cambios?</translation>
+        <translation>এই ডাটাবেস ফাইল পরিবর্তন করা হয়েছে। আপনি যে পরিবর্তনগুলো লোড করতে চান?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Solicitud de Unión</translation>
+        <translation>একত্রিত করার অনুরোধ করুন</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>El archivo de la base de datos ha cambiado y usted tiene modificaciones sin guardar. ¿Desea unir sus modificaciones?</translation>
+        <translation>এই ডাটাবেস ফাইল পরিবর্তন হয়েছে এবং আপনার পরিবর্তন অসংরক্ষিত রয়েছে।
+আপনি কি আপনার পরিবর্তন একত্রিত করতে চান?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation>No se pudo abrir el nuevo archivo de la base de datos mientras se intentaba recargar la base de datos actual.</translation>
+        <translation>এই ডাটাবেস টি সয়ংক্রিয়ভাবে পূনরায় খোলার সময় নতুন ডাটাবেস খুলতে ব্যর্থ হয়েছে</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>¿Vaciar papelera de reciclaje?</translation>
+        <translation>রিসাইকেল বিন খালি করুন?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>¿Está seguro que quiere eliminar permanentemente todo de su papelera de reciclaje?</translation>
+        <translation>আপনি কি নিশ্চিত যে ,আপনি  রিসাইকেল বিন থেকে সবকিছু স্থায়ীভাবে মুছে ফেলতে চান?</translation>
     </message>
 </context>
 <context>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation>Generar Token TOTP</translation>
+        <translation>TOTP টোকেন তৈরি করুন</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>বন্ধ করুন</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1220,94 +1216,94 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Vencimiento</translation>
+        <translation>মেয়াদ শেষে</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>ব্যবহারকরীর নাম</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Autoescritura</translation>
+        <translation>অটোটাইপ</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>Buscando...</translation>
+        <translation>সন্ধান করা হচ্ছে</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Atributos</translation>
+        <translation>বৈশিষ্ট্যাবলী</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Adjuntos</translation>
+        <translation>সংযুক্তিসমূহ</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>নোটসমূহ</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>Ventana</translation>
+        <translation>উইন্ডো</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Secuencia</translation>
+        <translation>অনুক্রম</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation>সন্ধান</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Limpiar</translation>
+        <translation>পরিস্কার</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Nunca</translation>
+        <translation>কখনো না</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation>[PROTEGIDO]</translation>
+        <translation>[সংরক্ষিত]</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Deshabilitado</translation>
+        <translation>নিষ্ক্রিয়</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Habilitado</translation>
+        <translation>সক্রিয়</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Entrada</translation>
+        <translation>এন্ট্রি</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>উন্নততর</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Icono</translation>
+        <translation>আইকন</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>অটো-টাইপ</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propiedades</translation>
+        <translation>বৈশিষ্ট্য</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Historial</translation>
+        <translation>ইতিহাস</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>Agente de SSH</translation>
+        <translation>SSH এজেন্ট</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1315,141 +1311,141 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(encriptado)</translation>
+        <translation>(এনক্রিপ্টেড)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>Seleccione la llave privada</translation>
+        <translation>ব্যক্তিগত কী নির্বাচন করো</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Archivo demasiado grande para ser una llave privada</translation>
+        <translation>একটি প্রাইভেট কী&apos;র জন্য ফাইলটি খুবই বড়</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Error al abrir la llave privada</translation>
+        <translation>গোপনীয় কী খুলতে ব্যর্থ</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Historial de entradas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Añadir entrada</translation>
+        <translation>এন্ট্রি যোগ করো</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Editar entrada</translation>
+        <translation>এন্ট্রি সম্পাদন করো</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Las contraseñas ingresadas son distintas.</translation>
+        <translation>ভিন্ন ভিন্ন পাসওয়ার্ড সরবরাহ করা হয়েছে।</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Nuevo atributo</translation>
+        <translation>নতুন বৈশিষ্ট্য</translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation>Confirmar eliminación</translation>
+        <translation>মূছে ফেলা নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>¿Está seguro que desea eliminar este atributo?</translation>
+        <translation>আপনি কি নিশ্চিত আপনি এই বৈশিষ্ট্য অপসারণ করতে চান?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation>[PROTEGIDO]</translation>
+        <translation>[সংরক্ষিত]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation>Presione revelar para ver o editar</translation>
+        <translation>দেখতে বা সম্পাদনা করতে রিভেল টিপুন</translation>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Mañana</translation>
+        <translation>আগামীকাল</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n semana</numerusform><numerusform>%n semana(s)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mes</numerusform><numerusform>%n mes(es)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>1 año</translation>
+        <translation>১ বছর</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation>¿Aplicar la contraseña generada?</translation>
+        <translation>জেনারেট করা পাসওয়ার্ড প্রয়োগ করবেন?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation>¿Desea aplicar la contraseña generada a esta entrada?</translation>
+        <translation>জেনারেট করা পাসওয়ার্ড এন্ট্রির সাথে প্রয়োগ করতে চান?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Entrada actualizada con éxito.</translation>
+        <translation>এন্ট্রি সফলভাবে আপডেট করা হয়েছে।</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Atributos adicionales</translation>
+        <translation>অতিরিক্ত বৈশিষ্ট্য</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Añadir</translation>
+        <translation>যোগ করুন</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation>অপসারণ করুন</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Editar Nombre</translation>
+        <translation>নাম পরিবর্তন করুন</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Proteger</translation>
+        <translation>রক্ষা করুন</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Revelar</translation>
+        <translation>রিভেল</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Adjuntos</translation>
+        <translation>সংযুক্তিসমূহ</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Color de Primer Plano:</translation>
+        <translation>পুরোভূমির রং:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Color de Segundo Plano:</translation>
+        <translation>পটভূমির রং:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Activar Auto-Escritura para esta entrada</translation>
+        <translation>এই এন্ট্রির জন্য অটো-টাইপ সক্রিয় করুন</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Heredar la secuencia de Auto-Escritura por defecto del &amp;grupo</translation>
+        <translation>দল থেকে পূর্ব-নির্ধারিত অটো-টাইপ ধারাবাহিকতা বজায়</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Usar secuencia de Auto-Escritura personalizada:</translation>
+        <translation>পছন্দসই অটো-টাইপ ক্রম ব্যবহার করুন:</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>Ventanas Asociadas</translation>
+        <translation>উইণ্ডো সমিতিসমূহ</translation>
     </message>
     <message>
         <source>+</source>
@@ -1461,108 +1457,108 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Título de la ventana:</translation>
+        <translation>উইন্ডো শিরোনাম:</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Usa una secuencia específica para esta asociación:</translation>
+        <translation>এই এসোসিয়েশনের জন্য নির্দিষ্ট ক্রম ব্যবহার করুন:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Mostrar</translation>
+        <translation>প্রদর্শন</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Recuperar</translation>
+        <translation>পুনর্বহাল করুন</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Eliminar</translation>
+        <translation>মুছে ফেলুন</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Eliminar todo</translation>
+        <translation>সব মুছে ফেলুন</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation>ইউআরএল:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>পাসওয়ার্ড:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Repetir:</translation>
+        <translation>পূনরায়:</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Título:</translation>
+        <translation>শিরোনাম:</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>নোটসমূহ</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Programar</translation>
+        <translation>পূর্বনির্ধারিত</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Cambie la casilla de verificación para mostrar la sección de notas.</translation>
+        <translation>নোট বিভাগ দেখার জন্য চেকবক্স টিক দিন।</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>ব্যবহারকারীর নাম:</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>মেয়াদ উত্তীর্ণ হয়ে যাবে</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>ফরম</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>Eliminar después la clave del agente  </translation>
+        <translation>পরে এজেন্ট থেকে কী অপসারণ করুন</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation>segundos</translation>
+        <translation> সেকেন্ড</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Huella dactilar</translation>
+        <translation>আঙ্গুলের ছাপ</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Eliminar llave del agente cuando la base de datos está cerrada/bloqueada</translation>
+        <translation>ডাটাবেজ বন্ধ/লক করা হয় তখন এজেন্টের কাছ থেকে কী অপসারণ করুন</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Llave Pública</translation>
+        <translation>পাবলিক কী</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Agregar llave al agente cuando la base de datos se abre/desbloquea</translation>
+        <translation>এজেন্টের কাছে কী যোগ করুন যখন ডাটাবেস খোলা/মুক্ত থাকে</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>Comentario</translation>
+        <translation>মন্তব্য</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Descifrar</translation>
+        <translation>ডিক্রাইপ্ট</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1570,176 +1566,176 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copiar al portapapeles</translation>
+        <translation>ক্লিপবোর্ডে কপি করুন</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Llave Privada</translation>
+        <translation>ব্যক্তিগত কী</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation>Archivo externo</translation>
+        <translation>বাইরের ফাইল</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Navegar...</translation>
+        <translation>ব্রাউজ...</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Adjunto</translation>
+        <translation>সংযুক্তি</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Añadir a agente</translation>
+        <translation>এজেন্টের সাথে যুক্ত করুন</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>Eliminar del agente</translation>
+        <translation>এজেন্টের কাছ থেকে অপসারণ করুন</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Requiere confirmación del usuario cuando se usa esta llave</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Grupo</translation>
+        <translation>দল</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Icono</translation>
+        <translation>আইকন</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propiedades</translation>
+        <translation>বৈশিষ্ট্য</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Añadir grupo</translation>
+        <translation>দলযোগ করুন</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Editar grupo</translation>
+        <translation>দল সম্পাদন করুন</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Habilitar</translation>
+        <translation>সক্রিয় করুন</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Deshabilitar</translation>
+        <translation>নিষ্ক্রিয়</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Heredar del grupo padre (%1)</translation>
+        <translation>মূল দল (%1) এর মত</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>নাম</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>নোটসমূহ</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>মেয়াদ উত্তীর্ণ হয়ে যাবে</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation>সন্ধান</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>অটো-টাইপ</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Usar por defecto la secuencia de Auto-Escritura del grupo padre</translation>
+        <translation>মূল দলে পূর্বনির্ধারিত অটো-টাইপ ধারা ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Seleccionar se&amp;cuencia de Auto-Escritura por defecto</translation>
+        <translation>ডিফল্ট অটো-টাইপ ধারা</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation>&amp;Usar icono por defecto</translation>
+        <translation>ডিফল্ট আইকন ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation>Usar icono &amp;personalizado</translation>
+        <translation>ইচ্ছামত আইকন ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Añadir icono personalizado</translation>
+        <translation>নিজস্ব আইকন যোগ করুন</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Eliminar icono personalizado</translation>
+        <translation>স্বনির্বাচিত আইকন মুছে ফেলুন</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Descargar favicon</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>No se pudo descargar el favicon</translation>
+        <translation>Favicon আনতে অক্ষম হয়েছে।</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Consejo: Puede activar Google como una alternativa en Herramientas &gt; Configuración &gt; Seguridad</translation>
+        <translation>ইঙ্গিত: আপনি গুগল কে ফল-ব্যাক হিসেবে সক্রিয় করতে পারেন টুলস &gt; সেটিংস &gt; নিরাপত্তা</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Imágenes</translation>
+        <translation>ছবি</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Todos los archivos</translation>
+        <translation>সকল ফাইল</translation>
     </message>
     <message>
         <source>Select Image</source>
-        <translation>Seleccionar imagen</translation>
+        <translation>ছবি নির্বাচন করুন</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation>No se puede leer el ícono</translation>
+        <translation>আইকন দেখা যায়নি</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation>El icono personalizado ya existe</translation>
+        <translation>স্বনির্বাচিত আইকন ইতোমধ্যে বিদ্যমান</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation>Confirmar Eliminación</translation>
+        <translation>মুছে ফেলা নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation>Este ícono se utiliza en %1 entradas, y será modificado por el ícono por defecto. ¿Está seguro que desea eliminarlo?</translation>
+        <translation>এই আইকন %1 এন্ট্রি দ্বারা ব্যবহৃত হচ্ছে, এবং ডিফল্ট আইকন দ্বারা প্রতিস্থাপিত হবে। আপনি কি নিশ্চিত যে আপনি এটা মুছে ফেলতে চান?</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Creado:</translation>
+        <translation>সৃষ্টি করেছে:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Modificado:</translation>
+        <translation>সংশোধিত:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Accedido:</translation>
+        <translation>দেখা হয়েছে:</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -1747,29 +1743,29 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Datos del complemento</translation>
+        <translation>প্লাগ-ইন তথ্য</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation>অপসারণ করুন</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Eliminar los datos del complemento?</translation>
+        <translation>প্লাগ-ইন তথ্য মুছে ফেলতে চান?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>¿Realmente desea eliminar los datos del complemento seleccionado?
-Esto puede causar un mal funcionamiento de los complementos afectados.</translation>
+        <translation>আপনি কি নির্বাচিত প্লাগ-ইন তথ্য মুছে ফেলতে চান?
+এর কারনে আক্রান্ত প্লাগ ইন খারাপ হতে পারে।</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Clave</translation>
+        <translation>কী</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Valor</translation>
+        <translation>মান</translation>
     </message>
 </context>
 <context>
@@ -1777,93 +1773,94 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <message>
         <source> - Clone</source>
         <comment>Suffix added to cloned entries</comment>
-        <translation>- Clon</translation>
+        <translation> -ক্লোন</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>নাম</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Tamaño</translation>
+        <translation>মাপ</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>ফরম</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Añadir</translation>
+        <translation>যোগ করুন</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Eliminar</translation>
+        <translation>অপসারণ করুন</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation>খুলুন</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Guardar</translation>
+        <translation>সংরক্ষণ করুন</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation>Seleccionar archivos</translation>
+        <translation>ফাইল নির্বাচন করুন</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
-        <translation>Confirmar eliminación</translation>
+        <translation>মূছে ফেলা নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>Guardar adjuntos</translation>
+        <translation>সংযুক্তিসমূহ সংরক্ষণ করুন</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>No se puede crear directorio:
-%1</translation>
+        <translation>ডিরেক্টরি তৈরি করা যায়নি:
+ %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>¿Seguro que quieres sobrescribir el archivo existente &quot;%1&quot; con el archivo adjunto?</translation>
+        <translation>আপনি কি বিদ্যমান ফাইল &quot;%1&quot; সঙ্গে সংযুক্তি উপরিলিখন করতে চান?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>Confirmar sobreescritura</translation>
+        <translation>উপরিলিখন নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>No se puede guardar los datos adjuntos:
+        <translation>সংযুক্তি সংরক্ষণ করা যায়নি: 
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>No se puede abrir el archivo adjunto:
-%1</translation>
+        <translation>সংযুক্তি খুলতে ব্যর্থ:
+ %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>No se pueden abrir los datos adjuntos:%1</translation>
+        <translation>সংযুক্তিসমূহ খুলতে ব্যর্থ: 
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation>No se pueden abrir los archivos:
+        <translation>ফাইল খোলা যায়নি: 
 %1</translation>
     </message>
 </context>
@@ -1871,22 +1868,22 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Nombre</translation>
+        <translation>নাম</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Última modificación</translation>
+        <translation>শেষ বার পরিমার্জিত</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Título</translation>
+        <translation>শিরোনাম</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario</translation>
+        <translation>ব্যবহারকরীর নাম</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1898,19 +1895,19 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Ref:</translation>
+        <translation>প্রসঙ্গ: </translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grupo</translation>
+        <translation>দল</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Título</translation>
+        <translation>শিরোনাম</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>ব্যবহারকরীর নাম</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1918,115 +1915,115 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message>
         <source>Never</source>
-        <translation>Nunca</translation>
+        <translation>কখনো না</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>নোটসমূহ</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>মেয়াদ উত্তীর্ণ হয়ে যাবে</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Creado</translation>
+        <translation>সৃষ্টি করেছেন</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Modificado</translation>
+        <translation>পরিবর্তন করা হয়েছে</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>Accedido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Adjuntos</translation>
+        <translation>সংযুক্তিসমূহ</translation>
     </message>
 </context>
 <context>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation>Personalizar Vista</translation>
+        <translation>পছন্দসই প্রদর্শন‌</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Ocultar nombres de usuario</translation>
+        <translation>ব্যবহারকারীর নাম লুকান</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Ocultar Contraseñas</translation>
+        <translation>পাসওয়ার্ড লুকান</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation>Ajustar a la ventana</translation>
+        <translation>উইন্ডোতে মানানসই</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Ajustar al contenido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Restaurar ajustes por defecto</translation>
+        <translation>স্বাভাবিক অবস্থায় ফেরত</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation>Adjuntos (icono)</translation>
+        <translation>সংযুক্তিসমূহ (আইকন)</translation>
     </message>
 </context>
 <context>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Papelera de reciclaje</translation>
+        <translation>রিসাইকেল বিন</translation>
     </message>
 </context>
 <context>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation>KeePassXC: ¡No se puede guardar el archivo!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation>No se puede guardar el archivo de script de mensajería nativo.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>HttpPasswordGeneratorWidget</name>
     <message>
         <source>Length:</source>
-        <translation>Longitud:</translation>
+        <translation>দৈর্ঘ্য:</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tipos de caracteres</translation>
+        <translation>অক্ষরের ধরণ</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Letras mayúsculas</translation>
+        <translation>বড় হাতের অক্ষর</translation>
     </message>
     <message>
         <source>A-Z</source>
-        <translation>A-Z</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Letras minúsculas</translation>
+        <translation>ছোট হাতের অক্ষর</translation>
     </message>
     <message>
         <source>a-z</source>
-        <translation>a-z</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Números</translation>
+        <translation>নম্বরগুলি</translation>
     </message>
     <message>
         <source>0-9</source>
@@ -2034,7 +2031,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caracteres especiales</translation>
+        <translation>বিশেষ অক্ষরসমূহ</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
@@ -2042,1301 +2039,1295 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Excluir caracteres similares</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation>Asegurar que la contraseña contiene caracteres de todos los grupos</translation>
+        <translation>পাসওয়ার্ড টি প্রত্যেক অক্ষর দলের সমন্বয় নিশ্চিত করুন</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>ASCII Extendido</translation>
+        <translation>বর্ধিত ASCII</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Cerrar</translation>
+        <translation>বন্ধ করুন</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>Cerrar mensaje</translation>
+        <translation>বার্তা বন্ধ করুন</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>No se pudo hacer el desafío/respuesta:</translation>
+        <translation>চ্যালেঞ্জের জবাব ইস্যু করতে ব্যর্থ।</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>La contraseña es incorrecta o el archivo de la base de datos está dañado.</translation>
+        <translation>ভুল কী বা ডাটাবেস ফাইল নষ্ট হয়েছে।</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>No se pudo hacer el desafío/respuesta:</translation>
+        <translation>চ্যালেঞ্জের জবাব ইস্যু করতে ব্যর্থ।</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>faltan las cabeceras de la base de datos</translation>
+        <translation>ডাটাবেসের শিরোনাম নেই</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Suma de verificación incorrecta de la cabecera</translation>
+        <translation>শিরোনামের চেকসাম আকার সঠিক নয়</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>Cabecera SHA256 diferente</translation>
+        <translation>হেডারের SHA256 মিলছে না</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation>Clave equivocada o base de datos corrupta. (HMAC distinta)</translation>
+        <translation>ভুল কী বা ডাটাবেস ফাইল নষ্ট হয়েছে। (HMAC অমিল)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Algoritmo de cifrado desconocido</translation>
+        <translation>অপরিচিত সংকেতায়ন</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Tamaño id de la cabecera inválido</translation>
+        <translation>হেডারের আইডি আকার সঠিক নয়</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>Longitud del campo en la cabecera inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Longitud del campo de datos en la cabecera incorrecto</translation>
+        <translation>হেডার তথ্য দৈর্ঘ্য সঠিক নয়</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Error al abrir el búfer para los parámetros KDF en la cabecera</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Función de derivación de llave no soportada (KDF) o parámetros no válidos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Los campos heredados de la cabecera  se encuentran en el archivo KDBX4.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Tamaño id de la cabecera interna inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation>Longitud del campo en la cabecera interna inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Tamaño binario de la cabecera interna inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Versión de mapa de variante de KeePass no soportada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del nombre de la entrada del mapa de variante inválida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Datos del nombre de la entrada de mapa de variante inválida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del valor de la entrada del mapa de variante inválida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Datos del valor de la entrada de mapa de variante inválida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del valor de la entrada del mapa booleano de variante inválida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada Int32 de mapeo de variante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt32 de mapeo de variante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada Int64 de mapeo de variante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt64 de mapeo de variante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Tipo de entrada inválida de mapeo devariante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Mapei de variante inválido en campo de tipo tamaño</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>Algoritmo de cifrado simétrico inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Tamaño de IV inválido en cifrado simétrico</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Falló serialización de parámetros KDF en mapeo de variante</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length</source>
-        <translation>Largo uuid de cifrado inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Cifrado no compatible</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Largo de banderas de compresión inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation>Algoritmo de compresión no soportado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Tamaño de semilla maestra inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Tamaño de semilla de transformación inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Tamaño de rondas de transformación inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>Tamaño de bytes de inicio no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Tamaño de id de flujo inváldo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Flujo de cifrado interno inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>No es una base de datos KeePass.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>El archivo seleccionado es una vieja base de datos de KeePass 1 (.kdb).
-
-Puede importarla haciendo clic en Base de datos &gt; &apos;Importar base de datos KeePass 1...&apos;.
-Esta migración es en único sentido. No podrá abrir la base de datos importada con la vieja versión 0.4 de KeePassX.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Version de la base de datos de KeePass 2 no soportada.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation>Error de parsing XML: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No root group</source>
-        <translation>Ningún grupo de raíz</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Datos o uuid del ícono faltantes</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation>Falta la clave de datos o valor</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation>Múltiples elementos de grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>Uuid de grupo nulo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Número de icono de grupo no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>Valor no válido de EnableAutoType</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>Valor no válido de EnableSearching</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>No uuid de grupo encontrado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>Uuid de DeleteObject nulo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>Falta uuid de DeletedObject o tiempo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Uuid de entrada nulo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Número de ícono de entrada inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Elemento de la historia en la entrada de la historia</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>No uuid de entrada encontrado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>Elemento del historial con uuid diferente</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
-        <translation>No se puede descifrar la cadena de entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Atributo personalizado duplicado encontrado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Falta clave de entrada o valor</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation>Encontrado dato adjunto duplicado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Falta clave de entrada binaria o valor</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Falta de secuencia o ventana de Asociación de auto-tipeado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>Valor booleano inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>Valor de tiempo o fecha no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>Valor del color no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Parte de color rgb no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>Valor de número no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>Valor uuid no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>No se puede descomprimir binario</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importar base de datos KeePass1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Incapaz de abrir la base de datos.</translation>
+        <translation>ডাটাবেজ খুলে দিতে অক্ষম।</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Incapaz de leer el archivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>No es una base de datos KeePass.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Algoritmo de cifrado no soportado.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Versión de la base de datos KeePass no soportada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>No se puede leer el cifrado IV</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Número de grupos no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Número de entradas no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>Tamaño del hash de contenido no válido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Tamaño de semilla de transformación inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Número de turnos de transformación no válido </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Incapaz de crear un grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Root</source>
-        <translation>Raíz</translation>
+        <translation>রুট</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la clave maestra</translation>
+        <translation>মাস্টার কী গণনা করতে অক্ষম</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>La contraseña es incorrecta o el archivo de la base de datos está dañado.</translation>
+        <translation>ভুল কী বা ডাটাবেস ফাইল নষ্ট হয়েছে।</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Error en la transformación de la llave</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Número de tipo de campo de grupo inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>Tamaño inválido para el campo grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>Datos de campo de grupo leídos no coinciden en tamaño</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Tamaño de campo de id de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Tamaño de campo de tiempo de creación de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Tamaño de campo de hora de modificación de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>Tamaño de campo de tiempo de acceso de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Tamaño de campo de tiempo de caducidad de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Tamaño del campo del ícono de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>Tamaño de campo del nivel de grupo incorrecto</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Tipo de campo de grupo inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>Falta identificador de grupo o nivel</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Entrada de tipo número en campo faltante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Tamaño de la entrada para el campo inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>Datos de campo de entrada no coinciden en tamaño</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>Tamaño de la entrada para el campo uuid inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Tamaño de la entrada para el campo identificador de grupo inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Tamaño de la entrada para el campo icono inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de creación inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de modificación inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de expiración inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Tipo del campo de entrada inválido</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass2</name>
     <message>
         <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – recomendado)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>El archivo de bloqueo de instancia única existente no es válido. Lanzando nueva instancia.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>El archivo de bloqueo no pudo ser creado. Modo de instancia única deshabilitado.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>Otra instancia de KeePassXC ya se está ejecutando.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Error fatal comprobando las funciones criptográficas.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation>KeePassXC - Error</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>Base de &amp;Datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation>Bases de datos &amp;recientes</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Ayuda</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>E&amp;ntradas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation>Copiar at&amp;ributo al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation>Contraseña temporal de un solo uso</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;Grupos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>&amp;Herramientas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Salir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Acerca de</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Open database...</source>
-        <translation>&amp;Abrir base de datos...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation>&amp;Guardar base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>&amp;Cerrar base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation>&amp;Nueva base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Unir base de datos KeePassX</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation>&amp;Añadir nueva entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation>&amp;Ver/Editar entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation>&amp;Eliminar entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation>&amp;Añadir nuevo grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation>&amp;Editar grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation>&amp;Eliminar grupo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation>&amp;Guardar base de datos como...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation>Cambiar la clave &amp;maestra...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation>Configuración de la base de &amp;datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Configuración de la base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>&amp;Clonar entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation>&amp;Buscar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>Copiar nombre de &amp;usuario</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Copiar nombre de usuario al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation>Cop&amp;iar contraseña</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Copiar contraseña al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Configuración</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Generador de contraseñas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>Realizar Auto-&amp;Escritura</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>A&amp;brir URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;Bloquear las bases de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Título</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>Copiar título al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>Copiar URL al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Notas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Copiar notas al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
-        <translation>&amp;Exportar a un archivo CSV...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import KeePass 1 database...</source>
-        <translation>Importat base de datos KeePass 1...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Import CSV file...</source>
-        <translation>Importar archivo CSV...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Re&amp;pair database...</source>
-        <translation>&amp;Reparar base de datos...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>Mostrar TOTP</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set up TOTP...</source>
-        <translation>Configurar TOTP...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>Copiar &amp;TOTP</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>Vaciar papelera de reciclaje</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Limpiar historial</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Error de acceso al archivo de configuración %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Parece que utiliza KeePassHTTP para la integración del navegador. Esta característica ha quedado obsoleto y desaparecerá en el futuro. &lt;br&gt;Por favor, ¡pasa a KeePassXC-Browser en lugar de esto! Para obtener ayuda con la migración, visite nuestra &lt;a class=&quot;link&quot; href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;Guía de migración&lt;/a&gt; (advertencia %1 de 3).&lt;/p&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>read-only</source>
-        <translation>sólo lectura</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Configuración</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Cambiar a ventana</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>Salir de KeePassXC</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Base de datos de KeePass 2</translation>
+        <translation>KeePass 2 ডাটাবেস</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Todos los archivos</translation>
+        <translation>সকল ফাইল</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Abrir base de datos</translation>
+        <translation>উন্মুক্ত ডাটাবেস</translation>
     </message>
     <message>
         <source>Save repaired database</source>
-        <translation>Guardar base de datos reparada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Fallo al escribir la base de datos.</translation>
+        <translation>এই ডাটাবেসে লেখা ব্যর্থ হয়েছে।</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>Por favor presione el botón en su YubiKey!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>ADVERTENCIA: Usted está utilizando una versión inestable de KeePassXC!
-Hay un alto riesgo de corrupción, mantenga una copia de seguridad de sus bases de datos.
-Esta versión no es para uso de producción.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Archivo de clave no válida, esperando una clave de OpenSSH</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>Desajuste de límite PEM</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>No se pudo decodificar Base64</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Archivo llave demasiado pequeño.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Id de encabezado mágico del archivo llave inválido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>Cero claves encontradas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation>No se pudo leer la clave pública.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Fichero de claves corrupto, no se pudo leer la clave privada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Sin contenido a desencriptar en llave privada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
-        <translation>Tratando de ejecutar KDF sin cifrado</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Frase de contraseña necesaria para descrifrar esta clave</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>Derivación de la llave falló, ¿archivo llave dañado?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>¿Error de descifrado, contraseña incorrecta?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>EOF inesperado al leer la clave pública</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>EOF inesperado al leer la clave privada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>No se puede escribir la clave pública ya que es vacía</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>EOF inesperado al escribir la clave pública</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>No se puede escribir la clave privada ya que es vacía</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>EOF inesperado al escribir la clave privada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>Tipo de clave no soportada: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Cifrado desconocido: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Cifrado IV demasiado corto para MD5 kdf</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>KDF desconocido: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>Tipo de clave desconocida: %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>Cuadro de diálogo</translation>
+        <translation>সংলাপ</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
-        <translation>Esto se requiere para acceder a sus bases de datos desde ChromeIPass o PassIFox</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable KeePassHTTP server</source>
-        <translation>Habilitar el servidor de KeePassHTTP</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
     <message>
         <source>Sh&amp;ow a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>M&amp;ostrar una notificación cuando se pidan credenciales</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Sólo devolver los resultados similares para una URL específica en vez de todas las entradas para todo el dominio.</translation>
+        <translation>একটি নির্দিষ্ট URL জন্য সম্ভাব্য সর্ব্বোত্তম ফলাফলটি দেখাবে পুরো ডোমেইনের জন্য সকল এন্ট্রি না দেখিয়ে।</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
-        <translation>&amp;Devolver sólo las entradas más relevantes</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Solicitar el desblo&amp;queo de la base de datos si se encuentra bloqueada</translation>
+        <translation>ডাটাবেস লক থাকলে আনলক করার অনুরোধ জানান</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ftp://, ...) are returned.</source>
-        <translation>Sólo se devuelven las entradas con el mismo esquema (http://, https://, ftp://, ...)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Match URL schemes</source>
-        <translation>&amp;Validar los esquemas de las URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation>Ordenar entradas por nombre de &amp;usuario</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation>Ordenar entradas por &amp;título</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation>&amp;Eliminar todas las claves de cifrado compartidas de la base de datos activa</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
-        <translation>Eli&amp;minar todos los permisos guardados de las entradas de la base de datos activa</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password Generator</source>
-        <translation>Generador de contraseñas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Avanzado</translation>
+        <translation>উন্নততর</translation>
     </message>
     <message>
         <source>Always allow &amp;access to entries</source>
-        <translation>Siempre permitir &amp;acceso a las entradas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Always allow &amp;updating entries</source>
-        <translation>Siempre permitir act&amp;ualizaciones de las entradas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation>Sólo las bases de datos seleccionadas se conectaran con el cliente.</translation>
+        <translation>শুধুমাত্র নির্বাচিত ডাটাবেসকে ক্লায়েন্টের সাথে সংযুক্ত করা উচিত।</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation>Busca&amp;r entradas que coincidan en todas las bases de datos abiertas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>No se permite crear o actualizar campos de caracteres automáticamente.</translation>
+        <translation>স্বয়ংক্রিয়ভাবে তৈরি করা বা স্ট্রিং ফিল্ড আপডেট করা সমর্থন করে না।</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Mostra&amp;r campos de caracteres avanzados que comiencen con &quot;KPH: &quot;</translation>
+        <translation>&quot;KPH: &quot; দিয়ে শুরু হয়েছে এমন উন্নত স্ট্রিং ফিল্ডগুলি দেখান</translation>
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation>Puerto HTTP:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default port: 19455</source>
-        <translation>Puerto por defecto: 19455</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation>KeePassXC escuchará por este puerto en 127.0.0.1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Advertencia:&lt;/b&gt; Las siguientes opciones pueden ser peligrosas.</translation>
+        <translation>&lt;b&gt;সতর্কতা:&lt;/b&gt; নিম্নোক্ত বিকল্পগুলি বিপজ্জনক হতে পারে।</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;KeePassHTTP ha quedado obsoleto y desaparecerá en el futuro. &lt;br&gt;Por favor, ¡pasa a KeePassXC-Browser en lugar de esto! Para obtener ayuda con la migración, visite nuestra &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;Guía de migración&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
-        <translation>No se puede asociar a puertos con privilegios</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot bind to privileged ports below 1024!
 Using default port 19455.</source>
-        <translation>¡No se puede asociar a puertos con privilegios debajo de 1024!
-Usando el puerto por defecto 19455</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>%p%</source>
-        <translation>%p%</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Contraseña:</translation>
+        <translation>পাসওয়ার্ড:</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>seguridad</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>entropy</source>
-        <translation>entropía</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tipos de caracteres</translation>
+        <translation>অক্ষরের ধরণ</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Letras mayúsculas</translation>
+        <translation>বড় হাতের অক্ষর</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Letras minúsculas</translation>
+        <translation>ছোট হাতের অক্ষর</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Números</translation>
+        <translation>নম্বরগুলি</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caracteres especiales:</translation>
+        <translation>বিশেষ অক্ষরসমূহ</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>ASCII Extendido</translation>
+        <translation>বর্ধিত ASCII</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Excluir caracteres similares</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Elegir caracteres de todos los grupos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Longitud:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Frase de contraseña</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Lista de palabras:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Cantidad de Palabras:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Separador de Palabras:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Generar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation>কপি</translation>
     </message>
     <message>
         <source>Accept</source>
-        <translation>Aceptar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Close</source>
-        <translation>Cerrar</translation>
+        <translation>বন্ধ করুন</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropía: %1 bit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Calidad de la contraseña: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Pobre</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Débil</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Buena</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Excelente</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>Base de datos no abierta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>Hash de la base de datos no disponible</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>Clave pública del cliente no recibida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>No se puede descifrar el mensaje</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation>Tiempo de espera superado, o no se puede conectar a KeePassXC</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation>Acción cancelada o denegada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
-        <translation>No se puede cifrar el mensaje o la clave pública no se encuentra. ¿Es habilitado el Native Messaging en KeePassXC?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>No se pudo asociar con KeePassXC, inténtelo de nuevo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key change was not successful</source>
-        <translation>Cambio de clave no fue exitoso</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation>Clave de cifrado no es reconocida</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation>Ninguna base de datos guardadas encontrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>Acción incorrecta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation>Mensaje vacío recibido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>No hay URL proporcionada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>No se encuentraron logins</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Error desconocido</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Añadir una nueva entrada a una base de datos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Ruta a la base de datos.</translation>
+        <translation>ডাটাবেসের পাথ</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Archivo de llave de la base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>path</source>
-        <translation>ruta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Nombre de usuario para la entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>username</source>
-        <translation>nombre de usuario</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>URL de la entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>URL</source>
@@ -3344,778 +3335,768 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Solicitar contraseña de la entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Generar una contraseña para la entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation>Tamaño de la contraseña a generar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>length</source>
-        <translation>Tamaño</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Camino de la entrada para añadir.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation>Copiar la contraseña de una entrada en el portapapeles.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>Camino de la entrada para copiar.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Tiempo de espera en segundos antes de borrar el portapapeles.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>Editar una entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Título para la entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>title</source>
-        <translation>título</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Camino de la entrada para editar.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>Estimar la entropía de una contraseña.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation>Contraseña para el que desea calcular la entropía.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>Realizar análisis avanzado en la contraseña.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>Extraer e imprimir el contenido de la base de datos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation>Ruta a la base de datos a extraer.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation>Introduzca la contraseña para desbloquear %1: </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation>Error al cargar el archivo llave %1 : %2</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ADVERTENCIA: Usted está utilizando un formato de archivo llave heredado que puede ser no compatible en el futuro.
-
-Por favor considere generar un nuevo archivo de llave.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>
 
 Available commands:
 </source>
-        <translation>
-
-Comandos disponibles:
-</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>Nombre del comando a ejecutar.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>Listar las entradas de la base de datos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Ruta del grupo a listar. Por defecto es /</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Encontrar las entradas rápidamente.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Search term.</source>
-        <translation>Término de búsqueda.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>Mezclar dos bases de datos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the database to merge into.</source>
-        <translation>Ruta de la base de datos resultado de la mezcla.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>Ruta de la base de datos de inicio de la mezcla.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Utilizar las mismas credenciales para ambos archivos de base de datos.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>Archivo llave de la base de datos desde la cual desea combinar.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>Muestra información de una entrada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Nombres de los atributos para mostrar. Esta opción se puede especificar más de una vez, con cada atributo apareciendo uno por línea en el orden dado. Si no se especifica ningún atributo, se da un resumen de los atributos predeterminados.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>attribute</source>
-        <translation>atributo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>Nombre de la entrada para mostrar.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>Dispositivo NULL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation>error leyendo del dispositivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation>¡archivo vacío!
-</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>malformed string</source>
-        <translation>cadena de caracteres mal formada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>comilla de cierre faltante</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grupo</translation>
+        <translation>দল</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Título</translation>
+        <translation>শিরোনাম</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario:</translation>
+        <translation>ব্যবহারকরীর নাম</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Contraseña</translation>
+        <translation>পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notas</translation>
+        <translation>নোটসমূহ</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Última modificación</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Created</source>
-        <translation>Creado</translation>
+        <translation>সৃষ্টি করেছেন</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation>Integración de navegador obsoleta</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integración con Navegadores</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation>YubiKey [%1] Desafío/Respuesta - Ranura %2 - %3</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Press</source>
-        <translation>Presione</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Passive</source>
-        <translation>Pasivo</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>Agente de SSH</translation>
+        <translation>SSH এজেন্ট</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Generar una nueva frase de contraseña aleatoria diceware.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Número de palabras para la frase de contraseña de diceware.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>count</source>
-        <translation>Número</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Lista de palabras para el generador de diceware.
-[Por defecto: Inglés EFF]</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>Generar una nueva contraseña aleatoria.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Length of the generated password.</source>
-        <translation>Longitud de la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
-        <translation>Utilizar caracteres en minúsculas en la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use uppercase characters in the generated password.</source>
-        <translation>Utilizar caracteres en mayúsculas en la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use numbers in the generated password.</source>
-        <translation>Utilizar números en la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use special characters in the generated password.</source>
-        <translation>Utilizar caracteres especiales en la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation>Utilizar ASCII extendido en la contraseña generada.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Error interno de zlib comprimiendo:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Error al escribir en el dispositivo subyacente:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Error al abrir el dispositivo subyacente:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Error al leer el dispositivo subyacente:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Error interno de zlib descomprimiendo:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>El formato gzip no está soportado en esta versión de zlib.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Error interno de zlib:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search...</source>
-        <translation>Buscar...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Search</source>
-        <translation>Buscar</translation>
+        <translation>সন্ধান</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Limpiar</translation>
+        <translation>পরিস্কার</translation>
     </message>
     <message>
         <source>Case Sensitive</source>
-        <translation>Distinguir mayúsculas/minúsculas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>Limitar la búsqueda al grupo selecionado</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Service</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Solicitud de asociación de nueva clave</translation>
+        <translation>KeePassXC: নতুন কী (key) যুক্ত করার আবেদন</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
-        <translation>Has recibido una solicitud de asociación para la clave de arriba.
-Si desea permitir su acceso a su base de datos KeePassXC
-asigne un nombre único para identificarla y acepte.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: ¿Sobrescribir clave existente?</translation>
+        <translation>KeePassXC: বর্তমান কী উপরিলিখন করবেন?</translation>
     </message>
     <message>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Ya existe una clave de cifrado con el nombre %1.
-¿Desea sobrescribirla?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Actualizar entrada</translation>
+        <translation>KeePassXC: হালনাগাদ এন্ট্রি</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>¿Desea actualizar la información en %1 - %2?</translation>
+        <translation>%1 - %2 এর মধ্যে তথ্য হালনাগাদ করতে চান?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ¡Base de datos bloqueada!</translation>
+        <translation>KeePassXC: ডাটাবেস তালাবদ্ধ !</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation>¡La base de datos activa está bloqueada!
-Por favor desbloquee la base de datos seleccionada o elija otra que esté desbloqueada.</translation>
+        <translation>সক্রিয় ডাটাবেজ বন্ধ রয়েছে।
+নির্বাচিত ডাটাবেস আনলক করুন বা খোলা আছে এমন অন্য একটি পছন্দ করুন।</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Las claves se eliminaron de la base de datos</translation>
+        <translation>KeePassXC: কী ডাটাবেস থেকে অপসারণ করা হয়েছে</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Quitado con éxito cifrado %n-llaves de KeePassX y Http.</numerusform><numerusform>Quitadas con éxito %n- llaves de encriptación de las opciones de KeePassX/Http.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: No se encontró ninguna clave</translation>
+        <translation>KeePassXC: কোন কী পাওয়া যায়নি</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>No se encontraron claves de cifrado en la configuración de KeePassHttp.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC: ¡Configuraciones no disponibles!</translation>
+        <translation>KeePassXC: সেটিংস সমূহ সুপ্রাপ্য নয়।</translation>
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation>La base de datos activa no contiene una entrada de configuración de KeePassHttp.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Removing stored permissions...</source>
-        <translation>Eliminando los permisos guardados...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Abortar</translation>
+        <translation>বাতিল</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Permisos eliminados</translation>
+        <translation>KeePassXC: অনুমতিসমূহ অপসারণ করা হয়েছে</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Con éxito quitar permisos de entradas %n.</numerusform><numerusform>Removidos permisos de %n entradas exitosamente.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: ¡No se encontró ninguna entrada con permisos!</translation>
+        <translation>KeePassXC: অনুমতিসহ কোন এন্ট্রি পাওয়া যায়নি।</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>La base de datos activa no contiene una entrada con permisos.</translation>
+        <translation>সক্রিয় ডাটাবেজ প্রবেশের অনুমতিসহ কোর এন্ট্রি নেই।</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Configuración de la aplicación</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Seguridad</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Error de acceso al archivo de configuración %1</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Configuraciones Básicas</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Inicie sólo una instancia de KeePassXC</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remember last databases</source>
-        <translation>Recordar última base de datos</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>Recordar los últimos archivos de llaves y el dongle de seguridad</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Load previous databases on startup</source>
-        <translation>Abrir base de datos anterior al inicio</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Guardar automáticamente al salir</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Guardar automáticamente después de cada cambio</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Recargar automáticamente la base de datos cuando sea modificada externamente</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimizar al copiar al portapapeles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Minimizar la ventana al iniciar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Usar icono del grupo en la creación de entrada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>No marcar la base de datos como modificada cuando los cambios no afecten a los datos (ej. expandir grupos)</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation>Ocultar la vista de detalles</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Mostrar icono en la bandeja de del sistema</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Ocultar la ventana a la bandeja del sistema cuando se minimiza</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation>Ocultar la ventana a la bandeja del sistema en vez de cerrar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation>Icono de bandeja del sistema oscuro</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language</source>
-        <translation>Idioma</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>অটো-টাইপ</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Use título de entrada para acertar ventanas en Auto-Tipeado global.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Use URL para acertar ventanas en Auto-Tipedo global</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Siempre preguntar antes de hacer Auto-Escritura</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Atajo global de Auto-Escritura</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type delay</source>
-        <translation>Retardo de Auto-Escritura</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>Micro segundo</translation>
+        <translation>এমএস</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>Inicio</translation>
+        <translation>সূচনা</translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>Administración de archivos</translation>
+        <translation>ফাইল ব্যবস্থাপনা</translation>
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation>Guardar los archivos de base de datos con seguridad (puede ser incompatible con Dropbox, etcétera)</translation>
+        <translation>নিরাপদে ডাটাবেস সংরক্ষণ করুন (ড্রডবক্স, এবং অন্যান্যর সাথে অসংগত হতে পারে)</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Hacer una copia de seguridad de la base de datos antes de guardar</translation>
+        <translation>সংরক্ষণ করার আগে ডাটাবেস ব্যাকআপ করুন</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Gestión de entrada</translation>
+        <translation>এন্ট্রি ব্যবস্থাপনা</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>General</translation>
+        <translation>সাধারন</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Intervalos</translation>
+        <translation>সময় শেষ</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Limpiar el portapapeles después de</translation>
+        <translation>ক্লিপবোর্ড পরিস্কার হবে</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>segundos</translation>
+        <translation>সে.</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Bloquear base de datos tras un periodo de inactividad de</translation>
+        <translation>অব্যবহৃত থাকলে ডাটাবেস লক হবে</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>Conveniencia</translation>
+        <translation>সাচ্ছন্দ্য</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Bloquear base de datos cuando la sesión está bloqueada o la pantalla esté cerrada</translation>
+        <translation>ডাটাবেস লক হবে লিড বন্ধ করলে বা সেশন লক করলে</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Bloquear base de datos al minimizar la ventana</translation>
+        <translation>উইন্ডো মিনিমাইজ করলে ডাটাবেস লক হবে</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>No pedir repetición de la contraseña cuando está visible</translation>
+        <translation>আবার যখন দৃশ্যমান হবে তখন পাসওয়ার্ড লাগবেনা</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
-        <translation>Mostrar contraseñas en texto claro por defecto</translation>
+        <translation>ডিফল্টভাবে পাসওয়ার্ড সাধারন লেখায় দেখান</translation>
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation>Ocultar contraseñas en el panel de vista previa</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Ocultar notas de entrada por defecto</translation>
+        <translation>ডিফল্টভাবে এন্ট্রি নোট লুকান</translation>
     </message>
     <message>
         <source>Privacy</source>
-        <translation>Privacidad</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>Usar Google como una alternativa para descargar iconos de sitios web</translation>
+        <translation>গুগল ব্যবহার করুন ওয়েবসাইটের আইকন ডাউনলোড করার জন্য</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Volver a bloquear la base de datos previamente bloqueada después de hacer Auto-Escritura </translation>
+        <translation>অটো-টাইপের পরে পূনরায় লক করুন আগের লক করা ডাটাবেস</translation>
     </message>
 </context>
 <context>
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>Configurar TOTP</translation>
+        <translation>TOTP সেট করুন</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>Clave:</translation>
+        <translation>কী:</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation>Ajustes para el token por defecto RFC 6238</translation>
+        <translation>ডিফল্ট RFC 6238 টোকেন সেটিংসমূহ</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation>Opciones de token de Steam</translation>
+        <translation>স্টেম টোকেন সেটিংসমূহ</translation>
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation>Usar configuración personalizada</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
-        <translation>Nota: Cambie estas configuraciones sólo si sabe lo que está haciendo.</translation>
+        <translation>দ্রষ্টব্য: এই সেটিংস পরিবর্তন করুন শুধুমাত্র যদি আপনি জানেন যে আপনি কি করছেন।</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Paso del tiempo:</translation>
+        <translation>সময় ধাপ:</translation>
     </message>
     <message>
         <source>8 digits</source>
-        <translation>8 dígitos</translation>
+        <translation>8 (আট) ডিজিট</translation>
     </message>
     <message>
         <source>6 digits</source>
-        <translation>6 dígitos</translation>
+        <translation>৬ ডিজিট</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Tamaño del código:</translation>
+        <translation>কোড সাইজ:</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>segundos</translation>
+        <translation>সে.</translation>
     </message>
 </context>
 <context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Contraseña Cronometrada</translation>
+        <translation>সময়ানুসারে পাসওয়ার্ড</translation>
     </message>
     <message>
         <source>000000</source>
-        <translation>000000</translation>
+        <translation>০০০০০০</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copiar</translation>
+        <translation>কপি</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation>Expira en</translation>
+        <translation>মেয়াদ শেষ</translation>
     </message>
     <message>
         <source>seconds</source>
-        <translation>segundos</translation>
+        <translation>সেকেন্ড</translation>
     </message>
 </context>
 <context>
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
-        <translation>Desbloquear base de datos</translation>
+        <translation>ডাটাবেস আনলক করুন</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Empiece a guardar sus contraseñas con seguridad en una base de datos de KeePassXC</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Crear una nueva base de datos</translation>
+        <translation>একটি নতুন ডাটাবেস তৈরী করুন</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Abrir una base de datos existente</translation>
+        <translation>পূর্বের একটি ডাটাবেস খুলুন</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Importar de KeePass 1</translation>
+        <translation>KeePass 1 থেকে আমদানি করুন</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Importar de CSV</translation>
+        <translation>CSV থেকে আমদানি করুন</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Bases de datos recientes</translation>
+        <translation>সাম্প্রতিক ডাটাবেস</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>Bienvenido a KeePassXC %1</translation>
+        <translation>KeePassXC %1 -তে আপনাকে স্বাগতম</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <source>Remove an entry from the database.</source>
-        <translation>Quitar una entrada de la base de datos.</translation>
+        <translation>ডাটাবেস থেকে একটি এন্ট্রি মুছে ফেলুন</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Ruta a la base de datos.</translation>
+        <translation>ডাটাবেসের পাথ</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>Camino de la entrada a quitar.</translation>
+        <translation>যে এন্ট্রি মুছে ফেলতে চান তার পাথ</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeePassXC - gestor de claves multiplataforma</translation>
+        <translation>KeePassXC - ক্রস প্ল্যাটফর্ম পাসওয়ার্ড ম্যানেজার</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>nombre de archivo de la base de datos de contraseñas a abrir (*.kdbx)</translation>
+        <translation>পাসওয়ার্ড দিয়ে যে ডাটাবেস (*.kdbx) খুলতে চান তার ফাইলনেম</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>ruta a un archivo de configuración personalizado</translation>
+        <translation>একটি কাস্টম কনফিগ ফাইল পাথ</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>archivo llave de la base de datos</translation>
+        <translation>ডাটাবেসের কী ফাইল</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>leer contraseña de la base de datos desde la entrada estándar</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation>Identificador de la ventana padre</translation>
+        <translation>মূল উইন্ডো হ্যান্ডেল</translation>
     </message>
 </context>
 </TS>

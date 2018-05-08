@@ -73,7 +73,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 团队特别感谢 debfx 开发了最初版 KeePassX</translation>
     </message>
     <message>
         <source>Build Type: %1
@@ -255,7 +255,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>当请求凭据时显示通知 (&amp;N)</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -280,12 +280,12 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>按照名称排列匹配的凭据</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>根据用户名排列匹配的凭据</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -293,7 +293,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>取消所有记住的权限</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -302,7 +302,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>读取凭据时不再询问</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
@@ -316,7 +316,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>在所有打开的的数据库中搜索相符的凭据</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -328,11 +328,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>启动时自动将 KeePassXC 或 keepassxc-proxy 执行文件路径更新为 native messaging 脚本。</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>启动时更新 native messaging 的 manifest 文件</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -340,16 +340,16 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>在 KeePassXC 与浏览器扩展之间使用代理程序</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>如果手工安装了代理，请设置自定义代理的路径。</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>设置自定义代理路径</translation>
     </message>
     <message>
         <source>Browse...</source>
