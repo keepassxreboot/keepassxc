@@ -3548,7 +3548,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Legacy Browser Integration</source>
-        <translation>Integracja ze starą przeglądarką</translation>
+        <translation>Przestarzała integracja z przeglądarką</translation>
     </message>
     <message>
         <source>Browser Integration</source>

@@ -98,6 +98,15 @@ QString FilePath::wordlistPath(const QString& name)
 
 QIcon FilePath::applicationIcon()
 {
+#ifdef KEEPASSXC_DIST_SNAP
+    return icon("apps", "keepassxc", false);
+#else
+    return icon("apps", "keepassxc");
+#endif
+}
+
+QIcon FilePath::trayIcon()
+{
     bool darkIcon = useDarkIcon();
 
 #ifdef KEEPASSXC_DIST_SNAP
@@ -106,7 +115,6 @@ QIcon FilePath::applicationIcon()
     return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc");
 #endif
 }
-
 
 QIcon FilePath::trayIconLocked()
 {

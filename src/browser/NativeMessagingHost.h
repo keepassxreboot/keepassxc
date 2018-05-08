@@ -31,7 +31,7 @@ class NativeMessagingHost : public NativeMessagingBase
     typedef QList<QLocalSocket*> SocketList;
 
 public:
-    explicit    NativeMessagingHost(DatabaseTabWidget* parent = 0);
+    explicit    NativeMessagingHost(DatabaseTabWidget* parent = 0, const bool enabled = false);
     ~NativeMessagingHost();
     int         init();
     void        run();

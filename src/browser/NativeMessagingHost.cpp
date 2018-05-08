@@ -23,8 +23,12 @@
 #include "NativeMessagingHost.h"
 #include "BrowserSettings.h"
 
-NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent) :
-    NativeMessagingBase(),
+#ifdef Q_OS_WIN
+#include <Winsock2.h>
+#endif
+
+NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool enabled) :
+    NativeMessagingBase(enabled),
     m_mutex(QMutex::Recursive),
     m_browserClients(m_browserService),
     m_browserService(parent)
@@ -72,6 +76,11 @@ void NativeMessagingHost::run()
     if (BrowserSettings::supportBrowserProxy()) {
         QString serverPath = getLocalServerPath();
         QFile::remove(serverPath);
+
+        // Ensure that STDIN is not being listened when proxy is used
+        if (m_notifier->isEnabled()) {
+            m_notifier->setEnabled(false);
+        }
 
         if (m_localServer->isListening()) {
             m_localServer->close();
@@ -142,9 +151,15 @@ void NativeMessagingHost::newLocalConnection()
 void NativeMessagingHost::newLocalMessage()
 {
     QLocalSocket* socket = qobject_cast<QLocalSocket*>(QObject::sender());
-
     if (!socket || socket->bytesAvailable() <= 0) {
         return;
+    }
+
+    socket->setReadBufferSize(NATIVE_MSG_MAX_LENGTH);
+    int socketDesc = socket->socketDescriptor();
+    if (socketDesc) {
+        int max = NATIVE_MSG_MAX_LENGTH;
+        setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
     QByteArray arr = socket->readAll();

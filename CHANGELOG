@@ -1,3 +1,19 @@
+2.3.2 (2018-05-07)
+=========================
+
+- Enable high entropy ASLR on Windows [#1747]
+- Enhance favicon fetching [#1786]
+- Fix crash on Windows due to autotype [#1691]
+- Fix dark tray icon changing all icons [#1680]
+- Fix --pw-stdin not using getPassword function [#1686]
+- Fix placeholders being resolved in notes [#1907]
+- Enable auto-type start delay to be configurable [#1908]
+- Browser: Fix native messaging reply size [#1719]
+- Browser: Increase maximum buffer size [#1720]
+- Browser: Enhance usability and functionality [#1810, #1822, #1830, #1884, #1906]
+- SSH Agent: Parse aes-256-cbc/ctr keys [#1682]
+- SSH Agent: Enhance usability and functionality [#1677, #1679, #1681, #1787]
+
 2.3.1 (2018-03-06)
 =========================
 

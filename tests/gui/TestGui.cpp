@@ -71,6 +71,8 @@ void TestGui::initTestCase()
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
     Config::instance()->set("AutoSaveAfterEveryChange", false);
+    // Enable the tray icon so we can test hiding/restoring the window
+    Config::instance()->set("GUI/ShowTrayIcon", true);
 
     m_mainWindow = new MainWindow();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
@@ -1089,6 +1091,32 @@ void TestGui::testDragAndDropKdbxFiles()
     Tools::wait(100);
 
     QCOMPARE(m_tabWidget->count(), openedDatabasesCount);
+}
+
+void TestGui::testTrayRestoreHide()
+{
+    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+        QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test...");
+    }
+
+    QSystemTrayIcon* trayIcon = m_mainWindow->findChild<QSystemTrayIcon*>();
+    QVERIFY(m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::Trigger);
+    Tools::wait(100);
+    QVERIFY(!m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::Trigger);
+    Tools::wait(100);
+    QVERIFY(m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::Trigger);
+    Tools::wait(100);
+    QVERIFY(!m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::Trigger);
+    Tools::wait(100);
+    QVERIFY(m_mainWindow->isVisible());
 }
 
 void TestGui::cleanupTestCase()

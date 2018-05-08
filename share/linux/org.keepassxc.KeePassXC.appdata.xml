@@ -50,6 +50,24 @@
     </screenshots>
 
     <releases>
+        <release version="2.3.2" date="2018-05-07">
+            <description>
+                <ul>
+                    <li>Enable high entropy ASLR on Windows [#1747]</li>
+                    <li>Enhance favicon fetching [#1786]</li>
+                    <li>Fix crash on Windows due to autotype [#1691]</li>
+                    <li>Fix dark tray icon changing all icons [#1680]</li>
+                    <li>Fix --pw-stdin not using getPassword function [#1686]</li>
+                    <li>Fix placeholders being resolved in notes [#1907]</li>
+                    <li>Enable auto-type start delay to be configurable [#1908]</li>
+                    <li>Browser: Fix native messaging reply size [#1719]</li>
+                    <li>Browser: Increase maximum buffer size [#1720]</li>
+                    <li>Browser: Enhance usability and functionality [#1810, #1822, #1830, #1884, #1906]</li>
+                    <li>SSH Agent: Parse aes-256-cbc/ctr keys [#1682]</li>
+                    <li>SSH Agent: Enhance usability and functionality [#1677, #1679, #1681, #1787]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.3.1" date="2018-03-06">
             <description>
                 <ul>

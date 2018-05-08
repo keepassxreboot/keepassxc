@@ -202,9 +202,6 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 
 add_subdirectory(http)
-if(WITH_XC_NETWORKING)
-  find_package(CURL REQUIRED)
-endif()
 
 set(BROWSER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/browser)
 add_subdirectory(browser)
@@ -279,7 +276,7 @@ if (UNIX AND NOT APPLE)
     target_link_libraries(keepassx_core Qt5::DBus)
 endif()
 if(MINGW)
-    target_link_libraries(keepassx_core Wtsapi32.lib)
+    target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
 endif()
 
 if(MINGW)
