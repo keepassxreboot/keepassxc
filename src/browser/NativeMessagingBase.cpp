@@ -39,6 +39,7 @@
 NativeMessagingBase::NativeMessagingBase(const bool enabled)
 {
 #ifdef Q_OS_WIN
+    Q_UNUSED(enabled);
     _setmode(_fileno(stdin), _O_BINARY);
     _setmode(_fileno(stdout), _O_BINARY);
 #else
