@@ -23,11 +23,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver Colaborações no GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver colaborações no GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Informações de Depuração</translation>
+        <translation>Informações de depuração</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -69,11 +69,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Mantedores do Projeto:</translation>
+        <translation>Mantedores do projeto:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>A equipe KeePassXC agradece especialmente a debfx pela criação do KeePassX original.</translation>
+        <translation>A equipe do KeePassXC agradece especialmente a debfx pela criação do KeePassX original.</translation>
     </message>
     <message>
         <source>Build Type: %1
@@ -111,7 +111,7 @@ Selecione se deseja permitir o acesso.</translation>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Habilitar Agente SSH (requer reinicialização)</translation>
+        <translation>Habilitar agente SSH (requer reinicialização)</translation>
     </message>
 </context>
 <context>
@@ -122,27 +122,27 @@ Selecione se deseja permitir o acesso.</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Digitação - KeePassXC</translation>
+        <translation>Autodigitação - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Digitação</translation>
+        <translation>Autodigitação</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>A sintaxe da sua sequência de Auto-Digitação está incorreta!</translation>
+        <translation>A sintaxe da sua sequência de autodigitação está incorreta!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Digitação contém um tempo de espera muito longo. Você tem certeza que deseja continuar?</translation>
+        <translation>Este comando de autodigitação contém um tempo de espera muito longo. Você tem certeza de que deseja continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Este comando Autotipo contém pressionamentos de teclas muito lentos. Você realmente deseja prosseguir?</translation>
+        <translation>Este comando de autodigitação contém pressionamentos de teclas muito lentos. Você tem certeza de que deseja continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Este comando Auto-Type contém os argumentos que são repetidos muitas vezes. Você realmente deseja prosseguir?</translation>
+        <translation>Este comando de autodigitação contém parâmetros que são repetidos muitas vezes. Você tem certeza de que deseja continuar?</translation>
     </message>
 </context>
 <context>
@@ -183,11 +183,11 @@ Selecione se deseja permitir o acesso.</translation>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Digitação - KeePassXC</translation>
+        <translation>Autodigitação - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Escolha uma entrada para Auto-Digitar:</translation>
+        <translation>Escolha uma entrada para digitar automaticamente:</translation>
     </message>
 </context>
 <context>

@@ -374,7 +374,7 @@ Ole hyvä ja valitse sallitaanko pääsy.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>Valitettavasti KeePassXC-Browser ei ole vielä tuettu Snap-julkaisuissa.</translation>
     </message>
 </context>
 <context>
@@ -1976,7 +1976,7 @@ Tämä voi vikaannuttaa tietoa käyttävän liitännäisen.</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Liitteet (kuvake)</translation>
     </message>
 </context>
 <context>

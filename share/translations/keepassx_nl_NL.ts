@@ -375,7 +375,7 @@ Geef aan of je toegang wilt verlenen of niet.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Het spijt ons, maar KeePassXC-Browser wordt momenteel niet ondersteund voor tussentijdse versies.</translation>
+        <translation>Het spijt ons, maar KeePassXC-Browser wordt momenteel niet ondersteund voor Snap releases.</translation>
     </message>
 </context>
 <context>
@@ -1361,7 +1361,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation>Druk Tonen om te bekijken of bewerken</translation>
+        <translation>Druk Weergeven om te bekijken of bewerken</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1416,7 +1416,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Tonen</translation>
+        <translation>Weergeven</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1470,7 +1470,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Tonen</translation>
+        <translation>Weergeven</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -1513,7 +1513,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Schakelen aan om notities te tonen.</translation>
+        <translation>Selecteer om notities weer te geven.</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -3483,7 +3483,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Namen van de te tonen kenmerken. Deze optie kan meer dan eens worden opgegeven, waarbij elk kenmerk op een regel wordt getoond in de opgegeven volgorde. Als er geen kenmerken worden opgegeven, wordt een samenvatting van de standaardkenmerken gegeven.</translation>
+        <translation>Namen van de weer te geven kenmerken. Deze optie kan meer dan eens worden opgegeven, waarbij elk kenmerk op een regel wordt getoond in de opgegeven volgorde. Als er geen kenmerken worden opgegeven, wordt een samenvatting van de standaardkenmerken gegeven.</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -3837,7 +3837,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Icoon in het systeemvak tonen</translation>
+        <translation>Icoon in het systeemvak weergeven</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
