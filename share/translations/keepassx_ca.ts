@@ -260,7 +260,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Sol·licitar el desbloqueig de la base de dades si està blocada</translation>
+        <translation>Sol·licita el desbloqueig de la base de dades si està blocada</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -575,7 +575,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Còpia el historial</translation>
+        <translation>Copia el historial</translation>
     </message>
 </context>
 <context>
@@ -1248,7 +1248,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -1897,7 +1897,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1913,15 +1913,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creat</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificat</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>Accedit</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -2667,7 +2667,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>Tanca base de dades</translation>
+        <translation>Tanca la base de dades</translation>
     </message>
     <message>
         <source>&amp;New database</source>
@@ -2727,11 +2727,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>Còpia el nom d&apos;&amp;usuari</translation>
+        <translation>Copia el nom d&apos;&amp;usuari</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Còpia el nom d&apos;usuari al porta-retalls</translation>
+        <translation>Copia el nom d&apos;usuari al porta-retalls</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2739,11 +2739,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Còpia la contrasenya  al porta-retalls</translation>
+        <translation>Copia la contrasenya al porta-retalls</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Conficuració</translation>
+        <translation>&amp;Configuració</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -2751,7 +2751,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>Realitza complació automètica</translation>
+        <translation>Realitza compleció automàtica</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2759,7 +2759,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;bloqueja la bases de dades</translation>
+        <translation>&amp;Bloqueja la bases de dades</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3510,11 +3510,11 @@ Available commands:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Darrera modificació</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creat</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>
