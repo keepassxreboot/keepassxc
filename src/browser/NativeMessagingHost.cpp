@@ -80,7 +80,7 @@ void NativeMessagingHost::run()
         QFile::remove(serverPath);
 
         // Ensure that STDIN is not being listened when proxy is used
-        if (m_notifier->isEnabled()) {
+        if (m_notifier && m_notifier->isEnabled()) {
             m_notifier->setEnabled(false);
         }
 
