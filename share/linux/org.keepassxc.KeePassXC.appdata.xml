@@ -50,6 +50,13 @@
     </screenshots>
 
     <releases>
+        <release version="2.3.3" date="2018-05-09">
+            <description>
+                <ul>
+                    <li>Fix crash when browser integration is enabled [#1923]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.3.2" date="2018-05-07">
             <description>
                 <ul>
