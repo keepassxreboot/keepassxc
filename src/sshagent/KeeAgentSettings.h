@@ -34,6 +34,7 @@ public:
     bool fromXml(const QByteArray& ba);
     QByteArray toXml() const;
 
+    static bool inEntry(const Entry* entry);
     bool fromEntry(const Entry* entry);
     void toEntry(Entry* entry) const;
     bool keyConfigured() const;

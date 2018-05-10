@@ -131,6 +131,7 @@ private slots:
     void toggleUsernamesHidden();
     void obtainContextFocusLock();
     void releaseContextFocusLock();
+    void agentEnabled(bool enabled);
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

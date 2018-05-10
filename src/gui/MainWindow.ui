@@ -337,6 +337,9 @@
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryAddToAgent"/>
+    <addaction name="actionEntryRemoveFromAgent"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -811,6 +814,16 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+/</string>
+   </property>
+  </action>
+  <action name="actionEntryAddToAgent">
+   <property name="text">
+    <string>Add key to SSH Agent</string>
+   </property>
+  </action>
+  <action name="actionEntryRemoveFromAgent">
+   <property name="text">
+    <string>Remove key from SSH Agent</string>
    </property>
   </action>
  </widget>

@@ -56,6 +56,7 @@ public:
 
 signals:
     void error(const QString& message);
+    void enabledChanged(bool enabled);
 
 public slots:
     void databaseModeChanged();

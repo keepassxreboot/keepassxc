@@ -190,8 +190,19 @@ MainWindow::MainWindow()
 
 #ifdef WITH_XC_SSHAGENT
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
+    connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+
+    m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
+    m_entryContextMenu->addAction(m_ui->actionEntryRemoveFromAgent);
+
+    m_ui->actionEntryAddToAgent->setIcon(resources()->icon("utilities-terminal"));
+    m_ui->actionEntryRemoveFromAgent->setIcon(resources()->icon("utilities-terminal"));
 #endif
+
+    m_ui->actionEntryAddToAgent->setVisible(false);
+    m_ui->actionEntryRemoveFromAgent->setVisible(false);
 
 #if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
@@ -269,6 +280,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
+    m_ui->actionEntryAddToAgent->setShortcut(Qt::CTRL + Qt::Key_H);
+    m_ui->actionEntryRemoveFromAgent->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_H);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
@@ -285,6 +298,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryAddToAgent->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryRemoveFromAgent->setShortcutVisibleInContextMenu(true);
 #endif
 
     connect(m_ui->menuEntries, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
@@ -440,6 +455,10 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
+#ifdef WITH_XC_SSHAGENT
+    m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
+    m_actionMultiplexer.connect(m_ui->actionEntryRemoveFromAgent, SIGNAL(triggered()), SLOT(removeFromAgent()));
+#endif
 
     m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()), SLOT(createGroup()));
     m_actionMultiplexer.connect(m_ui->actionGroupEdit, SIGNAL(triggered()), SLOT(switchToGroupEdit()));
@@ -691,6 +710,14 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionExportHtml->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
+#ifdef WITH_XC_SSHAGENT
+            bool singleEntryHasSshKey =
+                singleEntrySelected && sshAgent()->isEnabled() && dbWidget->currentEntryHasSshKey();
+            m_ui->actionEntryAddToAgent->setVisible(singleEntryHasSshKey);
+            m_ui->actionEntryAddToAgent->setEnabled(singleEntryHasSshKey);
+            m_ui->actionEntryRemoveFromAgent->setVisible(singleEntryHasSshKey);
+            m_ui->actionEntryRemoveFromAgent->setEnabled(singleEntryHasSshKey);
+#endif
 
             m_searchWidgetAction->setEnabled(true);
 
@@ -1183,6 +1210,12 @@ void MainWindow::obtainContextFocusLock()
 void MainWindow::releaseContextFocusLock()
 {
     m_contextMenuFocusLock = false;
+}
+
+void MainWindow::agentEnabled(bool enabled)
+{
+    m_ui->actionEntryAddToAgent->setVisible(enabled);
+    m_ui->actionEntryRemoveFromAgent->setVisible(enabled);
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)

@@ -699,6 +699,50 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
     }
 }
 
+#ifdef WITH_XC_SSHAGENT
+void DatabaseWidget::addToAgent()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return;
+    }
+
+    KeeAgentSettings settings;
+    if (!settings.fromEntry(currentEntry)) {
+        return;
+    }
+
+    OpenSSHKey key;
+    if (settings.toOpenSSHKey(currentEntry, key, true)) {
+        SSHAgent::instance()->addIdentity(key, settings);
+    } else {
+        m_messageWidget->showMessage(key.errorString(), MessageWidget::Error);
+    }
+}
+
+void DatabaseWidget::removeFromAgent()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return;
+    }
+
+    KeeAgentSettings settings;
+    if (!settings.fromEntry(currentEntry)) {
+        return;
+    }
+
+    OpenSSHKey key;
+    if (settings.toOpenSSHKey(currentEntry, key, false)) {
+        SSHAgent::instance()->removeIdentity(key);
+    } else {
+        m_messageWidget->showMessage(key.errorString(), MessageWidget::Error);
+    }
+}
+#endif
+
 void DatabaseWidget::performAutoType()
 {
     auto currentEntry = currentSelectedEntry();
@@ -1624,6 +1668,19 @@ bool DatabaseWidget::currentEntryHasTotp()
     }
     return currentEntry->hasTotp();
 }
+
+#ifdef WITH_XC_SSHAGENT
+bool DatabaseWidget::currentEntryHasSshKey()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return false;
+    }
+
+    return KeeAgentSettings::inEntry(currentEntry);
+}
+#endif
 
 bool DatabaseWidget::currentEntryHasNotes()
 {
