@@ -110,6 +110,9 @@ public:
     bool currentEntryHasUrl();
     bool currentEntryHasNotes();
     bool currentEntryHasTotp();
+#ifdef WITH_XC_SSHAGENT
+    bool currentEntryHasSshKey();
+#endif
 
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
@@ -169,6 +172,10 @@ public slots:
     void showTotpKeyQrCode();
     void copyTotp();
     void setupTotp();
+#ifdef WITH_XC_SSHAGENT
+    void addToAgent();
+    void removeFromAgent();
+#endif
     void performAutoType();
     void openUrl();
     void downloadSelectedFavicons();

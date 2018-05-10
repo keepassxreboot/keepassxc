@@ -53,6 +53,8 @@ void SSHAgent::setEnabled(bool enabled)
     }
 
     config()->set("SSHAgent", enabled);
+
+    emit enabledChanged(enabled);
 }
 
 QString SSHAgent::authSockOverride() const

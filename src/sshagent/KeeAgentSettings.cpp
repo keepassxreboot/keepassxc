@@ -300,6 +300,17 @@ QByteArray KeeAgentSettings::toXml() const
 }
 
 /**
+ * Check if an entry has KeeAgent settings configured
+ *
+ * @param entry Entry to check the attachment
+ * @return true if XML document exists
+ */
+bool KeeAgentSettings::inEntry(const Entry* entry)
+{
+    return entry->attachments()->hasKey("KeeAgent.settings");
+}
+
+/**
  * Read settings from an entry as an XML attachment.
  *
  * Sets error string on error.

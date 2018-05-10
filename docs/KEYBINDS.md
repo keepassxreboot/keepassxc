@@ -20,6 +20,8 @@ Copy Password                | Ctrl + C
 Trigger AutoType             | Ctrl + Shift - V
 Open URL                     | Ctrl + Shift - U
 Copy URL                     | Ctrl + U
+Add key to SSH Agent         | Ctrl + H
+Remove key from SSH Agent    | Ctrl + Shift + H
 Show Minimized               | Ctrl + M
 Hide Window                  | Ctrl + Shift - M
 Select Next Database Tab     | Ctrl + Tab *OR* Ctrl + PGDN
