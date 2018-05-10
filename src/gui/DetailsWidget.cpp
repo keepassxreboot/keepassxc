@@ -197,7 +197,7 @@ void DetailsWidget::updateEntryNotesTab()
     Q_ASSERT(m_currentEntry);
     const QString notes = m_currentEntry->notes();
     setTabEnabled(m_ui->entryTabWidget, m_ui->entryNotesTab, !notes.isEmpty());
-    m_ui->entryNotesEdit->setText(m_currentEntry->resolveMultiplePlaceholders(notes));
+    m_ui->entryNotesEdit->setText(notes);
 }
 
 void DetailsWidget::updateEntryAttributesTab()

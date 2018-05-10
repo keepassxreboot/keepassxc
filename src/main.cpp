@@ -45,12 +45,29 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
 
+static inline void earlyQNetworkAccessManagerWorkaround()
+{
+    // When QNetworkAccessManager is instantiated it regularly starts polling
+    // all network interfaces to see if anything changes and if so, what. This
+    // creates a latency spike every 10 seconds on Mac OS 10.12+ and Windows 7 >=
+    // when on a wifi connection.
+    // So here we disable it for lack of better measure.
+    // This will also cause this message: QObject::startTimer: Timers cannot
+    // have negative intervals
+    // For more info see:
+    // - https://bugreports.qt.io/browse/QTBUG-40332
+    // - https://bugreports.qt.io/browse/QTBUG-46015
+    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
+}
+
 int main(int argc, char** argv)
 {
 #ifdef QT_NO_DEBUG
     Tools::disableCoreDumps();
 #endif
     Tools::setupSearchPaths();
+
+    earlyQNetworkAccessManagerWorkaround();
 
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");

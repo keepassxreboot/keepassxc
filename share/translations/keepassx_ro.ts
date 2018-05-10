@@ -360,11 +360,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>Fișiere Executabile (*.exe);;Toate Fișierele (*.*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Fișiere Executabile (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
@@ -390,11 +390,11 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>Salvează și permite acces</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Suprascriere cheie existentă?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
@@ -593,7 +593,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Codec</source>
-        <translation type="unfinished"/>
+        <translation>Codec</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
@@ -641,7 +641,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Importat din fișier CSV</translation>
     </message>
     <message>
         <source>Original data: </source>
@@ -797,7 +797,7 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>Criptare</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -816,7 +816,7 @@ If you keep this number, your database may take hours or days (or even longer) t
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Anulare</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
@@ -852,7 +852,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Algoritm Criptare:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -864,7 +864,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>Funcție Derivare Cheie:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -876,18 +876,18 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Utilizare Memorie:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
+        <translation>Paralelism:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Meta Date Bază de Date</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -903,7 +903,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Setări Istoric</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -923,7 +923,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Setări Adiționale Bază de Date</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
@@ -1006,7 +1006,7 @@ Salvați modificările?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation type="unfinished"/>
+        <translation>Scrierea în baza de date a eșuat.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1141,11 +1141,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>Fișierul a fost modificat</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation type="unfinished"/>
+        <translation>Fișierul bazei de date a fost modificat. Doriți să încărcați ultimele modificări?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -1264,7 +1264,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -1583,7 +1583,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation type="unfinished"/>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1653,11 +1653,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation type="unfinished"/>
+        <translation>Adaugă icon personalizat</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation type="unfinished"/>
+        <translation>Șterge icon personalizat</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -1665,7 +1665,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>Nu pot descărca favicon.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -1685,11 +1685,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation type="unfinished"/>
+        <translation>Nu pot citi icon</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Icon personalizat deja există</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
@@ -1945,7 +1945,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Atașamente (icon)</translation>
     </message>
 </context>
 <context>
@@ -2849,7 +2849,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation type="unfinished"/>
+        <translation>Scrierea în baza de date a eșuat.</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
@@ -3645,7 +3645,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Suprascriere cheie existentă?</translation>
     </message>
     <message>
         <source>A shared encryption-key with the name &quot;%1&quot; already exists.
@@ -3918,7 +3918,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>Folosește Google ca variantă de rezervă pentru descărcare favicon site</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>

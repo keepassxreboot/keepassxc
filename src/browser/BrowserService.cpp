@@ -47,6 +47,7 @@ static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
     , m_dialogActive(false)
+    , m_bringToFrontRequested(false)
 {
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
     connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
@@ -83,6 +84,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
 
     if (triggerUnlock) {
         KEEPASSXC_MAIN_WINDOW->bringToFront();
+        m_bringToFrontRequested = true;
     }
 
     return false;
@@ -228,7 +230,8 @@ QString BrowserService::getKey(const QString& id)
 QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                                const QString& url,
                                                const QString& submitUrl,
-                                               const QString& realm)
+                                               const QString& realm,
+                                               const StringPairList& keyList)
 {
     QJsonArray result;
     if (thread() != QThread::currentThread()) {
@@ -239,7 +242,8 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                   Q_ARG(const QString&, id),
                                   Q_ARG(const QString&, url),
                                   Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm));
+                                  Q_ARG(const QString&, realm),
+                                  Q_ARG(const StringPairList&, keyList));
         return result;
     }
 
@@ -250,7 +254,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     // Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    for (Entry* entry : searchEntries(url)) {
+    for (Entry* entry : searchEntries(url, keyList)) {
         switch (checkAccess(entry, host, submitHost, realm)) {
         case Denied:
             continue;
@@ -356,15 +360,19 @@ void BrowserService::updateEntry(const QString& id,
         return;
     }
 
-    if (username.compare(login, Qt::CaseSensitive) != 0
-        || entry->password().compare(password, Qt::CaseSensitive) != 0) {
-        QMessageBox::StandardButton dialogResult = QMessageBox::No;
+    if (username.compare(login, Qt::CaseSensitive) != 0 || entry->password().compare(password, Qt::CaseSensitive) != 0) {
+        int dialogResult = QMessageBox::No;
         if (!BrowserSettings::alwaysAllowUpdate()) {
-            dialogResult = QMessageBox::warning(
-                0,
-                tr("KeePassXC: Update Entry"),
-                tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username),
-                QMessageBox::Yes | QMessageBox::No);
+            QMessageBox msgBox;
+            msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
+            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username));
+            msgBox.setStandardButtons(QMessageBox::Yes);
+            msgBox.addButton(QMessageBox::No);
+            msgBox.setDefaultButton(QMessageBox::No);
+            msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
+            msgBox.activateWindow();
+            msgBox.raise();
+            dialogResult = msgBox.exec();
         }
 
         if (BrowserSettings::alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
@@ -399,7 +407,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& text)
+QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPairList& keyList)
 {
     // Get the list of databases to search
     QList<Database*> databases;
@@ -408,7 +416,16 @@ QList<Entry*> BrowserService::searchEntries(const QString& text)
         for (int i = 0; i < count; ++i) {
             if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (Database* db = dbWidget->database()) {
-                    databases << db;
+                     // Check if database is connected with KeePassXC-Browser
+                    for (const StringPair keyPair : keyList) {
+                        Entry* entry = db->resolveEntry(KEEPASSXCBROWSER_UUID);
+                        if (entry) {
+                            QString key = entry->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
+                            if (!key.isEmpty() && keyPair.second == key) {
+                                databases << db;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -537,21 +554,30 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     const QString baseSubmitUrl =
         url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
 
-    QMultiMap<int, const Entry*> priorities;
-    for (const Entry* entry : pwEntries) {
+    // Build map of prioritized entries
+    QMultiMap<int, Entry*> priorities;
+    for (Entry* entry : pwEntries) {
         priorities.insert(sortPriority(entry, host, submitUrl, baseSubmitUrl), entry);
     }
 
+    QList<Entry*> results;
     QString field = BrowserSettings::sortByTitle() ? "Title" : "UserName";
-    std::sort(pwEntries.begin(), pwEntries.end(), [&priorities, &field](const Entry* left, const Entry* right) {
-        int res = priorities.key(left) - priorities.key(right);
-        if (res == 0) {
-            return QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0;
+    for (int i = 100; i >= 0; i -= 5) {
+        if (priorities.count(i) > 0) {
+            // Sort same priority entries by Title or UserName
+            auto entries = priorities.values(i);
+            std::sort(entries.begin(), entries.end(), [&priorities, &field](Entry* left, Entry* right) {
+                return QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0;
+            });
+            results << entries;
+            if (BrowserSettings::bestMatchOnly() && !pwEntries.isEmpty()) {
+                // Early out once we find the highest batch of matches
+                break;
+            }
         }
-        return res < 0;
-    });
+    }
 
-    return pwEntries;
+    return results;
 }
 
 bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
@@ -606,6 +632,10 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     res["password"] = entry->resolveMultiplePlaceholders(entry->password());
     res["name"] = entry->resolveMultiplePlaceholders(entry->title());
     res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuid().toHex());
+
+    if (entry->hasTotp()) {
+        res["totp"] = entry->totp();
+    }
 
     if (BrowserSettings::supportKphFields()) {
         const EntryAttributes* attr = entry->attributes();
@@ -762,6 +792,10 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
+        if (m_bringToFrontRequested) {
+            KEEPASSXC_MAIN_WINDOW->lower();
+            m_bringToFrontRequested = false;
+        }
         emit databaseUnlocked();
     }
 }

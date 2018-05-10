@@ -109,11 +109,6 @@ AutoTypeExecutor* AutoTypePlatformWin::createExecutor()
     return new AutoTypeExecutorWin(this);
 }
 
-int AutoTypePlatformWin::initialTimeout()
-{
-    return 500;
-}
-
 //
 // Set foreground window
 //

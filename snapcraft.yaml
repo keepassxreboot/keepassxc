@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.3.1
+version: 2.3.3
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -33,7 +33,7 @@ parts:
       - -DWITH_XC_ALL=ON
     build-packages:
       - g++
-      - libgcrypt20-dev
+      - libgcrypt20-18-dev
       - libqt5x11extras5-dev
       - qtbase5-dev
       - qttools5-dev
@@ -45,9 +45,11 @@ parts:
       - libykpers-1-dev
       - libcurl4-openssl-dev
       - libsodium-dev
+      - libargon2-0-dev
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
+      - libgcrypt20-18
     install: |
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
     organize:

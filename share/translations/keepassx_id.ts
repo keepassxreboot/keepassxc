@@ -73,7 +73,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Terima kasih dari tim KeePassXC kepada debfx yang telah membuat KeepassX original.</translation>
     </message>
     <message>
         <source>Build Type: %1
@@ -218,7 +218,7 @@ Silakan pilih apakah Anda ingin mengizinkannya.</translation>
     <name>BrowserOptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
@@ -374,7 +374,7 @@ Silakan pilih apakah Anda ingin mengizinkannya.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>Maaf, KeePassXC-Browser saat ini tidak mendukung rilisan Snap.</translation>
     </message>
 </context>
 <context>
@@ -447,7 +447,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Berhasil membuang %n kunci enkripsi dari pengaturan KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -463,7 +463,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Berhasil membuang perizinan dari %n entri.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -856,7 +856,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -1378,15 +1378,15 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan sandi yang dibuat?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Apakah Anda ingin menggunakan sandi yang dibuat untuk entri ini?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Entri berhasil diperbarui.</translation>
     </message>
 </context>
 <context>
@@ -1421,11 +1421,11 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Warna Latar Depan:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Warna Latar Belakang:</translation>
     </message>
 </context>
 <context>
@@ -1742,7 +1742,7 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Data Plugin</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1750,12 +1750,13 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Hapus data plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Apakah Anda benar-benar ingin menghapus data plugin?
+Ini mungkin akan menyebabkan plugin terkait tidak berfungsi.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -1813,7 +1814,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Apakah Anda yakin ingin membuang %n lampiran?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1972,7 +1973,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Lampiran (ikon)</translation>
     </message>
 </context>
 <context>
@@ -2997,7 +2998,7 @@ Versi ini tidak dimaksudkan untuk penggunaan sehari-hari.</translation>
     <name>OptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases from ChromeIPass or PassIFox</source>
@@ -3566,11 +3567,11 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Buat frasa sandi diceware acak yang baru.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Jumlah kata untuk frasa sandi diceware.</translation>
     </message>
     <message>
         <source>count</source>
@@ -3579,7 +3580,8 @@ Perintah yang tersedia:
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation type="unfinished"/>
+        <translation>Daftar kata untuk generator diceware.
+[Bawaan: Inggris EFF]</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
@@ -3607,7 +3609,7 @@ Perintah yang tersedia:
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Gunakan ASCII yang diperluas di dalam sandi yang dibuat.</translation>
     </message>
 </context>
 <context>
@@ -3962,7 +3964,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Kunci ulang basis data yang sebelumnya terkunci setelah menjalankan Ketik-Otomatis</translation>
     </message>
 </context>
 <context>

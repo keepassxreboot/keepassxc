@@ -32,12 +32,19 @@
 #include <iostream>
 #include <unistd.h>
 
+#ifndef Q_OS_WIN
+#include <sys/types.h>
+#include <sys/socket.h> 
+#endif
+
+static const int NATIVE_MSG_MAX_LENGTH = 1024*1024;
+
 class NativeMessagingBase : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit NativeMessagingBase();
+    explicit NativeMessagingBase(const bool enabled);
     ~NativeMessagingBase() = default;
 
 protected slots:

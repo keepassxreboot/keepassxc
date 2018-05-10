@@ -36,14 +36,17 @@
 #include <io.h>
 #endif
 
-NativeMessagingBase::NativeMessagingBase()
+NativeMessagingBase::NativeMessagingBase(const bool enabled)
 {
 #ifdef Q_OS_WIN
+    Q_UNUSED(enabled);
     _setmode(_fileno(stdin), _O_BINARY);
     _setmode(_fileno(stdout), _O_BINARY);
 #else
-    m_notifier.reset(new QSocketNotifier(fileno(stdin), QSocketNotifier::Read, this));
-    connect(m_notifier.data(), SIGNAL(activated(int)), this, SLOT(newNativeMessage()));
+    if (enabled) {
+        m_notifier.reset(new QSocketNotifier(fileno(stdin), QSocketNotifier::Read, this));
+        connect(m_notifier.data(), SIGNAL(activated(int)), this, SLOT(newNativeMessage()));
+    }
 #endif
 }
 

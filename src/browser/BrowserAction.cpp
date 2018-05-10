@@ -18,6 +18,7 @@
 
 #include "BrowserAction.h"
 #include "BrowserSettings.h"
+#include "NativeMessagingBase.h"
 #include "config-keepassx.h"
 #include "sodium.h"
 #include "sodium/crypto_box.h"
@@ -237,9 +238,17 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_NO_URL_PROVIDED);
     }
 
+    const QJsonArray keys = decrypted.value("keys").toArray();
+
+    StringPairList keyList;
+    for (const QJsonValue val : keys) {
+        const QJsonObject keyObject = val.toObject();
+        keyList.push_back(qMakePair(keyObject.value("id").toString(), keyObject.value("key").toString()));
+    }
+
     const QString id = decrypted.value("id").toString();
     const QString submit = decrypted.value("submitUrl").toString();
-    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "");
+    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList);
 
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
@@ -472,7 +481,7 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
 
     std::vector<unsigned char> e;
-    e.resize(max_length);
+    e.resize(NATIVE_MSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
         return QString();
@@ -500,7 +509,7 @@ QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
     std::vector<unsigned char> sk(sa.cbegin(), sa.cend());
 
     std::vector<unsigned char> d;
-    d.resize(max_length);
+    d.resize(NATIVE_MSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
         return QByteArray();

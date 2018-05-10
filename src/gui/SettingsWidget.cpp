@@ -157,6 +157,7 @@ void SettingsWidget::loadSettings()
         }
         m_generalUi->autoTypeShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get("AutoTypeDelay").toInt());
+        m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get("AutoTypeStartDelay").toInt());
     }
 
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
@@ -223,6 +224,7 @@ void SettingsWidget::saveSettings()
         config()->set("GlobalAutoTypeKey", m_generalUi->autoTypeShortcutWidget->key());
         config()->set("GlobalAutoTypeModifiers", static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
         config()->set("AutoTypeDelay", m_generalUi->autoTypeDelaySpinBox->value());
+        config()->set("AutoTypeStartDelay", m_generalUi->autoTypeStartDelaySpinBox->value());
     }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());

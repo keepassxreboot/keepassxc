@@ -65,7 +65,7 @@ class BrowserPlugin : public ISettingsPage
 public:
     BrowserPlugin(DatabaseTabWidget* tabWidget)
     {
-        m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget));
+        m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, BrowserSettings::isEnabled()));
     }
 
     ~BrowserPlugin()
@@ -686,7 +686,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     bool minimizeOnClose = isTrayIconEnabled() && config()->get("GUI/MinimizeOnClose").toBool();
     if (minimizeOnClose && !m_appExitCalled) {
-        event->ignore();
+        event->accept();
         hideWindow();
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {

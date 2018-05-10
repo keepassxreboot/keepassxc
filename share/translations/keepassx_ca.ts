@@ -73,12 +73,13 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Agraïments de l&apos;equip de KeePassXC a debfx per crear el KeePassX original.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>Tipus de construcció: %1
+</translation>
     </message>
 </context>
 <context>
@@ -110,7 +111,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation type="unfinished"/>
+        <translation>Habilita l&apos;agent SSH (requereix reiniciar-se)</translation>
     </message>
 </context>
 <context>
@@ -129,7 +130,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation type="unfinished"/>
+        <translation>La sintaxi de l&apos;Auto-Type no és correcte!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
@@ -193,7 +194,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>Confirma l&apos;accés al navegador KeePassXC</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -222,11 +223,11 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation type="unfinished"/>
+        <translation>Requerit per l&apos;accés a les teues bases de dades amb el navegador KeePassXC</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Habilita la integració de KeePassXC amb el navegador</translation>
     </message>
     <message>
         <source>General</source>
@@ -234,7 +235,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation type="unfinished"/>
+        <translation>Habilita la integració amb els següents navegadors:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
@@ -255,19 +256,19 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Mostra una &amp;notificació quan es demanen credencials</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Sol·licitar el desbloqueig de la base de dades si està blocada</translation>
+        <translation>Sol·licita el desbloqueig de la base de dades si està blocada</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>Només es retornen les entrades amb el mateix patró (http://, https://, ...)</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation type="unfinished"/>
+        <translation>Torna les coincidències a&amp;mb patrons URL (e.g., https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -275,25 +276,25 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Retorna només les millors coincidències de les credencials</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ordena les entrades coincidents per títol (ctrl + &amp;m)</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ordena les entrades coincidents per nom d&apos;&amp;usuari</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Desconnecta tots els navegadors</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>Oblida tots els &amp;permisos recordats</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -302,12 +303,12 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>No torn&amp;ar a preguntar abans d&apos;accedir a les credencials</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>No preguntar abans d&apos;act&amp;ualitzar les credencials</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -316,7 +317,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Cerca en totes les bases de dades obertes, entrades coincidents (crtl + &amp;h)</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -354,19 +355,19 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Navega...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Atenció:&lt;/b&gt; Canviar les següents opcions és perillós!</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>Arxius executables (*.exe);;Tots els arxius (*.*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Arxius executables (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
@@ -392,7 +393,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>Desa i autoritza l&apos;accés</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -401,7 +402,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>Ja existeix una clau de xifratge compartida amb el nom &quot;%1&quot;.
+Voleu sobreescriure-la?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -427,7 +429,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>La base de dades activa no conté cap entrada de configuració.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -435,7 +437,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation type="unfinished"/>
+        <translation>No s&apos;han trobat claus de xifratge compartides en la configuració de KeePassHttp.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -443,11 +445,11 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Reeixidament eliminat %n encriptació clau (s) de configuració KeePassXC.</numerusform><numerusform>Eliminada(es) correctament %n clau(s) de xifratge de la configuració de KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation type="unfinished"/>
+        <translation>Eliminant permisos emmagatzemats...</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -573,7 +575,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Còpia el historial</translation>
+        <translation>Copia el historial</translation>
     </message>
 </context>
 <context>
@@ -1246,7 +1248,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -1565,7 +1567,7 @@ Do you want to merge your changes?</source>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Navega...</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -1895,7 +1897,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>Password</source>
@@ -1911,15 +1913,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creat</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Modificat</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>Accedit</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -2665,7 +2667,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>Tanca base de dades</translation>
+        <translation>Tanca la base de dades</translation>
     </message>
     <message>
         <source>&amp;New database</source>
@@ -2725,11 +2727,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>Còpia el nom d&apos;&amp;usuari</translation>
+        <translation>Copia el nom d&apos;&amp;usuari</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Còpia el nom d&apos;usuari al porta-retalls</translation>
+        <translation>Copia el nom d&apos;usuari al porta-retalls</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2737,11 +2739,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Còpia la contrasenya  al porta-retalls</translation>
+        <translation>Copia la contrasenya al porta-retalls</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Conficuració</translation>
+        <translation>&amp;Configuració</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -2749,7 +2751,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>Realitza complació automètica</translation>
+        <translation>Realitza compleció automàtica</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2757,7 +2759,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;bloqueja la bases de dades</translation>
+        <translation>&amp;Bloqueja la bases de dades</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3078,7 +3080,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Atenció:&lt;/b&gt; Canviar les següents opcions és perillós!</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
@@ -3508,11 +3510,11 @@ Available commands:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation type="unfinished"/>
+        <translation>Darrera modificació</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Creat</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>

@@ -2623,6 +2623,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>KeePassXC - Error</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Database password: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -3646,15 +3650,27 @@ Available commands:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Agent refused this identity.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No agent running, cannot remove identity.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Agent does not have this identity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent refused this identity. Possible reasons include:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The key has already been added.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restricted lifetime is not supported by the agent (check options).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A confirmation request is not supported by the agent (check options).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3888,10 +3904,6 @@ Please unlock the selected database or choose another one which is unlocked.</so
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Auto-Type delay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
         <translation type="unfinished"></translation>
@@ -3918,6 +3930,14 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Type typing delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Type start delay</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4056,6 +4076,17 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>UnlockDatabaseWidget</name>
     <message>
         <source>Unlock database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UrlFetchProgressDialog</name>
+    <message>
+        <source>Download Progress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

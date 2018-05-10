@@ -39,7 +39,6 @@ public:
     bool registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
     void unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers) override;
     int platformEventFilter(void* event) override;
-    int initialTimeout() override;
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
