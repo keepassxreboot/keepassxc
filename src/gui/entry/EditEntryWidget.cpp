@@ -275,7 +275,6 @@ void EditEntryWidget::setupEntryUpdate()
         connect(
             m_sshAgentUi->attachmentComboBox, SIGNAL(editTextChanged(const QString&)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(const QString&)), this, SLOT(setUnsavedChanges()));
-        connect(m_sshAgentUi->publicKeyEdit, SIGNAL(textChanged()), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->addKeyToAgentCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->removeKeyFromAgentCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
         connect(
