@@ -31,7 +31,7 @@
 
 class ChangeMasterKeyWidget;
 class DatabaseOpenWidget;
-class DatabaseSettingsWidget;
+class DatabaseSettingsDialog;
 class Database;
 class EditEntryWidget;
 class EditGroupWidget;
@@ -157,11 +157,11 @@ public slots:
     void switchToView(bool accepted);
     void switchToEntryEdit();
     void switchToGroupEdit();
-    void switchToMasterKeyChange(bool disableCancel = false);
+    void switchToMasterKeyChange();
     void switchToDatabaseSettings();
     void switchToOpenDatabase(const QString& filePath);
     void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
-    void switchToImportCsv(const QString& filePath);
+    void switchToCsvImport(const QString& filePath);
     void csvImportFinished(bool accepted);
     void switchToOpenMergeDatabase(const QString& filePath);
     void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
@@ -195,7 +195,6 @@ private slots:
     void emitPressedEntry();
     void emitPressedEntry(Entry* currentEntry);
     void emitPressedGroup(Group* currentGroup);
-    void updateMasterKey(bool accepted);
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -218,7 +217,7 @@ private:
     EditGroupWidget* m_editGroupWidget;
     ChangeMasterKeyWidget* m_changeMasterKeyWidget;
     CsvImportWizard* m_csvImportWizard;
-    DatabaseSettingsWidget* m_databaseSettingsWidget;
+    DatabaseSettingsDialog* m_databaseSettingDialog;
     DatabaseOpenWidget* m_databaseOpenWidget;
     DatabaseOpenWidget* m_databaseOpenMergeWidget;
     KeePass1OpenWidget* m_keepass1OpenWidget;

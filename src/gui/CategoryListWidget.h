@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef KEEPASSXC_GUI_CATEGORYLISTWIDGET_H
+#define KEEPASSXC_GUI_CATEGORYLISTWIDGET_H
+
 #include <QPointer>
 #include <QStyledItemDelegate>
 #include <QWidget>
@@ -86,3 +89,5 @@ private:
 
     Q_DISABLE_COPY(CategoryListWidgetDelegate)
 };
+
+#endif

@@ -76,7 +76,7 @@ int Merge::execute(const QStringList& arguments)
     if (!parser.isSet("same-credentials")) {
         db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom));
     } else {
-        db2 = Database::openDatabaseFile(args.at(1), *(db1->key().clone()));
+        db2 = Database::openDatabaseFile(args.at(1), db1->key());
     }
     if (db2 == nullptr) {
         return EXIT_FAILURE;

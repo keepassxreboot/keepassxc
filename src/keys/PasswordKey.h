@@ -19,19 +19,21 @@
 #define KEEPASSX_PASSWORDKEY_H
 
 #include <QString>
+#include <QSharedPointer>
 
 #include "keys/Key.h"
 
 class PasswordKey : public Key
 {
 public:
+    static QUuid UUID;
+
     PasswordKey();
     explicit PasswordKey(const QString& password);
-    QByteArray rawKey() const;
+    QByteArray rawKey() const override;
     void setPassword(const QString& password);
-    PasswordKey* clone() const;
 
-    static PasswordKey fromRawKey(const QByteArray& rawKey);
+    static QSharedPointer<PasswordKey> fromRawKey(const QByteArray& rawKey);
 private:
     QByteArray m_key;
 };

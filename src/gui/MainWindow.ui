@@ -116,7 +116,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="SettingsWidget" name="settingsWidget" native="true"/>
+         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -629,9 +629,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SettingsWidget</class>
+   <class>ApplicationSettingsWidget</class>
    <extends>QWidget</extends>
-   <header>gui/SettingsWidget.h</header>
+   <header>gui/ApplicationSettingsWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

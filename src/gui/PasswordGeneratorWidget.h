@@ -51,11 +51,13 @@ public:
     void reset();
     void setStandaloneMode(bool standalone);
     QString getGeneratedPassword();
+    bool isPasswordVisible() const;
 
 public slots:
     void regeneratePassword();
     void applyPassword();
     void copyPassword();
+    void setPasswordVisible(bool visible);
 
 signals:
     void appliedPassword(const QString& password);
@@ -64,7 +66,6 @@ signals:
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
-    void togglePasswordShown(bool hidden);
     void selectSimpleMode();
     void selectAdvancedMode();
     void excludeHexChars();

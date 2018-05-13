@@ -27,7 +27,7 @@
 #include "format/KeePass2RandomStream.h"
 #include "format/KeePass2Reader.h"
 
-KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, const CompositeKey& key)
+KeePass2Repair::RepairOutcome KeePass2Repair::repairDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key)
 {
     m_errorStr.clear();
 

@@ -31,7 +31,7 @@ class Kdbx3Reader : public KdbxReader
 public:
     Database* readDatabaseImpl(QIODevice* device,
                                const QByteArray& headerData,
-                               const CompositeKey& key,
+                               QSharedPointer<const CompositeKey> key,
                                bool keepDatabase) override;
 
 protected:

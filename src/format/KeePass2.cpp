@@ -23,15 +23,15 @@
 
 #define UUID_LENGTH 16
 
-const QUuid KeePass2::CIPHER_AES = QUuid::fromRfc4122(QByteArray::fromHex("31c1f2e6bf714350be5805216afc5aff"));
-const QUuid KeePass2::CIPHER_TWOFISH = QUuid::fromRfc4122(QByteArray::fromHex("ad68f29f576f4bb9a36ad47af965346c"));
-const QUuid KeePass2::CIPHER_CHACHA20 = QUuid::fromRfc4122(QByteArray::fromHex("D6038A2B8B6F4CB5A524339A31DBB59A"));
+const QUuid KeePass2::CIPHER_AES      = QUuid("31c1f2e6-bf71-4350-be58-05216afc5aff");
+const QUuid KeePass2::CIPHER_TWOFISH  = QUuid("ad68f29f-576f-4bb9-a36a-d47af965346c");
+const QUuid KeePass2::CIPHER_CHACHA20 = QUuid("d6038a2b-8b6f-4cb5-a524-339a31dbb59a");
 
-const QUuid KeePass2::KDF_AES_KDBX3 = QUuid::fromRfc4122(QByteArray::fromHex("C9D9F39A628A4460BF740D08C18A4FEA"));
-const QUuid KeePass2::KDF_AES_KDBX4 = QUuid::fromRfc4122(QByteArray::fromHex("7C02BB8279A74AC0927D114A00648238"));
-const QUuid KeePass2::KDF_ARGON2 = QUuid::fromRfc4122(QByteArray::fromHex("EF636DDF8C29444B91F7A9A403E30A0C"));
+const QUuid KeePass2::KDF_AES_KDBX3   = QUuid("c9d9f39a-628a-4460-bf74-0d08c18a4fea");
+const QUuid KeePass2::KDF_AES_KDBX4   = QUuid("7c02bb82-79a7-4ac0-927d-114a00648238");
+const QUuid KeePass2::KDF_ARGON2      = QUuid("ef636ddf-8c29-444b-91f7-a9a403e30a0c");
 
-const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xE8\x30\x09\x4B\x97\x20\x5D\x2A");
+const QByteArray KeePass2::INNER_STREAM_SALSA20_IV("\xe8\x30\x09\x4b\x97\x20\x5d\x2a");
 
 const QString KeePass2::KDFPARAM_UUID("$UUID");
 // AES parameters

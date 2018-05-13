@@ -31,7 +31,7 @@
 
 Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device,
                                         const QByteArray& headerData,
-                                        const CompositeKey& key,
+                                        QSharedPointer<const CompositeKey> key,
                                         bool keepDatabase)
 {
     Q_ASSERT(m_kdbxVersion <= KeePass2::FILE_VERSION_3_1);

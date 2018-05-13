@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DatabaseSettingsWidget</class>
- <widget class="QWidget" name="DatabaseSettingsWidget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>1082</width>
-    <height>578</height>
-   </rect>
-  </property>
+ <class>DatabaseSettingsDialog</class>
+ <widget class="QWidget" name="DatabaseSettingsDialog">
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
@@ -27,6 +19,13 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="advancedSettingsToggle">
+       <property name="text">
+        <string>Advanced Settings</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
        <property name="standardButtons">

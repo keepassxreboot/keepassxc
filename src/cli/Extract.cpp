@@ -65,31 +65,31 @@ int Extract::execute(const QStringList& arguments)
     out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0));
     out.flush();
 
-    CompositeKey compositeKey;
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
 
     QString line = Utils::getPassword();
-    PasswordKey passwordKey;
-    passwordKey.setPassword(line);
-    compositeKey.addKey(passwordKey);
+    auto passwordKey = QSharedPointer<PasswordKey>::create();
+    passwordKey->setPassword(line);
+    compositeKey->addKey(passwordKey);
 
     QString keyFilePath = parser.value(keyFile);
     if (!keyFilePath.isEmpty()) {
-        FileKey fileKey;
+        auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMsg;
-        if (!fileKey.load(keyFilePath, &errorMsg)) {
+        if (!fileKey->load(keyFilePath, &errorMsg)) {
             errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilePath).arg(errorMsg);
             errorTextStream << endl;
             return EXIT_FAILURE;
         }
 
-        if (fileKey.type() != FileKey::Hashed) {
+        if (fileKey->type() != FileKey::Hashed) {
             errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
                                            "unsupported in the future.\n\n"
                                            "Please consider generating a new key file.");
             errorTextStream << endl;
         }
 
-        compositeKey.addKey(fileKey);
+        compositeKey->addKey(fileKey);
     }
 
     QString databaseFilename = args.at(0);

@@ -57,7 +57,7 @@ bool KdbxReader::readMagicNumbers(QIODevice* device, quint32& sig1, quint32& sig
  * @param keepDatabase keep database in case of read failure
  * @return pointer to the read database, nullptr on failure
  */
-Database* KdbxReader::readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase)
+Database* KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase)
 {
     device->seek(0);
 

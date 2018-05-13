@@ -59,7 +59,7 @@ public:
         CompressionAlgorithm compressionAlgo;
         QByteArray transformedMasterKey;
         QSharedPointer<Kdf> kdf;
-        CompositeKey key;
+        QSharedPointer<const CompositeKey> key;
         bool hasKey;
         QByteArray masterSeed;
         QByteArray challengeResponseKey;
@@ -82,6 +82,8 @@ public:
 
     Metadata* metadata();
     const Metadata* metadata() const;
+    QString filePath() const;
+    void setFilePath(const QString& filePath);
     Entry* resolveEntry(const QUuid& uuid);
     Entry* resolveEntry(const QString& text, EntryReferenceType referenceType);
     Group* resolveGroup(const QUuid& uuid);
@@ -93,16 +95,16 @@ public:
     Database::CompressionAlgorithm compressionAlgo() const;
     QSharedPointer<Kdf> kdf() const;
     QByteArray transformedMasterKey() const;
-    const CompositeKey& key() const;
+    QSharedPointer<const CompositeKey> key() const;
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
 
     void setCipher(const QUuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setKdf(QSharedPointer<Kdf> kdf);
-    bool setKey(const CompositeKey& key, bool updateChangedTime = true, bool updateTransformSalt = false);
+    bool setKey(QSharedPointer<const CompositeKey> key, bool updateChangedTime = true, bool updateTransformSalt = false);
     bool hasKey() const;
-    bool verifyKey(const CompositeKey& key) const;
+    bool verifyKey(QSharedPointer<CompositeKey> key) const;
     QVariantMap& publicCustomData();
     const QVariantMap& publicCustomData() const;
     void setPublicCustomData(const QVariantMap& customData);
@@ -120,7 +122,7 @@ public:
     bool changeKdf(QSharedPointer<Kdf> kdf);
 
     static Database* databaseByUuid(const QUuid& uuid);
-    static Database* openDatabaseFile(QString fileName, CompositeKey key);
+    static Database* openDatabaseFile(const QString& fileName, QSharedPointer<const CompositeKey> key);
     static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = QString(""));
 
 signals:
@@ -153,6 +155,8 @@ private:
     QTimer* m_timer;
     DatabaseData m_data;
     bool m_emitModified;
+
+    QString m_filePath;
 
     QUuid m_uuid;
     static QHash<QUuid, Database*> m_uuidMap;

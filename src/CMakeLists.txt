@@ -99,12 +99,10 @@ set(keepassx_SOURCES
     gui/AboutDialog.cpp
     gui/Application.cpp
     gui/CategoryListWidget.cpp
-    gui/ChangeMasterKeyWidget.cpp
     gui/Clipboard.cpp
     gui/CloneDialog.cpp
     gui/DatabaseOpenWidget.cpp
     gui/DatabaseRepairWidget.cpp
-    gui/DatabaseSettingsWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/DatabaseWidgetStateSync.cpp
@@ -115,6 +113,7 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
+    gui/masterkey/KeyComponentWidget.cpp
     gui/Font.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
@@ -125,7 +124,7 @@ set(keepassx_SOURCES
     gui/MessageWidget.cpp
     gui/PasswordEdit.cpp
     gui/PasswordGeneratorWidget.cpp
-    gui/SettingsWidget.cpp
+    gui/ApplicationSettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
     gui/TotpSetupDialog.cpp
@@ -151,6 +150,21 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    gui/masterkey/PasswordEditWidget.cpp
+    gui/masterkey/YubiKeyEditWidget.cpp
+    gui/masterkey/KeyFileEditWidget.cpp
+    gui/settings/SettingsWidget.cpp
+    gui/dbsettings/DatabaseSettingsWidget.cpp
+    gui/dbsettings/DatabaseSettingsDialog.cpp
+    gui/dbsettings/DatabaseSettingsWidgetGeneral.cpp
+        gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
+    gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
+        gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+    gui/wizard/NewDatabaseWizard.cpp
+    gui/wizard/NewDatabaseWizardPage.cpp
+    gui/wizard/NewDatabaseWizardPageMetaData.cpp
+    gui/wizard/NewDatabaseWizardPageEncryption.cpp
+    gui/wizard/NewDatabaseWizardPageMasterKey.cpp
     keys/ChallengeResponseKey.h
     keys/CompositeKey.cpp
     keys/drivers/YubiKey.h
@@ -165,8 +179,7 @@ set(keepassx_SOURCES
     streams/StoreDataStream.cpp
     streams/SymmetricCipherStream.cpp
     totp/totp.h
-    totp/totp.cpp
-)
+    totp/totp.cpp)
 if(APPLE)
     set(keepassx_SOURCES ${keepassx_SOURCES}
         core/ScreenLockListenerMac.h

@@ -29,7 +29,7 @@
  * @param key database encryption composite key
  * @return pointer to the read database, nullptr on failure
  */
-Database* KeePass2Reader::readDatabase(const QString& filename, const CompositeKey& key)
+Database* KeePass2Reader::readDatabase(const QString& filename, QSharedPointer<const CompositeKey> key)
 {
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
@@ -55,7 +55,7 @@ Database* KeePass2Reader::readDatabase(const QString& filename, const CompositeK
  * @param keepDatabase keep database in case of read failure
  * @return pointer to the read database, nullptr on failure
  */
-Database* KeePass2Reader::readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase)
+Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase)
 {
     m_error = false;
     m_errorStr.clear();

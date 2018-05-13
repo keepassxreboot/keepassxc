@@ -58,7 +58,7 @@
 #endif
 
 #include "gui/PasswordGeneratorWidget.h"
-#include "gui/SettingsWidget.h"
+#include "gui/ApplicationSettingsWidget.h"
 
 #include "touchid/TouchID.h"
 
@@ -313,7 +313,7 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
     connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
-    connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToImportCsv()));
+    connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToCsvImport()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
@@ -690,7 +690,7 @@ void MainWindow::switchToKeePass1Database()
     switchToDatabases();
 }
 
-void MainWindow::switchToImportCsv()
+void MainWindow::switchToCsvImport()
 {
     m_ui->tabWidget->importCsv();
     switchToDatabases();

@@ -37,7 +37,7 @@ void TestModified::testSignals()
     int spyCount = 0;
     int spyCount2 = 0;
 
-    CompositeKey compositeKey;
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
 
     QScopedPointer<Database> db(new Database());
     auto* root = db->rootGroup();

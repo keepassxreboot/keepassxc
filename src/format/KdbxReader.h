@@ -40,7 +40,7 @@ public:
     virtual ~KdbxReader() = default;
 
     static bool readMagicNumbers(QIODevice* device, quint32& sig1, quint32& sig2, quint32& version);
-    Database* readDatabase(QIODevice* device, const CompositeKey& key, bool keepDatabase = false);
+    Database* readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase = false);
 
     bool hasError() const;
     QString errorString() const;
@@ -62,7 +62,10 @@ protected:
      * @return pointer to the read database, nullptr on failure
      */
     virtual Database*
-    readDatabaseImpl(QIODevice* device, const QByteArray& headerData, const CompositeKey& key, bool keepDatabase) = 0;
+    readDatabaseImpl(QIODevice* device,
+                     const QByteArray& headerData,
+                     QSharedPointer<const CompositeKey> key,
+                     bool keepDatabase) = 0;
 
     /**
      * Read next header field from stream.

@@ -40,8 +40,8 @@ void TestKeePass2Format::initTestCase()
     QVERIFY(m_xmlDb.data());
 
     // construct and write KDBX to buffer
-    CompositeKey key;
-    key.addKey(PasswordKey("test"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
 
     m_kdbxSourceDb.reset(new Database());
     m_kdbxSourceDb->setKey(key);
@@ -495,8 +495,8 @@ void TestKeePass2Format::testXmlRepairUuidHistoryItem()
 void TestKeePass2Format::testReadBackTargetDb()
 {
     // read back previously constructed KDBX
-    CompositeKey key;
-    key.addKey(PasswordKey("test"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
 
     bool hasError;
     QString errorString;
@@ -542,8 +542,8 @@ void TestKeePass2Format::testKdbxNonAsciiPasswords()
 
 void TestKeePass2Format::testKdbxDeviceFailure()
 {
-    CompositeKey key;
-    key.addKey(PasswordKey("test"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("test"));
     QScopedPointer<Database> db(new Database());
     db->setKey(key);
     // Disable compression so we write a predictable number of bytes.
@@ -569,7 +569,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
 void TestKeePass2Format::testDuplicateAttachments()
 {
     QScopedPointer<Database> db(new Database());
-    db->setKey(CompositeKey());
+    db->setKey(QSharedPointer<CompositeKey>::create());
 
     const QByteArray attachment1("abc");
     const QByteArray attachment2("def");
@@ -612,7 +612,7 @@ void TestKeePass2Format::testDuplicateAttachments()
     }
 
     buffer.seek(0);
-    readKdbx(&buffer, CompositeKey(), db, hasError, errorString);
+    readKdbx(&buffer, QSharedPointer<CompositeKey>::create(), db, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading database: %1").arg(errorString)));
     }

@@ -40,7 +40,7 @@ public:
     };
     using RepairOutcome = QPair<RepairResult, Database*>;
 
-    RepairOutcome repairDatabase(QIODevice* device, const CompositeKey& key);
+    RepairOutcome repairDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key);
     QString errorString() const;
 
 private:

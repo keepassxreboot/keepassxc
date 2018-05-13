@@ -30,8 +30,11 @@
 #include <QXmlStreamReader>
 #include <QtConcurrent>
 
+QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
+
 YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
-    : m_slot(slot)
+    : ChallengeResponseKey(UUID)
+    , m_slot(slot)
     , m_blocking(blocking)
 {
     if (KEEPASSXC_MAIN_WINDOW) {

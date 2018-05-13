@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SettingsWidgetGeneral</class>
- <widget class="QWidget" name="SettingsWidgetGeneral">
+ <class>ApplicationSettingsWidgetGeneral</class>
+ <widget class="QWidget" name="ApplicationSettingsWidgetGeneral">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>794</height>
+    <height>842</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -26,7 +26,7 @@
    <item>
     <widget class="QTabWidget" name="generalSettingsTabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tabGeneral">
       <attribute name="title">
