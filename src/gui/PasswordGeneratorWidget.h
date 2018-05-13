@@ -67,6 +67,7 @@ private slots:
     void togglePasswordShown(bool hidden);
     void selectSimpleMode();
     void selectAdvancedMode();
+    void excludeHexChars();
 
     void passwordSliderMoved();
     void passwordSpinBoxChanged();

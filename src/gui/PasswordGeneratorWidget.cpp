@@ -44,6 +44,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
     connect(m_ui->buttonSimpleMode, SIGNAL(clicked()), SLOT(selectSimpleMode()));
     connect(m_ui->buttonAdvancedMode, SIGNAL(clicked()), SLOT(selectAdvancedMode()));
+    connect(m_ui->buttonAddHex, SIGNAL(clicked()), SLOT(excludeHexChars()));
     connect(m_ui->editExcludedChars, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
@@ -106,6 +107,10 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->advancedBar->setVisible(
         config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
     m_ui->excludedChars->setVisible(
+        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
+    m_ui->checkBoxExcludeAlike->setVisible(
+        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
+    m_ui->checkBoxEnsureEvery->setVisible(
         config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
     m_ui->editExcludedChars->setText(
         config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString());
@@ -316,6 +321,8 @@ void PasswordGeneratorWidget::selectSimpleMode()
 {
     m_ui->advancedBar->hide();
     m_ui->excludedChars->hide();
+    m_ui->checkBoxExcludeAlike->hide();
+    m_ui->checkBoxEnsureEvery->hide();
     m_ui->checkBoxUpper->setChecked(m_ui->checkBoxUpperAdv->isChecked());
     m_ui->checkBoxLower->setChecked(m_ui->checkBoxLowerAdv->isChecked());
     m_ui->checkBoxNumbers->setChecked(m_ui->checkBoxNumbersAdv->isChecked());
@@ -343,6 +350,13 @@ void PasswordGeneratorWidget::selectAdvancedMode()
     m_ui->checkBoxExtASCIIAdv->setChecked(m_ui->checkBoxExtASCII->isChecked());
     m_ui->advancedBar->show();
     m_ui->excludedChars->show();
+    m_ui->checkBoxExcludeAlike->show();
+    m_ui->checkBoxEnsureEvery->show();
+}
+
+void PasswordGeneratorWidget::excludeHexChars()
+{
+    m_ui->editExcludedChars->setText("GHIJKLMNOPQRSTUVWXYZghijklmnopqrstuvwxyz");
 }
 
 void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
