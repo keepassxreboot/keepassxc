@@ -273,19 +273,18 @@ void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, c
     QVERIFY(!writer.hasError());
     QVERIFY(buffer.seek(0));
 
-    CompositeKey key;
+    auto key = QSharedPointer<CompositeKey>::create();
     if (!password.isNull()) {
-        key.addKey(PasswordKey(password));
+        key->addKey(QSharedPointer<PasswordKey>::create(password));
     }
     if (!keyfileName.isEmpty()) {
-        FileKey fileKey;
-        QVERIFY(fileKey.load(keyfileName));
-        key.addKey(fileKey);
+        auto fileKey = QSharedPointer<FileKey>::create();
+        QVERIFY(fileKey->load(keyfileName));
+        key->addKey(fileKey);
     }
 
     KeePass2Reader reader;
-    Database* newDb = reader.readDatabase(&buffer, key);
+    QScopedPointer<Database> newDb(reader.readDatabase(&buffer, key));
     QVERIFY(newDb);
     QVERIFY(!reader.hasError());
-    delete newDb;
 }

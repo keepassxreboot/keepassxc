@@ -35,12 +35,16 @@ class TestGui : public QObject
 {
     Q_OBJECT
 
+protected slots:
+    void createDatabaseCallback();
+
 private slots:
     void initTestCase();
     void init();
     void cleanup();
     void cleanupTestCase();
 
+    void testSettingsDefaultTabOrder();
     void testCreateDatabase();
     void testMergeDatabase();
     void testAutoreloadDatabase();

@@ -39,22 +39,22 @@ DatabaseRepairWidget::DatabaseRepairWidget(QWidget* parent)
 
 void DatabaseRepairWidget::openDatabase()
 {
-    CompositeKey masterKey;
+    auto masterKey = QSharedPointer<CompositeKey>::create();
 
     if (m_ui->checkPassword->isChecked()) {
-        masterKey.addKey(PasswordKey(m_ui->editPassword->text()));
+        masterKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
     }
 
     if (m_ui->checkKeyFile->isChecked()) {
-        FileKey key;
+        auto key = QSharedPointer<FileKey>::create();
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
-        if (!key.load(keyFilename, &errorMsg)) {
+        if (!key->load(keyFilename, &errorMsg)) {
             MessageBox::warning(this, tr("Error"), tr("Can't open key file:\n%1").arg(errorMsg));
             emit editFinished(false);
             return;
         }
-        masterKey.addKey(key);
+        masterKey->addKey(key);
     }
 
     KeePass2Repair repair;

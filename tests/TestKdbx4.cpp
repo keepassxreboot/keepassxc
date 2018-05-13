@@ -66,7 +66,7 @@ void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
 }
 
 void TestKdbx4::readKdbx(QIODevice* device,
-                         CompositeKey const& key,
+                         QSharedPointer<const CompositeKey> key,
                          QScopedPointer<Database>& db,
                          bool& hasError,
                          QString& errorString)
@@ -81,7 +81,7 @@ void TestKdbx4::readKdbx(QIODevice* device,
 }
 
 void TestKdbx4::readKdbx(const QString& path,
-                         CompositeKey const& key,
+                         QSharedPointer<const CompositeKey> key,
                          QScopedPointer<Database>& db,
                          bool& hasError,
                          QString& errorString)
@@ -113,8 +113,8 @@ Q_DECLARE_METATYPE(QUuid)
 void TestKdbx4::testFormat400()
 {
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format400.kdbx");
-    CompositeKey key;
-    key.addKey(PasswordKey("t"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("t"));
     KeePass2Reader reader;
     QScopedPointer<Database> db(reader.readDatabase(filename, key));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
@@ -146,8 +146,8 @@ void TestKdbx4::testFormat400Upgrade()
     sourceDb->metadata()->setName("Wubba lubba dub dub");
     QCOMPARE(sourceDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3); // default is legacy AES-KDF
 
-    CompositeKey key;
-    key.addKey(PasswordKey("I am in great pain, please help me!"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("I am in great pain, please help me!"));
     sourceDb->setKey(key, true, true);
 
     QBuffer buffer;
@@ -228,20 +228,20 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     QFETCH(quint32, expectedVersion);
 
     // prepare composite key
-    PasswordKey passwordKey("turXpGMQiUE6CkPvWacydAKsnp4cxz");
+    auto passwordKey = QSharedPointer<PasswordKey>::create("turXpGMQiUE6CkPvWacydAKsnp4cxz");
 
     QByteArray fileKeyBytes("Ma6hHov98FbPeyAL22XhcgmpJk8xjQ");
     QBuffer fileKeyBuffer(&fileKeyBytes);
     fileKeyBuffer.open(QBuffer::ReadOnly);
-    FileKey fileKey;
-    fileKey.load(&fileKeyBuffer);
+    auto fileKey = QSharedPointer<FileKey>::create();
+    fileKey->load(&fileKeyBuffer);
 
     auto crKey = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("azdJnbVCFE76vV6t9RJ2DS6xvSS93k"));
 
-    CompositeKey compositeKey;
-    compositeKey.addKey(passwordKey);
-    compositeKey.addKey(fileKey);
-    compositeKey.addChallengeResponseKey(crKey);
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
+    compositeKey->addKey(passwordKey);
+    compositeKey->addKey(fileKey);
+    compositeKey->addChallengeResponseKey(crKey);
 
     QScopedPointer<Database> db(new Database());
     db->changeKdf(fastKdf(db->kdf()));
@@ -293,7 +293,7 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     buffer.seek(0);
     KeePass2Reader reader;
     QScopedPointer<Database> db2;
-    db2.reset(reader.readDatabase(&buffer, CompositeKey()));
+    db2.reset(reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create()));
     QVERIFY(reader.hasError());
 
     // check that we can read back the database with the original composite key,
@@ -396,7 +396,7 @@ void TestKdbx4::testCustomData()
     // read buffer back
     buffer.seek(0);
     KeePass2Reader reader;
-    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, CompositeKey()));
+    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create()));
 
     // test all custom data are read back successfully from KDBX
     QCOMPARE(newDb->publicCustomData(), publicCustomData);

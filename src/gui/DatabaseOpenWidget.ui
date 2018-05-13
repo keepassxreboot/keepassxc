@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>596</width>
-    <height>302</height>
+    <width>841</width>
+    <height>467</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,1,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>8</number>
    </property>
@@ -55,10 +55,13 @@
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -216,7 +219,7 @@
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkTouchID">
        <property name="text">
-        <string>Use TouchID for quick unlock</string>
+        <string>TouchID for quick unlock</string>
        </property>
       </widget>
      </item>

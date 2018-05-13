@@ -98,6 +98,16 @@ const Metadata* Database::metadata() const
     return m_metadata;
 }
 
+QString Database::filePath() const
+{
+    return m_filePath;
+}
+
+void Database::setFilePath(const QString& filePath)
+{
+    m_filePath = filePath;
+}
+
 Entry* Database::resolveEntry(const QUuid& uuid)
 {
     return findEntryRecursive(uuid, m_rootGroup);
@@ -244,7 +254,7 @@ QByteArray Database::challengeResponseKey() const
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
     m_data.masterSeed = masterSeed;
-    return m_data.key.challenge(masterSeed, m_data.challengeResponseKey);
+    return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
 }
 
 void Database::setCipher(const QUuid& cipher)
@@ -264,13 +274,20 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
 /**
  * Set and transform a new encryption key.
  *
- * @param key key to set and transform
+ * @param key key to set and transform or nullptr to reset the key
  * @param updateChangedTime true to update database change time
  * @param updateTransformSalt true to update the transform salt
  * @return true on success
  */
-bool Database::setKey(const CompositeKey& key, bool updateChangedTime, bool updateTransformSalt)
+bool Database::setKey(QSharedPointer<const CompositeKey> key, bool updateChangedTime, bool updateTransformSalt)
 {
+    if (!key) {
+        m_data.key.reset();
+        m_data.transformedMasterKey = {};
+        m_data.hasKey = false;
+        return true;
+    }
+
     if (updateTransformSalt) {
         m_data.kdf->randomizeSeed();
         Q_ASSERT(!m_data.kdf->seed().isEmpty());
@@ -278,7 +295,7 @@ bool Database::setKey(const CompositeKey& key, bool updateChangedTime, bool upda
 
     QByteArray oldTransformedMasterKey = m_data.transformedMasterKey;
     QByteArray transformedMasterKey;
-    if (!key.transform(*m_data.kdf, transformedMasterKey)) {
+    if (!key->transform(*m_data.kdf, transformedMasterKey)) {
         return false;
     }
 
@@ -301,14 +318,14 @@ bool Database::hasKey() const
     return m_data.hasKey;
 }
 
-bool Database::verifyKey(const CompositeKey& key) const
+bool Database::verifyKey(QSharedPointer<CompositeKey> key) const
 {
     Q_ASSERT(hasKey());
 
     if (!m_data.challengeResponseKey.isEmpty()) {
         QByteArray result;
 
-        if (!key.challenge(m_data.masterSeed, result)) {
+        if (!key->challenge(m_data.masterSeed, result)) {
             // challenge failed, (YubiKey?) removed?
             return false;
         }
@@ -319,7 +336,7 @@ bool Database::verifyKey(const CompositeKey& key) const
         }
     }
 
-    return (m_data.key.rawKey() == key.rawKey());
+    return (m_data.key->rawKey() == key->rawKey());
 }
 
 QVariantMap& Database::publicCustomData()
@@ -430,12 +447,12 @@ void Database::startModifiedTimer()
     m_timer->start(150);
 }
 
-const CompositeKey& Database::key() const
+QSharedPointer<const CompositeKey> Database::key() const
 {
     return m_data.key;
 }
 
-Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
+Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<const CompositeKey> key)
 {
 
     QFile dbFile(fileName);
@@ -461,7 +478,7 @@ Database* Database::openDatabaseFile(QString fileName, CompositeKey key)
 
 Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
 {
-    CompositeKey compositeKey;
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
     QTextStream outputTextStream(stdout);
     QTextStream errorTextStream(stderr);
 
@@ -469,19 +486,19 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
     outputTextStream.flush();
 
     QString line = Utils::getPassword();
-    PasswordKey passwordKey;
-    passwordKey.setPassword(line);
-    compositeKey.addKey(passwordKey);
+    auto passwordKey = QSharedPointer<PasswordKey>::create();
+    passwordKey->setPassword(line);
+    compositeKey->addKey(passwordKey);
 
     if (!keyFilename.isEmpty()) {
-        FileKey fileKey;
+        auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMessage;
-        if (!fileKey.load(keyFilename, &errorMessage)) {
+        if (!fileKey->load(keyFilename, &errorMessage)) {
             errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage);
             errorTextStream << endl;
             return nullptr;
         }
-        compositeKey.addKey(fileKey);
+        compositeKey->addKey(fileKey);
     }
 
     return Database::openDatabaseFile(databaseFilename, compositeKey);
@@ -607,7 +624,10 @@ bool Database::changeKdf(QSharedPointer<Kdf> kdf)
 {
     kdf->randomizeSeed();
     QByteArray transformedMasterKey;
-    if (!m_data.key.transform(*kdf, transformedMasterKey)) {
+    if (!m_data.key) {
+        m_data.key = QSharedPointer<CompositeKey>::create();
+    }
+    if (!m_data.key->transform(*kdf, transformedMasterKey)) {
         return false;
     }
 

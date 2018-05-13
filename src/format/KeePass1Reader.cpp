@@ -63,7 +63,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     m_errorStr.clear();
 
     QByteArray keyfileData;
-    FileKey newFileKey;
+    auto newFileKey = QSharedPointer<FileKey>::create();
 
     if (keyfileDevice) {
         keyfileData = readKeyfile(keyfileDevice);
@@ -77,7 +77,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
             return nullptr;
         }
 
-        if (!newFileKey.load(keyfileDevice)) {
+        if (!newFileKey->load(keyfileDevice)) {
             raiseError(tr("Unable to read keyfile.").append("\n").append(keyfileDevice->errorString()));
             return nullptr;
         }
@@ -233,12 +233,12 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         entry->setUpdateTimeinfo(true);
     }
 
-    CompositeKey key;
+    auto key = QSharedPointer<CompositeKey>::create();
     if (!password.isEmpty()) {
-        key.addKey(PasswordKey(password));
+        key->addKey(QSharedPointer<PasswordKey>::create(password));
     }
     if (keyfileDevice) {
-        key.addKey(newFileKey);
+        key->addKey(newFileKey);
     }
 
     if (!db->setKey(key)) {

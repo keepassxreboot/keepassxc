@@ -40,12 +40,12 @@ protected:
     void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
 
     void readKdbx(const QString& path,
-                  CompositeKey const& key,
+                  QSharedPointer<const CompositeKey> key,
                   QScopedPointer<Database>& db,
                   bool& hasError,
                   QString& errorString) override;
     void readKdbx(QIODevice* device,
-                  CompositeKey const& key,
+                  QSharedPointer<const CompositeKey> key,
                   QScopedPointer<Database>& db,
                   bool& hasError,
                   QString& errorString) override;

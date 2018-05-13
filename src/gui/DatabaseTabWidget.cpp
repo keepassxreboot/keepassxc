@@ -39,6 +39,7 @@
 #include "gui/UnlockDatabaseDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
+#include "gui/wizard/NewDatabaseWizard.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(nullptr)
@@ -85,24 +86,53 @@ void DatabaseTabWidget::toggleTabbar()
     }
 }
 
+/**
+ * Helper method for invoking the new database wizard.
+ * The user of this method MUST take ownership of the returned pointer.
+ *
+ * @return pointer to the configured new database, nullptr on failure
+ */
+Database* DatabaseTabWidget::execNewDatabaseWizard()
+{
+    // use QScopedPointer to ensure deletion after scope ends, but still parent
+    // it to this to make it modal and allow easier access in unit tests
+    QScopedPointer<NewDatabaseWizard> wizard(new NewDatabaseWizard(this));
+    if (!wizard->exec()) {
+        return nullptr;
+    }
+
+    auto* db = wizard->takeDatabase();
+    if (!db) {
+        return nullptr;
+    }
+    Q_ASSERT(db->key());
+    Q_ASSERT(db->kdf());
+    if (!db->key() || !db->kdf()) {
+        MessageBox::critical(this, tr("Database creation error"),
+            tr("The created database has no key or KDF, refusing to save it.\n"
+               "This is definitely a bug, please report it to the developers."),
+            QMessageBox::Ok, QMessageBox::Ok);
+        return nullptr;
+    }
+
+    return db;
+}
+
 void DatabaseTabWidget::newDatabase()
 {
-    DatabaseManagerStruct dbStruct;
-    Database* db = new Database();
-    db->rootGroup()->setName(tr("Root", "Root group"));
-    dbStruct.dbWidget = new DatabaseWidget(db, this);
-
-    CompositeKey emptyKey;
-    db->setKey(emptyKey);
-
-    insertDatabase(db, dbStruct);
-
-    if (!saveDatabaseAs(db)) {
-        closeDatabase(db);
+    auto* db = execNewDatabaseWizard();
+    if (!db) {
         return;
     }
 
-    dbStruct.dbWidget->switchToMasterKeyChange(true);
+    DatabaseManagerStruct dbStruct;
+    dbStruct.dbWidget = new DatabaseWidget(db, this);
+    insertDatabase(db, dbStruct);
+
+    if (!saveDatabaseAs(db)) {
+        // mark database as dirty if user canceled save dialog
+        emit db->modifiedImmediate();
+    }
 }
 
 void DatabaseTabWidget::openDatabase()
@@ -178,18 +208,21 @@ void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw,
 void DatabaseTabWidget::importCsv()
 {
     QString filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open CSV file"), QString(), filter);
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), {}, filter);
 
     if (fileName.isEmpty()) {
         return;
     }
 
-    Database* db = new Database();
+    auto* db = execNewDatabaseWizard();
+    if (!db) {
+        return;
+    }
+
     DatabaseManagerStruct dbStruct;
     dbStruct.dbWidget = new DatabaseWidget(db, this);
-
     insertDatabase(db, dbStruct);
-    dbStruct.dbWidget->switchToImportCsv(fileName);
+    dbStruct.dbWidget->switchToCsvImport(fileName);
 }
 
 void DatabaseTabWidget::mergeDatabase()
@@ -322,52 +355,52 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         return true;
     }
 
-    if (!dbStruct.readOnly) {
-        if (filePath.isEmpty()) {
-            filePath = dbStruct.fileInfo.canonicalFilePath();
-        }
+    if (filePath.isEmpty()) {
+        filePath = dbStruct.fileInfo.canonicalFilePath();
+    }
 
-        dbStruct.dbWidget->blockAutoReload(true);
-        // TODO: Make this async, but lock out the database widget to prevent re-entrance
-        bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
-        QString errorMessage = db->saveToFile(filePath, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
-        dbStruct.dbWidget->blockAutoReload(false);
-
-        if (errorMessage.isEmpty()) {
-            // successfully saved database file
-            dbStruct.modified = false;
-            dbStruct.saveAttempts = 0;
-            dbStruct.fileInfo = QFileInfo(filePath);
-            dbStruct.dbWidget->databaseSaved();
-            updateTabName(db);
-            emit messageDismissTab();
-            return true;
-        } else {
-            dbStruct.modified = true;
-            updateTabName(db);
-
-            if (++dbStruct.saveAttempts > 2 && useAtomicSaves) {
-                // Saving failed 3 times, issue a warning and attempt to resolve
-                auto choice = MessageBox::question(this,
-                                                   tr("Disable safe saves?"),
-                                                   tr("KeePassXC has failed to save the database multiple times. "
-                                                      "This is likely caused by file sync services holding a lock on "
-                                                      "the save file.\nDisable safe saves and try again?"),
-                                                   QMessageBox::Yes | QMessageBox::No,
-                                                   QMessageBox::Yes);
-                if (choice == QMessageBox::Yes) {
-                    config()->set("UseAtomicSaves", false);
-                    return saveDatabase(db, filePath);
-                }
-                // Reset save attempts without changing anything
-                dbStruct.saveAttempts = 0;
-            }
-
-            emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage), MessageWidget::Error);
-            return false;
-        }
-    } else {
+    if (dbStruct.readOnly || filePath.isEmpty()) {
         return saveDatabaseAs(db);
+    }
+
+    dbStruct.dbWidget->blockAutoReload(true);
+    // TODO: Make this async, but lock out the database widget to prevent re-entrance
+    bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
+    QString errorMessage = db->saveToFile(filePath, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
+    dbStruct.dbWidget->blockAutoReload(false);
+
+    if (errorMessage.isEmpty()) {
+        // successfully saved database file
+        dbStruct.modified = false;
+        dbStruct.saveAttempts = 0;
+        dbStruct.fileInfo = QFileInfo(filePath);
+        dbStruct.dbWidget->databaseSaved();
+        updateTabName(db);
+        emit messageDismissTab();
+        return true;
+    } else {
+        dbStruct.modified = true;
+        updateTabName(db);
+
+        if (++dbStruct.saveAttempts > 2 && useAtomicSaves) {
+            // Saving failed 3 times, issue a warning and attempt to resolve
+            auto choice = MessageBox::question(this,
+                                               tr("Disable safe saves?"),
+                                               tr("KeePassXC has failed to save the database multiple times. "
+                                                  "This is likely caused by file sync services holding a lock on "
+                                                  "the save file.\nDisable safe saves and try again?"),
+                                               QMessageBox::Yes | QMessageBox::No,
+                                               QMessageBox::Yes);
+            if (choice == QMessageBox::Yes) {
+                config()->set("UseAtomicSaves", false);
+                return saveDatabase(db, filePath);
+            }
+            // Reset save attempts without changing anything
+            dbStruct.saveAttempts = 0;
+        }
+
+        emit messageTab(tr("Writing the database failed.").append("\n").append(errorMessage), MessageWidget::Error);
+        return false;
     }
 }
 

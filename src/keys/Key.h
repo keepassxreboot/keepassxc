@@ -1,4 +1,5 @@
 /*
+*  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
 *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 *
 *  This program is free software: you can redistribute it and/or modify
@@ -19,15 +20,22 @@
 #define KEEPASSX_KEY_H
 
 #include <QByteArray>
+#include <QUuid>
 
 class Key
 {
 public:
-    virtual ~Key()
-    {
-    }
+    explicit Key(const QUuid& uuid) : m_uuid(uuid) {};
+    Q_DISABLE_COPY(Key);
+    virtual ~Key() = default;
     virtual QByteArray rawKey() const = 0;
-    virtual Key* clone() const = 0;
+    inline virtual QUuid uuid() const
+    {
+        return m_uuid;
+    }
+
+private:
+    QUuid m_uuid;
 };
 
 #endif // KEEPASSX_KEY_H

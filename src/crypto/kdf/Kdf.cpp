@@ -80,7 +80,7 @@ int Kdf::benchmark(int msec) const
     thread1.wait();
     thread2.wait();
 
-    return qMax(1, qMin(thread1.rounds(), thread2.rounds()));
+    return qMax(1, (thread1.rounds() + thread2.rounds()) / 2);
 }
 
 Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)

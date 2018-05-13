@@ -41,7 +41,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(togglePasswordShown(bool)));
+    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->buttonSimpleMode, SIGNAL(clicked()), SLOT(selectSimpleMode()));
     connect(m_ui->buttonAdvancedMode, SIGNAL(clicked()), SLOT(selectAdvancedMode()));
     connect(m_ui->buttonAddHex, SIGNAL(clicked()), SLOT(excludeHexChars()));
@@ -183,7 +183,7 @@ void PasswordGeneratorWidget::reset()
 {
     m_ui->editNewPassword->setText("");
     setStandaloneMode(false);
-    togglePasswordShown(config()->get("security/passwordscleartext").toBool());
+    setPasswordVisible(config()->get("security/passwordscleartext").toBool());
     updateGenerator();
 }
 
@@ -192,9 +192,9 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
     m_standalone = standalone;
     if (standalone) {
         m_ui->buttonApply->setText(tr("Close"));
-        togglePasswordShown(true);
+        setPasswordVisible(true);
     } else {
-        m_ui->buttonApply->setText(tr("Apply"));
+        m_ui->buttonApply->setText(tr("Accept"));
     }
 }
 
@@ -205,7 +205,7 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 
 void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
 {
-    if (e->key() == Qt::Key_Escape && m_standalone == true) {
+    if (e->key() == Qt::Key_Escape && m_standalone) {
         emit dialogTerminated();
     } else {
         e->ignore();
@@ -309,12 +309,17 @@ void PasswordGeneratorWidget::dicewareSpinBoxChanged()
     updateGenerator();
 }
 
-void PasswordGeneratorWidget::togglePasswordShown(bool showing)
+void PasswordGeneratorWidget::setPasswordVisible(bool visible)
 {
-    m_ui->editNewPassword->setShowPassword(showing);
+    m_ui->editNewPassword->setShowPassword(visible);
     bool blockSignals = m_ui->togglePasswordButton->blockSignals(true);
-    m_ui->togglePasswordButton->setChecked(showing);
+    m_ui->togglePasswordButton->setChecked(visible);
     m_ui->togglePasswordButton->blockSignals(blockSignals);
+}
+
+bool PasswordGeneratorWidget::isPasswordVisible() const
+{
+    return m_ui->togglePasswordButton->isChecked();
 }
 
 void PasswordGeneratorWidget::selectSimpleMode()

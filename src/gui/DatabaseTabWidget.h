@@ -103,6 +103,7 @@ private slots:
     void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
+    Database* execNewDatabaseWizard();
     bool saveDatabase(Database* db, QString filePath = "");
     bool saveDatabaseAs(Database* db);
     bool closeDatabase(Database* db);

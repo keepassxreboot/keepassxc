@@ -18,7 +18,8 @@
 #include "MockChallengeResponseKey.h"
 
 MockChallengeResponseKey::MockChallengeResponseKey(const QByteArray& secret)
-    : m_secret(secret)
+    : ChallengeResponseKey(QUuid("aac5b480-cdc0-411e-9cb8-962062dcc1fd"))
+    , m_secret(secret)
 {
 }
 

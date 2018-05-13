@@ -23,8 +23,8 @@
 
 namespace Ui
 {
-    class SettingsWidgetGeneral;
-    class SettingsWidgetSecurity;
+    class ApplicationSettingsWidgetGeneral;
+    class ApplicationSettingsWidgetSecurity;
 }
 
 class ISettingsPage
@@ -40,13 +40,13 @@ public:
     virtual void saveSettings(QWidget* widget) = 0;
 };
 
-class SettingsWidget : public EditWidget
+class ApplicationSettingsWidget : public EditWidget
 {
     Q_OBJECT
 
 public:
-    explicit SettingsWidget(QWidget* parent = nullptr);
-    ~SettingsWidget();
+    explicit ApplicationSettingsWidget(QWidget* parent = nullptr);
+    ~ApplicationSettingsWidget();
     void addSettingsPage(ISettingsPage* page);
     void loadSettings();
 
@@ -59,8 +59,8 @@ private slots:
 private:
     QWidget* const m_secWidget;
     QWidget* const m_generalWidget;
-    const QScopedPointer<Ui::SettingsWidgetSecurity> m_secUi;
-    const QScopedPointer<Ui::SettingsWidgetGeneral> m_generalUi;
+    const QScopedPointer<Ui::ApplicationSettingsWidgetSecurity> m_secUi;
+    const QScopedPointer<Ui::ApplicationSettingsWidgetGeneral> m_generalUi;
     Qt::Key m_globalAutoTypeKey;
     Qt::KeyboardModifiers m_globalAutoTypeModifiers;
     class ExtraPage;

@@ -39,11 +39,10 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/KeePass2Reader.h"
-#include "gui/ChangeMasterKeyWidget.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseOpenWidget.h"
-#include "gui/DatabaseSettingsWidget.h"
+#include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/DetailsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
@@ -69,7 +68,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     , m_newGroup(nullptr)
     , m_newEntry(nullptr)
     , m_newParent(nullptr)
-    , m_importingCsv(false)
 {
     m_mainWidget = new QWidget(this);
 
@@ -150,17 +148,10 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_historyEditEntryWidget = new EditEntryWidget();
     m_editGroupWidget = new EditGroupWidget();
     m_editGroupWidget->setObjectName("editGroupWidget");
-    m_changeMasterKeyWidget = new ChangeMasterKeyWidget();
-    m_changeMasterKeyWidget->setObjectName("changeMasterKeyWidget");
-    m_changeMasterKeyWidget->headlineLabel()->setText(tr("Change master key"));
-    QFont headlineLabelFont = m_changeMasterKeyWidget->headlineLabel()->font();
-    headlineLabelFont.setBold(true);
-    headlineLabelFont.setPointSize(headlineLabelFont.pointSize() + 2);
-    m_changeMasterKeyWidget->headlineLabel()->setFont(headlineLabelFont);
     m_csvImportWizard = new CsvImportWizard();
     m_csvImportWizard->setObjectName("csvImportWizard");
-    m_databaseSettingsWidget = new DatabaseSettingsWidget();
-    m_databaseSettingsWidget->setObjectName("databaseSettingsWidget");
+    m_databaseSettingDialog = new DatabaseSettingsDialog();
+    m_databaseSettingDialog->setObjectName("databaseSettingsDialog");
     m_databaseOpenWidget = new DatabaseOpenWidget();
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
     m_databaseOpenMergeWidget = new DatabaseOpenWidget();
@@ -174,8 +165,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_mainWidget);
     addWidget(m_editEntryWidget);
     addWidget(m_editGroupWidget);
-    addWidget(m_changeMasterKeyWidget);
-    addWidget(m_databaseSettingsWidget);
+    addWidget(m_databaseSettingDialog);
     addWidget(m_historyEditEntryWidget);
     addWidget(m_databaseOpenWidget);
     addWidget(m_csvImportWizard);
@@ -196,8 +186,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
-    connect(m_changeMasterKeyWidget, SIGNAL(editFinished(bool)), SLOT(updateMasterKey(bool)));
-    connect(m_databaseSettingsWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
+    connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
     connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
@@ -810,34 +799,6 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
     setCurrentWidget(m_editGroupWidget);
 }
 
-void DatabaseWidget::updateMasterKey(bool accepted)
-{
-    if (m_importingCsv) {
-        setCurrentWidget(m_csvImportWizard);
-        m_csvImportWizard->keyFinished(accepted, m_changeMasterKeyWidget->newMasterKey());
-        return;
-    }
-
-    if (accepted) {
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        bool result = m_db->setKey(m_changeMasterKeyWidget->newMasterKey(), true, true);
-#ifdef WITH_XC_TOUCHID
-        TouchID::getInstance().reset(m_filePath);
-#endif
-        QApplication::restoreOverrideCursor();
-
-        if (!result) {
-            m_messageWidget->showMessage(tr("Unable to calculate master key"), MessageWidget::Error);
-            return;
-        }
-    } else if (!m_db->hasKey()) {
-        emit closeRequest();
-        return;
-    }
-
-    setCurrentWidget(m_mainWidget);
-}
-
 void DatabaseWidget::openDatabase(bool accepted)
 {
     if (accepted) {
@@ -975,18 +936,16 @@ void DatabaseWidget::switchToGroupEdit()
     switchToGroupEdit(group, false);
 }
 
-void DatabaseWidget::switchToMasterKeyChange(bool disableCancel)
+void DatabaseWidget::switchToMasterKeyChange()
 {
-    m_changeMasterKeyWidget->clearForms();
-    m_changeMasterKeyWidget->setCancelEnabled(!disableCancel);
-    setCurrentWidget(m_changeMasterKeyWidget);
-    m_importingCsv = false;
+    switchToDatabaseSettings();
+    m_databaseSettingDialog->showMasterKeySettings();
 }
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingsWidget->load(m_db);
-    setCurrentWidget(m_databaseSettingsWidget);
+    m_databaseSettingDialog->load(m_db);
+    setCurrentWidget(m_databaseSettingDialog);
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
@@ -1012,14 +971,10 @@ void DatabaseWidget::switchToOpenDatabase(const QString& filePath, const QString
     }
 }
 
-void DatabaseWidget::switchToImportCsv(const QString& filePath)
+void DatabaseWidget::switchToCsvImport(const QString& filePath)
 {
-    updateFilePath(filePath);
+    setCurrentWidget(m_csvImportWizard);
     m_csvImportWizard->load(filePath, m_db);
-    m_changeMasterKeyWidget->clearForms();
-    m_changeMasterKeyWidget->setCancelEnabled(false);
-    setCurrentWidget(m_changeMasterKeyWidget);
-    m_importingCsv = true;
 }
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& filePath)
@@ -1220,6 +1175,7 @@ void DatabaseWidget::updateFilePath(const QString& filePath)
 
     m_fileWatcher.addPath(filePath);
     m_filePath = filePath;
+    m_db->setFilePath(filePath);
 }
 
 void DatabaseWidget::blockAutoReload(bool block)

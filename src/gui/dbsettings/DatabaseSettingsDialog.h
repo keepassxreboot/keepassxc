@@ -18,33 +18,33 @@
 #ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
-#include <QLayout>
-#include <QScopedPointer>
-#include <QSpinBox>
-#include <QWidget>
-
-#include "crypto/kdf/Kdf.h"
 #include "gui/DialogyWidget.h"
 
+#include <QScopedPointer>
+#include <QPointer>
+
 class Database;
+class DatabaseSettingsWidgetGeneral;
+class DatabaseSettingsWidgetEncryption;
+class DatabaseSettingsWidgetMasterKey;
+class QTabWidget;
 
 namespace Ui
 {
-    class DatabaseSettingsWidget;
-    class DatabaseSettingsWidgetGeneral;
-    class DatabaseSettingsWidgetEncryption;
+    class DatabaseSettingsDialog;
 }
 
-class DatabaseSettingsWidget : public DialogyWidget
+class DatabaseSettingsDialog : public DialogyWidget
 {
     Q_OBJECT
 
 public:
-    explicit DatabaseSettingsWidget(QWidget* parent = nullptr);
-    ~DatabaseSettingsWidget();
-    Q_DISABLE_COPY(DatabaseSettingsWidget)
+    explicit DatabaseSettingsDialog(QWidget* parent = nullptr);
+    ~DatabaseSettingsDialog() override;
+    Q_DISABLE_COPY(DatabaseSettingsDialog);
 
     void load(Database* db);
+    void showMasterKeySettings();
 
 signals:
     void editFinished(bool accepted);
@@ -52,20 +52,22 @@ signals:
 private slots:
     void save();
     void reject();
-    void transformRoundsBenchmark();
-    void kdfChanged(int index);
-    void memoryChanged(int value);
-    void parallelismChanged(int value);
+    void pageChanged();
+    void toggleAdvancedMode(bool advanced);
 
 private:
-    void truncateHistories();
+    enum Page
+    {
+        General = 0,
+        Security = 1
+    };
 
-    const QScopedPointer<Ui::DatabaseSettingsWidget> m_ui;
-    const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_uiGeneral;
-    const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_uiEncryption;
-    QWidget* m_uiGeneralPage;
-    QWidget* m_uiEncryptionPage;
-    Database* m_db;
+    QPointer<Database> m_db;
+    const QScopedPointer<Ui::DatabaseSettingsDialog> m_ui;
+    QPointer<DatabaseSettingsWidgetGeneral> m_generalWidget;
+    QPointer<QTabWidget> m_securityTabWidget;
+    QPointer<DatabaseSettingsWidgetMasterKey> m_masterKeyWidget;
+    QPointer<DatabaseSettingsWidgetEncryption> m_encryptionWidget;
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGET_H

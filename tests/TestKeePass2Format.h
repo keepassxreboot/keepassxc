@@ -72,12 +72,12 @@ protected:
     virtual void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) = 0;
 
     virtual void readKdbx(QIODevice* device,
-                          CompositeKey const& key,
+                          QSharedPointer<const CompositeKey> key,
                           QScopedPointer<Database>& db,
                           bool& hasError,
                           QString& errorString) = 0;
     virtual void readKdbx(const QString& path,
-                          CompositeKey const& key,
+                          QSharedPointer<const CompositeKey> key,
                           QScopedPointer<Database>& db,
                           bool& hasError,
                           QString& errorString) = 0;

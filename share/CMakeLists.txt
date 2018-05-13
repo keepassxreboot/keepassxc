@@ -39,6 +39,8 @@ if(APPLE)
   install(FILES macosx/keepassxc.icns DESTINATION ${DATA_INSTALL_DIR})
 endif()
 
+install(DIRECTORY wizard/ DESTINATION ${DATA_INSTALL_DIR}/wizard FILES_MATCHING PATTERN "*.png")
+
 install(DIRECTORY icons/application/ DESTINATION ${DATA_INSTALL_DIR}/icons/application
         FILES_MATCHING PATTERN "*.png" PATTERN "*.svgz")
 

@@ -24,6 +24,13 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
+QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
+
+FileKey::FileKey()
+    : Key(UUID)
+{
+}
+
 /**
  * Read key file from device while trying to detect its file format.
  *
@@ -142,14 +149,6 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
 QByteArray FileKey::rawKey() const
 {
     return m_key;
-}
-
-/**
- * @return cloned \link FileKey instance
- */
-FileKey* FileKey::clone() const
-{
-    return new FileKey(*this);
 }
 
 /**

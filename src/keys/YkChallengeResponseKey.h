@@ -29,10 +29,12 @@ class YkChallengeResponseKey : public QObject, public ChallengeResponseKey
     Q_OBJECT
 
 public:
-    YkChallengeResponseKey(int slot = -1, bool blocking = false);
+    static QUuid UUID;
 
-    QByteArray rawKey() const;
-    bool challenge(const QByteArray& challenge);
+    explicit YkChallengeResponseKey(int slot = -1, bool blocking = false);
+
+    QByteArray rawKey() const override;
+    bool challenge(const QByteArray& challenge) override;
     bool challenge(const QByteArray& challenge, unsigned retries);
     QString getName() const;
     bool isBlocking() const;

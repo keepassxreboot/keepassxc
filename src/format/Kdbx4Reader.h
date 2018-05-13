@@ -32,7 +32,7 @@ class Kdbx4Reader : public KdbxReader
 public:
     Database* readDatabaseImpl(QIODevice* device,
                                const QByteArray& headerData,
-                               const CompositeKey& key,
+                               QSharedPointer<const CompositeKey> key,
                                bool keepDatabase) override;
     QHash<QByteArray, QString> binaryPoolInverse() const;
     QHash<QString, QByteArray> binaryPool() const;

@@ -16,9 +16,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SettingsWidget.h"
-#include "ui_SettingsWidgetGeneral.h"
-#include "ui_SettingsWidgetSecurity.h"
+#include "ApplicationSettingsWidget.h"
+#include "ui_ApplicationSettingsWidgetGeneral.h"
+#include "ui_ApplicationSettingsWidgetSecurity.h"
 
 #include "autotype/AutoType.h"
 #include "config-keepassx.h"
@@ -29,7 +29,7 @@
 
 #include "touchid/TouchID.h"
 
-class SettingsWidget::ExtraPage
+class ApplicationSettingsWidget::ExtraPage
 {
 public:
     ExtraPage(ISettingsPage* page, QWidget* widget)
@@ -53,12 +53,12 @@ private:
     QWidget* widget;
 };
 
-SettingsWidget::SettingsWidget(QWidget* parent)
+ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
     , m_generalWidget(new QWidget())
-    , m_secUi(new Ui::SettingsWidgetSecurity())
-    , m_generalUi(new Ui::SettingsWidgetGeneral())
+    , m_secUi(new Ui::ApplicationSettingsWidgetSecurity())
+    , m_generalUi(new Ui::ApplicationSettingsWidgetGeneral())
     , m_globalAutoTypeKey(static_cast<Qt::Key>(0))
     , m_globalAutoTypeModifiers(Qt::NoModifier)
 {
@@ -109,11 +109,11 @@ SettingsWidget::SettingsWidget(QWidget* parent)
     }
 }
 
-SettingsWidget::~SettingsWidget()
+ApplicationSettingsWidget::~ApplicationSettingsWidget()
 {
 }
 
-void SettingsWidget::addSettingsPage(ISettingsPage* page)
+void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
 {
     QWidget* widget = page->createWidget();
     widget->setParent(this);
@@ -121,7 +121,7 @@ void SettingsWidget::addSettingsPage(ISettingsPage* page)
     addPage(page->name(), page->icon(), widget);
 }
 
-void SettingsWidget::loadSettings()
+void ApplicationSettingsWidget::loadSettings()
 {
 
     if (config()->hasAccessError()) {
@@ -204,7 +204,7 @@ void SettingsWidget::loadSettings()
     setCurrentPage(0);
 }
 
-void SettingsWidget::saveSettings()
+void ApplicationSettingsWidget::saveSettings()
 {
 
     if (config()->hasAccessError()) {
@@ -282,7 +282,7 @@ void SettingsWidget::saveSettings()
     }
 }
 
-void SettingsWidget::reject()
+void ApplicationSettingsWidget::reject()
 {
     // register the old key again as it might have changed
     if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
@@ -290,12 +290,12 @@ void SettingsWidget::reject()
     }
 }
 
-void SettingsWidget::enableAutoSaveOnExit(bool checked)
+void ApplicationSettingsWidget::enableAutoSaveOnExit(bool checked)
 {
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
 }
 
-void SettingsWidget::enableSystray(bool checked)
+void ApplicationSettingsWidget::enableSystray(bool checked)
 {
     m_generalUi->systrayDarkIconCheckBox->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);

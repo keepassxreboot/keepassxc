@@ -28,6 +28,7 @@ class MockChallengeResponseKey : public ChallengeResponseKey
 {
 public:
     explicit MockChallengeResponseKey(const QByteArray& secret);
+    Q_DISABLE_COPY(MockChallengeResponseKey);
     ~MockChallengeResponseKey() override;
     QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;

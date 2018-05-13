@@ -19,19 +19,23 @@
 
 #include "crypto/CryptoHash.h"
 
+QUuid PasswordKey::UUID("77e90411-303a-43f2-b773-853b05635ead");
+
 PasswordKey::PasswordKey()
+    : Key(UUID)
 {
 }
 
 PasswordKey::PasswordKey(const QString& password)
+    : Key(UUID)
 {
     setPassword(password);
 }
 
-PasswordKey PasswordKey::fromRawKey(const QByteArray& rawKey)
+QSharedPointer<PasswordKey> PasswordKey::fromRawKey(const QByteArray& rawKey)
 {
-    PasswordKey result;
-    result.m_key = rawKey;
+    auto result = QSharedPointer<PasswordKey>::create();
+    result->m_key = rawKey;
     return result;
 }
 
@@ -43,9 +47,4 @@ QByteArray PasswordKey::rawKey() const
 void PasswordKey::setPassword(const QString& password)
 {
     m_key = CryptoHash::hash(password.toUtf8(), CryptoHash::Sha256);
-}
-
-PasswordKey* PasswordKey::clone() const
-{
-    return new PasswordKey(*this);
 }

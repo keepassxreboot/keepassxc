@@ -1,6 +1,6 @@
 /*
+*  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
 *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -25,13 +25,11 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"
 
-CompositeKey::CompositeKey()
-{
-}
+QUuid CompositeKey::UUID("76a7ae25-a542-4add-9849-7c06be945b94");
 
-CompositeKey::CompositeKey(const CompositeKey& key)
+CompositeKey::CompositeKey()
+    : Key(UUID)
 {
-    *this = key;
 }
 
 CompositeKey::~CompositeKey()
@@ -41,7 +39,6 @@ CompositeKey::~CompositeKey()
 
 void CompositeKey::clear()
 {
-    qDeleteAll(m_keys);
     m_keys.clear();
     m_challengeResponseKeys.clear();
 }
@@ -49,30 +46,6 @@ void CompositeKey::clear()
 bool CompositeKey::isEmpty() const
 {
     return m_keys.isEmpty() && m_challengeResponseKeys.isEmpty();
-}
-
-CompositeKey* CompositeKey::clone() const
-{
-    return new CompositeKey(*this);
-}
-
-CompositeKey& CompositeKey::operator=(const CompositeKey& key)
-{
-    // handle self assignment as that would break when calling clear()
-    if (this == &key) {
-        return *this;
-    }
-
-    clear();
-
-    for (const Key* subKey : asConst(key.m_keys)) {
-        addKey(*subKey);
-    }
-    for (const auto subKey : asConst(key.m_challengeResponseKeys)) {
-        addChallengeResponseKey(subKey);
-    }
-
-    return *this;
 }
 
 /**
@@ -104,7 +77,7 @@ QByteArray CompositeKey::rawKey(const QByteArray* transformSeed, bool* ok) const
 {
     CryptoHash cryptoHash(CryptoHash::Sha256);
 
-    for (const Key* key : m_keys) {
+    for (auto const& key : m_keys) {
         cryptoHash.addData(key->rawKey());
     }
 
@@ -174,12 +147,41 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
     return true;
 }
 
-void CompositeKey::addKey(const Key& key)
+/**
+ * Add a \link Key to this composite key.
+ * Keys will be hashed in the order they were initially added.
+ *
+ * @param key the key
+ */
+void CompositeKey::addKey(QSharedPointer<Key> key)
 {
-    m_keys.append(key.clone());
+    m_keys.append(key);
 }
 
+/**
+ * @return list of Keys which are part of this CompositeKey
+ */
+const QList<QSharedPointer<Key>>& CompositeKey::keys() const
+{
+    return m_keys;
+}
+
+/**
+ * Add a \link ChallengeResponseKey to this composite key.
+ * ChallengeResponseKeys will be hashed in the order they were initially added,
+ * but will always come after normal \link Keys.
+ *
+ * @param key the key
+ */
 void CompositeKey::addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key)
 {
     m_challengeResponseKeys.append(key);
+}
+
+/**
+ * @return list of ChallengeResponseKeys which are part of this CompositeKey
+ */
+const QList<QSharedPointer<ChallengeResponseKey>>& CompositeKey::challengeResponseKeys() const
+{
+    return m_challengeResponseKeys;
 }

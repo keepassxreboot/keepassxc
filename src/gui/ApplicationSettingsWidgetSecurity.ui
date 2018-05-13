@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SettingsWidgetSecurity</class>
- <widget class="QWidget" name="SettingsWidgetSecurity">
+ <class>ApplicationSettingsWidgetSecurity</class>
+ <widget class="QWidget" name="ApplicationSettingsWidgetSecurity">
   <property name="geometry">
    <rect>
     <x>0</x>

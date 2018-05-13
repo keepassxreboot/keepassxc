@@ -65,8 +65,8 @@ void TestKdbx2::verifyKdbx2Db(Database* db)
 void TestKdbx2::testFormat200()
 {
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
-    CompositeKey key;
-    key.addKey(PasswordKey("a"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
     QScopedPointer<Database> db(reader.readDatabase(filename, key));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
@@ -78,8 +78,8 @@ void TestKdbx2::testFormat200()
 void TestKdbx2::testFormat200Upgrade()
 {
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
-    CompositeKey key;
-    key.addKey(PasswordKey("a"));
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
     QScopedPointer<Database> db(reader.readDatabase(filename, key));
     QVERIFY2(!reader.hasError(), reader.errorString().toStdString().c_str());
