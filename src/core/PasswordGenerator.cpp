@@ -285,12 +285,10 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
         passwordGroups.append(group);
     }
 
+    // Loop over character groups and remove excluded characters from them;
+    // remove empty groups
     int i = 0;
-    while (1) {
-        if (i == passwordGroups.size()) {
-            break;
-        }
-
+    while (i != passwordGroups.size()) {
         PasswordGroup group = passwordGroups[i];
 
         for (QChar ch : m_excluded) {
