@@ -32,6 +32,7 @@
 #include <QStackedLayout>
 #include <QStandardPaths>
 #include <QTemporaryFile>
+#include <QButtonGroup>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
