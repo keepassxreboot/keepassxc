@@ -19,6 +19,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #include <QTimer>
 
 #include "core/Config.h"
@@ -42,19 +43,34 @@ Clipboard::Clipboard(QObject* parent)
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
-void Clipboard::setText(const QString& text)
+void Clipboard::setText(const QString& text, bool secret)
 {
     QClipboard* clipboard = QApplication::clipboard();
 
-#ifdef Q_OS_MAC
     QMimeData* mime = new QMimeData;
+#ifdef Q_OS_MAC
     mime->setText(text);
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
-    clipboard->setText(text, QClipboard::Clipboard);
-    if (clipboard->supportsSelection()) {
-        clipboard->setText(text, QClipboard::Selection);
+    if (secret) {
+        const QString secretStr = "secret";
+        QByteArray secretBa = secretStr.toUtf8();
+        mime->setText(text);
+        mime->setData("x-kde-passwordManagerHint", secretBa);
+        clipboard->setMimeData(mime, QClipboard::Clipboard);
+
+        if (clipboard->supportsSelection()) {
+            QMimeData* mimeSelection = new QMimeData();
+            mimeSelection->setText(text);
+            mimeSelection->setData("x-kde-passwordManagerHint", secretBa);
+            clipboard->setMimeData(mimeSelection, QClipboard::Selection);
+        }
+    } else {
+        clipboard->setText(text, QClipboard::Clipboard);
+        if (clipboard->supportsSelection()) {
+            clipboard->setText(text, QClipboard::Selection);
+        }
     }
 #endif
 
@@ -65,6 +81,11 @@ void Clipboard::setText(const QString& text)
             m_timer->start(timeout * 1000);
         }
     }
+}
+
+void Clipboard::setSecretText(const QString& text)
+{
+    setText(text, true);
 }
 
 void Clipboard::clearCopiedText()

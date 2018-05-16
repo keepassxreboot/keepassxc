@@ -547,7 +547,7 @@ void DatabaseWidget::copyPassword()
         return;
     }
 
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
+    setClipboardSecretTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
 }
 
 void DatabaseWidget::copyURL()
@@ -587,6 +587,14 @@ void DatabaseWidget::copyAttribute(QAction* action)
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 {
     clipboard()->setText(text);
+    if (config()->get("MinimizeOnCopy").toBool()) {
+        window()->showMinimized();
+    }
+}
+
+void DatabaseWidget::setClipboardSecretTextAndMinimize(const QString& text)
+{
+    clipboard()->setSecretText(text);
     if (config()->get("MinimizeOnCopy").toBool()) {
         window()->showMinimized();
     }
@@ -931,7 +939,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->username()));
         break;
     case EntryModel::Password:
-        setClipboardTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
+        setClipboardSecretTextAndMinimize(entry->resolveMultiplePlaceholders(entry->password()));
         break;
     case EntryModel::Url:
         if (!entry->url().isEmpty()) {
