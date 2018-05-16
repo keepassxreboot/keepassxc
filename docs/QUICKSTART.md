@@ -53,13 +53,16 @@ Sharing allows you to share a subset of your credentials with others and vice ve
 
 ### Enable Sharing
 
-To use sharing, you need to enable it on a database.
+To use sharing, you need to enable for the application.
 
-1. Go to Database &rarr; Database Settings
-1. Check _Allow import_ if you want to import shared credentials
-1. Check _Allow export_ if you want to share credentials
+1. Go to Tools &rarr; Settings
+2. Select the category KeeShare
+3. Check _Allow import_ if you want to import shared credentials
+4. Check _Allow export_ if you want to share credentials
 
-<img src="./KeeShare/Database-Settings.png" height="600" width="800" alt="KeePassXC Databse Sharing Settings">
+To make sure that your data is valid when im imported by another client, please _generate_ (or _import_) a public/private key pair and enter your _signer_ name. This way your client may verify that the imported data is valid. When Importing, you'll see the known sources with names and fingerprint in the list at the bottom. This is the place to _trust_ or _untrust_ signers. It is only possible to trust someone on application level.
+
+<img src="./KeeShare/AppSettings.png" height="600" width="800" alt="KeeShare Application Settings">
 
 ### Sharing Credentials
 
@@ -69,24 +72,28 @@ If you checked _Allow export_ in the Sharing settings you now are good to go to 
 1. Select the sharing section
 1. Choose _Export to path_ as the sharing method
 1. Choose a path to store the shared credentials to
-1. Generate a password for this share database
+1. Generate a password for this share container
 
-The export file will not be generated automatically. Instead, each time the database is saved, the file gets written. If an old file is present, the old file will be overwritten! The file should be written to a location that is accessible by others. An easy setup is a network share or storing the file inside the cloud.
+The export file will not be generated automatically. Instead, each time the database is saved, the file gets written (so please deactivate the autosafe feature). If an old file is present, the old file will be overwritten! The file should be written to a location that is accessible by others. An easy setup is a network share or storing the file inside the cloud. 
 
-<img src="./KeeShare/Share-Group.png" height="600" width="800" alt="KeePassXC Group Sharing Settings">
+<img src="./KeeShare/GroupSettings_Export.png" height="600" width="800" alt="KeeShare Group Sharing Settings">
 
 ### Using Shared Credentials
 
-Checking _Allow import_ in the Sharing settings of the database enables you to receive credentials from others. KeePass will watch sharing sources and import any changes immoderately into your database using the synchronization feature.
+Checking _Allow import_ in the Sharing settings of the database enables you to receive credentials from others. KeePass will watch sharing sources and import any changes immediately into your database using the synchronization feature.
 
 1. Create a group for import
 1. Open the edit sheet on that group
 1. Select the sharing section
 1. Choose _Import from path_ as the sharing method
-1. Choose a database that is shared with you
-1. Enter the password for the shared database
+1. Choose a share container that is shared with you
+1. Enter the password for the shared container
 
-<img src="./KeeShare/Import-Group.png" height="600" width="800" alt="KeePassXC Group Import Settings">
+KeeShare observes the container for changes and merges them into your database when necessary. Importing merges in time order, so older data is moved to the history, which should have a sufficient size to prevent loss of needed data. 
+
+Please note, that the import currently is not restricted to the configured group. Every entry which was imported and moved outside the import group will be updated regardless of it's location!
+
+<img src="./KeeShare/GroupSettings_Import.png" height="600" width="800" alt="KeeShare Group Import Settings">
 
 ### Using Synchronized Credentials
 
@@ -98,7 +105,27 @@ Instead of using different groups for sharing and importing you can use a single
 1. Choose a database that you want to use a synchronization file
 1. Enter the password for the database
 
-<img src="./KeeShare/Synchronize-Group.png" height="600" width="800" alt="KeePassXC Group Synchronization Settings">
+<img src="./KeeShare/GroupSettings_Sync.png" height="600" width="800" alt="KeeShare Group Synchronization Settings">
 
-## Technical Details of Sharing
-Sharing relies on the combination of file exports and imports as well as the synchronization mechanism provided by KeePassXC
+### Disable Sharing for Credentials
+
+In case you don't want to share (import or export) some credentials, it is possible to you can 
+* use the application settings and uncheck the options or 
+* instead of selecting _Import from path_, _Export to path_ or _Synchronize with path_ you'll select _Inactive_ while leaving the path and the password untouched
+
+### Sharing overview
+
+There is a simple overview of shared groups to keep track of your data.
+
+1. Open the Database Settings
+1. Select the KeeShare category
+
+<img src="./KeeShare/DatabaseSettings.png" height="600" width="800" alt="KeeShare Group Sharing Ovewview">
+
+## Technical Details and Limitations of Sharing
+
+Sharing relies on the combination of file exports and imports as well as the synchronization mechanism provided by KeePassXC. Since the merge algorithm uses the history of entries to prevent data loss, this history must be enabled and have a sufficient size. Furthermore, the merge algorithm is location independend, therefore it does not matter if entries are moved outside of an import group. These entries will be updated none the less. Moving entries outside of export groups will prevent a further export of the entry, but it will not ensure that the already shared data will be removed from any client.
+
+KeeShare uses a custom certification mechanism to ensure that the source of the data is the expected one. This ensures that the data was exported by the signer but it is not possible to detect if someone replaced the data with an older version from a valid signer. To prevent this, the container could be placed at a location which is only writeable for valid signers.
+
+

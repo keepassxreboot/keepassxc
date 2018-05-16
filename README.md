@@ -2,6 +2,9 @@
 [![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(id:KeepassXC_TeamCityCi\)/statusIcon?guest=1)](https://ci.keepassxc.org/viewType.html?buildTypeId=KeepassXC_TeamCityCi&guest=1) [![Build status](https://ci.appveyor.com/api/projects/status/qmcar8rnqjh4oxof?svg=true)](https://ci.appveyor.com/project/droidmonkey/keepassxc) [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
 
 
+## Note
+This is a feature fork to introduce the concept of Sharing to KeepPassXC. See [Using Sharing](./docs/QUICKSTART.md#using-sharing) for more details.
+
 ## About KeePassXC
 [KeePassXC](https://keepassxc.org) is a cross-platform community fork of
 [KeePassX](https://www.keepassx.org/).
