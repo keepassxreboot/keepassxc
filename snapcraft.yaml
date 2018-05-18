@@ -27,6 +27,8 @@ parts:
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_LIBRARY_PATH=/opt/keepassxc-libs/lib/x86_64-linux-gnu
+      - -DCMAKE_INCLUDE_PATH=/opt/keepassxc-libs/include
       - -DKEEPASSXC_DIST_TYPE=Snap
       - -DKEEPASSXC_BUILD_TYPE=Release
       - -DWITH_TESTS=OFF
@@ -43,31 +45,26 @@ parts:
       - libxtst-dev
       - libyubikey-dev
       - libykpers-1-dev
-      - libcurl4-openssl-dev
       - libsodium-dev
       - libargon2-0-dev
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
       - libgcrypt20-18
-    install: |
+      - libykpers-1-1
+      - libargon2-0
+      - libsodium23
+      - libxtst6
+      - libqt5x11extras5
+      - libusb-1.0-0
+    override-build: |
+      snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
     organize:
       usr/share/qt5/translations/*.qm: usr/share/keepassxc/translations/
+      opt/keepassxc-libs/lib/x86_64-linux-gnu/*: usr/lib/x86_64-linux-gnu/
+      opt/keepassxc-libs/share/locale/*: usr/share/locale/
+    stage:
+      - -opt
     after: [desktop-qt5]
-
-  # Redefine desktop-qt5 stage packages to work with Ubuntu 17.04
-  desktop-qt5:
-    stage-packages:
-      - libxkbcommon0
-      - ttf-ubuntu-font-family
-      - dmz-cursor-theme
-      - light-themes
-      - adwaita-icon-theme
-      - gnome-themes-standard
-      - shared-mime-info
-      - libqt5gui5
-      - libgdk-pixbuf2.0-0
-      - libqt5svg5 # for loading icon themes which are svg
-      - locales-all
-      - xdg-user-dirs
+    
