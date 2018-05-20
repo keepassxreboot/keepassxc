@@ -181,6 +181,89 @@ void TestOpenSSHKey::testParseRSA()
     QCOMPARE(key.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
 }
 
+void TestOpenSSHKey::testParseRSACompare()
+{
+    const QString oldKeyString = QString(
+        "-----BEGIN RSA PRIVATE KEY-----\n"
+        "MIIEpAIBAAKCAQEAsCHtJicDPWnvHSIKbnTZaJkIB9vgE0pmLdK580JUqBuonVbB\n"
+        "y1QTy0ZQ7/TtqvLPgwPK88TR46OLO/QGCzo2+XxgJ85uy0xfuyUYRmSuw0drsErN\n"
+        "mH8vU91lSBxsGDp9LtBbgHKoR23vMWZ34IxFRc55XphrIH48ijsMaL6bXBwF/3tD\n"
+        "9T3lm2MpP1huyVNnIY9+GRRWCy4f9LMj/UGu/n4RtwwfpOZBBRwYkq5QkzA9lPm/\n"
+        "VzF3MP1rKTMkvAw+Nfb383mkmc6MRnsa6uh6iDa9aVB7naegM13UJQX/PY1Ks6pO\n"
+        "XDpy/MQ7iCh+HmYNq5dRmARyaNl9xIXJNhz1cQIDAQABAoIBAQCnEUc1LUQxeM5K\n"
+        "wANNCqE+SgoIClPdeHC7fmrLh1ttqe6ib6ybBUFRS31yXs0hnfefunVEDKlaV8K2\n"
+        "N52UAMAsngFHQNRvGh6kEWeZPd9Xc+N98TZbNCjcT+DGKc+Om8wqH5DrodZlCq4c\n"
+        "GaoT4HnE4TjWtZTH2XXrWF9I66PKFWf070R44nvyVcvaZi4pC2YmURRPuGF6K1iK\n"
+        "dH8zM6HHG1UGu2W6hLNn+K01IulG0Lb8eWNaNYMmtQWaxyp7I2IWkkecUs3nCuiR\n"
+        "byFOoomCjdh8r9yZFvwxjGUhgtkALN9GCU0Mwve+s11IB2gevruN+q9/Qejbyfdm\n"
+        "IlgLAeTRAoGBANRcVzW9CYeobCf+U9hKJFEOur8XO+J2mTMaELA0EjWpTJFAeIT7\n"
+        "KeRpCRG4/vOSklxxRF6vP1EACA4Z+5BlN+FTipHHs+bSEgqkPZiiANDH7Zot5Iqv\n"
+        "1q0fRyldNRZNZK7DWp08BPNVWGA/EnEuKJiURxnxBaxNXbUyMCdjxvMvAoGBANRT\n"
+        "utbrqS/bAa/DcHKn3V6DRqBl3TDOfvCNjiKC84a67F2uXgzLIdMktr4d1NyCZVJd\n"
+        "7/zVgWORLIdg1eAi6rYGoOvNV39wwga7CF+m9sBY0wAaKYCELe6L26r4aQHVCX6n\n"
+        "rnIgUv+4o4itmU2iP0r3wlmDC9pDRQP82vfvQPlfAoGASwhleANW/quvq2HdViq8\n"
+        "Mje2HBalfhrRfpDTHK8JUBSFjTzuWG42GxJRtgVbb8x2ElujAKGDCaetMO5VSGu7\n"
+        "Fs5hw6iAFCpdXY0yhl+XUi2R8kwM2EPQ4lKO3jqkq0ClNmqn9a5jQWcCVt9yMLNS\n"
+        "fLbHeI8EpiCf34ngIcrLXNkCgYEAzlcEZuKkC46xB+dNew8pMTUwSKZVm53BfPKD\n"
+        "44QRN6imFbBjU9mAaJnwQbfp6dWKs834cGPolyM4++MeVfB42iZ88ksesgmZdUMD\n"
+        "szkl6O0pOJs0I+HQZVdjRbadDZvD22MHQ3+oST1dJ3FVXz3Cdo9qPuT8esMO6f4r\n"
+        "qfDH2s8CgYAXC/lWWHQ//PGP0pH4oiEXisx1K0X1u0xMGgrChxBRGRiKZUwNMIvJ\n"
+        "TqUu7IKizK19cLHF/NBvxHYHFw+m7puNjn6T1RtRCUjRZT7Dx1VHfVosL9ih5DA8\n"
+        "tpbZA5KGKcvHtB5DDgT0MHwzBZnb4Q//Rhovzn+HXZPsJTTgHHy3NQ==\n"
+        "-----END RSA PRIVATE KEY-----\n"
+    );
+
+    const QString newKeyString = QString(
+        "-----BEGIN OPENSSH PRIVATE KEY-----\n"
+        "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\n"
+        "C9pDRQP82vfvQPlfAAAABmlkX3JzYQECAwQ=\n"
+        "-----END OPENSSH PRIVATE KEY-----\n"
+    );
+
+    const QByteArray oldKeyData = oldKeyString.toLatin1();
+    const QByteArray newKeyData = newKeyString.toLatin1();
+
+    OpenSSHKey newKey, oldKey;
+    QByteArray oldPrivateKey, newPrivateKey;
+    BinaryStream oldPrivateStream(&oldPrivateKey), newPrivateStream(&newPrivateKey);
+
+    QVERIFY(oldKey.parse(oldKeyData));
+    QVERIFY(newKey.parse(newKeyData));
+
+    // comment is not part of the old format and writePrivate() includes it
+    oldKey.setComment("id_rsa");
+
+    QVERIFY(oldKey.writePrivate(oldPrivateStream));
+    QVERIFY(newKey.writePrivate(newPrivateStream));
+
+    QCOMPARE(oldKey.type(), newKey.type());
+    QCOMPARE(oldKey.fingerprint(), newKey.fingerprint());
+    QCOMPARE(oldPrivateKey, newPrivateKey);
+}
+
 void TestOpenSSHKey::testDecryptOpenSSHAES256CBC()
 {
     const QString keyString = QString(
