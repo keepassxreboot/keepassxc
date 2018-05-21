@@ -51,7 +51,7 @@ UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
 
 void UrlFetchProgressDialog::networkReplyProgress(qint64 bytesRead, qint64 totalBytes)
 {
-    setValue(static_cast<int>(bytesRead/totalBytes));
+    setValue(static_cast<int>(bytesRead / totalBytes));
 }
 
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
