@@ -41,6 +41,7 @@ BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 BUILD_SOURCE_TARBALL=true
 BUILD_SNAPSHOT=false
+BUILD_SNAPCRAFT=false
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 
@@ -106,6 +107,8 @@ Options:
                           This option has no effect if --build is not set.
       --container-name    Docker container name (default: '${DOCKER_CONTAINER_NAME}')
                           The container must not exist already
+      --snapcraft         Create and use docker image to build snapcraft distribution.
+                          This option has no effect if --docker-image is not set.
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
   -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
@@ -542,6 +545,10 @@ build() {
             --container-name)
                 DOCKER_CONTAINER_NAME="$2"
                 shift ;;
+                
+            --snapcraft)
+                BUILD_SNAPCRAFT=true
+                shift ;;
             
             -c|--cmake-options)
                 CMAKE_OPTIONS="$2"
@@ -703,22 +710,34 @@ build() {
             ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
         fi
     else
-        mkdir -p "${OUTPUT_DIR}/bin-release"
-        
-        logInfo "Launching Docker container to compile sources..."
-        
-        docker run --name "$DOCKER_CONTAINER_NAME" --rm \
-            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
-            -e "CC=${CC}" -e "CXX=${CXX}" \
-            -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
-            -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
-            "$DOCKER_IMAGE" \
-            bash -c "cd /keepassxc/out/build-release && \
-                cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                    -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" \
-                    -DKEEPASSXC_DIST_TYPE=AppImage /keepassxc/src && \
-                make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
-                /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
+        if [ BUILD_SNAPCRAFT ]; then
+            logInfo "Building snapcraft docker image..."
+            
+            sudo docker image build -t "$DOCKER_IMAGE" "$(realpath "$SRC_DIR")/ci/snapcraft"
+
+            logInfo "Launching Docker contain to compile snapcraft..."
+            
+            sudo docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+                -v "$(realpath "$SRC_DIR"):/keepassxc" -w "/keepassxc" \
+                "$DOCKER_IMAGE" snapcraft       
+        else
+            mkdir -p "${OUTPUT_DIR}/bin-release"
+            
+            logInfo "Launching Docker container to compile sources..."
+            
+            docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+                --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
+                -e "CC=${CC}" -e "CXX=${CXX}" \
+                -v "$(realpath "$SRC_DIR"):/keepassxc/src:ro" \
+                -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
+                "$DOCKER_IMAGE" \
+                bash -c "cd /keepassxc/out/build-release && \
+                    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
+                        -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" \
+                        -DKEEPASSXC_DIST_TYPE=AppImage /keepassxc/src && \
+                    make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
+                    /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
+        fi
         
         if [ 0 -ne $? ]; then
             exitError "Docker build failed!"
