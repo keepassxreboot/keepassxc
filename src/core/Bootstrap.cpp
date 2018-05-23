@@ -16,6 +16,7 @@
  */
 
 #include "Bootstrap.h"
+#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Translator.h"
 #include "gui/MessageBox.h"
@@ -140,6 +141,8 @@ namespace Bootstrap
         HANDLE hToken = nullptr;
         PTOKEN_USER pTokenUser = nullptr;
         DWORD cbBufferSize = 0;
+        PSID pLocalSystemSid = nullptr;
+        DWORD pLocalSystemSidSize = SECURITY_MAX_SID_SIZE;
 
         // Access control list
         PACL pACL = nullptr;
@@ -166,8 +169,19 @@ namespace Bootstrap
             goto Cleanup;
         }
 
+        // Retrieve LocalSystem account SID
+        pLocalSystemSid = static_cast<PSID>(HeapAlloc(GetProcessHeap(), 0, pLocalSystemSidSize));
+        if (pLocalSystemSid == nullptr) {
+            goto Cleanup;
+        }
+
+        if (!CreateWellKnownSid(WinLocalSystemSid, nullptr, pLocalSystemSid, &pLocalSystemSidSize)) {
+            goto Cleanup;
+        }
+
         // Calculate the amount of memory that must be allocated for the DACL
-        cbACL = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid);
+        cbACL = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid)
+                + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pLocalSystemSid);
 
         // Create and initialize an ACL
         pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
@@ -189,6 +203,18 @@ namespace Bootstrap
             goto Cleanup;
         }
 
+#ifdef WITH_XC_SSHAGENT
+        // OpenSSH for Windows ssh-agent service is running as LocalSystem
+        if (!AddAccessAllowedAce(
+                pACL,
+                ACL_REVISION,
+                PROCESS_QUERY_INFORMATION | PROCESS_DUP_HANDLE, // just enough for ssh-agent
+                pLocalSystemSid // known LocalSystem sid
+                )) {
+            goto Cleanup;
+        }
+#endif
+
         // Set discretionary access control list
         bSuccess = ERROR_SUCCESS
                    == SetSecurityInfo(GetCurrentProcess(), // object handle
@@ -204,6 +230,9 @@ namespace Bootstrap
 
         if (pACL != nullptr) {
             HeapFree(GetProcessHeap(), 0, pACL);
+        }
+        if (pLocalSystemSid != nullptr) {
+            HeapFree(GetProcessHeap(), 0, pLocalSystemSid);
         }
         if (pTokenUser != nullptr) {
             HeapFree(GetProcessHeap(), 0, pTokenUser);
