@@ -190,6 +190,9 @@ add_unit_test(NAME testykchallengeresponsekey
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testtools SOURCES TestTools.cpp
+        LIBS ${TEST_LIBRARIES})
+
 if(WITH_GUI_TESTS)
   add_subdirectory(gui)
 endif(WITH_GUI_TESTS)

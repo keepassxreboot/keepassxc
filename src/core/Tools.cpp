@@ -24,6 +24,7 @@
 #include <QImageReader>
 #include <QLocale>
 #include <QStringList>
+#include <cctype>
 
 #include <QElapsedTimer>
 
@@ -56,8 +57,9 @@
 namespace Tools
 {
 
-    QString humanReadableFileSize(qint64 bytes)
+    QString humanReadableFileSize(qint64 bytes, quint32 precision)
     {
+        constexpr auto kibibyte = 1024;
         double size = bytes;
 
         QStringList units = QStringList() << "B"
@@ -67,12 +69,12 @@ namespace Tools
         int i = 0;
         int maxI = units.size() - 1;
 
-        while ((size >= 1024) && (i < maxI)) {
-            size /= 1024;
+        while ((size >= kibibyte) && (i < maxI)) {
+            size /= kibibyte;
             i++;
         }
 
-        return QString("%1 %2").arg(QLocale().toString(size, 'f', 2), units.at(i));
+        return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
     }
 
     bool hasChild(const QObject* parent, const QObject* child)
@@ -147,8 +149,8 @@ namespace Tools
 
     bool isHex(const QByteArray& ba)
     {
-        for (char c : ba) {
-            if (!((c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F'))) {
+        for (const unsigned char c : ba) {
+            if (!std::isxdigit(c)) {
                 return false;
             }
         }
@@ -158,8 +160,8 @@ namespace Tools
 
     bool isBase64(const QByteArray& ba)
     {
-        QRegExp regexp(
-            "^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$", Qt::CaseInsensitive, QRegExp::RegExp2);
+        constexpr auto pattern = R"(^(?:[a-z0-9+]{4})*(?:[a-z0-9+]{3}=|[a-z0-9+]{2}==)?$)";
+        QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
 
         QString base64 = QString::fromLatin1(ba.constData(), ba.size());
 
@@ -318,14 +320,15 @@ namespace Tools
         }
 
         // Set discretionary access control list
-        bSuccess = ERROR_SUCCESS == SetSecurityInfo(GetCurrentProcess(), // object handle
-                                                    SE_KERNEL_OBJECT, // type of object
-                                                    DACL_SECURITY_INFORMATION, // change only the objects DACL
-                                                    nullptr,
-                                                    nullptr, // do not change owner or group
-                                                    pACL, // DACL specified
-                                                    nullptr // do not change SACL
-                                                    );
+        bSuccess = ERROR_SUCCESS
+                   == SetSecurityInfo(GetCurrentProcess(), // object handle
+                                      SE_KERNEL_OBJECT, // type of object
+                                      DACL_SECURITY_INFORMATION, // change only the objects DACL
+                                      nullptr,
+                                      nullptr, // do not change owner or group
+                                      pACL, // DACL specified
+                                      nullptr // do not change SACL
+                      );
 
     Cleanup:
 

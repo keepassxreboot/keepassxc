@@ -23,7 +23,6 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestModified)
