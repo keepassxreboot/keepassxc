@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -43,7 +44,7 @@ Clipboard::Clipboard(QObject* parent)
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
-void Clipboard::setText(const QString& text, bool secret)
+void Clipboard::setText(const QString& text)
 {
     QClipboard* clipboard = QApplication::clipboard();
 
@@ -53,24 +54,14 @@ void Clipboard::setText(const QString& text, bool secret)
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
-    if (secret) {
-        const QString secretStr = "secret";
-        QByteArray secretBa = secretStr.toUtf8();
-        mime->setText(text);
-        mime->setData("x-kde-passwordManagerHint", secretBa);
-        clipboard->setMimeData(mime, QClipboard::Clipboard);
+    const QString secretStr = "secret";
+    QByteArray secretBa = secretStr.toUtf8();
+    mime->setText(text);
+    mime->setData("x-kde-passwordManagerHint", secretBa);
+    clipboard->setMimeData(mime, QClipboard::Clipboard);
 
-        if (clipboard->supportsSelection()) {
-            QMimeData* mimeSelection = new QMimeData();
-            mimeSelection->setText(text);
-            mimeSelection->setData("x-kde-passwordManagerHint", secretBa);
-            clipboard->setMimeData(mimeSelection, QClipboard::Selection);
-        }
-    } else {
-        clipboard->setText(text, QClipboard::Clipboard);
-        if (clipboard->supportsSelection()) {
-            clipboard->setText(text, QClipboard::Selection);
-        }
+    if (clipboard->supportsSelection()) {
+        clipboard->setMimeData(mime, QClipboard::Selection);
     }
 #endif
 
@@ -81,11 +72,6 @@ void Clipboard::setText(const QString& text, bool secret)
             m_timer->start(timeout * 1000);
         }
     }
-}
-
-void Clipboard::setSecretText(const QString& text)
-{
-    setText(text, true);
 }
 
 void Clipboard::clearCopiedText()
