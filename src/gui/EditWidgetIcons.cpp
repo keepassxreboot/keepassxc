@@ -325,13 +325,15 @@ void EditWidgetIcons::addCustomIconFromFile()
     if (m_database) {
         QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
 
-        QString filename = QFileDialog::getOpenFileName(this, tr("Select Image"), "", filter);
-        if (!filename.isEmpty()) {
-            auto icon = QImage(filename);
-            if (!icon.isNull()) {
-                addCustomIcon(QImage(filename));
-            } else {
-                emit messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
+        auto filenames = QFileDialog::getOpenFileNames(this, tr("Select Image(s)"), "", filter);
+        for (const auto& filename : filenames) {
+            if (!filename.isEmpty()) {
+                auto icon = QImage(filename);
+                if (!icon.isNull()) {
+                    addCustomIcon(QImage(filename));
+                } else {
+                    emit messageEditEntry(tr("Can't read icon"), MessageWidget::Error);
+                }
             }
         }
     }
