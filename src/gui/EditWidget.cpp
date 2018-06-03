@@ -125,8 +125,14 @@ void EditWidget::enableApplyButton(bool enabled)
 
 void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
-    m_ui->messageWidget->setCloseButtonVisible(false);
-    m_ui->messageWidget->showMessage(text, type, 2000);
+    // Show error messages for a longer time to make sure the user can read them
+    if (type == MessageWidget::Error) {
+        m_ui->messageWidget->setCloseButtonVisible(true);
+        m_ui->messageWidget->showMessage(text, type, 15000);
+    } else {
+        m_ui->messageWidget->setCloseButtonVisible(false);
+        m_ui->messageWidget->showMessage(text, type, 2000);
+    }
 }
 
 void EditWidget::hideMessage()
