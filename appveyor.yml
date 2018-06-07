@@ -1,0 +1,39 @@
+image:
+  - Visual Studio 2017
+
+configuration:
+  - Debug
+
+environment:
+    matrix:
+        - CC: clang
+          CXX: clang++
+
+clone_depth: 1
+
+platform:
+  - x64
+
+matrix:
+  fast_finish: true
+
+install:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/install-pacman.sh"
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/install-yubikey.sh"
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/install-argon2.sh"
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/install-libqrencode.sh"
+
+before_build:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/before-build.sh"
+
+build_script:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/build.sh"
+
+test_script:
+  - C:\msys64\usr\bin\bash -l -c "/c/projects/keepassxc/ci/appveyor/test.sh"
+
+cache:
+    - C:\msys64 -> ci/appveyor/install-pacman.sh
+    - C:\Yubikey -> ci/appveyor/install-yubikey.sh
+    - C:\Argon2 -> ci/appveyor/install-argon2.sh
+    - C:\Program\ Files\ (x86)/QRencode -> ci/appveyor/install-libqrencode.sh

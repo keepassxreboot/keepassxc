@@ -339,6 +339,8 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
   message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
+include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
+
 # Optional
 if(WITH_XC_YUBIKEY)
   find_package(YubiKey REQUIRED)
