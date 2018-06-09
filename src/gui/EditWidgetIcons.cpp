@@ -335,12 +335,11 @@ void EditWidgetIcons::addCustomIconFromFile()
             for (const auto& filename : filenames) {
                 if (!filename.isEmpty()) {
                     auto icon = QImage(filename);
-                    if (!icon.isNull()) {
-                        if (!addCustomIcon(QImage(filename))) {
-                            ++numexisting;
-                        }
-                    } else {
+                    if (icon.isNull()) {
                         errornames << filename;
+                    } else if (!addCustomIcon(icon)) {
+                        // Icon already exists in database
+                        ++numexisting;
                     }
                 }
             }
@@ -349,20 +348,20 @@ void EditWidgetIcons::addCustomIconFromFile()
             QString msg;
 
             if (numloaded > 0) {
-                msg = tr("Successfully loaded %1 of %2 icons").arg(numloaded).arg(filenames.size());
+                msg = tr("Successfully loaded %1 of %n icon(s)", "", filenames.size()).arg(numloaded);
             } else {
                 msg = tr("No icons were loaded");
             }
 
             if (numexisting > 0) {
-                msg += ", " + tr("%1 icons already existed").arg(numexisting);
+                msg += "\n" + tr("%n icon(s) already exist in the database", "", numexisting);
             }
 
             if (!errornames.empty()) {
                 // Show the first 8 icons that failed to load
                 errornames = errornames.mid(0, 8);
-                emit messageEditEntry(msg + "\n" + tr("The following icons failed:") + "\n" + errornames.join("\n"),
-                                      MessageWidget::Error);
+                emit messageEditEntry(msg + "\n" + tr("The following icon(s) failed:", "", errornames.size()) +
+                                      "\n" + errornames.join("\n"), MessageWidget::Error);
             } else if (numloaded > 0) {
                 emit messageEditEntry(msg, MessageWidget::Positive);
             } else {
