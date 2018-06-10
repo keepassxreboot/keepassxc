@@ -1,0 +1,31 @@
+image:
+  - Visual Studio 2017
+
+configuration:
+  - Debug
+
+environment:
+    matrix:
+        - CC: gcc
+          CXX: g++
+
+clone_depth: 1
+
+platform:
+  - x64
+
+matrix:
+  fast_finish: true
+
+install:
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 /bin/bash -l -c "pacman --noconfirm -Syu"
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 /bin/bash -l -c "/c/projects/keepassxc/ci/appveyor/install.sh"
+
+before_build:
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 /bin/bash -l -c "/c/projects/keepassxc/ci/appveyor/before-build.sh"
+
+build_script:
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 /bin/bash -l -c "/c/projects/keepassxc/ci/appveyor/build.sh"
+
+test_script:
+  - C:\msys64\usr\bin\env MSYSTEM=MINGW64 /bin/bash -l -c "/c/projects/keepassxc/ci/appveyor/test.sh"

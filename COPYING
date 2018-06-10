@@ -235,3 +235,7 @@ License: LGPL-2.1
 Files: share/macosx/dmg-background.tiff
 Copyright: 2008-2014, Andrey Tarantsov
 License: MIT
+
+Files: cmake/DeployQt.cmake
+Copyright: 2018, Nathan Osman
+License: MIT
