@@ -27,7 +27,6 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QLabel>
-#include <QLabel>
 #include <QLineEdit>
 #include <QProcess>
 #include <QSplitter>

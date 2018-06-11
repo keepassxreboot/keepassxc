@@ -20,7 +20,6 @@
 #include "ui_EditWidgetIcons.h"
 
 #include <QFileDialog>
-#include <QFileDialog>
 #include <QMessageBox>
 
 #include "core/Config.h"
