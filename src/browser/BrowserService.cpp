@@ -375,14 +375,11 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     }
 
     for (Entry* entry : EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
-        QString title = entry->title();
         QString url = entry->url();
 
-        // Filter to match hostname in Title and Url fields
-        if ((!title.isEmpty() && hostname.contains(title))
-            || (!url.isEmpty() && hostname.contains(url))
-            || (matchUrlScheme(title) && hostname.endsWith(QUrl(title).host()))
-            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) ) {
+        // Filter to match hostname in URL field
+        if ((!url.isEmpty() && hostname.contains(url))
+            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host()))) {
                 entries.append(entry);
         }
     }
