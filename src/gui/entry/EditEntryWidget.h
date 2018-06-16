@@ -21,6 +21,7 @@
 
 #include <QModelIndex>
 #include <QScopedPointer>
+#include <QButtonGroup>
 
 #include "gui/EditWidget.h"
 #include "config-keepassx.h"
