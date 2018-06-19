@@ -131,6 +131,10 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 	ENDIF() # NOT GENHTML_PATH
 
 	SET(coverage_info "${CMAKE_BINARY_DIR}/${_outputname}.info")
+	IF(MINGW)
+		# Replace C:/ with /C for MINGW
+		STRING(REGEX REPLACE "^([a-zA-Z]):" "/\\1" coverage_info ${coverage_info})
+	ENDIF()
 	SET(coverage_cleaned "${coverage_info}.cleaned")
 
 	SEPARATE_ARGUMENTS(test_command UNIX_COMMAND "${_testrunner}")
