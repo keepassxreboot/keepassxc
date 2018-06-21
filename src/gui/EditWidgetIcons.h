@@ -88,7 +88,7 @@ private slots:
     void fetchReadyRead();
     void fetchCanceled();
     void addCustomIconFromFile();
-    void addCustomIcon(const QImage& icon);
+    bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
     void updateWidgetsCustomIcons(bool checked);
