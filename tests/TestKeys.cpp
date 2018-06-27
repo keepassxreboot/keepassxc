@@ -24,7 +24,6 @@
 #include "config-keepassx-tests.h"
 
 #include "core/Metadata.h"
-#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/kdf/AesKdf.h"

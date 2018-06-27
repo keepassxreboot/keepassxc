@@ -261,6 +261,66 @@ void BrowserSettings::setPasswordUseSpecial(bool useSpecial)
     config()->set("generator/SpecialChars", useSpecial);
 }
 
+bool BrowserSettings::passwordUseBraces()
+{
+    return config()->get("generator/Braces", PasswordGenerator::DefaultBraces).toBool();
+}
+
+void BrowserSettings::setPasswordUseBraces(bool useBraces)
+{
+    config()->set("generator/Braces", useBraces);
+}
+
+bool BrowserSettings::passwordUsePunctuation()
+{
+    return config()->get("generator/Punctuation", PasswordGenerator::DefaultQuotes).toBool();
+}
+
+void BrowserSettings::setPasswordUsePunctuation(bool usePunctuation)
+{
+    config()->set("generator/Punctuation", usePunctuation);
+}
+
+bool BrowserSettings::passwordUseQuotes()
+{
+    return config()->get("generator/Quotes", PasswordGenerator::DefaultQuotes).toBool();
+}
+
+void BrowserSettings::setPasswordUseQuotes(bool useQuotes)
+{
+    config()->set("generator/Quotes", useQuotes);
+}
+
+bool BrowserSettings::passwordUseDashes()
+{
+    return config()->get("generator/Dashes", PasswordGenerator::DefaultDashes).toBool();
+}
+
+void BrowserSettings::setPasswordUseDashes(bool useDashes)
+{
+    config()->set("generator/Dashes", useDashes);
+}
+
+bool BrowserSettings::passwordUseMath()
+{
+    return config()->get("generator/Math", PasswordGenerator::DefaultMath).toBool();
+}
+
+void BrowserSettings::setPasswordUseMath(bool useMath)
+{
+    config()->set("generator/Math", useMath);
+}
+
+bool BrowserSettings::passwordUseLogograms()
+{
+    return config()->get("generator/Logograms", PasswordGenerator::DefaultLogograms).toBool();
+}
+
+void BrowserSettings::setPasswordUseLogograms(bool useLogograms)
+{
+    config()->set("generator/Logograms", useLogograms);
+}
+
 bool BrowserSettings::passwordUseEASCII()
 {
     return config()->get("generator/EASCII", PasswordGenerator::DefaultEASCII).toBool();
@@ -269,6 +329,26 @@ bool BrowserSettings::passwordUseEASCII()
 void BrowserSettings::setPasswordUseEASCII(bool useEASCII)
 {
     config()->set("generator/EASCII", useEASCII);
+}
+
+bool BrowserSettings::advancedMode()
+{
+    return config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool();
+}
+
+void BrowserSettings::setAdvancedMode(bool advancedMode)
+{
+    config()->set("generator/AdvancedMode", advancedMode);
+}
+
+QString BrowserSettings::passwordExcludedChars()
+{
+    return config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString();
+}
+
+void BrowserSettings::setPasswordExcludedChars(QString chars)
+{
+    config()->set("generator/ExcludedChars", chars);
 }
 
 int BrowserSettings::passPhraseWordCount()
@@ -346,6 +426,24 @@ PasswordGenerator::CharClasses BrowserSettings::passwordCharClasses()
     }
     if (passwordUseSpecial()) {
         classes |= PasswordGenerator::SpecialCharacters;
+    }
+    if (passwordUseBraces()) {
+        classes |= PasswordGenerator::Braces;
+    }
+    if (passwordUsePunctuation()) {
+        classes |= PasswordGenerator::Punctuation;
+    }
+    if (passwordUseQuotes()) {
+        classes |= PasswordGenerator::Quotes;
+    }
+    if (passwordUseDashes()) {
+        classes |= PasswordGenerator::Dashes;
+    }
+    if (passwordUseMath()) {
+        classes |= PasswordGenerator::Math;
+    }
+    if (passwordUseLogograms()) {
+        classes |= PasswordGenerator::Logograms;
     }
     if (passwordUseEASCII()) {
         classes |= PasswordGenerator::EASCII;

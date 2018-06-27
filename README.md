@@ -1,5 +1,6 @@
 # <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC
-[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(id:KeepassXC_TeamCityCi\)/statusIcon?guest=1)](https://ci.keepassxc.org/viewType.html?buildTypeId=KeepassXC_TeamCityCi&guest=1)  [![Coverage Status](https://coveralls.io/repos/github/keepassxreboot/keepassxc/badge.svg)](https://coveralls.io/github/keepassxreboot/keepassxc)
+[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(id:KeepassXC_TeamCityCi\)/statusIcon?guest=1)](https://ci.keepassxc.org/viewType.html?buildTypeId=KeepassXC_TeamCityCi&guest=1) [![Build status](https://ci.appveyor.com/api/projects/status/qmcar8rnqjh4oxof?svg=true)](https://ci.appveyor.com/project/droidmonkey/keepassxc) [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
+
 
 ## About KeePassXC
 [KeePassXC](https://keepassxc.org) is a cross-platform community fork of
@@ -32,7 +33,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - Browser integration with KeePassHTTP-Connector for
 [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepasshttp-connector/) and
 [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepasshttp-connector/dafgdjggglmmknipkhngniifhplpcldb), and
-[passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#Note_about_KeePassHTTP)
+[passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#note-about-keepasshttp)
 - Browser integration with KeePassXC-Browser using [native messaging](https://developer.chrome.com/extensions/nativeMessaging) for [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) and [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk)
 - Many bug fixes
 

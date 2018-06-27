@@ -32,7 +32,7 @@ class QIODevice;
 namespace Tools
 {
 
-    QString humanReadableFileSize(qint64 bytes);
+    QString humanReadableFileSize(qint64 bytes, quint32 precision = 2);
     bool hasChild(const QObject* parent, const QObject* child);
     bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
     bool readAllFromDevice(QIODevice* device, QByteArray& data);

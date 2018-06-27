@@ -756,9 +756,10 @@ bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
         }
     } else if (AutoType::checkHighRepetition(sequence)) {
         QMessageBox::StandardButton reply;
-        reply =
-            QMessageBox::question(nullptr, tr("Auto-Type"), tr("This Auto-Type command contains arguments which are "
-                                                               "repeated very often. Do you really want to proceed?"));
+        reply = QMessageBox::question(nullptr,
+                                      tr("Auto-Type"),
+                                      tr("This Auto-Type command contains arguments which are "
+                                         "repeated very often. Do you really want to proceed?"));
 
         if (reply == QMessageBox::No) {
             return false;
