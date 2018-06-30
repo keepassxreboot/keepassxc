@@ -96,7 +96,7 @@ int main(int argc, char** argv)
                                           "handle");
 
     parser.addHelpOption();
-    parser.addVersionOption();
+    QCommandLineOption versionOption = parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
@@ -105,7 +105,7 @@ int main(int argc, char** argv)
     parser.process(app);
     const QStringList fileNames = parser.positionalArguments();
 
-    if (app.isAlreadyRunning()) {
+    if (app.isAlreadyRunning() && !parser.isSet(versionOption)) {
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
