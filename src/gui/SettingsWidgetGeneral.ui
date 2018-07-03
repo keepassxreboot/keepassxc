@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>732</height>
+    <height>794</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -179,6 +179,13 @@
           <string>General</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QCheckBox" name="toolbarHideCheckBox">
+            <property name="text">
+             <string>Hide toolbar (icons)</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="systrayShowCheckBox">
             <property name="text">
