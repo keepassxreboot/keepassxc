@@ -633,8 +633,8 @@ void DatabaseWidget::openUrl()
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
-    if (entry->url().startsWith("cmd://")) {
-        QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
+    QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
+    if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
         if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
             if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
@@ -646,8 +646,9 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         // otherwise ask user
         if (cmdString.length() > 6) {
             QString cmdTruncated = cmdString.mid(6);
-            if (cmdTruncated.length() > 400)
+            if (cmdTruncated.length() > 400) {
                 cmdTruncated = cmdTruncated.left(400) + " […]";
+            }
             QMessageBox msgbox(QMessageBox::Icon::Question,
                                tr("Execute command?"),
                                tr("Do you really want to execute the following command?<br><br>%1<br>")
