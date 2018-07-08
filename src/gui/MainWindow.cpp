@@ -421,8 +421,20 @@ void MainWindow::openDatabase(const QString& fileName, const QString& pw, const 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 {
     int currentIndex = m_ui->stackedWidget->currentIndex();
+
     bool inDatabaseTabWidget = (currentIndex == DatabaseTabScreen);
     bool inWelcomeWidget = (currentIndex == WelcomeScreen);
+    bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
+
+    m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
+
+    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+
+    m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -534,16 +546,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         m_searchWidgetAction->setEnabled(false);
     }
-
-    bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
-    m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
-    m_ui->actionRepairDatabase->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-
-    m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
     if ((currentIndex == PasswordGeneratorScreen) != m_ui->actionPasswordGenerator->isChecked()) {
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
