@@ -203,8 +203,8 @@ void CsvImportWidget::load(const QString& filename, Database* const db)
     m_parserModel->setFilename(filename);
     m_ui->labelFilename->setText(filename);
     Group* group = m_db->rootGroup();
-    group->setUuid(Uuid::random());
-    group->setNotes(tr("Imported from CSV file\nOriginal data: %1").arg(filename));
+    group->setUuid(QUuid::createUuid());
+    group->setNotes(tr("Imported from CSV file").append("\n").append(tr("Original data: ")) + filename);
     parse();
 }
 
@@ -247,7 +247,7 @@ void CsvImportWidget::writeDatabase()
             continue;
         }
         Entry* entry = new Entry();
-        entry->setUuid(Uuid::random());
+        entry->setUuid(QUuid::createUuid());
         entry->setGroup(splitGroups(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
         entry->setTitle(m_parserModel->data(m_parserModel->index(r, 1)).toString());
         entry->setUsername(m_parserModel->data(m_parserModel->index(r, 2)).toString());
@@ -339,7 +339,7 @@ Group* CsvImportWidget::splitGroups(QString label)
             Group* brandNew = new Group();
             brandNew->setParent(current);
             brandNew->setName(groupName);
-            brandNew->setUuid(Uuid::random());
+            brandNew->setUuid(QUuid::createUuid());
             current = brandNew;
         } else {
             Q_ASSERT(children != nullptr);

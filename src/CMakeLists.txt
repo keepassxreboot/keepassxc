@@ -66,7 +66,6 @@ set(keepassx_SOURCES
     core/TimeInfo.cpp
     core/Tools.cpp
     core/Translator.cpp
-    core/Uuid.cpp
     core/Base32.h
     core/Base32.cpp
     cli/Utils.cpp

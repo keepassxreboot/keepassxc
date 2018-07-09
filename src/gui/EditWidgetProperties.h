@@ -25,7 +25,6 @@
 
 #include "core/CustomData.h"
 #include "core/TimeInfo.h"
-#include "core/Uuid.h"
 
 namespace Ui
 {
@@ -40,7 +39,7 @@ public:
     explicit EditWidgetProperties(QWidget* parent = nullptr);
     ~EditWidgetProperties();
 
-    void setFields(const TimeInfo& timeInfo, const Uuid& uuid);
+    void setFields(const TimeInfo& timeInfo, const QUuid& uuid);
     void setCustomData(const CustomData* customData);
 
     const CustomData* customData() const;

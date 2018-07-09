@@ -216,8 +216,7 @@ void TestMerge::testResolveConflictKeepBoth()
     QVERIFY2(olderEntry->attributes()->hasKey("merged"), "older entry is marked with an attribute \"merged\"");
     QCOMPARE(olderEntry->historyItems().isEmpty(), false);
 
-    QVERIFY2(olderEntry->uuid().toHex() != updatedEntry->uuid().toHex(),
-             "KeepBoth should not reuse the UUIDs when cloning.");
+    QVERIFY2(olderEntry->uuid() != updatedEntry->uuid(), "KeepBoth should not reuse the UUIDs when cloning.");
 
     delete dbSource;
     delete dbDestination;
@@ -308,7 +307,7 @@ void TestMerge::testCreateNewGroups()
     QTest::qSleep(1);
     Group* group3 = new Group();
     group3->setName("group3");
-    group3->setUuid(Uuid::random());
+    group3->setUuid(QUuid::createUuid());
     group3->setParent(dbSource->rootGroup());
 
     dbDestination->merge(dbSource);
@@ -331,7 +330,7 @@ void TestMerge::testMoveEntryIntoNewGroup()
     QTest::qSleep(1);
     Group* group3 = new Group();
     group3->setName("group3");
-    group3->setUuid(Uuid::random());
+    group3->setUuid(QUuid::createUuid());
     group3->setParent(dbSource->rootGroup());
 
     Entry* entry1 = dbSource->rootGroup()->findEntry("entry1");
@@ -367,13 +366,13 @@ void TestMerge::testUpdateEntryDifferentLocation()
 
     Group* group3 = new Group();
     group3->setName("group3");
-    group3->setUuid(Uuid::random());
+    group3->setUuid(QUuid::createUuid());
     group3->setParent(dbDestination->rootGroup());
 
     Entry* entry1 = dbDestination->rootGroup()->findEntry("entry1");
     QVERIFY(entry1 != nullptr);
     entry1->setGroup(group3);
-    Uuid uuidBeforeSyncing = entry1->uuid();
+    QUuid uuidBeforeSyncing = entry1->uuid();
 
     // Change the entry in the source db.
     QTest::qSleep(1);
@@ -413,7 +412,7 @@ void TestMerge::testUpdateGroup()
     Group* group2 = dbSource->rootGroup()->findChildByName("group2");
     group2->setName("group2 renamed");
     group2->setNotes("updated notes");
-    Uuid customIconId = Uuid::random();
+    QUuid customIconId = QUuid::createUuid();
     QImage customIcon;
     dbSource->metadata()->addCustomIcon(customIconId, customIcon);
     group2->setIcon(customIconId);
@@ -422,7 +421,7 @@ void TestMerge::testUpdateGroup()
     QVERIFY(entry1 != nullptr);
     entry1->setGroup(group2);
     entry1->setTitle("entry1 renamed");
-    Uuid uuidBeforeSyncing = entry1->uuid();
+    QUuid uuidBeforeSyncing = entry1->uuid();
 
     dbDestination->merge(dbSource);
 
@@ -446,7 +445,7 @@ void TestMerge::testUpdateGroupLocation()
 {
     Database* dbDestination = createTestDatabase();
     Group* group3 = new Group();
-    Uuid group3Uuid = Uuid::random();
+    QUuid group3Uuid = QUuid::createUuid();
     group3->setUuid(group3Uuid);
     group3->setName("group3");
     group3->setParent(dbDestination->rootGroup()->findChildByName("group1"));
@@ -509,7 +508,7 @@ void TestMerge::testMergeCustomIcons()
     Database* dbDestination = new Database();
     Database* dbSource = createTestDatabase();
 
-    Uuid customIconId = Uuid::random();
+    QUuid customIconId = QUuid::createUuid();
     QImage customIcon;
 
     dbSource->metadata()->addCustomIcon(customIconId, customIcon);
@@ -566,11 +565,11 @@ Database* TestMerge::createTestDatabase()
 
     Group* group1 = new Group();
     group1->setName("group1");
-    group1->setUuid(Uuid::random());
+    group1->setUuid(QUuid::createUuid());
 
     Group* group2 = new Group();
     group2->setName("group2");
-    group2->setUuid(Uuid::random());
+    group2->setUuid(QUuid::createUuid());
 
     Entry* entry1 = new Entry();
     Entry* entry2 = new Entry();
@@ -578,14 +577,14 @@ Database* TestMerge::createTestDatabase()
     // Give Entry 1 a history
     entry1->beginUpdate();
     entry1->setGroup(group1);
-    entry1->setUuid(Uuid::random());
+    entry1->setUuid(QUuid::createUuid());
     entry1->setTitle("entry1");
     entry1->endUpdate();
 
     // Give Entry 2 a history
     entry2->beginUpdate();
     entry2->setGroup(group1);
-    entry2->setUuid(Uuid::random());
+    entry2->setUuid(QUuid::createUuid());
     entry2->setTitle("entry2");
     entry2->endUpdate();
 

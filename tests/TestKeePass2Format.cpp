@@ -47,18 +47,18 @@ void TestKeePass2Format::initTestCase()
     m_kdbxSourceDb->setKey(key);
     m_kdbxSourceDb->metadata()->setName("TESTDB");
     Group* group = m_kdbxSourceDb->rootGroup();
-    group->setUuid(Uuid::random());
+    group->setUuid(QUuid::createUuid());
     group->setNotes("I'm a note!");
     auto entry = new Entry();
     entry->setPassword(QString::fromUtf8("\xc3\xa4\xa3\xb6\xc3\xbc\xe9\x9b\xbb\xe7\xb4\x85"));
-    entry->setUuid(Uuid::random());
+    entry->setUuid(QUuid::createUuid());
     entry->attributes()->set("test", "protectedTest", true);
     QVERIFY(entry->attributes()->isProtected("test"));
     entry->attachments()->set("myattach.txt", QByteArray("this is an attachment"));
     entry->attachments()->set("aaa.txt", QByteArray("also an attachment"));
     entry->setGroup(group);
     auto groupNew = new Group();
-    groupNew->setUuid(Uuid::random());
+    groupNew->setUuid(QUuid::createUuid());
     groupNew->setName("TESTGROUP");
     groupNew->setNotes("I'm a sub group note!");
     groupNew->setParent(group);
@@ -108,7 +108,7 @@ void TestKeePass2Format::testXmlMetadata()
 void TestKeePass2Format::testXmlCustomIcons()
 {
     QCOMPARE(m_xmlDb->metadata()->customIcons().size(), 1);
-    Uuid uuid = Uuid::fromBase64("++vyI+daLk6omox4a6kQGA==");
+    QUuid uuid = QUuid::fromRfc4122(QByteArray::fromBase64("++vyI+daLk6omox4a6kQGA=="));
     QVERIFY(m_xmlDb->metadata()->customIcons().contains(uuid));
     QImage icon = m_xmlDb->metadata()->customIcon(uuid);
     QCOMPARE(icon.width(), 16);
@@ -128,11 +128,11 @@ void TestKeePass2Format::testXmlGroupRoot()
 {
     const Group* group = m_xmlDb->rootGroup();
     QVERIFY(group);
-    QCOMPARE(group->uuid().toBase64(), QString("lmU+9n0aeESKZvcEze+bRg=="));
+    QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("lmU+9n0aeESKZvcEze+bRg==")));
     QCOMPARE(group->name(), QString("NewDatabase"));
     QCOMPARE(group->notes(), QString(""));
     QCOMPARE(group->iconNumber(), 49);
-    QCOMPARE(group->iconUuid(), Uuid());
+    QCOMPARE(group->iconUuid(), QUuid());
     QVERIFY(group->isExpanded());
     TimeInfo ti = group->timeInfo();
     QCOMPARE(ti.lastModificationTime(), Test::datetime(2010, 8, 8, 17, 24, 27));
@@ -145,7 +145,7 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
-    QCOMPARE(group->lastTopVisibleEntry()->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
+    QCOMPARE(group->lastTopVisibleEntry()->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
     QCOMPARE(group->children().size(), 3);
     QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 
@@ -156,11 +156,11 @@ void TestKeePass2Format::testXmlGroup1()
 {
     const Group* group = m_xmlDb->rootGroup()->children().at(0);
 
-    QCOMPARE(group->uuid().toBase64(), QString("AaUYVdXsI02h4T1RiAlgtg=="));
+    QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("AaUYVdXsI02h4T1RiAlgtg==")));
     QCOMPARE(group->name(), QString("General"));
     QCOMPARE(group->notes(), QString("Group Notez"));
     QCOMPARE(group->iconNumber(), 48);
-    QCOMPARE(group->iconUuid(), Uuid());
+    QCOMPARE(group->iconUuid(), QUuid());
     QCOMPARE(group->isExpanded(), true);
     QCOMPARE(group->defaultAutoTypeSequence(), QString("{Password}{ENTER}"));
     QCOMPARE(group->autoTypeEnabled(), Group::Enable);
@@ -172,19 +172,19 @@ void TestKeePass2Format::testXmlGroup2()
 {
     const Group* group = m_xmlDb->rootGroup()->children().at(1);
 
-    QCOMPARE(group->uuid().toBase64(), QString("1h4NtL5DK0yVyvaEnN//4A=="));
+    QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("1h4NtL5DK0yVyvaEnN//4A==")));
     QCOMPARE(group->name(), QString("Windows"));
     QCOMPARE(group->isExpanded(), false);
 
     QCOMPARE(group->children().size(), 1);
     const Group* child = group->children().first();
 
-    QCOMPARE(child->uuid().toBase64(), QString("HoYE/BjLfUSW257pCHJ/eA=="));
+    QCOMPARE(child->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("HoYE/BjLfUSW257pCHJ/eA==")));
     QCOMPARE(child->name(), QString("Subsub"));
     QCOMPARE(child->entries().size(), 1);
 
     const Entry* entry = child->entries().first();
-    QCOMPARE(entry->uuid().toBase64(), QString("GZpdQvGXOU2kaKRL/IVAGg=="));
+    QCOMPARE(entry->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("GZpdQvGXOU2kaKRL/IVAGg==")));
     QCOMPARE(entry->title(), QString("Subsub Entry"));
 }
 
@@ -192,10 +192,10 @@ void TestKeePass2Format::testXmlEntry1()
 {
     const Entry* entry = m_xmlDb->rootGroup()->entries().at(0);
 
-    QCOMPARE(entry->uuid().toBase64(), QString("+wSUOv6qf0OzW8/ZHAs2sA=="));
+    QCOMPARE(entry->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
     QCOMPARE(entry->historyItems().size(), 2);
     QCOMPARE(entry->iconNumber(), 0);
-    QCOMPARE(entry->iconUuid(), Uuid());
+    QCOMPARE(entry->iconUuid(), QUuid());
     QVERIFY(!entry->foregroundColor().isValid());
     QVERIFY(!entry->backgroundColor().isValid());
     QCOMPARE(entry->overrideUrl(), QString(""));
@@ -254,9 +254,9 @@ void TestKeePass2Format::testXmlEntry2()
 {
     const Entry* entry = m_xmlDb->rootGroup()->entries().at(1);
 
-    QCOMPARE(entry->uuid().toBase64(), QString("4jbADG37hkiLh2O0qUdaOQ=="));
+    QCOMPARE(entry->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("4jbADG37hkiLh2O0qUdaOQ==")));
     QCOMPARE(entry->iconNumber(), 0);
-    QCOMPARE(entry->iconUuid().toBase64(), QString("++vyI+daLk6omox4a6kQGA=="));
+    QCOMPARE(entry->iconUuid(), QUuid::fromRfc4122(QByteArray::fromBase64("++vyI+daLk6omox4a6kQGA==")));
     // TODO: test entry->icon()
     QCOMPARE(entry->foregroundColor(), QColor(255, 0, 0));
     QCOMPARE(entry->backgroundColor(), QColor(255, 255, 0));
@@ -330,11 +330,11 @@ void TestKeePass2Format::testXmlDeletedObjects()
     DeletedObject delObj;
 
     delObj = objList.takeFirst();
-    QCOMPARE(delObj.uuid.toBase64(), QString("5K/bzWCSmkCv5OZxYl4N/w=="));
+    QCOMPARE(delObj.uuid, QUuid::fromRfc4122(QByteArray::fromBase64("5K/bzWCSmkCv5OZxYl4N/w==")));
     QCOMPARE(delObj.deletionTime, Test::datetime(2010, 8, 25, 16, 14, 12));
 
     delObj = objList.takeFirst();
-    QCOMPARE(delObj.uuid.toBase64(), QString("80h8uSNWgkKhKCp1TgXF7g=="));
+    QCOMPARE(delObj.uuid, QUuid::fromRfc4122(QByteArray::fromBase64("80h8uSNWgkKhKCp1TgXF7g==")));
     QCOMPARE(delObj.deletionTime, Test::datetime(2010, 8, 25, 16, 14, 14));
 
     QVERIFY(objList.isEmpty());
@@ -424,7 +424,7 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
         QString().append(QChar(0x31)).append(QChar(0xD801)).append(QChar(0xDC37)).append(QChar(0x32));
 
     auto entry = new Entry();
-    entry->setUuid(Uuid::random());
+    entry->setUuid(QUuid::createUuid());
     entry->setGroup(dbWrite->rootGroup());
     entry->attributes()->set("PlainInvalid", strPlainInvalid);
     entry->attributes()->set("PlainValid", strPlainValid);
@@ -577,12 +577,12 @@ void TestKeePass2Format::testDuplicateAttachments()
 
     auto entry1 = new Entry();
     entry1->setGroup(db->rootGroup());
-    entry1->setUuid(Uuid("aaaaaaaaaaaaaaaa"));
+    entry1->setUuid(QUuid::fromRfc4122("aaaaaaaaaaaaaaaa"));
     entry1->attachments()->set("a", attachment1);
 
     auto entry2 = new Entry();
     entry2->setGroup(db->rootGroup());
-    entry2->setUuid(Uuid("bbbbbbbbbbbbbbbb"));
+    entry2->setUuid(QUuid::fromRfc4122("bbbbbbbbbbbbbbbb"));
     entry2->attachments()->set("b1", attachment1);
     entry2->beginUpdate();
     entry2->attachments()->set("b2", attachment1);
@@ -596,7 +596,7 @@ void TestKeePass2Format::testDuplicateAttachments()
 
     auto entry3 = new Entry();
     entry3->setGroup(db->rootGroup());
-    entry3->setUuid(Uuid("cccccccccccccccc"));
+    entry3->setUuid(QUuid::fromRfc4122("cccccccccccccccc"));
     entry3->attachments()->set("c1", attachment2);
     entry3->attachments()->set("c2", attachment2);
     entry3->attachments()->set("c3", attachment3);

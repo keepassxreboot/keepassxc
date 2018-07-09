@@ -37,7 +37,7 @@ public:
     bool isAgentRunning() const;
     bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
     bool removeIdentity(OpenSSHKey& key);
-    void removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid);
+    void removeIdentityAtLock(const OpenSSHKey& key, const QUuid& uuid);
 
 signals:
     void error(const QString& message);
@@ -71,7 +71,7 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QMap<QString, QSet<OpenSSHKey>> m_keys;
+    QMap<QUuid, QSet<OpenSSHKey>> m_keys;
     QString m_error;
 };
 

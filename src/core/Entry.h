@@ -26,13 +26,13 @@
 #include <QPointer>
 #include <QSet>
 #include <QUrl>
+#include <QUuid>
 
 #include "core/AutoTypeAssociations.h"
 #include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/TimeInfo.h"
-#include "core/Uuid.h"
 
 class Database;
 class Group;
@@ -45,14 +45,14 @@ enum class EntryReferenceType
     Password,
     Url,
     Notes,
-    Uuid,
+    QUuid,
     CustomAttributes
 };
 
 struct EntryData
 {
     int iconNumber;
-    Uuid customIcon;
+    QUuid customIcon;
     QColor foregroundColor;
     QColor backgroundColor;
     QString overrideUrl;
@@ -72,12 +72,12 @@ class Entry : public QObject
 public:
     Entry();
     ~Entry();
-    Uuid uuid() const;
+    const QUuid& uuid() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
     QPixmap iconScaledPixmap() const;
     int iconNumber() const;
-    Uuid iconUuid() const;
+    const QUuid& iconUuid() const;
     QColor foregroundColor() const;
     QColor backgroundColor() const;
     QString overrideUrl() const;
@@ -117,9 +117,9 @@ public:
     static const QString AutoTypeSequenceUsername;
     static const QString AutoTypeSequencePassword;
 
-    void setUuid(const Uuid& uuid);
+    void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
-    void setIcon(const Uuid& uuid);
+    void setIcon(const QUuid& uuid);
     void setForegroundColor(const QColor& color);
     void setBackgroundColor(const QColor& color);
     void setOverrideUrl(const QString& url);
@@ -232,7 +232,7 @@ private:
     const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 
-    Uuid m_uuid;
+    QUuid m_uuid;
     EntryData m_data;
     QPointer<EntryAttributes> m_attributes;
     QPointer<EntryAttachments> m_attachments;

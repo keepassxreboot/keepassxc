@@ -28,7 +28,6 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/TimeInfo.h"
-#include "core/Uuid.h"
 
 class Group : public QObject
 {
@@ -63,7 +62,7 @@ public:
         QString name;
         QString notes;
         int iconNumber;
-        Uuid customIcon;
+        QUuid customIcon;
         TimeInfo timeInfo;
         bool isExpanded;
         QString defaultAutoTypeSequence;
@@ -77,14 +76,14 @@ public:
 
     static Group* createRecycleBin();
 
-    Uuid uuid() const;
+    const QUuid& uuid() const;
     QString name() const;
     QString notes() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
     QPixmap iconScaledPixmap() const;
     int iconNumber() const;
-    Uuid iconUuid() const;
+    const QUuid& iconUuid() const;
     TimeInfo timeInfo() const;
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
@@ -106,18 +105,18 @@ public:
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
-    Group* findChildByUuid(const Uuid& uuid);
+    Group* findChildByUuid(const QUuid& uuid);
     Entry* findEntry(QString entryId);
-    Entry* findEntryByUuid(const Uuid& uuid);
+    Entry* findEntryByUuid(const QUuid& uuid);
     Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
     Group* findGroupByPath(QString groupPath, QString basePath = QString("/"));
     QStringList locate(QString locateTerm, QString currentPath = QString("/"));
     Entry* addEntryWithPath(QString entryPath);
-    void setUuid(const Uuid& uuid);
+    void setUuid(const QUuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
     void setIcon(int iconNumber);
-    void setIcon(const Uuid& uuid);
+    void setIcon(const QUuid& uuid);
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
@@ -144,7 +143,7 @@ public:
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
-    QSet<Uuid> customIconsRecursive() const;
+    QSet<QUuid> customIconsRecursive() const;
     /**
      * Creates a duplicate of this group.
      * Note that you need to copy the custom icons manually when inserting the
@@ -197,7 +196,7 @@ private:
     void recCreateDelObjects();
 
     QPointer<Database> m_db;
-    Uuid m_uuid;
+    QUuid m_uuid;
     GroupData m_data;
     QPointer<Entry> m_lastTopVisibleEntry;
     QList<Group*> m_children;

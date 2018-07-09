@@ -22,14 +22,14 @@
 
 #include "crypto/Random.h"
 
-Kdf::Kdf(Uuid uuid)
+Kdf::Kdf(const QUuid& uuid)
     : m_rounds(KDF_DEFAULT_ROUNDS)
     , m_seed(QByteArray(KDF_DEFAULT_SEED_SIZE, 0))
     , m_uuid(uuid)
 {
 }
 
-Uuid Kdf::uuid() const
+const QUuid& Kdf::uuid() const
 {
     return m_uuid;
 }

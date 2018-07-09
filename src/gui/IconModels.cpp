@@ -17,6 +17,8 @@
 
 #include "IconModels.h"
 
+#include <QUuid>
+
 #include "core/DatabaseIcons.h"
 
 DefaultIconModel::DefaultIconModel(QObject* parent)
@@ -53,7 +55,7 @@ CustomIconModel::CustomIconModel(QObject* parent)
 {
 }
 
-void CustomIconModel::setIcons(const QHash<Uuid, QPixmap>& icons, const QList<Uuid>& iconsOrder)
+void CustomIconModel::setIcons(const QHash<QUuid, QPixmap>& icons, const QList<QUuid>& iconsOrder)
 {
     beginResetModel();
 
@@ -80,21 +82,21 @@ QVariant CustomIconModel::data(const QModelIndex& index, int role) const
     }
 
     if (role == Qt::DecorationRole) {
-        Uuid uuid = uuidFromIndex(index);
+        QUuid uuid = uuidFromIndex(index);
         return m_icons.value(uuid);
     }
 
     return QVariant();
 }
 
-Uuid CustomIconModel::uuidFromIndex(const QModelIndex& index) const
+QUuid CustomIconModel::uuidFromIndex(const QModelIndex& index) const
 {
     Q_ASSERT(index.isValid());
 
     return m_iconsOrder.value(index.row());
 }
 
-QModelIndex CustomIconModel::indexFromUuid(const Uuid& uuid) const
+QModelIndex CustomIconModel::indexFromUuid(const QUuid& uuid) const
 {
     int idx = m_iconsOrder.indexOf(uuid);
     if (idx > -1) {

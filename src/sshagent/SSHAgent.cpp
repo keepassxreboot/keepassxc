@@ -234,11 +234,11 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
     return true;
 }
 
-void SSHAgent::removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid)
+void SSHAgent::removeIdentityAtLock(const OpenSSHKey& key, const QUuid& uuid)
 {
     OpenSSHKey copy = key;
     copy.clearPrivate();
-    m_keys[uuid.toHex()].insert(copy);
+    m_keys[uuid].insert(copy);
 }
 
 void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
@@ -249,17 +249,17 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
         return;
     }
 
-    Uuid uuid = widget->database()->uuid();
+    const QUuid& uuid = widget->database()->uuid();
 
-    if (mode == DatabaseWidget::LockedMode && m_keys.contains(uuid.toHex())) {
+    if (mode == DatabaseWidget::LockedMode && m_keys.contains(uuid)) {
 
-        QSet<OpenSSHKey> keys = m_keys.take(uuid.toHex());
+        QSet<OpenSSHKey> keys = m_keys.take(uuid);
         for (OpenSSHKey key : keys) {
             if (!removeIdentity(key)) {
                 emit error(m_error);
             }
         }
-    } else if (mode == DatabaseWidget::ViewMode && !m_keys.contains(uuid.toHex())) {
+    } else if (mode == DatabaseWidget::ViewMode && !m_keys.contains(uuid)) {
         for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
 
             if (widget->database()->metadata()->recycleBinEnabled()

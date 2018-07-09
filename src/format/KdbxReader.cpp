@@ -19,6 +19,8 @@
 #include "core/Database.h"
 #include "core/Endian.h"
 
+#define UUID_LENGTH 16
+
 /**
  * Read KDBX magic header numbers from a device.
  *
@@ -133,12 +135,16 @@ KeePass2::ProtectedStreamAlgo KdbxReader::protectedStreamAlgo() const
  */
 void KdbxReader::setCipher(const QByteArray& data)
 {
-    if (data.size() != Uuid::Length) {
-        raiseError(tr("Invalid cipher uuid length"));
+    if (data.size() != UUID_LENGTH) {
+        raiseError(tr("Invalid cipher uuid length: %1 (length=%2)").arg(QString(data)).arg(data.size()));
         return;
     }
 
-    Uuid uuid(data);
+    QUuid uuid = QUuid::fromRfc4122(data);
+    if (uuid.isNull()) {
+        raiseError(tr("Unable to parse UUID: %1").arg(QString(data)));
+        return;
+    }
 
     if (SymmetricCipher::cipherToAlgorithm(uuid) == SymmetricCipher::InvalidAlgorithm) {
         raiseError(tr("Unsupported cipher"));

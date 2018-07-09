@@ -20,6 +20,8 @@
 #include "config-keepassx.h"
 #include "crypto/SymmetricCipherGcrypt.h"
 
+#include <QDebug>
+
 SymmetricCipher::SymmetricCipher(Algorithm algo, Mode mode, Direction direction)
     : m_backend(createBackend(algo, mode, direction))
     , m_initialized(false)
@@ -90,7 +92,7 @@ QString SymmetricCipher::errorString() const
     return m_backend->errorString();
 }
 
-SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(Uuid cipher)
+SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& cipher)
 {
     if (cipher == KeePass2::CIPHER_AES) {
         return Aes256;
@@ -100,11 +102,11 @@ SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(Uuid cipher)
         return Twofish;
     }
 
-    qWarning("SymmetricCipher::cipherToAlgorithm: invalid Uuid %s", cipher.toByteArray().toHex().data());
+    qWarning() << "SymmetricCipher::cipherToAlgorithm: invalid UUID " << cipher;
     return InvalidAlgorithm;
 }
 
-Uuid SymmetricCipher::algorithmToCipher(Algorithm algo)
+QUuid SymmetricCipher::algorithmToCipher(Algorithm algo)
 {
     switch (algo) {
     case Aes256:
@@ -115,7 +117,7 @@ Uuid SymmetricCipher::algorithmToCipher(Algorithm algo)
         return KeePass2::CIPHER_TWOFISH;
     default:
         qWarning("SymmetricCipher::algorithmToCipher: invalid algorithm %d", algo);
-        return Uuid();
+        return QUuid();
     }
 }
 

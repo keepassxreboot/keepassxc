@@ -73,12 +73,10 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
         writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, KeePass2::FILE_VERSION_4);
 
-        CHECK_RETURN_FALSE(
-            writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toByteArray()));
-        CHECK_RETURN_FALSE(writeHeaderField<quint32>(
-            &header,
-            KeePass2::HeaderFieldID::CompressionFlags,
-            Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgo()), KeePass2::BYTEORDER)));
+        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
+        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CompressionFlags,
+                                                     Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgo()),
+                                                                             KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::MasterSeed, masterSeed));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
 

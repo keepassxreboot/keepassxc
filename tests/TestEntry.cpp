@@ -82,7 +82,7 @@ void TestEntry::testCopyDataFrom()
 void TestEntry::testClone()
 {
     QScopedPointer<Entry> entryOrg(new Entry());
-    entryOrg->setUuid(Uuid::random());
+    entryOrg->setUuid(QUuid::createUuid());
     entryOrg->setTitle("Original Title");
     entryOrg->beginUpdate();
     entryOrg->setTitle("New Title");
@@ -205,7 +205,7 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry1 = new Entry();
     entry1->setGroup(root);
-    entry1->setUuid(Uuid::random());
+    entry1->setUuid(QUuid::createUuid());
     entry1->setTitle("{USERNAME}");
     entry1->setUsername("{PASSWORD}");
     entry1->setPassword("{URL}");
@@ -215,10 +215,10 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry2 = new Entry();
     entry2->setGroup(root);
-    entry2->setUuid(Uuid::random());
+    entry2->setUuid(QUuid::createUuid());
     entry2->setTitle("Entry2Title");
     entry2->setUsername("{S:CustomUserNameAttribute}");
-    entry2->setPassword(QString("{REF:P@I:%1}").arg(entry1->uuid().toHex()));
+    entry2->setPassword(QString("{REF:P@I:%1}").arg(QString(entry1->uuid().toRfc4122().toHex())));
     entry2->setUrl("http://{S:IpAddress}:{S:Port}/{S:Uri}");
     entry2->attributes()->set("CustomUserNameAttribute", "CustomUserNameValue");
     entry2->attributes()->set("IpAddress", "127.0.0.1");
@@ -227,11 +227,11 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry3 = new Entry();
     entry3->setGroup(root);
-    entry3->setUuid(Uuid::random());
-    entry3->setTitle(QString("{REF:T@I:%1}").arg(entry2->uuid().toHex()));
-    entry3->setUsername(QString("{REF:U@I:%1}").arg(entry2->uuid().toHex()));
-    entry3->setPassword(QString("{REF:P@I:%1}").arg(entry2->uuid().toHex()));
-    entry3->setUrl(QString("{REF:A@I:%1}").arg(entry2->uuid().toHex()));
+    entry3->setUuid(QUuid::createUuid());
+    entry3->setTitle(QString("{REF:T@I:%1}").arg(QString(entry2->uuid().toRfc4122().toHex())));
+    entry3->setUsername(QString("{REF:U@I:%1}").arg(QString(entry2->uuid().toRfc4122().toHex())));
+    entry3->setPassword(QString("{REF:P@I:%1}").arg(QString(entry2->uuid().toRfc4122().toHex())));
+    entry3->setUrl(QString("{REF:A@I:%1}").arg(QString(entry2->uuid().toRfc4122().toHex())));
 
     QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->title()), QString("Entry2Title"));
     QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->username()), QString("CustomUserNameValue"));
@@ -240,11 +240,11 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry4 = new Entry();
     entry4->setGroup(root);
-    entry4->setUuid(Uuid::random());
-    entry4->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex()));
-    entry4->setUsername(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex()));
-    entry4->setPassword(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex()));
-    entry4->setUrl(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex()));
+    entry4->setUuid(QUuid::createUuid());
+    entry4->setTitle(QString("{REF:T@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex())));
+    entry4->setUsername(QString("{REF:U@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex())));
+    entry4->setPassword(QString("{REF:P@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex())));
+    entry4->setUrl(QString("{REF:A@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex())));
 
     QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->title()), QString("Entry2Title"));
     QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->username()), QString("CustomUserNameValue"));
@@ -253,7 +253,7 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry5 = new Entry();
     entry5->setGroup(root);
-    entry5->setUuid(Uuid::random());
+    entry5->setUuid(QUuid::createUuid());
     entry5->attributes()->set("Scheme", "http");
     entry5->attributes()->set("Host", "host.org");
     entry5->attributes()->set("Port", "2017");
@@ -271,8 +271,8 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry6 = new Entry();
     entry6->setGroup(root);
-    entry6->setUuid(Uuid::random());
-    entry6->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex()));
+    entry6->setUuid(QUuid::createUuid());
+    entry6->setTitle(QString("{REF:T@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex())));
     entry6->setUsername(QString("{TITLE}"));
     entry6->setPassword(QString("{PASSWORD}"));
 
@@ -282,8 +282,8 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     auto* entry7 = new Entry();
     entry7->setGroup(root);
-    entry7->setUuid(Uuid::random());
-    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuid().toHex()));
+    entry7->setUuid(QUuid::createUuid());
+    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(QString(entry3->uuid().toRfc4122().toHex())));
     entry7->setUsername(QString("{TITLE}"));
     entry7->setPassword(QString("PASSWORD"));
 
@@ -299,7 +299,7 @@ void TestEntry::testResolveReferencePlaceholders()
 
     auto* entry1 = new Entry();
     entry1->setGroup(root);
-    entry1->setUuid(Uuid::random());
+    entry1->setUuid(QUuid::createUuid());
     entry1->setTitle("Title1");
     entry1->setUsername("Username1");
     entry1->setPassword("Password1");
@@ -311,7 +311,7 @@ void TestEntry::testResolveReferencePlaceholders()
     group->setParent(root);
     auto* entry2 = new Entry();
     entry2->setGroup(group);
-    entry2->setUuid(Uuid::random());
+    entry2->setUuid(QUuid::createUuid());
     entry2->setTitle("Title2");
     entry2->setUsername("Username2");
     entry2->setPassword("Password2");
@@ -321,7 +321,7 @@ void TestEntry::testResolveReferencePlaceholders()
 
     auto* entry3 = new Entry();
     entry3->setGroup(group);
-    entry3->setUuid(Uuid::random());
+    entry3->setUuid(QUuid::createUuid());
     entry3->setTitle("{S:AttributeTitle}");
     entry3->setUsername("{S:AttributeUsername}");
     entry3->setPassword("{S:AttributePassword}");
@@ -335,9 +335,9 @@ void TestEntry::testResolveReferencePlaceholders()
 
     auto* tstEntry = new Entry();
     tstEntry->setGroup(root);
-    tstEntry->setUuid(Uuid::random());
+    tstEntry->setUuid(QUuid::createUuid());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry1->uuid().toHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(QString(entry1->uuid().toRfc4122().toHex()))), 
              entry1->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@U:%1}").arg(entry1->username())), entry1->title());
@@ -348,7 +348,7 @@ void TestEntry::testResolveReferencePlaceholders()
                  QString("{REF:T@O:%1}").arg(entry1->attributes()->value("CustomAttribute1"))),
              entry1->title());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry1->uuid().toHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(QString(entry1->uuid().toRfc4122().toHex()))), 
              entry1->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@U:%1}").arg(entry1->username())),
@@ -358,7 +358,7 @@ void TestEntry::testResolveReferencePlaceholders()
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@A:%1}").arg(entry1->url())), entry1->url());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@N:%1}").arg(entry1->notes())), entry1->notes());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry2->uuid().toHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(QString(entry2->uuid().toRfc4122().toHex()))), 
              entry2->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry2->title())), entry2->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@U:%1}").arg(entry2->username())), entry2->title());
@@ -377,38 +377,23 @@ void TestEntry::testResolveReferencePlaceholders()
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@A:%1}").arg(entry2->url())), entry2->url());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@N:%1}").arg(entry2->notes())), entry2->notes());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex())),
-             entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex())),
-             entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex())),
-             entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex())),
-             entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuid().toHex())),
-             entry3->attributes()->value("AttributeNotes"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex()))), entry3->attributes()->value("AttributeTitle"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex()))), entry3->attributes()->value("AttributeUsername"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex()))), entry3->attributes()->value("AttributePassword"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex()))), entry3->attributes()->value("AttributeUrl"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex()))), entry3->attributes()->value("AttributeNotes"));
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuid().toHex().toUpper())),
-             entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuid().toHex().toUpper())),
-             entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuid().toHex().toUpper())),
-             entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuid().toHex().toUpper())),
-             entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuid().toHex().toUpper())),
-             entry3->attributes()->value("AttributeNotes"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toUpper()))), entry3->attributes()->value("AttributeTitle"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toUpper()))), entry3->attributes()->value("AttributeUsername"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toUpper()))), entry3->attributes()->value("AttributePassword"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toUpper()))), entry3->attributes()->value("AttributeUrl"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toUpper()))), entry3->attributes()->value("AttributeNotes"));
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:t@i:%1}").arg(entry3->uuid().toHex().toLower())),
-             entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:u@i:%1}").arg(entry3->uuid().toHex().toLower())),
-             entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:p@i:%1}").arg(entry3->uuid().toHex().toLower())),
-             entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:a@i:%1}").arg(entry3->uuid().toHex().toLower())),
-             entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:n@i:%1}").arg(entry3->uuid().toHex().toLower())),
-             entry3->attributes()->value("AttributeNotes"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:t@i:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toLower()))), entry3->attributes()->value("AttributeTitle"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:u@i:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toLower()))), entry3->attributes()->value("AttributeUsername"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:p@i:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toLower()))), entry3->attributes()->value("AttributePassword"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:a@i:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toLower()))), entry3->attributes()->value("AttributeUrl"));
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:n@i:%1}").arg(QString(entry3->uuid().toRfc4122().toHex().toLower()))), entry3->attributes()->value("AttributeNotes"));
 }
 
 void TestEntry::testResolveNonIdPlaceholdersToUuid()
@@ -419,27 +404,27 @@ void TestEntry::testResolveNonIdPlaceholdersToUuid()
     auto* referencedEntryTitle = new Entry();
     referencedEntryTitle->setGroup(root);
     referencedEntryTitle->setTitle("myTitle");
-    referencedEntryTitle->setUuid(Uuid::random());
+    referencedEntryTitle->setUuid(QUuid::createUuid());
 
     auto* referencedEntryUsername = new Entry();
     referencedEntryUsername->setGroup(root);
     referencedEntryUsername->setUsername("myUser");
-    referencedEntryUsername->setUuid(Uuid::random());
+    referencedEntryUsername->setUuid(QUuid::createUuid());
 
     auto* referencedEntryPassword = new Entry();
     referencedEntryPassword->setGroup(root);
     referencedEntryPassword->setPassword("myPassword");
-    referencedEntryPassword->setUuid(Uuid::random());
+    referencedEntryPassword->setUuid(QUuid::createUuid());
 
     auto* referencedEntryUrl = new Entry();
     referencedEntryUrl->setGroup(root);
     referencedEntryUrl->setUrl("myUrl");
-    referencedEntryUrl->setUuid(Uuid::random());
+    referencedEntryUrl->setUuid(QUuid::createUuid());
 
     auto* referencedEntryNotes = new Entry();
     referencedEntryNotes->setGroup(root);
     referencedEntryNotes->setNotes("myNotes");
-    referencedEntryNotes->setUuid(Uuid::random());
+    referencedEntryNotes->setUuid(QUuid::createUuid());
 
     const QList<QChar> placeholders{'T', 'U', 'P', 'A', 'N'};
     for (const QChar& searchIn : placeholders) {
@@ -475,8 +460,9 @@ void TestEntry::testResolveNonIdPlaceholdersToUuid()
         newEntry->setGroup(root);
         newEntry->setNotes(newEntryNotesRaw);
 
-        const QString newEntryNotesResolved = newEntry->resolveMultiplePlaceholders(newEntry->notes());
-        QCOMPARE(newEntryNotesResolved, QString(referencedEntry->uuid().toHex()));
+        const QString newEntryNotesResolved =
+            newEntry->resolveMultiplePlaceholders(newEntry->notes());
+        QCOMPARE(newEntryNotesResolved, QString(referencedEntry->uuid().toRfc4122().toHex()));
     }
 }
 
@@ -487,7 +473,7 @@ void TestEntry::testResolveClonedEntry()
 
     auto* original = new Entry();
     original->setGroup(root);
-    original->setUuid(Uuid::random());
+    original->setUuid(QUuid::createUuid());
     original->setTitle("Title");
     original->setUsername("SomeUsername");
     original->setPassword("SomePassword");

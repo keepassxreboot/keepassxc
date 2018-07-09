@@ -21,8 +21,6 @@
 #include <QAbstractListModel>
 #include <QPixmap>
 
-#include "core/Uuid.h"
-
 class DefaultIconModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -43,13 +41,13 @@ public:
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
-    void setIcons(const QHash<Uuid, QPixmap>& icons, const QList<Uuid>& iconsOrder);
-    Uuid uuidFromIndex(const QModelIndex& index) const;
-    QModelIndex indexFromUuid(const Uuid& uuid) const;
+    void setIcons(const QHash<QUuid, QPixmap>& icons, const QList<QUuid>& iconsOrder);
+    QUuid uuidFromIndex(const QModelIndex& index) const;
+    QModelIndex indexFromUuid(const QUuid& uuid) const;
 
 private:
-    QHash<Uuid, QPixmap> m_icons;
-    QList<Uuid> m_iconsOrder;
+    QHash<QUuid, QPixmap> m_icons;
+    QList<QUuid> m_iconsOrder;
 };
 
 #endif // KEEPASSX_ICONMODELS_H

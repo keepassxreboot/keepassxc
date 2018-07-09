@@ -28,6 +28,8 @@
 #include <QBuffer>
 #include <QFile>
 
+#define UUID_LENGTH 16
+
 /**
  * @param version KDBX version
  */
@@ -142,12 +144,12 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
 
     m_meta->setUpdateDatetime(true);
 
-    QHash<Uuid, Group*>::const_iterator iGroup;
+    QHash<QUuid, Group*>::const_iterator iGroup;
     for (iGroup = m_groups.constBegin(); iGroup != m_groups.constEnd(); ++iGroup) {
         iGroup.value()->setUpdateTimeinfo(true);
     }
 
-    QHash<Uuid, Entry*>::const_iterator iEntry;
+    QHash<QUuid, Entry*>::const_iterator iEntry;
     for (iEntry = m_entries.constBegin(); iEntry != m_entries.constEnd(); ++iEntry) {
         iEntry.value()->setUpdateTimeinfo(true);
 
@@ -346,7 +348,7 @@ void KdbxXmlReader::parseIcon()
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Icon");
 
-    Uuid uuid;
+    QUuid uuid;
     QImage icon;
     bool uuidSet = false;
     bool iconSet = false;
@@ -479,12 +481,12 @@ Group* KdbxXmlReader::parseGroup()
     QList<Entry*> entries;
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
-            Uuid uuid = readUuid();
+            QUuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
                     raiseError(tr("Null group uuid"));
                 } else {
-                    group->setUuid(Uuid::random());
+                    group->setUuid(QUuid::createUuid());
                 }
             } else {
                 group->setUuid(uuid);
@@ -515,7 +517,7 @@ Group* KdbxXmlReader::parseGroup()
             continue;
         }
         if (m_xml.name() == "CustomIconUUID") {
-            Uuid uuid = readUuid();
+            QUuid uuid = readUuid();
             if (!uuid.isNull()) {
                 group->setIcon(uuid);
             }
@@ -588,7 +590,7 @@ Group* KdbxXmlReader::parseGroup()
     }
 
     if (group->uuid().isNull() && !m_strictMode) {
-        group->setUuid(Uuid::random());
+        group->setUuid(QUuid::createUuid());
     }
 
     if (!group->uuid().isNull()) {
@@ -633,10 +635,11 @@ void KdbxXmlReader::parseDeletedObject()
 
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
-            Uuid uuid = readUuid();
+            QUuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
                     raiseError(tr("Null DeleteObject uuid"));
+                    return;
                 }
                 continue;
             }
@@ -671,12 +674,12 @@ Entry* KdbxXmlReader::parseEntry(bool history)
 
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "UUID") {
-            Uuid uuid = readUuid();
+            QUuid uuid = readUuid();
             if (uuid.isNull()) {
                 if (m_strictMode) {
                     raiseError(tr("Null entry uuid"));
                 } else {
-                    entry->setUuid(Uuid::random());
+                    entry->setUuid(QUuid::createUuid());
                 }
             } else {
                 entry->setUuid(uuid);
@@ -695,7 +698,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
             continue;
         }
         if (m_xml.name() == "CustomIconUUID") {
-            Uuid uuid = readUuid();
+            QUuid uuid = readUuid();
             if (!uuid.isNull()) {
                 entry->setIcon(uuid);
             }
@@ -752,7 +755,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
     }
 
     if (entry->uuid().isNull() && !m_strictMode) {
-        entry->setUuid(Uuid::random());
+        entry->setUuid(QUuid::createUuid());
     }
 
     if (!entry->uuid().isNull()) {
@@ -1090,19 +1093,19 @@ int KdbxXmlReader::readNumber()
     return result;
 }
 
-Uuid KdbxXmlReader::readUuid()
+QUuid KdbxXmlReader::readUuid()
 {
     QByteArray uuidBin = readBinary();
     if (uuidBin.isEmpty()) {
-        return {};
+        return QUuid();
     }
-    if (uuidBin.length() != Uuid::Length) {
+    if (uuidBin.length() != UUID_LENGTH) {
         if (m_strictMode) {
             raiseError(tr("Invalid uuid value"));
         }
-        return {};
+        return QUuid();
     }
-    return Uuid(uuidBin);
+    return QUuid::fromRfc4122(uuidBin);
 }
 
 QByteArray KdbxXmlReader::readBinary()
@@ -1146,7 +1149,7 @@ QByteArray KdbxXmlReader::readCompressedBinary()
     return result;
 }
 
-Group* KdbxXmlReader::getGroup(const Uuid& uuid)
+Group* KdbxXmlReader::getGroup(const QUuid& uuid)
 {
     if (uuid.isNull()) {
         return nullptr;
@@ -1164,7 +1167,7 @@ Group* KdbxXmlReader::getGroup(const Uuid& uuid)
     return group;
 }
 
-Entry* KdbxXmlReader::getEntry(const Uuid& uuid)
+Entry* KdbxXmlReader::getEntry(const QUuid& uuid)
 {
     if (uuid.isNull()) {
         return nullptr;

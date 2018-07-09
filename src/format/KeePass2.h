@@ -23,8 +23,8 @@
 #include <QSharedPointer>
 #include <QVariantMap>
 #include <QtGlobal>
+#include <QUuid>
 
-#include "core/Uuid.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Kdf.h"
 
@@ -46,13 +46,13 @@ namespace KeePass2
 
     const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
 
-    extern const Uuid CIPHER_AES;
-    extern const Uuid CIPHER_TWOFISH;
-    extern const Uuid CIPHER_CHACHA20;
+extern const QUuid CIPHER_AES;
+extern const QUuid CIPHER_TWOFISH;
+extern const QUuid CIPHER_CHACHA20;
 
-    extern const Uuid KDF_AES_KDBX3;
-    extern const Uuid KDF_AES_KDBX4;
-    extern const Uuid KDF_ARGON2;
+extern const QUuid KDF_AES_KDBX3;
+extern const QUuid KDF_AES_KDBX4;
+extern const QUuid KDF_ARGON2;
 
     extern const QByteArray INNER_STREAM_SALSA20_IV;
 
@@ -67,8 +67,8 @@ namespace KeePass2
     extern const QString KDFPARAM_ARGON2_SECRET;
     extern const QString KDFPARAM_ARGON2_ASSOCDATA;
 
-    extern const QList<QPair<Uuid, QString>> CIPHERS;
-    extern const QList<QPair<Uuid, QString>> KDFS;
+extern const QList<QPair<QUuid, QString>> CIPHERS;
+extern const QList<QPair<QUuid, QString>> KDFS;
 
     enum class HeaderFieldID
     {
@@ -125,12 +125,11 @@ namespace KeePass2
         ByteArray = 0x42
     };
 
-    QByteArray hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey);
-    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
-    QVariantMap kdfToParameters(QSharedPointer<Kdf> kdf);
-    QSharedPointer<Kdf> uuidToKdf(const Uuid& uuid);
-    Uuid kdfToUuid(QSharedPointer<Kdf> kdf);
-    ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
+QByteArray hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey);
+QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
+QVariantMap kdfToParameters(QSharedPointer<Kdf> kdf);
+QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
+ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
 
 } // namespace KeePass2
 

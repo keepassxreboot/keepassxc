@@ -207,7 +207,7 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
             } else {
                 entry->setGroup(m_groupIds.value(groupId));
             }
-            entry->setUuid(Uuid::random());
+            entry->setUuid(QUuid::createUuid());
         }
     }
 
@@ -545,7 +545,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         return nullptr;
     }
 
-    group->setUuid(Uuid::random());
+    group->setUuid(QUuid::createUuid());
     group->setTimeInfo(timeInfo);
     m_groupIds.insert(groupId, group.data());
     m_groupLevels.insert(group.data(), groupLevel);
@@ -846,7 +846,7 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
     quint32 numGroups = Endian::bytesToSizedInt<quint32>(data.mid(pos, 4), KeePass1::BYTEORDER);
     pos += 4;
 
-    QList<Uuid> iconUuids;
+    QList<QUuid> iconUuids;
 
     for (quint32 i = 0; i < numIcons; i++) {
         if (data.size() < (pos + 4)) {
@@ -865,7 +865,7 @@ bool KeePass1Reader::parseCustomIcons4(const QByteArray& data)
             icon = icon.scaled(16, 16);
         }
 
-        Uuid uuid = Uuid::random();
+        QUuid uuid = QUuid::createUuid();
         iconUuids.append(uuid);
         m_db->metadata()->addCustomIcon(uuid, icon);
     }
