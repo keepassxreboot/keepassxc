@@ -122,9 +122,10 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
 void CsvImportWidget::comboChanged(int comboId)
 {
     QComboBox* currentSender = qobject_cast<QComboBox*>(m_comboMapper->mapping(comboId));
-    if (currentSender->currentIndex() != -1)
+    if (currentSender->currentIndex() != -1) {
         // this line is the one that actually updates GUI table
         m_parserModel->mapColumns(currentSender->currentIndex(), comboId);
+    }
     updateTableview();
 }
 
@@ -152,16 +153,17 @@ void CsvImportWidget::updateTableview()
     m_ui->tableViewFields->resizeRowsToContents();
     m_ui->tableViewFields->resizeColumnsToContents();
 
-    for (int c = 0; c < m_ui->tableViewFields->horizontalHeader()->count(); ++c)
+    for (int c = 0; c < m_ui->tableViewFields->horizontalHeader()->count(); ++c) {
         m_ui->tableViewFields->horizontalHeader()->setSectionResizeMode(c, QHeaderView::Stretch);
+    }
 }
 
 void CsvImportWidget::updatePreview()
 {
-
     int minSkip = 0;
-    if (m_ui->checkBoxFieldNames->isChecked())
+    if (m_ui->checkBoxFieldNames->isChecked()) {
         minSkip = 1;
+    }
     m_ui->labelSizeRowsCols->setText(m_parserModel->getFileInfo());
     m_ui->spinBoxSkip->setRange(minSkip, qMax(minSkip, m_parserModel->rowCount() - 1));
     m_ui->spinBoxSkip->setValue(minSkip);
@@ -173,8 +175,9 @@ void CsvImportWidget::updatePreview()
     for (int i = 1; i < m_parserModel->getCsvCols(); ++i) {
         if (m_ui->checkBoxFieldNames->isChecked()) {
             columnName = m_parserModel->getCsvTable().at(0).at(i);
-            if (columnName.isEmpty())
+            if (columnName.isEmpty()) {
                 columnName = "<" + tr("Empty fieldname %1").arg(++emptyId) + ">";
+            }
             list << columnName;
         } else {
             list << QString(tr("column %1").arg(i));
@@ -184,10 +187,11 @@ void CsvImportWidget::updatePreview()
 
     int j = 1;
     for (QComboBox* b : m_combos) {
-        if (j < m_parserModel->getCsvCols())
+        if (j < m_parserModel->getCsvCols()) {
             b->setCurrentIndex(j);
-        else
+        } else {
             b->setCurrentIndex(0);
+        }
         ++j;
     }
 }
@@ -212,11 +216,12 @@ void CsvImportWidget::parse()
     bool good = m_parserModel->parse();
     updatePreview();
     QApplication::restoreOverrideCursor();
-    if (!good)
+    if (!good) {
         m_ui->messageWidget->showMessage(tr("Error(s) detected in CSV file!").append("\n").append(formatStatusText()),
                                          MessageWidget::Warning);
-    else
+    } else {
         m_ui->messageWidget->setHidden(true);
+    }
     QWidget::adjustSize();
 }
 
@@ -235,12 +240,12 @@ QString CsvImportWidget::formatStatusText() const
 
 void CsvImportWidget::writeDatabase()
 {
-
     setRootGroup();
     for (int r = 0; r < m_parserModel->rowCount(); ++r) {
         // use validity of second column as a GO/NOGO for all others fields
-        if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid())
+        if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
             continue;
+        }
         Entry* entry = new Entry();
         entry->setUuid(Uuid::random());
         entry->setGroup(splitGroups(m_parserModel->data(m_parserModel->index(r, 0)).toString()));
@@ -271,12 +276,13 @@ void CsvImportWidget::writeDatabase()
 
     KeePass2Writer writer;
     writer.writeDatabase(&buffer, m_db);
-    if (writer.hasError())
+    if (writer.hasError()) {
         MessageBox::warning(this,
                             tr("Error"),
                             tr("CSV import: writer has errors:\n%1").arg(writer.errorString()),
                             QMessageBox::Ok,
                             QMessageBox::Ok);
+    }
     emit editFinished(true);
 }
 
@@ -317,13 +323,15 @@ Group* CsvImportWidget::splitGroups(QString label)
 {
     // extract group names from nested path provided in "label"
     Group* current = m_db->rootGroup();
-    if (label.isEmpty())
+    if (label.isEmpty()) {
         return current;
+    }
 
     QStringList groupList = label.split("/", QString::SkipEmptyParts);
     // avoid the creation of a subgroup with the same name as Root
-    if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root")
+    if (m_db->rootGroup()->name() == "Root" && groupList.first() == "Root") {
         groupList.removeFirst();
+    }
 
     for (const QString& groupName : groupList) {
         Group* children = hasChildren(current, groupName);
@@ -345,8 +353,9 @@ Group* CsvImportWidget::hasChildren(Group* current, QString groupName)
 {
     // returns the group whose name is "groupName" and is child of "current" group
     for (Group* group : current->children()) {
-        if (group->name() == groupName)
+        if (group->name() == groupName) {
             return group;
+        }
     }
     return nullptr;
 }
