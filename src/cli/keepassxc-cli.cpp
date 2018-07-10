@@ -23,6 +23,7 @@
 #include <QTextStream>
 
 #include <cli/Command.h>
+#include <cli/Utils.h>
 
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
     Bootstrap::bootstrapApplication();
 #endif
 
-    QTextStream out(stdout);
+    QTextStream out(Utils::STDOUT);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);

@@ -46,6 +46,7 @@ Estimate::~Estimate()
 static void estimate(const char* pwd, bool advanced)
 {
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     double e = 0.0;
     int len = static_cast<int>(strlen(pwd));
@@ -143,7 +144,7 @@ static void estimate(const char* pwd, bool advanced)
         }
         ZxcvbnFreeInfo(info);
         if (ChkLen != len) {
-            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen) << endl;
+            err << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen) << endl;
         }
     }
 }
@@ -152,6 +153,7 @@ int Estimate::execute(const QStringList& arguments)
 {
     QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -164,7 +166,7 @@ int Estimate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() > 1) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
         return EXIT_FAILURE;
     }
 

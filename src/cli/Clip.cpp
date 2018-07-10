@@ -42,7 +42,7 @@ Clip::~Clip()
 
 int Clip::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    QTextStream err(Utils::STDERR);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -59,7 +59,7 @@ int Clip::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 3) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
         return EXIT_FAILURE;
     }
 
@@ -83,7 +83,6 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
         timeoutSeconds = timeout.toInt();
     }
 
-    QTextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
@@ -95,7 +94,7 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
         return exitCode;
     }
 
-    outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
+    err << QObject::tr("Entry's password copied to the clipboard!") << endl;
 
     if (!timeoutSeconds) {
         return exitCode;
@@ -103,15 +102,15 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
 
     QString lastLine = "";
     while (timeoutSeconds > 0) {
-        outputTextStream << '\r' << QString(lastLine.size(), ' ') << '\r';
+        err << '\r' << QString(lastLine.size(), ' ') << '\r';
         lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeoutSeconds).arg(timeoutSeconds);
-        outputTextStream << lastLine << flush;
+        err << lastLine << flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         --timeoutSeconds;
     }
     Utils::clipText("");
-    outputTextStream << '\r' << QString(lastLine.size(), ' ') << '\r';
-    outputTextStream << QObject::tr("Clipboard cleared!") << endl;
+    err << '\r' << QString(lastLine.size(), ' ') << '\r';
+    err << QObject::tr("Clipboard cleared!") << endl;
 
     return EXIT_SUCCESS;
 }

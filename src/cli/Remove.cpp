@@ -44,7 +44,7 @@ Remove::~Remove()
 
 int Remove::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDERR, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
@@ -59,7 +59,7 @@ int Remove::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli rm");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli rm");
         return EXIT_FAILURE;
     }
 
@@ -73,7 +73,6 @@ int Remove::execute(const QStringList& arguments)
 
 int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -99,9 +98,9 @@ int Remove::removeEntry(Database* database, const QString& databasePath, const Q
     }
 
     if (recycled) {
-        out << QObject::tr("Successfully recycled entry %1.").arg(entryTitle) << endl;
+        err << QObject::tr("Successfully recycled entry %1.").arg(entryTitle) << endl;
     } else {
-        out << QObject::tr("Successfully deleted entry %1.").arg(entryTitle) << endl;
+        err << QObject::tr("Successfully deleted entry %1.").arg(entryTitle) << endl;
     }
 
     return EXIT_SUCCESS;

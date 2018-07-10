@@ -40,6 +40,7 @@ int Diceware::execute(const QStringList& arguments)
 {
     QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -56,7 +57,7 @@ int Diceware::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
 
@@ -76,7 +77,7 @@ int Diceware::execute(const QStringList& arguments)
     }
 
     if (!dicewareGenerator.isValid()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
 

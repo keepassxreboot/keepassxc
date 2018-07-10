@@ -40,7 +40,7 @@ List::~List()
 
 int List::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    QTextStream err(Utils::STDERR);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -58,7 +58,7 @@ int List::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
         return EXIT_FAILURE;
     }
 

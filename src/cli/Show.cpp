@@ -41,7 +41,7 @@ Show::~Show()
 
 int Show::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    QTextStream err(Utils::STDERR);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -64,7 +64,7 @@ int Show::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
         return EXIT_FAILURE;
     }
 

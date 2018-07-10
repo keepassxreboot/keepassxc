@@ -58,11 +58,11 @@ int Extract::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+    err << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 

@@ -44,7 +44,7 @@ Locate::~Locate()
 
 int Locate::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -59,7 +59,7 @@ int Locate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
         return EXIT_FAILURE;
     }
 

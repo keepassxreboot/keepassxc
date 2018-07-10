@@ -82,7 +82,7 @@ int Add::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli add");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli add");
         return EXIT_FAILURE;
     }
 
@@ -117,7 +117,7 @@ int Add::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        outputTextStream << QObject::tr("Enter password for new entry: ") << flush;
+        errorTextStream << QObject::tr("Enter password for new entry: ") << flush;
         QString password = Utils::getPassword();
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
@@ -141,6 +141,6 @@ int Add::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    outputTextStream << QObject::tr("Successfully added entry %1.").arg(entry->title()) << endl;
+    errorTextStream << QObject::tr("Successfully added entry %1.").arg(entry->title()) << endl;
     return EXIT_SUCCESS;
 }

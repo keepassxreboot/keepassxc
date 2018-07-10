@@ -64,7 +64,7 @@ int Merge::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
         return EXIT_FAILURE;
     }
 
@@ -92,6 +92,6 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << "Successfully merged the database files." << endl;
+    err << "Successfully merged the database files." << endl;
     return EXIT_SUCCESS;
 }

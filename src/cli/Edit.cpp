@@ -86,7 +86,7 @@ int Edit::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
         return EXIT_FAILURE;
     }
 
@@ -132,7 +132,7 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        out << QObject::tr("Enter new password for entry: ") << flush;
+        err << QObject::tr("Enter new password for entry: ") << flush;
         QString password = Utils::getPassword();
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
@@ -158,6 +158,6 @@ int Edit::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    err << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
     return EXIT_SUCCESS;
 }

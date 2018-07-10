@@ -40,6 +40,7 @@ int Generate::execute(const QStringList& arguments)
 {
     QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
     out.setCodec("UTF-8");  // force UTF-8 to prevent ??? characters in extended-ASCII passwords
 
     QCommandLineParser parser;
@@ -78,7 +79,7 @@ int Generate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
@@ -123,7 +124,7 @@ int Generate::execute(const QStringList& arguments)
     passwordGenerator.setExcludedChars(parser.value(exclude));
 
     if (!passwordGenerator.isValid()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        err << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
