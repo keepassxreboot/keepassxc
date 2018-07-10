@@ -507,8 +507,8 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
     QTextStream out(outputDescriptor);
     QTextStream err(errorDescriptor);
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
-    out.flush();
+    err << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
+    err.flush();
 
     QString line = Utils::getPassword();
     auto passwordKey = QSharedPointer<PasswordKey>::create();
