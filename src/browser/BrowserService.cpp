@@ -366,7 +366,7 @@ void BrowserService::updateEntry(const QString& id, const QString& uuid, const Q
     }
 }
 
-QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostname)
+QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostname, const QString& url)
 {
     QList<Entry*> entries;
     Group* rootGroup = db->rootGroup();
@@ -375,11 +375,19 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     }
 
     for (Entry* entry : EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
-        QString url = entry->url();
+        QString entryUrl = entry->url();
+        QUrl entryQUrl(entryUrl);
+        QString entryScheme = entryQUrl.scheme();
+        QUrl qUrl(url);
+
+        // Ignore entry if port or scheme defined in the URL doesn't match    
+        if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) || entryScheme.compare(qUrl.scheme()) != 0) {
+            continue;
+        }
 
         // Filter to match hostname in URL field
-        if ((!url.isEmpty() && hostname.contains(url))
-            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host()))) {
+        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
+            || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
     }
@@ -387,7 +395,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPairList& keyList)
+QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPairList& keyList)
 {
     // Get the list of databases to search
     QList<Database*> databases;
@@ -414,11 +422,11 @@ QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPai
     }
 
     // Search entries matching the hostname
-    QString hostname = QUrl(text).host();
+    QString hostname = QUrl(url).host();
     QList<Entry*> entries;
     do {
         for (Database* db : databases) {
-            entries << searchEntries(db, hostname);
+            entries << searchEntries(db, hostname, url);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
 
