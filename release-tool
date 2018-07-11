@@ -112,7 +112,7 @@ Options:
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
   -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
-  -g, --generators        Additional CPack generators (default: )
+  -g, --generators        Additional CPack generators (default: '${CPACK_GENERATORS}')
   -i, --install-prefix    Install prefix (default: '${INSTALL_PREFIX}')
   -p, --plugins           Space-separated list of plugins to build
                           (default: ${BUILD_PLUGINS})
@@ -576,7 +576,7 @@ build() {
                 shift ;;
 
             -g|--generators)
-                buil_generators="$2"
+                build_generators="$2"
                 shift ;;
             
             -i|--install-prefix)
