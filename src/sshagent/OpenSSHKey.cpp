@@ -350,7 +350,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
         QByteArray decryptKey;
         decryptKey.fill(0, cipher->keySize() + cipher->blockSize());
 
-        QByteArray phraseData = passphrase.toLatin1();
+        QByteArray phraseData = passphrase.toUtf8();
         if (bcrypt_pbkdf(phraseData, salt, decryptKey, rounds) < 0) {
             m_error = tr("Key derivation failed, key file corrupted?");
             return false;
