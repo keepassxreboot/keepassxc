@@ -625,6 +625,9 @@ BrowserService::Access BrowserService::checkAccess(const Entry* entry, const QSt
     if (!config.load(entry)) {
         return Unknown;
     }
+    if (entry->isExpired()) {
+        return Denied;
+    }
     if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
         return Allowed;
     }
