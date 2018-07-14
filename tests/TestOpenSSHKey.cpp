@@ -49,6 +49,7 @@ void TestOpenSSHKey::testParse()
     QCOMPARE(key.type(), QString("ssh-ed25519"));
     QCOMPARE(key.comment(), QString("opensshkey-test-parse@keepassxc"));
     QCOMPARE(key.fingerprint(), QString("SHA256:D1fVmA15YXzaJ5sdO9dXxo5coHL/pnNaIfCvokHzTA4"));
+    QCOMPARE(key.fingerprint(QCryptographicHash::Md5), QString("MD5:2d:e8:04:09:13:b4:2b:73:5e:87:43:cf:4e:6f:62:f1"));
 
     QByteArray publicKey, privateKey;
     BinaryStream publicStream(&publicKey), privateStream(&privateKey);
@@ -173,6 +174,7 @@ void TestOpenSSHKey::testParseRSA()
     QCOMPARE(key.type(), QString("ssh-rsa"));
     QCOMPARE(key.comment(), QString(""));
     QCOMPARE(key.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
+    QCOMPARE(key.fingerprint(QCryptographicHash::Md5), QString("MD5:c2:26:5b:3d:62:19:56:b0:c3:67:99:7a:a6:4c:66:06"));
 }
 
 void TestOpenSSHKey::testDecryptOpenSSHAES256CBC()

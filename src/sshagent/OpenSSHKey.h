@@ -37,7 +37,7 @@ public:
     const QString cipherName() const;
     const QString type() const;
     int keyLength() const;
-    const QString fingerprint() const;
+    const QString fingerprint(QCryptographicHash::Algorithm algo = QCryptographicHash::Sha256) const;
     const QString comment() const;
     const QString publicKey() const;
     const QString errorString() const;
