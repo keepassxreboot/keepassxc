@@ -88,13 +88,19 @@ bool Uuid::operator!=(const Uuid& other) const
 Uuid Uuid::fromBase64(const QString& str)
 {
     QByteArray data = QByteArray::fromBase64(str.toLatin1());
-    return Uuid(data);
+    if (data.size() == Uuid::Length) {
+        return Uuid(data);
+    }
+    return {};
 }
 
 Uuid Uuid::fromHex(const QString& str)
 {
     QByteArray data = QByteArray::fromHex(str.toLatin1());
-    return Uuid(data);
+    if (data.size() == Uuid::Length) {
+        return Uuid(data);
+    }
+    return {};
 }
 
 uint qHash(const Uuid& key)

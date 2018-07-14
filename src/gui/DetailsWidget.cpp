@@ -174,17 +174,15 @@ void DetailsWidget::updateEntryGeneralTab()
         m_ui->entryPasswordLabel->setToolTip({});
     }
 
+    m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
     const QString url = m_currentEntry->webUrl();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
-        // create a new display url that masks password placeholders
-        // the actual link will use the password
-        m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
         m_ui->entryUrlLabel->setUrl(url);
+        m_ui->entryUrlLabel->setCursor(Qt::PointingHandCursor);
     } else {
-        // Fallback to the raw url string
-        m_ui->entryUrlLabel->setRawText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->url()));
         m_ui->entryUrlLabel->setUrl({});
+        m_ui->entryUrlLabel->setCursor(Qt::ArrowCursor);
     }
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
