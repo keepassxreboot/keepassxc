@@ -90,7 +90,7 @@ int OpenSSHKey::keyLength() const
     return 0;
 }
 
-const QString OpenSSHKey::fingerprint() const
+const QString OpenSSHKey::fingerprint(QCryptographicHash::Algorithm algo) const
 {
     if (m_publicData.isEmpty()) {
         return {};
@@ -105,9 +105,20 @@ const QString OpenSSHKey::fingerprint() const
         stream.writeString(ba);
     }
 
-    QByteArray rawHash = QCryptographicHash::hash(publicKey, QCryptographicHash::Sha256);
+    QByteArray rawHash = QCryptographicHash::hash(publicKey, algo);
 
-    return "SHA256:" + QString::fromLatin1(rawHash.toBase64(QByteArray::OmitTrailingEquals));
+    if (algo == QCryptographicHash::Md5) {
+        QString md5Hash = QString::fromLatin1(rawHash.toHex());
+        QStringList md5HashParts;
+        for (int i = 0; i < md5Hash.length(); i += 2) {
+            md5HashParts.append(md5Hash.mid(i, 2));
+        }
+        return "MD5:" + md5HashParts.join(':');
+    } else if (algo == QCryptographicHash::Sha256) {
+        return "SHA256:" + QString::fromLatin1(rawHash.toBase64(QByteArray::OmitTrailingEquals));
+    }
+
+    return "HASH:" + QString::fromLatin1(rawHash.toHex());
 }
 
 const QString OpenSSHKey::comment() const

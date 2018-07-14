@@ -412,7 +412,11 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     }
 
     if (!key.fingerprint().isEmpty()) {
-        m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
+        m_sshAgentUi->fingerprintTextLabel->setText(
+            key.fingerprint(QCryptographicHash::Md5) +
+            "\n" +
+            key.fingerprint(QCryptographicHash::Sha256)
+       );
     } else {
         m_sshAgentUi->fingerprintTextLabel->setText(tr("(encrypted)"));
     }
@@ -596,7 +600,11 @@ void EditEntryWidget::decryptPrivateKey()
         m_sshAgentUi->commentTextLabel->setText(tr("n/a"));
     }
 
-    m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint());
+    m_sshAgentUi->fingerprintTextLabel->setText(
+        key.fingerprint(QCryptographicHash::Md5) +
+        "\n" +
+        key.fingerprint(QCryptographicHash::Sha256)
+   );
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
     m_sshAgentUi->copyToClipboardButton->setEnabled(true);
 }
