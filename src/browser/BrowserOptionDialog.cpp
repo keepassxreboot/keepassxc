@@ -34,6 +34,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
+    m_ui->extensionLabel->setOpenExternalLinks(true);
+    m_ui->extensionLabel->setText(tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2.").arg(
+        "<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
+        "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">Google Chrome / Chromium / Vivaldi</a>"));
+
     m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(-1);
