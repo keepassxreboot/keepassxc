@@ -47,6 +47,45 @@ install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 
+    if(APPLE AND WITH_APP_BUNDLE)
+        set(CLI_BINARY_DIR "${CMAKE_BINARY_DIR}/src/cli/keepassxc-cli")
+        set(CLI_APP_DIR "KeePassXC.app/Contents/MacOS/keepassxc-cli")
+        add_custom_command(TARGET keepassxc-cli
+                           POST_BUILD
+                           COMMAND ${CMAKE_COMMAND} -E copy ${CLI_BINARY_DIR} ${CLI_APP_DIR}
+                           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                           COMMENT "Copying keepassxc-cli inside the application")
+
+        add_custom_command(TARGET keepassxc-cli
+                           POST_BUILD
+                           COMMAND ${CMAKE_INSTALL_NAME_TOOL}
+                                -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore
+                                    "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
+                                -change /usr/local/opt/qt/lib/QtGui.framework/Versions/5/QtGui
+                                    "@executable_path/../Frameworks/QtGui.framework/Versions/5/QtGui"
+                                -change /usr/local/opt/qt/lib/QtMacExtras.framework/Versions/5/QtMacExtras
+                                    "@executable_path/../Frameworks/QtMacExtras.framework/Versions/5/QtMacExtras"
+                                -change /usr/local/opt/qt/lib/QtConcurrent.framework/Versions/5/QtConcurrent
+                                    "@executable_path/../Frameworks/QtConcurrent.framework/Versions/5/QtConcurrent"
+                                -change /usr/local/opt/qt/lib/QtCore.framework/Versions/5/QtCore
+                                    "@executable_path/../Frameworks/QtCore.framework/Versions/5/QtCore"
+                                -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork
+                                    "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
+                                -change /usr/local/opt/qt/lib/QtWidgets.framework/Versions/5/QtWidgets
+                                    "@executable_path/../Frameworks/QtWidgets.framework/Versions/5/QtWidgets"
+                                -change /usr/local/opt/libgcrypt/lib/libgcrypt.20.dylib
+                                    "@executable_path/../Frameworks/libgcrypt.20.dylib"
+                                -change /usr/local/opt/argon2/lib/libargon2.1.dylib
+                                    "@executable_path/../Frameworks/libargon2.1.dylib"
+                                -change /usr/local/opt/libgpg-error/lib/libgpg-error.0.dylib
+                                    "@executable_path/../Frameworks/libgpg-error.0.dylib"
+                                -change /usr/local/opt/libsodium/lib/libsodium.23.dylib
+                                    "@executable_path/../Frameworks/libsodium.23.dylib"
+                           ${CLI_APP_DIR}
+                           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                           COMMENT "Changing linking of keepassxc-cli")
+    endif()
+
 if(APPLE OR UNIX)
     install(FILES keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
     execute_process(COMMAND mandb -q)
