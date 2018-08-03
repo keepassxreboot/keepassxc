@@ -47,6 +47,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent) :
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
+#ifdef Q_OS_WIN
+    // Vivaldi uses Chrome's registry settings
+    m_ui->vivaldiSupport->setHidden(true);
+    m_ui->chromeSupport->setText("Chrome and Vivaldi");
+#endif
     m_ui->browserGlobalWarningWidget->setVisible(false);
 }
 
