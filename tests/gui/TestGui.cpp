@@ -477,6 +477,9 @@ void TestGui::testAddEntry()
     QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
+/* All apply tests disabled due to data loss workaround
+ * that disables apply button on new entry creation
+ *
     // Add entry "something 3" using the apply button then click ok
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 3");
@@ -488,6 +491,7 @@ void TestGui::testAddEntry()
     QTest::keyClicks(titleEdit, "something 4");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+*/
 
     // Add entry "something 5" but click cancel button (does NOT add entry)
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
@@ -496,8 +500,8 @@ void TestGui::testAddEntry()
 
     QApplication::processEvents();
 
-    // Confirm that 5 entries now exist
-    QTRY_COMPARE(entryView->model()->rowCount(), 5);
+    // Confirm entry count
+    QTRY_COMPARE(entryView->model()->rowCount(), 3);
 }
 
 void TestGui::testPasswordEntryEntropy()
