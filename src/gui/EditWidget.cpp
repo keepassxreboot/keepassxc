@@ -97,24 +97,33 @@ QLabel* EditWidget::headlineLabel()
     return m_ui->headerLabel;
 }
 
-void EditWidget::setReadOnly(bool readOnly)
+void EditWidget::setReadOnly(bool readOnly, bool applyEnabled)
 {
     m_readOnly = readOnly;
 
     if (readOnly) {
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
-    }
-    else {
-        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
-        // Find and connect the apply button
-        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
-        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
+    } else {
+        setupButtons(applyEnabled);
     }
 }
 
 bool EditWidget::readOnly() const
 {
     return m_readOnly;
+}
+
+void EditWidget::setupButtons(bool applyEnabled)
+{
+    if (applyEnabled) {
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
+        // Find and connect the apply button
+        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
+    } else {
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        disconnect(SIGNAL(apply()));
+    }
 }
 
 void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)

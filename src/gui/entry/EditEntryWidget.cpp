@@ -597,7 +597,8 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     }
 
     setForms(entry);
-    setReadOnly(m_history);
+    // Disable apply button if creating new entry (#2191)
+    setReadOnly(m_history, !m_create);
 
     setCurrentPage(0);
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
@@ -802,7 +803,6 @@ void EditEntryWidget::acceptEntry()
 {
     if (commitEntry()) {
         clear();
-        hideMessage();
         emit editFinished(true);
     }
 }

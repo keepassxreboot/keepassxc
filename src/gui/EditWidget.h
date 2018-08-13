@@ -45,7 +45,7 @@ public:
     void setCurrentPage(int index);
     void setHeadline(const QString& text);
     QLabel* headlineLabel();
-    void setReadOnly(bool readOnly);
+    void setReadOnly(bool readOnly, bool applyEnabled = true);
     bool readOnly() const;
 
 signals:
@@ -58,6 +58,8 @@ protected slots:
     void hideMessage();
 
 private:
+    void setupButtons(bool applyEnabled);
+
     const QScopedPointer<Ui::EditWidget> m_ui;
     bool m_readOnly;
 
