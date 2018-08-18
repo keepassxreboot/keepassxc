@@ -426,11 +426,18 @@ MainWindow::MainWindow()
     }
 #endif
 
-#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
+#if !defined(KEEPASSXC_BUILD_TYPE_RELEASE)
     m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using an unstable build of KeePassXC!\n"
                                               "There is a high risk of corruption, maintain a backup of your databases.\n"
                                               "This version is not meant for production use."),
-                                           MessageWidget::Warning, -1);
+                                          MessageWidget::Warning, -1);
+#elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
+    if (!config()->get("QtErrorMessageShown", false).toBool()) {
+        m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using a version of Qt that causes KeePassXC to crash!\n"
+                                                  "We recommend you use the AppImage version available on our downloads page."),
+                                              MessageWidget::Warning, -1);
+        config()->set("QtErrorMessageShown", true);
+    }
 #else
     // Show the HTTP deprecation message if enabled above
     emit m_ui->globalMessageWidget->hideAnimationFinished();
