@@ -23,6 +23,7 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
+#include <QDesktopServices>
 
 #include "config-keepassx.h"
 
@@ -389,7 +390,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()),
             SLOT(emptyRecycleBin()));
 
-    connect(m_ui->actionSettings, SIGNAL(triggered()), SLOT(switchToSettings()));
+    connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
     connect(m_ui->passwordGeneratorWidget, SIGNAL(dialogTerminated()), SLOT(closePasswordGen()));
 
@@ -400,6 +401,8 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToImportCsv()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
+    connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
+    connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
 
 #ifdef Q_OS_MAC
     setUnifiedTitleAndToolBarOnMac(true);
@@ -662,6 +665,10 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
         m_ui->actionPasswordGenerator->toggle();
         m_ui->actionPasswordGenerator->blockSignals(blocked);
+    } else if ((currentIndex == SettingsScreen) != m_ui->actionSettings->isChecked()) {
+        bool blocked = m_ui->actionSettings->blockSignals(true);
+        m_ui->actionSettings->toggle();
+        m_ui->actionSettings->blockSignals(blocked);
     }
 }
 
@@ -710,6 +717,16 @@ void MainWindow::showAboutDialog()
     aboutDialog->open();
 }
 
+void MainWindow::openDonateUrl()
+{
+    QDesktopServices::openUrl(QUrl("https://keepassxc.org/donate"));
+}
+
+void MainWindow::openBugReportUrl()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/keepassxreboot/keepassxc/issues"));
+}
+
 void MainWindow::switchToDatabases()
 {
     if (m_ui->tabWidget->currentIndex() == -1) {
@@ -720,15 +737,19 @@ void MainWindow::switchToDatabases()
     }
 }
 
-void MainWindow::switchToSettings()
+void MainWindow::switchToSettings(bool enabled)
 {
-    m_ui->settingsWidget->loadSettings();
-    m_ui->stackedWidget->setCurrentIndex(SettingsScreen);
+    if (enabled) {
+        m_ui->settingsWidget->loadSettings();
+        m_ui->stackedWidget->setCurrentIndex(SettingsScreen);
+    } else {
+        switchToDatabases();
+    }
 }
 
 void MainWindow::switchToPasswordGen(bool enabled)
 {
-    if (enabled == true) {
+    if (enabled) {
       m_ui->passwordGeneratorWidget->loadSettings();
       m_ui->passwordGeneratorWidget->regeneratePassword();
       m_ui->passwordGeneratorWidget->setStandaloneMode(true);
