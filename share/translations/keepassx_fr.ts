@@ -948,7 +948,7 @@ Si vous conservez ce nombre, la sécurité de votre base de données pourrait ê
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation>Activers la &amp;compression (recommandé)</translation>
+        <translation>Activer la &amp;compression (recommandé)</translation>
     </message>
 </context>
 <context>
