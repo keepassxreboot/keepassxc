@@ -436,8 +436,8 @@ MainWindow::MainWindow()
                                           MessageWidget::Warning, -1);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
     if (!config()->get("QtErrorMessageShown", false).toBool()) {
-        m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using a version of Qt that causes KeePassXC to crash!\n"
-                                                  "We recommend you use the AppImage version available on our downloads page."),
+        m_ui->globalMessageWidget->showMessage(tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!\n"
+                                                  "We recommend you use the AppImage available on our downloads page."),
                                               MessageWidget::Warning, -1);
         config()->set("QtErrorMessageShown", true);
     }
