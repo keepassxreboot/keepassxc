@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Katkıcılar</translation>
+        <translation>Katkı Verenler</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -69,16 +69,16 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Tasarı Bakımcıları:</translation>
+        <translation>Proje Sahipleri:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC ekibinden özel teşekkürler, özgün KeePassX&apos;i yaptığı için debfx&apos;e gider.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation>İnşa Türü: %1
+        <translation>Yapı Tarzı: %1
 </translation>
     </message>
 </context>
@@ -90,7 +90,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Bu kararı anımsa</translation>
+        <translation>Bu kararı hatırla</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -111,7 +111,7 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation type="unfinished"/>
+        <translation>SSH Aracısı&apos;nı etkinleştir (yeniden başlatma gerektirir)</translation>
     </message>
 </context>
 <context>
@@ -130,19 +130,19 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation type="unfinished"/>
+        <translation>Oto-Yazım ifadenizin sözdizimi yanlış!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>Bu Oto-Yazım komutu çok uzun bir gecikme içeriyor. Gerçekten devam etmek istiyor musun?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>Bu Oto-Yazım komutu çok yavaş tuşa basar. Gerçekten devam etmek istiyor musun?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation type="unfinished"/>
+        <translation>Bu Oto-Yazım komutu çok sık tekrarlanan argümanlar içerir. Gerçekten devam etmek istiyor musun?</translation>
     </message>
 </context>
 <context>
@@ -164,7 +164,7 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Küme</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <source>Title</source>
@@ -187,18 +187,18 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Oto-Yazım için girdi seçiniz:</translation>
+        <translation>Oto-Yazım için girdi seçin:</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Tarayıcı Erişim Onayı</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Bu kararı anımsa</translation>
+        <translation>Bu kararı hatırla</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -211,8 +211,8 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1, şu öge(ler) için parolalara erişim izni istedi.
-Lütfen erişime izin vermek istediklerinizi seçin.</translation>
+        <translation>%1, şu öge(ler) için şifrelere erişim izni istedi.
+Lütfen erişime izin vermek isteyip istemediğinizi belirtin.</translation>
     </message>
 </context>
 <context>
@@ -223,11 +223,11 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation type="unfinished"/>
+        <translation>Bu KeePassXC-Tarayıcı ile veritabanlarınıza erişmek için gereklidir.</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC tarayıcı entegrasyonunu etkinleştir</translation>
     </message>
     <message>
         <source>General</source>
@@ -235,66 +235,66 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation type="unfinished"/>
+        <translation>Bu tarayıcılar için entegrasyonu etkinleştir:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Google Chrome</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Firefox</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Chromium</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vivaldi</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Kimlik bilgileri istendiğinde bir &amp;bildirim göster</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Eğer kilitliyse veri tabanını açmayı is&amp;te</translation>
+        <translation>Eğer kilitliyse veritabanını açmayı is&amp;te</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation type="unfinished"/>
+        <translation>Sadece aynı şemaya sahip girişler (http://, https://, ...) döndürülür.</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Eşleşme URL şeması (ör., https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Tüm alan adı için tüm girdilerin yerine belirli bir URL için yalnızca en iyi eşleşmeyi döndürür.</translation>
+        <translation>Yalnızca tüm alan adı için tüm girdiler yerine belirli bir URL için en iyi eşleşenleri döndürür.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Yalnızca en iyi eşleşen kimlik bilgilerini döndür</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Eşleşen kimlik bilgilerini başlığa göre &amp;sırala</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Eşleşen kimlik bilgilerini &amp;kullanıcı adına göre sırala</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tüm tarayıcıları kapatın</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>Tüm hatırlanan izinleri &amp;unut</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -303,79 +303,79 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Kimlik bilgilerine erişmeden önce &amp;asla sorma</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Kimlik bilgilerini &amp;güncellemeden önce asla sorma</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation>Yalnızca seçilen veri tabanı istemciyle bağlanmış olmalıdır.</translation>
+        <translation>Sadece seçilen veritabanının bir istemci ile bağlı olması gerekir.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Kimlik bilgilerini eşleştirmek için tüm açılan &amp;veritabanlarında ara</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Dizge alanlarını kendiliğinden oluşturma ve güncelleme desteklenmiyor.</translation>
+        <translation>Dizi alanlarını otomatik oluşturma veya güncelleme desteklenmiyor.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>&quot;KPH: &quot; ile başlayan gelişmiş dizge alanları &amp;döndür</translation>
+        <translation>&quot;KPH: &quot; ile başlayan gelişmiş dizi alanları &amp;döndür</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>Başlangıçta yerel mesajlaşma komut dosyalarına otomatik olarak KeePassXC veya keepassxc-proxy ikili yolu güncellenir.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Başlangıçta yerel mesajlaşma &amp;manifesto dosyalarını güncelle</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC ve tarayıcı uzantısı arasında bir proxy uygulamasını desteklesin.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC ve tarayıcı uzantısı arasında bir &amp;amp;proxy uygulaması kullan</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation type="unfinished"/>
+        <translation>Eğer el ile bir proxy yüklediyseniz, özel bir proxy konumu kullanın.</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation type="unfinished"/>
+        <translation>Ö&amp;zel bir proxy konumu kullan</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Gözat...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Aşağıdaki seçenekler tehlikeli olabilir!</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>Yürütülebilir Dosyalar (*.exe);;Bütün Dosyalar (*.*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>Yürütülebilir Dosyalar (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation type="unfinished"/>
+        <translation>Özel proxy konumunu seçin</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>Üzgünüz, ancak şu anda Snap yayınları için KeePassXC-Tarayıcı desteklenmiyor.</translation>
     </message>
 </context>
 <context>
@@ -389,46 +389,50 @@ Lütfen erişime izin vermek istediklerinizi seçin.</translation>
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>Yukarıdaki anahtar için bir ilişkilendirme isteği aldınız.
+
+Eğer KeePassXC veritabanınıza erişim izni vermek isterseniz, 
+onu tanımlamak için benzersiz bir isim ver ve kabul et.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>Kaydet ve erişime izin ver</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Var olan anahtarın üstüne yaz?</translation>
+        <translation>KeePassXC: Mevcut anahtarın üzerine yazılsın mı?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; adıyla paylaşılan bir şifreleme anahtarı zaten var. 
+Üzerine yazmak istiyor musun?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Girdi Güncelle</translation>
+        <translation>KeePassXC: Giriş Güncelleme</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>%1 -%2 bilgilerini güncellemek istiyor musun?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: Veri tabanı kilitli!</translation>
+        <translation>KeePassXC: Veritabanı kilitli!</translation>
     </message>
     <message>
         <source>The active database is locked!
 Please unlock the selected database or choose another one which is unlocked.</source>
-        <translation>Etkin veri tabanı kilitli!
-Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birini seçin.</translation>
+        <translation>Etkin veritabanı kilitli!
+Lütfen seçili veritabanının kilidini açın veya kilidi açılan başka bir tane seçin.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
-        <translation>KeePassXC: Ayarlar kullanılabilir değil!</translation>
+        <translation>KeePassXC: Ayarlar mevcut değil!</translation>
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>Aktif veritabanı bir ayar girişi içermiyor.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -436,19 +440,19 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC ayarlarında paylaşılan şifreleme anahtarı bulunamadı.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Anahtarlar veri tabanından kaldırıldı</translation>
+        <translation>KeePassXC: Anahtarlar veritabanından kaldırıldı</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Başarıyla %n şifreleme anahtarları KeePassXC ayarlarından kaldırıldı.</numerusform><numerusform>%n şifreleme anahtarı(lar), KeePassXC ayarlarından başarıyla kaldırıldı.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation type="unfinished"/>
+        <translation>Depolanmış izinler kaldırılıyor…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -456,11 +460,11 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Silinen yetkiler</translation>
+        <translation>KeePassXC: Kaldırılan izinler</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Başarıyla izinleri %n entry(s) kaldırıldı.</numerusform><numerusform>%n giriş(ler)den izinler başarıyla kaldırıldı.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -468,22 +472,22 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Etkin veri tabanı izinleri olan girdi barındırmıyor.</translation>
+        <translation>Etkin veritabanı izinli bir giriş içermiyor.</translation>
     </message>
 </context>
 <context>
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Şifre</translation>
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>Parolayı gir:</translation>
+        <translation>Şifre gir:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
-        <translation>Parolayı yinele:</translation>
+        <translation>Şifreyi yinele:</translation>
     </message>
     <message>
         <source>&amp;Key file</source>
@@ -499,7 +503,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation type="unfinished"/>
+        <translation>Karşılaştırma &amp;Yanıtı</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -511,7 +515,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>All files</source>
-        <translation>Tüm dosyalar</translation>
+        <translation>Bütün dosyalar</translation>
     </message>
     <message>
         <source>Create Key File...</source>
@@ -531,32 +535,35 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>Boş bir dizgeyi parola olarak kullanmak istediğinize emin misiniz?</translation>
+        <translation>Boş bir dizeyi gerçekten şifre olarak kullanmak ister misiniz?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Farklı parolalar sağlandı.</translation>
+        <translation>Farklı şifreler sağlandı.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>%1, Anahtar dosyası olarak belirlenemedi:
+        <translation>%1 anahtar dosyası olarak ayarlanamadı:
 %2</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Eski anahtar dosya biçimi</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>İleride desteklenmeyebilecek eski bir anahtar 
+dosya biçimi kullanıyorsunuz. 
+
+Lütfen yeni bir anahtar dosyası oluşturmayı düşünün.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Ana anahtar değiştirme başarısız: YubiKey yerleştirilmedi.</translation>
+        <translation>Ana anahtar değiştirme başarısız: YubiKey eklenmedi.</translation>
     </message>
 </context>
 <context>
@@ -571,7 +578,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı adı ve şifreyi referanslarla değiştir</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -602,11 +609,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Şu tarafından metin yetkilendirildi</translation>
+        <translation>tarafından metin yetkili</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Şu tarafından alanlar bölümlendi</translation>
+        <translation>tarafından alanlar ayrıldı</translation>
     </message>
     <message>
         <source>Comments start with</source>
@@ -614,11 +621,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation>İlk kayıt alan adlarını içerir</translation>
+        <translation>İlk kaydın alan adlarını var</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Vazgeçilecek başlık satırı adedi</translation>
+        <translation>Vazgeçilecek başlık satırı sayısı</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -626,15 +633,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Ön izle</translation>
+        <translation>Ön izleme</translation>
     </message>
     <message>
         <source>Column layout</source>
-        <translation>Kolon dizimi</translation>
+        <translation>Sütun düzeni</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation>CSV içerisinde mevcut değil</translation>
+        <translation>CSV dosyasında mevcut değil</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
@@ -642,7 +649,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>column </source>
-        <translation>kolon</translation>
+        <translation>sütun</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -650,15 +657,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Özgün veri:</translation>
+        <translation>Orijinal veri:</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>CSV dosyasında hata(lar) saptandı !</translation>
+        <translation>CSV dosyasında hata(lar) tespit edildi !</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
-        <translation type="unfinished"/>
+        <translation> daha fazla ileti atlandı]</translation>
     </message>
     <message>
         <source>Error</source>
@@ -667,7 +674,7 @@ Please consider generating a new key file.</source>
     <message>
         <source>CSV import: writer has errors:
 </source>
-        <translation>CSV içe aktarma: yazıcıda hatalar:
+        <translation>CSV içe aktarma: yazarda hatalar var:
 </translation>
     </message>
 </context>
@@ -686,22 +693,22 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n bayt, </numerusform><numerusform>%n bayt(lar), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n satır, </numerusform><numerusform>%n satır(lar), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n sütun</numerusform><numerusform>%n sütun(lar)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Ana anahtar gir</translation>
+        <translation>Ana anahtarı gir</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -709,7 +716,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Parola:</translation>
+        <translation>Şifre:</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -721,34 +728,37 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation type="unfinished"/>
+        <translation>Karşılaştırma Yanıtı:</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Veri tabanı açılamıyor.</translation>
+        <translation>Veritabanı açılamıyor.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Anahtar dosya açılamıyor</translation>
+        <translation>Anahtar dosyası açılamıyor</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>Eski anahtar dosya biçimi</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>İleride desteklenmeyebilecek eski bir anahtar 
+dosya biçimi kullanıyorsunuz. 
+
+Lütfen yeni bir anahtar dosyası oluşturmayı düşünün.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>Bu uyarıyı bir daha gösterme</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tüm dosyalar</translation>
+        <translation>Bütün dosyalar</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -763,7 +773,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Veri tabanını onar</translation>
+        <translation>Veritabanını onar</translation>
     </message>
     <message>
         <source>Error</source>
@@ -771,15 +781,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Anahtar dosya açılamıyor</translation>
+        <translation>Anahtar dosyası açılamıyor</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Veri tabanı açılamıyor.</translation>
+        <translation>Veritabanı açılamıyor.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
-        <translation>Veri tabanı açıldı. Yapılacak bir şey yok.</translation>
+        <translation>Veritabanı iyi açıldı. Yapılacak bir şey yok.</translation>
     </message>
     <message>
         <source>Success</source>
@@ -788,12 +798,12 @@ Please consider generating a new key file.</source>
     <message>
         <source>The database has been successfully repaired
 You can now save it.</source>
-        <translation>Veri tabanı başarıyla onarıldı
+        <translation>Veritabanı başarıyla onarıldı
 Artık kaydedebilirsiniz.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Veri tabanı onarılamıyor.</translation>
+        <translation>Veritabanı onarılamıyor.</translation>
     </message>
 </context>
 <context>
@@ -804,66 +814,70 @@ Artık kaydedebilirsiniz.</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>Şifreleme</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Tur sayısı çok yüksek</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation type="unfinished"/>
+        <translation>Argon2 ile çok yüksek sayıda anahtar dönüştürme turu kullanıyorsunuz.
+
+Eğer bu sayı ile devam ederseniz, veritabanınızın açılması saatler veya günler (hatta daha uzun) sürebilir!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation type="unfinished"/>
+        <translation>Anladım, sayı kalsın</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>İptal</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Tur sayısı çok düşük</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF ile çok düşük sayıda anahtar dönüştürme turu kullanıyorsunuz.
+
+Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kırılabilir!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF değişmedi</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation type="unfinished"/>
+        <translation>Yeni KDF parametreleri ile anahtar dönüştürülemedi; KDF değişmedi.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> iş parçacıği</numerusform><numerusform> iş parçacık(ları)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Şifreleme Algoritması:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 Bit   (öntanımlı)</translation>
+        <translation>AES: 256 Bit (varsayılan)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
@@ -871,15 +885,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar Türetme Fonksiyonu:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation type="unfinished"/>
+        <translation>Dönüşüm turları:</translation>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation type="unfinished"/>
+        <translation>Karşılaştırma 1-saniyelik gecikme</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
@@ -887,26 +901,26 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
+        <translation>Paralellik:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı Meta Verileri</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Veri tabanı adı:</translation>
+        <translation>Veritabanı adı:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Veri tabanı ayrıntısı:</translation>
+        <translation>Veritabanı açıklaması:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Öntanımlı kullanıcı adı:</translation>
+        <translation>Varsayılan kullanıcı adı:</translation>
     </message>
     <message>
         <source>History Settings</source>
@@ -930,11 +944,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Ek Veritabanı Ayarları</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sıkıştırmayı etkinleştir (önerilir)</translation>
     </message>
 </context>
 <context>
@@ -946,15 +960,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Veri Tabanı</translation>
+        <translation>KeePass 2 Veritabanı</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tüm dosyalar</translation>
+        <translation>Bütün dosyalar</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Veri tabanı aç</translation>
+        <translation>Veritabanını aç</translation>
     </message>
     <message>
         <source>File not found!</source>
@@ -962,11 +976,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Veri tabanı açılamıyor.</translation>
+        <translation>Veritabanı açılamıyor.</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation>Dosya salt okunur kipte açıldı.</translation>
+        <translation>Dosya salt okunur modda açıldı.</translation>
     </message>
     <message>
         <source>Open CSV file</source>
@@ -978,19 +992,19 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation>Tüm dosyalar (*)</translation>
+        <translation>Bütün dosyalar (*)</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Veri tabanı birleştir</translation>
+        <translation>Veritabanını birleştir</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 veri tabanı aç</translation>
+        <translation>KeePass 1 veritabanı aç</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 veri tabanı</translation>
+        <translation>KeePass 1 veritabanı</translation>
     </message>
     <message>
         <source>Close?</source>
@@ -999,8 +1013,8 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>&quot;%1&quot;, düzenleme kipinde.
-Değişikliklerden vazgeç ve her durumda kapat?</translation>
+        <translation>&quot;%1&quot; düzenleme modunda.
+Değişikliklerden vazgeçip yine de kapatılsın mı?</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -1010,23 +1024,23 @@ Değişikliklerden vazgeç ve her durumda kapat?</translation>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
         <translation>&quot;%1&quot; değiştirildi.
-Değişiklikleri kaydet?</translation>
+Değişiklikler kaydedilsin mi?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Veri tabanına yazma başarısız.</translation>
+        <translation>Veritabanına yazma başarısız.</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Parolalar</translation>
+        <translation>Şifreler</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Veri tabanını farklı kaydet</translation>
+        <translation>Veritabanını farklı kaydet</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Veri tabanını CSV dosyasına dışa aktar</translation>
+        <translation>Veritabanını CSV dosyasına dışa aktar</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
@@ -1034,7 +1048,7 @@ Değişiklikleri kaydet?</translation>
     </message>
     <message>
         <source>New database</source>
-        <translation>Yeni veri tabanı</translation>
+        <translation>Yeni veritabanı</translation>
     </message>
     <message>
         <source>locked</source>
@@ -1042,30 +1056,31 @@ Değişiklikleri kaydet?</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Veri tabanını kilitle</translation>
+        <translation>Veritabanını kilitle</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Şu anda düzenlediğiniz için veri tabanı kilitlenemez.
-Lütfen değişikliklerinizi bitirmek için iptale basın veya onlardan vazgeçin.</translation>
+        <translation>Şu anda düzenlemekte olduğunuz veritabanı kilitlenemiyor.
+Lütfen değişikliklerinizi sonlandırmak veya vazgeçmek için iptal tuşuna basın.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Veri tabanı değiştirildi.
-Kilitlemeden önce veri tabanını kaydetmek ister misiniz?
+        <translation>Bu veritabanı değiştirildi.
+Veritabanını kilitlemeden önce kaydetmek ister misiniz?
 Aksi halde değişiklikleriniz kaybolacak.</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation type="unfinished"/>
+        <translation>Güvenli kaydetme devre dışı?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC veritabanını birkaç kez kaydetmeyi başaramadı. Buna genellikle bir kayıt dosyası üzerinde kilit tutan dosya eşitleme hizmetleri neden olur.
+Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translation>
     </message>
 </context>
 <context>
@@ -1084,7 +1099,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; girdisini tümüyle silmek istediğinize emin misiniz?</translation>
+        <translation>&quot;%1&quot; girdisini gerçekten tamamen silmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -1120,15 +1135,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Seçimimi anımsa</translation>
+        <translation>Seçimimi hatırla</translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Kümeyi sil?</translation>
+        <translation>Grubu sil?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; kümesini tümüyle silmek istediğinize emin misiniz?</translation>
+        <translation>&quot;%1&quot; grubunu gerçekten tamamen silmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -1136,11 +1151,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Geçerli veri tabanı yok.</translation>
+        <translation>Geçerli veritabanı yok.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Kaynak veri tabanı yok, yapılacak bir şey yok.</translation>
+        <translation>Kaynak veritabanı yok, yapılacak bir şey yok.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
@@ -1152,11 +1167,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>Dosya değişti</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Veri tabanı dosyası değiştirildi. Değişiklikleri yüklemek ister misiniz?</translation>
+        <translation>Veritabanı dosyası değiştirildi. Değişiklikleri yüklemek ister misiniz?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -1165,11 +1180,12 @@ Disable safe saves and try again?</source>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı dosyası değişti ve kaydedilmemiş değişiklikleriniz var.
+Değişikliklerinizi birleştirmek ister misiniz?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation>Bu veri tabanını kendiliğinden yeniden yüklenirken yeni veri tabanı dosyası açılamadı.</translation>
+        <translation>Bu veritabanını otomatik olarak yeniden yüklemeye çalışırken yeni veritabanı dosyası açılamadı.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -1184,7 +1200,7 @@ Do you want to merge your changes?</source>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>TOTP Jetonu Oluştur</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1196,7 +1212,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Şifre</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1204,7 +1220,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>Geçerlilik</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1212,11 +1228,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>Oto-yazım</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation type="unfinished"/>
+        <translation>Aranıyor</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -1224,7 +1240,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Ekler</translation>
+        <translation>Dosya ekleri</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1256,18 +1272,18 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Etkin</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Girdi</translation>
+        <translation>Giriş</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1291,7 +1307,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>SSH Ajanı</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1303,31 +1319,31 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>Özel anahtar seç</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>Dosya bir özel anahtar olmak için çok büyük</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation type="unfinished"/>
+        <translation>Özel anahtarı açma başarısız</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Girdi geçmişi</translation>
+        <translation>Giriş geçmişi</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Girdi ekle</translation>
+        <translation>Giriş ekle</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Girdiyi düzenle</translation>
+        <translation>Girişi düzenle</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Farklı parolalar sağlandı.</translation>
+        <translation>Farklı şifreler sağlandı.</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -1339,7 +1355,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Bu özniteliği silmek istediğinizden emin misiniz?</translation>
+        <translation>Bu özniteliği kaldırmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -1347,7 +1363,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>Görüntüleme veya düzenlemeyi belirlemek için basın</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1367,15 +1383,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifreyi uygula?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifreyi bu girişe uygulamak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Giriş başarıyla güncellendi.</translation>
     </message>
 </context>
 <context>
@@ -1406,30 +1422,30 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Ekler</translation>
+        <translation>Dosya ekleri</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Ön Plan Rengi:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Arka Plan Rengi:</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Bu girdi için Oto-Yazımı etkinleştir</translation>
+        <translation>Bu giriş için Oto-Yazımı etkinleştir</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Öntanımlı Oto-Yazım dizilişini &amp;kümeden devral</translation>
+        <translation>&amp;Gruptan varsayılan Oto-Yazım sırasını devral</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>Özel Oto-Yazım dizilişi k&amp;ullan:</translation>
+        <translation>Özel Oto-Yazım sırası k&amp;ullan:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1449,7 +1465,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation type="unfinished"/>
+        <translation>Bu ilişki için belirli bir sıra kullan:</translation>
     </message>
 </context>
 <context>
@@ -1479,7 +1495,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Parola:</translation>
+        <translation>Şifre:</translation>
     </message>
     <message>
         <source>Repeat:</source>
@@ -1499,7 +1515,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"/>
+        <translation>Notlar bölümünü göstermek için onay kutusunu değiştirin.</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1507,46 +1523,46 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Biter</translation>
+        <translation>Geçersiz</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation type="unfinished"/>
+        <translation>Sonra ajandan anahtarı kaldır</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation type="unfinished"/>
+        <translation>saniye</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Parmak izi</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı kapalı/kilitliyken ajandan anahtarı kaldır</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"/>
+        <translation>Açık anahtar</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı kapalı/kilitliyken ajana anahtar ekle</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Yorum</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Şifresiz</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1558,39 +1574,39 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation type="unfinished"/>
+        <translation>Özel anahtar</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation type="unfinished"/>
+        <translation>Harici dosya</translation>
     </message>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation type="unfinished"/>
+        <translation>Gözat...</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Dosya eki</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation type="unfinished"/>
+        <translation>Ajana ekle</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation type="unfinished"/>
+        <translation>Ajandan kaldır</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation type="unfinished"/>
+        <translation>Bu tuş kullanıldığında kullanıcı onayı gerekir</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Küme</translation>
+        <translation>Grup</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -1602,30 +1618,30 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Küme ekle</translation>
+        <translation>Grup ekle</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Kümeyi düzenle</translation>
+        <translation>Grubu düzenle</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Etkinleştir</translation>
+        <translation>Etkin</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Devre dışı bırak</translation>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Üst kümeden devral (%1)</translation>
+        <translation>Ana gruptan devral (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Ad</translation>
+        <translation>Adı</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1633,7 +1649,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Biter</translation>
+        <translation>Geçersiz</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1645,22 +1661,22 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>Üst kümenin öntanımlı Oto-Yazım dizilişini k&amp;ullan</translation>
+        <translation>Ana grubun varsayılan Oto-Yazım sırasını kullan</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Öntanımlı Oto-Yazım &amp;dizilişi belirle</translation>
+        <translation>Varsayılan Oto-Yazım &amp;sırasını ayarla</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation>&amp;Öntanımlı simge kullan</translation>
+        <translation>&amp;Varsayılan simge kullan</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation>Öze&amp;l simge kullan</translation>
+        <translation>Özel si&amp;mge kullan</translation>
     </message>
     <message>
         <source>Add custom icon</source>
@@ -1680,7 +1696,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>İpucu: Araçlar&gt;Ayarlar&gt;Güvenlik altından Google&apos;ı yedek olarak etkinleştirebilirsiniz</translation>
+        <translation>İpucu: Google’ı Araçlar&gt;Ayarlar&gt;Güvenlik altından geri almak gibi etkinleştirebilirsiniz</translation>
     </message>
     <message>
         <source>Images</source>
@@ -1688,7 +1704,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>Tüm dosyalar</translation>
+        <translation>Bütün dosyalar</translation>
     </message>
     <message>
         <source>Select Image</source>
@@ -1708,7 +1724,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation>Bu simge %1 girdi tarafından kullanılıyor ve öntanımlı simge tarafından değiştirilecek. Silmek istediğinize emin misiniz?</translation>
+        <translation>Bu simge %1 girişi tarafından kullanılıyor ve varsayılan simge tarafından değiştirilecek. Silmek istediğinize emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -1748,11 +1764,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Değer</translation>
     </message>
 </context>
 <context>
@@ -1771,14 +1787,14 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Boyut</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1798,7 +1814,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Select files</source>
-        <translation type="unfinished"/>
+        <translation>Dosya seç</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
@@ -1810,40 +1826,45 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation type="unfinished"/>
+        <translation>Ekleri kaydet</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Dizin oluşturulamadı:
+%1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation type="unfinished"/>
+        <translation>Eki, var olan &quot;%1&quot; dosyasının üstüne yazmak istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Üzerine yazımı onayla</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ekler kaydedilemiyor:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ek açılamıyor:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ekler açılamıyor:
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Dosyalar açılamıyor:
+%1</translation>
     </message>
 </context>
 <context>
@@ -1913,15 +1934,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturuldu</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Düzenlendi</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>Erişildi</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1932,31 +1953,31 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation type="unfinished"/>
+        <translation>Görünümü Özelleştir</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Kullanıcı Adlarını Gizle</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Parolaları Gizle</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished"/>
+        <translation>Pencereye sığdır</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>İçeriklere sığdır</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation type="unfinished"/>
+        <translation>Öntanımlılara sıfırla</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Ekler (simge)</translation>
     </message>
 </context>
 <context>
@@ -1970,11 +1991,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Dosya kaydedilemiyor!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>Yerel mesajlaşma betik dosyası kaydedilemiyor.</translation>
     </message>
 </context>
 <context>
@@ -2073,7 +2094,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>eksik veri tabanı başlıkları</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2081,15 +2102,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz başlık dosya özeti boyutu</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation type="unfinished"/>
+        <translation>Başlık SHA256 verisi uyuşmuyor</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>Yanlış anahtar veya veri tabanı dosyası bozuk. (HMAC uyuşmuyor)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
@@ -2097,39 +2118,39 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz başlık kimliği boyutu</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz başlık alanı genişliği</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz başlık veri genişliği</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>Başlıktaki KDF parametreleri için tampon açılamıyor</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Desteklenmeyen Anahtar Türetme İşlevi (KDF) veya geçersiz parametreler</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>KDBX4 dosyasında eski başlık alanları bulundu.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz iç başlık kimlik boyutu</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz iç başlık alann genişliği</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz iç başlık ikili boyutu</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -2225,11 +2246,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz sıkıştırma bayrakları genişliği</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Desteklenmeyen sıkıştırma algoritması</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
@@ -2271,26 +2292,26 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation type="unfinished"/>
+        <translation>Desteklenmeyen KeePass 2 veri tabanı sürümü.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation type="unfinished"/>
+        <translation>XML ayrıştırma başarısız: %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation type="unfinished"/>
+        <translation>Kök küme yok</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation type="unfinished"/>
+        <translation>Simge uuid&apos;si veya verisi eksik</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation type="unfinished"/>
+        <translation>Özel veri anahtarı veya değeri eksik</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
@@ -2767,7 +2788,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Başlığı panoya kopyala</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -2775,7 +2796,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>URL&apos;yi panoya kopyala</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -2783,7 +2804,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Notları panoya kopyala</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
@@ -2815,7 +2836,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Geri dönüşüm kutusunu b&amp;oşalt</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -2827,7 +2848,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Görünüşe göre KeePassHTTP&apos;yi tarayıcı tümleşmesi için kullanıyorsunuz. Bu özellik terk edilmiştir ve ileride kaldırılacaktır.&lt;br&gt;Bunun yerine KeePassXC-Browser&apos;a geçin! Göçle ilgili yardım için &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;göç kılavuzumuzu&lt;/a&gt; ziyaret edin (uyarı %1 / 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
@@ -2839,7 +2860,7 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>Pencereyi aç/kapa</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -2873,14 +2894,16 @@ Bu tek yönlü bir yer değiştirmedir. İçe aktarılan veri tabanını eski Ke
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>UYARI: KeePassXC&apos;nin kararsız inşasını kullanıyorsunuz!
+Yüksek bozulma tehlikesi bulunmaktadır, veri tabanlarınızın yedeğini alın.
+Bu sürüm, üretimde kullanıma uygun değildir.</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation type="unfinished"/>
+        <translation>Geçersiz anahtar dosyası, OpenSSH anahtarı bekleniyor</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -2888,11 +2911,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>Base64 çözme başarısız</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar dosyası çok küçük.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
@@ -2900,15 +2923,15 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>Sıfır anahtar bulundu</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation type="unfinished"/>
+        <translation>Genel anahtar okunamadı.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation type="unfinished"/>
+        <translation>Bozuk anahtar dosyası, özel anahtar okuma başarısız</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
@@ -2956,7 +2979,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Desteklenmeyen anahtar türü: %1</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
@@ -2972,7 +2995,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Bilinmeyen anahtar türü: %1</translation>
     </message>
 </context>
 <context>
@@ -3080,11 +3103,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Aşağıdaki seçenekler tehlikeli olabilir!</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;KeePassHTTP terk edilmiştir ve ileride kaldırılacaktır.&lt;br&gt;Bunun yerine KeePassXC-Browser&apos;a geçin! Göçle ilgili yardım için &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;göç kılavuzumuzu&lt;/a&gt; ziyaret edin.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3114,7 +3137,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>entropy</source>
-        <translation type="unfinished"/>
+        <translation>entropi</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3225,7 +3248,7 @@ Using default port 19455.</source>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>Veri tabanı açılmadı</translation>
     </message>
     <message>
         <source>Database hash not available</source>
@@ -3233,63 +3256,63 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation type="unfinished"/>
+        <translation>İstemci genel anahtarı alınmadı</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation type="unfinished"/>
+        <translation>İletinin şifresi çözülemedi</translation>
     </message>
     <message>
         <source>Timeout or cannot connect to KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Zaman aşımı veya KeePassXC&apos;ye bağlanılamadı</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>Eylem iptal edildi veya reddedildi</translation>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
-        <translation type="unfinished"/>
+        <translation>İleti şifrelenemedi veya genel anahtar bulunamadı. KeePassXC&apos;de Yerel Mesajlaşma etkin mi?</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC ilişkilendirmesi başarısız, yeniden dene</translation>
     </message>
     <message>
         <source>Key change was not successful</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar değişimi başarılı değil</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation type="unfinished"/>
+        <translation>Şifreleme anahtarı tanınmadı</translation>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation type="unfinished"/>
+        <translation>Kaydedilmiş veri tabanı bulunamadı</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation type="unfinished"/>
+        <translation>Doğru olmayan eylem</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation type="unfinished"/>
+        <translation>Boş ileti alındı</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation type="unfinished"/>
+        <translation>URL sağlanmadı</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation type="unfinished"/>
+        <translation>Giriş bulunamadı</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Bilinmeyen hata</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Veri tabanına yeni girdi ekle.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3297,23 +3320,23 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation type="unfinished"/>
+        <translation>Veri tabanının anahtar dosyası.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation type="unfinished"/>
+        <translation>yol</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Girdi için kullanıcı adı.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation type="unfinished"/>
+        <translation>kullanıcı adı</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Girdi için URL.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3325,23 +3348,23 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Girdi için parola oluştur.</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan parola için uzunluk.</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"/>
+        <translation>uzunluk</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation type="unfinished"/>
+        <translation>Eklenecek girdinin yolu.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Girdinin parolasını panoya kopyala.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
@@ -3350,35 +3373,35 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Pano temizlenmeden önce geçecek saniye.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation type="unfinished"/>
+        <translation>Girdi düzenle.</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Girdi için başlık.</translation>
     </message>
     <message>
         <source>title</source>
-        <translation type="unfinished"/>
+        <translation>başlık</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation type="unfinished"/>
+        <translation>Düzenlenecek girdinin yolu.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation type="unfinished"/>
+        <translation>Parolanın entropisini ölç</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation type="unfinished"/>
+        <translation>Entropisi ölçülecek parola.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation type="unfinished"/>
+        <translation>Parola üzerinde gelişmiş inceleme gerçekleştir.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
@@ -3390,25 +3413,31 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>%1 kilidini kaldırmak için parola yerleştir: </translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation type="unfinished"/>
+        <translation>%1 anahtar dosyası yüklenemedi : %2</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>UYARI: Gelecekte desteklenmeyebilecek eski anahtar dosyası
+biçimini kullanıyorsunuz.
+
+Lütfen yeni anahtar dosyası oluşturmayı düşünün.</translation>
     </message>
     <message>
         <source>
 
 Available commands:
 </source>
-        <translation type="unfinished"/>
+        <translation>
+
+Kullanılabilir komutlar:
+</translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
@@ -3424,11 +3453,11 @@ Available commands:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation type="unfinished"/>
+        <translation>Hızlıca girdi bul.</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>Arama terimi.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -3444,7 +3473,7 @@ Available commands:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation type="unfinished"/>
+        <translation>Her iki veri tabanı dosyası için aynı kimliği kullan.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -3514,7 +3543,7 @@ Available commands:
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturuldu</translation>
     </message>
     <message>
         <source>Legacy Browser Integration</source>
@@ -3538,7 +3567,7 @@ Available commands:
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>SSH Ajanı</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
@@ -3673,7 +3702,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>%1 -%2 bilgilerini güncellemek istiyor musun?</translation>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
@@ -3858,23 +3887,23 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Başlangıç</translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation type="unfinished"/>
+        <translation>Dosya Yönetimi</translation>
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation type="unfinished"/>
+        <translation>Veri tabanı dosyalarını güvenle kaydet (Dropbox vb. ile uyumsuz olabilir)</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation type="unfinished"/>
+        <translation>Kaydetmeden önce veri tabanı dosyasını yedekle</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation type="unfinished"/>
+        <translation>Girdi Yönetimi</translation>
     </message>
     <message>
         <source>General</source>
@@ -3926,7 +3955,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation type="unfinished"/>
+        <translation>Girdi notlarını öntanımlı olarak gizle</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -4054,7 +4083,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     <name>main</name>
     <message>
         <source>Remove an entry from the database.</source>
-        <translation type="unfinished"/>
+        <translation>Veri tabanından bir girdi kaldır.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -4062,7 +4091,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Kaldırılacak girdinin yolu.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>

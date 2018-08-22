@@ -61,8 +61,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
 
     if (create) {
         setHeadline(tr("Add group"));
-    }
-    else {
+    } else {
         setHeadline(tr("Edit group"));
     }
 
@@ -98,6 +97,9 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     m_editWidgetProperties->setCustomData(group->customData());
 
     setCurrentPage(0);
+
+    // Disable apply button if creating new group
+    setReadOnly(false, create);
 
     m_mainUi->editName->setFocus();
 }

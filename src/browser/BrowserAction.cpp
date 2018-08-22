@@ -169,7 +169,9 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
     QMutexLocker locker(&m_mutex);
     if (key.compare(m_clientPublicKey, Qt::CaseSensitive) == 0) {
-        const QString id = m_browserService.storeKey(key);
+        // Check for identification key. If it's not found, ensure backwards compatibility and use the current public key
+        const QString idKey = decrypted.value("idKey").toString();
+        const QString id = m_browserService.storeKey((idKey.isEmpty() ? key: idKey));
         if (id.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
         }

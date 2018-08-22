@@ -448,7 +448,7 @@ Buď jí odemkněte, nebo vyberte jinou, odemčenou.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>%n šifrovací klíč úspěšně odebrán z nastavení KeePassXC.</numerusform><numerusform>%n šifrovací klíče úspěšně odebrány z nastavení KeePassXC.</numerusform><numerusform>%n šifrovacích klíčů úspěšně odebráno z nastavení KeePassXC.</numerusform></translation>
+        <translation><numerusform>%n šifrovací klíč úspěšně odebrán z nastavení KeePassXC.</numerusform><numerusform>%n šifrovací klíče úspěšně odebrány z nastavení KeePassXC.</numerusform><numerusform>%n šifrovacích klíčů úspěšně odebráno z nastavení KeePassXC.</numerusform><numerusform>%n šifrovacích klíčů úspěšně odebráno z nastavení KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -464,7 +464,7 @@ Buď jí odemkněte, nebo vyberte jinou, odemčenou.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Z %n položky úspěšně odebrána oprávnění.</numerusform><numerusform>Ze %n položek úspěšně odebrána oprávnění.</numerusform><numerusform>Z %n položek úspěšně odebrána oprávnění.</numerusform></translation>
+        <translation><numerusform>Z %n položky úspěšně odebrána oprávnění.</numerusform><numerusform>Ze %n položek úspěšně odebrána oprávnění.</numerusform><numerusform>Z %n položek úspěšně odebrána oprávnění.</numerusform><numerusform>Z %n položek úspěšně odebrána oprávnění.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -692,15 +692,15 @@ Zvažte vytvoření nového souboru s klíčem.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n bajt</numerusform><numerusform>%n bajty</numerusform><numerusform>%n bajtů</numerusform></translation>
+        <translation><numerusform>%n bajt</numerusform><numerusform>%n bajty</numerusform><numerusform>%n bajtů</numerusform><numerusform>%n bajtů</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n řádek</numerusform><numerusform>%n řádky</numerusform><numerusform>%n řádků</numerusform></translation>
+        <translation><numerusform>%n řádek</numerusform><numerusform>%n řádky</numerusform><numerusform>%n řádků</numerusform><numerusform>%n řádků</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n sloupec</numerusform><numerusform>%n sloupce</numerusform><numerusform>%n sloupců</numerusform></translation>
+        <translation><numerusform>%n sloupec</numerusform><numerusform>%n sloupce</numerusform><numerusform>%n sloupců</numerusform><numerusform>%n sloupců</numerusform></translation>
     </message>
 </context>
 <context>
@@ -859,12 +859,12 @@ Pokud tento počet ponecháte, může být velmi snadné prolomit šifrování v
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>vlákno</numerusform><numerusform>vlákna</numerusform><numerusform>vláken</numerusform></translation>
+        <translation><numerusform>vlákno</numerusform><numerusform>vlákna</numerusform><numerusform>vláken</numerusform><numerusform>vláken</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1121,7 +1121,7 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Opravdu přesunout %n záznam do Koše? ()</numerusform><numerusform>Opravdu přesunout %n záznamy do Koše? ()</numerusform><numerusform>Opravdu přesunout %n záznamů do Koše?</numerusform></translation>
+        <translation><numerusform>Opravdu přesunout %n záznam do Koše? ()</numerusform><numerusform>Opravdu přesunout %n záznamy do Koše? ()</numerusform><numerusform>Opravdu přesunout %n záznamů do Koše?</numerusform><numerusform>Opravdu přesunout %n záznamů do Koše?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1369,11 +1369,11 @@ Přejete si je sloučit?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n týden</numerusform><numerusform>%n týdny</numerusform><numerusform>%n týdnů</numerusform></translation>
+        <translation><numerusform>%n týden</numerusform><numerusform>%n týdny</numerusform><numerusform>%n týdnů</numerusform><numerusform>%n týdnů</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n měsíc</numerusform><numerusform>%n měsíce</numerusform><numerusform>%n měsíců</numerusform></translation>
+        <translation><numerusform>%n měsíc</numerusform><numerusform>%n měsíce</numerusform><numerusform>%n měsíců</numerusform><numerusform>%n měsíců</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1817,7 +1817,7 @@ Dotčený zásuvný modul to může rozbít.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Opravdu chcete odebrat %n přílohu?</numerusform><numerusform>Opravdu chcete odebrat %n přílohy?</numerusform><numerusform>Opravdu chcete odebrat %n příloh?</numerusform></translation>
+        <translation><numerusform>Opravdu chcete odebrat %n přílohu?</numerusform><numerusform>Opravdu chcete odebrat %n přílohy?</numerusform><numerusform>Opravdu chcete odebrat %n příloh?</numerusform><numerusform>Opravdu chcete odebrat %n příloh?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -3719,7 +3719,7 @@ Buď jí odemkněte, nebo vyberte jinou, odemčenou.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Úspěšně odebrán %n šifrovací klíč z nastavení KeePassX/Http.</numerusform><numerusform>Úspěšně odebrány %n šifrovací klíče z nastavení KeePassX/Http.</numerusform><numerusform>Úspěšně odebráno %n šifrovacích klíčů z nastavení KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Úspěšně odebrán %n šifrovací klíč z nastavení KeePassX/Http.</numerusform><numerusform>Úspěšně odebrány %n šifrovací klíče z nastavení KeePassX/Http.</numerusform><numerusform>Úspěšně odebráno %n šifrovacích klíčů z nastavení KeePassX/Http.</numerusform><numerusform>Úspěšně odebráno %n šifrovacích klíčů z nastavení KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3751,7 +3751,7 @@ Buď jí odemkněte, nebo vyberte jinou, odemčenou.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Úspěšně odebrána oprávnění z %n položky.</numerusform><numerusform>Úspěšně odebrána oprávnění ze %n položek.</numerusform><numerusform>Úspěšně odebrána oprávnění ze %n položek.</numerusform></translation>
+        <translation><numerusform>Úspěšně odebrána oprávnění z %n položky.</numerusform><numerusform>Úspěšně odebrána oprávnění ze %n položek.</numerusform><numerusform>Úspěšně odebrána oprávnění ze %n položek.</numerusform><numerusform>Úspěšně odebrána oprávnění ze %n položek.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>

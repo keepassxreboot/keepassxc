@@ -944,7 +944,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>啟用&amp;壓縮 (推薦)</translation>
     </message>
 </context>
 <context>
@@ -1382,11 +1382,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>是否要把產生的密碼應用到此項目？</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>項目已成功更新。</translation>
     </message>
 </context>
 <context>

@@ -38,6 +38,7 @@ Prepare the Building Environment
 
 Build Steps
 ===========
+We recommend using the release tool to perform builds, please read up-to-date instructions [on our wiki](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#building-using-the-release-tool).
 
 To compile from source, open a **Terminal (on Linux/MacOS)** or a **MSYS2-MinGW shell (on Windows)**<br/>
 **Note:** on Windows make sure you are using a **MINGW shell** by checking the label before the current path
@@ -68,6 +69,9 @@ cd build
 cmake -DWITH_TESTS=OFF ...and other options - see below...
 make
 ```
+
+If you are on Windows, you may have to add ```-G "MSYS Makefiles"``` to the beginning of the cmake command. See the [Windows Build Instructions](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#windows) for more information.
+
 These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
 (Note the cmake notes/options below.)
 

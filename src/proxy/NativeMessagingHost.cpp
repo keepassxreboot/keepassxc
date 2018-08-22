@@ -49,6 +49,21 @@ NativeMessagingHost::~NativeMessagingHost()
 #endif
 }
 
+void NativeMessagingHost::readNativeMessages()
+{
+#ifdef Q_OS_WIN
+    quint32 length = 0;
+    while (m_running.load() && !std::cin.eof()) {
+        length = 0;
+        std::cin.read(reinterpret_cast<char*>(&length), 4);
+        if (!readStdIn(length)) {
+            QCoreApplication::quit();
+        }
+        QThread::msleep(1);
+    }
+#endif
+}
+
 void NativeMessagingHost::readLength()
 {
     quint32 length = 0;
@@ -56,14 +71,14 @@ void NativeMessagingHost::readLength()
     if (!std::cin.eof() && length > 0) {
         readStdIn(length);
     } else {
-    	QCoreApplication::quit();
+        QCoreApplication::quit();
     }
 }
 
-void NativeMessagingHost::readStdIn(const quint32 length)
+bool NativeMessagingHost::readStdIn(const quint32 length)
 {
     if (length <= 0) {
-        return;
+        return false;
     }
 
     QByteArray arr;
@@ -73,7 +88,7 @@ void NativeMessagingHost::readStdIn(const quint32 length)
         int c = std::getchar();
         if (c == EOF) {
             // message ended prematurely, ignore it and return
-            return;
+            return false;
         }
         arr.append(static_cast<char>(c));
     }
@@ -82,6 +97,8 @@ void NativeMessagingHost::readStdIn(const quint32 length)
         m_localSocket->write(arr.constData(), arr.length());
         m_localSocket->flush();
     }
+    
+    return true;
 }
 
 void NativeMessagingHost::newLocalMessage()
@@ -92,7 +109,7 @@ void NativeMessagingHost::newLocalMessage()
 
     QByteArray arr = m_localSocket->readAll();
     if (!arr.isEmpty()) {
-       sendReply(arr);
+        sendReply(arr);
     }
 }
 

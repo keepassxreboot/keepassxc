@@ -366,7 +366,7 @@ void BrowserService::updateEntry(const QString& id, const QString& uuid, const Q
     }
 }
 
-QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostname)
+QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostname, const QString& url)
 {
     QList<Entry*> entries;
     Group* rootGroup = db->rootGroup();
@@ -375,14 +375,19 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     }
 
     for (Entry* entry : EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
-        QString title = entry->title();
-        QString url = entry->url();
+        QString entryUrl = entry->url();
+        QUrl entryQUrl(entryUrl);
+        QString entryScheme = entryQUrl.scheme();
+        QUrl qUrl(url);
 
-        // Filter to match hostname in Title and Url fields
-        if ((!title.isEmpty() && hostname.contains(title))
-            || (!url.isEmpty() && hostname.contains(url))
-            || (matchUrlScheme(title) && hostname.endsWith(QUrl(title).host()))
-            || (matchUrlScheme(url) && hostname.endsWith(QUrl(url).host())) ) {
+        // Ignore entry if port or scheme defined in the URL doesn't match    
+        if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) || entryScheme.compare(qUrl.scheme()) != 0) {
+            continue;
+        }
+
+        // Filter to match hostname in URL field
+        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
+            || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
     }
@@ -390,7 +395,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPairList& keyList)
+QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPairList& keyList)
 {
     // Get the list of databases to search
     QList<Database*> databases;
@@ -417,11 +422,11 @@ QList<Entry*> BrowserService::searchEntries(const QString& text, const StringPai
     }
 
     // Search entries matching the hostname
-    QString hostname = QUrl(text).host();
+    QString hostname = QUrl(url).host();
     QList<Entry*> entries;
     do {
         for (Database* db : databases) {
-            entries << searchEntries(db, hostname);
+            entries << searchEntries(db, hostname, url);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
 
@@ -543,7 +548,9 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
             // Sort same priority entries by Title or UserName
             auto entries = priorities.values(i);
             std::sort(entries.begin(), entries.end(), [&priorities, &field](Entry* left, Entry* right) {
-                return QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0;
+                return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0) ||
+                       ((QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) == 0) && 
+                        (QString::localeAwareCompare(left->attributes()->value("UserName"), right->attributes()->value("UserName")) < 0));
             });
             results << entries;
             if (BrowserSettings::bestMatchOnly() && !pwEntries.isEmpty()) {
@@ -625,6 +632,9 @@ BrowserService::Access BrowserService::checkAccess(const Entry* entry, const QSt
     BrowserEntryConfig config;
     if (!config.load(entry)) {
         return Unknown;
+    }
+    if (entry->isExpired()) {
+        return Denied;
     }
     if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
         return Allowed;

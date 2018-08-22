@@ -50,6 +50,24 @@
     </screenshots>
 
     <releases>
+        <release version="2.3.4" date="2018-08-21">
+            <description>
+                <ul>
+                    <li>Show all URL schemes in entry view [#1768]</li>
+                    <li>Disable merge when database is locked [#1975]</li>
+                    <li>Fix intermittent crashes with favorite icon downloads [#1980]</li>
+                    <li>Provide potential crash warning to Qt 5.5.x users [#2211]</li>
+                    <li>Disable apply button when creating new entry/group to prevent data loss [#2204]</li>
+                    <li>Allow for 12 hour timeout to lock idle database [#2173]</li>
+                    <li>Multiple SSH Agent fixes [#1981, #2117]</li>
+                    <li>Multiple Browser Integration enhancements [#1993, #2003, #2055, #2116, #2159, #2174, #2185]</li>
+                    <li>Fix browser proxy application not closing properly [#2142]</li>
+                    <li>Add real names and Patreon supporters to about dialog [#2214]</li>
+                    <li>Add settings button to toolbar, Donate button, and Report a Bug button to help menu [#2214]</li>
+                    <li>Enhancements to release-tool to appsign intermediate build products [#2101]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.3.3" date="2018-05-09">
             <description>
                 <ul>

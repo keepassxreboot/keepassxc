@@ -605,7 +605,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation type="unfinished"/>
+        <translation>تُفصل الحقول بواسطة</translation>
     </message>
     <message>
         <source>Comments start with</source>
@@ -1949,11 +1949,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished"/>
+        <translation>ﻻئم النافذة</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>ﻻئم المحتوى</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
@@ -3891,7 +3891,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>SettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation type="unfinished"/>
+        <translation>مهلة نفاد الوقت</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
