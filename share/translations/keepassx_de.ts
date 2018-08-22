@@ -1803,7 +1803,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message>
         <source>Open</source>
-        <translation>Offen</translation>
+        <translation>Öffnen</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2776,7 +2776,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>Datenbank &amp;sperren</translation>
+        <translation>Datenbanken &amp;sperren</translation>
     </message>
     <message>
         <source>&amp;Title</source>

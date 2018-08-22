@@ -866,7 +866,7 @@ Jeśli zachowasz ten numer, twoja baza danych może być zbyt łatwa do złamani
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>wątek</numerusform><numerusform>wątki</numerusform><numerusform>wątków</numerusform><numerusform>wątków</numerusform></translation>
+        <translation><numerusform> wątek</numerusform><numerusform> wątki</numerusform><numerusform> wątków</numerusform><numerusform> wątków</numerusform></translation>
     </message>
 </context>
 <context>

@@ -373,6 +373,10 @@ Please select whether you want to allow access.</source>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -2739,10 +2743,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Find</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy &amp;username</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2890,6 +2890,19 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report a &amp;bug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
+We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

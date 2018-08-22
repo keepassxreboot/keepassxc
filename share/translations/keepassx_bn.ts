@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation type="unfinished"/>
+        <translation>ডিবাগ তথ্য</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -2127,7 +2127,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>শুরুতে KDF প্যারামিটারের জন্য বাফার আরাম্ভ করতে ব্যার্থ হয়েছে</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -2135,19 +2135,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>KDBX4 ফাইলে লেগাসি হেডার ফিল্ড পাওয়া গেছে</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>ভেতরের শিরোনামের আইডি সাইজ সঠিক নয়</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>শিরোনামের ভেতরের আইডি  পরিমান সঠিক নয়</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>শিরোনামের ভেতরের আইডি বাইনারি সাইজ সঠিক নয়</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -2275,7 +2275,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation type="unfinished"/>
+        <translation>KeePass ডাটাবেস নয়</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
@@ -2432,7 +2432,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation type="unfinished"/>
+        <translation>KeePass ডাটাবেস নয়</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -2846,19 +2846,19 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>read-only</source>
-        <translation type="unfinished"/>
+        <translation>শুধুমাত্র পাঠযোগ্য</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished"/>
+        <translation>সেটিংস</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>উইন্ডো পরিবর্তন</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC বন্ধ করুন</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2874,7 +2874,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Save repaired database</source>
-        <translation type="unfinished"/>
+        <translation>মেরামতকৃত ডাটাবেস সংরক্ষন করুন</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
@@ -2882,13 +2882,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation type="unfinished"/>
+        <translation>দয়া করে আপনার YubiKey! বাটন স্পর্শ করুন</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>সতর্কীকরণ: আপনি একটি আনস্টেবল ভার্সনের KeePassXC ব্যবহার করছেন।
+সমস্যা হবার উচ্চ ঝুঁকি আছে, আপনার ডাটাবেস ব্যাকআপ রাখুন।
+-এই সংস্করণ নিয়মিত ব্যবহারের জন্য বানানো হয়নি।</translation>
     </message>
 </context>
 <context>
@@ -2907,7 +2909,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation type="unfinished"/>
+        <translation>কী ফাইল খুবই ছোট</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
@@ -2915,11 +2917,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation type="unfinished"/>
+        <translation>কোন কী খুজে পাওয়া যায়নি</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation type="unfinished"/>
+        <translation>পাবলিক কী পড়তে ব্যর্থ হয়েছে।</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
@@ -3196,7 +3198,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Accept</source>
-        <translation type="unfinished"/>
+        <translation>গ্রহণ</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3204,7 +3206,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Apply</source>
-        <translation type="unfinished"/>
+        <translation>প্রয়োগ করুন</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
@@ -3217,22 +3219,22 @@ Using default port 19455.</source>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>নিম্নমানের</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>দূর্বল</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>ভাল</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation type="unfinished"/>
+        <translation>খুব ভাল</translation>
     </message>
 </context>
 <context>

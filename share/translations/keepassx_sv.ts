@@ -73,7 +73,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>Ett särskilt tack från teamet bakom KeePassXC riktas till debfx som skapade den ursprungliga KeePassX.</translation>
     </message>
     <message>
         <source>Build Type: %1
@@ -280,20 +280,20 @@ Vill du tillåta det?</translation>
     <message>
         <source>Sort &amp;matching credentials by title</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sortera &amp;matchande autentiseringsuppgifter per titel</translation>
     </message>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sortera matchande autentiseringsuppgifter per &amp;användarnamn</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Koppla från alla browsers</translation>
     </message>
     <message>
         <source>Forget all remembered &amp;permissions</source>
-        <translation type="unfinished"/>
+        <translation>Glöm alla ihågkomna &amp;rättigheter</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -302,16 +302,16 @@ Vill du tillåta det?</translation>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>&amp;Fråga aldrig innan åtkomst till autentiseringsuppgifter</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Fråga aldrig innan &amp;uppdatering av autetiseringsuppgifter</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation type="unfinished"/>
+        <translation>Endast den valda databasen måste vara ansluten med en klient.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
@@ -362,7 +362,7 @@ Vill du tillåta det?</translation>
     </message>
     <message>
         <source>Executable Files (*.exe);;All Files (*.*)</source>
-        <translation type="unfinished"/>
+        <translation>Exekverbara filer (*.exe);;Alla filer (*.*)</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
@@ -446,7 +446,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation type="unfinished"/>
+        <translation>Raderar sparade rättigheter...</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -462,7 +462,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ingen post med behörigheter hittades!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -485,7 +485,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nyckel-fil</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -683,15 +683,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte(s),</numerusform><numerusform>%n byte(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n rad(er),</numerusform><numerusform>%n rad(er),</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n kolumn(er)</numerusform><numerusform>%n kolumn(er)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -741,7 +741,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>Visa inte denna varning igen</translation>
     </message>
     <message>
         <source>All files</source>
@@ -801,7 +801,7 @@ Du kan nu spara den.</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>Kryptering</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -835,7 +835,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF oförändrad</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
@@ -844,19 +844,19 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>tråd(ar)</numerusform><numerusform>tråd(ar)</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsalgoritm:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -864,7 +864,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation type="unfinished"/>
+        <translation>Twofish:  256 Bit</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
@@ -880,7 +880,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Minnesanvändning:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -891,7 +891,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Databas metadata</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -907,7 +907,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Inställningar historik</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -927,7 +927,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Ytterligare databasinställningar</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
@@ -1057,7 +1057,7 @@ I annat fall försvinner ändringarna.</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation type="unfinished"/>
+        <translation>Inaktivera spara säkert?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
@@ -1149,7 +1149,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>Filen har ändrats</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -1170,7 +1170,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Töm papperskorgen?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
@@ -1181,7 +1181,7 @@ Do you want to merge your changes?</source>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>Generera TOTP Token</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1201,7 +1201,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>Utgår</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1209,15 +1209,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>Autotyp</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation type="unfinished"/>
+        <translation>Söker</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Attribut</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1249,15 +1249,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[SKYDDAD]</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiverad</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation type="unfinished"/>
+        <translation>Aktiverad</translation>
     </message>
 </context>
 <context>
@@ -1296,7 +1296,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>(krypterad)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -1336,11 +1336,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation type="unfinished"/>
+        <translation>Är du säker på att du vill ta bort detta attribut?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[SKYDDAD]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
@@ -1391,7 +1391,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation type="unfinished"/>
+        <translation>Redigera namn</translation>
     </message>
     <message>
         <source>Protect</source>
@@ -1407,11 +1407,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Förgrundsfärg:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Bakgrundsfärg:</translation>
     </message>
 </context>
 <context>
@@ -1523,7 +1523,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Fingeravtryck</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
@@ -1539,11 +1539,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Comment</source>
-        <translation type="unfinished"/>
+        <translation>Kommentar</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>Dekryptera</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1559,7 +1559,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>External file</source>
-        <translation type="unfinished"/>
+        <translation>Extern fil</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1568,7 +1568,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attachment</source>
-        <translation type="unfinished"/>
+        <translation>Bilaga</translation>
     </message>
     <message>
         <source>Add to agent</source>
@@ -1669,15 +1669,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner favicon</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte hämta favicon.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation type="unfinished"/>
+        <translation>Tips: Du kan aktivera Google som reserv under Verktyg&gt;Inställningar&gt;Säkerhet</translation>
     </message>
     <message>
         <source>Images</source>
@@ -1693,7 +1693,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte läsa ikon</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
@@ -1701,7 +1701,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Confirm Delete</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta radering</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -1728,7 +1728,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Tilläggsdata</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1736,7 +1736,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Radera tilläggsdata?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
@@ -1745,11 +1745,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Nyckel</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Värde</translation>
     </message>
 </context>
 <context>
@@ -1757,7 +1757,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source> - Clone</source>
         <comment>Suffix added to cloned entries</comment>
-        <translation type="unfinished"/>
+        <translation>- Klon</translation>
     </message>
 </context>
 <context>
@@ -1768,7 +1768,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"/>
+        <translation>Storlek</translation>
     </message>
 </context>
 <context>
@@ -1795,7 +1795,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Select files</source>
-        <translation type="unfinished"/>
+        <translation>Välj filer</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
@@ -1807,7 +1807,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation type="unfinished"/>
+        <translation>Spara bilagor</translation>
     </message>
     <message>
         <source>Unable to create directory:
@@ -1840,7 +1840,8 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Lyckas inte öppna filer:
+%1</translation>
     </message>
 </context>
 <context>
@@ -1933,27 +1934,27 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Dölj användarnamn</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Dölj lösenord</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished"/>
+        <translation>Anpassa till fönster</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>Anpassa för innehåll</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation type="unfinished"/>
+        <translation>Återställ till standardvärden</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Bilagor (ikon)</translation>
     </message>
 </context>
 <context>
@@ -1967,7 +1968,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Kan inte spara fil!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
@@ -1990,7 +1991,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -1998,7 +1999,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -2006,7 +2007,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>0-9</source>
-        <translation type="unfinished"/>
+        <translation>0-9</translation>
     </message>
     <message>
         <source>Special Characters</source>
@@ -2014,7 +2015,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation type="unfinished"/>
+        <translation>/*_&amp; ...</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -2033,11 +2034,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Stäng</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation type="unfinished"/>
+        <translation>Stäng meddelande</translation>
     </message>
 </context>
 <context>
@@ -2090,7 +2091,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation type="unfinished"/>
+        <translation>Okänt krypto</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
@@ -2272,7 +2273,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation type="unfinished"/>
+        <translation>XML-tolkning misslyckades: %1</translation>
     </message>
     <message>
         <source>No root group</source>
@@ -2602,14 +2603,14 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Fel</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Databas</translation>
     </message>
     <message>
         <source>&amp;Recent databases</source>
@@ -2621,7 +2622,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Hjälp</translation>
     </message>
     <message>
         <source>E&amp;ntries</source>
@@ -2629,43 +2630,43 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera att&amp;ribut till urklipp</translation>
     </message>
     <message>
         <source>Time-based one-time password</source>
-        <translation type="unfinished"/>
+        <translation>Tidsbaserat engångslösenord</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Grupper</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Verktyg</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Avsluta</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Om</translation>
     </message>
     <message>
         <source>&amp;Open database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Öppna databas</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Spara databas</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Stäng databas</translation>
     </message>
     <message>
         <source>&amp;New database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny databas</translation>
     </message>
     <message>
         <source>Merge from KeePassX database</source>
@@ -2673,39 +2674,39 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Add new entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lägg till ny post</translation>
     </message>
     <message>
         <source>&amp;View/Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Visa/redigera post</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Radera post</translation>
     </message>
     <message>
         <source>&amp;Add new group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lägg till ny grupp</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Redigera grupp</translation>
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Radera grupp</translation>
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation type="unfinished"/>
+        <translation>Sp&amp;ara databas som...</translation>
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation type="unfinished"/>
+        <translation>Ändra &amp;huvudlösenord</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Databasinställningar</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -2713,15 +2714,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Klona post</translation>
     </message>
     <message>
         <source>&amp;Find</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Hitta</translation>
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera &amp;användarnamn</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -2729,7 +2730,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Cop&amp;y password</source>
-        <translation type="unfinished"/>
+        <translation>Kop&amp;iera lösenord</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
@@ -2737,7 +2738,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Inställningar</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -2749,15 +2750,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Öppna URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lås databas</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Titel</translation>
     </message>
     <message>
         <source>Copy title to clipboard</source>
@@ -2765,7 +2766,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>&amp;URL</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
@@ -2773,7 +2774,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Noteringar</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
@@ -2781,11 +2782,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Exportera till CSV-fil...</translation>
     </message>
     <message>
         <source>Import KeePass 1 database...</source>
-        <translation type="unfinished"/>
+        <translation>Importera KeePass 1 databas...</translation>
     </message>
     <message>
         <source>Import CSV file...</source>
@@ -2793,7 +2794,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Re&amp;pair database...</source>
-        <translation type="unfinished"/>
+        <translation>Re&amp;parera databas...</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -2809,7 +2810,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>T&amp;öm papperskorg</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -2962,11 +2963,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation type="unfinished"/>
+        <translation>Okänd KDF: %1</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Okänd nyckeltyp: %1</translation>
     </message>
 </context>
 <context>
@@ -3046,7 +3047,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
-        <translation type="unfinished"/>
+        <translation>Endast den valda databasen måste vara ansluten med en klient.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
@@ -3070,7 +3071,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>KeePassXC will listen to this port on 127.0.0.1</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC kommer att lyssna på denna port på 127.0.0.1</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
@@ -3238,7 +3239,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation type="unfinished"/>
+        <translation>Åtgärden avbröts eller nekades</translation>
     </message>
     <message>
         <source>Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?</source>
@@ -3258,7 +3259,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>No saved databases found</source>
-        <translation type="unfinished"/>
+        <translation>Ingen sparad databas hittades</translation>
     </message>
     <message>
         <source>Incorrect action</source>
@@ -3334,7 +3335,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera en posts lösenord till urklipp.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
@@ -3555,11 +3556,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation type="unfinished"/>
+        <translation>Generera ett nytt slumpmässigt lösenord.</translation>
     </message>
     <message>
         <source>Length of the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Längden av det genererade lösenordet.</translation>
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
@@ -3719,7 +3720,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ingen post med behörigheter hittades!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -3866,7 +3867,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Entry Management</source>
-        <translation type="unfinished"/>
+        <translation>Posthantering</translation>
     </message>
     <message>
         <source>General</source>
@@ -3949,7 +3950,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>Steam token inställningar</translation>
     </message>
     <message>
         <source>Use custom settings</source>
