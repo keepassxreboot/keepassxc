@@ -371,6 +371,17 @@ void BrowserService::updateEntry(const QString& id,
         return;
     }
 
+    // Check if the entry password is a reference. If so, update the original entry instead
+    while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
+        const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
+        if (!referenceUuid.isNull()) {
+            entry = db->resolveEntry(referenceUuid);
+            if (!entry) {
+                return;
+            }
+        }
+    }
+
     QString username = entry->username();
     if (username.isEmpty()) {
         return;
@@ -391,7 +402,9 @@ void BrowserService::updateEntry(const QString& id,
 
         if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
             entry->beginUpdate();
-            entry->setUsername(login);
+            if (!entry->attributes()->isReference(EntryAttributes::UserNameKey)) {
+                entry->setUsername(login);
+            }
             entry->setPassword(password);
             entry->endUpdate();
         }

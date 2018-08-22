@@ -140,6 +140,7 @@ void TestEntry::testClone()
     QCOMPARE(entryClonePassRef->timeInfo().creationTime(), entryOrgClone->timeInfo().creationTime());
     QVERIFY(entryClonePassRef->attributes()->isReference(EntryAttributes::PasswordKey));
     QCOMPARE(entryClonePassRef->resolvePlaceholder(entryCloneUserRef->password()), entryOrg->password());
+    QCOMPARE(entryClonePassRef->attributes()->referenceUuid(EntryAttributes::PasswordKey), entryOrgClone->uuid());
 }
 
 void TestEntry::testResolveUrl()
