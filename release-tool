@@ -710,7 +710,7 @@ build() {
             ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
         fi
     else
-        if [ BUILD_SNAPCRAFT ]; then
+        if ${BUILD_SNAPCRAFT}; then
             logInfo "Building snapcraft docker image..."
             
             sudo docker image build -t "$DOCKER_IMAGE" "$(realpath "$SRC_DIR")/ci/snapcraft"
