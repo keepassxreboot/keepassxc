@@ -12,3 +12,4 @@ release*/
 .DS_Store
 .version
 \.scannerwork/
+bw-output/

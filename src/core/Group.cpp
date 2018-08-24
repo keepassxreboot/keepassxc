@@ -457,7 +457,7 @@ QStringList Group::hierarchy() const
     const Group* group = this;
     const Group* parent = m_parent;
     hierarchy.prepend(group->name());
-    
+
     while (parent) {
         group = group->parentGroup();
         parent = group->parentGroup();
@@ -577,30 +577,36 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
     return nullptr;
 }
 
-Group* Group::findGroupByPath(QString groupPath, QString basePath)
+Group* Group::findGroupByPath(QString groupPath)
 {
-
     Q_ASSERT(!groupPath.isNull());
 
-    QStringList possiblePaths;
-    possiblePaths << groupPath;
-    if (!groupPath.startsWith("/")) {
-        possiblePaths << QString("/" + groupPath);
-    }
-    if (!groupPath.endsWith("/")) {
-        possiblePaths << QString(groupPath + "/");
-    }
-    if (!groupPath.endsWith("/") && !groupPath.endsWith("/")) {
-        possiblePaths << QString("/" + groupPath + "/");
-    }
+    // normalize the groupPath by adding missing front and rear slashes. once.
+    QString normalizedGroupPath;
 
-    if (possiblePaths.contains(basePath)) {
+    if (groupPath == "") {
+        normalizedGroupPath = QString("/"); // root group
+    } else {
+        normalizedGroupPath = ((groupPath.startsWith("/"))? "" : "/")
+            + groupPath
+            + ((groupPath.endsWith("/") )? "" : "/");
+    }
+    return findGroupByPathRecursion(normalizedGroupPath, "/");
+}
+
+Group* Group::findGroupByPathRecursion(QString groupPath, QString basePath)
+{
+    // paths must be normalized
+    Q_ASSERT(groupPath.startsWith("/") && groupPath.endsWith("/"));
+    Q_ASSERT(basePath.startsWith("/") && basePath.endsWith("/"));
+
+    if (groupPath == basePath) {
         return this;
     }
 
     for (Group* innerGroup : children()) {
         QString innerBasePath = basePath + innerGroup->name() + "/";
-        Group* group = innerGroup->findGroupByPath(groupPath, innerBasePath);
+        Group* group = innerGroup->findGroupByPathRecursion(groupPath, innerBasePath);
         if (group != nullptr) {
             return group;
         }
