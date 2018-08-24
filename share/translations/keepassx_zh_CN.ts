@@ -370,11 +370,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation type="unfinished"/>
+        <translation>选择自定义代理路径</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
+        <translation>非常抱歉，KeePassXC-Browser 当前不支持 Snap 发行包</translation>
     </message>
 </context>
 <context>
@@ -388,11 +388,14 @@ Please select whether you want to allow access.</source>
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>你已收到上述密钥的关联请求。
+
+如果你想允许它访问你的 KeePassXC 数据库，
+请为它提供一个唯一的名称来识别并接受它。</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation type="unfinished"/>
+        <translation>保存并允许访问</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -401,7 +404,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>一个名为“%1”共享的加密密钥已存在。
+确认要覆盖它吗？</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -427,7 +431,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>当前数据库中不包含设置的条目。</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -544,14 +548,16 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>旧式密钥文件格式</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>您使用的是旧式密钥文件格式，将来可能会不再被支持。
+
+请考虑生成一个新的密钥文件。</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -732,18 +738,20 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation type="unfinished"/>
+        <translation>旧式密钥文件格式</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>您使用的是旧式密钥文件格式，将来可能会不再被支持。
+
+请考虑生成一个新的密钥文件。</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>不再显示此警告</translation>
     </message>
     <message>
         <source>All files</source>
@@ -870,7 +878,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>密钥派生函数:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -929,11 +937,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>其他数据库设置</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>启用压缩 (推荐)</translation>
     </message>
 </context>
 <context>
@@ -1151,7 +1159,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>文件已变更</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -1183,7 +1191,7 @@ Do you want to merge your changes?</source>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>生成 TOTP 令牌</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1203,7 +1211,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>过期时间</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1219,7 +1227,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>添加属性</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1247,11 +1255,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>从不</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[受保护的内容]</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -1298,15 +1306,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation type="unfinished"/>
+        <translation>（已加密）</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>选择私钥文件</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>作为一个私钥来说，这个文件太大了。</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
@@ -1342,7 +1350,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>[PROTECTED]</source>
-        <translation type="unfinished"/>
+        <translation>[受保护的内容]</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
@@ -1366,15 +1374,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>是否应用生成的密码？</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>是否将生成的密码应用于此项目？</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>项目已成功更新。</translation>
     </message>
 </context>
 <context>
@@ -1409,11 +1417,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>前景色:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>背景色:</translation>
     </message>
 </context>
 <context>
@@ -1545,7 +1553,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation type="unfinished"/>
+        <translation>解密</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1837,12 +1845,12 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>无法打开附件：%1</translation>
     </message>
     <message>
         <source>Unable to open files:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>无法打开文件：%1</translation>
     </message>
 </context>
 <context>
@@ -1896,7 +1904,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation type="unfinished"/>
+        <translation>从不</translation>
     </message>
     <message>
         <source>Password</source>
@@ -2348,7 +2356,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>找到重复的自定义属性</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>

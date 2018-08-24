@@ -194,10 +194,14 @@ void DatabaseTabWidget::importCsv()
 
 void DatabaseTabWidget::mergeDatabase()
 {
-    QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-    const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(), filter);
-    if (!fileName.isEmpty()) {
-        mergeDatabase(fileName);
+    auto dbWidget = currentDatabaseWidget();
+    if (dbWidget && dbWidget->currentMode() != DatabaseWidget::LockedMode) {
+        QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(),
+                                                               filter);
+        if (!fileName.isEmpty()) {
+            mergeDatabase(fileName);
+        }
     }
 }
 

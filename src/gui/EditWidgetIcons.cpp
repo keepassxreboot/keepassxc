@@ -45,16 +45,17 @@ UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
     setWindowTitle(tr("Download Progress"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setLabelText(tr("Downloading %1.").arg(url.toDisplayString()));
-    setMinimum(0);
-    setValue(0);
-    setMinimumDuration(0);
+    setMinimumDuration(2000);
     setMinimumSize(QSize(400, 75));
 }
 
 void UrlFetchProgressDialog::networkReplyProgress(qint64 bytesRead, qint64 totalBytes)
 {
-    setMaximum(totalBytes);
-    setValue(bytesRead);
+    if (totalBytes > 0) {
+        setValue(static_cast<int>(bytesRead / totalBytes));
+    } else {
+        setValue(0);
+    }
 }
 
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
@@ -290,7 +291,9 @@ void EditWidgetIcons::fetchFinished()
 void EditWidgetIcons::fetchCanceled()
 {
 #ifdef WITH_XC_NETWORKING
-    m_reply->abort();
+    if (m_reply) {
+        m_reply->abort();
+    }
 #endif
 }
 

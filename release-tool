@@ -35,13 +35,11 @@ TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
 CMAKE_OPTIONS=""
+CPACK_GENERATORS="NSIS;ZIP"
 COMPILER="g++"
 MAKE_OPTIONS="-j8"
 BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
-BUILD_SOURCE_TARBALL=true
-BUILD_SNAPSHOT=false
-BUILD_SNAPCRAFT=false
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
 
@@ -81,7 +79,7 @@ Options:
   -v, --version        Release version number or name (required)
   -a, --app-name       Application name (default: '${APP_NAME}')
   -s, --source-dir     Source directory (default: '${SRC_DIR}')
-  -g, --gpg-key        GPG key used to sign the merge commit and release tag,
+  -k, --key            GPG key used to sign the merge commit and release tag,
                        leave empty to let Git choose your default key
                        (default: '${GPG_GIT_KEY}')
   -r, --release-branch Source release branch to merge from (default: 'release/VERSION')
@@ -109,9 +107,12 @@ Options:
                           The container must not exist already
       --snapcraft         Create and use docker image to build snapcraft distribution.
                           This option has no effect if --docker-image is not set.
+      --appsign           Perform platform specific App Signing before packaging
+  -k, --key               Specify the App Signing Key/Identity
   -c, --cmake-options     Additional CMake options for compiling the sources
       --compiler          Compiler to use (default: '${COMPILER}')
   -m, --make-options      Make options for compiling sources (default: '${MAKE_OPTIONS}')
+  -g, --generators        Additional CPack generators (default: '${CPACK_GENERATORS}')
   -i, --install-prefix    Install prefix (default: '${INSTALL_PREFIX}')
   -p, --plugins           Space-separated list of plugins to build
                           (default: ${BUILD_PLUGINS})
@@ -126,7 +127,7 @@ Sign previously compiled release packages with GPG
 
 Options:
   -f, --files        Files to sign (required)
-  -g, --gpg-key      GPG key used to sign the files (default: '${GPG_KEY}')
+  -k, --key          GPG key used to sign the files (default: '${GPG_KEY}')
   -h, --help         Show this help
 EOF
     elif [ "appsign" == "$cmd" ]; then
@@ -136,8 +137,7 @@ Sign binaries with code signing certificates on Windows and macOS
 
 Options:
   -f, --files        Files to sign (required)
-  -k, --signtool-key Key to be used with signtool (required for Windows EXE)
-  -i, --identity     Apple Developer ID to be used with codesign (required for macOS APP and DMG)
+  -k, --key          Signing Key or Apple Developer ID
   -h, --help         Show this help
 EOF
     fi
@@ -437,7 +437,7 @@ merge() {
                 SRC_DIR="$2"
                 shift ;;
             
-            -g|--gpg-key)
+            -k|--key|-g|--gpg-key)
                 GPG_GIT_KEY="$2"
                 shift ;;
             
@@ -514,7 +514,14 @@ merge() {
 # -----------------------------------------------------------------------
 #                             build command
 # -----------------------------------------------------------------------
-build() {    
+build() {
+    local build_source_tarball=true
+    local build_snapshot=false
+    local build_snapcraft=false
+    local build_generators=""
+    local build_appsign=false
+    local build_key=""
+    
     while [ $# -ge 1 ]; do
         local arg="$1"
         case "$arg" in
@@ -541,14 +548,20 @@ build() {
             -d|--docker-image)
                 DOCKER_IMAGE="$2"
                 shift ;;
+
+            --appsign)
+                build_appsign=true ;;
+
+            -k|--key)
+                build_key="$2"
+                shift ;;
             
             --container-name)
                 DOCKER_CONTAINER_NAME="$2"
                 shift ;;
                 
             --snapcraft)
-                BUILD_SNAPCRAFT=true
-                shift ;;
+                build_snapcraft=true ;;
             
             -c|--cmake-options)
                 CMAKE_OPTIONS="$2"
@@ -561,6 +574,10 @@ build() {
             -m|--make-options)
                 MAKE_OPTIONS="$2"
                 shift ;;
+
+            -g|--generators)
+                build_generators="$2"
+                shift ;;
             
             -i|--install-prefix)
                 INSTALL_PREFIX="$2"
@@ -571,10 +588,10 @@ build() {
                 shift ;;
             
             -n|--no-source-tarball)
-                BUILD_SOURCE_TARBALL=false ;;
+                build_source_tarball=false ;;
 
             --snapshot)
-                BUILD_SNAPSHOT=true ;;
+                build_snapshot=true ;;
             
             -h|--help)
                 printUsage "build"
@@ -592,7 +609,7 @@ build() {
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
 
-    if ${BUILD_SNAPSHOT}; then
+    if ${build_snapshot}; then
         TAG_NAME="HEAD"
         local branch=`git rev-parse --abbrev-ref HEAD`
         logInfo "Using current branch ${branch} to build..."
@@ -618,7 +635,7 @@ build() {
         exitError "Failed to create output directory!"
     fi
 
-    if ${BUILD_SOURCE_TARBALL}; then
+    if ${build_source_tarball}; then
         logInfo "Creating source tarball..."
         local app_name_lower="$(echo "$APP_NAME" | tr '[:upper:]' '[:lower:]')"
         local prefix="${app_name_lower}-${RELEASE_NAME}"
@@ -626,7 +643,7 @@ build() {
 
         git archive --format=tar "$TAG_NAME" --prefix="${prefix}/" --output="${OUTPUT_DIR}/${tarball_name}"
 
-        if ! ${BUILD_SNAPSHOT}; then
+        if ! ${build_snapshot}; then
             # add .version file to tar
             mkdir "${prefix}"
             echo -n ${RELEASE_NAME} > "${prefix}/.version"
@@ -638,7 +655,7 @@ build() {
         xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
 
-    if ! ${BUILD_SNAPSHOT} && [ -e "${OUTPUT_DIR}/build-release" ]; then
+    if ! ${build_snapshot} && [ -e "${OUTPUT_DIR}/build-release" ]; then
         logInfo "Cleaning existing build directory..."
         rm -r "${OUTPUT_DIR}/build-release" 2> /dev/null
         if [ $? -ne 0 ]; then
@@ -681,22 +698,38 @@ build() {
             # Building on Windows with Msys2
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" $CMAKE_OPTIONS "$SRC_DIR"
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
             
             logInfo "Compiling and packaging sources..."
             mingw32-make ${MAKE_OPTIONS} preinstall
+
+            # Appsign the executables if desired
+            if [[ ${build_appsign} && ! -z ${build_key} ]]; then
+                logInfo "Signing executable files"
+                appsign "-f" `find src | grep '\.exe'` "-k" "${build_key}"
+            fi
+
             # Call cpack directly instead of calling make package.
             # This is important because we want to build the MSI when making a
             # release.
-            cpack -G "NSIS;ZIP;${CPACK_GENERATORS}"
+            cpack -G "${CPACK_GENERATORS};${build_generators}"
+
+            # Inject the portable config into the zip build and rename
+            for filename in ${APP_NAME}-*.zip; do
+                logInfo "Creating portable zip file"
+                local folder=`echo ${filename} | sed -r 's/(.*)\.zip/\1/'`
+                python -c 'import zipfile,sys ; zipfile.ZipFile(sys.argv[1],"a").write(sys.argv[2],sys.argv[3])' \
+                    ${filename} ${SRC_DIR}/share/keepassxc.ini ${folder}/keepassxc.ini
+                mv ${filename} ${folder}-portable.zip
+            done
             
-            mv "./${APP_NAME}-"*.* ../
+            mv "${APP_NAME}-"*.* ../
         else
             mkdir -p "${OUTPUT_DIR}/bin-release"
             
             # Building on Linux without Docker container
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
+            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off ${CMAKE_OPTIONS} \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
                 -DKEEPASSXC_DIST_TYPE=AppImage "$SRC_DIR"
                 
@@ -710,7 +743,7 @@ build() {
             ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
         fi
     else
-        if ${BUILD_SNAPCRAFT}; then
+        if ${build_snapcraft}; then
             logInfo "Building snapcraft docker image..."
             
             sudo docker image build -t "$DOCKER_IMAGE" "$(realpath "$SRC_DIR")/ci/snapcraft"
@@ -767,7 +800,7 @@ gpgsign() {
                     shift
                 done ;;
 
-            -g|--gpg-key)
+            -k|--key|-g|--gpg-key)
                 GPG_KEY="$2"
                 shift ;;
 
@@ -817,8 +850,7 @@ gpgsign() {
 # -----------------------------------------------------------------------
 appsign() {
     local sign_files=()
-    local signtool_key
-    local codesign_identity
+    local key
 
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -829,12 +861,8 @@ appsign() {
                     shift
                 done ;;
 
-            -k|--signtool-key)
-                signtool_key="$2"
-                shift ;;
-
-            -i|--identity)
-                codesign_identity="$2"
+            -k|--key|-i|--identity)
+                key="$2"
                 shift ;;
 
             -h|--help)
@@ -849,6 +877,12 @@ appsign() {
         shift
     done
 
+    if [ -z "${key}" ]; then
+        logError "Missing arguments, --key is required!\n"
+        printUsage "appsign"
+        exit 1
+    fi
+
     if [ -z "${sign_files}" ]; then
         logError "Missing arguments, --files is required!\n"
         printUsage "appsign"
@@ -862,12 +896,6 @@ appsign() {
     done
 
     if [ "$(uname -s)" == "Darwin" ]; then
-        if [ -z "${codesign_identity}" ]; then
-            logError "Missing arguments, --identity is required on macOS!\n"
-            printUsage "appsign"
-            exit 1
-        fi
-
         checkCodesignCommandExists
 
         local orig_dir="$(pwd)"
@@ -887,7 +915,7 @@ appsign() {
                 fi
 
                 logInfo "Signing app using codesign..."
-                codesign --sign "${codesign_identity}" --verbose --deep ./app/KeePassXC.app
+                codesign --sign "${key}" --verbose --deep ./app/KeePassXC.app
 
                 if [ 0 -ne $? ]; then
                     cd "${orig_dir}"
@@ -912,15 +940,9 @@ appsign() {
         done
 
     elif [ "$(uname -o)" == "Msys" ]; then
-        if [ -z "${signtool_key}" ]; then
-            logError "Missing arguments, --signtool-key is required on Windows!\n"
-            printUsage "appsign"
-            exit 1
-        fi
-
         checkOsslsigncodeCommandExists
 
-        if [[ ! -f "${signtool_key}" ]]; then
+        if [[ ! -f "${key}" ]]; then
             exitError "Key file was not found!"
         fi
 
@@ -931,7 +953,7 @@ appsign() {
             if [[ ${f: -4} == ".exe" ]]; then
                 logInfo "Signing file '${f}' using osslsigncode..."
                 # output a signed exe; we have to use a different name due to osslsigntool limitations
-                osslsigncode sign -pkcs12 "${signtool_key}" -pass "${password}" -n "KeePassXC" \
+                osslsigncode sign -pkcs12 "${key}" -pass "${password}" -n "KeePassXC" \
                     -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
 
                 if [ 0 -ne $? ]; then
@@ -947,7 +969,7 @@ appsign() {
 
                 # osslsigncode does not succeed at signing MSI files at this time...
                 logInfo "Signing file '${f}' using Microsoft signtool..."
-                signtool sign -f "${signtool_key}" -p "${password}" -d "KeePassXC" \
+                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" \
                     -t "http://timestamp.comodoca.com/authenticode" "${f}"
                 
                 if [ 0 -ne $? ]; then

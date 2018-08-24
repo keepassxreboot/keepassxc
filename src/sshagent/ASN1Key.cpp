@@ -103,15 +103,14 @@ namespace
 
         mpi_invm(u, q, p);
 
-        iqmp_hex.resize((bap.length() + 1) * 2);
-        gcry_mpi_print(
-            GCRYMPI_FMT_HEX, reinterpret_cast<unsigned char*>(iqmp_hex.data()), iqmp_hex.length(), nullptr, u);
+        iqmp_hex.resize(bap.length() * 2);
+        gcry_mpi_print(GCRYMPI_FMT_HEX, reinterpret_cast<unsigned char*>(iqmp_hex.data()), iqmp_hex.size(), nullptr, u);
 
         gcry_mpi_release(u);
         gcry_mpi_release(p);
         gcry_mpi_release(q);
 
-        return QByteArray::fromHex(iqmp_hex);
+        return QByteArray::fromHex(QString(iqmp_hex).toLatin1());
     }
 }
 

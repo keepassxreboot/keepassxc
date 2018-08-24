@@ -224,6 +224,8 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionDonate"/>
+    <addaction name="actionBugReport"/>
    </widget>
    <widget class="QMenu" name="menuEntries">
     <property name="title">
@@ -321,6 +323,8 @@
    <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionLockDatabases"/>
+   <addaction name="separator"/>
+   <addaction name="actionSettings"/>
    <addaction name="separator"/>
   </widget>
   <action name="actionQuit">
@@ -456,14 +460,6 @@
     <string>&amp;Clone entry</string>
    </property>
   </action>
-  <action name="actionSearch">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>&amp;Find</string>
-   </property>
-  </action>
   <action name="actionEntryCopyUsername">
    <property name="enabled">
     <bool>false</bool>
@@ -487,6 +483,9 @@
    </property>
   </action>
   <action name="actionSettings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>&amp;Settings</string>
    </property>
@@ -603,6 +602,16 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionDonate">
+   <property name="text">
+    <string>&amp;Donate</string>
+   </property>
+  </action>
+  <action name="actionBugReport">
+   <property name="text">
+    <string>Report a &amp;bug</string>
    </property>
   </action>
  </widget>

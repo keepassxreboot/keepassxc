@@ -116,10 +116,10 @@ void NativeMessagingHost::readLength()
     }
 }
 
-void NativeMessagingHost::readStdIn(const quint32 length)
+bool NativeMessagingHost::readStdIn(const quint32 length)
 {
     if (length <= 0) {
-        return;
+        return false;
     }
 
     QByteArray arr;
@@ -131,7 +131,7 @@ void NativeMessagingHost::readStdIn(const quint32 length)
         int c = std::getchar();
         if (c == EOF) {
             // message ended prematurely, ignore it and return
-            return;
+            return false;
         }
         arr.append(static_cast<char>(c));
     }
@@ -139,6 +139,7 @@ void NativeMessagingHost::readStdIn(const quint32 length)
     if (arr.length() > 0) {
         sendReply(m_browserClients.readResponse(arr));
     }
+    return true;
 }
 
 void NativeMessagingHost::newLocalConnection()

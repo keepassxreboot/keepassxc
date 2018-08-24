@@ -81,8 +81,10 @@ private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
     void updateWindowTitle();
     void showAboutDialog();
+    void openDonateUrl();
+    void openBugReportUrl();
     void switchToDatabases();
-    void switchToSettings();
+    void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();

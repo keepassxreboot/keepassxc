@@ -33,8 +33,9 @@ public slots:
     void socketStateChanged(QLocalSocket::LocalSocketState socketState);
 
 private:
+    void readNativeMessages();
     void readLength();
-    void readStdIn(const quint32 length);
+    bool readStdIn(const quint32 length);
 
 private:
     QLocalSocket* m_localSocket;

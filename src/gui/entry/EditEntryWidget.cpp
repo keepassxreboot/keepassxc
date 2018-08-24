@@ -862,7 +862,6 @@ void EditEntryWidget::acceptEntry()
 {
     if (commitEntry()) {
         clear();
-        hideMessage();
         emit editFinished(true);
     }
 }

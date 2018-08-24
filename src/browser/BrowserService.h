@@ -52,8 +52,8 @@ public:
                   const QString& url,
                   const QString& submitUrl,
                   const QString& realm);
-    QList<Entry*> searchEntries(Database* db, const QString& hostname);
-    QList<Entry*> searchEntries(const QString& text, const StringPairList& keyList);
+    QList<Entry*> searchEntries(Database* db, const QString& hostname, const QString& url);
+    QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
 

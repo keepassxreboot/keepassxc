@@ -46,7 +46,7 @@ signals:
 
 private:
     void readLength();
-    void readStdIn(const quint32 length);
+    bool readStdIn(const quint32 length);
     void sendReplyToAllClients(const QJsonObject& json);
 
 private slots:
