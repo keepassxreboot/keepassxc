@@ -17,9 +17,6 @@
 
 #include "SquareSvgWidget.h"
 
-SquareSvgWidget::SquareSvgWidget() = default;
-SquareSvgWidget::~SquareSvgWidget() = default;
-
 bool SquareSvgWidget::hasHeightForWidth() const
 {
     return true;

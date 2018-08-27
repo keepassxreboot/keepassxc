@@ -18,13 +18,13 @@
 #ifndef KEEPASSX_SquareSvgWidget_H
 #define KEEPASSX_SquareSvgWidget_H
 
-#include <QSvgWidget>
+#include <QtSvg/QSvgWidget>
 
 class SquareSvgWidget : public QSvgWidget
 {
 public:
-    SquareSvgWidget();
-    ~SquareSvgWidget();
+    SquareSvgWidget() = default;
+    ~SquareSvgWidget() override = default;
 
     bool hasHeightForWidth() const override;
     int heightForWidth(int width) const override;

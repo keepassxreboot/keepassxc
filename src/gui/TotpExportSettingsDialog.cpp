@@ -43,14 +43,9 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 {
     m_verticalLayout->addItem(new QSpacerItem(0, 0));
 
-    auto horizontalLayout = new QHBoxLayout();
-    horizontalLayout->addItem(new QSpacerItem(0, 0));
-    horizontalLayout->addWidget(m_totpSvgWidget);
-    horizontalLayout->addItem(new QSpacerItem(0, 0));
-
-    m_verticalLayout->addItem(horizontalLayout);
-    m_verticalLayout->addItem(new QSpacerItem(0, 0));
-
+    m_verticalLayout->addStretch(0);
+    m_verticalLayout->addWidget(m_totpSvgWidget);
+    m_verticalLayout->addStretch(0);
     m_verticalLayout->addWidget(m_countDown);
     m_verticalLayout->addWidget(m_buttonBox);
 
@@ -73,17 +68,10 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 
     if (qrc.isValid()) {
         QBuffer buffer;
-        qrc.writeSvg(&buffer, this->logicalDpiX());
+        qrc.writeSvg(&buffer, logicalDpiX());
         m_totpSvgWidget->load(buffer.data());
-
-        const int threeInches = this->logicalDpiX() * 3;
-        const int fourInches = this->logicalDpiX() * 4;
-        const QSizePolicy sizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        m_totpSvgWidget->resize(QSize(threeInches, threeInches));
-        m_totpSvgWidget->setSizePolicy(sizePolicy);
-        setMinimumSize(QSize(threeInches, fourInches));
-        setSizePolicy(sizePolicy);
+        const int minsize = static_cast<int>(logicalDpiX() * 2.5);
+        m_totpSvgWidget->setMinimumSize(minsize, minsize);
     } else {
         auto errorBox = new QMessageBox(parent);
         errorBox->setAttribute(Qt::WA_DeleteOnClose);
