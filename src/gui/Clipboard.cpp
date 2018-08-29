@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,6 +20,7 @@
 
 #include <QApplication>
 #include <QClipboard>
+#include <QMimeData>
 #include <QTimer>
 
 #include "core/Config.h"
@@ -46,15 +48,20 @@ void Clipboard::setText(const QString& text)
 {
     QClipboard* clipboard = QApplication::clipboard();
 
-#ifdef Q_OS_MAC
     QMimeData* mime = new QMimeData;
+#ifdef Q_OS_MAC
     mime->setText(text);
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
-    clipboard->setText(text, QClipboard::Clipboard);
+    const QString secretStr = "secret";
+    QByteArray secretBa = secretStr.toUtf8();
+    mime->setText(text);
+    mime->setData("x-kde-passwordManagerHint", secretBa);
+    clipboard->setMimeData(mime, QClipboard::Clipboard);
+
     if (clipboard->supportsSelection()) {
-        clipboard->setText(text, QClipboard::Selection);
+        clipboard->setMimeData(mime, QClipboard::Selection);
     }
 #endif
 
