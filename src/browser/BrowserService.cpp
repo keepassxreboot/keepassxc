@@ -388,7 +388,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         return entries;
     }
 
-    for (Entry* entry : EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
+    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup, Qt::CaseInsensitive)) {
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();
@@ -401,7 +401,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         }
 
         // Filter to match hostname in URL field
-        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
+        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl)) 
             || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
@@ -778,6 +778,29 @@ bool BrowserService::removeFirstDomain(QString& hostname)
 
     // Nothing removed
     return false;
+}
+
+/**
+ * Gets the base domain of URL.
+ *
+ * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
+ */
+QString BrowserService::baseDomain(const QString& url) const
+{
+    QUrl qurl = QUrl::fromUserInput(url);
+    QString hostname = qurl.host();
+
+    if (hostname.isEmpty() || !hostname.contains(qurl.topLevelDomain())) {
+        return {};
+    }
+
+    // Remove the top level domain part from the hostname, e.g. https://another.example.co.uk -> https://another.example
+    hostname.chop(qurl.topLevelDomain().length());
+    // Split the URL and select the last part, e.g. https://another.example -> example
+    QString baseDomain = hostname.split('.').last();
+    // Append the top level domain back to the URL, e.g. example -> example.co.uk
+    baseDomain.append(qurl.topLevelDomain());
+    return baseDomain;
 }
 
 Database* BrowserService::getDatabase()
