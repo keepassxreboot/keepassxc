@@ -14,6 +14,8 @@ apps:
     command: desktop-launch keepassxc
     plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy]
     desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
+    environment:
+      DISABLE_WAYLAND: 1
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
@@ -34,7 +36,7 @@ parts:
       - -DWITH_XC_ALL=ON
     build-packages:
       - g++
-      - libgcrypt20-18-dev
+      - libgcrypt20-dev
       - libqt5x11extras5-dev
       - qtbase5-dev
       - qttools5-dev
