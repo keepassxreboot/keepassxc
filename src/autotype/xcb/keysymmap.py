@@ -47,12 +47,10 @@ with open(keysymdef, "r") as fid:
             unicodeVal = int(match.group(2), 16)
 
             # ignore 1:1 mappings
-            if keysym >= 0x0020 and keysym <= 0x007e:
-                continue
-            if keysym >= 0x00a0 and keysym <= 0x00ff:
+            if 0x0020 <= keysym <= 0x007e or 0x00a0 <= keysym <= 0x00ff:
                 continue
             # ignore unicode | 0x01000000 mappings
-            if keysym >= 0x1000000:
+            elif keysym >= 0x1000000:
                 continue
 
             keysymMap[unicodeVal] = keysym
