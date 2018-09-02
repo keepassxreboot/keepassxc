@@ -64,7 +64,7 @@ print("""/*
  */
 """)
 
-print("const int AutoTypePlatformX11::m_unicodeToKeysymLen = " + str(len(keysymMap)) + ";")
+print("const int AutoTypePlatformX11::m_unicodeToKeysymLen = {0};".format(len(keysymMap)))
 
 print()
 
