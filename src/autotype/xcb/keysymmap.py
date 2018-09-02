@@ -39,23 +39,23 @@ else:
 
 keysymMap = {}
 
-f = open(keysymdef, "r")
-for line in f:
-    match = re.search(r'0x([0-9a-fA-F]+)\s+/\* U\+([0-9a-fA-F]+)', line)
-    if match:
-        keysym = int(match.group(1), 16)
-        unicodeVal = int(match.group(2), 16)
+with open(keysymdef, "r") as fid:
+    for line in fid:
+        match = re.search(r'0x([0-9a-fA-F]+)\s+/\* U\+([0-9a-fA-F]+)', line)
+        if match:
+            keysym = int(match.group(1), 16)
+            unicodeVal = int(match.group(2), 16)
 
-        # ignore 1:1 mappings
-        if keysym >= 0x0020 and keysym <= 0x007e:
-            continue
-        if keysym >= 0x00a0 and keysym <= 0x00ff:
-            continue
-        # ignore unicode | 0x01000000 mappings
-        if keysym >= 0x1000000:
-            continue
+            # ignore 1:1 mappings
+            if keysym >= 0x0020 and keysym <= 0x007e:
+                continue
+            if keysym >= 0x00a0 and keysym <= 0x00ff:
+                continue
+            # ignore unicode | 0x01000000 mappings
+            if keysym >= 0x1000000:
+                continue
 
-        keysymMap[unicodeVal] = keysym
+            keysymMap[unicodeVal] = keysym
 
 keysymMap = collections.OrderedDict(sorted(keysymMap.items(), key=lambda t: t[0]))
 
