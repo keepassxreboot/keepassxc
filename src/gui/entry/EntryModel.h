@@ -42,7 +42,8 @@ public:
         Modified = 8,
         Accessed = 9,
         Paperclip = 10,
-        Attachments = 11
+        Attachments = 11,
+        Totp = 12
     };
 
     explicit EntryModel(QObject* parent = nullptr);

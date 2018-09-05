@@ -18,6 +18,7 @@
 
 #include "totp.h"
 #include "core/Base32.h"
+
 #include <QCryptographicHash>
 #include <QDateTime>
 #include <QMessageAuthenticationCode>
@@ -28,114 +29,107 @@
 #include <QtEndian>
 #include <cmath>
 
-const quint8 Totp::defaultStep = 30;
-const quint8 Totp::defaultDigits = 6;
-
-/**
- * Custom encoder types. Each should be unique and >= 128 and < 255
- * Values have no meaning outside of keepassxc
- */
-/**
- * Encoder for Steam Guard TOTP
- */
-const quint8 Totp::ENCODER_STEAM = 254;
-
-const Totp::Encoder Totp::defaultEncoder = {"", "", "0123456789", 0, 0, false};
-const QMap<quint8, Totp::Encoder> Totp::encoders{
-    {Totp::ENCODER_STEAM, {"steam", "S", "23456789BCDFGHJKMNPQRTVWXY", 5, 30, true}},
+static QList<Totp::Encoder> encoders {
+    {"", "", "0123456789", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP, false},
+    {"steam", Totp::STEAM_SHORTNAME, "23456789BCDFGHJKMNPQRTVWXY", Totp::STEAM_DIGITS, Totp::DEFAULT_STEP, true},
 };
 
-/**
- * These map the second field of the "TOTP Settings" field to our internal encoder number
- * that overloads the digits field. Make sure that the key matches the shortName value
- * in the corresponding Encoder
- * NOTE: when updating this map, a corresponding edit to the settings regex must be made
- *       in Entry::totpSeed()
- */
-const QMap<QString, quint8> Totp::shortNameToEncoder{
-    {"S", Totp::ENCODER_STEAM},
-};
-/**
- * These map the "encoder=" URL parameter of the "otp" field to our internal encoder number
- * that overloads the digits field. Make sure that the key matches the name value
- * in the corresponding Encoder
- */
-const QMap<QString, quint8> Totp::nameToEncoder{
-    {"steam", Totp::ENCODER_STEAM},
-};
-
-Totp::Totp()
+QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, const QString& key)
 {
-}
+    // Create default settings
+    auto settings = createSettings(key, DEFAULT_DIGITS, DEFAULT_STEP);
 
-QString Totp::parseOtpString(QString key, quint8& digits, quint8& step)
-{
-    QUrl url(key);
-
-    QString seed;
-    uint q_digits, q_step;
-
-    // Default OTP url format
+    QUrl url(rawSettings);
     if (url.isValid() && url.scheme() == "otpauth") {
+        // Default OTP url format
         QUrlQuery query(url);
-
-        seed = query.queryItemValue("secret");
-
-        q_digits = query.queryItemValue("digits").toUInt();
-        if (q_digits == 6 || q_digits == 8) {
-            digits = q_digits;
-        }
-
-        q_step = query.queryItemValue("period").toUInt();
-        if (q_step > 0 && q_step <= 60) {
-            step = q_step;
-        }
-        QString encName = query.queryItemValue("encoder");
-        if (!encName.isEmpty() && nameToEncoder.contains(encName)) {
-            digits = nameToEncoder[encName];
+        settings->otpUrl = true;
+        settings->key = query.queryItemValue("secret");
+        settings->digits = query.queryItemValue("digits").toUInt();
+        settings->step = query.queryItemValue("period").toUInt();
+        if (query.hasQueryItem("encoder")) {
+            settings->encoder = getEncoderByName(query.queryItemValue("encoder"));
         }
     } else {
-        // Compatibility with "KeeOtp" plugin string format
-        QRegExp rx("key=(.+)", Qt::CaseInsensitive, QRegExp::RegExp);
-
-        if (rx.exactMatch(key)) {
-            QUrlQuery query(key);
-
-            seed = query.queryItemValue("key");
-            q_digits = query.queryItemValue("size").toUInt();
-            if (q_digits == 6 || q_digits == 8) {
-                digits = q_digits;
-            }
-
-            q_step = query.queryItemValue("step").toUInt();
-            if (q_step > 0 && q_step <= 60) {
-                step = q_step;
-            }
-
+        QUrlQuery query(rawSettings);
+        if (query.hasQueryItem("key")) {
+            // Compatibility with "KeeOtp" plugin
+            // if settings are changed, will convert to semi-colon format
+            settings->key = query.queryItemValue("key");
+            settings->digits = query.queryItemValue("size").toUInt();
+            settings->step = query.queryItemValue("step").toUInt();
         } else {
-            seed = key;
+            // Parse semi-colon separated values ([step];[digits|S])
+            auto vars = rawSettings.split(";");
+            if (vars.size() >= 2) {
+                if (vars[1] == STEAM_SHORTNAME) {
+                    // Explicit steam encoder
+                    settings->encoder = steamEncoder();
+                } else {
+                    // Extract step and digits
+                    settings->step = vars[0].toUInt();
+                    settings->digits = vars[1].toUInt();
+                }
+            }
         }
     }
 
-    if (digits == 0) {
-        digits = defaultDigits;
+    // Bound digits and step
+    settings->digits = qMax(1u, settings->digits);
+    settings->step = qBound(1u, settings->step, 60u);
+
+    // Detect custom settings, used by setup GUI
+    if (settings->encoder.shortName != STEAM_SHORTNAME
+        && (settings->digits != DEFAULT_DIGITS || settings->step != DEFAULT_STEP)) {
+        settings->custom = true;
     }
 
-    if (step == 0) {
-        step = defaultStep;
-    }
-
-    return seed;
+    return settings;
 }
 
-QString Totp::generateTotp(const QByteArray key,
-                           quint64 time,
-                           const quint8 numDigits = defaultDigits,
-                           const quint8 step = defaultStep)
+QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const uint digits, const uint step,
+                                                    const QString& encoderShortName)
 {
-    quint64 current = qToBigEndian(time / step);
+    bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP;
+    return QSharedPointer<Totp::Settings>(new Totp::Settings {
+        getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step
+    });
+}
 
-    QVariant secret = Base32::decode(Base32::sanitizeInput(key));
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
+{
+    // OTP Url output
+    if (settings->otpUrl) {
+        auto urlstring = QString("key=%1&step=%2&size=%3").arg(settings->key).arg(settings->step).arg(settings->digits);
+        if (!settings->encoder.name.isEmpty()) {
+            urlstring.append("&encoder=").append(settings->encoder.name);
+        }
+        return urlstring;
+    }
+
+    // Semicolon output [step];[encoder]
+    if (!settings->encoder.shortName.isEmpty()) {
+        return QString("%1;%2").arg(settings->step).arg(settings->encoder.shortName);
+    }
+
+    // Semicolon output [step];[digits]
+    return QString("%1;%2").arg(settings->step).arg(settings->digits);
+}
+
+QString Totp::generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time)
+{
+    const Encoder& encoder = settings->encoder;
+    uint step = settings->custom ? settings->step : encoder.step;
+    uint digits = settings->custom ? settings->digits : encoder.digits;
+
+    quint64 current;
+    if (time == 0) {
+        current = qToBigEndian(QDateTime::currentDateTime().toTime_t() / step);
+    } else {
+        current = qToBigEndian(time / step);
+    }
+
+    QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
     if (secret.isNull()) {
         return "Invalid TOTP secret key";
     }
@@ -155,9 +149,6 @@ QString Totp::generateTotp(const QByteArray key,
             | (hmac[offset + 3] & 0xff);
     // clang-format on
 
-    const Encoder& encoder = encoders.value(numDigits, defaultEncoder);
-    // if encoder.digits is 0, we need to use the passed-in number of digits (default encoder)
-    quint8 digits = encoder.digits == 0 ? numDigits : encoder.digits;
     int direction = -1;
     int startpos = digits - 1;
     if (encoder.reverse) {
@@ -175,26 +166,34 @@ QString Totp::generateTotp(const QByteArray key,
     return retval;
 }
 
-// See: https://github.com/google/google-authenticator/wiki/Key-Uri-Format
-QUrl Totp::generateOtpString(const QString& secret,
-                             const QString& type,
-                             const QString& issuer,
-                             const QString& username,
-                             const QString& algorithm,
-                             quint8 digits,
-                             quint8 step)
+Totp::Encoder& Totp::defaultEncoder()
 {
-    QUrl keyUri;
-    keyUri.setScheme("otpauth");
-    keyUri.setHost(type);
-    keyUri.setPath(QString("/%1:%2").arg(issuer).arg(username));
-    QUrlQuery parameters;
-    parameters.addQueryItem("secret", secret);
-    parameters.addQueryItem("issuer", issuer);
-    parameters.addQueryItem("algorithm", algorithm);
-    parameters.addQueryItem("digits", QString::number(digits));
-    parameters.addQueryItem("period", QString::number(step));
-    keyUri.setQuery(parameters);
+    // The first encoder is always the default
+    Q_ASSERT(!encoders.empty());
+    return encoders[0];
+}
 
-    return keyUri;
+Totp::Encoder& Totp::steamEncoder()
+{
+    return getEncoderByShortName("S");
+}
+
+Totp::Encoder& Totp::getEncoderByShortName(QString shortName)
+{
+    for (auto& encoder : encoders) {
+        if (encoder.shortName == shortName) {
+            return encoder;
+        }
+    }
+    return defaultEncoder();
+}
+
+Totp::Encoder& Totp::getEncoderByName(QString name)
+{
+    for (auto& encoder : encoders) {
+        if (encoder.name == name) {
+            return encoder;
+        }
+    }
+    return defaultEncoder();
 }

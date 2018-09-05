@@ -56,7 +56,7 @@
 #include "gui/MessageBox.h"
 #include "gui/PasswordEdit.h"
 #include "gui/SearchWidget.h"
-#include "gui/SetupTotpDialog.h"
+#include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -636,7 +636,7 @@ void TestGui::testTotp()
 
     triggerAction("actionEntrySetupTotp");
 
-    SetupTotpDialog* setupTotpDialog = m_dbWidget->findChild<SetupTotpDialog*>("SetupTotpDialog");
+    TotpSetupDialog* setupTotpDialog = m_dbWidget->findChild<TotpSetupDialog*>("TotpSetupDialog");
 
     Tools::wait(100);
 

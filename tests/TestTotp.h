@@ -21,8 +21,6 @@
 
 #include <QObject>
 
-class Totp;
-
 class TestTotp : public QObject
 {
     Q_OBJECT
@@ -31,7 +29,6 @@ private slots:
     void initTestCase();
     void testParseSecret();
     void testTotpCode();
-    void testEncoderData();
     void testSteamTotp();
     void testEntryHistory();
 };

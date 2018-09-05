@@ -127,7 +127,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 12;
+    return 13;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -201,16 +201,20 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Accessed:
             result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
             return result;
-        case Attachments:
-            // Display comma-separated list of attachments
-            QList<QString> attachments = entry->attachments()->keys();
-            for (int i = 0; i < attachments.size(); ++i) {
-                if (result.isEmpty()) {
-                    result.append(attachments.at(i));
-                    continue;
+        case Attachments: {
+                // Display comma-separated list of attachments
+                QList<QString> attachments = entry->attachments()->keys();
+                for (int i = 0; i < attachments.size(); ++i) {
+                    if (result.isEmpty()) {
+                        result.append(attachments.at(i));
+                        continue;
+                    }
+                    result.append(QString(", ") + attachments.at(i));
                 }
-                result.append(QString(", ") + attachments.at(i));
+                return result;
             }
+        case Totp:
+            result = entry->hasTotp() ? tr("Yes") : "";
             return result;
         }
     } else if (role == Qt::UserRole) { // Qt::UserRole is used as sort role, see EntryView::EntryView()
@@ -309,6 +313,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Accessed");
         case Attachments:
             return tr("Attachments");
+        case Totp:
+            return tr("TOTP");
         }
     } else if (role == Qt::DecorationRole) {
         if (section == Paperclip) {

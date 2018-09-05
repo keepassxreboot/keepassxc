@@ -45,8 +45,6 @@ Entry::Entry()
     m_data.iconNumber = DefaultIconNumber;
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
-    m_data.totpStep = Totp::defaultStep;
-    m_data.totpDigits = Totp::defaultDigits;
 
     connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
     connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
@@ -347,74 +345,45 @@ const CustomData* Entry::customData() const
 
 bool Entry::hasTotp() const
 {
-    return m_attributes->hasKey("TOTP Seed") || m_attributes->hasKey("otp");
+    return !m_data.totpSettings.isNull();
 }
 
 QString Entry::totp() const
 {
     if (hasTotp()) {
-        QString seed = totpSeed();
-        quint64 time = QDateTime::currentDateTime().toTime_t();
-        QString output = Totp::generateTotp(seed.toLatin1(), time, m_data.totpDigits, m_data.totpStep);
-
-        return QString(output);
+        return Totp::generateTotp(m_data.totpSettings);
     }
     return {};
 }
 
-void Entry::setTotp(const QString& seed, quint8& step, quint8& digits)
+void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
 {
     beginUpdate();
-    if (step == 0) {
-        step = Totp::defaultStep;
-    }
+    m_data.totpSettings = settings;
 
-    if (digits == 0) {
-        digits = Totp::defaultDigits;
-    }
-    QString data;
-
-    const Totp::Encoder& enc = Totp::encoders.value(digits, Totp::defaultEncoder);
-
-    if (m_attributes->hasKey("otp")) {
-        data = QString("key=%1&step=%2&size=%3").arg(seed).arg(step).arg(enc.digits == 0 ? digits : enc.digits);
-        if (!enc.name.isEmpty()) {
-            data.append("&enocder=").append(enc.name);
-        }
-        m_attributes->set("otp", data, true);
+    auto text = Totp::writeSettings(m_data.totpSettings);
+    if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
+        m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
     } else {
-        m_attributes->set("TOTP Seed", seed, true);
-        if (!enc.shortName.isEmpty()) {
-            data = QString("%1;%2").arg(step).arg(enc.shortName);
-        } else {
-            data = QString("%1;%2").arg(step).arg(digits);
-        }
-        m_attributes->set("TOTP Settings", data);
+        m_attributes->set(Totp::ATTRIBUTE_SEED, m_data.totpSettings->key, true);
+        m_attributes->set(Totp::ATTRIBUTE_SETTINGS, text);
     }
     endUpdate();
 }
 
-QString Entry::totpSeed() const
+void Entry::updateTotp()
 {
-    QString secret = "";
-
-    if (m_attributes->hasKey("otp")) {
-        secret = m_attributes->value("otp");
-    } else if (m_attributes->hasKey("TOTP Seed")) {
-        secret = m_attributes->value("TOTP Seed");
+    if (m_attributes->contains(Totp::ATTRIBUTE_SETTINGS)) {
+        m_data.totpSettings = Totp::parseSettings(m_attributes->value(Totp::ATTRIBUTE_SETTINGS),
+                                                  m_attributes->value(Totp::ATTRIBUTE_SEED));
+    } else if (m_attributes->contains(Totp::ATTRIBUTE_OTP)) {
+        m_data.totpSettings = Totp::parseSettings(m_attributes->value(Totp::ATTRIBUTE_OTP));
     }
-
-    return Totp::parseOtpString(secret, m_data.totpDigits, m_data.totpStep);
 }
 
-quint8 Entry::totpStep() const
+QSharedPointer<Totp::Settings> Entry::totpSettings() const
 {
-    return m_data.totpStep;
-}
-
-quint8 Entry::totpDigits() const
-{
-    return m_data.totpDigits;
+    return m_data.totpSettings;
 }
 
 void Entry::setUuid(const QUuid& uuid)
@@ -723,33 +692,6 @@ bool Entry::endUpdate()
 void Entry::updateModifiedSinceBegin()
 {
     m_modifiedSinceBegin = true;
-}
-
-/**
- * Update TOTP data whenever entry attributes have changed.
- */
-void Entry::updateTotp()
-{
-    m_data.totpDigits = Totp::defaultDigits;
-    m_data.totpStep = Totp::defaultStep;
-
-    if (!m_attributes->hasKey("TOTP Settings")) {
-        return;
-    }
-
-    // this regex must be kept in sync with the set of allowed short names Totp::shortNameToEncoder
-    QRegularExpression rx(QString("(\\d+);((?:\\d+)|S)"));
-    QRegularExpressionMatch m = rx.match(m_attributes->value("TOTP Settings"));
-    if (!m.hasMatch()) {
-        return;
-    }
-
-    m_data.totpStep = static_cast<quint8>(m.captured(1).toUInt());
-    if (Totp::shortNameToEncoder.contains(m.captured(2))) {
-        m_data.totpDigits = Totp::shortNameToEncoder[m.captured(2)];
-    } else {
-        m_data.totpDigits = static_cast<quint8>(m.captured(2).toUInt());
-    }
 }
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const

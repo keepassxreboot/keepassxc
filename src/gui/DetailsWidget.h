@@ -33,7 +33,7 @@ class DetailsWidget : public QWidget
 
 public:
     explicit DetailsWidget(QWidget* parent = nullptr);
-    ~DetailsWidget();
+    ~DetailsWidget() override;
 
 public slots:
     void setEntry(Entry* selectedEntry);
@@ -56,8 +56,6 @@ private slots:
     void updateGroupGeneralTab();
     void updateGroupNotesTab();
 
-    void stopTotpTimer();
-    void deleteTotpTimer();
     void updateTotpLabel();
     void updateTabIndexes();
 
@@ -71,8 +69,7 @@ private:
     bool m_locked;
     Entry* m_currentEntry;
     Group* m_currentGroup;
-    quint8 m_step;
-    QPointer<QTimer> m_totpTimer;
+    QTimer m_totpTimer;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
 };
