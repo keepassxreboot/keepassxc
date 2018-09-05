@@ -55,13 +55,13 @@ private:
     bool saveFile(SupportedBrowsers browser, const QJsonObject& script);
 
 private:
-    static const QString HOST_NAME;
-    static const QStringList ALLOWED_EXTENSIONS;
-    static const QStringList ALLOWED_ORIGINS;
-    static const QString TARGET_DIR_CHROME;
-    static const QString TARGET_DIR_CHROMIUM;
-    static const QString TARGET_DIR_FIREFOX;
-    static const QString TARGET_DIR_VIVALDI;
+    const QString HOST_NAME;
+    const QStringList ALLOWED_EXTENSIONS;
+    const QStringList ALLOWED_ORIGINS;
+    const QString TARGET_DIR_CHROME;
+    const QString TARGET_DIR_CHROMIUM;
+    const QString TARGET_DIR_FIREFOX;
+    const QString TARGET_DIR_VIVALDI;
 };
 
 #endif // HOSTINSTALLER_H

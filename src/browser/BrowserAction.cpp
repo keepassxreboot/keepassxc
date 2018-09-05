@@ -270,8 +270,8 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
 {
     const QString nonce = json.value("nonce").toString();
-    const QString password = BrowserSettings::generatePassword();
-    const QString bits = QString::number(BrowserSettings::getbits()); // For some reason this always returns 1140 bits?
+    const QString password = browserSettings()->generatePassword();
+    const QString bits = QString::number(browserSettings()->getbits()); // For some reason this always returns 1140 bits?
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();

@@ -66,36 +66,36 @@ BrowserOptionDialog::~BrowserOptionDialog()
 
 void BrowserOptionDialog::loadSettings()
 {
-    BrowserSettings settings;
-    m_ui->enableBrowserSupport->setChecked(settings.isEnabled());
+    auto settings = browserSettings();
+    m_ui->enableBrowserSupport->setChecked(settings->isEnabled());
 
-    m_ui->showNotification->setChecked(settings.showNotification());
-    m_ui->bestMatchOnly->setChecked(settings.bestMatchOnly());
-    m_ui->unlockDatabase->setChecked(settings.unlockDatabase());
-    m_ui->matchUrlScheme->setChecked(settings.matchUrlScheme());
+    m_ui->showNotification->setChecked(settings->showNotification());
+    m_ui->bestMatchOnly->setChecked(settings->bestMatchOnly());
+    m_ui->unlockDatabase->setChecked(settings->unlockDatabase());
+    m_ui->matchUrlScheme->setChecked(settings->matchUrlScheme());
 
     // hide unimplemented options
     // TODO: fix this
     m_ui->showNotification->hide();
 
-    if (settings.sortByUsername()) {
+    if (settings->sortByUsername()) {
         m_ui->sortByUsername->setChecked(true);
     } else {
         m_ui->sortByTitle->setChecked(true);
     }
 
-    m_ui->alwaysAllowAccess->setChecked(settings.alwaysAllowAccess());
-    m_ui->alwaysAllowUpdate->setChecked(settings.alwaysAllowUpdate());
-    m_ui->searchInAllDatabases->setChecked(settings.searchInAllDatabases());
-    m_ui->supportKphFields->setChecked(settings.supportKphFields());
-    m_ui->supportBrowserProxy->setChecked(settings.supportBrowserProxy());
-    m_ui->useCustomProxy->setChecked(settings.useCustomProxy());
-    m_ui->customProxyLocation->setText(settings.customProxyLocation());
-    m_ui->updateBinaryPath->setChecked(settings.updateBinaryPath());
-    m_ui->chromeSupport->setChecked(settings.chromeSupport());
-    m_ui->chromiumSupport->setChecked(settings.chromiumSupport());
-    m_ui->firefoxSupport->setChecked(settings.firefoxSupport());
-    m_ui->vivaldiSupport->setChecked(settings.vivaldiSupport());
+    m_ui->alwaysAllowAccess->setChecked(settings->alwaysAllowAccess());
+    m_ui->alwaysAllowUpdate->setChecked(settings->alwaysAllowUpdate());
+    m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
+    m_ui->supportKphFields->setChecked(settings->supportKphFields());
+    m_ui->supportBrowserProxy->setChecked(settings->supportBrowserProxy());
+    m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
+    m_ui->customProxyLocation->setText(settings->customProxyLocation());
+    m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
+    m_ui->chromeSupport->setChecked(settings->chromeSupport());
+    m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
+    m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
+    m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
 
 #if defined(KEEPASSXC_DIST_APPIMAGE)
     m_ui->supportBrowserProxy->setChecked(true);
@@ -113,28 +113,28 @@ void BrowserOptionDialog::loadSettings()
 
 void BrowserOptionDialog::saveSettings()
 {
-    BrowserSettings settings;
-    settings.setEnabled(m_ui->enableBrowserSupport->isChecked());
-    settings.setShowNotification(m_ui->showNotification->isChecked());
-    settings.setBestMatchOnly(m_ui->bestMatchOnly->isChecked());
-    settings.setUnlockDatabase(m_ui->unlockDatabase->isChecked());
-    settings.setMatchUrlScheme(m_ui->matchUrlScheme->isChecked());
-    settings.setSortByUsername(m_ui->sortByUsername->isChecked());
+    auto settings = browserSettings();
+    settings->setEnabled(m_ui->enableBrowserSupport->isChecked());
+    settings->setShowNotification(m_ui->showNotification->isChecked());
+    settings->setBestMatchOnly(m_ui->bestMatchOnly->isChecked());
+    settings->setUnlockDatabase(m_ui->unlockDatabase->isChecked());
+    settings->setMatchUrlScheme(m_ui->matchUrlScheme->isChecked());
+    settings->setSortByUsername(m_ui->sortByUsername->isChecked());
 
-    settings.setSupportBrowserProxy(m_ui->supportBrowserProxy->isChecked());
-    settings.setUseCustomProxy(m_ui->useCustomProxy->isChecked());
-    settings.setCustomProxyLocation(m_ui->customProxyLocation->text());
+    settings->setSupportBrowserProxy(m_ui->supportBrowserProxy->isChecked());
+    settings->setUseCustomProxy(m_ui->useCustomProxy->isChecked());
+    settings->setCustomProxyLocation(m_ui->customProxyLocation->text());
 
-    settings.setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
-    settings.setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
-    settings.setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
-    settings.setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
-    settings.setSupportKphFields(m_ui->supportKphFields->isChecked());
+    settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
+    settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
+    settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
+    settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
+    settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
 
-    settings.setChromeSupport(m_ui->chromeSupport->isChecked());
-    settings.setChromiumSupport(m_ui->chromiumSupport->isChecked());
-    settings.setFirefoxSupport(m_ui->firefoxSupport->isChecked());
-    settings.setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
+    settings->setChromeSupport(m_ui->chromeSupport->isChecked());
+    settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());
+    settings->setFirefoxSupport(m_ui->firefoxSupport->isChecked());
+    settings->setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
 }
 
 void BrowserOptionDialog::showProxyLocationFileDialog()

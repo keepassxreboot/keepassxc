@@ -27,95 +27,105 @@
 class BrowserSettings
 {
 public:
-    static bool isEnabled();
-    static void setEnabled(bool enabled);
+    explicit BrowserSettings() = default;
+    static BrowserSettings* instance();
 
-    static bool showNotification(); // TODO!!
-    static void setShowNotification(bool showNotification);
-    static bool bestMatchOnly();
-    static void setBestMatchOnly(bool bestMatchOnly);
-    static bool unlockDatabase();
-    static void setUnlockDatabase(bool unlockDatabase);
-    static bool matchUrlScheme();
-    static void setMatchUrlScheme(bool matchUrlScheme);
-    static bool sortByUsername();
-    static void setSortByUsername(bool sortByUsername = true);
-    static bool sortByTitle();
-    static void setSortByTitle(bool sortByUsertitle = true);
-    static bool alwaysAllowAccess();
-    static void setAlwaysAllowAccess(bool alwaysAllowAccess);
-    static bool alwaysAllowUpdate();
-    static void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
-    static bool searchInAllDatabases();
-    static void setSearchInAllDatabases(bool searchInAllDatabases);
-    static bool supportKphFields();
-    static void setSupportKphFields(bool supportKphFields);
+    bool isEnabled();
+    void setEnabled(bool enabled);
 
-    static bool supportBrowserProxy();
-    static void setSupportBrowserProxy(bool enabled);
-    static bool useCustomProxy();
-    static void setUseCustomProxy(bool enabled);
-    static QString customProxyLocation();
-    static void setCustomProxyLocation(QString location);
-    static bool updateBinaryPath();
-    static void setUpdateBinaryPath(bool enabled);
-    static bool chromeSupport();
-    static void setChromeSupport(bool enabled);
-    static bool chromiumSupport();
-    static void setChromiumSupport(bool enabled);
-    static bool firefoxSupport();
-    static void setFirefoxSupport(bool enabled);
-    static bool vivaldiSupport();
-    static void setVivaldiSupport(bool enabled);
+    bool showNotification(); // TODO!!
+    void setShowNotification(bool showNotification);
+    bool bestMatchOnly();
+    void setBestMatchOnly(bool bestMatchOnly);
+    bool unlockDatabase();
+    void setUnlockDatabase(bool unlockDatabase);
+    bool matchUrlScheme();
+    void setMatchUrlScheme(bool matchUrlScheme);
+    bool sortByUsername();
+    void setSortByUsername(bool sortByUsername = true);
+    bool sortByTitle();
+    void setSortByTitle(bool sortByUsertitle = true);
+    bool alwaysAllowAccess();
+    void setAlwaysAllowAccess(bool alwaysAllowAccess);
+    bool alwaysAllowUpdate();
+    void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
+    bool searchInAllDatabases();
+    void setSearchInAllDatabases(bool searchInAllDatabases);
+    bool supportKphFields();
+    void setSupportKphFields(bool supportKphFields);
 
-    static bool passwordUseNumbers();
-    static void setPasswordUseNumbers(bool useNumbers);
-    static bool passwordUseLowercase();
-    static void setPasswordUseLowercase(bool useLowercase);
-    static bool passwordUseUppercase();
-    static void setPasswordUseUppercase(bool useUppercase);
-    static bool passwordUseSpecial();
-    static void setPasswordUseSpecial(bool useSpecial);
-    static bool passwordUseBraces();
-    static void setPasswordUseBraces(bool useBraces);
-    static bool passwordUsePunctuation();
-    static void setPasswordUsePunctuation(bool usePunctuation);
-    static bool passwordUseQuotes();
-    static void setPasswordUseQuotes(bool useQuotes);
-    static bool passwordUseDashes();
-    static void setPasswordUseDashes(bool useDashes);
-    static bool passwordUseMath();
-    static void setPasswordUseMath(bool useMath);
-    static bool passwordUseLogograms();
-    static void setPasswordUseLogograms(bool useLogograms);
-    static bool passwordUseEASCII();
-    static void setPasswordUseEASCII(bool useEASCII);
-    static bool advancedMode();
-    static void setAdvancedMode(bool advancedMode);
-    static QString passwordExcludedChars();
-    static void setPasswordExcludedChars(QString chars);
-    static int passPhraseWordCount();
-    static void setPassPhraseWordCount(int wordCount);
-    static QString passPhraseWordSeparator();
-    static void setPassPhraseWordSeparator(QString separator);
-    static int generatorType();
-    static void setGeneratorType(int type);
-    static bool passwordEveryGroup();
-    static void setPasswordEveryGroup(bool everyGroup);
-    static bool passwordExcludeAlike();
-    static void setPasswordExcludeAlike(bool excludeAlike);
-    static int passwordLength();
-    static void setPasswordLength(int length);
-    static PasswordGenerator::CharClasses passwordCharClasses();
-    static PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
-    static QString generatePassword();
-    static int getbits();
-    static void updateBinaryPaths(QString customProxyLocation = QString());
+    bool supportBrowserProxy();
+    void setSupportBrowserProxy(bool enabled);
+    bool useCustomProxy();
+    void setUseCustomProxy(bool enabled);
+    QString customProxyLocation();
+    void setCustomProxyLocation(QString location);
+    bool updateBinaryPath();
+    void setUpdateBinaryPath(bool enabled);
+    bool chromeSupport();
+    void setChromeSupport(bool enabled);
+    bool chromiumSupport();
+    void setChromiumSupport(bool enabled);
+    bool firefoxSupport();
+    void setFirefoxSupport(bool enabled);
+    bool vivaldiSupport();
+    void setVivaldiSupport(bool enabled);
+
+    bool passwordUseNumbers();
+    void setPasswordUseNumbers(bool useNumbers);
+    bool passwordUseLowercase();
+    void setPasswordUseLowercase(bool useLowercase);
+    bool passwordUseUppercase();
+    void setPasswordUseUppercase(bool useUppercase);
+    bool passwordUseSpecial();
+    void setPasswordUseSpecial(bool useSpecial);
+    bool passwordUseBraces();
+    void setPasswordUseBraces(bool useBraces);
+    bool passwordUsePunctuation();
+    void setPasswordUsePunctuation(bool usePunctuation);
+    bool passwordUseQuotes();
+    void setPasswordUseQuotes(bool useQuotes);
+    bool passwordUseDashes();
+    void setPasswordUseDashes(bool useDashes);
+    bool passwordUseMath();
+    void setPasswordUseMath(bool useMath);
+    bool passwordUseLogograms();
+    void setPasswordUseLogograms(bool useLogograms);
+    bool passwordUseEASCII();
+    void setPasswordUseEASCII(bool useEASCII);
+    bool advancedMode();
+    void setAdvancedMode(bool advancedMode);
+    QString passwordExcludedChars();
+    void setPasswordExcludedChars(QString chars);
+    int passPhraseWordCount();
+    void setPassPhraseWordCount(int wordCount);
+    QString passPhraseWordSeparator();
+    void setPassPhraseWordSeparator(QString separator);
+    int generatorType();
+    void setGeneratorType(int type);
+    bool passwordEveryGroup();
+    void setPasswordEveryGroup(bool everyGroup);
+    bool passwordExcludeAlike();
+    void setPasswordExcludeAlike(bool excludeAlike);
+    int passwordLength();
+    void setPasswordLength(int length);
+    PasswordGenerator::CharClasses passwordCharClasses();
+    PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
+    QString generatePassword();
+    int getbits();
+    void updateBinaryPaths(QString customProxyLocation = QString());
 
 private:
-    static PasswordGenerator m_passwordGenerator;
-    static PassphraseGenerator m_passPhraseGenerator;
-    static HostInstaller m_hostInstaller;
+    static BrowserSettings* m_instance;
+
+    PasswordGenerator m_passwordGenerator;
+    PassphraseGenerator m_passPhraseGenerator;
+    HostInstaller m_hostInstaller;
 };
+
+inline BrowserSettings* browserSettings()
+{
+    return BrowserSettings::instance();
+}
 
 #endif // BROWSERSETTINGS_H

@@ -34,7 +34,6 @@
 #include "core/PasswordGenerator.h"
 #include "gui/MainWindow.h"
 
-static const QUuid KEEPASSXCBROWSER_UUID = QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224"));
 static const char KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 static const char ASSOCIATE_KEY_PREFIX[] = "Public Key: ";
 static const char KEEPASSXCBROWSER_GROUP_NAME[] = "KeePassXC-Browser Passwords";
@@ -44,6 +43,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
+    , m_keepassBrowserUUID(QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224")))
 {
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
     connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
@@ -65,7 +65,7 @@ bool BrowserService::isDatabaseOpened() const
 
 bool BrowserService::openDatabase(bool triggerUnlock)
 {
-    if (!BrowserSettings::unlockDatabase()) {
+    if (!browserSettings()->unlockDatabase()) {
         return false;
     }
 
@@ -139,11 +139,11 @@ Entry* BrowserService::getConfigEntry(bool create)
         return nullptr;
     }
 
-    entry = db->resolveEntry(KEEPASSXCBROWSER_UUID);
+    entry = db->resolveEntry(m_keepassBrowserUUID);
     if (!entry && create) {
         entry = new Entry();
         entry->setTitle(QLatin1String(KEEPASSXCBROWSER_NAME));
-        entry->setUuid(KEEPASSXCBROWSER_UUID);
+        entry->setUuid(m_keepassBrowserUUID);
         entry->setAutoTypeEnabled(false);
         entry->setGroup(db->rootGroup());
         return entry;
@@ -243,7 +243,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
         return result;
     }
 
-    const bool alwaysAllowAccess = BrowserSettings::alwaysAllowAccess();
+    const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const QString host = QUrl(url).host();
     const QString submitHost = QUrl(submitUrl).host();
 
@@ -358,7 +358,7 @@ void BrowserService::updateEntry(const QString& id,
 
     if (username.compare(login, Qt::CaseSensitive) != 0 || entry->password().compare(password, Qt::CaseSensitive) != 0) {
         int dialogResult = QMessageBox::No;
-        if (!BrowserSettings::alwaysAllowUpdate()) {
+        if (!browserSettings()->alwaysAllowUpdate()) {
             QMessageBox msgBox;
             msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
             msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username));
@@ -371,7 +371,7 @@ void BrowserService::updateEntry(const QString& id,
             dialogResult = msgBox.exec();
         }
 
-        if (BrowserSettings::alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
+        if (browserSettings()->alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
             entry->beginUpdate();
             entry->setUsername(login);
             entry->setPassword(password);
@@ -396,7 +396,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
 
         // Ignore entry if port or scheme defined in the URL doesn't match    
         if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) ||
-            (BrowserSettings::matchUrlScheme() && entryScheme.compare(qUrl.scheme()) != 0)) {
+            (browserSettings()->matchUrlScheme() && entryScheme.compare(qUrl.scheme()) != 0)) {
             continue;
         }
 
@@ -414,14 +414,14 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
 {
     // Get the list of databases to search
     QList<Database*> databases;
-    if (BrowserSettings::searchInAllDatabases()) {
+    if (browserSettings()->searchInAllDatabases()) {
         const int count = m_dbTabWidget->count();
         for (int i = 0; i < count; ++i) {
             if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (Database* db = dbWidget->database()) {
                      // Check if database is connected with KeePassXC-Browser
                     for (const StringPair keyPair : keyList) {
-                        Entry* entry = db->resolveEntry(KEEPASSXCBROWSER_UUID);
+                        Entry* entry = db->resolveEntry(m_keepassBrowserUUID);
                         if (entry) {
                             QString key = entry->attributes()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
                             if (!key.isEmpty() && keyPair.second == key) {
@@ -564,18 +564,18 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     }
 
     QList<Entry*> results;
-    QString field = BrowserSettings::sortByTitle() ? "Title" : "UserName";
+    QString field = browserSettings()->sortByTitle() ? "Title" : "UserName";
     for (int i = 100; i >= 0; i -= 5) {
         if (priorities.count(i) > 0) {
             // Sort same priority entries by Title or UserName
             auto entries = priorities.values(i);
-            std::sort(entries.begin(), entries.end(), [&priorities, &field](Entry* left, Entry* right) {
+            std::sort(entries.begin(), entries.end(), [&field](Entry* left, Entry* right) {
                 return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0) ||
                        ((QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) == 0) && 
                         (QString::localeAwareCompare(left->attributes()->value("UserName"), right->attributes()->value("UserName")) < 0));
             });
             results << entries;
-            if (BrowserSettings::bestMatchOnly() && !pwEntries.isEmpty()) {
+            if (browserSettings()->bestMatchOnly() && !pwEntries.isEmpty()) {
                 // Early out once we find the highest batch of matches
                 break;
             }
@@ -642,7 +642,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
         res["totp"] = entry->totp();
     }
 
-    if (BrowserSettings::supportKphFields()) {
+    if (browserSettings()->supportKphFields()) {
         const EntryAttributes* attr = entry->attributes();
         QJsonArray stringFields;
         for (const QString& key : attr->keys()) {

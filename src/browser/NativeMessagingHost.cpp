@@ -30,14 +30,14 @@
 NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool enabled)
     : NativeMessagingBase(enabled)
     , m_mutex(QMutex::Recursive)
-    , m_browserClients(m_browserService)
     , m_browserService(parent)
+    , m_browserClients(m_browserService)
 {
     m_localServer.reset(new QLocalServer(this));
     m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
     m_running.store(false);
 
-    if (BrowserSettings::isEnabled() && !m_running) {
+    if (browserSettings()->isEnabled() && !m_running) {
         run();
     }
 
@@ -64,8 +64,8 @@ void NativeMessagingHost::run()
     }
 
     // Update KeePassXC/keepassxc-proxy binary paths to Native Messaging scripts
-    if (BrowserSettings::updateBinaryPath()) {
-        BrowserSettings::updateBinaryPaths(BrowserSettings::useCustomProxy() ? BrowserSettings::customProxyLocation()
+    if (browserSettings()->updateBinaryPath()) {
+        browserSettings()->updateBinaryPaths(browserSettings()->useCustomProxy() ? browserSettings()->customProxyLocation()
                                                                              : "");
     }
 
@@ -75,7 +75,7 @@ void NativeMessagingHost::run()
         QtConcurrent::run(this, static_cast<void (NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
 #endif
 
-    if (BrowserSettings::supportBrowserProxy()) {
+    if (browserSettings()->supportBrowserProxy()) {
         QString serverPath = getLocalServerPath();
         QFile::remove(serverPath);
 
