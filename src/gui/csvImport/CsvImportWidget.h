@@ -66,7 +66,7 @@ private:
     QList<QComboBox*> m_combos;
     Database* m_db;
 
-    static const QStringList m_columnHeader;
+    const QStringList m_columnHeader;
     QStringList m_fieldSeparatorList;
     void configParser();
     void updateTableview();

@@ -28,16 +28,8 @@
 #include "gui/MessageWidget.h"
 
 // I wanted to make the CSV import GUI future-proof, so if one day you need a new field,
-// all you have to do is uncomment a row or two here, and the GUI will follow:
+// all you have to do is add a field to m_columnHeader, and the GUI will follow:
 // dynamic generation of comboBoxes, labels, placement and so on. Try it for immense fun!
-const QStringList CsvImportWidget::m_columnHeader =
-    QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username") << QObject::tr("Password")
-                  << QObject::tr("URL") << QObject::tr("Notes") << QObject::tr("Last Modified")
-                  << QObject::tr("Created")
-    //  << QObject::tr("Future field1")
-    //  << QObject::tr("Future field2")
-    //  << QObject::tr("Future field3")
-    ;
 
 CsvImportWidget::CsvImportWidget(QWidget* parent)
     : QWidget(parent)
@@ -45,6 +37,10 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     , m_parserModel(new CsvParserModel(this))
     , m_comboModel(new QStringListModel(this))
     , m_comboMapper(new QSignalMapper(this))
+    , m_columnHeader(QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username")
+                                   << QObject::tr("Password") << QObject::tr("URL") << QObject::tr("Notes")
+                                   << QObject::tr("Last Modified") << QObject::tr("Created")
+                                   /*  << QObject::tr("Future field1") */ )
 {
     m_ui->setupUi(this);
 

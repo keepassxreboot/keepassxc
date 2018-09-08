@@ -100,8 +100,8 @@ private:
 
     QPixmap m_paperClipPixmap;
 
-    static const QString HiddenContentDisplay;
-    static const Qt::DateFormat DateFormat;
+    const QString HiddenContentDisplay;
+    const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

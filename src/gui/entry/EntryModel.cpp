@@ -30,17 +30,13 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 
-// String being displayed when hiding content
-const QString EntryModel::HiddenContentDisplay(QString("\u25cf").repeated(6));
-
-// Format used to display dates
-const Qt::DateFormat EntryModel::DateFormat = Qt::DefaultLocaleShortDate;
-
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
     , m_hideUsernames(false)
     , m_hidePasswords(true)
+    , HiddenContentDisplay(QString("\u25cf").repeated(6))
+    , DateFormat(Qt::DefaultLocaleShortDate)
 {
 }
 
