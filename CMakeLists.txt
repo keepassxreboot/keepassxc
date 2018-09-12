@@ -63,9 +63,6 @@ if(WITH_XC_ALL)
   endif()
 endif()
 
-# Process ui files automatically from source files
-set(CMAKE_AUTOUIC ON)
-
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "4")
 set(KEEPASSXC_VERSION_PATCH "0")
@@ -315,8 +312,11 @@ endif()
 
 get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
 
+# Process moc automatically
 set(CMAKE_AUTOMOC ON)
+# Process .ui files automatically
 set(CMAKE_AUTOUIC ON)
+# Process .qrc files automatically
 set(CMAKE_AUTORCC ON)
 
 if(APPLE)
