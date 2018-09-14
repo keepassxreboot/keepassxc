@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>EntryPreviewWidget</class>
  <widget class="QWidget" name="EntryPreviewWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>280</width>
+    <height>267</height>
+   </rect>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
     <number>0</number>
@@ -107,6 +115,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryTotpButton">
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
            <property name="toolTip">
             <string>Generate TOTP Token</string>
            </property>
@@ -120,6 +131,9 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryCloseButton">
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
            <property name="toolTip">
             <string>Close</string>
            </property>
@@ -135,6 +149,9 @@
        </item>
        <item>
         <widget class="QTabWidget" name="entryTabWidget">
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -732,6 +749,13 @@
    <header>gui/widgets/ElidedLabel.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>entryTotpButton</tabstop>
+  <tabstop>entryAutotypeTree</tabstop>
+  <tabstop>entryTabWidget</tabstop>
+  <tabstop>groupCloseButton</tabstop>
+  <tabstop>groupTabWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

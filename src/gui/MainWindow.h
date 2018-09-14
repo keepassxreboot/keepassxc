@@ -69,6 +69,8 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void hideWindow();
+    void toggleWindow();
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
@@ -103,13 +105,13 @@ private slots:
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
-    void hideWindow();
-    void toggleWindow();
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
     void hideTabMessage();
     void handleScreenLock();
     void showErrorMessage(const QString& message);
+    void selectNextDatabaseTab();
+    void selectPreviousDatabaseTab();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

@@ -207,6 +207,11 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
 
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectPreviousDatabaseTab()));
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
@@ -697,6 +702,30 @@ void MainWindow::databaseStatusChanged(DatabaseWidget*)
     updateTrayIcon();
 }
 
+void MainWindow::selectNextDatabaseTab()
+{
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        int index = m_ui->tabWidget->currentIndex() + 1;
+        if (index >= m_ui->tabWidget->count()) {
+            m_ui->tabWidget->setCurrentIndex(0);
+        } else {
+            m_ui->tabWidget->setCurrentIndex(index);
+        }
+    }
+}
+
+void MainWindow::selectPreviousDatabaseTab()
+{
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        int index = m_ui->tabWidget->currentIndex() - 1;
+        if (index < 0) {
+            m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
+        } else {
+            m_ui->tabWidget->setCurrentIndex(index);
+        }
+    }
+}
+
 void MainWindow::databaseTabChanged(int tabIndex)
 {
     if (tabIndex != -1 && m_ui->stackedWidget->currentIndex() == WelcomeScreen) {
@@ -716,15 +745,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
         return;
     }
 
-    bool minimizeOnClose = isTrayIconEnabled() && config()->get("GUI/MinimizeOnClose").toBool();
-    if (minimizeOnClose && !m_appExitCalled) {
-        event->accept();
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
+        event->ignore();
         hideWindow();
-
-        if (config()->get("security/lockdatabaseminimize").toBool()) {
-            m_ui->tabWidget->lockDatabases();
-        }
-
         return;
     }
 
@@ -908,7 +931,12 @@ void MainWindow::hideWindow()
     // TODO: Add an explanation for why this is also not done on Mac (or remove the check)
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif
-    QTimer::singleShot(0, this, SLOT(hide()));
+    // Only hide if tray icon is active, otherwise window will be gone forever
+    if (isTrayIconEnabled()) {
+        hide();
+    } else {
+        showMinimized();
+    }
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
         m_ui->tabWidget->lockDatabases();

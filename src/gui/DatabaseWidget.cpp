@@ -116,10 +116,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_previewView->hide();
     connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
     connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
-    connect(this,
-            SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-            m_previewView,
-            SLOT(setDatabaseMode(DatabaseWidget::Mode)));
+    connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
+            m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
     connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
 
     auto* vLayout = new QVBoxLayout(rightHandSideWidget);
@@ -137,8 +135,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_searchingLabel->setVisible(false);
 
     rightHandSideWidget->setLayout(vLayout);
-
-    setTabOrder(m_entryView, m_groupView);
 
     m_mainSplitter->addWidget(m_groupView);
     m_mainSplitter->addWidget(rightHandSideWidget);
@@ -1342,29 +1338,16 @@ QStringList DatabaseWidget::customEntryAttributes() const
 }
 
 /*
- * Restores the focus on the group and entry that was focused
- * before the database was locked or reloaded.
+ * Restores the focus on the group and entry provided
  */
 void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& entryUuid)
 {
-    Group* restoredGroup = nullptr;
-    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    for (Group* group : groups) {
-        if (group->uuid() == groupUuid) {
-            restoredGroup = group;
-            break;
-        }
-    }
-
-    if (restoredGroup != nullptr) {
-        m_groupView->setCurrentGroup(restoredGroup);
-
-        const QList<Entry*> entries = restoredGroup->entries();
-        for (Entry* entry : entries) {
-            if (entry->uuid() == entryUuid) {
-                m_entryView->setCurrentEntry(entry);
-                break;
-            }
+    auto group = m_db->resolveGroup(groupUuid);
+    if (group) {
+        m_groupView->setCurrentGroup(group);
+        auto entry = group->findEntryByUuid(entryUuid);
+        if (entry) {
+            m_entryView->setCurrentEntry(entry);
         }
     }
 }
