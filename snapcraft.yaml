@@ -38,8 +38,8 @@ parts:
       - g++
       - libgcrypt20-dev
       - libqt5x11extras5-dev
+      - libqt5svg5-dev
       - qtbase5-dev
-      - qtsvg5-dev
       - qttools5-dev
       - qttools5-dev-tools
       - zlib1g-dev
@@ -59,6 +59,7 @@ parts:
       - libsodium23
       - libxtst6
       - libqt5x11extras5
+      - libqt5svg5
       - libusb-1.0-0
       - qtwayland5
     override-build: |
