@@ -98,6 +98,10 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const ui
 
 QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
 {
+    if (settings.isNull()) {
+        return {};
+    }
+
     // OTP Url output
     if (settings->otpUrl) {
         auto urlstring = QString("key=%1&step=%2&size=%3").arg(settings->key).arg(settings->step).arg(settings->digits);
@@ -118,20 +122,26 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
 
 QString Totp::generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time)
 {
+    Q_ASSERT(!settings.isNull());
+    if (settings.isNull()) {
+        return QObject::tr("Invalid Settings", "TOTP");
+    }
+
     const Encoder& encoder = settings->encoder;
     uint step = settings->custom ? settings->step : encoder.step;
     uint digits = settings->custom ? settings->digits : encoder.digits;
 
     quint64 current;
     if (time == 0) {
-        current = qToBigEndian(QDateTime::currentDateTime().toTime_t() / step);
+        // TODO: Replace toTime_t() with toSecsSinceEpoch() when minimum Qt >= 5.8
+        current = qToBigEndian(static_cast<quint64>(QDateTime::currentDateTime().toTime_t()) / step);
     } else {
         current = qToBigEndian(time / step);
     }
 
     QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
     if (secret.isNull()) {
-        return "Invalid TOTP secret key";
+        return QObject::tr("Invalid Key", "TOTP");
     }
 
     QMessageAuthenticationCode code(QCryptographicHash::Sha1);
