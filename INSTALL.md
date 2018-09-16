@@ -27,7 +27,7 @@ The following libraries are required:
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
 * libsodium (>= 1.0.12, optional for KeePassXC-Browser support)
 * libargon2
-
+* lcov
 
 Prepare the Building Environment
 ================================
@@ -107,6 +107,7 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)
 	  -DWITH_ASAN=[ON|OFF] Enable/Disable address sanitizer checks (Linux / macOS only) (default: OFF)
 	  -DWITH_COVERAGE=[ON|OFF] Enable/Disable coverage tests (GCC only) (default: OFF)
+	  -DWITH_XC_SSHAGENT=[ON|OFF] Include SSH agent support. (default: OFF)
 	```
 
 * If you are on MacOS you must add this parameter to **Cmake**, with the Qt version you have installed<br/> `-DCMAKE_PREFIX_PATH=/usr/local/Cellar/qt5/5.6.2/lib/cmake/`
