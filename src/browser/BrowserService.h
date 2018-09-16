@@ -107,6 +107,7 @@ private:
     DatabaseTabWidget* const m_dbTabWidget;
     bool m_dialogActive;
     bool m_bringToFrontRequested;
+    QUuid m_keepassBrowserUUID;
 };
 
 #endif // BROWSERSERVICE_H

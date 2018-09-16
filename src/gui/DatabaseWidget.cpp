@@ -47,7 +47,7 @@
 #include "gui/DetailsWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
-#include "gui/SetupTotpDialog.h"
+#include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
 #include "gui/UnlockDatabaseDialog.h"
 #include "gui/UnlockDatabaseWidget.h"
@@ -444,15 +444,8 @@ void DatabaseWidget::setupTotp()
         return;
     }
 
-    auto setupTotpDialog = new SetupTotpDialog(this, currentEntry);
-    if (currentEntry->hasTotp()) {
-        setupTotpDialog->setSeed(currentEntry->totpSeed());
-        setupTotpDialog->setStep(currentEntry->totpStep());
-        setupTotpDialog->setDigits(currentEntry->totpDigits());
-        // now that all settings are set, decide whether it's default, steam or custom
-        setupTotpDialog->setSettings(currentEntry->totpDigits());
-    }
-
+    auto setupTotpDialog = new TotpSetupDialog(this, currentEntry);
+    connect(setupTotpDialog, SIGNAL(totpUpdated()), SIGNAL(entrySelectionChanged()));
     setupTotpDialog->open();
 }
 
@@ -936,6 +929,13 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
     case EntryModel::Url:
         if (!entry->url().isEmpty()) {
             openUrlForEntry(entry);
+        }
+        break;
+    case EntryModel::Totp:
+        if (entry->hasTotp()) {
+            setClipboardTextAndMinimize(entry->totp());
+        } else {
+            setupTotp();
         }
         break;
     // TODO: switch to 'Notes' tab in details view/pane

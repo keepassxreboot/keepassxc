@@ -22,39 +22,52 @@
 #include <QMap>
 #include <QString>
 #include <QtCore/qglobal.h>
+#include <QtCore/QSharedPointer>
 
 class QUrl;
 
-class Totp
+namespace Totp {
+
+struct Encoder
 {
-public:
-    Totp();
-    static QString parseOtpString(QString rawSecret, quint8& digits, quint8& step);
-    static QString generateTotp(const QByteArray key, quint64 time, const quint8 numDigits, const quint8 step);
-    static QUrl generateOtpString(const QString& secret,
-                                  const QString& type,
-                                  const QString& issuer,
-                                  const QString& username,
-                                  const QString& algorithm,
-                                  quint8 digits,
-                                  quint8 step);
-    static const quint8 defaultStep;
-    static const quint8 defaultDigits;
-    struct Encoder
-    {
-        QString name;
-        QString shortName;
-        QString alphabet;
-        quint8 digits;
-        quint8 step;
-        bool reverse;
-    };
-    static const Encoder defaultEncoder;
-    // custom encoder values that overload the digits field
-    static const quint8 ENCODER_STEAM;
-    static const QMap<quint8, Encoder> encoders;
-    static const QMap<QString, quint8> shortNameToEncoder;
-    static const QMap<QString, quint8> nameToEncoder;
+    QString name;
+    QString shortName;
+    QString alphabet;
+    uint digits;
+    uint step;
+    bool reverse;
 };
+
+struct Settings
+{
+    Totp::Encoder encoder;
+    QString key;
+    bool otpUrl;
+    bool custom;
+    uint digits;
+    uint step;
+};
+
+constexpr uint DEFAULT_STEP = 30u;
+constexpr uint DEFAULT_DIGITS = 6u;
+constexpr uint STEAM_DIGITS = 5u;
+static const QString STEAM_SHORTNAME = "S";
+
+static const QString ATTRIBUTE_OTP = "otp";
+static const QString ATTRIBUTE_SEED = "TOTP Seed";
+static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
+
+QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
+QSharedPointer<Totp::Settings> createSettings(const QString& key, const uint digits, const uint step,
+                                              const QString& encoderShortName = {});
+QString writeSettings(const QSharedPointer<Totp::Settings> settings);
+
+QString generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time = 0ull);
+
+Encoder& defaultEncoder();
+Encoder& steamEncoder();
+Encoder& getEncoderByShortName(QString shortName);
+Encoder& getEncoderByName(QString name);
+}
 
 #endif // QTOTP_H

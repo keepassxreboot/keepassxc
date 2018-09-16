@@ -20,9 +20,16 @@
 #include "BrowserSettings.h"
 #include "core/Config.h"
 
-PasswordGenerator BrowserSettings::m_passwordGenerator;
-PassphraseGenerator BrowserSettings::m_passPhraseGenerator;
-HostInstaller BrowserSettings::m_hostInstaller;
+BrowserSettings* BrowserSettings::m_instance(nullptr);
+
+BrowserSettings* BrowserSettings::instance()
+{
+    if (!m_instance) {
+        m_instance = new BrowserSettings();
+    }
+
+    return m_instance;
+}
 
 bool BrowserSettings::isEnabled()
 {
@@ -185,7 +192,7 @@ bool BrowserSettings::chromeSupport()
 void BrowserSettings::setChromeSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-        HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
+            HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::chromiumSupport()
@@ -196,7 +203,7 @@ bool BrowserSettings::chromiumSupport()
 void BrowserSettings::setChromiumSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-        HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
+            HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::firefoxSupport()
@@ -207,7 +214,7 @@ bool BrowserSettings::firefoxSupport()
 void BrowserSettings::setFirefoxSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-        HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
+            HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::vivaldiSupport()
@@ -218,7 +225,7 @@ bool BrowserSettings::vivaldiSupport()
 void BrowserSettings::setVivaldiSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-        HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
+            HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::passwordUseNumbers()

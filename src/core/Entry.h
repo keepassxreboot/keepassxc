@@ -36,6 +36,9 @@
 
 class Database;
 class Group;
+namespace Totp {
+    struct Settings;
+}
 
 enum class EntryReferenceType
 {
@@ -61,8 +64,7 @@ struct EntryData
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
-    mutable quint8 totpDigits;
-    mutable quint8 totpStep;
+    QSharedPointer<Totp::Settings> totpSettings;
 };
 
 class Entry : public QObject
@@ -98,9 +100,7 @@ public:
     QString password() const;
     QString notes() const;
     QString totp() const;
-    QString totpSeed() const;
-    quint8 totpDigits() const;
-    quint8 totpStep() const;
+    QSharedPointer<Totp::Settings> totpSettings() const;
 
     bool hasTotp() const;
     bool isExpired() const;
@@ -135,7 +135,7 @@ public:
     void setNotes(const QString& notes);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
-    void setTotp(const QString& seed, quint8& step, quint8& digits);
+    void setTotp(QSharedPointer<Totp::Settings> settings);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;

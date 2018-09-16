@@ -39,8 +39,6 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     , m_locked(false)
     , m_currentEntry(nullptr)
     , m_currentGroup(nullptr)
-    , m_step(0)
-    , m_totpTimer(nullptr)
     , m_selectedTabEntry(0)
     , m_selectedTabGroup(0)
 {
@@ -56,6 +54,7 @@ DetailsWidget::DetailsWidget(QWidget* parent)
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
+    connect(&m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
 
     // Group
     m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
@@ -65,7 +64,6 @@ DetailsWidget::DetailsWidget(QWidget* parent)
 
 DetailsWidget::~DetailsWidget()
 {
-    deleteTotpTimer();
 }
 
 void DetailsWidget::setEntry(Entry* selectedEntry)
@@ -146,16 +144,11 @@ void DetailsWidget::updateEntryTotp()
     m_ui->entryTotpButton->setChecked(false);
 
     if (hasTotp) {
-        deleteTotpTimer();
-        m_totpTimer = new QTimer(m_currentEntry);
-        connect(m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
-        m_totpTimer->start(1000);
-
-        m_step = m_currentEntry->totpStep();
+        m_totpTimer.start(1000);
         updateTotpLabel();
     } else {
         m_ui->entryTotpLabel->clear();
-        stopTotpTimer();
+        m_totpTimer.stop();
     }
 }
 
@@ -274,30 +267,16 @@ void DetailsWidget::updateGroupNotesTab()
     m_ui->groupNotesEdit->setText(notes);
 }
 
-void DetailsWidget::stopTotpTimer()
-{
-    if (m_totpTimer) {
-        m_totpTimer->stop();
-    }
-}
-
-void DetailsWidget::deleteTotpTimer()
-{
-    if (m_totpTimer) {
-        delete m_totpTimer;
-    }
-}
-
 void DetailsWidget::updateTotpLabel()
 {
-    if (!m_locked && m_currentEntry) {
+    if (!m_locked && m_currentEntry && m_currentEntry->hasTotp()) {
         const QString totpCode = m_currentEntry->totp();
         const QString firstHalf = totpCode.left(totpCode.size() / 2);
         const QString secondHalf = totpCode.mid(totpCode.size() / 2);
         m_ui->entryTotpLabel->setText(firstHalf + " " + secondHalf);
     } else {
         m_ui->entryTotpLabel->clear();
-        stopTotpTimer();
+        m_totpTimer.stop();
     }
 }
 

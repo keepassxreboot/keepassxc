@@ -128,7 +128,7 @@ set(keepassx_SOURCES
     gui/SettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
-    gui/SetupTotpDialog.cpp
+    gui/TotpSetupDialog.cpp
     gui/TotpDialog.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp

@@ -18,6 +18,7 @@
 
 #include "HostInstaller.h"
 #include "config-keepassx.h"
+
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -27,35 +28,27 @@
 #include <QProcessEnvironment>
 #include <QStandardPaths>
 
-const QString HostInstaller::HOST_NAME = "org.keepassxc.keepassxc_browser";
-const QStringList HostInstaller::ALLOWED_ORIGINS = QStringList()
-                                                   << "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/"
-                                                   << "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/";
-
-const QStringList HostInstaller::ALLOWED_EXTENSIONS = QStringList() << "keepassxc-browser@keepassxc.org";
-
-#if defined(Q_OS_OSX)
-const QString HostInstaller::TARGET_DIR_CHROME = "/Library/Application Support/Google/Chrome/NativeMessagingHosts";
-const QString HostInstaller::TARGET_DIR_CHROMIUM = "/Library/Application Support/Chromium/NativeMessagingHosts";
-const QString HostInstaller::TARGET_DIR_FIREFOX = "/Library/Application Support/Mozilla/NativeMessagingHosts";
-const QString HostInstaller::TARGET_DIR_VIVALDI = "/Library/Application Support/Vivaldi/NativeMessagingHosts";
-#elif defined(Q_OS_LINUX)
-const QString HostInstaller::TARGET_DIR_CHROME = "/.config/google-chrome/NativeMessagingHosts";
-const QString HostInstaller::TARGET_DIR_CHROMIUM = "/.config/chromium/NativeMessagingHosts";
-const QString HostInstaller::TARGET_DIR_FIREFOX = "/.mozilla/native-messaging-hosts";
-const QString HostInstaller::TARGET_DIR_VIVALDI = "/.config/vivaldi/NativeMessagingHosts";
-#elif defined(Q_OS_WIN)
-const QString HostInstaller::TARGET_DIR_CHROME =
-    "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\" + HostInstaller::HOST_NAME;
-const QString HostInstaller::TARGET_DIR_CHROMIUM =
-    "HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\" + HostInstaller::HOST_NAME;
-const QString HostInstaller::TARGET_DIR_FIREFOX =
-    "HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\" + HostInstaller::HOST_NAME;
-const QString HostInstaller::TARGET_DIR_VIVALDI =
-    "HKEY_CURRENT_USER\\Software\\Vivaldi\\NativeMessagingHosts\\" + HostInstaller::HOST_NAME;
-#endif
-
 HostInstaller::HostInstaller()
+    : HOST_NAME("org.keepassxc.keepassxc_browser")
+    , ALLOWED_EXTENSIONS(QStringList() << "keepassxc-browser@keepassxc.org")
+    , ALLOWED_ORIGINS(QStringList() << "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/"
+                                    << "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/")
+#if defined(Q_OS_OSX)
+    , TARGET_DIR_CHROME("/Library/Application Support/Google/Chrome/NativeMessagingHosts")
+    , TARGET_DIR_CHROMIUM("/Library/Application Support/Chromium/NativeMessagingHosts")
+    , TARGET_DIR_FIREFOX("/Library/Application Support/Mozilla/NativeMessagingHosts")
+    , TARGET_DIR_VIVALDI("/Library/Application Support/Vivaldi/NativeMessagingHosts")
+#elif defined(Q_OS_LINUX)
+    , TARGET_DIR_CHROME("/.config/google-chrome/NativeMessagingHosts")
+    , TARGET_DIR_CHROMIUM("/.config/chromium/NativeMessagingHosts")
+    , TARGET_DIR_FIREFOX("/.mozilla/native-messaging-hosts")
+    , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
+#elif defined(Q_OS_WIN)
+    , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+    , TARGET_DIR_CHROMIUM("HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+    , TARGET_DIR_FIREFOX("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+    , TARGET_DIR_VIVALDI("HKEY_CURRENT_USER\\Software\\Vivaldi\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+#endif
 {
 }
 
@@ -118,13 +111,13 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
 {
     switch (browser) {
     case SupportedBrowsers::CHROME:
-        return HostInstaller::TARGET_DIR_CHROME;
+        return TARGET_DIR_CHROME;
     case SupportedBrowsers::CHROMIUM:
-        return HostInstaller::TARGET_DIR_CHROMIUM;
+        return TARGET_DIR_CHROMIUM;
     case SupportedBrowsers::FIREFOX:
-        return HostInstaller::TARGET_DIR_FIREFOX;
+        return TARGET_DIR_FIREFOX;
     case SupportedBrowsers::VIVALDI:
-        return HostInstaller::TARGET_DIR_VIVALDI;
+        return TARGET_DIR_VIVALDI;
     default:
         return QString();
     }
@@ -158,12 +151,12 @@ QString HostInstaller::getPath(SupportedBrowsers browser) const
         userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
     }
 
-    QString winPath = QString("%1/%2_%3.json").arg(userPath, HostInstaller::HOST_NAME, getBrowserName(browser));
+    QString winPath = QString("%1/%2_%3.json").arg(userPath, HOST_NAME, getBrowserName(browser));
     winPath.replace("/", "\\");
     return winPath;
 #else
     QString path = getTargetPath(browser);
-    return QString("%1%2/%3.json").arg(QDir::homePath(), path, HostInstaller::HOST_NAME);
+    return QString("%1%2/%3.json").arg(QDir::homePath(), path, HOST_NAME);
 #endif
 }
 
@@ -207,19 +200,19 @@ QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& 
 #endif // #ifdef KEEPASSXC_DIST_APPIMAGE
 
     QJsonObject script;
-    script["name"] = HostInstaller::HOST_NAME;
+    script["name"] = HOST_NAME;
     script["description"] = "KeePassXC integration with native messaging support";
     script["path"] = path;
     script["type"] = "stdio";
 
     QJsonArray arr;
     if (browser == SupportedBrowsers::FIREFOX) {
-        for (const QString extension : HostInstaller::ALLOWED_EXTENSIONS) {
+        for (const QString& extension : ALLOWED_EXTENSIONS) {
             arr.append(extension);
         }
         script["allowed_extensions"] = arr;
     } else {
-        for (const QString origin : HostInstaller::ALLOWED_ORIGINS) {
+        for (const QString& origin : ALLOWED_ORIGINS) {
             arr.append(origin);
         }
         script["allowed_origins"] = arr;
@@ -248,10 +241,5 @@ bool HostInstaller::saveFile(SupportedBrowsers browser, const QJsonObject& scrip
     }
 
     QJsonDocument doc(script);
-    qint64 bytesWritten = scriptFile.write(doc.toJson());
-    if (bytesWritten < 0) {
-        return false;
-    }
-
-    return true;
+    return scriptFile.write(doc.toJson()) >= 0;
 }

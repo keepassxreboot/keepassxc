@@ -58,8 +58,8 @@ private slots:
 
 private:
     QMutex m_mutex;
-    BrowserClients m_browserClients;
     BrowserService m_browserService;
+    BrowserClients m_browserClients;
     QSharedPointer<QLocalServer> m_localServer;
     SocketList m_socketList;
 };
