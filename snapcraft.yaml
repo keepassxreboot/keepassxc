@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.3.4
+version: 2.4.0
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -7,12 +7,15 @@ description: |
   personal data management. It has a light interface, is cross-platform and
   published under the terms of the GNU General Public License.
 confinement: strict
+base: core18
 
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy]
     desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
+    environment:
+      DISABLE_WAYLAND: 1
   cli:
     command: keepassxc-cli
     plugs: [gsettings, home, removable-media, raw-usb]
@@ -27,15 +30,13 @@ parts:
     configflags:
       - -DCMAKE_BUILD_TYPE=Release
       - -DCMAKE_INSTALL_PREFIX=/usr
-      - -DCMAKE_LIBRARY_PATH=/opt/keepassxc-libs/lib/x86_64-linux-gnu
-      - -DCMAKE_INCLUDE_PATH=/opt/keepassxc-libs/include
       - -DKEEPASSXC_DIST_TYPE=Snap
-      - -DKEEPASSXC_BUILD_TYPE=Release
+      - -DKEEPASSXC_BUILD_TYPE=PreRelease
       - -DWITH_TESTS=OFF
       - -DWITH_XC_ALL=ON
     build-packages:
       - g++
-      - libgcrypt20-18-dev
+      - libgcrypt20-dev
       - libqt5x11extras5-dev
       - qtbase5-dev
       - qttools5-dev
@@ -50,20 +51,19 @@ parts:
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
-      - libgcrypt20-18
+      - libgcrypt20
       - libykpers-1-1
       - libargon2-0
       - libsodium23
       - libxtst6
       - libqt5x11extras5
       - libusb-1.0-0
+      - qtwayland5
     override-build: |
       snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
     organize:
       usr/share/qt5/translations/*.qm: usr/share/keepassxc/translations/
-      opt/keepassxc-libs/lib/x86_64-linux-gnu/*: usr/lib/x86_64-linux-gnu/
-      opt/keepassxc-libs/share/locale/*: usr/share/locale/
     stage:
       - -opt
     after: [desktop-qt5]

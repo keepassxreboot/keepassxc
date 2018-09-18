@@ -50,6 +50,13 @@
     </screenshots>
 
     <releases>
+        <release version="2.4.0-preview" date="TBD">
+            <description>
+                <p>
+                This is a pre-release build, <a href="https://github.com/keepassxreboot/keepassxc/pulls?q=is%3Apr+milestone%3Av2.4.0+is%3Aclosed">click to view merged PR's</a>                
+                </p>
+            </description>
+        </release>
         <release version="2.3.4" date="2018-08-21">
             <description>
                 <ul>
