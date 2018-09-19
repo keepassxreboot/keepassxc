@@ -45,7 +45,7 @@ UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
     setWindowTitle(tr("Download Progress"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setLabelText(tr("Downloading %1.").arg(url.toDisplayString()));
-    setMinimumDuration(2000);
+    setMinimumDuration(0);
     setMinimumSize(QSize(400, 75));
 }
 
@@ -244,6 +244,7 @@ void EditWidgetIcons::fetchFinished()
     QImage image;
     bool duckDuckGoFallbackEnabled = config()->get("security/IconDownloadFallbackToDuckDuckGo", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
+    QUrl url = m_reply->url();
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
@@ -264,6 +265,9 @@ void EditWidgetIcons::fetchFinished()
             // No redirect, and we theoretically have some icon data now.
             image.loadFromData(m_bytesReceived);
         }
+    } else {
+        UrlFetchProgressDialog *progress = findChild<UrlFetchProgressDialog *>(url.toString());
+        progress->close();
     }
 
     if (!image.isNull()) {
@@ -311,6 +315,7 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
     connect(m_reply, &QIODevice::readyRead, this, &EditWidgetIcons::fetchReadyRead);
 
     UrlFetchProgressDialog *progress = new UrlFetchProgressDialog(url, this);
+    progress->setObjectName(url.toString());
     progress->setAttribute(Qt::WA_DeleteOnClose);
     connect(m_reply, &QNetworkReply::finished, progress, &QProgressDialog::hide);
     connect(m_reply, &QNetworkReply::downloadProgress, progress, &UrlFetchProgressDialog::networkReplyProgress);
