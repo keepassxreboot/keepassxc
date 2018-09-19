@@ -219,12 +219,12 @@ void EditWidgetIcons::downloadFavicon()
     }
     m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
 
-    // Try to use Google fallback, if enabled
-    if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool()) {
-        QUrl urlGoogle = QUrl("https://www.google.com/s2/favicons");
+    // Try to use DuckDuckGo fallback, if enabled
+    if (config()->get("security/IconDownloadFallbackToDuckDuckGo", false).toBool()) {
+        QUrl urlDuckDuckGo = QUrl("https://icons.duckduckgo.com");
 
-        urlGoogle.setQuery("domain=" + QUrl::toPercentEncoding(secondLevelDomain));
-        m_urlsToTry.append(urlGoogle);
+        urlDuckDuckGo.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
+        m_urlsToTry.append(urlDuckDuckGo);
     }
 
     startFetchFavicon(m_urlsToTry.takeFirst());
@@ -242,7 +242,7 @@ void EditWidgetIcons::fetchFinished()
 {
 #ifdef WITH_XC_NETWORKING
     QImage image;
-    bool googleFallbackEnabled = config()->get("security/IconDownloadFallbackToGoogle", false).toBool();
+    bool duckDuckGoFallbackEnabled = config()->get("security/IconDownloadFallbackToDuckDuckGo", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
@@ -275,9 +275,9 @@ void EditWidgetIcons::fetchFinished()
         startFetchFavicon(m_urlsToTry.takeFirst());
         return;
     } else {
-        if (!googleFallbackEnabled) {
+        if (!duckDuckGoFallbackEnabled) {
             emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
-                                  tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"),
+                                  tr("Hint: You can enable DuckDuckGo as a fallback under Tools>Settings>Security"),
                                   MessageWidget::Error);
         } else {
             emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);

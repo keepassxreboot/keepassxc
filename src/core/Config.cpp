@@ -148,7 +148,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/hidepassworddetails", true);
     m_defaults.insert("security/autotypeask", true);
-    m_defaults.insert("security/IconDownloadFallbackToGoogle", false);
+    m_defaults.insert("security/IconDownloadFallbackToDuckDuckGo", false);
     m_defaults.insert("security/resettouchid", false);
     m_defaults.insert("security/resettouchidtimeout", 30);
     m_defaults.insert("security/resettouchidscreenlock", true);
