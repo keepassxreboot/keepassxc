@@ -109,7 +109,7 @@ public:
     Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const QUuid& uuid);
     Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
-    Group* findGroupByPath(QString groupPath, QString basePath = QString("/"));
+    Group* findGroupByPath(QString groupPath);
     QStringList locate(QString locateTerm, QString currentPath = QString("/"));
     Entry* addEntryWithPath(QString entryPath);
     void setUuid(const QUuid& uuid);
@@ -194,6 +194,8 @@ private:
     void recSetDatabase(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
+
+    Group* findGroupByPathRecursion(QString groupPath, QString basePath);
 
     QPointer<Database> m_db;
     QUuid m_uuid;
