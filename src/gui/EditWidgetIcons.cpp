@@ -45,7 +45,7 @@ UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
     setWindowTitle(tr("Download Progress"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setLabelText(tr("Downloading %1.").arg(url.toDisplayString()));
-    setMinimumDuration(2000);
+    setMinimumDuration(0);
     setMinimumSize(QSize(400, 75));
 }
 
@@ -219,12 +219,12 @@ void EditWidgetIcons::downloadFavicon()
     }
     m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
 
-    // Try to use Google fallback, if enabled
-    if (config()->get("security/IconDownloadFallbackToGoogle", false).toBool()) {
-        QUrl urlGoogle = QUrl("https://www.google.com/s2/favicons");
+    // Try to use alternative fallback URL, if enabled
+    if (config()->get("security/IconDownloadFallback", false).toBool()) {
+        QUrl fallbackUrl = QUrl("https://icons.duckduckgo.com");
+        fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
 
-        urlGoogle.setQuery("domain=" + QUrl::toPercentEncoding(secondLevelDomain));
-        m_urlsToTry.append(urlGoogle);
+        m_urlsToTry.append(fallbackUrl);
     }
 
     startFetchFavicon(m_urlsToTry.takeFirst());
@@ -242,8 +242,9 @@ void EditWidgetIcons::fetchFinished()
 {
 #ifdef WITH_XC_NETWORKING
     QImage image;
-    bool googleFallbackEnabled = config()->get("security/IconDownloadFallbackToGoogle", false).toBool();
+    bool fallbackEnabled = config()->get("security/IconDownloadFallback", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
+    QUrl url = m_reply->url();
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
@@ -264,6 +265,9 @@ void EditWidgetIcons::fetchFinished()
             // No redirect, and we theoretically have some icon data now.
             image.loadFromData(m_bytesReceived);
         }
+    } else {
+        UrlFetchProgressDialog *progress = findChild<UrlFetchProgressDialog *>(url.toString());
+        progress->close();
     }
 
     if (!image.isNull()) {
@@ -275,9 +279,9 @@ void EditWidgetIcons::fetchFinished()
         startFetchFavicon(m_urlsToTry.takeFirst());
         return;
     } else {
-        if (!googleFallbackEnabled) {
+        if (!fallbackEnabled) {
             emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
-                                  tr("Hint: You can enable Google as a fallback under Tools>Settings>Security"),
+                                  tr("Hint: You can enable DuckDuckGo as a fallback under Tools>Settings>Security"),
                                   MessageWidget::Error);
         } else {
             emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);
@@ -311,6 +315,7 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
     connect(m_reply, &QIODevice::readyRead, this, &EditWidgetIcons::fetchReadyRead);
 
     UrlFetchProgressDialog *progress = new UrlFetchProgressDialog(url, this);
+    progress->setObjectName(url.toString());
     progress->setAttribute(Qt::WA_DeleteOnClose);
     connect(m_reply, &QNetworkReply::finished, progress, &QProgressDialog::hide);
     connect(m_reply, &QNetworkReply::downloadProgress, progress, &UrlFetchProgressDialog::networkReplyProgress);
