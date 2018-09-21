@@ -203,7 +203,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QCheckBox" name="fallbackToDuckDuckGo">
+       <widget class="QCheckBox" name="fallbackToSearch">
         <property name="text">
          <string>Use DuckDuckGo as fallback for downloading website icons</string>
         </property>

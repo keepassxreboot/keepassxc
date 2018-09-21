@@ -186,7 +186,7 @@ void SettingsWidget::loadSettings()
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(config()->get("security/lockdatabasescreenlock").toBool());
     m_secUi->relockDatabaseAutoTypeCheckBox->setChecked(config()->get("security/relockautotype").toBool());
-    m_secUi->fallbackToDuckDuckGo->setChecked(config()->get("security/IconDownloadFallbackToDuckDuckGo").toBool());
+    m_secUi->fallbackToSearch->setChecked(config()->get("security/IconDownloadFallback").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordDetailsCleartextCheckBox->setChecked(config()->get("security/hidepassworddetails").toBool());
@@ -256,7 +256,7 @@ void SettingsWidget::saveSettings()
     config()->set("security/lockdatabaseminimize", m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set("security/lockdatabasescreenlock", m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
     config()->set("security/relockautotype", m_secUi->relockDatabaseAutoTypeCheckBox->isChecked());
-    config()->set("security/IconDownloadFallbackToDuckDuckGo", m_secUi->fallbackToDuckDuckGo->isChecked());
+    config()->set("security/IconDownloadFallback", m_secUi->fallbackToSearch->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
