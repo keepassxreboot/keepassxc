@@ -392,6 +392,11 @@ QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const Q
     // XXX: will this include disabled entries or ones in recycle bin?
     // TODO: check if this is compatible with https://github.com/keepassxreboot/keepassxc/pull/2253
     for (Entry* entry : rootGroup->entriesRecursive()) {
+        if (matchAdditionalURLs(entry, hostname, url)) {
+            entries.append(entry);
+            continue;
+        }
+
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();
@@ -406,8 +411,7 @@ QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const Q
 
         // Filter to match hostname in URL field
         if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
-            || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))
-            || matchAdditionalURLs(entry, hostname, url)) {
+            || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
     }
@@ -418,6 +422,7 @@ QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const Q
 bool BrowserService::matchAdditionalURLs(const Entry* entry, const QString& hostname, const QString& url)
 {
     for (QString altURL : entry->altURLs()) {
+        // TODO: match port and scheme
         if (matchUrlScheme(altURL) && hostname.endsWith(QUrl(altURL).host())) {
             return true;
         }
