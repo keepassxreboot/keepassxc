@@ -148,6 +148,8 @@ void TestEntry::testResolveUrl()
     QScopedPointer<Entry> entry(new Entry());
     QString testUrl("www.google.com");
     QString testCmd("cmd://firefox " + testUrl);
+    QString testFileUnix("/home/example/test.txt");
+    QString testFileWindows("c:/WINDOWS/test.txt");
     QString testComplexCmd("cmd://firefox --start-now --url 'http://" + testUrl + "' --quit");
     QString nonHttpUrl("ftp://google.com");
     QString noUrl("random text inserted here");
@@ -156,6 +158,11 @@ void TestEntry::testResolveUrl()
     QCOMPARE(entry->resolveUrl(""), QString(""));
     QCOMPARE(entry->resolveUrl(testUrl), "https://" + testUrl);
     QCOMPARE(entry->resolveUrl("http://" + testUrl), "http://" + testUrl);
+    // Test file:// URL's
+    QCOMPARE(entry->resolveUrl("file://" + testFileUnix), "file://" + testFileUnix);
+    QCOMPARE(entry->resolveUrl(testFileUnix), "file://" + testFileUnix);
+    QCOMPARE(entry->resolveUrl("file:///" + testFileWindows), "file:///" + testFileWindows);
+    QCOMPARE(entry->resolveUrl(testFileWindows), "file:///" + testFileWindows);
     // Test cmd:// with no URL
     QCOMPARE(entry->resolveUrl("cmd://firefox"), QString(""));
     QCOMPARE(entry->resolveUrl("cmd://firefox --no-url"), QString(""));
