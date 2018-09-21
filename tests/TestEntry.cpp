@@ -160,7 +160,9 @@ void TestEntry::testResolveUrl()
     QCOMPARE(entry->resolveUrl("http://" + testUrl), "http://" + testUrl);
     // Test file:// URL's
     QCOMPARE(entry->resolveUrl("file://" + testFileUnix), "file://" + testFileUnix);
+    QCOMPARE(entry->resolveUrl(testFileUnix), "file://" + testFileUnix);
     QCOMPARE(entry->resolveUrl("file:///" + testFileWindows), "file:///" + testFileWindows);
+    QCOMPARE(entry->resolveUrl(testFileWindows), "file:///" + testFileWindows);
     // Test cmd:// with no URL
     QCOMPARE(entry->resolveUrl("cmd://firefox"), QString(""));
     QCOMPARE(entry->resolveUrl("cmd://firefox --no-url"), QString(""));

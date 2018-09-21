@@ -26,6 +26,7 @@
 #include "totp/totp.h"
 
 #include <QDebug>
+#include <QDir>
 #include <QRegularExpression>
 
 const int Entry::DefaultIconNumber = 0;
@@ -986,12 +987,13 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
 QString Entry::resolveUrl(const QString& url) const
 {
     QString newUrl = url;
-    if (!url.isEmpty() && !url.contains("://")) {
-        // URL doesn't have a protocol, add https by default
-        newUrl.prepend("https://");
-    }
 
-    if (newUrl.startsWith("cmd://")) {
+    QRegExp fileRegEx("^([a-z]:)?[\\\\/]", Qt::CaseInsensitive, QRegExp::RegExp2);
+    if (fileRegEx.indexIn(newUrl) != -1) {
+        // Match possible file paths without the scheme and convert it to a file URL
+        newUrl = QDir::fromNativeSeparators(newUrl);
+        newUrl = QUrl::fromLocalFile(newUrl).toString();
+    } else if (newUrl.startsWith("cmd://")) {
         QStringList cmdList = newUrl.split(" ");
         for (int i = 1; i < cmdList.size(); ++i) {
             // Don't pass arguments to the resolveUrl function (they look like URL's)
@@ -1002,6 +1004,11 @@ QString Entry::resolveUrl(const QString& url) const
 
         // No URL in this command
         return QString("");
+    }
+
+    if (!newUrl.isEmpty() && !newUrl.contains("://")) {
+        // URL doesn't have a protocol, add https by default
+        newUrl.prepend("https://");
     }
 
     // Validate the URL
