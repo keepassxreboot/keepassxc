@@ -37,7 +37,7 @@ LineEdit::LineEdit(QWidget* parent)
     if (icon.isNull()) {
         icon = QIcon::fromTheme("edit-clear");
         if (icon.isNull()) {
-            icon = filePath()->icon("actions", iconNameDirected, false);
+            icon = filePath()->icon("actions", iconNameDirected);
         }
     }
 

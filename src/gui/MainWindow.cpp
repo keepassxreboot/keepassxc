@@ -218,26 +218,26 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseSaveAs->setIcon(filePath()->icon("actions", "document-save-as"));
     m_ui->actionDatabaseClose->setIcon(filePath()->icon("actions", "document-close"));
     m_ui->actionChangeDatabaseSettings->setIcon(filePath()->icon("actions", "document-edit"));
-    m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key", false));
-    m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt", false));
+    m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key"));
+    m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt"));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
 
-    m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new", false));
-    m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone", false));
-    m_ui->actionEntryEdit->setIcon(filePath()->icon("actions", "entry-edit", false));
-    m_ui->actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete", false));
-    m_ui->actionEntryAutoType->setIcon(filePath()->icon("actions", "auto-type", false));
-    m_ui->actionEntryCopyUsername->setIcon(filePath()->icon("actions", "username-copy", false));
-    m_ui->actionEntryCopyPassword->setIcon(filePath()->icon("actions", "password-copy", false));
-    m_ui->actionEntryCopyURL->setIcon(filePath()->icon("actions", "url-copy", false));
+    m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new"));
+    m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone"));
+    m_ui->actionEntryEdit->setIcon(filePath()->icon("actions", "entry-edit"));
+    m_ui->actionEntryDelete->setIcon(filePath()->icon("actions", "entry-delete"));
+    m_ui->actionEntryAutoType->setIcon(filePath()->icon("actions", "auto-type"));
+    m_ui->actionEntryCopyUsername->setIcon(filePath()->icon("actions", "username-copy"));
+    m_ui->actionEntryCopyPassword->setIcon(filePath()->icon("actions", "password-copy"));
+    m_ui->actionEntryCopyURL->setIcon(filePath()->icon("actions", "url-copy"));
 
-    m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new", false));
-    m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit", false));
-    m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete", false));
-    m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash", false));
+    m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new"));
+    m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit"));
+    m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete"));
+    m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash"));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
-    m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator", false));
+    m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator"));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
 
