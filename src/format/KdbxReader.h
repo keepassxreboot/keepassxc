@@ -48,7 +48,6 @@ public:
     bool saveXml() const;
     void setSaveXml(bool save);
     QByteArray xmlData() const;
-    QByteArray streamKey() const;
     KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
 
 protected:

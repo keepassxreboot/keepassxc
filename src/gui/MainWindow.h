@@ -107,7 +107,6 @@ private slots:
     void toggleWindow();
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
-    void repairDatabase();
     void hideTabMessage();
     void handleScreenLock();
     void showErrorMessage(const QString& message);

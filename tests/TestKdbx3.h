@@ -30,7 +30,6 @@ private slots:
     void testProtectedStrings();
     void testBrokenHeaderHash();
     void testFormat300();
-    void testKdbxRepair();
 
 protected:
     void initTestCaseImpl() override;
