@@ -22,6 +22,7 @@ ENV REBUILD_COUNTER=4
 
 ENV QT5_VERSION=53
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
+ENV TERM=xterm-256color
 
 RUN set -x \
      && apt-get update -y \

@@ -20,6 +20,7 @@ ENV REBUILD_COUNTER=1
 
 ENV QT5_VERSION=510
 ENV QT5_PPA_VERSION=5.10.1
+ENV TERM=xterm-256color
 
 RUN set -x \
     && apt update -y \
@@ -48,4 +49,3 @@ RUN set -x \
 
 RUN set -x \
     && apt-get autoremove --purge
-
