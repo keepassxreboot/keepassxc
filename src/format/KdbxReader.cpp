@@ -120,11 +120,6 @@ QByteArray KdbxReader::xmlData() const
     return m_xmlData;
 }
 
-QByteArray KdbxReader::streamKey() const
-{
-    return m_protectedStreamKey;
-}
-
 KeePass2::ProtectedStreamAlgo KdbxReader::protectedStreamAlgo() const
 {
     return m_irsAlgo;

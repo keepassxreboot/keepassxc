@@ -24,7 +24,6 @@
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
-#include "format/KeePass2Repair.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
 
@@ -180,35 +179,4 @@ void TestKdbx3::testBrokenHeaderHash()
     QScopedPointer<Database> db(reader.readDatabase(filename, key));
     QVERIFY(!db.data());
     QVERIFY(reader.hasError());
-}
-
-void TestKdbx3::testKdbxRepair()
-{
-    QString brokenDbFilename = QString(KEEPASSX_TEST_DATA_DIR).append("/bug392.kdbx");
-    // master password = test
-    // entry username: testuser\x10\x20AC
-    // entry password: testpw
-    auto key = QSharedPointer<CompositeKey>::create();
-    key->addKey(QSharedPointer<PasswordKey>::create("test"));
-
-    // test that we can't open the broken database
-    bool hasError;
-    QString errorString;
-    QScopedPointer<Database> dbBroken;
-    readKdbx(brokenDbFilename, key, dbBroken, hasError, errorString);
-    QVERIFY(!dbBroken.data());
-    QVERIFY(hasError);
-
-    // test if we can repair the database
-    KeePass2Repair repair;
-    QFile file(brokenDbFilename);
-    file.open(QIODevice::ReadOnly);
-    auto result = repair.repairDatabase(&file, key);
-    QCOMPARE(result.first, KeePass2Repair::RepairSuccess);
-    QScopedPointer<Database> dbRepaired(result.second);
-    QVERIFY(dbRepaired);
-
-    QCOMPARE(dbRepaired->rootGroup()->entries().size(), 1);
-    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->username(), QString("testuser").append(QChar(0x20AC)));
-    QCOMPARE(dbRepaired->rootGroup()->entries().at(0)->password(), QString("testpw"));
 }

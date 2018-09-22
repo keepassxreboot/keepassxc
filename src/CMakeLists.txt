@@ -85,7 +85,6 @@ set(keepassx_SOURCES
     format/KeePass1Reader.cpp
     format/KeePass2.cpp
     format/KeePass2RandomStream.cpp
-    format/KeePass2Repair.cpp
     format/KdbxReader.cpp
     format/KdbxWriter.cpp
     format/KdbxXmlReader.cpp
@@ -102,7 +101,6 @@ set(keepassx_SOURCES
     gui/Clipboard.cpp
     gui/CloneDialog.cpp
     gui/DatabaseOpenWidget.cpp
-    gui/DatabaseRepairWidget.cpp
     gui/DatabaseTabWidget.cpp
     gui/DatabaseWidget.cpp
     gui/DatabaseWidgetStateSync.cpp
@@ -113,7 +111,6 @@ set(keepassx_SOURCES
     gui/EditWidgetIcons.cpp
     gui/EditWidgetProperties.cpp
     gui/FileDialog.cpp
-    gui/masterkey/KeyComponentWidget.cpp
     gui/Font.cpp
     gui/IconModels.cpp
     gui/KeePass1OpenWidget.cpp
@@ -150,16 +147,17 @@ set(keepassx_SOURCES
     gui/group/EditGroupWidget.cpp
     gui/group/GroupModel.cpp
     gui/group/GroupView.cpp
+    gui/masterkey/KeyComponentWidget.cpp
     gui/masterkey/PasswordEditWidget.cpp
     gui/masterkey/YubiKeyEditWidget.cpp
     gui/masterkey/KeyFileEditWidget.cpp
-    gui/settings/SettingsWidget.cpp
     gui/dbsettings/DatabaseSettingsWidget.cpp
     gui/dbsettings/DatabaseSettingsDialog.cpp
     gui/dbsettings/DatabaseSettingsWidgetGeneral.cpp
-        gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
+    gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
     gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
-        gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+    gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+    gui/settings/SettingsWidget.cpp
     gui/wizard/NewDatabaseWizard.cpp
     gui/wizard/NewDatabaseWizardPage.cpp
     gui/wizard/NewDatabaseWizardPageMetaData.cpp
