@@ -179,9 +179,15 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/Type", m_ui->tabWidget->currentIndex());
 }
 
-void PasswordGeneratorWidget::reset()
+void PasswordGeneratorWidget::reset(int length)
 {
     m_ui->editNewPassword->setText("");
+    if (length > 0) {
+        m_ui->spinBoxLength->setValue(length);
+    } else {
+        m_ui->spinBoxLength->setValue(config()->get("generator/Length", PasswordGenerator::DefaultLength).toInt());
+    }
+
     setStandaloneMode(false);
     setPasswordVisible(config()->get("security/passwordscleartext").toBool());
     updateGenerator();
