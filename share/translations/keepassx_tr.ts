@@ -3571,48 +3571,49 @@ Kullanılabilir komutlar:
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Rastgele yeni diceware parolası oluşturun</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>Diceware parolası için kelime sayısı</translation>
     </message>
     <message>
         <source>count</source>
-        <translation type="unfinished"/>
+        <translation>sayı</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation type="unfinished"/>
+        <translation>Dikkate değer üretici için Wordlist.
+[Varsayılan: EFF İngilizce]</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation type="unfinished"/>
+        <translation>Rasgele yeni bir şifre oluşturun</translation>
     </message>
     <message>
         <source>Length of the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifrenin uzunluğu</translation>
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan parolada küçük harfli karakterler kullanın</translation>
     </message>
     <message>
         <source>Use uppercase characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan parolada büyük harfli karakterler kullanın</translation>
     </message>
     <message>
         <source>Use numbers in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifre içinde sayılar kullanın</translation>
     </message>
     <message>
         <source>Use special characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifrede özel karakterler kullanın</translation>
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Oluşturulan şifrede genişletilmiş ASCII kullanın</translation>
     </message>
 </context>
 <context>
@@ -3623,15 +3624,15 @@ Kullanılabilir komutlar:
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Temel cihaza yazılırken hata oluştu:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Temel cihaz açıldığında hata oluştu: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>Temel cihazdan veri okunurken hata oluştu: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
@@ -3834,7 +3835,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation type="unfinished"/>
+        <translation>Ayrıntılar görünümünü gizle</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -3850,7 +3851,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Siyah sistem tepsi simgesi</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3862,11 +3863,11 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Eşleşecek giriş başlığını kullan Küresel Oto-Yazım</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Eşleşecek giriş adresini kullan Küresel Oto-Yazım</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -3951,7 +3952,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Önizleme panelindeki şifreleri gizle</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -3967,7 +3968,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı otomatik yeniden kilitlenme zamanı</translation>
     </message>
 </context>
 <context>
@@ -3982,11 +3983,11 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation type="unfinished"/>
+        <translation>Varsayılan RFC 6238 belirteç ayarları</translation>
     </message>
     <message>
         <source>Steam token settings</source>
-        <translation type="unfinished"/>
+        <translation>Steam belirteç ayarları</translation>
     </message>
     <message>
         <source>Use custom settings</source>
@@ -3998,7 +3999,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Time step:</source>
-        <translation type="unfinished"/>
+        <translation>Zaman adımı:</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -4076,7 +4077,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC'ye hoşgeldiniz %1</translation>
     </message>
 </context>
 <context>
@@ -4115,7 +4116,7 @@ Lütfen seçilen veri tabanının kilidini kaldırın veya kilitli olmayan birin
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation type="unfinished"/>
+        <translation>Üst pencere tanıtıcısı</translation>
     </message>
 </context>
 </TS>
