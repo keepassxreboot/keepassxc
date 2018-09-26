@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#  
+#
 # KeePassXC Release Preparation Helper
 # Copyright (C) 2017 KeePassXC team <https://keepassxc.org/>
 #
@@ -50,7 +50,8 @@ printUsage() {
     local cmd
     if [ "" == "$1" ] || [ "help" == "$1" ]; then
         cmd="COMMAND"
-    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ]; then
+    elif [ "check" == "$1" ] || [ "merge" == "$1" ] || [ "build" == "$1" ] \
+        || [ "gpgsign" == "$1" ] || [ "appsign" == "$1" ] || [ "appimage" == "$1" ]; then
         cmd="$1"
     else
         logError "Unknown command: '$1'\n"
@@ -58,7 +59,7 @@ printUsage() {
     fi
 
     printf "\e[1mUsage:\e[0m $(basename $0) $cmd [options]\n"
-    
+
     if [ "COMMAND" == "$cmd" ]; then
         cat << EOF
 
@@ -107,6 +108,8 @@ Options:
                           The container must not exist already
       --snapcraft         Create and use docker image to build snapcraft distribution.
                           This option has no effect if --docker-image is not set.
+      --appimage          Build a Linux AppImage after compilation.
+                          If this option is set, --install-prefix has no effect
       --appsign           Perform platform specific App Signing before packaging
   -k, --key               Specify the App Signing Key/Identity
   -c, --cmake-options     Additional CMake options for compiling the sources
@@ -140,6 +143,25 @@ Options:
   -k, --key          Signing Key or Apple Developer ID
   -h, --help         Show this help
 EOF
+    elif [ "appimage" == "$cmd" ]; then
+        cat << EOF
+
+Generate Linux AppImage from 'make install' AppDir
+
+Options:
+  -a, --appdir         Input AppDir (required)
+  -v, --version        KeePassXC version
+  -o, --output-dir     Output directory where to build the AppImage
+                       (default: '${OUTPUT_DIR}')
+  -d, --docker-image   Use the specified Docker image to build the AppImage.
+                       The image must have all required build dependencies installed.
+      --container-name Docker container name (default: '${DOCKER_CONTAINER_NAME}')
+                       The container must not exist already
+      --appsign        Embed a PGP signature into the AppImage
+  -k, --key            The PGP Signing Key
+      --verbosity      linuxdeploy verbosity (default: 3)
+  -h, --help           Show this help
+EOF
     fi
 }
 
@@ -161,7 +183,7 @@ init() {
     if [ "" == "$TAG_NAME" ]; then
         TAG_NAME="$RELEASE_NAME"
     fi
-    
+
     if [ "" == "$SOURCE_BRANCH" ]; then
         SOURCE_BRANCH="release/${RELEASE_NAME}"
     fi
@@ -190,6 +212,10 @@ exitError() {
 
 exitTrap() {
     exitError "Existing upon user request..."
+}
+
+cmdExists() {
+    command -v "$1" &> /dev/null
 }
 
 checkSourceDirExists() {
@@ -271,7 +297,7 @@ checkChangeLog() {
     if [ ! -f CHANGELOG ]; then
         exitError "No CHANGELOG file found!"
     fi
-    
+
     grep -qPzo "${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n=+\n" CHANGELOG
     if [ $? -ne 0 ]; then
         exitError "'CHANGELOG' has not been updated to the '${RELEASE_NAME}' release!"
@@ -302,38 +328,32 @@ checkSnapcraft() {
 }
 
 checkTransifexCommandExists() {
-    command -v tx > /dev/null
-    if [ 0 -ne $? ]; then
+    if ! cmdExists tx; then
         exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'."
     fi
 }
 
 checkOsslsigncodeCommandExists() {
-    command -v osslsigncode > /dev/null
-    if [ 0 -ne $? ]; then
+    if ! cmdExists osslsigncode; then
         exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
     fi
 }
 
 checkSigntoolCommandExists() {
-    command -v signtool > /dev/null
-    if [ 0 -ne $? ]; then
+    if ! cmdExists signtool; then
         exitError "signtool command not found on the PATH! Add the Windows SDK binary folder to your PATH."
     fi
 }
 
 checkCodesignCommandExists() {
-    command -v codesign > /dev/null
-    if [ 0 -ne $? ]; then
+    if !cmdExists codesign; then
         exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
     fi
 }
 
 checkQt5LUpdateExists() {
-    command -v lupdate > /dev/null
-    if [ 0 -eq $? ] && ! $(lupdate -version | grep -q "lupdate version 5\."); then
-        command -v lupdate-qt5 > /dev/null
-        if [ 0 -ne $? ]; then
+    if cmdExists lupdate && ! $(lupdate -version | grep -q "lupdate version 5\."); then
+        if ! cmdExists lupdate-qt5; then
             exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
         fi
     fi
@@ -341,12 +361,12 @@ checkQt5LUpdateExists() {
 
 performChecks() {
     logInfo "Performing basic checks..."
-    
+
     checkSourceDirExists
 
     logInfo "Changing to source directory..."
     cd "${SRC_DIR}"
-    
+
     logInfo "Validating toolset and repository..."
 
     checkTransifexCommandExists
@@ -356,23 +376,23 @@ performChecks() {
     checkWorkingTreeClean
     checkSourceBranchExists
     checkTargetBranchExists
-    
+
     logInfo "Checking out '${SOURCE_BRANCH}'..."
     git checkout "$SOURCE_BRANCH"
-    
+
     logInfo "Attempting to find '${RELEASE_NAME}' in various files..."
 
     checkVersionInCMake
     checkChangeLog
     checkAppStreamInfo
     checkSnapcraft
-    
+
     logInfo "\e[1m\e[32mAll checks passed!\e[0m"
 }
 
 # re-implement realpath for OS X (thanks mschrag)
 # https://superuser.com/questions/205127/
-if ! $(command -v realpath > /dev/null); then
+if ! cmdExists realpath; then
     realpath() {
         pushd . > /dev/null
         if [ -d "$1" ]; then
@@ -381,7 +401,7 @@ if ! $(command -v realpath > /dev/null); then
         else
             cd "$(dirname "$1")"
             cur_dir=$(dirs -l +0)
-            
+
             if [ "$cur_dir" == "/" ]; then
                 echo "$cur_dir$(basename "$1")"
             else
@@ -421,42 +441,42 @@ check() {
 # -----------------------------------------------------------------------
 #                             merge command
 # -----------------------------------------------------------------------
-merge() {    
+merge() {
     while [ $# -ge 1 ]; do
         local arg="$1"
         case "$arg" in
             -v|--version)
                 RELEASE_NAME="$2"
                 shift ;;
-                
+
             -a|--app-name)
                 APP_NAME="$2"
                 shift ;;
-            
+
             -s|--source-dir)
                 SRC_DIR="$2"
                 shift ;;
-            
+
             -k|--key|-g|--gpg-key)
                 GPG_GIT_KEY="$2"
                 shift ;;
-            
+
             -r|--release-branch)
                 SOURCE_BRANCH="$2"
                 shift ;;
-            
+
             --target-branch)
                 TARGET_BRANCH="$2"
                 shift ;;
-            
+
             -t|--tag-name)
                 TAG_NAME="$2"
                 shift ;;
-            
+
             -h|--help)
                 printUsage "merge"
                 exit ;;
-            
+
             *)
                 logError "Unknown option '$arg'\n"
                 printUsage "merge"
@@ -468,7 +488,7 @@ merge() {
     init
 
     performChecks
-    
+
     logInfo "Updating language files..."
     ./share/translations/update.sh update
     ./share/translations/update.sh pull
@@ -489,10 +509,10 @@ merge() {
     CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
         CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
     COMMIT_MSG="Release ${RELEASE_NAME}"
-    
+
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
     git checkout "$TARGET_BRANCH"
-    
+
     logInfo "Merging '${SOURCE_BRANCH}' into '${TARGET_BRANCH}'..."
 
     git merge "$SOURCE_BRANCH" --no-ff -m "$COMMIT_MSG" -m "${CHANGELOG}" "$SOURCE_BRANCH" -S"$GPG_GIT_KEY"
@@ -503,12 +523,201 @@ merge() {
     else
         git tag -a "$TAG_NAME" -m "$COMMIT_MSG" -m "${CHANGELOG}" -s -u "$GPG_GIT_KEY"
     fi
-    
+
     cleanup
-    
+
     logInfo "All done!"
     logInfo "Please merge the release branch back into the develop branch now and then push your changes."
     logInfo "Don't forget to also push the tags using \e[1mgit push --tags\e[0m."
+}
+
+# -----------------------------------------------------------------------
+#                         appimage command
+# -----------------------------------------------------------------------
+appimage() {
+    local appdir
+    local build_appsign=false
+    local build_key
+    local verbosity="1"
+
+    while [ $# -ge 1 ]; do
+        local arg="$1"
+        case "$arg" in
+            -v|--version)
+                RELEASE_NAME="$2"
+                shift ;;
+
+            -a|--appdir)
+                appdir="$2"
+                shift ;;
+
+            -o|--output-dir)
+                OUTPUT_DIR="$2"
+                shift ;;
+
+            -d|--docker-image)
+                DOCKER_IMAGE="$2"
+                shift ;;
+
+            --container-name)
+                DOCKER_CONTAINER_NAME="$2"
+                shift ;;
+
+            --appsign)
+                build_appsign=true ;;
+
+            --verbosity)
+                verbosity=$2
+                shift ;;
+
+            -k|--key)
+                build_key="$2"
+                shift ;;
+
+            -h|--help)
+                printUsage "appimage"
+                exit ;;
+
+            *)
+                logError "Unknown option '$arg'\n"
+                printUsage "appimage"
+                exit 1 ;;
+        esac
+        shift
+    done
+
+    if [ -z "${appdir}" ]; then
+        logError "Missing arguments, --appdir is required!\n"
+        printUsage "appimage"
+        exit 1
+    fi
+
+    if [ ! -d "${appdir}" ]; then
+        logError "AppDir does not exist, please create one with 'make install'!\n"
+        exit 1
+    elif [ -e "${appdir}/AppRun" ]; then
+        logError "AppDir has already been run through linuxdeploy, please create a fresh AppDir with 'make install'.\n"
+        exit 1
+    fi
+
+    appdir="$(realpath "$appdir")"
+
+    local out="${OUTPUT_DIR}"
+    if [ "" == "$out" ]; then
+        out="."
+    fi
+    mkdir -p "$out"
+    local out_real="$(realpath "$out")"
+    cd "$out"
+
+    local linuxdeploy="linuxdeploy"
+    local linuxdeploy_cleanup
+    local linuxdeploy_plugin_qt="linuxdeploy-plugin-qt"
+    local linuxdeploy_plugin_qt_cleanup
+    local appimagetool="appimagetool"
+    local appimagetool_cleanup
+
+    logInfo "Testing for AppImage tools..."
+    local docker_test_cmd
+    if [ "" != "$DOCKER_IMAGE" ]; then
+        docker_test_cmd="docker run --rm ${DOCKER_IMAGE}"
+    fi
+
+    # Test if linuxdeploy and linuxdeploy-plugin-qt are installed
+    # on the system or inside the Docker container
+    if ! ${docker_test_cmd} which ${linuxdeploy} &> /dev/null; then
+        logInfo "Downloading linuxdeploy..."
+        linuxdeploy="./linuxdeploy"
+        linuxdeploy_cleanup="rm -f ${linuxdeploy}"
+        curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > "$linuxdeploy"
+        chmod +x "$linuxdeploy"
+    fi
+    if ! ${docker_test_cmd} which ${linuxdeploy_plugin_qt} &> /dev/null; then
+        logInfo "Downloading linuxdeploy-plugin-qt..."
+        linuxdeploy_plugin_qt="./linuxdeploy-plugin-qt"
+        linuxdeploy_plugin_qt_cleanup="rm -f ${linuxdeploy_plugin_qt}"
+        curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > "$linuxdeploy_plugin_qt"
+        chmod +x "$linuxdeploy_plugin_qt"
+    fi
+
+    # appimagetool is always run outside a Docker container, so we can access our GPG keys
+    if ! cmdExists ${appimagetool}; then
+        logInfo "Downloading appimagetool..."
+        appimagetool="./appimagetool"
+        appimagetool_cleanup="rm -f ${appimagetool}"
+        curl -L "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" > "$appimagetool"
+        chmod +x "$appimagetool"
+    fi
+
+    # Create custom AppRun wrapper
+    cat << EOF > "${out_real}/KeePassXC-AppRun"
+#!/usr/bin/env bash
+
+export PATH="\$(dirname \$0)/usr/bin:\${PATH}"
+export LD_LIBRARY_PATH="\$(dirname \$0)/usr/lib:\${LD_LIBRARY_PATH}"
+
+if [ "\${1}" == "cli" ]; then
+    shift
+    exec keepassxc-cli "\$@"
+elif [ "\${1}" == "proxy" ]; then
+    shift
+    exec keepassxc-proxy "\$@"
+elif [ -v CHROME_WRAPPER ] || [ -v MOZ_LAUNCHED_CHILD ]; then
+    exec keepassxc-proxy "\$@"
+else
+    exec keepassxc "\$@"
+fi
+EOF
+    chmod +x "${out_real}/KeePassXC-AppRun"
+
+    # Find .desktop files, icons, and binaries to deploy
+    local desktop_file="$(find "$appdir" -name "org.keepassxc.KeePassXC.desktop" | head -n1)"
+    local icon="$(find "$appdir" -name 'keepassxc.png' | grep -P 'application/256x256/apps/keepassxc.png$' | head -n1)"
+    local executables="$(IFS=$'\n' find "$appdir" | grep -P '/usr/bin/keepassxc[^/]*$' | xargs -i printf " --executable={}")"
+
+    logInfo "Collecting libs and patching binaries..."
+    if [ "" == "$DOCKER_IMAGE" ]; then
+        "$linuxdeploy" --verbosity=${verbosity} --plugin=qt --appdir="$appdir" --desktop-file="$desktop_file" \
+        --custom-apprun="${out_real}/KeePassXC-AppRun" --icon-file="$icon" ${executables} \
+        --library=$(ldconfig -p | grep x86-64 | grep -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)
+    else
+        desktop_file="${desktop_file//${appdir}/\/keepassxc\/AppDir}"
+        icon="${icon//${appdir}/\/keepassxc\/AppDir}"
+        executables="${executables//${appdir}/\/keepassxc\/AppDir}"
+
+        docker run --name "$DOCKER_CONTAINER_NAME" --rm \
+            --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
+            -v "${appdir}:/keepassxc/AppDir:rw" \
+            -v "${out_real}:/keepassxc/out:rw" \
+            "$DOCKER_IMAGE" \
+            bash -c "cd /keepassxc/out && ${linuxdeploy} --verbosity=${verbosity} --plugin=qt --appdir=/keepassxc/AppDir \
+            --custom-apprun="/keepassxc/out/KeePassXC-AppRun" --desktop-file=${desktop_file} --icon-file=${icon} ${executables} \
+            --library=\$(ldconfig -p | grep x86-64 | grep -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)"
+    fi
+
+    logInfo "Creating AppImage..."
+    local appsign_flag=""
+    local appsign_key_flag=""
+    if ${build_appsign}; then
+        appsign_flag="--sign"
+        appsign_key_flag="--sign-key ${build_key}"
+    fi
+    local appimage_name="KeePassXC-x86_64.AppImage"
+    if [ "" != "$RELEASE_NAME" ]; then
+        appimage_name="KeePassXC-${RELEASE_NAME}-x86_64.AppImage"
+    fi
+
+    # Run appimagetool to package (and possibly sign) AppImage
+    # --no-appstream is required, since it may crash on newer systems
+    # see: https://github.com/AppImage/AppImageKit/issues/856
+    "$appimagetool" --updateinformation "gh-releases-zsync|keepassxreboot|keepassxc|latest|KeePassXC-*-x86_64.AppImage.zsync" \
+        ${appsign_flag} ${appsign_key_flag} --no-appstream "$appdir" "${out_real}/${appimage_name}"
+
+    logInfo "Cleaning up temporary files..."
+    ${linuxdeploy_cleanup}
+    ${linuxdeploy_plugin_qt_cleanup}
+    ${appimagetool_cleanup}
+    rm -f "${out_real}/KeePassXC-AppRun"
 }
 
 # -----------------------------------------------------------------------
@@ -518,35 +727,40 @@ build() {
     local build_source_tarball=true
     local build_snapshot=false
     local build_snapcraft=false
+    local build_appimage=false
     local build_generators=""
     local build_appsign=false
     local build_key=""
-    
+
     while [ $# -ge 1 ]; do
         local arg="$1"
         case "$arg" in
             -v|--version)
                 RELEASE_NAME="$2"
                 shift ;;
-                
+
             -a|--app-name)
                 APP_NAME="$2"
                 shift ;;
-            
+
             -s|--source-dir)
                 SRC_DIR="$2"
                 shift ;;
-            
+
             -o|--output-dir)
                 OUTPUT_DIR="$2"
                 shift ;;
-            
+
             -t|--tag-name)
                 TAG_NAME="$2"
                 shift ;;
-            
+
             -d|--docker-image)
                 DOCKER_IMAGE="$2"
+                shift ;;
+
+            --container-name)
+                DOCKER_CONTAINER_NAME="$2"
                 shift ;;
 
             --appsign)
@@ -555,22 +769,21 @@ build() {
             -k|--key)
                 build_key="$2"
                 shift ;;
-            
-            --container-name)
-                DOCKER_CONTAINER_NAME="$2"
-                shift ;;
-                
+
             --snapcraft)
                 build_snapcraft=true ;;
-            
+
+            --appimage)
+                build_appimage=true ;;
+
             -c|--cmake-options)
                 CMAKE_OPTIONS="$2"
                 shift ;;
-            
+
             --compiler)
                 COMPILER="$2"
                 shift ;;
-            
+
             -m|--make-options)
                 MAKE_OPTIONS="$2"
                 shift ;;
@@ -578,25 +791,25 @@ build() {
             -g|--generators)
                 build_generators="$2"
                 shift ;;
-            
+
             -i|--install-prefix)
                 INSTALL_PREFIX="$2"
                 shift ;;
-            
+
             -p|--plugins)
                 BUILD_PLUGINS="$2"
                 shift ;;
-            
+
             -n|--no-source-tarball)
                 build_source_tarball=false ;;
 
             --snapshot)
                 build_snapshot=true ;;
-            
+
             -h|--help)
                 printUsage "build"
                 exit ;;
-            
+
             *)
                 logError "Unknown option '$arg'\n"
                 printUsage "build"
@@ -666,19 +879,24 @@ build() {
     logInfo "Creating build directory..."
     mkdir -p "${OUTPUT_DIR}/build-release"
     cd "${OUTPUT_DIR}/build-release"
-    
+
     logInfo "Configuring sources..."
     for p in ${BUILD_PLUGINS}; do
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
     done
-    
+    if [ "$(uname -o)" == "GNU/Linux" ] && ${build_appimage}; then
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_DIST_TYPE=AppImage"
+        # linuxdeploy requires /usr as install prefix
+        INSTALL_PREFIX="/usr"
+    fi
+
     if [ "$COMPILER" == "g++" ]; then
         export CC=gcc
     elif [ "$COMPILER" == "clang++" ]; then
         export CC=clang
     fi
     export CXX="$COMPILER"
-    
+
     if [ "" == "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
             # Building on macOS
@@ -692,21 +910,27 @@ build() {
 
             logInfo "Compiling and packaging sources..."
             make ${MAKE_OPTIONS} package
-            
+
+            # Appsign the executables if desired
+            if [[ ${build_appsign} && ! -z ${build_key} ]]; then
+                logInfo "Signing executable files"
+                appsign "-f" "./${APP_NAME}-${RELEASE_NAME}.dmg" "-k" "${build_key}"
+            fi
+
             mv "./${APP_NAME}-${RELEASE_NAME}.dmg" ../
         elif [ "$(uname -o)" == "Msys" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
-            
+
             logInfo "Compiling and packaging sources..."
             mingw32-make ${MAKE_OPTIONS} preinstall
 
             # Appsign the executables if desired
             if [[ ${build_appsign} && ! -z ${build_key} ]]; then
                 logInfo "Signing executable files"
-                appsign "-f" `find src | grep '\.exe'` "-k" "${build_key}"
+                appsign "-f" $(find src | grep '\.exe') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
@@ -717,47 +941,43 @@ build() {
             # Inject the portable config into the zip build and rename
             for filename in ${APP_NAME}-*.zip; do
                 logInfo "Creating portable zip file"
-                local folder=`echo ${filename} | sed -r 's/(.*)\.zip/\1/'`
+                local folder=$(echo ${filename} | sed -r 's/(.*)\.zip/\1/')
                 python -c 'import zipfile,sys ; zipfile.ZipFile(sys.argv[1],"a").write(sys.argv[2],sys.argv[3])' \
                     ${filename} ${SRC_DIR}/share/keepassxc.ini ${folder}/keepassxc.ini
                 mv ${filename} ${folder}-portable.zip
             done
-            
+
             mv "${APP_NAME}-"*.* ../
         else
-            mkdir -p "${OUTPUT_DIR}/bin-release"
-            
+            mkdir -p "${OUTPUT_DIR}/KeePassXC.AppDir"
+
             # Building on Linux without Docker container
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off ${CMAKE_OPTIONS} \
-                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
-                -DKEEPASSXC_DIST_TYPE=AppImage "$SRC_DIR"
-                
+                -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
+
             logInfo "Compiling sources..."
-            make $MAKE_OPTIONS
-            
+            make ${MAKE_OPTIONS}
+
             logInfo "Installing to bin dir..."
-            make DESTDIR="${OUTPUT_DIR}/bin-release" install/strip
-            
-            logInfo "Creating AppImage..."
-            ${SRC_DIR}/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME"
+            make DESTDIR="${OUTPUT_DIR}/KeePassXC.AppDir" install/strip
         fi
     else
         if ${build_snapcraft}; then
             logInfo "Building snapcraft docker image..."
-            
+
             sudo docker image build -t "$DOCKER_IMAGE" "$(realpath "$SRC_DIR")/ci/snapcraft"
 
             logInfo "Launching Docker contain to compile snapcraft..."
-            
+
             sudo docker run --name "$DOCKER_CONTAINER_NAME" --rm \
                 -v "$(realpath "$SRC_DIR"):/keepassxc" -w "/keepassxc" \
-                "$DOCKER_IMAGE" snapcraft       
+                "$DOCKER_IMAGE" snapcraft
         else
-            mkdir -p "${OUTPUT_DIR}/bin-release"
-            
+            mkdir -p "${OUTPUT_DIR}/KeePassXC.AppDir"
+
             logInfo "Launching Docker container to compile sources..."
-            
+
             docker run --name "$DOCKER_CONTAINER_NAME" --rm \
                 --cap-add SYS_ADMIN --security-opt apparmor:unconfined --device /dev/fuse \
                 -e "CC=${CC}" -e "CXX=${CXX}" \
@@ -765,25 +985,39 @@ build() {
                 -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
                 "$DOCKER_IMAGE" \
                 bash -c "cd /keepassxc/out/build-release && \
-                    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off $CMAKE_OPTIONS \
-                        -DCMAKE_INSTALL_PREFIX=\"${INSTALL_PREFIX}\" \
-                        -DKEEPASSXC_DIST_TYPE=AppImage /keepassxc/src && \
-                    make $MAKE_OPTIONS && make DESTDIR=/keepassxc/out/bin-release install/strip && \
-                    /keepassxc/src/AppImage-Recipe.sh "$APP_NAME" "$RELEASE_NAME""
+                    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off ${CMAKE_OPTIONS} \
+                        -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} /keepassxc/src && \
+                    make ${MAKE_OPTIONS} && make DESTDIR=/keepassxc/out/KeePassXC.AppDir install/strip"
         fi
-        
+
         if [ 0 -ne $? ]; then
             exitError "Docker build failed!"
         fi
-        
+
         logInfo "Build finished, Docker container terminated."
     fi
-    
+
+    if [ "$(uname -o)" == "GNU/Linux" ] && ${build_appimage}; then
+        local appsign_flag=""
+        local appsign_key_flag=""
+        local docker_image_flag=""
+        local docker_container_name_flag=""
+        if ${build_appsign}; then
+            appsign_flag="--appsign"
+            appsign_key_flag="-k ${build_key}"
+        fi
+        if [ "" != "${DOCKER_IMAGE}" ]; then
+            docker_image_flag="-d ${DOCKER_IMAGE}"
+            docker_container_name_flag="--container-name ${DOCKER_CONTAINER_NAME}"
+        fi
+        appimage "-a" "${OUTPUT_DIR}/KeePassXC.AppDir" "-o" "${OUTPUT_DIR}" \
+            ${appsign_flag} ${appsign_key_flag} ${docker_image_flag} ${docker_container_name_flag}
+    fi
+
     cleanup
-    
+
     logInfo "All done!"
 }
-
 
 # -----------------------------------------------------------------------
 #                           gpgsign command
@@ -815,7 +1049,7 @@ gpgsign() {
         esac
         shift
     done
-    
+
     if [ -z "${sign_files}" ]; then
         logError "Missing arguments, --files is required!\n"
         printUsage "gpgsign"
@@ -829,7 +1063,7 @@ gpgsign() {
 
         logInfo "Signing file '${f}' using release key..."
         gpg --output "${f}.sig" --armor --local-user "$GPG_KEY" --detach-sig "$f"
-        
+
         if [ 0 -ne $? ]; then
             exitError "Signing failed!"
         fi
@@ -839,11 +1073,9 @@ gpgsign() {
         local bname="$(basename "$f")"
         (cd "$(dirname "$rp")"; sha256sum "$bname"  > "${bname}.DIGEST")
     done
-    
+
     logInfo "All done!"
 }
-
-
 
 # -----------------------------------------------------------------------
 #                           appsign command
@@ -971,7 +1203,7 @@ appsign() {
                 logInfo "Signing file '${f}' using Microsoft signtool..."
                 signtool sign -f "${key}" -p "${password}" -d "KeePassXC" \
                     -t "http://timestamp.comodoca.com/authenticode" "${f}"
-                
+
                 if [ 0 -ne $? ]; then
                     exitError "Signing failed!"
                 fi
@@ -987,7 +1219,6 @@ appsign() {
     logInfo "All done!"
 }
 
-
 # -----------------------------------------------------------------------
 #                       parse global command line
 # -----------------------------------------------------------------------
@@ -1000,7 +1231,8 @@ if [ "" == "$MODE" ]; then
 elif [ "help" == "$MODE" ]; then
     printUsage "$1"
     exit
-elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ]; then
+elif [ "check" == "$MODE" ] || [ "merge" == "$MODE" ] || [ "build" == "$MODE" ] \
+    || [ "gpgsign" == "$MODE" ] || [ "appsign" == "$MODE" ] || [ "appimage" == "$MODE" ]; then
     ${MODE} "$@"
 else
     printUsage "$MODE"
