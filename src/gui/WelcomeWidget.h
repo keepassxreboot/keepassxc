@@ -43,6 +43,9 @@ signals:
     void importKeePass1Database();
     void importCsv();
 
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 private slots:
     void openDatabaseFromFile(QListWidgetItem* item);
 
