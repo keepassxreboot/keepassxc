@@ -681,7 +681,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
-    m_mainUi->passwordGenerator->reset();
+    m_mainUi->passwordGenerator->reset(entry->password().length());
 
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
@@ -934,6 +934,7 @@ void EditEntryWidget::cancel()
                                            QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
                                            QMessageBox::Cancel);
         if (result == QMessageBox::Cancel) {
+            m_mainUi->passwordGenerator->reset();
             return;
         }
         if (result == QMessageBox::Save) {
