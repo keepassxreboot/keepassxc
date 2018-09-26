@@ -121,6 +121,9 @@ void YubiKeyEditWidget::yubikeyDetected(int slot, bool blocking)
     m_compUi->buttonRedetectYubikey->setEnabled(true);
     m_compUi->yubikeyProgress->setVisible(false);
     m_isDetected = true;
+#else
+    Q_UNUSED(slot);
+    Q_UNUSED(blocking);
 #endif
 }
 
