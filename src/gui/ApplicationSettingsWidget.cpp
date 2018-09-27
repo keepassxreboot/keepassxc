@@ -88,10 +88,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->lockDatabaseIdleSpinBox,
             SLOT(setEnabled(bool)));
 
-    connect(m_secUi->touchIDResetCheckBox,
-            SIGNAL(toggled(bool)),
-            m_secUi->touchIDResetSpinBox,
-            SLOT(setEnabled(bool)));
+    connect(m_secUi->touchIDResetCheckBox, SIGNAL(toggled(bool)), m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
 
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
@@ -189,6 +186,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->fallbackToSearch->setChecked(config()->get("security/IconDownloadFallback").toBool());
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
+    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get("security/passwordemptynodots").toBool());
     m_secUi->passwordDetailsCleartextCheckBox->setChecked(config()->get("security/hidepassworddetails").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
@@ -259,6 +257,8 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("security/IconDownloadFallback", m_secUi->fallbackToSearch->isChecked());
 
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
+    config()->set("security/passwordemptynodots", m_secUi->passwordShowDotsCheckBox->isChecked());
+
     config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
     config()->set("security/hidenotes", m_secUi->hideNotesCheckBox->isChecked());

@@ -180,6 +180,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="passwordShowDotsCheckBox">
+        <property name="text">
+         <string>Don't use placeholder for empty password fields</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="passwordDetailsCleartextCheckBox">
         <property name="text">
          <string>Hide passwords in the preview panel</string>
