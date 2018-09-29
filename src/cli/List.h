@@ -26,7 +26,7 @@ public:
     List();
     ~List();
     int execute(const QStringList& arguments);
-    int listGroup(Database* database, bool recursive, QString groupPath = QString(""));
+    int listGroup(Database* database, bool recursive, const QString& groupPath = {});
 };
 
 #endif // KEEPASSXC_LIST_H

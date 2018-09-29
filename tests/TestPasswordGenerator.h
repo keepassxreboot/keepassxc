@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,18 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LOCATE_H
-#define KEEPASSXC_LOCATE_H
+#ifndef KEEPASSXC_TESTPASSWORDGENERATOR_H
+#define KEEPASSXC_TESTPASSWORDGENERATOR_H
 
-#include "Command.h"
+#include <QObject>
 
-class Locate : public Command
+class TestPasswordGenerator : public QObject
 {
-public:
-    Locate();
-    ~Locate();
-    int execute(const QStringList& arguments);
-    int locateEntry(Database* database, const QString& searchTerm);
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void testCharClasses();
+    void testLookalikeExclusion();
 };
 
-#endif // KEEPASSXC_LOCATE_H
+#endif //KEEPASSXC_TESTPASSWORDGENERATOR_H

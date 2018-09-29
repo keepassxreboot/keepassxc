@@ -30,31 +30,27 @@ class QIODevice;
 
 namespace Tools
 {
+QString humanReadableFileSize(qint64 bytes, quint32 precision = 2);
+bool hasChild(const QObject* parent, const QObject* child);
+bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
+bool readAllFromDevice(QIODevice* device, QByteArray& data);
+QString imageReaderFilter();
+bool isHex(const QByteArray& ba);
+bool isBase64(const QByteArray& ba);
+void sleep(int ms);
+void wait(int ms);
 
-    QString humanReadableFileSize(qint64 bytes, quint32 precision = 2);
-    bool hasChild(const QObject* parent, const QObject* child);
-    bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
-    bool readAllFromDevice(QIODevice* device, QByteArray& data);
-    QString imageReaderFilter();
-    bool isHex(const QByteArray& ba);
-    bool isBase64(const QByteArray& ba);
-    void sleep(int ms);
-    void wait(int ms);
-    void disableCoreDumps();
-    void setupSearchPaths();
-    bool createWindowsDACL();
+template <typename RandomAccessIterator, typename T>
+RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
+{
+    RandomAccessIterator it = std::lower_bound(begin, end, value);
 
-    template <typename RandomAccessIterator, typename T>
-    RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
-    {
-        RandomAccessIterator it = std::lower_bound(begin, end, value);
-
-        if ((it == end) || (value < *it)) {
-            return end;
-        } else {
-            return it;
-        }
+    if ((it == end) || (value < *it)) {
+        return end;
+    } else {
+        return it;
     }
+}
 
 } // namespace Tools
 

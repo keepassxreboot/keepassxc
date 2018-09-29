@@ -19,17 +19,18 @@
 #ifndef KEEPASSX_TESTGUI_H
 #define KEEPASSX_TESTGUI_H
 
-#include "TemporaryFile.h"
+#include "gui/MainWindow.h"
 
 #include <QAbstractItemModel>
 #include <QObject>
 #include <QPointer>
+#include <QScopedPointer>
+#include <QTemporaryFile>
 
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class QAbstractItemView;
-class MainWindow;
 
 class TestGui : public QObject
 {
@@ -84,12 +85,12 @@ private:
                     Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
 
-    QPointer<MainWindow> m_mainWindow;
+    QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
     QPointer<Database> m_db;
     QByteArray m_dbData;
-    TemporaryFile m_dbFile;
+    QScopedPointer<QTemporaryFile> m_dbFile;
     QString m_dbFileName;
     QString m_dbFilePath;
 };

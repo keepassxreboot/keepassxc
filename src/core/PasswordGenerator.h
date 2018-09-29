@@ -66,7 +66,6 @@ public:
     bool isValid() const;
 
     QString generatePassword() const;
-    int getbits() const;
 
     static const int DefaultLength = 16;
     static const char* DefaultExcludedChars;

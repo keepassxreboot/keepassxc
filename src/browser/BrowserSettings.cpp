@@ -485,11 +485,6 @@ QString BrowserSettings::generatePassword()
     }
 }
 
-int BrowserSettings::getbits()
-{
-    return m_passwordGenerator.getbits();
-}
-
 void BrowserSettings::updateBinaryPaths(QString customProxyLocation)
 {
     bool isProxy = supportBrowserProxy();

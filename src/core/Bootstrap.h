@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,18 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LOCATE_H
-#define KEEPASSXC_LOCATE_H
 
-#include "Command.h"
+#ifndef KEEPASSXC_BOOTSTRAP_H
+#define KEEPASSXC_BOOTSTRAP_H
 
-class Locate : public Command
+#include "gui/MainWindow.h"
+
+namespace Bootstrap
 {
-public:
-    Locate();
-    ~Locate();
-    int execute(const QStringList& arguments);
-    int locateEntry(Database* database, const QString& searchTerm);
+void bootstrapApplication();
+void restoreMainWindowState(MainWindow& mainWindow);
+void disableCoreDumps();
+bool createWindowsDACL();
+void setupSearchPaths();
 };
 
-#endif // KEEPASSXC_LOCATE_H
+
+#endif //KEEPASSXC_BOOTSTRAP_H
