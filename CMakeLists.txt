@@ -204,12 +204,6 @@ endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
-
-  if(WITH_COVERAGE)
-    # Include code coverage, use with -DCMAKE_BUILD_TYPE=Coverage
-    include(CodeCoverage)
-    setup_target_for_coverage(kp_coverage "make test" coverage)
-  endif()
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCC)
@@ -290,6 +284,21 @@ endif()
 if(WITH_TESTS)
   enable_testing()
 endif(WITH_TESTS)
+
+if(WITH_COVERAGE)
+  # Include code coverage, use with -DCMAKE_BUILD_TYPE=Debug
+  include(CodeCoverage)
+  set(COVERAGE_GCOVR_EXCLUDES
+          "\\(.+/\\)?tests/.\\*"
+          ".\\*/moc_\\[^/\\]+\\.cpp"
+          ".\\*/ui_\\[^/\\]+\\.h"
+          "\\(.+/\\)?zxcvbn/.\\*")
+  append_coverage_compiler_flags()
+  setup_target_for_coverage_gcovr_html(
+    NAME coverage
+    EXECUTABLE $(MAKE) && $(MAKE) test
+  )
+endif()
 
 include(CLangFormat)
 
