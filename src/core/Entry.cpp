@@ -19,6 +19,7 @@
 
 #include "config-keepassx.h"
 
+#include "core/Clock.h"
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
@@ -60,6 +61,7 @@ Entry::Entry()
 
 Entry::~Entry()
 {
+    setUpdateTimeinfo(false);
     if (m_group) {
         m_group->removeEntry(this);
 
@@ -77,17 +79,21 @@ template <class T> inline bool Entry::set(T& property, const T& value)
         property = value;
         emit modified();
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 void Entry::updateTimeinfo()
 {
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLastModificationTime(QDateTime::currentDateTimeUtc());
-        m_data.timeInfo.setLastAccessTime(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLastModificationTime(Clock::currentDateTimeUtc());
+        m_data.timeInfo.setLastAccessTime(Clock::currentDateTimeUtc());
     }
+}
+
+bool Entry::canUpdateTimeinfo() const
+{
+    return m_updateTimeinfo;
 }
 
 void Entry::setUpdateTimeinfo(bool value)
@@ -123,6 +129,11 @@ const QUuid& Entry::uuid() const
     return m_uuid;
 }
 
+const QString Entry::uuidToHex() const
+{
+    return QString::fromLatin1(m_uuid.toRfc4122().toHex());
+}
+
 QImage Entry::icon() const
 {
     if (m_data.customIcon.isNull()) {
@@ -142,15 +153,13 @@ QPixmap Entry::iconPixmap() const
 {
     if (m_data.customIcon.isNull()) {
         return databaseIcons()->iconPixmap(m_data.iconNumber);
-    } else {
-        Q_ASSERT(database());
-
-        if (database()) {
-            return database()->metadata()->customIconPixmap(m_data.customIcon);
-        } else {
-            return QPixmap();
-        }
     }
+
+    Q_ASSERT(database());
+    if (database()) {
+        return database()->metadata()->customIconPixmap(m_data.customIcon);
+    }
+    return QPixmap();
 }
 
 QPixmap Entry::iconScaledPixmap() const
@@ -158,11 +167,9 @@ QPixmap Entry::iconScaledPixmap() const
     if (m_data.customIcon.isNull()) {
         // built-in icons are 16x16 so don't need to be scaled
         return databaseIcons()->iconPixmap(m_data.iconNumber);
-    } else {
-        Q_ASSERT(database());
-
-        return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
     }
+    Q_ASSERT(database());
+    return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
 }
 
 int Entry::iconNumber() const
@@ -195,7 +202,7 @@ QString Entry::tags() const
     return m_data.tags;
 }
 
-TimeInfo Entry::timeInfo() const
+const TimeInfo& Entry::timeInfo() const
 {
     return m_data.timeInfo;
 }
@@ -300,7 +307,7 @@ QString Entry::notes() const
 
 bool Entry::isExpired() const
 {
-    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < QDateTime::currentDateTimeUtc();
+    return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
 }
 
 bool Entry::hasReferences() const
@@ -532,7 +539,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
 
     for (Entry* entry : historyEntries) {
         Q_ASSERT(!entry->parent());
-        Q_ASSERT(entry->uuid() == uuid());
+        Q_ASSERT(entry->uuid().isNull() || entry->uuid() == uuid());
         Q_ASSERT(m_history.contains(entry));
 
         m_history.removeOne(entry);
@@ -597,6 +604,42 @@ void Entry::truncateHistory()
     }
 }
 
+bool Entry::equals(const Entry* other, CompareItemOptions options) const
+{
+    if (!other) {
+        return false;
+    }
+    if (m_uuid != other->uuid()) {
+        return false;
+    }
+    if (!m_data.equals(other->m_data, options)) {
+        return false;
+    }
+    if (*m_customData != *other->m_customData) {
+        return false;
+    }
+    if (*m_attributes != *other->m_attributes) {
+        return false;
+    }
+    if (*m_attachments != *other->m_attachments) {
+        return false;
+    }
+    if (*m_autoTypeAssociations != *other->m_autoTypeAssociations) {
+        return false;
+    }
+    if (!options.testFlag(CompareItemIgnoreHistory)) {
+        if (m_history.count() != other->m_history.count()) {
+            return false;
+        }
+        for (int i = 0; i < m_history.count(); ++i) {
+            if (!m_history[i]->equals(other->m_history[i], options)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 Entry* Entry::clone(CloneFlags flags) const
 {
     Entry* entry = new Entry();
@@ -613,12 +656,12 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneUserAsRef) {
         // Build the username reference
-        QString username = "{REF:U@I:" + m_uuid.toRfc4122().toHex() + "}";
+        QString username = "{REF:U@I:" + uuidToHex() + "}";
         entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
-        QString password = "{REF:P@I:" + m_uuid.toRfc4122().toHex() + "}";
+        QString password = "{REF:P@I:" + uuidToHex() + "}";
         entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
@@ -635,7 +678,7 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->setUpdateTimeinfo(true);
 
     if (flags & CloneResetTimeInfo) {
-        QDateTime now = QDateTime::currentDateTimeUtc();
+        QDateTime now = Clock::currentDateTimeUtc();
         entry->m_data.timeInfo.setCreationTime(now);
         entry->m_data.timeInfo.setLastModificationTime(now);
         entry->m_data.timeInfo.setLastAccessTime(now);
@@ -835,7 +878,7 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
     case EntryReferenceType::Notes:
         return notes();
     case EntryReferenceType::QUuid:
-        return uuid().toRfc4122().toHex();
+        return uuidToHex();
     default:
         break;
     }
@@ -880,7 +923,7 @@ void Entry::setGroup(Group* group)
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
-        m_data.timeInfo.setLocationChanged(QDateTime::currentDateTimeUtc());
+        m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
     }
 }
 
@@ -893,9 +936,16 @@ const Database* Entry::database() const
 {
     if (m_group) {
         return m_group->database();
-    } else {
-        return nullptr;
     }
+    return nullptr;
+}
+
+Database* Entry::database()
+{
+    if (m_group) {
+        return m_group->database();
+    }
+    return nullptr;
 }
 
 QString Entry::maskPasswordPlaceholders(const QString& str) const
@@ -955,9 +1005,11 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
 {
     if (!placeholder.startsWith(QLatin1Char('{')) || !placeholder.endsWith(QLatin1Char('}'))) {
         return PlaceholderType::NotPlaceholder;
-    } else if (placeholder.startsWith(QLatin1Literal("{S:"))) {
+    }
+    if (placeholder.startsWith(QLatin1Literal("{S:"))) {
         return PlaceholderType::CustomAttribute;
-    } else if (placeholder.startsWith(QLatin1Literal("{REF:"))) {
+    }
+    if (placeholder.startsWith(QLatin1Literal("{REF:"))) {
         return PlaceholderType::Reference;
     }
 
@@ -1019,4 +1071,65 @@ QString Entry::resolveUrl(const QString& url) const
 
     // No valid http URL's found
     return QString("");
+}
+
+bool EntryData::operator==(const EntryData& other) const
+{
+    return equals(other, CompareItemDefault);
+}
+
+bool EntryData::operator!=(const EntryData& other) const
+{
+    return !(*this == other);
+}
+
+bool EntryData::equals(const EntryData& other, CompareItemOptions options) const
+{
+    if (::compare(iconNumber, other.iconNumber, options) != 0) {
+        return false;
+    }
+    if (::compare(customIcon, other.customIcon, options) != 0) {
+        return false;
+    }
+    if (::compare(foregroundColor, other.foregroundColor, options) != 0) {
+        return false;
+    }
+    if (::compare(backgroundColor, other.backgroundColor, options) != 0) {
+        return false;
+    }
+    if (::compare(overrideUrl, other.overrideUrl, options) != 0) {
+        return false;
+    }
+    if (::compare(tags, other.tags, options) != 0) {
+        return false;
+    }
+    if (::compare(autoTypeEnabled, other.autoTypeEnabled, options) != 0) {
+        return false;
+    }
+    if (::compare(autoTypeObfuscation, other.autoTypeObfuscation, options) != 0) {
+        return false;
+    }
+    if (::compare(defaultAutoTypeSequence, other.defaultAutoTypeSequence, options) != 0) {
+        return false;
+    }
+    if (!timeInfo.equals(other.timeInfo, options)) {
+        return false;
+    }
+    if (!totpSettings.isNull() && !other.totpSettings.isNull()) {
+        // Both have TOTP settings, compare them
+        if (::compare(totpSettings->key, other.totpSettings->key, options) != 0) {
+            return false;
+        }
+        if (::compare(totpSettings->digits, other.totpSettings->digits, options) != 0) {
+            return false;
+        }
+        if (::compare(totpSettings->step, other.totpSettings->step, options) != 0) {
+            return false;
+        }
+    } else if (totpSettings.isNull() != other.totpSettings.isNull()) {
+        // The existance of TOTP has changed between these entries
+        return false;
+    }
+
+    return true;
 }

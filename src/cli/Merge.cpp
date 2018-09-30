@@ -23,6 +23,7 @@
 #include <QTextStream>
 
 #include "core/Database.h"
+#include "core/Merger.h"
 
 Merge::Merge()
 {
@@ -82,7 +83,8 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    db1->merge(db2);
+    Merger merger(db2, db1);
+    merger.merge();
 
     QString errorMessage = db1->saveToFile(args.at(0));
     if (!errorMessage.isEmpty()) {

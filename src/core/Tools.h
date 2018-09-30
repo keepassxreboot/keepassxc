@@ -21,7 +21,6 @@
 
 #include "core/Global.h"
 
-#include <QDateTime>
 #include <QObject>
 #include <QString>
 

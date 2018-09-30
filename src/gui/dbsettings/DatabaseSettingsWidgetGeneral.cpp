@@ -17,6 +17,7 @@
 
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "ui_DatabaseSettingsWidgetGeneral.h"
+#include "core/Clock.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -82,7 +83,7 @@ bool DatabaseSettingsWidgetGeneral::save()
     meta->setDescription(m_ui->dbDescriptionEdit->text());
     meta->setDefaultUserName(m_ui->defaultUsernameEdit->text());
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
-    meta->setSettingsChanged(QDateTime::currentDateTimeUtc());
+    meta->setSettingsChanged(Clock::currentDateTimeUtc());
 
     bool truncate = false;
 

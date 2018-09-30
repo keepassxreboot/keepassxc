@@ -60,11 +60,12 @@ private:
     Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
-    QWidget* const m_editGroupWidgetMain;
-    EditWidgetIcons* const m_editGroupWidgetIcons;
-    EditWidgetProperties* const m_editWidgetProperties;
-    Group* m_group;
-    Database* m_database;
+    QPointer<QWidget> m_editGroupWidgetMain;
+    QPointer<EditWidgetIcons> m_editGroupWidgetIcons;
+    QPointer<EditWidgetProperties> m_editWidgetProperties;
+
+    QPointer<Group> m_group;
+    QPointer<Database> m_database;
 
     Q_DISABLE_COPY(EditGroupWidget)
 };

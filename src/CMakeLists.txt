@@ -40,6 +40,7 @@ set(keepassx_SOURCES
     core/AutoTypeAssociations.cpp
     core/AsyncTask.h
     core/AutoTypeMatch.cpp
+    core/Compare.cpp
     core/Config.cpp
     core/CsvParser.cpp
     core/CustomData.cpp
@@ -54,6 +55,7 @@ set(keepassx_SOURCES
     core/Group.cpp
     core/InactivityTimer.cpp
     core/ListDeleter.h
+    core/Merger.cpp
     core/Metadata.cpp
     core/PasswordGenerator.cpp
     core/PassphraseGenerator.cpp
@@ -64,6 +66,7 @@ set(keepassx_SOURCES
     core/ScreenLockListenerPrivate.cpp
     core/TimeDelta.cpp
     core/TimeInfo.cpp
+    core/Clock.cpp
     core/Tools.cpp
     core/Translator.cpp
     core/Base32.h

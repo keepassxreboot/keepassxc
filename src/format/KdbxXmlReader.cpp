@@ -17,6 +17,7 @@
 
 #include "KdbxXmlReader.h"
 #include "KeePass2RandomStream.h"
+#include "core/Clock.h"
 #include "core/DatabaseIcons.h"
 #include "core/Endian.h"
 #include "core/Entry.h"
@@ -1032,7 +1033,7 @@ QDateTime KdbxXmlReader::readDateTime()
         return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);
     }
 
-    QDateTime dt = QDateTime::fromString(str, Qt::ISODate);
+    QDateTime dt = Clock::parse(str, Qt::ISODate);
     if (dt.isValid()) {
         return dt;
     }
@@ -1041,7 +1042,7 @@ QDateTime KdbxXmlReader::readDateTime()
         raiseError(tr("Invalid date time value"));
     }
 
-    return QDateTime::currentDateTimeUtc();
+    return Clock::currentDateTimeUtc();
 }
 
 QColor KdbxXmlReader::readColor()
