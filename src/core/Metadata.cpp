@@ -18,6 +18,7 @@
 #include "Metadata.h"
 #include <QtCore/QCryptographicHash>
 
+#include "core/Clock.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
@@ -43,7 +44,7 @@ Metadata::Metadata(QObject* parent)
     m_data.protectUrl = false;
     m_data.protectNotes = false;
 
-    QDateTime now = QDateTime::currentDateTimeUtc();
+    QDateTime now = Clock::currentDateTimeUtc();
     m_data.nameChanged = now;
     m_data.descriptionChanged = now;
     m_data.defaultUserNameChanged = now;
@@ -71,7 +72,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
-            dateTime = QDateTime::currentDateTimeUtc();
+            dateTime = Clock::currentDateTimeUtc();
         }
         emit modified();
         return true;

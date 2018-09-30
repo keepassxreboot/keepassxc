@@ -28,6 +28,8 @@ class TestGroup : public QObject
 
 private slots:
     void initTestCase();
+    void init();
+    void cleanup();
     void testParenting();
     void testSignals();
     void testEntries();

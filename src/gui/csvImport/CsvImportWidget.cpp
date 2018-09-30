@@ -23,6 +23,7 @@
 #include <QFileInfo>
 #include <QSpacerItem>
 
+#include "core/Clock.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
 #include "gui/MessageWidget.h"
@@ -255,14 +256,13 @@ void CsvImportWidget::writeDatabase()
         if (m_parserModel->data(m_parserModel->index(r, 6)).isValid()) {
             qint64 lastModified = m_parserModel->data(m_parserModel->index(r, 6)).toString().toLongLong();
             if (lastModified) {
-                timeInfo.setLastModificationTime(
-                    QDateTime::fromMSecsSinceEpoch(lastModified * 1000).toTimeSpec(Qt::UTC));
+                timeInfo.setLastModificationTime(Clock::datetimeUtc(lastModified * 1000));
             }
         }
         if (m_parserModel->data(m_parserModel->index(r, 7)).isValid()) {
             qint64 created = m_parserModel->data(m_parserModel->index(r, 7)).toString().toLongLong();
             if (created) {
-                timeInfo.setCreationTime(QDateTime::fromMSecsSinceEpoch(created * 1000).toTimeSpec(Qt::UTC));
+                timeInfo.setCreationTime(Clock::datetimeUtc(created * 1000));
             }
         }
         entry->setTimeInfo(timeInfo);

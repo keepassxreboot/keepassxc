@@ -18,6 +18,7 @@
 
 #include "TestGroup.h"
 #include "TestGlobal.h"
+#include "stub/TestClock.h"
 
 #include <QSignalSpy>
 
@@ -26,11 +27,29 @@
 
 QTEST_GUILESS_MAIN(TestGroup)
 
+namespace
+{
+    TestClock* m_clock = nullptr;
+}
+
 void TestGroup::initTestCase()
 {
     qRegisterMetaType<Entry*>("Entry*");
     qRegisterMetaType<Group*>("Group*");
     QVERIFY(Crypto::init());
+}
+
+void TestGroup::init()
+{
+    Q_ASSERT(m_clock == nullptr);
+    m_clock = new TestClock(2010, 5, 5, 10, 30, 10);
+    TestClock::setup(m_clock);
+}
+
+void TestGroup::cleanup()
+{
+    TestClock::teardown();
+    m_clock = nullptr;
 }
 
 void TestGroup::testParenting()
@@ -389,7 +408,7 @@ void TestGroup::testClone()
     QVERIFY(clonedGroupNewUuid->uuid() != originalGroup->uuid());
 
     // Making sure the new modification date is not the same.
-    QTest::qSleep(1);
+    m_clock->advanceSecond(1);
 
     QScopedPointer<Group> clonedGroupResetTimeInfo(
         originalGroup->clone(Entry::CloneNoFlags, Group::CloneNewUuid | Group::CloneResetTimeInfo));
@@ -474,7 +493,7 @@ void TestGroup::testFindEntry()
 
     Entry* entry;
 
-    entry = db->rootGroup()->findEntry(entry1->uuid().toRfc4122().toHex());
+    entry = db->rootGroup()->findEntry(entry1->uuidToHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
@@ -491,7 +510,7 @@ void TestGroup::testFindEntry()
     entry = db->rootGroup()->findEntry(QString("//entry1"));
     QVERIFY(entry == nullptr);
 
-    entry = db->rootGroup()->findEntry(entry2->uuid().toRfc4122().toHex());
+    entry = db->rootGroup()->findEntry(entry2->uuidToHex());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 

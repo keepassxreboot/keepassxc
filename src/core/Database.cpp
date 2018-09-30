@@ -27,7 +27,9 @@
 #include <QXmlStreamReader>
 
 #include "cli/Utils.h"
+#include "core/Clock.h"
 #include "core/Group.h"
+#include "core/Merger.h"
 #include "core/Metadata.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
@@ -40,6 +42,7 @@ QHash<QUuid, Database*> Database::m_uuidMap;
 
 Database::Database()
     : m_metadata(new Metadata(this))
+    , m_rootGroup(nullptr)
     , m_timer(new QTimer(this))
     , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
@@ -216,6 +219,39 @@ QList<DeletedObject> Database::deletedObjects()
     return m_deletedObjects;
 }
 
+const QList<DeletedObject>& Database::deletedObjects() const
+{
+    return m_deletedObjects;
+}
+
+bool Database::containsDeletedObject(const QUuid& uuid) const
+{
+    for (const DeletedObject& currentObject : m_deletedObjects) {
+        if (currentObject.uuid == uuid) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Database::containsDeletedObject(const DeletedObject& object) const
+{
+    for (const DeletedObject& currentObject : m_deletedObjects) {
+        if (currentObject.uuid == object.uuid) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Database::setDeletedObjects(const QList<DeletedObject>& delObjs)
+{
+    if (m_deletedObjects == delObjs) {
+        return;
+    }
+    m_deletedObjects = delObjs;
+}
+
 void Database::addDeletedObject(const DeletedObject& delObj)
 {
     Q_ASSERT(delObj.deletionTime.timeSpec() == Qt::UTC);
@@ -225,7 +261,7 @@ void Database::addDeletedObject(const DeletedObject& delObj)
 void Database::addDeletedObject(const QUuid& uuid)
 {
     DeletedObject delObj;
-    delObj.deletionTime = QDateTime::currentDateTimeUtc();
+    delObj.deletionTime = Clock::currentDateTimeUtc();
     delObj.uuid = uuid;
 
     addDeletedObject(delObj);
@@ -303,7 +339,7 @@ bool Database::setKey(QSharedPointer<const CompositeKey> key, bool updateChanged
     m_data.transformedMasterKey = transformedMasterKey;
     m_data.hasKey = true;
     if (updateChangedTime) {
-        m_metadata->setMasterKeyChanged(QDateTime::currentDateTimeUtc());
+        m_metadata->setMasterKeyChanged(Clock::currentDateTimeUtc());
     }
 
     if (oldTransformedMasterKey != m_data.transformedMasterKey) {
@@ -401,21 +437,6 @@ void Database::emptyRecycleBin()
     }
 }
 
-void Database::merge(const Database* other)
-{
-    m_rootGroup->merge(other->rootGroup());
-
-    for (const QUuid& customIconId : other->metadata()->customIcons().keys()) {
-        QImage customIcon = other->metadata()->customIcon(customIconId);
-        if (!this->metadata()->containsCustomIcon(customIconId)) {
-            qDebug() << QString("Adding custom icon %1 to database.").arg(customIconId.toString());
-            this->metadata()->addCustomIcon(customIconId, customIcon);
-        }
-    }
-
-    emit modified();
-}
-
 void Database::setEmitModified(bool value)
 {
     if (m_emitModified && !value) {
@@ -423,6 +444,11 @@ void Database::setEmitModified(bool value)
     }
 
     m_emitModified = value;
+}
+
+void Database::markAsModified()
+{
+    emit modified();
 }
 
 const QUuid& Database::uuid()
@@ -467,7 +493,6 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
 
     KeePass2Reader reader;
     Database* db = reader.readDatabase(&dbFile, key);
-
     if (reader.hasError()) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return nullptr;
@@ -600,7 +625,6 @@ QString Database::writeDatabase(QIODevice* device)
  * @param filePath Path to the file to backup
  * @return
  */
-
 bool Database::backupDatabase(QString filePath)
 {
     QString backupFilePath = filePath;
