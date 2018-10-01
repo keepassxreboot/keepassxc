@@ -27,6 +27,7 @@ The following libraries are required:
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
 * libsodium (>= 1.0.12, optional for KeePassXC-Browser support)
 * libargon2
+* libquazip5
 
 Prepare the Building Environment
 ================================

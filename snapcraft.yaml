@@ -48,6 +48,8 @@ parts:
       - libykpers-1-dev
       - libsodium-dev
       - libargon2-0-dev
+      - libquazip5-dev
+      - libquazip5-headers
     stage-packages:
       - dbus
       - qttranslations5-l10n # common translations
