@@ -51,6 +51,7 @@ set(keepassx_SOURCES
     core/EntryAttributes.cpp
     core/EntrySearcher.cpp
     core/FilePath.cpp
+    core/FileWatcher.cpp
     core/Global.h
     core/Group.cpp
     core/InactivityTimer.cpp
@@ -211,6 +212,7 @@ add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
+add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
@@ -225,6 +227,17 @@ endif()
 
 add_subdirectory(autotype)
 add_subdirectory(cli)
+
+add_subdirectory(crypto/ssh)
+if(WITH_XC_CRYPTO_SSH)
+    set(crypto_ssh_LIB crypto_ssh)
+endif()
+
+
+add_subdirectory(keeshare)
+if(WITH_XC_KEESHARE)
+    set(keeshare_LIB keeshare)
+endif()
 
 add_subdirectory(sshagent)
 if(WITH_XC_SSHAGENT)
@@ -269,7 +282,6 @@ set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUIL
 target_link_libraries(keepassx_core
                       autotype
                       ${keepassxcbrowser_LIB}
-                      ${sshagent_LIB}
                       Qt5::Core
                       Qt5::Network
                       Qt5::Concurrent
@@ -280,7 +292,14 @@ target_link_libraries(keepassx_core
                       ${ARGON2_LIBRARIES}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
+		      ${ZLIB_LIBRARIES})
+
+if(WITH_XC_SSHAGENT)
+  target_link_libraries(keepassx_core sshagent)
+endif()
+if(WITH_XC_KEESHARE)
+  target_link_libraries(keepassx_core keeshare)
+endif()
 
 if(APPLE)
     target_link_libraries(keepassx_core "-framework Foundation")

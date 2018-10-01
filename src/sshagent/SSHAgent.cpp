@@ -17,8 +17,10 @@
  */
 
 #include "SSHAgent.h"
-#include "BinaryStream.h"
-#include "KeeAgentSettings.h"
+
+#include "crypto/ssh/OpenSSHKey.h"
+#include "crypto/ssh/BinaryStream.h"
+#include "sshagent/KeeAgentSettings.h"
 
 #ifndef Q_OS_WIN
 #include <QtNetwork>
@@ -306,11 +308,11 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
 
             OpenSSHKey key;
 
-            if (!key.parse(keyData)) {
+            if (!key.parsePKCS1PEM(keyData)) {
                 continue;
             }
 
-            if (!key.openPrivateKey(e->password())) {
+            if (!key.openKey(e->password())) {
                 continue;
             }
 

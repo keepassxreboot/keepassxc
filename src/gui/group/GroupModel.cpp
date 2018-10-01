@@ -25,6 +25,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
+#include "keeshare/KeeShare.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)
     : QAbstractItemModel(parent)
@@ -125,13 +126,18 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
     Group* group = groupFromIndex(index);
 
     if (role == Qt::DisplayRole) {
-        return group->name();
+        QString nameTemplate = tr("%1", "Template for name without annotation");
+#ifdef WITH_XC_KEESHARE
+        nameTemplate = KeeShare::indicatorSuffix(group, nameTemplate);
+#endif
+        return nameTemplate.arg(group->name());
     } else if (role == Qt::DecorationRole) {
-        if (group->isExpired()) {
-            return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-        } else {
-            return group->iconScaledPixmap();
-        }
+        QPixmap pixmap = group->isExpired() ? databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex)
+                                            : group->iconScaledPixmap();
+#ifdef WITH_XC_KEESHARE
+        pixmap = KeeShare::indicatorBadge(group, pixmap);
+#endif
+        return pixmap;
     } else if (role == Qt::FontRole) {
         QFont font;
         if (group->isExpired()) {

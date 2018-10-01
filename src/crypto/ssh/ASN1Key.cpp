@@ -17,6 +17,8 @@
  */
 
 #include "ASN1Key.h"
+#include "crypto/ssh/BinaryStream.h"
+
 #include <gcrypt.h>
 
 namespace
@@ -53,7 +55,17 @@ namespace
         return true;
     }
 
-    bool parseHeader(BinaryStream& stream, quint8 wantedType)
+    bool parsePublicHeader(BinaryStream& stream)
+    {
+        quint8 tag;
+        quint32 len;
+
+        nextTag(stream, tag, len);
+
+        return (tag == TAG_SEQUENCE);
+    }
+
+    bool parsePrivateHeader(BinaryStream& stream, quint8 wantedType)
     {
         quint8 tag;
         quint32 len;
@@ -118,7 +130,7 @@ bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
 {
     BinaryStream stream(&ba);
 
-    if (!parseHeader(stream, KEY_ZERO)) {
+    if (!parsePrivateHeader(stream, KEY_ZERO)) {
         return false;
     }
 
@@ -149,11 +161,38 @@ bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
     return true;
 }
 
-bool ASN1Key::parseRSA(QByteArray& ba, OpenSSHKey& key)
+bool ASN1Key::parsePublicRSA(QByteArray& ba, OpenSSHKey& key)
 {
     BinaryStream stream(&ba);
 
-    if (!parseHeader(stream, KEY_ZERO)) {
+    if (!parsePublicHeader(stream)) {
+        return false;
+    }
+
+    QByteArray n, e;
+    readInt(stream, n);
+    readInt(stream, e);
+
+    QList<QByteArray> publicData;
+    publicData.append(e);
+    publicData.append(n);
+
+    QList<QByteArray> privateData;
+    privateData.append(n);
+    privateData.append(e);
+
+    key.setType("ssh-rsa");
+    key.setPublicData(publicData);
+    key.setPrivateData(privateData);
+    key.setComment("");
+    return true;
+}
+
+bool ASN1Key::parsePrivateRSA(QByteArray& ba, OpenSSHKey& key)
+{
+    BinaryStream stream(&ba);
+
+    if (!parsePrivateHeader(stream, KEY_ZERO)) {
         return false;
     }
 

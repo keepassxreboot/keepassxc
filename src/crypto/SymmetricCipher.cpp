@@ -89,7 +89,7 @@ int SymmetricCipher::blockSize() const
 
 QString SymmetricCipher::errorString() const
 {
-    return m_backend->errorString();
+    return m_backend->error();
 }
 
 SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& cipher)

@@ -37,7 +37,7 @@ public:
     explicit KdbxXmlWriter(quint32 version);
 
     void writeDatabase(QIODevice* device,
-                       Database* db,
+                       const Database *db,
                        KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
@@ -82,8 +82,8 @@ private:
     const quint32 m_kdbxVersion;
 
     QXmlStreamWriter m_xml;
-    QPointer<Database> m_db;
-    QPointer<Metadata> m_meta;
+    QPointer<const Database> m_db;
+    QPointer<const Metadata> m_meta;
     KeePass2RandomStream* m_randomStream = nullptr;
     QHash<QByteArray, int> m_idMap;
     QByteArray m_headerHash;

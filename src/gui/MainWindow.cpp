@@ -40,7 +40,10 @@
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
 #endif
-
+#ifdef WITH_XC_KEESHARE
+#include "keeshare/KeeShare.h"
+#include "keeshare/SettingsPageKeeShare.h"
+#endif
 #ifdef WITH_XC_BROWSER
 #include "browser/BrowserOptionDialog.h"
 #include "browser/BrowserSettings.h"
@@ -141,22 +144,26 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
+
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
 #endif
+
 #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     connect(SSHAgent::instance(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
 #endif
 
+#ifdef WITH_XC_KEESHARE
+    KeeShare::init(this);
+    m_ui->settingsWidget->addSettingsPage(new SettingsPageKeeShare(m_ui->tabWidget));
+#endif
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
     connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
-    connect(
-        m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
-    connect(
-        m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
+    connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+    connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);

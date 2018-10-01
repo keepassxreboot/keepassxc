@@ -16,23 +16,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPENSSHKEY_H
-#define OPENSSHKEY_H
+#ifndef KEEPASSXC_OPENSSHKEY_H
+#define KEEPASSXC_OPENSSHKEY_H
 
-#include "BinaryStream.h"
 #include <QtCore>
 
-class OpenSSHKey : QObject
+class BinaryStream;
+
+class OpenSSHKey : public QObject
 {
     Q_OBJECT
 public:
+    static OpenSSHKey generate(bool secure = true);
+
     explicit OpenSSHKey(QObject* parent = nullptr);
     OpenSSHKey(const OpenSSHKey& other);
     bool operator==(const OpenSSHKey& other) const;
 
-    bool parse(const QByteArray& in);
+    bool parsePKCS1PEM(const QByteArray& in);
     bool encrypted() const;
-    bool openPrivateKey(const QString& passphrase = QString());
+    bool openKey(const QString& passphrase = QString());
 
     const QString cipherName() const;
     const QString type() const;
@@ -40,6 +43,7 @@ public:
     const QString fingerprint(QCryptographicHash::Algorithm algo = QCryptographicHash::Sha256) const;
     const QString comment() const;
     const QString publicKey() const;
+    const QString privateKey() const;
     const QString errorString() const;
 
     void setType(const QString& type);
@@ -54,26 +58,41 @@ public:
     bool writePublic(BinaryStream& stream);
     bool writePrivate(BinaryStream& stream);
 
-private:
-    static const QString TYPE_DSA;
-    static const QString TYPE_RSA;
-    static const QString TYPE_OPENSSH;
+    QList<QByteArray> publicParts() const;
+    QList<QByteArray> privateParts() const;
+    const QString& privateType() const;
 
-    bool parsePEM(const QByteArray& in, QByteArray& out);
+    static const QString TYPE_DSA_PRIVATE;
+    static const QString TYPE_RSA_PRIVATE;
+    static const QString TYPE_RSA_PUBLIC;
+    static const QString TYPE_OPENSSH_PRIVATE;
+
+    enum Type
+    {
+        Public,
+        Private
+    };
+
+    static OpenSSHKey restoreFromBinary(Type eType, const QByteArray& serialized);
+    static QByteArray serializeToBinary(Type eType, const OpenSSHKey& key);
+
+private:
+    bool extractPEM(const QByteArray& in, QByteArray& out);
 
     QString m_type;
     QString m_cipherName;
     QByteArray m_cipherIV;
     QString m_kdfName;
     QByteArray m_kdfOptions;
-    QByteArray m_rawPrivateData;
-    QList<QByteArray> m_publicData;
-    QList<QByteArray> m_privateData;
-    QString m_privateType;
+
+    QString m_rawType;
+    QByteArray m_rawData;
+    QList<QByteArray> m_rawPublicData;
+    QList<QByteArray> m_rawPrivateData;
     QString m_comment;
     QString m_error;
 };
 
 uint qHash(const OpenSSHKey& key);
 
-#endif // OPENSSHKEY_H
+#endif // KEEPASSXC_OPENSSHKEY_H

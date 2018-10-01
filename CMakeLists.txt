@@ -47,6 +47,7 @@ option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website 
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
+option(WITH_XC_KEESHARE "Include sharing support with KeeShare." OFF)
 if(APPLE)
   option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
 endif()
@@ -58,9 +59,16 @@ if(WITH_XC_ALL)
   set(WITH_XC_BROWSER ON)
   set(WITH_XC_YUBIKEY ON)
   set(WITH_XC_SSHAGENT ON)
+  set(WITH_XC_KEESHARE ON)
   if(APPLE)
     set(WITH_XC_TOUCHID ON)
   endif()
+endif()
+
+if(WITH_XC_SSHAGENT OR WITH_XC_KEESHARE)
+  set(WITH_XC_CRYPTO_SSH ON)
+else()
+  set(WITH_XC_CRYPTO_SSH OFF)
 endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
@@ -346,6 +354,13 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
 endif()
 
 include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
+
+# Optional
+if(WITH_XC_KEESHARE)
+    find_package(QuaZip REQUIRED)
+
+    include_directories(SYSTEM ${QUAZIP_INCLUDE_DIR})
+endif()
 
 # Optional
 if(WITH_XC_YUBIKEY)

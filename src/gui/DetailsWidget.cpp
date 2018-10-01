@@ -27,6 +27,9 @@
 #include "core/FilePath.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
+#ifdef WITH_XC_KEESHARE
+#include "keeshare/KeeShare.h"
+#endif
 
 namespace
 {
@@ -102,7 +105,9 @@ void DetailsWidget::setGroup(Group* selectedGroup)
     updateGroupHeaderLine();
     updateGroupGeneralTab();
     updateGroupNotesTab();
-
+#ifdef WITH_XC_KEESHARE
+    updateGroupSharingTab();
+#endif
     setVisible(!config()->get("GUI/HideDetailsView").toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
@@ -266,6 +271,17 @@ void DetailsWidget::updateGroupNotesTab()
     setTabEnabled(m_ui->groupTabWidget, m_ui->groupNotesTab, !notes.isEmpty());
     m_ui->groupNotesEdit->setText(notes);
 }
+
+#ifdef WITH_XC_KEESHARE
+void DetailsWidget::updateGroupSharingTab()
+{
+    Q_ASSERT(m_currentGroup);
+    setTabEnabled(m_ui->groupTabWidget, m_ui->groupShareTab, KeeShare::isShared(m_currentGroup));
+    auto reference = KeeShare::referenceOf(m_currentGroup);
+    m_ui->groupShareTypeLabel->setText(KeeShare::referenceTypeLabel(reference));
+    m_ui->groupSharePathLabel->setText(reference.path);
+}
+#endif
 
 void DetailsWidget::updateTotpLabel()
 {

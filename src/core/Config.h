@@ -43,6 +43,9 @@ public:
     static void createConfigFromFile(const QString& file);
     static void createTempFileInstance();
 
+signals:
+    void changed(const QString& key);
+
 private:
     Config(const QString& fileName, QObject* parent);
     explicit Config(QObject* parent);

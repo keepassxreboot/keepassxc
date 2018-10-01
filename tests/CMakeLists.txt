@@ -95,7 +95,7 @@ set(TEST_LIBRARIES
     ${ZLIB_LIBRARIES}
 )
 
-set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp stub/TestClock.cpp)
+set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp stub/TestClock.cpp stub/TestRandom.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
 target_link_libraries(testsupport Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 
@@ -130,6 +130,11 @@ add_unit_test(NAME testcryptohash SOURCES TestCryptoHash.cpp
 add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp
         LIBS ${TEST_LIBRARIES})
 
+if(WITH_XC_KEESHARE)
+    add_unit_test(NAME testsignature SOURCES TestSignature.cpp
+	    LIBS ${TEST_LIBRARIES})
+endif()
+
 add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
@@ -154,9 +159,9 @@ if(WITH_XC_AUTOTYPE)
   set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 endif()
 
-if(WITH_XC_SSHAGENT)
-  add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
-          LIBS sshagent ${TEST_LIBRARIES})
+if(WITH_XC_CRYPTO_SSH)
+add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
+	LIBS ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
@@ -174,8 +179,8 @@ add_unit_test(NAME testbase32 SOURCES TestBase32.cpp
 add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
         LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testrandom SOURCES TestRandom.cpp
-        LIBS ${TEST_LIBRARIES})
+add_unit_test(NAME testrandomgenerator SOURCES TestRandomGenerator.cpp
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
         LIBS ${TEST_LIBRARIES})
@@ -186,6 +191,11 @@ add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
 add_unit_test(NAME testykchallengeresponsekey
         SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
+
+if(WITH_XC_KEESHARE)
+    add_unit_test(NAME testsharing SOURCES TestSharing.cpp
+	    LIBS testsupport ${TEST_LIBRARIES})
+endif()
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
         LIBS ${TEST_LIBRARIES})

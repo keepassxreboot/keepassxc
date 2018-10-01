@@ -20,8 +20,9 @@
 #include "ui_ApplicationSettingsWidgetGeneral.h"
 #include "ui_ApplicationSettingsWidgetSecurity.h"
 
-#include "autotype/AutoType.h"
 #include "config-keepassx.h"
+
+#include "autotype/AutoType.h"
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Global.h"
@@ -77,12 +78,10 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(this, SIGNAL(apply()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
-    connect(
-        m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableAutoSaveOnExit(bool)));
+    connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableAutoSaveOnExit(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableSystray(bool)));
 
-    connect(
-        m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)), m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
+    connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)), m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox,
             SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox,
@@ -120,7 +119,6 @@ void ApplicationSettingsWidget::addSettingsPage(ISettingsPage* page)
 
 void ApplicationSettingsWidget::loadSettings()
 {
-
     if (config()->hasAccessError()) {
         showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
     }

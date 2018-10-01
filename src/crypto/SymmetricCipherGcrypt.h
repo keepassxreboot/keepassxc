@@ -43,12 +43,12 @@ public:
     int keySize() const;
     int blockSize() const;
 
-    QString errorString() const;
+    QString error() const;
 
 private:
     static int gcryptAlgo(SymmetricCipher::Algorithm algo);
     static int gcryptMode(SymmetricCipher::Mode mode);
-    void setErrorString(gcry_error_t err);
+    void setError(const gcry_error_t& err);
 
     gcry_cipher_hd_t m_ctx;
     const int m_algo;
@@ -56,7 +56,7 @@ private:
     const SymmetricCipher::Direction m_direction;
     QByteArray m_key;
     QByteArray m_iv;
-    QString m_errorString;
+    QString m_error;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERGCRYPT_H

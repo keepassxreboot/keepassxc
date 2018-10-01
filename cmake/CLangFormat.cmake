@@ -29,9 +29,9 @@ set(EXCLUDED_FILES
     gui/KMessageWidget.cpp
     gui/MainWindowAdaptor.h
     gui/MainWindowAdaptor.cpp
-    sshagent/bcrypt_pbkdf.cpp
-    sshagent/blf.h
-    sshagent/blowfish.c
+    crypto/ssh/bcrypt_pbkdf.cpp
+    crypto/ssh/blf.h
+    crypto/ssh/blowfish.c
     tests/modeltest.cpp
     tests/modeltest.h
     # objective-c files

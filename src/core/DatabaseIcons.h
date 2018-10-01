@@ -33,6 +33,8 @@ public:
 
     static const int IconCount;
     static const int ExpiredIconIndex;
+    static const int SharedIconIndex;
+    static const int UnsharedIconIndex;
 
 private:
     DatabaseIcons();

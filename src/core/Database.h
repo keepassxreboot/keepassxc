@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QObject>
 
+#include "config-keepassx.h"
 #include "crypto/kdf/Kdf.h"
 #include "keys/CompositeKey.h"
 
@@ -88,7 +89,7 @@ public:
     const Metadata* metadata() const;
     QString filePath() const;
     void setFilePath(const QString& filePath);
-    Entry* resolveEntry(const QUuid& uuid);
+    Entry* resolveEntry(const QUuid& uuid) const;
     Entry* resolveEntry(const QString& text, EntryReferenceType referenceType);
     Group* resolveGroup(const QUuid& uuid);
     QList<DeletedObject> deletedObjects();
@@ -149,7 +150,7 @@ private slots:
     void startModifiedTimer();
 
 private:
-    Entry* findEntryRecursive(const QUuid& uuid, Group* group);
+    Entry* findEntryRecursive(const QUuid& uuid, Group* group) const;
     Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group);
     Group* findGroupRecursive(const QUuid& uuid, Group* group);
 

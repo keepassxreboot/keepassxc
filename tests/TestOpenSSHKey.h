@@ -38,6 +38,7 @@ private slots:
     void testDecryptOpenSSHAES256CTR();
     void testDecryptRSAAES256CTR();
     void testDecryptUTF8();
+    void testGenerateRSA();
 };
 
 #endif // TESTOPENSSHKEY_H

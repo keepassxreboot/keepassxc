@@ -34,6 +34,19 @@ namespace Ui
     class DatabaseSettingsDialog;
 }
 
+class IDatabaseSettingsPage
+{
+public:
+    virtual ~IDatabaseSettingsPage()
+    {
+    }
+    virtual QString name() = 0;
+    virtual QIcon icon() = 0;
+    virtual QWidget* createWidget() = 0;
+    virtual void loadSettings(QWidget* widget, Database* db) = 0;
+    virtual void saveSettings(QWidget* widget) = 0;
+};
+
 class DatabaseSettingsDialog : public DialogyWidget
 {
     Q_OBJECT
@@ -44,6 +57,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsDialog);
 
     void load(Database* db);
+    void addSettingsPage(IDatabaseSettingsPage* page);
     void showMasterKeySettings();
 
 signals:
@@ -68,6 +82,9 @@ private:
     QPointer<QTabWidget> m_securityTabWidget;
     QPointer<DatabaseSettingsWidgetMasterKey> m_masterKeyWidget;
     QPointer<DatabaseSettingsWidgetEncryption> m_encryptionWidget;
+
+    class ExtraPage;
+    QList<ExtraPage> m_extraPages;
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGET_H

@@ -40,6 +40,9 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 #include "gui/wizard/NewDatabaseWizard.h"
+#include "keeshare/KeeShare.h"
+
+#include "config-keepassx.h"
 
 DatabaseManagerStruct::DatabaseManagerStruct()
     : dbWidget(nullptr)
@@ -375,6 +378,11 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
         dbStruct.saveAttempts = 0;
         dbStruct.fileInfo = QFileInfo(filePath);
         dbStruct.dbWidget->databaseSaved();
+#ifdef WITH_XC_KEESHARE
+        // TODO HNH: This is hacky - we need to remove the logic from the ui at this point to allow a proper
+        // architecture
+        KeeShare::instance()->handleDatabaseSaved(db);
+#endif
         updateTabName(db);
         emit messageDismissTab();
         return true;
@@ -429,7 +437,14 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                 // Failed to save, try again
                 continue;
             }
-
+#ifdef WITH_XC_KEESHARE
+            // Since we change to the saved database we should also export
+            // TODO HNH: This is hacky - we need to remove the logic from the ui at this point to allow a proper
+            // architecture
+            KeeShare::instance()->handleDatabaseSaved(db);
+#endif
+            // changes of the current database
+            //           SaveAs for non-existing datbase doesn't matter since one has to set the path while creation
             dbStruct.dbWidget->updateFilePath(dbStruct.fileInfo.absoluteFilePath());
             updateLastDatabases(dbStruct.fileInfo.absoluteFilePath());
             return true;
@@ -628,9 +643,9 @@ void DatabaseTabWidget::updateTabNameFromDbWidgetSender()
     }
 }
 
-int DatabaseTabWidget::databaseIndex(Database* db)
+int DatabaseTabWidget::databaseIndex(const Database* db)
 {
-    QWidget* dbWidget = m_dbList.value(db).dbWidget;
+    QWidget* dbWidget = m_dbList.value(const_cast<Database*>(db)).dbWidget;
     return indexOf(dbWidget);
 }
 
@@ -865,6 +880,35 @@ void DatabaseTabWidget::connectDatabase(Database* newDb, Database* oldDb)
     connect(newDb, SIGNAL(nameTextChanged()), SLOT(updateTabNameFromDbSender()));
     connect(newDb, SIGNAL(modified()), SLOT(modified()));
     newDb->setEmitModified(true);
+
+#ifdef WITH_XC_KEESHARE
+    KeeShare::instance()->connectDatabase(newDb, oldDb);
+    connect(KeeShare::instance(),
+            SIGNAL(sharingMessage(Database*, QString, MessageWidget::MessageType)),
+            this,
+            SLOT(handleDatabaseMessage(Database*, QString, MessageWidget::MessageType)),
+            Qt::UniqueConnection);
+    KeeShare::instance()->handleDatabaseOpened(newDb);
+#endif
+}
+
+void DatabaseTabWidget::handleDatabaseMessage(Database* db, QString message, MessageWidget::MessageType type)
+{
+    auto* databaseWidget = currentDatabaseWidget();
+    if (!databaseWidget) {
+        return;
+    }
+    auto* currentDb = currentDatabaseWidget()->database();
+    if (!currentDb) {
+        return;
+    }
+    if (currentDb != db) {
+        auto index = databaseIndex(db);
+        emit messageGlobal(tr("Update in background database %1:\n%2").arg(tabText(index)).arg(message), type);
+
+    } else {
+        emit messageTab(message, type);
+    }
 }
 
 void DatabaseTabWidget::performGlobalAutoType()

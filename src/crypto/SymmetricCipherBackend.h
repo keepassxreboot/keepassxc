@@ -38,7 +38,7 @@ public:
     virtual int keySize() const = 0;
     virtual int blockSize() const = 0;
 
-    virtual QString errorString() const = 0;
+    virtual QString error() const = 0;
 };
 
 #endif // KEEPASSX_SYMMETRICCIPHERBACKEND_H

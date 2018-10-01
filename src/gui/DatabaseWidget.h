@@ -37,6 +37,7 @@ class EditEntryWidget;
 class EditGroupWidget;
 class Entry;
 class EntryView;
+class DelayingFileWatcher;
 class Group;
 class GroupView;
 class KeePass1OpenWidget;
@@ -48,7 +49,6 @@ class UnlockDatabaseWidget;
 class MessageWidget;
 class DetailsWidget;
 class UnlockDatabaseDialog;
-class QFileSystemWatcher;
 
 namespace Ui
 {
@@ -200,10 +200,8 @@ private slots:
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();
     // Database autoreload slots
-    void onWatchedFileChanged();
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
-    void unblockAutoReload();
 
 private:
     void setClipboardTextAndMinimize(const QString& text);
@@ -227,11 +225,12 @@ private:
     QSplitter* m_detailSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
+    QString m_filePath;
     QLabel* m_searchingLabel;
     Group* m_newGroup;
     Entry* m_newEntry;
     Group* m_newParent;
-    QString m_filePath;
+
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
@@ -246,10 +245,7 @@ private:
     bool m_importingCsv;
 
     // Autoreload
-    QFileSystemWatcher m_fileWatcher;
-    QTimer m_fileWatchTimer;
-    QTimer m_fileWatchUnblockTimer;
-    bool m_ignoreAutoReload;
+    QPointer<DelayingFileWatcher> m_fileWatcher;
     bool m_databaseModified;
 };
 

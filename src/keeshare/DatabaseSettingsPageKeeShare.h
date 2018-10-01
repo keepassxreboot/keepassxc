@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,36 +15,23 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTRANDOM_H
-#define KEEPASSX_TESTRANDOM_H
-
-#include "crypto/Random.h"
+#ifndef KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
+#define KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
 
 #include <QObject>
+#include <QPointer>
+#include <QWidget>
 
-class RandomBackendTest : public RandomBackend
+#include "gui/dbsettings/DatabaseSettingsDialog.h"
+
+class DatabaseSettingsPageKeeShare : public IDatabaseSettingsPage
 {
 public:
-    RandomBackendTest();
-    void randomize(void* data, int len) override;
-    void setNextBytes(const QByteArray& nextBytes);
-
-private:
-    QByteArray m_nextBytes;
-    int m_bytesIndex;
+    QString name() override;
+    QIcon icon() override;
+    QWidget* createWidget() override;
+    void loadSettings(QWidget* widget, Database* db) override;
+    void saveSettings(QWidget* widget) override;
 };
 
-class TestRandom : public QObject
-{
-    Q_OBJECT
-
-private slots:
-    void initTestCase();
-    void testUInt();
-    void testUIntRange();
-
-private:
-    RandomBackendTest* m_backend;
-};
-
-#endif // KEEPASSX_TESTRANDOM_H
+#endif // KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H

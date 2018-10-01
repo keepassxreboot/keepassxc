@@ -98,8 +98,9 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_YUBIKEY=[ON|OFF] Enable/Disable YubiKey HMAC-SHA1 authentication support (default: OFF)
 	  -DWITH_XC_BROWSER=[ON|OFF] Enable/Disable KeePassXC-Browser extension support (default: OFF)
 	  -DWITH_XC_NETWORKING=[ON|OFF] Enable/Disable Networking support (favicon download) (default: OFF)
-	  -DWITH_XC_SSHAGENT=[ON|OFF] Include SSH agent support. (default: OFF)
-	  
+	  -DWITH_XC_SSHAGENT=[ON|OFF] Enable/Disable SSHAgent support (default: OFF)
+	  -DWITH_XC_SHARING=[ON|OFF] Enable/Disable Sharing extension (default: OFF)
+	  -DWITH_XC_TOUCHID=[ON|OFF] (macOS Only) Enable/Disable Touch ID unlock (default:OFF)
 	  -DWITH_XC_ALL=[ON|OFF] Enable/Disable compiling all plugins above (default: OFF)
 	  
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)

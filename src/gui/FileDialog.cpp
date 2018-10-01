@@ -79,13 +79,14 @@ QStringList FileDialog::getOpenFileNames(QWidget* parent,
     }
 }
 
-QString FileDialog::getSaveFileName(QWidget* parent,
-                                    const QString& caption,
-                                    QString dir,
-                                    const QString& filter,
-                                    QString* selectedFilter,
-                                    QFileDialog::Options options,
-                                    const QString& defaultExtension)
+QString FileDialog::getFileName(QWidget* parent,
+                                const QString& caption,
+                                QString dir,
+                                const QString& filter,
+                                QString* selectedFilter,
+                                QFileDialog::Options options,
+                                const QString& defaultExtension,
+                                const QString& defaultName)
 {
     if (!m_nextFileName.isEmpty()) {
         QString result = m_nextFileName;
@@ -98,6 +99,63 @@ QString FileDialog::getSaveFileName(QWidget* parent,
 
         QString result;
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+        Q_UNUSED(defaultName);
+        Q_UNUSED(defaultExtension);
+        // the native dialogs on these platforms already append the file extension
+        result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
+#else
+        QFileDialog dialog(parent, caption, dir, filter);
+        dialog.setFileMode(QFileDialog::AnyFile);
+        dialog.setAcceptMode(QFileDialog::AcceptSave);
+        if (selectedFilter) {
+            dialog.selectNameFilter(*selectedFilter);
+        }
+        if (!defaultName.isEmpty()) {
+            dialog.selectFile(defaultName);
+        }
+        dialog.setOptions(options);
+        dialog.setDefaultSuffix(defaultExtension);
+        dialog.setLabelText(QFileDialog::Accept, QFileDialog::tr("Select"));
+        QStringList results;
+        if (dialog.exec()) {
+            results = dialog.selectedFiles();
+            if (!results.isEmpty()) {
+                result = results[0];
+            }
+        }
+#endif
+
+        // on Mac OS X the focus is lost after closing the native dialog
+        if (parent) {
+            parent->activateWindow();
+        }
+
+        saveLastDir(result);
+        return result;
+    }
+}
+
+QString FileDialog::getSaveFileName(QWidget* parent,
+                                    const QString& caption,
+                                    QString dir,
+                                    const QString& filter,
+                                    QString* selectedFilter,
+                                    QFileDialog::Options options,
+                                    const QString& defaultExtension,
+                                    const QString& defaultName)
+{
+    if (!m_nextFileName.isEmpty()) {
+        QString result = m_nextFileName;
+        m_nextFileName.clear();
+        return result;
+    } else {
+        if (dir.isEmpty()) {
+            dir = config()->get("LastDir").toString();
+        }
+
+        QString result;
+#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+        Q_UNUSED(defaultName);
         Q_UNUSED(defaultExtension);
         // the native dialogs on these platforms already append the file extension
         result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);
@@ -107,6 +165,9 @@ QString FileDialog::getSaveFileName(QWidget* parent,
         dialog.setFileMode(QFileDialog::AnyFile);
         if (selectedFilter) {
             dialog.selectNameFilter(*selectedFilter);
+        }
+        if (!defaultName.isEmpty()) {
+            dialog.selectFile(defaultName);
         }
         dialog.setOptions(options);
         dialog.setDefaultSuffix(defaultExtension);
@@ -130,8 +191,7 @@ QString FileDialog::getSaveFileName(QWidget* parent,
     }
 }
 
-QString
-FileDialog::getExistingDirectory(QWidget* parent, const QString& caption, QString dir, QFileDialog::Options options)
+QString FileDialog::getExistingDirectory(QWidget* parent, const QString& caption, QString dir, QFileDialog::Options options)
 {
     if (!m_nextDirName.isEmpty()) {
         QString result = m_nextDirName;

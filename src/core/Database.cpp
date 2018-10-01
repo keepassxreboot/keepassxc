@@ -111,7 +111,7 @@ void Database::setFilePath(const QString& filePath)
     m_filePath = filePath;
 }
 
-Entry* Database::resolveEntry(const QUuid& uuid)
+Entry* Database::resolveEntry(const QUuid& uuid) const
 {
     return findEntryRecursive(uuid, m_rootGroup);
 }
@@ -121,7 +121,7 @@ Entry* Database::resolveEntry(const QString& text, EntryReferenceType referenceT
     return findEntryRecursive(text, referenceType, m_rootGroup);
 }
 
-Entry* Database::findEntryRecursive(const QUuid& uuid, Group* group)
+Entry* Database::findEntryRecursive(const QUuid& uuid, Group* group) const
 {
     const QList<Entry*> entryList = group->entries();
     for (Entry* entry : entryList) {
@@ -289,8 +289,11 @@ QByteArray Database::challengeResponseKey() const
 
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
-    m_data.masterSeed = masterSeed;
-    return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
+    if (m_data.key) {
+        m_data.masterSeed = masterSeed;
+        return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
+    }
+    return true;
 }
 
 void Database::setCipher(const QUuid& cipher)

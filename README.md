@@ -35,6 +35,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepasshttp-connector/dafgdjggglmmknipkhngniifhplpcldb), and
 [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#note-about-keepasshttp)
 - Browser integration with KeePassXC-Browser using [native messaging](https://developer.chrome.com/extensions/nativeMessaging) for [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) and [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk)
+- Sharing of passwords using KeeShare. See [Using Sharing](./docs/QUICKSTART.md#using-sharing) for more details.
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.

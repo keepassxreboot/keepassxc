@@ -35,8 +35,8 @@ public:
     ~CryptoHash();
     void addData(const QByteArray& data);
     void reset();
-    QByteArray result() const;
     void setKey(const QByteArray& data);
+    QByteArray result() const;
 
     static QByteArray hash(const QByteArray& data, Algorithm algo);
     static QByteArray hmac(const QByteArray& data, const QByteArray& key, Algorithm algo);

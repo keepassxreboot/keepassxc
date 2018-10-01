@@ -346,4 +346,31 @@ namespace Tools
         return bSuccess;
     }
 
+
+    Buffer::Buffer()
+        : raw(nullptr)
+        , size(0)
+    {
+
+    }
+
+    Buffer::~Buffer()
+    {
+        clear();
+    }
+
+    void Buffer::clear()
+    {
+        if(size > 0){
+            free(raw);
+        }
+        raw = nullptr; size = 0;
+    }
+
+    QByteArray Buffer::content() const
+    {
+        return QByteArray(reinterpret_cast<char*>(raw), size );
+    }
+
+
 } // namespace Tools

@@ -48,7 +48,16 @@ QString Config::getFileName()
 
 void Config::set(const QString& key, const QVariant& value)
 {
+    if (m_settings->contains(key) && m_settings->value(key) == value) {
+        return;
+    }
+    const bool surpressSignal = !m_settings->contains(key) && m_defaults.value(key) == value;
+
     m_settings->setValue(key, value);
+
+    if (!surpressSignal) {
+        emit changed(key);
+    }
 }
 
 /**

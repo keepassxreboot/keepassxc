@@ -52,6 +52,8 @@ RUN set -x \
         zlib1g-dev \
         libyubikey-dev \
         libykpers-1-dev \
+        libquazip5-headers \
+        libquazip5-dev \
         libxi-dev \
         libxtst-dev \
         xvfb

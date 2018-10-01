@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2018 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,16 +16,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ASN1KEY_H
-#define ASN1KEY_H
+#ifndef KEEPASSXC_TESTSIGNATURE_H
+#define KEEPASSXC_TESTSIGNATURE_H
 
-#include "OpenSSHKey.h"
-#include <QtCore>
+#include <QObject>
 
-namespace ASN1Key
+class TestSignature : public QObject
 {
-    bool parseDSA(QByteArray& ba, OpenSSHKey& key);
-    bool parseRSA(QByteArray& ba, OpenSSHKey& key);
-}
+    Q_OBJECT
 
-#endif // ASN1KEY_H
+private slots:
+    void initTestCase();
+
+    void testSigningOpenSSH_RSA_PrivateOnly();
+    void testSigningOpenSSH_RSA();
+
+    void testSigningGenerated_RSA_PrivateOnly();
+
+    void testSigningTest_RSA_PrivateOnly();
+    void testSigningTest_RSA();
+};
+
+#endif // KEEPASSX_TESTSIGNATURE_H
