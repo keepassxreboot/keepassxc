@@ -50,6 +50,7 @@ int List::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    parser.addOption({{"R", "recursive"}, "Recursive mode, list elements recursively"});
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -58,22 +59,24 @@ int List::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
+    bool recursive = parser.isSet({"R", "recursive"});
+
     Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db == nullptr) {
         return EXIT_FAILURE;
     }
 
     if (args.size() == 2) {
-        return this->listGroup(db, args.at(1));
+        return this->listGroup(db, recursive, args.at(1));
     }
-    return this->listGroup(db);
+    return this->listGroup(db, recursive);
 }
 
-int List::listGroup(Database* database, QString groupPath)
+int List::listGroup(Database* database, bool recursive, QString groupPath)
 {
     QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     if (groupPath.isEmpty()) {
-        outputTextStream << database->rootGroup()->print();
+        outputTextStream << database->rootGroup()->print(recursive);
         outputTextStream.flush();
         return EXIT_SUCCESS;
     }
@@ -84,7 +87,7 @@ int List::listGroup(Database* database, QString groupPath)
         return EXIT_FAILURE;
     }
 
-    outputTextStream << group->print();
+    outputTextStream << group->print(recursive);
     outputTextStream.flush();
     return EXIT_SUCCESS;
 }
