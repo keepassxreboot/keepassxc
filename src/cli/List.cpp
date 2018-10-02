@@ -50,7 +50,11 @@ int List::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
-    parser.addOption({{"R", "recursive"}, "Recursive mode, list elements recursively"});
+
+    QCommandLineOption recursiveOption(QStringList() << "R"
+                                                     << "recursive",
+                                       QObject::tr("Recursive mode, list elements recursively"));
+    parser.addOption(recursiveOption);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -59,7 +63,7 @@ int List::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    bool recursive = parser.isSet({"R", "recursive"});
+    bool recursive = parser.isSet(recursiveOption);
 
     Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
     if (db == nullptr) {
