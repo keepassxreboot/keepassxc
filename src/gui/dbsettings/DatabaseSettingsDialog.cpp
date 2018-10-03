@@ -25,6 +25,7 @@
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Database.h"
+#include "touchid/TouchID.h"
 
 DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     : DialogyWidget(parent)
