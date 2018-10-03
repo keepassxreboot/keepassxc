@@ -43,14 +43,4 @@ namespace QTest
 
 } // namespace QTest
 
-namespace Test
-{
-
-    inline QDateTime datetime(int year, int month, int day, int hour, int min, int second)
-    {
-        return QDateTime(QDate(year, month, day), QTime(hour, min, second), Qt::UTC);
-    }
-
-} // namespace Test
-
 #endif // KEEPASSXC_TESTGLOBAL_H

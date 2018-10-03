@@ -18,9 +18,9 @@
 
 #include "totp.h"
 #include "core/Base32.h"
+#include "core/Clock.h"
 
 #include <QCryptographicHash>
-#include <QDateTime>
 #include <QMessageAuthenticationCode>
 #include <QRegExp>
 #include <QUrl>
@@ -133,8 +133,7 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings> settings, const 
 
     quint64 current;
     if (time == 0) {
-        // TODO: Replace toTime_t() with toSecsSinceEpoch() when minimum Qt >= 5.8
-        current = qToBigEndian(static_cast<quint64>(QDateTime::currentDateTime().toTime_t()) / step);
+        current = qToBigEndian(static_cast<quint64>(Clock::currentSecondsSinceEpoch()) / step);
     } else {
         current = qToBigEndian(time / step);
     }

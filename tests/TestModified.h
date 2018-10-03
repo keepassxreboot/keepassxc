@@ -26,6 +26,8 @@ class TestModified : public QObject
 
 private slots:
     void initTestCase();
+    void init();
+    void cleanup();
     void testSignals();
     void testGroupSets();
     void testEntrySets();

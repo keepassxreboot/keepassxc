@@ -95,7 +95,7 @@ set(TEST_LIBRARIES
     ${ZLIB_LIBRARIES}
 )
 
-set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp)
+set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp stub/TestClock.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
 target_link_libraries(testsupport Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 
@@ -104,16 +104,16 @@ if(YUBIKEY_FOUND)
 endif()
 
 add_unit_test(NAME testgroup SOURCES TestGroup.cpp
-        LIBS ${TEST_LIBRARIES})
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkdbx2 SOURCES TestKdbx2.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkdbx3 SOURCES TestKeePass2Format.cpp FailDevice.cpp TestKdbx3.cpp
-        LIBS ${TEST_LIBRARIES})
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkdbx4 SOURCES TestKeePass2Format.cpp FailDevice.cpp mock/MockChallengeResponseKey.cpp TestKdbx4.cpp
-        LIBS ${TEST_LIBRARIES})
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp mock/MockChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
@@ -137,7 +137,7 @@ add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testmodified SOURCES TestModified.cpp
-        LIBS ${TEST_LIBRARIES})
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
         LIBS ${TEST_LIBRARIES})
@@ -163,7 +163,7 @@ add_unit_test(NAME testentry SOURCES TestEntry.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testmerge SOURCES TestMerge.cpp
-        LIBS ${TEST_LIBRARIES})
+	LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testtotp SOURCES TestTotp.cpp
         LIBS ${TEST_LIBRARIES})

@@ -16,10 +16,12 @@
  */
 
 #include "TestModified.h"
+#include "stub/TestClock.h"
 
 #include <QSignalSpy>
 #include <QTest>
 
+#include "core/Clock.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -27,9 +29,27 @@
 
 QTEST_GUILESS_MAIN(TestModified)
 
+namespace
+{
+    TestClock* m_clock = nullptr;
+}
+
 void TestModified::initTestCase()
 {
     QVERIFY(Crypto::init());
+}
+
+void TestModified::init()
+{
+    Q_ASSERT(m_clock == nullptr);
+    m_clock = new TestClock(2010, 5, 5, 10, 30, 10);
+    TestClock::setup(m_clock);
+}
+
+void TestModified::cleanup()
+{
+    TestClock::teardown();
+    m_clock = nullptr;
 }
 
 void TestModified::testSignals()
@@ -230,7 +250,7 @@ void TestModified::testEntrySets()
     entry->setExpires(entry->timeInfo().expires());
     QCOMPARE(spyModified.count(), spyCount);
 
-    entry->setExpiryTime(QDateTime::currentDateTimeUtc().addYears(1));
+    entry->setExpiryTime(Clock::currentDateTimeUtc().addYears(1));
     QCOMPARE(spyModified.count(), ++spyCount);
     entry->setExpiryTime(entry->timeInfo().expiryTime());
     QCOMPARE(spyModified.count(), spyCount);
@@ -300,7 +320,7 @@ void TestModified::testHistoryItems()
     QCOMPARE(entry->historyItems().size(), historyItemsSize);
 
     QDateTime modified = entry->timeInfo().lastModificationTime();
-    QTest::qSleep(10);
+    m_clock->advanceSecond(10);
     entry->beginUpdate();
     entry->setTitle("b");
     entry->endUpdate();

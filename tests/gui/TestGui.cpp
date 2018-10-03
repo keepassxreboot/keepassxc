@@ -92,7 +92,6 @@ void TestGui::initTestCase()
     Tools::wait(50);
 
     // Load the NewDatabase.kdbx file into temporary storage
-    QByteArray tmpData;
     QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
@@ -292,17 +291,17 @@ void TestGui::testAutoreloadDatabase()
     config()->set("AutoReloadOnChange", false);
 
     // Load the MergeDatabase.kdbx file into temporary storage
-    QByteArray tmpData;
+    QByteArray unmodifiedMergeDatabase;
     QFile mergeDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     QVERIFY(mergeDbFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&mergeDbFile, tmpData));
+    QVERIFY(Tools::readAllFromDevice(&mergeDbFile, unmodifiedMergeDatabase));
     mergeDbFile.close();
 
     // Test accepting new file in autoreload
     MessageBox::setNextAnswer(QMessageBox::Yes);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile.open());
-    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    QVERIFY(m_dbFile.write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile.close();
     Tools::wait(1500);
 
@@ -320,7 +319,7 @@ void TestGui::testAutoreloadDatabase()
     MessageBox::setNextAnswer(QMessageBox::No);
     // Overwrite the current temp database with a new file
     m_dbFile.open();
-    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    QVERIFY(m_dbFile.write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile.close();
     Tools::wait(1500);
 
@@ -337,7 +336,6 @@ void TestGui::testAutoreloadDatabase()
     // Test accepting a merge of edits into autoreload
     // Turn on autoload so we only get one messagebox (for the merge)
     config()->set("AutoReloadOnChange", true);
-
     // Modify some entries
     testEditEntry();
 
@@ -345,7 +343,7 @@ void TestGui::testAutoreloadDatabase()
     MessageBox::setNextAnswer(QMessageBox::Yes);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile.open());
-    QVERIFY(m_dbFile.write(tmpData, static_cast<qint64>(tmpData.size())));
+    QVERIFY(m_dbFile.write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile.close();
     Tools::wait(1500);
 

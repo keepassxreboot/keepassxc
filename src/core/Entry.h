@@ -65,6 +65,10 @@ struct EntryData
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
     QSharedPointer<Totp::Settings> totpSettings;
+
+    bool operator==(const EntryData& other) const;
+    bool operator!=(const EntryData& other) const;
+    bool equals(const EntryData& other, CompareItemOptions options) const;
 };
 
 class Entry : public QObject
@@ -75,6 +79,7 @@ public:
     Entry();
     ~Entry();
     const QUuid& uuid() const;
+    const QString uuidToHex() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
     QPixmap iconScaledPixmap() const;
@@ -84,7 +89,7 @@ public:
     QColor backgroundColor() const;
     QString overrideUrl() const;
     QString tags() const;
-    TimeInfo timeInfo() const;
+    const TimeInfo& timeInfo() const;
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
@@ -142,6 +147,8 @@ public:
     void addHistoryItem(Entry* entry);
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
+
+    bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;
 
     enum CloneFlag
     {
@@ -204,7 +211,10 @@ public:
     Group* group();
     const Group* group() const;
     void setGroup(Group* group);
+    const Database* database() const;
+    Database* database();
 
+    bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
 
 signals:
@@ -229,7 +239,6 @@ private:
 
     static EntryReferenceType referenceType(const QString& referenceStr);
 
-    const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 
     QUuid m_uuid;
@@ -238,8 +247,8 @@ private:
     QPointer<EntryAttachments> m_attachments;
     QPointer<AutoTypeAssociations> m_autoTypeAssociations;
     QPointer<CustomData> m_customData;
+    QList<Entry*> m_history; // Items sorted from oldest to newest
 
-    QList<Entry*> m_history;
     Entry* m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;

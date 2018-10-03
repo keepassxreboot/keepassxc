@@ -114,7 +114,7 @@ QString BrowserService::getDatabaseRootUuid()
         return QString();
     }
 
-    return QString::fromLatin1(rootGroup->uuid().toRfc4122().toHex());
+    return rootGroup->uuidToHex();
 }
 
 QString BrowserService::getDatabaseRecycleBinUuid()
@@ -128,7 +128,7 @@ QString BrowserService::getDatabaseRecycleBinUuid()
     if (!recycleBin) {
         return QString();
     }
-    return QString::fromLatin1(recycleBin->uuid().toRfc4122().toHex());
+    return recycleBin->uuidToHex();
 }
 
 Entry* BrowserService::getConfigEntry(bool create)
@@ -636,7 +636,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     res["login"] = entry->resolveMultiplePlaceholders(entry->username());
     res["password"] = entry->resolveMultiplePlaceholders(entry->password());
     res["name"] = entry->resolveMultiplePlaceholders(entry->title());
-    res["uuid"] = entry->resolveMultiplePlaceholders(QString::fromLatin1(entry->uuid().toRfc4122().toHex()));
+    res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
 
     if (entry->hasTotp()) {
         res["totp"] = entry->totp();

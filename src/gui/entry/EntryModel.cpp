@@ -24,6 +24,7 @@
 #include <QPainter>
 #include <QPalette>
 
+#include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
 #include "core/Global.h"
@@ -172,6 +173,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (attr->isReference(EntryAttributes::PasswordKey)) {
                 result.prepend(tr("Ref: ", "Reference abbreviation"));
             }
+            if (entry->password().isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
+                result = "";
+            }
             return result;
         case Url:
             result = entry->resolveMultiplePlaceholders(entry->displayUrl());
@@ -202,17 +206,17 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
             return result;
         case Attachments: {
-                // Display comma-separated list of attachments
-                QList<QString> attachments = entry->attachments()->keys();
-                for (int i = 0; i < attachments.size(); ++i) {
-                    if (result.isEmpty()) {
-                        result.append(attachments.at(i));
-                        continue;
-                    }
-                    result.append(QString(", ") + attachments.at(i));
+            // Display comma-separated list of attachments
+            QList<QString> attachments = entry->attachments()->keys();
+            for (int i = 0; i < attachments.size(); ++i) {
+                if (result.isEmpty()) {
+                    result.append(attachments.at(i));
+                    continue;
                 }
-                return result;
+                result.append(QString(", ") + attachments.at(i));
             }
+            return result;
+        }
         case Totp:
             result = entry->hasTotp() ? tr("Yes") : "";
             return result;
