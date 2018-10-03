@@ -20,6 +20,8 @@ set(cli_SOURCES
     Clip.h
     Command.cpp
     Command.h
+    Create.cpp
+    Create.h
     Diceware.cpp
     Diceware.h
     Edit.cpp
