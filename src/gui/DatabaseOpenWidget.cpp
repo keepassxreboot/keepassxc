@@ -184,7 +184,9 @@ void DatabaseOpenWidget::openDatabase()
         return;
     }
 
-    m_ui->editPassword->setShowPassword(false);
+    if (!m_ui->editPassword->isPasswordVisible()) {
+      m_ui->editPassword->setShowPassword(false);
+    }
     QCoreApplication::processEvents();
 
     QFile file(m_filename);
