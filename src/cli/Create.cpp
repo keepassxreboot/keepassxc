@@ -121,7 +121,7 @@ QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
     QSharedPointer<PasswordKey> passwordKey;
     QTextStream out(stdout);
 
-    out << QObject::tr("Insert password used to encrypt database (Press enter to ignore): ");
+    out << QObject::tr("Insert password used to encrypt database (Press enter leave blank): ");
     out.flush();
     QString password = Utils::getPassword();
 
