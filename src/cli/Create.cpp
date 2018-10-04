@@ -56,18 +56,20 @@ Create::~Create()
  */
 int Create::execute(const QStringList& arguments)
 {
-    QTextStream out(stdout);
+    QTextStream out(stdout, QIODevice::WriteOnly);
+    QTextStream err(stdout, QIODevice::WriteOnly);
+
     QCommandLineParser parser;
 
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption keyFile(
-        QStringList() << "k"
-                      << "key-file",
+        QStringList() << "k" << "key-file",
         QObject::tr("Key file of the database. When file does not exist, new key file will be generated"),
         QObject::tr("path"));
     parser.addOption(keyFile);
 
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -80,7 +82,7 @@ int Create::execute(const QStringList& arguments)
 
     QSharedPointer<FileKey> fileKey;
     if (!loadFileKey(parser.value(keyFile), fileKey)) {
-        out << QObject::tr("Loading the key file failed") << endl;
+        err << QObject::tr("Loading the key file failed") << endl;
         return EXIT_FAILURE;
     }
 
@@ -94,7 +96,7 @@ int Create::execute(const QStringList& arguments)
     }
 
     if (key->isEmpty()) {
-        out << QObject::tr("No key's set, aborting creating database") << endl;
+        err << QObject::tr("No key's set, aborting creating database") << endl;
         return EXIT_FAILURE;
     }
 
@@ -103,7 +105,7 @@ int Create::execute(const QStringList& arguments)
 
     QString dberror = db.saveToFile(args.at(0));
     if (dberror.length() > 0) {
-        out << QObject::tr("Failed to save the database: ") << dberror << endl;
+        err << QObject::tr("Failed to save the database: ") << dberror << endl;
         return EXIT_FAILURE;
     }
 
@@ -119,7 +121,7 @@ int Create::execute(const QStringList& arguments)
 QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
 {
     QSharedPointer<PasswordKey> passwordKey;
-    QTextStream out(stdout);
+    QTextStream out(stdout, QIODevice::WriteOnly);
 
     out << QObject::tr("Insert password used to encrypt database (Press enter leave blank): ");
     out.flush();
@@ -145,7 +147,7 @@ QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
  */
 bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
 {
-    QTextStream out(stdout);
+    QTextStream err(stdout, QIODevice::WriteOnly);
 
     if (path.length() > 0) {
         QFileInfo fileInfo(path);
@@ -156,13 +158,13 @@ bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
             fileKey->create(path, &error);
 
             if (error.length() > 0) {
-                out << QObject::tr("Creating KeyFile failed: ") << error << endl;
+                err << QObject::tr("Creating KeyFile failed: ") << error << endl;
                 return false;
             }
         }
 
         if (!fileKey->load(path, &error)) {
-            out << QObject::tr("Loading KeyFile failed: ") << error << endl;
+            err << QObject::tr("Loading KeyFile failed: ") << error << endl;
             return false;
         }
     }
