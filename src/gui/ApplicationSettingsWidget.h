@@ -55,6 +55,7 @@ private slots:
     void reject();
     void enableAutoSaveOnExit(bool checked);
     void enableSystray(bool checked);
+    void enableToolbarSettings(bool checked);
 
 private:
     QWidget* const m_secWidget;

@@ -135,6 +135,7 @@ MainWindow::MainWindow()
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
+    restoreState(config()->get("GUI/MainWindowState").toByteArray());
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
 #endif
@@ -779,6 +780,7 @@ void MainWindow::saveWindowInformation()
 {
     if (isVisible()) {
         config()->set("GUI/MainWindowGeometry", saveGeometry());
+        config()->set("GUI/MainWindowState", saveState());
     }
 }
 
@@ -904,6 +906,13 @@ void MainWindow::applySettingsChanges()
 #endif
 
     m_ui->toolBar->setHidden(config()->get("GUI/HideToolbar").toBool());
+    m_ui->toolBar->setMovable(config()->get("GUI/MovableToolbar").toBool());
+
+    bool isOk = false;
+    const auto toolButtonStyle = static_cast<Qt::ToolButtonStyle>(config()->get("GUI/ToolButtonStyle").toInt(&isOk));
+    if (isOk) {
+        m_ui->toolBar->setToolButtonStyle(toolButtonStyle);
+    }
 
     updateTrayIcon();
 }

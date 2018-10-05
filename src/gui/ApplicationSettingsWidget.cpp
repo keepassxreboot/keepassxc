@@ -80,6 +80,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(
         m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableAutoSaveOnExit(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableSystray(bool)));
+    connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), this, SLOT(enableToolbarSettings(bool)));
 
     connect(
         m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)), m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -156,6 +157,19 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_generalUi->previewHideCheckBox->setChecked(config()->get("GUI/HidePreviewPanel").toBool());
     m_generalUi->toolbarHideCheckBox->setChecked(config()->get("GUI/HideToolbar").toBool());
+    m_generalUi->toolbarMovableCheckBox->setChecked(config()->get("GUI/MovableToolbar").toBool());
+
+    m_generalUi->toolButtonStyleComboBox->clear();
+    m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
+    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text only"), Qt::ToolButtonTextOnly);
+    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text beside icon"), Qt::ToolButtonTextBesideIcon);
+    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text under icon"), Qt::ToolButtonTextUnderIcon);
+    m_generalUi->toolButtonStyleComboBox->addItem(tr("Follow style"), Qt::ToolButtonFollowStyle);
+    int toolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->findData(config()->get("GUI/ToolButtonStyle"));
+    if (toolButtonStyleIndex > 0) {
+        m_generalUi->toolButtonStyleComboBox->setCurrentIndex(toolButtonStyleIndex);
+    }
+
     m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
     m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get("GUI/DarkTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
@@ -232,6 +246,11 @@ void ApplicationSettingsWidget::saveSettings()
 
     config()->set("GUI/HidePreviewPanel", m_generalUi->previewHideCheckBox->isChecked());
     config()->set("GUI/HideToolbar", m_generalUi->toolbarHideCheckBox->isChecked());
+    config()->set("GUI/MovableToolbar", m_generalUi->toolbarMovableCheckBox->isChecked());
+
+    int currentToolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->currentIndex();
+    config()->set("GUI/ToolButtonStyle", m_generalUi->toolButtonStyleComboBox->itemData(currentToolButtonStyleIndex).toString());
+
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
@@ -300,3 +319,11 @@ void ApplicationSettingsWidget::enableSystray(bool checked)
     m_generalUi->systrayDarkIconCheckBox->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
 }
+
+void ApplicationSettingsWidget::enableToolbarSettings(bool checked)
+{
+    m_generalUi->toolbarMovableCheckBox->setEnabled(!checked);
+    m_generalUi->toolButtonStyleComboBox->setEnabled(!checked);
+    m_generalUi->toolButtonStyleLabel->setEnabled(!checked);
+}
+
