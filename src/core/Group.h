@@ -34,8 +34,7 @@ class Group : public QObject
     Q_OBJECT
 
 public:
-    enum TriState
-    {
+    enum TriState {
         Inherit,
         Enable,
         Disable
@@ -117,6 +116,8 @@ public:
     Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const QUuid& uuid) const;
     Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
+    QMap<QUuid, Entry*> findEntries(QString entryId);
+    QMap<QUuid, Entry*> findEntriesByPath(QString entryPath, QString basePath = QString(""));
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(QString groupPath);
     QStringList locate(QString locateTerm, QString currentPath = QString("/"));

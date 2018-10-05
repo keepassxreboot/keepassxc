@@ -72,18 +72,16 @@ int Show::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    return this->showEntry(db, parser.values(attributes), args.at(1));
+    return this->showEntries(db, parser.values(attributes), args.at(1));
 }
 
-int Show::showEntry(Database* database, QStringList attributes, QString entryPath)
+int Show::showEntries(Database* database, QStringList attributes, QString entryPath)
 {
+    int result = EXIT_SUCCESS;
+    QMap<QUuid, Entry*> entries = database->rootGroup()->findEntries(entryPath);
 
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
-    if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
+    if(entries.isEmpty()) {
+        qCritical("could not find entry with path %s.", qPrintable(entryPath));
         return EXIT_FAILURE;
     }
 
@@ -92,6 +90,20 @@ int Show::showEntry(Database* database, QStringList attributes, QString entryPat
     if (attributes.isEmpty()) {
         attributes = EntryAttributes::DefaultAttributes;
     }
+
+    for(Entry* entry : entries.values()) {
+        if(showEntry(entry, attributes, showAttributeNames) != EXIT_SUCCESS) {
+            result = EXIT_FAILURE;
+        }
+    }
+
+    return result;
+}
+
+int Show::showEntry(Entry* entry, QStringList attributes, bool showAttributeNames)
+{
+    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
+    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
 
     // Iterate over the attributes and output them line-by-line.
     bool sawUnknownAttribute = false;
@@ -106,5 +118,6 @@ int Show::showEntry(Database* database, QStringList attributes, QString entryPat
         }
         outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
     }
+    outputTextStream << "---" << endl;
     return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
 }
