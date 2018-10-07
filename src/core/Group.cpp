@@ -552,17 +552,17 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
-QMap<QUuid, Entry*> Group::findEntries(QString entryId) 
+QSet<Entry*> Group::findEntries(QString entryId) 
 {
     Q_ASSERT(!entryId.isNull());
-    QMap<QUuid, Entry*> entries;
+    QSet<Entry*> entries;
 
     QUuid entryUuid = QUuid::fromRfc4122(QByteArray::fromHex(entryId.toLatin1()));
     if (!entryUuid.isNull()) {
         Entry* entry;
         entry = findEntryByUuid(entryUuid);
         if (entry) {
-            entries.insert(entryUuid, entry);
+            entries.insert(entry);
             return entries; // If an entry with a matching UUID has been found return. No more entries can be found
         }
     } 
@@ -571,22 +571,22 @@ QMap<QUuid, Entry*> Group::findEntries(QString entryId)
 
     for (Entry* entry : entriesRecursive(false)) {
         if (entry->title() == entryId) {
-            entries.insert(entry->uuid(), entry);
+            entries.insert(entry);
         }
     }
 
     return entries;
 }
 
-QMap<QUuid, Entry*> Group::findEntriesByPath(QString entryPath, QString basePath)
+QSet<Entry*> Group::findEntriesByPath(QString entryPath, QString basePath)
 {
     Q_ASSERT(!entryPath.isNull());
-    QMap<QUuid, Entry*> entries;
+    QSet<Entry*> entries;
 
     for (Entry* entry : asConst(m_entries)) {
         QString currentEntryPath = basePath + entry->title();
         if (entryPath == currentEntryPath || entryPath == QString("/" + currentEntryPath)) {
-            entries.insert(entry->uuid(), entry);
+            entries.insert(entry);
         }
     }
 

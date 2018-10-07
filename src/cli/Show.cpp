@@ -78,7 +78,7 @@ int Show::execute(const QStringList& arguments)
 int Show::showEntries(Database* database, QStringList attributes, QString entryPath)
 {
     int result = EXIT_SUCCESS;
-    QMap<QUuid, Entry*> entries = database->rootGroup()->findEntries(entryPath);
+    QSet<Entry*> entries = database->rootGroup()->findEntries(entryPath);
 
     if(entries.isEmpty()) {
         qCritical("could not find entry with path %s.", qPrintable(entryPath));
@@ -91,7 +91,7 @@ int Show::showEntries(Database* database, QStringList attributes, QString entryP
         attributes = EntryAttributes::DefaultAttributes;
     }
 
-    for(Entry* entry : entries.values()) {
+    for(Entry* entry : entries) {
         if(showEntry(entry, attributes, showAttributeNames) != EXIT_SUCCESS) {
             result = EXIT_FAILURE;
         }
