@@ -17,13 +17,29 @@
  */
 
 #include "Config.h"
-#include "ConfigDeprecations.h"
 
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
 #include <QStandardPaths>
 #include <QTemporaryFile>
+
+/*
+ * Map of configuration file settings that are either deprecated, or have
+ * had their name changed.  Entries in the map are of the form
+ *     {oldName, newName}
+ * Set newName to empty string to remove the setting from the file.
+ */
+static const QMap<QString, QString> deprecationMap = {
+    // >2.3.4
+    {"security/hidepassworddetails", "security/HidePasswordPreviewPanel"},
+    // >2.3.4
+    {"GUI/HideDetailsView", "GUI/HidePreviewPanel"},
+    // >2.3.4
+    {"GUI/DetailSplitterState", "GUI/PreviewSplitterState"},
+    // >2.3.4
+    {"security/IconDownloadFallbackToGoogle", "security/IconDownloadFallback"},
+};
 
 Config* Config::m_instance(nullptr);
 
@@ -66,9 +82,9 @@ void Config::sync()
 
 void Config::upgrade()
 {
-    for (auto setting : deprecationMap.keys()) {
+    for (const auto& setting : deprecationMap.keys()) {
         if (m_settings->contains(setting)) {
-            if(deprecationMap.value(setting) != "REMOVED") {
+            if(!deprecationMap.value(setting).isEmpty()) {
                 // Add entry with new name and old entry's value
                 m_settings->setValue(deprecationMap.value(setting), m_settings->value(setting));
             }

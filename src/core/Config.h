@@ -38,7 +38,6 @@ public:
     void set(const QString& key, const QVariant& value);
     bool hasAccessError();
     void sync();
-    void upgrade();
 
     static Config* instance();
     static void createConfigFromFile(const QString& file);
@@ -48,6 +47,7 @@ private:
     Config(const QString& fileName, QObject* parent);
     explicit Config(QObject* parent);
     void init(const QString& fileName);
+    void upgrade();
 
     static Config* m_instance;
 
