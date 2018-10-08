@@ -95,7 +95,7 @@ int main(int argc, char** argv)
                                           QCoreApplication::translate("main", "Parent window handle"),
                                           "handle");
 
-    parser.addHelpOption();
+    QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
@@ -103,6 +103,12 @@ int main(int argc, char** argv)
     parser.addOption(parentWindowOption);
 
     parser.process(app);
+    
+    // Don't try and do anything with the application if we're only showing the help / version
+    if (parser.isSet(versionOption) || parser.isSet(helpOption)) {
+        return 0;
+    }
+    
     const QStringList fileNames = parser.positionalArguments();
 
     if (app.isAlreadyRunning() && !parser.isSet(versionOption)) {
