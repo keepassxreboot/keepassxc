@@ -38,6 +38,7 @@ public:
     void set(const QString& key, const QVariant& value);
     bool hasAccessError();
     void sync();
+    void upgrade();
 
     static Config* instance();
     static void createConfigFromFile(const QString& file);

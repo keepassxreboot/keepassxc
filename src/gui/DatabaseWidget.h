@@ -46,7 +46,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class MessageWidget;
-class DetailsWidget;
+class EntryPreviewWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
@@ -90,8 +90,8 @@ public:
     bool isEditWidgetModified() const;
     QList<int> mainSplitterSizes() const;
     void setMainSplitterSizes(const QList<int>& sizes);
-    QList<int> detailSplitterSizes() const;
-    void setDetailSplitterSizes(const QList<int>& sizes);
+    QList<int> previewSplitterSizes() const;
+    void setPreviewSplitterSizes(const QList<int>& sizes);
     bool isUsernamesHidden() const;
     void setUsernamesHidden(const bool hide);
     bool isPasswordsHidden() const;
@@ -130,7 +130,7 @@ signals:
     void searchModeAboutToActivate();
     void searchModeActivated();
     void mainSplitterSizesChanged();
-    void detailSplitterSizesChanged();
+    void previewSplitterSizesChanged();
     void entryViewStateChanged();
     void updateSearch(QString text);
 
@@ -224,7 +224,7 @@ private:
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
     QSplitter* m_mainSplitter;
-    QSplitter* m_detailSplitter;
+    QSplitter* m_previewSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     QLabel* m_searchingLabel;
@@ -235,7 +235,7 @@ private:
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
-    DetailsWidget* m_detailsView;
+    EntryPreviewWidget* m_previewView;
 
     // Search state
     QString m_lastSearchText;

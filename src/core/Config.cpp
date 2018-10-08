@@ -17,6 +17,7 @@
  */
 
 #include "Config.h"
+#include "ConfigDeprecations.h"
 
 #include <QCoreApplication>
 #include <QDir>
@@ -61,6 +62,19 @@ void Config::set(const QString& key, const QVariant& value)
 void Config::sync()
 {
     m_settings->sync();
+}
+
+void Config::upgrade()
+{
+    for (auto setting : deprecationMap.keys()) {
+        if (m_settings->contains(setting)) {
+            if(deprecationMap.value(setting) != "REMOVED") {
+                // Add entry with new name and old entry's value
+                m_settings->setValue(deprecationMap.value(setting), m_settings->value(setting));
+            }
+            m_settings->remove(setting);
+        }
+    }
 }
 
 Config::Config(const QString& fileName, QObject* parent)
@@ -118,6 +132,7 @@ Config::~Config()
 void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
+    upgrade();
     connect(qApp, &QCoreApplication::aboutToQuit, this, &Config::sync);
 
     m_defaults.insert("SingleInstance", true);
@@ -147,7 +162,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/passwordsrepeat", false);
     m_defaults.insert("security/passwordscleartext", false);
     m_defaults.insert("security/passwordemptynodots", true);
-    m_defaults.insert("security/hidepassworddetails", true);
+    m_defaults.insert("security/HidePasswordPreviewPanel", true);
     m_defaults.insert("security/autotypeask", true);
     m_defaults.insert("security/IconDownloadFallback", false);
     m_defaults.insert("security/resettouchid", false);

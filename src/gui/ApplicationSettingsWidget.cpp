@@ -154,7 +154,7 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
     }
 
-    m_generalUi->detailsHideCheckBox->setChecked(config()->get("GUI/HideDetailsView").toBool());
+    m_generalUi->previewHideCheckBox->setChecked(config()->get("GUI/HidePreviewPanel").toBool());
     m_generalUi->toolbarHideCheckBox->setChecked(config()->get("GUI/HideToolbar").toBool());
     m_generalUi->systrayShowCheckBox->setChecked(config()->get("GUI/ShowTrayIcon").toBool());
     m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get("GUI/DarkTrayIcon").toBool());
@@ -187,7 +187,7 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
     m_secUi->passwordShowDotsCheckBox->setChecked(config()->get("security/passwordemptynodots").toBool());
-    m_secUi->passwordDetailsCleartextCheckBox->setChecked(config()->get("security/hidepassworddetails").toBool());
+    m_secUi->passwordPreviewCleartextCheckBox->setChecked(config()->get("security/HidePasswordPreviewPanel").toBool());
     m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
 
@@ -230,7 +230,7 @@ void ApplicationSettingsWidget::saveSettings()
 
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 
-    config()->set("GUI/HideDetailsView", m_generalUi->detailsHideCheckBox->isChecked());
+    config()->set("GUI/HidePreviewPanel", m_generalUi->previewHideCheckBox->isChecked());
     config()->set("GUI/HideToolbar", m_generalUi->toolbarHideCheckBox->isChecked());
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
@@ -259,7 +259,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
     config()->set("security/passwordemptynodots", m_secUi->passwordShowDotsCheckBox->isChecked());
 
-    config()->set("security/hidepassworddetails", m_secUi->passwordDetailsCleartextCheckBox->isChecked());
+    config()->set("security/HidePasswordPreviewPanel", m_secUi->passwordPreviewCleartextCheckBox->isChecked());
     config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
     config()->set("security/hidenotes", m_secUi->hideNotesCheckBox->isChecked());
 
