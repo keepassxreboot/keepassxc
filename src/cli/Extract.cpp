@@ -20,12 +20,14 @@
 
 #include "Extract.h"
 
+#include <QBuffer>
 #include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
 
 #include "cli/Utils.h"
 #include "core/Database.h"
+#include "format/KdbxXmlWriter.h"
 #include "format/KeePass2Reader.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -53,7 +55,11 @@ int Extract::execute(const QStringList& arguments)
                                              << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
+    QCommandLineOption unprotectedOpt(QStringList() << "u"
+                                                    << "unprotected",
+                                      QObject::tr("Output unprotected data. This WILL show your passwords in PLAINTEXT!"));
     parser.addOption(keyFile);
+    parser.addOption(unprotectedOpt);
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -92,6 +98,8 @@ int Extract::execute(const QStringList& arguments)
         compositeKey->addKey(fileKey);
     }
 
+    bool outputUnprotected = parser.isSet(unprotectedOpt);
+
     QString databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
@@ -104,11 +112,26 @@ int Extract::execute(const QStringList& arguments)
     }
 
     KeePass2Reader reader;
+    KdbxXmlWriter writer(KeePass2::FILE_VERSION_4);
+
     reader.setSaveXml(true);
     Database* db = reader.readDatabase(&dbFile, compositeKey);
-    delete db;
 
-    QByteArray xmlData = reader.reader()->xmlData();
+    QByteArray xmlData;
+
+    if (outputUnprotected) {
+        QBuffer xmlWriteBuffer;
+
+        xmlWriteBuffer.open(QIODevice::WriteOnly);
+        writer.writeDatabase(&xmlWriteBuffer, db);
+        xmlWriteBuffer.close();
+
+        xmlData = xmlWriteBuffer.data();
+    } else {
+        xmlData = reader.reader()->xmlData();
+    }
+
+    delete db;
 
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
@@ -116,6 +139,9 @@ int Extract::execute(const QStringList& arguments)
         } else {
             qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
         }
+        return EXIT_FAILURE;
+    } else if (writer.hasError()) {
+        qCritical("Error while writing the database XML:\n%s", qPrintable(writer.errorString()));
         return EXIT_FAILURE;
     }
 
