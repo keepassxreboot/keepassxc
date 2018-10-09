@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DetailsWidget</class>
- <widget class="QWidget" name="DetailsWidget">
+ <class>EntryPreviewWidget</class>
+ <widget class="QWidget" name="EntryPreviewWidget">
   <layout class="QVBoxLayout" name="verticalLayout_7">
    <property name="spacing">
     <number>0</number>

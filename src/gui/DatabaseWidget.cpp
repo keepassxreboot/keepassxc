@@ -44,7 +44,7 @@
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseOpenWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
-#include "gui/DetailsWidget.h"
+#include "gui/EntryPreviewWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
 #include "gui/TotpSetupDialog.h"
@@ -85,9 +85,9 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     mainLayout->addLayout(layout);
     m_mainSplitter = new QSplitter(m_mainWidget);
     m_mainSplitter->setChildrenCollapsible(false);
-    m_detailSplitter = new QSplitter(m_mainWidget);
-    m_detailSplitter->setOrientation(Qt::Vertical);
-    m_detailSplitter->setChildrenCollapsible(true);
+    m_previewSplitter = new QSplitter(m_mainWidget);
+    m_previewSplitter->setOrientation(Qt::Vertical);
+    m_previewSplitter->setChildrenCollapsible(true);
 
     QWidget* rightHandSideWidget = new QWidget(m_mainSplitter);
 
@@ -111,27 +111,27 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 5px;");
 
-    m_detailsView = new DetailsWidget(this);
-    m_detailsView->hide();
-    connect(this, SIGNAL(pressedEntry(Entry*)), m_detailsView, SLOT(setEntry(Entry*)));
-    connect(this, SIGNAL(pressedGroup(Group*)), m_detailsView, SLOT(setGroup(Group*)));
+    m_previewView = new EntryPreviewWidget(this);
+    m_previewView->hide();
+    connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
+    connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
     connect(this,
             SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-            m_detailsView,
+            m_previewView,
             SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_detailsView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
+    connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
 
     auto* vLayout = new QVBoxLayout(rightHandSideWidget);
     vLayout->setMargin(0);
     vLayout->addWidget(m_searchingLabel);
-    vLayout->addWidget(m_detailSplitter);
+    vLayout->addWidget(m_previewSplitter);
 
-    m_detailSplitter->addWidget(m_entryView);
-    m_detailSplitter->addWidget(m_detailsView);
+    m_previewSplitter->addWidget(m_entryView);
+    m_previewSplitter->addWidget(m_previewView);
 
-    m_detailSplitter->setStretchFactor(0, 100);
-    m_detailSplitter->setStretchFactor(1, 0);
-    m_detailSplitter->setSizes({1, 1});
+    m_previewSplitter->setStretchFactor(0, 100);
+    m_previewSplitter->setStretchFactor(1, 0);
+    m_previewSplitter->setSizes({1, 1});
 
     m_searchingLabel->setVisible(false);
 
@@ -179,7 +179,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_unlockDatabaseWidget);
 
     connect(m_mainSplitter, SIGNAL(splitterMoved(int, int)), SIGNAL(mainSplitterSizesChanged()));
-    connect(m_detailSplitter, SIGNAL(splitterMoved(int, int)), SIGNAL(detailSplitterSizesChanged()));
+    connect(m_previewSplitter, SIGNAL(splitterMoved(int, int)), SIGNAL(previewSplitterSizesChanged()));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
@@ -276,14 +276,14 @@ void DatabaseWidget::setMainSplitterSizes(const QList<int>& sizes)
     m_mainSplitter->setSizes(sizes);
 }
 
-QList<int> DatabaseWidget::detailSplitterSizes() const
+QList<int> DatabaseWidget::previewSplitterSizes() const
 {
-    return m_detailSplitter->sizes();
+    return m_previewSplitter->sizes();
 }
 
-void DatabaseWidget::setDetailSplitterSizes(const QList<int>& sizes)
+void DatabaseWidget::setPreviewSplitterSizes(const QList<int>& sizes)
 {
-    m_detailSplitter->setSizes(sizes);
+    m_previewSplitter->setSizes(sizes);
 }
 
 /**

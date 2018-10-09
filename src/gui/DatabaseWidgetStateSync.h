@@ -49,7 +49,7 @@ private:
 
     bool m_blockUpdates;
     QList<int> m_mainSplitterSizes;
-    QList<int> m_detailSplitterSizes;
+    QList<int> m_previewSplitterSizes;
 
     bool m_hideUsernames;
     bool m_hidePasswords;

@@ -164,9 +164,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="detailsHideCheckBox">
+           <widget class="QCheckBox" name="previewHideCheckBox">
             <property name="text">
-             <string>Hide the Details view</string>
+             <string>Hide the entry preview panel</string>
             </property>
            </widget>
           </item>
