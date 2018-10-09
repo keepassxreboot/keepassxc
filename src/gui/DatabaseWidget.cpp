@@ -688,7 +688,14 @@ void DatabaseWidget::deleteGroup()
             delete currentGroup;
         }
     } else {
-        m_db->recycleGroup(currentGroup);
+        QMessageBox::StandardButton result = MessageBox::question(
+            this,
+            tr("Move group to recycle bin?"),
+            tr("Do you really want to move the group \"%1\" to the recycle bin?").arg(currentGroup->name().toHtmlEscaped()),
+            QMessageBox::Yes | QMessageBox::No);
+        if (result == QMessageBox::Yes) {
+            m_db->recycleGroup(currentGroup);
+        }
     }
 }
 
