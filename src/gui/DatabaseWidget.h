@@ -112,6 +112,10 @@ public:
     void blockAutoReload(bool block = true);
     void refreshSearch();
     bool isRecycleBinSelected() const;
+    QString getDatabaseName() const;
+    void setDatabaseName(const QString& databaseName);
+    QString getDatabaseFileName() const;
+    void setDatabaseFileName(const QString& databaseFileName);
 
 signals:
     void closeRequest();
@@ -236,6 +240,8 @@ private:
     QUuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
     EntryPreviewWidget* m_previewView;
+    QString m_databaseName;
+    QString m_databaseFileName;
 
     // Search state
     QString m_lastSearchText;
