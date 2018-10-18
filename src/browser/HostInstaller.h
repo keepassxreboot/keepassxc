@@ -39,6 +39,7 @@ public:
 public:
     HostInstaller();
     bool checkIfInstalled(SupportedBrowsers browser);
+    bool checkIfProxyExists(const bool& proxy, const QString& location, QString& path) const;
     void installBrowser(SupportedBrowsers browser,
                         const bool& enabled,
                         const bool& proxy = false,
@@ -50,6 +51,7 @@ private:
     QString getBrowserName(SupportedBrowsers browser) const;
     QString getPath(SupportedBrowsers browser) const;
     QString getInstallDir(SupportedBrowsers browser) const;
+    QString getProxyPath(const bool& proxy, const QString& location) const;
     QJsonObject constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location);
     bool registryEntryFound(const QSettings& settings);
     bool saveFile(SupportedBrowsers browser, const QJsonObject& script);

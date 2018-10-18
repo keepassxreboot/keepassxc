@@ -114,6 +114,7 @@ public:
     QString generatePassword();
     int getbits();
     void updateBinaryPaths(QString customProxyLocation = QString());
+    bool checkIfProxyExists(QString& path);
 
 private:
     static BrowserSettings* m_instance;

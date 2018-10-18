@@ -39,6 +39,13 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
         "<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
         "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">Google Chrome / Chromium / Vivaldi</a>"));
 
+    m_ui->scriptWarningWidget->setVisible(false);
+    m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
+    m_ui->scriptWarningWidget->showMessage(tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
+                                          "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
+                                          "<br />Browser integration WILL NOT WORK without the proxy application."
+                                          "<br />Expected Path: "), MessageWidget::Warning);
+
     m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(-1);
@@ -109,6 +116,17 @@ void BrowserOptionDialog::loadSettings()
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
+
+    // Check for native messaging host location errors
+    QString path;
+    if (!settings->checkIfProxyExists(path)) {
+        QString text = m_ui->scriptWarningWidget->text();
+        text.append(path);
+        m_ui->scriptWarningWidget->setText(text);
+        m_ui->scriptWarningWidget->setVisible(true);
+    } else {
+        m_ui->scriptWarningWidget->setVisible(false);
+    }
 }
 
 void BrowserOptionDialog::saveSettings()
