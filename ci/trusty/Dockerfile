@@ -18,7 +18,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=4
+ENV REBUILD_COUNTER=5
 
 ENV QT5_VERSION=qt53
 ENV QT5_PPA_VERSION=${QT5_VERSION}2
@@ -49,6 +49,7 @@ RUN set -x \
         ${QT5_VERSION}tools \
         ${QT5_VERSION}x11extras \
         ${QT5_VERSION}translations \
+        ${QT5_VERSION}svg \
         zlib1g-dev \
         libyubikey-dev \
         libykpers-1-dev \

@@ -16,7 +16,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=9
+ENV REBUILD_COUNTER=10
 
 ENV QT5_VERSION=qt510
 ENV QT5_PPA_VERSION=qt-5.10.1
@@ -50,6 +50,7 @@ RUN set -x \
         ${QT5_VERSION}x11extras \
         ${QT5_VERSION}translations \
         ${QT5_VERSION}imageformats \
+        ${QT5_VERSION}svg \
         zlib1g-dev \
         libxi-dev \
         libxtst-dev \
