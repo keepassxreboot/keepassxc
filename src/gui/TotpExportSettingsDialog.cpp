@@ -55,6 +55,7 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     connect(m_buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
     connect(m_timer, SIGNAL(timeout()), this, SLOT(autoClose()));
+    connect(parent, SIGNAL(lockedDatabase()), this, SLOT(close()));
 
     m_buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
     m_countDown->setAlignment(Qt::AlignCenter);

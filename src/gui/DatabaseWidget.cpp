@@ -1184,6 +1184,7 @@ void DatabaseWidget::lock()
     Database* newDb = new Database();
     newDb->metadata()->setName(m_db->metadata()->name());
     replaceDatabase(newDb);
+    emit lockedDatabase();
 }
 
 void DatabaseWidget::updateFilePath(const QString& filePath)

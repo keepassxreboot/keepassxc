@@ -125,6 +125,7 @@ signals:
     void pressedEntry(Entry* selectedEntry);
     void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
+    void lockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
