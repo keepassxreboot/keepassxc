@@ -77,21 +77,6 @@ QString humanReadableFileSize(qint64 bytes, quint32 precision)
     return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
 }
 
-bool hasChild(const QObject* parent, const QObject* child)
-{
-    if (!parent || !child) {
-        return false;
-    }
-
-    const QObjectList children = parent->children();
-    for (QObject* c : children) {
-        if (child == c || hasChild(c, child)) {
-            return true;
-        }
-    }
-    return false;
-}
-
 bool readFromDevice(QIODevice* device, QByteArray& data, int size)
 {
     QByteArray buffer;

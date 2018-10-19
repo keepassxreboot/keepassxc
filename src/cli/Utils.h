@@ -29,8 +29,12 @@ extern FILE* STDIN;
 
 void setStdinEcho(bool enable);
 QString getPassword();
-void setNextPassword(const QString& password);
 int clipText(const QString& text);
+
+namespace Test
+{
+void setNextPassword(const QString& password);
+}
 };
 
 #endif // KEEPASSXC_UTILS_H

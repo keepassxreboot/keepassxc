@@ -376,7 +376,7 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
 QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 {
     QJsonObject message;
-    message["version"] = KEEPASSX_VERSION;
+    message["version"] = KEEPASSXC_VERSION;
     message["success"] = "true";
     message["nonce"] = nonce;
     return message;

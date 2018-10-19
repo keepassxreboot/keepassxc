@@ -460,7 +460,8 @@ void DatabaseWidget::deleteEntries()
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
-    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
+    auto* recycleBin = m_db->metadata()->recycleBin();
+    bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid());
     if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
         QString prompt;
         if (selected.size() == 1) {
@@ -688,9 +689,10 @@ void DatabaseWidget::deleteGroup()
         return;
     }
 
-    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
+    auto* recycleBin = m_db->metadata()->recycleBin();
+    bool inRecycleBin = recycleBin && recycleBin->findGroupByUuid(currentGroup->uuid());
     bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
-    bool isRecycleBinSubgroup = Tools::hasChild(currentGroup, m_db->metadata()->recycleBin());
+    bool isRecycleBinSubgroup = currentGroup->findGroupByUuid(m_db->metadata()->recycleBin()->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this,

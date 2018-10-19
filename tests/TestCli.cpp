@@ -115,7 +115,7 @@ void TestCli::cleanupTestCase()
 
 QSharedPointer<Database> TestCli::readTestDatabase() const
 {
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     auto db = QSharedPointer<Database>(Database::unlockFromStdin(m_dbFile->fileName(), "", m_stdoutHandle));
     m_stdoutFile->seek(ftell(m_stdoutHandle));  // re-synchronize handles
     return db;
@@ -145,7 +145,7 @@ void TestCli::testAdd()
     QVERIFY(!addCmd.name.isEmpty());
     QVERIFY(addCmd.getDescriptionLine().contains(addCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     addCmd.execute({"add", "-u", "newuser", "--url", "https://example.com/", "-g", "-l", "20", m_dbFile->fileName(), "/newuser-entry"});
     m_stderrFile->reset();
 
@@ -156,8 +156,8 @@ void TestCli::testAdd()
     QCOMPARE(entry->url(), QString("https://example.com/"));
     QCOMPARE(entry->password().size(), 20);
 
-    Utils::setNextPassword("a");
-    Utils::setNextPassword("newpassword");
+    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("newpassword");
     addCmd.execute({"add", "-u", "newuser2", "--url", "https://example.net/", "-g", "-l", "20", "-p", m_dbFile->fileName(), "/newuser-entry2"});
 
     db = readTestDatabase();
@@ -177,7 +177,7 @@ void TestCli::testClip()
     QVERIFY(!clipCmd.name.isEmpty());
     QVERIFY(clipCmd.getDescriptionLine().contains(clipCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry"});
 
     m_stderrFile->reset();
@@ -190,7 +190,7 @@ void TestCli::testClip()
 
     QCOMPARE(clipboard->text(), QString("Password"));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     QFuture<void> future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
 
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
@@ -246,7 +246,7 @@ void TestCli::testEdit()
     QVERIFY(!editCmd.name.isEmpty());
     QVERIFY(editCmd.getDescriptionLine().contains(editCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     editCmd.execute({"edit", "-u", "newuser", "--url", "https://otherurl.example.com/", "-t", "newtitle", m_dbFile->fileName(), "/Sample Entry"});
 
     auto db = readTestDatabase();
@@ -256,7 +256,7 @@ void TestCli::testEdit()
     QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
     QCOMPARE(entry->password(), QString("Password"));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     editCmd.execute({"edit", "-g", m_dbFile->fileName(), "/newtitle"});
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newtitle");
@@ -266,7 +266,7 @@ void TestCli::testEdit()
     QVERIFY(!entry->password().isEmpty());
     QVERIFY(entry->password() != QString("Password"));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     editCmd.execute({"edit", "-g", "-l", "34", "-t", "yet another title", m_dbFile->fileName(), "/newtitle"});
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/yet another title");
@@ -276,8 +276,8 @@ void TestCli::testEdit()
     QVERIFY(entry->password() != QString("Password"));
     QCOMPARE(entry->password().size(), 34);
 
-    Utils::setNextPassword("a");
-    Utils::setNextPassword("newpassword");
+    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("newpassword");
     editCmd.execute({"edit", "-p", m_dbFile->fileName(), "/yet another title"});
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/yet another title");
@@ -392,7 +392,7 @@ void TestCli::testExtract()
     QVERIFY(!extractCmd.name.isEmpty());
     QVERIFY(extractCmd.getDescriptionLine().contains(extractCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     extractCmd.execute({"extract", m_dbFile->fileName()});
 
     m_stdoutFile->seek(0);
@@ -471,7 +471,7 @@ void TestCli::testList()
     QVERIFY(!listCmd.name.isEmpty());
     QVERIFY(listCmd.getDescriptionLine().contains(listCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", m_dbFile->fileName()});
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
@@ -484,7 +484,7 @@ void TestCli::testList()
                                                  "Homebanking/\n"));
 
     qint64 pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", "-R", m_dbFile->fileName()});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
@@ -503,14 +503,14 @@ void TestCli::testList()
                                                  "  [empty]\n"));
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", m_dbFile->fileName(), "/General/"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("[empty]\n"));
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", m_dbFile->fileName(), "/DoesNotExist/"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
@@ -525,14 +525,14 @@ void TestCli::testLocate()
     QVERIFY(!locateCmd.name.isEmpty());
     QVERIFY(locateCmd.getDescriptionLine().contains(locateCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", m_dbFile->fileName(), "Sample"});
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n"));
 
     qint64 pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", m_dbFile->fileName(), "Does Not Exist"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
@@ -556,14 +556,14 @@ void TestCli::testLocate()
     tmpFile.close();
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", tmpFile.fileName(), "New"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("/General/New Entry\n"));
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", tmpFile.fileName(), "Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
@@ -612,7 +612,7 @@ void TestCli::testMerge()
     sourceFile.close();
 
     qint64 pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     mergeCmd.execute({"merge", "-s", targetFile1.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
@@ -631,8 +631,8 @@ void TestCli::testMerge()
 
     // try again with different passwords for both files
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("b");
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("b");
+    Utils::Test::setNextPassword("a");
     mergeCmd.execute({"merge", targetFile2.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
@@ -671,7 +671,7 @@ void TestCli::testRemove()
     qint64 pos = m_stdoutFile->pos();
 
     // delete entry and verify
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();    // skip password prompt
@@ -690,7 +690,7 @@ void TestCli::testRemove()
     pos = m_stdoutFile->pos();
 
     // try again, this time without recycle bin
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();    // skip password prompt
@@ -707,7 +707,7 @@ void TestCli::testRemove()
     pos = m_stdoutFile->pos();
 
     // finally, try deleting a non-existent entry
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();    // skip password prompt
@@ -722,7 +722,7 @@ void TestCli::testShow()
     QVERIFY(!showCmd.name.isEmpty());
     QVERIFY(showCmd.getDescriptionLine().contains(showCmd.name));
 
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     showCmd.execute({"show", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
@@ -733,14 +733,14 @@ void TestCli::testShow()
                                                  "Notes: Notes\n"));
 
     qint64 pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"));
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
@@ -748,7 +748,7 @@ void TestCli::testShow()
                                                  "http://www.somesite.com/\n"));
 
     pos = m_stdoutFile->pos();
-    Utils::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt

@@ -40,7 +40,7 @@ int main(int argc, char** argv)
     }
 
     QCoreApplication app(argc, argv);
-    QCoreApplication::setApplicationVersion(KEEPASSX_VERSION);
+    QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
 
 #ifdef QT_NO_DEBUG
     Bootstrap::bootstrapApplication();
@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     if (parser.positionalArguments().empty()) {
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
-            out << KEEPASSX_VERSION << endl;
+            out << KEEPASSXC_VERSION << endl;
             return EXIT_SUCCESS;
         }
         parser.showHelp();

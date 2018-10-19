@@ -234,11 +234,11 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         }
 
         Group* dragGroup = db->resolveGroup(groupUuid);
-        if (!dragGroup || !Tools::hasChild(db, dragGroup) || dragGroup == db->rootGroup()) {
+        if (!dragGroup || !db->rootGroup()->findGroupByUuid(dragGroup->uuid()) || dragGroup == db->rootGroup()) {
             return false;
         }
 
-        if (dragGroup == parentGroup || Tools::hasChild(dragGroup, parentGroup)) {
+        if (dragGroup == parentGroup || dragGroup->findGroupByUuid(parentGroup->uuid())) {
             return false;
         }
 
@@ -278,7 +278,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             }
 
             Entry* dragEntry = db->resolveEntry(entryUuid);
-            if (!dragEntry || !Tools::hasChild(db, dragEntry)) {
+            if (!dragEntry || !db->rootGroup()->findEntryByUuid(dragEntry->uuid())) {
                 continue;
             }
 

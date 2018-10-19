@@ -72,6 +72,8 @@ void setStdinEcho(bool enable = true)
 #endif
 }
 
+namespace Test
+{
 QStringList nextPasswords = {};
 
 /**
@@ -85,6 +87,7 @@ void setNextPassword(const QString& password)
 {
     nextPasswords.append(password);
 }
+}   // namespace Test
 
 /**
  * Read a user password from STDIN or return a password previously
@@ -97,8 +100,8 @@ QString getPassword()
     QTextStream out(STDOUT, QIODevice::WriteOnly);
 
     // return preset password if one is set
-    if (!nextPasswords.isEmpty()) {
-        auto password = nextPasswords.takeFirst();
+    if (!Test::nextPasswords.isEmpty()) {
+        auto password = Test::nextPasswords.takeFirst();
         // simulate user entering newline
         out << endl;
         return password;

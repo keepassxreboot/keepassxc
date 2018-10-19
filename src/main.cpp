@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 {
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
-    Application::setApplicationVersion(KEEPASSX_VERSION);
+    Application::setApplicationVersion(KEEPASSXC_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
     Bootstrap::bootstrapApplication();

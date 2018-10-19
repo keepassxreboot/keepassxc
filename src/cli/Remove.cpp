@@ -76,7 +76,7 @@ int Remove::removeEntry(Database* database, const QString& databasePath, const Q
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
@@ -84,7 +84,8 @@ int Remove::removeEntry(Database* database, const QString& databasePath, const Q
 
     QString entryTitle = entry->title();
     bool recycled = true;
-    if (Tools::hasChild(database->metadata()->recycleBin(), entry) || !database->metadata()->recycleBinEnabled()) {
+    auto* recycleBin = database->metadata()->recycleBin();
+    if (!database->metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findEntryByUuid(entry->uuid()))) {
         delete entry;
         recycled = false;
     } else {
