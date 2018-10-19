@@ -15,72 +15,72 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TestClock.h"
+#include "MockClock.h"
 
-TestClock::TestClock(int year, int month, int day, int hour, int min, int second)
+MockClock::MockClock(int year, int month, int day, int hour, int min, int second)
     : Clock()
     , m_utcCurrent(datetimeUtc(year, month, day, hour, min, second))
 {
 }
 
-TestClock::TestClock(QDateTime utcBase)
+MockClock::MockClock(QDateTime utcBase)
     : Clock()
     , m_utcCurrent(utcBase)
 {
 }
 
-const QDateTime& TestClock::advanceSecond(int seconds)
+const QDateTime& MockClock::advanceSecond(int seconds)
 {
     m_utcCurrent = m_utcCurrent.addSecs(seconds);
     return m_utcCurrent;
 }
 
-const QDateTime& TestClock::advanceMinute(int minutes)
+const QDateTime& MockClock::advanceMinute(int minutes)
 {
     m_utcCurrent = m_utcCurrent.addSecs(minutes * 60);
     return m_utcCurrent;
 }
 
-const QDateTime& TestClock::advanceHour(int hours)
+const QDateTime& MockClock::advanceHour(int hours)
 {
     m_utcCurrent = m_utcCurrent.addSecs(hours * 60 * 60);
     return m_utcCurrent;
 }
 
-const QDateTime& TestClock::advanceDay(int days)
+const QDateTime& MockClock::advanceDay(int days)
 {
     m_utcCurrent = m_utcCurrent.addDays(days);
     return m_utcCurrent;
 }
 
-const QDateTime& TestClock::advanceMonth(int months)
+const QDateTime& MockClock::advanceMonth(int months)
 {
     m_utcCurrent = m_utcCurrent.addMonths(months);
     return m_utcCurrent;
 }
 
-const QDateTime& TestClock::advanceYear(int years)
+const QDateTime& MockClock::advanceYear(int years)
 {
     m_utcCurrent = m_utcCurrent.addYears(years);
     return m_utcCurrent;
 }
 
-void TestClock::setup(Clock* clock)
+void MockClock::setup(Clock* clock)
 {
     Clock::setInstance(clock);
 }
 
-void TestClock::teardown()
+void MockClock::teardown()
 {
     Clock::resetInstance();
 }
 
-QDateTime TestClock::currentDateTimeUtcImpl() const
+QDateTime MockClock::currentDateTimeUtcImpl() const
 {
     return m_utcCurrent;
 }
 
-QDateTime TestClock::currentDateTimeImpl() const
+QDateTime MockClock::currentDateTimeImpl() const
 {
     return m_utcCurrent.toLocalTime();
 }

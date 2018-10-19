@@ -22,12 +22,12 @@
 
 #include <QDateTime>
 
-class TestClock : public Clock
+class MockClock : public Clock
 {
 public:
-    TestClock(int year, int month, int day, int hour, int min, int second);
+    MockClock(int year, int month, int day, int hour, int min, int second);
 
-    TestClock(QDateTime utcBase = QDateTime::currentDateTimeUtc());
+    MockClock(QDateTime utcBase = QDateTime::currentDateTimeUtc());
 
     const QDateTime& advanceSecond(int seconds);
     const QDateTime& advanceMinute(int minutes);
