@@ -102,7 +102,7 @@ void TestGui::initTestCase()
 // Every test starts with opening the temp database
 void TestGui::init()
 {
-    m_dbFile.reset(new QTemporaryFile());
+    m_dbFile.reset(new TemporaryFile());
     // Write the temp storage to a temp database file for use in our tests
     QVERIFY(m_dbFile->open());
     QCOMPARE(m_dbFile->write(m_dbData), static_cast<qint64>((m_dbData.size())));
@@ -289,7 +289,7 @@ void TestGui::createDatabaseCallback()
     QCOMPARE(fileCombo->currentText(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
 
     // save database to temporary file
-    QTemporaryFile tmpFile;
+    TemporaryFile tmpFile;
     QVERIFY(tmpFile.open());
     tmpFile.close();
     fileDialog()->setNextFileName(tmpFile.fileName());
@@ -1071,7 +1071,7 @@ void TestGui::testSaveAs()
     m_db->metadata()->setName("testSaveAs");
 
     // open temporary file so it creates a filename
-    QTemporaryFile tmpFile;
+    TemporaryFile tmpFile;
     QVERIFY(tmpFile.open());
     QString tmpFileName = tmpFile.fileName();
     tmpFile.remove();

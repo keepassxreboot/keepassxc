@@ -19,6 +19,7 @@
 #define KEEPASSXC_TESTCLI_H
 
 #include "core/Database.h"
+#include "util/TemporaryFile.h"
 
 #include <QTest>
 #include <QTextStream>
@@ -57,10 +58,10 @@ private slots:
 
 private:
     QByteArray m_dbData;
-    QScopedPointer<QTemporaryFile> m_dbFile;
-    QScopedPointer<QTemporaryFile> m_stdoutFile;
-    QScopedPointer<QTemporaryFile> m_stderrFile;
-    QScopedPointer<QTemporaryFile> m_stdinFile;
+    QScopedPointer<TemporaryFile> m_dbFile;
+    QScopedPointer<TemporaryFile> m_stdoutFile;
+    QScopedPointer<TemporaryFile> m_stderrFile;
+    QScopedPointer<TemporaryFile> m_stdinFile;
     FILE* m_stdoutHandle = stdout;
     FILE* m_stderrHandle = stderr;
     FILE* m_stdinHandle = stdin;

@@ -71,22 +71,22 @@ void TestCli::initTestCase()
 
 void TestCli::init()
 {
-    m_dbFile.reset(new QTemporaryFile());
+    m_dbFile.reset(new TemporaryFile());
     m_dbFile->open();
     m_dbFile->write(m_dbData);
-    m_dbFile->flush();
+    m_dbFile->close();
 
-    m_stdinFile.reset(new QTemporaryFile());
+    m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
     m_stdinHandle = fdopen(m_stdinFile->handle(), "r+");
     Utils::STDIN = m_stdinHandle;
 
-    m_stdoutFile.reset(new QTemporaryFile());
+    m_stdoutFile.reset(new TemporaryFile());
     m_stdoutFile->open();
     m_stdoutHandle = fdopen(m_stdoutFile->handle(), "r+");
     Utils::STDOUT = m_stdoutHandle;
 
-    m_stderrFile.reset(new QTemporaryFile());
+    m_stderrFile.reset(new TemporaryFile());
     m_stderrFile->open();
     m_stderrHandle = fdopen(m_stderrFile->handle(), "r+");
     Utils::STDERR = m_stderrHandle;
@@ -147,6 +147,7 @@ void TestCli::testAdd()
 
     Utils::setNextPassword("a");
     addCmd.execute({"add", "-u", "newuser", "--url", "https://example.com/", "-g", "-l", "20", m_dbFile->fileName(), "/newuser-entry"});
+    m_stderrFile->reset();
 
     auto db = readTestDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("/newuser-entry");
@@ -220,7 +221,7 @@ void TestCli::testDiceware()
     passphrase = m_stdoutFile->readLine();
     QCOMPARE(passphrase.split(" ").size(), 10);
 
-    QTemporaryFile wordFile;
+    TemporaryFile wordFile;
     wordFile.open();
     for (int i = 0; i < 4500; ++i) {
         wordFile.write(QString("word" + QString::number(i) + "\n").toLatin1());
@@ -548,7 +549,7 @@ void TestCli::testLocate()
     entry->setUuid(QUuid::createUuid());
     entry->setTitle("New Entry");
     group->addEntry(entry);
-    QTemporaryFile tmpFile;
+    TemporaryFile tmpFile;
     tmpFile.open();
     Kdbx4Writer writer;
     writer.writeDatabase(&tmpFile, db.data());
@@ -581,13 +582,13 @@ void TestCli::testMerge()
     // load test database and save a copy
     auto db = readTestDatabase();
     QVERIFY(db);
-    QTemporaryFile targetFile1;
+    TemporaryFile targetFile1;
     targetFile1.open();
     writer.writeDatabase(&targetFile1, db.data());
     targetFile1.close();
 
     // save another copy with a different password
-    QTemporaryFile targetFile2;
+    TemporaryFile targetFile2;
     targetFile2.open();
     auto oldKey = db->key();
     auto key = QSharedPointer<CompositeKey>::create();
@@ -605,7 +606,7 @@ void TestCli::testMerge()
     auto* group = db->rootGroup()->findGroupByPath("/Internet/");
     QVERIFY(group);
     group->addEntry(entry);
-    QTemporaryFile sourceFile;
+    TemporaryFile sourceFile;
     sourceFile.open();
     writer.writeDatabase(&sourceFile, db.data());
     sourceFile.close();
@@ -615,6 +616,7 @@ void TestCli::testMerge()
     mergeCmd.execute({"merge", "-s", targetFile1.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
+    m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully merged the database files.\n"));
 
     QFile readBack(targetFile1.fileName());
@@ -660,7 +662,7 @@ void TestCli::testRemove()
     // load test database and save a copy with disabled recycle bin
     auto db = readTestDatabase();
     QVERIFY(db);
-    QTemporaryFile fileCopy;
+    TemporaryFile fileCopy;
     fileCopy.open();
     db->metadata()->setRecycleBinEnabled(false);
     writer.writeDatabase(&fileCopy, db.data());
