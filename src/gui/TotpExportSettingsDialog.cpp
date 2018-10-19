@@ -34,13 +34,14 @@
 
 TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry* entry)
     : QDialog(parent)
-    , m_entry(entry)
     , m_timer(new QTimer(this))
     , m_verticalLayout(new QVBoxLayout())
     , m_totpSvgWidget(new SquareSvgWidget())
     , m_countDown(new QLabel())
+    , m_warningLabel(new QLabel())
     , m_buttonBox(new QDialogButtonBox(QDialogButtonBox::Close | QDialogButtonBox::Ok))
 {
+    m_verticalLayout->addWidget(m_warningLabel);
     m_verticalLayout->addItem(new QSpacerItem(0, 0));
 
     m_verticalLayout->addStretch(0);
@@ -64,8 +65,18 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
     autoClose();
     m_timer->start(1000);
 
-    const QUrl keyUri = totpKeyUri(entry);
-    const QrCode qrc(keyUri.toEncoded());
+    const auto totpSettings = entry->totpSettings();
+    if (totpSettings->custom || !totpSettings->encoder.shortName.isEmpty()) {
+        m_warningLabel->setWordWrap(true);
+        m_warningLabel->setMargin(5);
+        m_warningLabel->setText(tr("NOTE: These TOTP settings are custom and may not work with other authenticators.",
+                                   "TOTP QR code dialog warning"));
+    } else {
+        m_warningLabel->hide();
+    }
+
+    m_totpUri = Totp::writeSettings(entry->totpSettings(), entry->title(), entry->username(), true);
+    const QrCode qrc(m_totpUri);
 
     if (qrc.isValid()) {
         QBuffer buffer;
@@ -87,8 +98,7 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 
 void TotpExportSettingsDialog::copyToClipboard()
 {
-    const QUrl keyUri = totpKeyUri(m_entry);
-    clipboard()->setText(keyUri.toEncoded().data());
+    clipboard()->setText(m_totpUri);
     if (config()->get("MinimizeOnCopy").toBool()) {
         static_cast<DatabaseWidget*>(parent())->window()->showMinimized();
     }
@@ -102,11 +112,6 @@ void TotpExportSettingsDialog::autoClose()
         m_timer->stop();
         close();
     }
-}
-
-QUrl TotpExportSettingsDialog::totpKeyUri(const Entry* entry) const
-{
-    return Totp::writeSettings(entry->totpSettings(), true);
 }
 
 TotpExportSettingsDialog::~TotpExportSettingsDialog() = default;

@@ -80,7 +80,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     settings->step = qBound(1u, settings->step, 60u);
 
     // Detect custom settings, used by setup GUI
-    if (settings->encoder.shortName != STEAM_SHORTNAME
+    if (settings->encoder.shortName.isEmpty()
         && (settings->digits != DEFAULT_DIGITS || settings->step != DEFAULT_STEP)) {
         settings->custom = true;
     }
@@ -97,7 +97,7 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const ui
     });
 }
 
-QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, bool forceOtp)
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, const QString& title, const QString& username, bool forceOtp)
 {
     if (settings.isNull()) {
         return {};
@@ -105,7 +105,13 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, bool 
 
     // OTP Url output
     if (settings->otpUrl || forceOtp) {
-        auto urlstring = QString("key=%1&step=%2&size=%3").arg(settings->key).arg(settings->step).arg(settings->digits);
+        auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
+                .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)))
+                .arg(username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)))
+                .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
+                .arg(settings->step)
+                .arg(settings->digits);
+
         if (!settings->encoder.name.isEmpty()) {
             urlstring.append("&encoder=").append(settings->encoder.name);
         }

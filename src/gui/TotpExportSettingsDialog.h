@@ -43,14 +43,14 @@ private slots:
     void autoClose();
 
 private:
-    QUrl totpKeyUri(const Entry* entry) const;
     int m_secTillClose;
-    Entry* m_entry;
+    QString m_totpUri;
     QTimer* m_timer;
 
     QVBoxLayout* m_verticalLayout;
     SquareSvgWidget* m_totpSvgWidget;
     QLabel* m_countDown;
+    QLabel* m_warningLabel;
     QDialogButtonBox* m_buttonBox;
 };
 

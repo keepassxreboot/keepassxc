@@ -369,7 +369,7 @@ void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
     beginUpdate();
     m_data.totpSettings = settings;
 
-    auto text = Totp::writeSettings(m_data.totpSettings);
+    auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
     if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
         m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
     } else {
