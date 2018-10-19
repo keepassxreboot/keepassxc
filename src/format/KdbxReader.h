@@ -86,6 +86,8 @@ protected:
 
     void raiseError(const QString& errorMessage);
 
+    void decryptXmlInnerStream(QByteArray& xmlOutput, Database* db) const;
+
     QScopedPointer<Database> m_db;
 
     QPair<quint32, quint32> m_kdbxSignature;

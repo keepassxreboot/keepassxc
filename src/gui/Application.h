@@ -22,8 +22,8 @@
 
 #include <QApplication>
 #include <QtNetwork/QLocalServer>
-class QLockFile;
 
+class QLockFile;
 class QSocketNotifier;
 
 class Application : public QApplication

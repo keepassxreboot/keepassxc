@@ -43,17 +43,17 @@ Extract::~Extract()
 
 int Extract::execute(const QStringList& arguments)
 {
-    QTextStream out(stdout);
-    QTextStream errorTextStream(stderr);
+    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
+    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -62,8 +62,7 @@ int Extract::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0));
-    out.flush();
+    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 
@@ -74,52 +73,51 @@ int Extract::execute(const QStringList& arguments)
 
     QString keyFilePath = parser.value(keyFile);
     if (!keyFilePath.isEmpty()) {
+        // LCOV_EXCL_START
         auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMsg;
         if (!fileKey->load(keyFilePath, &errorMsg)) {
-            errorTextStream << QObject::tr("Failed to load key file %1 : %2").arg(keyFilePath).arg(errorMsg);
-            errorTextStream << endl;
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath).arg(errorMsg) << endl;
             return EXIT_FAILURE;
         }
 
         if (fileKey->type() != FileKey::Hashed) {
-            errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                                           "unsupported in the future.\n\n"
-                                           "Please consider generating a new key file.");
-            errorTextStream << endl;
+            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                               "unsupported in the future.\n\n"
+                               "Please consider generating a new key file.") << endl;
         }
+        // LCOV_EXCL_STOP
 
         compositeKey->addKey(fileKey);
     }
 
-    QString databaseFilename = args.at(0);
+    const QString& databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
-        qCritical("File %s does not exist.", qPrintable(databaseFilename));
+        err << QObject::tr("File %1 does not exist.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(databaseFilename));
+        err << QObject::tr("Unable to open file %1.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
     }
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
-    Database* db = reader.readDatabase(&dbFile, compositeKey);
-    delete db;
+    QScopedPointer<Database> db(reader.readDatabase(&dbFile, compositeKey));
 
     QByteArray xmlData = reader.reader()->xmlData();
 
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
-            qCritical("Error while reading the database:\n%s", qPrintable(reader.errorString()));
+            err << QObject::tr("Error while reading the database:\n%1").arg(reader.errorString()) << endl;
         } else {
-            qWarning("Error while parsing the database:\n%s\n", qPrintable(reader.errorString()));
+            err << QObject::tr("Error while parsing the database:\n%1").arg(reader.errorString()) << endl;
         }
         return EXIT_FAILURE;
     }
 
-    out << xmlData.constData() << "\n";
+    out << xmlData.constData() << endl;
 
     return EXIT_SUCCESS;
 }

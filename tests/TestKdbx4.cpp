@@ -199,12 +199,12 @@ void TestKdbx4::testFormat400Upgrade_data()
     auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     auto constexpr kdbx4 = KeePass2::FILE_VERSION_4   & KeePass2::FILE_VERSION_CRITICAL_MASK;
 
-    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << false << kdbx4;
-    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << false << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << false << kdbx3;
-    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << true  << kdbx4;
-    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << true  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << true  << kdbx4;
+    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << false << kdbx4;
+    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << false << kdbx3;
+    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << true  << kdbx4;
+    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << true  << kdbx4;
 
     QTest::newRow("Argon2           + ChaCha20")              << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
     QTest::newRow("AES-KDF          + ChaCha20")              << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << false << kdbx4;

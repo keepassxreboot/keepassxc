@@ -23,7 +23,8 @@
 
 #define UUID_LENGTH 16
 
-const QUuid KeePass2::CIPHER_AES      = QUuid("31c1f2e6-bf71-4350-be58-05216afc5aff");
+const QUuid KeePass2::CIPHER_AES128   = QUuid("61ab05a1-9464-41c3-8d74-3a563df8dd35");
+const QUuid KeePass2::CIPHER_AES256   = QUuid("31c1f2e6-bf71-4350-be58-05216afc5aff");
 const QUuid KeePass2::CIPHER_TWOFISH  = QUuid("ad68f29f-576f-4bb9-a36a-d47af965346c");
 const QUuid KeePass2::CIPHER_CHACHA20 = QUuid("d6038a2b-8b6f-4cb5-a524-339a31dbb59a");
 
@@ -47,7 +48,7 @@ const QString KeePass2::KDFPARAM_ARGON2_SECRET("K");
 const QString KeePass2::KDFPARAM_ARGON2_ASSOCDATA("A");
 
 const QList<QPair<QUuid, QString>> KeePass2::CIPHERS{
-    qMakePair(KeePass2::CIPHER_AES, QObject::tr("AES: 256-bit")),
+    qMakePair(KeePass2::CIPHER_AES256, QObject::tr("AES: 256-bit")),
     qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish: 256-bit")),
     qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20: 256-bit"))
 };

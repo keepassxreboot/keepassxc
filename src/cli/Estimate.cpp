@@ -16,6 +16,7 @@
  */
 
 #include "Estimate.h"
+#include "cli/Utils.h"
 
 #include <QCommandLineParser>
 #include <QTextStream>
@@ -44,117 +45,126 @@ Estimate::~Estimate()
 
 static void estimate(const char* pwd, bool advanced)
 {
-    double e;
-    int len = strlen(pwd);
+    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+
+    double e = 0.0;
+    int len = static_cast<int>(strlen(pwd));
     if (!advanced) {
-        e = ZxcvbnMatch(pwd, 0, 0);
-        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n", len, e, e * 0.301029996);
+        e = ZxcvbnMatch(pwd, nullptr, nullptr);
+        out << QObject::tr("Length %1").arg(len, 0) << '\t'
+            << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
+            << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << endl;
     } else {
-        int ChkLen;
+        int ChkLen = 0;
         ZxcMatch_t *info, *p;
         double m = 0.0;
-        e = ZxcvbnMatch(pwd, 0, &info);
+        e = ZxcvbnMatch(pwd, nullptr, &info);
         for (p = info; p; p = p->Next) {
             m += p->Entrpy;
         }
         m = e - m;
-        printf("Length %d\tEntropy %.3f\tLog10 %.3f\n  Multi-word extra bits %.1f\n", len, e, e * 0.301029996, m);
+        out << QObject::tr("Length %1").arg(len) << '\t'
+            << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
+            << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << "\n  "
+            << QObject::tr("Multi-word extra bits %1").arg(m, 0, 'f', 1) << endl;
         p = info;
         ChkLen = 0;
         while (p) {
             int n;
             switch (static_cast<int>(p->Type)) {
             case BRUTE_MATCH:
-                printf("  Type: Bruteforce     ");
+                out << "  " << QObject::tr("Type: Bruteforce") << "       ";
                 break;
             case DICTIONARY_MATCH:
-                printf("  Type: Dictionary     ");
+                out << "  " << QObject::tr("Type: Dictionary") << "       ";
                 break;
             case DICT_LEET_MATCH:
-                printf("  Type: Dict+Leet      ");
+                out << "  " << QObject::tr("Type: Dict+Leet") << "        ";
                 break;
             case USER_MATCH:
-                printf("  Type: User Words     ");
+                out << "  " << QObject::tr("Type: User Words") << "       ";
                 break;
             case USER_LEET_MATCH:
-                printf("  Type: User+Leet      ");
+                out << "  " << QObject::tr("Type: User+Leet") << "        ";
                 break;
             case REPEATS_MATCH:
-                printf("  Type: Repeated       ");
+                out << "  " << QObject::tr("Type: Repeated") << "         ";
                 break;
             case SEQUENCE_MATCH:
-                printf("  Type: Sequence       ");
+                out << "  " << QObject::tr("Type: Sequence") << "         ";
                 break;
             case SPATIAL_MATCH:
-                printf("  Type: Spatial        ");
+                out << "  " << QObject::tr("Type: Spatial") << "          ";
                 break;
             case DATE_MATCH:
-                printf("  Type: Date           ");
+                out << "  " << QObject::tr("Type: Date") << "             ";
                 break;
             case BRUTE_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Bruteforce(Rep)");
+                out << "  " << QObject::tr("Type: Bruteforce(Rep)") << "  ";
                 break;
             case DICTIONARY_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Dictionary(Rep)");
+                out << "  " << QObject::tr("Type: Dictionary(Rep)") << "  ";
                 break;
             case DICT_LEET_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Dict+Leet(Rep) ");
+                out << "  " << QObject::tr("Type: Dict+Leet(Rep)") << "   ";
                 break;
             case USER_MATCH + MULTIPLE_MATCH:
-                printf("  Type: User Words(Rep)");
+                out << "  " << QObject::tr("Type: User Words(Rep)") << "  ";
                 break;
             case USER_LEET_MATCH + MULTIPLE_MATCH:
-                printf("  Type: User+Leet(Rep) ");
+                out << "  " << QObject::tr("Type: User+Leet(Rep)") << "   ";
                 break;
             case REPEATS_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Repeated(Rep)  ");
+                out << "  " << QObject::tr("Type: Repeated(Rep)") << "    ";
                 break;
             case SEQUENCE_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Sequence(Rep)  ");
+                out << "  " << QObject::tr("Type: Sequence(Rep)") << "    ";
                 break;
             case SPATIAL_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Spatial(Rep)   ");
+                out << "  " << QObject::tr("Type: Spatial(Rep)") << "     ";
                 break;
             case DATE_MATCH + MULTIPLE_MATCH:
-                printf("  Type: Date(Rep)      ");
+                out << "  " << QObject::tr("Type: Date(Rep)") << "        ";
                 break;
 
             default:
-                printf("  Type: Unknown%d ", p->Type);
+                out << "  " << QObject::tr("Type: Unknown%1").arg(p->Type) << "        ";
                 break;
             }
             ChkLen += p->Length;
-            printf("  Length %d  Entropy %6.3f (%.2f) ", p->Length, p->Entrpy, p->Entrpy * 0.301029996);
+
+            out << QObject::tr("Length %1").arg(p->Length) << '\t'
+                << QObject::tr("Entropy %1 (%2)").arg(p->Entrpy, 6, 'f', 3).arg(p->Entrpy * 0.301029996, 0, 'f', 2) << '\t';
             for (n = 0; n < p->Length; ++n, ++pwd) {
-                printf("%c", *pwd);
+                out << *pwd;
             }
-            printf("\n");
+            out << endl;
             p = p->Next;
         }
         ZxcvbnFreeInfo(info);
         if (ChkLen != len) {
-            printf("*** Password length (%d) != sum of length of parts (%d) ***\n", len, ChkLen);
+            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen) << endl;
         }
     }
 }
 
 int Estimate::execute(const QStringList& arguments)
 {
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("password", QObject::tr("Password for which to estimate the entropy."), "[password]");
-    QCommandLineOption advancedOption(QStringList() << "a"
-                                                    << "advanced",
+    QCommandLineOption advancedOption(QStringList() << "a" << "advanced",
                                       QObject::tr("Perform advanced analysis on the password."));
     parser.addOption(advancedOption);
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() > 1) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
         return EXIT_FAILURE;
     }
 
@@ -162,7 +172,7 @@ int Estimate::execute(const QStringList& arguments)
     if (args.size() == 1) {
         password = args.at(0);
     } else {
-        password = inputTextStream.readLine();
+        password = in.readLine();
     }
 
     estimate(password.toLatin1(), parser.isSet(advancedOption));

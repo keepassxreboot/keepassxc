@@ -26,7 +26,7 @@ public:
     Locate();
     ~Locate();
     int execute(const QStringList& arguments);
-    int locateEntry(Database* database, QString searchTerm);
+    int locateEntry(Database* database, const QString& searchTerm);
 };
 
 #endif // KEEPASSXC_LOCATE_H

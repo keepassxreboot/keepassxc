@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,26 +15,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_UTILS_H
-#define KEEPASSXC_UTILS_H
 
-#include <QtCore/qglobal.h>
-#include <QTextStream>
+#ifndef KEEPASSXC_BOOTSTRAP_H
+#define KEEPASSXC_BOOTSTRAP_H
 
-namespace Utils
+#include "gui/MainWindow.h"
+
+namespace Bootstrap
 {
-extern FILE* STDOUT;
-extern FILE* STDERR;
-extern FILE* STDIN;
-
-void setStdinEcho(bool enable);
-QString getPassword();
-int clipText(const QString& text);
-
-namespace Test
-{
-void setNextPassword(const QString& password);
-}
+void bootstrapApplication();
+void restoreMainWindowState(MainWindow& mainWindow);
+void disableCoreDumps();
+bool createWindowsDACL();
+void setupSearchPaths();
 };
 
-#endif // KEEPASSXC_UTILS_H
+
+#endif //KEEPASSXC_BOOTSTRAP_H

@@ -131,7 +131,8 @@ public:
 
     static Database* databaseByUuid(const QUuid& uuid);
     static Database* openDatabaseFile(const QString& fileName, QSharedPointer<const CompositeKey> key);
-    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = QString(""));
+    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = {},
+        FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
 
 signals:
     void groupDataChanged(Group* group);

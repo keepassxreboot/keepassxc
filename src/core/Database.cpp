@@ -47,7 +47,7 @@ Database::Database()
     , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
-    m_data.cipher = KeePass2::CIPHER_AES;
+    m_data.cipher = KeePass2::CIPHER_AES256;
     m_data.compressionAlgo = CompressionGZip;
 
     // instantiate default AES-KDF with legacy KDBX3 flag set
@@ -501,14 +501,14 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     return db;
 }
 
-Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
+Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
-    QTextStream outputTextStream(stdout);
-    QTextStream errorTextStream(stderr);
+    QTextStream out(outputDescriptor);
+    QTextStream err(errorDescriptor);
 
-    outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
-    outputTextStream.flush();
+    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
+    out.flush();
 
     QString line = Utils::getPassword();
     auto passwordKey = QSharedPointer<PasswordKey>::create();
@@ -518,11 +518,19 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
     if (!keyFilename.isEmpty()) {
         auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMessage;
+        // LCOV_EXCL_START
         if (!fileKey->load(keyFilename, &errorMessage)) {
-            errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage);
-            errorTextStream << endl;
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage)<< endl;
             return nullptr;
         }
+
+        if (fileKey->type() != FileKey::Hashed) {
+            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                               "unsupported in the future.\n\n"
+                               "Please consider generating a new key file.") << endl;
+        }
+        // LCOV_EXCL_STOP
+
         compositeKey->addKey(fileKey);
     }
 

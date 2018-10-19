@@ -41,22 +41,20 @@ Edit::~Edit()
 
 int Edit::execute(const QStringList& arguments)
 {
-
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
 
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
+    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
 
-    QCommandLineOption username(QStringList() << "u"
-                                              << "username",
+    QCommandLineOption username(QStringList() << "u" << "username",
                                 QObject::tr("Username for the entry."),
                                 QObject::tr("username"));
     parser.addOption(username);
@@ -64,61 +62,58 @@ int Edit::execute(const QStringList& arguments)
     QCommandLineOption url(QStringList() << "url", QObject::tr("URL for the entry."), QObject::tr("URL"));
     parser.addOption(url);
 
-    QCommandLineOption title(QStringList() << "t"
-                                           << "title",
+    QCommandLineOption title(QStringList() << "t" << "title",
                              QObject::tr("Title for the entry."),
                              QObject::tr("title"));
     parser.addOption(title);
 
-    QCommandLineOption prompt(QStringList() << "p"
-                                            << "password-prompt",
+    QCommandLineOption prompt(QStringList() << "p" << "password-prompt",
                               QObject::tr("Prompt for the entry's password."));
     parser.addOption(prompt);
 
-    QCommandLineOption generate(QStringList() << "g"
-                                              << "generate",
+    QCommandLineOption generate(QStringList() << "g" << "generate",
                                 QObject::tr("Generate a password for the entry."));
     parser.addOption(generate);
 
-    QCommandLineOption length(QStringList() << "l"
-                                            << "password-length",
+    QCommandLineOption length(QStringList() << "l" << "password-length",
                               QObject::tr("Length for the generated password."),
                               QObject::tr("length"));
     parser.addOption(length);
 
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to edit."));
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
         return EXIT_FAILURE;
     }
 
-    QString databasePath = args.at(0);
-    QString entryPath = args.at(1);
+    const QString& databasePath = args.at(0);
+    const QString& entryPath = args.at(1);
 
-    Database* db = Database::unlockFromStdin(databasePath, parser.value(keyFile));
-    if (db == nullptr) {
+    Database* db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    if (!db) {
         return EXIT_FAILURE;
     }
 
     QString passwordLength = parser.value(length);
     if (!passwordLength.isEmpty() && !passwordLength.toInt()) {
-        qCritical("Invalid value for password length %s.", qPrintable(passwordLength));
+        err << QObject::tr("Invalid value for password length: %1").arg(passwordLength) << endl;
         return EXIT_FAILURE;
     }
 
     Entry* entry = db->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty()
         && !parser.isSet(prompt)
         && !parser.isSet(generate)) {
-        qCritical("Not changing any field for entry %s.", qPrintable(entryPath));
+        err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
@@ -137,8 +132,7 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        outputTextStream << "Enter new password for entry: ";
-        outputTextStream.flush();
+        out << QObject::tr("Enter new password for entry: ") << flush;
         QString password = Utils::getPassword();
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
@@ -147,7 +141,7 @@ int Edit::execute(const QStringList& arguments)
         if (passwordLength.isEmpty()) {
             passwordGenerator.setLength(PasswordGenerator::DefaultLength);
         } else {
-            passwordGenerator.setLength(passwordLength.toInt());
+            passwordGenerator.setLength(static_cast<size_t>(passwordLength.toInt()));
         }
 
         passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
@@ -160,10 +154,10 @@ int Edit::execute(const QStringList& arguments)
 
     QString errorMessage = db->saveToFile(databasePath);
     if (!errorMessage.isEmpty()) {
-        qCritical("Writing the database failed %s.", qPrintable(errorMessage));
+        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "Successfully edited entry " << entry->title() << "." << endl;
+    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
     return EXIT_SUCCESS;
 }
