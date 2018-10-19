@@ -23,6 +23,7 @@ if(WITH_XC_BROWSER)
         BrowserAction.cpp
         BrowserClients.cpp
         BrowserEntryConfig.cpp
+        BrowserEntrySaveDialog.cpp
         BrowserOptionDialog.cpp
         BrowserService.cpp
         BrowserSettings.cpp

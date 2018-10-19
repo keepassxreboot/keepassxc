@@ -51,7 +51,8 @@ public:
                   const QString& password,
                   const QString& url,
                   const QString& submitUrl,
-                  const QString& realm);
+                  const QString& realm,
+                  Database* selectedDb = nullptr);
     QList<Entry*> searchEntries(Database* db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
     void removeSharedEncryptionKeys();
@@ -68,7 +69,8 @@ public slots:
                      const QString& uuid,
                      const QString& login,
                      const QString& password,
-                     const QString& url);
+                     const QString& url,
+                     const QString& submitUrl);
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
@@ -96,13 +98,14 @@ private:
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group* findCreateAddEntryGroup();
+    Group* findCreateAddEntryGroup(Database* selectedDb = nullptr);
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
     bool removeFirstDomain(QString& hostname);
     QString baseDomain(const QString& url) const;
     Database* getDatabase();
+    Database* selectedDatabase();
 
 private:
     DatabaseTabWidget* const m_dbTabWidget;

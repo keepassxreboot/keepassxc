@@ -322,7 +322,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url);
+        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);

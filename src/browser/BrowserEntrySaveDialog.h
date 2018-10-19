@@ -1,6 +1,6 @@
 /*
 *  Copyright (C) 2013 Francois Ferrand
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+*  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
 *
 *  This program is free software: you can redistribute it and/or modify
 *  it under the terms of the GNU General Public License as published by
@@ -16,34 +16,34 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef BROWSERACCESSCONTROLDIALOG_H
-#define BROWSERACCESSCONTROLDIALOG_H
+#ifndef BROWSERENTRYSAVEDIALOG_H
+#define BROWSERENTRYSAVEDIALOG_H
 
 #include <QDialog>
 #include <QScopedPointer>
+#include <QListWidgetItem>
+#include "gui/DatabaseTabWidget.h"
 
 class Entry;
 
 namespace Ui
 {
-    class BrowserAccessControlDialog;
+    class BrowserEntrySaveDialog;
 }
 
-class BrowserAccessControlDialog : public QDialog
+class BrowserEntrySaveDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit BrowserAccessControlDialog(QWidget* parent = nullptr);
-    ~BrowserAccessControlDialog();
+    explicit BrowserEntrySaveDialog(QWidget* parent = nullptr);
+    ~BrowserEntrySaveDialog() override;
 
-    void setUrl(const QString& url);
-    void setItems(const QList<Entry*>& items);
-    bool remember() const;
-    void setRemember(bool r);
+    int setItems(QList<DatabaseWidget*>& databaseWidgets, DatabaseWidget* currentWidget) const;
+    QList<QListWidgetItem *> getSelected() const;
 
 private:
-    QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
+    QScopedPointer<Ui::BrowserEntrySaveDialog> m_ui;
 };
 
-#endif // BROWSERACCESSCONTROLDIALOG_H
+#endif // BROWSERENTRYSAVEDIALOG_H

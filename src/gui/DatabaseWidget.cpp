@@ -1487,6 +1487,26 @@ bool DatabaseWidget::isRecycleBinSelected() const
     return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
 }
 
+QString DatabaseWidget::getDatabaseName() const
+{
+    return m_databaseName;
+}
+
+void DatabaseWidget::setDatabaseName(const QString& databaseName)
+{
+    m_databaseName = databaseName;
+}
+
+QString DatabaseWidget::getDatabaseFileName() const
+{
+    return m_databaseFileName;
+}
+
+void DatabaseWidget::setDatabaseFileName(const QString& databaseFileName)
+{
+    m_databaseFileName = databaseFileName;
+}
+
 void DatabaseWidget::emptyRecycleBin()
 {
     if (!isRecycleBinSelected()) {
