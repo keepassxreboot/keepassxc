@@ -49,6 +49,7 @@
 #include "gui/MessageBox.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
+#include "gui/TotpExportSettingsDialog.h"
 #include "gui/UnlockDatabaseDialog.h"
 #include "gui/UnlockDatabaseWidget.h"
 #include "gui/entry/EditEntryWidget.h"
@@ -570,6 +571,18 @@ void DatabaseWidget::copyAttribute(QAction* action)
 
     setClipboardTextAndMinimize(
         currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
+}
+
+void DatabaseWidget::showTotpKeyQrCode()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return;
+    }
+
+    auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
+    totpDisplayDialog->open();
 }
 
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
@@ -1171,6 +1184,7 @@ void DatabaseWidget::lock()
     Database* newDb = new Database();
     newDb->metadata()->setName(m_db->metadata()->name());
     replaceDatabase(newDb);
+    emit lockedDatabase();
 }
 
 void DatabaseWidget::updateFilePath(const QString& filePath)

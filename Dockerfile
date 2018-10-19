@@ -16,7 +16,7 @@
 
 FROM ubuntu:14.04
 
-ENV REBUILD_COUNTER=8
+ENV REBUILD_COUNTER=10
 
 ENV QT5_VERSION=qt510
 ENV QT5_PPA_VERSION=qt-5.10.1
@@ -50,12 +50,14 @@ RUN set -x \
         ${QT5_VERSION}x11extras \
         ${QT5_VERSION}translations \
         ${QT5_VERSION}imageformats \
+        ${QT5_VERSION}svg \
         zlib1g-dev \
         libxi-dev \
         libxtst-dev \
         mesa-common-dev \
         libyubikey-dev \
-        libykpers-1-dev
+        libykpers-1-dev \
+        libqrencode-dev
 
 ENV PATH="/opt/${QT5_VERSION}/bin:${PATH}"
 ENV CMAKE_PREFIX_PATH="/opt/${QT5_VERSION}/lib/cmake"

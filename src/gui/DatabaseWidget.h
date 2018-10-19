@@ -125,6 +125,7 @@ signals:
     void pressedEntry(Entry* selectedEntry);
     void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
+    void lockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
@@ -146,6 +147,7 @@ public slots:
     void copyNotes();
     void copyAttribute(QAction* action);
     void showTotp();
+    void showTotpKeyQrCode();
     void copyTotp();
     void setupTotp();
     void performAutoType();

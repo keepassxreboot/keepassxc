@@ -127,8 +127,10 @@ set(keepassx_SOURCES
     gui/ApplicationSettingsWidget.cpp
     gui/SearchWidget.cpp
     gui/SortFilterHideProxyModel.cpp
+    gui/SquareSvgWidget.cpp
     gui/TotpSetupDialog.cpp
     gui/TotpDialog.cpp
+    gui/TotpExportSettingsDialog.cpp
     gui/UnlockDatabaseWidget.cpp
     gui/UnlockDatabaseDialog.cpp
     gui/WelcomeWidget.cpp
@@ -225,6 +227,8 @@ endif()
 
 add_subdirectory(autotype)
 add_subdirectory(cli)
+add_subdirectory(qrcode)
+set(qrcode_LIB qrcode)
 
 add_subdirectory(sshagent)
 if(WITH_XC_SSHAGENT)
@@ -270,9 +274,10 @@ target_link_libraries(keepassx_core
                       autotype
                       ${keepassxcbrowser_LIB}
                       ${sshagent_LIB}
+                      ${qrcode_LIB}
                       Qt5::Core
-                      Qt5::Network
                       Qt5::Concurrent
+                      Qt5::Network
                       Qt5::Widgets
                       ${CURL_LIBRARIES}
                       ${YUBIKEY_LIBRARIES}
@@ -280,7 +285,9 @@ target_link_libraries(keepassx_core
                       ${ARGON2_LIBRARIES}
                       ${GCRYPT_LIBRARIES}
                       ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES})
+                      ${YUBIKEY_LIBRARIES}
+                      ${ZLIB_LIBRARIES}
+                      ${ZXCVBN_LIBRARIES})
 
 if(APPLE)
     target_link_libraries(keepassx_core "-framework Foundation")
