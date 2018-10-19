@@ -19,19 +19,18 @@ if(WITH_XC_BROWSER)
     find_package(sodium 1.0.12 REQUIRED)
 
     set(keepassxcbrowser_SOURCES
-        BrowserAccessControlDialog.cpp
-        BrowserAction.cpp
-        BrowserClients.cpp
-        BrowserEntryConfig.cpp
-        BrowserEntrySaveDialog.cpp
-        BrowserOptionDialog.cpp
-        BrowserService.cpp
-        BrowserSettings.cpp
-        HostInstaller.cpp
-        NativeMessagingBase.cpp
-        NativeMessagingHost.cpp
-        Variant.cpp
-    )
+            BrowserAccessControlDialog.cpp
+            BrowserAction.cpp
+            BrowserClients.cpp
+            BrowserEntryConfig.cpp
+            BrowserEntrySaveDialog.cpp
+            BrowserOptionDialog.cpp
+            BrowserService.cpp
+            BrowserSettings.cpp
+            HostInstaller.cpp
+            NativeMessagingBase.cpp
+            NativeMessagingHost.cpp
+            Variant.cpp)
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
     target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network sodium)
