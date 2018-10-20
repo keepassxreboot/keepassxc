@@ -29,7 +29,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    m_ui->welcomeLabel->setText(tr("Welcome to KeePassXC %1").arg(KEEPASSX_VERSION));
+    m_ui->welcomeLabel->setText(tr("Welcome to KeePassXC %1").arg(KEEPASSXC_VERSION));
     QFont welcomeLabelFont = m_ui->welcomeLabel->font();
     welcomeLabelFont.setBold(true);
     welcomeLabelFont.setPointSize(welcomeLabelFont.pointSize() + 4);

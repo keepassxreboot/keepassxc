@@ -41,6 +41,8 @@ public:
                        KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
+    void disableInnerStreamProtection(bool disable);
+    bool innerStreamProtectionDisabled() const;
     bool hasError();
     QString errorString();
 
@@ -80,6 +82,8 @@ private:
     void raiseError(const QString& errorMessage);
 
     const quint32 m_kdbxVersion;
+
+    bool m_innerStreamProtectionDisabled = false;
 
     QXmlStreamWriter m_xml;
     QPointer<Database> m_db;

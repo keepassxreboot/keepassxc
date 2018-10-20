@@ -112,7 +112,6 @@ public:
     PasswordGenerator::CharClasses passwordCharClasses();
     PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
     QString generatePassword();
-    int getbits();
     void updateBinaryPaths(QString customProxyLocation = QString());
 
 private:

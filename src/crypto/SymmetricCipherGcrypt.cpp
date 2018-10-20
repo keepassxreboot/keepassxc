@@ -185,8 +185,6 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 
 bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 {
-    // TODO: check block size
-
     gcry_error_t error;
 
     char* rawData = data.data();

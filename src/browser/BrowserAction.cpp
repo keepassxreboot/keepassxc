@@ -271,7 +271,6 @@ QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const
 {
     const QString nonce = json.value("nonce").toString();
     const QString password = browserSettings()->generatePassword();
-    const QString bits = QString::number(browserSettings()->getbits()); // For some reason this always returns 1140 bits?
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
@@ -322,7 +321,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url);
+        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -377,7 +376,7 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
 QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 {
     QJsonObject message;
-    message["version"] = KEEPASSX_VERSION;
+    message["version"] = KEEPASSXC_VERSION;
     message["success"] = "true";
     message["nonce"] = nonce;
     return message;

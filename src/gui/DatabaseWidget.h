@@ -112,6 +112,10 @@ public:
     void blockAutoReload(bool block = true);
     void refreshSearch();
     bool isRecycleBinSelected() const;
+    QString getDatabaseName() const;
+    void setDatabaseName(const QString& databaseName);
+    QString getDatabaseFileName() const;
+    void setDatabaseFileName(const QString& databaseFileName);
 
 signals:
     void closeRequest();
@@ -125,6 +129,7 @@ signals:
     void pressedEntry(Entry* selectedEntry);
     void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
+    void lockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
@@ -146,6 +151,7 @@ public slots:
     void copyNotes();
     void copyAttribute(QAction* action);
     void showTotp();
+    void showTotpKeyQrCode();
     void copyTotp();
     void setupTotp();
     void performAutoType();
@@ -210,7 +216,7 @@ private:
     void setIconFromParent();
     void replaceDatabase(Database* db);
 
-    Database* m_db;
+    QPointer<Database> m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditEntryWidget* m_historyEditEntryWidget;
@@ -236,6 +242,8 @@ private:
     QUuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
     EntryPreviewWidget* m_previewView;
+    QString m_databaseName;
+    QString m_databaseFileName;
 
     // Search state
     QString m_lastSearchText;

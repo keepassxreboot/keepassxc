@@ -251,6 +251,7 @@
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
+     <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
     <addaction name="actionEntryCopyUsername"/>
@@ -577,7 +578,12 @@
   </action>
   <action name="actionEntryTotp">
    <property name="text">
-    <string>Show TOTP</string>
+    <string>Show TOTP...</string>
+   </property>
+  </action>
+  <action name="actionEntryTotpQRCode">
+   <property name="text">
+    <string>Show TOTP QR Code...</string>
    </property>
   </action>
   <action name="actionEntrySetupTotp">

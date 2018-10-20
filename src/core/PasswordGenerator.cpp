@@ -80,21 +80,21 @@ QString PasswordGenerator::generatePassword() const
     QString password;
 
     if (m_flags & CharFromEveryGroup) {
-        for (int i = 0; i < groups.size(); i++) {
-            int pos = randomGen()->randomUInt(groups[i].size());
+        for (const auto& group : groups) {
+            int pos = randomGen()->randomUInt(static_cast<quint32>(group.size()));
 
-            password.append(groups[i][pos]);
+            password.append(group[pos]);
         }
 
         for (int i = groups.size(); i < m_length; i++) {
-            int pos = randomGen()->randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(static_cast<quint32>(passwordChars.size()));
 
             password.append(passwordChars[pos]);
         }
 
         // shuffle chars
         for (int i = (password.size() - 1); i >= 1; i--) {
-            int j = randomGen()->randomUInt(i + 1);
+            int j = randomGen()->randomUInt(static_cast<quint32>(i + 1));
 
             QChar tmp = password[i];
             password[i] = password[j];
@@ -102,28 +102,13 @@ QString PasswordGenerator::generatePassword() const
         }
     } else {
         for (int i = 0; i < m_length; i++) {
-            int pos = randomGen()->randomUInt(passwordChars.size());
+            int pos = randomGen()->randomUInt(static_cast<quint32>(passwordChars.size()));
 
             password.append(passwordChars[pos]);
         }
     }
 
     return password;
-}
-
-int PasswordGenerator::getbits() const
-{
-    const QVector<PasswordGroup> groups = passwordGroups();
-
-    int bits = 0;
-    QVector<QChar> passwordChars;
-    for (const PasswordGroup& group : groups) {
-        bits += group.size();
-    }
-
-    bits *= m_length;
-
-    return bits;
 }
 
 bool PasswordGenerator::isValid() const
@@ -138,11 +123,8 @@ bool PasswordGenerator::isValid() const
         return false;
     }
 
-    if (passwordGroups().size() == 0) {
-        return false;
-    }
+    return !passwordGroups().isEmpty();
 
-    return true;
 }
 
 QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
@@ -298,9 +280,9 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
                 j = group.indexOf(ch);
             }
         }
-        if (group.size() > 0) {
+        if (!group.isEmpty()) {
             passwordGroups.replace(i, group);
-            i++;
+            ++i;
         } else {
             passwordGroups.remove(i);
         }

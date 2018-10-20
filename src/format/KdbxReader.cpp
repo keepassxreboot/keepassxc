@@ -1,3 +1,5 @@
+#include <utility>
+
 /*
  * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
@@ -18,6 +20,9 @@
 #include "KdbxReader.h"
 #include "core/Database.h"
 #include "core/Endian.h"
+#include "format/KdbxXmlWriter.h"
+
+#include <QBuffer>
 
 #define UUID_LENGTH 16
 
@@ -92,7 +97,14 @@ Database* KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const Compo
     }
 
     // read payload
-    return readDatabaseImpl(device, headerStream.storedData(), key, keepDatabase);
+    auto* db = readDatabaseImpl(device, headerStream.storedData(), std::move(key), keepDatabase);
+
+    if (saveXml()) {
+        m_xmlData.clear();
+        decryptXmlInnerStream(m_xmlData, db);
+    }
+
+    return db;
 }
 
 bool KdbxReader::hasError() const
@@ -256,6 +268,23 @@ void KdbxReader::setInnerRandomStreamID(const QByteArray& data)
         return;
     }
     m_irsAlgo = irsAlgo;
+}
+
+/**
+ * Decrypt protected inner stream fields in XML dump on demand.
+ * Without the stream key from the KDBX header, the values become worthless.
+ *
+ * @param xmlOutput XML dump with decrypted fields
+ * @param db the database object for which to generate the decrypted XML dump
+ */
+void KdbxReader::decryptXmlInnerStream(QByteArray& xmlOutput, Database* db) const
+{
+    QBuffer buffer;
+    buffer.setBuffer(&xmlOutput);
+    buffer.open(QIODevice::WriteOnly);
+    KdbxXmlWriter writer(m_kdbxVersion);
+    writer.disableInnerStreamProtection(true);
+    writer.writeDatabase(&buffer, db);
 }
 
 /**
