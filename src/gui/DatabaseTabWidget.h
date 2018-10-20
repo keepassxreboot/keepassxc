@@ -56,6 +56,7 @@ public:
     void mergeDatabase(const QString& fileName);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases() const;
+    DatabaseManagerStruct indexDatabaseManagerStruct(int index);
 
     static const int LastDatabasesCount;
 
@@ -110,7 +111,6 @@ private:
     void deleteDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
-    DatabaseManagerStruct indexDatabaseManagerStruct(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
     void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);

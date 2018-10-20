@@ -82,7 +82,6 @@ Database* KdbxXmlReader::readDatabase(QIODevice* device)
  * @param db database to read into
  * @param randomStream random stream to use for decryption
  */
-#include "QDebug"
 void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_error = false;

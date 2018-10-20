@@ -26,6 +26,7 @@
 #include "BrowserService.h"
 #include "BrowserAccessControlDialog.h"
 #include "BrowserEntryConfig.h"
+#include "BrowserEntrySaveDialog.h"
 #include "BrowserSettings.h"
 #include "core/Database.h"
 #include "core/EntrySearcher.h"
@@ -289,14 +290,33 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     return result;
 }
 
-void BrowserService::addEntry(const QString&,
+void BrowserService::addEntry(const QString& id,
                               const QString& login,
                               const QString& password,
                               const QString& url,
                               const QString& submitUrl,
-                              const QString& realm)
+                              const QString& realm,
+                              Database* selectedDb)
 {
-    Group* group = findCreateAddEntryGroup();
+    if (thread() != QThread::currentThread()) {
+        QMetaObject::invokeMethod(this,
+                                  "addEntry",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_ARG(const QString&, id),
+                                  Q_ARG(const QString&, login),
+                                  Q_ARG(const QString&, password),
+                                  Q_ARG(const QString&, url),
+                                  Q_ARG(const QString&, submitUrl),
+                                  Q_ARG(const QString&, realm),
+                                  Q_ARG(Database*, selectedDb));
+    }
+
+    Database* db = selectedDb ? selectedDb : selectedDatabase();
+    if (!db) {
+        return;
+    }
+
+    Group* group = findCreateAddEntryGroup(db);
     if (!group) {
         return;
     }
@@ -328,7 +348,8 @@ void BrowserService::updateEntry(const QString& id,
                                  const QString& uuid,
                                  const QString& login,
                                  const QString& password,
-                                 const QString& url)
+                                 const QString& url,
+                                 const QString& submitUrl)
 {
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(this,
@@ -338,16 +359,19 @@ void BrowserService::updateEntry(const QString& id,
                                   Q_ARG(const QString&, uuid),
                                   Q_ARG(const QString&, login),
                                   Q_ARG(const QString&, password),
-                                  Q_ARG(const QString&, url));
+                                  Q_ARG(const QString&, url),
+                                  Q_ARG(const QString&, submitUrl));
     }
 
-    Database* db = getDatabase();
+    Database* db = selectedDatabase();
     if (!db) {
         return;
     }
 
     Entry* entry = db->resolveEntry(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
     if (!entry) {
+        // If entry is not found for update, add a new one to the selected database
+        addEntry(id, login, password, url, submitUrl, "", db);
         return;
     }
 
@@ -388,7 +412,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         return entries;
     }
 
-    for (Entry* entry : EntrySearcher().search(hostname, rootGroup, Qt::CaseInsensitive)) {
+    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup, Qt::CaseInsensitive)) {
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();
@@ -401,7 +425,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         }
 
         // Filter to match hostname in URL field
-        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
+        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl)) 
             || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
@@ -679,9 +703,9 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
     return Unknown;
 }
 
-Group* BrowserService::findCreateAddEntryGroup()
+Group* BrowserService::findCreateAddEntryGroup(Database* selectedDb)
 {
-    Database* db = getDatabase();
+    Database* db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
         return nullptr;
     }
@@ -780,6 +804,29 @@ bool BrowserService::removeFirstDomain(QString& hostname)
     return false;
 }
 
+/**
+ * Gets the base domain of URL.
+ *
+ * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
+ */
+QString BrowserService::baseDomain(const QString& url) const
+{
+    QUrl qurl = QUrl::fromUserInput(url);
+    QString hostname = qurl.host();
+
+    if (hostname.isEmpty() || !hostname.contains(qurl.topLevelDomain())) {
+        return {};
+    }
+
+    // Remove the top level domain part from the hostname, e.g. https://another.example.co.uk -> https://another.example
+    hostname.chop(qurl.topLevelDomain().length());
+    // Split the URL and select the last part, e.g. https://another.example -> example
+    QString baseDomain = hostname.split('.').last();
+    // Append the top level domain back to the URL, e.g. example -> example.co.uk
+    baseDomain.append(qurl.topLevelDomain());
+    return baseDomain;
+}
+
 Database* BrowserService::getDatabase()
 {
     if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget()) {
@@ -788,6 +835,42 @@ Database* BrowserService::getDatabase()
         }
     }
     return nullptr;
+}
+
+Database* BrowserService::selectedDatabase()
+{
+    QList<DatabaseWidget*> databaseWidgets;
+    for (int i = 0;; ++i) {
+        const auto dbStruct = m_dbTabWidget->indexDatabaseManagerStruct(i);
+        // Add only open databases
+        if (dbStruct.dbWidget && dbStruct.dbWidget->dbHasKey() && 
+            (dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode || 
+             dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode)) {
+            databaseWidgets.push_back(dbStruct.dbWidget);
+            continue;
+        }
+
+        // Break out if dbStruct.dbWidget is nullptr
+        break;
+    }
+
+    BrowserEntrySaveDialog browserEntrySaveDialog;
+    int openDatabaseCount = browserEntrySaveDialog.setItems(databaseWidgets, m_dbTabWidget->currentDatabaseWidget());
+    if (openDatabaseCount > 1) {
+        int res = browserEntrySaveDialog.exec();
+        if (res == QDialog::Accepted) {
+            const auto selectedDatabase = browserEntrySaveDialog.getSelected();
+            if (selectedDatabase.length() > 0) {
+                int index = selectedDatabase[0]->data(Qt::UserRole).toUInt();
+                return databaseWidgets[index]->database();
+            }
+        } else {
+            return nullptr;
+        }
+    }
+
+    // Return current database
+    return getDatabase();
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)

@@ -110,14 +110,6 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device,
         return nullptr;
     }
 
-    QBuffer buffer;
-    if (saveXml()) {
-        m_xmlData = xmlDevice->readAll();
-        buffer.setBuffer(&m_xmlData);
-        buffer.open(QIODevice::ReadOnly);
-        xmlDevice = &buffer;
-    }
-
     Q_ASSERT(xmlDevice);
 
     KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_3_1);

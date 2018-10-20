@@ -94,7 +94,7 @@ QString SymmetricCipher::errorString() const
 
 SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& cipher)
 {
-    if (cipher == KeePass2::CIPHER_AES) {
+    if (cipher == KeePass2::CIPHER_AES256) {
         return Aes256;
     } else if (cipher == KeePass2::CIPHER_CHACHA20) {
         return ChaCha20;
@@ -109,15 +109,17 @@ SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& ciphe
 QUuid SymmetricCipher::algorithmToCipher(Algorithm algo)
 {
     switch (algo) {
+    case Aes128:
+        return KeePass2::CIPHER_AES128;
     case Aes256:
-        return KeePass2::CIPHER_AES;
+        return KeePass2::CIPHER_AES256;
     case ChaCha20:
         return KeePass2::CIPHER_CHACHA20;
     case Twofish:
         return KeePass2::CIPHER_TWOFISH;
     default:
         qWarning("SymmetricCipher::algorithmToCipher: invalid algorithm %d", algo);
-        return QUuid();
+        return {};
     }
 }
 

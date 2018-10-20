@@ -16,7 +16,7 @@
  */
 
 #include "TestModified.h"
-#include "stub/TestClock.h"
+#include "mock/MockClock.h"
 
 #include <QSignalSpy>
 #include <QTest>
@@ -31,7 +31,7 @@ QTEST_GUILESS_MAIN(TestModified)
 
 namespace
 {
-    TestClock* m_clock = nullptr;
+    MockClock* m_clock = nullptr;
 }
 
 void TestModified::initTestCase()
@@ -42,13 +42,13 @@ void TestModified::initTestCase()
 void TestModified::init()
 {
     Q_ASSERT(m_clock == nullptr);
-    m_clock = new TestClock(2010, 5, 5, 10, 30, 10);
-    TestClock::setup(m_clock);
+    m_clock = new MockClock(2010, 5, 5, 10, 30, 10);
+    MockClock::setup(m_clock);
 }
 
 void TestModified::cleanup()
 {
-    TestClock::teardown();
+    MockClock::teardown();
     m_clock = nullptr;
 }
 

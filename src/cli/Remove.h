@@ -28,7 +28,7 @@ public:
     Remove();
     ~Remove();
     int execute(const QStringList& arguments);
-    int removeEntry(Database* database, QString databasePath, QString entryPath);
+    int removeEntry(Database* database, const QString& databasePath, const QString& entryPath);
 };
 
 #endif // KEEPASSXC_REMOVE_H

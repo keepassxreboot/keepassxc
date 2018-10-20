@@ -555,6 +555,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
 
     QString tabName;
+    QString fileName;
 
     if (dbStruct.fileInfo.exists()) {
         if (db->metadata()->name().isEmpty()) {
@@ -563,6 +564,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
             tabName = db->metadata()->name();
         }
 
+        fileName = dbStruct.fileInfo.fileName();
         setTabToolTip(index, dbStruct.fileInfo.absoluteFilePath());
     } else {
         if (db->metadata()->name().isEmpty()) {
@@ -579,6 +581,9 @@ void DatabaseTabWidget::updateTabName(Database* db)
     if (dbStruct.modified) {
         tabName.append("*");
     }
+
+    dbStruct.dbWidget->setDatabaseName(tabName);
+    dbStruct.dbWidget->setDatabaseFileName(fileName);
 
     setTabText(index, tabName);
     emit tabNameChanged();

@@ -49,6 +49,7 @@
 #include "gui/MessageBox.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
+#include "gui/TotpExportSettingsDialog.h"
 #include "gui/UnlockDatabaseDialog.h"
 #include "gui/UnlockDatabaseWidget.h"
 #include "gui/entry/EditEntryWidget.h"
@@ -115,10 +116,8 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_previewView->hide();
     connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
     connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
-    connect(this,
-            SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-            m_previewView,
-            SLOT(setDatabaseMode(DatabaseWidget::Mode)));
+    connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
+            m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
     connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
 
     auto* vLayout = new QVBoxLayout(rightHandSideWidget);
@@ -136,8 +135,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_searchingLabel->setVisible(false);
 
     rightHandSideWidget->setLayout(vLayout);
-
-    setTabOrder(m_entryView, m_groupView);
 
     m_mainSplitter->addWidget(m_groupView);
     m_mainSplitter->addWidget(rightHandSideWidget);
@@ -459,7 +456,8 @@ void DatabaseWidget::deleteEntries()
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
-    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), selectedEntries.first());
+    auto* recycleBin = m_db->metadata()->recycleBin();
+    bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid());
     if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
         QString prompt;
         if (selected.size() == 1) {
@@ -572,6 +570,18 @@ void DatabaseWidget::copyAttribute(QAction* action)
         currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
 }
 
+void DatabaseWidget::showTotpKeyQrCode()
+{
+    Entry* currentEntry = m_entryView->currentEntry();
+    Q_ASSERT(currentEntry);
+    if (!currentEntry) {
+        return;
+    }
+
+    auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
+    totpDisplayDialog->open();
+}
+
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 {
     clipboard()->setText(text);
@@ -675,9 +685,10 @@ void DatabaseWidget::deleteGroup()
         return;
     }
 
-    bool inRecycleBin = Tools::hasChild(m_db->metadata()->recycleBin(), currentGroup);
+    auto* recycleBin = m_db->metadata()->recycleBin();
+    bool inRecycleBin = recycleBin && recycleBin->findGroupByUuid(currentGroup->uuid());
     bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
-    bool isRecycleBinSubgroup = Tools::hasChild(currentGroup, m_db->metadata()->recycleBin());
+    bool isRecycleBinSubgroup = currentGroup->findGroupByUuid(m_db->metadata()->recycleBin()->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this,
@@ -1171,6 +1182,7 @@ void DatabaseWidget::lock()
     Database* newDb = new Database();
     newDb->metadata()->setName(m_db->metadata()->name());
     replaceDatabase(newDb);
+    emit lockedDatabase();
 }
 
 void DatabaseWidget::updateFilePath(const QString& filePath)
@@ -1326,29 +1338,16 @@ QStringList DatabaseWidget::customEntryAttributes() const
 }
 
 /*
- * Restores the focus on the group and entry that was focused
- * before the database was locked or reloaded.
+ * Restores the focus on the group and entry provided
  */
 void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& entryUuid)
 {
-    Group* restoredGroup = nullptr;
-    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
-    for (Group* group : groups) {
-        if (group->uuid() == groupUuid) {
-            restoredGroup = group;
-            break;
-        }
-    }
-
-    if (restoredGroup != nullptr) {
-        m_groupView->setCurrentGroup(restoredGroup);
-
-        const QList<Entry*> entries = restoredGroup->entries();
-        for (Entry* entry : entries) {
-            if (entry->uuid() == entryUuid) {
-                m_entryView->setCurrentEntry(entry);
-                break;
-            }
+    auto group = m_db->resolveGroup(groupUuid);
+    if (group) {
+        m_groupView->setCurrentGroup(group);
+        auto entry = group->findEntryByUuid(entryUuid);
+        if (entry) {
+            m_entryView->setCurrentEntry(entry);
         }
     }
 }
@@ -1471,6 +1470,26 @@ void DatabaseWidget::hideMessage()
 bool DatabaseWidget::isRecycleBinSelected() const
 {
     return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
+}
+
+QString DatabaseWidget::getDatabaseName() const
+{
+    return m_databaseName;
+}
+
+void DatabaseWidget::setDatabaseName(const QString& databaseName)
+{
+    m_databaseName = databaseName;
+}
+
+QString DatabaseWidget::getDatabaseFileName() const
+{
+    return m_databaseFileName;
+}
+
+void DatabaseWidget::setDatabaseFileName(const QString& databaseFileName)
+{
+    m_databaseFileName = databaseFileName;
 }
 
 void DatabaseWidget::emptyRecycleBin()

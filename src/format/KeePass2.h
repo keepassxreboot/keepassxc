@@ -46,7 +46,8 @@ namespace KeePass2
 
     const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
 
-extern const QUuid CIPHER_AES;
+extern const QUuid CIPHER_AES128;
+extern const QUuid CIPHER_AES256;
 extern const QUuid CIPHER_TWOFISH;
 extern const QUuid CIPHER_CHACHA20;
 

@@ -93,7 +93,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const C
     }
 
     m_reader->setSaveXml(m_saveXml);
-    return m_reader->readDatabase(device, key, keepDatabase);
+    return m_reader->readDatabase(device, std::move(key), keepDatabase);
 }
 
 bool KeePass2Reader::hasError() const
