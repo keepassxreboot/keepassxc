@@ -84,7 +84,7 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
     }
 
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
+    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;

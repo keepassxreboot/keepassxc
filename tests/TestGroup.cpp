@@ -493,56 +493,63 @@ void TestGroup::testFindEntry()
 
     Entry* entry;
 
-    entry = db->rootGroup()->findEntry(entry1->uuidToHex());
+    entry = db->rootGroup()->findEntryByUuid(entry1->uuid());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
-    entry = db->rootGroup()->findEntry(QString("entry1"));
+    entry = db->rootGroup()->findEntryByPath(QString("entry1"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
     // We also can find the entry with the leading slash.
-    entry = db->rootGroup()->findEntry(QString("/entry1"));
+    entry = db->rootGroup()->findEntryByPath(QString("/entry1"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry1"));
 
     // But two slashes should not be accepted.
-    entry = db->rootGroup()->findEntry(QString("//entry1"));
+    entry = db->rootGroup()->findEntryByPath(QString("//entry1"));
     QVERIFY(entry == nullptr);
 
-    entry = db->rootGroup()->findEntry(entry2->uuidToHex());
+    entry = db->rootGroup()->findEntryByUuid(entry2->uuid());
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("group1/entry2"));
+    entry = db->rootGroup()->findEntryByPath(QString("group1/entry2"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("/entry2"));
+    entry = db->rootGroup()->findEntryByPath(QString("/entry2"));
     QVERIFY(entry == nullptr);
 
     // We also can find the entry with the leading slash.
-    entry = db->rootGroup()->findEntry(QString("/group1/entry2"));
+    entry = db->rootGroup()->findEntryByPath(QString("/group1/entry2"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
     // Should also find the entry only by title.
-    entry = db->rootGroup()->findEntry(QString("entry2"));
+    entry = db->rootGroup()->findEntryByPath(QString("entry2"));
     QVERIFY(entry != nullptr);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("invalid/path/to/entry2"));
+    entry = db->rootGroup()->findEntryByPath(QString("invalid/path/to/entry2"));
     QVERIFY(entry == nullptr);
 
-    entry = db->rootGroup()->findEntry(QString("entry27"));
+    entry = db->rootGroup()->findEntryByPath(QString("entry27"));
     QVERIFY(entry == nullptr);
 
     // A valid UUID that does not exist in this database.
-    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc75281"));
+    entry = db->rootGroup()->findEntryByUuid(QUuid("febfb01ebcdf9dbd90a3f1579dc75281"));
     QVERIFY(entry == nullptr);
 
     // An invalid UUID.
-    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc"));
+    entry = db->rootGroup()->findEntryByUuid(QUuid("febfb01ebcdf9dbd90a3f1579dc"));
+    QVERIFY(entry == nullptr);
+
+    // Empty strings
+    entry = db->rootGroup()->findEntryByUuid({});
+    QVERIFY(entry == nullptr);
+
+    entry = db->rootGroup()->findEntryByPath({});
     QVERIFY(entry == nullptr);
 }
 

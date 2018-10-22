@@ -82,7 +82,7 @@ int Show::showEntry(Database* database, QStringList attributes, const QString& e
     TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
     TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
+    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;

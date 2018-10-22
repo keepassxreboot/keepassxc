@@ -114,12 +114,11 @@ public:
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
-    Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const QUuid& uuid) const;
-    Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
+    Entry* findEntryByPath(QString entryPath);
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(QString groupPath);
-    QStringList locate(QString locateTerm, QString currentPath = QString("/"));
+    QStringList locate(QString locateTerm, QString currentPath = {"/"});
     Entry* addEntryWithPath(QString entryPath);
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);
@@ -201,6 +200,7 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
 
+    Entry* findEntryByPathRecursion(QString entryPath, QString basePath);
     Group* findGroupByPathRecursion(QString groupPath, QString basePath);
 
     QPointer<Database> m_db;
