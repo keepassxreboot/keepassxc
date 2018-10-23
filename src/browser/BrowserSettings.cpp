@@ -490,3 +490,8 @@ void BrowserSettings::updateBinaryPaths(QString customProxyLocation)
     bool isProxy = supportBrowserProxy();
     m_hostInstaller.updateBinaryPaths(isProxy, customProxyLocation);
 }
+
+bool BrowserSettings::checkIfProxyExists(QString& path)
+{
+    return m_hostInstaller.checkIfProxyExists(supportBrowserProxy(), customProxyLocation(), path);
+}
