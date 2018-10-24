@@ -157,7 +157,7 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
                 icon.addFile(filename, QSize(size, size));
             }
         }
-        filename = QString("%1/icons/application/scalable/%2.svgz").arg(m_dataPath, combinedName);
+        filename = QString("%1/icons/application/scalable/%2.svg").arg(m_dataPath, combinedName);
         if (QFile::exists(filename)) {
             icon.addFile(filename);
         }
@@ -200,7 +200,7 @@ QIcon FilePath::onOffIcon(const QString& category, const QString& name)
                 icon.addFile(filename, QSize(size, size), QIcon::Normal, state);
             }
         }
-        filename = QString("%1/icons/application/scalable/%2-%3.svgz").arg(m_dataPath, combinedName, stateName);
+        filename = QString("%1/icons/application/scalable/%2-%3.svg").arg(m_dataPath, combinedName, stateName);
         if (QFile::exists(filename)) {
             icon.addFile(filename, QSize(), QIcon::Normal, state);
         }
