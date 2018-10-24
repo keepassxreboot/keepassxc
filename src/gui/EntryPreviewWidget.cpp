@@ -52,13 +52,13 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
-    connect(m_ui->entryCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     connect(&m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
 
     // Group
     m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
-    connect(m_ui->groupCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 }
 
