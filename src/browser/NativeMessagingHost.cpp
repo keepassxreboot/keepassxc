@@ -207,18 +207,6 @@ void NativeMessagingHost::disconnectSocket()
     }
 }
 
-void NativeMessagingHost::removeSharedEncryptionKeys()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeSharedEncryptionKeys();
-}
-
-void NativeMessagingHost::removeStoredPermissions()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeStoredPermissions();
-}
-
 void NativeMessagingHost::databaseLocked()
 {
     QJsonObject response;

@@ -54,10 +54,6 @@ public:
 
     QJsonObject readResponse(const QJsonObject& json);
 
-public slots:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
-
 private:
     QJsonObject handleAction(const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
