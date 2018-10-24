@@ -179,7 +179,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires =
-        entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
 }
 
