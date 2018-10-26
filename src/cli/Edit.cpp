@@ -21,8 +21,8 @@
 #include "Edit.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -41,9 +41,9 @@ Edit::~Edit()
 
 int Edit::execute(const QStringList& arguments)
 {
-    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);

@@ -22,8 +22,8 @@
 #include "cli/Utils.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/PasswordGenerator.h"
 
 Generate::Generate()
@@ -38,9 +38,8 @@ Generate::~Generate()
 
 int Generate::execute(const QStringList& arguments)
 {
-    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    out.setCodec("UTF-8");  // force UTF-8 to prevent ??? characters in extended-ASCII passwords
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -87,8 +86,7 @@ int Generate::execute(const QStringList& arguments)
     if (parser.value(len).isEmpty()) {
         passwordGenerator.setLength(PasswordGenerator::DefaultLength);
     } else {
-        int length = parser.value(len).toInt();
-        passwordGenerator.setLength(static_cast<size_t>(length));
+        passwordGenerator.setLength(parser.value(len).toInt());
     }
 
     PasswordGenerator::CharClasses classes = 0x0;

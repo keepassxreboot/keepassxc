@@ -21,8 +21,8 @@
 #include <stdio.h>
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -41,7 +41,7 @@ Show::~Show()
 
 int Show::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    TextStream out(Utils::STDOUT);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -78,9 +78,9 @@ int Show::execute(const QStringList& arguments)
 
 int Show::showEntry(Database* database, QStringList attributes, const QString& entryPath)
 {
-    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
