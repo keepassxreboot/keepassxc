@@ -397,7 +397,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
 
         // Ignore entry if port or scheme defined in the URL doesn't match    
         if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) ||
-            (browserSettings()->matchUrlScheme() && entryScheme.compare(qUrl.scheme()) != 0)) {
+            (browserSettings()->matchUrlScheme() && !entryScheme.isEmpty() && entryScheme.compare(qUrl.scheme()) != 0)) {
             continue;
         }
 
