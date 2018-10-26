@@ -19,7 +19,11 @@
 #include "AutoTypeSelectDialog.h"
 
 #include <QApplication>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QLabel>
@@ -44,7 +48,11 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     setWindowTitle(tr("Auto-Type - KeePassXC"));
     setWindowIcon(filePath()->applicationIcon());
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QRect screenGeometry = QApplication::screenAt(QCursor::pos())->availableGeometry();
+#else
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
+#endif
     QSize size = config()->get("GUI/AutoTypeSelectDialogSize", QSize(600, 250)).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));

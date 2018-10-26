@@ -37,7 +37,6 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     , m_ui(new Ui::CsvImportWidget())
     , m_parserModel(new CsvParserModel(this))
     , m_comboModel(new QStringListModel(this))
-    , m_comboMapper(new QSignalMapper(this))
     , m_columnHeader(QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username")
                                    << QObject::tr("Password") << QObject::tr("URL") << QObject::tr("Notes")
                                    << QObject::tr("Last Modified") << QObject::tr("Created")
@@ -87,8 +86,11 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
         combo->setFont(font);
         m_combos.append(combo);
         combo->setModel(m_comboModel);
-        m_comboMapper->setMapping(combo, i);
-        connect(combo, SIGNAL(currentIndexChanged(int)), m_comboMapper, SLOT(map()));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+        connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]{ comboChanged(combo, i); });
+#else
+        connect(combo, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=]{ comboChanged(combo, i); });
+#endif
 
         // layout labels and combo fields in column-first order
         int combo_rows = 1 + (m_columnHeader.count() - 1) / 2;
@@ -110,15 +112,13 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     connect(m_ui->comboBoxFieldSeparator, SIGNAL(currentIndexChanged(int)), SLOT(parse()));
     connect(m_ui->checkBoxBackslash, SIGNAL(toggled(bool)), SLOT(parse()));
     connect(m_ui->checkBoxFieldNames, SIGNAL(toggled(bool)), SLOT(updatePreview()));
-    connect(m_comboMapper, SIGNAL(mapped(int)), this, SLOT(comboChanged(int)));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), this, SLOT(writeDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
 }
 
-void CsvImportWidget::comboChanged(int comboId)
+void CsvImportWidget::comboChanged(QComboBox* currentSender, int comboId)
 {
-    QComboBox* currentSender = qobject_cast<QComboBox*>(m_comboMapper->mapping(comboId));
     if (currentSender->currentIndex() != -1) {
         // this line is the one that actually updates GUI table
         m_parserModel->mapColumns(currentSender->currentIndex(), comboId);

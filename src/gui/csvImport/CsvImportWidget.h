@@ -23,7 +23,6 @@
 #include <QList>
 #include <QPushButton>
 #include <QScopedPointer>
-#include <QSignalMapper>
 #include <QStackedWidget>
 #include <QStringListModel>
 
@@ -50,7 +49,7 @@ signals:
 
 private slots:
     void parse();
-    void comboChanged(int comboId);
+    void comboChanged(QComboBox* currentSender, int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
     void updatePreview();
@@ -62,7 +61,6 @@ private:
     const QScopedPointer<Ui::CsvImportWidget> m_ui;
     CsvParserModel* const m_parserModel;
     QStringListModel* const m_comboModel;
-    QSignalMapper* m_comboMapper;
     QList<QComboBox*> m_combos;
     Database* m_db;
 

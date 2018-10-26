@@ -57,7 +57,7 @@ void bootstrapApplication()
     applyEarlyQNetworkAccessManagerWorkaround();
     Translator::installTranslators();
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // Don't show menu icons on OSX
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 #endif
