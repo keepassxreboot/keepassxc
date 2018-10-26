@@ -23,6 +23,11 @@
 #include <QApplication>
 #include <QtNetwork/QLocalServer>
 
+#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
+#include <QScopedPointer>
+
+class OSEventFilter;
+#endif
 class QLockFile;
 class QSocketNotifier;
 
@@ -33,7 +38,7 @@ class Application : public QApplication
 public:
     Application(int& argc, char** argv);
     QWidget* mainWindow() const;
-    ~Application();
+    ~Application() override;
     void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;
@@ -70,6 +75,9 @@ private:
     QLockFile* m_lockFile;
     QLocalServer m_lockServer;
     QString m_socketName;
+#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
+    QScopedPointer<OSEventFilter> m_osEventFilter;
+#endif
 };
 
 #endif // KEEPASSX_APPLICATION_H

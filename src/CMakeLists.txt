@@ -204,6 +204,11 @@ if(MINGW)
             core/ScreenLockListenerWin.h
             core/ScreenLockListenerWin.cpp)
 endif()
+if(MINGW OR (UNIX AND NOT APPLE))
+    set(keepassx_SOURCES
+            ${keepassx_SOURCES}
+            core/OSEventFilter.cpp)
+endif()
 
 set(keepassx_SOURCES_MAINEXE main.cpp)
 
