@@ -97,7 +97,7 @@ QString FileDialog::getSaveFileName(QWidget* parent,
         }
 
         QString result;
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
         Q_UNUSED(defaultExtension);
         // the native dialogs on these platforms already append the file extension
         result = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options);

@@ -50,7 +50,7 @@ QString FilePath::pluginPath(const QString& name)
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
-#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
+#if defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";
 #endif
 
@@ -223,13 +223,13 @@ FilePath::FilePath()
     else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
     }
 #endif
-#if defined(Q_OS_UNIX) && !(defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE))
+#if defined(Q_OS_UNIX) && !(defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE))
     else if (isDataDirAbsolute && testSetDir(KEEPASSX_DATA_DIR)) {
     } else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
     } else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
 #endif
-#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
+#if defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     else if (testSetDir(appDirPath + "/../Resources")) {
     }
 #endif

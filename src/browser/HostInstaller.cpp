@@ -33,7 +33,7 @@ HostInstaller::HostInstaller()
     , ALLOWED_EXTENSIONS(QStringList() << "keepassxc-browser@keepassxc.org")
     , ALLOWED_ORIGINS(QStringList() << "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/"
                                     << "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/")
-#if defined(Q_OS_OSX)
+#if defined(Q_OS_MACOS)
     , TARGET_DIR_CHROME("/Library/Application Support/Google/Chrome/NativeMessagingHosts")
     , TARGET_DIR_CHROMIUM("/Library/Application Support/Chromium/NativeMessagingHosts")
     , TARGET_DIR_FIREFOX("/Library/Application Support/Mozilla/NativeMessagingHosts")

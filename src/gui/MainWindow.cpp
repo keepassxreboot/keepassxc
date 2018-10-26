@@ -47,7 +47,7 @@
 #include "browser/NativeMessagingHost.h"
 #endif
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "gui/MainWindowAdaptor.h"
 #include <QList>
 #include <QtDBus/QtDBus>
@@ -117,7 +117,7 @@ MainWindow::MainWindow()
 {
     m_ui->setupUi(this);
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
     new MainWindowAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/keepassxc", this);
@@ -314,7 +314,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
     connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
@@ -817,7 +817,7 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
             QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
             menu->addAction(actionQuit);
 
@@ -918,7 +918,7 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
-#if !defined(Q_OS_LINUX) && !defined(Q_OS_MAC)
+#if !defined(Q_OS_LINUX) && !defined(Q_OS_MACOS)
     // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
     // the same time (which would happen if both minimize on startup and minimize to tray are set)
     // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
@@ -944,7 +944,7 @@ void MainWindow::toggleWindow()
     } else {
         bringToFront();
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723

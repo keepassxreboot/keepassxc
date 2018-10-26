@@ -142,7 +142,7 @@ QStringList AutoType::windowTitles()
 
 void AutoType::raiseWindow()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     m_plugin->raiseOwnWindow();
 #endif
 }
@@ -213,7 +213,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     }
 
     if (hideWindow) {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         m_plugin->raiseLastActiveWindow();
 #else
         hideWindow->showMinimized();
@@ -327,7 +327,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         connect(selectDialog, SIGNAL(rejected()), SLOT(autoTypeRejectedFromGlobal()));
 
         selectDialog->setMatchList(matchList);
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         m_plugin->raiseOwnWindow();
         Tools::wait(500);
 #endif
