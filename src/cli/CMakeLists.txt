@@ -15,31 +15,18 @@
 
 set(cli_SOURCES
         Add.cpp
-        Add.h
         Clip.cpp
-        Clip.h
         Command.cpp
-        Command.h
         Diceware.cpp
-        Diceware.h
         Edit.cpp
-        Edit.h
         Estimate.cpp
-        Estimate.h
         Extract.cpp
-        Extract.h
         Generate.cpp
-        Generate.h
         List.cpp
-        List.h
         Locate.cpp
-        Locate.h
         Merge.cpp
-        Merge.h
         Remove.cpp
-        Remove.h
-        Show.cpp
-        Show.h)
+        Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)
