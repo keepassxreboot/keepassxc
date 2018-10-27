@@ -926,7 +926,7 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(QString locateTerm, QString currentPath)
+QStringList Group::locate(QString locateTerm, QString currentPath) const
 {
     // TODO: Replace with EntrySearcher
     QStringList response;
@@ -934,15 +934,15 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
         return response;
     }
 
-    for (Entry* entry : asConst(m_entries)) {
+    for (const Entry* entry : asConst(m_entries)) {
         QString entryPath = currentPath + entry->title();
         if (entryPath.toLower().contains(locateTerm.toLower())) {
             response << entryPath;
         }
     }
 
-    for (Group* group : asConst(m_children)) {
-        for (QString path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
+    for (const Group* group : asConst(m_children)) {
+        for (const QString& path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
             response << path;
         }
     }
