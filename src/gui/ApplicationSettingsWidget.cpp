@@ -146,8 +146,8 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString>> languages = Translator::availableLanguages();
-    for (int i = 0; i < languages.size(); i++) {
-        m_generalUi->languageComboBox->addItem(languages[i].second, languages[i].first);
+    for (const auto& language : languages) {
+        m_generalUi->languageComboBox->addItem(language.second, language.first);
     }
     int defaultIndex = m_generalUi->languageComboBox->findData(config()->get("GUI/Language"));
     if (defaultIndex > 0) {

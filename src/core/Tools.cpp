@@ -121,8 +121,8 @@ QString imageReaderFilter()
     QStringList formatsStringList;
 
     for (const QByteArray& format : formats) {
-        for (int i = 0; i < format.size(); i++) {
-            if (!QChar(format.at(i)).isLetterOrNumber()) {
+        for (char codePoint : format) {
+            if (!QChar(codePoint).isLetterOrNumber()) {
                 continue;
             }
         }
