@@ -143,7 +143,7 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
-    
+
     m_ui->editPassword->setFocus();
 }
 
@@ -195,9 +195,9 @@ void DatabaseOpenWidget::openDatabase()
                                          MessageWidget::Error);
         return;
     }
-    if (m_db) {
-        delete m_db;
-    }
+
+    delete m_db;
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db = reader.readDatabase(&file, masterKey);
     QApplication::restoreOverrideCursor();
@@ -254,7 +254,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             // check if the user cancelled the operation
             if (passwordKey.isNull())
                 return QSharedPointer<CompositeKey>();
-            
+
             masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
         }
     }
