@@ -21,8 +21,8 @@
 #include "Add.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -41,9 +41,9 @@ Add::~Add()
 
 int Add::execute(const QStringList& arguments)
 {
-    QTextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);

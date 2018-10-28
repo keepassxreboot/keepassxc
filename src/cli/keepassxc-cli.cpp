@@ -20,8 +20,8 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include <cli/Command.h>
 
 #include "config-keepassx.h"
@@ -46,7 +46,7 @@ int main(int argc, char** argv)
     Bootstrap::bootstrapApplication();
 #endif
 
-    QTextStream out(stdout);
+    TextStream out(stdout);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);

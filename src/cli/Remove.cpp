@@ -23,8 +23,8 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -44,7 +44,7 @@ Remove::~Remove()
 
 int Remove::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
@@ -73,8 +73,8 @@ int Remove::execute(const QStringList& arguments)
 
 int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {

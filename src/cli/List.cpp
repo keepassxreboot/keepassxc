@@ -22,8 +22,8 @@
 #include "cli/Utils.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -40,7 +40,7 @@ List::~List()
 
 int List::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    TextStream out(Utils::STDOUT);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -77,8 +77,8 @@ int List::execute(const QStringList& arguments)
 
 int List::listGroup(Database* database, bool recursive, const QString& groupPath)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     if (groupPath.isEmpty()) {
         out << database->rootGroup()->print(recursive) << flush;

@@ -70,10 +70,9 @@ set(keepassx_SOURCES
         core/Clock.cpp
         core/Tools.cpp
         core/Translator.cpp
-        core/Base32.h
         core/Base32.cpp
         cli/Utils.cpp
-        cli/Utils.h
+        cli/TextStream.cpp
         crypto/Crypto.cpp
         crypto/CryptoHash.cpp
         crypto/Random.cpp

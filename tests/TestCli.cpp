@@ -455,12 +455,13 @@ void TestCli::testGenerate()
 
     qint64 pos = 0;
     // run multiple times to make accidental passes unlikely
+    TextStream stream(m_stdoutFile.data());
     for (int i = 0; i < 10; ++i) {
         generateCmd.execute(parameters);
-        m_stdoutFile->seek(pos);
+        stream.seek(pos);
         QRegularExpression regex(pattern);
-        QString password = QString::fromUtf8(m_stdoutFile->readLine());
-        pos = m_stdoutFile->pos();
+        QString password = stream.readLine();
+        pos = stream.pos();
         QVERIFY2(regex.match(password).hasMatch(), qPrintable("Password " + password + " does not match pattern " + pattern));
     }
 }

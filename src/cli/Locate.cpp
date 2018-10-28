@@ -1,5 +1,3 @@
-#include <utility>
-
 /*
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
@@ -24,8 +22,8 @@
 
 #include <QCommandLineParser>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Global.h"
 #include "core/Database.h"
@@ -44,7 +42,7 @@ Locate::~Locate()
 
 int Locate::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -73,8 +71,8 @@ int Locate::execute(const QStringList& arguments)
 
 int Locate::locateEntry(Database* database, const QString& searchTerm)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QStringList results = database->rootGroup()->locate(searchTerm);
     if (results.isEmpty()) {

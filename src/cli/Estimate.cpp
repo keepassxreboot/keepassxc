@@ -19,8 +19,8 @@
 #include "cli/Utils.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -45,7 +45,7 @@ Estimate::~Estimate()
 
 static void estimate(const char* pwd, bool advanced)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     double e = 0.0;
     int len = static_cast<int>(strlen(pwd));
@@ -150,8 +150,8 @@ static void estimate(const char* pwd, bool advanced)
 
 int Estimate::execute(const QStringList& arguments)
 {
-    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
