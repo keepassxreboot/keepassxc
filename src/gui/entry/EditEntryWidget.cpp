@@ -1311,8 +1311,7 @@ void EditEntryWidget::pickColor()
         oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
     }
 
-    QColorDialog colorDialog(this);
-    QColor newColor = colorDialog.getColor(oldColor);
+    QColor newColor = QColorDialog::getColor(oldColor);
     if (newColor.isValid()) {
         setupColorButton(isForeground, newColor);
         setUnsavedChanges(true);

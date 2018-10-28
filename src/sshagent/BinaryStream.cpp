@@ -151,7 +151,7 @@ bool BinaryStream::readString(QString& str)
         return false;
     }
 
-    str = str.fromLatin1(ba);
+    str = QString::fromLatin1(ba);
     return true;
 }
 
