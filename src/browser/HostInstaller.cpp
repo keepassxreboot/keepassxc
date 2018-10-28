@@ -111,7 +111,7 @@ void HostInstaller::installBrowser(SupportedBrowsers browser,
         // Always create the script file
         QJsonObject script = constructFile(browser, proxy, location);
         if (!saveFile(browser, script)) {
-            QMessageBox::critical(0,
+            QMessageBox::critical(nullptr,
                                   tr("KeePassXC: Cannot save file!"),
                                   tr("Cannot save the native messaging script file."),
                                   QMessageBox::Ok);

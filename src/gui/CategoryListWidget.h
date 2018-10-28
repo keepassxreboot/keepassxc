@@ -35,7 +35,7 @@ class CategoryListWidget : public QWidget
     Q_OBJECT
 
 public:
-    CategoryListWidget(QWidget* parent = 0);
+    CategoryListWidget(QWidget* parent = nullptr);
     ~CategoryListWidget();
 
     int currentCategory();

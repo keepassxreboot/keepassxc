@@ -481,16 +481,16 @@ void BrowserService::convertAttributesToCustomData(Database *currentDb)
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
                                  tr("Successfully converted attributes from %1 entry(s).\n"
                                     "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
                                  QMessageBox::Ok);
     } else if (counter == 0 && keyCounter > 0) {
-        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
                                  tr("Successfully moved %n keys to custom data.", "", keyCounter),
                                  QMessageBox::Ok);
     } else {
-        QMessageBox::information(0, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
+        QMessageBox::information(nullptr, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
                                  tr("The active database does not contain an entry with KeePassHTTP attributes."),
                                  QMessageBox::Ok);
     }

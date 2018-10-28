@@ -419,7 +419,7 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                                                             oldFilePath,
                                                             tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                             nullptr,
-                                                            0,
+                                                            nullptr,
                                                             "kdbx");
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
@@ -488,7 +488,7 @@ void DatabaseTabWidget::exportToCsv()
     }
 
     QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, 0, "csv");
+        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr, "csv");
     if (fileName.isEmpty()) {
         return;
     }

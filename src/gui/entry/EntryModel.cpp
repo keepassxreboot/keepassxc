@@ -331,7 +331,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
 
 Qt::DropActions EntryModel::supportedDropActions() const
 {
-    return 0;
+    return Qt::IgnoreAction;
 }
 
 Qt::DropActions EntryModel::supportedDragActions() const

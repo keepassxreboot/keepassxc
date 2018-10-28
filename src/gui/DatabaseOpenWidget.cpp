@@ -122,7 +122,7 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 
 #ifdef WITH_XC_YUBIKEY
     // Don't listen to any Yubikey events if we are hidden
-    disconnect(YubiKey::instance(), 0, this, 0);
+    disconnect(YubiKey::instance(), nullptr, this, nullptr);
     m_yubiKeyBeingPolled = false;
 #endif
 }
