@@ -395,9 +395,6 @@
    <property name="toolTip">
     <string>Add a new entry</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryEdit">
    <property name="enabled">
@@ -409,9 +406,6 @@
    <property name="toolTip">
     <string>View or edit entry</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryDelete">
    <property name="enabled">
@@ -419,9 +413,6 @@
    </property>
    <property name="text">
     <string>&amp;Delete entry</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionGroupNew">
@@ -434,9 +425,6 @@
    <property name="toolTip">
     <string>Add a new group</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionGroupEdit">
    <property name="enabled">
@@ -444,9 +432,6 @@
    </property>
    <property name="text">
     <string>&amp;Edit group</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionGroupDelete">
@@ -456,9 +441,6 @@
    <property name="text">
     <string>&amp;Delete group</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionDatabaseSaveAs">
    <property name="enabled">
@@ -466,9 +448,6 @@
    </property>
    <property name="text">
     <string>Sa&amp;ve database as...</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionChangeMasterKey">
@@ -500,9 +479,6 @@
    <property name="text">
     <string>&amp;Clone entry</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryCopyUsername">
    <property name="enabled">
@@ -514,9 +490,6 @@
    <property name="toolTip">
     <string>Copy username to clipboard</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryCopyPassword">
    <property name="enabled">
@@ -527,9 +500,6 @@
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionSettings">
@@ -558,9 +528,6 @@
    <property name="text">
     <string>Perform &amp;Auto-Type</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryOpenUrl">
    <property name="enabled">
@@ -568,9 +535,6 @@
    </property>
    <property name="text">
     <string>Open &amp;URL</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionLockDatabases">
@@ -591,9 +555,6 @@
    <property name="toolTip">
     <string>Copy title to clipboard</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryCopyURL">
    <property name="enabled">
@@ -605,9 +566,6 @@
    <property name="toolTip">
     <string>Copy URL to clipboard</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryCopyNotes">
    <property name="enabled">
@@ -618,9 +576,6 @@
    </property>
    <property name="toolTip">
     <string>Copy notes to clipboard</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionExportCsv">
@@ -651,32 +606,20 @@
    <property name="text">
     <string>Show TOTP...</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryTotpQRCode">
    <property name="text">
     <string>Show TOTP QR Code...</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionEntrySetupTotp">
    <property name="text">
     <string>Set up TOTP...</string>
    </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
-   </property>
   </action>
   <action name="actionEntryCopyTotp">
    <property name="text">
     <string>Copy &amp;TOTP</string>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionGroupEmptyRecycleBin">
@@ -685,9 +628,6 @@
    </property>
    <property name="visible">
     <bool>false</bool>
-   </property>
-   <property name="shortcutVisibleInContextMenu">
-    <bool>true</bool>
    </property>
   </action>
   <action name="actionDonate">

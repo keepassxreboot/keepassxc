@@ -200,6 +200,22 @@ MainWindow::MainWindow()
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
+    // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
+    m_ui->actionEntryNew->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryEdit->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryDelete->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryClone->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
+#endif
+
     // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
