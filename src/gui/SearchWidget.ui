@@ -48,7 +48,7 @@
       <string notr="true">padding:3px</string>
      </property>
      <property name="placeholderText">
-      <string>Search (CTRL+F)...</string>
+      <string/>
      </property>
      <property name="clearButtonEnabled">
       <bool>false</bool>

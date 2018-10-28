@@ -759,6 +759,11 @@ void TestGui::testTotp()
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     QTRY_VERIFY(!setupTotpButtonBox->isVisible());
 
+    // Make sure the entry is selected
+    clickIndex(item, entryView, Qt::LeftButton);
+    QApplication::processEvents();
+    Tools::wait(200);
+
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QTRY_VERIFY(entryEditAction->isEnabled());
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
