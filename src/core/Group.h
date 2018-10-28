@@ -153,11 +153,7 @@ public:
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<QUuid> customIconsRecursive() const;
-    /**
-     * Creates a duplicate of this group.
-     * Note that you need to copy the custom icons manually when inserting the
-     * new group into another database.
-     */
+
     Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
@@ -166,27 +162,21 @@ public:
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+
 signals:
     void dataChanged(Group* group);
-
     void aboutToAdd(Group* group, int index);
     void added();
     void aboutToRemove(Group* group);
     void removed();
-    /**
-     * Group moved within the database.
-     */
     void aboutToMove(Group* group, Group* toGroup, int index);
     void moved();
-
+    void modified();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
     void entryRemoved(Entry* entry);
-
     void entryDataChanged(Entry* entry);
-
-    void modified();
 
 private slots:
     void updateTimeinfo();
@@ -200,8 +190,8 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
 
-    Entry* findEntryByPathRecursion(QString entryPath, QString basePath);
-    Group* findGroupByPathRecursion(QString groupPath, QString basePath);
+    Entry* findEntryByPathRecursive(QString entryPath, QString basePath);
+    Group* findGroupByPathRecursive(QString groupPath, QString basePath);
 
     QPointer<Database> m_db;
     QUuid m_uuid;

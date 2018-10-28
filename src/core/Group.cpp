@@ -550,11 +550,13 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 
 Entry* Group::findEntryByUuid(const QUuid& uuid) const
 {
-    if (!uuid.isNull()) {
-        for (Entry* entry : entriesRecursive(false)) {
-            if (entry->uuid() == uuid) {
-                return entry;
-            }
+    if (uuid.isNull()) {
+        return nullptr;
+    }
+
+    for (Entry* entry : entriesRecursive(false)) {
+        if (entry->uuid() == uuid) {
+            return entry;
         }
     }
 
@@ -573,10 +575,10 @@ Entry* Group::findEntryByPath(QString entryPath)
     if (!normalizedEntryPath.startsWith("/") && normalizedEntryPath.contains("/")) {
         normalizedEntryPath = "/" + normalizedEntryPath;
     }
-    return findEntryByPathRecursion(normalizedEntryPath, "/");
+    return findEntryByPathRecursive(normalizedEntryPath, "/");
 }
 
-Entry* Group::findEntryByPathRecursion(QString entryPath, QString basePath)
+Entry* Group::findEntryByPathRecursive(QString entryPath, QString basePath)
 {
     // Return the first entry that matches the full path OR if there is no leading
     // slash, return the first entry title that matches
@@ -588,7 +590,7 @@ Entry* Group::findEntryByPathRecursion(QString entryPath, QString basePath)
     }
 
     for (Group* group : children()) {
-        Entry* entry = group->findEntryByPathRecursion(entryPath, basePath + group->name() + "/");
+        Entry* entry = group->findEntryByPathRecursive(entryPath, basePath + group->name() + "/");
         if (entry != nullptr) {
             return entry;
         }
@@ -609,10 +611,10 @@ Group* Group::findGroupByPath(QString groupPath)
             + groupPath
             + (groupPath.endsWith("/") ? "" : "/");
     }
-    return findGroupByPathRecursion(normalizedGroupPath, "/");
+    return findGroupByPathRecursive(normalizedGroupPath, "/");
 }
 
-Group* Group::findGroupByPathRecursion(QString groupPath, QString basePath)
+Group* Group::findGroupByPathRecursive(QString groupPath, QString basePath)
 {
     // paths must be normalized
     Q_ASSERT(groupPath.startsWith("/") && groupPath.endsWith("/"));
@@ -624,7 +626,7 @@ Group* Group::findGroupByPathRecursion(QString groupPath, QString basePath)
 
     for (Group* innerGroup : children()) {
         QString innerBasePath = basePath + innerGroup->name() + "/";
-        Group* group = innerGroup->findGroupByPathRecursion(groupPath, innerBasePath);
+        Group* group = innerGroup->findGroupByPathRecursive(groupPath, innerBasePath);
         if (group != nullptr) {
             return group;
         }
@@ -710,11 +712,13 @@ QSet<QUuid> Group::customIconsRecursive() const
 
 Group* Group::findGroupByUuid(const QUuid& uuid)
 {
-    if (!uuid.isNull()) {
-        for (Group* group : groupsRecursive(true)) {
-            if (group->uuid() == uuid) {
-                return group;
-            }
+    if (uuid.isNull()) {
+        return nullptr;
+    }
+
+    for (Group* group : groupsRecursive(true)) {
+        if (group->uuid() == uuid) {
+            return group;
         }
     }
 
@@ -732,6 +736,11 @@ Group* Group::findChildByName(const QString& name)
     return nullptr;
 }
 
+/**
+ * Creates a duplicate of this group.
+ * Note that you need to copy the custom icons manually when inserting the
+ * new group into another database.
+ */
 Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) const
 {
     Group* clonedGroup = new Group();
