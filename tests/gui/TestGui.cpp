@@ -758,6 +758,7 @@ void TestGui::testTotp()
     auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
+    clickIndex(item, entryView, Qt::LeftButton);
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);

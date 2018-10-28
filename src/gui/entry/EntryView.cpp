@@ -62,9 +62,9 @@ EntryView::EntryView(QWidget* parent)
     m_headerMenu->setTitle(tr("Customize View"));
     m_headerMenu->addSection(tr("Customize View"));
 
-    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(toggleUsernamesHidden(bool)));
+    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(setUsernamesHidden(bool)));
     m_hideUsernamesAction->setCheckable(true);
-    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(togglePasswordsHidden(bool)));
+    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(setPasswordsHidden(bool)));
     m_hidePasswordsAction->setCheckable(true);
     m_headerMenu->addSeparator();
 
@@ -274,6 +274,11 @@ bool EntryView::isUsernamesHidden() const
  */
 void EntryView::setUsernamesHidden(const bool hide)
 {
+    bool block = m_hideUsernamesAction->signalsBlocked();
+    m_hideUsernamesAction->blockSignals(true);
+    m_hideUsernamesAction->setChecked(hide);
+    m_hideUsernamesAction->blockSignals(block);
+
     m_model->setUsernamesHidden(hide);
 }
 
@@ -291,6 +296,11 @@ bool EntryView::isPasswordsHidden() const
  */
 void EntryView::setPasswordsHidden(const bool hide)
 {
+    bool block = m_hidePasswordsAction->signalsBlocked();
+    m_hidePasswordsAction->blockSignals(true);
+    m_hidePasswordsAction->setChecked(hide);
+    m_hidePasswordsAction->blockSignals(block);
+
     m_model->setPasswordsHidden(hide);
 }
 

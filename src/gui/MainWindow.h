@@ -112,6 +112,8 @@ private slots:
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
+    void togglePasswordsHidden();
+    void toggleUsernamesHidden();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);

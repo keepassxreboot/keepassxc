@@ -200,12 +200,17 @@ MainWindow::MainWindow()
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
+    // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    // Control database tabs
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectPreviousDatabaseTab()));
+    // Toggle password and username visibility in entry view
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
@@ -472,7 +477,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
-            m_ui->menuEntryTotp->setEnabled(true);
+            m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -715,6 +720,22 @@ void MainWindow::databaseTabChanged(int tabIndex)
     }
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
+}
+
+void MainWindow::togglePasswordsHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
+    }
+}
+
+void MainWindow::toggleUsernamesHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

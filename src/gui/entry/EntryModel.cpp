@@ -468,9 +468,10 @@ bool EntryModel::isUsernamesHidden() const
 /**
  * Set state of 'Hide Usernames' setting and signal change
  */
-void EntryModel::setUsernamesHidden(const bool hide)
+void EntryModel::setUsernamesHidden(bool hide)
 {
     m_hideUsernames = hide;
+    emit dataChanged(index(0, 0), index(rowCount()-1, columnCount() - 1));
     emit usernamesHiddenChanged();
 }
 
@@ -485,26 +486,11 @@ bool EntryModel::isPasswordsHidden() const
 /**
  * Set state of 'Hide Passwords' setting and signal change
  */
-void EntryModel::setPasswordsHidden(const bool hide)
+void EntryModel::setPasswordsHidden(bool hide)
 {
     m_hidePasswords = hide;
+    emit dataChanged(index(0, 0), index(rowCount()-1, columnCount() - 1));
     emit passwordsHiddenChanged();
-}
-
-/**
- * Toggle state of 'Hide Usernames' setting
- */
-void EntryModel::toggleUsernamesHidden(const bool hide)
-{
-    setUsernamesHidden(hide);
-}
-
-/**
- * Toggle state of 'Hide Passwords' setting
- */
-void EntryModel::togglePasswordsHidden(const bool hide)
-{
-    setPasswordsHidden(hide);
 }
 
 void EntryModel::setPaperClipPixmap(const QPixmap& paperclip)

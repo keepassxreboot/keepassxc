@@ -1326,7 +1326,7 @@ bool DatabaseWidget::isGroupSelected() const
 
 bool DatabaseWidget::currentEntryHasFocus()
 {
-    return m_entryView->currentEntry() && m_entryView->hasFocus();
+    return m_entryView->numberOfSelectedEntries() > 0 && m_entryView->hasFocus();
 }
 
 bool DatabaseWidget::currentEntryHasTitle()
