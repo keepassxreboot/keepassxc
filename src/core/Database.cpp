@@ -25,6 +25,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
+#include <utility>
 
 #include "cli/Utils.h"
 #include "core/Clock.h"
@@ -492,7 +493,7 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     }
 
     KeePass2Reader reader;
-    Database* db = reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, std::move(key));
     if (reader.hasError()) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return nullptr;

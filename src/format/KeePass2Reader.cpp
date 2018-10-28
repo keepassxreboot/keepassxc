@@ -21,6 +21,7 @@
 #include "format/KeePass1.h"
 
 #include <QFile>
+#include <utility>
 
 /**
  * Read database from file and detect correct file format.
@@ -37,7 +38,7 @@ Database* KeePass2Reader::readDatabase(const QString& filename, QSharedPointer<c
         return nullptr;
     }
 
-    QScopedPointer<Database> db(readDatabase(&file, key));
+    QScopedPointer<Database> db(readDatabase(&file, std::move(key)));
 
     if (file.error() != QFile::NoError) {
         raiseError(file.errorString());

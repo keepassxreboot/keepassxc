@@ -18,6 +18,8 @@
 
 #include "CsvParserModel.h"
 
+#include <utility>
+
 CsvParserModel::CsvParserModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_skipped(0)
@@ -92,7 +94,7 @@ void CsvParserModel::setSkippedRows(int skipped)
 
 void CsvParserModel::setHeaderLabels(QStringList l)
 {
-    m_columnHeader = l;
+    m_columnHeader = std::move(l);
 }
 
 int CsvParserModel::rowCount(const QModelIndex& parent) const
