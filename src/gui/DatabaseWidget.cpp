@@ -175,14 +175,14 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     addWidget(m_keepass1OpenWidget);
     addWidget(m_unlockDatabaseWidget);
 
-    connect(m_mainSplitter, SIGNAL(splitterMoved(int, int)), SIGNAL(mainSplitterSizesChanged()));
-    connect(m_previewSplitter, SIGNAL(splitterMoved(int, int)), SIGNAL(previewSplitterSizesChanged()));
+    connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
+    connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView,
-            SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
-            SLOT(entryActivationSignalReceived(Entry*, EntryModel::ModelColumn)));
+            SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
+            SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));

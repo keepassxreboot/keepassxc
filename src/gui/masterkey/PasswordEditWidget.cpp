@@ -107,7 +107,7 @@ void PasswordEditWidget::showPasswordGenerator()
     layout->addWidget(pwGenerator);
 
     pwGenerator->setStandaloneMode(false);
-    connect(pwGenerator, SIGNAL(appliedPassword(const QString&)), SLOT(setPassword(const QString&)));
+    connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setPassword(QString)));
     connect(pwGenerator, SIGNAL(dialogTerminated()), &pwDialog, SLOT(close()));
 
     pwGenerator->setPasswordVisible(isPasswordVisible());

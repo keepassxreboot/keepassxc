@@ -145,7 +145,7 @@ QString BrowserService::storeKey(const QString& key)
 
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(
-            this, "storeKey", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, id), Q_ARG(const QString&, key));
+            this, "storeKey", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, id), Q_ARG(QString, key));
         return id;
     }
 
@@ -213,11 +213,11 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                   "findMatchingEntries",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(QJsonArray, result),
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm),
-                                  Q_ARG(const StringPairList&, keyList));
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl),
+                                  Q_ARG(QString, realm),
+                                  Q_ARG(StringPairList, keyList));
         return result;
     }
 
@@ -279,12 +279,12 @@ void BrowserService::addEntry(const QString& id,
         QMetaObject::invokeMethod(this,
                                   "addEntry",
                                   Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, login),
-                                  Q_ARG(const QString&, password),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm),
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, login),
+                                  Q_ARG(QString, password),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl),
+                                  Q_ARG(QString, realm),
                                   Q_ARG(Database*, selectedDb));
     }
 
@@ -332,12 +332,12 @@ void BrowserService::updateEntry(const QString& id,
         QMetaObject::invokeMethod(this,
                                   "updateEntry",
                                   Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, uuid),
-                                  Q_ARG(const QString&, login),
-                                  Q_ARG(const QString&, password),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl));
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, uuid),
+                                  Q_ARG(QString, login),
+                                  Q_ARG(QString, password),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl));
     }
 
     Database* db = selectedDatabase();

@@ -693,7 +693,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*, bool)), SLOT(changeDatabase(Database*, bool)));
+    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*,bool)), SLOT(changeDatabase(Database*,bool)));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(emitDatabaseUnlockedFromDbWidgetSender()));
 }

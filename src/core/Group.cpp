@@ -850,9 +850,9 @@ void Group::recSetDatabase(Database* db)
         connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
         connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
         connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-        connect(this, SIGNAL(aboutToAdd(Group*, int)), db, SIGNAL(groupAboutToAdd(Group*, int)));
+        connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
         connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
-        connect(this, SIGNAL(aboutToMove(Group*, Group*, int)), db, SIGNAL(groupAboutToMove(Group*, Group*, int)));
+        connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
     }

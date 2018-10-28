@@ -106,7 +106,7 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
     // showEvent() may be called twice, so make sure we are only polling once
     if (!m_yubiKeyBeingPolled) {
         connect(
-            YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
+            YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 

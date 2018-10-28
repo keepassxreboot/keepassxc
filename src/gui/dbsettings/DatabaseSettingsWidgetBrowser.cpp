@@ -38,7 +38,7 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     m_ui->customDataTable->setModel(m_customDataModel);
 
     settingsWarning();
-    connect(m_ui->customDataTable->selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+    connect(m_ui->customDataTable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedKey()));
     connect(m_ui->convertToCustomData, SIGNAL(clicked()), this, SLOT(convertAttributesToCustomData()));

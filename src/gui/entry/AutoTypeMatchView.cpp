@@ -44,7 +44,7 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(matchSelectionChanged()));
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)

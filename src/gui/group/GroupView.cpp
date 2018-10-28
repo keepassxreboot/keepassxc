@@ -36,10 +36,10 @@ GroupView::GroupView(Database* db, QWidget* parent)
 
     connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
     connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
-    connect(m_model, SIGNAL(rowsInserted(QModelIndex, int, int)), SLOT(syncExpandedState(QModelIndex, int, int)));
+    connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
     connect(m_model, SIGNAL(modelReset()), SLOT(modelReset()));
 
-    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex, QModelIndex)), SLOT(emitGroupChanged()));
+    connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
 
     connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitGroupPressed(QModelIndex)));
 
