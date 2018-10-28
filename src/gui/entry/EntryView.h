@@ -55,16 +55,16 @@ public slots:
 
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
-    void entryPressed(Entry* entry);
     void entrySelectionChanged();
     void viewStateChanged();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
+    void focusInEvent(QFocusEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
-    void emitEntryPressed(const QModelIndex& index);
     void switchToListMode();
     void switchToSearchMode();
     void showHeaderMenu(const QPoint& position);

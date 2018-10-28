@@ -183,7 +183,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
+    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
@@ -196,9 +196,9 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
-    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
+    m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
@@ -457,8 +457,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         switch (mode) {
         case DatabaseWidget::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -507,13 +507,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             for (QAction* action : groupActions) {
                 action->setEnabled(false);
             }
-            m_ui->actionEntryCopyTitle->setEnabled(false);
-            m_ui->actionEntryCopyUsername->setEnabled(false);
-            m_ui->actionEntryCopyPassword->setEnabled(false);
-            m_ui->actionEntryCopyURL->setEnabled(false);
-            m_ui->actionEntryCopyNotes->setEnabled(false);
-            m_ui->menuEntryCopyAttribute->setEnabled(false);
-            m_ui->menuEntryTotp->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -539,13 +532,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         for (QAction* action : groupActions) {
             action->setEnabled(false);
         }
-        m_ui->actionEntryCopyTitle->setEnabled(false);
-        m_ui->actionEntryCopyUsername->setEnabled(false);
-        m_ui->actionEntryCopyPassword->setEnabled(false);
-        m_ui->actionEntryCopyURL->setEnabled(false);
-        m_ui->actionEntryCopyNotes->setEnabled(false);
-        m_ui->menuEntryCopyAttribute->setEnabled(false);
-        m_ui->menuEntryTotp->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);

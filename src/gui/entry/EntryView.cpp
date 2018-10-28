@@ -50,13 +50,13 @@ EntryView::EntryView(QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+
     connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
     connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
-    connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryPressed(QModelIndex)));
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
@@ -146,6 +146,18 @@ void EntryView::keyPressEvent(QKeyEvent* event)
     QTreeView::keyPressEvent(event);
 }
 
+void EntryView::focusInEvent(QFocusEvent* event)
+{
+    emit entrySelectionChanged();
+    QTreeView::focusInEvent(event);
+}
+
+void EntryView::focusOutEvent(QFocusEvent* event)
+{
+    emit entrySelectionChanged();
+    QTreeView::focusOutEvent(event);
+}
+
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
@@ -176,13 +188,7 @@ bool EntryView::inSearchMode()
 void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
-
     emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
-}
-
-void EntryView::emitEntryPressed(const QModelIndex& index)
-{
-    emit entryPressed(entryFromIndex(index));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)

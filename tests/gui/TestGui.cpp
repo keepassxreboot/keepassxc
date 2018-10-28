@@ -836,15 +836,19 @@ void TestGui::testSearch()
     // Ensure Down focuses on entry view when search text is selected
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
-    // Refocus back to search edit
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
-    QTRY_VERIFY(searchTextEdit->hasFocus());
-    // Test password copy
+    // Test that password copies (entry has focus)
     QClipboard* clipboard = QApplication::clipboard();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QModelIndex searchedItem = entryView->model()->index(0, 1);
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());
+    // Refocus back to search edit
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    // Test that password does not copy
+    searchTextEdit->selectAll();
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QTRY_COMPARE(clipboard->text(), "someTHING");
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
