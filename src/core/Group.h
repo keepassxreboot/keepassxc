@@ -115,11 +115,11 @@ public:
 
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid) const;
-    Entry* findEntryByPath(QString entryPath);
+    Entry* findEntryByPath(const QString& entryPath);
     Group* findGroupByUuid(const QUuid& uuid);
-    Group* findGroupByPath(QString groupPath);
-    QStringList locate(QString locateTerm, QString currentPath = {"/"}) const;
-    Entry* addEntryWithPath(QString entryPath);
+    Group* findGroupByPath(const QString& groupPath);
+    QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
+    Entry* addEntryWithPath(const QString& entryPath);
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
@@ -190,8 +190,8 @@ private:
     void cleanupParent();
     void recCreateDelObjects();
 
-    Entry* findEntryByPathRecursive(QString entryPath, QString basePath);
-    Group* findGroupByPathRecursive(QString groupPath, QString basePath);
+    Entry* findEntryByPathRecursive(const QString& entryPath, const QString& basePath);
+    Group* findGroupByPathRecursive(const QString& groupPath, const QString& basePath);
 
     QPointer<Database> m_db;
     QUuid m_uuid;

@@ -245,7 +245,7 @@ QByteArray HmacBlockStream::getCurrentHmacKey() const
     return getHmacKey(m_blockIndex, m_key);
 }
 
-QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key)
+QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, const QByteArray& key)
 {
     Q_ASSERT(key.size() == 64);
     QByteArray indexBytes = Endian::sizedIntToBytes<quint64>(blockIndex, ByteOrder);

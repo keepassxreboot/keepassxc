@@ -98,7 +98,7 @@ AutoTypeMatch AutoTypeMatchView::currentMatch()
     return AutoTypeMatch();
 }
 
-void AutoTypeMatchView::setCurrentMatch(AutoTypeMatch match)
+void AutoTypeMatchView::setCurrentMatch(const AutoTypeMatch& match)
 {
     selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromMatch(match)),
                                       QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);

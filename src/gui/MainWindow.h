@@ -90,7 +90,7 @@ private slots:
     void switchToPasswordGen(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
-    void switchToDatabaseFile(QString file);
+    void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
     void switchToCsvImport();
     void closePasswordGen();

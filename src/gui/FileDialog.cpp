@@ -178,7 +178,7 @@ FileDialog::FileDialog()
 {
 }
 
-void FileDialog::saveLastDir(QString dir)
+void FileDialog::saveLastDir(const QString& dir)
 {
     if (!dir.isEmpty() && !m_forgetLastDir) {
         config()->set("LastDir", QFileInfo(dir).absolutePath());

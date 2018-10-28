@@ -563,7 +563,7 @@ Entry* Group::findEntryByUuid(const QUuid& uuid) const
     return nullptr;
 }
 
-Entry* Group::findEntryByPath(QString entryPath)
+Entry* Group::findEntryByPath(const QString& entryPath)
 {
     if (entryPath.isEmpty()) {
         return nullptr;
@@ -578,7 +578,7 @@ Entry* Group::findEntryByPath(QString entryPath)
     return findEntryByPathRecursive(normalizedEntryPath, "/");
 }
 
-Entry* Group::findEntryByPathRecursive(QString entryPath, QString basePath)
+Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath)
 {
     // Return the first entry that matches the full path OR if there is no leading
     // slash, return the first entry title that matches
@@ -599,7 +599,7 @@ Entry* Group::findEntryByPathRecursive(QString entryPath, QString basePath)
     return nullptr;
 }
 
-Group* Group::findGroupByPath(QString groupPath)
+Group* Group::findGroupByPath(const QString& groupPath)
 {
     // normalize the groupPath by adding missing front and rear slashes. once.
     QString normalizedGroupPath;
@@ -614,7 +614,7 @@ Group* Group::findGroupByPath(QString groupPath)
     return findGroupByPathRecursive(normalizedGroupPath, "/");
 }
 
-Group* Group::findGroupByPathRecursive(QString groupPath, QString basePath)
+Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& basePath)
 {
     // paths must be normalized
     Q_ASSERT(groupPath.startsWith("/") && groupPath.endsWith("/"));
@@ -926,7 +926,7 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(QString locateTerm, QString currentPath) const
+QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
 {
     // TODO: Replace with EntrySearcher
     QStringList response;
@@ -950,7 +950,7 @@ QStringList Group::locate(QString locateTerm, QString currentPath) const
     return response;
 }
 
-Entry* Group::addEntryWithPath(QString entryPath)
+Entry* Group::addEntryWithPath(const QString& entryPath)
 {
     if (entryPath.isEmpty() || findEntryByPath(entryPath)) {
         return nullptr;

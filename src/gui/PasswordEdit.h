@@ -41,7 +41,7 @@ signals:
 
 private slots:
     void updateStylesheet();
-    void autocompletePassword(QString password);
+    void autocompletePassword(const QString& password);
 
 private:
     bool passwordsEqual() const;

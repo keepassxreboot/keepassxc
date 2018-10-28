@@ -65,7 +65,7 @@ private:
     QString m_nextDirName;
     bool m_forgetLastDir = false;
 
-    void saveLastDir(QString);
+    void saveLastDir(const QString&);
 
     static FileDialog* m_instance;
 

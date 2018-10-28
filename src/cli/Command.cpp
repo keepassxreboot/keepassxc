@@ -71,7 +71,7 @@ void populateCommands()
     }
 }
 
-Command* Command::getCommand(QString commandName)
+Command* Command::getCommand(const QString& commandName)
 {
     populateCommands();
     if (commands.contains(commandName)) {

@@ -673,7 +673,7 @@ void MainWindow::switchToOpenDatabase()
     switchToDatabases();
 }
 
-void MainWindow::switchToDatabaseFile(QString file)
+void MainWindow::switchToDatabaseFile(const QString& file)
 {
     m_ui->tabWidget->openDatabase(file);
     switchToDatabases();

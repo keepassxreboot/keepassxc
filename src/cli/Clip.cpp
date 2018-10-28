@@ -71,7 +71,7 @@ int Clip::execute(const QStringList& arguments)
     return clipEntry(db, args.at(1), args.value(2));
 }
 
-int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
+int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout)
 {
     TextStream err(Utils::STDERR);
 

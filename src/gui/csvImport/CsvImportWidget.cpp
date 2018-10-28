@@ -315,7 +315,7 @@ void CsvImportWidget::setRootGroup()
         m_db->rootGroup()->setName("Root");
 }
 
-Group* CsvImportWidget::splitGroups(QString label)
+Group* CsvImportWidget::splitGroups(const QString& label)
 {
     // extract group names from nested path provided in "label"
     Group* current = m_db->rootGroup();
@@ -345,7 +345,7 @@ Group* CsvImportWidget::splitGroups(QString label)
     return current;
 }
 
-Group* CsvImportWidget::hasChildren(Group* current, QString groupName)
+Group* CsvImportWidget::hasChildren(Group* current, const QString& groupName)
 {
     // returns the group whose name is "groupName" and is child of "current" group
     for (Group* group : current->children()) {

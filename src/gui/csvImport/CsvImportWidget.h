@@ -68,8 +68,8 @@ private:
     QStringList m_fieldSeparatorList;
     void configParser();
     void updateTableview();
-    Group* splitGroups(QString label);
-    Group* hasChildren(Group* current, QString groupName);
+    Group* splitGroups(const QString& label);
+    Group* hasChildren(Group* current, const QString& groupName);
     QString formatStatusText() const;
 };
 
