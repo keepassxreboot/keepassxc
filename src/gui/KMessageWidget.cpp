@@ -309,10 +309,10 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         "}"
         ".QLabel { color: %6; }"
         ))
-        .arg(bg0.name())
-        .arg(bg1.name())
-        .arg(bg2.name())
-        .arg(border.name())
+        .arg(bg0.name(),
+             bg1.name(),
+             bg2.name(),
+             border.name())
         // DefaultFrameWidth returns the size of the external margin + border width. We know our border is 1px,
         // so we subtract this from the frame normal QStyle FrameWidth to get our margin
         .arg(style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, this) - 1)

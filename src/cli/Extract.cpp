@@ -77,7 +77,7 @@ int Extract::execute(const QStringList& arguments)
         auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMsg;
         if (!fileKey->load(keyFilePath, &errorMsg)) {
-            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath).arg(errorMsg) << endl;
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath, errorMsg) << endl;
             return EXIT_FAILURE;
         }
 

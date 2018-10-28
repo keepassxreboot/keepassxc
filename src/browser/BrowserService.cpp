@@ -362,7 +362,7 @@ void BrowserService::updateEntry(const QString& id,
         if (!browserSettings()->alwaysAllowUpdate()) {
             QMessageBox msgBox;
             msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
-            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username));
+            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username));
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.addButton(QMessageBox::No);
             msgBox.setDefaultButton(QMessageBox::No);

@@ -811,7 +811,7 @@ void Group::removeEntry(Entry* entry)
 {
     Q_ASSERT_X(m_entries.contains(entry),
                Q_FUNC_INFO,
-               QString("Group %1 does not contain %2").arg(this->name()).arg(entry->title()).toLatin1());
+               QString("Group %1 does not contain %2").arg(this->name(), entry->title()).toLatin1());
 
     emit entryAboutToRemove(entry);
 
