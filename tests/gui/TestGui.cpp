@@ -757,14 +757,15 @@ void TestGui::testTotp()
 
     auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_VERIFY(!setupTotpButtonBox->isVisible());
 
-    clickIndex(item, entryView, Qt::LeftButton);
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QTRY_VERIFY(entryEditAction->isEnabled());
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
-    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
 
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     editEntryWidget->setCurrentPage(1);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
@@ -849,7 +850,7 @@ void TestGui::testSearch()
     // Test that password does not copy
     searchTextEdit->selectAll();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
-    QTRY_COMPARE(clipboard->text(), "someTHING");
+    QTRY_COMPARE(clipboard->text(), QString("someTHING"));
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
