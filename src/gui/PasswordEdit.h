@@ -31,6 +31,7 @@ public:
 
     explicit PasswordEdit(QWidget* parent = nullptr);
     void enableVerifyMode(PasswordEdit* baseEdit);
+    bool isPasswordVisible() const;
 
 public slots:
     void setShowPassword(bool show);
