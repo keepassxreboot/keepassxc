@@ -49,8 +49,8 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
     , TARGET_DIR_CHROMIUM("HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
     , TARGET_DIR_FIREFOX("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
-    , TARGET_DIR_VIVALDI("HKEY_CURRENT_USER\\Software\\Vivaldi\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
-    , TARGET_DIR_TOR_BROWSER("HKEY_CURRENT_USER\\Software\\TorProject\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+    , TARGET_DIR_VIVALDI(TARGET_DIR_CHROME)
+    , TARGET_DIR_TOR_BROWSER(TARGET_DIR_FIREFOX)
 #endif
 {
 }

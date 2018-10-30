@@ -60,8 +60,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="extensionLabel">
-        </widget>
+        <widget class="QLabel" name="extensionLabel"/>
        </item>
        <item>
         <spacer name="verticalSpacer_1">
@@ -88,6 +87,19 @@
           <property name="horizontalSpacing">
            <number>40</number>
           </property>
+          <item row="0" column="3">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>179</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="chromeSupport">
             <property name="text">
@@ -107,19 +119,6 @@
              <bool>false</bool>
             </property>
            </widget>
-          </item>
-          <item row="0" column="2">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>179</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item row="1" column="0">
            <widget class="QCheckBox" name="chromiumSupport">
@@ -141,14 +140,14 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
+          <item row="0" column="2">
            <widget class="QCheckBox" name="torBrowserSupport">
             <property name="text">
-              <string>&amp;Tor Browser</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
+             <string>&amp;Tor Browser</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -223,22 +222,6 @@
           <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by &amp;username</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>10</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <spacer name="verticalSpacer_2">
