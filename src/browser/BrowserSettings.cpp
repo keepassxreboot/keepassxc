@@ -228,6 +228,17 @@ void BrowserSettings::setVivaldiSupport(bool enabled)
             HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
+bool BrowserSettings::torBrowserSupport()
+{
+    return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::TOR_BROWSER);
+}
+
+void BrowserSettings::setTorBrowserSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::TOR_BROWSER, enabled, supportBrowserProxy(), customProxyLocation());
+}
+
 bool BrowserSettings::passwordUseNumbers()
 {
     return config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool();
