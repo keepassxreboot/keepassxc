@@ -23,8 +23,8 @@
 #include "Clip.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -42,7 +42,7 @@ Clip::~Clip()
 
 int Clip::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT);
+    TextStream out(Utils::STDOUT);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -73,7 +73,7 @@ int Clip::execute(const QStringList& arguments)
 
 int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
 {
-    QTextStream err(Utils::STDERR);
+    TextStream err(Utils::STDERR);
 
     int timeoutSeconds = 0;
     if (!timeout.isEmpty() && !timeout.toInt()) {
@@ -83,7 +83,7 @@ int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
         timeoutSeconds = timeout.toInt();
     }
 
-    QTextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntry(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;

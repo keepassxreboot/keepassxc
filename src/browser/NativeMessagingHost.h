@@ -37,10 +37,6 @@ public:
     void run();
     void stop();
 
-public slots:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
-
 signals:
     void quit();
 

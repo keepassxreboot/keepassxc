@@ -566,15 +566,3 @@ QString BrowserAction::incrementNonce(const QString& nonce)
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
 }
-
-void BrowserAction::removeSharedEncryptionKeys()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeSharedEncryptionKeys();
-}
-
-void BrowserAction::removeStoredPermissions()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeStoredPermissions();
-}

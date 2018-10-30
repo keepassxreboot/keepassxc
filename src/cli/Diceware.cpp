@@ -21,8 +21,8 @@
 #include "Diceware.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
 #include "Utils.h"
 
@@ -38,8 +38,8 @@ Diceware::~Diceware()
 
 int Diceware::execute(const QStringList& arguments)
 {
-    QTextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);

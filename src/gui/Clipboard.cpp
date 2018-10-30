@@ -26,7 +26,7 @@
 #include "core/Config.h"
 
 Clipboard* Clipboard::m_instance(nullptr);
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 QPointer<MacPasteboard> Clipboard::m_pasteboard(nullptr);
 #endif
 
@@ -34,7 +34,7 @@ Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (!m_pasteboard) {
         m_pasteboard = new MacPasteboard();
     }
@@ -49,7 +49,7 @@ void Clipboard::setText(const QString& text)
     QClipboard* clipboard = QApplication::clipboard();
 
     QMimeData* mime = new QMimeData;
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     mime->setText(text);
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);

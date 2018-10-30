@@ -18,8 +18,8 @@
 #include "Merge.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/Merger.h"
 #include "cli/Utils.h"
@@ -38,8 +38,8 @@ Merge::~Merge()
 
 int Merge::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);

@@ -19,7 +19,7 @@
 #define KEEPASSXC_UTILS_H
 
 #include <QtCore/qglobal.h>
-#include <QTextStream>
+#include "cli/TextStream.h"
 
 namespace Utils
 {

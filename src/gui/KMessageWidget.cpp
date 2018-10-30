@@ -102,7 +102,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     closeButton->setAutoRaise(true);
     closeButton->setDefaultAction(closeAction);
     closeButtonPixmap = QPixmap(closeButton->icon().pixmap(closeButton->icon().actualSize(QSize(16, 16))));
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     closeButton->setStyleSheet("QToolButton { background: transparent;"
                                    "border-radius: 2px; padding: 3px; }"
                                "QToolButton::hover, QToolButton::focus {"

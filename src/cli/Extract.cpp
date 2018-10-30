@@ -22,8 +22,8 @@
 
 #include <QCommandLineParser>
 #include <QFile>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "format/KeePass2Reader.h"
@@ -43,8 +43,8 @@ Extract::~Extract()
 
 int Extract::execute(const QStringList& arguments)
 {
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);

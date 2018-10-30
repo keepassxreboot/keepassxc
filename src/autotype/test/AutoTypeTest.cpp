@@ -110,7 +110,7 @@ bool AutoTypePlatformTest::raiseWindow(WId window)
     return false;
 }
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
 bool AutoTypePlatformTest::raiseLastActiveWindow()
 {
     return false;

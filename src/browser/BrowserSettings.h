@@ -113,6 +113,7 @@ public:
     PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
     QString generatePassword();
     void updateBinaryPaths(QString customProxyLocation = QString());
+    bool checkIfProxyExists(QString& path);
 
 private:
     static BrowserSettings* m_instance;

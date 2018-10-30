@@ -55,8 +55,12 @@ public:
                   Database* selectedDb = nullptr);
     QList<Entry*> searchEntries(Database* db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
+    void convertAttributesToCustomData(Database *currentDb = nullptr);
+
+public:
+    static const char KEEPASSXCBROWSER_NAME[];
+    static const char ASSOCIATE_KEY_PREFIX[];
+    static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
 
 public slots:
     QJsonArray findMatchingEntries(const QString& id,
@@ -106,6 +110,9 @@ private:
     QString baseDomain(const QString& url) const;
     Database* getDatabase();
     Database* selectedDatabase();
+    bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
+    int moveKeysToCustomData(Entry* entry, Database* db) const;
+    bool checkLegacySettings();
 
 private:
     DatabaseTabWidget* const m_dbTabWidget;

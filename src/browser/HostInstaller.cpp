@@ -33,7 +33,7 @@ HostInstaller::HostInstaller()
     , ALLOWED_EXTENSIONS(QStringList() << "keepassxc-browser@keepassxc.org")
     , ALLOWED_ORIGINS(QStringList() << "chrome-extension://iopaggbpplllidnfmcghoonnokmjoicf/"
                                     << "chrome-extension://oboonakemofpalcgghocfoadofidjkkk/")
-#if defined(Q_OS_OSX)
+#if defined(Q_OS_MACOS)
     , TARGET_DIR_CHROME("/Library/Application Support/Google/Chrome/NativeMessagingHosts")
     , TARGET_DIR_CHROMIUM("/Library/Application Support/Chromium/NativeMessagingHosts")
     , TARGET_DIR_FIREFOX("/Library/Application Support/Mozilla/NativeMessagingHosts")
@@ -52,6 +52,12 @@ HostInstaller::HostInstaller()
 {
 }
 
+/**
+ * Checks if the selected browser has native messaging host properly installed
+ *
+ * @param browser Selected browser
+ * @return bool Script is installed correctly
+ */
 bool HostInstaller::checkIfInstalled(SupportedBrowsers browser)
 {
     QString fileName = getPath(browser);
@@ -63,6 +69,29 @@ bool HostInstaller::checkIfInstalled(SupportedBrowsers browser)
 #endif
 }
 
+/**
+ * Checks if keepassxc-proxy location is found
+ *
+ * @param proxy Is keepassxc-proxy enabled
+ * @param location Custom proxy location
+ * @param path The path is set here and returned to the caller
+ * @return bool
+ */
+bool HostInstaller::checkIfProxyExists(const bool& proxy, const QString& location, QString& path) const
+{
+    QString fileName = getProxyPath(proxy, location);
+    path = fileName;
+    return QFile::exists(fileName);
+}
+
+/**
+ * Installs native messaging JSON script for the selected browser
+ *
+ * @param browser Selected browser
+ * @param enabled Is browser integration enabled
+ * @param proxy Is keepassxc-proxy enabled
+ * @param location Custom proxy location
+ */
 void HostInstaller::installBrowser(SupportedBrowsers browser,
                                    const bool& enabled,
                                    const bool& proxy,
@@ -98,6 +127,12 @@ void HostInstaller::installBrowser(SupportedBrowsers browser,
     }
 }
 
+/**
+ * Updates the paths to native messaging host for each browser that has been enabled
+ *
+ * @param proxy Is keepassxc-proxy enabled
+ * @param location Custom proxy location
+ */
 void HostInstaller::updateBinaryPaths(const bool& proxy, const QString& location)
 {
     for (int i = 0; i < 4; ++i) {
@@ -107,6 +142,12 @@ void HostInstaller::updateBinaryPaths(const bool& proxy, const QString& location
     }
 }
 
+/**
+ * Returns the target path for each browser. Windows uses a registry path instead of a file path
+ *
+ * @param browser Selected browser
+ * @return QString Current target path for the selected browser
+ */
 QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
 {
     switch (browser) {
@@ -123,6 +164,13 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
     }
 }
 
+/**
+ * Returns the browser name 
+ * Needed for Windows to separate Chromium- or Firefox-based scripts
+ *
+ * @param browser Selected browser
+ * @return QString Name of the selected browser
+ */
 QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
 {
     switch (browser) {
@@ -139,6 +187,12 @@ QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
     }
 }
 
+/**
+ * Returns the path of native messaging JSON script for the selected browser
+ *
+ * @param browser Selected browser
+ * @return QString JSON script path for the selected browser
+ */
 QString HostInstaller::getPath(SupportedBrowsers browser) const
 {
 #ifdef Q_OS_WIN
@@ -160,6 +214,12 @@ QString HostInstaller::getPath(SupportedBrowsers browser) const
 #endif
 }
 
+/**
+ * Gets the installation directory for JSON script file (application install path)
+ *
+ * @param browser Selected browser
+ * @return QString Install path
+ */
 QString HostInstaller::getInstallDir(SupportedBrowsers browser) const
 {
     QString path = getTargetPath(browser);
@@ -170,7 +230,14 @@ QString HostInstaller::getInstallDir(SupportedBrowsers browser) const
 #endif
 }
 
-QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location)
+/**
+ * Gets the path to keepassxc-proxy binary
+ *
+ * @param proxy Is keepassxc-proxy used with KeePassXC
+ * @param location Custom proxy path
+ * @return path Path to keepassxc-proxy
+ */
+QString HostInstaller::getProxyPath(const bool& proxy, const QString& location) const
 {
     QString path;
 #ifdef KEEPASSXC_DIST_APPIMAGE
@@ -198,6 +265,20 @@ QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& 
 #endif
 
 #endif // #ifdef KEEPASSXC_DIST_APPIMAGE
+    return path;
+}
+
+/**
+ * Constructs the JSON script file used with native messaging
+ *
+ * @param browser Browser (Chromium- and Firefox-based browsers need a different parameters for the script)
+ * @param proxy Is keepassxc-proxy used with KeePassXC
+ * @param location Custom proxy location
+ * @return script The JSON script file
+ */
+QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location)
+{
+    QString path = getProxyPath(proxy, location);
 
     QJsonObject script;
     script["name"] = HOST_NAME;
@@ -221,11 +302,24 @@ QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& 
     return script;
 }
 
+/**
+ * Checks if a registry setting is found with default value
+ *
+ * @param settings Registry path
+ * @return bool Is the registry value found
+ */
 bool HostInstaller::registryEntryFound(const QSettings& settings)
 {
     return !settings.value("Default").isNull();
 }
 
+/**
+ * Saves a JSON script file
+ *
+ * @param browser Selected browser
+ * @param script JSON native messaging script object
+ * @return bool Write succeeds
+ */
 bool HostInstaller::saveFile(SupportedBrowsers browser, const QJsonObject& script)
 {
     QString path = getPath(browser);

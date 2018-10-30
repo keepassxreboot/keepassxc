@@ -1432,7 +1432,7 @@ void DatabaseWidget::showUnlockDialog()
     m_unlockDatabaseDialog->clearForms();
     m_unlockDatabaseDialog->setFilePath(m_filePath);
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     autoType()->raiseWindow();
     Tools::wait(500);
 #endif

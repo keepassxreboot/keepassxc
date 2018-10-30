@@ -43,7 +43,7 @@ public:
     bool raiseWindow(WId window) override;
     AutoTypeExecutor* createExecutor() override;
 
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     bool raiseLastActiveWindow() override;
     bool raiseOwnWindow() override;
 #endif

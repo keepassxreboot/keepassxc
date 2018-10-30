@@ -97,7 +97,7 @@ void setNextPassword(const QString& password)
  */
 QString getPassword()
 {
-    QTextStream out(STDOUT, QIODevice::WriteOnly);
+    TextStream out(STDOUT, QIODevice::WriteOnly);
 
     // return preset password if one is set
     if (!Test::nextPasswords.isEmpty()) {
@@ -107,7 +107,7 @@ QString getPassword()
         return password;
     }
 
-    QTextStream in(STDIN, QIODevice::ReadOnly);
+    TextStream in(STDIN, QIODevice::ReadOnly);
 
     setStdinEcho(false);
     QString line = in.readLine();
@@ -123,7 +123,7 @@ QString getPassword()
  */
 int clipText(const QString& text)
 {
-    QTextStream err(Utils::STDERR);
+    TextStream err(Utils::STDERR);
 
     QString programName = "";
     QStringList arguments;

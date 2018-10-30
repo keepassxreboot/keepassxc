@@ -44,7 +44,7 @@ namespace
     const char BlockSizeProperty[] = "blockSize";
 }
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
 class XcbEventFilter : public QAbstractNativeEventFilter
 {
 public:
@@ -92,7 +92,7 @@ Application::Application(int& argc, char** argv)
     , m_alreadyRunning(false)
     , m_lockFile(nullptr)
 {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     installNativeEventFilter(new XcbEventFilter());
 #elif defined(Q_OS_WIN)
     installNativeEventFilter(new WinEventFilter());
@@ -195,7 +195,7 @@ bool Application::event(QEvent* event)
         emit openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // restore main window when clicking on the docker icon
     else if (event->type() == QEvent::ApplicationActivate) {
         emit applicationActivated();
