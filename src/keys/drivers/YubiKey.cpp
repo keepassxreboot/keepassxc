@@ -163,18 +163,13 @@ bool YubiKey::getSerial(unsigned int& serial)
 
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
-    if (!m_mutex.tryLock()) {
-        return ALREADY_RUNNING;
+    // ensure that YubiKey::init() succeeded
+    if (!init()) {
+        return ERROR;
     }
 
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChallenge = challenge;
-
-    // ensure that YubiKey::init() succeeded
-    if (!init()) {
-        m_mutex.unlock();
-        return ERROR;
-    }
 
     // yk_challenge_response() insists on 64 byte response buffer */
     response.clear();
@@ -196,9 +191,12 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
     r = reinterpret_cast<unsigned char*>(response.data());
 
-    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
-    emit challenged();
+    // Try to grab a lock for 1 second, fail out if not possible
+    if (!m_mutex.tryLock(1000)) {
+        return ALREADY_RUNNING;
+    }
 
+    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
     m_mutex.unlock();
 
     if (!ret) {

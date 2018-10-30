@@ -18,6 +18,7 @@
 #include "keys/YkChallengeResponseKey.h"
 #include "keys/drivers/YubiKey.h"
 
+#include "core/AsyncTask.h"
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
@@ -56,10 +57,8 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
     return this->challenge(challenge, 2);
 }
 
-bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned retries)
+bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int retries)
 {
-    Q_ASSERT(retries > 0);
-
     do {
         --retries;
 
@@ -67,28 +66,17 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned ret
             emit userInteractionRequired();
         }
 
-        QFuture<YubiKey::ChallengeResult> future = QtConcurrent::run(
-            [this, challenge]() { return YubiKey::instance()->challenge(m_slot, true, challenge, m_key); });
-
-        QEventLoop loop;
-        QFutureWatcher<YubiKey::ChallengeResult> watcher;
-        connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
-        watcher.setFuture(future);
-        loop.exec();
+        auto result = AsyncTask::runAndWaitForFuture([this, challenge]() {
+            return YubiKey::instance()->challenge(m_slot, true, challenge, m_key);
+        });
 
         if (m_blocking) {
             emit userConfirmed();
         }
 
-        if (future.result() != YubiKey::ERROR) {
+        if (result == YubiKey::SUCCESS) {
             return true;
         }
-
-        // if challenge failed, retry to detect YubiKeys in the event the YubiKey was un-plugged and re-plugged
-        if (retries > 0 && !YubiKey::instance()->init()) {
-            continue;
-        }
-
     } while (retries > 0);
 
     return false;

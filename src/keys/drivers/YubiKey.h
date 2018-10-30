@@ -68,7 +68,7 @@ public:
      * @param mayBlock operation is allowed to block
      * @param challenge challenge input to YubiKey
      * @param response response output from YubiKey
-     * @return true on success
+     * @return challenge result
      */
     ChallengeResult challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response);
 
@@ -99,19 +99,9 @@ signals:
     void detectComplete();
 
     /**
-     * Emitted when the YubiKey was challenged and has returned a response.
-     */
-    void challenged();
-
-    /**
      * Emitted when no Yubikey could be found.
      */
     void notFound();
-
-    /**
-     * Emitted when detection is already running.
-     */
-    void alreadyRunning();
 
 private:
     explicit YubiKey();
