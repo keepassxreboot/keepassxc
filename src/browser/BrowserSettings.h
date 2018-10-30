@@ -70,7 +70,9 @@ public:
     void setFirefoxSupport(bool enabled);
     bool vivaldiSupport();
     void setVivaldiSupport(bool enabled);
-
+    bool torBrowserSupport();
+    void setTorBrowserSupport(bool enabled);
+    
     bool passwordUseNumbers();
     void setPasswordUseNumbers(bool useNumbers);
     bool passwordUseLowercase();

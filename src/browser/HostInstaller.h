@@ -33,7 +33,8 @@ public:
         CHROME = 0,
         CHROMIUM = 1,
         FIREFOX = 2,
-        VIVALDI = 3
+        VIVALDI = 3,
+        TOR_BROWSER = 4
     };
 
 public:
@@ -64,6 +65,7 @@ private:
     const QString TARGET_DIR_CHROMIUM;
     const QString TARGET_DIR_FIREFOX;
     const QString TARGET_DIR_VIVALDI;
+    const QString TARGET_DIR_TOR_BROWSER;
 };
 
 #endif // HOSTINSTALLER_H

@@ -141,6 +141,16 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="torBrowserSupport">
+            <property name="text">
+              <string>&amp;Tor Browser</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
