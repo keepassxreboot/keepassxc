@@ -463,7 +463,6 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
 void EditEntryWidget::saveSSHAgentConfig()
 {
     KeeAgentSettings settings;
-    QString privateKeyPath = m_sshAgentUi->attachmentComboBox->currentText();
 
     settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
     settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());

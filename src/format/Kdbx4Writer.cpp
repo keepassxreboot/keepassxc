@@ -50,7 +50,6 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(ivSize);
     QByteArray protectedStreamKey = randomGen()->randomArray(64);
-    QByteArray startBytes;
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (!db->setKey(db->key(), false, true)) {

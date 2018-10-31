@@ -101,7 +101,6 @@ QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
     AutoTypeMatch match = matchFromIndex(index);
 
     if (role == Qt::DisplayRole) {
-        QString result;
         switch (index.column()) {
         case ParentGroup:
             if (match.entry->group()) {
