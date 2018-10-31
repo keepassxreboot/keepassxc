@@ -983,7 +983,7 @@ QStringList Group::locate(const QString& locateTerm, const QString& currentPath)
 
     for (const Entry* entry : asConst(m_entries)) {
         QString entryPath = currentPath + entry->title();
-        if (entryPath.toLower().contains(locateTerm.toLower())) {
+        if (entryPath.contains(locateTerm, Qt::CaseInsensitive)) {
             response << entryPath;
         }
     }

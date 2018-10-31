@@ -480,7 +480,7 @@ bool Merger::mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::M
     bool updateTimeInfo = targetEntry->canUpdateTimeinfo();
     targetEntry->setUpdateTimeinfo(false);
     targetEntry->removeHistoryItems(targetHistoryItems);
-    for (Entry* historyItem : merged.values()) {
+    for (Entry* historyItem : merged) {
         Q_ASSERT(!historyItem->parent());
         targetEntry->addHistoryItem(historyItem);
     }
