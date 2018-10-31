@@ -38,7 +38,6 @@ configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
         core/AutoTypeAssociations.cpp
-        core/AsyncTask.h
         core/AutoTypeMatch.cpp
         core/Compare.cpp
         core/Config.cpp
@@ -52,18 +51,14 @@ set(keepassx_SOURCES
         core/EntrySearcher.cpp
         core/FilePath.cpp
         core/Bootstrap.cpp
-        core/Global.h
         core/Group.cpp
         core/InactivityTimer.cpp
-        core/ListDeleter.h
         core/Merger.cpp
         core/Metadata.cpp
         core/PasswordGenerator.cpp
         core/PassphraseGenerator.cpp
         core/SignalMultiplexer.cpp
         core/ScreenLockListener.cpp
-        core/ScreenLockListener.h
-        core/ScreenLockListenerPrivate.h
         core/ScreenLockListenerPrivate.cpp
         core/TimeDelta.cpp
         core/TimeInfo.cpp
@@ -77,14 +72,11 @@ set(keepassx_SOURCES
         crypto/CryptoHash.cpp
         crypto/Random.cpp
         crypto/SymmetricCipher.cpp
-        crypto/SymmetricCipherBackend.h
         crypto/SymmetricCipherGcrypt.cpp
         crypto/kdf/Kdf.cpp
-        crypto/kdf/Kdf_p.h
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
         format/CsvExporter.cpp
-        format/KeePass1.h
         format/KeePass1Reader.cpp
         format/KeePass2.cpp
         format/KeePass2RandomStream.cpp
@@ -142,7 +134,6 @@ set(keepassx_SOURCES
         gui/entry/AutoTypeMatchModel.cpp
         gui/entry/AutoTypeMatchView.cpp
         gui/entry/EditEntryWidget.cpp
-        gui/entry/EditEntryWidget_p.h
         gui/entry/EntryAttachmentsModel.cpp
         gui/entry/EntryAttachmentsWidget.cpp
         gui/entry/EntryAttributesModel.cpp
@@ -168,11 +159,8 @@ set(keepassx_SOURCES
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageMasterKey.cpp
-        keys/ChallengeResponseKey.h
         keys/CompositeKey.cpp
-        keys/drivers/YubiKey.h
         keys/FileKey.cpp
-        keys/Key.h
         keys/PasswordKey.cpp
         keys/YkChallengeResponseKey.cpp
         streams/HashedBlockStream.cpp
@@ -181,27 +169,22 @@ set(keepassx_SOURCES
         streams/qtiocompressor.cpp
         streams/StoreDataStream.cpp
         streams/SymmetricCipherStream.cpp
-        totp/totp.h
         totp/totp.cpp)
 if(APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerMac.h
             core/ScreenLockListenerMac.cpp
-            core/MacPasteboard.h
             core/MacPasteboard.cpp)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerDBus.h
             core/ScreenLockListenerDBus.cpp
             gui/MainWindowAdaptor.cpp)
 endif()
 if(MINGW)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerWin.h
             core/ScreenLockListenerWin.cpp)
 endif()
 if(MINGW OR (UNIX AND NOT APPLE))
@@ -243,13 +226,11 @@ set(autotype_SOURCES
         core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
-        autotype/AutoTypePlatformPlugin.h
         autotype/AutoTypeSelectDialog.cpp
         autotype/AutoTypeSelectView.cpp
         autotype/ShortcutWidget.cpp
         autotype/WildcardMatcher.cpp
-        autotype/WindowSelectComboBox.cpp
-        autotype/test/AutoTypeTestInterface.h)
+        autotype/WindowSelectComboBox.cpp)
 
 if(MINGW)
     set(keepassx_SOURCES_MAINEXE ${keepassx_SOURCES_MAINEXE} ${CMAKE_SOURCE_DIR}/share/windows/icon.rc)

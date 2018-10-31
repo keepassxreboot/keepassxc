@@ -44,7 +44,7 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(matchSelectionChanged()));
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
@@ -98,7 +98,7 @@ AutoTypeMatch AutoTypeMatchView::currentMatch()
     return AutoTypeMatch();
 }
 
-void AutoTypeMatchView::setCurrentMatch(AutoTypeMatch match)
+void AutoTypeMatchView::setCurrentMatch(const AutoTypeMatch& match)
 {
     selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromMatch(match)),
                                       QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);

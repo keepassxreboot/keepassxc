@@ -98,7 +98,7 @@ void PasswordEdit::updateStylesheet()
     setStyleSheet(stylesheet);
 }
 
-void PasswordEdit::autocompletePassword(QString password)
+void PasswordEdit::autocompletePassword(const QString& password)
 {
     if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);

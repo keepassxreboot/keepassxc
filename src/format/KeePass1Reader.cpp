@@ -37,7 +37,7 @@
 class KeePass1Key : public CompositeKey
 {
 public:
-    virtual QByteArray rawKey() const;
+    QByteArray rawKey() const override;
     virtual void clear();
     void setPassword(const QByteArray& password);
     void setKeyfileData(const QByteArray& keyfileData);

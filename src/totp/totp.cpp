@@ -97,7 +97,7 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const ui
     });
 }
 
-QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, const QString& title, const QString& username, bool forceOtp)
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings, const QString& title, const QString& username, bool forceOtp)
 {
     if (settings.isNull()) {
         return {};
@@ -106,9 +106,9 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, const
     // OTP Url output
     if (settings->otpUrl || forceOtp) {
         auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
-                .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)))
-                .arg(username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)))
-                .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
+                .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
+                     username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
+                     QString(Base32::sanitizeInput(settings->key.toLatin1())))
                 .arg(settings->step)
                 .arg(settings->digits);
 
@@ -127,7 +127,7 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings, const
     return QString("%1;%2").arg(settings->step).arg(settings->digits);
 }
 
-QString Totp::generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time)
+QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time)
 {
     Q_ASSERT(!settings.isNull());
     if (settings.isNull()) {
@@ -194,7 +194,7 @@ Totp::Encoder& Totp::steamEncoder()
     return getEncoderByShortName("S");
 }
 
-Totp::Encoder& Totp::getEncoderByShortName(QString shortName)
+Totp::Encoder& Totp::getEncoderByShortName(const QString& shortName)
 {
     for (auto& encoder : encoders) {
         if (encoder.shortName == shortName) {
@@ -204,7 +204,7 @@ Totp::Encoder& Totp::getEncoderByShortName(QString shortName)
     return defaultEncoder();
 }
 
-Totp::Encoder& Totp::getEncoderByName(QString name)
+Totp::Encoder& Totp::getEncoderByName(const QString& name)
 {
     for (auto& encoder : encoders) {
         if (encoder.name == name) {

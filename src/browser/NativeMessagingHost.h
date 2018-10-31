@@ -31,7 +31,7 @@ class NativeMessagingHost : public NativeMessagingBase
     typedef QList<QLocalSocket*> SocketList;
 
 public:
-    explicit NativeMessagingHost(DatabaseTabWidget* parent = 0, const bool enabled = false);
+    explicit NativeMessagingHost(DatabaseTabWidget* parent = nullptr, const bool enabled = false);
     ~NativeMessagingHost();
     int init();
     void run();
@@ -41,8 +41,8 @@ signals:
     void quit();
 
 private:
-    void readLength();
-    bool readStdIn(const quint32 length);
+    void readLength() override;
+    bool readStdIn(const quint32 length) override;
     void sendReplyToAllClients(const QJsonObject& json);
 
 private slots:

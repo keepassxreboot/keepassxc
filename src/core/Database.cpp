@@ -25,6 +25,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
+#include <utility>
 
 #include "cli/Utils.h"
 #include "core/Clock.h"
@@ -315,7 +316,7 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
  * @param updateTransformSalt true to update the transform salt
  * @return true on success
  */
-bool Database::setKey(QSharedPointer<const CompositeKey> key, bool updateChangedTime, bool updateTransformSalt)
+bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime, bool updateTransformSalt)
 {
     if (!key) {
         m_data.key.reset();
@@ -354,7 +355,7 @@ bool Database::hasKey() const
     return m_data.hasKey;
 }
 
-bool Database::verifyKey(QSharedPointer<CompositeKey> key) const
+bool Database::verifyKey(const QSharedPointer<CompositeKey>& key) const
 {
     Q_ASSERT(hasKey());
 
@@ -492,7 +493,7 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     }
 
     KeePass2Reader reader;
-    Database* db = reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, std::move(key));
     if (reader.hasError()) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return nullptr;
@@ -501,7 +502,7 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     return db;
 }
 
-Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
+Database* Database::unlockFromStdin(const QString& databaseFilename, const QString& keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
     QTextStream out(outputDescriptor);
@@ -553,7 +554,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
  * @param backup Backup the existing database file, if exists
  * @return error string, if any
  */
-QString Database::saveToFile(QString filePath, bool atomic, bool backup)
+QString Database::saveToFile(const QString& filePath, bool atomic, bool backup)
 {
     QString error;
     if (atomic) {
@@ -633,7 +634,7 @@ QString Database::writeDatabase(QIODevice* device)
  * @param filePath Path to the file to backup
  * @return
  */
-bool Database::backupDatabase(QString filePath)
+bool Database::backupDatabase(const QString& filePath)
 {
     QString backupFilePath = filePath;
     auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
@@ -652,7 +653,7 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
     m_data.kdf = std::move(kdf);
 }
 
-bool Database::changeKdf(QSharedPointer<Kdf> kdf)
+bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 {
     kdf->randomizeSeed();
     QByteArray transformedMasterKey;

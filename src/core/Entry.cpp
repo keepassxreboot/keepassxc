@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
+#include <utility>
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
@@ -367,7 +368,7 @@ QString Entry::totp() const
 void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
 {
     beginUpdate();
-    m_data.totpSettings = settings;
+    m_data.totpSettings = std::move(settings);
 
     auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
     if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {

@@ -88,7 +88,7 @@ int main(int argc, char** argv)
     
     const QStringList fileNames = parser.positionalArguments();
 
-    if (app.isAlreadyRunning() && !parser.isSet(versionOption)) {
+    if (app.isAlreadyRunning()) {
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }

@@ -27,7 +27,7 @@ class Remove : public Command
 public:
     Remove();
     ~Remove();
-    int execute(const QStringList& arguments);
+    int execute(const QStringList& arguments) override;
     int removeEntry(Database* database, const QString& databasePath, const QString& entryPath);
 };
 

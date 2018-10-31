@@ -126,9 +126,9 @@ extern const QList<QPair<QUuid, QString>> KDFS;
         ByteArray = 0x42
     };
 
-QByteArray hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey);
+QByteArray hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey);
 QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
-QVariantMap kdfToParameters(QSharedPointer<Kdf> kdf);
+QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
 QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
 ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
 

@@ -71,8 +71,7 @@ bool DialogyWidget::clickButton(QDialogButtonBox::StandardButton standardButton)
     }
 
     QList<QDialogButtonBox*> buttonBoxes = findChildren<QDialogButtonBox*>();
-    for (int i = 0; i < buttonBoxes.size(); ++i) {
-        QDialogButtonBox* buttonBox = buttonBoxes.at(i);
+    for (auto buttonBox : buttonBoxes) {
         pb = buttonBox->button(standardButton);
         if (pb && pb->isVisible() && pb->isEnabled()) {
             pb->click();

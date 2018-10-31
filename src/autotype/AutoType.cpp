@@ -43,7 +43,7 @@ AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
-    , m_currentGlobalModifiers(0)
+    , m_currentGlobalModifiers(nullptr)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(nullptr)
     , m_executor(nullptr)
@@ -731,8 +731,7 @@ bool AutoType::checkHighRepetition(const QString& string)
 bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
 {
     if (!AutoType::checkSyntax(sequence)) {
-        QMessageBox messageBox;
-        messageBox.critical(nullptr, tr("Auto-Type"), tr("The Syntax of your Auto-Type statement is incorrect!"));
+        QMessageBox::critical(nullptr, tr("Auto-Type"), tr("The Syntax of your Auto-Type statement is incorrect!"));
         return false;
     } else if (AutoType::checkHighDelay(sequence)) {
         QMessageBox::StandardButton reply;

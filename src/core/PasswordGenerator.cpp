@@ -25,15 +25,15 @@ const char* PasswordGenerator::DefaultExcludedChars = "";
 
 PasswordGenerator::PasswordGenerator()
     : m_length(0)
-    , m_classes(0)
-    , m_flags(0)
+    , m_classes(nullptr)
+    , m_flags(nullptr)
     , m_excluded(PasswordGenerator::DefaultExcludedChars)
 {
 }
 
-double PasswordGenerator::calculateEntropy(QString password)
+double PasswordGenerator::calculateEntropy(const QString& password)
 {
-    return ZxcvbnMatch(password.toLatin1(), 0, 0);
+    return ZxcvbnMatch(password.toLatin1(), nullptr, nullptr);
 }
 
 void PasswordGenerator::setLength(int length)

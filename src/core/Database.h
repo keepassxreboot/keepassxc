@@ -110,9 +110,9 @@ public:
     void setCipher(const QUuid& cipher);
     void setCompressionAlgo(Database::CompressionAlgorithm algo);
     void setKdf(QSharedPointer<Kdf> kdf);
-    bool setKey(QSharedPointer<const CompositeKey> key, bool updateChangedTime = true, bool updateTransformSalt = false);
+    bool setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime = true, bool updateTransformSalt = false);
     bool hasKey() const;
-    bool verifyKey(QSharedPointer<CompositeKey> key) const;
+    bool verifyKey(const QSharedPointer<CompositeKey>& key) const;
     QVariantMap& publicCustomData();
     const QVariantMap& publicCustomData() const;
     void setPublicCustomData(const QVariantMap& customData);
@@ -121,17 +121,17 @@ public:
     void emptyRecycleBin();
     void setEmitModified(bool value);
     void markAsModified();
-    QString saveToFile(QString filePath, bool atomic = true, bool backup = false);
+    QString saveToFile(const QString& filePath, bool atomic = true, bool backup = false);
 
     /**
      * Returns a unique id that is only valid as long as the Database exists.
      */
     const QUuid& uuid();
-    bool changeKdf(QSharedPointer<Kdf> kdf);
+    bool changeKdf(const QSharedPointer<Kdf>& kdf);
 
     static Database* databaseByUuid(const QUuid& uuid);
     static Database* openDatabaseFile(const QString& fileName, QSharedPointer<const CompositeKey> key);
-    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = {},
+    static Database* unlockFromStdin(const QString& databaseFilename, const QString& keyFilename = {},
         FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
 
 signals:
@@ -156,7 +156,7 @@ private:
 
     void createRecycleBin();
     QString writeDatabase(QIODevice* device);
-    bool backupDatabase(QString filePath);
+    bool backupDatabase(const QString& filePath);
 
     Metadata* const m_metadata;
     Group* m_rootGroup;

@@ -39,7 +39,7 @@ CategoryListWidget::CategoryListWidget(QWidget* parent)
     connect(m_ui->scrollDown, SIGNAL(clicked()), SLOT(scrollCategoriesDown()));
     connect(m_ui->categoryList->verticalScrollBar(), SIGNAL(valueChanged(int)), SLOT(updateCategoryScrollButtons()));
     connect(
-        m_ui->categoryList->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), SLOT(updateCategoryScrollButtons()));
+        m_ui->categoryList->verticalScrollBar(), SIGNAL(rangeChanged(int,int)), SLOT(updateCategoryScrollButtons()));
 }
 
 CategoryListWidget::~CategoryListWidget()

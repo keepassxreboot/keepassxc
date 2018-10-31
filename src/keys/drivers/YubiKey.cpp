@@ -37,8 +37,8 @@
 #define m_ykds (static_cast<YK_STATUS*>(m_ykds_void))
 
 YubiKey::YubiKey()
-    : m_yk_void(NULL)
-    , m_ykds_void(NULL)
+    : m_yk_void(nullptr)
+    , m_ykds_void(nullptr)
     , m_mutex(QMutex::Recursive)
 {
 }
@@ -59,7 +59,7 @@ bool YubiKey::init()
     m_mutex.lock();
 
     // previously initialized
-    if (m_yk != NULL && m_ykds != NULL) {
+    if (m_yk != nullptr && m_ykds != nullptr) {
 
         if (yk_get_status(m_yk, m_ykds)) {
             // Still connected
@@ -78,15 +78,15 @@ bool YubiKey::init()
 
     // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
-    if (m_yk == NULL) {
+    if (m_yk == nullptr) {
         m_mutex.unlock();
         return false;
     }
 
     m_ykds_void = static_cast<void*>(ykds_alloc());
-    if (m_ykds == NULL) {
+    if (m_ykds == nullptr) {
         yk_close_key(m_yk);
-        m_yk_void = NULL;
+        m_yk_void = nullptr;
         m_mutex.unlock();
         return false;
     }
@@ -101,12 +101,12 @@ bool YubiKey::deinit()
 
     if (m_yk) {
         yk_close_key(m_yk);
-        m_yk_void = NULL;
+        m_yk_void = nullptr;
     }
 
     if (m_ykds) {
         ykds_free(m_ykds);
-        m_ykds_void = NULL;
+        m_ykds_void = nullptr;
     }
 
     m_mutex.unlock();

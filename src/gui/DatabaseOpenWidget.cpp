@@ -106,7 +106,7 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
     // showEvent() may be called twice, so make sure we are only polling once
     if (!m_yubiKeyBeingPolled) {
         connect(
-            YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
+            YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 
@@ -122,7 +122,7 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 
 #ifdef WITH_XC_YUBIKEY
     // Don't listen to any Yubikey events if we are hidden
-    disconnect(YubiKey::instance(), 0, this, 0);
+    disconnect(YubiKey::instance(), nullptr, this, nullptr);
     m_yubiKeyBeingPolled = false;
 #endif
 }
@@ -143,7 +143,7 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
-    
+
     m_ui->editPassword->setFocus();
 }
 
@@ -195,9 +195,9 @@ void DatabaseOpenWidget::openDatabase()
                                          MessageWidget::Error);
         return;
     }
-    if (m_db) {
-        delete m_db;
-    }
+
+    delete m_db;
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db = reader.readDatabase(&file, masterKey);
     QApplication::restoreOverrideCursor();
@@ -254,7 +254,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             // check if the user cancelled the operation
             if (passwordKey.isNull())
                 return QSharedPointer<CompositeKey>();
-            
+
             masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
         }
     }

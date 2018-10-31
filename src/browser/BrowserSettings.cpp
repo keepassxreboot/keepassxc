@@ -169,7 +169,7 @@ QString BrowserSettings::customProxyLocation()
     return config()->get("Browser/CustomProxyLocation", "").toString();
 }
 
-void BrowserSettings::setCustomProxyLocation(QString location)
+void BrowserSettings::setCustomProxyLocation(const QString& location)
 {
     config()->set("Browser/CustomProxyLocation", location);
 }
@@ -364,7 +364,7 @@ QString BrowserSettings::passwordExcludedChars()
     return config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString();
 }
 
-void BrowserSettings::setPasswordExcludedChars(QString chars)
+void BrowserSettings::setPasswordExcludedChars(const QString& chars)
 {
     config()->set("generator/ExcludedChars", chars);
 }
@@ -384,7 +384,7 @@ QString BrowserSettings::passPhraseWordSeparator()
     return config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString();
 }
 
-void BrowserSettings::setPassPhraseWordSeparator(QString separator)
+void BrowserSettings::setPassPhraseWordSeparator(const QString& separator)
 {
     config()->set("generator/WordSeparator", separator);
 }
@@ -496,7 +496,7 @@ QString BrowserSettings::generatePassword()
     }
 }
 
-void BrowserSettings::updateBinaryPaths(QString customProxyLocation)
+void BrowserSettings::updateBinaryPaths(const QString& customProxyLocation)
 {
     bool isProxy = supportBrowserProxy();
     m_hostInstaller.updateBinaryPaths(isProxy, customProxyLocation);

@@ -145,7 +145,7 @@ QString BrowserService::storeKey(const QString& key)
 
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(
-            this, "storeKey", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, id), Q_ARG(const QString&, key));
+            this, "storeKey", Qt::BlockingQueuedConnection, Q_RETURN_ARG(QString, id), Q_ARG(QString, key));
         return id;
     }
 
@@ -213,11 +213,11 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                   "findMatchingEntries",
                                   Qt::BlockingQueuedConnection,
                                   Q_RETURN_ARG(QJsonArray, result),
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm),
-                                  Q_ARG(const StringPairList&, keyList));
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl),
+                                  Q_ARG(QString, realm),
+                                  Q_ARG(StringPairList, keyList));
         return result;
     }
 
@@ -279,12 +279,12 @@ void BrowserService::addEntry(const QString& id,
         QMetaObject::invokeMethod(this,
                                   "addEntry",
                                   Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, login),
-                                  Q_ARG(const QString&, password),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl),
-                                  Q_ARG(const QString&, realm),
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, login),
+                                  Q_ARG(QString, password),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl),
+                                  Q_ARG(QString, realm),
                                   Q_ARG(Database*, selectedDb));
     }
 
@@ -332,12 +332,12 @@ void BrowserService::updateEntry(const QString& id,
         QMetaObject::invokeMethod(this,
                                   "updateEntry",
                                   Qt::BlockingQueuedConnection,
-                                  Q_ARG(const QString&, id),
-                                  Q_ARG(const QString&, uuid),
-                                  Q_ARG(const QString&, login),
-                                  Q_ARG(const QString&, password),
-                                  Q_ARG(const QString&, url),
-                                  Q_ARG(const QString&, submitUrl));
+                                  Q_ARG(QString, id),
+                                  Q_ARG(QString, uuid),
+                                  Q_ARG(QString, login),
+                                  Q_ARG(QString, password),
+                                  Q_ARG(QString, url),
+                                  Q_ARG(QString, submitUrl));
     }
 
     Database* db = selectedDatabase();
@@ -362,7 +362,7 @@ void BrowserService::updateEntry(const QString& id,
         if (!browserSettings()->alwaysAllowUpdate()) {
             QMessageBox msgBox;
             msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
-            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host()).arg(username));
+            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username));
             msgBox.setStandardButtons(QMessageBox::Yes);
             msgBox.addButton(QMessageBox::No);
             msgBox.setDefaultButton(QMessageBox::No);
@@ -421,7 +421,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
             if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (Database* db = dbWidget->database()) {
                      // Check if database is connected with KeePassXC-Browser
-                    for (const StringPair keyPair : keyList) {
+                    for (const StringPair& keyPair : keyList) {
                         QString key = db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
                         if (!key.isEmpty() && keyPair.second == key) {
                             databases << db;
@@ -481,16 +481,16 @@ void BrowserService::convertAttributesToCustomData(Database *currentDb)
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
                                  tr("Successfully converted attributes from %1 entry(s).\n"
                                     "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
                                  QMessageBox::Ok);
     } else if (counter == 0 && keyCounter > 0) {
-        QMessageBox::information(0, tr("KeePassXC: Converted KeePassHTTP attributes"),
+        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
                                  tr("Successfully moved %n keys to custom data.", "", keyCounter),
                                  QMessageBox::Ok);
     } else {
-        QMessageBox::information(0, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
+        QMessageBox::information(nullptr, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
                                  tr("The active database does not contain an entry with KeePassHTTP attributes."),
                                  QMessageBox::Ok);
     }

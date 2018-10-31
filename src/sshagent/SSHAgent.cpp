@@ -38,7 +38,7 @@ SSHAgent::SSHAgent(QObject* parent)
 
 SSHAgent::~SSHAgent()
 {
-    for (QSet<OpenSSHKey> keys : m_keys.values()) {
+    for (const QSet<OpenSSHKey>& keys : m_keys.values()) {
         for (OpenSSHKey key : keys) {
             removeIdentity(key);
         }

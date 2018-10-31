@@ -208,12 +208,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Attachments: {
             // Display comma-separated list of attachments
             QList<QString> attachments = entry->attachments()->keys();
-            for (int i = 0; i < attachments.size(); ++i) {
+            for (const auto& attachment : attachments) {
                 if (result.isEmpty()) {
-                    result.append(attachments.at(i));
+                    result.append(attachment);
                     continue;
                 }
-                result.append(QString(", ") + attachments.at(i));
+                result.append(QString(", ") + attachment);
             }
             return result;
         }
@@ -331,7 +331,7 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
 
 Qt::DropActions EntryModel::supportedDropActions() const
 {
-    return 0;
+    return Qt::IgnoreAction;
 }
 
 Qt::DropActions EntryModel::supportedDragActions() const

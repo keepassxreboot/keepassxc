@@ -59,7 +59,7 @@ const QList<QPair<QUuid, QString>> KeePass2::KDFS{
     qMakePair(KeePass2::KDF_AES_KDBX3, QObject::tr("AES-KDF (KDBX 3.1)"))
 };
 
-QByteArray KeePass2::hmacKey(QByteArray masterSeed, QByteArray transformedMasterKey)
+QByteArray KeePass2::hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey)
 {
     CryptoHash hmacKeyHash(CryptoHash::Sha512);
     hmacKeyHash.addData(masterSeed);
@@ -98,7 +98,7 @@ QSharedPointer<Kdf> KeePass2::kdfFromParameters(const QVariantMap& p)
     return kdf;
 }
 
-QVariantMap KeePass2::kdfToParameters(QSharedPointer<Kdf> kdf)
+QVariantMap KeePass2::kdfToParameters(const QSharedPointer<Kdf>& kdf)
 {
     return kdf->writeParameters();
 }

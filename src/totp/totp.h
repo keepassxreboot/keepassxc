@@ -60,15 +60,15 @@ static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
 QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
 QSharedPointer<Totp::Settings> createSettings(const QString& key, const uint digits, const uint step,
                                               const QString& encoderShortName = {});
-QString writeSettings(const QSharedPointer<Totp::Settings> settings, const QString& title = {},
+QString writeSettings(const QSharedPointer<Totp::Settings>& settings, const QString& title = {},
                       const QString& username = {}, bool forceOtp = false);
 
-QString generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time = 0ull);
+QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
 
 Encoder& defaultEncoder();
 Encoder& steamEncoder();
-Encoder& getEncoderByShortName(QString shortName);
-Encoder& getEncoderByName(QString name);
+Encoder& getEncoderByShortName(const QString& shortName);
+Encoder& getEncoderByName(const QString& name);
 }
 
 #endif // QTOTP_H

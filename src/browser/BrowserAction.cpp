@@ -468,7 +468,7 @@ QJsonObject BrowserAction::decryptMessage(const QString& message, const QString&
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
 }
 
-QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
+QString BrowserAction::encrypt(const QString& plaintext, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = plaintext.toUtf8();
@@ -496,7 +496,7 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     return QString();
 }
 
-QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
+QByteArray BrowserAction::decrypt(const QString& encrypted, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = base64Decode(encrypted);
@@ -546,14 +546,14 @@ QJsonObject BrowserAction::getJsonObject(const uchar* pArray, const uint len) co
     return doc.object();
 }
 
-QJsonObject BrowserAction::getJsonObject(const QByteArray ba) const
+QJsonObject BrowserAction::getJsonObject(const QByteArray& ba) const
 {
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
     return doc.object();
 }
 
-QByteArray BrowserAction::base64Decode(const QString str)
+QByteArray BrowserAction::base64Decode(const QString& str)
 {
     return QByteArray::fromBase64(str.toUtf8());
 }

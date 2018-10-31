@@ -319,14 +319,14 @@ MainWindow::MainWindow()
 #endif
 
     connect(m_ui->tabWidget,
-            SIGNAL(messageGlobal(QString, MessageWidget::MessageType)),
+            SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
             this,
-            SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
+            SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
     connect(m_ui->tabWidget,
-            SIGNAL(messageTab(QString, MessageWidget::MessageType)),
+            SIGNAL(messageTab(QString,MessageWidget::MessageType)),
             this,
-            SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
+            SLOT(displayTabMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
@@ -673,7 +673,7 @@ void MainWindow::switchToOpenDatabase()
     switchToDatabases();
 }
 
-void MainWindow::switchToDatabaseFile(QString file)
+void MainWindow::switchToDatabaseFile(const QString& file)
 {
     m_ui->tabWidget->openDatabase(file);
     switchToDatabases();

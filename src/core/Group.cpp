@@ -563,7 +563,7 @@ Entry* Group::findEntryByUuid(const QUuid& uuid) const
     return nullptr;
 }
 
-Entry* Group::findEntryByPath(QString entryPath)
+Entry* Group::findEntryByPath(const QString& entryPath)
 {
     if (entryPath.isEmpty()) {
         return nullptr;
@@ -578,7 +578,7 @@ Entry* Group::findEntryByPath(QString entryPath)
     return findEntryByPathRecursive(normalizedEntryPath, "/");
 }
 
-Entry* Group::findEntryByPathRecursive(QString entryPath, QString basePath)
+Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath)
 {
     // Return the first entry that matches the full path OR if there is no leading
     // slash, return the first entry title that matches
@@ -599,7 +599,7 @@ Entry* Group::findEntryByPathRecursive(QString entryPath, QString basePath)
     return nullptr;
 }
 
-Group* Group::findGroupByPath(QString groupPath)
+Group* Group::findGroupByPath(const QString& groupPath)
 {
     // normalize the groupPath by adding missing front and rear slashes. once.
     QString normalizedGroupPath;
@@ -614,7 +614,7 @@ Group* Group::findGroupByPath(QString groupPath)
     return findGroupByPathRecursive(normalizedGroupPath, "/");
 }
 
-Group* Group::findGroupByPathRecursive(QString groupPath, QString basePath)
+Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& basePath)
 {
     // paths must be normalized
     Q_ASSERT(groupPath.startsWith("/") && groupPath.endsWith("/"));
@@ -811,7 +811,7 @@ void Group::removeEntry(Entry* entry)
 {
     Q_ASSERT_X(m_entries.contains(entry),
                Q_FUNC_INFO,
-               QString("Group %1 does not contain %2").arg(this->name()).arg(entry->title()).toLatin1());
+               QString("Group %1 does not contain %2").arg(this->name(), entry->title()).toLatin1());
 
     emit entryAboutToRemove(entry);
 
@@ -850,9 +850,9 @@ void Group::recSetDatabase(Database* db)
         connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
         connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
         connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-        connect(this, SIGNAL(aboutToAdd(Group*, int)), db, SIGNAL(groupAboutToAdd(Group*, int)));
+        connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
         connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
-        connect(this, SIGNAL(aboutToMove(Group*, Group*, int)), db, SIGNAL(groupAboutToMove(Group*, Group*, int)));
+        connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
     }
@@ -926,7 +926,7 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(QString locateTerm, QString currentPath)
+QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
 {
     // TODO: Replace with EntrySearcher
     QStringList response;
@@ -934,15 +934,15 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
         return response;
     }
 
-    for (Entry* entry : asConst(m_entries)) {
+    for (const Entry* entry : asConst(m_entries)) {
         QString entryPath = currentPath + entry->title();
         if (entryPath.toLower().contains(locateTerm.toLower())) {
             response << entryPath;
         }
     }
 
-    for (Group* group : asConst(m_children)) {
-        for (QString path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
+    for (const Group* group : asConst(m_children)) {
+        for (const QString& path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
             response << path;
         }
     }
@@ -950,7 +950,7 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
     return response;
 }
 
-Entry* Group::addEntryWithPath(QString entryPath)
+Entry* Group::addEntryWithPath(const QString& entryPath)
 {
     if (entryPath.isEmpty() || findEntryByPath(entryPath)) {
         return nullptr;
