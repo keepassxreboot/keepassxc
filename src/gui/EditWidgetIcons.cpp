@@ -173,7 +173,7 @@ namespace {
     {
         QUrl url;
         if (var.canConvert<QUrl>())
-            url = var.value<QUrl>();
+            url = var.toUrl();
         return url;
     }
 
