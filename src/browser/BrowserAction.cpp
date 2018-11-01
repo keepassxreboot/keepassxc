@@ -271,7 +271,6 @@ QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const
 {
     const QString nonce = json.value("nonce").toString();
     const QString password = browserSettings()->generatePassword();
-    const QString bits = QString::number(browserSettings()->getbits()); // For some reason this always returns 1140 bits?
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
@@ -322,7 +321,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url);
+        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -377,7 +376,7 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
 QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 {
     QJsonObject message;
-    message["version"] = KEEPASSX_VERSION;
+    message["version"] = KEEPASSXC_VERSION;
     message["success"] = "true";
     message["nonce"] = nonce;
     return message;
@@ -469,7 +468,7 @@ QJsonObject BrowserAction::decryptMessage(const QString& message, const QString&
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
 }
 
-QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
+QString BrowserAction::encrypt(const QString& plaintext, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = plaintext.toUtf8();
@@ -497,7 +496,7 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     return QString();
 }
 
-QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
+QByteArray BrowserAction::decrypt(const QString& encrypted, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = base64Decode(encrypted);
@@ -547,14 +546,14 @@ QJsonObject BrowserAction::getJsonObject(const uchar* pArray, const uint len) co
     return doc.object();
 }
 
-QJsonObject BrowserAction::getJsonObject(const QByteArray ba) const
+QJsonObject BrowserAction::getJsonObject(const QByteArray& ba) const
 {
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
     return doc.object();
 }
 
-QByteArray BrowserAction::base64Decode(const QString str)
+QByteArray BrowserAction::base64Decode(const QString& str)
 {
     return QByteArray::fromBase64(str.toUtf8());
 }
@@ -566,16 +565,4 @@ QString BrowserAction::incrementNonce(const QString& nonce)
 
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
-}
-
-void BrowserAction::removeSharedEncryptionKeys()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeSharedEncryptionKeys();
-}
-
-void BrowserAction::removeStoredPermissions()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeStoredPermissions();
 }

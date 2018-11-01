@@ -51,11 +51,16 @@ public:
                   const QString& password,
                   const QString& url,
                   const QString& submitUrl,
-                  const QString& realm);
+                  const QString& realm,
+                  Database* selectedDb = nullptr);
     QList<Entry*> searchEntries(Database* db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
+    void convertAttributesToCustomData(Database *currentDb = nullptr);
+
+public:
+    static const char KEEPASSXCBROWSER_NAME[];
+    static const char ASSOCIATE_KEY_PREFIX[];
+    static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
 
 public slots:
     QJsonArray findMatchingEntries(const QString& id,
@@ -68,7 +73,8 @@ public slots:
                      const QString& uuid,
                      const QString& login,
                      const QString& password,
-                     const QString& url);
+                     const QString& url,
+                     const QString& submitUrl);
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
@@ -96,12 +102,17 @@ private:
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group* findCreateAddEntryGroup();
+    Group* findCreateAddEntryGroup(Database* selectedDb = nullptr);
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
     bool removeFirstDomain(QString& hostname);
+    QString baseDomain(const QString& url) const;
     Database* getDatabase();
+    Database* selectedDatabase();
+    bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
+    int moveKeysToCustomData(Entry* entry, Database* db) const;
+    bool checkLegacySettings();
 
 private:
     DatabaseTabWidget* const m_dbTabWidget;

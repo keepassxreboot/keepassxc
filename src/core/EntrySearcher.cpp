@@ -34,12 +34,12 @@ EntrySearcher::searchEntries(const QString& searchTerm, const Group* group, Qt::
 {
     QList<Entry*> searchResult;
 
-    const QList<Entry*> entryList = group->entries();
+    const QList<Entry*>& entryList = group->entries();
     for (Entry* entry : entryList) {
         searchResult.append(matchEntry(searchTerm, entry, caseSensitivity));
     }
 
-    const QList<Group*> children = group->children();
+    const QList<Group*>& children = group->children();
     for (Group* childGroup : children) {
         if (childGroup->searchingEnabled() != Group::Disable) {
             if (matchGroup(searchTerm, childGroup, caseSensitivity)) {

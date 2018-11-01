@@ -20,7 +20,7 @@
 #define KEEPASSX_CLIPBOARD_H
 
 #include <QObject>
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
 #include "core/MacPasteboard.h"
 #include <QPointer>
 #endif
@@ -48,7 +48,7 @@ private:
     static Clipboard* m_instance;
 
     QTimer* m_timer;
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // This object lives for the whole program lifetime and we cannot delete it on exit,
     // so ignore leak warnings. See https://bugreports.qt.io/browse/QTBUG-54832
     static QPointer<MacPasteboard> m_pasteboard;

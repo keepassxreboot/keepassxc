@@ -41,7 +41,7 @@ public:
 
     explicit AutoTypeMatchModel(QObject* parent = nullptr);
     AutoTypeMatch matchFromIndex(const QModelIndex& index) const;
-    QModelIndex indexFromMatch(AutoTypeMatch match) const;
+    QModelIndex indexFromMatch(const AutoTypeMatch& match) const;
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;

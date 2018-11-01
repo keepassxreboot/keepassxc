@@ -25,8 +25,8 @@ class List : public Command
 public:
     List();
     ~List();
-    int execute(const QStringList& arguments);
-    int listGroup(Database* database, bool recursive, QString groupPath = QString(""));
+    int execute(const QStringList& arguments) override;
+    int listGroup(Database* database, bool recursive, const QString& groupPath = {});
 };
 
 #endif // KEEPASSXC_LIST_H

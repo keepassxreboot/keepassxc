@@ -64,7 +64,7 @@ bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString grou
     }
     groupPath.append(group->name());
 
-    const QList<Entry*> entryList = group->entries();
+    const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {
         QString line;
 
@@ -83,7 +83,7 @@ bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString grou
         }
     }
 
-    const QList<Group*> children = group->children();
+    const QList<Group*>& children = group->children();
     for (const Group* child : children) {
         if (!writeGroup(device, child, groupPath)) {
             return false;

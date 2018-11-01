@@ -22,9 +22,10 @@
 
 #include <QCommandLineParser>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
+#include "core/Global.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -41,18 +42,17 @@ Locate::~Locate()
 
 int Locate::execute(const QStringList& arguments)
 {
-
-    QTextStream out(stdout);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addPositionalArgument("term", QObject::tr("Search term."));
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
+    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -61,26 +61,27 @@ int Locate::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
+    QScopedPointer<Database> db(Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR));
     if (!db) {
         return EXIT_FAILURE;
     }
 
-    return this->locateEntry(db, args.at(1));
+    return locateEntry(db.data(), args.at(1));
 }
 
-int Locate::locateEntry(Database* database, QString searchTerm)
+int Locate::locateEntry(Database* database, const QString& searchTerm)
 {
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
     QStringList results = database->rootGroup()->locate(searchTerm);
     if (results.isEmpty()) {
-        outputTextStream << "No results for that search term" << endl;
-        return EXIT_SUCCESS;
+        err << "No results for that search term." << endl;
+        return EXIT_FAILURE;
     }
 
-    for (QString result : results) {
-        outputTextStream << result << endl;
+    for (const QString& result : asConst(results)) {
+        out << result << endl;
     }
     return EXIT_SUCCESS;
 }

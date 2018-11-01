@@ -153,7 +153,7 @@ bool CompositeKey::challenge(const QByteArray& seed, QByteArray& result) const
  *
  * @param key the key
  */
-void CompositeKey::addKey(QSharedPointer<Key> key)
+void CompositeKey::addKey(const QSharedPointer<Key>& key)
 {
     m_keys.append(key);
 }
@@ -173,7 +173,7 @@ const QList<QSharedPointer<Key>>& CompositeKey::keys() const
  *
  * @param key the key
  */
-void CompositeKey::addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key)
+void CompositeKey::addChallengeResponseKey(const QSharedPointer<ChallengeResponseKey>& key)
 {
     m_challengeResponseKeys.append(key);
 }

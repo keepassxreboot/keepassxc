@@ -27,7 +27,7 @@ for all your websites, programs, etc.
 * In **Browser Integration**, check **Enable KeePassXC browser integration**
 * Right below that, click the checkbox for the browser(s) you use
 Leave the other options at their defaults.
-* *In your default web browser,* install the KeePassXC Browser extension/add-on. Instructions for [Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) or [Chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk)
+* *In your default web browser,* install the KeePassXC Browser extension/add-on. Instructions for [Firefox or Tor Browser](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) or [Chrome](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk)
 * Click the KeePassXC icon in the upper-right corner. You'll see the dialog below. 
 * Click the blue Connect button to make the browser extension connect to the KeePassXC application. 
 <img src="./KeePassXC-Connect.png" height="200" alt="KeePassXC Connect dialog">

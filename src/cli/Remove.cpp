@@ -23,8 +23,8 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -44,46 +44,48 @@ Remove::~Remove()
 
 int Remove::execute(const QStringList& arguments)
 {
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    TextStream out(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "Remove an entry from the database."));
-    parser.addPositionalArgument("database", QCoreApplication::translate("main", "Path of the database."));
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
+    parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
+    parser.addPositionalArgument("database", QCoreApplication::tr("main", "Path of the database."));
+    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
-    parser.addPositionalArgument("entry", QCoreApplication::translate("main", "Path of the entry to remove."));
+    parser.addPositionalArgument("entry", QCoreApplication::tr("main", "Path of the entry to remove."));
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli rm");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli rm");
         return EXIT_FAILURE;
     }
 
-    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
-    if (db == nullptr) {
+    QScopedPointer<Database> db(Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR));
+    if (!db) {
         return EXIT_FAILURE;
     }
 
-    return this->removeEntry(db, args.at(0), args.at(1));
+    return removeEntry(db.data(), args.at(0), args.at(1));
 }
 
-int Remove::removeEntry(Database* database, QString databasePath, QString entryPath)
+int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath)
 {
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
+    QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        qCritical("Entry %s not found.", qPrintable(entryPath));
+        err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     QString entryTitle = entry->title();
     bool recycled = true;
-    if (Tools::hasChild(database->metadata()->recycleBin(), entry) || !database->metadata()->recycleBinEnabled()) {
+    auto* recycleBin = database->metadata()->recycleBin();
+    if (!database->metadata()->recycleBinEnabled() || (recycleBin && recycleBin->findEntryByUuid(entry->uuid()))) {
         delete entry;
         recycled = false;
     } else {
@@ -92,14 +94,14 @@ int Remove::removeEntry(Database* database, QString databasePath, QString entryP
 
     QString errorMessage = database->saveToFile(databasePath);
     if (!errorMessage.isEmpty()) {
-        qCritical("Unable to save database to file : %s", qPrintable(errorMessage));
+        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     if (recycled) {
-        outputTextStream << "Successfully recycled entry " << entryTitle << "." << endl;
+        out << QObject::tr("Successfully recycled entry %1.").arg(entryTitle) << endl;
     } else {
-        outputTextStream << "Successfully deleted entry " << entryTitle << "." << endl;
+        out << QObject::tr("Successfully deleted entry %1.").arg(entryTitle) << endl;
     }
 
     return EXIT_SUCCESS;

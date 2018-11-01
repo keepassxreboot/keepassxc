@@ -35,7 +35,7 @@ class BrowserEntryConfig : public QObject
     Q_PROPERTY(QString Realm READ realm WRITE setRealm)
 
 public:
-    BrowserEntryConfig(QObject* object = 0);
+    BrowserEntryConfig(QObject* object = nullptr);
 
     bool load(const Entry* entry);
     void save(Entry* entry);

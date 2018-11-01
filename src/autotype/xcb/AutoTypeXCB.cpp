@@ -50,7 +50,7 @@ AutoTypePlatformX11::AutoTypePlatformX11()
                      << "xfce4-panel"; // Xfce 4
 
     m_currentGlobalKey = static_cast<Qt::Key>(0);
-    m_currentGlobalModifiers = 0;
+    m_currentGlobalModifiers = nullptr;
 
     m_keysymTable = nullptr;
     m_xkb = nullptr;
@@ -197,7 +197,7 @@ void AutoTypePlatformX11::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
     XUngrabKey(m_dpy, keycode, nativeModifiers | Mod2Mask | LockMask, m_rootWindow);
 
     m_currentGlobalKey = static_cast<Qt::Key>(0);
-    m_currentGlobalModifiers = 0;
+    m_currentGlobalModifiers = nullptr;
     m_currentGlobalKeycode = 0;
     m_currentGlobalNativeModifiers = 0;
 }
@@ -496,7 +496,7 @@ void AutoTypePlatformX11::updateKeymap()
     m_xkb = getKeyboard();
 
     XDisplayKeycodes(m_dpy, &m_minKeycode, &m_maxKeycode);
-    if (m_keysymTable != NULL)
+    if (m_keysymTable != nullptr)
         XFree(m_keysymTable);
     m_keysymTable = XGetKeyboardMapping(m_dpy, m_minKeycode, m_maxKeycode - m_minKeycode + 1, &m_keysymPerKeycode);
 

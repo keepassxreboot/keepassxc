@@ -21,6 +21,7 @@
 #define BROWSEROPTIONDIALOG_H
 
 #include <QScopedPointer>
+#include <QPointer>
 #include <QWidget>
 
 namespace Ui
@@ -39,10 +40,6 @@ public:
 public slots:
     void loadSettings();
     void saveSettings();
-
-signals:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
 
 private slots:
     void showProxyLocationFileDialog();

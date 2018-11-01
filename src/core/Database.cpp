@@ -25,6 +25,7 @@
 #include <QTextStream>
 #include <QTimer>
 #include <QXmlStreamReader>
+#include <utility>
 
 #include "cli/Utils.h"
 #include "core/Clock.h"
@@ -47,7 +48,7 @@ Database::Database()
     , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
-    m_data.cipher = KeePass2::CIPHER_AES;
+    m_data.cipher = KeePass2::CIPHER_AES256;
     m_data.compressionAlgo = CompressionGZip;
 
     // instantiate default AES-KDF with legacy KDBX3 flag set
@@ -315,7 +316,7 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
  * @param updateTransformSalt true to update the transform salt
  * @return true on success
  */
-bool Database::setKey(QSharedPointer<const CompositeKey> key, bool updateChangedTime, bool updateTransformSalt)
+bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime, bool updateTransformSalt)
 {
     if (!key) {
         m_data.key.reset();
@@ -354,7 +355,7 @@ bool Database::hasKey() const
     return m_data.hasKey;
 }
 
-bool Database::verifyKey(QSharedPointer<CompositeKey> key) const
+bool Database::verifyKey(const QSharedPointer<CompositeKey>& key) const
 {
     Q_ASSERT(hasKey());
 
@@ -492,7 +493,7 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     }
 
     KeePass2Reader reader;
-    Database* db = reader.readDatabase(&dbFile, key);
+    Database* db = reader.readDatabase(&dbFile, std::move(key));
     if (reader.hasError()) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return nullptr;
@@ -501,14 +502,14 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
     return db;
 }
 
-Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename)
+Database* Database::unlockFromStdin(const QString& databaseFilename, const QString& keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
-    QTextStream outputTextStream(stdout);
-    QTextStream errorTextStream(stderr);
+    QTextStream out(outputDescriptor);
+    QTextStream err(errorDescriptor);
 
-    outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
-    outputTextStream.flush();
+    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
+    out.flush();
 
     QString line = Utils::getPassword();
     auto passwordKey = QSharedPointer<PasswordKey>::create();
@@ -518,11 +519,19 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
     if (!keyFilename.isEmpty()) {
         auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMessage;
+        // LCOV_EXCL_START
         if (!fileKey->load(keyFilename, &errorMessage)) {
-            errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage);
-            errorTextStream << endl;
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage)<< endl;
             return nullptr;
         }
+
+        if (fileKey->type() != FileKey::Hashed) {
+            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                               "unsupported in the future.\n\n"
+                               "Please consider generating a new key file.") << endl;
+        }
+        // LCOV_EXCL_STOP
+
         compositeKey->addKey(fileKey);
     }
 
@@ -545,7 +554,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
  * @param backup Backup the existing database file, if exists
  * @return error string, if any
  */
-QString Database::saveToFile(QString filePath, bool atomic, bool backup)
+QString Database::saveToFile(const QString& filePath, bool atomic, bool backup)
 {
     QString error;
     if (atomic) {
@@ -625,7 +634,7 @@ QString Database::writeDatabase(QIODevice* device)
  * @param filePath Path to the file to backup
  * @return
  */
-bool Database::backupDatabase(QString filePath)
+bool Database::backupDatabase(const QString& filePath)
 {
     QString backupFilePath = filePath;
     auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
@@ -644,7 +653,7 @@ void Database::setKdf(QSharedPointer<Kdf> kdf)
     m_data.kdf = std::move(kdf);
 }
 
-bool Database::changeKdf(QSharedPointer<Kdf> kdf)
+bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 {
     kdf->randomizeSeed();
     QByteArray transformedMasterKey;

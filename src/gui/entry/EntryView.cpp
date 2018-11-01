@@ -51,7 +51,7 @@ EntryView::EntryView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(entrySelectionChanged()));
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
     connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
     connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
@@ -97,10 +97,10 @@ EntryView::EntryView(QWidget* parent)
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
-    connect(header(), SIGNAL(sectionCountChanged(int, int)), SIGNAL(viewStateChanged()));
-    connect(header(), SIGNAL(sectionMoved(int, int, int)), SIGNAL(viewStateChanged()));
-    connect(header(), SIGNAL(sectionResized(int, int, int)), SIGNAL(viewStateChanged()));
-    connect(header(), SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionCountChanged(int,int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionMoved(int,int,int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SIGNAL(viewStateChanged()));
 
     resetFixedColumns();
 
@@ -123,7 +123,7 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
         emitEntryActivated(currentIndex());
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         // Pressing return does not emit the QTreeView::activated signal on mac os
         emit activated(currentIndex());
 #endif

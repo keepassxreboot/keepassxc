@@ -18,7 +18,7 @@
 
 #include "TestGroup.h"
 #include "TestGlobal.h"
-#include "stub/TestClock.h"
+#include "mock/MockClock.h"
 
 #include <QSignalSpy>
 
@@ -29,7 +29,7 @@ QTEST_GUILESS_MAIN(TestGroup)
 
 namespace
 {
-    TestClock* m_clock = nullptr;
+    MockClock* m_clock = nullptr;
 }
 
 void TestGroup::initTestCase()
@@ -42,13 +42,13 @@ void TestGroup::initTestCase()
 void TestGroup::init()
 {
     Q_ASSERT(m_clock == nullptr);
-    m_clock = new TestClock(2010, 5, 5, 10, 30, 10);
-    TestClock::setup(m_clock);
+    m_clock = new MockClock(2010, 5, 5, 10, 30, 10);
+    MockClock::setup(m_clock);
 }
 
 void TestGroup::cleanup()
 {
-    TestClock::teardown();
+    MockClock::teardown();
     m_clock = nullptr;
 }
 
@@ -493,57 +493,64 @@ void TestGroup::testFindEntry()
 
     Entry* entry;
 
-    entry = db->rootGroup()->findEntry(entry1->uuidToHex());
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByUuid(entry1->uuid());
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry1"));
 
-    entry = db->rootGroup()->findEntry(QString("entry1"));
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("entry1"));
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry1"));
 
     // We also can find the entry with the leading slash.
-    entry = db->rootGroup()->findEntry(QString("/entry1"));
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("/entry1"));
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry1"));
 
     // But two slashes should not be accepted.
-    entry = db->rootGroup()->findEntry(QString("//entry1"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("//entry1"));
+    QVERIFY(!entry);
 
-    entry = db->rootGroup()->findEntry(entry2->uuidToHex());
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByUuid(entry2->uuid());
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("group1/entry2"));
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("group1/entry2"));
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("/entry2"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("/entry2"));
+    QVERIFY(!entry);
 
     // We also can find the entry with the leading slash.
-    entry = db->rootGroup()->findEntry(QString("/group1/entry2"));
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("/group1/entry2"));
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry2"));
 
     // Should also find the entry only by title.
-    entry = db->rootGroup()->findEntry(QString("entry2"));
-    QVERIFY(entry != nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("entry2"));
+    QVERIFY(entry);
     QCOMPARE(entry->title(), QString("entry2"));
 
-    entry = db->rootGroup()->findEntry(QString("invalid/path/to/entry2"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("invalid/path/to/entry2"));
+    QVERIFY(!entry);
 
-    entry = db->rootGroup()->findEntry(QString("entry27"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByPath(QString("entry27"));
+    QVERIFY(!entry);
 
     // A valid UUID that does not exist in this database.
-    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc75281"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByUuid(QUuid("febfb01ebcdf9dbd90a3f1579dc75281"));
+    QVERIFY(!entry);
 
     // An invalid UUID.
-    entry = db->rootGroup()->findEntry(QString("febfb01ebcdf9dbd90a3f1579dc"));
-    QVERIFY(entry == nullptr);
+    entry = db->rootGroup()->findEntryByUuid(QUuid("febfb01ebcdf9dbd90a3f1579dc"));
+    QVERIFY(!entry);
+
+    // Empty strings
+    entry = db->rootGroup()->findEntryByUuid({});
+    QVERIFY(!entry);
+
+    entry = db->rootGroup()->findEntryByPath({});
+    QVERIFY(!entry);
 }
 
 void TestGroup::testFindGroupByPath()
@@ -561,51 +568,51 @@ void TestGroup::testFindGroupByPath()
     Group* group;
 
     group = db->rootGroup()->findGroupByPath("/");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), db->rootGroup()->uuid());
 
     // We also accept it if the leading slash is missing.
     group = db->rootGroup()->findGroupByPath("");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), db->rootGroup()->uuid());
 
     group = db->rootGroup()->findGroupByPath("/group1/");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group1->uuid());
 
     // We also accept it if the leading slash is missing.
     group = db->rootGroup()->findGroupByPath("group1/");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group1->uuid());
 
     // Too many slashes at the end
     group = db->rootGroup()->findGroupByPath("group1//");
-    QVERIFY(group == nullptr);
+    QVERIFY(!group);
 
     // Missing a slash at the end.
     group = db->rootGroup()->findGroupByPath("/group1");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group1->uuid());
 
     // Too many slashes at the start
     group = db->rootGroup()->findGroupByPath("//group1");
-    QVERIFY(group == nullptr);
+    QVERIFY(!group);
 
     group = db->rootGroup()->findGroupByPath("/group1/group2/");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group2->uuid());
 
     // We also accept it if the leading slash is missing.
     group = db->rootGroup()->findGroupByPath("group1/group2/");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group2->uuid());
 
     group = db->rootGroup()->findGroupByPath("group1/group2");
-    QVERIFY(group != nullptr);
+    QVERIFY(group);
     QCOMPARE(group->uuid(), group2->uuid());
 
     group = db->rootGroup()->findGroupByPath("invalid");
-    QVERIFY(group == nullptr);
+    QVERIFY(!group);
 }
 
 void TestGroup::testPrint()
@@ -697,7 +704,7 @@ void TestGroup::testLocate()
     QVERIFY(results.contains("/entry1"));
 
     results = db->rootGroup()->locate("invalid");
-    QVERIFY(results.size() == 0);
+    QVERIFY(results.isEmpty());
 
     results = db->rootGroup()->locate("google");
     QVERIFY(results.size() == 1);
@@ -725,37 +732,37 @@ void TestGroup::testAddEntryWithPath()
     group2->setParent(group1);
 
     Entry* entry = db->rootGroup()->addEntryWithPath("entry1");
-    QVERIFY(entry != nullptr);
+    QVERIFY(entry);
     QVERIFY(!entry->uuid().isNull());
 
     entry = db->rootGroup()->addEntryWithPath("entry1");
-    QVERIFY(entry == nullptr);
+    QVERIFY(!entry);
 
     entry = db->rootGroup()->addEntryWithPath("/entry1");
-    QVERIFY(entry == nullptr);
+    QVERIFY(!entry);
 
     entry = db->rootGroup()->addEntryWithPath("entry2");
-    QVERIFY(entry != nullptr);
+    QVERIFY(entry);
     QVERIFY(entry->title() == "entry2");
     QVERIFY(!entry->uuid().isNull());
 
     entry = db->rootGroup()->addEntryWithPath("/entry3");
-    QVERIFY(entry != nullptr);
+    QVERIFY(entry);
     QVERIFY(entry->title() == "entry3");
     QVERIFY(!entry->uuid().isNull());
 
     entry = db->rootGroup()->addEntryWithPath("/group1/entry4");
-    QVERIFY(entry != nullptr);
+    QVERIFY(entry);
     QVERIFY(entry->title() == "entry4");
     QVERIFY(!entry->uuid().isNull());
 
     entry = db->rootGroup()->addEntryWithPath("/group1/group2/entry5");
-    QVERIFY(entry != nullptr);
+    QVERIFY(entry);
     QVERIFY(entry->title() == "entry5");
     QVERIFY(!entry->uuid().isNull());
 
     entry = db->rootGroup()->addEntryWithPath("/group1/invalid_group/entry6");
-    QVERIFY(entry == nullptr);
+    QVERIFY(!entry);
 
     delete db;
 }

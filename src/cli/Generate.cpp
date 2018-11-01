@@ -19,10 +19,11 @@
 #include <stdio.h>
 
 #include "Generate.h"
+#include "cli/Utils.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "core/PasswordGenerator.h"
 
 Generate::Generate()
@@ -37,38 +38,31 @@ Generate::~Generate()
 
 int Generate::execute(const QStringList& arguments)
 {
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
-    QCommandLineOption len(QStringList() << "L"
-                                         << "length",
+    parser.setApplicationDescription(description);
+    QCommandLineOption len(QStringList() << "L" << "length",
                            QObject::tr("Length of the generated password"),
                            QObject::tr("length"));
     parser.addOption(len);
-    QCommandLineOption lower(QStringList() << "l"
-                                           << "lower",
+    QCommandLineOption lower(QStringList() << "l" << "lower",
                              QObject::tr("Use lowercase characters"));
     parser.addOption(lower);
-    QCommandLineOption upper(QStringList() << "u"
-                                           << "upper",
+    QCommandLineOption upper(QStringList() << "u" << "upper",
                              QObject::tr("Use uppercase characters"));
     parser.addOption(upper);
-    QCommandLineOption numeric(QStringList() << "n"
-                                             << "numeric",
+    QCommandLineOption numeric(QStringList() << "n" << "numeric",
                                QObject::tr("Use numbers."));
     parser.addOption(numeric);
-    QCommandLineOption special(QStringList() << "s"
-                                             << "special",
+    QCommandLineOption special(QStringList() << "s" << "special",
                                QObject::tr("Use special characters"));
     parser.addOption(special);
-    QCommandLineOption extended(QStringList() << "e"
-                                              << "extended",
+    QCommandLineOption extended(QStringList() << "e" << "extended",
                                 QObject::tr("Use extended ASCII"));
     parser.addOption(extended);
-    QCommandLineOption exclude(QStringList() << "x"
-                                             << "exclude",
+    QCommandLineOption exclude(QStringList() << "x" << "exclude",
                                QObject::tr("Exclude character set"),
                                QObject::tr("chars"));
     parser.addOption(exclude);
@@ -78,12 +72,12 @@ int Generate::execute(const QStringList& arguments)
     QCommandLineOption every_group(QStringList() << "every-group",
                                    QObject::tr("Include characters from every selected group"));
     parser.addOption(every_group);
-
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
@@ -92,8 +86,7 @@ int Generate::execute(const QStringList& arguments)
     if (parser.value(len).isEmpty()) {
         passwordGenerator.setLength(PasswordGenerator::DefaultLength);
     } else {
-        int length = parser.value(len).toInt();
-        passwordGenerator.setLength(length);
+        passwordGenerator.setLength(parser.value(len).toInt());
     }
 
     PasswordGenerator::CharClasses classes = 0x0;
@@ -128,12 +121,12 @@ int Generate::execute(const QStringList& arguments)
     passwordGenerator.setExcludedChars(parser.value(exclude));
 
     if (!passwordGenerator.isValid()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
     QString password = passwordGenerator.generatePassword();
-    outputTextStream << password << endl;
+    out << password << endl;
 
     return EXIT_SUCCESS;
 }

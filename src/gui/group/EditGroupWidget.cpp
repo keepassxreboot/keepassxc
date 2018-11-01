@@ -49,8 +49,8 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 
     connect(m_editGroupWidgetIcons,
-            SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)),
-            SLOT(showMessage(QString, MessageWidget::MessageType)));
+            SIGNAL(messageEditEntry(QString,MessageWidget::MessageType)),
+            SLOT(showMessage(QString,MessageWidget::MessageType)));
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 }
 

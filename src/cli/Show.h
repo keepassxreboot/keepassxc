@@ -25,8 +25,8 @@ class Show : public Command
 public:
     Show();
     ~Show();
-    int execute(const QStringList& arguments);
-    int showEntry(Database* database, QStringList attributes, QString entryPath);
+    int execute(const QStringList& arguments) override;
+    int showEntry(Database* database, QStringList attributes, const QString& entryPath);
 };
 
 #endif // KEEPASSXC_SHOW_H

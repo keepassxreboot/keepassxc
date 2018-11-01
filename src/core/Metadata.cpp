@@ -450,7 +450,11 @@ void Metadata::copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* othe
 
 QByteArray Metadata::hashImage(const QImage& image)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    auto data = QByteArray(reinterpret_cast<const char*>(image.bits()), static_cast<int>(image.sizeInBytes()));
+#else
     auto data = QByteArray(reinterpret_cast<const char*>(image.bits()), image.byteCount());
+#endif
     return QCryptographicHash::hash(data, QCryptographicHash::Md5);
 }
 

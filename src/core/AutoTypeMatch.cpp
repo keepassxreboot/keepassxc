@@ -18,6 +18,8 @@
 
 #include "AutoTypeMatch.h"
 
+#include <utility>
+
 AutoTypeMatch::AutoTypeMatch()
     : entry(nullptr)
     , sequence()
@@ -26,7 +28,7 @@ AutoTypeMatch::AutoTypeMatch()
 
 AutoTypeMatch::AutoTypeMatch(Entry* entry, QString sequence)
     : entry(entry)
-    , sequence(sequence)
+    , sequence(std::move(sequence))
 {
 }
 

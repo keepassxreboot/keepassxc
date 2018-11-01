@@ -31,6 +31,7 @@ public:
 
     explicit PasswordEdit(QWidget* parent = nullptr);
     void enableVerifyMode(PasswordEdit* baseEdit);
+    bool isPasswordVisible() const;
 
 public slots:
     void setShowPassword(bool show);
@@ -40,7 +41,7 @@ signals:
 
 private slots:
     void updateStylesheet();
-    void autocompletePassword(QString password);
+    void autocompletePassword(const QString& password);
 
 private:
     bool passwordsEqual() const;

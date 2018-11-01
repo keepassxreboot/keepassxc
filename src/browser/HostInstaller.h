@@ -33,12 +33,14 @@ public:
         CHROME = 0,
         CHROMIUM = 1,
         FIREFOX = 2,
-        VIVALDI = 3
+        VIVALDI = 3,
+        TOR_BROWSER = 4
     };
 
 public:
     HostInstaller();
     bool checkIfInstalled(SupportedBrowsers browser);
+    bool checkIfProxyExists(const bool& proxy, const QString& location, QString& path) const;
     void installBrowser(SupportedBrowsers browser,
                         const bool& enabled,
                         const bool& proxy = false,
@@ -50,6 +52,7 @@ private:
     QString getBrowserName(SupportedBrowsers browser) const;
     QString getPath(SupportedBrowsers browser) const;
     QString getInstallDir(SupportedBrowsers browser) const;
+    QString getProxyPath(const bool& proxy, const QString& location) const;
     QJsonObject constructFile(SupportedBrowsers browser, const bool& proxy, const QString& location);
     bool registryEntryFound(const QSettings& settings);
     bool saveFile(SupportedBrowsers browser, const QJsonObject& script);
@@ -62,6 +65,7 @@ private:
     const QString TARGET_DIR_CHROMIUM;
     const QString TARGET_DIR_FIREFOX;
     const QString TARGET_DIR_VIVALDI;
+    const QString TARGET_DIR_TOR_BROWSER;
 };
 
 #endif // HOSTINSTALLER_H

@@ -71,6 +71,10 @@ void PasswordEdit::setShowPassword(bool show)
     emit showPasswordChanged(show);
 }
 
+bool PasswordEdit::isPasswordVisible() const {
+  return isEnabled();
+}
+
 bool PasswordEdit::passwordsEqual() const
 {
     return text() == m_basePasswordEdit->text();
@@ -94,7 +98,7 @@ void PasswordEdit::updateStylesheet()
     setStyleSheet(stylesheet);
 }
 
-void PasswordEdit::autocompletePassword(QString password)
+void PasswordEdit::autocompletePassword(const QString& password)
 {
     if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);

@@ -44,14 +44,14 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection, QItemSelection)), SIGNAL(matchSelectionChanged()));
+        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
         emitMatchActivated(currentIndex());
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
         // Pressing return does not emit the QTreeView::activated signal on mac os
         emit activated(currentIndex());
 #endif
@@ -98,7 +98,7 @@ AutoTypeMatch AutoTypeMatchView::currentMatch()
     return AutoTypeMatch();
 }
 
-void AutoTypeMatchView::setCurrentMatch(AutoTypeMatch match)
+void AutoTypeMatchView::setCurrentMatch(const AutoTypeMatch& match)
 {
     selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromMatch(match)),
                                       QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);

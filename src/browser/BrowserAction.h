@@ -54,10 +54,6 @@ public:
 
     QJsonObject readResponse(const QJsonObject& json);
 
-public slots:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
-
 private:
     QJsonObject handleAction(const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
@@ -77,14 +73,14 @@ private:
 
     QString encryptMessage(const QJsonObject& message, const QString& nonce);
     QJsonObject decryptMessage(const QString& message, const QString& nonce, const QString& action = QString());
-    QString encrypt(const QString plaintext, const QString nonce);
-    QByteArray decrypt(const QString encrypted, const QString nonce);
+    QString encrypt(const QString& plaintext, const QString& nonce);
+    QByteArray decrypt(const QString& encrypted, const QString& nonce);
 
     QString getBase64FromKey(const uchar* array, const uint len);
     QByteArray getQByteArray(const uchar* array, const uint len) const;
     QJsonObject getJsonObject(const uchar* pArray, const uint len) const;
-    QJsonObject getJsonObject(const QByteArray ba) const;
-    QByteArray base64Decode(const QString str);
+    QJsonObject getJsonObject(const QByteArray& ba) const;
+    QByteArray base64Decode(const QString& str);
     QString incrementNonce(const QString& nonce);
 
 private:
