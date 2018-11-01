@@ -59,6 +59,7 @@ public:
 
 public:
     static const char KEEPASSXCBROWSER_NAME[];
+    static const char KEEPASSXCBROWSER_OLD_NAME[];
     static const char ASSOCIATE_KEY_PREFIX[];
     static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
 
