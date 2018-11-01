@@ -49,12 +49,7 @@
 #include "crypto/Crypto.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2Reader.h"
-#include "keys/PasswordKey.h"
-#include "keys/FileKey.h"
 #include "gui/ApplicationSettingsWidget.h"
-#include "gui/dbsettings/DatabaseSettingsDialog.h"
-#include "gui/masterkey/PasswordEditWidget.h"
-#include "gui/masterkey/KeyFileEditWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
@@ -63,15 +58,19 @@
 #include "gui/MessageBox.h"
 #include "gui/PasswordEdit.h"
 #include "gui/SearchWidget.h"
-#include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
+#include "gui/TotpSetupDialog.h"
+#include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
-#include "gui/wizard/NewDatabaseWizard.h"
 #include "gui/masterkey/KeyComponentWidget.h"
+#include "gui/masterkey/KeyFileEditWidget.h"
+#include "gui/masterkey/PasswordEditWidget.h"
+#include "gui/wizard/NewDatabaseWizard.h"
+#include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
 QTEST_MAIN(TestGui)
@@ -159,7 +158,7 @@ void TestGui::testSettingsDefaultTabOrder()
     auto* settingsWidget = m_mainWindow->findChild<ApplicationSettingsWidget*>();
     QVERIFY(settingsWidget->isVisible());
     QCOMPARE(settingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
-    for (auto* w: settingsWidget->findChildren<QTabWidget*>()) {
+    for (auto* w : settingsWidget->findChildren<QTabWidget*>()) {
         if (w->currentIndex() != 0) {
             QFAIL("Application settings contain QTabWidgets whose default index is not 0");
         }
@@ -171,7 +170,7 @@ void TestGui::testSettingsDefaultTabOrder()
     auto* dbSettingsWidget = m_mainWindow->findChild<DatabaseSettingsDialog*>();
     QVERIFY(dbSettingsWidget->isVisible());
     QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
-    for (auto* w: dbSettingsWidget->findChildren<QTabWidget*>()) {
+    for (auto* w : dbSettingsWidget->findChildren<QTabWidget*>()) {
         if (w->currentIndex() != 0) {
             QFAIL("Database settings contain QTabWidgets whose default index is not 0");
         }
@@ -1091,7 +1090,11 @@ void TestGui::testDragAndDropGroup()
 
     // dropping parent on child is supposed to fail
     dragAndDropGroup(groupModel->index(0, 0, rootIndex),
-                     groupModel->index(0, 0, groupModel->index(0, 0, rootIndex)), -1, false, "NewDatabase", 0);
+                     groupModel->index(0, 0, groupModel->index(0, 0, rootIndex)),
+                     -1,
+                     false,
+                     "NewDatabase",
+                     0);
 
     dragAndDropGroup(groupModel->index(1, 0, rootIndex), rootIndex, 0, true, "NewDatabase", 0);
 

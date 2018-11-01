@@ -25,7 +25,7 @@
 
 namespace QTest
 {
-  
+
     template <> inline char* toString(const Group::TriState& triState)
     {
         QString value;

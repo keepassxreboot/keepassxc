@@ -720,14 +720,15 @@ QSharedPointer<Database> Database::unlockFromStdin(const QString& databaseFilena
         QString errorMessage;
         // LCOV_EXCL_START
         if (!fileKey->load(keyFilename, &errorMessage)) {
-            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage)<< endl;
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
             return {};
         }
 
         if (fileKey->type() != FileKey::Hashed) {
             err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
                                "unsupported in the future.\n\n"
-                               "Please consider generating a new key file.") << endl;
+                               "Please consider generating a new key file.")
+                << endl;
         }
         // LCOV_EXCL_STOP
 

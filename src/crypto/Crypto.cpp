@@ -144,8 +144,9 @@ bool Crypto::testSha512()
     QByteArray sha512Test =
         CryptoHash::hash("abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq", CryptoHash::Sha512);
 
-    if (sha512Test != QByteArray::fromHex("204a8fc6dda82f0a0ced7beb8e08a41657c16ef468b228a8279be331a703c33596fd15c13b1b"
-                                          "07f9aa1d3bea57789ca031ad85c7a71dd70354ec631238ca3445")) {
+    if (sha512Test
+        != QByteArray::fromHex("204a8fc6dda82f0a0ced7beb8e08a41657c16ef468b228a8279be331a703c33596fd15c13b1b"
+                               "07f9aa1d3bea57789ca031ad85c7a71dd70354ec631238ca3445")) {
         raiseError("SHA-512 mismatch.");
         return false;
     }

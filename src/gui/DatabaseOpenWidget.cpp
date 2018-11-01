@@ -105,9 +105,11 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 #ifdef WITH_XC_YUBIKEY
     // showEvent() may be called twice, so make sure we are only polling once
     if (!m_yubiKeyBeingPolled) {
+        // clang-format off
         connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+        // clang-format on
 
         pollYubikey();
         m_yubiKeyBeingPolled = true;
@@ -190,7 +192,7 @@ void DatabaseOpenWidget::openDatabase()
     }
 
     if (!m_ui->editPassword->isPasswordVisible()) {
-      m_ui->editPassword->setShowPassword(false);
+        m_ui->editPassword->setShowPassword(false);
     }
     QCoreApplication::processEvents();
 

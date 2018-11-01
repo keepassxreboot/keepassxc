@@ -30,7 +30,7 @@
 #include <QtEndian>
 #include <cmath>
 
-static QList<Totp::Encoder> encoders {
+static QList<Totp::Encoder> encoders{
     {"", "", "0123456789", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP, false},
     {"steam", Totp::STEAM_SHORTNAME, "23456789BCDFGHJKMNPQRTVWXY", Totp::STEAM_DIGITS, Totp::DEFAULT_STEP, true},
 };
@@ -88,16 +88,18 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     return settings;
 }
 
-QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const uint digits, const uint step,
-                                                    const QString& encoderShortName)
+QSharedPointer<Totp::Settings>
+Totp::createSettings(const QString& key, const uint digits, const uint step, const QString& encoderShortName)
 {
     bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP;
-    return QSharedPointer<Totp::Settings>(new Totp::Settings {
-        getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step
-    });
+    return QSharedPointer<Totp::Settings>(
+        new Totp::Settings{getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step});
 }
 
-QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings, const QString& title, const QString& username, bool forceOtp)
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
+                            const QString& title,
+                            const QString& username,
+                            bool forceOtp)
 {
     if (settings.isNull()) {
         return {};
@@ -106,11 +108,11 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings, cons
     // OTP Url output
     if (settings->otpUrl || forceOtp) {
         auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
-                .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
-                     username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
-                     QString(Base32::sanitizeInput(settings->key.toLatin1())))
-                .arg(settings->step)
-                .arg(settings->digits);
+                             .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
+                                  username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
+                                  QString(Base32::sanitizeInput(settings->key.toLatin1())))
+                             .arg(settings->step)
+                             .arg(settings->digits);
 
         if (!settings->encoder.name.isEmpty()) {
             urlstring.append("&encoder=").append(settings->encoder.name);

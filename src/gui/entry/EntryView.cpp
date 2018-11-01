@@ -49,10 +49,12 @@ EntryView::EntryView(QWidget* parent)
     // QAbstractItemView::startDrag() uses this property as the default drag action
     setDefaultDropAction(Qt::MoveAction);
 
+    // clang-format off
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(emitEntrySelectionChanged()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
+    // clang-format on
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
@@ -93,10 +95,21 @@ EntryView::EntryView(QWidget* parent)
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
+    // clang-format off
     connect(header(), SIGNAL(sectionCountChanged(int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sectionMoved(int,int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SIGNAL(viewStateChanged()));
+    // clang-format on
 
     resetFixedColumns();
 

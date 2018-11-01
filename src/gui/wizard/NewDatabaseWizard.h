@@ -30,7 +30,7 @@ class NewDatabaseWizardPage;
  */
 class NewDatabaseWizard : public QWizard
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizard(QWidget* parent = nullptr);
@@ -47,4 +47,4 @@ private:
     QList<QPointer<NewDatabaseWizardPage>> m_pages;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARD_H
+#endif // KEEPASSXC_NEWDATABASEWIZARD_H

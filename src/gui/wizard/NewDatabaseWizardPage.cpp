@@ -19,6 +19,7 @@
 
 #include "NewDatabaseWizardPage.h"
 #include "ui_NewDatabaseWizardPage.h"
+
 #include "core/Database.h"
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
 

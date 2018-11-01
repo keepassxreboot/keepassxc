@@ -26,10 +26,10 @@
 class Database;
 namespace Ui
 {
-class DatabaseSettingsWidgetEncryption;
+    class DatabaseSettingsWidgetEncryption;
 }
 
-class DatabaseSettingsWidgetEncryption: public DatabaseSettingsWidget
+class DatabaseSettingsWidgetEncryption : public DatabaseSettingsWidget
 {
     Q_OBJECT
 
@@ -38,7 +38,10 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetEncryption);
     ~DatabaseSettingsWidgetEncryption() override;
 
-    inline bool hasAdvancedMode() const override { return true; }
+    inline bool hasAdvancedMode() const override
+    {
+        return true;
+    }
     void setAdvancedMode(bool advanced) override;
 
 public slots:
@@ -64,7 +67,11 @@ private slots:
     void markDirty();
 
 private:
-    enum FormatSelection { KDBX4, KDBX3 };
+    enum FormatSelection
+    {
+        KDBX4,
+        KDBX3
+    };
     static const char* CD_DECRYPTION_TIME_PREFERENCE_KEY;
 
     bool m_isDirty = false;
@@ -72,4 +79,4 @@ private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_ui;
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H

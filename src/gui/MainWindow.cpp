@@ -20,10 +20,10 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
-#include <QDesktopServices>
 
 #include "config-keepassx.h"
 
@@ -56,8 +56,8 @@
 #include <QtDBus/QtDBus>
 #endif
 
-#include "gui/PasswordGeneratorWidget.h"
 #include "gui/ApplicationSettingsWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 #include "touchid/TouchID.h"
 
@@ -67,7 +67,8 @@ class BrowserPlugin : public ISettingsPage
 public:
     BrowserPlugin(DatabaseTabWidget* tabWidget)
     {
-        m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
+        m_nativeMessagingHost =
+            QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
     }
 
     ~BrowserPlugin()
@@ -105,8 +106,8 @@ public:
         }
     }
 
-    private:
-        QSharedPointer<NativeMessagingHost> m_nativeMessagingHost;
+private:
+    QSharedPointer<NativeMessagingHost> m_nativeMessagingHost;
 };
 #endif
 
@@ -346,11 +347,13 @@ MainWindow::MainWindow()
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
-
+    // clang-format off
     connect(m_ui->tabWidget,
             SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
             this,
             SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
+    // clang-format on
+
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
@@ -368,13 +371,15 @@ MainWindow::MainWindow()
         tr("WARNING: You are using an unstable build of KeePassXC!\n"
            "There is a high risk of corruption, maintain a backup of your databases.\n"
            "This version is not meant for production use."),
-        MessageWidget::Warning, -1);
+        MessageWidget::Warning,
+        -1);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
     if (!config()->get("QtErrorMessageShown", false).toBool()) {
         m_ui->globalMessageWidget->showMessage(
             tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!\n"
                "We recommend you use the AppImage available on our downloads page."),
-            MessageWidget::Warning, -1);
+            MessageWidget::Warning,
+            -1);
         config()->set("QtErrorMessageShown", true);
     }
 #endif
@@ -671,10 +676,10 @@ void MainWindow::switchToSettings(bool enabled)
 void MainWindow::switchToPasswordGen(bool enabled)
 {
     if (enabled) {
-      m_ui->passwordGeneratorWidget->loadSettings();
-      m_ui->passwordGeneratorWidget->regeneratePassword();
-      m_ui->passwordGeneratorWidget->setStandaloneMode(true);
-      m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
+        m_ui->passwordGeneratorWidget->loadSettings();
+        m_ui->passwordGeneratorWidget->regeneratePassword();
+        m_ui->passwordGeneratorWidget->setStandaloneMode(true);
+        m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
         switchToDatabases();

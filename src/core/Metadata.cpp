@@ -429,7 +429,7 @@ void Metadata::removeCustomIcon(const QUuid& uuid)
     emit metadataModified();
 }
 
-QUuid Metadata::findCustomIcon(const QImage &candidate)
+QUuid Metadata::findCustomIcon(const QImage& candidate)
 {
     QByteArray hash = hashImage(candidate);
     return m_customIconsHashes.value(hash, QUuid());

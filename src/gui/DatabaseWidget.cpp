@@ -50,8 +50,8 @@
 #include "gui/EntryPreviewWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
-#include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
+#include "gui/TotpSetupDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -155,6 +155,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     addChildWidget(m_csvImportWizard);
     addChildWidget(m_keepass1OpenWidget);
 
+    // clang-format off
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
@@ -177,7 +178,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
-
+    // clang-format on
+    
     connectDatabaseSignals();
 
     m_fileWatchTimer.setSingleShot(true);

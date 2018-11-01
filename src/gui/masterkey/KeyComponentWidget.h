@@ -18,12 +18,12 @@
 #ifndef KEEPASSXC_KEYCOMPONENTWIDGET_H
 #define KEEPASSXC_KEYCOMPONENTWIDGET_H
 
-#include <QWidget>
 #include <QScopedPointer>
+#include <QWidget>
 
 namespace Ui
 {
-class KeyComponentWidget;
+    class KeyComponentWidget;
 }
 class CompositeKey;
 class QStackedWidget;
@@ -31,12 +31,14 @@ class QStackedWidget;
 class KeyComponentWidget : public QWidget
 {
     Q_OBJECT
+    // clang-format off
     Q_PROPERTY(QString componentName READ m_componentName READ componentName
                    WRITE setComponentName NOTIFY nameChanged)
     Q_PROPERTY(QString componentDescription READ m_componentDescription READ componentDescription
                    WRITE setComponentDescription NOTIFY descriptionChanged)
     Q_PROPERTY(bool componentAdded READ m_isComponentAdded READ componentAdded
                    WRITE setComponentAdded NOTIFY componentAddChanged)
+    // clang-format on
 
 public:
     enum Page
@@ -127,4 +129,4 @@ private:
     const QScopedPointer<Ui::KeyComponentWidget> m_ui;
 };
 
-#endif //KEEPASSXC_KEYCOMPONENTWIDGET_H
+#endif // KEEPASSXC_KEYCOMPONENTWIDGET_H

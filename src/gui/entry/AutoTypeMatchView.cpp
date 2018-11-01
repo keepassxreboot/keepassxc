@@ -18,10 +18,10 @@
 
 #include "AutoTypeMatchView.h"
 
+#include "gui/SortFilterHideProxyModel.h"
+
 #include <QHeaderView>
 #include <QKeyEvent>
-
-#include "gui/SortFilterHideProxyModel.h"
 
 AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
     : QTreeView(parent)
@@ -43,8 +43,10 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
     header()->setDefaultSectionSize(150);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
+    // clang-format off
     connect(
         selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
+    // clang-format on
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)

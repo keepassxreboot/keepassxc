@@ -16,24 +16,24 @@
  */
 
 #include "TestCli.h"
+
 #include "config-keepassx-tests.h"
-#include "core/Global.h"
-#include "core/Config.h"
 #include "core/Bootstrap.h"
-#include "core/Tools.h"
+#include "core/Config.h"
+#include "core/Global.h"
 #include "core/PasswordGenerator.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "format/KeePass2.h"
 #include "format/Kdbx3Reader.h"
+#include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Reader.h"
 #include "format/Kdbx4Writer.h"
-#include "format/Kdbx3Writer.h"
 #include "format/KdbxXmlReader.h"
+#include "format/KeePass2.h"
 
-#include "cli/Command.h"
-#include "cli/Utils.h"
 #include "cli/Add.h"
 #include "cli/Clip.h"
+#include "cli/Command.h"
 #include "cli/Diceware.h"
 #include "cli/Edit.h"
 #include "cli/Estimate.h"
@@ -44,12 +44,13 @@
 #include "cli/Merge.h"
 #include "cli/Remove.h"
 #include "cli/Show.h"
+#include "cli/Utils.h"
 
-#include <QFile>
 #include <QClipboard>
+#include <QFile>
 #include <QFuture>
-#include <QtConcurrent>
 #include <QSet>
+#include <QtConcurrent>
 
 #include <cstdio>
 
@@ -130,7 +131,7 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 {
     Utils::Test::setNextPassword("a");
     auto db = QSharedPointer<Database>(Database::unlockFromStdin(m_dbFile->fileName(), "", m_stdoutHandle));
-    m_stdoutFile->seek(ftell(m_stdoutHandle));  // re-synchronize handles
+    m_stdoutFile->seek(ftell(m_stdoutHandle)); // re-synchronize handles
     return db;
 }
 
@@ -159,7 +160,16 @@ void TestCli::testAdd()
     QVERIFY(addCmd.getDescriptionLine().contains(addCmd.name));
 
     Utils::Test::setNextPassword("a");
-    addCmd.execute({"add", "-u", "newuser", "--url", "https://example.com/", "-g", "-l", "20", m_dbFile->fileName(), "/newuser-entry"});
+    addCmd.execute({"add",
+                    "-u",
+                    "newuser",
+                    "--url",
+                    "https://example.com/",
+                    "-g",
+                    "-l",
+                    "20",
+                    m_dbFile->fileName(),
+                    "/newuser-entry"});
     m_stderrFile->reset();
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
@@ -184,7 +194,17 @@ void TestCli::testAdd()
 
     Utils::Test::setNextPassword("a");
     Utils::Test::setNextPassword("newpassword");
-    addCmd.execute({"add", "-u", "newuser2", "--url", "https://example.net/", "-g", "-l", "20", "-p", m_dbFile->fileName(), "/newuser-entry2"});
+    addCmd.execute({"add",
+                    "-u",
+                    "newuser2",
+                    "--url",
+                    "https://example.net/",
+                    "-g",
+                    "-l",
+                    "20",
+                    "-p",
+                    m_dbFile->fileName(),
+                    "/newuser-entry2"});
 
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry2");
@@ -251,8 +271,10 @@ void TestCli::testClip()
 
     // Password with timeout
     Utils::Test::setNextPassword("a");
+    // clang-format off
     QFuture<void> future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
-
+    // clang-format on
+    
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
 
@@ -322,7 +344,9 @@ void TestCli::testEdit()
     QVERIFY(editCmd.getDescriptionLine().contains(editCmd.name));
 
     Utils::Test::setNextPassword("a");
+    // clang-format off
     editCmd.execute({"edit", "-u", "newuser", "--url", "https://otherurl.example.com/", "-t", "newtitle", m_dbFile->fileName(), "/Sample Entry"});
+    // clang-format on
     m_stdoutFile->reset();
     m_stdoutFile->readLine(); // skip prompt line
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully edited entry newtitle.\n"));
@@ -378,54 +402,74 @@ void TestCli::testEstimate_data()
     QTest::addColumn<QString>("log10");
     QTest::addColumn<QStringList>("searchStrings");
 
-    QTest::newRow("Dictionary")
-        << "password" << "8" << "1.0" << "0.3"
-        << QStringList{"Type: Dictionary", "\tpassword"};
+    QTest::newRow("Dictionary") << "password"
+                                << "8"
+                                << "1.0"
+                                << "0.3" << QStringList{"Type: Dictionary", "\tpassword"};
 
-    QTest::newRow("Spatial")
-        << "zxcv" << "4" << "10.3" << "3.1"
-        << QStringList{"Type: Spatial", "\tzxcv"};
+    QTest::newRow("Spatial") << "zxcv"
+                             << "4"
+                             << "10.3"
+                             << "3.1" << QStringList{"Type: Spatial", "\tzxcv"};
 
-    QTest::newRow("Spatial(Rep)")
-        << "sdfgsdfg" << "8" << "11.3" << "3.4"
-        << QStringList{"Type: Spatial(Rep)", "\tsdfgsdfg"};
+    QTest::newRow("Spatial(Rep)") << "sdfgsdfg"
+                                  << "8"
+                                  << "11.3"
+                                  << "3.4" << QStringList{"Type: Spatial(Rep)", "\tsdfgsdfg"};
 
     QTest::newRow("Dictionary / Sequence")
-        << "password123" << "11" << "4.5" << "1.3"
-        << QStringList{"Type: Dictionary", "Type: Sequence", "\tpassword", "\t123"};
+        << "password123"
+        << "11"
+        << "4.5"
+        << "1.3" << QStringList{"Type: Dictionary", "Type: Sequence", "\tpassword", "\t123"};
 
-    QTest::newRow("Dict+Leet")
-        << "p455w0rd" << "8" << "2.5" << "0.7"
-        << QStringList{"Type: Dict+Leet", "\tp455w0rd"};
+    QTest::newRow("Dict+Leet") << "p455w0rd"
+                               << "8"
+                               << "2.5"
+                               << "0.7" << QStringList{"Type: Dict+Leet", "\tp455w0rd"};
 
-    QTest::newRow("Dictionary(Rep)")
-        << "hellohello" << "10" << "7.3" << "2.2"
-        << QStringList{"Type: Dictionary(Rep)", "\thellohello"};
+    QTest::newRow("Dictionary(Rep)") << "hellohello"
+                                     << "10"
+                                     << "7.3"
+                                     << "2.2" << QStringList{"Type: Dictionary(Rep)", "\thellohello"};
 
     QTest::newRow("Sequence(Rep) / Dictionary")
-        << "456456foobar" << "12" << "16.7" << "5.0"
-        << QStringList{"Type: Sequence(Rep)", "Type: Dictionary", "\t456456", "\tfoobar"};
+        << "456456foobar"
+        << "12"
+        << "16.7"
+        << "5.0" << QStringList{"Type: Sequence(Rep)", "Type: Dictionary", "\t456456", "\tfoobar"};
 
     QTest::newRow("Bruteforce(Rep) / Bruteforce")
-        << "xzxzy" << "5" << "16.1" << "4.8"
-        << QStringList{"Type: Bruteforce(Rep)", "Type: Bruteforce", "\txzxz", "\ty"};
+        << "xzxzy"
+        << "5"
+        << "16.1"
+        << "4.8" << QStringList{"Type: Bruteforce(Rep)", "Type: Bruteforce", "\txzxz", "\ty"};
 
     QTest::newRow("Dictionary / Date(Rep)")
-        << "pass20182018" << "12" << "15.1" << "4.56"
-        << QStringList{"Type: Dictionary", "Type: Date(Rep)", "\tpass", "\t20182018"};
+        << "pass20182018"
+        << "12"
+        << "15.1"
+        << "4.56" << QStringList{"Type: Dictionary", "Type: Date(Rep)", "\tpass", "\t20182018"};
 
     QTest::newRow("Dictionary / Date / Bruteforce")
-        << "mypass2018-2" << "12" << "32.9" << "9.9"
-        << QStringList{"Type: Dictionary", "Type: Date", "Type: Bruteforce", "\tmypass", "\t2018", "\t-2"};
+        << "mypass2018-2"
+        << "12"
+        << "32.9"
+        << "9.9" << QStringList{"Type: Dictionary", "Type: Date", "Type: Bruteforce", "\tmypass", "\t2018", "\t-2"};
 
-    QTest::newRow("Strong Password")
-        << "E*!%.Qw{t.X,&bafw)\"Q!ah$%;U/" << "28" << "165.7" << "49.8"
-        << QStringList{"Type: Bruteforce", "\tE*"};
+    QTest::newRow("Strong Password") << "E*!%.Qw{t.X,&bafw)\"Q!ah$%;U/"
+                                     << "28"
+                                     << "165.7"
+                                     << "49.8" << QStringList{"Type: Bruteforce", "\tE*"};
 
     // TODO: detect passphrases and adjust entropy calculation accordingly (issue #2347)
     QTest::newRow("Strong Passphrase")
-        << "squint wooing resupply dangle isolation axis headsman" << "53" << "151.2" << "45.5"
-        << QStringList{"Type: Dictionary", "Type: Bruteforce", "Multi-word extra bits 22.0", "\tsquint", "\t ", "\twooing"};
+        << "squint wooing resupply dangle isolation axis headsman"
+        << "53"
+        << "151.2"
+        << "45.5"
+        << QStringList{
+               "Type: Dictionary", "Type: Bruteforce", "Multi-word extra bits 22.0", "\tsquint", "\t ", "\twooing"};
 }
 
 void TestCli::testEstimate()
@@ -514,31 +558,23 @@ void TestCli::testGenerate_data()
     QTest::newRow("length") << QStringList{"generate", "-L", "13"} << "^.{13}$";
     QTest::newRow("lowercase") << QStringList{"generate", "-L", "14", "-l"} << "^[a-z]{14}$";
     QTest::newRow("uppercase") << QStringList{"generate", "-L", "15", "-u"} << "^[A-Z]{15}$";
-    QTest::newRow("numbers")<< QStringList{"generate", "-L", "16", "-n"} << "^[0-9]{16}$";
-    QTest::newRow("special")
-        << QStringList{"generate", "-L", "200", "-s"}
-        << R"(^[\(\)\[\]\{\}\.\-*|\\,:;"'\/\_!+-<=>?#$%&^`@~]{200}$)";
-    QTest::newRow("special (exclude)")
-        << QStringList{"generate", "-L", "200", "-s" , "-x", "+.?@&"}
-        << R"(^[\(\)\[\]\{\}\.\-*|\\,:;"'\/\_!-<=>#$%^`~]{200}$)";
-    QTest::newRow("extended")
-        << QStringList{"generate", "-L", "50", "-e"}
-        << R"(^[^a-zA-Z0-9\(\)\[\]\{\}\.\-\*\|\\,:;"'\/\_!+-<=>?#$%&^`@~]{50}$)";
+    QTest::newRow("numbers") << QStringList{"generate", "-L", "16", "-n"} << "^[0-9]{16}$";
+    QTest::newRow("special") << QStringList{"generate", "-L", "200", "-s"}
+                             << R"(^[\(\)\[\]\{\}\.\-*|\\,:;"'\/\_!+-<=>?#$%&^`@~]{200}$)";
+    QTest::newRow("special (exclude)") << QStringList{"generate", "-L", "200", "-s", "-x", "+.?@&"}
+                                       << R"(^[\(\)\[\]\{\}\.\-*|\\,:;"'\/\_!-<=>#$%^`~]{200}$)";
+    QTest::newRow("extended") << QStringList{"generate", "-L", "50", "-e"}
+                              << R"(^[^a-zA-Z0-9\(\)\[\]\{\}\.\-\*\|\\,:;"'\/\_!+-<=>?#$%&^`@~]{50}$)";
     QTest::newRow("numbers + lowercase + uppercase")
-        << QStringList{"generate", "-L", "16", "-n", "-u", "-l"}
-        << "^[0-9a-zA-Z]{16}$";
+        << QStringList{"generate", "-L", "16", "-n", "-u", "-l"} << "^[0-9a-zA-Z]{16}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude)")
-        << QStringList{"generate", "-L", "500", "-n", "-u", "-l", "-x", "abcdefg0123@"}
-        << "^[^abcdefg0123@]{500}$";
+        << QStringList{"generate", "-L", "500", "-n", "-u", "-l", "-x", "abcdefg0123@"} << "^[^abcdefg0123@]{500}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude similar)")
-        << QStringList{"generate", "-L", "200", "-n", "-u", "-l", "--exclude-similar"}
-        << "^[^l1IO0]{200}$";
+        << QStringList{"generate", "-L", "200", "-n", "-u", "-l", "--exclude-similar"} << "^[^l1IO0]{200}$";
     QTest::newRow("uppercase + lowercase (every)")
-        << QStringList{"generate", "-L", "2", "-u", "-l", "--every-group"}
-        << "^[a-z][A-Z]|[A-Z][a-z]$";
+        << QStringList{"generate", "-L", "2", "-u", "-l", "--every-group"} << "^[a-z][A-Z]|[A-Z][a-z]$";
     QTest::newRow("numbers + lowercase (every)")
-        << QStringList{"generate", "-L", "2", "-n", "-l", "--every-group"}
-        << "^[a-z][0-9]|[0-9][a-z]$";
+        << QStringList{"generate", "-L", "2", "-n", "-l", "--every-group"} << "^[a-z][0-9]|[0-9][a-z]$";
 }
 
 void TestCli::testGenerate()
@@ -559,7 +595,8 @@ void TestCli::testGenerate()
         QRegularExpression regex(pattern);
         QString password = stream.readLine();
         pos = stream.pos();
-        QVERIFY2(regex.match(password).hasMatch(), qPrintable("Password " + password + " does not match pattern " + pattern));
+        QVERIFY2(regex.match(password).hasMatch(),
+                 qPrintable("Password " + password + " does not match pattern " + pattern));
     }
 }
 
@@ -572,14 +609,15 @@ void TestCli::testList()
     Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", m_dbFile->fileName()});
     m_stdoutFile->reset();
-    m_stdoutFile->readLine();   // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "General/\n"
-                                                 "Windows/\n"
-                                                 "Network/\n"
-                                                 "Internet/\n"
-                                                 "eMail/\n"
-                                                 "Homebanking/\n"));
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "General/\n"
+                        "Windows/\n"
+                        "Network/\n"
+                        "Internet/\n"
+                        "eMail/\n"
+                        "Homebanking/\n"));
 
     // Quiet option
     qint64 pos = m_stdoutFile->pos();
@@ -599,20 +637,21 @@ void TestCli::testList()
     Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", "-R", m_dbFile->fileName()});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "General/\n"
-                                                 "  [empty]\n"
-                                                 "Windows/\n"
-                                                 "  [empty]\n"
-                                                 "Network/\n"
-                                                 "  [empty]\n"
-                                                 "Internet/\n"
-                                                 "  [empty]\n"
-                                                 "eMail/\n"
-                                                 "  [empty]\n"
-                                                 "Homebanking/\n"
-                                                 "  [empty]\n"));
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "General/\n"
+                        "  [empty]\n"
+                        "Windows/\n"
+                        "  [empty]\n"
+                        "Network/\n"
+                        "  [empty]\n"
+                        "Internet/\n"
+                        "  [empty]\n"
+                        "eMail/\n"
+                        "  [empty]\n"
+                        "Homebanking/\n"
+                        "  [empty]\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
@@ -625,7 +664,7 @@ void TestCli::testList()
     Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", m_dbFile->fileName(), "/DoesNotExist/"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Cannot find group /DoesNotExist/.\n"));
@@ -640,7 +679,7 @@ void TestCli::testLocate()
     Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", m_dbFile->fileName(), "Sample"});
     m_stdoutFile->reset();
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n"));
 
     // Quiet option
@@ -654,7 +693,7 @@ void TestCli::testLocate()
     Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", m_dbFile->fileName(), "Does Not Exist"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("No results for that search term.\n"));
@@ -678,14 +717,14 @@ void TestCli::testLocate()
     Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", tmpFile.fileName(), "New"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("/General/New Entry\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     locateCmd.execute({"locate", tmpFile.fileName(), "Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n/General/New Entry\n"));
 }
 
@@ -811,7 +850,7 @@ void TestCli::testRemove()
     Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();    // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully recycled entry Sample Entry.\n"));
 
     auto key = QSharedPointer<CompositeKey>::create();
@@ -831,7 +870,7 @@ void TestCli::testRemove()
     Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();    // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully deleted entry Sample Entry.\n"));
 
     readBack.setFileName(fileCopy.fileName());
@@ -849,7 +888,7 @@ void TestCli::testRemove()
     Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();    // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry /Sample Entry not found.\n"));
@@ -910,12 +949,13 @@ void TestCli::testShow()
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->reset();
-    m_stdoutFile->readLine();   // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Title: Sample Entry\n"
-                                                 "UserName: User Name\n"
-                                                 "Password: Password\n"
-                                                 "URL: http://www.somesite.com/\n"
-                                                 "Notes: Notes\n"));
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: Password\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"));
 
     qint64 pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
@@ -931,22 +971,23 @@ void TestCli::testShow()
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "http://www.somesite.com/\n"));
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "http://www.somesite.com/\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: unknown attribute DoesNotExist.\n"));

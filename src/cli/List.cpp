@@ -49,7 +49,8 @@ int List::execute(const QStringList& arguments)
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
 
-    QCommandLineOption recursiveOption(QStringList() << "R" << "recursive",
+    QCommandLineOption recursiveOption(QStringList() << "R"
+                                                     << "recursive",
                                        QObject::tr("Recursively list the elements of the group."));
     parser.addOption(recursiveOption);
     parser.addHelpOption();

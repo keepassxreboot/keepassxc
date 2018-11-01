@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BrowserAction.h"
 #include "BrowserSettings.h"
@@ -167,9 +167,10 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
     QMutexLocker locker(&m_mutex);
     if (key.compare(m_clientPublicKey, Qt::CaseSensitive) == 0) {
-        // Check for identification key. If it's not found, ensure backwards compatibility and use the current public key
+        // Check for identification key. If it's not found, ensure backwards compatibility and use the current public
+        // key
         const QString idKey = decrypted.value("idKey").toString();
-        const QString id = m_browserService.storeKey((idKey.isEmpty() ? key: idKey));
+        const QString id = m_browserService.storeKey((idKey.isEmpty() ? key : idKey));
         if (id.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
         }

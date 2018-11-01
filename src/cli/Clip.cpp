@@ -50,12 +50,13 @@ int Clip::execute(const QStringList& arguments)
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
 
-    QCommandLineOption totp(QStringList() << "t"  << "totp",
+    QCommandLineOption totp(QStringList() << "t"
+                                          << "totp",
                             QObject::tr("Copy the current TOTP to the clipboard."));
     parser.addOption(totp);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
-    parser.addPositionalArgument("timeout",
-                                 QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]");
+    parser.addPositionalArgument(
+        "timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]");
     parser.addHelpOption();
     parser.process(arguments);
 

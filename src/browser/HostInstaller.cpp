@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "HostInstaller.h"
 #include "config-keepassx.h"
@@ -46,8 +46,10 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts")
 #elif defined(Q_OS_WIN)
+    // clang-format off
     , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
     , TARGET_DIR_CHROMIUM("HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
+    // clang-format on
     , TARGET_DIR_FIREFOX("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
     , TARGET_DIR_VIVALDI(TARGET_DIR_CHROME)
     , TARGET_DIR_TOR_BROWSER(TARGET_DIR_FIREFOX)
@@ -163,14 +165,14 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
     case SupportedBrowsers::VIVALDI:
         return TARGET_DIR_VIVALDI;
     case SupportedBrowsers::TOR_BROWSER:
-	    return TARGET_DIR_TOR_BROWSER;
+        return TARGET_DIR_TOR_BROWSER;
     default:
         return QString();
     }
 }
 
 /**
- * Returns the browser name 
+ * Returns the browser name
  * Needed for Windows to separate Chromium- or Firefox-based scripts
  *
  * @param browser Selected browser
@@ -188,7 +190,7 @@ QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
     case SupportedBrowsers::VIVALDI:
         return "vivaldi";
     case SupportedBrowsers::TOR_BROWSER:
-	    return "tor-browser";
+        return "tor-browser";
     default:
         return QString();
     }

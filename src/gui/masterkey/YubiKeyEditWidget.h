@@ -23,7 +23,7 @@
 
 namespace Ui
 {
-class YubiKeyEditWidget;
+    class YubiKeyEditWidget;
 }
 
 class YkChallengeResponseKey;
@@ -57,4 +57,4 @@ private:
     bool m_isDetected = false;
 };
 
-#endif //KEEPASSXC_YUBIKEYEDITWIDGET_H
+#endif // KEEPASSXC_YUBIKEYEDITWIDGET_H

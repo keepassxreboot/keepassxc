@@ -84,7 +84,7 @@ void Config::upgrade()
 {
     for (const auto& setting : deprecationMap.keys()) {
         if (m_settings->contains(setting)) {
-            if(!deprecationMap.value(setting).isEmpty()) {
+            if (!deprecationMap.value(setting).isEmpty()) {
                 // Add entry with new name and old entry's value
                 m_settings->setValue(deprecationMap.value(setting), m_settings->value(setting));
             }

@@ -48,4 +48,4 @@ protected:
     QSharedPointer<Database> m_db;
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSWIDGET_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGET_H

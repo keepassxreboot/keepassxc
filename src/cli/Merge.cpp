@@ -47,12 +47,14 @@ int Merge::execute(const QStringList& arguments)
     parser.addPositionalArgument("database2", QObject::tr("Path of the database to merge from."));
     parser.addOption(Command::QuietOption);
 
-    QCommandLineOption samePasswordOption(QStringList() << "s" << "same-credentials",
+    QCommandLineOption samePasswordOption(QStringList() << "s"
+                                                        << "same-credentials",
                                           QObject::tr("Use the same credentials for both database files."));
     parser.addOption(samePasswordOption);
     parser.addOption(Command::KeyFileOption);
 
-    QCommandLineOption keyFileFromOption(QStringList() << "f" << "key-file-from",
+    QCommandLineOption keyFileFromOption(QStringList() << "f"
+                                                       << "key-file-from",
                                          QObject::tr("Key file of the database to merge from."),
                                          QObject::tr("path"));
     parser.addOption(keyFileFromOption);

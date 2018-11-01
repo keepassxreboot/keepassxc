@@ -112,7 +112,7 @@ namespace
 
         return QByteArray::fromHex(QString(iqmp_hex).toLatin1());
     }
-}
+} // namespace
 
 bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
 {

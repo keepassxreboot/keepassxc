@@ -22,7 +22,7 @@
 
 class NewDatabaseWizardPageEncryption : public NewDatabaseWizardPage
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizardPageEncryption(QWidget* parent = nullptr);
@@ -30,4 +30,4 @@ public:
     ~NewDatabaseWizardPageEncryption() override;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H

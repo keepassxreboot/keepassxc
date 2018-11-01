@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
+#include <QButtonGroup>
 #include <QModelIndex>
 #include <QScopedPointer>
 #include <QButtonGroup>
@@ -52,7 +53,7 @@ namespace Ui
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditWidget;
-}
+} // namespace Ui
 
 class EditEntryWidget : public EditWidget
 {
