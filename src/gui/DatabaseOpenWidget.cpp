@@ -174,7 +174,7 @@ QSharedPointer<Database> DatabaseOpenWidget::database()
 
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
-    if (!pw.isNull()) {
+    if (!pw.isEmpty()) {
         m_ui->editPassword->setText(pw);
     }
     if (!keyFile.isEmpty()) {

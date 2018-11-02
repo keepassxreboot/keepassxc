@@ -731,7 +731,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
         }
         if (m_xml.name() == "Binary") {
             QPair<QString, QString> ref = parseEntryBinary(entry);
-            if (!ref.first.isNull() && !ref.second.isNull()) {
+            if (!ref.first.isEmpty() && !ref.second.isEmpty()) {
                 binaryRefs.append(ref);
             }
             continue;
