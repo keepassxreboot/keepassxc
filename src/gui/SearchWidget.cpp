@@ -18,6 +18,7 @@
 
 #include "SearchWidget.h"
 #include "ui_SearchWidget.h"
+#include "ui_SearchHelpWidget.h"
 
 #include <QKeyEvent>
 #include <QMenu>
@@ -26,6 +27,7 @@
 
 #include "core/Config.h"
 #include "core/FilePath.h"
+#include "gui/widgets/PopupHelpWidget.h"
 
 SearchWidget::SearchWidget(QWidget* parent)
     : QWidget(parent)
@@ -35,11 +37,17 @@ SearchWidget::SearchWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    m_helpWidget = new PopupHelpWidget(m_ui->searchEdit);
+    m_helpWidget->setOffset(QPoint(0,1));
+    Ui::SearchHelpWidget helpUi;
+    helpUi.setupUi(m_helpWidget);
+
     m_searchTimer->setSingleShot(true);
     m_clearSearchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->clearIcon, SIGNAL(triggered(bool)), m_ui->searchEdit, SLOT(clear()));
+    connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), m_ui->searchEdit, SLOT(clear()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
@@ -65,6 +73,9 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_ui->searchIcon->setMenu(searchMenu);
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
+    m_ui->helpIcon->setIcon(filePath()->icon("actions", "system-help"));
+    m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
+
     m_ui->clearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
     m_ui->clearIcon->setVisible(false);
     m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
@@ -86,13 +97,6 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
-        } else if (keyEvent->matches(QKeySequence::Copy)) {
-            // If Control+C is pressed in the search edit when no text
-            // is selected, copy the password of the current entry
-            if (!m_ui->searchEdit->hasSelectedText()) {
-                emit copyPressed();
-                return true;
-            }
         } else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
             if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
                 // If down is pressed at EOL, move the focus to the entry view
@@ -111,7 +115,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
         m_clearSearchTimer->stop();
     }
 
-    return QObject::eventFilter(obj, event);
+    return QWidget::eventFilter(obj, event);
 }
 
 void SearchWidget::connectSignals(SignalMultiplexer& mx)
@@ -187,4 +191,13 @@ void SearchWidget::searchFocus()
 {
     m_ui->searchEdit->setFocus();
     m_ui->searchEdit->selectAll();
+}
+
+void SearchWidget::toggleHelp()
+{
+    if (m_helpWidget->isVisible()) {
+        m_helpWidget->hide();
+    } else {
+        m_helpWidget->show();
+    }
 }

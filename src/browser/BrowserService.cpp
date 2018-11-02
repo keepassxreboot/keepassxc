@@ -88,7 +88,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
-        KEEPASSXC_MAIN_WINDOW->bringToFront();
+        getMainWindow()->bringToFront();
         m_bringToFrontRequested = true;
     }
 
@@ -901,7 +901,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         if (m_bringToFrontRequested) {
-            KEEPASSXC_MAIN_WINDOW->lower();
+            getMainWindow()->lower();
             m_bringToFrontRequested = false;
         }
         emit databaseUnlocked();

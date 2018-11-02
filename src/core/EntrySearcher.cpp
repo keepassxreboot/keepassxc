@@ -96,6 +96,7 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
             found = !attachments.filter(term->regex).empty();
             break;
         default:
+            // Terms without a specific field try to match title, username, url, and notes
             found = term->regex.match(entry->resolvePlaceholder(entry->title())).hasMatch() ||
                     term->regex.match(entry->resolvePlaceholder(entry->username())).hasMatch() ||
                     term->regex.match(entry->resolvePlaceholder(entry->url())).hasMatch() ||
@@ -139,7 +140,7 @@ QList<QSharedPointer<EntrySearcher::SearchTerm> > EntrySearcher::parseSearchTerm
         term->regex = Tools::convertToRegex(term->word, !mods.contains("*"), mods.contains("+"), m_caseSensitive);
 
         // Exclude modifier
-        term->exclude = mods.contains("-");
+        term->exclude = mods.contains("-") || mods.contains("!");
 
         // Determine the field to search
         QString field = result.captured(2);

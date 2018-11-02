@@ -802,10 +802,22 @@ void TestGui::testSearch()
     auto* clearButton = searchWidget->findChild<QAction*>("clearIcon");
     QVERIFY(!clearButton->isVisible());
 
+    auto* helpButton = searchWidget->findChild<QAction*>("helpIcon");
+    auto* helpPanel = searchWidget->findChild<QWidget*>("SearchHelpWidget");
+    QVERIFY(helpButton->isVisible());
+    QVERIFY(!helpPanel->isVisible());
+
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
     QTRY_VERIFY(!clearButton->isVisible());
+    // Show/Hide search help
+    helpButton->trigger();
+    QTRY_VERIFY(helpPanel->isVisible());
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(helpPanel->isVisible());
+    helpButton->trigger();
+    QTRY_VERIFY(!helpPanel->isVisible());
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));

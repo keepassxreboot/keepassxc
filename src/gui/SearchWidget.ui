@@ -81,6 +81,11 @@
     <string>Clear</string>
    </property>
   </action>
+  <action name="helpIcon">
+   <property name="text">
+    <string>Search Help</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>searchEdit</tabstop>
