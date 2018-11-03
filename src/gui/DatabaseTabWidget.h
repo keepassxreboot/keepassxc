@@ -32,19 +32,6 @@ class DatabaseOpenWidget;
 class QFile;
 class MessageWidget;
 
-struct DatabaseManagerStruct
-{
-    DatabaseManagerStruct();
-
-    DatabaseWidget* dbWidget;
-    QFileInfo fileInfo;
-    bool modified;
-    bool readOnly;
-    int saveAttempts;
-};
-
-Q_DECLARE_TYPEINFO(DatabaseManagerStruct, Q_MOVABLE_TYPE);
-
 class DatabaseTabWidget : public QTabWidget
 {
     Q_OBJECT
@@ -52,15 +39,19 @@ class DatabaseTabWidget : public QTabWidget
 public:
     explicit DatabaseTabWidget(QWidget* parent = nullptr);
     ~DatabaseTabWidget() override;
-    void openDatabase(const QString& fileName, const QString& pw = QString(), const QString& keyFile = QString());
-    void mergeDatabase(const QString& fileName);
+    void mergeDatabase(const QString& filePath);
     DatabaseWidget* currentDatabaseWidget();
     bool hasLockableDatabases() const;
-    DatabaseManagerStruct indexDatabaseManagerStruct(int index);
 
     static const int LastDatabasesCount;
 
 public slots:
+    void addDatabaseTab(const QString& filePath);
+    bool closeDatabaseTab(int index);
+    bool closeDatabaseTab(const QString& filePath);
+    bool closeDatabaseTab(DatabaseWidget* dbWidget);
+    bool closeAllDatabaseTabs();
+
     void newDatabase();
     void openDatabase();
     void importCsv();
@@ -71,7 +62,6 @@ public slots:
     void exportToCsv();
     bool closeDatabase(int index = -1);
     void closeDatabaseFromSender();
-    bool closeAllDatabases();
     void changeMasterKey();
     void changeDatabaseSettings();
     bool readOnly(int index = -1);
@@ -107,16 +97,14 @@ private:
     Database* execNewDatabaseWizard();
     bool saveDatabase(Database* db, QString filePath = "");
     bool saveDatabaseAs(Database* db);
-    bool closeDatabase(Database* db);
+    bool closeDatabaseTab(Database* db);
     void deleteDatabase(Database* db);
     int databaseIndex(Database* db);
     Database* indexDatabase(int index);
     Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
-    void insertDatabase(Database* db, const DatabaseManagerStruct& dbStruct);
     void updateLastDatabases(const QString& filename);
     void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
-    QHash<Database*, DatabaseManagerStruct> m_dbList;
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbPendingLock;
 };

@@ -1,3 +1,5 @@
+#include <utility>
+
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
@@ -640,10 +642,10 @@ QString EditEntryWidget::entryTitle() const
     }
 }
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, Database* database)
+void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database)
 {
     m_entry = entry;
-    m_database = database;
+    m_database = std::move(database);
     m_create = create;
     m_history = history;
 
@@ -667,7 +669,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     setUnsavedChanges(m_create);
 }
 
-void EditEntryWidget::setForms(const Entry* entry, bool restore)
+void EditEntryWidget::setForms(Entry* entry, bool restore)
 {
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameEdit->setReadOnly(m_history);
@@ -867,7 +869,7 @@ void EditEntryWidget::acceptEntry()
     }
 }
 
-void EditEntryWidget::updateEntryData(Entry* entry) const
+void EditEntryWidget::updateEntryData(Entry*) const
 {
     QRegularExpression newLineRegex("(?:\r?\n|\r)");
 
@@ -969,11 +971,11 @@ bool EditEntryWidget::hasBeenModified() const
     }
 
     // check if updating the entry would modify it
-    QScopedPointer<Entry> entry(new Entry());
-    entry->copyDataFrom(m_entry);
+    auto* entry = new Entry();
+    entry->copyDataFrom(m_entry.data());
 
     entry->beginUpdate();
-    updateEntryData(entry.data());
+    updateEntryData(entry);
     return entry->endUpdate();
 }
 
@@ -1256,17 +1258,13 @@ void EditEntryWidget::deleteHistoryEntry()
 void EditEntryWidget::deleteAllHistoryEntries()
 {
     m_historyModel->deleteAll();
-    if (m_historyModel->rowCount() > 0) {
-        m_historyUi->deleteAllButton->setEnabled(true);
-    } else {
-        m_historyUi->deleteAllButton->setEnabled(false);
-    }
+    m_historyUi->deleteAllButton->setEnabled(m_historyModel->rowCount() > 0);
     setUnsavedChanges(true);
 }
 
 QMenu* EditEntryWidget::createPresetsMenu()
 {
-    QMenu* expirePresetsMenu = new QMenu(this);
+    auto* expirePresetsMenu = new QMenu(this);
     expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
@@ -1277,9 +1275,9 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 6))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
     expirePresetsMenu->addSeparator();
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
     return expirePresetsMenu;
 }
 

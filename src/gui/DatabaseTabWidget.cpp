@@ -41,14 +41,6 @@
 #include "gui/group/GroupView.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 
-DatabaseManagerStruct::DatabaseManagerStruct()
-    : dbWidget(nullptr)
-    , modified(false)
-    , readOnly(false)
-    , saveAttempts(0)
-{
-}
-
 const int DatabaseTabWidget::LastDatabasesCount = 5;
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
@@ -56,25 +48,19 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
     , m_dbPendingLock(nullptr)
 {
-    DragTabBar* tabBar = new DragTabBar(this);
+    auto* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
     setDocumentMode(true);
 
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
-    connect(
-        this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
+    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
 {
-    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
-    while (i.hasNext()) {
-        i.next();
-        deleteDatabase(i.key());
-    }
 }
 
 void DatabaseTabWidget::toggleTabbar()
@@ -144,65 +130,33 @@ void DatabaseTabWidget::openDatabase()
     }
 }
 
-void DatabaseTabWidget::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
+/**
+ * Add a new database tab or switch to an existing one if the
+ * database has been opened already.
+ *
+ * @param filePath database file path
+ */
+void DatabaseTabWidget::addDatabaseTab(const QString& filePath)
 {
-    QFileInfo fileInfo(fileName);
+    QFileInfo fileInfo(filePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
     if (canonicalFilePath.isEmpty()) {
-        emit messageGlobal(tr("File not found!"), MessageWidget::Error);
+        emit messageGlobal(tr("The database file does not exist or is not accessible."), MessageWidget::Error);
         return;
     }
 
-    QHashIterator<Database*, DatabaseManagerStruct> i(m_dbList);
-    while (i.hasNext()) {
-        i.next();
-        if (i.value().fileInfo.canonicalFilePath() == canonicalFilePath) {
-            if (!i.value().dbWidget->dbHasKey() && !(pw.isNull() && keyFile.isEmpty())) {
-                // If the database is locked and a pw or keyfile is provided, unlock it
-                i.value().dbWidget->switchToOpenDatabase(i.value().fileInfo.absoluteFilePath(), pw, keyFile);
-            } else {
-                setCurrentIndex(databaseIndex(i.key()));
-            }
+    for (auto* w: children()) {
+        auto* dbWidget = qobject_cast<DatabaseWidget*>(w);
+        Q_ASSERT(dbWidget);
+        if (dbWidget && dbWidget->databaseFileName() == filePath) {
+            // switch to existing tab if file is already open
+            setCurrentIndex(indexOf(dbWidget));
             return;
         }
     }
 
-    DatabaseManagerStruct dbStruct;
-
-    // test if we can read/write or read the file
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadWrite)) {
-        if (!file.open(QIODevice::ReadOnly)) {
-            // can't open
-            emit messageGlobal(tr("Unable to open the database.").append("\n").append(file.errorString()),
-                               MessageWidget::Error);
-            return;
-        } else {
-            // can only open read-only
-            dbStruct.readOnly = true;
-        }
-    }
-    file.close();
-
-    Database* db = new Database();
-    dbStruct.dbWidget = new DatabaseWidget(db, this);
-    dbStruct.fileInfo = fileInfo;
-
-    insertDatabase(db, dbStruct);
-
-    if (dbStruct.readOnly) {
-        emit messageTab(tr("File opened in read only mode."), MessageWidget::Warning);
-    }
-
-    updateLastDatabases(dbStruct.fileInfo.absoluteFilePath());
-
-    if (!pw.isNull() || !keyFile.isEmpty()) {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileInfo.absoluteFilePath(), pw, keyFile);
-    } else {
-        dbStruct.dbWidget->switchToOpenDatabase(dbStruct.fileInfo.absoluteFilePath());
-    }
-
-    emit messageDismissTab();
+    auto* databaseWidget = new DatabaseWidget(filePath, this);
+    addTab(databaseWidget, fileInfo.fileName());
 }
 
 void DatabaseTabWidget::importCsv()
@@ -263,9 +217,50 @@ void DatabaseTabWidget::importKeePass1Database()
     dbStruct.dbWidget->switchToImportKeepass1(fileName);
 }
 
-bool DatabaseTabWidget::closeDatabase(Database* db)
+/**
+ * @see DatabaseTabWidget::removeDatabaseTab(DatabaseWidget*)
+ *
+ * @param index index of the database tab to close
+ * @return true if database was closed successully
+ */
+bool DatabaseTabWidget::closeDatabaseTab(int index)
 {
-    Q_ASSERT(db);
+    return closeDatabaseTab(qobject_cast<DatabaseWidget*>(widget(index)));
+}
+
+/**
+ * @see DatabaseTabWidget::removeDatabaseTab(DatabaseWidget*)
+ *
+ * @param filePath file path of the database to close
+ * @return true if database was closed successully
+ */
+bool DatabaseTabWidget::closeDatabaseTab(const QString& filePath)
+{
+    return closeDatabaseTab(Database::databaseByFilePath(filePath, nullptr));
+}
+
+/**
+ * Attempt to close a database and remove its tab afterwards.
+ *
+ * @param dbWidget \link DatabaseWidget to close
+ * @return true if database was closed successully
+ */
+bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
+{
+    int tabIndex = indexOf(dbWidget);
+    if (!dbWidget || tabIndex < 0) {
+        return false;
+    }
+
+    if (!dbWidget->close()) {
+        return false;
+    }
+
+    removeTab(tabIndex);
+    return true;
+}
+{
+    Q_ASSERT(db);removeTab(1)
 
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
     int index = databaseIndex(db);
@@ -314,32 +309,20 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
     return true;
 }
 
-void DatabaseTabWidget::deleteDatabase(Database* db)
+/**
+ * Attempt to close all opened databases.
+ * The attempt will be aborted with the first database that cannot be closed.
+ *
+ * @return true if all databases could be closed.
+ */
+bool DatabaseTabWidget::closeAllDatabaseTabs()
 {
-    const DatabaseManagerStruct dbStruct = m_dbList.value(db);
-    bool emitDatabaseWithFileClosed = dbStruct.fileInfo.exists() && !dbStruct.readOnly;
-    QString filePath = dbStruct.fileInfo.absoluteFilePath();
-
-    int index = databaseIndex(db);
-
-    removeTab(index);
-    toggleTabbar();
-    m_dbList.remove(db);
-    delete dbStruct.dbWidget;
-    delete db;
-
-    if (emitDatabaseWithFileClosed) {
-        emit databaseWithFileClosed(filePath);
-    }
-}
-
-bool DatabaseTabWidget::closeAllDatabases()
-{
-    while (!m_dbList.isEmpty()) {
-        if (!closeDatabase()) {
+    while (count() > 0) {
+        if (!closeDatabaseTab(0)) {
             return false;
         }
     }
+
     return true;
 }
 
@@ -440,17 +423,6 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
     }
 }
 
-bool DatabaseTabWidget::closeDatabase(int index)
-{
-    if (index == -1) {
-        index = currentIndex();
-    }
-
-    setCurrentIndex(index);
-
-    return closeDatabase(indexDatabase(index));
-}
-
 void DatabaseTabWidget::closeDatabaseFromSender()
 {
     Q_ASSERT(sender());
@@ -458,7 +430,7 @@ void DatabaseTabWidget::closeDatabaseFromSender()
     Database* db = databaseFromDatabaseWidget(dbWidget);
     int index = databaseIndex(db);
     setCurrentIndex(index);
-    closeDatabase(db);
+    closeDatabaseTab(db);
 }
 
 bool DatabaseTabWidget::saveDatabase(int index)

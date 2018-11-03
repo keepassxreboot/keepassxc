@@ -284,7 +284,7 @@ void TestKeePass1Reader::reopenDatabase(Database* db, const QString& password, c
     }
 
     KeePass2Reader reader;
-    QScopedPointer<Database> newDb(reader.readDatabase(&buffer, key));
+    QScopedPointer<Database> newDb(reader.readDatabase(QSharedPointer<const CompositeKey>(), &buffer, key));
     QVERIFY(newDb);
     QVERIFY(!reader.hasError());
 }

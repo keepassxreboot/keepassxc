@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,50 +18,40 @@
 
 #include "Database.h"
 
-#include <QDebug>
-#include <QFile>
-#include <QSaveFile>
-#include <QTemporaryFile>
-#include <QTextStream>
-#include <QTimer>
-#include <QXmlStreamReader>
-#include <utility>
-
 #include "cli/Utils.h"
+#include "cli/TextStream.h"
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
-#include "crypto/kdf/AesKdf.h"
-#include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-QHash<QUuid, Database*> Database::m_uuidMap;
+#include <QFile>
+#include <QSaveFile>
+#include <QTemporaryFile>
+#include <QTimer>
+#include <QXmlStreamReader>
+#include <QFileInfo>
+
+QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
+QHash<QString, QPointer<Database>> Database::s_filePathMap;
 
 Database::Database()
     : m_metadata(new Metadata(this))
+    , m_data()
     , m_rootGroup(nullptr)
     , m_timer(new QTimer(this))
     , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
-    m_data.cipher = KeePass2::CIPHER_AES256;
-    m_data.compressionAlgo = CompressionGZip;
-
-    // instantiate default AES-KDF with legacy KDBX3 flag set
-    // KDBX4+ will re-initialize the KDF using parameters read from the KDBX file
-    m_data.kdf = QSharedPointer<AesKdf>::create(true);
-    m_data.kdf->randomizeSeed();
-    m_data.hasKey = false;
-
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
     m_timer->setSingleShot(true);
 
-    m_uuidMap.insert(m_uuid, this);
+    s_uuidMap.insert(m_uuid, this);
 
     connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modifiedImmediate()));
     connect(m_metadata, SIGNAL(nameTextChanged()), this, SIGNAL(nameTextChanged()));
@@ -69,9 +59,248 @@ Database::Database()
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }
 
+Database::Database(const QString& filePath)
+    : Database()
+{
+    setFilePath(filePath);
+}
+
 Database::~Database()
 {
-    m_uuidMap.remove(m_uuid);
+    s_uuidMap.remove(m_uuid);
+}
+
+QUuid Database::uuid() const
+{
+    return m_uuid;
+}
+
+/**
+ * Open the database from a previously specified file.
+ * Unless `readOnly` is set to false, the database will be opened in
+ * read-write mode and fall back to read-only if that is not possible.
+ *
+ * @param key composite key for unlocking the database
+ * @param readOnly open in read-only mode
+ * @param error error message in case of failure
+ * @return true on success
+ */
+bool Database::open(QSharedPointer<const CompositeKey> key, bool readOnly, QString* error)
+{
+    Q_ASSERT(!m_data.filePath.isEmpty());
+    if (m_data.filePath.isEmpty()) {
+        return false;
+    }
+    open(m_data.filePath, std::move(key), readOnly, error);
+}
+
+/**
+ * Open the database from a file.
+ * Unless `readOnly` is set to false, the database will be opened in
+ * read-write mode and fall back to read-only if that is not possible.
+ *
+ * @param filePath path to the file
+ * @param key composite key for unlocking the database
+ * @param readOnly open in read-only mode
+ * @param error error message in case of failure
+ * @return true on success
+ */
+bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, bool readOnly, QString* error)
+{
+    QFile dbFile(filePath);
+    if (!dbFile.exists()) {
+        if (error) {
+            *error = tr("File %1 does not exist.").arg(filePath);
+        }
+        return false;
+    }
+
+    if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
+        readOnly = true;
+    }
+
+    if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
+        if (error) {
+            *error = tr("Unable to open file %1.").arg(filePath);
+        }
+        return false;
+    }
+
+    KeePass2Reader reader;
+    bool ok = reader.readDatabase(&dbFile, std::move(key), this);
+    if (reader.hasError()) {
+        if (error) {
+            *error = tr("Error while reading the database: %1").arg(reader.errorString());
+        }
+        return false;
+    }
+
+    setReadOnly(readOnly);
+    setFilePath(filePath);
+    dbFile.close();
+
+    return ok;
+}
+
+/**
+ * Save the database back to the file is has been opened from.
+ * This method behaves the same as its overloads.
+ *
+ * @see Database::save(const QString&, bool, bool, QString*)
+ *
+ * @param atomic Use atomic file transactions
+ * @param backup Backup the existing database file, if exists
+ * @param error error message in case of failure
+ * @return true on success
+ */
+bool Database::save(bool atomic, bool backup, QString* error)
+{
+    Q_ASSERT(!m_data.filePath.isEmpty());
+    if (m_data.filePath.isEmpty()) {
+        if (error) {
+            *error = tr("Could not save, database has no file name.");
+        }
+        return false;
+    }
+
+    return save(m_data.filePath, atomic, backup, error);
+}
+
+/**
+ * Save the database to a file.
+ *
+ * This function uses QTemporaryFile instead of QSaveFile due to a bug
+ * in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may prevent
+ * the QSaveFile from renaming itself when using Dropbox, Drive, or OneDrive.
+ *
+ * The risk in using QTemporaryFile is that the rename function is not atomic
+ * and may result in loss of data if there is a crash or power loss at the
+ * wrong moment.
+ *
+ * @param filePath Absolute path of the file to save
+ * @param atomic Use atomic file transactions
+ * @param backup Backup the existing database file, if exists
+ * @param error error message in case of failure
+ * @return true on success
+ */
+bool Database::save(const QString& filePath, bool atomic, bool backup, QString* error)
+{
+    Q_ASSERT(!m_data.isReadOnly);
+    if (m_data.isReadOnly) {
+        return false;
+    }
+
+    if (atomic) {
+        QSaveFile saveFile(filePath);
+        if (saveFile.open(QIODevice::WriteOnly)) {
+            // write the database to the file
+            if (!writeDatabase(&saveFile, error)) {
+                return false;
+            }
+
+            if (backup) {
+                backupDatabase(filePath);
+            }
+
+            if (saveFile.commit()) {
+                // successfully saved database file
+                setFilePath(filePath);
+                return true;
+            }
+        }
+        if (error) {
+            *error = saveFile.errorString();
+        }
+    } else {
+        QTemporaryFile tempFile;
+        if (tempFile.open()) {
+            // write the database to the file
+            if (!writeDatabase(&tempFile, error)) {
+                return false;
+            }
+
+            tempFile.close(); // flush to disk
+
+            if (backup) {
+                backupDatabase(filePath);
+            }
+
+            // Delete the original db and move the temp file in place
+            QFile::remove(filePath);
+#ifdef Q_OS_LINUX
+            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
+            if (tempFile.copy(filePath)) {
+                // successfully saved database file
+                return true;
+            }
+#else
+            if (tempFile.rename(filePath)) {
+                // successfully saved database file
+                tempFile.setAutoRemove(false);
+                setFilePath(filePath);
+                return true;
+            }
+#endif
+        }
+        if (error) {
+            *error = tempFile.errorString();
+        }
+    }
+
+    // Saving failed
+    return false;
+}
+
+bool Database::writeDatabase(QIODevice* device, QString* error)
+{
+    Q_ASSERT(!m_data.isReadOnly);
+    if (m_data.isReadOnly) {
+        if (error) {
+            *error = tr("File cannot be written as it is opened in read-only mode.");
+        }
+        return false;
+    }
+
+    KeePass2Writer writer;
+    setEmitModified(false);
+    writer.writeDatabase(device, this);
+    setEmitModified(true);
+
+    if (writer.hasError()) {
+        // the writer failed
+        if (error) {
+            *error = writer.errorString();
+        }
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Remove the old backup and replace it with a new one
+ * backups are named <filename>.old.kdbx
+ *
+ * @param filePath Path to the file to backup
+ * @return true on success
+ */
+bool Database::backupDatabase(const QString& filePath)
+{
+    QString backupFilePath = filePath;
+    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
+    backupFilePath.replace(re, ".old.kdbx");
+    QFile::remove(backupFilePath);
+    return QFile::copy(filePath, backupFilePath);
+}
+
+bool Database::isReadOnly() const
+{
+    return m_data.isReadOnly;
+}
+
+void Database::setReadOnly(bool readOnly)
+{
+    m_data.isReadOnly = readOnly;
 }
 
 Group* Database::rootGroup()
@@ -84,6 +313,13 @@ const Group* Database::rootGroup() const
     return m_rootGroup;
 }
 
+/**
+ * Sets group as the root group and takes ownership of it.
+ * Warning: Be careful when calling this method as it doesn't
+ *          emit any notifications so e.g. models aren't updated.
+ *          The caller is responsible for cleaning up the previous
+            root group.
+ */
 void Database::setRootGroup(Group* group)
 {
     Q_ASSERT(group);
@@ -104,12 +340,23 @@ const Metadata* Database::metadata() const
 
 QString Database::filePath() const
 {
-    return m_filePath;
+    return m_data.filePath;
 }
 
 void Database::setFilePath(const QString& filePath)
 {
-    m_filePath = filePath;
+    if (filePath == m_data.filePath) {
+        return;
+    }
+
+    if (s_filePathMap.contains(m_data.filePath)) {
+        s_filePathMap.remove(m_data.filePath);
+    }
+    QString oldPath = m_data.filePath;
+    m_data.filePath = filePath;
+    s_filePathMap.insert(m_data.filePath, this);
+
+    emit filePathChanged(oldPath, filePath);
 }
 
 Entry* Database::resolveEntry(const QUuid& uuid)
@@ -318,6 +565,8 @@ void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
  */
 bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime, bool updateTransformSalt)
 {
+    Q_ASSERT(!m_data.isReadOnly);
+
     if (!key) {
         m_data.key.reset();
         m_data.transformedMasterKey = {};
@@ -388,11 +637,13 @@ const QVariantMap& Database::publicCustomData() const
 
 void Database::setPublicCustomData(const QVariantMap& customData)
 {
+    Q_ASSERT(!m_data.isReadOnly);
     m_data.publicCustomData = customData;
 }
 
 void Database::createRecycleBin()
 {
+    Q_ASSERT(!m_data.isReadOnly);
     Group* recycleBin = Group::createRecycleBin();
     recycleBin->setParent(rootGroup());
     m_metadata->setRecycleBin(recycleBin);
@@ -400,6 +651,7 @@ void Database::createRecycleBin()
 
 void Database::recycleEntry(Entry* entry)
 {
+    Q_ASSERT(!m_data.isReadOnly);
     if (m_metadata->recycleBinEnabled()) {
         if (!m_metadata->recycleBin()) {
             createRecycleBin();
@@ -412,6 +664,7 @@ void Database::recycleEntry(Entry* entry)
 
 void Database::recycleGroup(Group* group)
 {
+    Q_ASSERT(!m_data.isReadOnly);
     if (m_metadata->recycleBinEnabled()) {
         if (!m_metadata->recycleBin()) {
             createRecycleBin();
@@ -424,6 +677,7 @@ void Database::recycleGroup(Group* group)
 
 void Database::emptyRecycleBin()
 {
+    Q_ASSERT(!m_data.isReadOnly);
     if (m_metadata->recycleBinEnabled() && m_metadata->recycleBin()) {
         // destroying direct entries of the recycle bin
         QList<Entry*> subEntries = m_metadata->recycleBin()->entries();
@@ -440,6 +694,7 @@ void Database::emptyRecycleBin()
 
 void Database::setEmitModified(bool value)
 {
+    Q_ASSERT(!m_data.isReadOnly);
     if (m_emitModified && !value) {
         m_timer->stop();
     }
@@ -449,21 +704,32 @@ void Database::setEmitModified(bool value)
 
 void Database::markAsModified()
 {
+    Q_ASSERT(!m_data.isReadOnly);
     emit modified();
 }
 
-const QUuid& Database::uuid()
-{
-    return m_uuid;
-}
-
+/**
+ * @param uuid UUID of the database
+ * @return pointer to the database or nullptr if no such database exists
+ */
 Database* Database::databaseByUuid(const QUuid& uuid)
 {
-    return m_uuidMap.value(uuid, 0);
+    return s_uuidMap.value(uuid, nullptr);
+}
+
+/**
+ * @param filePath file path of the database
+ * @return pointer to the database or nullptr if the database has not been opened
+ */
+Database* Database::databaseByFilePath(const QString& filePath)
+{
+    return s_fileNameMap.value(filePath, nullptr);
 }
 
 void Database::startModifiedTimer()
 {
+    Q_ASSERT(!m_data.isReadOnly);
+
     if (!m_emitModified) {
         return;
     }
@@ -479,34 +745,11 @@ QSharedPointer<const CompositeKey> Database::key() const
     return m_data.key;
 }
 
-Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<const CompositeKey> key)
-{
-
-    QFile dbFile(fileName);
-    if (!dbFile.exists()) {
-        qCritical("Database file %s does not exist.", qPrintable(fileName));
-        return nullptr;
-    }
-    if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open database file %s.", qPrintable(fileName));
-        return nullptr;
-    }
-
-    KeePass2Reader reader;
-    Database* db = reader.readDatabase(&dbFile, std::move(key));
-    if (reader.hasError()) {
-        qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
-        return nullptr;
-    }
-
-    return db;
-}
-
-Database* Database::unlockFromStdin(const QString& databaseFilename, const QString& keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
+Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
-    QTextStream out(outputDescriptor);
-    QTextStream err(errorDescriptor);
+    TextStream out(outputDescriptor);
+    TextStream err(errorDescriptor);
 
     out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename);
     out.flush();
@@ -535,112 +778,9 @@ Database* Database::unlockFromStdin(const QString& databaseFilename, const QStri
         compositeKey->addKey(fileKey);
     }
 
-    return Database::openDatabaseFile(databaseFilename, compositeKey);
-}
-
-/**
- * Save the database to a file.
- *
- * This function uses QTemporaryFile instead of QSaveFile due to a bug
- * in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may prevent
- * the QSaveFile from renaming itself when using Dropbox, Drive, or OneDrive.
- *
- * The risk in using QTemporaryFile is that the rename function is not atomic
- * and may result in loss of data if there is a crash or power loss at the
- * wrong moment.
- *
- * @param filePath Absolute path of the file to save
- * @param atomic Use atomic file transactions
- * @param backup Backup the existing database file, if exists
- * @return error string, if any
- */
-QString Database::saveToFile(const QString& filePath, bool atomic, bool backup)
-{
-    QString error;
-    if (atomic) {
-        QSaveFile saveFile(filePath);
-        if (saveFile.open(QIODevice::WriteOnly)) {
-            // write the database to the file
-            error = writeDatabase(&saveFile);
-            if (!error.isEmpty()) {
-                return error;
-            }
-
-            if (backup) {
-                backupDatabase(filePath);
-            }
-
-            if (saveFile.commit()) {
-                // successfully saved database file
-                return {};
-            }
-        }
-        error = saveFile.errorString();
-    } else {
-        QTemporaryFile tempFile;
-        if (tempFile.open()) {
-            // write the database to the file
-            error = writeDatabase(&tempFile);
-            if (!error.isEmpty()) {
-                return error;
-            }
-
-            tempFile.close(); // flush to disk
-
-            if (backup) {
-                backupDatabase(filePath);
-            }
-
-            // Delete the original db and move the temp file in place
-            QFile::remove(filePath);
-#ifdef Q_OS_LINUX
-            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
-            if (tempFile.copy(filePath)) {
-                // successfully saved database file
-                return {};
-            }
-#else
-            if (tempFile.rename(filePath)) {
-                // successfully saved database file
-                tempFile.setAutoRemove(false);
-                return {};
-            }
-#endif
-        }
-        error = tempFile.errorString();
-    }
-    // Saving failed
-    return error;
-}
-
-QString Database::writeDatabase(QIODevice* device)
-{
-    KeePass2Writer writer;
-    setEmitModified(false);
-    writer.writeDatabase(device, this);
-    setEmitModified(true);
-
-    if (writer.hasError()) {
-        // the writer failed
-        return writer.errorString();
-    }
-    return {};
-}
-
-/**
- * Remove the old backup and replace it with a new one
- * backups are named <filename>.old.kdbx
- *
- * @param filePath Path to the file to backup
- * @return
- */
-bool Database::backupDatabase(const QString& filePath)
-{
-    QString backupFilePath = filePath;
-    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
-    backupFilePath.replace(re, ".old.kdbx");
-    QFile::remove(backupFilePath);
-    return QFile::copy(filePath, backupFilePath);
+    auto* db = new Database();
+    db->open(databaseFilename, compositeKey);
+    return db;
 }
 
 QSharedPointer<Kdf> Database::kdf() const
@@ -650,11 +790,14 @@ QSharedPointer<Kdf> Database::kdf() const
 
 void Database::setKdf(QSharedPointer<Kdf> kdf)
 {
+    Q_ASSERT(!m_data.isReadOnly);
     m_data.kdf = std::move(kdf);
 }
 
 bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 {
+    Q_ASSERT(!m_data.isReadOnly);
+
     kdf->randomizeSeed();
     QByteArray transformedMasterKey;
     if (!m_data.key) {

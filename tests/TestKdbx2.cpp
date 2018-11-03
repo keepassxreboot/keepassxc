@@ -68,7 +68,7 @@ void TestKdbx2::testFormat200()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
 
     QVERIFY2(!reader.hasError(), reader.errorString().toStdString().c_str());
@@ -81,7 +81,7 @@ void TestKdbx2::testFormat200Upgrade()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
     QVERIFY2(!reader.hasError(), reader.errorString().toStdString().c_str());
     QVERIFY(!db.isNull());
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
@@ -99,7 +99,7 @@ void TestKdbx2::testFormat200Upgrade()
 
     // read buffer back
     buffer.seek(0);
-    QScopedPointer<Database> targetDb(reader.readDatabase(&buffer, key));
+    QScopedPointer<Database> targetDb(reader.readDatabase(QSharedPointer<const CompositeKey>(), &buffer, key));
     if (reader.hasError()) {
         QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
     }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -68,121 +68,117 @@
 #include "sshagent/SSHAgent.h"
 #endif
 
-DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
+DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     : QStackedWidget(parent)
-    , m_db(db)
-    , m_newGroup(nullptr)
-    , m_newEntry(nullptr)
-    , m_newParent(nullptr)
-{
-    m_mainWidget = new QWidget(this);
+    , m_db(std::move(db))
 
-    m_messageWidget = new MessageWidget(this);
+    , m_mainWidget(new QWidget(this))
+    , m_mainSplitter(new QSplitter(m_mainWidget))
+    , m_messageWidget(new MessageWidget(this))
+    , m_previewView(new EntryPreviewWidget(this))
+    , m_previewSplitter(new QSplitter(m_mainWidget))
+    , m_searchingLabel(new QLabel(this))
+    , m_csvImportWizard(new CsvImportWizard(this))
+    , m_editEntryWidget(new EditEntryWidget(this))
+    , m_editGroupWidget(new EditGroupWidget(this))
+    , m_historyEditEntryWidget(new EditEntryWidget(this))
+    , m_databaseSettingDialog(new DatabaseSettingsDialog(this))
+    , m_databaseOpenWidget(new DatabaseOpenWidget(this))
+    , m_databaseOpenMergeWidget(new DatabaseOpenWidget(this))
+    , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
+    , m_unlockDatabaseWidget(new UnlockDatabaseWidget(this))
+    , m_unlockDatabaseDialog(new UnlockDatabaseDialog(this))
+    , m_groupView(new GroupView(db.data(), m_mainSplitter))
+    , m_entryView(nullptr)
+
+    , m_newGroup()
+    , m_newEntry()
+    , m_newParent()
+{
     m_messageWidget->setHidden(true);
 
-    auto* mainLayout = new QVBoxLayout();
-    QLayout* layout = new QHBoxLayout();
+    auto* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(m_messageWidget);
-    mainLayout->addLayout(layout);
-    m_mainSplitter = new QSplitter(m_mainWidget);
+    auto* hbox = new QHBoxLayout();
+    mainLayout->addLayout(hbox);
+    hbox->addWidget(m_mainSplitter);
+    m_mainWidget->setLayout(mainLayout);
+
+    auto* rightHandSideWidget = new QWidget(m_mainSplitter);
+    auto* vbox = new QVBoxLayout(rightHandSideWidget);
+    vbox->setMargin(0);
+    vbox->addWidget(m_searchingLabel);
+    vbox->addWidget(m_previewSplitter);
+    rightHandSideWidget->setLayout(vbox);
+    m_entryView = new EntryView(rightHandSideWidget);
+
     m_mainSplitter->setChildrenCollapsible(false);
-    m_previewSplitter = new QSplitter(m_mainWidget);
+    m_mainSplitter->addWidget(m_groupView);
+    m_mainSplitter->addWidget(rightHandSideWidget);
+    m_mainSplitter->setStretchFactor(0, 30);
+    m_mainSplitter->setStretchFactor(1, 70);
+
     m_previewSplitter->setOrientation(Qt::Vertical);
     m_previewSplitter->setChildrenCollapsible(true);
 
-    QWidget* rightHandSideWidget = new QWidget(m_mainSplitter);
-
-    m_groupView = new GroupView(db, m_mainSplitter);
     m_groupView->setObjectName("groupView");
     m_groupView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(m_groupView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitGroupContextMenuRequested(QPoint)));
 
-    m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
     m_entryView->displayGroup(db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
-    m_searchingLabel = new QLabel();
     m_searchingLabel->setText(tr("Searching..."));
     m_searchingLabel->setAlignment(Qt::AlignCenter);
     m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
                                     "background-color: rgb(255, 253, 160);"
                                     "border: 2px solid rgb(190, 190, 190);"
-                                    "border-radius: 5px;");
+                                    "border-radius: 2px;");
+    m_searchingLabel->setVisible(false);
 
-    m_previewView = new EntryPreviewWidget(this);
     m_previewView->hide();
-    connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
-    connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-            m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
-
-    auto* vLayout = new QVBoxLayout(rightHandSideWidget);
-    vLayout->setMargin(0);
-    vLayout->addWidget(m_searchingLabel);
-    vLayout->addWidget(m_previewSplitter);
-
     m_previewSplitter->addWidget(m_entryView);
     m_previewSplitter->addWidget(m_previewView);
-
     m_previewSplitter->setStretchFactor(0, 100);
     m_previewSplitter->setStretchFactor(1, 0);
     m_previewSplitter->setSizes({1, 1});
 
-    m_searchingLabel->setVisible(false);
-
-    rightHandSideWidget->setLayout(vLayout);
-
-    m_mainSplitter->addWidget(m_groupView);
-    m_mainSplitter->addWidget(rightHandSideWidget);
-
-    m_mainSplitter->setStretchFactor(0, 30);
-    m_mainSplitter->setStretchFactor(1, 70);
-
-    layout->addWidget(m_mainSplitter);
-    m_mainWidget->setLayout(mainLayout);
-
-    m_editEntryWidget = new EditEntryWidget();
     m_editEntryWidget->setObjectName("editEntryWidget");
-    m_historyEditEntryWidget = new EditEntryWidget();
-    m_editGroupWidget = new EditGroupWidget();
     m_editGroupWidget->setObjectName("editGroupWidget");
-    m_csvImportWizard = new CsvImportWizard();
     m_csvImportWizard->setObjectName("csvImportWizard");
-    m_databaseSettingDialog = new DatabaseSettingsDialog();
     m_databaseSettingDialog->setObjectName("databaseSettingsDialog");
-    m_databaseOpenWidget = new DatabaseOpenWidget();
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
-    m_databaseOpenMergeWidget = new DatabaseOpenWidget();
     m_databaseOpenMergeWidget->setObjectName("databaseOpenMergeWidget");
-    m_keepass1OpenWidget = new KeePass1OpenWidget();
     m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
-    m_unlockDatabaseWidget = new UnlockDatabaseWidget();
     m_unlockDatabaseWidget->setObjectName("unlockDatabaseWidget");
-    m_unlockDatabaseDialog = new UnlockDatabaseDialog();
     m_unlockDatabaseDialog->setObjectName("unlockDatabaseDialog");
-    addWidget(m_mainWidget);
-    addWidget(m_editEntryWidget);
-    addWidget(m_editGroupWidget);
-    addWidget(m_databaseSettingDialog);
-    addWidget(m_historyEditEntryWidget);
-    addWidget(m_databaseOpenWidget);
-    addWidget(m_csvImportWizard);
-    addWidget(m_databaseOpenMergeWidget);
-    addWidget(m_keepass1OpenWidget);
-    addWidget(m_unlockDatabaseWidget);
+
+    addChildWidget(m_mainWidget);
+    addChildWidget(m_editEntryWidget);
+    addChildWidget(m_editGroupWidget);
+    addChildWidget(m_databaseSettingDialog);
+    addChildWidget(m_historyEditEntryWidget);
+    addChildWidget(m_databaseOpenWidget);
+    addChildWidget(m_csvImportWizard);
+    addChildWidget(m_databaseOpenMergeWidget);
+    addChildWidget(m_keepass1OpenWidget);
+    addChildWidget(m_unlockDatabaseWidget);
 
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
+    connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
+    connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
+    connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
+    connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
-    connect(m_entryView,
-            SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
-            SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
-    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
+    connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
+        SLOT(entryActivationSignalReceived(Entry*, EntryModel::ModelColumn)));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
@@ -225,9 +221,39 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     setCurrentWidget(m_mainWidget);
 }
 
+DatabaseWidget::DatabaseWidget(const QString& filePath, QWidget* parent)
+    : DatabaseWidget(QSharedPointer<Database>::create(filePath), parent)
+{
+}
+
 DatabaseWidget::~DatabaseWidget()
 {
     delete m_EntrySearcher;
+}
+
+QSharedPointer<Database> DatabaseWidget::database() const
+{
+    return m_db;
+}
+
+QString DatabaseWidget::databaseName() const
+{
+    return m_databaseName;
+}
+
+void DatabaseWidget::setDatabaseName(const QString& databaseName)
+{
+    m_databaseName = databaseName;
+}
+
+QString DatabaseWidget::databaseFilePath() const
+{
+    return m_databaseFileName;
+}
+
+void DatabaseWidget::setDatabaseFilePath(const QString& filePath)
+{
+    m_databaseFileName = filePath;
 }
 
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
@@ -341,7 +367,7 @@ void DatabaseWidget::emitCurrentModeChanged()
     emit currentModeChanged(currentMode());
 }
 
-Database* DatabaseWidget::database()
+QSharedPointer<Database> DatabaseWidget::database()
 {
     return m_db;
 }
@@ -385,11 +411,9 @@ void DatabaseWidget::setIconFromParent()
 
 void DatabaseWidget::replaceDatabase(Database* db)
 {
-    Database* oldDb = m_db;
-    m_db = db;
-    m_groupView->changeDatabase(m_db);
-    emit databaseChanged(m_db, m_databaseModified);
-    delete oldDb;
+    m_db.reset(db);
+    m_groupView->changeDatabase(m_db.data());
+    emit databaseChanged(m_db.data(), m_databaseModified);
 }
 
 void DatabaseWidget::cloneEntry()
@@ -400,7 +424,7 @@ void DatabaseWidget::cloneEntry()
         return;
     }
 
-    auto cloneDialog = new CloneDialog(this, m_db, currentEntry);
+    auto cloneDialog = new CloneDialog(this, m_db.data(), currentEntry);
     cloneDialog->show();
 }
 
@@ -676,38 +700,12 @@ void DatabaseWidget::deleteGroup()
     }
 }
 
-int DatabaseWidget::addWidget(QWidget* w)
+int DatabaseWidget::addChildWidget(QWidget* w)
 {
     w->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-
     int index = QStackedWidget::addWidget(w);
-
     adjustSize();
-
     return index;
-}
-
-void DatabaseWidget::setCurrentIndex(int index)
-{
-    // use setCurrentWidget() instead
-    // index is not reliable
-    Q_UNUSED(index);
-    Q_ASSERT(false);
-}
-
-void DatabaseWidget::setCurrentWidget(QWidget* widget)
-{
-    if (currentWidget()) {
-        currentWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    }
-
-    QStackedWidget::setCurrentWidget(widget);
-
-    if (currentWidget()) {
-        currentWidget()->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    }
-
-    adjustSize();
 }
 
 void DatabaseWidget::csvImportFinished(bool accepted)
@@ -791,7 +789,7 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::openDatabase(bool accepted)
 {
     if (accepted) {
-        replaceDatabase(static_cast<DatabaseOpenWidget*>(sender())->database());
+        replaceDatabase(qobject_cast<DatabaseOpenWidget*>(sender())->database());
         setCurrentWidget(m_mainWidget);
         emit unlockedDatabase();
 
@@ -801,9 +799,9 @@ void DatabaseWidget::openDatabase(bool accepted)
         m_databaseOpenWidget = nullptr;
         delete m_keepass1OpenWidget;
         m_keepass1OpenWidget = nullptr;
-        m_fileWatcher.addPath(m_filePath);
+        m_fileWatcher.addPath(m_db->filePath());
     } else {
-        m_fileWatcher.removePath(m_filePath);
+        m_fileWatcher.removePath(m_db->filePath());
         if (m_databaseOpenWidget->database()) {
             delete m_databaseOpenWidget->database();
         }
@@ -826,13 +824,13 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
-        Merger merger(srcDb, m_db);
+        Merger merger(srcDb, m_db.data());
         merger.merge();
     }
 
     m_databaseOpenMergeWidget->clearForms();
     setCurrentWidget(m_mainWidget);
-    emit databaseMerged(m_db);
+    emit databaseMerged(m_db.data());
 }
 
 void DatabaseWidget::unlockDatabase(bool accepted)
@@ -861,7 +859,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     if (sender() == m_unlockDatabaseDialog) {
         QList<Database*> dbList;
-        dbList.append(m_db);
+        dbList.append(m_db.data());
         autoType()->performGlobalAutoType(dbList);
     }
 }
@@ -942,7 +940,7 @@ void DatabaseWidget::switchToMasterKeyChange()
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingDialog->load(m_db);
+    m_databaseSettingDialog->load(m_db.data());
     setCurrentWidget(m_databaseSettingDialog);
 }
 
@@ -972,7 +970,7 @@ void DatabaseWidget::switchToOpenDatabase(const QString& filePath, const QString
 void DatabaseWidget::switchToCsvImport(const QString& filePath)
 {
     setCurrentWidget(m_csvImportWizard);
-    m_csvImportWizard->load(filePath, m_db);
+    m_csvImportWizard->load(filePath, m_db.data());
 }
 
 void DatabaseWidget::switchToOpenMergeDatabase(const QString& filePath)
@@ -1164,11 +1162,11 @@ void DatabaseWidget::lock()
 
 void DatabaseWidget::updateFilePath(const QString& filePath)
 {
-    if (!m_filePath.isEmpty()) {
-        m_fileWatcher.removePath(m_filePath);
+    if (!m_db->filePath().isEmpty()) {
+        m_fileWatcher.removePath(m_db->filePath());
     }
 
-#if defined(Q_OS_LINUX)
+#ifdef Q_OS_LINUX
     struct statfs statfsBuf;
     bool forcePolling = false;
     const auto NFS_SUPER_MAGIC = 0x6969;
@@ -1184,7 +1182,6 @@ void DatabaseWidget::updateFilePath(const QString& filePath)
 #endif
 
     m_fileWatcher.addPath(filePath);
-    m_filePath = filePath;
     m_db->setFilePath(filePath);
 }
 
@@ -1201,7 +1198,7 @@ void DatabaseWidget::blockAutoReload(bool block)
 void DatabaseWidget::unblockAutoReload()
 {
     m_ignoreAutoReload = false;
-    updateFilePath(m_filePath);
+    updateFilePath(m_db->filePath());
 }
 
 void DatabaseWidget::onWatchedFileChanged()
@@ -1238,16 +1235,16 @@ void DatabaseWidget::reloadDatabaseFile()
             m_db->markAsModified();
             m_databaseModified = true;
             // Rewatch the database file
-            m_fileWatcher.addPath(m_filePath);
+            m_fileWatcher.addPath(m_db->filePath());
             return;
         }
     }
 
     KeePass2Reader reader;
-    QFile file(m_filePath);
+    QFile file(m_db->filePath());
     if (file.open(QIODevice::ReadOnly)) {
-        Database* db = reader.readDatabase(&file, database()->key());
-        if (db != nullptr) {
+        auto db = QSharedPointer<Database>::create();
+        if (reader.readDatabase(&file, database()->key(), db.data())) {
             if (m_databaseModified) {
                 // Ask if we want to merge changes into new database
                 QMessageBox::StandardButton mb =
@@ -1260,7 +1257,7 @@ void DatabaseWidget::reloadDatabaseFile()
                 if (mb == QMessageBox::Yes) {
                     // Merge the old database into the new one
                     m_db->setEmitModified(false);
-                    Merger merger(m_db, db);
+                    Merger merger(m_db.data(), db.data());
                     merger.merge();
                 } else {
                     // Since we are accepting the new file as-is, internally mark as unmodified
@@ -1281,7 +1278,7 @@ void DatabaseWidget::reloadDatabaseFile()
                 entryBeforeReload = m_entryView->currentEntry()->uuid();
             }
 
-            replaceDatabase(db);
+            replaceDatabase(db.data());
             restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
         }
     } else {
@@ -1296,7 +1293,7 @@ void DatabaseWidget::reloadDatabaseFile()
     }
 
     // Rewatch the database file
-    m_fileWatcher.addPath(m_filePath);
+    m_fileWatcher.addPath(m_db->filePath());
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const
@@ -1412,7 +1409,7 @@ EntryView* DatabaseWidget::entryView()
 void DatabaseWidget::showUnlockDialog()
 {
     m_unlockDatabaseDialog->clearForms();
-    m_unlockDatabaseDialog->setFilePath(m_filePath);
+    m_unlockDatabaseDialog->setFilePath(m_db->filePath());
 
 #if defined(Q_OS_MACOS)
     autoType()->raiseWindow();
@@ -1452,26 +1449,6 @@ void DatabaseWidget::hideMessage()
 bool DatabaseWidget::isRecycleBinSelected() const
 {
     return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
-}
-
-QString DatabaseWidget::getDatabaseName() const
-{
-    return m_databaseName;
-}
-
-void DatabaseWidget::setDatabaseName(const QString& databaseName)
-{
-    m_databaseName = databaseName;
-}
-
-QString DatabaseWidget::getDatabaseFileName() const
-{
-    return m_databaseFileName;
-}
-
-void DatabaseWidget::setDatabaseFileName(const QString& databaseFileName)
-{
-    m_databaseFileName = databaseFileName;
 }
 
 void DatabaseWidget::emptyRecycleBin()

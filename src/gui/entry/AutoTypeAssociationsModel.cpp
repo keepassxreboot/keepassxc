@@ -49,7 +49,7 @@ void AutoTypeAssociationsModel::setAutoTypeAssociations(AutoTypeAssociations* au
     endResetModel();
 }
 
-void AutoTypeAssociationsModel::setEntry(const Entry* entry)
+void AutoTypeAssociationsModel::setEntry(Entry*)
 {
     m_entry = entry;
 }

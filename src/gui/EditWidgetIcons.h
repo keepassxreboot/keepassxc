@@ -71,7 +71,10 @@ public:
 
     IconStruct state();
     void reset();
-    void load(const QUuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
+    void load(const QUuid& currentUuid,
+              QSharedPointer<Database> database,
+              const IconStruct& iconStruct,
+              const QString& url = "");
 
 public slots:
     void setUrl(const QString& url);

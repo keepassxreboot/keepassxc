@@ -59,14 +59,14 @@ bool KdbxReader::readMagicNumbers(QIODevice* device, quint32& sig1, quint32& sig
  *
  * @param device input device
  * @param key database encryption composite key
- * @param keepDatabase keep database in case of read failure
- * @return pointer to the read database, nullptr on failure
+ * @param db database to read into
+ * @return true on success
  */
-Database* KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase)
+bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, Database* db)
 {
     device->seek(0);
 
-    m_db.reset(new Database());
+    m_db = db;
     m_xmlData.clear();
     m_masterSeed.clear();
     m_encryptionIV.clear();
@@ -79,7 +79,7 @@ Database* KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const Compo
     // read KDBX magic numbers
     quint32 sig1, sig2;
     if (!readMagicNumbers(&headerStream, sig1, sig2, m_kdbxVersion)) {
-        return nullptr;
+        return false;
     }
     m_kdbxSignature = qMakePair(sig1, sig2);
 
@@ -87,24 +87,24 @@ Database* KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const Compo
     m_kdbxVersion &= KeePass2::FILE_VERSION_CRITICAL_MASK;
 
     // read header fields
-    while (readHeaderField(headerStream) && !hasError()) {
+    while (readHeaderField(headerStream, nullptr) && !hasError()) {
     }
 
     headerStream.close();
 
     if (hasError()) {
-        return nullptr;
+        return false;
     }
 
     // read payload
-    auto* db = readDatabaseImpl(device, headerStream.storedData(), std::move(key), keepDatabase);
+    bool ok = readDatabaseImpl(db, device, headerStream.storedData(), std::move(key));
 
     if (saveXml()) {
         m_xmlData.clear();
         decryptXmlInnerStream(m_xmlData, db);
     }
 
-    return db;
+    return ok;
 }
 
 bool KdbxReader::hasError() const

@@ -43,10 +43,10 @@ int BrowserEntrySaveDialog::setItems(QList<DatabaseWidget*>& databaseWidgets, Da
     uint counter = 0;
     int activeIndex = -1;
     for (const auto dbWidget : databaseWidgets) {
-        QString databaseName = dbWidget->getDatabaseName();
-        QString databaseFileName = dbWidget->getDatabaseFileName();
+        QString databaseName = dbWidget->databaseName();
+        QString databaseFileName = dbWidget->databaseFilePath();
 
-        QListWidgetItem* item = new QListWidgetItem();
+        auto* item = new QListWidgetItem();
         item->setData(Qt::UserRole, counter);
 
         // Show database name (and filename if the name has been set in metadata)

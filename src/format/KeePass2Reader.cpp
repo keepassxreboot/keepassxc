@@ -21,31 +21,31 @@
 #include "format/KeePass1.h"
 
 #include <QFile>
-#include <utility>
 
 /**
  * Read database from file and detect correct file format.
  *
  * @param filename input file
  * @param key database encryption composite key
- * @return pointer to the read database, nullptr on failure
+ * @param db Database to read into
+ * @return true on success
  */
-Database* KeePass2Reader::readDatabase(const QString& filename, QSharedPointer<const CompositeKey> key)
+bool KeePass2Reader::readDatabase(const QString& filename, QSharedPointer<const CompositeKey> key, Database* db)
 {
     QFile file(filename);
     if (!file.open(QFile::ReadOnly)) {
         raiseError(file.errorString());
-        return nullptr;
+        return false;
     }
 
-    QScopedPointer<Database> db(readDatabase(&file, std::move(key)));
+    bool ok = readDatabase(&file, std::move(key), db);
 
     if (file.error() != QFile::NoError) {
         raiseError(file.errorString());
-        return nullptr;
+        return false;
     }
 
-    return db.take();
+    return ok;
 }
 
 /**
@@ -53,10 +53,10 @@ Database* KeePass2Reader::readDatabase(const QString& filename, QSharedPointer<c
  *
  * @param device input device
  * @param key database encryption composite key
- * @param keepDatabase keep database in case of read failure
- * @return pointer to the read database, nullptr on failure
+ * @param db Database to read into
+ * @return true on success
  */
-Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase)
+bool KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, Database* db)
 {
     m_error = false;
     m_errorStr.clear();
@@ -69,7 +69,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const C
 
     if (!ok || signature1 != KeePass2::SIGNATURE_1 || signature2 != KeePass2::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
-        return nullptr;
+        return false;
     }
 
     if (signature2 == KeePass1::SIGNATURE_2) {
@@ -77,13 +77,13 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const C
                       "You can import it by clicking on Database > 'Import KeePass 1 database...'.\n"
                       "This is a one-way migration. You won't be able to open the imported "
                       "database with the old KeePassX 0.4 version."));
-        return nullptr;
+        return false;
     }
 
     quint32 maxVersion = KeePass2::FILE_VERSION_4 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     if (m_version < KeePass2::FILE_VERSION_MIN || m_version > maxVersion) {
         raiseError(tr("Unsupported KeePass 2 database version."));
-        return nullptr;
+        return false;
     }
 
     // determine file format (KDBX 2/3 or 4)
@@ -94,7 +94,7 @@ Database* KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const C
     }
 
     m_reader->setSaveXml(m_saveXml);
-    return m_reader->readDatabase(device, std::move(key), keepDatabase);
+    return m_reader->readDatabase(device, std::move(key), db);
 }
 
 bool KeePass2Reader::hasError() const

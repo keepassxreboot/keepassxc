@@ -1305,7 +1305,7 @@ void TestGui::checkDatabase(QString dbFileName)
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
-    QScopedPointer<Database> dbSaved(reader.readDatabase(dbFileName, key));
+    QScopedPointer<Database> dbSaved(reader.readDatabase(QSharedPointer<const CompositeKey>(), dbFileName, key));
     QVERIFY(dbSaved);
     QVERIFY(!reader.hasError());
     QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());

@@ -70,7 +70,7 @@ private slots:
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
-    Database* m_db;
+    QScopedPointer<Database> m_db;
     QString m_filename;
 
 private:
