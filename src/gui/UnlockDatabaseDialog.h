@@ -34,7 +34,7 @@ public:
     explicit UnlockDatabaseDialog(QWidget* parent = nullptr);
     void setFilePath(const QString& filePath);
     void clearForms();
-    Database* database();
+    QSharedPointer<Database> database();
 
 signals:
     void unlockDone(bool);

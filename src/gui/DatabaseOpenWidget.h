@@ -42,7 +42,7 @@ public:
     void load(const QString& filename);
     void clearForms();
     void enterKey(const QString& pw, const QString& keyFile);
-    Database* database();
+    QSharedPointer<Database> database();
 
 public slots:
     void pollYubikey();
@@ -70,7 +70,7 @@ private slots:
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
-    QScopedPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
     QString m_filename;
 
 private:

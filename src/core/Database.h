@@ -111,8 +111,10 @@ public:
     void recycleGroup(Group* group);
     void emptyRecycleBin();
 
+    bool isModified() const;
     void setEmitModified(bool value);
     void markAsModified();
+    void markAsClean();
 
     Group* resolveGroup(const QUuid& uuid);
     Entry* resolveEntry(const QUuid& uuid);
@@ -174,6 +176,7 @@ private:
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QTimer* m_timer;
+    bool m_modified = false;
     bool m_emitModified;
 
     QUuid m_uuid;

@@ -158,9 +158,9 @@ void DatabaseOpenWidget::clearForms()
     m_db.reset();
 }
 
-Database* DatabaseOpenWidget::database()
+QSharedPointer<Database> DatabaseOpenWidget::database()
 {
-    return m_db.take();
+    return m_db;
 }
 
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)

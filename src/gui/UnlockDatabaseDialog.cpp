@@ -40,7 +40,7 @@ void UnlockDatabaseDialog::clearForms()
     m_view->clearForms();
 }
 
-Database* UnlockDatabaseDialog::database()
+QSharedPointer<Database> UnlockDatabaseDialog::database()
 {
     return m_view->database();
 }

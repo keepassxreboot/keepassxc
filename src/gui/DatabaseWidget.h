@@ -75,14 +75,11 @@ public:
 
     QSharedPointer<Database> database() const;
 
-    void lock();
-    void showUnlockDialog();
-    void closeUnlockDialog();
+    bool lock();
+    bool unlock();
 
-    bool canDeleteCurrentGroup() const;
     DatabaseWidget::Mode currentMode() const;
-    bool isInEditMode() const;
-    bool isInSearchMode() const;
+
     QString getCurrentSearch();
     void refreshSearch();
 
@@ -90,6 +87,7 @@ public:
     EntryView* entryView();
 
     Group* currentGroup() const;
+    bool canDeleteCurrentGroup() const;
     bool isGroupSelected() const;
     bool isRecycleBinSelected() const;
     int numberOfSelectedEntries() const;
@@ -190,6 +188,9 @@ public slots:
     void showErrorMessage(const QString& errorMessage);
     void hideMessage();
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 private slots:
     void updateFilePath(const QString& filePath);
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -216,7 +217,7 @@ private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
-    void replaceDatabase(Database* db);
+    void replaceDatabase(QSharedPointer<Database> db);
 
     QSharedPointer<Database> m_db;
 

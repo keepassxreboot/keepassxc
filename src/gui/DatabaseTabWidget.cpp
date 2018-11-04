@@ -259,55 +259,6 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
     removeTab(tabIndex);
     return true;
 }
-{
-    Q_ASSERT(db);removeTab(1)
-
-    const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
-    int index = databaseIndex(db);
-    Q_ASSERT(index != -1);
-
-    dbStruct.dbWidget->closeUnlockDialog();
-    QString dbName = tabText(index);
-    if (dbName.right(1) == "*") {
-        dbName.chop(1);
-    }
-    if (dbStruct.dbWidget->isInEditMode() && db->hasKey() && dbStruct.dbWidget->isEditWidgetModified()) {
-        QMessageBox::StandardButton result = MessageBox::question(
-            this,
-            tr("Close?"),
-            tr("\"%1\" is in edit mode.\nDiscard changes and close anyway?").arg(dbName.toHtmlEscaped()),
-            QMessageBox::Discard | QMessageBox::Cancel,
-            QMessageBox::Cancel);
-        if (result == QMessageBox::Cancel) {
-            return false;
-        }
-    }
-    if (dbStruct.modified) {
-        if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!saveDatabase(db)) {
-                return false;
-            }
-        } else if (dbStruct.dbWidget->currentMode() != DatabaseWidget::LockedMode) {
-            QMessageBox::StandardButton result =
-                MessageBox::question(this,
-                                     tr("Save changes?"),
-                                     tr("\"%1\" was modified.\nSave changes?").arg(dbName.toHtmlEscaped()),
-                                     QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel,
-                                     QMessageBox::Yes);
-            if (result == QMessageBox::Yes) {
-                if (!saveDatabase(db)) {
-                    return false;
-                }
-            } else if (result == QMessageBox::Cancel) {
-                return false;
-            }
-        }
-    }
-
-    deleteDatabase(db);
-
-    return true;
-}
 
 /**
  * Attempt to close all opened databases.
@@ -862,6 +813,6 @@ void DatabaseTabWidget::performGlobalAutoType()
         autoType()->performGlobalAutoType(unlockedDatabases);
     } else if (m_dbList.size() > 0) {
         m_dbPendingLock = indexDatabaseManagerStruct(0).dbWidget;
-        m_dbPendingLock->showUnlockDialog();
+        m_dbPendingLock->unlock();
     }
 }

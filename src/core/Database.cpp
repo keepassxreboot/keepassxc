@@ -702,10 +702,22 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
+bool Database::isModified() const
+{
+    return m_modified;
+}
+
 void Database::markAsModified()
 {
     Q_ASSERT(!m_data.isReadOnly);
+    m_modified = true;
     emit modified();
+}
+
+void Database::markAsClean()
+{
+    Q_ASSERT(!m_data.isReadOnly);
+    m_modified = false;
 }
 
 /**
