@@ -44,6 +44,8 @@
 #include "cli/Merge.h"
 #include "cli/Remove.h"
 #include "cli/Show.h"
+#include "cli/Totp.h"
+#include "cli/TotpClip.h"
 
 #include <QFile>
 #include <QClipboard>
@@ -123,7 +125,7 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 12);
+    QCOMPARE(Command::getCommands().size(), 14);
     QVERIFY(Command::getCommand("add"));
     QVERIFY(Command::getCommand("clip"));
     QVERIFY(Command::getCommand("diceware"));
@@ -136,6 +138,8 @@ void TestCli::testCommand()
     QVERIFY(Command::getCommand("merge"));
     QVERIFY(Command::getCommand("rm"));
     QVERIFY(Command::getCommand("show"));
+    QVERIFY(Command::getCommand("totp"));
+    QVERIFY(Command::getCommand("totp-clip"));
     QVERIFY(!Command::getCommand("doesnotexist"));
 }
 
@@ -756,4 +760,73 @@ void TestCli::testShow()
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: unknown attribute DoesNotExist.\n"));
+}
+
+bool isTOTP(const QString & value) {
+    QString val = value.trimmed();
+    if (val.length() < 5 || val.length() > 6) {
+        return false;
+    }
+    for (int i = 0; i < val.length(); ++i) {
+        if (!value[i].isDigit()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void TestCli::testTotp()
+{
+    ShowTotp totpCmd;
+    QVERIFY(!totpCmd.name.isEmpty());
+    QVERIFY(totpCmd.getDescriptionLine().contains(totpCmd.name));
+
+    Utils::Test::setNextPassword("a");
+    totpCmd.execute({"totp", m_dbFile->fileName(), "/Sample Entry"});
+
+    m_stderrFile->reset();
+    QString errorOutput(m_stderrFile->readAll());
+
+    if (errorOutput.contains("Entry with path ") && errorOutput.contains("has no TOTP set up.")) {
+        QSKIP("TOTP test skipped due to missing TOTP");
+    }
+
+    m_stdoutFile->reset();
+    m_stdoutFile->readLine();   // skip password prompt
+
+    QVERIFY(isTOTP(m_stdoutFile->readAll()));
+}
+
+void TestCli::testTotpClip()
+{
+    QClipboard* clipboard = QGuiApplication::clipboard();
+    clipboard->clear();
+
+    TotpClip totpClipCmd;
+    QVERIFY(!totpClipCmd.name.isEmpty());
+    QVERIFY(totpClipCmd.getDescriptionLine().contains(totpClipCmd.name));
+
+    Utils::Test::setNextPassword("a");
+    totpClipCmd.execute({"totp-clip", m_dbFile->fileName(), "/Sample Entry"});
+
+    m_stderrFile->reset();
+    QString errorOutput(m_stderrFile->readAll());
+
+    if (errorOutput.contains("Unable to start program")
+        || errorOutput.contains("No program defined for clipboard manipulation")) {
+        QSKIP("Clip test skipped due to missing clipboard tool");
+    }
+    if (errorOutput.contains("Entry with path ") && errorOutput.contains("has no TOTP set up.")) {
+        QSKIP("TOTP test skipped due to missing TOTP");
+    }
+
+    QVERIFY(isTOTP(clipboard->text()));
+
+    Utils::Test::setNextPassword("a");
+    QFuture<void> future = QtConcurrent::run(&totpClipCmd, &TotpClip::execute, QStringList{"totp-clip", m_dbFile->fileName(), "/Sample Entry", "1"});
+
+    QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
+    QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 1500);
+
+    future.waitForFinished();
 }
