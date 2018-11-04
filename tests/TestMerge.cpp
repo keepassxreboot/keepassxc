@@ -23,6 +23,8 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
+#include <QSignalSpy>
+
 QTEST_GUILESS_MAIN(TestMerge)
 
 namespace
@@ -1353,6 +1355,37 @@ void TestMerge::testResolveGroupConflictOlder()
     QPointer<Group> groupDestinationMerged =
         dbDestination->rootGroup()->findChildByName("group1 updated in destination");
     QVERIFY(groupDestinationMerged != nullptr);
+}
+
+void TestMerge::testMergeNotModified()
+{
+    QScopedPointer<Database> dbDestination(createTestDatabase());
+    QScopedPointer<Database> dbSource(
+        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
+    Merger merger(dbSource.data(), dbDestination.data());
+    merger.merge();
+    QVERIFY(modifiedSignalSpy.empty());
+}
+
+void TestMerge::testMergeModified()
+{
+    QScopedPointer<Database> dbDestination(createTestDatabase());
+    QScopedPointer<Database> dbSource(
+        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
+    // Make sure the two changes have a different timestamp.
+    QTest::qSleep(1);
+    Entry* entry = dbSource->rootGroup()->findEntryByPath("entry1");
+    entry->beginUpdate();
+    entry->setTitle("new title");
+    entry->endUpdate();
+
+    Merger merger(dbSource.data(), dbDestination.data());
+    merger.merge();
+    QVERIFY(!modifiedSignalSpy.empty());
 }
 
 Database* TestMerge::createTestDatabase()
