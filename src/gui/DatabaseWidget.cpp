@@ -199,8 +199,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
 
-    m_databaseModified = false;
-
     m_fileWatchTimer.setSingleShot(true);
     m_fileWatchUnblockTimer.setSingleShot(true);
     m_ignoreAutoReload = false;
@@ -383,7 +381,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 {
     m_db = std::move(db);
     m_groupView->changeDatabase(m_db.data());
-    emit databaseChanged(m_db, m_databaseModified);
+    emit databaseChanged(m_db, m_db->isModified());
 }
 
 void DatabaseWidget::cloneEntry()
@@ -963,16 +961,6 @@ void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
     setCurrentWidget(m_keepass1OpenWidget);
 }
 
-void DatabaseWidget::databaseModified()
-{
-    m_databaseModified = true;
-}
-
-void DatabaseWidget::databaseSaved()
-{
-    m_databaseModified = false;
-}
-
 void DatabaseWidget::refreshSearch()
 {
     if (m_entryView->inSearchMode()) {
@@ -1214,76 +1202,59 @@ void DatabaseWidget::reloadDatabaseFile()
         return;
     }
 
-    if (currentMode() == DatabaseWidget::LockedMode) {
-        return;
-    }
-
     if (!config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db
-        QMessageBox::StandardButton mb =
-            MessageBox::question(this,
-                                 tr("File has changed"),
-                                 tr("The database file has changed. Do you want to load the changes?"),
-                                 QMessageBox::Yes | QMessageBox::No);
+        auto result = MessageBox::question(this,
+            tr("File has changed"),
+            tr("The database file has changed. Do you want to load the changes?"),
+            QMessageBox::Yes | QMessageBox::No);
 
-        if (mb == QMessageBox::No) {
+        if (result == QMessageBox::No) {
             // Notify everyone the database does not match the file
             m_db->markAsModified();
-            m_databaseModified = true;
             // Rewatch the database file
             m_fileWatcher.addPath(m_db->filePath());
             return;
         }
     }
 
-    KeePass2Reader reader;
-    QFile file(m_db->filePath());
-    if (file.open(QIODevice::ReadOnly)) {
-        auto db = QSharedPointer<Database>::create();
-        if (reader.readDatabase(&file, database()->key(), db.data())) {
-            if (m_databaseModified) {
-                // Ask if we want to merge changes into new database
-                QMessageBox::StandardButton mb =
-                    MessageBox::question(this,
-                                         tr("Merge Request"),
-                                         tr("The database file has changed and you have unsaved changes.\n"
-                                            "Do you want to merge your changes?"),
-                                         QMessageBox::Yes | QMessageBox::No);
+    QString error;
+    auto db = QSharedPointer<Database>::create(m_db->filePath());
+    if (db->open(database()->key(), true, &error)) {
+        if (m_db->isModified()) {
+            // Ask if we want to merge changes into new database
+            auto result = MessageBox::question(this,
+                tr("Merge Request"),
+                tr("The database file has changed and you have unsaved changes.\nDo you want to merge your changes?"),
+                QMessageBox::Yes | QMessageBox::No);
 
-                if (mb == QMessageBox::Yes) {
-                    // Merge the old database into the new one
-                    m_db->setEmitModified(false);
-                    Merger merger(m_db.data(), db.data());
-                    merger.merge();
-                } else {
-                    // Since we are accepting the new file as-is, internally mark as unmodified
-                    // TODO: when saving is moved out of DatabaseTabWidget, this should be replaced
-                    m_databaseModified = false;
-                }
+            if (result == QMessageBox::Yes) {
+                // Merge the old database into the new one
+                Merger merger(m_db.data(), db.data());
+                merger.merge();
             }
-
-            QUuid groupBeforeReload;
-            if (m_groupView && m_groupView->currentGroup()) {
-                groupBeforeReload = m_groupView->currentGroup()->uuid();
-            } else {
-                groupBeforeReload = m_db->rootGroup()->uuid();
-            }
-
-            QUuid entryBeforeReload;
-            if (m_entryView && m_entryView->currentEntry()) {
-                entryBeforeReload = m_entryView->currentEntry()->uuid();
-            }
-
-            replaceDatabase(db);
-            restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
         }
+
+        QUuid groupBeforeReload;
+        if (m_groupView && m_groupView->currentGroup()) {
+            groupBeforeReload = m_groupView->currentGroup()->uuid();
+        } else {
+            groupBeforeReload = m_db->rootGroup()->uuid();
+        }
+
+        QUuid entryBeforeReload;
+        if (m_entryView && m_entryView->currentEntry()) {
+            entryBeforeReload = m_entryView->currentEntry()->uuid();
+        }
+
+        bool isReadOnly = m_db->isReadOnly();
+        replaceDatabase(db);
+        m_db->setReadOnly(isReadOnly);
+        restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
     } else {
         m_messageWidget->showMessage(
-            tr("Could not open the new database file while attempting to autoreload this database.")
-                .append("\n")
-                .append(file.errorString()),
+            tr("Could not open the new database file while attempting to autoreload.\nError: %1").arg(error),
             MessageWidget::Error);
-        // HACK: Directly calling the database's signal
         // Mark db as modified since existing data may differ from file or file was deleted
         m_db->markAsModified();
     }

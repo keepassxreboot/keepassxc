@@ -311,9 +311,7 @@ void Metadata::setGenerator(const QString& value)
 
 void Metadata::setName(const QString& value)
 {
-    if (set(m_data.name, value, m_data.nameChanged)) {
-        emit nameTextChanged();
-    }
+    set(m_data.name, value, m_data.nameChanged);
 }
 
 void Metadata::setNameChanged(const QDateTime& value)

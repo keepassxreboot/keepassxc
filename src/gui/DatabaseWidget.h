@@ -171,8 +171,6 @@ public slots:
     void switchToOpenMergeDatabase(const QString& filePath);
     void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& filePath);
-    void databaseModified();
-    void databaseSaved();
     void emptyRecycleBin();
 
     // Search related slots
@@ -260,7 +258,6 @@ private:
     QTimer m_fileWatchTimer;
     QTimer m_fileWatchUnblockTimer;
     bool m_ignoreAutoReload;
-    bool m_databaseModified;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

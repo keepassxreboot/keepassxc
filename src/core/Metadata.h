@@ -148,7 +148,6 @@ public:
     void copyAttributesFrom(const Metadata* other);
 
 signals:
-    void nameTextChanged();
     void modified();
 
 private:

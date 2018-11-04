@@ -122,8 +122,8 @@ public:
 
     static Database* databaseByUuid(const QUuid& uuid);;
     static Database* databaseByFilePath(const QString& filePath);;
-    static Database* unlockFromStdin(QString databaseFilename, QString keyFilename = {},
-        FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
+    static QSharedPointer<Database> unlockFromStdin(QString databaseFilename, QString keyFilename = {},
+                                                    FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
 
 signals:
     void filePathChanged(const QString& oldPath, const QString& newPath);
@@ -134,9 +134,9 @@ signals:
     void groupRemoved();
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
-    void nameTextChanged();
+    void metadataChanged();
     void modified();
-    void modifiedImmediate();
+    void clean();
 
 private slots:
     void startModifiedTimer();

@@ -53,9 +53,9 @@ Database::Database()
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modifiedImmediate()));
-    connect(m_metadata, SIGNAL(nameTextChanged()), this, SIGNAL(nameTextChanged()));
-    connect(this, SIGNAL(modifiedImmediate()), this, SLOT(startModifiedTimer()));
+    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_metadata, SIGNAL(metadataChanged()), this, SIGNAL(metadataChanged()));
+    connect(this, SIGNAL(modified()), this, SLOT(startModifiedTimer()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }
 
@@ -274,6 +274,8 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
+    markAsClean();
+    emit clean();
     return true;
 }
 
@@ -593,7 +595,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool update
     }
 
     if (oldTransformedMasterKey != m_data.transformedMasterKey) {
-        emit modifiedImmediate();
+        emit modified();
     }
 
     return true;
@@ -757,7 +759,8 @@ QSharedPointer<const CompositeKey> Database::key() const
     return m_data.key;
 }
 
-Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilename, FILE* outputDescriptor, FILE* errorDescriptor)
+QSharedPointer<Database> Database::unlockFromStdin(QString databaseFilename, QString keyFilename,
+                                                   FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
     TextStream out(outputDescriptor);
@@ -790,7 +793,7 @@ Database* Database::unlockFromStdin(QString databaseFilename, QString keyFilenam
         compositeKey->addKey(fileKey);
     }
 
-    auto* db = new Database();
+    auto db = QSharedPointer<Database>::create();
     db->open(databaseFilename, compositeKey);
     return db;
 }
@@ -821,7 +824,7 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 
     setKdf(kdf);
     m_data.transformedMasterKey = transformedMasterKey;
-    emit modifiedImmediate();
+    emit modified();
 
     return true;
 }

@@ -69,10 +69,10 @@ Database* KdbxXmlReader::readDatabase(const QString& filename)
  * @param device input device
  * @return pointer to the new database
  */
-Database* KdbxXmlReader::readDatabase(QIODevice* device)
+QSharedPointer<Database> KdbxXmlReader::readDatabase(QIODevice* device)
 {
-    auto db = new Database();
-    readDatabase(device, db);
+    auto db = QSharedPointer<Database>::create();
+    readDatabase(device, db.data());
     return db;
 }
 
