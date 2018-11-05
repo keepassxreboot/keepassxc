@@ -35,7 +35,6 @@
 #include "Remove.h"
 #include "Show.h"
 #include "Totp.h"
-#include "TotpClip.h"
 
 QMap<QString, Command*> commands;
 
@@ -71,7 +70,6 @@ void populateCommands()
         commands.insert(QString("rm"), new Remove());
         commands.insert(QString("show"), new Show());
         commands.insert(QString("totp"), new ShowTotp());
-        commands.insert(QString("totp-clip"), new TotpClip());
     }
 }
 

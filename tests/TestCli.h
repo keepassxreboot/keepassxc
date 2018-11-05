@@ -56,7 +56,6 @@ private slots:
     void testRemove();
     void testShow();
     void testTotp();
-    void testTotpClip();
 
 private:
     QByteArray m_dbData;
