@@ -50,6 +50,9 @@ int Show::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    QCommandLineOption totp(QStringList() << "t"  << "totp",
+                            QObject::tr("Show TOTP."));
+    parser.addOption(totp);
     QCommandLineOption attributes(
         QStringList() << "a" << "attributes",
         QObject::tr(
@@ -73,10 +76,10 @@ int Show::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    return showEntry(db.data(), parser.values(attributes), args.at(1));
+    return showEntry(db.data(), parser.values(attributes), parser.isSet(totp), args.at(1));
 }
 
-int Show::showEntry(Database* database, QStringList attributes, const QString& entryPath)
+int Show::showEntry(Database* database, QStringList attributes, bool showTotp, const QString& entryPath)
 {
     TextStream in(Utils::STDIN, QIODevice::ReadOnly);
     TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
@@ -88,9 +91,14 @@ int Show::showEntry(Database* database, QStringList attributes, const QString& e
         return EXIT_FAILURE;
     }
 
+    if (showTotp && !entry->hasTotp()) {
+        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+        return EXIT_FAILURE;
+    }
+
     // If no attributes specified, output the default attribute set.
-    bool showAttributeNames = attributes.isEmpty();
-    if (attributes.isEmpty()) {
+    bool showAttributeNames = attributes.isEmpty() && !showTotp;
+    if (attributes.isEmpty() && !showTotp) {
         attributes = EntryAttributes::DefaultAttributes;
     }
 
@@ -107,5 +115,13 @@ int Show::showEntry(Database* database, QStringList attributes, const QString& e
         }
         out << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
     }
+
+    if (showTotp) {
+        if (showAttributeNames) {
+            out << "TOTP: ";
+        }
+        out << entry->totp() << endl;
+    }
+
     return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
 }

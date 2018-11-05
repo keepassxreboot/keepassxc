@@ -55,7 +55,6 @@ private slots:
     void testMerge();
     void testRemove();
     void testShow();
-    void testTotp();
 
 private:
     QByteArray m_dbData;

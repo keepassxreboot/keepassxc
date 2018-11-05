@@ -26,7 +26,7 @@ public:
     Show();
     ~Show();
     int execute(const QStringList& arguments) override;
-    int showEntry(Database* database, QStringList attributes, const QString& entryPath);
+    int showEntry(Database* database, QStringList attributes, bool showTotp, const QString& entryPath);
 };
 
 #endif // KEEPASSXC_SHOW_H

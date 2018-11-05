@@ -26,8 +26,7 @@ set(cli_SOURCES
         Locate.cpp
         Merge.cpp
         Remove.cpp
-        Show.cpp
-        Totp.cpp)
+        Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)

@@ -44,7 +44,6 @@
 #include "cli/Merge.h"
 #include "cli/Remove.h"
 #include "cli/Show.h"
-#include "cli/Totp.h"
 
 #include <QFile>
 #include <QClipboard>
@@ -124,7 +123,7 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 13);
+    QCOMPARE(Command::getCommands().size(), 12);
     QVERIFY(Command::getCommand("add"));
     QVERIFY(Command::getCommand("clip"));
     QVERIFY(Command::getCommand("diceware"));
@@ -137,7 +136,6 @@ void TestCli::testCommand()
     QVERIFY(Command::getCommand("merge"));
     QVERIFY(Command::getCommand("rm"));
     QVERIFY(Command::getCommand("show"));
-    QVERIFY(Command::getCommand("totp"));
     QVERIFY(!Command::getCommand("doesnotexist"));
 }
 
@@ -788,26 +786,19 @@ void TestCli::testShow()
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: unknown attribute DoesNotExist.\n"));
-}
 
-void TestCli::testTotp()
-{
-    ShowTotp totpCmd;
-    QVERIFY(!totpCmd.name.isEmpty());
-    QVERIFY(totpCmd.getDescriptionLine().contains(totpCmd.name));
-
+    pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
-    totpCmd.execute({"totp", m_dbFile->fileName(), "/Sample Entry"});
-
-    m_stderrFile->reset();
-    QString errorOutput(m_stderrFile->readAll());
-
-    if (errorOutput.contains("Entry with path ") && errorOutput.contains("has no TOTP set up.")) {
-        QSKIP("TOTP test skipped due to missing TOTP");
-    }
-
-    m_stdoutFile->reset();
+    showCmd.execute({"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
+    m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
+    QVERIFY(isTOTP(m_stdoutFile->readAll()));
 
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();   // skip password prompt
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Sample Entry\n"));
     QVERIFY(isTOTP(m_stdoutFile->readAll()));
 }
