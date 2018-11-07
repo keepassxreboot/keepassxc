@@ -1036,11 +1036,17 @@ void EditEntryWidget::removeCurrentAttribute()
     QModelIndex index = m_advancedUi->attributesView->currentIndex();
 
     if (index.isValid()) {
-        if (MessageBox::question(this,
-                                 tr("Confirm Remove"),
-                                 tr("Are you sure you want to remove this attribute?"),
-                                 QMessageBox::Yes | QMessageBox::No)
-            == QMessageBox::Yes) {
+
+        QMessageBox question;
+        question.setIcon(QMessageBox::Question);
+        question.setWindowTitle(tr("Confirm Removal"));
+        question.setText(tr("Are you sure you want to remove this attribute?"));
+        auto remove = question.addButton(tr("Remove"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = question.addButton(QMessageBox::Cancel);
+        question.setDefaultButton(cancel);
+        question.exec();
+
+        if (question.clickedButton() == remove) {
             m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
             setUnsavedChanges(true);
         }

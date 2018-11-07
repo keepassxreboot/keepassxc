@@ -467,10 +467,16 @@ void DatabaseWidget::deleteEntries()
             prompt = tr("Do you really want to delete %n entry(s) for good?", "", selected.size());
         }
 
-        QMessageBox::StandardButton result = MessageBox::question(
-            this, tr("Delete entry(s)?", "", selected.size()), prompt, QMessageBox::Yes | QMessageBox::No);
+        QMessageBox question;
+        question.setIcon(QMessageBox::Question);
+        question.setWindowTitle(tr("Delete entry(s)?"));
+        question.setText(prompt);
+        auto del = question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = question.addButton(QMessageBox::Cancel);
+        question.setDefaultButton(cancel);
+        question.exec();
 
-        if (result == QMessageBox::Yes) {
+        if (question.clickedButton() == del) {
             for (Entry* entry : asConst(selectedEntries)) {
                 delete entry;
             }
@@ -485,10 +491,16 @@ void DatabaseWidget::deleteEntries()
             prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", selected.size());
         }
 
-        QMessageBox::StandardButton result = MessageBox::question(
-            this, tr("Move entry(s) to recycle bin?", "", selected.size()), prompt, QMessageBox::Yes | QMessageBox::No);
+        QMessageBox question;
+        question.setIcon(QMessageBox::Question);
+        question.setWindowTitle(tr("Move entry(s) to recycle bin?", "", selected.size()));
+        question.setText(prompt);
+        question.addButton(tr("Move"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = question.addButton(QMessageBox::Cancel);
+        question.setDefaultButton(cancel);
+        question.exec();
 
-        if (result == QMessageBox::No) {
+        if (question.clickedButton() == cancel) {
             return;
         }
 
@@ -690,21 +702,30 @@ void DatabaseWidget::deleteGroup()
     bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
     bool isRecycleBinSubgroup = currentGroup->findGroupByUuid(m_db->metadata()->recycleBin()->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
-        QMessageBox::StandardButton result = MessageBox::question(
-            this,
-            tr("Delete group?"),
-            tr("Do you really want to delete the group \"%1\" for good?").arg(currentGroup->name().toHtmlEscaped()),
-            QMessageBox::Yes | QMessageBox::No);
-        if (result == QMessageBox::Yes) {
+        QMessageBox question;
+        question.setIcon(QMessageBox::Question);
+        question.setWindowTitle(tr("Delete group"));
+        question.setText(tr("Do you really want to delete the group \"%1\" for good?").arg(currentGroup->name().toHtmlEscaped()));
+        auto del = question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = question.addButton(QMessageBox::Cancel);
+        question.setDefaultButton(cancel);
+        question.exec();
+
+        if (question.clickedButton() == del) {
             delete currentGroup;
         }
     } else {
-        QMessageBox::StandardButton result = MessageBox::question(
-            this,
-            tr("Move group to recycle bin?"),
-            tr("Do you really want to move the group \"%1\" to the recycle bin?").arg(currentGroup->name().toHtmlEscaped()),
-            QMessageBox::Yes | QMessageBox::No);
-        if (result == QMessageBox::Yes) {
+        QMessageBox question;
+        question.setIcon(QMessageBox::Question);
+        question.setWindowTitle(tr("Move group to recycle bin?"));
+        question.setText(tr("Do you really want to move the group "
+                            "\"%1\" to the recycle bin?").arg(currentGroup->name().toHtmlEscaped()));
+        auto move = question.addButton(tr("Move"), QMessageBox::ButtonRole::AcceptRole);
+        auto cancel = question.addButton(QMessageBox::Cancel);
+        question.setDefaultButton(cancel);
+        question.exec();
+
+        if (question.clickedButton() == move) {
             m_db->recycleGroup(currentGroup);
         }
     }
@@ -1280,14 +1301,17 @@ void DatabaseWidget::reloadDatabaseFile()
         if (db != nullptr) {
             if (m_databaseModified) {
                 // Ask if we want to merge changes into new database
-                QMessageBox::StandardButton mb =
-                    MessageBox::question(this,
-                                         tr("Merge Request"),
-                                         tr("The database file has changed and you have unsaved changes.\n"
-                                            "Do you want to merge your changes?"),
-                                         QMessageBox::Yes | QMessageBox::No);
 
-                if (mb == QMessageBox::Yes) {
+                QMessageBox question;
+                question.setIcon(QMessageBox::Question);
+                question.setWindowTitle(tr("Merge Request"));
+                question.setText(tr("The database file has changed and you have unsaved changes.\n"
+                                    "Do you want to merge your changes?"));
+                auto merge = question.addButton(tr("Merge"), QMessageBox::ButtonRole::AcceptRole);
+                question.addButton(QMessageBox::Cancel);
+                question.exec();
+
+                if (question.clickedButton() == merge) {
                     // Merge the old database into the new one
                     m_db->setEmitModified(false);
                     Merger merger(m_db, db);
@@ -1505,13 +1529,16 @@ void DatabaseWidget::emptyRecycleBin()
         return;
     }
 
-    QMessageBox::StandardButton result =
-        MessageBox::question(this,
-                             tr("Empty recycle bin?"),
-                             tr("Are you sure you want to permanently delete everything from your recycle bin?"),
-                             QMessageBox::Yes | QMessageBox::No);
+    QMessageBox question;
+    question.setIcon(QMessageBox::Question);
+    question.setWindowTitle(tr("Empty recycle bin?"));
+    question.setText(tr("Are you sure you want to permanently delete everything from your recycle bin?"));
+    auto empty = question.addButton(tr("Empty"), QMessageBox::ButtonRole::AcceptRole);
+    auto cancel = question.addButton(QMessageBox::Cancel);
+    question.setDefaultButton(cancel);
+    question.exec();
 
-    if (result == QMessageBox::Yes) {
+    if (question.clickedButton() == empty) {
         m_db->emptyRecycleBin();
         refreshSearch();
     }

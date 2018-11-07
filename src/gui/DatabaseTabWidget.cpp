@@ -297,9 +297,9 @@ bool DatabaseTabWidget::closeDatabase(Database* db)
                 MessageBox::question(this,
                                      tr("Save changes?"),
                                      tr("\"%1\" was modified.\nSave changes?").arg(dbName.toHtmlEscaped()),
-                                     QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel,
-                                     QMessageBox::Yes);
-            if (result == QMessageBox::Yes) {
+                                     QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel,
+                                     QMessageBox::Save);
+            if (result == QMessageBox::Save) {
                 if (!saveDatabase(db)) {
                     return false;
                 }
@@ -384,14 +384,18 @@ bool DatabaseTabWidget::saveDatabase(Database* db, QString filePath)
 
         if (++dbStruct.saveAttempts > 2 && useAtomicSaves) {
             // Saving failed 3 times, issue a warning and attempt to resolve
-            auto choice = MessageBox::question(this,
-                                               tr("Disable safe saves?"),
-                                               tr("KeePassXC has failed to save the database multiple times. "
-                                                  "This is likely caused by file sync services holding a lock on "
-                                                  "the save file.\nDisable safe saves and try again?"),
-                                               QMessageBox::Yes | QMessageBox::No,
-                                               QMessageBox::Yes);
-            if (choice == QMessageBox::Yes) {
+            QMessageBox question;
+            question.setIcon(QMessageBox::Question);
+            question.setWindowTitle(tr("Disable safe saves?"));
+            question.setText(tr("KeePassXC has failed to save the database multiple times. "
+                                "This is likely caused by file sync services holding a lock on "
+                                "the save file.\nDisable safe saves and try again?"));
+            auto disable = question.addButton(tr("Disable"), QMessageBox::ButtonRole::AcceptRole);
+            question.addButton(QMessageBox::Cancel);
+            question.setDefaultButton(disable);
+            question.exec();
+
+            if (question.clickedButton() == disable) {
                 config()->set("UseAtomicSaves", false);
                 return saveDatabase(db, filePath);
             }

@@ -155,7 +155,7 @@ QString BrowserService::storeKey(const QString& key)
     }
 
     bool contains;
-    QMessageBox::StandardButton dialogResult = QMessageBox::No;
+    QMessageBox::ButtonRole dialogResult = QMessageBox::ButtonRole::RejectRole;
 
     do {
         QInputDialog keyDialog;
@@ -178,14 +178,18 @@ QString BrowserService::storeKey(const QString& key)
 
         contains = db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
         if (contains) {
-            dialogResult = QMessageBox::warning(nullptr,
-                                                tr("KeePassXC: Overwrite existing key?"),
-                                                tr("A shared encryption key with the name \"%1\" "
-                                                   "already exists.\nDo you want to overwrite it?")
-                                                    .arg(id),
-                                                QMessageBox::Yes | QMessageBox::No);
+            QMessageBox warning;
+            warning.setIcon(QMessageBox::Warning);
+            warning.setWindowTitle(tr("KeePassXC: Overwrite existing key?"));
+            warning.setText(tr("A shared encryption key with the name \"%1\" "
+                               "already exists.\nDo you want to overwrite it?").arg(id));
+            warning.addButton(tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole);
+            auto cancel = warning.addButton(QMessageBox::Cancel);
+            warning.setDefaultButton(cancel);
+            warning.exec();
+            dialogResult = warning.buttonRole(warning.clickedButton());
         }
-    } while (contains && dialogResult == QMessageBox::No);
+    } while (contains && dialogResult == QMessageBox::ButtonRole::RejectRole);
 
     db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key);
     return id;
@@ -363,16 +367,16 @@ void BrowserService::updateEntry(const QString& id,
             QMessageBox msgBox;
             msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
             msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.addButton(QMessageBox::No);
-            msgBox.setDefaultButton(QMessageBox::No);
+            msgBox.addButton(QMessageBox::Save);
+            msgBox.addButton(QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::Cancel);
             msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
             msgBox.activateWindow();
             msgBox.raise();
             dialogResult = msgBox.exec();
         }
 
-        if (browserSettings()->alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
+        if (browserSettings()->alwaysAllowUpdate() || dialogResult == QMessageBox::Save) {
             entry->beginUpdate();
             entry->setUsername(login);
             entry->setPassword(password);
@@ -395,14 +399,14 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         QString entryScheme = entryQUrl.scheme();
         QUrl qUrl(url);
 
-        // Ignore entry if port or scheme defined in the URL doesn't match    
+        // Ignore entry if port or scheme defined in the URL doesn't match
         if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) ||
             (browserSettings()->matchUrlScheme() && !entryScheme.isEmpty() && entryScheme.compare(qUrl.scheme()) != 0)) {
             continue;
         }
 
         // Filter to match hostname in URL field
-        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl)) 
+        if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
             || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
                 entries.append(entry);
         }
@@ -537,7 +541,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
             auto entries = priorities.values(i);
             std::sort(entries.begin(), entries.end(), [&field](Entry* left, Entry* right) {
                 return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0) ||
-                       ((QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) == 0) && 
+                       ((QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) == 0) &&
                         (QString::localeAwareCompare(left->attributes()->value("UserName"), right->attributes()->value("UserName")) < 0));
             });
             results << entries;
@@ -785,8 +789,8 @@ Database* BrowserService::selectedDatabase()
     for (int i = 0;; ++i) {
         const auto dbStruct = m_dbTabWidget->indexDatabaseManagerStruct(i);
         // Add only open databases
-        if (dbStruct.dbWidget && dbStruct.dbWidget->dbHasKey() && 
-            (dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode || 
+        if (dbStruct.dbWidget && dbStruct.dbWidget->dbHasKey() &&
+            (dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode ||
              dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode)) {
             databaseWidgets.push_back(dbStruct.dbWidget);
             continue;
@@ -876,7 +880,7 @@ bool BrowserService::checkLegacySettings()
                                                 "Do you want to upgrade the settings to the latest standard?\n"
                                                 "This is necessary to maintain compatibility with the browser plugin."),
                                              QMessageBox::Yes | QMessageBox::No);
-        
+
     if (dialogResult == QMessageBox::No) {
         return false;
     }

@@ -162,10 +162,16 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
         return;
     }
 
-    const QString question = tr("Are you sure you want to remove %n attachment(s)?", "", indexes.count());
-    QMessageBox::StandardButton answer =
-        MessageBox::question(this, tr("Confirm remove"), question, QMessageBox::Yes | QMessageBox::No);
-    if (answer == QMessageBox::Yes) {
+    QMessageBox question;
+    question.setIcon(QMessageBox::Question);
+    question.setWindowTitle(tr("Confirm remove"));
+    question.setText(tr("Are you sure you want to remove %n attachment(s)?", "", indexes.count()));
+    auto remove = question.addButton(tr("Remove"), QMessageBox::ButtonRole::AcceptRole);
+    auto cancel = question.addButton(QMessageBox::Cancel);
+    question.setDefaultButton(cancel);
+    question.exec();
+
+    if (question.clickedButton() == remove) {
         QStringList keys;
         for (const QModelIndex& index : indexes) {
             keys.append(m_attachmentsModel->keyByIndex(index));
@@ -208,15 +214,25 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         const QString attachmentPath = saveDir.absoluteFilePath(filename);
 
         if (QFileInfo::exists(attachmentPath)) {
-            const QString question(
+            const QString questionText(
                 tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
-            auto answer = MessageBox::question(this,
-                                               tr("Confirm overwrite"),
-                                               question.arg(filename),
-                                               QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-            if (answer == QMessageBox::No) {
+
+            QMessageBox question;
+            QPushButton *skip = nullptr;
+            question.setIcon(QMessageBox::Question);
+            question.setWindowTitle(tr("Confirm overwrite"));
+            question.setText(questionText.arg(filename));
+            question.addButton(tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole);
+            if (indexes.length() > 1) {
+                skip = question.addButton(tr("Skip"), QMessageBox::ButtonRole::RejectRole);
+            }
+            auto cancel = question.addButton(QMessageBox::Cancel);
+
+            question.exec();
+
+            if (question.clickedButton() == skip) {
                 continue;
-            } else if (answer == QMessageBox::Cancel) {
+            } else if (question.clickedButton() == cancel) {
                 return;
             }
         }
