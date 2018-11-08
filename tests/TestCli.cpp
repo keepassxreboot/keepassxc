@@ -67,6 +67,12 @@ void TestCli::initTestCase()
     QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
     sourceDbFile.close();
+
+    // Load the NewDatabase.kdbx file into temporary storage
+    QFile sourceDbFile2(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase2.kdbx"));
+    QVERIFY(sourceDbFile2.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile2, m_dbData2));
+    sourceDbFile2.close();
 }
 
 void TestCli::init()
@@ -75,6 +81,11 @@ void TestCli::init()
     m_dbFile->open();
     m_dbFile->write(m_dbData);
     m_dbFile->close();
+
+    m_dbFile2.reset(new TemporaryFile());
+    m_dbFile2->open();
+    m_dbFile2->write(m_dbData2);
+    m_dbFile2->close();
 
     m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
@@ -95,6 +106,8 @@ void TestCli::init()
 void TestCli::cleanup()
 {
     m_dbFile.reset();
+
+    m_dbFile2.reset();
 
     m_stdinFile.reset();
     m_stdinHandle = stdin;
@@ -230,9 +243,9 @@ void TestCli::testClip()
 
     qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/ZNoTOTP"});
+    clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /ZNoTOTP has no TOTP set up.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }
 
 void TestCli::testDiceware()
@@ -513,7 +526,6 @@ void TestCli::testList()
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "ZNoTOTP\n"
                                                  "General/\n"
                                                  "Windows/\n"
                                                  "Network/\n"
@@ -527,7 +539,6 @@ void TestCli::testList()
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "ZNoTOTP\n"
                                                  "General/\n"
                                                  "  [empty]\n"
                                                  "Windows/\n"
@@ -813,10 +824,10 @@ void TestCli::testShow()
     pos = m_stdoutFile->pos();
     qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile->fileName(), "--totp", "/ZNoTOTP"});
+    showCmd.execute({"show", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /ZNoTOTP has no TOTP set up.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }

@@ -58,7 +58,9 @@ private slots:
 
 private:
     QByteArray m_dbData;
+    QByteArray m_dbData2;
     QScopedPointer<TemporaryFile> m_dbFile;
+    QScopedPointer<TemporaryFile> m_dbFile2;
     QScopedPointer<TemporaryFile> m_stdoutFile;
     QScopedPointer<TemporaryFile> m_stderrFile;
     QScopedPointer<TemporaryFile> m_stdinFile;
