@@ -227,6 +227,12 @@ void TestCli::testClip()
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
 
     future.waitForFinished();
+
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/NoTOTP"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /NoTOTP has no TOTP set up.\n"));
 }
 
 void TestCli::testDiceware()
@@ -507,6 +513,7 @@ void TestCli::testList()
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
+                                                 "NoTOTP\n"
                                                  "General/\n"
                                                  "Windows/\n"
                                                  "Network/\n"
@@ -520,6 +527,7 @@ void TestCli::testList()
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
+                                                 "NoTOTP\n"
                                                  "General/\n"
                                                  "  [empty]\n"
                                                  "Windows/\n"
@@ -801,4 +809,14 @@ void TestCli::testShow()
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Sample Entry\n"));
     QVERIFY(isTOTP(m_stdoutFile->readAll()));
+
+    pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", m_dbFile->fileName(), "--totp", "/NoTOTP"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();   // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /NoTOTP has no TOTP set up.\n"));
 }
