@@ -17,7 +17,7 @@ keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager
 Adds a new entry to a database. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 
 .IP "clip [options] <database> <entry> [timeout]"
-Copies the password of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
+Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
 .IP "diceware [options]"
 Generate a random diceware passphrase.
@@ -47,7 +47,7 @@ Merges two databases together. The first database file is going to be replaced b
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
 
 .IP "show [options] <database> <entry>"
-Shows the title, username, password, URL and notes of a database entry. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
+Shows the title, username, password, URL and notes of a database entry. Can also show a current TOTP. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
 
 .SH OPTIONS
 
@@ -102,12 +102,23 @@ Specify the title of the entry.
 Perform advanced analysis on the password.
 
 
+.SS "Clip options"
+
+.IP "-t, --totp"
+Copy current TOTP instead of current password to clipboard. Will report an error
+if no TOTP is configured for the entry.
+
+
 .SS "Show options"
 
 .IP "-a, --attributes <attribute>..."
 Names of the attributes to show. This option can be specified more than once,
 with each attribute shown one-per-line in the given order. If no attributes are
-specified, a summary of the default attributes is given.
+specified and \fI-t\fP is not specified, a summary of the default attributes is given.
+
+.IP "-t, --totp"
+Also show the current TOTP. Will report an error if no TOTP is configured for the
+entry.
 
 
 .SS "Diceware options"
