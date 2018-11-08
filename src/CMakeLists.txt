@@ -239,7 +239,7 @@ endif()
 if(WITH_XC_YUBIKEY)
     list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
 else()
-    list(APPEND keepassx_SOURCES keys/drivers/YubiKeyStub.cpp)
+    list(APPEND keepassx_SOURCES keys/drivers/YubiKey.h keys/drivers/YubiKeyStub.cpp)
 endif()
 
 if(WITH_XC_TOUCHID)
