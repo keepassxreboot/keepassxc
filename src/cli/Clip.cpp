@@ -52,7 +52,7 @@ int Clip::execute(const QStringList& arguments)
                                QObject::tr("path"));
     parser.addOption(keyFile);
     QCommandLineOption totp(QStringList() << "t"  << "totp",
-                            QObject::tr("Copy a TOTP to the clipboard instead."));
+                            QObject::tr("Copy the current TOTP to the clipboard."));
     parser.addOption(totp);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
     parser.addPositionalArgument("timeout",
@@ -74,7 +74,7 @@ int Clip::execute(const QStringList& arguments)
     return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp));
 }
 
-int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout, bool useTotp)
+int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout, bool clipTotp)
 {
     TextStream err(Utils::STDERR);
 
@@ -94,7 +94,7 @@ int Clip::clipEntry(Database* database, const QString& entryPath, const QString&
     }
 
     QString value;
-    if (useTotp) {
+    if (clipTotp) {
         if (!entry->hasTotp()) {
             err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
             return EXIT_FAILURE;
@@ -110,8 +110,8 @@ int Clip::clipEntry(Database* database, const QString& entryPath, const QString&
         return exitCode;
     }
 
-    if (useTotp) {
-        outputTextStream << QObject::tr("TOTP for entry copied to the clipboard!") << endl;
+    if (clipTotp) {
+        outputTextStream << QObject::tr("Entry's current TOTP copied to the clipboard!") << endl;
     } else {
         outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
     }

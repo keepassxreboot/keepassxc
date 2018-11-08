@@ -51,7 +51,7 @@ int Show::execute(const QStringList& arguments)
                                QObject::tr("path"));
     parser.addOption(keyFile);
     QCommandLineOption totp(QStringList() << "t"  << "totp",
-                            QObject::tr("Show TOTP."));
+                            QObject::tr("Show the entry's current TOTP."));
     parser.addOption(totp);
     QCommandLineOption attributes(
         QStringList() << "a" << "attributes",
