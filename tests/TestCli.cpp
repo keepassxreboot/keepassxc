@@ -230,9 +230,9 @@ void TestCli::testClip()
 
     qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/NoTOTP"});
+    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/ZNoTOTP"});
     m_stderrFile->seek(posErr);
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /NoTOTP has no TOTP set up.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /ZNoTOTP has no TOTP set up.\n"));
 }
 
 void TestCli::testDiceware()
@@ -513,7 +513,7 @@ void TestCli::testList()
     m_stdoutFile->reset();
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "NoTOTP\n"
+                                                 "ZNoTOTP\n"
                                                  "General/\n"
                                                  "Windows/\n"
                                                  "Network/\n"
@@ -527,7 +527,7 @@ void TestCli::testList()
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "NoTOTP\n"
+                                                 "ZNoTOTP\n"
                                                  "General/\n"
                                                  "  [empty]\n"
                                                  "Windows/\n"
@@ -813,10 +813,10 @@ void TestCli::testShow()
     pos = m_stdoutFile->pos();
     qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile->fileName(), "--totp", "/NoTOTP"});
+    showCmd.execute({"show", m_dbFile->fileName(), "--totp", "/ZNoTOTP"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();   // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /NoTOTP has no TOTP set up.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /ZNoTOTP has no TOTP set up.\n"));
 }
