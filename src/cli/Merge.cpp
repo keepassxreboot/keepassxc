@@ -84,7 +84,7 @@ int Merge::execute(const QStringList& arguments)
     }
 
     Merger merger(db2.data(), db1.data());
-    merger.merge();
+    bool databaseChanged = merger.merge();
 
     QString errorMessage = db1->saveToFile(args.at(0));
     if (!errorMessage.isEmpty()) {
@@ -92,6 +92,10 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << "Successfully merged the database files." << endl;
+    if (databaseChanged) {
+        out << "Successfully merged the database files." << endl;
+    } else {
+        out << "Database was not modified by merge operation." << endl;
+    }
     return EXIT_SUCCESS;
 }
