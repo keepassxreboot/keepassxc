@@ -484,11 +484,11 @@ Database* Database::openDatabaseFile(const QString& fileName, QSharedPointer<con
 
     QFile dbFile(fileName);
     if (!dbFile.exists()) {
-        qCritical("File %s does not exist.", qPrintable(fileName));
+        qCritical("Database file %s does not exist.", qPrintable(fileName));
         return nullptr;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
-        qCritical("Unable to open file %s.", qPrintable(fileName));
+        qCritical("Unable to open database file %s.", qPrintable(fileName));
         return nullptr;
     }
 
