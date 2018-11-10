@@ -698,6 +698,15 @@ void TestCli::testMerge()
     QVERIFY(entry1);
     QCOMPARE(entry1->title(), QString("Some Website"));
     QCOMPARE(entry1->password(), QString("secretsecretsecret"));
+
+    // making sure that the message is different if the database was not
+    // modified by the merge operation.
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge", "-s", sourceFile.fileName(), sourceFile.fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Database was not modified by merge operation.\n"));
 }
 
 void TestCli::testRemove()
