@@ -405,10 +405,9 @@ void TestGui::testTabs()
 void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-    int editCount = 0;
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
     // Select the first entry in the database
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QModelIndex entryItem = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(entryItem);
     clickIndex(entryItem, entryView, Qt::LeftButton);
@@ -419,6 +418,9 @@ void TestGui::testEditEntry()
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
     QVERIFY(entryEditWidget->isVisible());
     QVERIFY(entryEditWidget->isEnabled());
+
+    // Record current history count
+    int editCount = entry->historyItems().size();
 
     // Edit the first entry ("Sample Entry")
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
@@ -748,6 +750,7 @@ void TestGui::testTotp()
     QApplication::processEvents();
 
     auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
+    seedEdit->setText("");
 
     QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     QTest::keyClicks(seedEdit, exampleSeed);
