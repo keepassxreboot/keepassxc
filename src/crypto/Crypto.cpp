@@ -50,7 +50,7 @@ bool Crypto::init()
     // has to be set before testing Crypto classes
     m_initalized = true;
 
-    if (!selfTest()) {
+    if (!backendSelfTest() || !selfTest()) {
         m_initalized = false;
         return false;
     }

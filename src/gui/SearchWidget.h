@@ -35,7 +35,7 @@ class SearchWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit SearchWidget(QWidget* parent = 0);
+    explicit SearchWidget(QWidget* parent = nullptr);
     ~SearchWidget();
 
     void connectSignals(SignalMultiplexer& mx);
@@ -55,7 +55,7 @@ signals:
     void enterPressed();
 
 public slots:
-    void databaseChanged(DatabaseWidget* dbWidget = 0);
+    void databaseChanged(DatabaseWidget* dbWidget = nullptr);
 
 private slots:
     void startSearchTimer();

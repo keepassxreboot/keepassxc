@@ -59,7 +59,7 @@ public:
     bool useCustomProxy();
     void setUseCustomProxy(bool enabled);
     QString customProxyLocation();
-    void setCustomProxyLocation(QString location);
+    void setCustomProxyLocation(const QString& location);
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
     bool chromeSupport();
@@ -70,7 +70,9 @@ public:
     void setFirefoxSupport(bool enabled);
     bool vivaldiSupport();
     void setVivaldiSupport(bool enabled);
-
+    bool torBrowserSupport();
+    void setTorBrowserSupport(bool enabled);
+    
     bool passwordUseNumbers();
     void setPasswordUseNumbers(bool useNumbers);
     bool passwordUseLowercase();
@@ -96,11 +98,11 @@ public:
     bool advancedMode();
     void setAdvancedMode(bool advancedMode);
     QString passwordExcludedChars();
-    void setPasswordExcludedChars(QString chars);
+    void setPasswordExcludedChars(const QString& chars);
     int passPhraseWordCount();
     void setPassPhraseWordCount(int wordCount);
     QString passPhraseWordSeparator();
-    void setPassPhraseWordSeparator(QString separator);
+    void setPassPhraseWordSeparator(const QString& separator);
     int generatorType();
     void setGeneratorType(int type);
     bool passwordEveryGroup();
@@ -112,8 +114,8 @@ public:
     PasswordGenerator::CharClasses passwordCharClasses();
     PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
     QString generatePassword();
-    int getbits();
-    void updateBinaryPaths(QString customProxyLocation = QString());
+    void updateBinaryPaths(const QString& customProxyLocation = QString());
+    bool checkIfProxyExists(QString& path);
 
 private:
     static BrowserSettings* m_instance;

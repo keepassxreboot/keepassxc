@@ -24,20 +24,24 @@
 #include "ui_BrowserOptionDialog.h"
 
 #include <QFileDialog>
-#include <QMessageBox>
 
 BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::BrowserOptionDialog())
 {
     m_ui->setupUi(this);
-    connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SIGNAL(removeSharedEncryptionKeys()));
-    connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SIGNAL(removeStoredPermissions()));
 
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2.").arg(
         "<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
         "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">Google Chrome / Chromium / Vivaldi</a>"));
+
+    m_ui->scriptWarningWidget->setVisible(false);
+    m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
+    m_ui->scriptWarningWidget->showMessage(tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
+                                          "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
+                                          "<br />Browser integration WILL NOT WORK without the proxy application."
+                                          "<br />Expected Path: "), MessageWidget::Warning);
 
     m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"), MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
@@ -56,6 +60,9 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     // Vivaldi uses Chrome's registry settings
     m_ui->vivaldiSupport->setHidden(true);
     m_ui->chromeSupport->setText("Chrome and Vivaldi");
+    // Tor Browser uses Firefox's registry settings
+    m_ui->torBrowserSupport->setHidden(true);
+    m_ui->firefoxSupport->setText("Firefox and Tor Browser");
 #endif
     m_ui->browserGlobalWarningWidget->setVisible(false);
 }
@@ -95,7 +102,10 @@ void BrowserOptionDialog::loadSettings()
     m_ui->chromeSupport->setChecked(settings->chromeSupport());
     m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
     m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
+#ifndef Q_OS_WIN
     m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
+    m_ui->torBrowserSupport->setChecked(settings->torBrowserSupport());
+#endif
 
 #if defined(KEEPASSXC_DIST_APPIMAGE)
     m_ui->supportBrowserProxy->setChecked(true);
@@ -109,6 +119,17 @@ void BrowserOptionDialog::loadSettings()
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
+
+    // Check for native messaging host location errors
+    QString path;
+    if (!settings->checkIfProxyExists(path)) {
+        QString text = m_ui->scriptWarningWidget->text();
+        text.append(path);
+        m_ui->scriptWarningWidget->setText(text);
+        m_ui->scriptWarningWidget->setVisible(true);
+    } else {
+        m_ui->scriptWarningWidget->setVisible(false);
+    }
 }
 
 void BrowserOptionDialog::saveSettings()
@@ -134,7 +155,10 @@ void BrowserOptionDialog::saveSettings()
     settings->setChromeSupport(m_ui->chromeSupport->isChecked());
     settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());
     settings->setFirefoxSupport(m_ui->firefoxSupport->isChecked());
+#ifndef Q_OS_WIN
     settings->setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
+    settings->setTorBrowserSupport(m_ui->torBrowserSupport->isChecked());
+#endif
 }
 
 void BrowserOptionDialog::showProxyLocationFileDialog()

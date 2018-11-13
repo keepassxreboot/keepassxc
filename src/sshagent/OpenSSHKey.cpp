@@ -101,7 +101,7 @@ const QString OpenSSHKey::fingerprint(QCryptographicHash::Algorithm algo) const
 
     stream.writeString(m_type);
 
-    for (QByteArray ba : m_publicData) {
+    for (const QByteArray& ba : m_publicData) {
         stream.writeString(ba);
     }
 
@@ -137,7 +137,7 @@ const QString OpenSSHKey::publicKey() const
 
     stream.writeString(m_type);
 
-    for (QByteArray ba : m_publicData) {
+    for (const QByteArray& ba : m_publicData) {
         stream.writeString(ba);
     }
 
@@ -544,7 +544,7 @@ bool OpenSSHKey::writePublic(BinaryStream& stream)
         return false;
     }
 
-    for (QByteArray t : m_publicData) {
+    for (const QByteArray& t : m_publicData) {
         if (!stream.writeString(t)) {
             m_error = tr("Unexpected EOF when writing public key");
             return false;
@@ -566,7 +566,7 @@ bool OpenSSHKey::writePrivate(BinaryStream& stream)
         return false;
     }
 
-    for (QByteArray t : m_privateData) {
+    for (const QByteArray& t : m_privateData) {
         if (!stream.writeString(t)) {
             m_error = tr("Unexpected EOF when writing private key");
             return false;

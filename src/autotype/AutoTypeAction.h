@@ -29,19 +29,17 @@ class AutoTypeExecutor;
 class KEEPASSX_EXPORT AutoTypeAction
 {
 public:
-    virtual ~AutoTypeAction()
-    {
-    }
     virtual AutoTypeAction* clone() = 0;
     virtual void accept(AutoTypeExecutor* executor) = 0;
+    virtual ~AutoTypeAction();
 };
 
 class KEEPASSX_EXPORT AutoTypeChar : public AutoTypeAction
 {
 public:
     explicit AutoTypeChar(const QChar& character);
-    AutoTypeAction* clone();
-    void accept(AutoTypeExecutor* executor);
+    AutoTypeAction* clone() override;
+    void accept(AutoTypeExecutor* executor) override;
 
     const QChar character;
 };
@@ -50,8 +48,8 @@ class KEEPASSX_EXPORT AutoTypeKey : public AutoTypeAction
 {
 public:
     explicit AutoTypeKey(Qt::Key key);
-    AutoTypeAction* clone();
-    void accept(AutoTypeExecutor* executor);
+    AutoTypeAction* clone() override;
+    void accept(AutoTypeExecutor* executor) override;
 
     const Qt::Key key;
 };
@@ -60,8 +58,8 @@ class KEEPASSX_EXPORT AutoTypeDelay : public AutoTypeAction
 {
 public:
     explicit AutoTypeDelay(int delayMs);
-    AutoTypeAction* clone();
-    void accept(AutoTypeExecutor* executor);
+    AutoTypeAction* clone() override;
+    void accept(AutoTypeExecutor* executor) override;
 
     const int delayMs;
 };
@@ -70,8 +68,8 @@ class KEEPASSX_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
     AutoTypeClearField();
-    AutoTypeAction* clone();
-    void accept(AutoTypeExecutor* executor);
+    AutoTypeAction* clone() override;
+    void accept(AutoTypeExecutor* executor) override;
 };
 
 class KEEPASSX_EXPORT AutoTypeExecutor

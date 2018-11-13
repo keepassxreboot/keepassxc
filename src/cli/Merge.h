@@ -25,7 +25,7 @@ class Merge : public Command
 public:
     Merge();
     ~Merge();
-    int execute(const QStringList& arguments);
+    int execute(const QStringList& arguments) override;
 };
 
 #endif // KEEPASSXC_MERGE_H

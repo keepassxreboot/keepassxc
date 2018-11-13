@@ -43,7 +43,7 @@ AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
     , m_autoTypeDelay(0)
     , m_currentGlobalKey(static_cast<Qt::Key>(0))
-    , m_currentGlobalModifiers(0)
+    , m_currentGlobalModifiers(nullptr)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(nullptr)
     , m_executor(nullptr)
@@ -142,7 +142,7 @@ QStringList AutoType::windowTitles()
 
 void AutoType::raiseWindow()
 {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     m_plugin->raiseOwnWindow();
 #endif
 }
@@ -213,7 +213,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
     }
 
     if (hideWindow) {
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         m_plugin->raiseLastActiveWindow();
 #else
         hideWindow->showMinimized();
@@ -327,7 +327,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
         connect(selectDialog, SIGNAL(rejected()), SLOT(autoTypeRejectedFromGlobal()));
 
         selectDialog->setMatchList(matchList);
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
         m_plugin->raiseOwnWindow();
         Tools::wait(500);
 #endif
@@ -731,8 +731,7 @@ bool AutoType::checkHighRepetition(const QString& string)
 bool AutoType::verifyAutoTypeSyntax(const QString& sequence)
 {
     if (!AutoType::checkSyntax(sequence)) {
-        QMessageBox messageBox;
-        messageBox.critical(nullptr, tr("Auto-Type"), tr("The Syntax of your Auto-Type statement is incorrect!"));
+        QMessageBox::critical(nullptr, tr("Auto-Type"), tr("The Syntax of your Auto-Type statement is incorrect!"));
         return false;
     } else if (AutoType::checkHighDelay(sequence)) {
         QMessageBox::StandardButton reply;

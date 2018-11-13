@@ -25,8 +25,8 @@ class Locate : public Command
 public:
     Locate();
     ~Locate();
-    int execute(const QStringList& arguments);
-    int locateEntry(Database* database, QString searchTerm);
+    int execute(const QStringList& arguments) override;
+    int locateEntry(Database* database, const QString& searchTerm);
 };
 
 #endif // KEEPASSXC_LOCATE_H

@@ -46,7 +46,7 @@ class QSplitter;
 class QLabel;
 class UnlockDatabaseWidget;
 class MessageWidget;
-class DetailsWidget;
+class EntryPreviewWidget;
 class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
@@ -90,8 +90,8 @@ public:
     bool isEditWidgetModified() const;
     QList<int> mainSplitterSizes() const;
     void setMainSplitterSizes(const QList<int>& sizes);
-    QList<int> detailSplitterSizes() const;
-    void setDetailSplitterSizes(const QList<int>& sizes);
+    QList<int> previewSplitterSizes() const;
+    void setPreviewSplitterSizes(const QList<int>& sizes);
     bool isUsernamesHidden() const;
     void setUsernamesHidden(const bool hide);
     bool isPasswordsHidden() const;
@@ -112,6 +112,10 @@ public:
     void blockAutoReload(bool block = true);
     void refreshSearch();
     bool isRecycleBinSelected() const;
+    QString getDatabaseName() const;
+    void setDatabaseName(const QString& databaseName);
+    QString getDatabaseFileName() const;
+    void setDatabaseFileName(const QString& databaseFileName);
 
 signals:
     void closeRequest();
@@ -125,12 +129,13 @@ signals:
     void pressedEntry(Entry* selectedEntry);
     void pressedGroup(Group* selectedGroup);
     void unlockedDatabase();
+    void lockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
     void searchModeActivated();
     void mainSplitterSizesChanged();
-    void detailSplitterSizesChanged();
+    void previewSplitterSizesChanged();
     void entryViewStateChanged();
     void updateSearch(QString text);
 
@@ -146,6 +151,7 @@ public slots:
     void copyNotes();
     void copyAttribute(QAction* action);
     void showTotp();
+    void showTotpKeyQrCode();
     void copyTotp();
     void setupTotp();
     void performAutoType();
@@ -210,7 +216,7 @@ private:
     void setIconFromParent();
     void replaceDatabase(Database* db);
 
-    Database* m_db;
+    QPointer<Database> m_db;
     QWidget* m_mainWidget;
     EditEntryWidget* m_editEntryWidget;
     EditEntryWidget* m_historyEditEntryWidget;
@@ -224,7 +230,7 @@ private:
     UnlockDatabaseWidget* m_unlockDatabaseWidget;
     UnlockDatabaseDialog* m_unlockDatabaseDialog;
     QSplitter* m_mainSplitter;
-    QSplitter* m_detailSplitter;
+    QSplitter* m_previewSplitter;
     GroupView* m_groupView;
     EntryView* m_entryView;
     QLabel* m_searchingLabel;
@@ -235,7 +241,9 @@ private:
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
     MessageWidget* m_messageWidget;
-    DetailsWidget* m_detailsView;
+    EntryPreviewWidget* m_previewView;
+    QString m_databaseName;
+    QString m_databaseFileName;
 
     // Search state
     QString m_lastSearchText;

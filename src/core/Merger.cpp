@@ -95,7 +95,7 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
             // Entry is already present in the database. Update it.
             const bool locationChanged = targetEntry->timeInfo().locationChanged() < sourceEntry->timeInfo().locationChanged();
             if (locationChanged && targetEntry->group() != context.m_targetGroup) {
-                changes << tr("Relocating %1 [%2]").arg(sourceEntry->title()).arg(sourceEntry->uuidToHex());
+                changes << tr("Relocating %1 [%2]").arg(sourceEntry->title(), sourceEntry->uuidToHex());
                 moveEntry(targetEntry, context.m_targetGroup);
             }
             changes << resolveEntryConflict(context, sourceEntry, targetEntry);
@@ -107,7 +107,7 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
     for (Group* sourceChildGroup : sourceChildGroups) {
         Group* targetChildGroup = context.m_targetRootGroup->findGroupByUuid(sourceChildGroup->uuid());
         if (!targetChildGroup) {
-            changes << tr("Creating missing %1 [%2]").arg(sourceChildGroup->name()).arg(sourceChildGroup->uuidToHex());
+            changes << tr("Creating missing %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
             targetChildGroup = sourceChildGroup->clone(Entry::CloneNoFlags, Group::CloneNoFlags);
             moveGroup(targetChildGroup, context.m_targetGroup);
             TimeInfo timeinfo = targetChildGroup->timeInfo();
@@ -117,7 +117,7 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
             bool locationChanged =
                 targetChildGroup->timeInfo().locationChanged() < sourceChildGroup->timeInfo().locationChanged();
             if (locationChanged && targetChildGroup->parent() != context.m_targetGroup) {
-                changes << tr("Relocating %1 [%2]").arg(sourceChildGroup->name()).arg(sourceChildGroup->uuidToHex());
+                changes << tr("Relocating %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
                 moveGroup(targetChildGroup, context.m_targetGroup);
                 TimeInfo timeinfo = targetChildGroup->timeInfo();
                 timeinfo.setLocationChanged(sourceChildGroup->timeInfo().locationChanged());
@@ -146,7 +146,7 @@ Merger::ChangeList Merger::resolveGroupConflict(const MergeContext& context, con
 
     // only if the other group is newer, update the existing one.
     if (timeExisting < timeOther) {
-        changes << tr("Overwriting %1 [%2]").arg(sourceChildGroup->name()).arg(sourceChildGroup->uuidToHex());
+        changes << tr("Overwriting %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
         targetChildGroup->setName(sourceChildGroup->name());
         targetChildGroup->setNotes(sourceChildGroup->notes());
         if (sourceChildGroup->iconNumber() == 0) {
@@ -270,16 +270,12 @@ Merger::ChangeList Merger::resolveEntryConflict_Duplicate(const MergeContext& co
         Entry* clonedEntry = sourceEntry->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
         moveEntry(clonedEntry, context.m_targetGroup);
         markOlderEntry(targetEntry);
-        changes << tr("Adding backup for older target %1 [%2]")
-                   .arg(targetEntry->title())
-                   .arg(targetEntry->uuidToHex());
+        changes << tr("Adding backup for older target %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
     } else if (comparison > 0) {
         Entry* clonedEntry = sourceEntry->clone(Entry::CloneNewUuid | Entry::CloneIncludeHistory);
         moveEntry(clonedEntry, context.m_targetGroup);
         markOlderEntry(clonedEntry);
-        changes << tr("Adding backup for older source %1 [%2]")
-                   .arg(sourceEntry->title())
-                   .arg(sourceEntry->uuidToHex());
+        changes << tr("Adding backup for older source %1 [%2]").arg(sourceEntry->title(), sourceEntry->uuidToHex());
     }
     return changes;
 }
@@ -297,8 +293,7 @@ Merger::ChangeList Merger::resolveEntryConflict_KeepLocal(const MergeContext& co
         // this type of merge changes the database timestamp since reapplying the
         // old entry is an active change of the database!
         changes << tr("Reapplying older target entry on top of newer source %1 [%2]")
-                   .arg(targetEntry->title())
-                   .arg(targetEntry->uuidToHex());
+                   .arg(targetEntry->title(), targetEntry->uuidToHex());
         Entry* agedTargetEntry = targetEntry->clone(Entry::CloneNoFlags);
         targetEntry->addHistoryItem(agedTargetEntry);
     }
@@ -318,8 +313,7 @@ Merger::ChangeList Merger::resolveEntryConflict_KeepRemote(const MergeContext& c
         // this type of merge changes the database timestamp since reapplying the
         // old entry is an active change of the database!
         changes << tr("Reapplying older source entry on top of newer target %1 [%2]")
-                   .arg(targetEntry->title())
-                   .arg(targetEntry->uuidToHex());
+                   .arg(targetEntry->title(), targetEntry->uuidToHex());
         targetEntry->beginUpdate();
         targetEntry->copyDataFrom(sourceEntry);
         targetEntry->endUpdate();
@@ -342,9 +336,7 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
                qPrintable(targetEntry->title()),
                qPrintable(sourceEntry->title()),
                qPrintable(currentGroup->name()));
-        changes << tr("Synchronizing from newer source %1 [%2]")
-                   .arg(targetEntry->title())
-                   .arg(targetEntry->uuidToHex());
+        changes << tr("Synchronizing from newer source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
         moveEntry(clonedEntry, currentGroup);
         mergeHistory(targetEntry, clonedEntry, mergeMethod);
         eraseEntry(targetEntry);
@@ -355,9 +347,7 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
                qPrintable(targetEntry->group()->name()));
         const bool changed = mergeHistory(sourceEntry, targetEntry, mergeMethod);
         if (changed) {
-            changes << tr("Synchronizing from older source %1 [%2]")
-                       .arg(targetEntry->title())
-                       .arg(targetEntry->uuidToHex());
+            changes << tr("Synchronizing from older source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
         }
     }
     return changes;
@@ -550,9 +540,9 @@ Merger::ChangeList Merger::mergeDeletions(const MergeContext& context)
         }
         deletions << object;
         if (entry->group()) {
-            changes << tr("Deleting child %1 [%2]").arg(entry->title()).arg(entry->uuidToHex());
+            changes << tr("Deleting child %1 [%2]").arg(entry->title(), entry->uuidToHex());
         } else {
-            changes << tr("Deleting orphan %1 [%2]").arg(entry->title()).arg(entry->uuidToHex());
+            changes << tr("Deleting orphan %1 [%2]").arg(entry->title(), entry->uuidToHex());
         }
         // Entry is inserted into deletedObjects after deletions are processed
         eraseEntry(entry);
@@ -576,9 +566,9 @@ Merger::ChangeList Merger::mergeDeletions(const MergeContext& context)
         }
         deletions << object;
         if (group->parentGroup()) {
-            changes << tr("Deleting child %1 [%2]").arg(group->name()).arg(group->uuidToHex());
+            changes << tr("Deleting child %1 [%2]").arg(group->name(), group->uuidToHex());
         } else {
-            changes << tr("Deleting orphan %1 [%2]").arg(group->name()).arg(group->uuidToHex());
+            changes << tr("Deleting orphan %1 [%2]").arg(group->name(), group->uuidToHex());
         }
         eraseGroup(group);
     }

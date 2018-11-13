@@ -43,7 +43,7 @@ public:
     void setRemember(bool r);
 
 private:
-    QScopedPointer<Ui::BrowserAccessControlDialog> ui;
+    QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
 };
 
 #endif // BROWSERACCESSCONTROLDIALOG_H

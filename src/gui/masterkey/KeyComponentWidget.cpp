@@ -38,8 +38,8 @@ KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
 
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(reset()));
 
-    connect(this, SIGNAL(nameChanged(const QString&)), SLOT(updateComponentName(const QString&)));
-    connect(this, SIGNAL(descriptionChanged(const QString&)), SLOT(updateComponentDescription(const QString&)));
+    connect(this, SIGNAL(nameChanged(QString)), SLOT(updateComponentName(QString)));
+    connect(this, SIGNAL(descriptionChanged(QString)), SLOT(updateComponentDescription(QString)));
     connect(this, SIGNAL(componentAddRequested()), SLOT(doAdd()));
     connect(this, SIGNAL(componentEditRequested()), SLOT(doEdit()));
     connect(this, SIGNAL(componentRemovalRequested()), SLOT(doRemove()));

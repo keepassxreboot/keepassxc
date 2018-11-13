@@ -21,6 +21,9 @@
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetMasterKey.h"
+#ifdef WITH_XC_BROWSER
+#include "DatabaseSettingsWidgetBrowser.h"
+#endif
 
 #include "core/Config.h"
 #include "core/FilePath.h"
@@ -34,6 +37,9 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     , m_securityTabWidget(new QTabWidget(this))
     , m_masterKeyWidget(new DatabaseSettingsWidgetMasterKey(this))
     , m_encryptionWidget(new DatabaseSettingsWidgetEncryption(this))
+#ifdef WITH_XC_BROWSER
+    , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
+#endif
 {
     m_ui->setupUi(this);
 
@@ -55,6 +61,11 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_ui->advancedSettingsToggle, SIGNAL(toggled(bool)), SLOT(toggleAdvancedMode(bool)));
 
+#ifdef WITH_XC_BROWSER
+    m_ui->categoryList->addCategory(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"));
+    m_ui->stackedWidget->addWidget(m_browserWidget);
+#endif
+
     pageChanged();
 }
 
@@ -68,6 +79,9 @@ void DatabaseSettingsDialog::load(Database* db)
     m_generalWidget->load(db);
     m_masterKeyWidget->load(db);
     m_encryptionWidget->load(db);
+#ifdef WITH_XC_BROWSER
+    m_browserWidget->load(db);
+#endif
     m_ui->advancedSettingsToggle->setChecked(config()->get("GUI/AdvancedSettings", false).toBool());
     m_db = db;
 }

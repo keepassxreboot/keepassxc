@@ -83,7 +83,7 @@ private:
     bool isCRLF(const QChar& c) const;
     bool isSpace(const QChar& c) const;
     bool isTab(const QChar& c) const;
-    bool isEmptyRow(CsvRow row) const;
+    bool isEmptyRow(const CsvRow& row) const;
     bool parseFile();
     void parseRecord();
     void parseField(CsvRow& row);
@@ -96,7 +96,7 @@ private:
     void clear();
     bool skipEndline();
     void skipLine();
-    void appendStatusMsg(QString s, bool isCritical = false);
+    void appendStatusMsg(const QString& s, bool isCritical = false);
 };
 
 #endif // CSVPARSER_H

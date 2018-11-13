@@ -18,6 +18,8 @@
 
 #include "CsvParserModel.h"
 
+#include <utility>
+
 CsvParserModel::CsvParserModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_skipped(0)
@@ -36,9 +38,9 @@ void CsvParserModel::setFilename(const QString& filename)
 QString CsvParserModel::getFileInfo()
 {
     QString a(tr("%1, %2, %3", "file info: bytes, rows, columns")
-                  .arg(tr("%n byte(s)", nullptr, getFileSize()))
-                  .arg(tr("%n row(s)", nullptr, getCsvRows()))
-                  .arg(tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1))));
+                  .arg(tr("%n byte(s)", nullptr, getFileSize()),
+                       tr("%n row(s)", nullptr, getCsvRows()),
+                       tr("%n column(s)", nullptr, qMax(0, getCsvCols() - 1))));
     return a;
 }
 
@@ -92,7 +94,7 @@ void CsvParserModel::setSkippedRows(int skipped)
 
 void CsvParserModel::setHeaderLabels(QStringList l)
 {
-    m_columnHeader = l;
+    m_columnHeader = std::move(l);
 }
 
 int CsvParserModel::rowCount(const QModelIndex& parent) const

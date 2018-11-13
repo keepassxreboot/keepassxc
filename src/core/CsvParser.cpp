@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
@@ -327,7 +327,7 @@ bool CsvParser::isText(QChar c) const
     return !((isCRLF(c)) || (isSeparator(c)));
 }
 
-bool CsvParser::isEmptyRow(CsvRow row) const
+bool CsvParser::isEmptyRow(const CsvRow& row) const
 {
     CsvRow::const_iterator it = row.constBegin();
     for (; it != row.constEnd(); ++it)
@@ -414,7 +414,7 @@ int CsvParser::getCsvRows() const
     return m_table.size();
 }
 
-void CsvParser::appendStatusMsg(QString s, bool isCritical)
+void CsvParser::appendStatusMsg(const QString& s, bool isCritical)
 {
     m_statusMsg += QObject::tr("%1: (row, col) %2,%3").arg(s, m_currRow, m_currCol).append("\n");
     m_isGood = !isCritical;

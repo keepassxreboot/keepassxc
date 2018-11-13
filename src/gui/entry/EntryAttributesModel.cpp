@@ -47,8 +47,8 @@ void EntryAttributesModel::setEntryAttributes(EntryAttributes* entryAttributes)
         connect(m_entryAttributes, SIGNAL(aboutToBeRemoved(QString)), SLOT(attributeAboutToRemove(QString)));
         connect(m_entryAttributes, SIGNAL(removed(QString)), SLOT(attributeRemove()));
         connect(
-            m_entryAttributes, SIGNAL(aboutToRename(QString, QString)), SLOT(attributeAboutToRename(QString, QString)));
-        connect(m_entryAttributes, SIGNAL(renamed(QString, QString)), SLOT(attributeRename(QString, QString)));
+            m_entryAttributes, SIGNAL(aboutToRename(QString,QString)), SLOT(attributeAboutToRename(QString,QString)));
+        connect(m_entryAttributes, SIGNAL(renamed(QString,QString)), SLOT(attributeRename(QString,QString)));
         connect(m_entryAttributes, SIGNAL(aboutToBeReset()), SLOT(aboutToReset()));
         connect(m_entryAttributes, SIGNAL(reset()), SLOT(reset()));
     }

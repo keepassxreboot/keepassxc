@@ -36,6 +36,8 @@ private slots:
     void testResolveConflictNewer();
     void testResolveConflictExisting();
     void testResolveGroupConflictOlder();
+    void testMergeNotModified();
+    void testMergeModified();
     void testResolveConflictDuplicate();
     void testResolveConflictEntry_Synchronize();
     void testResolveConflictEntry_KeepLocal();

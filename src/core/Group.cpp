@@ -321,9 +321,7 @@ void Group::setNotes(const QString& notes)
 
 void Group::setIcon(int iconNumber)
 {
-    Q_ASSERT(iconNumber >= 0);
-
-    if (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull()) {
+    if (iconNumber >= 0 && (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull())) {
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
         emit modified();
@@ -333,9 +331,7 @@ void Group::setIcon(int iconNumber)
 
 void Group::setIcon(const QUuid& uuid)
 {
-    Q_ASSERT(!uuid.isNull());
-
-    if (m_data.customIcon != uuid) {
+    if (!uuid.isNull() && m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
         emit modified();
@@ -552,36 +548,12 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     return entryList;
 }
 
-Entry* Group::findEntry(QString entryId)
-{
-    Q_ASSERT(!entryId.isNull());
-
-    Entry* entry;
-    QUuid entryUuid = QUuid::fromRfc4122(QByteArray::fromHex(entryId.toLatin1()));
-    if (!entryUuid.isNull()) {
-        entry = findEntryByUuid(entryUuid);
-        if (entry) {
-            return entry;
-        }
-    }
-
-    entry = findEntryByPath(entryId);
-    if (entry) {
-        return entry;
-    }
-
-    for (Entry* entry : entriesRecursive(false)) {
-        if (entry->title() == entryId) {
-            return entry;
-        }
-    }
-
-    return nullptr;
-}
-
 Entry* Group::findEntryByUuid(const QUuid& uuid) const
 {
-    Q_ASSERT(!uuid.isNull());
+    if (uuid.isNull()) {
+        return nullptr;
+    }
+
     for (Entry* entry : entriesRecursive(false)) {
         if (entry->uuid() == uuid) {
             return entry;
@@ -591,20 +563,34 @@ Entry* Group::findEntryByUuid(const QUuid& uuid) const
     return nullptr;
 }
 
-Entry* Group::findEntryByPath(QString entryPath, QString basePath)
+Entry* Group::findEntryByPath(const QString& entryPath)
 {
+    if (entryPath.isEmpty()) {
+        return nullptr;
+    }
 
-    Q_ASSERT(!entryPath.isNull());
+    // Add a beginning slash if the search string contains a slash
+    // We don't add a slash by default to allow searching by entry title
+    QString normalizedEntryPath = entryPath;
+    if (!normalizedEntryPath.startsWith("/") && normalizedEntryPath.contains("/")) {
+        normalizedEntryPath = "/" + normalizedEntryPath;
+    }
+    return findEntryByPathRecursive(normalizedEntryPath, "/");
+}
 
-    for (Entry* entry : asConst(m_entries)) {
-        QString currentEntryPath = basePath + entry->title();
-        if (entryPath == currentEntryPath || entryPath == QString("/" + currentEntryPath)) {
+Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath)
+{
+    // Return the first entry that matches the full path OR if there is no leading
+    // slash, return the first entry title that matches
+    for (Entry* entry : entries()) {
+        if (entryPath == (basePath + entry->title())
+            || (!entryPath.startsWith("/") && entry->title() == entryPath)) {
             return entry;
         }
     }
 
-    for (Group* group : asConst(m_children)) {
-        Entry* entry = group->findEntryByPath(entryPath, basePath + group->name() + QString("/"));
+    for (Group* group : children()) {
+        Entry* entry = group->findEntryByPathRecursive(entryPath, basePath + group->name() + "/");
         if (entry != nullptr) {
             return entry;
         }
@@ -613,24 +599,22 @@ Entry* Group::findEntryByPath(QString entryPath, QString basePath)
     return nullptr;
 }
 
-Group* Group::findGroupByPath(QString groupPath)
+Group* Group::findGroupByPath(const QString& groupPath)
 {
-    Q_ASSERT(!groupPath.isNull());
-
     // normalize the groupPath by adding missing front and rear slashes. once.
     QString normalizedGroupPath;
 
-    if (groupPath == "") {
+    if (groupPath.isEmpty()) {
         normalizedGroupPath = QString("/"); // root group
     } else {
-        normalizedGroupPath = ((groupPath.startsWith("/"))? "" : "/")
+        normalizedGroupPath = (groupPath.startsWith("/") ? "" : "/")
             + groupPath
-            + ((groupPath.endsWith("/") )? "" : "/");
+            + (groupPath.endsWith("/") ? "" : "/");
     }
-    return findGroupByPathRecursion(normalizedGroupPath, "/");
+    return findGroupByPathRecursive(normalizedGroupPath, "/");
 }
 
-Group* Group::findGroupByPathRecursion(QString groupPath, QString basePath)
+Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& basePath)
 {
     // paths must be normalized
     Q_ASSERT(groupPath.startsWith("/") && groupPath.endsWith("/"));
@@ -642,7 +626,7 @@ Group* Group::findGroupByPathRecursion(QString groupPath, QString basePath)
 
     for (Group* innerGroup : children()) {
         QString innerBasePath = basePath + innerGroup->name() + "/";
-        Group* group = innerGroup->findGroupByPathRecursion(groupPath, innerBasePath);
+        Group* group = innerGroup->findGroupByPathRecursive(groupPath, innerBasePath);
         if (group != nullptr) {
             return group;
         }
@@ -683,7 +667,7 @@ QList<const Group*> Group::groupsRecursive(bool includeSelf) const
         groupList.append(this);
     }
 
-    for (const Group* group : m_children) {
+    for (const Group* group : asConst(m_children)) {
         groupList.append(group->groupsRecursive(true));
     }
 
@@ -728,7 +712,10 @@ QSet<QUuid> Group::customIconsRecursive() const
 
 Group* Group::findGroupByUuid(const QUuid& uuid)
 {
-    Q_ASSERT(!uuid.isNull());
+    if (uuid.isNull()) {
+        return nullptr;
+    }
+
     for (Group* group : groupsRecursive(true)) {
         if (group->uuid() == uuid) {
             return group;
@@ -749,6 +736,11 @@ Group* Group::findChildByName(const QString& name)
     return nullptr;
 }
 
+/**
+ * Creates a duplicate of this group.
+ * Note that you need to copy the custom icons manually when inserting the
+ * new group into another database.
+ */
 Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) const
 {
     Group* clonedGroup = new Group();
@@ -819,7 +811,7 @@ void Group::removeEntry(Entry* entry)
 {
     Q_ASSERT_X(m_entries.contains(entry),
                Q_FUNC_INFO,
-               QString("Group %1 does not contain %2").arg(this->name()).arg(entry->title()).toLatin1());
+               QString("Group %1 does not contain %2").arg(this->name(), entry->title()).toLatin1());
 
     emit entryAboutToRemove(entry);
 
@@ -858,9 +850,9 @@ void Group::recSetDatabase(Database* db)
         connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
         connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
         connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-        connect(this, SIGNAL(aboutToAdd(Group*, int)), db, SIGNAL(groupAboutToAdd(Group*, int)));
+        connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
         connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
-        connect(this, SIGNAL(aboutToMove(Group*, Group*, int)), db, SIGNAL(groupAboutToMove(Group*, Group*, int)));
+        connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
     }
@@ -934,20 +926,23 @@ bool Group::resolveAutoTypeEnabled() const
     }
 }
 
-QStringList Group::locate(QString locateTerm, QString currentPath)
+QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
 {
-    Q_ASSERT(!locateTerm.isNull());
+    // TODO: Replace with EntrySearcher
     QStringList response;
+    if (locateTerm.isEmpty()) {
+        return response;
+    }
 
-    for (Entry* entry : asConst(m_entries)) {
+    for (const Entry* entry : asConst(m_entries)) {
         QString entryPath = currentPath + entry->title();
         if (entryPath.toLower().contains(locateTerm.toLower())) {
             response << entryPath;
         }
     }
 
-    for (Group* group : asConst(m_children)) {
-        for (QString path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
+    for (const Group* group : asConst(m_children)) {
+        for (const QString& path : group->locate(locateTerm, currentPath + group->name() + QString("/"))) {
             response << path;
         }
     }
@@ -955,22 +950,17 @@ QStringList Group::locate(QString locateTerm, QString currentPath)
     return response;
 }
 
-Entry* Group::addEntryWithPath(QString entryPath)
+Entry* Group::addEntryWithPath(const QString& entryPath)
 {
-    Q_ASSERT(!entryPath.isNull());
-    if (this->findEntryByPath(entryPath)) {
+    if (entryPath.isEmpty() || findEntryByPath(entryPath)) {
         return nullptr;
     }
 
     QStringList groups = entryPath.split("/");
     QString entryTitle = groups.takeLast();
     QString groupPath = groups.join("/");
-    if (groupPath.isNull()) {
-        groupPath = QString("");
-    }
 
-    Q_ASSERT(!groupPath.isNull());
-    Group* group = this->findGroupByPath(groupPath);
+    Group* group = findGroupByPath(groupPath);
     if (!group) {
         return nullptr;
     }

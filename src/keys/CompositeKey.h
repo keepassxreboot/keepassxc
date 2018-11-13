@@ -39,13 +39,13 @@ public:
 
     QByteArray rawKey() const override;
     QByteArray rawKey(const QByteArray* transformSeed, bool* ok = nullptr) const;
-    bool transform(const Kdf& kdf, QByteArray& result) const Q_REQUIRED_RESULT;
+    Q_REQUIRED_RESULT bool transform(const Kdf& kdf, QByteArray& result) const;
     bool challenge(const QByteArray& seed, QByteArray& result) const;
 
-    void addKey(QSharedPointer<Key> key);
+    void addKey(const QSharedPointer<Key>& key);
     const QList<QSharedPointer<Key>>& keys() const;
 
-    void addChallengeResponseKey(QSharedPointer<ChallengeResponseKey> key);\
+    void addChallengeResponseKey(const QSharedPointer<ChallengeResponseKey>& key);\
     const QList<QSharedPointer<ChallengeResponseKey>>& challengeResponseKeys() const;
 
 private:

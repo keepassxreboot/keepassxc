@@ -29,13 +29,13 @@ class Command
 {
 public:
     virtual ~Command();
-    virtual int execute(const QStringList& arguments);
+    virtual int execute(const QStringList& arguments) = 0;
     QString name;
     QString description;
     QString getDescriptionLine();
 
     static QList<Command*> getCommands();
-    static Command* getCommand(QString commandName);
+    static Command* getCommand(const QString& commandName);
 };
 
 #endif // KEEPASSXC_COMMAND_H

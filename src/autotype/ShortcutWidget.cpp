@@ -24,7 +24,7 @@
 ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)
     , m_key(static_cast<Qt::Key>(0))
-    , m_modifiers(0)
+    , m_modifiers(nullptr)
     , m_locked(false)
 {
     setReadOnly(true);
@@ -58,7 +58,7 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 void ShortcutWidget::resetShortcut()
 {
     m_key = static_cast<Qt::Key>(0);
-    m_modifiers = 0;
+    m_modifiers = nullptr;
     m_locked = false;
     autoType()->unregisterGlobalShortcut();
 }

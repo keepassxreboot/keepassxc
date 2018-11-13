@@ -25,9 +25,25 @@
 #endif
 
 #include <QProcess>
-#include <QTextStream>
 
-void Utils::setStdinEcho(bool enable = true)
+namespace Utils
+{
+/**
+ * STDOUT file handle for the CLI.
+ */
+FILE* STDOUT = stdout;
+
+/**
+ * STDERR file handle for the CLI.
+ */
+FILE* STDERR = stderr;
+
+/**
+ * STDIN file handle for the CLI.
+ */
+FILE* STDIN = stdin;
+
+void setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN
     HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
@@ -56,28 +72,58 @@ void Utils::setStdinEcho(bool enable = true)
 #endif
 }
 
-QString Utils::getPassword()
+namespace Test
 {
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    static QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+QStringList nextPasswords = {};
+
+/**
+ * Set the next password returned by \link getPassword() instead of reading it from STDIN.
+ * Multiple calls to this method will fill a queue of passwords.
+ * This function is intended for testing purposes.
+ *
+ * @param password password to return next
+ */
+void setNextPassword(const QString& password)
+{
+    nextPasswords.append(password);
+}
+}   // namespace Test
+
+/**
+ * Read a user password from STDIN or return a password previously
+ * set by \link setNextPassword().
+ *
+ * @return the password
+ */
+QString getPassword()
+{
+    TextStream out(STDOUT, QIODevice::WriteOnly);
+
+    // return preset password if one is set
+    if (!Test::nextPasswords.isEmpty()) {
+        auto password = Test::nextPasswords.takeFirst();
+        // simulate user entering newline
+        out << endl;
+        return password;
+    }
+
+    TextStream in(STDIN, QIODevice::ReadOnly);
 
     setStdinEcho(false);
-    QString line = inputTextStream.readLine();
+    QString line = in.readLine();
     setStdinEcho(true);
-
-    // The new line was also not echoed, but we do want to echo it.
-    outputTextStream << "\n";
-    outputTextStream.flush();
+    out << endl;
 
     return line;
 }
 
-/*
+/**
  * A valid and running event loop is needed to use the global QClipboard,
  * so we need to use this from the CLI.
  */
-int Utils::clipText(const QString& text)
+int clipText(const QString& text)
 {
+    TextStream err(Utils::STDERR);
 
     QString programName = "";
     QStringList arguments;
@@ -98,16 +144,18 @@ int Utils::clipText(const QString& text)
 #endif
 
     if (programName.isEmpty()) {
-        qCritical("No program defined for clipboard manipulation");
+        err << QObject::tr("No program defined for clipboard manipulation");
+        err.flush();
         return EXIT_FAILURE;
     }
 
-    QProcess* clipProcess = new QProcess(nullptr);
+    auto* clipProcess = new QProcess(nullptr);
     clipProcess->start(programName, arguments);
     clipProcess->waitForStarted();
 
     if (clipProcess->state() != QProcess::Running) {
-        qCritical("Unable to start program %s", qPrintable(programName));
+        err << QObject::tr("Unable to start program %1").arg(programName);
+        err.flush();
         return EXIT_FAILURE;
     }
 
@@ -120,3 +168,5 @@ int Utils::clipText(const QString& text)
 
     return clipProcess->exitCode();
 }
+
+}   // namespace Utils

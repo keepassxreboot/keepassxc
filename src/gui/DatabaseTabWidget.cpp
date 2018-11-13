@@ -419,7 +419,7 @@ bool DatabaseTabWidget::saveDatabaseAs(Database* db)
                                                             oldFilePath,
                                                             tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                             nullptr,
-                                                            0,
+                                                            nullptr,
                                                             "kdbx");
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
@@ -488,7 +488,7 @@ void DatabaseTabWidget::exportToCsv()
     }
 
     QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, 0, "csv");
+        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr, "csv");
     if (fileName.isEmpty()) {
         return;
     }
@@ -555,6 +555,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
     const DatabaseManagerStruct& dbStruct = m_dbList.value(db);
 
     QString tabName;
+    QString fileName;
 
     if (dbStruct.fileInfo.exists()) {
         if (db->metadata()->name().isEmpty()) {
@@ -563,6 +564,7 @@ void DatabaseTabWidget::updateTabName(Database* db)
             tabName = db->metadata()->name();
         }
 
+        fileName = dbStruct.fileInfo.fileName();
         setTabToolTip(index, dbStruct.fileInfo.absoluteFilePath());
     } else {
         if (db->metadata()->name().isEmpty()) {
@@ -579,6 +581,9 @@ void DatabaseTabWidget::updateTabName(Database* db)
     if (dbStruct.modified) {
         tabName.append("*");
     }
+
+    dbStruct.dbWidget->setDatabaseName(tabName);
+    dbStruct.dbWidget->setDatabaseFileName(fileName);
 
     setTabText(index, tabName);
     emit tabNameChanged();
@@ -688,7 +693,7 @@ void DatabaseTabWidget::insertDatabase(Database* db, const DatabaseManagerStruct
     setCurrentIndex(index);
     connectDatabase(db);
     connect(dbStruct.dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseFromSender()));
-    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*, bool)), SLOT(changeDatabase(Database*, bool)));
+    connect(dbStruct.dbWidget, SIGNAL(databaseChanged(Database*,bool)), SLOT(changeDatabase(Database*,bool)));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(updateTabNameFromDbWidgetSender()));
     connect(dbStruct.dbWidget, SIGNAL(unlockedDatabase()), SLOT(emitDatabaseUnlockedFromDbWidgetSender()));
 }

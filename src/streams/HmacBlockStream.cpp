@@ -17,6 +17,8 @@
 
 #include "HmacBlockStream.h"
 
+#include <utility>
+
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 
@@ -25,7 +27,7 @@ const QSysInfo::Endian HmacBlockStream::ByteOrder = QSysInfo::LittleEndian;
 HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
     : LayeredStream(baseDevice)
     , m_blockSize(1024 * 1024)
-    , m_key(key)
+    , m_key(std::move(key))
 {
     init();
 }
@@ -33,7 +35,7 @@ HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
 HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key, qint32 blockSize)
     : LayeredStream(baseDevice)
     , m_blockSize(blockSize)
-    , m_key(key)
+    , m_key(std::move(key))
 {
     init();
 }
@@ -245,7 +247,7 @@ QByteArray HmacBlockStream::getCurrentHmacKey() const
     return getHmacKey(m_blockIndex, m_key);
 }
 
-QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key)
+QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, const QByteArray& key)
 {
     Q_ASSERT(key.size() == 64);
     QByteArray indexBytes = Endian::sizedIntToBytes<quint64>(blockIndex, ByteOrder);

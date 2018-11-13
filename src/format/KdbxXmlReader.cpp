@@ -28,6 +28,7 @@
 
 #include <QBuffer>
 #include <QFile>
+#include <utility>
 
 #define UUID_LENGTH 16
 
@@ -43,9 +44,9 @@ KdbxXmlReader::KdbxXmlReader(quint32 version)
  * @param version KDBX version
  * @param binaryPool binary pool
  */
-KdbxXmlReader::KdbxXmlReader(quint32 version, const QHash<QString, QByteArray>& binaryPool)
+KdbxXmlReader::KdbxXmlReader(quint32 version, QHash<QString, QByteArray>  binaryPool)
     : m_kdbxVersion(version)
-    , m_binaryPool(binaryPool)
+    , m_binaryPool(std::move(binaryPool))
 {
 }
 
@@ -82,7 +83,6 @@ Database* KdbxXmlReader::readDatabase(QIODevice* device)
  * @param db database to read into
  * @param randomStream random stream to use for decryption
  */
-#include "QDebug"
 void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_error = false;

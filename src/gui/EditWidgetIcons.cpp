@@ -84,11 +84,11 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(),
-            SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this,
             SIGNAL(widgetUpdated()));
     connect(m_ui->customIconsView->selectionModel(),
-            SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this,
             SIGNAL(widgetUpdated()));
 
@@ -176,7 +176,7 @@ namespace {
     // Try to get the 2nd level domain of the host part of a QUrl. For example,
     // "foo.bar.example.com" would become "example.com", and "foo.bar.example.co.uk"
     // would become "example.co.uk".
-    QString getSecondLevelDomain(QUrl url)
+    QString getSecondLevelDomain(const QUrl& url)
     {
         QString fqdn = url.host();
         fqdn.truncate(fqdn.length() - url.topLevelDomain().length());
@@ -185,7 +185,7 @@ namespace {
         return newdom;
     }
 
-    QUrl convertVariantToUrl(QVariant var)
+    QUrl convertVariantToUrl(const QVariant& var)
     {
         QUrl url;
         if (var.canConvert<QUrl>())

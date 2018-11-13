@@ -34,7 +34,7 @@ public:
     bool reset() override;
     void close() override;
 
-    static QByteArray getHmacKey(quint64 blockIndex, QByteArray key);
+    static QByteArray getHmacKey(quint64 blockIndex, const QByteArray& key);
 
     bool atEnd() const override;
 

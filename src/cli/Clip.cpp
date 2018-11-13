@@ -23,8 +23,8 @@
 #include "Clip.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -42,20 +42,22 @@ Clip::~Clip()
 
 int Clip::execute(const QStringList& arguments)
 {
-
-    QTextStream out(stdout);
+    TextStream out(Utils::STDOUT);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
+    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    QCommandLineOption totp(QStringList() << "t"  << "totp",
+                            QObject::tr("Copy the current TOTP to the clipboard."));
+    parser.addOption(totp);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
-    parser.addPositionalArgument(
-        "timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]"));
+    parser.addPositionalArgument("timeout",
+                                 QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]");
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
@@ -64,51 +66,71 @@ int Clip::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile));
+    Database* db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
 
-    return this->clipEntry(db, args.at(1), args.value(2));
+    return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp));
 }
 
-int Clip::clipEntry(Database* database, QString entryPath, QString timeout)
+int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout, bool clipTotp)
 {
+    TextStream err(Utils::STDERR);
 
     int timeoutSeconds = 0;
     if (!timeout.isEmpty() && !timeout.toInt()) {
-        qCritical("Invalid timeout value %s.", qPrintable(timeout));
+        err << QObject::tr("Invalid timeout value %1.").arg(timeout) << endl;
         return EXIT_FAILURE;
     } else if (!timeout.isEmpty()) {
         timeoutSeconds = timeout.toInt();
     }
 
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
-    Entry* entry = database->rootGroup()->findEntry(entryPath);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        qCritical("Entry %s not found.", qPrintable(entryPath));
+        err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
-    int exitCode = Utils::clipText(entry->password());
+    QString value;
+    if (clipTotp) {
+        if (!entry->hasTotp()) {
+            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+            return EXIT_FAILURE;
+        }
+
+        value = entry->totp();
+    } else {
+        value = entry->password();
+    }
+
+    int exitCode = Utils::clipText(value);
     if (exitCode != EXIT_SUCCESS) {
         return exitCode;
     }
 
-    outputTextStream << "Entry's password copied to the clipboard!" << endl;
+    if (clipTotp) {
+        outputTextStream << QObject::tr("Entry's current TOTP copied to the clipboard!") << endl;
+    } else {
+        outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
+    }
 
     if (!timeoutSeconds) {
         return exitCode;
     }
 
+    QString lastLine = "";
     while (timeoutSeconds > 0) {
-        outputTextStream << "\rClearing the clipboard in " << timeoutSeconds << " seconds...";
-        outputTextStream.flush();
+        outputTextStream << '\r' << QString(lastLine.size(), ' ') << '\r';
+        lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeoutSeconds).arg(timeoutSeconds);
+        outputTextStream << lastLine << flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        timeoutSeconds--;
+        --timeoutSeconds;
     }
     Utils::clipText("");
-    outputTextStream << "\nClipboard cleared!" << endl;
+    outputTextStream << '\r' << QString(lastLine.size(), ' ') << '\r';
+    outputTextStream << QObject::tr("Clipboard cleared!") << endl;
 
     return EXIT_SUCCESS;
 }
