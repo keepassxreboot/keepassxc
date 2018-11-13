@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ Create::~Create()
  * If the database is being saved in a non existant directory, the
  * function will fail.
  *
- * @return EXIT_SUCCESS on succes, or EXIT_FAILURE on failure
+ * @return EXIT_SUCCESS on success, or EXIT_FAILURE on failure
  */
 int Create::execute(const QStringList& arguments)
 {
@@ -65,7 +65,7 @@ int Create::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption keyFile(
         QStringList() << "k" << "key-file",
-        QObject::tr("Key file of the database. When file does not exist, new key file will be generated"),
+        QObject::tr("Key file of the database. If file does not exist, new key file will be generated"),
         QObject::tr("path"));
     parser.addOption(keyFile);
 
@@ -78,12 +78,15 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto key = QSharedPointer<CompositeKey>(new CompositeKey());
+    auto key = QSharedPointer<CompositeKey>::create();
 
     QSharedPointer<FileKey> fileKey;
-    if (!loadFileKey(parser.value(keyFile), fileKey)) {
-        err << QObject::tr("Loading the key file failed") << endl;
-        return EXIT_FAILURE;
+
+    if(parser.isSet(keyFile)) {
+        if (!loadFileKey(parser.value(keyFile), fileKey)) {
+            err << QObject::tr("Loading the key file failed") << endl;
+            return EXIT_FAILURE;
+        }
     }
 
     if (!fileKey.isNull()) {
@@ -96,7 +99,7 @@ int Create::execute(const QStringList& arguments)
     }
 
     if (key->isEmpty()) {
-        err << QObject::tr("No key's set, aborting creating database") << endl;
+        err << QObject::tr("No key is set, aborting creating database") << endl;
         return EXIT_FAILURE;
     }
 
@@ -149,24 +152,22 @@ bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
 {
     QTextStream err(stdout, QIODevice::WriteOnly);
 
-    if (path.length() > 0) {
-        QFileInfo fileInfo(path);
-        QString error;
-        fileKey = QSharedPointer<FileKey>(new FileKey());
+    QFileInfo fileInfo(path);
+    QString error;
+    fileKey = QSharedPointer<FileKey>(new FileKey());
 
-        if (!fileInfo.exists()) {
-            fileKey->create(path, &error);
+    if (!fileInfo.exists()) {
+        fileKey->create(path, &error);
 
-            if (error.length() > 0) {
-                err << QObject::tr("Creating KeyFile failed: ") << error << endl;
-                return false;
-            }
-        }
-
-        if (!fileKey->load(path, &error)) {
-            err << QObject::tr("Loading KeyFile failed: ") << error << endl;
+        if (error.length() > 0) {
+            err << QObject::tr("Creating KeyFile failed: %1").arg(error) << endl;
             return false;
         }
+    }
+
+    if (!fileKey->load(path, &error)) {
+        err << QObject::tr("Loading KeyFile failed: ") << error << endl;
+        return false;
     }
 
     return true;
