@@ -33,6 +33,7 @@
 #include <QTimer>
 #include <QXmlStreamReader>
 #include <QFileInfo>
+#include <QtConcurrent>
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 QHash<QString, QPointer<Database>> Database::s_filePathMap;
@@ -395,6 +396,33 @@ void Database::setFilePath(const QString& filePath)
     s_filePathMap.insert(m_data.filePath, this);
 
     emit filePathChanged(oldPath, filePath);
+}
+
+QList<Entry*> Database::resolveReferences(const QUuid& uuid) const
+{
+    return resolveReferences(uuid, m_rootGroup);
+}
+
+QList<Entry*> Database::resolveReferences(const QUuid& uuid, const Group* group) const
+{
+    auto isReference = [&uuid](const Entry* e) { return e->hasReferencesTo(uuid); };
+
+    QList<Entry*> result = QtConcurrent::blockingFiltered(group->entries(), isReference);
+
+    for (Group* child : group->children()) {
+        result += resolveReferences(uuid, child);
+    }
+    return result;
+}
+
+void Database::replaceReferencesWithValues(Entry* entry, QList<Entry*> references)
+{
+    for (Entry* reference : references) {
+        for (const QString& key : EntryAttributes::DefaultAttributes) {
+            if (reference->isAttributeReferenceOf(key, entry->uuid()))
+                reference->setDefaultAttribute(key, entry->attribute(key));
+        }
+    }
 }
 
 QList<DeletedObject> Database::deletedObjects()

@@ -39,7 +39,8 @@ namespace Tools
     bool isBase64(const QByteArray& ba);
     void sleep(int ms);
     void wait(int ms);
-    QRegularExpression convertToRegex(const QString& string, bool useWildcards = false, 
+    QString uuidToHex(const QUuid& uuid);
+    QRegularExpression convertToRegex(const QString& string, bool useWildcards = false,
                                       bool exactMatch = false, bool caseSensitive = false);
 
     template <typename RandomAccessIterator, typename T>

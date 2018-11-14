@@ -441,52 +441,96 @@ void DatabaseWidget::deleteEntries()
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
+    auto it = selectedEntries.begin();
+    while (it != selectedEntries.end()) {
+        QList<Entry*> references = m_db->resolveReferences((*it)->uuid());
+        for (const auto& el : selectedEntries) {
+            references.removeAll(el);
+        }
+
+        if (!references.isEmpty()) {
+            if (handleEntryWithReferences(*it, references)) {
+                it++;
+            } else {
+                it = selectedEntries.erase(it);
+            }
+        } else {
+            it++;
+        }
+    }
+
+    if (!selectedEntries.isEmpty()) {
+        deleteEntries(selectedEntries);
+    }
+
+    refreshSearch();
+}
+
+bool DatabaseWidget::handleEntryWithReferences(Entry* entry, QList<Entry*> references)
+{
+    auto result = MessageBox::question(
+        this,
+        tr("Replace references to entry?"),
+        tr("Entry \"%1\" has %2 references. "
+           "You can either copy values into references, ignore them or cancel deletion of the original.")
+            .arg(entry->title().toHtmlEscaped())
+            .arg(references.size()),
+        MessageBox::Apply | MessageBox::Ignore | MessageBox::Cancel);
+
+    if (result == MessageBox::Apply) {
+        m_db->replaceReferencesWithValues(entry, references);
+    }
+
+    return result != MessageBox::Cancel;
+}
+
+void DatabaseWidget::deleteEntries(QList<Entry*> entries)
+{
+    Q_ASSERT(!entries.isEmpty());
+
     auto* recycleBin = m_db->metadata()->recycleBin();
-    bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid());
+    bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(entries.first()->uuid());
     if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
         QString prompt;
         refreshSearch();
-        if (selected.size() == 1) {
+        if (entries.size() == 1) {
             prompt = tr("Do you really want to delete the entry \"%1\" for good?")
-                         .arg(selectedEntries.first()->title().toHtmlEscaped());
+                         .arg(entries.first()->title().toHtmlEscaped());
         } else {
-            prompt = tr("Do you really want to delete %n entry(s) for good?", "", selected.size());
+            prompt = tr("Do you really want to delete %n entry(s) for good?", "", entries.size());
         }
 
         auto answer = MessageBox::question(this,
-                                           tr("Delete entry(s)?", "", selected.size()),
+                                           tr("Delete entry(s)?", "", entries.size()),
                                            prompt,
                                            MessageBox::Delete | MessageBox::Cancel,
                                            MessageBox::Cancel);
 
         if (answer == MessageBox::Delete) {
-            for (Entry* entry : asConst(selectedEntries)) {
+            for (Entry* entry : asConst(entries)) {
                 delete entry;
-                    refreshSearch();
+                refreshSearch();
             }
-            refreshSearch();
         }
     } else {
         QString prompt;
-        if (selected.size() == 1) {
+        if (entries.size() == 1) {
             prompt = tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                         .arg(selectedEntries.first()->title().toHtmlEscaped());
+                         .arg(entries.first()->title().toHtmlEscaped());
         } else {
-            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", selected.size());
+            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", entries.size());
         }
 
         auto answer = MessageBox::question(this,
-                                           tr("Move entry(s) to recycle bin?", "", selected.size()),
+                                           tr("Move entry(s) to recycle bin?", "", entries.size()),
                                            prompt,
                                            MessageBox::Move | MessageBox::Cancel,
                                            MessageBox::Cancel);
 
-        if (answer == MessageBox::Cancel) {
-            return;
-        }
-
-        for (Entry* entry : asConst(selectedEntries)) {
-            m_db->recycleEntry(entry);
+        if (answer != MessageBox::Cancel) {
+            for (Entry* entry : asConst(entries)) {
+                m_db->recycleEntry(entry);
+            }
         }
     }
 }

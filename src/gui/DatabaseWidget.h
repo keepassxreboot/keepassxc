@@ -227,6 +227,8 @@ private:
     void processAutoOpen();
 
     QSharedPointer<Database> m_db;
+    bool handleEntryWithReferences(Entry* entry, QList<Entry*> references);
+    void deleteEntries(QList<Entry*> entries);
 
     QPointer<QWidget> m_mainWidget;
     QPointer<QSplitter> m_mainSplitter;

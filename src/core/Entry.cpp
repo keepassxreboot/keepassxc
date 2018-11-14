@@ -24,6 +24,7 @@
 #include "core/DatabaseIcons.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "totp/totp.h"
 
 #include <QDir>
@@ -100,6 +101,32 @@ void Entry::setUpdateTimeinfo(bool value)
     m_updateTimeinfo = value;
 }
 
+QString Entry::buildReference(const QUuid& uuid, const QString& field)
+{
+    Q_ASSERT(EntryAttributes::DefaultAttributes.count(field) > 0);
+
+    QString uuidStr = Tools::uuidToHex(uuid);
+    QString shortField;
+
+    if (field == EntryAttributes::TitleKey) {
+        shortField = "T";
+    } else if (field == EntryAttributes::UserNameKey) {
+        shortField = "U";
+    } else if (field == EntryAttributes::PasswordKey) {
+        shortField = "P";
+    } else if (field == EntryAttributes::URLKey) {
+        shortField = "A";
+    } else if (field == EntryAttributes::NotesKey) {
+        shortField = "N";
+    }
+
+    if (shortField.isEmpty()) {
+        return {};
+    }
+
+    return QString("{REF:%1@I:%2}").arg(shortField, uuidStr);
+}
+
 EntryReferenceType Entry::referenceType(const QString& referenceStr)
 {
     const QString referenceLowerStr = referenceStr.toLower();
@@ -130,7 +157,7 @@ const QUuid& Entry::uuid() const
 
 const QString Entry::uuidToHex() const
 {
-    return QString::fromLatin1(m_uuid.toRfc4122().toHex());
+    return Tools::uuidToHex(m_uuid);
 }
 
 QImage Entry::icon() const
@@ -304,9 +331,23 @@ QString Entry::notes() const
     return m_attributes->value(EntryAttributes::NotesKey);
 }
 
+QString Entry::attribute(const QString& key) const
+{
+    return m_attributes->value(key);
+}
+
 bool Entry::isExpired() const
 {
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
+}
+
+bool Entry::isAttributeReferenceOf(const QString& key, const QUuid& uuid) const
+{
+    if (!m_attributes->isReference(key)) {
+        return false;
+    }
+
+    return m_attributes->value(key).contains(Tools::uuidToHex(uuid), Qt::CaseInsensitive);
 }
 
 bool Entry::hasReferences() const
@@ -314,6 +355,17 @@ bool Entry::hasReferences() const
     const QList<QString> keyList = EntryAttributes::DefaultAttributes;
     for (const QString& key : keyList) {
         if (m_attributes->isReference(key)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Entry::hasReferencesTo(const QUuid& uuid) const
+{
+    const QList<QString> keyList = EntryAttributes::DefaultAttributes;
+    for (const QString& key : keyList) {
+        if (isAttributeReferenceOf(key, uuid)) {
             return true;
         }
     }
@@ -496,6 +548,17 @@ void Entry::setNotes(const QString& notes)
     m_attributes->set(EntryAttributes::NotesKey, notes, m_attributes->isProtected(EntryAttributes::NotesKey));
 }
 
+void Entry::setDefaultAttribute(const QString& attribute, const QString& value)
+{
+    Q_ASSERT(EntryAttributes::isDefaultAttribute(attribute));
+
+    if (!EntryAttributes::isDefaultAttribute(attribute)) {
+        return;
+    }
+
+    m_attributes->set(attribute, value, m_attributes->isProtected(attribute));
+}
+
 void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
@@ -654,16 +717,17 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_attachments->copyDataFrom(m_attachments);
 
     if (flags & CloneUserAsRef) {
-        // Build the username reference
-        QString username = "{REF:U@I:" + uuidToHex() + "}";
         entry->m_attributes->set(
-            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+            EntryAttributes::UserNameKey,
+            buildReference(uuid(), EntryAttributes::UserNameKey),
+            m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
-        QString password = "{REF:P@I:" + uuidToHex() + "}";
         entry->m_attributes->set(
-            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+            EntryAttributes::PasswordKey,
+            buildReference(uuid(), EntryAttributes::PasswordKey),
+            m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
