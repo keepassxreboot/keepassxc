@@ -30,15 +30,18 @@
 SearchWidget::SearchWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SearchWidget())
+    , m_searchTimer(new QTimer(this))
+    , m_clearSearchTimer(new QTimer(this))
 {
     m_ui->setupUi(this);
 
-    m_searchTimer = new QTimer(this);
     m_searchTimer->setSingleShot(true);
+    m_clearSearchTimer->setSingleShot(true);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->clearIcon, SIGNAL(triggered(bool)), m_ui->searchEdit, SLOT(clear()));
     connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
+    connect(m_clearSearchTimer, SIGNAL(timeout()), m_ui->searchEdit, SLOT(clear()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
     new QShortcut(QKeySequence::Find, this, SLOT(searchFocus()), nullptr, Qt::ApplicationShortcut);
@@ -101,6 +104,11 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
                 return true;
             }
         }
+    } else if (event->type() == QEvent::FocusOut) {
+        // Auto-clear search after 5 minutes
+        m_clearSearchTimer->start(300000);
+    } else if (event->type() == QEvent::FocusIn) {
+        m_clearSearchTimer->stop();
     }
 
     return QObject::eventFilter(obj, event);

@@ -893,6 +893,14 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
             setupTotp();
         }
         break;
+    case EntryModel::ParentGroup:
+        // Call this first to clear out of search mode, otherwise
+        // the desired entry is not properly selected
+        endSearch();
+        emit clearSearch();
+        m_groupView->setCurrentGroup(entry->group());
+        m_entryView->setCurrentEntry(entry);
+        break;
     // TODO: switch to 'Notes' tab in details view/pane
     // case EntryModel::Notes:
     //    break;
