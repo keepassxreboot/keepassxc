@@ -736,11 +736,9 @@ void TestGui::testTotp()
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
     QCOMPARE(entryView->model()->rowCount(), 1);
-
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
-
     clickIndex(item, entryView, Qt::LeftButton);
 
     triggerAction("actionEntrySetupTotp");
@@ -749,24 +747,24 @@ void TestGui::testTotp()
 
     QApplication::processEvents();
 
+    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
     seedEdit->setText("");
-
-    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     QTest::keyClicks(seedEdit, exampleSeed);
 
     auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    QTRY_VERIFY(!setupTotpButtonBox->isVisible());
+    QTRY_VERIFY(!setupTotpDialog->isVisible());
 
-    // Make sure the entry is selected
-    clickIndex(item, entryView, Qt::LeftButton);
+    // Make sure the entryView is selected and active
+    entryView->activateWindow();
     QApplication::processEvents();
-    Tools::wait(200);
+    QTRY_VERIFY(entryView->hasFocus());
 
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
-    QTRY_VERIFY(entryEditAction->isEnabled());
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QVERIFY(entryEditWidget->isVisible());
+    QVERIFY(entryEditWidget->isEnabled());
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
 
