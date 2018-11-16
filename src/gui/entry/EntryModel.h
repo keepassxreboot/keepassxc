@@ -61,13 +61,9 @@ public:
     QMimeData* mimeData(const QModelIndexList& indexes) const override;
 
     void setEntryList(const QList<Entry*>& entries);
-
-    bool isUsernamesHidden() const;
-    void setUsernamesHidden(const bool hide);
-    bool isPasswordsHidden() const;
-    void setPasswordsHidden(const bool hide);
-
     void setPaperClipPixmap(const QPixmap& paperclip);
+    bool isUsernamesHidden() const;
+    bool isPasswordsHidden() const;
 
 signals:
     void switchedToListMode();
@@ -77,8 +73,8 @@ signals:
 
 public slots:
     void setGroup(Group* group);
-    void toggleUsernamesHidden(const bool hide);
-    void togglePasswordsHidden(const bool hide);
+    void setUsernamesHidden(bool hide);
+    void setPasswordsHidden(bool hide);
 
 private slots:
     void entryAboutToAdd(Entry* entry);

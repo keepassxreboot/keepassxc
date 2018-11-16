@@ -183,7 +183,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
+    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
@@ -196,16 +196,37 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
-    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
+    m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
+    // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
+    m_ui->actionEntryNew->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryEdit->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryDelete->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryClone->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
+#endif
+
+    // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    // Control database tabs
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectPreviousDatabaseTab()));
+    // Toggle password and username visibility in entry view
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
@@ -457,8 +478,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         switch (mode) {
         case DatabaseWidget::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -472,7 +493,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
-            m_ui->menuEntryTotp->setEnabled(true);
+            m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -507,13 +528,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             for (QAction* action : groupActions) {
                 action->setEnabled(false);
             }
-            m_ui->actionEntryCopyTitle->setEnabled(false);
-            m_ui->actionEntryCopyUsername->setEnabled(false);
-            m_ui->actionEntryCopyPassword->setEnabled(false);
-            m_ui->actionEntryCopyURL->setEnabled(false);
-            m_ui->actionEntryCopyNotes->setEnabled(false);
-            m_ui->menuEntryCopyAttribute->setEnabled(false);
-            m_ui->menuEntryTotp->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -539,13 +553,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         for (QAction* action : groupActions) {
             action->setEnabled(false);
         }
-        m_ui->actionEntryCopyTitle->setEnabled(false);
-        m_ui->actionEntryCopyUsername->setEnabled(false);
-        m_ui->actionEntryCopyPassword->setEnabled(false);
-        m_ui->actionEntryCopyURL->setEnabled(false);
-        m_ui->actionEntryCopyNotes->setEnabled(false);
-        m_ui->menuEntryCopyAttribute->setEnabled(false);
-        m_ui->menuEntryTotp->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -729,6 +736,22 @@ void MainWindow::databaseTabChanged(int tabIndex)
     }
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
+}
+
+void MainWindow::togglePasswordsHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
+    }
+}
+
+void MainWindow::toggleUsernamesHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
+    }
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

@@ -99,6 +99,7 @@ public:
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
+    bool currentEntryHasFocus();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
     bool currentEntryHasPassword();
@@ -198,9 +199,8 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
-    void emitPressedEntry();
-    void emitPressedEntry(Entry* currentEntry);
     void emitPressedGroup(Group* currentGroup);
+    void emitEntrySelectionChanged();
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);

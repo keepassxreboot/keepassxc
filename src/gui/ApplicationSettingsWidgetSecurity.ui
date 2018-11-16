@@ -175,7 +175,7 @@
       <item>
        <widget class="QCheckBox" name="passwordCleartextCheckBox">
         <property name="text">
-         <string>Show passwords in cleartext by default</string>
+         <string>Don't hide passwords when editing them</string>
         </property>
        </widget>
       </item>

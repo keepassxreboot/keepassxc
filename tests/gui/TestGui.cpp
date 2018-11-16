@@ -736,11 +736,9 @@ void TestGui::testTotp()
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
     QCOMPARE(entryView->model()->rowCount(), 1);
-
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
-
     clickIndex(item, entryView, Qt::LeftButton);
 
     triggerAction("actionEntrySetupTotp");
@@ -749,21 +747,28 @@ void TestGui::testTotp()
 
     QApplication::processEvents();
 
+    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
     seedEdit->setText("");
-
-    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     QTest::keyClicks(seedEdit, exampleSeed);
 
     auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_VERIFY(!setupTotpDialog->isVisible());
+
+    // Make sure the entryView is selected and active
+    entryView->activateWindow();
+    QApplication::processEvents();
+    QTRY_VERIFY(entryView->hasFocus());
 
     auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
     QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QVERIFY(entryEditWidget->isVisible());
+    QVERIFY(entryEditWidget->isEnabled());
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
-    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
 
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     editEntryWidget->setCurrentPage(1);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
@@ -836,15 +841,19 @@ void TestGui::testSearch()
     // Ensure Down focuses on entry view when search text is selected
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
-    // Refocus back to search edit
-    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
-    QTRY_VERIFY(searchTextEdit->hasFocus());
-    // Test password copy
+    // Test that password copies (entry has focus)
     QClipboard* clipboard = QApplication::clipboard();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QModelIndex searchedItem = entryView->model()->index(0, 1);
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());
+    // Refocus back to search edit
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    // Test that password does not copy
+    searchTextEdit->selectAll();
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QTRY_COMPARE(clipboard->text(), QString("someTHING"));
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);

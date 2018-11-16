@@ -47,12 +47,14 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Entry
     m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
+    connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     connect(&m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
 
@@ -152,18 +154,40 @@ void EntryPreviewWidget::updateEntryTotp()
     }
 }
 
+void EntryPreviewWidget::setPasswordVisible(bool state)
+{
+    const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
+    auto flags = m_ui->entryPasswordLabel->textInteractionFlags();
+    if (state) {
+        m_ui->entryPasswordLabel->setRawText(password);
+        m_ui->entryPasswordLabel->setToolTip(password);
+        m_ui->entryPasswordLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
+    } else {
+        m_ui->entryPasswordLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
+        m_ui->entryPasswordLabel->setToolTip({});
+        if (password.isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
+            m_ui->entryPasswordLabel->setRawText("");
+        } else {
+            m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
+        }
+    }
+}
+
 void EntryPreviewWidget::updateEntryGeneralTab()
 {
     Q_ASSERT(m_currentEntry);
     m_ui->entryUsernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
 
-    if (!config()->get("security/HidePasswordPreviewPanel").toBool()) {
-        const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
-        m_ui->entryPasswordLabel->setRawText(password);
-        m_ui->entryPasswordLabel->setToolTip(password);
+    if (config()->get("security/HidePasswordPreviewPanel").toBool()) {
+        // Hide password
+        setPasswordVisible(false);
+        // Show the password toggle button if there are dots in the label
+        m_ui->togglePasswordButton->setVisible(!m_ui->entryPasswordLabel->rawText().isEmpty());
+        m_ui->togglePasswordButton->setChecked(false);
     } else {
-        m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
-        m_ui->entryPasswordLabel->setToolTip({});
+        // Show password
+        setPasswordVisible(true);
+        m_ui->togglePasswordButton->setVisible(false);
     }
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());

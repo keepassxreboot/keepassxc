@@ -50,21 +50,21 @@ EntryView::EntryView(QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+
     connect(m_model, SIGNAL(switchedToListMode()), SLOT(switchToListMode()));
     connect(m_model, SIGNAL(switchedToSearchMode()), SLOT(switchToSearchMode()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
-    connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitEntryPressed(QModelIndex)));
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
     m_headerMenu->addSection(tr("Customize View"));
 
-    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(toggleUsernamesHidden(bool)));
+    m_hideUsernamesAction = m_headerMenu->addAction(tr("Hide Usernames"), m_model, SLOT(setUsernamesHidden(bool)));
     m_hideUsernamesAction->setCheckable(true);
-    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(togglePasswordsHidden(bool)));
+    m_hidePasswordsAction = m_headerMenu->addAction(tr("Hide Passwords"), m_model, SLOT(setPasswordsHidden(bool)));
     m_hidePasswordsAction->setCheckable(true);
     m_headerMenu->addSeparator();
 
@@ -146,6 +146,18 @@ void EntryView::keyPressEvent(QKeyEvent* event)
     QTreeView::keyPressEvent(event);
 }
 
+void EntryView::focusInEvent(QFocusEvent* event)
+{
+    emit entrySelectionChanged();
+    QTreeView::focusInEvent(event);
+}
+
+void EntryView::focusOutEvent(QFocusEvent* event)
+{
+    emit entrySelectionChanged();
+    QTreeView::focusOutEvent(event);
+}
+
 void EntryView::setGroup(Group* group)
 {
     m_model->setGroup(group);
@@ -176,13 +188,7 @@ bool EntryView::inSearchMode()
 void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
-
     emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
-}
-
-void EntryView::emitEntryPressed(const QModelIndex& index)
-{
-    emit entryPressed(entryFromIndex(index));
 }
 
 void EntryView::setModel(QAbstractItemModel* model)
@@ -268,6 +274,11 @@ bool EntryView::isUsernamesHidden() const
  */
 void EntryView::setUsernamesHidden(const bool hide)
 {
+    bool block = m_hideUsernamesAction->signalsBlocked();
+    m_hideUsernamesAction->blockSignals(true);
+    m_hideUsernamesAction->setChecked(hide);
+    m_hideUsernamesAction->blockSignals(block);
+
     m_model->setUsernamesHidden(hide);
 }
 
@@ -285,6 +296,11 @@ bool EntryView::isPasswordsHidden() const
  */
 void EntryView::setPasswordsHidden(const bool hide)
 {
+    bool block = m_hidePasswordsAction->signalsBlocked();
+    m_hidePasswordsAction->blockSignals(true);
+    m_hidePasswordsAction->setChecked(hide);
+    m_hidePasswordsAction->blockSignals(block);
+
     m_model->setPasswordsHidden(hide);
 }
 
