@@ -84,6 +84,7 @@ signals:
     void databaseLocked();
     void databaseUnlocked();
     void databaseChanged();
+    void lockDatabase(DatabaseWidget*);
 
 private:
     enum Access

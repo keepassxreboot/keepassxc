@@ -59,6 +59,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
                 SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
                 this,
                 SLOT(activateDatabaseChanged(DatabaseWidget*)));
+        connect(this, SIGNAL(lockDatabase(DatabaseWidget*)), m_dbTabWidget, SLOT(lockDatabase(DatabaseWidget*)));
     }
 }
 
