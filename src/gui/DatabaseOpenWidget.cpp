@@ -177,9 +177,8 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
 void DatabaseOpenWidget::openDatabase()
 {
-    KeePass2Reader reader;
     QSharedPointer<CompositeKey> masterKey = databaseKey();
-    if (masterKey.isNull()) {
+    if (!masterKey) {
         return;
     }
 
@@ -188,15 +187,17 @@ void DatabaseOpenWidget::openDatabase()
     }
     QCoreApplication::processEvents();
 
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db.reset(new Database());
     QString error;
-    if (!m_db->open(m_filename, masterKey, false, &error)) {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    bool ok = m_db->open(m_filename, masterKey, false, &error);
+    QApplication::restoreOverrideCursor();
+    if (!ok) {
+        m_ui->messageWidget->showMessage(
+            tr("Unable to open the database:\n%1").arg(error),
             MessageWidget::MessageType::Error);
         return;
     }
-    QApplication::restoreOverrideCursor();
 
     if (m_db) {
 #ifdef WITH_XC_TOUCHID
@@ -220,9 +221,9 @@ void DatabaseOpenWidget::openDatabase()
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
-        emit editFinished(true);
+        emit dialogFinished(true);
     } else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(reader.errorString()),
+        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
                                          MessageWidget::Error);
         m_ui->editPassword->clear();
 
@@ -322,7 +323,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
 
 void DatabaseOpenWidget::reject()
 {
-    emit editFinished(false);
+    emit dialogFinished(false);
 }
 
 void DatabaseOpenWidget::activatePassword()

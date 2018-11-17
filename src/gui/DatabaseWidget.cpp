@@ -90,7 +90,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
     , m_unlockDatabaseWidget(new UnlockDatabaseWidget(this))
     , m_unlockDatabaseDialog(new UnlockDatabaseDialog(this))
-    , m_groupView(new GroupView(db.data(), m_mainSplitter))
+    , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_entryView(nullptr)
 
     , m_newGroup()
@@ -129,7 +129,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_entryView->displayGroup(db->rootGroup());
+    m_entryView->displayGroup(m_db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
@@ -186,9 +186,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
-    connect(m_databaseOpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
-    connect(m_databaseOpenMergeWidget, SIGNAL(editFinished(bool)), SLOT(mergeDatabase(bool)));
-    connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(openDatabase(bool)));
+    connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
+    connect(m_databaseOpenMergeWidget, SIGNAL(dialogFinished(bool)), SLOT(mergeDatabase(bool)));
+    connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(m_unlockDatabaseDialog, SIGNAL(unlockDone(bool)), SLOT(unlockDatabase(bool)));
@@ -394,7 +394,7 @@ void DatabaseWidget::setIconFromParent()
 void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 {
     m_db = std::move(db);
-    m_groupView->changeDatabase(m_db.data());
+    m_groupView->changeDatabase(m_db);
     emit databaseChanged(m_db, m_db->isModified());
 }
 
@@ -768,19 +768,18 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
     setCurrentWidget(m_editGroupWidget);
 }
 
-void DatabaseWidget::openDatabase(bool accepted)
+void DatabaseWidget::loadDatabase(bool accepted)
 {
+    auto* openWidget = qobject_cast<DatabaseOpenWidget*>(sender());
+    Q_ASSERT(openWidget);
+    if (!openWidget) {
+        return;
+    }
+
     if (accepted) {
-        replaceDatabase(qobject_cast<DatabaseWidget*>(sender())->database());
+        replaceDatabase(openWidget->database());
         setCurrentWidget(m_mainWidget);
         emit unlockedDatabase();
-
-        // We won't need those anymore and KeePass1OpenWidget closes
-        // the file in its dtor.
-        delete m_databaseOpenWidget;
-        m_databaseOpenWidget = nullptr;
-        delete m_keepass1OpenWidget;
-        m_keepass1OpenWidget = nullptr;
         m_fileWatcher.addPath(m_db->filePath());
     } else {
         m_fileWatcher.removePath(m_db->filePath());
@@ -929,6 +928,11 @@ void DatabaseWidget::switchToDatabaseSettings()
     setCurrentWidget(m_databaseSettingDialog);
 }
 
+void DatabaseWidget::switchToOpenDatabase()
+{
+    switchToOpenDatabase(m_db->filePath());
+}
+
 void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
 {
     updateFilePath(filePath);
@@ -940,18 +944,6 @@ void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
         setCurrentWidget(m_unlockDatabaseWidget);
     }
 }
-
-void DatabaseWidget::switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile)
-{
-    updateFilePath(filePath);
-    switchToOpenDatabase(filePath);
-    if (m_databaseOpenWidget) {
-        m_databaseOpenWidget->enterKey(password, keyFile);
-    } else if (m_unlockDatabaseWidget) {
-        m_unlockDatabaseWidget->enterKey(password, keyFile);
-    }
-}
-
 void DatabaseWidget::switchToCsvImport(const QString& filePath)
 {
     setCurrentWidget(m_csvImportWizard);

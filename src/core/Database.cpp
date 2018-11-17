@@ -49,13 +49,14 @@ Database::Database()
 {
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
+    rootGroup()->setName(tr("Root", "Root group name"));
     m_timer->setSingleShot(true);
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modifiedImmediate()));
     connect(m_metadata, SIGNAL(metadataChanged()), this, SIGNAL(metadataChanged()));
-    connect(this, SIGNAL(modified()), this, SLOT(startModifiedTimer()));
+    connect(this, SIGNAL(modifiedImmediate()), this, SLOT(startModifiedTimer()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }
 
@@ -139,6 +140,7 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     setFilePath(filePath);
     dbFile.close();
 
+    setInitialized(ok);
     return ok;
 }
 
@@ -303,6 +305,25 @@ bool Database::isReadOnly() const
 void Database::setReadOnly(bool readOnly)
 {
     m_data.isReadOnly = readOnly;
+}
+
+/**
+ * Returns true if database has been fully decrypted and initialized, i.e. if
+ * it's not just an empty default instance.
+ *
+ * @return true if database has been fully initialized
+ */
+bool Database::isInitialized() const
+{
+    return m_unlocked;
+}
+
+/**
+ * @param unlocked true to mark database as initialized
+ */
+void Database::setInitialized(bool unlocked)
+{
+    m_unlocked = unlocked;
 }
 
 Group* Database::rootGroup()
@@ -595,7 +616,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool update
     }
 
     if (oldTransformedMasterKey != m_data.transformedMasterKey) {
-        emit modified();
+        emit modifiedImmediate();
     }
 
     return true;
@@ -713,7 +734,7 @@ void Database::markAsModified()
 {
     Q_ASSERT(!m_data.isReadOnly);
     m_modified = true;
-    emit modified();
+    emit modifiedImmediate();
 }
 
 void Database::markAsClean()
@@ -824,7 +845,7 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 
     setKdf(kdf);
     m_data.transformedMasterKey = transformedMasterKey;
-    emit modified();
+    emit modifiedImmediate();
 
     return true;
 }

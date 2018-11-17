@@ -279,6 +279,7 @@ MainWindow::MainWindow()
             SLOT(databaseChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), search, SLOT(databaseChanged()));
 
+    connect(m_ui->tabWidget, SIGNAL(modified()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));

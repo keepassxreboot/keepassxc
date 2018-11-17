@@ -37,10 +37,6 @@ void GroupModel::changeDatabase(Database* newDb)
 {
     beginResetModel();
 
-    if (m_db) {
-        m_db->disconnect(this);
-    }
-
     m_db = newDb;
 
     connect(m_db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));

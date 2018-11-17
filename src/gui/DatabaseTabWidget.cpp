@@ -100,6 +100,7 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
         return {};
     }
 
+    db->setInitialized(true);
     return db;
 }
 
@@ -111,6 +112,7 @@ void DatabaseTabWidget::newDatabase()
     }
 
     addDatabaseTab(new DatabaseWidget(db, this));
+    emit db->modifiedImmediate();
 }
 
 void DatabaseTabWidget::openDatabase()
@@ -137,8 +139,8 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath)
         return;
     }
 
-    for (auto* w: children()) {
-        auto* dbWidget = qobject_cast<DatabaseWidget*>(w);
+    for (int i = 0, c = count(); i < c; ++i) {
+        auto* dbWidget = databaseWidgetFromIndex(i);
         Q_ASSERT(dbWidget);
         if (dbWidget && dbWidget->database()->filePath() == canonicalFilePath) {
             // switch to existing tab if file is already open
@@ -147,7 +149,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath)
         }
     }
 
-    auto* dbWidget = new DatabaseWidget(filePath, this);
+    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(filePath), this);
     addDatabaseTab(dbWidget);
     updateLastDatabases(filePath);
 }
@@ -173,6 +175,10 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
+
+    if (!db->isInitialized()) {
+        dbWidget->switchToOpenDatabase();
+    }
 }
 
 void DatabaseTabWidget::importCsv()

@@ -174,8 +174,8 @@ public slots:
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
+    void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
-    void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
     void switchToCsvImport(const QString& filePath);
     void csvImportFinished(bool accepted);
     void switchToOpenMergeDatabase(const QString& filePath);
@@ -211,7 +211,7 @@ private slots:
     void emitEntryContextMenuRequested(const QPoint& pos);
     void emitPressedGroup(Group* currentGroup);
     void emitEntrySelectionChanged();
-    void openDatabase(bool accepted);
+    void loadDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void emitCurrentModeChanged();

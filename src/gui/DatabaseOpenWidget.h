@@ -48,7 +48,7 @@ public slots:
     void pollYubikey();
 
 signals:
-    void editFinished(bool accepted);
+    void dialogFinished(bool accepted);
 
 protected:
     void showEvent(QShowEvent* event) override;

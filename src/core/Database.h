@@ -22,6 +22,7 @@
 #include <QDateTime>
 #include <QHash>
 #include <QObject>
+#include <QPointer>
 
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
@@ -74,6 +75,8 @@ public:
     void setFilePath(const QString& filePath);
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);
+    bool isInitialized() const;
+    void setInitialized(bool unlocked);
 
     Group* rootGroup();
     const Group* rootGroup() const;
@@ -136,6 +139,7 @@ signals:
     void groupMoved();
     void metadataChanged();
     void modified();
+    void modifiedImmediate();
     void clean();
 
 private slots:
@@ -175,9 +179,10 @@ private:
     DatabaseData m_data;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
-    QTimer* m_timer;
+    QPointer<QTimer> m_timer;
     bool m_modified = false;
     bool m_emitModified;
+    bool m_unlocked = false;
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;
