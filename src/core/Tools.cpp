@@ -26,6 +26,8 @@
 #include <QImageReader>
 #include <QLocale>
 #include <QStringList>
+#include <QRegularExpression>
+
 #include <QElapsedTimer>
 
 #include <cctype>
@@ -197,6 +199,33 @@ void wait(int ms)
         }
         while (!timer.hasExpired(ms));
     }
+}
+
+// Escape common regex symbols except for *, ?, and |
+auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
+
+QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+{
+    QString pattern = string;
+
+    // Wildcard support (*, ?, |)
+    if (useWildcards) {
+        pattern.replace(regexEscape, "\\\\1");
+        pattern.replace("*", ".*");
+        pattern.replace("?", ".");
+    }
+
+    // Exact modifier
+    if (exactMatch) {
+        pattern = "^" + pattern + "$";
+    }
+
+    auto regex = QRegularExpression(pattern);
+    if (!caseSensitive) {
+        regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+    }
+
+    return regex;
 }
 
 } // namespace Tools

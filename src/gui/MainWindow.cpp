@@ -109,12 +109,17 @@ public:
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
+MainWindow* g_MainWindow = nullptr;
+MainWindow* getMainWindow() { return g_MainWindow; }
+
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
     , m_trayIcon(nullptr)
     , m_appExitCalled(false)
     , m_appExiting(false)
 {
+    g_MainWindow = this;
+
     m_ui->setupUi(this);
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)

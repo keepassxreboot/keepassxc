@@ -100,7 +100,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_entryView->setGroup(db->rootGroup());
+    m_entryView->displayGroup(db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
@@ -209,7 +209,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_fileWatchUnblockTimer.setSingleShot(true);
     m_ignoreAutoReload = false;
 
-    m_searchCaseSensitive = false;
+    m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
 #ifdef WITH_XC_SSHAGENT
@@ -227,6 +227,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
 DatabaseWidget::~DatabaseWidget()
 {
+    delete m_EntrySearcher;
 }
 
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
@@ -291,7 +292,7 @@ bool DatabaseWidget::isUsernamesHidden() const
 /**
  * Set state of entry view 'Hide Usernames' setting
  */
-void DatabaseWidget::setUsernamesHidden(const bool hide)
+void DatabaseWidget::setUsernamesHidden(bool hide)
 {
     m_entryView->setUsernamesHidden(hide);
 }
@@ -307,7 +308,7 @@ bool DatabaseWidget::isPasswordsHidden() const
 /**
  * Set state of entry view 'Hide Passwords' setting
  */
-void DatabaseWidget::setPasswordsHidden(const bool hide)
+void DatabaseWidget::setPasswordsHidden(bool hide)
 {
     m_entryView->setPasswordsHidden(hide);
 }
@@ -892,6 +893,14 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
             setupTotp();
         }
         break;
+    case EntryModel::ParentGroup:
+        // Call this first to clear out of search mode, otherwise
+        // the desired entry is not properly selected
+        endSearch();
+        emit clearSearch();
+        m_groupView->setCurrentGroup(entry->group());
+        m_entryView->setCurrentEntry(entry);
+        break;
     // TODO: switch to 'Notes' tab in details view/pane
     // case EntryModel::Notes:
     //    break;
@@ -1012,17 +1021,15 @@ void DatabaseWidget::search(const QString& searchtext)
 
     emit searchModeAboutToActivate();
 
-    Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
-
     Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
 
-    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, caseSensitive);
+    QList<Entry*> searchResult = m_EntrySearcher->search(searchtext, searchGroup);
 
-    m_entryView->setEntryList(searchResult);
+    m_entryView->displaySearch(searchResult);
     m_lastSearchText = searchtext;
 
     // Display a label detailing our search results
-    if (searchResult.size() > 0) {
+    if (!searchResult.isEmpty()) {
         m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
     } else {
         m_searchingLabel->setText(tr("No Results"));
@@ -1035,7 +1042,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
-    m_searchCaseSensitive = state;
+    m_EntrySearcher->setCaseSensitive(state);
     refreshSearch();
 }
 
@@ -1047,11 +1054,14 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
 
 void DatabaseWidget::onGroupChanged(Group* group)
 {
-    // Intercept group changes if in search mode
-    if (isInSearchMode()) {
+    if (isInSearchMode() && m_searchLimitGroup) {
+        // Perform new search if we are limiting search to the current group
         search(m_lastSearchText);
+    } else if (isInSearchMode()) {
+        // Otherwise cancel search
+        emit clearSearch();
     } else {
-        m_entryView->setGroup(group);
+        m_entryView->displayGroup(group);
     }
 }
 
@@ -1066,7 +1076,7 @@ void DatabaseWidget::endSearch()
         emit listModeAboutToActivate();
 
         // Show the normal entry view of the current group
-        m_entryView->setGroup(currentGroup());
+        m_entryView->displayGroup(currentGroup());
 
         emit listModeActivated();
     }

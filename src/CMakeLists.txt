@@ -126,7 +126,6 @@ set(keepassx_SOURCES
         gui/UnlockDatabaseWidget.cpp
         gui/UnlockDatabaseDialog.cpp
         gui/WelcomeWidget.cpp
-        gui/widgets/ElidedLabel.cpp
         gui/csvImport/CsvImportWidget.cpp
         gui/csvImport/CsvImportWizard.cpp
         gui/csvImport/CsvParserModel.cpp
@@ -154,6 +153,8 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
         gui/settings/SettingsWidget.cpp
+        gui/widgets/ElidedLabel.cpp
+        gui/widgets/PopupHelpWidget.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp

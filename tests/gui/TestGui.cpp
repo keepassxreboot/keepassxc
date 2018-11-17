@@ -802,10 +802,22 @@ void TestGui::testSearch()
     auto* clearButton = searchWidget->findChild<QAction*>("clearIcon");
     QVERIFY(!clearButton->isVisible());
 
+    auto* helpButton = searchWidget->findChild<QAction*>("helpIcon");
+    auto* helpPanel = searchWidget->findChild<QWidget*>("SearchHelpWidget");
+    QVERIFY(helpButton->isVisible());
+    QVERIFY(!helpPanel->isVisible());
+
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
     QTRY_VERIFY(!clearButton->isVisible());
+    // Show/Hide search help
+    helpButton->trigger();
+    QTRY_VERIFY(helpPanel->isVisible());
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(helpPanel->isVisible());
+    helpButton->trigger();
+    QTRY_VERIFY(!helpPanel->isVisible());
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
@@ -841,9 +853,10 @@ void TestGui::testSearch()
     // Ensure Down focuses on entry view when search text is selected
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
+    QCOMPARE(entryView->selectionModel()->currentIndex().row(), 0);
     // Test that password copies (entry has focus)
     QClipboard* clipboard = QApplication::clipboard();
-    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
     QModelIndex searchedItem = entryView->model()->index(0, 1);
     Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
     QTRY_COMPARE(searchedEntry->password(), clipboard->text());

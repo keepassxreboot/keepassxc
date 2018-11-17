@@ -148,8 +148,12 @@ private:
     bool m_appExiting;
 };
 
-#define KEEPASSXC_MAIN_WINDOW                                                                                          \
-    (qobject_cast<Application*>(qApp) ? qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow())      \
-                                      : nullptr)
+/**
+ * Return instance of MainWindow created on app load
+ * non-gui instances will return nullptr
+ *
+ * @return MainWindow instance or nullptr
+ */
+MainWindow* getMainWindow();
 
 #endif // KEEPASSX_MAINWINDOW_H

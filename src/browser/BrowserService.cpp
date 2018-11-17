@@ -88,7 +88,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
-        KEEPASSXC_MAIN_WINDOW->bringToFront();
+        getMainWindow()->bringToFront();
         m_bringToFrontRequested = true;
     }
 
@@ -390,7 +390,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         return entries;
     }
 
-    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup, Qt::CaseInsensitive)) {
+    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup)) {
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();
@@ -901,7 +901,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         if (m_bringToFrontRequested) {
-            KEEPASSXC_MAIN_WINDOW->lower();
+            getMainWindow()->lower();
             m_bringToFrontRequested = false;
         }
         emit databaseUnlocked();

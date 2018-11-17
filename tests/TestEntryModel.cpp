@@ -307,7 +307,7 @@ void TestEntryModel::testProxyModel()
 
     QList<Entry*> entryList;
     entryList << entry;
-    modelSource->setEntryList(entryList);
+    modelSource->setEntries(entryList);
 
     /**
      * @author Fonic <https://github.com/fonic>
@@ -346,7 +346,7 @@ void TestEntryModel::testDatabaseDelete()
     Entry* entry2 = new Entry();
     entry2->setGroup(db2->rootGroup());
 
-    model->setEntryList(QList<Entry*>() << entry1 << entry2);
+    model->setEntries(QList<Entry*>() << entry1 << entry2);
 
     QCOMPARE(model->rowCount(), 2);
 
