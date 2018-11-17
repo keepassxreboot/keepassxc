@@ -23,7 +23,7 @@
 
 EntrySearcher::EntrySearcher(bool caseSensitive)
     : m_caseSensitive(caseSensitive)
-    , m_termParser(R"re(([-*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re")
+    , m_termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re")
     // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
 {
 }
@@ -104,7 +104,7 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
         }
 
         // Short circuit if we failed to match or we matched and are excluding this term
-        if (!found || term->exclude) {
+        if ((!found && !term->exclude) || (found && term->exclude)) {
             return false;
         }
     }

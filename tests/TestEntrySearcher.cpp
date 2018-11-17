@@ -20,12 +20,12 @@
 
 QTEST_GUILESS_MAIN(TestEntrySearcher)
 
-void TestEntrySearcher::initTestCase()
+void TestEntrySearcher::init()
 {
     m_rootGroup = new Group();
 }
 
-void TestEntrySearcher::cleanupTestCase()
+void TestEntrySearcher::cleanup()
 {
     delete m_rootGroup;
 }
@@ -71,6 +71,7 @@ void TestEntrySearcher::testSearch()
     eRoot2->setNotes("test term test");
     eRoot2->setGroup(m_rootGroup);
 
+    // Searching is disabled for these
     Entry* e1 = new Entry();
     e1->setUsername("test search term test");
     e1->setGroup(group1);
@@ -78,6 +79,7 @@ void TestEntrySearcher::testSearch()
     Entry* e11 = new Entry();
     e11->setNotes("test search term test");
     e11->setGroup(group11);
+    // End searching disabled
 
     Entry* e2111 = new Entry();
     e2111->setTitle("test search term test");
@@ -85,6 +87,7 @@ void TestEntrySearcher::testSearch()
 
     Entry* e2111b = new Entry();
     e2111b->setNotes("test search test");
+    e2111b->setUsername("user123");
     e2111b->setPassword("testpass");
     e2111b->setGroup(group2111);
 
@@ -94,9 +97,11 @@ void TestEntrySearcher::testSearch()
 
     Entry* e3b = new Entry();
     e3b->setTitle("test search test");
+    e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
     e3b->setGroup(group3);
 
+    // Simple search term testing
     m_searchResult = m_entrySearcher.search("search", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 5);
 
@@ -106,7 +111,21 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("search term", group211);
     QCOMPARE(m_searchResult.count(), 1);
 
+    // Test advanced search terms
     m_searchResult = m_entrySearcher.search("password:testpass", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("!user:email.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
+
+    m_searchResult = m_entrySearcher.search("*user:\".*@.*\\.com\"", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("+user:email", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    // Terms are logical AND together
+    m_searchResult = m_entrySearcher.search("password:pass user:user", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 
     // Parent group has search disabled
