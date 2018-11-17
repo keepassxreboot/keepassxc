@@ -54,8 +54,6 @@ void KeePass1OpenWidget::openDatabase()
         return;
     }
 
-    delete m_db;
-
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db = reader.readDatabase(&file, password, keyFileName);
     QApplication::restoreOverrideCursor();

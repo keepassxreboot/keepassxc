@@ -73,7 +73,7 @@ DatabaseSettingsDialog::~DatabaseSettingsDialog()
 {
 }
 
-void DatabaseSettingsDialog::load(Database* db)
+void DatabaseSettingsDialog::load(QSharedPointer<Database> db)
 {
     m_ui->categoryList->setCurrentCategory(0);
     m_generalWidget->load(db);

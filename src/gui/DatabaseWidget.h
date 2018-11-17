@@ -76,9 +76,12 @@ public:
     QSharedPointer<Database> database() const;
 
     bool lock();
-    bool unlock();
+    void prepareUnlock();
+    bool save(int attempt = 0);
+    bool saveAs();
 
     DatabaseWidget::Mode currentMode() const;
+    bool isSearchActive() const;
 
     QString getCurrentSearch();
     void refreshSearch();
@@ -117,6 +120,12 @@ public:
     void setPreviewSplitterSizes(const QList<int>& sizes);
 
 signals:
+    // relayed Database signals
+    void databaseMetadataChanged();
+    void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
+    void databaseModified();
+    void databaseClean();
+
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
@@ -139,6 +148,7 @@ signals:
     void clearSearch();
 
 public slots:
+    void replaceDatabase(QSharedPointer<Database> db);
     void createEntry();
     void cloneEntry();
     void deleteEntries();
@@ -215,7 +225,6 @@ private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
-    void replaceDatabase(QSharedPointer<Database> db);
 
     QSharedPointer<Database> m_db;
 

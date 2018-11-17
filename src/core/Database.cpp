@@ -91,7 +91,7 @@ bool Database::open(QSharedPointer<const CompositeKey> key, bool readOnly, QStri
     if (m_data.filePath.isEmpty()) {
         return false;
     }
-    open(m_data.filePath, std::move(key), readOnly, error);
+    return open(m_data.filePath, std::move(key), readOnly, error);
 }
 
 /**
@@ -737,7 +737,7 @@ Database* Database::databaseByUuid(const QUuid& uuid)
  */
 Database* Database::databaseByFilePath(const QString& filePath)
 {
-    return s_fileNameMap.value(filePath, nullptr);
+    return s_filePathMap.value(filePath, nullptr);
 }
 
 void Database::startModifiedTimer()

@@ -20,7 +20,7 @@
 
 #include "gui/settings/SettingsWidget.h"
 
-#include <QPointer>
+#include <QSharedPointer>
 
 class Database;
 
@@ -36,7 +36,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidget);
     ~DatabaseSettingsWidget() override;
 
-    virtual void load(Database* db);
+    virtual void load(QSharedPointer<Database> db);
 
 signals:
     /**
@@ -45,7 +45,7 @@ signals:
     void sizeChanged();
 
 protected:
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
 };
 
 #endif //KEEPASSXC_DATABASESETTINGSWIDGET_H

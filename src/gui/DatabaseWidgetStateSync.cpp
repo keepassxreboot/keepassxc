@@ -74,7 +74,7 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
             m_activeDbWidget->setPreviewSplitterSizes(m_previewSplitterSizes);
         }
 
-        if (m_activeDbWidget->isInSearchMode()) {
+        if (m_activeDbWidget->isSearchActive()) {
             restoreSearchView();
         } else {
             restoreListView();
@@ -177,7 +177,7 @@ void DatabaseWidgetStateSync::updateViewState()
     m_hideUsernames = m_activeDbWidget->isUsernamesHidden();
     m_hidePasswords = m_activeDbWidget->isPasswordsHidden();
 
-    if (m_activeDbWidget->isInSearchMode()) {
+    if (m_activeDbWidget->isSearchActive()) {
         m_searchViewState = m_activeDbWidget->entryViewState();
     } else {
         m_listViewState = m_activeDbWidget->entryViewState();

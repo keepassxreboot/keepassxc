@@ -100,7 +100,7 @@ private slots:
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
-    Database* m_database;
+    QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;

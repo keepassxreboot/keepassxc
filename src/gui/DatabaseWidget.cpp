@@ -32,6 +32,7 @@
 #include <QSplitter>
 
 #include "autotype/AutoType.h"
+#include "core/Database.h"
 #include "core/Config.h"
 #include "core/EntrySearcher.h"
 #include "core/FilePath.h"
@@ -40,6 +41,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/KeePass2Reader.h"
+#include "gui/FileDialog.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseOpenWidget.h"
@@ -199,6 +201,13 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
 
+    // relayed Database events
+    connect(m_db.data(), SIGNAL(metadataChanged()), this, SIGNAL(databaseMetadataChanged()));
+    connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
+        this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
+    connect(m_db.data(), SIGNAL(modified()), this, SIGNAL(databaseModified()));
+    connect(m_db.data(), SIGNAL(clean()), this, SIGNAL(databaseClean()));
+
     m_fileWatchTimer.setSingleShot(true);
     m_fileWatchUnblockTimer.setSingleShot(true);
     m_ignoreAutoReload = false;
@@ -247,6 +256,11 @@ DatabaseWidget::Mode DatabaseWidget::currentMode() const
     } else {
         return DatabaseWidget::EditMode;
     }
+}
+
+bool DatabaseWidget::isSearchActive() const
+{
+    return m_entryView->inSearchMode();
 }
 
 bool DatabaseWidget::isEditWidgetModified() const
@@ -349,7 +363,7 @@ void DatabaseWidget::createEntry()
 
     m_newEntry = new Entry();
 
-    if (m_entryView->inSearchMode()) {
+    if (isSearchActive()) {
         m_newEntry->setTitle(getCurrentSearch());
         endSearch();
     }
@@ -781,14 +795,14 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 {
     if (accepted) {
         if (!m_db) {
-            m_messageWidget->showMessage(tr("No current database."), MessageWidget::Error);
+            showMessage(tr("No current database."), MessageWidget::Error);
             return;
         }
 
         auto srcDb = qobject_cast<DatabaseOpenWidget*>(sender())->database();
 
         if (!srcDb) {
-            m_messageWidget->showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
+            showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
             return;
         }
 
@@ -816,6 +830,9 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
 
     replaceDatabase(db);
+    if (db->isReadOnly()) {
+        showMessage(tr("File opened in read only mode."), MessageWidget::Warning, false, -1);
+    }
 
     restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
     m_groupBeforeLock = QUuid();
@@ -826,8 +843,8 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     emit unlockedDatabase();
 
     if (sender() == m_unlockDatabaseDialog) {
-        QList<Database*> dbList;
-        dbList.append(m_db.data());
+        QList<QSharedPointer<Database>> dbList;
+        dbList.append(m_db);
         autoType()->performGlobalAutoType(dbList);
     }
 }
@@ -908,7 +925,7 @@ void DatabaseWidget::switchToMasterKeyChange()
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingDialog->load(m_db.data());
+    m_databaseSettingDialog->load(m_db);
     setCurrentWidget(m_databaseSettingDialog);
 }
 
@@ -963,7 +980,7 @@ void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
 
 void DatabaseWidget::refreshSearch()
 {
-    if (m_entryView->inSearchMode()) {
+    if (isSearchActive()) {
         search(m_lastSearchText);
     }
 }
@@ -1010,8 +1027,8 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
 
 void DatabaseWidget::onGroupChanged(Group* group)
 {
-    if (isSearchActive() && m_searchLimitGroup) {
-        // Perform new search if we are limiting search to the current group
+    // Intercept group changes if in search mode
+    if (isSearchActive()) {
         search(m_lastSearchText);
     } else if (isSearchActive()) {
         // Otherwise cancel search
@@ -1028,7 +1045,7 @@ QString DatabaseWidget::getCurrentSearch()
 
 void DatabaseWidget::endSearch()
 {
-    if (m_entryView->inSearchMode()) {
+    if (isSearchActive()) {
         emit listModeAboutToActivate();
 
         // Show the normal entry view of the current group
@@ -1098,6 +1115,8 @@ void DatabaseWidget::closeEvent(QCloseEvent* event)
 bool DatabaseWidget::lock()
 {
     Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+
+    clipboard()->clearCopiedText();
 
     auto result = MessageBox::question(this, tr("Lock Database?"),
         tr("You are editing an entry. Discard changes and lock anyway?"),
@@ -1252,7 +1271,7 @@ void DatabaseWidget::reloadDatabaseFile()
         m_db->setReadOnly(isReadOnly);
         restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
     } else {
-        m_messageWidget->showMessage(
+        showMessage(
             tr("Could not open the new database file while attempting to autoreload.\nError: %1").arg(error),
             MessageWidget::Error);
         // Mark db as modified since existing data may differ from file or file was deleted
@@ -1373,7 +1392,7 @@ EntryView* DatabaseWidget::entryView()
     return m_entryView;
 }
 
-bool DatabaseWidget::unlock()
+void DatabaseWidget::prepareUnlock()
 {
     m_unlockDatabaseDialog->clearForms();
     m_unlockDatabaseDialog->setFilePath(m_db->filePath());
@@ -1387,10 +1406,100 @@ bool DatabaseWidget::unlock()
     m_unlockDatabaseDialog->activateWindow();
 }
 
-void DatabaseWidget::showMessage(const QString& text,
-                                 MessageWidget::MessageType type,
-                                 bool showClosebutton,
-                                 int autoHideTimeout)
+/**
+ * Save the database to disk.
+ *
+ * This method will try to save several times in case of failure and
+ * ask to disable safe saves if it is unable to save after the third attempt.
+ * Set `attempt` to -1 to disable this behavior.
+ *
+ * @param attempt current save attempt or -1 to disable attempts
+ * @return true on success
+ */
+bool DatabaseWidget::save(int attempt)
+{
+    // Never allow saving a locked database; it causes corruption
+    Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+    // Release build interlock
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        // We return true since a save is not required
+        return true;
+    }
+
+    if (m_db->isReadOnly() || m_db->filePath().isEmpty()) {
+        return saveAs();
+    }
+
+    blockAutoReload(true);
+    // TODO: Make this async, but lock out the database widget to prevent re-entrance
+    bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
+    QString errorMessage;
+    bool ok = m_db->save(useAtomicSaves, config()->get("BackupBeforeSave").toBool(), &errorMessage);
+    blockAutoReload(false);
+
+    if (ok) {
+        return true;
+    }
+
+    if (attempt >= 0 && attempt <= 2) {
+        return save(attempt + 1);
+    }
+
+    if (attempt > 2 && useAtomicSaves) {
+        // Saving failed 3 times, issue a warning and attempt to resolve
+        auto choice = MessageBox::question(this,
+                                           tr("Disable safe saves?"),
+                                           tr("KeePassXC has failed to save the database multiple times. "
+                                              "This is likely caused by file sync services holding a lock on "
+                                              "the save file.\nDisable safe saves and try again?"),
+                                           QMessageBox::Yes | QMessageBox::No,
+                                           QMessageBox::Yes);
+        if (choice == QMessageBox::Yes) {
+            config()->set("UseAtomicSaves", false);
+            return save(attempt + 1);
+        }
+    }
+
+    showMessage(tr("Writing the database failed.\n%1").arg(errorMessage), MessageWidget::Error);
+    return false;
+}
+
+/**
+ * Save database under a new user-selected filename.
+ *
+ * @return true on success
+ */
+bool DatabaseWidget::saveAs()
+{
+    while (true) {
+        QString oldFilePath = m_db->filePath();
+        if (!QFileInfo(oldFilePath).exists()) {
+            oldFilePath = QDir::toNativeSeparators(QDir::homePath() + "/" + tr("Passwords").append(".kdbx"));
+        }
+        QString newFilePath = FileDialog::instance()->getSaveFileName(
+            this, tr("Save database as"), oldFilePath,
+            tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr, "kdbx");
+
+        if (!newFilePath.isEmpty()) {
+            // Ensure we don't recurse back into this function
+            m_db->setReadOnly(false);
+            m_db->setFilePath(newFilePath);
+
+            if (!save(-1)) {
+                // Failed to save, try again
+                continue;
+            }
+
+            return true;
+        }
+
+        // Canceled file selection
+        return false;
+    }
+}
+
+void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type,
+                                 bool showClosebutton, int autoHideTimeout)
 {
     m_messageWidget->setCloseButtonVisible(showClosebutton);
     m_messageWidget->showMessage(text, type, autoHideTimeout);

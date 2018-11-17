@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
- * Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,18 +18,16 @@
 #ifndef KEEPASSX_DATABASETABWIDGET_H
 #define KEEPASSX_DATABASETABWIDGET_H
 
-#include <QFileInfo>
-#include <QHash>
-#include <QTabWidget>
-
-#include "gui/DatabaseWidget.h"
 #include "gui/MessageWidget.h"
 
+#include <QTabWidget>
+#include <QPointer>
+
+class Database;
 class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
 class QFile;
-class MessageWidget;
 
 class DatabaseTabWidget : public QTabWidget
 {
@@ -40,73 +37,59 @@ public:
     explicit DatabaseTabWidget(QWidget* parent = nullptr);
     ~DatabaseTabWidget() override;
     void mergeDatabase(const QString& filePath);
-    DatabaseWidget* currentDatabaseWidget();
-    bool hasLockableDatabases() const;
 
-    static const int LastDatabasesCount;
+    QString tabName(int index);
+    DatabaseWidget* currentDatabaseWidget();
+    DatabaseWidget* databaseWidgetFromIndex(int index) const;
+
+    bool isReadOnly(int index = -1) const;
+    bool canSave(int index = -1) const;
+    bool isModified(int index = -1) const;
+    bool hasLockableDatabases() const;
 
 public slots:
     void addDatabaseTab(const QString& filePath);
+    void addDatabaseTab(DatabaseWidget* dbWidget);
     bool closeDatabaseTab(int index);
-    bool closeDatabaseTab(const QString& filePath);
     bool closeDatabaseTab(DatabaseWidget* dbWidget);
     bool closeAllDatabaseTabs();
+    void updateTabName(int index = -1);
 
     void newDatabase();
     void openDatabase();
-    void importCsv();
     void mergeDatabase();
+    void importCsv();
     void importKeePass1Database();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     void exportToCsv();
-    bool closeDatabase(int index = -1);
+
+    void lockDatabases();
     void closeDatabaseFromSender();
+    void relockPendingDatabase();
+
     void changeMasterKey();
     void changeDatabaseSettings();
-    bool readOnly(int index = -1);
-    bool canSave(int index = -1);
-    bool isModified(int index = -1);
     void performGlobalAutoType();
-    void lockDatabases();
-    void relockPendingDatabase();
-    QString databasePath(int index = -1);
 
 signals:
     void tabNameChanged();
-    void databaseWithFileClosed(QString filePath);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
-    void databaseUnlocked(DatabaseWidget* dbWidget);
     void messageGlobal(const QString&, MessageWidget::MessageType type);
-    void messageTab(const QString&, MessageWidget::MessageType type);
-    void messageDismissGlobal();
-    void messageDismissTab();
 
 private slots:
-    void updateTabName(Database* db);
-    void updateTabNameFromDbSender();
-    void updateTabNameFromDbWidgetSender();
-    void modified();
     void toggleTabbar();
-    void changeDatabase(Database* newDb, bool unsavedChanges);
     void emitActivateDatabaseChanged();
-    void emitDatabaseUnlockedFromDbWidgetSender();
 
 private:
-    Database* execNewDatabaseWizard();
-    bool saveDatabase(Database* db, QString filePath = "");
-    bool saveDatabaseAs(Database* db);
-    bool closeDatabaseTab(Database* db);
-    void deleteDatabase(Database* db);
-    int databaseIndex(Database* db);
-    Database* indexDatabase(int index);
-    Database* databaseFromDatabaseWidget(DatabaseWidget* dbWidget);
+    QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
-    void connectDatabase(Database* newDb, Database* oldDb = nullptr);
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbPendingLock;
+
+    static const int s_lastDatabasesMax;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

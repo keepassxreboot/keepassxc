@@ -61,7 +61,7 @@ void UrlFetchProgressDialog::networkReplyProgress(qint64 bytesRead, qint64 total
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
-    , m_database(nullptr)
+    , m_db(nullptr)
 #ifdef WITH_XC_NETWORKING
     , m_reply(nullptr)
 #endif
@@ -102,7 +102,7 @@ EditWidgetIcons::~EditWidgetIcons()
 
 IconStruct EditWidgetIcons::state()
 {
-    Q_ASSERT(m_database);
+    Q_ASSERT(m_db);
     Q_ASSERT(!m_currentUuid.isNull());
 
     IconStruct iconStruct;
@@ -127,7 +127,7 @@ IconStruct EditWidgetIcons::state()
 
 void EditWidgetIcons::reset()
 {
-    m_database = nullptr;
+    m_db = nullptr;
     m_currentUuid = QUuid();
 }
 
@@ -139,7 +139,7 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
     Q_ASSERT(database);
     Q_ASSERT(!currentUuid.isNull());
 
-    m_database = database;
+    m_db = database;
     m_currentUuid = currentUuid;
     setUrl(url);
 
@@ -332,7 +332,7 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
 
 void EditWidgetIcons::addCustomIconFromFile()
 {
-    if (m_database) {
+    if (m_db) {
         QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
 
         auto filenames = QFileDialog::getOpenFileNames(this, tr("Select Image(s)"), "", filter);
@@ -381,19 +381,19 @@ void EditWidgetIcons::addCustomIconFromFile()
 bool EditWidgetIcons::addCustomIcon(const QImage& icon)
 {
     bool added = false;
-    if (m_database) {
+    if (m_db) {
         // Don't add an icon larger than 128x128, but retain original size if smaller
         auto scaledicon = icon;
         if (icon.width() > 128 || icon.height() > 128) {
             scaledicon = icon.scaled(128, 128);
         }
 
-        QUuid uuid = m_database->metadata()->findCustomIcon(scaledicon);
+        QUuid uuid = m_db->metadata()->findCustomIcon(scaledicon);
         if (uuid.isNull()) {
             uuid = QUuid::createUuid();
-            m_database->metadata()->addCustomIcon(uuid, scaledicon);
-            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                        m_database->metadata()->customIconsOrder());
+            m_db->metadata()->addCustomIcon(uuid, scaledicon);
+            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps(),
+                                        m_db->metadata()->customIconsOrder());
             added = true;
         }
 
@@ -410,12 +410,12 @@ bool EditWidgetIcons::addCustomIcon(const QImage& icon)
 
 void EditWidgetIcons::removeCustomIcon()
 {
-    if (m_database) {
+    if (m_db) {
         QModelIndex index = m_ui->customIconsView->currentIndex();
         if (index.isValid()) {
             QUuid iconUuid = m_customIconModel->uuidFromIndex(index);
 
-            const QList<Entry*> allEntries = m_database->rootGroup()->entriesRecursive(true);
+            const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
             QList<Entry*> entriesWithSameIcon;
             QList<Entry*> historyEntriesWithSameIcon;
 
@@ -430,7 +430,7 @@ void EditWidgetIcons::removeCustomIcon()
                 }
             }
 
-            const QList<Group*> allGroups = m_database->rootGroup()->groupsRecursive(true);
+            const QList<Group*> allGroups = m_db->rootGroup()->groupsRecursive(true);
             QList<Group*> groupsWithSameIcon;
 
             for (Group* group : allGroups) {
@@ -474,14 +474,14 @@ void EditWidgetIcons::removeCustomIcon()
             }
 
             // Remove the icon from the database
-            m_database->metadata()->removeCustomIcon(iconUuid);
-            m_customIconModel->setIcons(m_database->metadata()->customIconsScaledPixmaps(),
-                                        m_database->metadata()->customIconsOrder());
+            m_db->metadata()->removeCustomIcon(iconUuid);
+            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps(),
+                                        m_db->metadata()->customIconsOrder());
 
             // Reset the current icon view
             updateRadioButtonDefaultIcons();
 
-            if (m_database->resolveEntry(m_currentUuid) != nullptr) {
+            if (m_db->resolveEntry(m_currentUuid) != nullptr) {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Entry::DefaultIconNumber));
             } else {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));

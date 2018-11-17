@@ -87,7 +87,7 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
     m_kdbxVersion &= KeePass2::FILE_VERSION_CRITICAL_MASK;
 
     // read header fields
-    while (readHeaderField(headerStream, nullptr) && !hasError()) {
+    while (readHeaderField(headerStream, m_db) && !hasError()) {
     }
 
     headerStream.close();
@@ -97,7 +97,7 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
     }
 
     // read payload
-    bool ok = readDatabaseImpl(db, device, headerStream.storedData(), std::move(key));
+    bool ok = readDatabaseImpl(device, headerStream.storedData(), std::move(key), db);
 
     if (saveXml()) {
         m_xmlData.clear();

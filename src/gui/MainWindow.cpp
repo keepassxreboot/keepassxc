@@ -32,6 +32,9 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
+#include "keys/FileKey.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/SearchWidget.h"
@@ -132,7 +135,7 @@ MainWindow::MainWindow()
     setAcceptDrops(true);
 
     // Setup the search widget in the toolbar
-    SearchWidget* search = new SearchWidget();
+    auto* search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
     m_searchWidgetAction = m_ui->toolBar->addWidget(search);
     m_searchWidgetAction->setEnabled(false);
@@ -349,10 +352,6 @@ MainWindow::MainWindow()
             this,
             SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
-    connect(m_ui->tabWidget,
-            SIGNAL(messageTab(QString,MessageWidget::MessageType)),
-            this,
-            SLOT(displayTabMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
@@ -450,9 +449,18 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
+void MainWindow::openDatabase(const QString& filePath, const QString& pw, const QString& keyFile)
 {
-    m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create(pw));
+    auto fileKey = QSharedPointer<FileKey>::create();
+    fileKey->load(keyFile);
+    key->addKey(fileKey);
+    if (db->open(filePath, key)) {
+        auto* dbWidget = new DatabaseWidget(db, this);
+        m_ui->tabWidget->addDatabaseTab(dbWidget);
+    }
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
@@ -587,15 +595,13 @@ void MainWindow::updateWindowTitle()
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
     bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
+    QString tabName = m_ui->tabWidget->tabName(tabWidgetIndex);
 
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
-        customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
+        customWindowTitlePart = tabName;
         if (isModified) {
             // remove asterisk '*' from title
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
-        }
-        if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-            customWindowTitlePart = tr("%1 [read-only]", "window title modifier").arg(customWindowTitlePart);
         }
         m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
@@ -612,17 +618,16 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
         setWindowFilePath("");
     } else {
-        setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
+        setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
     }
 
     setWindowModified(isModified);
-
     setWindowTitle(windowTitle);
 }
 
 void MainWindow::showAboutDialog()
 {
-    AboutDialog* aboutDialog = new AboutDialog(this);
+    auto* aboutDialog = new AboutDialog(this);
     aboutDialog->open();
 }
 
@@ -687,7 +692,7 @@ void MainWindow::switchToOpenDatabase()
 
 void MainWindow::switchToDatabaseFile(const QString& file)
 {
-    m_ui->tabWidget->openDatabase(file);
+    m_ui->tabWidget->addDatabaseTab(file);
     switchToDatabases();
 }
 
@@ -820,11 +825,7 @@ bool MainWindow::saveLastDatabases()
         connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
     }
 
-    if (!m_ui->tabWidget->closeAllDatabases()) {
-        accept = false;
-    } else {
-        accept = true;
-    }
+    accept = m_ui->tabWidget->closeAllDatabaseTabs();
 
     if (openPreviousDatabasesOnStartup) {
         disconnect(
@@ -1121,7 +1122,7 @@ void MainWindow::dropEvent(QDropEvent* event)
 
 void MainWindow::closeAllDatabases()
 {
-    m_ui->tabWidget->closeAllDatabases();
+    m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
 void MainWindow::lockAllDatabases()

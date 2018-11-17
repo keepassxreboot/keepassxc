@@ -39,7 +39,7 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
             << new NewDatabaseWizardPageEncryption()
             << new NewDatabaseWizardPageMasterKey();
 
-    for (auto const& page: asConst(m_pages)) {
+    for (const auto& page: asConst(m_pages)) {
         addPage(page);
     }
 
@@ -57,20 +57,27 @@ bool NewDatabaseWizard::validateCurrentPage()
     return m_pages[currentId()]->validatePage();
 }
 
-Database* NewDatabaseWizard::takeDatabase()
+/**
+ * Take configured database and reset internal pointer.
+ *
+ * @return the configured database
+ */
+QSharedPointer<Database> NewDatabaseWizard::takeDatabase()
 {
-    return m_db.take();
+    auto tmpPointer = m_db;
+    m_db.reset();
+    return tmpPointer;
 }
 
 void NewDatabaseWizard::initializePage(int id)
 {
     if (id == startId()) {
-        m_db.reset(new Database());
+        m_db = QSharedPointer<Database>::create();
         m_db->rootGroup()->setName(tr("Root", "Root group"));
         m_db->setKdf({});
         m_db->setKey({});
     }
 
-    m_pages[id]->setDatabase(m_db.data());
+    m_pages[id]->setDatabase(m_db);
     m_pages[id]->initializePage();
 }

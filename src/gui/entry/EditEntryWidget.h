@@ -134,7 +134,7 @@ private:
     bool passwordsEqual();
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
-    void updateEntryData(Entry*) const;
+    void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
     void saveSSHAgentConfig();

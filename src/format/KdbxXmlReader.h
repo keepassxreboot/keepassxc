@@ -45,7 +45,7 @@ public:
     explicit KdbxXmlReader(quint32 version, QHash<QString, QByteArray>  binaryPool);
     virtual ~KdbxXmlReader() = default;
 
-    virtual Database* readDatabase(const QString& filename);
+    virtual QSharedPointer<Database> readDatabase(const QString& filename);
     virtual QSharedPointer<Database> readDatabase(QIODevice* device);
     virtual void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr);
 

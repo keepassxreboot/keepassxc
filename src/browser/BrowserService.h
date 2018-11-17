@@ -52,10 +52,10 @@ public:
                   const QString& url,
                   const QString& submitUrl,
                   const QString& realm,
-                  Database* selectedDb = nullptr);
-    QList<Entry*> searchEntries(Database* db, const QString& hostname, const QString& url);
+                  QSharedPointer<Database> selectedDb = nullptr);
+    QList<Entry*> searchEntries(QSharedPointer<Database> db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
-    void convertAttributesToCustomData(Database *currentDb = nullptr);
+    void convertAttributesToCustomData(QSharedPointer<Database> currentDb = nullptr);
 
 public:
     static const char KEEPASSXCBROWSER_NAME[];
@@ -103,16 +103,16 @@ private:
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group* findCreateAddEntryGroup(Database* selectedDb = nullptr);
+    Group* findCreateAddEntryGroup(QSharedPointer<Database> selectedDb = nullptr);
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
     bool removeFirstDomain(QString& hostname);
     QString baseDomain(const QString& url) const;
-    Database* getDatabase();
-    Database* selectedDatabase();
+    QSharedPointer<Database> getDatabase();
+    QSharedPointer<Database> selectedDatabase();
     bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
-    int moveKeysToCustomData(Entry* entry, Database* db) const;
+    int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const;
     bool checkLegacySettings();
 
 private:

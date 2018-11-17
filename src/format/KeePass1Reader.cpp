@@ -57,7 +57,7 @@ KeePass1Reader::KeePass1Reader()
 {
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
+QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
 {
     m_error = false;
     m_errorStr.clear();
@@ -83,9 +83,9 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         }
     }
 
-    QScopedPointer<Database> db(new Database());
+    auto db = QSharedPointer<Database>::create();
     QScopedPointer<Group> tmpParent(new Group());
-    m_db = db.data();
+    m_db = db;
     m_tmpParent = tmpParent.data();
     m_device = device;
 
@@ -246,10 +246,10 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         return nullptr;
     }
 
-    return db.take();
+    return db;
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
+QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
 {
     QScopedPointer<QFile> keyFile;
     if (!keyfileName.isEmpty()) {
@@ -260,12 +260,10 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         }
     }
 
-    QScopedPointer<Database> db(readDatabase(device, password, keyFile.data()));
-
-    return db.take();
+    return QSharedPointer<Database>(readDatabase(device, password, keyFile.data()));
 }
 
-Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
+QSharedPointer<Database> KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
 {
     QFile dbFile(filename);
     if (!dbFile.open(QFile::ReadOnly)) {
@@ -273,7 +271,7 @@ Database* KeePass1Reader::readDatabase(const QString& filename, const QString& p
         return nullptr;
     }
 
-    Database* db = readDatabase(&dbFile, password, keyfileName);
+    auto db = readDatabase(&dbFile, password, keyfileName);
 
     if (dbFile.error() != QFile::NoError) {
         raiseError(dbFile.errorString());

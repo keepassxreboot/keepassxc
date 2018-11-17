@@ -869,7 +869,7 @@ void EditEntryWidget::acceptEntry()
     }
 }
 
-void EditEntryWidget::updateEntryData(Entry*) const
+void EditEntryWidget::updateEntryData(Entry* entry) const
 {
     QRegularExpression newLineRegex("(?:\r?\n|\r)");
 
