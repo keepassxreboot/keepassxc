@@ -1115,7 +1115,9 @@ void DatabaseWidget::closeEvent(QCloseEvent* event)
 
 bool DatabaseWidget::lock()
 {
-    Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+    if (currentMode() == DatabaseWidget::LockedMode) {
+        return true;
+    }
 
     clipboard()->clearCopiedText();
 
