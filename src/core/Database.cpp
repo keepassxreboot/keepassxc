@@ -723,7 +723,6 @@ void Database::emptyRecycleBin()
 
 void Database::setEmitModified(bool value)
 {
-    Q_ASSERT(!m_data.isReadOnly);
     if (m_emitModified && !value) {
         m_timer->stop();
     }
@@ -748,7 +747,6 @@ void Database::markAsModified()
 
 void Database::markAsClean()
 {
-    Q_ASSERT(!m_data.isReadOnly);
     bool emitSignal = m_modified;
     m_modified = false;
     if (emitSignal) {

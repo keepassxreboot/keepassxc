@@ -56,7 +56,7 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& filePath, const QString& pw = QString(), const QString& keyFile = QString());
+    void openDatabase(const QString& filePath, const QString& pw = {}, const QString& keyFile = {});
     void appExit();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,

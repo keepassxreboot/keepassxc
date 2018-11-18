@@ -118,8 +118,7 @@ void DatabaseTabWidget::newDatabase()
 void DatabaseTabWidget::openDatabase()
 {
     QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-    QString defaultDir = config()->get("LastDir", QDir::homePath()).toString();
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), defaultDir, filter);
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), "", filter);
     if (!fileName.isEmpty()) {
         addDatabaseTab(fileName);
     }
@@ -187,7 +186,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
 void DatabaseTabWidget::importCsv()
 {
     QString filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), {}, filter);
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), "", filter);
 
     if (fileName.isEmpty()) {
         return;
@@ -208,8 +207,7 @@ void DatabaseTabWidget::mergeDatabase()
     auto dbWidget = currentDatabaseWidget();
     if (dbWidget && dbWidget->currentMode() != DatabaseWidget::LockedMode) {
         QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(),
-                                                               filter);
+        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), "", filter);
         if (!fileName.isEmpty()) {
             mergeDatabase(fileName);
         }
@@ -288,6 +286,7 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
     }
 
     removeTab(tabIndex);
+    toggleTabbar();
     emit databaseClosed(filePath);
     return true;
 }
