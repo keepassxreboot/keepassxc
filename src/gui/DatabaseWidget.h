@@ -210,6 +210,7 @@ private slots:
     void emitEntryContextMenuRequested(const QPoint& pos);
     void emitPressedGroup(Group* currentGroup);
     void emitEntrySelectionChanged();
+    void connectDatabaseSignals();
     void loadDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);

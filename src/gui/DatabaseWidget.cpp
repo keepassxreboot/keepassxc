@@ -201,6 +201,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
 
+    connectDatabaseSignals();
+
     m_fileWatchTimer.setSingleShot(true);
     m_fileWatchUnblockTimer.setSingleShot(true);
     m_ignoreAutoReload = false;
@@ -391,6 +393,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // signals triggering dangling pointers.
     auto oldDb = m_db;
     m_db = std::move(db);
+    connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
 }
 
@@ -764,6 +767,16 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
     setCurrentWidget(m_editGroupWidget);
 }
 
+void DatabaseWidget::connectDatabaseSignals()
+{
+    // relayed Database events
+    connect(m_db.data(), SIGNAL(metadataModified()), this, SIGNAL(databaseMetadataChanged()));
+    connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
+            this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
+    connect(m_db.data(), SIGNAL(modified()), this, SIGNAL(databaseModified()));
+    connect(m_db.data(), SIGNAL(clean()), this, SIGNAL(databaseClean()));
+}
+
 void DatabaseWidget::loadDatabase(bool accepted)
 {
     auto* openWidget = qobject_cast<DatabaseOpenWidget*>(sender());
@@ -776,14 +789,6 @@ void DatabaseWidget::loadDatabase(bool accepted)
         replaceDatabase(openWidget->database());
         setCurrentWidget(m_mainWidget);
         m_fileWatcher.addPath(m_db->filePath());
-
-        // relayed Database events
-        connect(m_db.data(), SIGNAL(metadataModified()), this, SIGNAL(databaseMetadataChanged()));
-        connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
-            this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
-        connect(m_db.data(), SIGNAL(modified()), this, SIGNAL(databaseModified()));
-        connect(m_db.data(), SIGNAL(clean()), this, SIGNAL(databaseClean()));
-
         emit databaseUnlocked();
     } else {
         m_fileWatcher.removePath(m_db->filePath());
