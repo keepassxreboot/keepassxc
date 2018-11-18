@@ -388,7 +388,6 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 {
     m_db = std::move(db);
     m_groupView->changeDatabase(m_db);
-    emit databaseChanged(m_db, m_db->isModified());
 }
 
 void DatabaseWidget::cloneEntry()
@@ -1111,11 +1110,13 @@ bool DatabaseWidget::lock()
 
     clipboard()->clearCopiedText();
 
-    auto result = MessageBox::question(this, tr("Lock Database?"),
-        tr("You are editing an entry. Discard changes and lock anyway?"),
-        QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
-    if (result == QMessageBox::Cancel) {
-        return false;
+    if (currentMode() == DatabaseWidget::Mode::EditMode) {
+        auto result = MessageBox::question(this, tr("Lock Database?"),
+            tr("You are editing an entry. Discard changes and lock anyway?"),
+            QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
+        if (result == QMessageBox::Cancel) {
+            return false;
+        }
     }
 
     if (m_db->isModified()) {
@@ -1124,7 +1125,7 @@ bool DatabaseWidget::lock()
                 return false;
             }
         } else if (currentMode() != DatabaseWidget::LockedMode) {
-            result = MessageBox::question(this, tr("Save changes?"),
+            auto result = MessageBox::question(this, tr("Save changes?"),
                 tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped()),
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes && !m_db->save()) {
@@ -1149,8 +1150,10 @@ bool DatabaseWidget::lock()
     clearAllWidgets();
     m_unlockDatabaseWidget->load(m_db->filePath());
     setCurrentWidget(m_unlockDatabaseWidget);
+
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
     replaceDatabase(newDb);
+
     emit databaseLocked();
 
     return true;

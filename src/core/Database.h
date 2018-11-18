@@ -181,9 +181,9 @@ private:
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QPointer<QTimer> m_timer;
+    bool m_unlocked = false;
     bool m_modified = false;
     bool m_emitModified;
-    bool m_unlocked = false;
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;

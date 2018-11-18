@@ -44,7 +44,7 @@ Database::Database()
     , m_data()
     , m_rootGroup(nullptr)
     , m_timer(new QTimer(this))
-    , m_emitModified(true)
+    , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
 {
     setRootGroup(new Group());
@@ -57,6 +57,9 @@ Database::Database()
     connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(metadataModified()));
     connect(m_metadata, SIGNAL(metadataModified()), this, SLOT(markAsModified()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
+
+    m_modified = false;
+    m_emitModified = true;
 }
 
 Database::Database(const QString& filePath)

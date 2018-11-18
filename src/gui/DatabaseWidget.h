@@ -132,7 +132,6 @@ signals:
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
-    void databaseChanged(QSharedPointer<Database> newDb, bool unsavedChanges);
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
