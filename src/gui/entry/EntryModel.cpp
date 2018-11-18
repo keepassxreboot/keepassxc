@@ -437,13 +437,13 @@ void EntryModel::entryDataChanged(Entry* entry)
 
 void EntryModel::severConnections()
 {
-//    if (m_group) {
-//        disconnect(m_group, nullptr, this, nullptr);
-//    }
-//
-//    for (const Group* group : asConst(m_allGroups)) {
-//        disconnect(group, nullptr, this, nullptr);
-//    }
+    if (m_group) {
+        disconnect(m_group, nullptr, this, nullptr);
+    }
+
+    for (const Group* group : asConst(m_allGroups)) {
+        disconnect(group, nullptr, this, nullptr);
+    }
 }
 
 void EntryModel::makeConnections(const Group* group)

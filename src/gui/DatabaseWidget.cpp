@@ -386,6 +386,10 @@ void DatabaseWidget::setIconFromParent()
 
 void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 {
+    // TODO: instead of increasing the ref count temporarily, there should be a clean
+    // break from the old database. Without this crashes occur due to the change
+    // signals triggering dangling pointers.
+    auto oldDb = m_db;
     m_db = std::move(db);
     m_groupView->changeDatabase(m_db);
 }
