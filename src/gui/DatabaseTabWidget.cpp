@@ -286,7 +286,7 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
     }
 
     removeTab(tabIndex);
-    delete dbWidget;
+    dbWidget->deleteLater();
     toggleTabbar();
     emit databaseClosed(filePath);
     return true;
