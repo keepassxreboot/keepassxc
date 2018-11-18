@@ -110,33 +110,35 @@ void TestGui::init()
     m_dbFilePath = m_dbFile->fileName();
     m_dbFile->close();
 
+    // make sure window is activated or focus tests may fail
+    m_mainWindow->activateWindow();
+    QApplication::processEvents();
+
     fileDialog()->setNextFileName(m_dbFilePath);
     triggerAction("actionDatabaseOpen");
 
-    auto* databaseOpenWidget = m_mainWindow->findChild<QWidget*>("databaseOpenWidget");
+    auto* databaseOpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenWidget");
+    QVERIFY(databaseOpenWidget);
     auto* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPassword);
+    editPassword->setFocus();
 
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QTRY_VERIFY(m_tabWidget->currentDatabaseWidget());
-
     m_dbWidget = m_tabWidget->currentDatabaseWidget();
     m_db = m_dbWidget->database();
-
-    // make sure window is activated or focus tests may fail
-    m_mainWindow->activateWindow();
-    QApplication::processEvents();
 }
 
 // Every test ends with closing the temp database without saving
 void TestGui::cleanup()
 {
     // DO NOT save the database
+    m_db->markAsClean();
     MessageBox::setNextAnswer(QMessageBox::No);
     triggerAction("actionDatabaseClose");
     QApplication::processEvents();
+    MessageBox::setNextAnswer(QMessageBox::NoButton);
 
     if (m_dbWidget) {
         delete m_dbWidget;
@@ -298,13 +300,14 @@ void TestGui::createDatabaseCallback()
 void TestGui::testMergeDatabase()
 {
     // It is safe to ignore the warning this line produces
-    QSignalSpy dbMergeSpy(m_dbWidget.data(), SIGNAL(databaseMerged(Database*)));
+    QSignalSpy dbMergeSpy(m_dbWidget.data(), SIGNAL(databaseMerged(QSharedPointer<Database>)));
+    QApplication::processEvents();
 
     // set file to merge from
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    auto* databaseOpenMergeWidget = m_mainWindow->findChild<QWidget*>("databaseOpenMergeWidget");
+    auto* databaseOpenMergeWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenMergeWidget");
     auto* editPasswordMerge = databaseOpenMergeWidget->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPasswordMerge->isVisible());
 
@@ -314,7 +317,7 @@ void TestGui::testMergeDatabase()
     QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
 
     QTRY_COMPARE(dbMergeSpy.count(), 1);
-    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
+    QTRY_VERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).contains("*"));
 
     m_db = m_tabWidget->currentDatabaseWidget()->database();
 
@@ -349,7 +352,7 @@ void TestGui::testAutoreloadDatabase()
 
     // the General group contains one entry from the new db data
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QVERIFY(!m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+    QVERIFY(!m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -367,7 +370,7 @@ void TestGui::testAutoreloadDatabase()
 
     // Ensure the merge did not take place
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
-    QVERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+    QVERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -390,13 +393,13 @@ void TestGui::testAutoreloadDatabase()
     m_db = m_dbWidget->database();
 
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QVERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 }
 
 void TestGui::testTabs()
 {
     QCOMPARE(m_tabWidget->count(), 1);
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
 }
 
 void TestGui::testEditEntry()
@@ -428,6 +431,7 @@ void TestGui::testEditEntry()
 
     // Apply the edit
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QVERIFY(editEntryWidgetButtonBox);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
@@ -476,6 +480,7 @@ void TestGui::testEditEntry()
 
     // Save the edit (press OK)
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QApplication::processEvents();
 
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
@@ -487,7 +492,7 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Confirm modified indicator is showing
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
 
     // Test copy & paste newline sanitization
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
@@ -1102,7 +1107,7 @@ void TestGui::testSaveAs()
 
     triggerAction("actionDatabaseSaveAs");
 
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSaveAs"));
 
     checkDatabase(tmpFileName);
 
@@ -1119,7 +1124,7 @@ void TestGui::testSave()
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSave*"));
 
     triggerAction("actionDatabaseSave");
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSave"));
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSave"));
 
     checkDatabase();
 }
@@ -1156,15 +1161,15 @@ void TestGui::testKeePass1Import()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb"));
     triggerAction("actionImportKeePass1");
 
-    auto* keepass1OpenWidget = m_mainWindow->findChild<QWidget*>("keepass1OpenWidget");
+    auto* keepass1OpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("keepass1OpenWidget");
     auto* editPassword = keepass1OpenWidget->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPassword);
 
     QTest::keyClicks(editPassword, "masterpw");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QCOMPARE(m_tabWidget->count(), 2);
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New database]*"));
+    QTRY_COMPARE(m_tabWidget->count(), 2);
+    QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
 
     // Close the KeePass1 Database
     MessageBox::setNextAnswer(QMessageBox::No);
@@ -1179,7 +1184,7 @@ void TestGui::testDatabaseLocking()
     MessageBox::setNextAnswer(QMessageBox::Cancel);
     triggerAction("actionLockDatabases");
 
-    QCOMPARE(m_tabWidget->tabText(0).remove('&'), origDbName + " [locked]");
+    QCOMPARE(m_tabWidget->tabName(0), origDbName + " [Locked]");
 
     auto* actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), false);
@@ -1194,7 +1199,7 @@ void TestGui::testDatabaseLocking()
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QCOMPARE(m_tabWidget->tabText(0).remove('&'), origDbName);
+    QCOMPARE(m_tabWidget->tabName(0), origDbName);
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseMerge->isEnabled(), true);

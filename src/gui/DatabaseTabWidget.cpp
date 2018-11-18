@@ -413,13 +413,18 @@ bool DatabaseTabWidget::hasLockableDatabases() const
 }
 
 /**
- * Get the tab's display name
+ * Get the tab's (original) display name without platform-specific
+ * mangling that may occur when reading back the actual widget's \link tabText()
  *
  * @param index tab index
  * @return tab name
  */
 QString DatabaseTabWidget::tabName(int index)
 {
+    if (index == -1 || index > count()) {
+        return "";
+    }
+
     auto* dbWidget = databaseWidgetFromIndex(index);
 
     auto db = dbWidget->database();

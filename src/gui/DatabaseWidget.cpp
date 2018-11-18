@@ -1136,8 +1136,13 @@ bool DatabaseWidget::lock()
                 return false;
             }
         } else if (currentMode() != DatabaseWidget::LockedMode) {
-            auto result = MessageBox::question(this, tr("Save changes?"),
-                tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped()),
+            QString msg;
+            if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
+                msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
+            } else {
+                msg = tr("Database was modified.\nSave changes?");
+            }
+            auto result = MessageBox::question(this, tr("Save changes?"), msg,
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
             if (result == QMessageBox::Yes && !m_db->save()) {
                 return false;

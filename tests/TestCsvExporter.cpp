@@ -63,7 +63,7 @@ void TestCsvExporter::testExport()
     m_csvExporter->exportDatabase(&buffer, m_db);
 
     QString expectedResult =
-        QString().append(ExpectedHeaderLine).append("\"Test Group Name\",\"Test Entry Title\",\"Test Username\",\"Test "
+        QString().append(ExpectedHeaderLine).append("\"Root/Test Group Name\",\"Test Entry Title\",\"Test Username\",\"Test "
                                                     "Password\",\"http://test.url\",\"Test Notes\"\n");
 
     QCOMPARE(QString::fromUtf8(buffer.buffer().constData()), expectedResult);
@@ -98,5 +98,5 @@ void TestCsvExporter::testNestedGroups()
     QCOMPARE(QString::fromUtf8(buffer.buffer().constData()),
              QString()
                  .append(ExpectedHeaderLine)
-                 .append("\"Test Group Name/Test Sub Group Name\",\"Test Entry Title\",\"\",\"\",\"\",\"\"\n"));
+                 .append("\"Root/Test Group Name/Test Sub Group Name\",\"Test Entry Title\",\"\",\"\",\"\",\"\"\n"));
 }

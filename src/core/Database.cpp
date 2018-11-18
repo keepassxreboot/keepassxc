@@ -737,7 +737,9 @@ bool Database::isModified() const
 
 void Database::markAsModified()
 {
-    Q_ASSERT(!m_data.isReadOnly);
+    if (isReadOnly()) {
+        return;
+    }
 
     m_modified = true;
     if (m_emitModified) {

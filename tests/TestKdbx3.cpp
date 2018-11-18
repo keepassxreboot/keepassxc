@@ -109,7 +109,7 @@ void TestKdbx3::testFormat300()
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(reader.readDatabase(filename, key, db.data()));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3);
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
@@ -179,9 +179,6 @@ void TestKdbx3::testBrokenHeaderHash()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/BrokenHeaderHash.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(""));
-    KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
-    QVERIFY(!db.data());
-    QVERIFY(reader.hasError());
+    QVERIFY(!db->open(filename, key));
 }

@@ -1366,7 +1366,7 @@ void TestMerge::testMergeNotModified()
     QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
     Merger merger(dbSource.data(), dbDestination.data());
     merger.merge();
-    QVERIFY(modifiedSignalSpy.empty());
+    QTRY_VERIFY(modifiedSignalSpy.empty());
 }
 
 void TestMerge::testMergeModified()
@@ -1385,7 +1385,7 @@ void TestMerge::testMergeModified()
 
     Merger merger(dbSource.data(), dbDestination.data());
     merger.merge();
-    QVERIFY(!modifiedSignalSpy.empty());
+    QTRY_VERIFY(!modifiedSignalSpy.empty());
 }
 
 Database* TestMerge::createTestDatabase()

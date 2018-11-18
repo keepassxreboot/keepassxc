@@ -503,6 +503,7 @@ void TestKeePass2Format::testReadBackTargetDb()
     QString errorString;
 
     m_kdbxTargetBuffer.seek(0);
+    m_kdbxTargetDb = QSharedPointer<Database>::create();
     readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading database: ").append(errorString)));
