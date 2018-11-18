@@ -53,6 +53,8 @@ public slots:
     bool closeDatabaseTab(int index);
     bool closeDatabaseTab(DatabaseWidget* dbWidget);
     bool closeAllDatabaseTabs();
+    bool closeCurrentDatabaseTab();
+    bool closeDatabaseTabFromSender();
     void updateTabName(int index = -1);
 
     void newDatabase();
@@ -73,14 +75,18 @@ public slots:
     void performGlobalAutoType();
 
 signals:
-    void tabNameChanged();
-    void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void databaseClosed(const QString& filePath);
+    void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
+    void activateDatabaseChanged(DatabaseWidget* dbWidget);
+    void tabNameChanged();
     void messageGlobal(const QString&, MessageWidget::MessageType type);
+    void messageDismissGlobal();
 
 private slots:
     void toggleTabbar();
     void emitActivateDatabaseChanged();
+    void emitDatabaseLockChanged();
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();

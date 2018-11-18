@@ -107,7 +107,6 @@ private slots:
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
-    void hideTabMessage();
     void handleScreenLock();
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();

@@ -137,9 +137,9 @@ signals:
     void groupRemoved();
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
-    void metadataChanged();
     void modified();
     void modifiedImmediate();
+    void metadataModified();
     void clean();
 
 private slots:

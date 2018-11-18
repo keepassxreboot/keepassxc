@@ -53,14 +53,14 @@ Metadata::Metadata(QObject* parent)
     m_masterKeyChanged = now;
     m_settingsChanged = now;
 
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(metadataModified()));
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit metadataModified();
         return true;
     } else {
         return false;
@@ -74,7 +74,7 @@ template <class P, class V> bool Metadata::set(P& property, const V& value, QDat
         if (m_updateDatetime) {
             dateTime = Clock::currentDateTimeUtc();
         }
-        emit modified();
+        emit metadataModified();
         return true;
     } else {
         return false;
@@ -391,7 +391,7 @@ void Metadata::addCustomIcon(const QUuid& uuid, const QImage& icon)
     QByteArray hash = hashImage(icon);
     m_customIconsHashes[hash] = uuid;
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    emit modified();
+    emit metadataModified();
 }
 
 void Metadata::addCustomIconScaled(const QUuid& uuid, const QImage& icon)
@@ -426,7 +426,7 @@ void Metadata::removeCustomIcon(const QUuid& uuid)
     m_customIconScaledCacheKeys.remove(uuid);
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    emit modified();
+    emit metadataModified();
 }
 
 QUuid Metadata::findCustomIcon(const QImage &candidate)

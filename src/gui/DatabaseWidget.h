@@ -125,6 +125,8 @@ signals:
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
     void databaseModified();
     void databaseClean();
+    void databaseUnlocked();
+    void databaseLocked();
 
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
@@ -136,8 +138,6 @@ signals:
     void entryContextMenuRequested(const QPoint& globalPos);
     void pressedEntry(Entry* selectedEntry);
     void pressedGroup(Group* selectedGroup);
-    void unlockedDatabase();
-    void lockedDatabase();
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();

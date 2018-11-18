@@ -51,7 +51,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     setTabBar(tabBar);
     setDocumentMode(true);
 
-    connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabase(int)));
+    connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabaseTab(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
     connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
@@ -170,11 +170,13 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
 
     connect(dbWidget, SIGNAL(databaseMetadataChanged()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseFilePathChanged(const QString&, const QString&)), SLOT(updateTabName()));
-    connect(dbWidget, SIGNAL(databaseModified()), SLOT(markDatabaseModified()));
-    connect(dbWidget, SIGNAL(databaseClean()), SLOT(markDatabaseClean()));
-    connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabase()));
+    connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
+    connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseClean()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseLocked()), SLOT(emitDatabaseLockChanged()));
 
     if (!db->isInitialized()) {
         dbWidget->switchToOpenDatabase();
@@ -234,7 +236,29 @@ void DatabaseTabWidget::importKeePass1Database()
 }
 
 /**
- * @see DatabaseTabWidget::removeDatabaseTab(DatabaseWidget*)
+ * Attempt to close the current database and remove its tab afterwards.
+ *
+ * @param index index of the database tab to close
+ * @return true if database was closed successully
+ */
+bool DatabaseTabWidget::closeCurrentDatabaseTab()
+{
+    return closeDatabaseTab(currentIndex());
+}
+
+/**
+ * Attempt to close the database tab that sent the close request.
+ *
+ * @param index index of the database tab to close
+ * @return true if database was closed successully
+ */
+bool DatabaseTabWidget::closeDatabaseTabFromSender()
+{
+    return closeDatabaseTab(qobject_cast<DatabaseWidget*>(sender()));
+}
+
+/**
+ * Attempt to close a database and remove its tab afterwards.
  *
  * @param index index of the database tab to close
  * @return true if database was closed successully
@@ -257,11 +281,13 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
         return false;
     }
 
+    QString filePath = dbWidget->database()->filePath();
     if (!dbWidget->close()) {
         return false;
     }
 
     removeTab(tabIndex);
+    emit databaseClosed(filePath);
     return true;
 }
 
@@ -345,6 +371,10 @@ void DatabaseTabWidget::changeDatabaseSettings()
 
 bool DatabaseTabWidget::isReadOnly(int index) const
 {
+    if (count() == 0) {
+        return false;
+    }
+
     if (index == -1) {
         index = currentIndex();
     }
@@ -355,6 +385,10 @@ bool DatabaseTabWidget::isReadOnly(int index) const
 
 bool DatabaseTabWidget::isModified(int index) const
 {
+    if (count() == 0) {
+        return false;
+    }
+
     if (index == -1) {
         index = currentIndex();
     }
@@ -507,6 +541,21 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
 void DatabaseTabWidget::emitActivateDatabaseChanged()
 {
     emit activateDatabaseChanged(currentDatabaseWidget());
+}
+
+void DatabaseTabWidget::emitDatabaseLockChanged()
+{
+    auto* dbWidget = qobject_cast<DatabaseWidget*>(sender());
+    Q_ASSERT(dbWidget);
+    if (!dbWidget) {
+        return;
+    }
+
+    if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+        emit databaseLocked(dbWidget);
+    } else {
+        emit databaseUnlocked(dbWidget);
+    }
 }
 
 void DatabaseTabWidget::performGlobalAutoType()

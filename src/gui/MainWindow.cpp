@@ -279,7 +279,6 @@ MainWindow::MainWindow()
             SLOT(databaseChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), search, SLOT(databaseChanged()));
 
-    connect(m_ui->tabWidget, SIGNAL(modified()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));
@@ -297,7 +296,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
-    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeDatabase()));
+    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
@@ -353,7 +352,6 @@ MainWindow::MainWindow()
             this,
             SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
-    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
@@ -596,10 +594,9 @@ void MainWindow::updateWindowTitle()
     int stackedWidgetIndex = m_ui->stackedWidget->currentIndex();
     int tabWidgetIndex = m_ui->tabWidget->currentIndex();
     bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
-    QString tabName = m_ui->tabWidget->tabName(tabWidgetIndex);
 
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
-        customWindowTitlePart = tabName;
+        customWindowTitlePart = m_ui->tabWidget->tabName(tabWidgetIndex);
         if (isModified) {
             // remove asterisk '*' from title
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
@@ -709,8 +706,9 @@ void MainWindow::switchToCsvImport()
     switchToDatabases();
 }
 
-void MainWindow::databaseStatusChanged(DatabaseWidget*)
+void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
 {
+    Q_UNUSED(dbWidget);
     updateTrayIcon();
 }
 
@@ -823,14 +821,14 @@ bool MainWindow::saveLastDatabases()
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
     if (openPreviousDatabasesOnStartup) {
-        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+        connect(m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
     }
 
     accept = m_ui->tabWidget->closeAllDatabaseTabs();
 
     if (openPreviousDatabasesOnStartup) {
         disconnect(
-            m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
 
@@ -1036,13 +1034,6 @@ void MainWindow::displayTabMessage(const QString& text,
 void MainWindow::hideGlobalMessage()
 {
     m_ui->globalMessageWidget->hideMessage();
-}
-
-void MainWindow::hideTabMessage()
-{
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
-    }
 }
 
 void MainWindow::showYubiKeyPopup()

@@ -43,7 +43,7 @@ Group::Group()
     m_data.searchingEnabled = Inherit;
     m_data.mergeMode = Default;
 
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(modified()));
     connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
 }
 

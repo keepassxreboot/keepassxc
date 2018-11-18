@@ -54,7 +54,7 @@ Entry::Entry()
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
     connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
     connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(modified()));
 
     connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
     connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));

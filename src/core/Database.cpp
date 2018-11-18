@@ -54,8 +54,8 @@ Database::Database()
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(modified()), this, SIGNAL(modifiedImmediate()));
-    connect(m_metadata, SIGNAL(metadataChanged()), this, SIGNAL(metadataChanged()));
+    connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(metadataModified()));
+    connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(modifiedImmediate()));
     connect(this, SIGNAL(modifiedImmediate()), this, SLOT(startModifiedTimer()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }

@@ -188,9 +188,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_databaseOpenMergeWidget, SIGNAL(dialogFinished(bool)), SLOT(mergeDatabase(bool)));
-    connect(m_keepass1OpenWidget, SIGNAL(editFinished(bool)), SLOT(loadDatabase(bool)));
+    connect(m_keepass1OpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
-    connect(m_unlockDatabaseWidget, SIGNAL(editFinished(bool)), SLOT(unlockDatabase(bool)));
+    connect(m_unlockDatabaseWidget, SIGNAL(dialogFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(m_unlockDatabaseDialog, SIGNAL(unlockDone(bool)), SLOT(unlockDatabase(bool)));
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
@@ -202,10 +202,13 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
 
     // relayed Database events
-    connect(m_db.data(), SIGNAL(metadataChanged()), this, SIGNAL(databaseMetadataChanged()));
+    connect(m_db.data(), SIGNAL(metadataModified()), this, SIGNAL(databaseMetadataChanged()));
     connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
         this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
     connect(m_db.data(), SIGNAL(modified()), this, SIGNAL(databaseModified()));
+    connect(m_db.data(), &Database::modified, this, [&]() {
+        return;
+    });
     connect(m_db.data(), SIGNAL(clean()), this, SIGNAL(databaseClean()));
 
     m_fileWatchTimer.setSingleShot(true);
@@ -779,8 +782,8 @@ void DatabaseWidget::loadDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(openWidget->database());
         setCurrentWidget(m_mainWidget);
-        emit unlockedDatabase();
         m_fileWatcher.addPath(m_db->filePath());
+        emit databaseUnlocked();
     } else {
         m_fileWatcher.removePath(m_db->filePath());
         if (m_databaseOpenWidget->database()) {
@@ -839,7 +842,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     setCurrentWidget(m_mainWidget);
     m_unlockDatabaseWidget->clearForms();
-    emit unlockedDatabase();
+    emit databaseUnlocked();
 
     if (sender() == m_unlockDatabaseDialog) {
         QList<QSharedPointer<Database>> dbList;
@@ -1095,7 +1098,7 @@ Group* DatabaseWidget::currentGroup() const
 
 void DatabaseWidget::closeEvent(QCloseEvent* event)
 {
-    if (!lock()) {
+    if (currentMode() != Mode::LockedMode && !lock()) {
         event->ignore();
         return;
     }
@@ -1150,7 +1153,7 @@ bool DatabaseWidget::lock()
     setCurrentWidget(m_unlockDatabaseWidget);
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
     replaceDatabase(newDb);
-    emit lockedDatabase();
+    emit databaseLocked();
 
     return true;
 }
