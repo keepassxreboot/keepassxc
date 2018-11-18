@@ -789,7 +789,7 @@ void Group::copyDataFrom(const Group* other)
     m_customData->copyDataFrom(other->m_customData);
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
-#include <QDebug>
+
 void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);
@@ -801,7 +801,6 @@ void Group::addEntry(Entry* entry)
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
     if (m_db) {
         connect(entry, SIGNAL(modified()), m_db, SLOT(markAsModified()));
-        qDebug() << "connected";
     }
 
     emit modified();

@@ -619,8 +619,8 @@ void MainWindow::updateWindowTitle()
         setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
     }
 
-    setWindowModified(isModified);
     setWindowTitle(windowTitle);
+    setWindowModified(isModified);
 }
 
 void MainWindow::showAboutDialog()

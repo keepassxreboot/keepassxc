@@ -107,6 +107,8 @@ bool Database::open(QSharedPointer<const CompositeKey> key, bool readOnly, QStri
  */
 bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, bool readOnly, QString* error)
 {
+    setEmitModified(false);
+
     QFile dbFile(filePath);
     if (!dbFile.exists()) {
         if (error) {
@@ -140,6 +142,9 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     dbFile.close();
 
     setInitialized(ok);
+    markAsClean();
+
+    setEmitModified(true);
     return ok;
 }
 
@@ -276,7 +281,6 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     }
 
     markAsClean();
-    emit clean();
     return true;
 }
 
@@ -732,15 +736,21 @@ bool Database::isModified() const
 void Database::markAsModified()
 {
     Q_ASSERT(!m_data.isReadOnly);
+
     m_modified = true;
-    startModifiedTimer();
+    if (m_emitModified) {
+        startModifiedTimer();
+    }
 }
 
 void Database::markAsClean()
 {
     Q_ASSERT(!m_data.isReadOnly);
+    bool emitSignal = m_modified;
     m_modified = false;
-    emit clean();
+    if (emitSignal) {
+        emit clean();
+    }
 }
 
 /**

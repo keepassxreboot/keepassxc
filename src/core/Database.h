@@ -116,8 +116,6 @@ public:
 
     bool isModified() const;
     void setEmitModified(bool value);
-    void markAsModified();
-    void markAsClean();
 
     Group* resolveGroup(const QUuid& uuid);
     Entry* resolveEntry(const QUuid& uuid);
@@ -127,6 +125,10 @@ public:
     static Database* databaseByFilePath(const QString& filePath);;
     static QSharedPointer<Database> unlockFromStdin(QString databaseFilename, QString keyFilename = {},
                                                     FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
+
+public slots:
+    void markAsModified();
+    void markAsClean();
 
 signals:
     void filePathChanged(const QString& oldPath, const QString& newPath);
