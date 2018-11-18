@@ -43,11 +43,11 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     auto db = QSharedPointer<Database>::create();
     QVERIFY(db->open(filename, key));
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinOnNotCreated()
@@ -58,11 +58,11 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     auto db = QSharedPointer<Database>::create();
     QVERIFY(db->open(filename, key));
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinOnEmpty()
@@ -73,11 +73,11 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     auto db = QSharedPointer<Database>::create();
     QVERIFY(db->open(filename, key));
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
@@ -97,6 +97,8 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     QVERIFY(db->metadata()->recycleBin()->children().empty());
 
     QTemporaryFile afterCleanup;
+    afterCleanup.open();
+
     KeePass2Writer writer;
     writer.writeDatabase(&afterCleanup, db.data());
     QVERIFY(afterCleanup.size() < initialSize);
