@@ -186,7 +186,7 @@ private:
 
     void setParent(Database* db);
 
-    void recSetDatabase(Database* db);
+    void connectDatabaseSignalsRecursive(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
 

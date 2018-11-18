@@ -112,7 +112,7 @@ void DatabaseTabWidget::newDatabase()
     }
 
     addDatabaseTab(new DatabaseWidget(db, this));
-    emit db->modifiedImmediate();
+    db->markAsModified();
 }
 
 void DatabaseTabWidget::openDatabase()
@@ -495,11 +495,9 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
 void DatabaseTabWidget::lockDatabases()
 {
     for (int i = 0, c = count(); i < c; ++i) {
-        if (!databaseWidgetFromIndex(i)) {
+        if (!databaseWidgetFromIndex(i)->lock()) {
             return;
         }
-
-        updateTabName(i);
     }
 }
 

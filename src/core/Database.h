@@ -138,7 +138,6 @@ signals:
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
     void modified();
-    void modifiedImmediate();
     void metadataModified();
     void clean();
 

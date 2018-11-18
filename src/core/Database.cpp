@@ -44,7 +44,7 @@ Database::Database()
     , m_data()
     , m_rootGroup(nullptr)
     , m_timer(new QTimer(this))
-    , m_emitModified(false)
+    , m_emitModified(true)
     , m_uuid(QUuid::createUuid())
 {
     setRootGroup(new Group());
@@ -55,8 +55,7 @@ Database::Database()
     s_uuidMap.insert(m_uuid, this);
 
     connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(metadataModified()));
-    connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(modifiedImmediate()));
-    connect(this, SIGNAL(modifiedImmediate()), this, SLOT(startModifiedTimer()));
+    connect(m_metadata, SIGNAL(metadataModified()), this, SLOT(markAsModified()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
 }
 
@@ -616,7 +615,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool update
     }
 
     if (oldTransformedMasterKey != m_data.transformedMasterKey) {
-        emit modifiedImmediate();
+        markAsModified();
     }
 
     return true;
@@ -734,13 +733,14 @@ void Database::markAsModified()
 {
     Q_ASSERT(!m_data.isReadOnly);
     m_modified = true;
-    emit modifiedImmediate();
+    startModifiedTimer();
 }
 
 void Database::markAsClean()
 {
     Q_ASSERT(!m_data.isReadOnly);
     m_modified = false;
+    emit clean();
 }
 
 /**
@@ -845,7 +845,7 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
 
     setKdf(kdf);
     m_data.transformedMasterKey = transformedMasterKey;
-    emit modifiedImmediate();
+    markAsModified();
 
     return true;
 }

@@ -441,7 +441,7 @@ void Group::setParent(Group* parent, int index)
             }
         }
         if (m_db != parent->m_db) {
-            recSetDatabase(parent->m_db);
+            connectDatabaseSignalsRecursive(parent->m_db);
         }
         QObject::setParent(parent);
         emit aboutToAdd(this, index);
@@ -477,7 +477,7 @@ void Group::setParent(Database* db)
     cleanupParent();
 
     m_parent = nullptr;
-    recSetDatabase(db);
+    connectDatabaseSignalsRecursive(db);
 
     QObject::setParent(db);
 }
@@ -789,7 +789,7 @@ void Group::copyDataFrom(const Group* other)
     m_customData->copyDataFrom(other->m_customData);
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
-
+#include <QDebug>
 void Group::addEntry(Entry* entry)
 {
     Q_ASSERT(entry);
@@ -800,7 +800,8 @@ void Group::addEntry(Entry* entry)
     m_entries << entry;
     connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
     if (m_db) {
-        connect(entry, SIGNAL(modified()), m_db, SIGNAL(modifiedImmediate()));
+        connect(entry, SIGNAL(modified()), m_db, SLOT(markAsModified()));
+        qDebug() << "connected";
     }
 
     emit modified();
@@ -824,7 +825,7 @@ void Group::removeEntry(Entry* entry)
     emit entryRemoved(entry);
 }
 
-void Group::recSetDatabase(Database* db)
+void Group::connectDatabaseSignalsRecursive(Database* db)
 {
     if (m_db) {
         disconnect(SIGNAL(dataChanged(Group*)), m_db);
@@ -842,7 +843,7 @@ void Group::recSetDatabase(Database* db)
             entry->disconnect(m_db);
         }
         if (db) {
-            connect(entry, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
+            connect(entry, SIGNAL(modified()), db, SLOT(markAsModified()));
         }
     }
 
@@ -854,13 +855,13 @@ void Group::recSetDatabase(Database* db)
         connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
-        connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
+        connect(this, SIGNAL(modified()), db, SLOT(markAsModified()));
     }
 
     m_db = db;
 
     for (Group* group : asConst(m_children)) {
-        group->recSetDatabase(db);
+        group->connectDatabaseSignalsRecursive(db);
     }
 }
 
@@ -965,7 +966,7 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
         return nullptr;
     }
 
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setTitle(entryTitle);
     entry->setUuid(QUuid::createUuid());
     entry->setGroup(group);
