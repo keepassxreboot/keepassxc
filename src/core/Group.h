@@ -164,14 +164,14 @@ public:
     void removeEntry(Entry* entry);
 
 signals:
-    void dataChanged(Group* group);
-    void aboutToAdd(Group* group, int index);
-    void added();
-    void aboutToRemove(Group* group);
-    void removed();
+    void groupDataChanged(Group* group);
+    void groupAboutToAdd(Group* group, int index);
+    void groupAdded();
+    void groupAboutToRemove(Group* group);
+    void groupRemoved();
     void aboutToMove(Group* group, Group* toGroup, int index);
-    void moved();
-    void modified();
+    void groupMoved();
+    void groupModified();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);

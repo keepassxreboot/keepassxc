@@ -662,8 +662,8 @@ void DatabaseWidget::deleteGroup()
 
     auto* recycleBin = m_db->metadata()->recycleBin();
     bool inRecycleBin = recycleBin && recycleBin->findGroupByUuid(currentGroup->uuid());
-    bool isRecycleBin = (currentGroup == m_db->metadata()->recycleBin());
-    bool isRecycleBinSubgroup = currentGroup->findGroupByUuid(m_db->metadata()->recycleBin()->uuid());
+    bool isRecycleBin = recycleBin && (currentGroup == recycleBin);
+    bool isRecycleBinSubgroup = recycleBin && currentGroup->findGroupByUuid(recycleBin->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         QMessageBox::StandardButton result = MessageBox::question(
             this,

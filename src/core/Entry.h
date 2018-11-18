@@ -221,9 +221,8 @@ signals:
     /**
      * Emitted when a default attribute has been changed.
      */
-    void dataChanged(Entry* entry);
-
-    void modified();
+    void entryDataChanged(Entry* entry);
+    void entryModified();
 
 private slots:
     void emitDataChanged();

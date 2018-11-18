@@ -50,14 +50,14 @@ Entry::Entry()
     m_data.autoTypeObfuscation = 0;
 
     connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
-    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(entryModified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
-    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(modified()));
+    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(entryModified()));
+    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(entryModified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(entryModified()));
 
-    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
-    connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateTimeinfo()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateModifiedSinceBegin()));
 }
 
 Entry::~Entry()
@@ -78,7 +78,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit entryModified();
         return true;
     }
     return false;
@@ -409,7 +409,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -422,7 +422,7 @@ void Entry::setIcon(const QUuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -502,7 +502,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -510,7 +510,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -529,7 +529,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -547,7 +547,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::truncateHistory()
@@ -930,7 +930,7 @@ void Entry::setGroup(Group* group)
 
 void Entry::emitDataChanged()
 {
-    emit dataChanged(this);
+    emit entryDataChanged(this);
 }
 
 const Database* Entry::database() const
