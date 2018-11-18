@@ -1474,9 +1474,10 @@ bool DatabaseWidget::saveAs()
     while (true) {
         QString oldFilePath = m_db->filePath();
         if (!QFileInfo(oldFilePath).exists()) {
-            oldFilePath = QDir::toNativeSeparators(QDir::homePath() + "/" + tr("Passwords").append(".kdbx"));
+            oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString()
+                + "/" + tr("Passwords").append(".kdbx"));
         }
-        QString newFilePath = FileDialog::instance()->getSaveFileName(
+        QString newFilePath = fileDialog()->getSaveFileName(
             this, tr("Save database as"), oldFilePath,
             tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr, "kdbx");
 

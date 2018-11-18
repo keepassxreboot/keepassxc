@@ -118,7 +118,8 @@ void DatabaseTabWidget::newDatabase()
 void DatabaseTabWidget::openDatabase()
 {
     QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-    QString fileName = FileDialog::instance()->getOpenFileName(this, tr("Open database"), QDir::homePath(), filter);
+    QString defaultDir = config()->get("LastDir", QDir::homePath()).toString();
+    QString fileName = fileDialog()->getOpenFileName(this, tr("Open database"), defaultDir, filter);
     if (!fileName.isEmpty()) {
         addDatabaseTab(fileName);
     }
