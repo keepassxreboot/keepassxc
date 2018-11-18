@@ -143,7 +143,7 @@ private:
     void displayAttribute(QModelIndex index, bool showProtected);
 
     QPointer<Entry> m_entry;
-    QSharedPointer<Database> m_database;
+    QSharedPointer<Database> m_db;
 
     bool m_create;
     bool m_history;

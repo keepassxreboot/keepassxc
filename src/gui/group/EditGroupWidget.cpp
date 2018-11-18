@@ -30,7 +30,6 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     , m_editGroupWidgetIcons(new EditWidgetIcons())
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_group(nullptr)
-    , m_database(nullptr)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
@@ -61,7 +60,7 @@ EditGroupWidget::~EditGroupWidget()
 void EditGroupWidget::loadGroup(Group* group, bool create, QSharedPointer<Database> database)
 {
     m_group = group;
-    m_database = database;
+    m_db = database;
 
     if (create) {
         setHeadline(tr("Add group"));
@@ -141,7 +140,7 @@ void EditGroupWidget::apply()
 
 void EditGroupWidget::cancel()
 {
-    if (!m_group->iconUuid().isNull() && !m_database->metadata()->containsCustomIcon(m_group->iconUuid())) {
+    if (!m_group->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_group->iconUuid())) {
         m_group->setIcon(Entry::DefaultIconNumber);
     }
 
@@ -152,7 +151,7 @@ void EditGroupWidget::cancel()
 void EditGroupWidget::clear()
 {
     m_group = nullptr;
-    m_database = nullptr;
+    m_db.reset();
     m_editGroupWidgetIcons->reset();
 }
 

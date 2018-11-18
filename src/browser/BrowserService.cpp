@@ -779,7 +779,7 @@ QSharedPointer<Database> BrowserService::getDatabase()
             return db;
         }
     }
-    return nullptr;
+    return {};
 }
 
 QSharedPointer<Database> BrowserService::selectedDatabase()
@@ -810,7 +810,7 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
                 return databaseWidgets[index]->database();
             }
         } else {
-            return nullptr;
+            return {};
         }
     }
 
@@ -879,12 +879,9 @@ bool BrowserService::checkLegacySettings()
                                                 "Do you want to upgrade the settings to the latest standard?\n"
                                                 "This is necessary to maintain compatibility with the browser plugin."),
                                              QMessageBox::Yes | QMessageBox::No);
-        
-    if (dialogResult == QMessageBox::No) {
-        return false;
-    }
 
-    return true;
+    return !(dialogResult == QMessageBox::No);
+
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)

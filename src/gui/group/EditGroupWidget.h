@@ -65,7 +65,7 @@ private:
     QPointer<EditWidgetProperties> m_editWidgetProperties;
 
     QPointer<Group> m_group;
-    QSharedPointer<Database> m_database;
+    QSharedPointer<Database> m_db;
 
     Q_DISABLE_COPY(EditGroupWidget)
 };

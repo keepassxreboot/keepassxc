@@ -645,7 +645,7 @@ QString EditEntryWidget::entryTitle() const
 void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database)
 {
     m_entry = entry;
-    m_database = std::move(database);
+    m_db = std::move(database);
     m_create = create;
     m_history = history;
 
@@ -736,7 +736,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
+    m_iconsWidget->load(entry->uuid(), m_db, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
@@ -926,7 +926,7 @@ void EditEntryWidget::cancel()
         return;
     }
 
-    if (!m_entry->iconUuid().isNull() && !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
+    if (!m_entry->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_entry->iconUuid())) {
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
@@ -954,7 +954,7 @@ void EditEntryWidget::cancel()
 void EditEntryWidget::clear()
 {
     m_entry = nullptr;
-    m_database = nullptr;
+    m_db.reset();
     m_entryAttributes->clear();
     m_advancedUi->attachmentsWidget->clearAttachments();
     m_autoTypeAssoc->clear();

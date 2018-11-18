@@ -814,7 +814,7 @@ QSharedPointer<Database> Database::unlockFromStdin(QString databaseFilename, QSt
         // LCOV_EXCL_START
         if (!fileKey->load(keyFilename, &errorMessage)) {
             err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage)<< endl;
-            return nullptr;
+            return {};
         }
 
         if (fileKey->type() != FileKey::Hashed) {

@@ -127,7 +127,7 @@ IconStruct EditWidgetIcons::state()
 
 void EditWidgetIcons::reset()
 {
-    m_db = nullptr;
+    m_db.reset();
     m_currentUuid = QUuid();
 }
 
