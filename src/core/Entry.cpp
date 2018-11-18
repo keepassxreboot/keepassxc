@@ -26,7 +26,6 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
 #include <utility>
@@ -742,7 +741,7 @@ void Entry::updateModifiedSinceBegin()
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
@@ -766,7 +765,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 
@@ -830,7 +829,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 

@@ -19,7 +19,6 @@
 #include "EntryPreviewWidget.h"
 #include "ui_EntryPreviewWidget.h"
 
-#include <QDebug>
 #include <QDesktopServices>
 #include <QDir>
 
