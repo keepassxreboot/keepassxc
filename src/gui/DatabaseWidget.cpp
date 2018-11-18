@@ -99,7 +99,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 {
     m_messageWidget->setHidden(true);
 
-    auto* mainLayout = new QVBoxLayout(this);
+    auto* mainLayout = new QVBoxLayout();
     mainLayout->addWidget(m_messageWidget);
     auto* hbox = new QHBoxLayout();
     mainLayout->addLayout(hbox);
@@ -107,7 +107,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_mainWidget->setLayout(mainLayout);
 
     auto* rightHandSideWidget = new QWidget(m_mainSplitter);
-    auto* vbox = new QVBoxLayout(rightHandSideWidget);
+    auto* vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->addWidget(m_searchingLabel);
     vbox->addWidget(m_previewSplitter);
