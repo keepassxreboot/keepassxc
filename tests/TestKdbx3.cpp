@@ -33,7 +33,7 @@ void TestKdbx3::initTestCaseImpl()
 {
 }
 
-Database* TestKdbx3::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx3::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_3_1);
     reader.setStrictMode(strictMode);
@@ -43,7 +43,7 @@ Database* TestKdbx3::readXml(const QString& path, bool strictMode, bool& hasErro
     return db;
 }
 
-Database* TestKdbx3::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx3::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_3_1);
     reader.setStrictMode(strictMode);
@@ -63,12 +63,12 @@ void TestKdbx3::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
 
 void TestKdbx3::readKdbx(QIODevice* device,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), device, key));
+    reader.readDatabase(device, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -78,12 +78,12 @@ void TestKdbx3::readKdbx(QIODevice* device,
 
 void TestKdbx3::readKdbx(const QString& path,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), path, key));
+    reader.readDatabase(path, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -108,7 +108,8 @@ void TestKdbx3::testFormat300()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3);
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
@@ -123,7 +124,8 @@ void TestKdbx3::testNonAscii()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(QString::fromUtf8("\xce\x94\xc3\xb6\xd8\xb6")));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
@@ -136,7 +138,8 @@ void TestKdbx3::testCompressed()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(""));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
@@ -149,7 +152,8 @@ void TestKdbx3::testProtectedStrings()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("masterpw"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
@@ -176,7 +180,8 @@ void TestKdbx3::testBrokenHeaderHash()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(""));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
     QVERIFY(!db.data());
     QVERIFY(reader.hasError());
 }

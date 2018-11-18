@@ -31,8 +31,8 @@ const QString TestCsvExporter::ExpectedHeaderLine =
 
 void TestCsvExporter::init()
 {
-    m_db = new Database();
-    m_csvExporter = new CsvExporter();
+    m_db = QSharedPointer<Database>::create();
+    m_csvExporter = QSharedPointer<CsvExporter>::create();
 }
 
 void TestCsvExporter::initTestCase()
@@ -42,17 +42,15 @@ void TestCsvExporter::initTestCase()
 
 void TestCsvExporter::cleanup()
 {
-    delete m_db;
-    delete m_csvExporter;
 }
 
 void TestCsvExporter::testExport()
 {
     Group* groupRoot = m_db->rootGroup();
-    Group* group = new Group();
+    auto* group = new Group();
     group->setName("Test Group Name");
     group->setParent(groupRoot);
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setGroup(group);
     entry->setTitle("Test Entry Title");
     entry->setUsername("Test Username");
@@ -83,13 +81,13 @@ void TestCsvExporter::testEmptyDatabase()
 void TestCsvExporter::testNestedGroups()
 {
     Group* groupRoot = m_db->rootGroup();
-    Group* group = new Group();
+    auto* group = new Group();
     group->setName("Test Group Name");
     group->setParent(groupRoot);
-    Group* childGroup = new Group();
+    auto* childGroup = new Group();
     childGroup->setName("Test Sub Group Name");
     childGroup->setParent(group);
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setGroup(childGroup);
     entry->setTitle("Test Entry Title");
 

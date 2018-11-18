@@ -37,7 +37,7 @@ void TestKdbx4::initTestCaseImpl()
     m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
 }
 
-Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -47,7 +47,7 @@ Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasErro
     return db;
 }
 
-Database* TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -67,12 +67,12 @@ void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
 
 void TestKdbx4::readKdbx(QIODevice* device,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), device, key));
+    reader.readDatabase(device, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -82,12 +82,12 @@ void TestKdbx4::readKdbx(QIODevice* device,
 
 void TestKdbx4::readKdbx(const QString& path,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), path, key));
+    reader.readDatabase(path, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -116,7 +116,8 @@ void TestKdbx4::testFormat400()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("t"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(QSharedPointer<const CompositeKey>(), filename, key));
+    auto db = QSharedPointer<Database>::create();
+    reader.readDatabase(filename, key, db.data());
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
@@ -174,7 +175,8 @@ void TestKdbx4::testFormat400Upgrade()
     // read buffer back
     buffer.seek(0);
     KeePass2Reader reader;
-    QScopedPointer<Database> targetDb(reader.readDatabase(QSharedPointer<const CompositeKey>(), &buffer, key));
+    auto targetDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, key, targetDb.data());
     if (reader.hasError()) {
         QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
     }
@@ -292,14 +294,15 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     // paranoid check that we cannot decrypt the database without a key
     buffer.seek(0);
     KeePass2Reader reader;
-    QScopedPointer<Database> db2;
-    db2.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), &buffer, QSharedPointer<CompositeKey>::create()));
+    auto db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), db2.data());
     QVERIFY(reader.hasError());
 
     // check that we can read back the database with the original composite key,
     // i.e., no components have been lost on the way
     buffer.seek(0);
-    db2.reset(reader.readDatabase(QSharedPointer<const CompositeKey>(), &buffer, compositeKey));
+    db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, compositeKey, db2.data());
     if (reader.hasError()) {
         QFAIL(qPrintable(reader.errorString()));
     }
@@ -396,9 +399,8 @@ void TestKdbx4::testCustomData()
     // read buffer back
     buffer.seek(0);
     KeePass2Reader reader;
-    QSharedPointer<Database> newDb(reader.readDatabase(
-        QSharedPointer<const CompositeKey>(),
-        &buffer, QSharedPointer<CompositeKey>::create()));
+    auto newDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), newDb.data());
 
     // test all custom data are read back successfully from KDBX
     QCOMPARE(newDb->publicCustomData(), publicCustomData);

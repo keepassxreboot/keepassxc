@@ -40,8 +40,8 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinDisabled.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
 
@@ -55,8 +55,8 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinNotYetCreated.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
 
@@ -70,8 +70,8 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinEmpty.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
 
     QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
 
@@ -85,8 +85,8 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinWithData.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key));
 
     QFile originalFile(filename);
     qint64 initialSize = originalFile.size();

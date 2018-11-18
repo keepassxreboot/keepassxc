@@ -89,7 +89,7 @@ int Add::execute(const QStringList& arguments)
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    Database* db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -126,7 +126,7 @@ int Add::execute(const QStringList& arguments)
         if (passwordLength.isEmpty()) {
             passwordGenerator.setLength(PasswordGenerator::DefaultLength);
         } else {
-            passwordGenerator.setLength(static_cast<size_t>(passwordLength.toInt()));
+            passwordGenerator.setLength(passwordLength.toInt());
         }
 
         passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
@@ -135,8 +135,9 @@ int Add::execute(const QStringList& arguments)
         entry->setPassword(password);
     }
 
-    QString errorMessage = db->saveToFile(databasePath);
-    if (!errorMessage.isEmpty()) {
+    QString errorMessage;
+    bool ok = db->save(databasePath, true, false, &errorMessage);
+    if (!ok) {
         errorTextStream << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

@@ -68,27 +68,31 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QScopedPointer<Database> db1(Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR));
+    auto db1 = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db1) {
         return EXIT_FAILURE;
     }
 
-    QScopedPointer<Database> db2;
+    QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
-        db2.reset(Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom), Utils::STDOUT, Utils::STDERR));
+        db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom), Utils::STDOUT, Utils::STDERR);
     } else {
-        db2.reset(Database::openDatabaseFile(args.at(1), db1->key()));
-    }
-    if (!db2) {
-        return EXIT_FAILURE;
+        db2 = QSharedPointer<Database>::create();
+        QString errorMessage;
+        bool ok = db2->open(args.at(1), db1->key(), false, &errorMessage);
+        if (!ok) {
+            err << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
+            return EXIT_FAILURE;
+        }
     }
 
     Merger merger(db2.data(), db1.data());
     bool databaseChanged = merger.merge();
 
     if (databaseChanged) {
-        QString errorMessage = db1->saveToFile(args.at(0));
-        if (!errorMessage.isEmpty()) {
+        QString errorMessage;
+        bool ok = db1->save(args.at(0), true, false, &errorMessage);
+        if (!ok) {
             err << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }

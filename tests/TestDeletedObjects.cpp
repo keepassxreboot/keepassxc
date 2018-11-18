@@ -30,7 +30,7 @@ void TestDeletedObjects::initTestCase()
     QVERIFY(Crypto::init());
 }
 
-void TestDeletedObjects::createAndDelete(Database* db, int delObjectsSize)
+void TestDeletedObjects::createAndDelete(QSharedPointer<Database> db, int delObjectsSize)
 {
     QCOMPARE(db->deletedObjects().size(), delObjectsSize);
     Group* root = db->rootGroup();
@@ -89,32 +89,27 @@ void TestDeletedObjects::testDeletedObjectsFromFile()
     KdbxXmlReader reader(KeePass2::FILE_VERSION_3_1);
     reader.setStrictMode(true);
     QString xmlFile = QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml");
-    Database* db = reader.readDatabase(xmlFile);
+    auto db = reader.readDatabase(xmlFile);
 
     createAndDelete(db, 2);
-
-    delete db;
 }
 
 void TestDeletedObjects::testDeletedObjectsFromNewDb()
 {
-    Database* db = new Database();
-
+    auto db = QSharedPointer<Database>::create();
     createAndDelete(db, 0);
-
-    delete db;
 }
 
 void TestDeletedObjects::testDatabaseChange()
 {
-    Database* db = new Database();
+    auto db = QSharedPointer<Database>::create();
     Group* root = db->rootGroup();
     int delObjectsSize = 0;
-    Database* db2 = new Database();
+    auto db2 = QSharedPointer<Database>::create();
     Group* root2 = db2->rootGroup();
     int delObjectsSize2 = 0;
 
-    Entry* e = new Entry();
+    auto* e = new Entry();
     e->setGroup(root);
 
     QCOMPARE(db->deletedObjects().size(), delObjectsSize);
@@ -130,11 +125,11 @@ void TestDeletedObjects::testDatabaseChange()
     QCOMPARE(db->deletedObjects().size(), delObjectsSize);
     QCOMPARE(db2->deletedObjects().size(), ++delObjectsSize2);
 
-    Group* g1 = new Group();
+    auto* g1 = new Group();
     g1->setParent(root);
     QUuid g1Uuid = QUuid::createUuid();
     g1->setUuid(g1Uuid);
-    Entry* e1 = new Entry();
+    auto* e1 = new Entry();
     e1->setGroup(g1);
     QUuid e1Uuid = QUuid::createUuid();
     e1->setUuid(e1Uuid);
@@ -146,8 +141,8 @@ void TestDeletedObjects::testDatabaseChange()
     QCOMPARE(db->deletedObjects().at(delObjectsSize - 2).uuid, e1Uuid);
     QCOMPARE(db->deletedObjects().at(delObjectsSize - 1).uuid, g1Uuid);
 
-    Group* group = new Group();
-    Entry* entry = new Entry();
+    auto* group = new Group();
+    auto* entry = new Entry();
     entry->setGroup(group);
     entry->setGroup(root);
 
@@ -155,6 +150,4 @@ void TestDeletedObjects::testDatabaseChange()
     QCOMPARE(db2->deletedObjects().size(), delObjectsSize2);
 
     delete group;
-    delete db;
-    delete db2;
 }

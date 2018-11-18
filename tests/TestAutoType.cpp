@@ -57,7 +57,7 @@ void TestAutoType::init()
     config()->set("AutoTypeEntryTitleMatch", false);
     m_test->clearActions();
 
-    m_db = new Database();
+    m_db = QSharedPointer<Database>::create();
     m_dbList.clear();
     m_dbList.append(m_db);
     m_group = new Group();
@@ -126,7 +126,6 @@ void TestAutoType::init()
 
 void TestAutoType::cleanup()
 {
-    delete m_db;
 }
 
 void TestAutoType::testInternal()

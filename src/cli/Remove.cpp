@@ -63,7 +63,7 @@ int Remove::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QScopedPointer<Database> db(Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR));
+    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -92,8 +92,9 @@ int Remove::removeEntry(Database* database, const QString& databasePath, const Q
         database->recycleEntry(entry);
     };
 
-    QString errorMessage = database->saveToFile(databasePath);
-    if (!errorMessage.isEmpty()) {
+    QString errorMessage;
+    bool ok = database->save(databasePath, true, false, &errorMessage);
+    if (!ok) {
         err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

@@ -138,9 +138,6 @@ void TestGui::cleanup()
     triggerAction("actionDatabaseClose");
     QApplication::processEvents();
 
-    if (m_db) {
-        delete m_db;
-    }
     if (m_dbWidget) {
         delete m_dbWidget;
     }
@@ -550,7 +547,7 @@ void TestGui::testSearchEditEntry()
     auto* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTest::keyClicks(searchTextEdit, "Doggy");
-    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
 
     // Goto "Doggy"'s edit view
     QTest::keyClick(searchTextEdit, Qt::Key_Return);
@@ -822,7 +819,7 @@ void TestGui::testSearch()
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
     QTRY_VERIFY(clearButton->isVisible());
-    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Press the search clear button
     clearButton->trigger();
@@ -837,7 +834,7 @@ void TestGui::testSearch()
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
     // Search for "some"
     QTest::keyClicks(searchTextEdit, "some");
-    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
     // Search for "someTHING"
     QTest::keyClicks(searchTextEdit, "THING");
@@ -894,7 +891,7 @@ void TestGui::testSearch()
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QVERIFY(m_dbWidget->isInSearchMode());
+    QVERIFY(m_dbWidget->isSearchActive());
 
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
@@ -910,7 +907,7 @@ void TestGui::testSearch()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
     // Confirm the edit was made and we are back in search mode
-    QTRY_VERIFY(m_dbWidget->isInSearchMode());
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
     QCOMPARE(entry->title(), origTitle.append("_edited"));
 
     // Cancel search, should return to normal view
@@ -1304,10 +1301,8 @@ void TestGui::checkDatabase(QString dbFileName)
 
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
-    KeePass2Reader reader;
-    QScopedPointer<Database> dbSaved(reader.readDatabase(QSharedPointer<const CompositeKey>(), dbFileName, key));
-    QVERIFY(dbSaved);
-    QVERIFY(!reader.hasError());
+    auto dbSaved = QSharedPointer<Database>::create();
+    QVERIFY(dbSaved->open(dbFileName, key));
     QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());
 }
 

@@ -20,6 +20,7 @@
 
 #include <QDateTime>
 #include <QObject>
+#include <QSharedPointer>
 
 class Database;
 
@@ -43,9 +44,9 @@ private slots:
 
 private:
     static QDateTime genDT(int year, int month, int day, int hour, int min);
-    static void reopenDatabase(Database* db, const QString& password, const QString& keyfileName);
+    static void reopenDatabase(QSharedPointer<Database> db, const QString& password, const QString& keyfileName);
 
-    Database* m_db;
+    QSharedPointer<Database> m_db;
 };
 
 #endif // KEEPASSX_TESTKEEPASS1READER_H

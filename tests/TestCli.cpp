@@ -671,7 +671,8 @@ void TestCli::testMerge()
 
     QFile readBack(targetFile1.fileName());
     readBack.open(QIODevice::ReadOnly);
-    QScopedPointer<Database> mergedDb(reader.readDatabase(oldKey, QSharedPointer<const CompositeKey>(), &readBack));
+    auto mergedDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack, oldKey, mergedDb.data());
     readBack.close();
     QVERIFY(mergedDb);
     auto* entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
@@ -691,7 +692,8 @@ void TestCli::testMerge()
 
     readBack.setFileName(targetFile2.fileName());
     readBack.open(QIODevice::ReadOnly);
-    mergedDb.reset(reader.readDatabase(key, QSharedPointer<const CompositeKey>(), &readBack));
+    mergedDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack, key, mergedDb.data());
     readBack.close();
     QVERIFY(mergedDb);
     entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
@@ -740,7 +742,8 @@ void TestCli::testRemove()
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     QFile readBack(m_dbFile->fileName());
     readBack.open(QIODevice::ReadOnly);
-    QScopedPointer<Database> readBackDb(reader.readDatabase(key, QSharedPointer<const CompositeKey>(), &readBack));
+    auto readBackDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack, key, readBackDb.data());
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
@@ -757,7 +760,8 @@ void TestCli::testRemove()
 
     readBack.setFileName(fileCopy.fileName());
     readBack.open(QIODevice::ReadOnly);
-    readBackDb.reset(reader.readDatabase(key, QSharedPointer<const CompositeKey>(), &readBack));
+    readBackDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack, key, readBackDb.data());
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
