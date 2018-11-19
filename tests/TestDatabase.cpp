@@ -41,13 +41,13 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
 
     // Explicitly mark DB as read-write in case it was opened from a read-only drive.
     // Prevents assertion failures on CI systems when the data dir is not writable
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
@@ -60,10 +60,10 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
@@ -76,10 +76,10 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
@@ -92,7 +92,7 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     db->setReadOnly(false);
 
     QFile originalFile(filename);

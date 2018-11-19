@@ -61,7 +61,7 @@ void TestModified::testSignals()
 
     QScopedPointer<Database> db(new Database());
     auto* root = db->rootGroup();
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->setKey(compositeKey);
     ++spyCount;
@@ -88,7 +88,7 @@ void TestModified::testSignals()
 
     QScopedPointer<Database> db2(new Database());
     auto* root2 = db2->rootGroup();
-    QSignalSpy spyModified2(db2.data(), SIGNAL(modified()));
+    QSignalSpy spyModified2(db2.data(), SIGNAL(databaseModified()));
 
     group1->setParent(root2);
     ++spyCount;
@@ -149,7 +149,7 @@ void TestModified::testGroupSets()
     auto* group = new Group();
     group->setParent(root);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     root->setUuid(QUuid::createUuid());
     ++spyCount;
@@ -224,7 +224,7 @@ void TestModified::testEntrySets()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     entry->setUuid(QUuid::createUuid());
     ++spyCount;
@@ -648,7 +648,7 @@ void TestModified::testCustomData()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modified()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->metadata()->customData()->set("Key", "Value");
     ++spyCount;

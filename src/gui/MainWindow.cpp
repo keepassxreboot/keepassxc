@@ -465,7 +465,7 @@ void MainWindow::openDatabase(const QString& filePath, const QString& pw, const 
         fileKey->load(keyFile);
         key->addKey(fileKey);
     }
-    if (db->open(filePath, key)) {
+    if (db->open(filePath, key, nullptr, false)) {
         auto* dbWidget = new DatabaseWidget(db, this);
         m_ui->tabWidget->addDatabaseTab(dbWidget);
         dbWidget->switchToView(true);

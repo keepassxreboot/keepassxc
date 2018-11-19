@@ -481,7 +481,7 @@ void EditWidgetIcons::removeCustomIcon()
             // Reset the current icon view
             updateRadioButtonDefaultIcons();
 
-            if (m_db->resolveEntry(m_currentUuid) != nullptr) {
+            if (m_db->rootGroup()->findEntryByUuid(m_currentUuid) != nullptr) {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Entry::DefaultIconNumber));
             } else {
                 m_ui->defaultIconsView->setCurrentIndex(m_defaultIconModel->index(Group::DefaultIconNumber));

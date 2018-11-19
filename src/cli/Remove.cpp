@@ -93,8 +93,7 @@ int Remove::removeEntry(Database* database, const QString& databasePath, const Q
     };
 
     QString errorMessage;
-    bool ok = database->save(databasePath, true, false, &errorMessage);
-    if (!ok) {
+    if (!database->save(databasePath, &errorMessage, true, false)) {
         err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

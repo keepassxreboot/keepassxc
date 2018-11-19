@@ -67,7 +67,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::CompressionFlags,
-                                                 Endian::sizedIntToBytes<qint32>(db->compressionAlgo(),
+                                                 Endian::sizedIntToBytes<qint32>(db->compressionAlgorithm(),
                                                                                  KeePass2::BYTEORDER)));
     auto kdf = db->kdf();
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::MasterSeed, masterSeed));
@@ -112,7 +112,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     QIODevice* outputDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (db->compressionAlgo() == Database::CompressionNone) {
+    if (db->compressionAlgorithm() == Database::CompressionNone) {
         outputDevice = &hashedStream;
     } else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));

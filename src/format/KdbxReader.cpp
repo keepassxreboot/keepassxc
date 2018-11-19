@@ -175,7 +175,7 @@ void KdbxReader::setCompressionFlags(const QByteArray& data)
         raiseError(tr("Unsupported compression algorithm"));
         return;
     }
-    m_db->setCompressionAlgo(static_cast<Database::CompressionAlgorithm>(id));
+    m_db->setCompressionAlgorithm(static_cast<Database::CompressionAlgorithm>(id));
 }
 
 /**

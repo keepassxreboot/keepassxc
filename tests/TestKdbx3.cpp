@@ -125,11 +125,11 @@ void TestKdbx3::testNonAscii()
     key->addKey(QSharedPointer<PasswordKey>::create(QString::fromUtf8("\xce\x94\xc3\xb6\xd8\xb6")));
     KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
-    QCOMPARE(db->compressionAlgo(), Database::CompressionNone);
+    QCOMPARE(db->compressionAlgorithm(), Database::CompressionNone);
 }
 
 void TestKdbx3::testCompressed()
@@ -139,11 +139,11 @@ void TestKdbx3::testCompressed()
     key->addKey(QSharedPointer<PasswordKey>::create(""));
     KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Compressed"));
-    QCOMPARE(db->compressionAlgo(), Database::CompressionGZip);
+    QCOMPARE(db->compressionAlgorithm(), Database::CompressionGZip);
 }
 
 void TestKdbx3::testProtectedStrings()
@@ -153,7 +153,7 @@ void TestKdbx3::testProtectedStrings()
     key->addKey(QSharedPointer<PasswordKey>::create("masterpw"));
     KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(filename, key));
+    QVERIFY(db->open(filename, key, nullptr, false));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
@@ -180,5 +180,5 @@ void TestKdbx3::testBrokenHeaderHash()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(""));
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(!db->open(filename, key));
+    QVERIFY(!db->open(filename, key, nullptr, false));
 }

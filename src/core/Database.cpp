@@ -54,9 +54,8 @@ Database::Database()
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(metadataModified()), this, SIGNAL(metadataModified()));
     connect(m_metadata, SIGNAL(metadataModified()), this, SLOT(markAsModified()));
-    connect(m_timer, SIGNAL(timeout()), SIGNAL(modified()));
+    connect(m_timer, SIGNAL(timeout()), SIGNAL(databaseModified()));
 
     m_modified = false;
     m_emitModified = true;
@@ -71,6 +70,10 @@ Database::Database(const QString& filePath)
 Database::~Database()
 {
     s_uuidMap.remove(m_uuid);
+
+    if (m_modified) {
+        emit databaseDiscarded();
+    }
 }
 
 QUuid Database::uuid() const
@@ -88,13 +91,13 @@ QUuid Database::uuid() const
  * @param error error message in case of failure
  * @return true on success
  */
-bool Database::open(QSharedPointer<const CompositeKey> key, bool readOnly, QString* error)
+bool Database::open(QSharedPointer<const CompositeKey> key, QString* error, bool readOnly)
 {
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
         return false;
     }
-    return open(m_data.filePath, std::move(key), readOnly, error);
+    return open(m_data.filePath, std::move(key), error, readOnly);
 }
 
 /**
@@ -108,8 +111,12 @@ bool Database::open(QSharedPointer<const CompositeKey> key, bool readOnly, QStri
  * @param error error message in case of failure
  * @return true on success
  */
-bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, bool readOnly, QString* error)
+bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error, bool readOnly)
 {
+    if (isInitialized() && m_modified) {
+        emit databaseDiscarded();
+    }
+
     setEmitModified(false);
 
     QFile dbFile(filePath);
@@ -162,7 +169,7 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
  * @param error error message in case of failure
  * @return true on success
  */
-bool Database::save(bool atomic, bool backup, QString* error)
+bool Database::save(QString* error, bool atomic, bool backup)
 {
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
@@ -172,7 +179,7 @@ bool Database::save(bool atomic, bool backup, QString* error)
         return false;
     }
 
-    return save(m_data.filePath, atomic, backup, error);
+    return save(m_data.filePath, error, atomic, backup);
 }
 
 /**
@@ -192,7 +199,7 @@ bool Database::save(bool atomic, bool backup, QString* error)
  * @param error error message in case of failure
  * @return true on success
  */
-bool Database::save(const QString& filePath, bool atomic, bool backup, QString* error)
+bool Database::save(const QString& filePath, QString* error, bool atomic, bool backup)
 {
     Q_ASSERT(!m_data.isReadOnly);
     if (m_data.isReadOnly) {
@@ -314,22 +321,22 @@ void Database::setReadOnly(bool readOnly)
 }
 
 /**
- * Returns true if database has been fully decrypted and initialized, i.e. if
+ * Returns true if database has been fully decrypted and populated, i.e. if
  * it's not just an empty default instance.
  *
  * @return true if database has been fully initialized
  */
 bool Database::isInitialized() const
 {
-    return m_unlocked;
+    return m_initialized;
 }
 
 /**
- * @param unlocked true to mark database as initialized
+ * @param initialized true to mark database as initialized
  */
-void Database::setInitialized(bool unlocked)
+void Database::setInitialized(bool initialized)
 {
-    m_unlocked = unlocked;
+    m_initialized = initialized;
 }
 
 Group* Database::rootGroup()
@@ -352,6 +359,10 @@ const Group* Database::rootGroup() const
 void Database::setRootGroup(Group* group)
 {
     Q_ASSERT(group);
+
+    if (isInitialized() && m_modified) {
+        emit databaseDiscarded();
+    }
 
     m_rootGroup = group;
     m_rootGroup->setParent(this);
@@ -386,109 +397,6 @@ void Database::setFilePath(const QString& filePath)
     s_filePathMap.insert(m_data.filePath, this);
 
     emit filePathChanged(oldPath, filePath);
-}
-
-Entry* Database::resolveEntry(const QUuid& uuid)
-{
-    return findEntryRecursive(uuid, m_rootGroup);
-}
-
-Entry* Database::resolveEntry(const QString& text, EntryReferenceType referenceType)
-{
-    return findEntryRecursive(text, referenceType, m_rootGroup);
-}
-
-Entry* Database::findEntryRecursive(const QUuid& uuid, Group* group)
-{
-    const QList<Entry*> entryList = group->entries();
-    for (Entry* entry : entryList) {
-        if (entry->uuid() == uuid) {
-            return entry;
-        }
-    }
-
-    const QList<Group*> children = group->children();
-    for (Group* child : children) {
-        Entry* result = findEntryRecursive(uuid, child);
-        if (result) {
-            return result;
-        }
-    }
-
-    return nullptr;
-}
-
-Entry* Database::findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group)
-{
-    Q_ASSERT_X(referenceType != EntryReferenceType::Unknown,
-               "Database::findEntryRecursive",
-               "Can't search entry with \"referenceType\" parameter equal to \"Unknown\"");
-
-    bool found = false;
-    const QList<Entry*> entryList = group->entries();
-    for (Entry* entry : entryList) {
-        switch (referenceType) {
-        case EntryReferenceType::Unknown:
-            return nullptr;
-        case EntryReferenceType::Title:
-            found = entry->title() == text;
-            break;
-        case EntryReferenceType::UserName:
-            found = entry->username() == text;
-            break;
-        case EntryReferenceType::Password:
-            found = entry->password() == text;
-            break;
-        case EntryReferenceType::Url:
-            found = entry->url() == text;
-            break;
-        case EntryReferenceType::Notes:
-            found = entry->notes() == text;
-            break;
-        case EntryReferenceType::QUuid:
-            found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(text.toLatin1()));
-            break;
-        case EntryReferenceType::CustomAttributes:
-            found = entry->attributes()->containsValue(text);
-            break;
-        }
-
-        if (found) {
-            return entry;
-        }
-    }
-
-    const QList<Group*> children = group->children();
-    for (Group* child : children) {
-        Entry* result = findEntryRecursive(text, referenceType, child);
-        if (result) {
-            return result;
-        }
-    }
-
-    return nullptr;
-}
-
-Group* Database::resolveGroup(const QUuid& uuid)
-{
-    return findGroupRecursive(uuid, m_rootGroup);
-}
-
-Group* Database::findGroupRecursive(const QUuid& uuid, Group* group)
-{
-    if (group->uuid() == uuid) {
-        return group;
-    }
-
-    const QList<Group*> children = group->children();
-    for (Group* child : children) {
-        Group* result = findGroupRecursive(uuid, child);
-        if (result) {
-            return result;
-        }
-    }
-
-    return nullptr;
 }
 
 QList<DeletedObject> Database::deletedObjects()
@@ -549,9 +457,9 @@ const QUuid& Database::cipher() const
     return m_data.cipher;
 }
 
-Database::CompressionAlgorithm Database::compressionAlgo() const
+Database::CompressionAlgorithm Database::compressionAlgorithm() const
 {
-    return m_data.compressionAlgo;
+    return m_data.compressionAlgorithm;
 }
 
 QByteArray Database::transformedMasterKey() const
@@ -577,11 +485,11 @@ void Database::setCipher(const QUuid& cipher)
     m_data.cipher = cipher;
 }
 
-void Database::setCompressionAlgo(Database::CompressionAlgorithm algo)
+void Database::setCompressionAlgorithm(Database::CompressionAlgorithm algo)
 {
     Q_ASSERT(static_cast<quint32>(algo) <= CompressionAlgorithmMax);
 
-    m_data.compressionAlgo = algo;
+    m_data.compressionAlgorithm = algo;
 }
 
 /**
@@ -752,7 +660,7 @@ void Database::markAsClean()
     bool emitSignal = m_modified;
     m_modified = false;
     if (emitSignal) {
-        emit clean();
+        emit databaseSaved();
     }
 }
 
@@ -793,7 +701,7 @@ QSharedPointer<const CompositeKey> Database::key() const
     return m_data.key;
 }
 
-QSharedPointer<Database> Database::unlockFromStdin(QString databaseFilename, QString keyFilename,
+QSharedPointer<Database> Database::unlockFromStdin(const QString& databaseFilename, const QString& keyFilename,
                                                    FILE* outputDescriptor, FILE* errorDescriptor)
 {
     auto compositeKey = QSharedPointer<CompositeKey>::create();
@@ -828,7 +736,7 @@ QSharedPointer<Database> Database::unlockFromStdin(QString databaseFilename, QSt
     }
 
     auto db = QSharedPointer<Database>::create();
-    db->open(databaseFilename, compositeKey);
+    db->open(databaseFilename, compositeKey, nullptr, false);
     return db;
 }
 

@@ -88,7 +88,7 @@ void TestKeys::testFileKey()
     compositeKey->addKey(fileKey);
 
     auto db = QSharedPointer<Database>::create();
-    QVERIFY(db->open(dbFilename, compositeKey));
+    QVERIFY(db->open(dbFilename, compositeKey, nullptr, false));
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("%1 Database").arg(name));
 }

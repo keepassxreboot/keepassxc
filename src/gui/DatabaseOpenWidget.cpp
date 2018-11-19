@@ -190,7 +190,7 @@ void DatabaseOpenWidget::openDatabase()
     m_db.reset(new Database());
     QString error;
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    bool ok = m_db->open(m_filename, masterKey, false, &error);
+    bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
     if (!ok) {
         m_ui->messageWidget->showMessage(

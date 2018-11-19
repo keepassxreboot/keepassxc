@@ -343,7 +343,7 @@ void BrowserService::updateEntry(const QString& id,
         return;
     }
 
-    Entry* entry = db->resolveEntry(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
+    Entry* entry = db->rootGroup()->findEntryByUuid(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
         addEntry(id, login, password, url, submitUrl, "", db);
@@ -665,7 +665,7 @@ Group* BrowserService::findCreateAddEntryGroup(QSharedPointer<Database> selected
 
     for (const Group* g : rootGroup->groupsRecursive(true)) {
         if (g->name() == groupName) {
-            return db->resolveGroup(g->uuid());
+            return db->rootGroup()->findGroupByUuid(g->uuid());
         }
     }
 
@@ -880,8 +880,7 @@ bool BrowserService::checkLegacySettings()
                                                 "This is necessary to maintain compatibility with the browser plugin."),
                                              QMessageBox::Yes | QMessageBox::No);
 
-    return !(dialogResult == QMessageBox::No);
-
+    return dialogResult == QMessageBox::Yes;
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)

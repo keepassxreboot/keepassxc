@@ -116,6 +116,7 @@ public:
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid) const;
     Entry* findEntryByPath(const QString& entryPath);
+    Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(const QString& groupPath);
     QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
@@ -149,6 +150,7 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
+    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group = nullptr);
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);

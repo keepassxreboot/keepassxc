@@ -1307,7 +1307,7 @@ void TestGui::checkDatabase(QString dbFileName)
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
     auto dbSaved = QSharedPointer<Database>::create();
-    QVERIFY(dbSaved->open(dbFileName, key));
+    QVERIFY(dbSaved->open(dbFileName, key, nullptr, false));
     QCOMPARE(dbSaved->metadata()->name(), m_db->metadata()->name());
 }
 

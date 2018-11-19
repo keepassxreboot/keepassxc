@@ -168,11 +168,10 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
     setCurrentIndex(index);
     toggleTabbar();
 
-    connect(dbWidget, SIGNAL(databaseMetadataChanged()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseFilePathChanged(const QString&, const QString&)), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
-    connect(dbWidget, SIGNAL(databaseClean()), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));

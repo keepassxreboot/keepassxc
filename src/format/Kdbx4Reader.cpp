@@ -99,7 +99,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
     QIODevice* xmlDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (db->compressionAlgo() == Database::CompressionNone) {
+    if (db->compressionAlgorithm() == Database::CompressionNone) {
         xmlDevice = &cipherStream;
     } else {
         ioCompressor.reset(new QtIOCompressor(&cipherStream));

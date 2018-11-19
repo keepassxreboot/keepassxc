@@ -79,8 +79,7 @@ int Merge::execute(const QStringList& arguments)
     } else {
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;
-        bool ok = db2->open(args.at(1), db1->key(), false, &errorMessage);
-        if (!ok) {
+        if (!db2->open(args.at(1), db1->key(), &errorMessage, false)) {
             err << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
             return EXIT_FAILURE;
         }
@@ -91,8 +90,7 @@ int Merge::execute(const QStringList& arguments)
 
     if (databaseChanged) {
         QString errorMessage;
-        bool ok = db1->save(args.at(0), true, false, &errorMessage);
-        if (!ok) {
+        if (!db1->save(args.at(0), &errorMessage, true, false)) {
             err << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }

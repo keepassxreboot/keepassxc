@@ -48,10 +48,10 @@ Entry::Entry()
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
-    connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
-    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(entryModified()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), SLOT(updateTotp()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), this, SIGNAL(entryModified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(entryModified()));
+    connect(m_attachments, SIGNAL(entryAttachmentsModified()), this, SIGNAL(entryModified()));
     connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(entryModified()));
     connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(entryModified()));
 
@@ -849,7 +849,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     Q_ASSERT(m_group);
     Q_ASSERT(m_group->database());
-    const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
+    const Entry* refEntry = m_group->findEntryBySearchTerm(searchText, searchInType);
 
     if (refEntry) {
         const QString wantedField = match.captured(EntryAttributes::WantedFieldGroupName);

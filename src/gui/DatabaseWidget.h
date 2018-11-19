@@ -121,10 +121,9 @@ public:
 
 signals:
     // relayed Database signals
-    void databaseMetadataChanged();
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
     void databaseModified();
-    void databaseClean();
+    void databaseSaved();
     void databaseUnlocked();
     void databaseLocked();
 

@@ -153,8 +153,7 @@ int Edit::execute(const QStringList& arguments)
     entry->endUpdate();
 
     QString errorMessage;
-    bool ok = db->save(databasePath, true, false, &errorMessage);
-    if (!ok) {
+    if (!db->save(databasePath, &errorMessage, true, false)) {
         err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

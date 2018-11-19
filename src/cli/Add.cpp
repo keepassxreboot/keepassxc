@@ -136,8 +136,7 @@ int Add::execute(const QStringList& arguments)
     }
 
     QString errorMessage;
-    bool ok = db->save(databasePath, true, false, &errorMessage);
-    if (!ok) {
+    if (!db->save(databasePath, &errorMessage, true, false)) {
         errorTextStream << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

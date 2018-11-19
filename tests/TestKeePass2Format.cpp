@@ -549,7 +549,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QScopedPointer<Database> db(new Database());
     db->setKey(key);
     // Disable compression so we write a predictable number of bytes.
-    db->setCompressionAlgo(Database::CompressionNone);
+    db->setCompressionAlgorithm(Database::CompressionNone);
 
     auto entry = new Entry();
     entry->setParent(db->rootGroup());

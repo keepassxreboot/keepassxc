@@ -770,11 +770,10 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::connectDatabaseSignals()
 {
     // relayed Database events
-    connect(m_db.data(), SIGNAL(metadataModified()), this, SIGNAL(databaseMetadataChanged()));
     connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
             this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
-    connect(m_db.data(), SIGNAL(modified()), this, SIGNAL(databaseModified()));
-    connect(m_db.data(), SIGNAL(clean()), this, SIGNAL(databaseClean()));
+    connect(m_db.data(), SIGNAL(databaseModified()), this, SIGNAL(databaseModified()));
+    connect(m_db.data(), SIGNAL(databaseSaved()), this, SIGNAL(databaseSaved()));
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1132,7 +1131,7 @@ bool DatabaseWidget::lock()
 
     if (m_db->isModified()) {
         if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!m_db->save()) {
+            if (!m_db->save(nullptr, false, false)) {
                 return false;
             }
         } else if (currentMode() != DatabaseWidget::LockedMode) {
@@ -1144,7 +1143,7 @@ bool DatabaseWidget::lock()
             }
             auto result = MessageBox::question(this, tr("Save changes?"), msg,
                 QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
-            if (result == QMessageBox::Yes && !m_db->save()) {
+            if (result == QMessageBox::Yes && !m_db->save(nullptr, false, false)) {
                 return false;
             } else if (result == QMessageBox::Cancel) {
                 return false;
@@ -1251,7 +1250,7 @@ void DatabaseWidget::reloadDatabaseFile()
 
     QString error;
     auto db = QSharedPointer<Database>::create(m_db->filePath());
-    if (db->open(database()->key(), true, &error)) {
+    if (db->open(database()->key(), &error, true)) {
         if (m_db->isModified()) {
             // Ask if we want to merge changes into new database
             auto result = MessageBox::question(this,
@@ -1314,7 +1313,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
  */
 void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& entryUuid)
 {
-    auto group = m_db->resolveGroup(groupUuid);
+    auto group = m_db->rootGroup()->findGroupByUuid(groupUuid);
     if (group) {
         m_groupView->setCurrentGroup(group);
         auto entry = group->findEntryByUuid(entryUuid);
@@ -1446,7 +1445,7 @@ bool DatabaseWidget::save(int attempt)
     // TODO: Make this async, but lock out the database widget to prevent re-entrance
     bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
     QString errorMessage;
-    bool ok = m_db->save(useAtomicSaves, config()->get("BackupBeforeSave").toBool(), &errorMessage);
+    bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
     blockAutoReload(false);
 
     if (ok) {
