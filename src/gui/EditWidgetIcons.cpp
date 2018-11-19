@@ -248,16 +248,15 @@ void EditWidgetIcons::fetchFinished()
         } else {
             // No redirect, and we theoretically have some icon data now.
             image.loadFromData(m_bytesReceived);
-            // Show confirmation message if triggered from Entry tab download button
-            if (!this->isVisible()) {
-                emit messageEditEntry(tr("Favicon successfully downloaded"), MessageWidget::Positive);
-            }
         }
     }
 
     if (!image.isNull()) {
         if (!addCustomIcon(image)) {
             emit messageEditEntry(tr("Custom icon already exists"), MessageWidget::Information);
+        } else if (!this->isVisible()) {
+            // Show confirmation message if triggered from Entry tab download button
+            emit messageEditEntry(tr("Custom icon successfully downloaded"), MessageWidget::Positive);
         }
     } else if (!m_urlsToTry.empty()) {
         m_redirects = 0;
