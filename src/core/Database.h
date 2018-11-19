@@ -135,7 +135,6 @@ signals:
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
     void databaseModified();
-    void metadataModified();
     void databaseSaved();
     void databaseDiscarded();
 
