@@ -122,7 +122,7 @@ void EditEntryWidget::setupMain()
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
 #ifdef WITH_XC_NETWORKING
-    m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("apps", "preferences-desktop-icons"));
+    m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("actions", "favicon-download"));
     m_mainUi->fetchFaviconButton->setDisabled(true);
 #else
     m_mainUi->fetchFaviconButton->setVisible(false);

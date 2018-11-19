@@ -151,6 +151,12 @@ Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
 Comment: based on Nuvola icon theme
 
+Files: share/icons/application/*/actions/favicon-download.png
+Copyright: 2003-2004, David Vignoni <david@icon-king.com>
+           2018, Kyle Kneitinger <kyle@kneit.in>
+License: LGPL-2.1
+Comment: based on Nuvola icon theme
+
 Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
