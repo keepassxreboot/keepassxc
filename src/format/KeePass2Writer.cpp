@@ -48,8 +48,7 @@ bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
  */
 bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
 {
-    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX4 ||
-        db->kdf()->uuid() == KeePass2::KDF_ARGON2 ) {
+    if (db->kdf()->uuid() != KeePass2::KDF_AES_KDBX3 ) {
         return false;
     }
     
