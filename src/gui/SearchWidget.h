@@ -30,20 +30,25 @@ namespace Ui
     class SearchWidget;
 }
 
+class PopupHelpWidget;
+
 class SearchWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit SearchWidget(QWidget* parent = nullptr);
-    ~SearchWidget();
+    ~SearchWidget() override;
+
+    Q_DISABLE_COPY(SearchWidget)
 
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
     void setLimitGroup(bool state);
 
 protected:
-    bool eventFilter(QObject* obj, QEvent* event);
+    // Filter key presses in the search field
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 signals:
     void search(const QString& text);
@@ -63,14 +68,15 @@ private slots:
     void updateCaseSensitive();
     void updateLimitGroup();
     void searchFocus();
+    void toggleHelp();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
+    PopupHelpWidget* m_helpWidget;
     QTimer* m_searchTimer;
+    QTimer* m_clearSearchTimer;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
-
-    Q_DISABLE_COPY(SearchWidget)
 };
 
 #endif // SEARCHWIDGET_H

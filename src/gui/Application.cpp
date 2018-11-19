@@ -49,7 +49,6 @@ namespace
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-    , m_mainWindow(nullptr)
 #ifdef Q_OS_UNIX
     , m_unixSignalNotifier(nullptr)
 #endif
@@ -141,16 +140,6 @@ Application::~Application()
         m_lockFile->unlock();
         delete m_lockFile;
     }
-}
-
-QWidget* Application::mainWindow() const
-{
-    return m_mainWindow;
-}
-
-void Application::setMainWindow(QWidget* mainWindow)
-{
-    m_mainWindow = mainWindow;
 }
 
 bool Application::event(QEvent* event)

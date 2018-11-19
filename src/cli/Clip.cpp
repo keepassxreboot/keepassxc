@@ -51,6 +51,9 @@ int Clip::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    QCommandLineOption totp(QStringList() << "t"  << "totp",
+                            QObject::tr("Copy the current TOTP to the clipboard."));
+    parser.addOption(totp);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
     parser.addPositionalArgument("timeout",
                                  QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]");
@@ -68,10 +71,10 @@ int Clip::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    return clipEntry(db, args.at(1), args.value(2));
+    return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp));
 }
 
-int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout)
+int Clip::clipEntry(Database* database, const QString& entryPath, const QString& timeout, bool clipTotp)
 {
     TextStream err(Utils::STDERR);
 
@@ -90,12 +93,28 @@ int Clip::clipEntry(Database* database, const QString& entryPath, const QString&
         return EXIT_FAILURE;
     }
 
-    int exitCode = Utils::clipText(entry->password());
+    QString value;
+    if (clipTotp) {
+        if (!entry->hasTotp()) {
+            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+            return EXIT_FAILURE;
+        }
+
+        value = entry->totp();
+    } else {
+        value = entry->password();
+    }
+
+    int exitCode = Utils::clipText(value);
     if (exitCode != EXIT_SUCCESS) {
         return exitCode;
     }
 
-    outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
+    if (clipTotp) {
+        outputTextStream << QObject::tr("Entry's current TOTP copied to the clipboard!") << endl;
+    } else {
+        outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
+    }
 
     if (!timeoutSeconds) {
         return exitCode;

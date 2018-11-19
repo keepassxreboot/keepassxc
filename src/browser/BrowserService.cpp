@@ -36,6 +36,7 @@
 #include "gui/MainWindow.h"
 
 const char BrowserService::KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
+const char BrowserService::KEEPASSXCBROWSER_OLD_NAME[] = "keepassxc-browser Settings";
 const char BrowserService::ASSOCIATE_KEY_PREFIX[] = "KPXC_BROWSER_";
 static const char KEEPASSXCBROWSER_GROUP_NAME[] = "KeePassXC-Browser Passwords";
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
@@ -87,7 +88,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
-        KEEPASSXC_MAIN_WINDOW->bringToFront();
+        getMainWindow()->bringToFront();
         m_bringToFrontRequested = true;
     }
 
@@ -393,7 +394,7 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
         return entries;
     }
 
-    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup, Qt::CaseInsensitive)) {
+    for (Entry* entry : EntrySearcher().search(baseDomain(hostname), rootGroup)) {
         QString entryUrl = entry->url();
         QUrl entryQUrl(entryUrl);
         QString entryScheme = entryQUrl.scheme();
@@ -471,11 +472,16 @@ void BrowserService::convertAttributesToCustomData(Database *currentDb)
         if (moveSettingsToCustomData(entry, KEEPASSHTTP_NAME)) {
             ++counter;
         }
+
+        if (moveSettingsToCustomData(entry, KEEPASSXCBROWSER_OLD_NAME)) {
+            ++counter;
+        }
+
         if (moveSettingsToCustomData(entry, KEEPASSXCBROWSER_NAME)) {
             ++counter;
         }
 
-        if (entry->title() == KEEPASSHTTP_NAME || entry->title() == KEEPASSXCBROWSER_NAME) {
+        if (entry->title() == KEEPASSHTTP_NAME || entry->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive)) {
             keyCounter += moveKeysToCustomData(entry, db);
             delete entry;
         }
@@ -864,7 +870,7 @@ bool BrowserService::checkLegacySettings()
     QList<Entry*> entries = db->rootGroup()->entriesRecursive();
     for (const auto& e : entries) {
         if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME)) ||
-            (e->title() == KEEPASSHTTP_NAME || e->title() == KEEPASSXCBROWSER_NAME)) {
+            (e->title() == KEEPASSHTTP_NAME || e->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive))) {
             legacySettingsFound = true;
             break;
         }
@@ -899,7 +905,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         if (m_bringToFrontRequested) {
-            KEEPASSXC_MAIN_WINDOW->lower();
+            getMainWindow()->lower();
             m_bringToFrontRequested = false;
         }
         emit databaseUnlocked();

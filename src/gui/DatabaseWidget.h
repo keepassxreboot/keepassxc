@@ -37,6 +37,7 @@ class EditEntryWidget;
 class EditGroupWidget;
 class Entry;
 class EntryView;
+class EntrySearcher;
 class Group;
 class GroupView;
 class KeePass1OpenWidget;
@@ -93,12 +94,13 @@ public:
     QList<int> previewSplitterSizes() const;
     void setPreviewSplitterSizes(const QList<int>& sizes);
     bool isUsernamesHidden() const;
-    void setUsernamesHidden(const bool hide);
+    void setUsernamesHidden(bool hide);
     bool isPasswordsHidden() const;
-    void setPasswordsHidden(const bool hide);
+    void setPasswordsHidden(bool hide);
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
     void clearAllWidgets();
+    bool currentEntryHasFocus();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
     bool currentEntryHasPassword();
@@ -137,7 +139,7 @@ signals:
     void mainSplitterSizesChanged();
     void previewSplitterSizesChanged();
     void entryViewStateChanged();
-    void updateSearch(QString text);
+    void clearSearch();
 
 public slots:
     void createEntry();
@@ -198,9 +200,8 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
-    void emitPressedEntry();
-    void emitPressedEntry(Entry* currentEntry);
     void emitPressedGroup(Group* currentGroup);
+    void emitEntrySelectionChanged();
     void openDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -246,8 +247,8 @@ private:
     QString m_databaseFileName;
 
     // Search state
+    EntrySearcher* m_EntrySearcher;
     QString m_lastSearchText;
-    bool m_searchCaseSensitive;
     bool m_searchLimitGroup;
 
     // CSV import state

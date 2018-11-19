@@ -37,9 +37,7 @@ class Application : public QApplication
 
 public:
     Application(int& argc, char** argv);
-    QWidget* mainWindow() const;
     ~Application() override;
-    void setMainWindow(QWidget* mainWindow);
 
     bool event(QEvent* event) override;
     bool isAlreadyRunning() const;
@@ -60,8 +58,6 @@ private slots:
     void socketReadyRead();
 
 private:
-    QWidget* m_mainWindow;
-
 #if defined(Q_OS_UNIX)
     /**
      * Register Unix signals such as SIGINT and SIGTERM for clean shutdown.

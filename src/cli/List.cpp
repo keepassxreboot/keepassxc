@@ -51,7 +51,7 @@ int List::execute(const QStringList& arguments)
                                QObject::tr("path"));
     parser.addOption(keyFile);
     QCommandLineOption recursiveOption(QStringList() << "R" << "recursive",
-                                       QObject::tr("Recursive mode, list elements recursively"));
+                                       QObject::tr("Recursively list the elements of the group."));
     parser.addOption(recursiveOption);
     parser.addHelpOption();
     parser.process(arguments);

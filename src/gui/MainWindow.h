@@ -112,6 +112,8 @@ private slots:
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
+    void togglePasswordsHidden();
+    void toggleUsernamesHidden();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -146,8 +148,12 @@ private:
     bool m_appExiting;
 };
 
-#define KEEPASSXC_MAIN_WINDOW                                                                                          \
-    (qobject_cast<Application*>(qApp) ? qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow())      \
-                                      : nullptr)
+/**
+ * Return instance of MainWindow created on app load
+ * non-gui instances will return nullptr
+ *
+ * @return MainWindow instance or nullptr
+ */
+MainWindow* getMainWindow();
 
 #endif // KEEPASSX_MAINWINDOW_H

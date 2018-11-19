@@ -45,7 +45,7 @@ bool KeyFileEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
     }
 
     if (fileKey->type() != FileKey::Hashed) {
-        QMessageBox::warning(KEEPASSXC_MAIN_WINDOW,
+        QMessageBox::warning(getMainWindow(),
                              tr("Legacy key file format"),
                              tr("You are using a legacy key file format which may become\n"
                                 "unsupported in the future.\n\n"
@@ -100,7 +100,7 @@ void KeyFileEditWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            MessageBox::critical(KEEPASSXC_MAIN_WINDOW, tr("Error creating key file"),
+            MessageBox::critical(getMainWindow(), tr("Error creating key file"),
                                  tr("Unable to create key file: %1").arg(errorMsg), QMessageBox::Button::Ok);
         } else {
             m_compUi->keyFileCombo->setEditText(fileName);

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2014 Florian Geyer <blueice@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,31 +15,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRYSEARCHER_H
-#define KEEPASSX_TESTENTRYSEARCHER_H
+#ifndef KEEPASSXC_POPUPHELPWIDGET_H
+#define KEEPASSXC_POPUPHELPWIDGET_H
 
-#include <QObject>
+#include <QPointer>
+#include <QFrame>
 
-#include "core/EntrySearcher.h"
-#include "core/Group.h"
-
-class TestEntrySearcher : public QObject
+class PopupHelpWidget : public QFrame
 {
     Q_OBJECT
+public:
+    explicit PopupHelpWidget(QWidget* parent);
+    ~PopupHelpWidget() override;
 
-private slots:
-    void init();
-    void cleanup();
+    void setOffset(const QPoint& offset);
+    void setPosition(Qt::Corner corner);
 
-    void testAndConcatenationInSearch();
-    void testSearch();
-    void testAllAttributesAreSearched();
-    void testSearchTermParser();
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private:
-    Group* m_rootGroup;
-    EntrySearcher m_entrySearcher;
-    QList<Entry*> m_searchResult;
+    void alignWithParent();
+    QPointer<QWidget> m_parentWindow;
+    QPointer<QWidget> m_appWindow;
+
+    QPoint m_offset;
+    Qt::Corner m_corner;
 };
 
-#endif // KEEPASSX_TESTENTRYSEARCHER_H
+
+#endif //KEEPASSXC_POPUPHELPWIDGET_H

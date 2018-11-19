@@ -67,6 +67,12 @@ void TestCli::initTestCase()
     QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
     sourceDbFile.close();
+
+    // Load the NewDatabase.kdbx file into temporary storage
+    QFile sourceDbFile2(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase2.kdbx"));
+    QVERIFY(sourceDbFile2.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile2, m_dbData2));
+    sourceDbFile2.close();
 }
 
 void TestCli::init()
@@ -75,6 +81,11 @@ void TestCli::init()
     m_dbFile->open();
     m_dbFile->write(m_dbData);
     m_dbFile->close();
+
+    m_dbFile2.reset(new TemporaryFile());
+    m_dbFile2->open();
+    m_dbFile2->write(m_dbData2);
+    m_dbFile2->close();
 
     m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
@@ -95,6 +106,8 @@ void TestCli::init()
 void TestCli::cleanup()
 {
     m_dbFile.reset();
+
+    m_dbFile2.reset();
 
     m_stdinFile.reset();
     m_stdinHandle = stdin;
@@ -168,6 +181,19 @@ void TestCli::testAdd()
     QCOMPARE(entry->password(), QString("newpassword"));
 }
 
+bool isTOTP(const QString & value) {
+    QString val = value.trimmed();
+    if (val.length() < 5 || val.length() > 6) {
+        return false;
+    }
+    for (int i = 0; i < val.length(); ++i) {
+        if (!value[i].isDigit()) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void TestCli::testClip()
 {
     QClipboard* clipboard = QGuiApplication::clipboard();
@@ -177,6 +203,7 @@ void TestCli::testClip()
     QVERIFY(!clipCmd.name.isEmpty());
     QVERIFY(clipCmd.getDescriptionLine().contains(clipCmd.name));
 
+    // Password
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry"});
 
@@ -190,6 +217,13 @@ void TestCli::testClip()
 
     QCOMPARE(clipboard->text(), QString("Password"));
 
+    // TOTP
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "--totp"});
+
+    QVERIFY(isTOTP(clipboard->text()));
+
+    // Password with timeout
     Utils::Test::setNextPassword("a");
     QFuture<void> future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
 
@@ -197,6 +231,21 @@ void TestCli::testClip()
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
 
     future.waitForFinished();
+
+    // TOTP with timeout
+    Utils::Test::setNextPassword("a");
+    future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
+
+    QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
+
+    future.waitForFinished();
+
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }
 
 void TestCli::testDiceware()
@@ -649,6 +698,15 @@ void TestCli::testMerge()
     QVERIFY(entry1);
     QCOMPARE(entry1->title(), QString("Some Website"));
     QCOMPARE(entry1->password(), QString("secretsecretsecret"));
+
+    // making sure that the message is different if the database was not
+    // modified by the merge operation.
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge", "-s", sourceFile.fileName(), sourceFile.fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Database was not modified by merge operation.\n"));
 }
 
 void TestCli::testRemove()
@@ -756,4 +814,29 @@ void TestCli::testShow()
     m_stderrFile->reset();
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: unknown attribute DoesNotExist.\n"));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();   // skip password prompt
+    QVERIFY(isTOTP(m_stdoutFile->readAll()));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();   // skip password prompt
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Sample Entry\n"));
+    QVERIFY(isTOTP(m_stdoutFile->readAll()));
+
+    pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();   // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }

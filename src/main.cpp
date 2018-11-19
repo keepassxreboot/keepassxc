@@ -111,7 +111,6 @@ int main(int argc, char** argv)
     }
 
     MainWindow mainWindow;
-    app.setMainWindow(&mainWindow);
     QObject::connect(&app, SIGNAL(anotherInstanceStarted()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));

@@ -100,7 +100,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_entryView = new EntryView(rightHandSideWidget);
     m_entryView->setObjectName("entryView");
     m_entryView->setContextMenuPolicy(Qt::CustomContextMenu);
-    m_entryView->setGroup(db->rootGroup());
+    m_entryView->displayGroup(db->rootGroup());
     connect(m_entryView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(emitEntryContextMenuRequested(QPoint)));
 
     // Add a notification for when we are searching
@@ -114,7 +114,6 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     m_previewView = new EntryPreviewWidget(this);
     m_previewView->hide();
-    connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
     connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
             m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
@@ -183,7 +182,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     connect(m_entryView,
             SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
             SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
-    connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
+    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitEntrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
@@ -202,9 +201,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
     connect(m_groupView, SIGNAL(groupPressed(Group*)), SLOT(emitPressedGroup(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
-    connect(m_entryView, SIGNAL(entryPressed(Entry*)), SLOT(emitPressedEntry(Entry*)));
-    connect(m_entryView, SIGNAL(entrySelectionChanged()), SLOT(emitPressedEntry()));
-    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitPressedEntry()));
+    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
 
     m_databaseModified = false;
 
@@ -212,7 +209,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
     m_fileWatchUnblockTimer.setSingleShot(true);
     m_ignoreAutoReload = false;
 
-    m_searchCaseSensitive = false;
+    m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
 #ifdef WITH_XC_SSHAGENT
@@ -230,6 +227,7 @@ DatabaseWidget::DatabaseWidget(Database* db, QWidget* parent)
 
 DatabaseWidget::~DatabaseWidget()
 {
+    delete m_EntrySearcher;
 }
 
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
@@ -294,7 +292,7 @@ bool DatabaseWidget::isUsernamesHidden() const
 /**
  * Set state of entry view 'Hide Usernames' setting
  */
-void DatabaseWidget::setUsernamesHidden(const bool hide)
+void DatabaseWidget::setUsernamesHidden(bool hide)
 {
     m_entryView->setUsernamesHidden(hide);
 }
@@ -310,7 +308,7 @@ bool DatabaseWidget::isPasswordsHidden() const
 /**
  * Set state of entry view 'Hide Passwords' setting
  */
-void DatabaseWidget::setPasswordsHidden(const bool hide)
+void DatabaseWidget::setPasswordsHidden(bool hide)
 {
     m_entryView->setPasswordsHidden(hide);
 }
@@ -518,80 +516,60 @@ void DatabaseWidget::setFocus()
 void DatabaseWidget::copyTitle()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->title()));
     }
-
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->title()));
 }
 
 void DatabaseWidget::copyUsername()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->username()));
     }
-
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->username()));
 }
 
 void DatabaseWidget::copyPassword()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
     }
-
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
 }
 
 void DatabaseWidget::copyURL()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
     }
-
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
 }
 
 void DatabaseWidget::copyNotes()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->notes()));
     }
-
-    setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->notes()));
 }
 
 void DatabaseWidget::copyAttribute(QAction* action)
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        setClipboardTextAndMinimize(
+                currentEntry->resolveMultiplePlaceholders(
+                        currentEntry->attributes()->value(action->data().toString())));
     }
-
-    setClipboardTextAndMinimize(
-        currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
 }
 
 void DatabaseWidget::showTotpKeyQrCode()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
+        totpDisplayDialog->open();
     }
-
-    auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
-    totpDisplayDialog->open();
 }
 
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
@@ -605,27 +583,22 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 void DatabaseWidget::performAutoType()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        autoType()->performAutoType(currentEntry, window());
     }
-
-    autoType()->performAutoType(currentEntry, window());
 }
 
 void DatabaseWidget::openUrl()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    Q_ASSERT(currentEntry);
-    if (!currentEntry) {
-        return;
+    if (currentEntry) {
+        openUrlForEntry(currentEntry);
     }
-
-    openUrlForEntry(currentEntry);
 }
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
+    Q_ASSERT(entry);
     QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
     if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
@@ -948,6 +921,14 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
             setupTotp();
         }
         break;
+    case EntryModel::ParentGroup:
+        // Call this first to clear out of search mode, otherwise
+        // the desired entry is not properly selected
+        endSearch();
+        emit clearSearch();
+        m_groupView->setCurrentGroup(entry->group());
+        m_entryView->setCurrentEntry(entry);
+        break;
     // TODO: switch to 'Notes' tab in details view/pane
     // case EntryModel::Notes:
     //    break;
@@ -1068,17 +1049,15 @@ void DatabaseWidget::search(const QString& searchtext)
 
     emit searchModeAboutToActivate();
 
-    Qt::CaseSensitivity caseSensitive = m_searchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
-
     Group* searchGroup = m_searchLimitGroup ? currentGroup() : m_db->rootGroup();
 
-    QList<Entry*> searchResult = EntrySearcher().search(searchtext, searchGroup, caseSensitive);
+    QList<Entry*> searchResult = m_EntrySearcher->search(searchtext, searchGroup);
 
-    m_entryView->setEntryList(searchResult);
+    m_entryView->displaySearch(searchResult);
     m_lastSearchText = searchtext;
 
     // Display a label detailing our search results
-    if (searchResult.size() > 0) {
+    if (!searchResult.isEmpty()) {
         m_searchingLabel->setText(tr("Search Results (%1)").arg(searchResult.size()));
     } else {
         m_searchingLabel->setText(tr("No Results"));
@@ -1091,7 +1070,7 @@ void DatabaseWidget::search(const QString& searchtext)
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
-    m_searchCaseSensitive = state;
+    m_EntrySearcher->setCaseSensitive(state);
     refreshSearch();
 }
 
@@ -1103,11 +1082,15 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
 
 void DatabaseWidget::onGroupChanged(Group* group)
 {
-    // Intercept group changes if in search mode
-    if (isInSearchMode())
+    if (isInSearchMode() && m_searchLimitGroup) {
+        // Perform new search if we are limiting search to the current group
         search(m_lastSearchText);
-    else
-        m_entryView->setGroup(group);
+    } else if (isInSearchMode()) {
+        // Otherwise cancel search
+        emit clearSearch();
+    } else {
+        m_entryView->displayGroup(group);
+    }
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1121,7 +1104,7 @@ void DatabaseWidget::endSearch()
         emit listModeAboutToActivate();
 
         // Show the normal entry view of the current group
-        m_entryView->setGroup(currentGroup());
+        m_entryView->displayGroup(currentGroup());
 
         emit listModeActivated();
     }
@@ -1142,20 +1125,14 @@ void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
     emit entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
-void DatabaseWidget::emitPressedEntry()
+void DatabaseWidget::emitEntrySelectionChanged()
 {
     Entry* currentEntry = m_entryView->currentEntry();
-    emitPressedEntry(currentEntry);
-}
-
-void DatabaseWidget::emitPressedEntry(Entry* currentEntry)
-{
-    if (!currentEntry) {
-        // if no entry is pressed, leave in details the last entry
-        return;
+    if (currentEntry) {
+        m_previewView->setEntry(currentEntry);
     }
 
-    emit pressedEntry(currentEntry);
+    emit entrySelectionChanged();
 }
 
 void DatabaseWidget::emitPressedGroup(Group* currentGroup)
@@ -1385,7 +1362,12 @@ void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid&
 
 bool DatabaseWidget::isGroupSelected() const
 {
-    return m_groupView->currentGroup() != nullptr;
+    return m_groupView->currentGroup();
+}
+
+bool DatabaseWidget::currentEntryHasFocus()
+{
+    return m_entryView->numberOfSelectedEntries() > 0 && m_entryView->hasFocus();
 }
 
 bool DatabaseWidget::currentEntryHasTitle()
