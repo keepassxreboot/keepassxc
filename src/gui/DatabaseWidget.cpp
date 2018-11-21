@@ -178,8 +178,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
-    connect(m_entryView, SIGNAL(entryActivated(Entry*, EntryModel::ModelColumn)),
-        SLOT(entryActivationSignalReceived(Entry*, EntryModel::ModelColumn)));
+    connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
+        SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
@@ -770,8 +770,8 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::connectDatabaseSignals()
 {
     // relayed Database events
-    connect(m_db.data(), SIGNAL(filePathChanged(const QString&, const QString&)),
-            this, SIGNAL(databaseFilePathChanged(const QString&, const QString&)));
+    connect(m_db.data(), SIGNAL(filePathChanged(QString,QString)),
+            this, SIGNAL(databaseFilePathChanged(QString,QString)));
     connect(m_db.data(), SIGNAL(databaseModified()), this, SIGNAL(databaseModified()));
     connect(m_db.data(), SIGNAL(databaseSaved()), this, SIGNAL(databaseSaved()));
 }

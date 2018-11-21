@@ -168,7 +168,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
     setCurrentIndex(index);
     toggleTabbar();
 
-    connect(dbWidget, SIGNAL(databaseFilePathChanged(const QString&, const QString&)), SLOT(updateTabName()));
+    connect(dbWidget, SIGNAL(databaseFilePathChanged(QString,QString)), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
