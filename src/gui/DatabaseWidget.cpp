@@ -241,16 +241,21 @@ QSharedPointer<Database> DatabaseWidget::database() const
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
     if (currentWidget() == nullptr) {
-        return DatabaseWidget::None;
+        return DatabaseWidget::Mode::None;
     } else if (currentWidget() == m_csvImportWizard) {
-        return DatabaseWidget::ImportMode;
+        return DatabaseWidget::Mode::ImportMode;
     } else if (currentWidget() == m_mainWidget) {
-        return DatabaseWidget::ViewMode;
+        return DatabaseWidget::Mode::ViewMode;
     } else if (currentWidget() == m_unlockDatabaseWidget || currentWidget() == m_databaseOpenWidget) {
-        return DatabaseWidget::LockedMode;
+        return DatabaseWidget::Mode::LockedMode;
     } else {
-        return DatabaseWidget::EditMode;
+        return DatabaseWidget::Mode::EditMode;
     }
+}
+
+bool DatabaseWidget::isLocked() const
+{
+    return currentMode() == Mode::LockedMode;
 }
 
 bool DatabaseWidget::isSearchActive() const
@@ -1103,18 +1108,26 @@ Group* DatabaseWidget::currentGroup() const
 
 void DatabaseWidget::closeEvent(QCloseEvent* event)
 {
-    if (currentMode() != Mode::LockedMode && !lock()) {
+    if (!isLocked() && !lock()) {
         event->ignore();
         return;
     }
 
-    QStackedWidget::closeEvent(event);
+    event->accept();
+}
+
+void DatabaseWidget::showEvent(QShowEvent* event)
+{
+    if (!m_db->isInitialized() || isLocked()) {
+        switchToOpenDatabase();
+    }
+
     event->accept();
 }
 
 bool DatabaseWidget::lock()
 {
-    if (currentMode() == DatabaseWidget::LockedMode) {
+    if (isLocked()) {
         return true;
     }
 
@@ -1134,7 +1147,7 @@ bool DatabaseWidget::lock()
             if (!m_db->save(nullptr, false, false)) {
                 return false;
             }
-        } else if (currentMode() != DatabaseWidget::LockedMode) {
+        } else if (isLocked()) {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
@@ -1228,7 +1241,7 @@ void DatabaseWidget::onWatchedFileChanged()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    if (!m_db || currentMode() == DatabaseWidget::LockedMode) {
+    if (!m_db || isLocked()) {
         return;
     }
 
@@ -1430,9 +1443,9 @@ void DatabaseWidget::prepareUnlock()
 bool DatabaseWidget::save(int attempt)
 {
     // Never allow saving a locked database; it causes corruption
-    Q_ASSERT(currentMode() != DatabaseWidget::LockedMode);
+    Q_ASSERT(!isLocked());
     // Release build interlock
-    if (currentMode() == DatabaseWidget::LockedMode) {
+    if (isLocked()) {
         // We return true since a save is not required
         return true;
     }

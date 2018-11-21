@@ -114,12 +114,12 @@ void EntryPreviewWidget::setGroup(Group* selectedGroup)
 
 void EntryPreviewWidget::setDatabaseMode(DatabaseWidget::Mode mode)
 {
-    m_locked = mode == DatabaseWidget::LockedMode;
+    m_locked = mode == DatabaseWidget::Mode::LockedMode;
     if (m_locked) {
         return;
     }
 
-    if (mode == DatabaseWidget::ViewMode) {
+    if (mode == DatabaseWidget::Mode::ViewMode) {
         if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
             setGroup(m_currentGroup);
         } else {

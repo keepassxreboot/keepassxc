@@ -493,12 +493,12 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
 
-        if (mode == DatabaseWidget::None) {
+        if (mode == DatabaseWidget::Mode::None) {
             mode = dbWidget->currentMode();
         }
 
         switch (mode) {
-        case DatabaseWidget::ViewMode: {
+        case DatabaseWidget::Mode::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
@@ -538,9 +538,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
             break;
         }
-        case DatabaseWidget::EditMode:
-        case DatabaseWidget::ImportMode:
-        case DatabaseWidget::LockedMode: {
+        case DatabaseWidget::Mode::EditMode:
+        case DatabaseWidget::Mode::ImportMode:
+        case DatabaseWidget::Mode::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
                 action->setEnabled(false);

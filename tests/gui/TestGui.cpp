@@ -424,7 +424,7 @@ void TestGui::testEditEntry()
 
     // Edit the first entry ("Sample Entry")
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "_test");
@@ -433,7 +433,7 @@ void TestGui::testEditEntry()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QVERIFY(editEntryWidgetButtonBox);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
@@ -474,7 +474,7 @@ void TestGui::testEditEntry()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     auto* messageWiget = editEntryWidget->findChild<MessageWidget*>("messageWidget");
     QTRY_VERIFY(messageWiget->isVisible());
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     QCOMPARE(passwordEdit->text(), QString("newpass"));
     passwordEdit->setText(originalPassword);
 
@@ -483,7 +483,7 @@ void TestGui::testEditEntry()
     QApplication::processEvents();
 
     // Confirm edit was made
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
     QCOMPARE(entry->foregroundColor(), fgColor);
     QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
@@ -496,7 +496,7 @@ void TestGui::testEditEntry()
 
     // Test copy & paste newline sanitization
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     titleEdit->setText("multiline\ntitle");
     editEntryWidget->findChild<QLineEdit*>("usernameEdit")->setText("multiline\nusername");
     editEntryWidget->findChild<QLineEdit*>("passwordEdit")->setText("multiline\npassword");
@@ -556,7 +556,7 @@ void TestGui::testSearchEditEntry()
 
     // Goto "Doggy"'s edit view
     QTest::keyClick(searchTextEdit, Qt::Key_Return);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Check the path in header is "parent-group > entry"
     QCOMPARE(m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget")->findChild<QLabel*>("headerLabel")->text(),
@@ -579,7 +579,7 @@ void TestGui::testAddEntry()
 
     // Click the new entry button and check that we enter edit mode
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Add entry "test" and confirm added
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
@@ -588,7 +588,7 @@ void TestGui::testAddEntry()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 
@@ -631,7 +631,7 @@ void TestGui::testPasswordEntryEntropy()
 
     // Click the new entry button and check that we enter edit mode
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Add entry "test" and confirm added
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
@@ -703,7 +703,7 @@ void TestGui::testDicewareEntryEntropy()
 
     // Click the new entry button and check that we enter edit mode
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Add entry "test" and confirm added
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
@@ -738,7 +738,7 @@ void TestGui::testTotp()
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
     QCOMPARE(entryView->model()->rowCount(), 1);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
     clickIndex(item, entryView, Qt::LeftButton);
@@ -768,7 +768,7 @@ void TestGui::testTotp()
     QVERIFY(entryEditWidget->isVisible());
     QVERIFY(entryEditWidget->isEnabled());
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     editEntryWidget->setCurrentPage(1);
@@ -836,7 +836,7 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_Escape);
     QTRY_VERIFY(searchTextEdit->text().isEmpty());
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     // Search for "some"
     QTest::keyClicks(searchTextEdit, "some");
     QTRY_VERIFY(m_dbWidget->isSearchActive());
@@ -901,7 +901,7 @@ void TestGui::testSearch()
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);
     QTest::keyClick(searchTextEdit, Qt::Key_Return);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Perform the edit and save it
     EditEntryWidget* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
@@ -917,7 +917,7 @@ void TestGui::testSearch()
 
     // Cancel search, should return to normal view
     QTest::keyClick(m_mainWindow.data(), Qt::Key_Escape);
-    QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
 }
 
 void TestGui::testDeleteEntry()
@@ -931,7 +931,7 @@ void TestGui::testDeleteEntry()
     auto* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
 
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
     QVERIFY(entryDeleteWidget->isVisible());
     QVERIFY(entryDeleteWidget->isEnabled());
@@ -1024,7 +1024,7 @@ void TestGui::testEntryPlaceholders()
 
     // Click the new entry button and check that we enter edit mode
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::EditMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
 
     // Add entry "test" and confirm added
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
@@ -1039,7 +1039,7 @@ void TestGui::testEntryPlaceholders()
 
     QCOMPARE(entryView->model()->rowCount(), 2);
 
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::ViewMode);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 

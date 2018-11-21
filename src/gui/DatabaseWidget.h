@@ -60,7 +60,7 @@ class DatabaseWidget : public QStackedWidget
     Q_OBJECT
 
 public:
-    enum Mode
+    enum class Mode
     {
         None,
         ImportMode,
@@ -81,6 +81,7 @@ public:
     bool saveAs();
 
     DatabaseWidget::Mode currentMode() const;
+    bool isLocked() const;
     bool isSearchActive() const;
 
     QString getCurrentSearch();
@@ -196,6 +197,7 @@ public slots:
 
 protected:
     void closeEvent(QCloseEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void updateFilePath(const QString& filePath);

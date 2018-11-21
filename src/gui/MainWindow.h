@@ -80,7 +80,7 @@ protected:
     void changeEvent(QEvent* event) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
+    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
     void openDonateUrl();

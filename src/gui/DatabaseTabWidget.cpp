@@ -40,8 +40,6 @@
 #include "gui/group/GroupView.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 
-const int DatabaseTabWidget::s_lastDatabasesMax = 5;
-
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
@@ -100,7 +98,6 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
         return {};
     }
 
-    db->setInitialized(true);
     return db;
 }
 
@@ -176,10 +173,6 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget)
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(emitDatabaseLockChanged()));
-
-    if (!db->isInitialized()) {
-        dbWidget->switchToOpenDatabase();
-    }
 }
 
 void DatabaseTabWidget::importCsv()
@@ -204,7 +197,7 @@ void DatabaseTabWidget::importCsv()
 void DatabaseTabWidget::mergeDatabase()
 {
     auto dbWidget = currentDatabaseWidget();
-    if (dbWidget && dbWidget->currentMode() != DatabaseWidget::LockedMode) {
+    if (dbWidget && !dbWidget->isLocked()) {
         QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
         const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), "", filter);
         if (!fileName.isEmpty()) {
@@ -405,7 +398,7 @@ bool DatabaseTabWidget::canSave(int index) const
 bool DatabaseTabWidget::hasLockableDatabases() const
 {
     for (int i = 0, c = count(); i < c; ++i) {
-        if (databaseWidgetFromIndex(i)->currentMode() != DatabaseWidget::Mode::LockedMode) {
+        if (!databaseWidgetFromIndex(i)->isLocked()) {
             return true;
         }
     }
@@ -453,7 +446,7 @@ QString DatabaseTabWidget::tabName(int index)
         }
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+    if (dbWidget->isLocked()) {
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
@@ -516,7 +509,7 @@ void DatabaseTabWidget::relockPendingDatabase()
         return;
     }
 
-    if (m_dbPendingLock->currentMode() == DatabaseWidget::LockedMode || !m_dbPendingLock->database()->hasKey()) {
+    if (m_dbPendingLock->isLocked() || !m_dbPendingLock->database()->hasKey()) {
         m_dbPendingLock = nullptr;
         return;
     }
@@ -534,7 +527,7 @@ void DatabaseTabWidget::updateLastDatabases(const QString& filename)
         lastDatabases.prepend(filename);
         lastDatabases.removeDuplicates();
 
-        while (lastDatabases.count() > s_lastDatabasesMax) {
+        while (lastDatabases.count() > config()->get("NumberOfRememberedLastDatabases").toInt()) {
             lastDatabases.removeLast();
         }
         config()->set("LastDatabases", lastDatabases);
@@ -554,7 +547,7 @@ void DatabaseTabWidget::emitDatabaseLockChanged()
         return;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::LockedMode) {
+    if (dbWidget->isLocked()) {
         emit databaseLocked(dbWidget);
     } else {
         emit databaseUnlocked(dbWidget);
@@ -567,7 +560,7 @@ void DatabaseTabWidget::performGlobalAutoType()
 
     for (int i = 0, c = count(); i < c; ++i) {
         auto* dbWidget = databaseWidgetFromIndex(i);
-        if (dbWidget->currentMode() != DatabaseWidget::LockedMode) {
+        if (!dbWidget->isLocked()) {
             unlockedDatabases.append(dbWidget->database());
         }
     }

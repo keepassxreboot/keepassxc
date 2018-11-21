@@ -94,8 +94,6 @@ private:
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbPendingLock;
-
-    static const int s_lastDatabasesMax;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

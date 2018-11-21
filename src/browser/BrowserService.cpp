@@ -69,7 +69,7 @@ bool BrowserService::isDatabaseOpened() const
         return false;
     }
 
-    return dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode;
+    return dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode;
 }
 
 bool BrowserService::openDatabase(bool triggerUnlock)
@@ -83,7 +83,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
         return false;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         return true;
     }
 
@@ -106,7 +106,7 @@ void BrowserService::lockDatabase()
         return;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         dbWidget->lock();
     }
 }
@@ -789,8 +789,8 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
         auto* dbWidget = m_dbTabWidget->databaseWidgetFromIndex(i);
         // Add only open databases
         if (dbWidget && dbWidget->database()->hasKey() &&
-            (dbWidget->currentMode() == DatabaseWidget::ViewMode ||
-             dbWidget->currentMode() == DatabaseWidget::EditMode)) {
+            (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode ||
+             dbWidget->currentMode() == DatabaseWidget::Mode::EditMode)) {
             databaseWidgets.push_back(dbWidget);
             continue;
         }
@@ -909,7 +909,7 @@ void BrowserService::activateDatabaseChanged(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         auto currentMode = dbWidget->currentMode();
-        if (currentMode == DatabaseWidget::ViewMode || currentMode == DatabaseWidget::EditMode) {
+        if (currentMode == DatabaseWidget::Mode::ViewMode || currentMode == DatabaseWidget::Mode::EditMode) {
             emit databaseUnlocked();
         } else {
             emit databaseLocked();
