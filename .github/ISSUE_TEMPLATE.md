@@ -1,4 +1,5 @@
 [TIP]:  # ( Provide a general summary of the issue in the title above ^^ )
+[TIP]:  # ( Do not include screenshots of your actual database! )
 
 ## Expected Behavior
 [NOTE]: # ( If you're describing a bug, tell us what should happen )

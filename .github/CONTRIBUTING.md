@@ -130,13 +130,13 @@ For **Qt-UI files** (*.ui*): 2 spaces
 #include "MyWidget.h"
 #include "ui_MyWidget.h"
 
-// Global includes
-#include <QWidget>
-#include <stdin>
-
 // Application includes
 #include "core/Config.h"
 #include "core/FilePath.h"
+
+// Global includes
+#include <QWidget>
+#include <stdin>
 ```
 
 #### Classes
