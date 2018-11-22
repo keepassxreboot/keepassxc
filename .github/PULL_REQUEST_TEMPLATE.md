@@ -15,12 +15,12 @@
 
 
 ## Screenshots
-[TIP]:  # ( Do not include screenshots of your actual repository! )
+[TIP]:  # ( Do not include screenshots of your actual database! )
 
 
 ## Testing strategy
 [NOTE]: # ( Please describe in detail how you tested your changes. )
-[TIP]:  # ( We expect all new code to be covered by unit tests! )
+[TIP]:  # ( We expect new code to be covered by unit tests and documented with doc blocks! )
 
 
 ## Checklist:
