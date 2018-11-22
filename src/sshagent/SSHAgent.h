@@ -43,7 +43,7 @@ signals:
     void error(const QString& message);
 
 public slots:
-    void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::LockedMode);
+    void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::Mode::LockedMode);
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;

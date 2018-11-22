@@ -43,8 +43,8 @@ Group::Group()
     m_data.searchingEnabled = Inherit;
     m_data.mergeMode = Default;
 
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(groupModified()));
+    connect(this, SIGNAL(groupModified()), SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -87,7 +87,7 @@ template <class P, class V> inline bool Group::set(P& property, const V& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit groupModified();
         return true;
     } else {
         return false;
@@ -310,7 +310,7 @@ void Group::setUuid(const QUuid& uuid)
 void Group::setName(const QString& name)
 {
     if (set(m_data.name, name)) {
-        emit dataChanged(this);
+        emit groupDataChanged(this);
     }
 }
 
@@ -324,8 +324,8 @@ void Group::setIcon(int iconNumber)
     if (iconNumber >= 0 && (m_data.iconNumber != iconNumber || !m_data.customIcon.isNull())) {
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
-        emit modified();
-        emit dataChanged(this);
+        emit groupModified();
+        emit groupDataChanged(this);
     }
 }
 
@@ -334,8 +334,8 @@ void Group::setIcon(const QUuid& uuid)
     if (!uuid.isNull() && m_data.customIcon != uuid) {
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
-        emit modified();
-        emit dataChanged(this);
+        emit groupModified();
+        emit groupDataChanged(this);
     }
 }
 
@@ -352,7 +352,7 @@ void Group::setExpanded(bool expanded)
             updateTimeinfo();
             return;
         }
-        emit modified();
+        emit groupModified();
     }
 }
 
@@ -380,7 +380,7 @@ void Group::setExpires(bool value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        emit modified();
+        emit groupModified();
     }
 }
 
@@ -388,7 +388,7 @@ void Group::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        emit modified();
+        emit groupModified();
     }
 }
 
@@ -441,10 +441,10 @@ void Group::setParent(Group* parent, int index)
             }
         }
         if (m_db != parent->m_db) {
-            recSetDatabase(parent->m_db);
+            connectDatabaseSignalsRecursive(parent->m_db);
         }
         QObject::setParent(parent);
-        emit aboutToAdd(this, index);
+        emit groupAboutToAdd(this, index);
         Q_ASSERT(index <= parent->m_children.size());
         parent->m_children.insert(index, this);
     } else {
@@ -460,12 +460,12 @@ void Group::setParent(Group* parent, int index)
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
     }
 
-    emit modified();
+    emit groupModified();
 
     if (!moveWithinDatabase) {
-        emit added();
+        emit groupAdded();
     } else {
-        emit moved();
+        emit groupMoved();
     }
 }
 
@@ -477,7 +477,7 @@ void Group::setParent(Database* db)
     cleanupParent();
 
     m_parent = nullptr;
-    recSetDatabase(db);
+    connectDatabaseSignalsRecursive(db);
 
     QObject::setParent(db);
 }
@@ -576,6 +576,53 @@ Entry* Group::findEntryByPath(const QString& entryPath)
         normalizedEntryPath = "/" + normalizedEntryPath;
     }
     return findEntryByPathRecursive(normalizedEntryPath, "/");
+}
+
+Entry* Group::findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType)
+{
+    Q_ASSERT_X(referenceType != EntryReferenceType::Unknown,
+               "Database::findEntryRecursive",
+               "Can't search entry with \"referenceType\" parameter equal to \"Unknown\"");
+
+    const QList<Group*> groups = groupsRecursive(true);
+
+    for (const Group* group : groups) {
+        bool found = false;
+        const QList<Entry*>& entryList = group->entries();
+        for (Entry* entry : entryList) {
+            switch (referenceType) {
+                case EntryReferenceType::Unknown:
+                    return nullptr;
+                case EntryReferenceType::Title:
+                    found = entry->title() == term;
+                    break;
+                case EntryReferenceType::UserName:
+                    found = entry->username() == term;
+                    break;
+                case EntryReferenceType::Password:
+                    found = entry->password() == term;
+                    break;
+                case EntryReferenceType::Url:
+                    found = entry->url() == term;
+                    break;
+                case EntryReferenceType::Notes:
+                    found = entry->notes() == term;
+                    break;
+                case EntryReferenceType::QUuid:
+                    found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(term.toLatin1()));
+                    break;
+                case EntryReferenceType::CustomAttributes:
+                    found = entry->attributes()->containsValue(term);
+                    break;
+            }
+
+            if (found) {
+                return entry;
+            }
+        }
+    }
+
+    return nullptr;
 }
 
 Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& basePath)
@@ -798,12 +845,12 @@ void Group::addEntry(Entry* entry)
     emit entryAboutToAdd(entry);
 
     m_entries << entry;
-    connect(entry, SIGNAL(dataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
+    connect(entry, SIGNAL(entryDataChanged(Entry*)), SIGNAL(entryDataChanged(Entry*)));
     if (m_db) {
-        connect(entry, SIGNAL(modified()), m_db, SIGNAL(modifiedImmediate()));
+        connect(entry, SIGNAL(entryModified()), m_db, SLOT(markAsModified()));
     }
 
-    emit modified();
+    emit groupModified();
     emit entryAdded(entry);
 }
 
@@ -820,21 +867,21 @@ void Group::removeEntry(Entry* entry)
         entry->disconnect(m_db);
     }
     m_entries.removeAll(entry);
-    emit modified();
+    emit groupModified();
     emit entryRemoved(entry);
 }
 
-void Group::recSetDatabase(Database* db)
+void Group::connectDatabaseSignalsRecursive(Database* db)
 {
     if (m_db) {
-        disconnect(SIGNAL(dataChanged(Group*)), m_db);
-        disconnect(SIGNAL(aboutToRemove(Group*)), m_db);
-        disconnect(SIGNAL(removed()), m_db);
-        disconnect(SIGNAL(aboutToAdd(Group*, int)), m_db);
-        disconnect(SIGNAL(added()), m_db);
+        disconnect(SIGNAL(groupDataChanged(Group*)), m_db);
+        disconnect(SIGNAL(groupAboutToRemove(Group*)), m_db);
+        disconnect(SIGNAL(groupRemoved()), m_db);
+        disconnect(SIGNAL(groupAboutToAdd(Group*, int)), m_db);
+        disconnect(SIGNAL(groupAdded()), m_db);
         disconnect(SIGNAL(aboutToMove(Group*, Group*, int)), m_db);
-        disconnect(SIGNAL(moved()), m_db);
-        disconnect(SIGNAL(modified()), m_db);
+        disconnect(SIGNAL(groupMoved()), m_db);
+        disconnect(SIGNAL(groupModified()), m_db);
     }
 
     for (Entry* entry : asConst(m_entries)) {
@@ -842,35 +889,35 @@ void Group::recSetDatabase(Database* db)
             entry->disconnect(m_db);
         }
         if (db) {
-            connect(entry, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
+            connect(entry, SIGNAL(entryModified()), db, SLOT(markAsModified()));
         }
     }
 
     if (db) {
-        connect(this, SIGNAL(dataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
-        connect(this, SIGNAL(aboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
-        connect(this, SIGNAL(removed()), db, SIGNAL(groupRemoved()));
-        connect(this, SIGNAL(aboutToAdd(Group*,int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
-        connect(this, SIGNAL(added()), db, SIGNAL(groupAdded()));
+        connect(this, SIGNAL(groupDataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
+        connect(this, SIGNAL(groupAboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
+        connect(this, SIGNAL(groupRemoved()), db, SIGNAL(groupRemoved()));
+        connect(this, SIGNAL(groupAboutToAdd(Group*, int)), db, SIGNAL(groupAboutToAdd(Group*,int)));
+        connect(this, SIGNAL(groupAdded()), db, SIGNAL(groupAdded()));
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
-        connect(this, SIGNAL(moved()), db, SIGNAL(groupMoved()));
-        connect(this, SIGNAL(modified()), db, SIGNAL(modifiedImmediate()));
+        connect(this, SIGNAL(groupMoved()), db, SIGNAL(groupMoved()));
+        connect(this, SIGNAL(groupModified()), db, SLOT(markAsModified()));
     }
 
     m_db = db;
 
     for (Group* group : asConst(m_children)) {
-        group->recSetDatabase(db);
+        group->connectDatabaseSignalsRecursive(db);
     }
 }
 
 void Group::cleanupParent()
 {
     if (m_parent) {
-        emit aboutToRemove(this);
+        emit groupAboutToRemove(this);
         m_parent->m_children.removeAll(this);
-        emit modified();
-        emit removed();
+        emit groupModified();
+        emit groupRemoved();
     }
 }
 
@@ -965,7 +1012,7 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
         return nullptr;
     }
 
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setTitle(entryTitle);
     entry->setUuid(QUuid::createUuid());
     entry->setGroup(group);

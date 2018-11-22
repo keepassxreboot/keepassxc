@@ -36,7 +36,7 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
  *
  * @param db database object to be configured
  */
-void DatabaseSettingsWidget::load(Database* db)
+void DatabaseSettingsWidget::load(QSharedPointer<Database> db)
 {
     m_db = db;
     initialize();

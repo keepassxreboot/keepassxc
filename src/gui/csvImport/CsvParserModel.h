@@ -36,7 +36,7 @@ public:
     QString getFileInfo();
     bool parse();
 
-    void setHeaderLabels(QStringList l);
+    void setHeaderLabels(const QStringList& labels);
     void mapColumns(int csvColumn, int dbColumn);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;

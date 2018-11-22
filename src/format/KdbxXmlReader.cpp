@@ -56,7 +56,7 @@ KdbxXmlReader::KdbxXmlReader(quint32 version, QHash<QString, QByteArray>  binary
  * @param device input file
  * @return pointer to the new database
  */
-Database* KdbxXmlReader::readDatabase(const QString& filename)
+QSharedPointer<Database> KdbxXmlReader::readDatabase(const QString& filename)
 {
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
@@ -69,10 +69,10 @@ Database* KdbxXmlReader::readDatabase(const QString& filename)
  * @param device input device
  * @return pointer to the new database
  */
-Database* KdbxXmlReader::readDatabase(QIODevice* device)
+QSharedPointer<Database> KdbxXmlReader::readDatabase(QIODevice* device)
 {
-    auto db = new Database();
-    readDatabase(device, db);
+    auto db = QSharedPointer<Database>::create();
+    readDatabase(device, db.data());
     return db;
 }
 

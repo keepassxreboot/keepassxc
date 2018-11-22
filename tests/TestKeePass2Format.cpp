@@ -34,7 +34,7 @@ void TestKeePass2Format::initTestCase()
     // read raw XML database
     bool hasError;
     QString errorString;
-    m_xmlDb.reset(readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString));
+    m_xmlDb = readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading XML: ").append(errorString)));
     }
@@ -44,7 +44,7 @@ void TestKeePass2Format::initTestCase()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("test"));
 
-    m_kdbxSourceDb.reset(new Database());
+    m_kdbxSourceDb = QSharedPointer<Database>::create();
     m_kdbxSourceDb->setKey(key);
     m_kdbxSourceDb->metadata()->setName("TESTDB");
     Group* group = m_kdbxSourceDb->rootGroup();
@@ -351,7 +351,7 @@ void TestKeePass2Format::testXmlBroken()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> db(readXml(xmlFile, strictMode, hasError, errorString));
+    auto db = readXml(xmlFile, strictMode, hasError, errorString);
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
@@ -392,7 +392,7 @@ void TestKeePass2Format::testXmlEmptyUuids()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> dbp(readXml(xmlFile, true, hasError, errorString));
+    auto db = readXml(xmlFile, true, hasError, errorString);
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
@@ -446,7 +446,7 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
     QVERIFY(!hasError);
     buffer.seek(0);
 
-    QScopedPointer<Database> dbRead(readXml(&buffer, true, hasError, errorString));
+    auto dbRead = readXml(&buffer, true, hasError, errorString);
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
@@ -474,7 +474,7 @@ void TestKeePass2Format::testXmlRepairUuidHistoryItem()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> db(readXml(xmlFile, false, hasError, errorString));
+    auto db = readXml(xmlFile, false, hasError, errorString);
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
@@ -503,6 +503,7 @@ void TestKeePass2Format::testReadBackTargetDb()
     QString errorString;
 
     m_kdbxTargetBuffer.seek(0);
+    m_kdbxTargetDb = QSharedPointer<Database>::create();
     readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading database: ").append(errorString)));
@@ -548,7 +549,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QScopedPointer<Database> db(new Database());
     db->setKey(key);
     // Disable compression so we write a predictable number of bytes.
-    db->setCompressionAlgo(Database::CompressionNone);
+    db->setCompressionAlgorithm(Database::CompressionNone);
 
     auto entry = new Entry();
     entry->setParent(db->rootGroup());
@@ -569,7 +570,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
  */
 void TestKeePass2Format::testDuplicateAttachments()
 {
-    QScopedPointer<Database> db(new Database());
+    auto db = QSharedPointer<Database>::create();
     db->setKey(QSharedPointer<CompositeKey>::create());
 
     const QByteArray attachment1("abc");

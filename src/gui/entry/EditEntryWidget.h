@@ -38,7 +38,6 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
-class QStackedLayout;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
@@ -60,11 +59,11 @@ class EditEntryWidget : public EditWidget
 
 public:
     explicit EditEntryWidget(QWidget* parent = nullptr);
-    ~EditEntryWidget();
+    ~EditEntryWidget() override;
 
-    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName, Database* database);
+    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
+                   QSharedPointer<Database> database);
 
-    void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
     void clear();
     bool hasBeenModified() const;
@@ -128,7 +127,7 @@ private:
     void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();
-    void setForms(const Entry* entry, bool restore = false);
+    void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
@@ -138,8 +137,8 @@ private:
 
     void displayAttribute(QModelIndex index, bool showProtected);
 
-    Entry* m_entry;
-    Database* m_database;
+    QPointer<Entry> m_entry;
+    QSharedPointer<Database> m_db;
 
     bool m_create;
     bool m_history;

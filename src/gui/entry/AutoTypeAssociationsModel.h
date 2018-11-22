@@ -32,7 +32,7 @@ class AutoTypeAssociationsModel : public QAbstractListModel
 public:
     explicit AutoTypeAssociationsModel(QObject* parent = nullptr);
     void setAutoTypeAssociations(AutoTypeAssociations* autoTypeAssociations);
-    void setEntry(const Entry* entry);
+    void setEntry(Entry* entry);
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;

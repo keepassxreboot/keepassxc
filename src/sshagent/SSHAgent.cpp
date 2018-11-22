@@ -251,7 +251,7 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
 
     const QUuid& uuid = widget->database()->uuid();
 
-    if (mode == DatabaseWidget::LockedMode && m_keys.contains(uuid)) {
+    if (mode == DatabaseWidget::Mode::LockedMode && m_keys.contains(uuid)) {
 
         QSet<OpenSSHKey> keys = m_keys.take(uuid);
         for (OpenSSHKey key : keys) {
@@ -259,7 +259,7 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
                 emit error(m_error);
             }
         }
-    } else if (mode == DatabaseWidget::ViewMode && !m_keys.contains(uuid)) {
+    } else if (mode == DatabaseWidget::Mode::ViewMode && !m_keys.contains(uuid)) {
         for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
 
             if (widget->database()->metadata()->recycleBinEnabled()

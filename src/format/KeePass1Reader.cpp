@@ -48,8 +48,7 @@ private:
 };
 
 KeePass1Reader::KeePass1Reader()
-    : m_db(nullptr)
-    , m_tmpParent(nullptr)
+    : m_tmpParent(nullptr)
     , m_device(nullptr)
     , m_encryptionFlags(0)
     , m_transformRounds(0)
@@ -57,7 +56,7 @@ KeePass1Reader::KeePass1Reader()
 {
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
+QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
 {
     m_error = false;
     m_errorStr.clear();
@@ -70,22 +69,22 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
         if (keyfileData.isEmpty()) {
             raiseError(tr("Unable to read keyfile.").append("\n").append(keyfileDevice->errorString()));
-            return nullptr;
+            return {};
         }
         if (!keyfileDevice->seek(0)) {
             raiseError(tr("Unable to read keyfile.").append("\n").append(keyfileDevice->errorString()));
-            return nullptr;
+            return {};
         }
 
         if (!newFileKey->load(keyfileDevice)) {
             raiseError(tr("Unable to read keyfile.").append("\n").append(keyfileDevice->errorString()));
-            return nullptr;
+            return {};
         }
     }
 
-    QScopedPointer<Database> db(new Database());
+    auto db = QSharedPointer<Database>::create();
     QScopedPointer<Group> tmpParent(new Group());
-    m_db = db.data();
+    m_db = db;
     m_tmpParent = tmpParent.data();
     m_device = device;
 
@@ -94,19 +93,19 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     auto signature1 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || signature1 != KeePass1::SIGNATURE_1) {
         raiseError(tr("Not a KeePass database."));
-        return nullptr;
+        return {};
     }
 
     auto signature2 = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || signature2 != KeePass1::SIGNATURE_2) {
         raiseError(tr("Not a KeePass database."));
-        return nullptr;
+        return {};
     }
 
     m_encryptionFlags = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok || !(m_encryptionFlags & KeePass1::Rijndael || m_encryptionFlags & KeePass1::Twofish)) {
         raiseError(tr("Unsupported encryption algorithm."));
-        return nullptr;
+        return {};
     }
 
     auto version = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
@@ -114,49 +113,49 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
         || (version & KeePass1::FILE_VERSION_CRITICAL_MASK)
                != (KeePass1::FILE_VERSION & KeePass1::FILE_VERSION_CRITICAL_MASK)) {
         raiseError(tr("Unsupported KeePass database version."));
-        return nullptr;
+        return {};
     }
 
     m_masterSeed = m_device->read(16);
     if (m_masterSeed.size() != 16) {
         raiseError("Unable to read master seed");
-        return nullptr;
+        return {};
     }
 
     m_encryptionIV = m_device->read(16);
     if (m_encryptionIV.size() != 16) {
         raiseError(tr("Unable to read encryption IV", "IV = Initialization Vector for symmetric cipher"));
-        return nullptr;
+        return {};
     }
 
     auto numGroups = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         raiseError(tr("Invalid number of groups"));
-        return nullptr;
+        return {};
     }
 
     auto numEntries = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         raiseError(tr("Invalid number of entries"));
-        return nullptr;
+        return {};
     }
 
     m_contentHashHeader = m_device->read(32);
     if (m_contentHashHeader.size() != 32) {
         raiseError(tr("Invalid content hash size"));
-        return nullptr;
+        return {};
     }
 
     m_transformSeed = m_device->read(32);
     if (m_transformSeed.size() != 32) {
         raiseError(tr("Invalid transform seed size"));
-        return nullptr;
+        return {};
     }
 
     m_transformRounds = Endian::readSizedInt<quint32>(m_device, KeePass1::BYTEORDER, &ok);
     if (!ok) {
         raiseError(tr("Invalid number of transform rounds"));
-        return nullptr;
+        return {};
     }
     auto kdf = QSharedPointer<AesKdf>::create(true);
     kdf->setRounds(m_transformRounds);
@@ -168,14 +167,14 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     QScopedPointer<SymmetricCipherStream> cipherStream(testKeys(password, keyfileData, contentPos));
 
     if (!cipherStream) {
-        return nullptr;
+        return {};
     }
 
     QList<Group*> groups;
     for (quint32 i = 0; i < numGroups; i++) {
         Group* group = readGroup(cipherStream.data());
         if (!group) {
-            return nullptr;
+            return {};
         }
         groups.append(group);
     }
@@ -184,14 +183,14 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
     for (quint32 i = 0; i < numEntries; i++) {
         Entry* entry = readEntry(cipherStream.data());
         if (!entry) {
-            return nullptr;
+            return {};
         }
         entries.append(entry);
     }
 
     if (!constructGroupTree(groups)) {
         raiseError(tr("Unable to construct group tree"));
-        return nullptr;
+        return {};
     }
 
     for (Entry* entry : asConst(entries)) {
@@ -243,41 +242,39 @@ Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& passwor
 
     if (!db->setKey(key)) {
         raiseError(tr("Unable to calculate master key"));
-        return nullptr;
+        return {};
     }
 
-    return db.take();
+    return db;
 }
 
-Database* KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
+QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
 {
     QScopedPointer<QFile> keyFile;
     if (!keyfileName.isEmpty()) {
         keyFile.reset(new QFile(keyfileName));
         if (!keyFile->open(QFile::ReadOnly)) {
             raiseError(keyFile->errorString());
-            return nullptr;
+            return {};
         }
     }
 
-    QScopedPointer<Database> db(readDatabase(device, password, keyFile.data()));
-
-    return db.take();
+    return QSharedPointer<Database>(readDatabase(device, password, keyFile.data()));
 }
 
-Database* KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
+QSharedPointer<Database> KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
 {
     QFile dbFile(filename);
     if (!dbFile.open(QFile::ReadOnly)) {
         raiseError(dbFile.errorString());
-        return nullptr;
+        return {};
     }
 
-    Database* db = readDatabase(&dbFile, password, keyfileName);
+    auto db = readDatabase(&dbFile, password, keyfileName);
 
     if (dbFile.error() != QFile::NoError) {
         raiseError(dbFile.errorString());
-        return nullptr;
+        return {};
     }
 
     return db;
@@ -293,8 +290,7 @@ QString KeePass1Reader::errorString()
     return m_errorStr;
 }
 
-SymmetricCipherStream*
-KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos)
+SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos)
 {
     const QList<PasswordEncoding> encodings = {Windows1252, Latin1, UTF8};
 

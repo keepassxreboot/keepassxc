@@ -43,7 +43,7 @@ public:
 
     void setPageWidget(DatabaseSettingsWidget* page);
     DatabaseSettingsWidget* pageWidget();
-    void setDatabase(Database* db);
+    void setDatabase(QSharedPointer<Database> db);
 
     void initializePage() override;
     bool validatePage() override;
@@ -53,7 +53,7 @@ public slots:
 
 protected:
     QPointer<DatabaseSettingsWidget> m_pageWidget;
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
 
     const QScopedPointer<Ui::NewDatabaseWizardPage> m_ui;
 };

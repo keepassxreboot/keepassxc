@@ -71,7 +71,10 @@ public:
 
     IconStruct state();
     void reset();
-    void load(const QUuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
+    void load(const QUuid& currentUuid,
+              QSharedPointer<Database> database,
+              const IconStruct& iconStruct,
+              const QString& url = "");
 
 public slots:
     void setUrl(const QString& url);
@@ -97,7 +100,7 @@ private slots:
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
-    Database* m_database;
+    QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;

@@ -21,8 +21,9 @@
 #include "gui/DialogyWidget.h"
 #include "config-keepassx.h"
 
-#include <QScopedPointer>
 #include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
 
 class Database;
 class DatabaseSettingsWidgetGeneral;
@@ -47,7 +48,7 @@ public:
     ~DatabaseSettingsDialog() override;
     Q_DISABLE_COPY(DatabaseSettingsDialog);
 
-    void load(Database* db);
+    void load(QSharedPointer<Database> db);
     void showMasterKeySettings();
 
 signals:
@@ -66,7 +67,7 @@ private:
         Security = 1
     };
 
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
     const QScopedPointer<Ui::DatabaseSettingsDialog> m_ui;
     QPointer<DatabaseSettingsWidgetGeneral> m_generalWidget;
     QPointer<QTabWidget> m_securityTabWidget;

@@ -41,7 +41,7 @@ public:
     explicit EditGroupWidget(QWidget* parent = nullptr);
     ~EditGroupWidget();
 
-    void loadGroup(Group* group, bool create, Database* database);
+    void loadGroup(Group* group, bool create, QSharedPointer<Database> database);
     void clear();
 
 signals:
@@ -65,7 +65,7 @@ private:
     QPointer<EditWidgetProperties> m_editWidgetProperties;
 
     QPointer<Group> m_group;
-    QPointer<Database> m_database;
+    QSharedPointer<Database> m_db;
 
     Q_DISABLE_COPY(EditGroupWidget)
 };

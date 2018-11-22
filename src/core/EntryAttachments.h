@@ -44,7 +44,7 @@ public:
     int attachmentsSize() const;
 
 signals:
-    void modified();
+    void entryAttachmentsModified();
     void keyModified(const QString& key);
     void aboutToBeAdded(const QString& key);
     void added(const QString& key);

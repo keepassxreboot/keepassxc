@@ -41,7 +41,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetMasterKey);
     ~DatabaseSettingsWidgetMasterKey() override;
 
-    void load(Database* db) override;
+    void load(QSharedPointer<Database> db) override;
 
     inline bool hasAdvancedMode() const override { return false; }
 

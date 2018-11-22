@@ -27,7 +27,7 @@ UnlockDatabaseDialog::UnlockDatabaseDialog(QWidget* parent)
     , m_view(new UnlockDatabaseWidget(this))
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-    connect(m_view, SIGNAL(editFinished(bool)), this, SLOT(complete(bool)));
+    connect(m_view, SIGNAL(dialogFinished(bool)), this, SLOT(complete(bool)));
 }
 
 void UnlockDatabaseDialog::setFilePath(const QString& filePath)
@@ -40,7 +40,7 @@ void UnlockDatabaseDialog::clearForms()
     m_view->clearForms();
 }
 
-Database* UnlockDatabaseDialog::database()
+QSharedPointer<Database> UnlockDatabaseDialog::database()
 {
     return m_view->database();
 }

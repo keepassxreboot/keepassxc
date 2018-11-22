@@ -1,3 +1,5 @@
+#include <utility>
+
 /*
  *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
@@ -66,9 +68,9 @@ DatabaseSettingsWidget* NewDatabaseWizardPage::pageWidget()
  *
  * @param db database object to be configured
  */
-void NewDatabaseWizardPage::setDatabase(Database* db)
+void NewDatabaseWizardPage::setDatabase(QSharedPointer<Database> db)
 {
-    m_db = db;
+    m_db = std::move(db);
 }
 
 void NewDatabaseWizardPage::initializePage()

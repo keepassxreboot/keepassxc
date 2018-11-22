@@ -116,6 +116,7 @@ public:
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid) const;
     Entry* findEntryByPath(const QString& entryPath);
+    Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
     Group* findGroupByPath(const QString& groupPath);
     QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
@@ -149,6 +150,7 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
+    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group = nullptr);
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
@@ -164,14 +166,14 @@ public:
     void removeEntry(Entry* entry);
 
 signals:
-    void dataChanged(Group* group);
-    void aboutToAdd(Group* group, int index);
-    void added();
-    void aboutToRemove(Group* group);
-    void removed();
+    void groupDataChanged(Group* group);
+    void groupAboutToAdd(Group* group, int index);
+    void groupAdded();
+    void groupAboutToRemove(Group* group);
+    void groupRemoved();
     void aboutToMove(Group* group, Group* toGroup, int index);
-    void moved();
-    void modified();
+    void groupMoved();
+    void groupModified();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
@@ -186,7 +188,7 @@ private:
 
     void setParent(Database* db);
 
-    void recSetDatabase(Database* db);
+    void connectDatabaseSignalsRecursive(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
 

@@ -68,7 +68,7 @@ DatabaseSettingsWidgetMasterKey::~DatabaseSettingsWidgetMasterKey()
 {
 }
 
-void DatabaseSettingsWidgetMasterKey::load(Database* db)
+void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
 {
     DatabaseSettingsWidget::load(db);
 

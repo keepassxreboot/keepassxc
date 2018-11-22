@@ -69,7 +69,7 @@ bool BrowserService::isDatabaseOpened() const
         return false;
     }
 
-    return dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode;
+    return dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode;
 }
 
 bool BrowserService::openDatabase(bool triggerUnlock)
@@ -83,7 +83,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
         return false;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         return true;
     }
 
@@ -106,14 +106,14 @@ void BrowserService::lockDatabase()
         return;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::ViewMode || dbWidget->currentMode() == DatabaseWidget::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         dbWidget->lock();
     }
 }
 
 QString BrowserService::getDatabaseRootUuid()
 {
-    Database* db = getDatabase();
+    auto db = getDatabase();
     if (!db) {
         return {};
     }
@@ -128,7 +128,7 @@ QString BrowserService::getDatabaseRootUuid()
 
 QString BrowserService::getDatabaseRecycleBinUuid()
 {
-    Database* db = getDatabase();
+    auto db = getDatabase();
     if (!db) {
         return {};
     }
@@ -150,7 +150,7 @@ QString BrowserService::storeKey(const QString& key)
         return id;
     }
 
-    Database* db = getDatabase();
+    auto db = getDatabase();
     if (!db) {
         return {};
     }
@@ -194,7 +194,7 @@ QString BrowserService::storeKey(const QString& key)
 
 QString BrowserService::getKey(const QString& id)
 {
-    Database* db = getDatabase();
+    auto db = getDatabase();
     if (!db) {
         return {};
     }
@@ -268,13 +268,10 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     return result;
 }
 
-void BrowserService::addEntry(const QString& id,
-                              const QString& login,
-                              const QString& password,
-                              const QString& url,
-                              const QString& submitUrl,
-                              const QString& realm,
-                              Database* selectedDb)
+void BrowserService::addEntry(const QString& id, const QString& login,
+                              const QString& password, const QString& url,
+                              const QString& submitUrl, const QString& realm,
+                              QSharedPointer<Database> selectedDb)
 {
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(this,
@@ -286,10 +283,10 @@ void BrowserService::addEntry(const QString& id,
                                   Q_ARG(QString, url),
                                   Q_ARG(QString, submitUrl),
                                   Q_ARG(QString, realm),
-                                  Q_ARG(Database*, selectedDb));
+                                  Q_ARG(QSharedPointer<Database>, selectedDb));
     }
 
-    Database* db = selectedDb ? selectedDb : selectedDatabase();
+    auto db = selectedDb ? selectedDb : selectedDatabase();
     if (!db) {
         return;
     }
@@ -299,7 +296,7 @@ void BrowserService::addEntry(const QString& id,
         return;
     }
 
-    Entry* entry = new Entry();
+    auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
     entry->setTitle(QUrl(url).host());
     entry->setUrl(url);
@@ -341,12 +338,12 @@ void BrowserService::updateEntry(const QString& id,
                                   Q_ARG(QString, submitUrl));
     }
 
-    Database* db = selectedDatabase();
+    auto db = selectedDatabase();
     if (!db) {
         return;
     }
 
-    Entry* entry = db->resolveEntry(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
+    Entry* entry = db->rootGroup()->findEntryByUuid(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
         addEntry(id, login, password, url, submitUrl, "", db);
@@ -382,10 +379,10 @@ void BrowserService::updateEntry(const QString& id,
     }
 }
 
-QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostname, const QString& url)
+QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const QString& hostname, const QString& url)
 {
     QList<Entry*> entries;
-    Group* rootGroup = db->rootGroup();
+    auto* rootGroup = db->rootGroup();
     if (!rootGroup) {
         return entries;
     }
@@ -415,12 +412,12 @@ QList<Entry*> BrowserService::searchEntries(Database* db, const QString& hostnam
 QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPairList& keyList)
 {
     // Get the list of databases to search
-    QList<Database*> databases;
+    QList<QSharedPointer<Database>> databases;
     if (browserSettings()->searchInAllDatabases()) {
         const int count = m_dbTabWidget->count();
         for (int i = 0; i < count; ++i) {
-            if (DatabaseWidget* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
-                if (Database* db = dbWidget->database()) {
+            if (auto* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
+                if (const auto& db = dbWidget->database()) {
                      // Check if database is connected with KeePassXC-Browser
                     for (const StringPair& keyPair : keyList) {
                         QString key = db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
@@ -431,7 +428,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
                 }
             }
         }
-    } else if (Database* db = getDatabase()) {
+    } else if (const auto& db = getDatabase()) {
         databases << db;
     }
 
@@ -439,7 +436,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
     QString hostname = QUrl(url).host();
     QList<Entry*> entries;
     do {
-        for (Database* db : databases) {
+        for (const auto& db : databases) {
             entries << searchEntries(db, hostname, url);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
@@ -447,9 +444,9 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
     return entries;
 }
 
-void BrowserService::convertAttributesToCustomData(Database *currentDb)
+void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> currentDb)
 {
-    Database* db = currentDb ? currentDb : getDatabase();
+    auto db = currentDb ? currentDb : getDatabase();
     if (!db) {
         return;
     }
@@ -651,9 +648,9 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
     return Unknown;
 }
 
-Group* BrowserService::findCreateAddEntryGroup(Database* selectedDb)
+Group* BrowserService::findCreateAddEntryGroup(QSharedPointer<Database> selectedDb)
 {
-    Database* db = selectedDb ? selectedDb : getDatabase();
+    auto db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
         return nullptr;
     }
@@ -668,11 +665,11 @@ Group* BrowserService::findCreateAddEntryGroup(Database* selectedDb)
 
     for (const Group* g : rootGroup->groupsRecursive(true)) {
         if (g->name() == groupName) {
-            return db->resolveGroup(g->uuid());
+            return db->rootGroup()->findGroupByUuid(g->uuid());
         }
     }
 
-    Group* group = new Group();
+    auto* group = new Group();
     group->setUuid(QUuid::createUuid());
     group->setName(groupName);
     group->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
@@ -775,26 +772,26 @@ QString BrowserService::baseDomain(const QString& url) const
     return baseDomain;
 }
 
-Database* BrowserService::getDatabase()
+QSharedPointer<Database> BrowserService::getDatabase()
 {
     if (DatabaseWidget* dbWidget = m_dbTabWidget->currentDatabaseWidget()) {
-        if (Database* db = dbWidget->database()) {
+        if (const auto& db = dbWidget->database()) {
             return db;
         }
     }
-    return nullptr;
+    return {};
 }
 
-Database* BrowserService::selectedDatabase()
+QSharedPointer<Database> BrowserService::selectedDatabase()
 {
     QList<DatabaseWidget*> databaseWidgets;
-    for (int i = 0;; ++i) {
-        const auto dbStruct = m_dbTabWidget->indexDatabaseManagerStruct(i);
+    for (int i = 0; ; ++i) {
+        auto* dbWidget = m_dbTabWidget->databaseWidgetFromIndex(i);
         // Add only open databases
-        if (dbStruct.dbWidget && dbStruct.dbWidget->dbHasKey() && 
-            (dbStruct.dbWidget->currentMode() == DatabaseWidget::ViewMode || 
-             dbStruct.dbWidget->currentMode() == DatabaseWidget::EditMode)) {
-            databaseWidgets.push_back(dbStruct.dbWidget);
+        if (dbWidget && dbWidget->database()->hasKey() &&
+            (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode ||
+             dbWidget->currentMode() == DatabaseWidget::Mode::EditMode)) {
+            databaseWidgets.push_back(dbWidget);
             continue;
         }
 
@@ -813,7 +810,7 @@ Database* BrowserService::selectedDatabase()
                 return databaseWidgets[index]->database();
             }
         } else {
-            return nullptr;
+            return {};
         }
     }
 
@@ -836,7 +833,7 @@ bool BrowserService::moveSettingsToCustomData(Entry* entry, const QString& name)
     return false;
 }
 
-int BrowserService::moveKeysToCustomData(Entry* entry, Database* db) const
+int BrowserService::moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const
 {
     int keyCounter = 0;
     for (const auto& key : entry->attributes()->keys()) {
@@ -857,7 +854,7 @@ int BrowserService::moveKeysToCustomData(Entry* entry, Database* db) const
 
 bool BrowserService::checkLegacySettings()
 {
-    Database* db = getDatabase();
+    auto db = getDatabase();
     if (!db) {
         return false;
     }
@@ -882,12 +879,8 @@ bool BrowserService::checkLegacySettings()
                                                 "Do you want to upgrade the settings to the latest standard?\n"
                                                 "This is necessary to maintain compatibility with the browser plugin."),
                                              QMessageBox::Yes | QMessageBox::No);
-        
-    if (dialogResult == QMessageBox::No) {
-        return false;
-    }
 
-    return true;
+    return dialogResult == QMessageBox::Yes;
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
@@ -916,7 +909,7 @@ void BrowserService::activateDatabaseChanged(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         auto currentMode = dbWidget->currentMode();
-        if (currentMode == DatabaseWidget::ViewMode || currentMode == DatabaseWidget::EditMode) {
+        if (currentMode == DatabaseWidget::Mode::ViewMode || currentMode == DatabaseWidget::Mode::EditMode) {
             emit databaseUnlocked();
         } else {
             emit databaseLocked();

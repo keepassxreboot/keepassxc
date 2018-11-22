@@ -92,9 +92,9 @@ void CsvParserModel::setSkippedRows(int skipped)
     emit layoutChanged();
 }
 
-void CsvParserModel::setHeaderLabels(QStringList l)
+void CsvParserModel::setHeaderLabels(const QStringList& labels)
 {
-    m_columnHeader = std::move(l);
+    m_columnHeader = labels;
 }
 
 int CsvParserModel::rowCount(const QModelIndex& parent) const

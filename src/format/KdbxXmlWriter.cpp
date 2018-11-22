@@ -190,7 +190,7 @@ void KdbxXmlWriter::writeBinaries()
         m_xml.writeAttribute("ID", QString::number(i.value()));
 
         QByteArray data;
-        if (m_db->compressionAlgo() == Database::CompressionGZip) {
+        if (m_db->compressionAlgorithm() == Database::CompressionGZip) {
             m_xml.writeAttribute("Compressed", "True");
 
             QBuffer buffer;

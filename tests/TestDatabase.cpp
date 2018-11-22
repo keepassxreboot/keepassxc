@@ -40,14 +40,18 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinDisabled.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key, nullptr, false));
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    // Explicitly mark DB as read-write in case it was opened from a read-only drive.
+    // Prevents assertion failures on CI systems when the data dir is not writable
+    db->setReadOnly(false);
+
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinOnNotCreated()
@@ -55,14 +59,15 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinNotYetCreated.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key, nullptr, false));
+    db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinOnEmpty()
@@ -70,14 +75,15 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinEmpty.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key, nullptr, false));
+    db->setReadOnly(false);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->emptyRecycleBin();
     // The database must be unmodified in this test after emptying the recycle bin.
-    QCOMPARE(spyModified.count(), 0);
+    QTRY_COMPARE(spyModified.count(), 0);
 }
 
 void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
@@ -85,8 +91,9 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinWithData.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
-    QScopedPointer<Database> db(Database::openDatabaseFile(filename, key));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(filename, key, nullptr, false));
+    db->setReadOnly(false);
 
     QFile originalFile(filename);
     qint64 initialSize = originalFile.size();
@@ -97,6 +104,8 @@ void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
     QVERIFY(db->metadata()->recycleBin()->children().empty());
 
     QTemporaryFile afterCleanup;
+    afterCleanup.open();
+
     KeePass2Writer writer;
     writer.writeDatabase(&afterCleanup, db.data());
     QVERIFY(afterCleanup.size() < initialSize);
