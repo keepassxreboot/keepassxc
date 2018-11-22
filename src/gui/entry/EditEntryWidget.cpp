@@ -1,5 +1,3 @@
-#include <utility>
-
 /*
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
@@ -443,6 +441,8 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     if (SSHAgent::instance()->isAgentRunning()) {
         m_sshAgentUi->addToAgentButton->setEnabled(true);
         m_sshAgentUi->removeFromAgentButton->setEnabled(true);
+
+        SSHAgent::instance()->setAutoRemoveOnLock(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
     }
 }
 
@@ -565,13 +565,10 @@ void EditEntryWidget::addKeyToAgent()
         lifetime = m_sshAgentUi->lifetimeSpinBox->value();
     }
 
-    if (!SSHAgent::instance()->addIdentity(key, static_cast<quint32>(lifetime), confirm)) {
+    if (!SSHAgent::instance()->addIdentity(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked(),
+                                           static_cast<quint32>(lifetime), confirm)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
         return;
-    }
-
-    if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
-        SSHAgent::instance()->scheduleIdentitityRemovalAtLock(key, qobject_cast<DatabaseWidget*>(parentWidget()));
     }
 }
 

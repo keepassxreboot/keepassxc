@@ -21,6 +21,7 @@
 
 #include "OpenSSHKey.h"
 #include <QList>
+#include <QHash>
 #include <QtCore>
 
 #include "gui/DatabaseWidget.h"
@@ -35,9 +36,9 @@ public:
 
     const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
+    bool addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime, bool confirm);
     bool removeIdentity(OpenSSHKey& key);
-    void scheduleIdentitityRemovalAtLock(const OpenSSHKey& key, DatabaseWidget* dbWidget);
+    void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 
 signals:
     void error(const QString& message);
@@ -71,7 +72,7 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QMap<QPointer<DatabaseWidget>, QSet<OpenSSHKey>> m_keys;
+    QHash<OpenSSHKey, bool> m_addedKeys;
     QString m_error;
 };
 

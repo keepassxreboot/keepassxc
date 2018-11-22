@@ -38,16 +38,17 @@ SSHAgent::SSHAgent(QObject* parent)
 
 SSHAgent::~SSHAgent()
 {
-    for (const QSet<OpenSSHKey>& keys : m_keys.values()) {
-        for (OpenSSHKey key : keys) {
-            removeIdentity(key);
-        }
+    auto it = m_addedKeys.begin();
+    while (it != m_addedKeys.end()) {
+        OpenSSHKey key = it.key();
+        removeIdentity(key);
+        it = m_addedKeys.erase(it);
     }
 }
 
 SSHAgent* SSHAgent::instance()
 {
-    if (m_instance == nullptr) {
+    if (!m_instance) {
         qFatal("Race condition: instance wanted before it was initialized, this is a bug.");
     }
 
@@ -159,7 +160,16 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
 #endif
 }
 
-bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
+/**
+ * Add the identity to the SSH agent.
+ *
+ * @param key identity / key to add
+ * @param lifetime time after which the key should expire
+ * @param confirm ask for confirmation before adding the key
+ * @param removeOnLock autoremove from agent when the Database is locked
+ * @return true on success
+ */
+bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime, bool confirm)
 {
     if (!isAgentRunning()) {
         m_error = tr("No agent running, cannot add identity.");
@@ -201,9 +211,18 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
         return false;
     }
 
+    OpenSSHKey keyCopy = key;
+    keyCopy.clearPrivate();
+    m_addedKeys[keyCopy] = removeOnLock;
     return true;
 }
 
+/**
+ * Remove an identity from the SSH agent.
+ *
+ * @param key identity to remove
+ * @return true on success
+ */
 bool SSHAgent::removeIdentity(OpenSSHKey& key)
 {
     if (!isAgentRunning()) {
@@ -222,30 +241,21 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
     request.writeString(keyData);
 
     QByteArray responseData;
-    if (!sendMessage(requestData, responseData)) {
-        return false;
-    }
-
-    if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent does not have this identity.");
-        return false;
-    }
-
-    return true;
+    return sendMessage(requestData, responseData);
 }
 
 /**
- * Schedule to remove the given key when the referenced
- * \link DatabaseWidet locks its database.
+ * Change "remove identity on lock" setting for a key already added to the agent.
+ * Will to nothing if the key has not been added to the agent.
  *
- * @param key key to schedule removal for
- * @param dbWidget widget for whose lock to wait
+ * @param key key to change setting for
+ * @param autoRemove whether to remove the key from the agent when database is locked
  */
-void SSHAgent::scheduleIdentitityRemovalAtLock(const OpenSSHKey& key, DatabaseWidget* dbWidget)
+void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
 {
-    OpenSSHKey copy = key;
-    copy.clearPrivate();
-    m_keys[dbWidget].insert(copy);
+    if (m_addedKeys.contains(key)) {
+        m_addedKeys[key] = autoRemove;
+    }
 }
 
 void SSHAgent::databaseModeChanged()
@@ -255,93 +265,97 @@ void SSHAgent::databaseModeChanged()
         return;
     }
 
-    if (widget->isLocked() && m_keys.contains(widget)) {
-        QSet<OpenSSHKey> keys = m_keys.take(widget);
-        for (OpenSSHKey key : keys) {
-            if (!removeIdentity(key)) {
-                emit error(m_error);
+    if (widget->isLocked()) {
+        auto it = m_addedKeys.begin();
+        while (it != m_addedKeys.end()) {
+            OpenSSHKey key = it.key();
+            if (it.value()) {
+                if (!removeIdentity(key)) {
+                    emit error(m_error);
+                }
+                it = m_addedKeys.erase(it);
+            } else {
+                // don't remove it yet
+                m_addedKeys[key] = false;
+                ++it;
             }
         }
+
         return;
     }
 
-    if (!widget->isLocked() && !m_keys.contains(widget)) {
-        for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
+    for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
 
-            if (widget->database()->metadata()->recycleBinEnabled()
-                && e->group() == widget->database()->metadata()->recycleBin()) {
+        if (widget->database()->metadata()->recycleBinEnabled()
+            && e->group() == widget->database()->metadata()->recycleBin()) {
+            continue;
+        }
+
+        if (!e->attachments()->hasKey("KeeAgent.settings")) {
+            continue;
+        }
+
+        KeeAgentSettings settings;
+        settings.fromXml(e->attachments()->value("KeeAgent.settings"));
+
+        if (!settings.allowUseOfSshKey()) {
+            continue;
+        }
+
+        QByteArray keyData;
+        QString fileName;
+        if (settings.selectedType() == "attachment") {
+            fileName = settings.attachmentName();
+            keyData = e->attachments()->value(fileName);
+        } else if (!settings.fileName().isEmpty()) {
+            QFile file(settings.fileName());
+            QFileInfo fileInfo(file);
+
+            fileName = fileInfo.fileName();
+
+            if (file.size() > 1024 * 1024) {
                 continue;
             }
 
-            if (!e->attachments()->hasKey("KeeAgent.settings")) {
+            if (!file.open(QIODevice::ReadOnly)) {
                 continue;
             }
 
-            KeeAgentSettings settings;
-            settings.fromXml(e->attachments()->value("KeeAgent.settings"));
+            keyData = file.readAll();
+        }
 
-            if (!settings.allowUseOfSshKey()) {
-                continue;
+        if (keyData.isEmpty()) {
+            continue;
+        }
+
+        OpenSSHKey key;
+
+        if (!key.parse(keyData)) {
+            continue;
+        }
+
+        if (!key.openPrivateKey(e->password())) {
+            continue;
+        }
+
+        if (key.comment().isEmpty()) {
+            key.setComment(e->username());
+        }
+
+        if (key.comment().isEmpty()) {
+            key.setComment(fileName);
+        }
+
+        if (!m_addedKeys.contains(key) && settings.addAtDatabaseOpen()) {
+            quint32 lifetime = 0;
+
+            if (settings.useLifetimeConstraintWhenAdding()) {
+                lifetime = static_cast<quint32>(settings.lifetimeConstraintDuration());
             }
 
-            QByteArray keyData;
-            QString fileName;
-            if (settings.selectedType() == "attachment") {
-                fileName = settings.attachmentName();
-                keyData = e->attachments()->value(fileName);
-            } else if (!settings.fileName().isEmpty()) {
-                QFile file(settings.fileName());
-                QFileInfo fileInfo(file);
-
-                fileName = fileInfo.fileName();
-
-                if (file.size() > 1024 * 1024) {
-                    continue;
-                }
-
-                if (!file.open(QIODevice::ReadOnly)) {
-                    continue;
-                }
-
-                keyData = file.readAll();
-            }
-
-            if (keyData.isEmpty()) {
-                continue;
-            }
-
-            OpenSSHKey key;
-
-            if (!key.parse(keyData)) {
-                continue;
-            }
-
-            if (!key.openPrivateKey(e->password())) {
-                continue;
-            }
-
-            if (key.comment().isEmpty()) {
-                key.setComment(e->username());
-            }
-
-            if (key.comment().isEmpty()) {
-                key.setComment(fileName);
-            }
-
-            if (settings.removeAtDatabaseClose()) {
-                scheduleIdentitityRemovalAtLock(key, widget);
-            }
-
-            if (settings.addAtDatabaseOpen()) {
-                int lifetime = 0;
-
-                if (settings.useLifetimeConstraintWhenAdding()) {
-                    lifetime = settings.lifetimeConstraintDuration();
-                }
-
-                if (!addIdentity(key, lifetime, settings.useConfirmConstraintWhenAdding())) {
-                    emit error(m_error);
-                }
+            if (!addIdentity(key, settings.removeAtDatabaseClose(),
+                lifetime, settings.useConfirmConstraintWhenAdding())) {
+                emit error(m_error);
             }
         }
     }
