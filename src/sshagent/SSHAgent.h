@@ -37,13 +37,13 @@ public:
     bool isAgentRunning() const;
     bool addIdentity(OpenSSHKey& key, quint32 lifetime = 0, bool confirm = false);
     bool removeIdentity(OpenSSHKey& key);
-    void removeIdentityAtLock(const OpenSSHKey& key, const QUuid& uuid);
+    void scheduleIdentitityRemovalAtLock(const OpenSSHKey& key, DatabaseWidget* dbWidget);
 
 signals:
     void error(const QString& message);
 
 public slots:
-    void databaseModeChanged(DatabaseWidget::Mode mode = DatabaseWidget::Mode::LockedMode);
+    void databaseModeChanged();
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;
@@ -71,7 +71,7 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QMap<QUuid, QSet<OpenSSHKey>> m_keys;
+    QMap<QPointer<DatabaseWidget>, QSet<OpenSSHKey>> m_keys;
     QString m_error;
 };
 

@@ -558,20 +558,20 @@ void EditEntryWidget::addKeyToAgent()
     m_sshAgentUi->commentTextLabel->setText(key.comment());
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
 
-    quint32 lifetime = 0;
+    int lifetime = 0;
     bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
 
     if (m_sshAgentUi->lifetimeCheckBox->isChecked()) {
         lifetime = m_sshAgentUi->lifetimeSpinBox->value();
     }
 
-    if (!SSHAgent::instance()->addIdentity(key, lifetime, confirm)) {
+    if (!SSHAgent::instance()->addIdentity(key, static_cast<quint32>(lifetime), confirm)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
         return;
     }
 
     if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
-        SSHAgent::instance()->removeIdentityAtLock(key, m_entry->uuid());
+        SSHAgent::instance()->scheduleIdentitityRemovalAtLock(key, qobject_cast<DatabaseWidget*>(parentWidget()));
     }
 }
 

@@ -234,32 +234,38 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
     return true;
 }
 
-void SSHAgent::removeIdentityAtLock(const OpenSSHKey& key, const QUuid& uuid)
+/**
+ * Schedule to remove the given key when the referenced
+ * \link DatabaseWidet locks its database.
+ *
+ * @param key key to schedule removal for
+ * @param dbWidget widget for whose lock to wait
+ */
+void SSHAgent::scheduleIdentitityRemovalAtLock(const OpenSSHKey& key, DatabaseWidget* dbWidget)
 {
     OpenSSHKey copy = key;
     copy.clearPrivate();
-    m_keys[uuid].insert(copy);
+    m_keys[dbWidget].insert(copy);
 }
 
-void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
+void SSHAgent::databaseModeChanged()
 {
-    DatabaseWidget* widget = qobject_cast<DatabaseWidget*>(sender());
-
-    if (widget == nullptr) {
+    auto* widget = qobject_cast<DatabaseWidget*>(sender());
+    if (!widget) {
         return;
     }
 
-    const QUuid& uuid = widget->database()->uuid();
-
-    if (mode == DatabaseWidget::Mode::LockedMode && m_keys.contains(uuid)) {
-
-        QSet<OpenSSHKey> keys = m_keys.take(uuid);
+    if (widget->isLocked() && m_keys.contains(widget)) {
+        QSet<OpenSSHKey> keys = m_keys.take(widget);
         for (OpenSSHKey key : keys) {
             if (!removeIdentity(key)) {
                 emit error(m_error);
             }
         }
-    } else if (mode == DatabaseWidget::Mode::ViewMode && !m_keys.contains(uuid)) {
+        return;
+    }
+
+    if (!widget->isLocked() && !m_keys.contains(widget)) {
         for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
 
             if (widget->database()->metadata()->recycleBinEnabled()
@@ -323,7 +329,7 @@ void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
             }
 
             if (settings.removeAtDatabaseClose()) {
-                removeIdentityAtLock(key, uuid);
+                scheduleIdentitityRemovalAtLock(key, widget);
             }
 
             if (settings.addAtDatabaseOpen()) {
