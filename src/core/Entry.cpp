@@ -26,6 +26,7 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
+#include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
 #include <utility>
