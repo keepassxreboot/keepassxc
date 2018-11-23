@@ -48,7 +48,7 @@ public:
     bool hasLockableDatabases() const;
 
 public slots:
-    void addDatabaseTab(const QString& filePath, const QString& password = {}, bool inBackground = false);
+    void addDatabaseTab(const QString& filePath, bool inBackground = false, const QString& password = {});
     void addDatabaseTab(DatabaseWidget* dbWidget, bool inBackground = false);
     bool closeDatabaseTab(int index);
     bool closeDatabaseTab(DatabaseWidget* dbWidget);

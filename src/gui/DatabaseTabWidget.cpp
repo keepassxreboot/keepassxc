@@ -129,7 +129,7 @@ void DatabaseTabWidget::openDatabase()
  * @param password optional, password to unlock database
  * @param inBackground optional, don't focus tab after opening
  */
-void DatabaseTabWidget::addDatabaseTab(const QString& filePath, const QString& password, bool inBackground)
+void DatabaseTabWidget::addDatabaseTab(const QString& filePath, bool inBackground, const QString& password)
 {
     QFileInfo fileInfo(filePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
@@ -142,8 +142,9 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath, const QString& p
         auto* dbWidget = databaseWidgetFromIndex(i);
         Q_ASSERT(dbWidget);
         if (dbWidget && dbWidget->database()->filePath() == canonicalFilePath) {
-            // Does nothing if already unlocked
-            dbWidget->performUnlockDatabase(password);
+            if (!password.isEmpty()) {
+                dbWidget->performUnlockDatabase(password);
+            }
             if (!inBackground) {
                 // switch to existing tab if file is already open
                 setCurrentIndex(indexOf(dbWidget));
@@ -154,7 +155,9 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath, const QString& p
 
     auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(filePath), this);
     addDatabaseTab(dbWidget, inBackground);
-    dbWidget->performUnlockDatabase(password);
+    if (!password.isEmpty()) {
+        dbWidget->performUnlockDatabase(password);
+    }
     updateLastDatabases(filePath);
 }
 
@@ -176,7 +179,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     }
 
     connect(dbWidget, SIGNAL(databaseFilePathChanged(QString,QString)), SLOT(updateTabName()));
-    connect(dbWidget, SIGNAL(requestOpenDatabase(QString,QString,bool)), SLOT(addDatabaseTab(QString,QString,bool)));
+    connect(dbWidget, SIGNAL(requestOpenDatabase(QString,bool,QString)), SLOT(addDatabaseTab(QString,bool,QString)));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));

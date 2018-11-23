@@ -396,8 +396,8 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     auto oldDb = m_db;
     m_db = std::move(db);
     connectDatabaseSignals();
-    processAutoOpen();
     m_groupView->changeDatabase(m_db);
+    processAutoOpen();
 }
 
 void DatabaseWidget::cloneEntry()
@@ -1606,6 +1606,6 @@ void DatabaseWidget::processAutoOpen()
         }
 
         // Request to open the database file in the background
-        emit requestOpenDatabase(filepath.canonicalFilePath(), entry->password(), true);
+        emit requestOpenDatabase(filepath.canonicalFilePath(), true, entry->password());
     }
 }
