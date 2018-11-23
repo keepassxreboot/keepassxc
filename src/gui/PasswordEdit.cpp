@@ -61,7 +61,7 @@ void PasswordEdit::setShowPassword(bool show)
             setText(m_basePasswordEdit->text());
         } else {
             // This fix a bug when the QLineEdit is disabled while switching config
-            if (isEnabled() == false) {
+            if (!isEnabled()) {
                 setEnabled(true);
                 setReadOnly(false);
             }

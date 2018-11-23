@@ -20,6 +20,7 @@
 #define KEEPASSX_PASSWORDEDIT_H
 
 #include <QLineEdit>
+#include <QPointer>
 
 class PasswordEdit : public QLineEdit
 {
@@ -46,7 +47,7 @@ private slots:
 private:
     bool passwordsEqual() const;
 
-    PasswordEdit* m_basePasswordEdit;
+    QPointer<PasswordEdit> m_basePasswordEdit;
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H

@@ -124,6 +124,12 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
     disconnect(YubiKey::instance(), nullptr, this, nullptr);
     m_yubiKeyBeingPolled = false;
 #endif
+
+    if (isVisible()) {
+        return;
+    }
+
+    clearForms();
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
@@ -148,8 +154,9 @@ void DatabaseOpenWidget::load(const QString& filename)
 
 void DatabaseOpenWidget::clearForms()
 {
-    m_ui->editPassword->clear();
+    m_ui->editPassword->setText("");
     m_ui->comboKeyFile->clear();
+    m_ui->comboKeyFile->setEditText("");
     m_ui->checkPassword->setChecked(true);
     m_ui->checkKeyFile->setChecked(false);
     m_ui->checkChallengeResponse->setChecked(false);
@@ -225,7 +232,7 @@ void DatabaseOpenWidget::openDatabase()
     } else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
                                          MessageWidget::Error);
-        m_ui->editPassword->clear();
+        m_ui->editPassword->setText("");
 
 #ifdef WITH_XC_TOUCHID
         // unable to unlock database, reset TouchID for the current database

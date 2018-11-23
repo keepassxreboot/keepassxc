@@ -212,11 +212,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
 #ifdef WITH_XC_SSHAGENT
     if (config()->get("SSHAgent", false).toBool()) {
-        connect(this,
-                SIGNAL(currentModeChanged(DatabaseWidget::Mode)),
-                SSHAgent::instance(),
-                SLOT(databaseModeChanged(DatabaseWidget::Mode)));
-        connect(this, SIGNAL(closeRequest()), SSHAgent::instance(), SLOT(databaseModeChanged()));
+        connect(this, SIGNAL(databaseLocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
+        connect(this, SIGNAL(databaseUnlocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
     }
 #endif
 
@@ -1147,7 +1144,7 @@ bool DatabaseWidget::lock()
             if (!m_db->save(nullptr, false, false)) {
                 return false;
             }
-        } else if (isLocked()) {
+        } else if (!isLocked()) {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
