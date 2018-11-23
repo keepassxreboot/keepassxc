@@ -396,6 +396,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     auto oldDb = m_db;
     m_db = std::move(db);
     connectDatabaseSignals();
+    processAutoOpen();
     m_groupView->changeDatabase(m_db);
 }
 
@@ -954,6 +955,7 @@ void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
         setCurrentWidget(m_unlockDatabaseWidget);
     }
 }
+
 void DatabaseWidget::switchToCsvImport(const QString& filePath)
 {
     setCurrentWidget(m_csvImportWizard);
@@ -978,6 +980,18 @@ void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
     updateFilePath(filePath);
     m_keepass1OpenWidget->load(filePath);
     setCurrentWidget(m_keepass1OpenWidget);
+}
+
+void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
+{
+    if (password.isEmpty() && keyfile.isEmpty()) {
+        return;
+    }
+
+    if (!m_db->isInitialized() || isLocked()) {
+        switchToOpenDatabase();
+        m_databaseOpenWidget->enterKey(password, keyfile);
+    }
 }
 
 void DatabaseWidget::refreshSearch()
@@ -1559,5 +1573,39 @@ void DatabaseWidget::emptyRecycleBin()
     if (result == QMessageBox::Yes) {
         m_db->emptyRecycleBin();
         refreshSearch();
+    }
+}
+
+void DatabaseWidget::processAutoOpen()
+{
+    Q_ASSERT(m_db);
+
+    auto* autoopenGroup = m_db->rootGroup()->findGroupByPath("/AutoOpen");
+    if (!autoopenGroup) {
+        return;
+    }
+
+    for (const auto* entry : autoopenGroup->entries()) {
+        if (entry->url().isEmpty() || entry->password().isEmpty()) {
+            continue;
+        }
+        QFileInfo filepath;
+        if (entry->url().startsWith("file://")) {
+            QUrl url(entry->url());
+            filepath.setFile(url.toLocalFile());
+        } else {
+            filepath.setFile(entry->url());
+            if (filepath.isRelative()) {
+                QFileInfo currentpath(m_db->filePath());
+                filepath.setFile(currentpath.absoluteDir(), entry->url());
+            }
+        }
+
+        if (!filepath.isFile()) {
+            continue;
+        }
+
+        // Request to open the database file in the background
+        emit requestOpenDatabase(filepath.canonicalFilePath(), entry->password(), true);
     }
 }
