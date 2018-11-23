@@ -39,6 +39,7 @@ public:
     static Command* getCommand(const QString& commandName);
 
     static const QCommandLineOption QuietOption;
+    static const QCommandLineOption KeyFileOption;
 };
 
 #endif // KEEPASSXC_COMMAND_H

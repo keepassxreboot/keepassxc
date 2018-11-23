@@ -50,10 +50,7 @@ int Extract::execute(const QStringList& arguments)
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
     parser.addOption(Command::QuietOption);
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
+    parser.addOption(Command::KeyFileOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -74,7 +71,7 @@ int Extract::execute(const QStringList& arguments)
     passwordKey->setPassword(line);
     compositeKey->addKey(passwordKey);
 
-    QString keyFilePath = parser.value(keyFile);
+    QString keyFilePath = parser.value(Command::KeyFileOption);
     if (!keyFilePath.isEmpty()) {
         // LCOV_EXCL_START
         auto fileKey = QSharedPointer<FileKey>::create();

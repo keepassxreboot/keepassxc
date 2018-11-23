@@ -50,14 +50,12 @@ int Merge::execute(const QStringList& arguments)
     QCommandLineOption samePasswordOption(QStringList() << "s" << "same-credentials",
                                           QObject::tr("Use the same credentials for both database files."));
     parser.addOption(samePasswordOption);
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
-    QCommandLineOption keyFileFrom(QStringList() << "f" << "key-file-from",
-                                   QObject::tr("Key file of the database to merge from."),
-                                   QObject::tr("path"));
-    parser.addOption(keyFileFrom);
+    parser.addOption(Command::KeyFileOption);
+
+    QCommandLineOption keyFileFromOption(QStringList() << "f" << "key-file-from",
+                                         QObject::tr("Key file of the database to merge from."),
+                                         QObject::tr("path"));
+    parser.addOption(keyFileFromOption);
 
     parser.addHelpOption();
     parser.process(arguments);
@@ -69,7 +67,7 @@ int Merge::execute(const QStringList& arguments)
     }
 
     auto db1 = Database::unlockFromStdin(args.at(0),
-                                         parser.value(keyFile),
+                                         parser.value(Command::KeyFileOption),
                                          parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                          Utils::STDERR);
     if (!db1) {
@@ -78,10 +76,7 @@ int Merge::execute(const QStringList& arguments)
 
     QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
-        db2 = Database::unlockFromStdin(args.at(1),
-                                        parser.value(keyFileFrom),
-                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                        Utils::STDERR);
+        db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFromOption), Utils::STDOUT, Utils::STDERR);
     } else {
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;

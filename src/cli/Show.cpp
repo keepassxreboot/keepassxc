@@ -46,11 +46,8 @@ int Show::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    QCommandLineOption keyFile(QStringList() << "k"  << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
     parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
     QCommandLineOption totp(QStringList() << "t"  << "totp",
                             QObject::tr("Show the entry's current TOTP."));
     parser.addOption(totp);
@@ -73,7 +70,7 @@ int Show::execute(const QStringList& arguments)
     }
 
     auto db = Database::unlockFromStdin(args.at(0),
-                                        parser.value(keyFile),
+                                        parser.value(Command::KeyFileOption),
                                         parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                         Utils::STDERR);
     if (!db) {

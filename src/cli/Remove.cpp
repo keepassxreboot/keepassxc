@@ -50,10 +50,7 @@ int Remove::execute(const QStringList& arguments)
     parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
     parser.addPositionalArgument("database", QCoreApplication::tr("main", "Path of the database."));
     parser.addOption(Command::QuietOption);
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
+    parser.addOption(Command::KeyFileOption);
     parser.addPositionalArgument("entry", QCoreApplication::tr("main", "Path of the entry to remove."));
     parser.addHelpOption();
     parser.process(arguments);
@@ -65,7 +62,7 @@ int Remove::execute(const QStringList& arguments)
     }
 
     auto db = Database::unlockFromStdin(args.at(0),
-                                        parser.value(keyFile),
+                                        parser.value(Command::KeyFileOption),
                                         parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                         Utils::STDERR);
     if (!db) {

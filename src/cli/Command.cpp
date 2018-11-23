@@ -39,6 +39,12 @@ const QCommandLineOption Command::QuietOption =
     QCommandLineOption(QStringList() << "q"
                                      << "quiet",
                        QObject::tr("Silence password prompt and other secondary outputs."));
+
+const QCommandLineOption Command::KeyFileOption(QStringList() << "k"
+                                                              << "key-file",
+                                                QObject::tr("Key file of the database."),
+                                                QObject::tr("path"));
+
 QMap<QString, Command*> commands;
 
 Command::~Command()
