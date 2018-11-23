@@ -307,11 +307,9 @@ void TestGui::testMergeDatabase()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    auto* databaseOpenMergeWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenMergeWidget");
-    auto* editPasswordMerge = databaseOpenMergeWidget->findChild<QLineEdit*>("editPassword");
+    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("editPassword"));
+    auto* editPasswordMerge = QApplication::focusWidget();
     QVERIFY(editPasswordMerge->isVisible());
-
-    m_tabWidget->currentDatabaseWidget()->setCurrentWidget(databaseOpenMergeWidget);
 
     QTest::keyClicks(editPasswordMerge, "a");
     QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
@@ -1191,14 +1189,16 @@ void TestGui::testDatabaseLocking()
     auto* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave", Qt::FindChildrenRecursively);
     QCOMPARE(actionDatabaseSave->isEnabled(), false);
 
-    QWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
-    auto* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("unlockDatabaseWidget");
+    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
+    QVERIFY(dbWidget->isLocked());
+    auto* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("databaseOpenWidget");
     QWidget* editPassword = unlockDatabaseWidget->findChild<QLineEdit*>("editPassword");
     QVERIFY(editPassword);
 
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
+    QVERIFY(!dbWidget->isLocked());
     QCOMPARE(m_tabWidget->tabName(0), origDbName);
 
     actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);

@@ -123,8 +123,7 @@ set(keepassx_SOURCES
         gui/TotpSetupDialog.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
-        gui/UnlockDatabaseWidget.cpp
-        gui/UnlockDatabaseDialog.cpp
+        gui/DatabaseOpenDialog.cpp
         gui/WelcomeWidget.cpp
         gui/csvImport/CsvImportWidget.cpp
         gui/csvImport/CsvImportWizard.cpp

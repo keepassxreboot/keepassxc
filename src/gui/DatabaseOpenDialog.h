@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,32 +18,47 @@
 #ifndef KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
 #define KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
 
-#include <QDialog>
-
-//#include <gui/DatabaseTabWidget.h>
-
 #include "core/Global.h"
 
-class UnlockDatabaseWidget;
-class Database;
+#include <QDialog>
+#include <QPointer>
+#include <QSharedPointer>
 
-class UnlockDatabaseDialog : public QDialog
+class Database;
+class DatabaseWidget;
+class DatabaseOpenWidget;
+
+class DatabaseOpenDialog : public QDialog
 {
     Q_OBJECT
+
 public:
-    explicit UnlockDatabaseDialog(QWidget* parent = nullptr);
+    enum class Intent
+    {
+        None,
+        AutoType,
+        Merge
+    };
+
+    explicit DatabaseOpenDialog(QWidget* parent = nullptr);
     void setFilePath(const QString& filePath);
-    void clearForms();
+    void setTargetDatabaseWidget(DatabaseWidget* dbWidget);
+    void setIntent(Intent intent);
+    Intent intent() const;
     QSharedPointer<Database> database();
+    void clearForms();
 
 signals:
-    void unlockDone(bool);
+    void dialogFinished(bool);
 
 public slots:
-    void complete(bool r);
+    void complete(bool accepted);
 
 private:
-    UnlockDatabaseWidget* const m_view;
+    QPointer<DatabaseOpenWidget> m_view;
+    QSharedPointer<Database> m_db;
+    QPointer<DatabaseWidget> m_dbWidget;
+    Intent m_intent = Intent::None;
 };
 
 #endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
