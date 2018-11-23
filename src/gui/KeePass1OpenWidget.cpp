@@ -61,10 +61,9 @@ void KeePass1OpenWidget::openDatabase()
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());
         emit dialogFinished(true);
+        clearForms();
     } else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
                                          MessageWidget::Error);
-
-        m_ui->editPassword->clear();
     }
 }

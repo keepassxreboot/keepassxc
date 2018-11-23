@@ -19,6 +19,7 @@
 #define KEEPASSX_DATABASETABWIDGET_H
 
 #include "gui/MessageWidget.h"
+#include "DatabaseOpenDialog.h"
 
 #include <QTabWidget>
 #include <QPointer>
@@ -27,7 +28,6 @@ class Database;
 class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
-class QFile;
 
 class DatabaseTabWidget : public QTabWidget
 {
@@ -68,6 +68,8 @@ public slots:
 
     void lockDatabases();
     void closeDatabaseFromSender();
+    void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
+    void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
     void relockPendingDatabase();
 
     void changeMasterKey();
@@ -93,7 +95,8 @@ private:
     void updateLastDatabases(const QString& filename);
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
-    QPointer<DatabaseWidget> m_dbPendingLock;
+    QPointer<DatabaseWidget> m_dbWidgetPendingLock;
+    QScopedPointer<DatabaseOpenDialog> m_databaseOpenDialog;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

@@ -24,12 +24,14 @@
 #include <QStackedWidget>
 #include <QTimer>
 
+#include "DatabaseOpenDialog.h"
 #include "gui/entry/EntryModel.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
 
 class DatabaseOpenWidget;
+class KeePass1OpenWidget;
 class DatabaseSettingsDialog;
 class Database;
 class EditEntryWidget;
@@ -39,15 +41,12 @@ class EntryView;
 class EntrySearcher;
 class Group;
 class GroupView;
-class KeePass1OpenWidget;
 class QFile;
 class QMenu;
 class QSplitter;
 class QLabel;
-class UnlockDatabaseWidget;
 class MessageWidget;
 class EntryPreviewWidget;
-class UnlockDatabaseDialog;
 class QFileSystemWatcher;
 
 namespace Ui
@@ -60,6 +59,8 @@ class DatabaseWidget : public QStackedWidget
     Q_OBJECT
 
 public:
+    friend class DatabaseOpenDialog;
+
     enum class Mode
     {
         None,
@@ -74,11 +75,6 @@ public:
     ~DatabaseWidget();
 
     QSharedPointer<Database> database() const;
-
-    bool lock();
-    void prepareUnlock();
-    bool save(int attempt = 0);
-    bool saveAs();
 
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
@@ -148,6 +144,10 @@ signals:
     void clearSearch();
 
 public slots:
+    bool lock();
+    bool save(int attempt = 0);
+    bool saveAs();
+
     void replaceDatabase(QSharedPointer<Database> db);
     void createEntry();
     void cloneEntry();
@@ -169,19 +169,18 @@ public slots:
     void createGroup();
     void deleteGroup();
     void onGroupChanged(Group* group);
-    void switchToView(bool accepted);
+    void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
+    void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
     void switchToCsvImport(const QString& filePath);
-    void csvImportFinished(bool accepted);
-    void switchToOpenMergeDatabase(const QString& filePath);
-    void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
-    void switchToImportKeepass1(const QString& filePath);
     void performUnlockDatabase(const QString& password, const QString& keyfile = {});
+    void csvImportFinished(bool accepted);
+    void switchToImportKeepass1(const QString& filePath);
     void emptyRecycleBin();
 
     // Search related slots
@@ -215,8 +214,8 @@ private slots:
     void emitEntrySelectionChanged();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
-    void mergeDatabase(bool accepted);
     void unlockDatabase(bool accepted);
+    void mergeDatabase(bool accepted);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void onWatchedFileChanged();
@@ -244,22 +243,16 @@ private:
     QPointer<EditEntryWidget> m_historyEditEntryWidget;
     QPointer<DatabaseSettingsDialog> m_databaseSettingDialog;
     QPointer<DatabaseOpenWidget> m_databaseOpenWidget;
-    QPointer<DatabaseOpenWidget> m_databaseOpenMergeWidget;
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
-    QPointer<UnlockDatabaseWidget> m_unlockDatabaseWidget;
-    QPointer<UnlockDatabaseDialog> m_unlockDatabaseDialog;
     QPointer<GroupView> m_groupView;
     QPointer<EntryView> m_entryView;
 
-    QPointer<Group> m_newGroup;
-    QPointer<Entry> m_newEntry;
+    QScopedPointer<Group> m_newGroup;
+    QScopedPointer<Entry> m_newEntry;
     QPointer<Group> m_newParent;
 
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
-
-    QString m_databaseName;
-    QString m_databaseFileName;
 
     // Search state
     EntrySearcher* m_EntrySearcher;

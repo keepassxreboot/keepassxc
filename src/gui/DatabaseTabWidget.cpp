@@ -28,6 +28,7 @@
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
@@ -35,7 +36,7 @@
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-#include "gui/UnlockDatabaseDialog.h"
+#include "gui/DatabaseOpenDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 #include "gui/wizard/NewDatabaseWizard.h"
@@ -43,7 +44,8 @@
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
-    , m_dbPendingLock(nullptr)
+    , m_dbWidgetPendingLock(nullptr)
+    , m_databaseOpenDialog(new DatabaseOpenDialog())
 {
     auto* tabBar = new DragTabBar(this);
     setTabBar(tabBar);
@@ -54,6 +56,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
+    connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -220,9 +223,9 @@ void DatabaseTabWidget::mergeDatabase()
     }
 }
 
-void DatabaseTabWidget::mergeDatabase(const QString& fileName)
+void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 {
-    currentDatabaseWidget()->switchToOpenMergeDatabase(fileName);
+    unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::Merge, filePath);
 }
 
 void DatabaseTabWidget::importKeePass1Database()
@@ -514,22 +517,59 @@ void DatabaseTabWidget::lockDatabases()
 }
 
 /**
+ * Unlock a database with an unlock popup dialog.
+ *
+ * @param dbWidget DatabaseWidget which to connect signals to
+ * @param intent intent for unlocking
+ */
+void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent)
+{
+    unlockDatabaseInDialog(dbWidget, intent, dbWidget->database()->filePath());
+}
+
+/**
+ * Unlock a database with an unlock popup dialog.
+ *
+ * @param dbWidget DatabaseWidget which to connect signals to
+ * @param intent intent for unlocking
+ * @param file path of the database to be unlocked
+ */
+void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent,
+                                               const QString& filePath)
+{
+    m_databaseOpenDialog->setTargetDatabaseWidget(dbWidget);
+    m_databaseOpenDialog->setIntent(intent);
+    m_databaseOpenDialog->setFilePath(filePath);
+
+#ifdef Q_OS_MACOS
+    if (intent == DatabaseOpenDialog::Intent::AutoType) {
+        autoType()->raiseWindow();
+        Tools::wait(500);
+    }
+#endif
+
+    m_databaseOpenDialog->show();
+    m_databaseOpenDialog->raise();
+    m_databaseOpenDialog->activateWindow();
+}
+
+/**
  * This function relock the pending database when autotype has been performed successfully
  * A database is marked as pending when it's unlocked after a global Auto-Type invocation
  */
 void DatabaseTabWidget::relockPendingDatabase()
 {
-    if (!m_dbPendingLock || !config()->get("security/relockautotype").toBool()) {
+    if (!m_dbWidgetPendingLock || !config()->get("security/relockautotype").toBool()) {
         return;
     }
 
-    if (m_dbPendingLock->isLocked() || !m_dbPendingLock->database()->hasKey()) {
-        m_dbPendingLock = nullptr;
+    if (m_dbWidgetPendingLock->isLocked() || !m_dbWidgetPendingLock->database()->hasKey()) {
+        m_dbWidgetPendingLock = nullptr;
         return;
     }
 
-    m_dbPendingLock->lock();
-    m_dbPendingLock = nullptr;
+    m_dbWidgetPendingLock->lock();
+    m_dbWidgetPendingLock = nullptr;
 }
 
 void DatabaseTabWidget::updateLastDatabases(const QString& filename)
@@ -579,11 +619,13 @@ void DatabaseTabWidget::performGlobalAutoType()
         }
     }
 
+    // TODO: allow for database selection during Auto-Type instead of using the current tab
     if (!unlockedDatabases.isEmpty()) {
         autoType()->performGlobalAutoType(unlockedDatabases);
     } else if (count() > 0) {
-        // TODO: allow for database selection during Auto-Type instead of using the first tab
-        m_dbPendingLock = databaseWidgetFromIndex(0);
-        m_dbPendingLock->prepareUnlock();
+        if (config()->get("security/relockautotype").toBool()) {
+            m_dbWidgetPendingLock = currentDatabaseWidget();
+        }
+        unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::AutoType);
     }
 }

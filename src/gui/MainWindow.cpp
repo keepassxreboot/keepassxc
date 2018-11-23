@@ -468,7 +468,7 @@ void MainWindow::openDatabase(const QString& filePath, const QString& pw, const 
     if (db->open(filePath, key, nullptr, false)) {
         auto* dbWidget = new DatabaseWidget(db, this);
         m_ui->tabWidget->addDatabaseTab(dbWidget);
-        dbWidget->switchToView(true);
+        dbWidget->switchToMainView(true);
     }
 }
 
