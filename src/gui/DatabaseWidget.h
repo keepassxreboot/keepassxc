@@ -132,6 +132,7 @@ signals:
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
+    void requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password);
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
@@ -180,6 +181,7 @@ public slots:
     void switchToOpenMergeDatabase(const QString& filePath);
     void switchToOpenMergeDatabase(const QString& filePath, const QString& password, const QString& keyFile);
     void switchToImportKeepass1(const QString& filePath);
+    void performUnlockDatabase(const QString& password, const QString& keyfile = {});
     void emptyRecycleBin();
 
     // Search related slots
@@ -226,6 +228,7 @@ private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
+    void processAutoOpen();
 
     QSharedPointer<Database> m_db;
 
