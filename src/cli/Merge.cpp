@@ -20,9 +20,9 @@
 #include <QCommandLineParser>
 
 #include "cli/TextStream.h"
+#include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Merger.h"
-#include "cli/Utils.h"
 
 #include <cstdlib>
 
@@ -68,22 +68,20 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db1 = Database::unlockFromStdin(
-            args.at(0),
-            parser.value(keyFile),
-            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-            Utils::STDERR);
+    auto db1 = Database::unlockFromStdin(args.at(0),
+                                         parser.value(keyFile),
+                                         parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                         Utils::STDERR);
     if (!db1) {
         return EXIT_FAILURE;
     }
 
     QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
-        db2 = Database::unlockFromStdin(
-                args.at(1),
-                parser.value(keyFileFrom),
-                parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                Utils::STDERR);
+        db2 = Database::unlockFromStdin(args.at(1),
+                                        parser.value(keyFileFrom),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     } else {
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;

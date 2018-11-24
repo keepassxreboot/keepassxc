@@ -194,7 +194,8 @@ void TestCli::testAdd()
     QCOMPARE(entry->password(), QString("newpassword"));
 }
 
-bool isTOTP(const QString & value) {
+bool isTOTP(const QString& value)
+{
     QString val = value.trimmed();
     if (val.length() < 5 || val.length() > 6) {
         return false;
@@ -309,7 +310,7 @@ void TestCli::testDiceware()
     const auto words = passphrase.split(" ");
     QCOMPARE(words.size(), 11);
     QRegularExpression regex("^word\\d+$");
-    for (const auto& word: words) {
+    for (const auto& word : words) {
         QVERIFY2(regex.match(word).hasMatch(), qPrintable("Word " + word + " was not on the word list"));
     }
 }
@@ -465,7 +466,7 @@ void TestCli::testEstimate()
     QVERIFY(result.startsWith("Length " + length));
     QVERIFY(result.contains("Entropy " + entropy));
     QVERIFY(result.contains("Log10 " + log10));
-    for (const auto& string: asConst(searchStrings)) {
+    for (const auto& string : asConst(searchStrings)) {
         QVERIFY2(result.contains(string), qPrintable("String " + string + " missing"));
     }
 }

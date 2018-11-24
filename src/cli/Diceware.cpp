@@ -22,9 +22,9 @@
 
 #include <QCommandLineParser>
 
+#include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
-#include "Utils.h"
 
 Diceware::Diceware()
 {

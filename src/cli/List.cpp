@@ -65,11 +65,10 @@ int List::execute(const QStringList& arguments)
 
     bool recursive = parser.isSet(recursiveOption);
 
-    auto db = Database::unlockFromStdin(
-            args.at(0),
-            parser.value(keyFile),
-            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-            Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(keyFile),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

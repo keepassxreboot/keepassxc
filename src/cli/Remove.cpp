@@ -64,11 +64,10 @@ int Remove::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(
-            args.at(0),
-            parser.value(keyFile),
-            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-            Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(keyFile),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

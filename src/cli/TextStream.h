@@ -47,4 +47,4 @@ private:
     void detectCodec();
 };
 
-#endif //KEEPASSXC_TEXTSTREAM_H
+#endif // KEEPASSXC_TEXTSTREAM_H

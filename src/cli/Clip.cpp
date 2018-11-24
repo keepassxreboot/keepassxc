@@ -67,11 +67,10 @@ int Clip::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(
-            args.at(0),
-            parser.value(keyFile),
-            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-            Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(keyFile),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -79,12 +78,11 @@ int Clip::execute(const QStringList& arguments)
     return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp), parser.isSet(Command::QuietOption));
 }
 
-int Clip::clipEntry(
-        QSharedPointer<Database> database,
-        const QString& entryPath,
-        const QString& timeout,
-        bool clipTotp,
-        bool silent)
+int Clip::clipEntry(QSharedPointer<Database> database,
+                    const QString& entryPath,
+                    const QString& timeout,
+                    bool clipTotp,
+                    bool silent)
 {
     TextStream err(Utils::STDERR);
 

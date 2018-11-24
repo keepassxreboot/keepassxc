@@ -64,7 +64,7 @@ int Extract::execute(const QStringList& arguments)
     }
 
     if (!parser.isSet(Command::QuietOption)) {
-      out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+        out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
     }
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
