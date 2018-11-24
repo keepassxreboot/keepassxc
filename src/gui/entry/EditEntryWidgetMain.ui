@@ -19,6 +19,17 @@
      </property>
     </widget>
    </item>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLineEdit" name="urlEdit"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="fetchFaviconButton">
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item row="4" column="1">
     <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
    </item>
@@ -154,9 +165,6 @@
    </item>
    <item row="1" column="1">
     <widget class="QLineEdit" name="usernameEdit"/>
-   </item>
-   <item row="5" column="1">
-    <widget class="QLineEdit" name="urlEdit"/>
    </item>
    <item row="7" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">

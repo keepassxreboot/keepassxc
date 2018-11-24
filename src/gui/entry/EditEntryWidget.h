@@ -79,6 +79,9 @@ private slots:
     void cancel();
     void togglePasswordGeneratorButton(bool checked);
     void setGeneratedPassword(const QString& password);
+#ifdef WITH_XC_NETWORKING
+    void updateFaviconButtonEnable(const QString& url);
+#endif
     void insertAttribute();
     void editCurrentAttribute();
     void removeCurrentAttribute();

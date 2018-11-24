@@ -121,8 +121,19 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
+#ifdef WITH_XC_NETWORKING
+    m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("actions", "favicon-download"));
+    m_mainUi->fetchFaviconButton->setDisabled(true);
+#else
+    m_mainUi->fetchFaviconButton->setVisible(false);
+#endif
+
+
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+#ifdef WITH_XC_NETWORKING
+    connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
+#endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
@@ -241,6 +252,9 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
+#ifdef WITH_XC_NETWORKING
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(const QString&)), this, SLOT(updateFaviconButtonEnable(const QString&)));
+#endif
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->notesEnabled, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setUnsavedChanges()));
@@ -994,6 +1008,13 @@ void EditEntryWidget::setGeneratedPassword(const QString& password)
 
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 }
+
+#ifdef WITH_XC_NETWORKING
+void EditEntryWidget::updateFaviconButtonEnable(const QString& url)
+{
+    m_mainUi->fetchFaviconButton->setDisabled(url.isEmpty());
+}
+#endif
 
 void EditEntryWidget::insertAttribute()
 {

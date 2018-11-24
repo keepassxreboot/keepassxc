@@ -39,25 +39,6 @@ IconStruct::IconStruct()
 {
 }
 
-UrlFetchProgressDialog::UrlFetchProgressDialog(const QUrl &url, QWidget *parent)
-  : QProgressDialog(parent)
-{
-    setWindowTitle(tr("Download Progress"));
-    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setLabelText(tr("Downloading %1.").arg(url.toDisplayString()));
-    setMinimumDuration(0);
-    setMinimumSize(QSize(400, 75));
-}
-
-void UrlFetchProgressDialog::networkReplyProgress(qint64 bytesRead, qint64 totalBytes)
-{
-    if (totalBytes > 0) {
-        setValue(static_cast<int>(bytesRead / totalBytes));
-    } else {
-        setValue(0);
-    }
-}
-
 EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
@@ -268,14 +249,14 @@ void EditWidgetIcons::fetchFinished()
             // No redirect, and we theoretically have some icon data now.
             image.loadFromData(m_bytesReceived);
         }
-    } else {
-        UrlFetchProgressDialog *progress = findChild<UrlFetchProgressDialog *>(url.toString());
-        progress->close();
     }
 
     if (!image.isNull()) {
         if (!addCustomIcon(image)) {
             emit messageEditEntry(tr("Custom icon already exists"), MessageWidget::Information);
+        } else if (!this->isVisible()) {
+            // Show confirmation message if triggered from Entry tab download button
+            emit messageEditEntry(tr("Custom icon successfully downloaded"), MessageWidget::Positive);
         }
     } else if (!m_urlsToTry.empty()) {
         m_redirects = 0;
@@ -316,15 +297,6 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
     m_reply = m_netMgr.get(request);
     connect(m_reply, &QNetworkReply::finished, this, &EditWidgetIcons::fetchFinished);
     connect(m_reply, &QIODevice::readyRead, this, &EditWidgetIcons::fetchReadyRead);
-
-    UrlFetchProgressDialog *progress = new UrlFetchProgressDialog(url, this);
-    progress->setObjectName(url.toString());
-    progress->setAttribute(Qt::WA_DeleteOnClose);
-    connect(m_reply, &QNetworkReply::finished, progress, &QProgressDialog::hide);
-    connect(m_reply, &QNetworkReply::downloadProgress, progress, &UrlFetchProgressDialog::networkReplyProgress);
-    connect(progress, &QProgressDialog::canceled, this, &EditWidgetIcons::fetchCanceled);
-
-    progress->show();
 #else
     Q_UNUSED(url);
 #endif
