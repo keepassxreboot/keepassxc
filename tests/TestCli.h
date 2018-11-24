@@ -54,6 +54,7 @@ private slots:
     void testLocate();
     void testMerge();
     void testRemove();
+    void testRemoveQuiet();
     void testShow();
 
 private:

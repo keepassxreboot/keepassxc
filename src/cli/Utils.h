@@ -26,9 +26,10 @@ namespace Utils
 extern FILE* STDOUT;
 extern FILE* STDERR;
 extern FILE* STDIN;
+extern FILE* DEVNULL;
 
 void setStdinEcho(bool enable);
-QString getPassword();
+QString getPassword(FILE* outputDescriptor = STDOUT);
 int clipText(const QString& text);
 
 namespace Test

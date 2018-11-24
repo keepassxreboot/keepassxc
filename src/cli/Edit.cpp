@@ -48,6 +48,7 @@ int Edit::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addOption(Command::QuietOption);
 
     QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
@@ -93,7 +94,11 @@ int Edit::execute(const QStringList& arguments)
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    auto db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(
+            databasePath,
+            parser.value(keyFile),
+            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+            Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -132,8 +137,10 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        out << QObject::tr("Enter new password for entry: ") << flush;
-        QString password = Utils::getPassword();
+        if (!parser.isSet(Command::QuietOption)) {
+            out << QObject::tr("Enter new password for entry: ") << flush;
+        }
+        QString password = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
         PasswordGenerator passwordGenerator;
@@ -158,6 +165,8 @@ int Edit::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    if (!parser.isSet(Command::QuietOption)) {
+        out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    }
     return EXIT_SUCCESS;
 }

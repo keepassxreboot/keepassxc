@@ -48,6 +48,7 @@ int Locate::execute(const QStringList& arguments)
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addPositionalArgument("term", QObject::tr("Search term."));
+    parser.addOption(Command::QuietOption);
     QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
@@ -61,7 +62,11 @@ int Locate::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(
+            args.at(0),
+            parser.value(keyFile),
+            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+            Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

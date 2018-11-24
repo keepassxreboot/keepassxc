@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_COMMAND_H
 #define KEEPASSXC_COMMAND_H
 
+#include <QCommandLineOption>
 #include <QList>
 #include <QObject>
 #include <QString>
@@ -36,6 +37,8 @@ public:
 
     static QList<Command*> getCommands();
     static Command* getCommand(const QString& commandName);
+
+    static const QCommandLineOption QuietOption;
 };
 
 #endif // KEEPASSXC_COMMAND_H

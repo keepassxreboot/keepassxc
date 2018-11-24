@@ -45,10 +45,11 @@ int Merge::execute(const QStringList& arguments)
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database1", QObject::tr("Path of the database to merge into."));
     parser.addPositionalArgument("database2", QObject::tr("Path of the database to merge from."));
+    parser.addOption(Command::QuietOption);
 
     QCommandLineOption samePasswordOption(QStringList() << "s" << "same-credentials",
                                           QObject::tr("Use the same credentials for both database files."));
-
+    parser.addOption(samePasswordOption);
     QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
@@ -58,7 +59,6 @@ int Merge::execute(const QStringList& arguments)
                                    QObject::tr("path"));
     parser.addOption(keyFileFrom);
 
-    parser.addOption(samePasswordOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -68,14 +68,22 @@ int Merge::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db1 = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db1 = Database::unlockFromStdin(
+            args.at(0),
+            parser.value(keyFile),
+            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+            Utils::STDERR);
     if (!db1) {
         return EXIT_FAILURE;
     }
 
     QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
-        db2 = Database::unlockFromStdin(args.at(1), parser.value(keyFileFrom), Utils::STDOUT, Utils::STDERR);
+        db2 = Database::unlockFromStdin(
+                args.at(1),
+                parser.value(keyFileFrom),
+                parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                Utils::STDERR);
     } else {
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;
@@ -94,8 +102,10 @@ int Merge::execute(const QStringList& arguments)
             err << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
-        out << "Successfully merged the database files." << endl;
-    } else {
+        if (!parser.isSet(Command::QuietOption)) {
+            out << "Successfully merged the database files." << endl;
+        }
+    } else if (!parser.isSet(Command::QuietOption)) {
         out << "Database was not modified by merge operation." << endl;
     }
 

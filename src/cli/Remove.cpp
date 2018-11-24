@@ -49,6 +49,7 @@ int Remove::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
     parser.addPositionalArgument("database", QCoreApplication::tr("main", "Path of the database."));
+    parser.addOption(Command::QuietOption);
     QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
@@ -63,17 +64,21 @@ int Remove::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(
+            args.at(0),
+            parser.value(keyFile),
+            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+            Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
 
-    return removeEntry(db.data(), args.at(0), args.at(1));
+    return removeEntry(db.data(), args.at(0), args.at(1), parser.isSet(Command::QuietOption));
 }
 
-int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath)
+int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath, bool quiet)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream out(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
     TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);

@@ -35,6 +35,10 @@
 #include "Remove.h"
 #include "Show.h"
 
+const QCommandLineOption Command::QuietOption =
+    QCommandLineOption(QStringList() << "q"
+                                     << "quiet",
+                       QObject::tr("Silence password prompt and other secondary outputs."));
 QMap<QString, Command*> commands;
 
 Command::~Command()

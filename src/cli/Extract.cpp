@@ -49,6 +49,7 @@ int Extract::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
+    parser.addOption(Command::QuietOption);
     QCommandLineOption keyFile(QStringList() << "k" << "key-file",
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
@@ -62,11 +63,13 @@ int Extract::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+    if (!parser.isSet(Command::QuietOption)) {
+      out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+    }
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 
-    QString line = Utils::getPassword();
+    QString line = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
     auto passwordKey = QSharedPointer<PasswordKey>::create();
     passwordKey->setPassword(line);
     compositeKey->addKey(passwordKey);

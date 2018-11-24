@@ -43,6 +43,16 @@ FILE* STDERR = stderr;
  */
 FILE* STDIN = stdin;
 
+/**
+ * STDIN file handle for the CLI.
+ */
+#ifdef Q_OS_WIN
+FILE* DEVNULL = fopen("nul", "rw");
+#else
+FILE* DEVNULL = fopen("/dev/null", "rw");
+#endif
+
+
 void setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN
@@ -95,9 +105,9 @@ void setNextPassword(const QString& password)
  *
  * @return the password
  */
-QString getPassword()
+QString getPassword(FILE* outputDescriptor)
 {
-    TextStream out(STDOUT, QIODevice::WriteOnly);
+    TextStream out(outputDescriptor, QIODevice::WriteOnly);
 
     // return preset password if one is set
     if (!Test::nextPasswords.isEmpty()) {
