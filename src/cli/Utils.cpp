@@ -44,7 +44,7 @@ FILE* STDERR = stderr;
 FILE* STDIN = stdin;
 
 /**
- * STDIN file handle for the CLI.
+ * DEVNULL file handle for the CLI.
  */
 #ifdef Q_OS_WIN
 FILE* DEVNULL = fopen("nul", "rw");
