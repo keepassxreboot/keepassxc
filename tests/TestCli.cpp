@@ -495,11 +495,12 @@ void TestCli::testExtract()
     m_stdoutFile->reset();
 
     // Quiet option
+    QScopedPointer<Database> dbQuiet(new Database());
     qint64 pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     extractCmd.execute({"extract", "-q", m_dbFile->fileName()});
     m_stdoutFile->seek(pos);
-    reader.readDatabase(m_stdoutFile.data(), db.data());
+    reader.readDatabase(m_stdoutFile.data(), dbQuiet.data());
     QVERIFY(!reader.hasError());
     QVERIFY(db.data());
 }
