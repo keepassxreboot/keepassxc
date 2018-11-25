@@ -239,7 +239,7 @@ void TestCli::testClip()
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-q"});
     m_stdoutFile->seek(pos);
-    // Output should be empty when silent option is set.
+    // Output should be empty when quiet option is set.
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(clipboard->text(), QString("Password"));
 
