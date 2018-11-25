@@ -104,7 +104,8 @@ int Extract::execute(const QStringList& arguments)
 
     KeePass2Reader reader;
     reader.setSaveXml(true);
-    QScopedPointer<Database> db(reader.readDatabase(&dbFile, compositeKey));
+    auto db = QSharedPointer<Database>::create();
+    reader.readDatabase(&dbFile, compositeKey, db.data());
 
     QByteArray xmlData = reader.reader()->xmlData();
 

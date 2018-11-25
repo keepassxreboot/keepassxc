@@ -56,7 +56,7 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& fileName, const QString& pw = QString(), const QString& keyFile = QString());
+    void openDatabase(const QString& filePath, const QString& pw = {}, const QString& keyFile = {});
     void appExit();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
@@ -80,7 +80,7 @@ protected:
     void changeEvent(QEvent* event) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
+    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
     void openDonateUrl();
@@ -107,7 +107,6 @@ private slots:
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
-    void hideTabMessage();
     void handleScreenLock();
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();

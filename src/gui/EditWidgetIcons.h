@@ -20,7 +20,6 @@
 #define KEEPASSX_EDITWIDGETICONS_H
 
 #include <QSet>
-#include <QProgressDialog>
 #include <QUrl>
 #include <QWidget>
 #include <QNetworkAccessManager>
@@ -50,17 +49,6 @@ struct IconStruct
     int number;
 };
 
-class UrlFetchProgressDialog : public QProgressDialog
-{
-    Q_OBJECT
-
-public:
-    explicit UrlFetchProgressDialog(const QUrl &url, QWidget *parent = nullptr);
-
-public slots:
-    void networkReplyProgress(qint64 bytesRead, qint64 totalBytes);
-};
-
 class EditWidgetIcons : public QWidget
 {
     Q_OBJECT
@@ -71,7 +59,10 @@ public:
 
     IconStruct state();
     void reset();
-    void load(const QUuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
+    void load(const QUuid& currentUuid,
+              QSharedPointer<Database> database,
+              const IconStruct& iconStruct,
+              const QString& url = "");
 
 public slots:
     void setUrl(const QString& url);
@@ -97,7 +88,7 @@ private slots:
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
-    Database* m_database;
+    QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;

@@ -26,7 +26,6 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
 #include <utility>
@@ -49,15 +48,15 @@ Entry::Entry()
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
-    connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
-    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), SLOT(updateTotp()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), this, SIGNAL(entryModified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attachments, SIGNAL(entryAttachmentsModified()), this, SIGNAL(entryModified()));
+    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(entryModified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(entryModified()));
 
-    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
-    connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateTimeinfo()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateModifiedSinceBegin()));
 }
 
 Entry::~Entry()
@@ -78,7 +77,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit entryModified();
         return true;
     }
     return false;
@@ -409,7 +408,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -422,7 +421,7 @@ void Entry::setIcon(const QUuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -502,7 +501,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -510,7 +509,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -529,7 +528,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -547,7 +546,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::truncateHistory()
@@ -742,7 +741,7 @@ void Entry::updateModifiedSinceBegin()
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
@@ -766,7 +765,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 
@@ -830,7 +829,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 
@@ -850,7 +849,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     Q_ASSERT(m_group);
     Q_ASSERT(m_group->database());
-    const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
+    const Entry* refEntry = m_group->findEntryBySearchTerm(searchText, searchInType);
 
     if (refEntry) {
         const QString wantedField = match.captured(EntryAttributes::WantedFieldGroupName);
@@ -930,7 +929,7 @@ void Entry::setGroup(Group* group)
 
 void Entry::emitDataChanged()
 {
-    emit dataChanged(this);
+    emit entryDataChanged(this);
 }
 
 const Database* Entry::database() const

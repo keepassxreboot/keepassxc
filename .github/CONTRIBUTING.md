@@ -94,7 +94,7 @@ The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successf
 * **master** – points to the latest public release
 * **develop** – points to the development of the next release, contains tested and reviewed code
 * **feature/**[name] – points to a branch with a new feature, one which is candidate for merge into develop (subject to rebase)
-* **hotfix/**[id]-[description] – points to a branch with a fix for a particular issue ID
+* **hotfix/**[name] – points to a branch with a fix for a particular issue ID
 
 
 ### Git commit messages
@@ -103,8 +103,7 @@ The Branch Strategy is based on [git-flow-lite](http://nvie.com/posts/a-successf
 * Use the imperative mood ("Move cursor to…" not "Moves cursor to…")
 * Limit the first line to 72 characters or less
 * Reference issues and pull requests liberally
-* If your pull request fixes an existing issue, add "…, resolves #ISSUENUMBER" to your main commit
-* When only changing documentation, include `[ci skip]` in the commit description
+* If your pull request fixes an existing issue, add "Fixes #ISSUENUMBER" to your pull request description
 
 ### Coding styleguide
 
@@ -125,15 +124,67 @@ For names made of multiple concatenated words, the first letter of the whole is 
 For **C++ files** (*.cpp .h*): 4 spaces  
 For **Qt-UI files** (*.ui*): 2 spaces
 
-#### Pointers
+#### Includes
+```c
+// Class includes
+#include "MyWidget.h"
+#include "ui_MyWidget.h"
+
+// Application includes
+#include "core/Config.h"
+#include "core/FilePath.h"
+
+// Global includes
+#include <QWidget>
+#include <stdin>
+```
+
+#### Classes
+```c
+// Note: order is important, stay organized!
+class MyWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit MyWidget(QWidget* parent);
+    ~MyWidget() override;
+
+signals:
+    void alert();
+
+public slots:
+    void processEvent(Event* event);
+
+private slots:
+    void myEvent(Event* event);
+
+private:
+    const QScopedPointer<Ui::MyWidget> m_ui;
+    int m_counter;
+};
+
+// Note: alignment of variable initialization
+MyWidget::MyWidget(QWidget* parent)
+    : QWidget(parent)
+    , m_ui(new Ui::MyWidget())
+{
+
+}
+```
+
+#### Pointers / References
 ```c
 int* count;
+const QString& string;
 ```
 
 #### Braces
 ```c
 if (condition) {
     doSomething();
+} else {
+    doSomethingElse();
 }
 
 void ExampleClass::exampleFunction()
@@ -144,14 +195,17 @@ void ExampleClass::exampleFunction()
 
 #### Switch statement
 ```c
+// Note: avoid declaring variables in a switch statement
 switch (a) {
 case 1:
     doSomething();
     break;
 
-default:
+// Note: use braces if necessary
+default: {
     doSomethingElse();
     break;
+}
 }
 ```
 

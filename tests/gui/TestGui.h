@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QSharedPointer>
 
 class Database;
 class DatabaseTabWidget;
@@ -88,7 +89,7 @@ private:
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
     QByteArray m_dbData;
     QScopedPointer<TemporaryFile> m_dbFile;
     QString m_dbFileName;

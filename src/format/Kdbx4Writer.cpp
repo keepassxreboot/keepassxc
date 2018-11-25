@@ -75,7 +75,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CompressionFlags,
-                                                     Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgo()),
+                                                     Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgorithm()),
                                                                              KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::MasterSeed, masterSeed));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
@@ -138,7 +138,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QIODevice* outputDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (db->compressionAlgo() == Database::CompressionNone) {
+    if (db->compressionAlgorithm() == Database::CompressionNone) {
         outputDevice = cipherStream.data();
     } else {
         ioCompressor.reset(new QtIOCompressor(cipherStream.data()));

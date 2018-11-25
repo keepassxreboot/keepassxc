@@ -18,8 +18,6 @@
 
 #include <stdio.h>
 
-#include <QDebug>
-
 #include <ykcore.h>
 #include <ykdef.h>
 #include <ykstatus.h>
@@ -215,9 +213,9 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
              */
 
             if (yk_errno == YK_EUSBERR) {
-                qWarning() << "USB error:" << yk_usb_strerror();
+                qWarning("USB error: %s",  yk_usb_strerror());
             } else {
-                qWarning() << "YubiKey core error:" << yk_strerror(yk_errno);
+                qWarning("YubiKey core error: %s", yk_strerror(yk_errno));
             }
 
             return ERROR;

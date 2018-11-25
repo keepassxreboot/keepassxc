@@ -93,7 +93,7 @@ int Edit::execute(const QStringList& arguments)
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    Database* db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -152,8 +152,8 @@ int Edit::execute(const QStringList& arguments)
 
     entry->endUpdate();
 
-    QString errorMessage = db->saveToFile(databasePath);
-    if (!errorMessage.isEmpty()) {
+    QString errorMessage;
+    if (!db->save(databasePath, &errorMessage, true, false)) {
         err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

@@ -20,6 +20,7 @@
 #define KEEPASSX_TESTAUTOTYPE_H
 
 #include <QObject>
+#include <QSharedPointer>
 
 class AutoType;
 class AutoTypePlatformInterface;
@@ -53,8 +54,8 @@ private:
     AutoTypePlatformInterface* m_platform;
     AutoTypeTestInterface* m_test;
     AutoType* m_autoType;
-    Database* m_db;
-    QList<Database*> m_dbList;
+    QSharedPointer<Database> m_db;
+    QList<QSharedPointer<Database>> m_dbList;
     Group* m_group;
     Entry* m_entry1;
     Entry* m_entry2;

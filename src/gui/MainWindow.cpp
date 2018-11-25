@@ -32,6 +32,9 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
+#include "keys/FileKey.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/SearchWidget.h"
@@ -132,7 +135,7 @@ MainWindow::MainWindow()
     setAcceptDrops(true);
 
     // Setup the search widget in the toolbar
-    SearchWidget* search = new SearchWidget();
+    auto* search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
     m_searchWidgetAction = m_ui->toolBar->addWidget(search);
     m_searchWidgetAction->setEnabled(false);
@@ -293,7 +296,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
-    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeDatabase()));
+    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
@@ -349,11 +352,6 @@ MainWindow::MainWindow()
             this,
             SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
-    connect(m_ui->tabWidget,
-            SIGNAL(messageTab(QString,MessageWidget::MessageType)),
-            this,
-            SLOT(displayTabMessage(QString,MessageWidget::MessageType)));
-    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
@@ -450,9 +448,28 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
+void MainWindow::openDatabase(const QString& filePath, const QString& pw, const QString& keyFile)
 {
-    m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
+    if (pw.isEmpty() && keyFile.isEmpty()) {
+        m_ui->tabWidget->addDatabaseTab(filePath);
+        return;
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    if (!pw.isEmpty()) {
+        key->addKey(QSharedPointer<PasswordKey>::create(pw));
+    }
+    if (!keyFile.isEmpty()) {
+        auto fileKey = QSharedPointer<FileKey>::create();
+        fileKey->load(keyFile);
+        key->addKey(fileKey);
+    }
+    if (db->open(filePath, key, nullptr, false)) {
+        auto* dbWidget = new DatabaseWidget(db, this);
+        m_ui->tabWidget->addDatabaseTab(dbWidget);
+        dbWidget->switchToMainView(true);
+    }
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
@@ -476,12 +493,12 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
 
-        if (mode == DatabaseWidget::None) {
+        if (mode == DatabaseWidget::Mode::None) {
             mode = dbWidget->currentMode();
         }
 
         switch (mode) {
-        case DatabaseWidget::ViewMode: {
+        case DatabaseWidget::Mode::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
@@ -521,9 +538,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
             break;
         }
-        case DatabaseWidget::EditMode:
-        case DatabaseWidget::ImportMode:
-        case DatabaseWidget::LockedMode: {
+        case DatabaseWidget::Mode::EditMode:
+        case DatabaseWidget::Mode::ImportMode:
+        case DatabaseWidget::Mode::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
                 action->setEnabled(false);
@@ -589,13 +606,10 @@ void MainWindow::updateWindowTitle()
     bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
 
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
-        customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
+        customWindowTitlePart = m_ui->tabWidget->tabName(tabWidgetIndex);
         if (isModified) {
             // remove asterisk '*' from title
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
-        }
-        if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-            customWindowTitlePart = tr("%1 [read-only]", "window title modifier").arg(customWindowTitlePart);
         }
         m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
@@ -612,17 +626,16 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
         setWindowFilePath("");
     } else {
-        setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
+        setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
     }
 
-    setWindowModified(isModified);
-
     setWindowTitle(windowTitle);
+    setWindowModified(isModified);
 }
 
 void MainWindow::showAboutDialog()
 {
-    AboutDialog* aboutDialog = new AboutDialog(this);
+    auto* aboutDialog = new AboutDialog(this);
     aboutDialog->open();
 }
 
@@ -687,7 +700,7 @@ void MainWindow::switchToOpenDatabase()
 
 void MainWindow::switchToDatabaseFile(const QString& file)
 {
-    m_ui->tabWidget->openDatabase(file);
+    m_ui->tabWidget->addDatabaseTab(file);
     switchToDatabases();
 }
 
@@ -703,8 +716,9 @@ void MainWindow::switchToCsvImport()
     switchToDatabases();
 }
 
-void MainWindow::databaseStatusChanged(DatabaseWidget*)
+void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
 {
+    Q_UNUSED(dbWidget);
     updateTrayIcon();
 }
 
@@ -817,18 +831,14 @@ bool MainWindow::saveLastDatabases()
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
     if (openPreviousDatabasesOnStartup) {
-        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+        connect(m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
     }
 
-    if (!m_ui->tabWidget->closeAllDatabases()) {
-        accept = false;
-    } else {
-        accept = true;
-    }
+    accept = m_ui->tabWidget->closeAllDatabaseTabs();
 
     if (openPreviousDatabasesOnStartup) {
         disconnect(
-            m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
 
@@ -1036,13 +1046,6 @@ void MainWindow::hideGlobalMessage()
     m_ui->globalMessageWidget->hideMessage();
 }
 
-void MainWindow::hideTabMessage()
-{
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
-    }
-}
-
 void MainWindow::showYubiKeyPopup()
 {
     displayGlobalMessage(tr("Please touch the button on your YubiKey!"),
@@ -1121,7 +1124,7 @@ void MainWindow::dropEvent(QDropEvent* event)
 
 void MainWindow::closeAllDatabases()
 {
-    m_ui->tabWidget->closeAllDatabases();
+    m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
 void MainWindow::lockAllDatabases()

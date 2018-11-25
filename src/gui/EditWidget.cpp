@@ -56,7 +56,7 @@ void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* w
      * from automatic resizing and it now should be able to fit into a user's monitor even if the monitor is only 768
      * pixels high.
      */
-    QScrollArea* scrollArea = new QScrollArea(m_ui->stackedWidget);
+    auto* scrollArea = new QScrollArea(m_ui->stackedWidget);
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidget(widget);
     scrollArea->setWidgetResizable(true);

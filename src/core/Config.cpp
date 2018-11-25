@@ -153,6 +153,7 @@ void Config::init(const QString& fileName)
 
     m_defaults.insert("SingleInstance", true);
     m_defaults.insert("RememberLastDatabases", true);
+    m_defaults.insert("NumberOfRememberedLastDatabases", 5);
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
     m_defaults.insert("AutoSaveAfterEveryChange", true);

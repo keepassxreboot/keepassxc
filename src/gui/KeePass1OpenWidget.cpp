@@ -54,19 +54,16 @@ void KeePass1OpenWidget::openDatabase()
         return;
     }
 
-    delete m_db;
-
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     m_db = reader.readDatabase(&file, password, keyFileName);
     QApplication::restoreOverrideCursor();
 
     if (m_db) {
         m_db->metadata()->setName(QFileInfo(m_filename).completeBaseName());
-        emit editFinished(true);
+        emit dialogFinished(true);
+        clearForms();
     } else {
         m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
                                          MessageWidget::Error);
-
-        m_ui->editPassword->clear();
     }
 }

@@ -19,6 +19,9 @@
 #include "BrowserEntrySaveDialog.h"
 #include "ui_BrowserEntrySaveDialog.h"
 
+#include "core/Database.h"
+#include "gui/DatabaseWidget.h"
+
 BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::BrowserEntrySaveDialog())
@@ -43,10 +46,10 @@ int BrowserEntrySaveDialog::setItems(QList<DatabaseWidget*>& databaseWidgets, Da
     uint counter = 0;
     int activeIndex = -1;
     for (const auto dbWidget : databaseWidgets) {
-        QString databaseName = dbWidget->getDatabaseName();
-        QString databaseFileName = dbWidget->getDatabaseFileName();
+        QString databaseName = dbWidget->database()->metadata()->name();
+        QString databaseFileName = dbWidget->database()->filePath();
 
-        QListWidgetItem* item = new QListWidgetItem();
+        auto* item = new QListWidgetItem();
         item->setData(Qt::UserRole, counter);
 
         // Show database name (and filename if the name has been set in metadata)

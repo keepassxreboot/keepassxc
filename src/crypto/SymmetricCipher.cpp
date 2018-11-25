@@ -20,8 +20,6 @@
 #include "config-keepassx.h"
 #include "crypto/SymmetricCipherGcrypt.h"
 
-#include <QDebug>
-
 SymmetricCipher::SymmetricCipher(Algorithm algo, Mode mode, Direction direction)
     : m_backend(createBackend(algo, mode, direction))
     , m_initialized(false)
@@ -102,7 +100,7 @@ SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& ciphe
         return Twofish;
     }
 
-    qWarning() << "SymmetricCipher::cipherToAlgorithm: invalid UUID " << cipher;
+    qWarning("SymmetricCipher::cipherToAlgorithm: invalid UUID %s", cipher.toString().toLatin1().data());
     return InvalidAlgorithm;
 }
 

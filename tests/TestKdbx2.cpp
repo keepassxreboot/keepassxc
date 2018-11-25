@@ -37,7 +37,7 @@ void TestKdbx2::initTestCase()
 /**
  * Helper method for verifying contents of the sample KDBX 2 file.
  */
-void TestKdbx2::verifyKdbx2Db(Database* db)
+void TestKdbx2::verifyKdbx2Db(QSharedPointer<Database> db)
 {
     QVERIFY(db);
     QCOMPARE(db->rootGroup()->name(), QString("Format200"));
@@ -67,12 +67,13 @@ void TestKdbx2::testFormat200()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    auto db = QSharedPointer<Database>::create();
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    QVERIFY(reader.readDatabase(filename, key, db.data()));
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
 
     QVERIFY2(!reader.hasError(), reader.errorString().toStdString().c_str());
-    verifyKdbx2Db(db.data());
+    verifyKdbx2Db(db);
 }
 
 void TestKdbx2::testFormat200Upgrade()
@@ -80,8 +81,9 @@ void TestKdbx2::testFormat200Upgrade()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format200.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    auto db = QSharedPointer<Database>::create();
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    reader.readDatabase(filename, key, db.data());
     QVERIFY2(!reader.hasError(), reader.errorString().toStdString().c_str());
     QVERIFY(!db.isNull());
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_2 & KeePass2::FILE_VERSION_CRITICAL_MASK);
@@ -92,20 +94,21 @@ void TestKdbx2::testFormat200Upgrade()
 
     // write KDBX 3 to upgrade it
     KeePass2Writer writer;
-    writer.writeDatabase(&buffer, db.data());
+    QVERIFY(writer.writeDatabase(&buffer, db.data()));
     if (writer.hasError()) {
         QFAIL(qPrintable(QString("Error while writing database: %1").arg(writer.errorString())));
     }
 
     // read buffer back
     buffer.seek(0);
-    QScopedPointer<Database> targetDb(reader.readDatabase(&buffer, key));
+    auto targetDb = QSharedPointer<Database>::create();
+    QVERIFY(reader.readDatabase(&buffer, key, targetDb.data()));
     if (reader.hasError()) {
         QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
     }
 
     // database should now be upgraded to KDBX 3 without data loss
-    verifyKdbx2Db(targetDb.data());
+    verifyKdbx2Db(targetDb);
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK);
     QCOMPARE(targetDb->kdf()->uuid(), KeePass2::KDF_AES_KDBX3);
 }

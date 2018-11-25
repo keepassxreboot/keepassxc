@@ -121,8 +121,19 @@ void EditEntryWidget::setupMain()
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
+#ifdef WITH_XC_NETWORKING
+    m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("actions", "favicon-download"));
+    m_mainUi->fetchFaviconButton->setDisabled(true);
+#else
+    m_mainUi->fetchFaviconButton->setVisible(false);
+#endif
+
+
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+#ifdef WITH_XC_NETWORKING
+    connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
+#endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
     m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
@@ -241,6 +252,9 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
+#ifdef WITH_XC_NETWORKING
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(const QString&)), this, SLOT(updateFaviconButtonEnable(const QString&)));
+#endif
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->notesEnabled, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setUnsavedChanges()));
@@ -340,7 +354,7 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
     connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
 
-    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(modified()), SLOT(updateSSHAgentAttachments()));
+    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(entryAttachmentsModified()), SLOT(updateSSHAgentAttachments()));
 
     addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
 }
@@ -441,6 +455,8 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     if (SSHAgent::instance()->isAgentRunning()) {
         m_sshAgentUi->addToAgentButton->setEnabled(true);
         m_sshAgentUi->removeFromAgentButton->setEnabled(true);
+
+        SSHAgent::instance()->setAutoRemoveOnLock(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
     }
 }
 
@@ -556,20 +572,17 @@ void EditEntryWidget::addKeyToAgent()
     m_sshAgentUi->commentTextLabel->setText(key.comment());
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
 
-    quint32 lifetime = 0;
+    int lifetime = 0;
     bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
 
     if (m_sshAgentUi->lifetimeCheckBox->isChecked()) {
         lifetime = m_sshAgentUi->lifetimeSpinBox->value();
     }
 
-    if (!SSHAgent::instance()->addIdentity(key, lifetime, confirm)) {
+    if (!SSHAgent::instance()->addIdentity(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked(),
+                                           static_cast<quint32>(lifetime), confirm)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
         return;
-    }
-
-    if (m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked()) {
-        SSHAgent::instance()->removeIdentityAtLock(key, m_entry->uuid());
     }
 }
 
@@ -640,10 +653,10 @@ QString EditEntryWidget::entryTitle() const
     }
 }
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, Database* database)
+void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database)
 {
     m_entry = entry;
-    m_database = database;
+    m_db = std::move(database);
     m_create = create;
     m_history = history;
 
@@ -667,7 +680,7 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
     setUnsavedChanges(m_create);
 }
 
-void EditEntryWidget::setForms(const Entry* entry, bool restore)
+void EditEntryWidget::setForms(Entry* entry, bool restore)
 {
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameEdit->setReadOnly(m_history);
@@ -734,7 +747,7 @@ void EditEntryWidget::setForms(const Entry* entry, bool restore)
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
-    m_iconsWidget->load(entry->uuid(), m_database, iconStruct, entry->webUrl());
+    m_iconsWidget->load(entry->uuid(), m_db, iconStruct, entry->webUrl());
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
@@ -924,7 +937,7 @@ void EditEntryWidget::cancel()
         return;
     }
 
-    if (!m_entry->iconUuid().isNull() && !m_database->metadata()->containsCustomIcon(m_entry->iconUuid())) {
+    if (!m_entry->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_entry->iconUuid())) {
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
@@ -952,7 +965,7 @@ void EditEntryWidget::cancel()
 void EditEntryWidget::clear()
 {
     m_entry = nullptr;
-    m_database = nullptr;
+    m_db.reset();
     m_entryAttributes->clear();
     m_advancedUi->attachmentsWidget->clearAttachments();
     m_autoTypeAssoc->clear();
@@ -969,11 +982,11 @@ bool EditEntryWidget::hasBeenModified() const
     }
 
     // check if updating the entry would modify it
-    QScopedPointer<Entry> entry(new Entry());
-    entry->copyDataFrom(m_entry);
+    auto* entry = new Entry();
+    entry->copyDataFrom(m_entry.data());
 
     entry->beginUpdate();
-    updateEntryData(entry.data());
+    updateEntryData(entry);
     return entry->endUpdate();
 }
 
@@ -995,6 +1008,13 @@ void EditEntryWidget::setGeneratedPassword(const QString& password)
 
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
 }
+
+#ifdef WITH_XC_NETWORKING
+void EditEntryWidget::updateFaviconButtonEnable(const QString& url)
+{
+    m_mainUi->fetchFaviconButton->setDisabled(url.isEmpty());
+}
+#endif
 
 void EditEntryWidget::insertAttribute()
 {
@@ -1262,17 +1282,13 @@ void EditEntryWidget::deleteHistoryEntry()
 void EditEntryWidget::deleteAllHistoryEntries()
 {
     m_historyModel->deleteAll();
-    if (m_historyModel->rowCount() > 0) {
-        m_historyUi->deleteAllButton->setEnabled(true);
-    } else {
-        m_historyUi->deleteAllButton->setEnabled(false);
-    }
+    m_historyUi->deleteAllButton->setEnabled(m_historyModel->rowCount() > 0);
     setUnsavedChanges(true);
 }
 
 QMenu* EditEntryWidget::createPresetsMenu()
 {
-    QMenu* expirePresetsMenu = new QMenu(this);
+    auto* expirePresetsMenu = new QMenu(this);
     expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
     expirePresetsMenu->addSeparator();
     expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
@@ -1283,9 +1299,9 @@ QMenu* EditEntryWidget::createPresetsMenu()
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
     expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 6))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
     expirePresetsMenu->addSeparator();
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
-    expirePresetsMenu->addAction(tr("%n year(s)", 0, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
     return expirePresetsMenu;
 }
 

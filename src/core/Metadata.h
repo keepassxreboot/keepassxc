@@ -148,8 +148,7 @@ public:
     void copyAttributesFrom(const Metadata* other);
 
 signals:
-    void nameTextChanged();
-    void modified();
+    void metadataModified();
 
 private:
     template <class P, class V> bool set(P& property, const V& value);

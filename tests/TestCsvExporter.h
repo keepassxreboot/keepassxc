@@ -20,6 +20,7 @@
 #define KEEPASSX_TESTCSVEXPORTER_H
 
 #include <QObject>
+#include <QSharedPointer>
 
 class Database;
 class CsvExporter;
@@ -40,8 +41,8 @@ private slots:
     void testNestedGroups();
 
 private:
-    Database* m_db;
-    CsvExporter* m_csvExporter;
+    QSharedPointer<Database> m_db;
+    QSharedPointer<CsvExporter> m_csvExporter;
 };
 
 #endif // KEEPASSX_TESTCSVEXPORTER_H

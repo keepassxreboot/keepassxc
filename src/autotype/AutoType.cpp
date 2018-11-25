@@ -268,7 +268,7 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
  * Global Autotype entry-point function
  * Perform global Auto-Type on the active window
  */
-void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
+void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList)
 {
     if (!m_plugin) {
         return;
@@ -287,7 +287,7 @@ void AutoType::performGlobalAutoType(const QList<Database*>& dbList)
 
     QList<AutoTypeMatch> matchList;
 
-    for (Database* db : dbList) {
+    for (const auto& db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
             const QSet<QString> sequences = autoTypeSequences(entry, windowTitle).toSet();

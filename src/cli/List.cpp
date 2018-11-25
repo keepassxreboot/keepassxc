@@ -64,7 +64,7 @@ int List::execute(const QStringList& arguments)
 
     bool recursive = parser.isSet(recursiveOption);
 
-    QScopedPointer<Database> db(Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR));
+    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

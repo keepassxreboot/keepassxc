@@ -40,7 +40,7 @@ public:
     virtual ~KdbxReader() = default;
 
     static bool readMagicNumbers(QIODevice* device, quint32& sig1, quint32& sig2, quint32& version);
-    Database* readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase = false);
+    bool readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, Database* db);
 
     bool hasError() const;
     QString errorString() const;
@@ -57,22 +57,22 @@ protected:
      * @param device input device at the payload starting position
      * @param KDBX header data as bytes
      * @param key database encryption composite key
-     * @param keepDatabase keep database in case of read failure
-     * @return pointer to the read database, nullptr on failure
+     * @param db database to read into
+     * @return true on success
      */
-    virtual Database*
-    readDatabaseImpl(QIODevice* device,
-                     const QByteArray& headerData,
-                     QSharedPointer<const CompositeKey> key,
-                     bool keepDatabase) = 0;
+    virtual bool readDatabaseImpl(QIODevice* device,
+                                  const QByteArray& headerData,
+                                  QSharedPointer<const CompositeKey> key,
+                                  Database* db) = 0;
 
     /**
      * Read next header field from stream.
      *
      * @param headerStream input header stream
+     * @param database to read header field for
      * @return true if there are more header fields
      */
-    virtual bool readHeaderField(StoreDataStream& headerStream) = 0;
+    virtual bool readHeaderField(StoreDataStream& headerStream, Database* db) = 0;
 
     virtual void setCipher(const QByteArray& data);
     virtual void setCompressionFlags(const QByteArray& data);
@@ -88,9 +88,6 @@ protected:
 
     void decryptXmlInnerStream(QByteArray& xmlOutput, Database* db) const;
 
-    QScopedPointer<Database> m_db;
-
-    QPair<quint32, quint32> m_kdbxSignature;
     quint32 m_kdbxVersion = 0;
 
     QByteArray m_masterSeed;
@@ -102,6 +99,9 @@ protected:
     QByteArray m_xmlData;
 
 private:
+    QPair<quint32, quint32> m_kdbxSignature;
+    QPointer<Database> m_db;
+
     bool m_saveXml = false;
     bool m_error = false;
     QString m_errorStr = "";

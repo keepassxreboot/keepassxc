@@ -135,7 +135,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
         // Keyboard focus on search widget at database unlocking
-        connect(dbWidget, SIGNAL(unlockedDatabase()), this, SLOT(searchFocus()));
+        connect(dbWidget, SIGNAL(databaseUnlocked()), this, SLOT(searchFocus()));
         // Enforce search policy
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
