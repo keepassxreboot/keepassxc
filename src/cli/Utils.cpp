@@ -47,9 +47,9 @@ FILE* STDIN = stdin;
  * DEVNULL file handle for the CLI.
  */
 #ifdef Q_OS_WIN
-FILE* DEVNULL = fopen("nul", "rw");
+FILE* DEVNULL = fopen("nul", "w");
 #else
-FILE* DEVNULL = fopen("/dev/null", "rw");
+FILE* DEVNULL = fopen("/dev/null", "w");
 #endif
 
 
