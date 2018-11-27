@@ -20,7 +20,6 @@
 #define KEEPASSX_EDITWIDGETICONS_H
 
 #include <QSet>
-#include <QProgressDialog>
 #include <QUrl>
 #include <QWidget>
 #include <QNetworkAccessManager>
@@ -48,17 +47,6 @@ struct IconStruct
 
     QUuid uuid;
     int number;
-};
-
-class UrlFetchProgressDialog : public QProgressDialog
-{
-    Q_OBJECT
-
-public:
-    explicit UrlFetchProgressDialog(const QUrl &url, QWidget *parent = nullptr);
-
-public slots:
-    void networkReplyProgress(qint64 bytesRead, qint64 totalBytes);
 };
 
 class EditWidgetIcons : public QWidget
