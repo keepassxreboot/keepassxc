@@ -22,12 +22,12 @@
 
 #include <QCommandLineParser>
 
+#include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Global.h"
-#include "Utils.h"
+#include "core/Group.h"
 
 Show::Show()
 {
@@ -50,6 +50,7 @@ int Show::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    parser.addOption(Command::QuietOption);
     QCommandLineOption totp(QStringList() << "t"  << "totp",
                             QObject::tr("Show the entry's current TOTP."));
     parser.addOption(totp);
@@ -71,7 +72,10 @@ int Show::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(keyFile),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

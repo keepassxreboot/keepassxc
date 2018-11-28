@@ -51,6 +51,7 @@ int Clip::execute(const QStringList& arguments)
                                QObject::tr("Key file of the database."),
                                QObject::tr("path"));
     parser.addOption(keyFile);
+    parser.addOption(Command::QuietOption);
     QCommandLineOption totp(QStringList() << "t"  << "totp",
                             QObject::tr("Copy the current TOTP to the clipboard."));
     parser.addOption(totp);
@@ -66,15 +67,22 @@ int Clip::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(keyFile),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
 
-    return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp));
+    return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp), parser.isSet(Command::QuietOption));
 }
 
-int Clip::clipEntry(QSharedPointer<Database> database, const QString& entryPath, const QString& timeout, bool clipTotp)
+int Clip::clipEntry(QSharedPointer<Database> database,
+                    const QString& entryPath,
+                    const QString& timeout,
+                    bool clipTotp,
+                    bool silent)
 {
     TextStream err(Utils::STDERR);
 
@@ -86,7 +94,7 @@ int Clip::clipEntry(QSharedPointer<Database> database, const QString& entryPath,
         timeoutSeconds = timeout.toInt();
     }
 
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(silent ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
