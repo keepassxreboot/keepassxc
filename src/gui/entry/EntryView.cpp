@@ -50,7 +50,7 @@ EntryView::EntryView(QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(emitEntrySelectionChanged()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
 
@@ -144,13 +144,13 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 
 void EntryView::focusInEvent(QFocusEvent* event)
 {
-    emit entrySelectionChanged();
+    emit entrySelectionChanged(currentEntry());
     QTreeView::focusInEvent(event);
 }
 
 void EntryView::focusOutEvent(QFocusEvent* event)
 {
-    emit entrySelectionChanged();
+    emit entrySelectionChanged(nullptr);
     QTreeView::focusOutEvent(event);
 }
 
@@ -181,7 +181,7 @@ void EntryView::setFirstEntryActive()
         QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
         setCurrentEntry(m_model->entryFromIndex(index));
     } else {
-        emit entrySelectionChanged();
+        emit entrySelectionChanged(currentEntry());
     }
 }
 
@@ -194,6 +194,11 @@ void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
     emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
+}
+
+void EntryView::emitEntrySelectionChanged()
+{
+    emit entrySelectionChanged(currentEntry());
 }
 
 void EntryView::setModel(QAbstractItemModel* model)

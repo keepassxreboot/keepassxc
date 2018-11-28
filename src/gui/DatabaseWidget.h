@@ -132,8 +132,6 @@ signals:
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
-    void pressedEntry(Entry* selectedEntry);
-    void pressedGroup(Group* selectedGroup);
     void listModeAboutToActivate();
     void listModeActivated();
     void searchModeAboutToActivate();
@@ -168,7 +166,6 @@ public slots:
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
-    void onGroupChanged(Group* group);
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
@@ -210,8 +207,8 @@ private slots:
     void switchToGroupEdit(Group* entry, bool create);
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
-    void emitPressedGroup(Group* currentGroup);
-    void emitEntrySelectionChanged();
+    void onEntryChanged(Entry* entry);
+    void onGroupChanged(Group* group);
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
