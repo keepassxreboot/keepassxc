@@ -46,7 +46,7 @@ void TotpSetupDialog::saveSettings()
     uint digits = Totp::DEFAULT_DIGITS;
     if (m_ui->radio8Digits->isChecked()) {
         digits = 8;
-    else if (m_ui->radio7Digits->isChecked()) {
+    } else if (m_ui->radio7Digits->isChecked()) {
         digits = 7;
     } else if (m_ui->radioSteam->isChecked()) {
         digits = Totp::STEAM_DIGITS;
@@ -77,7 +77,7 @@ void TotpSetupDialog::init()
             m_ui->radioCustom->setChecked(true);
             if (settings->digits == 8) {
                 m_ui->radio8Digits->setChecked(true);
-            else if (settings->digits == 7) {
+            } else if (settings->digits == 7) {
                 m_ui->radio7Digits->setChecked(true);
             } else {
                 m_ui->radio6Digits->setChecked(true);
