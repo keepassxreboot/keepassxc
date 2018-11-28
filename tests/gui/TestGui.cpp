@@ -875,18 +875,28 @@ void TestGui::testSearch()
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
 
     // Test group search
+    searchWidget->setLimitGroup(false);
     GroupView* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
     clickIndex(groupView->model()->index(0, 0, rootGroupIndex), groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup()->name(), QString("General"));
-
-    searchWidget->setLimitGroup(false);
+    // Selecting a group should cancel search
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    // Restore search
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_F, Qt::ControlModifier);
+    QTest::keyClicks(searchTextEdit, "someTHING");
     QTRY_COMPARE(entryView->model()->rowCount(), 2);
+    // Enable group limiting
     searchWidget->setLimitGroup(true);
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    // Selecting another group should NOT cancel search
+    clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
+    QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+    QTRY_COMPARE(entryView->model()->rowCount(), 2);
 
     // reset
+    searchWidget->setLimitGroup(false);
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
 
