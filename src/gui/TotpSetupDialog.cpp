@@ -75,6 +75,8 @@ void TotpSetupDialog::init()
             m_ui->radioCustom->setChecked(true);
             if (settings->digits == 8) {
                 m_ui->radio8Digits->setChecked(true);
+            else if (settings->digits == 7) {
+                m_ui->radio7Digits->setChecked(true);
             } else {
                 m_ui->radio6Digits->setChecked(true);
             }
