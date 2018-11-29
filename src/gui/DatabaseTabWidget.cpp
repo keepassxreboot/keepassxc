@@ -94,10 +94,12 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
     Q_ASSERT(db->key());
     Q_ASSERT(db->kdf());
     if (!db->key() || !db->kdf()) {
-        MessageBox::critical(this, tr("Database creation error"),
-            tr("The created database has no key or KDF, refusing to save it.\n"
-               "This is definitely a bug, please report it to the developers."),
-            QMessageBox::Ok, QMessageBox::Ok);
+        MessageBox::critical(this,
+                             tr("Database creation error"),
+                             tr("The created database has no key or KDF, refusing to save it.\n"
+                                "This is definitely a bug, please report it to the developers."),
+                             QMessageBox::Ok,
+                             QMessageBox::Ok);
         return {};
     }
 
@@ -216,7 +218,7 @@ void DatabaseTabWidget::mergeDatabase()
     auto dbWidget = currentDatabaseWidget();
     if (dbWidget && !dbWidget->isLocked()) {
         QString filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
-        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), "", filter);
+        const QString fileName = fileDialog()->getOpenFileName(this, tr("Merge database"), QString(), filter);
         if (!fileName.isEmpty()) {
             mergeDatabase(fileName);
         }

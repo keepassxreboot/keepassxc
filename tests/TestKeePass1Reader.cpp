@@ -267,7 +267,7 @@ void TestKeePass1Reader::reopenDatabase(QSharedPointer<Database> db,
     QVERIFY(buffer.seek(0));
 
     auto key = QSharedPointer<CompositeKey>::create();
-    if (!password.isNull()) {
+    if (!password.isEmpty()) {
         key->addKey(QSharedPointer<PasswordKey>::create(password));
     }
     if (!keyfileName.isEmpty()) {

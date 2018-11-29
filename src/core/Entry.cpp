@@ -657,12 +657,14 @@ Entry* Entry::clone(CloneFlags flags) const
     if (flags & CloneUserAsRef) {
         // Build the username reference
         QString username = "{REF:U@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+        entry->m_attributes->set(
+            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
         QString password = "{REF:P@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+        entry->m_attributes->set(
+            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
@@ -1065,7 +1067,8 @@ QString Entry::resolveUrl(const QString& url) const
 
     // Validate the URL
     QUrl tempUrl = QUrl(newUrl);
-    if (tempUrl.isValid() && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
+    if (tempUrl.isValid()
+        && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
         return tempUrl.url();
     }
 

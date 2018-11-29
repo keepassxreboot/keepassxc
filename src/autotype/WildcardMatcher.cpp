@@ -23,7 +23,7 @@
 const QChar WildcardMatcher::Wildcard = '*';
 const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;
 
-WildcardMatcher::WildcardMatcher(QString  text)
+WildcardMatcher::WildcardMatcher(QString text)
     : m_text(std::move(text))
 {
 }

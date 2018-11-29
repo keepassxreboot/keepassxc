@@ -34,6 +34,7 @@ KeeAgentSettings::KeeAgentSettings()
 
 bool KeeAgentSettings::operator==(KeeAgentSettings& other)
 {
+    // clang-format off
     return (m_allowUseOfSshKey == other.m_allowUseOfSshKey && m_addAtDatabaseOpen == other.m_addAtDatabaseOpen
             && m_removeAtDatabaseClose == other.m_removeAtDatabaseClose
             && m_useConfirmConstraintWhenAdding == other.m_useConfirmConstraintWhenAdding
@@ -43,6 +44,7 @@ bool KeeAgentSettings::operator==(KeeAgentSettings& other)
             && m_attachmentName == other.m_attachmentName
             && m_saveAttachmentToTempFile == other.m_saveAttachmentToTempFile
             && m_fileName == other.m_fileName);
+    // clang-format on
 }
 
 bool KeeAgentSettings::operator!=(KeeAgentSettings& other)

@@ -28,7 +28,7 @@ namespace
     {
         return wholes + QLocale().decimalPoint() + fractions + " " + unit;
     }
-}
+} // namespace
 
 void TestTools::testHumanReadableFileSize()
 {

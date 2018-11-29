@@ -46,12 +46,12 @@ protected:
 
 private:
     Q_REQUIRED_RESULT static bool transformKeyRaw(const QByteArray& key,
-                                const QByteArray& seed,
-                                quint32 version,
-                                quint32 rounds,
-                                quint64 memory,
-                                quint32 parallelism,
-                                QByteArray& result);
+                                                  const QByteArray& seed,
+                                                  quint32 version,
+                                                  quint32 rounds,
+                                                  quint64 memory,
+                                                  quint32 parallelism,
+                                                  QByteArray& result);
 };
 
 #endif // KEEPASSX_ARGON2KDF_H

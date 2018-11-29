@@ -26,19 +26,22 @@
 class Database;
 namespace Ui
 {
-class DatabaseSettingsWidgetMetaDataSimple;
+    class DatabaseSettingsWidgetMetaDataSimple;
 }
 
 class DatabaseSettingWidgetMetaData : public DatabaseSettingsWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DatabaseSettingWidgetMetaData(QWidget* parent = nullptr);
     Q_DISABLE_COPY(DatabaseSettingWidgetMetaData);
     ~DatabaseSettingWidgetMetaData() override;
 
-    inline bool hasAdvancedMode() const override { return false; }
+    inline bool hasAdvancedMode() const override
+    {
+        return false;
+    }
 
 public slots:
     void initialize() override;
@@ -52,4 +55,4 @@ private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetMetaDataSimple> m_ui;
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSWIDGEMETADATA_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGEMETADATA_H

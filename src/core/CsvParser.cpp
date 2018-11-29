@@ -403,10 +403,11 @@ QString CsvParser::getStatus() const
 
 int CsvParser::getCsvCols() const
 {
-    if ((m_table.size() > 0) && (m_table.at(0).size() > 0))
+    if (!m_table.isEmpty() && !m_table.at(0).isEmpty()) {
         return m_table.at(0).size();
-    else
+    } else {
         return 0;
+    }
 }
 
 int CsvParser::getCsvRows() const

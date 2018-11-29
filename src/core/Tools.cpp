@@ -22,14 +22,12 @@
 #include "core/Translator.h"
 
 #include <QCoreApplication>
+#include <QElapsedTimer>
 #include <QIODevice>
 #include <QImageReader>
 #include <QLocale>
-#include <QStringList>
 #include <QRegularExpression>
-
-#include <QElapsedTimer>
-
+#include <QStringList>
 #include <cctype>
 
 #ifdef Q_OS_WIN
@@ -59,147 +57,145 @@
 
 namespace Tools
 {
-QString humanReadableFileSize(qint64 bytes, quint32 precision)
-{
-    constexpr auto kibibyte = 1024;
-    double size = bytes;
+    QString humanReadableFileSize(qint64 bytes, quint32 precision)
+    {
+        constexpr auto kibibyte = 1024;
+        double size = bytes;
 
-    QStringList units = QStringList() << "B"
-                                      << "KiB"
-                                      << "MiB"
-                                      << "GiB";
-    int i = 0;
-    int maxI = units.size() - 1;
+        QStringList units = QStringList() << "B"
+                                          << "KiB"
+                                          << "MiB"
+                                          << "GiB";
+        int i = 0;
+        int maxI = units.size() - 1;
 
-    while ((size >= kibibyte) && (i < maxI)) {
-        size /= kibibyte;
-        i++;
+        while ((size >= kibibyte) && (i < maxI)) {
+            size /= kibibyte;
+            i++;
+        }
+
+        return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
     }
 
-    return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
-}
+    bool readFromDevice(QIODevice* device, QByteArray& data, int size)
+    {
+        QByteArray buffer;
+        buffer.resize(size);
 
-bool readFromDevice(QIODevice* device, QByteArray& data, int size)
-{
-    QByteArray buffer;
-    buffer.resize(size);
-
-    qint64 readResult = device->read(buffer.data(), size);
-    if (readResult == -1) {
-        return false;
-    } else {
-        buffer.resize(readResult);
-        data = buffer;
-        return true;
-    }
-}
-
-bool readAllFromDevice(QIODevice* device, QByteArray& data)
-{
-    QByteArray result;
-    qint64 readBytes = 0;
-    qint64 readResult;
-    do {
-        result.resize(result.size() + 16384);
-        readResult = device->read(result.data() + readBytes, result.size() - readBytes);
-        if (readResult > 0) {
-            readBytes += readResult;
+        qint64 readResult = device->read(buffer.data(), size);
+        if (readResult == -1) {
+            return false;
+        } else {
+            buffer.resize(readResult);
+            data = buffer;
+            return true;
         }
     }
-    while (readResult > 0);
 
-    if (readResult == -1) {
-        return false;
-    } else {
-        result.resize(static_cast<int>(readBytes));
-        data = result;
-        return true;
+    bool readAllFromDevice(QIODevice* device, QByteArray& data)
+    {
+        QByteArray result;
+        qint64 readBytes = 0;
+        qint64 readResult;
+        do {
+            result.resize(result.size() + 16384);
+            readResult = device->read(result.data() + readBytes, result.size() - readBytes);
+            if (readResult > 0) {
+                readBytes += readResult;
+            }
+        } while (readResult > 0);
+
+        if (readResult == -1) {
+            return false;
+        } else {
+            result.resize(static_cast<int>(readBytes));
+            data = result;
+            return true;
+        }
     }
-}
 
-QString imageReaderFilter()
-{
-    const QList<QByteArray> formats = QImageReader::supportedImageFormats();
-    QStringList formatsStringList;
+    QString imageReaderFilter()
+    {
+        const QList<QByteArray> formats = QImageReader::supportedImageFormats();
+        QStringList formatsStringList;
 
-    for (const QByteArray& format : formats) {
-        for (char codePoint : format) {
-            if (!QChar(codePoint).isLetterOrNumber()) {
-                continue;
+        for (const QByteArray& format : formats) {
+            for (char codePoint : format) {
+                if (!QChar(codePoint).isLetterOrNumber()) {
+                    continue;
+                }
+            }
+
+            formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        }
+
+        return formatsStringList.join(" ");
+    }
+
+    bool isHex(const QByteArray& ba)
+    {
+        for (const unsigned char c : ba) {
+            if (!std::isxdigit(c)) {
+                return false;
             }
         }
 
-        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        return true;
     }
 
-    return formatsStringList.join(" ");
-}
+    bool isBase64(const QByteArray& ba)
+    {
+        constexpr auto pattern = R"(^(?:[a-z0-9+]{4})*(?:[a-z0-9+]{3}=|[a-z0-9+]{2}==)?$)";
+        QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
 
-bool isHex(const QByteArray& ba)
-{
-    for (const unsigned char c : ba) {
-        if (!std::isxdigit(c)) {
-            return false;
+        QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+        return regexp.exactMatch(base64);
+    }
+
+    void sleep(int ms)
+    {
+        Q_ASSERT(ms >= 0);
+
+        if (ms == 0) {
+            return;
         }
-    }
-
-    return true;
-}
-
-bool isBase64(const QByteArray& ba)
-{
-    constexpr auto pattern = R"(^(?:[a-z0-9+]{4})*(?:[a-z0-9+]{3}=|[a-z0-9+]{2}==)?$)";
-    QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
-
-    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
-
-    return regexp.exactMatch(base64);
-}
-
-void sleep(int ms)
-{
-    Q_ASSERT(ms >= 0);
-
-    if (ms == 0) {
-        return;
-    }
 
 #ifdef Q_OS_WIN
-    Sleep(uint(ms));
+        Sleep(uint(ms));
 #else
-    timespec ts;
-    ts.tv_sec = ms/1000;
-    ts.tv_nsec = (ms%1000)*1000*1000;
-    nanosleep(&ts, nullptr);
+        timespec ts;
+        ts.tv_sec = ms / 1000;
+        ts.tv_nsec = (ms % 1000) * 1000 * 1000;
+        nanosleep(&ts, nullptr);
 #endif
-}
-
-void wait(int ms)
-{
-    Q_ASSERT(ms >= 0);
-
-    if (ms == 0) {
-        return;
     }
 
-    QElapsedTimer timer;
-    timer.start();
+    void wait(int ms)
+    {
+        Q_ASSERT(ms >= 0);
 
-    if (ms <= 50) {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
-        sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
-    } else {
-        int timeLeft;
-        do {
-            timeLeft = ms - timer.elapsed();
-            if (timeLeft > 0) {
-                QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
-                sleep(10);
-            }
+        if (ms == 0) {
+            return;
         }
-        while (!timer.hasExpired(ms));
+
+        QElapsedTimer timer;
+        timer.start();
+
+        if (ms <= 50) {
+            QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
+            sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
+        } else {
+            int timeLeft;
+            do {
+                timeLeft = ms - timer.elapsed();
+                if (timeLeft > 0) {
+                    QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
+                    sleep(10);
+                }
+            } while (!timer.hasExpired(ms));
+        }
     }
-}
 
 // Escape common regex symbols except for *, ?, and |
 auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");

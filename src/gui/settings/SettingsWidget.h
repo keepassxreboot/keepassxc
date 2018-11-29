@@ -62,7 +62,7 @@ public slots:
     /**
      * Discard settings.
      */
-    virtual void discard() {};
+    virtual void discard(){};
 
 signals:
     void editFinished(bool saved);
@@ -72,4 +72,4 @@ private:
     bool m_advancedMode = false;
 };
 
-#endif //KEEPASSXC_SETTINGSWIDGET_H
+#endif // KEEPASSXC_SETTINGSWIDGET_H

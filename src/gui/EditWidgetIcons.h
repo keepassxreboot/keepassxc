@@ -21,9 +21,8 @@
 
 #include <QSet>
 #include <QUrl>
-#include <QWidget>
-#include <QNetworkAccessManager>
 #include <QUuid>
+#include <QWidget>
 
 #include "config-keepassx.h"
 #include "core/Global.h"
@@ -33,6 +32,7 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 #ifdef WITH_XC_NETWORKING
+class QNetworkAccessManager;
 class QNetworkReply;
 #endif
 
@@ -95,8 +95,8 @@ private:
     QUrl m_fetchUrl;
     QList<QUrl> m_urlsToTry;
     QByteArray m_bytesReceived;
-    QNetworkAccessManager m_netMgr;
-    QNetworkReply *m_reply;
+    QNetworkAccessManager* m_netMgr;
+    QNetworkReply* m_reply;
     int m_redirects;
 #endif
     DefaultIconModel* const m_defaultIconModel;

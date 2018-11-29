@@ -17,6 +17,7 @@
 
 #include "KeyComponentWidget.h"
 #include "ui_KeyComponentWidget.h"
+
 #include <QStackedWidget>
 #include <QTimer>
 
@@ -124,7 +125,8 @@ void KeyComponentWidget::updateComponentName(const QString& name)
     m_ui->addButton->setText(tr("Add %1", "Add a key component").arg(name));
     m_ui->changeButton->setText(tr("Change %1", "Change a key component").arg(name));
     m_ui->removeButton->setText(tr("Remove %1", "Remove a key component").arg(name));
-    m_ui->changeOrRemoveLabel->setText(tr("%1 set, click to change or remove", "Change or remove a key component").arg(name));
+    m_ui->changeOrRemoveLabel->setText(
+        tr("%1 set, click to change or remove", "Change or remove a key component").arg(name));
 }
 
 void KeyComponentWidget::updateComponentDescription(const QString& description)

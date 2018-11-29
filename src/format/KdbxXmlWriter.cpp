@@ -356,12 +356,14 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     for (const QString& key : attributesKeyList) {
         m_xml.writeStartElement("String");
 
+        // clang-format off
         bool protect =
             (((key == "Title") && m_meta->protectTitle()) || ((key == "UserName") && m_meta->protectUsername())
             || ((key == "Password") && m_meta->protectPassword())
             || ((key == "URL") && m_meta->protectUrl())
             || ((key == "Notes") && m_meta->protectNotes())
             || entry->attributes()->isProtected(key));
+        // clang-format on
 
         writeString("Key", key);
 

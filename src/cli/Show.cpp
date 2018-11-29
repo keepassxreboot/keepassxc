@@ -48,11 +48,13 @@ int Show::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
-    QCommandLineOption totp(QStringList() << "t"  << "totp",
+    QCommandLineOption totp(QStringList() << "t"
+                                          << "totp",
                             QObject::tr("Show the entry's current TOTP."));
     parser.addOption(totp);
     QCommandLineOption attributes(
-        QStringList() << "a" << "attributes",
+        QStringList() << "a"
+                      << "attributes",
         QObject::tr(
             "Names of the attributes to show. "
             "This option can be specified more than once, with each attribute shown one-per-line in the given order. "

@@ -390,7 +390,7 @@ bool OpenSSHKey::openPrivateKey(const QString& passphrase)
             hash.addData(m_cipherIV.data(), 8);
             mdBuf = hash.result();
             keyData.append(mdBuf);
-        } while(keyData.size() < cipher->keySize());
+        } while (keyData.size() < cipher->keySize());
 
         if (keyData.size() > cipher->keySize()) {
             // If our key size isn't a multiple of 16 (e.g. AES-192 or something),

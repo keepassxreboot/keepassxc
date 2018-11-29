@@ -39,6 +39,7 @@ void GroupModel::changeDatabase(Database* newDb)
 
     m_db = newDb;
 
+    // clang-format off
     connect(m_db, SIGNAL(groupDataChanged(Group*)), SLOT(groupDataChanged(Group*)));
     connect(m_db, SIGNAL(groupAboutToAdd(Group*,int)), SLOT(groupAboutToAdd(Group*,int)));
     connect(m_db, SIGNAL(groupAdded()), SLOT(groupAdded()));
@@ -46,6 +47,7 @@ void GroupModel::changeDatabase(Database* newDb)
     connect(m_db, SIGNAL(groupRemoved()), SLOT(groupRemoved()));
     connect(m_db, SIGNAL(groupAboutToMove(Group*,Group*,int)), SLOT(groupAboutToMove(Group*,Group*,int)));
     connect(m_db, SIGNAL(groupMoved()), SLOT(groupMoved()));
+    // clang-format on
 
     endResetModel();
 }

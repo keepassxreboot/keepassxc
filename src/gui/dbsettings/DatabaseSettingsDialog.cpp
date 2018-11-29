@@ -18,16 +18,17 @@
 
 #include "DatabaseSettingsDialog.h"
 #include "ui_DatabaseSettingsDialog.h"
-#include "DatabaseSettingsWidgetGeneral.h"
+
 #include "DatabaseSettingsWidgetEncryption.h"
+#include "DatabaseSettingsWidgetGeneral.h"
 #include "DatabaseSettingsWidgetMasterKey.h"
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
 
 #include "core/Config.h"
-#include "core/FilePath.h"
 #include "core/Database.h"
+#include "core/FilePath.h"
 #include "touchid/TouchID.h"
 
 DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
@@ -57,12 +58,13 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->setCurrentIndex(0);
     m_securityTabWidget->setCurrentIndex(0);
 
-    connect(m_securityTabWidget, SIGNAL(currentChanged(int)),  SLOT(pageChanged()));
+    connect(m_securityTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged()));
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_ui->advancedSettingsToggle, SIGNAL(toggled(bool)), SLOT(toggleAdvancedMode(bool)));
 
 #ifdef WITH_XC_BROWSER
-    m_ui->categoryList->addCategory(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"));
+    m_ui->categoryList->addCategory(tr("Browser Integration"),
+                                    FilePath::instance()->icon("apps", "internet-web-browser"));
     m_ui->stackedWidget->addWidget(m_browserWidget);
 #endif
 

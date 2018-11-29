@@ -630,10 +630,12 @@ Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& 
     // Return the first entry that matches the full path OR if there is no leading
     // slash, return the first entry title that matches
     for (Entry* entry : entries()) {
+        // clang-format off
         if (entryPath == (basePath + entry->title())
             || (!entryPath.startsWith("/") && entry->title() == entryPath)) {
             return entry;
         }
+        // clang-format on
     }
 
     for (Group* group : children()) {
@@ -654,9 +656,11 @@ Group* Group::findGroupByPath(const QString& groupPath)
     if (groupPath.isEmpty()) {
         normalizedGroupPath = QString("/"); // root group
     } else {
+        // clang-format off
         normalizedGroupPath = (groupPath.startsWith("/") ? "" : "/")
             + groupPath
             + (groupPath.endsWith("/") ? "" : "/");
+        // clang-format on
     }
     return findGroupByPathRecursive(normalizedGroupPath, "/");
 }
@@ -894,6 +898,7 @@ void Group::connectDatabaseSignalsRecursive(Database* db)
     }
 
     if (db) {
+        // clang-format off
         connect(this, SIGNAL(groupDataChanged(Group*)), db, SIGNAL(groupDataChanged(Group*)));
         connect(this, SIGNAL(groupAboutToRemove(Group*)), db, SIGNAL(groupAboutToRemove(Group*)));
         connect(this, SIGNAL(groupRemoved()), db, SIGNAL(groupRemoved()));
@@ -902,6 +907,7 @@ void Group::connectDatabaseSignalsRecursive(Database* db)
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(groupMoved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(groupModified()), db, SLOT(markAsModified()));
+        // clang-format on
     }
 
     m_db = db;
@@ -983,7 +989,7 @@ QStringList Group::locate(const QString& locateTerm, const QString& currentPath)
 
     for (const Entry* entry : asConst(m_entries)) {
         QString entryPath = currentPath + entry->title();
-        if (entryPath.toLower().contains(locateTerm.toLower())) {
+        if (entryPath.contains(locateTerm, Qt::CaseInsensitive)) {
             response << entryPath;
         }
     }

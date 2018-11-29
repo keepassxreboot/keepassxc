@@ -5,10 +5,10 @@
 #define TOUCHID_AVAILABLE 1
 #define TOUCHID_NOT_AVAILABLE 0
 
-#include <QHash>
-#include <QString>
 #include <QByteArray>
+#include <QHash>
 #include <QSharedPointer>
+#include <QString>
 
 class TouchID
 {
@@ -16,7 +16,9 @@ public:
     static TouchID& getInstance();
 
 private:
-    TouchID() {}
+    TouchID()
+    {
+    }
 
     // TouchID(TouchID const&); // Don't Implement
     // void operator=(TouchID const&); // Don't implement

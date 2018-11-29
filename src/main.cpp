@@ -16,19 +16,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCommandLineParser>
 #include <QFile>
 #include <QTextStream>
-#include <QCommandLineParser>
 
+#include "cli/Utils.h"
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
-#include "core/Tools.h"
 #include "core/Config.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
-#include "cli/Utils.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
@@ -58,19 +58,24 @@ int main(int argc, char** argv)
     Bootstrap::bootstrapApplication();
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
-    parser.addPositionalArgument("filename",
-        QCoreApplication::translate("main",  "filenames of the password databases to open (*.kdbx)"), "[filename(s)]");
+    parser.setApplicationDescription(
+        QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
+    parser.addPositionalArgument(
+        "filename",
+        QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"),
+        "[filename(s)]");
 
     QCommandLineOption configOption(
         "config", QCoreApplication::translate("main", "path to a custom config file"), "config");
     QCommandLineOption keyfileOption(
         "keyfile", QCoreApplication::translate("main", "key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
-        QCoreApplication::translate("main", "read password of the database from stdin"));
+                                     QCoreApplication::translate("main", "read password of the database from stdin"));
     // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
-    QCommandLineOption parentWindowOption(
-        QStringList() << "pw" << "parent-window", QCoreApplication::translate("main", "Parent window handle"), "handle");
+    QCommandLineOption parentWindowOption(QStringList() << "pw"
+                                                        << "parent-window",
+                                          QCoreApplication::translate("main", "Parent window handle"),
+                                          "handle");
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -80,19 +85,21 @@ int main(int argc, char** argv)
     parser.addOption(parentWindowOption);
 
     parser.process(app);
-    
+
     // Don't try and do anything with the application if we're only showing the help / version
     if (parser.isSet(versionOption) || parser.isSet(helpOption)) {
         return 0;
     }
-    
+
     const QStringList fileNames = parser.positionalArguments();
 
     if (app.isAlreadyRunning()) {
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
-        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.").toUtf8().constData();
+        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.")
+                          .toUtf8()
+                          .constData();
         return 0;
     }
 

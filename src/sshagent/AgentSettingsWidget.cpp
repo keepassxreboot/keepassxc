@@ -17,8 +17,9 @@
  */
 
 #include "AgentSettingsWidget.h"
-#include "core/Config.h"
 #include "ui_AgentSettingsWidget.h"
+
+#include "core/Config.h"
 
 AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
     : QWidget(parent)

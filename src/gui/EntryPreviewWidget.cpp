@@ -220,7 +220,7 @@ void EntryPreviewWidget::updateEntryAttributesTab()
     m_ui->entryAttributesEdit->clear();
     const EntryAttributes* attributes = m_currentEntry->attributes();
     const QStringList customAttributes = attributes->customKeys();
-    const bool haveAttributes = customAttributes.size() > 0;
+    const bool haveAttributes = !customAttributes.isEmpty();
     setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttributesTab, haveAttributes);
     if (haveAttributes) {
         QString attributesText;

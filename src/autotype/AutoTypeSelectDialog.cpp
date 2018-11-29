@@ -67,10 +67,13 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     QLabel* descriptionLabel = new QLabel(tr("Select entry to Auto-Type:"), this);
     layout->addWidget(descriptionLabel);
 
+    // clang-format off
     connect(m_view, SIGNAL(activated(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(m_view, SIGNAL(clicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(matchRemoved()));
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
+    // clang-format on
+
     layout->addWidget(m_view);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, Qt::Horizontal, this);

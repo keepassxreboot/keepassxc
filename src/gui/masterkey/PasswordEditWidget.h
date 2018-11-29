@@ -23,7 +23,7 @@
 
 namespace Ui
 {
-class PasswordEditWidget;
+    class PasswordEditWidget;
 }
 
 class PasswordEditWidget : public KeyComponentWidget
@@ -53,4 +53,4 @@ private:
     QPointer<QWidget> m_compEditWidget;
 };
 
-#endif //KEEPASSXC_PASSWORDEDITWIDGET_H
+#endif // KEEPASSXC_PASSWORDEDITWIDGET_H

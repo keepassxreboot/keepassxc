@@ -9,6 +9,7 @@ class OSEventFilter : public QAbstractNativeEventFilter
 public:
     OSEventFilter();
     bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override;
+
 private:
     Q_DISABLE_COPY(OSEventFilter)
 };

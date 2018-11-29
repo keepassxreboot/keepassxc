@@ -227,7 +227,7 @@ void TestKeys::testCompositeKeyComponents()
     auto fileKeyEnc = QSharedPointer<FileKey>::create();
     QString error;
     fileKeyEnc->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"), &error);
-    if (!error.isNull()) {
+    if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }
     auto challengeResponseKeyEnc = QSharedPointer<MockChallengeResponseKey>::create(QByteArray(16, 0x10));
@@ -285,7 +285,7 @@ void TestKeys::testCompositeKeyComponents()
     compositeKeyDec3->addKey(passwordKeyEnc);
     auto fileKeyWrong = QSharedPointer<FileKey>::create();
     fileKeyWrong->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed2.key"), &error);
-    if (!error.isNull()) {
+    if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }
     compositeKeyDec3->addKey(fileKeyWrong);

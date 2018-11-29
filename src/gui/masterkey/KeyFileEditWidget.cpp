@@ -17,8 +17,9 @@
 
 #include "KeyFileEditWidget.h"
 #include "ui_KeyFileEditWidget.h"
-#include "gui/MainWindow.h"
+
 #include "gui/FileDialog.h"
+#include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -100,8 +101,10 @@ void KeyFileEditWidget::createKeyFile()
         QString errorMsg;
         bool created = FileKey::create(fileName, &errorMsg);
         if (!created) {
-            MessageBox::critical(getMainWindow(), tr("Error creating key file"),
-                                 tr("Unable to create key file: %1").arg(errorMsg), QMessageBox::Button::Ok);
+            MessageBox::critical(getMainWindow(),
+                                 tr("Error creating key file"),
+                                 tr("Unable to create key file: %1").arg(errorMsg),
+                                 QMessageBox::Button::Ok);
         } else {
             m_compUi->keyFileCombo->setEditText(fileName);
         }

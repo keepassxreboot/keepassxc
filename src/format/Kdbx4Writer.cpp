@@ -50,7 +50,6 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(ivSize);
     QByteArray protectedStreamKey = randomGen()->randomArray(64);
-    QByteArray startBytes;
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (!db->setKey(db->key(), false, true)) {
@@ -73,10 +72,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
         writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, KeePass2::FILE_VERSION_4);
 
-        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
-        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CompressionFlags,
-                                                     Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgorithm()),
-                                                                             KeePass2::BYTEORDER)));
+        CHECK_RETURN_FALSE(
+            writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
+        CHECK_RETURN_FALSE(writeHeaderField<quint32>(
+            &header,
+            KeePass2::HeaderFieldID::CompressionFlags,
+            Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgorithm()), KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::MasterSeed, masterSeed));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
 

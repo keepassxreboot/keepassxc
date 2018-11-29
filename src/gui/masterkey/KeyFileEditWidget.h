@@ -23,12 +23,12 @@
 
 namespace Ui
 {
-class KeyFileEditWidget;
+    class KeyFileEditWidget;
 }
 
 class KeyFileEditWidget : public KeyComponentWidget
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit KeyFileEditWidget(QWidget* parent = nullptr);
@@ -51,4 +51,4 @@ private:
     QPointer<QWidget> m_compEditWidget;
 };
 
-#endif //KEEPASSXC_KEYFILEEDITWIDGET_H
+#endif // KEEPASSXC_KEYFILEEDITWIDGET_H

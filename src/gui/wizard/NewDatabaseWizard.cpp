@@ -16,14 +16,14 @@
  */
 
 #include "NewDatabaseWizard.h"
-#include "NewDatabaseWizardPageMetaData.h"
 #include "NewDatabaseWizardPageEncryption.h"
 #include "NewDatabaseWizardPageMasterKey.h"
+#include "NewDatabaseWizardPageMetaData.h"
 
-#include "core/Global.h"
 #include "core/Database.h"
-#include "core/Group.h"
 #include "core/FilePath.h"
+#include "core/Global.h"
+#include "core/Group.h"
 #include "format/KeePass2.h"
 
 #include <QVBoxLayout>
@@ -35,11 +35,13 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     setWizardStyle(QWizard::MacStyle);
     setOption(QWizard::WizardOption::HaveHelpButton, false);
 
+    // clang-format off
     m_pages << new NewDatabaseWizardPageMetaData()
             << new NewDatabaseWizardPageEncryption()
             << new NewDatabaseWizardPageMasterKey();
+    // clang-format on
 
-    for (const auto& page: asConst(m_pages)) {
+    for (const auto& page : asConst(m_pages)) {
         addPage(page);
     }
 

@@ -36,7 +36,8 @@
 
 class Database;
 class Group;
-namespace Totp {
+namespace Totp
+{
     struct Settings;
 }
 

@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
 #define KEEPASSX_DATABASESETTINGSWIDGET_H
 
-#include "gui/DialogyWidget.h"
 #include "config-keepassx.h"
+#include "gui/DialogyWidget.h"
 
 #include <QPointer>
 #include <QScopedPointer>

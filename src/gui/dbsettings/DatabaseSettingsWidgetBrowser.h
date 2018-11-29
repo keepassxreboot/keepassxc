@@ -21,18 +21,19 @@
 
 #include "DatabaseSettingsWidget.h"
 
+#include "browser/BrowserService.h"
+#include "core/CustomData.h"
+#include "gui/DatabaseTabWidget.h"
+
+#include <QItemSelection>
 #include <QPointer>
 #include <QScopedPointer>
 #include <QStandardItemModel>
-#include <QItemSelection>
-#include "core/CustomData.h"
-#include "gui/DatabaseTabWidget.h"
-#include "browser/BrowserService.h"
 
 class Database;
 namespace Ui
 {
-class DatabaseSettingsWidgetBrowser;
+    class DatabaseSettingsWidgetBrowser;
 }
 
 class DatabaseSettingsWidgetBrowser : public DatabaseSettingsWidget
@@ -45,7 +46,10 @@ public:
     ~DatabaseSettingsWidgetBrowser() override;
 
     CustomData* customData() const;
-    inline bool hasAdvancedMode() const override { return false; }
+    inline bool hasAdvancedMode() const override
+    {
+        return false;
+    }
 
 public slots:
     void initialize() override;
@@ -75,4 +79,4 @@ private:
     BrowserService m_browserService;
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H

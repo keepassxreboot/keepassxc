@@ -17,18 +17,21 @@
  */
 
 #include "DatabaseSettingsWidgetBrowser.h"
+#include "ui_DatabaseSettingsWidgetBrowser.h"
+
 #include <QProgressDialog>
+
+#include "browser/BrowserSettings.h"
 #include "core/Clock.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"
-#include "browser/BrowserSettings.h"
-#include "ui_DatabaseSettingsWidgetBrowser.h"
 
 DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
-    : DatabaseSettingsWidget(parent), m_ui(new Ui::DatabaseSettingsWidgetBrowser())
+    : DatabaseSettingsWidget(parent)
+    , m_ui(new Ui::DatabaseSettingsWidgetBrowser())
     , m_customData(new CustomData(this))
     , m_customDataModel(new QStandardItemModel(this))
     , m_browserService(nullptr)
@@ -38,8 +41,13 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     m_ui->customDataTable->setModel(m_customDataModel);
 
     settingsWarning();
-    connect(m_ui->customDataTable->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+
+    // clang-format off
+    connect(m_ui->customDataTable->selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
+    // clang-format on
+
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedKey()));
     connect(m_ui->convertToCustomData, SIGNAL(clicked()), this, SLOT(convertAttributesToCustomData()));
     connect(m_ui->convertToCustomData, SIGNAL(clicked()), this, SLOT(updateSharedKeyList()));
@@ -83,11 +91,13 @@ bool DatabaseSettingsWidgetBrowser::save()
 
 void DatabaseSettingsWidgetBrowser::removeSelectedKey()
 {
-    if (QMessageBox::Yes != MessageBox::question(this,
-            tr("Delete the selected key?"),
-            tr("Do you really want to delete the selected key?\n"
-               "This may prevent connection to the browser plugin."),
-            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel)) {
+    if (QMessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Delete the selected key?"),
+                                tr("Do you really want to delete the selected key?\n"
+                                   "This may prevent connection to the browser plugin."),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel)) {
         return;
     }
 
@@ -116,9 +126,8 @@ void DatabaseSettingsWidgetBrowser::updateModel()
         if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
             QString strippedKey = key;
             strippedKey.remove(BrowserService::ASSOCIATE_KEY_PREFIX);
-            m_customDataModel->appendRow(QList<QStandardItem*>()
-                                             << new QStandardItem(strippedKey)
-                                             << new QStandardItem(customData()->value(key)));
+            m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(strippedKey)
+                                                                 << new QStandardItem(customData()->value(key)));
         }
     }
 
@@ -132,7 +141,8 @@ void DatabaseSettingsWidgetBrowser::settingsWarning()
         m_ui->removeSharedEncryptionKeys->setEnabled(false);
         m_ui->removeStoredPermissions->setEnabled(false);
         m_ui->customDataTable->setEnabled(false);
-        m_ui->warningWidget->showMessage(tr("Enable Browser Integration to access these settings."), MessageWidget::Warning);
+        m_ui->warningWidget->showMessage(tr("Enable Browser Integration to access these settings."),
+                                         MessageWidget::Warning);
         m_ui->warningWidget->setCloseButtonVisible(false);
         m_ui->warningWidget->setAutoHideTimeout(-1);
     } else {
@@ -146,11 +156,13 @@ void DatabaseSettingsWidgetBrowser::settingsWarning()
 
 void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
 {
-    if (QMessageBox::Yes != MessageBox::question(this,
-            tr("Disconnect all browsers"),
-            tr("Do you really want to disconnect all browsers?\n"
-               "This may prevent connection to the browser plugin."),
-            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel)) {
+    if (QMessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Disconnect all browsers"),
+                                tr("Do you really want to disconnect all browsers?\n"
+                                   "This may prevent connection to the browser plugin."),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel)) {
         return;
     }
 
@@ -182,11 +194,13 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
 
 void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
 {
-    if (QMessageBox::Yes != MessageBox::question(this,
-            tr("Forget all site-specific settings on entries"),
-            tr("Do you really want forget all site-specific settings on every entry?\n"
-               "Permissions to access entries will be revoked."),
-            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel)) {
+    if (QMessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Forget all site-specific settings on entries"),
+                                tr("Do you really want forget all site-specific settings on every entry?\n"
+                                   "Permissions to access entries will be revoked."),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel)) {
         return;
     }
 
@@ -226,11 +240,14 @@ void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
 
 void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
 {
-    if (QMessageBox::Yes != MessageBox::question(this,
-            tr("Move KeePassHTTP attributes to custom data"),
-            tr("Do you really want to move all legacy browser integration data to the latest standard?\n"
-               "This is necessary to maintain compatibility with the browser plugin."),
-            QMessageBox::Yes | QMessageBox::Cancel, QMessageBox::Cancel)) {
+    if (QMessageBox::Yes
+        != MessageBox::question(
+               this,
+               tr("Move KeePassHTTP attributes to custom data"),
+               tr("Do you really want to move all legacy browser integration data to the latest standard?\n"
+                  "This is necessary to maintain compatibility with the browser plugin."),
+               QMessageBox::Yes | QMessageBox::Cancel,
+               QMessageBox::Cancel)) {
         return;
     }
 
@@ -242,4 +259,3 @@ void DatabaseSettingsWidgetBrowser::updateSharedKeyList()
 {
     updateModel();
 }
-

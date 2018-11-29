@@ -15,7 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef KEEPASSXC_BOOTSTRAP_H
 #define KEEPASSXC_BOOTSTRAP_H
 
@@ -23,12 +22,11 @@
 
 namespace Bootstrap
 {
-void bootstrapApplication();
-void restoreMainWindowState(MainWindow& mainWindow);
-void disableCoreDumps();
-bool createWindowsDACL();
-void setupSearchPaths();
-};
+    void bootstrapApplication();
+    void restoreMainWindowState(MainWindow& mainWindow);
+    void disableCoreDumps();
+    bool createWindowsDACL();
+    void setupSearchPaths();
+}; // namespace Bootstrap
 
-
-#endif //KEEPASSXC_BOOTSTRAP_H
+#endif // KEEPASSXC_BOOTSTRAP_H

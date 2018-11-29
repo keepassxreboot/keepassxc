@@ -21,11 +21,11 @@
 #include "core/Database.h"
 #include "util/TemporaryFile.h"
 
-#include <QTest>
-#include <QTextStream>
 #include <QFile>
 #include <QScopedPointer>
 #include <QTemporaryFile>
+#include <QTest>
+#include <QTextStream>
 
 class TestCli : public QObject
 {
@@ -70,4 +70,4 @@ private:
     FILE* m_stdinHandle = stdin;
 };
 
-#endif //KEEPASSXC_TESTCLI_H
+#endif // KEEPASSXC_TESTCLI_H

@@ -21,9 +21,9 @@
 #include <QList>
 #include <QMap>
 #include <QSharedPointer>
+#include <QUuid>
 #include <QVariantMap>
 #include <QtGlobal>
-#include <QUuid>
 
 #include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Kdf.h"
@@ -46,14 +46,14 @@ namespace KeePass2
 
     const QSysInfo::Endian BYTEORDER = QSysInfo::LittleEndian;
 
-extern const QUuid CIPHER_AES128;
-extern const QUuid CIPHER_AES256;
-extern const QUuid CIPHER_TWOFISH;
-extern const QUuid CIPHER_CHACHA20;
+    extern const QUuid CIPHER_AES128;
+    extern const QUuid CIPHER_AES256;
+    extern const QUuid CIPHER_TWOFISH;
+    extern const QUuid CIPHER_CHACHA20;
 
-extern const QUuid KDF_AES_KDBX3;
-extern const QUuid KDF_AES_KDBX4;
-extern const QUuid KDF_ARGON2;
+    extern const QUuid KDF_AES_KDBX3;
+    extern const QUuid KDF_AES_KDBX4;
+    extern const QUuid KDF_ARGON2;
 
     extern const QByteArray INNER_STREAM_SALSA20_IV;
 
@@ -68,8 +68,8 @@ extern const QUuid KDF_ARGON2;
     extern const QString KDFPARAM_ARGON2_SECRET;
     extern const QString KDFPARAM_ARGON2_ASSOCDATA;
 
-extern const QList<QPair<QUuid, QString>> CIPHERS;
-extern const QList<QPair<QUuid, QString>> KDFS;
+    extern const QList<QPair<QUuid, QString>> CIPHERS;
+    extern const QList<QPair<QUuid, QString>> KDFS;
 
     enum class HeaderFieldID
     {
@@ -126,11 +126,11 @@ extern const QList<QPair<QUuid, QString>> KDFS;
         ByteArray = 0x42
     };
 
-QByteArray hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey);
-QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
-QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
-QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
-ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
+    QByteArray hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey);
+    QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
+    QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
+    QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
+    ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
 
 } // namespace KeePass2
 

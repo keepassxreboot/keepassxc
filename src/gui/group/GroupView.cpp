@@ -34,11 +34,13 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
+    // clang-format off
     connect(this, SIGNAL(expanded(QModelIndex)), SLOT(expandedChanged(QModelIndex)));
     connect(this, SIGNAL(collapsed(QModelIndex)), SLOT(expandedChanged(QModelIndex)));
     connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
     connect(m_model, SIGNAL(modelReset()), SLOT(modelReset()));
     connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
+    // clang-format on
 
     modelReset();
 

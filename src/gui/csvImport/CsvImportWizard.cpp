@@ -42,7 +42,6 @@ void CsvImportWizard::load(const QString& filename, Database* database)
     m_parse->load(filename, database);
 }
 
-
 void CsvImportWizard::parseFinished(bool accepted)
 {
     emit importFinished(accepted);
