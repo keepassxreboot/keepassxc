@@ -26,7 +26,7 @@ LayeredStream::LayeredStream(QIODevice* baseDevice)
 
 LayeredStream::~LayeredStream()
 {
-    close();
+    QIODevice::close();
 }
 
 bool LayeredStream::isSequential() const
