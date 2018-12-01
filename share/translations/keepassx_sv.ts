@@ -19,15 +19,15 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Medverkande</translation>
+        <translation>Bidragsgivare</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Se Bidragsgivare på GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Se alla bidrag på GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Felsöknings Information</translation>
+        <translation>Felsökningsinformation</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -59,8 +59,8 @@
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Operativ system: %1
-CPU-arkitektur: %2
+        <translation>Operativsystem: %1
+Processorarkitektur: %2
 Kärna: %3 %4</translation>
     </message>
     <message>
@@ -89,7 +89,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Remember this decision</source>
-        <translation>Kom ihåg detta val</translation>
+        <translation>Kom ihåg det här valet</translation>
     </message>
     <message>
         <source>Allow</source>
@@ -102,15 +102,15 @@ Kärna: %3 %4</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 har begärt åtkomst till lösenord för följande objekt(en).
-Vänligen välj om du vill tillåta åtkomst.</translation>
+        <translation>%1 har begärt åtkomst till lösenorden för följande objekt.
+Vill du tillåta det?</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Aktivera SSH Agent (kräver omstart)</translation>
+        <translation>Aktivera SSH-agenten (kräver omstart)</translation>
     </message>
 </context>
 <context>
@@ -156,7 +156,7 @@ Vänligen välj om du vill tillåta åtkomst.</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standard sekvens</translation>
+        <translation>Standardsekvens</translation>
     </message>
 </context>
 <context>
@@ -186,7 +186,7 @@ Vänligen välj om du vill tillåta åtkomst.</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Välj post att auto-skriva</translation>
+        <translation>Välj post att autoskriva:</translation>
     </message>
 </context>
 <context>
@@ -302,7 +302,7 @@ Vill du tillåta det?</translation>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>&amp;Fråga aldrig innan åtkomst till autentiseringsuppgifter</translation>
+        <translation>&amp;Fråga aldrig innan åtkomst till autentisieringsuppgifter</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
@@ -430,7 +430,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Hittade inga nycklar</translation>
+        <translation>KeePassXC: Inga nycklar hittade</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
@@ -565,7 +565,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till &apos; - Klon&apos; i titel</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -620,7 +620,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Överväg &apos;\&apos; som ändelse tecken</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Preview</source>
@@ -632,7 +632,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Not present in CSV file</source>
-        <translation>Finns inte i CSV fil</translation>
+        <translation>Finns inte i CSV filen</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
@@ -683,11 +683,11 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n byte(s),</numerusform><numerusform>%n byte(s), </numerusform></translation>
+        <translation><numerusform>%n byte(s), </numerusform><numerusform>%n byte(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n rad(er),</numerusform><numerusform>%n rad(er),</numerusform></translation>
+        <translation><numerusform>%n rad(er),</numerusform><numerusform>%n rad(er), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
@@ -726,7 +726,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Kan inte öppna nyckel-fil</translation>
+        <translation>Kan inte öppna nyckelfilen</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -772,7 +772,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Misslyckades att öppna databasen.</translation>
+        <translation>Kunde inte öppna databas.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -797,7 +797,7 @@ Du kan nu spara den.</translation>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>General</source>
-        <translation>Allmänt</translation>
+        <translation>Allmän</translation>
     </message>
     <message>
         <source>Encryption</source>
@@ -844,7 +844,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform>MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -943,7 +943,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Databas</translation>
+        <translation>KeePass 2 databas</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1011,7 +1011,7 @@ Spara ändringarna?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Kunde inte skriva till databasen.</translation>
+        <translation>Misslyckades med att skriva till databasen.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1093,7 +1093,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>Flytta post till papperskorgen?</translation>
+        <translation>Flytta post till soptunnan?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -1105,7 +1105,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Vill du verkligen flytta %n post till papperskorgen?</numerusform><numerusform>Vill du verkligen flytta %n poster till papperskorgen?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1117,7 +1117,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Kom ihåg mitt val</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete group?</source>
@@ -1356,7 +1356,7 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n månad</numerusform><numerusform>%n månader</numerusform></translation>
+        <translation><numerusform>%n månad(er)</numerusform><numerusform>%n månad(er)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1364,7 +1364,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Använd genererat lösenord?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
@@ -1399,7 +1399,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"/>
+        <translation>Visa</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1511,7 +1511,7 @@ Do you want to merge your changes?</source>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
@@ -1555,7 +1555,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation type="unfinished"/>
+        <translation>Private key</translation>
     </message>
     <message>
         <source>External file</source>
@@ -1657,7 +1657,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation type="unfinished"/>
+        <translation>Använd egen ikon</translation>
     </message>
     <message>
         <source>Add custom icon</source>
@@ -1775,7 +1775,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"/>
+        <translation>Formulär</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1825,17 +1825,20 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte spara bilagor:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna bilaga:
+%1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna bilagor:
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
@@ -1915,11 +1918,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>Ändrad</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>Läst</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1930,7 +1933,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation type="unfinished"/>
+        <translation>Anpassa vy</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -2412,7 +2415,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Inte en KeePass databas</translation>
+        <translation>Inte en KeePass databas.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -2554,33 +2557,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Invalid entry field type</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bitar</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bitar</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bitar</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – rekommenderad)</translation>
     </message>
 </context>
 <context>
@@ -3063,7 +3039,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>HTTP Port:</source>
-        <translation>Http-Port:</translation>
+        <translation>HTTP Port:</translation>
     </message>
     <message>
         <source>Default port: 19455</source>
@@ -3164,7 +3140,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Ord separator:</translation>
+        <translation>Ord separerare:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -3465,7 +3441,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>NULL device</translation>
     </message>
     <message>
         <source>error reading from device</source>
@@ -3479,11 +3455,35 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>malformed string</source>
-        <translation>felaktigt uppbyggd sträng</translation>
+        <translation>felaktigt uppbyggd textsträng</translation>
     </message>
     <message>
         <source>missing closing quote</source>
         <translation>saknar avslutande citattecken</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bitar</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bitar</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bitar</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – rekommenderad)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3564,23 +3564,23 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Använd gemener i det genererade lösenordet.</translation>
     </message>
     <message>
         <source>Use uppercase characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Använd versaler i det genererade lösenordet.</translation>
     </message>
     <message>
         <source>Use numbers in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Använd siffror i det genererade lösenordet.</translation>
     </message>
     <message>
         <source>Use special characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Använd specialtecken i det genererade lösenordet.</translation>
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Använd utökad ASCII i det genererade lösenordet.</translation>
     </message>
 </context>
 <context>
@@ -3688,7 +3688,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Inga nycklar hittade</translation>
+        <translation>KeePassXC: Hittade inga nycklar</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
@@ -3716,7 +3716,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Framgångsrikt bort behörigheter från %n poster.</numerusform><numerusform>Lyckades ta bort behörigheter från %n poster.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3754,7 +3754,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Tillåt endast en öppen instans av KeePassXC</translation>
+        <translation>Tillåt endast en samtidig instans av KeePassXC</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -3871,7 +3871,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>General</source>
-        <translation>Allmänt</translation>
+        <translation>Allmän</translation>
     </message>
 </context>
 <context>

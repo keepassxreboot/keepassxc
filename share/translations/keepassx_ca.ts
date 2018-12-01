@@ -130,7 +130,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>La sintaxi de l&apos;Auto-Type no és correcte!</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
@@ -260,11 +260,11 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Sol·licita el desbloqueig de la base de dades si està blocada</translation>
+        <translation>Sol·licitar el desbloqueig de la base de dades si està blocada</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Només es retornen les entrades amb el mateix patró (http://, https://, ...)</translation>
+        <translation>Només es retornen les entrades amb el mateix esquema (http://, https://, ...)</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
@@ -286,7 +286,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Ordena les entrades coincidents per nom d&apos;&amp;usuari</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -393,7 +393,7 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Desa i autoritza l&apos;accés</translation>
+        <translation>Desa i autoritza l&apos;accès</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -402,7 +402,7 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Ja existeix una clau de xifratge compartida amb el nom &quot;%1&quot;.
+        <translation>Ja existeix una clau de xifrat compartida amb el nom &quot;%1&quot;.
 Voleu sobreescriure-la?</translation>
     </message>
     <message>
@@ -437,7 +437,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC Settings.</source>
-        <translation>No s&apos;han trobat claus de xifratge compartides en la configuració de KeePassHttp.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -445,7 +445,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Reeixidament eliminat %n encriptació clau (s) de configuració KeePassXC.</numerusform><numerusform>Eliminada(es) correctament %n clau(s) de xifratge de la configuració de KeePassXC.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -492,7 +492,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>Browse</source>
-        <translation>Navegar</translation>
+        <translation>Navega</translation>
     </message>
     <message>
         <source>Create</source>
@@ -504,7 +504,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>Refresh</source>
-        <translation>L&apos;actualitza</translation>
+        <translation>Actualitza</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -575,7 +575,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Copia el historial</translation>
+        <translation>Còpia el historial</translation>
     </message>
 </context>
 <context>
@@ -752,7 +752,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Arxius de clau</translation>
+        <translation>Fitxers de clau</translation>
     </message>
     <message>
         <source>Select key file</source>
@@ -804,7 +804,7 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation>Xifratge</translation>
+        <translation>Encriptatge</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -859,7 +859,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Algorisme de xifratge:</translation>
+        <translation>Algorisme de d’encriptatge:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -1108,7 +1108,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Realment voleu moure %n entry(s) a la Paperera de reciclatge?</numerusform><numerusform>Realment voleu moure %n entrada(es) a la paperera?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1299,7 +1299,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(xifrat)</translation>
+        <translation>(encriptat)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -1355,11 +1355,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n setmanes</numerusform><numerusform>%n setmana(es)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mes (OS)</numerusform><numerusform>%n mes(os)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -2421,7 +2421,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Algoritme de xifratge no admès.</translation>
+        <translation>Algoritme d&apos;encriptació no admès.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
@@ -2562,33 +2562,6 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2667,7 +2640,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>Tanca la base de dades</translation>
+        <translation>Tanca base de dades</translation>
     </message>
     <message>
         <source>&amp;New database</source>
@@ -2727,11 +2700,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy &amp;username</source>
-        <translation>Copia el nom d&apos;&amp;usuari</translation>
+        <translation>Còpia el nom d&apos;&amp;usuari</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Copia el nom d&apos;usuari al porta-retalls</translation>
+        <translation>Còpia el nom d&apos;usuari al porta-retalls</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2739,11 +2712,11 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Copia la contrasenya al porta-retalls</translation>
+        <translation>Còpia la contrasenya  al porta-retalls</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Configuració</translation>
+        <translation>&amp;Conficuració</translation>
     </message>
     <message>
         <source>Password Generator</source>
@@ -2751,7 +2724,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>Realitza compleció automàtica</translation>
+        <translation>Realitza complació automètica</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2759,7 +2732,7 @@ Es tracta d&apos;una migració unidireccional. No obrir la base de dades importa
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;Bloqueja la bases de dades</translation>
+        <translation>&amp;bloqueja la bases de dades</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3028,7 +3001,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
-        <translation>Suprimeix totes les claus de xifratge compartides de la base de dades activa</translation>
+        <translation>Suprimeix totes les claus d&apos;encriptació compartides de la base de dades activa</translation>
     </message>
     <message>
         <source>Re&amp;move all stored permissions from entries in active database</source>
@@ -3489,6 +3462,30 @@ Available commands:
         <translation>falta la cometa de tancament</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Grup</translation>
     </message>
@@ -3699,7 +3696,7 @@ Per favor, desbloqueu  la base de dades seleccionada o escolliu-ne una altra.</t
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>No s&apos;han trobat claus de xifratge compartides en la configuració de KeePassHttp.</translation>
+        <translation>No s&apos;han trobat claus d&apos;encriptació compartides en la configuració de KeePassHttp.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>

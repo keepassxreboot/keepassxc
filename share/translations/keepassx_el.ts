@@ -238,19 +238,19 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Google Chrome</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Firefox</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Chromium</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vivaldi</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
@@ -533,7 +533,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Έχετε εισάγει διαφορετικούς κωδικούς.</translation>
+        <translation>Παρέχονται διαφορετικοί κωδικοί.</translation>
     </message>
     <message>
         <source>Failed to set %1 as the Key file:
@@ -627,7 +627,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Column layout</source>
-        <translation type="unfinished"/>
+        <translation>Διάταξη στηλών</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
@@ -721,11 +721,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Αδύνατο να ανοιχτεί η βάση δεδομένων.</translation>
+        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Αποτυχία ανοίγματος αρχείο κλειδιού</translation>
+        <translation>Δεν είναι δυνατό να ανοίξει αρχείο κλειδιού</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -740,11 +740,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation type="unfinished"/>
+        <translation>Να μην εμφανιστεί ξανά αυτή η προειδοποίηση</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Όλα τα αρχεία </translation>
+        <translation>Όλα τα αρχεία</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -799,12 +799,12 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"/>
+        <translation>Κρυπτογράφηση</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Αριθμός γύρων πάρα πολύ υψηλός</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
@@ -818,12 +818,12 @@ If you keep this number, your database may take hours or days (or even longer) t
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Άκυρο</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation type="unfinished"/>
+        <translation>Αριθμός γύρων πάρα πολύ χαμηλός</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
@@ -854,7 +854,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Αλγόριθμος κρυπτογράφησης:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -878,18 +878,18 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Χρήση μνήμης:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
+        <translation>Παραλληλισμός:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Μετα-δεδομένα βάσης</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -905,7 +905,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Ρυθμίσεις ιστορικού</translation>
     </message>
     <message>
         <source>Max. history items:</source>
@@ -925,7 +925,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Πρόσθετες ρυθμίσεις βάσης δεδομένων</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
@@ -949,7 +949,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Άνοιγμα βάσης δεδομένων</translation>
+        <translation>Άνοιγμα Βάσης Δεδομένων</translation>
     </message>
     <message>
         <source>File not found!</source>
@@ -1017,7 +1017,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Αποθήκευση βάσης δεδομένων σαν</translation>
+        <translation>Αποθήκευση βάσης δεδομένων ως</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1029,7 +1029,7 @@ Save changes?</source>
     </message>
     <message>
         <source>New database</source>
-        <translation>Νέα βάση δεδομένων</translation>
+        <translation>Νέα Βάση Δεδομένων</translation>
     </message>
     <message>
         <source>locked</source>
@@ -1601,7 +1601,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Επεξεργασία ομάδας</translation>
+        <translation>Επεξεργασία Ομάδας</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -2398,7 +2398,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Αποτυχία ανοίγματος βάσης δεδομένων.</translation>
+        <translation>Δεν είναι δυνατό να ανοίξει τη βάση δεδομένων.</translation>
     </message>
 </context>
 <context>
@@ -2409,7 +2409,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Δεν ειναι βάση δεδομένων KeePass.</translation>
+        <translation>Δεν είναι βάση δεδομένων KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -2550,33 +2550,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3477,6 +3450,30 @@ Available commands:
     </message>
     <message>
         <source>missing closing quote</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
         <translation type="unfinished"/>
     </message>
     <message>

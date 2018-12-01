@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation> &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt; 사이트에 버그를 보고해 주십시오</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt; 사이트에 버그를 보고해 주십시오</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -447,7 +447,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>KeePassXC 설정에서 암호화 키 %n개를 삭제했습니다.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -463,7 +463,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>항목 %n개에 저장된 권한을 삭제했습니다.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -655,7 +655,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>원본 데이터:</translation>
+        <translation>원본 데이터: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -1144,7 +1144,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>마스터 키를 계산할 수 없음</translation>
+        <translation>마스터 키를 계산할 수 없습니다</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1815,7 +1815,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>첨부 항목 %n개를 삭제하시겠습니까?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -2480,7 +2480,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>마스터 키를 계산할 수 없음</translation>
+        <translation>마스터 키를 계산할 수 없습니다</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2577,33 +2577,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Invalid entry field type</source>
         <translation>잘못된 항목 필드 크기</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256비트</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256비트</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256비트</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF(KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF(KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2(KDBX 4 – 추천)</translation>
     </message>
 </context>
 <context>
@@ -3515,6 +3488,30 @@ Available commands:
         <translation>닫는 따옴표 없음</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256비트</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256비트</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256비트</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2(KDBX 4 – 추천)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF(KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF(KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>그룹</translation>
     </message>
@@ -3616,23 +3613,23 @@ Available commands:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>압축 중 내부 zlib 오류 발생:</translation>
+        <translation>압축 중 내부 zlib 오류 발생: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>장치에 기록하는 중 오류 발생:</translation>
+        <translation>장치에 기록하는 중 오류 발생: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>장치를 여는 중 오류 발생:</translation>
+        <translation>장치를 여는 중 오류 발생: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>장치에서 읽는 중 오류 발생:</translation>
+        <translation>장치에서 읽는 중 오류 발생: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>압축 푸는 중 내부 zlib 오류 발생:</translation>
+        <translation>압축 푸는 중 내부 zlib 오류 발생: </translation>
     </message>
 </context>
 <context>
@@ -4031,7 +4028,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Expires in</source>
-        <translation>만료 시간:</translation>
+        <translation>만료 시간</translation>
     </message>
     <message>
         <source>seconds</source>

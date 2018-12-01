@@ -768,14 +768,6 @@ Please consider generating a new key file.</translation>
         <source>Select key file</source>
         <translation>Select key file</translation>
     </message>
-    <message>
-        <source>authenticate to access the database</source>
-        <translation>authenticate to access the database</translation>
-    </message>
-    <message>
-        <source>authenticate a privileged operation</source>
-        <translation>authenticate a privileged operation</translation>
-    </message>
 </context>
 <context>
     <name>DatabaseRepairWidget</name>
@@ -1131,7 +1123,7 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform></translation>
+        <translation><numerusform>Do you really want to move %n entry to the recycle bin?</numerusform><numerusform>Do you really want to move %n entries to the recycle bin?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1379,11 +1371,11 @@ Do you want to merge your changes?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n week(s)</numerusform><numerusform>%n week(s)</numerusform></translation>
+        <translation><numerusform>%n week</numerusform><numerusform>%n weeks</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n month(s)</numerusform><numerusform>%n month(s)</numerusform></translation>
+        <translation><numerusform>%n month</numerusform><numerusform>%n months</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1751,7 +1743,7 @@ Do you want to merge your changes?</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>UUID:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
@@ -1827,7 +1819,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Are you sure you want to remove %n attachments?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
+        <translation><numerusform>Are you sure you want to remove %n attachment?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -2589,33 +2581,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Invalid entry field type</source>
         <translation>Invalid entry field type</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – recommended)</translation>
     </message>
 </context>
 <context>
@@ -3527,6 +3492,30 @@ Available commands:
         <translation>missing closing quote</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – recommended)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Group</translation>
     </message>
@@ -3730,7 +3719,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Successfully removed %n encryption key from KeePassHTTP Settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassHTTP Settings.</numerusform></translation>
+        <translation><numerusform>Successfully removed %n encryption key from KeePassXC/HTTP Settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassXC/HTTP Settings.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>

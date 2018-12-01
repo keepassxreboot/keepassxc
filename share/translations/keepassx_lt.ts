@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Revizija: %1</translation>
+        <translation>Poversijis: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
@@ -445,7 +445,7 @@ Prašome atrakinti pasirinktą duomenų bazę arba pasirinkti kitą, kuri būtų
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n šifravimo raktas sėkmingai pašalintas iš KeePassXC nustatymų.</numerusform><numerusform>%n šifravimo raktai sėkmingai pašalinti iš KeePassXC nustatymų.</numerusform><numerusform>%n šifravimo raktų sėkmingai pašalinta iš KeePassXC nustatymų.</numerusform><numerusform>%n šifravimo raktų sėkmingai pašalinta iš KeePassXC nustatymų.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -568,7 +568,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Pridėti prie antraštės &quot; - Dublikatas&quot;</translation>
+        <translation>Pridėti prie pavadinimo &quot; - Dublikatas&quot;</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -848,12 +848,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> gija</numerusform><numerusform> gijos</numerusform><numerusform> gijų</numerusform><numerusform> gijų</numerusform></translation>
     </message>
 </context>
 <context>
@@ -987,7 +987,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Atverti KeePass 1 duomenų bazę</translation>
+        <translation>Atverkite KeePass 1 duomenų bazę</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
@@ -995,12 +995,12 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Close?</source>
-        <translation>Uždaryti?</translation>
+        <translation>Užverti?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; is in edit mode.
 Discard changes and close anyway?</source>
-        <translation>&quot;%1&quot; yra taisymo veiksenoje.
+        <translation>&quot;%1&quot; yra redagavimo veiksenoje.
 Vis tiek atmesti pakeitimus ir užverti?</translation>
     </message>
     <message>
@@ -1048,7 +1048,7 @@ Save changes?</source>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Nepavyksta užrakinti duomenų bazės, kadangi šiuo metu ją taisote.
+        <translation>Nepavyksta užrakinti duomenų bazės, kadangi šiuo metu ją redaguojate.
 Spauskite atšaukti, kad užbaigtumėte savo pakeitimus arba juos atmestumėte.</translation>
     </message>
     <message>
@@ -1109,7 +1109,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Ar tikrai norite perkelti %n įrašą į šiukšlinę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašus į šiukšlinę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašų į šiukšlinę?</numerusform><numerusform>Ar tikrai norite perkelti %n įrašų į šiukšlinę?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1325,7 +1325,7 @@ Ar norite sulieti savo pakeitimus?</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Taisyti įrašą</translation>
+        <translation>Keisti įrašą</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -1608,7 +1608,7 @@ Ar norite sulieti savo pakeitimus?</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Taisyti grupę</translation>
+        <translation>Keisti grupę</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -1804,7 +1804,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ar tikrai norite pašalinti %n priedą?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedus?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedų?</numerusform><numerusform>Ar tikrai norite pašalinti %n priedų?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -2569,33 +2569,6 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 bitų</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 bitų</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 bitų</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – rekomenduojama)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2774,7 +2747,7 @@ Tai yra vienakryptis perkėlimas. Jūs negalėsite atverti importuotos duomenų 
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>Kopijuoti antraštę į iškarpinę</translation>
+        <translation>Kopijuoti pavadinimą į iškarpinę</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -3357,7 +3330,7 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>Laiko limitas, sekundėmis, prieš išvalant iškarpinę.</translation>
+        <translation>Skirtas laikas, sekundėmis, prieš išvalant iškarpinę.</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -3365,7 +3338,7 @@ Naudojamas numatytasis prievadas 19455.</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Įrašo antraštė.</translation>
+        <translation>Įrašo pavadinimas.</translation>
     </message>
     <message>
         <source>title</source>
@@ -3466,7 +3439,7 @@ Prieinamos komandos:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Požymių, kuriuos rodyti, pavadinimai. Ši parinktis gali būti nurodyta daugiau nei vieną kartą, kiekvienoje eilutėje nurodyta tvarka rodant po atskirą požymį. Jei nėra nurodyti jokie požymiai, bus nurodyta numatytųjų požymių santrauka.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>attribute</source>
@@ -3497,6 +3470,30 @@ Prieinamos komandos:
     <message>
         <source>missing closing quote</source>
         <translation>trūksta užveriamosios kabutės</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 bitų</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 bitų</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 bitų</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – rekomenduojama)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3702,7 +3699,7 @@ Prašome atrakinti pasirinktą duomenų bazę arba pasirinkti kitą, kuri būtų
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>%n šifravimo raktas sėkmingai pašalintas iš KeePassX/Http nustatymų.</numerusform><numerusform>%n šifravimo raktai sėkmingai pašalinti iš KeePassX/Http nustatymų.</numerusform><numerusform>%n šifravimo raktų sėkmingai pašalinta iš KeePassX/Http nustatymų.</numerusform><numerusform>%n šifravimo raktų sėkmingai pašalinta iš KeePassX/Http nustatymų.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3734,7 +3731,7 @@ Prašome atrakinti pasirinktą duomenų bazę arba pasirinkti kitą, kuri būtų
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Leidimai sėkmingai pašalinti iš %n įrašo.</numerusform><numerusform>Leidimai sėkmingai pašalinti iš %n įrašų.</numerusform><numerusform>Leidimai sėkmingai pašalinti iš %n įrašų.</numerusform><numerusform>Leidimai sėkmingai pašalinti iš %n įrašų.</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>

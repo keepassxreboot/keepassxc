@@ -3,8 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>About KeePassXC
-</translation>
+        <translation>About KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
@@ -334,7 +333,7 @@ Please select whether you want to allow access.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Update &amp;native messaging manifest files at startup</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -449,7 +448,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Successfully removed %n encryption key from KeePassXC settings.</numerusform><numerusform>Successfully removed %n encryption keys from KeePassXC settings.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -465,7 +464,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Successfully removed permissions from %n entry.</numerusform><numerusform>Successfully removed permissions from %n entries.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -496,7 +495,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message>
         <source>Browse</source>
-        <translation>Browser</translation>
+        <translation>Browse</translation>
     </message>
     <message>
         <source>Create</source>
@@ -586,7 +585,7 @@ Please consider generating a new key file.</source>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation type="unfinished"/>
+        <translation>Import CSV fields</translation>
     </message>
     <message>
         <source>filename</source>
@@ -716,7 +715,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Browser</translation>
+        <translation>Browse</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1109,7 +1108,7 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Do you really want to move %n entry to the recycle bin?</numerusform><numerusform>Do you really want to move %n entries to the recycle bin?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1357,11 +1356,11 @@ Do you want to merge your changes?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n week</numerusform><numerusform>%n weeks</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n month</numerusform><numerusform>%n months</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1805,7 +1804,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Are you sure you want to remove %n attachment?</numerusform><numerusform>Are you sure you want to remove %n attachments?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1865,7 +1864,7 @@ This may cause the affected plugins to malfunction.</translation>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation type="unfinished"/>
+        <translation>Last modified</translation>
     </message>
     <message>
         <source>Title</source>
@@ -1956,7 +1955,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>Fit to contents</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
@@ -2121,7 +2120,7 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>Unsupported key derivation function (KDF) or invalid parameters</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -2570,33 +2569,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2707,7 +2679,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Delete group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Delete group</translation>
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
@@ -2799,7 +2771,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Import KeePass 1 database...</source>
-        <translation type="unfinished"/>
+        <translation>Import KeePass 1 database...</translation>
     </message>
     <message>
         <source>Import CSV file...</source>
@@ -3157,7 +3129,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>Pick characters from every group</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
@@ -3336,7 +3308,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Length for the generated password.</translation>
     </message>
     <message>
         <source>length</source>
@@ -3495,6 +3467,30 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Group</translation>
     </message>
@@ -3577,7 +3573,7 @@ Available commands:
     </message>
     <message>
         <source>Use uppercase characters in the generated password.</source>
-        <translation type="unfinished"/>
+        <translation>Use uppercase characters in the generated password.</translation>
     </message>
     <message>
         <source>Use numbers in the generated password.</source>
@@ -3727,7 +3723,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Successfully removed permissions from %n entry.</numerusform><numerusform>Successfully removed permissions from %n entries.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3813,7 +3809,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>Show a system tray icon</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -4047,7 +4043,7 @@ Please unlock the selected database or choose another one which is unlocked.</tr
     </message>
     <message>
         <source>Recent databases</source>
-        <translation type="unfinished"/>
+        <translation>Recent databases</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>

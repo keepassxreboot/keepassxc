@@ -73,12 +73,12 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 團隊特別鳴謝 debfx 開發了原本的 KeePassX</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation type="unfinished"/>
+        <translation>建置型態: %1</translation>
     </message>
 </context>
 <context>
@@ -447,7 +447,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 KeePassXC 移除 %n 個加密金鑰。</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -463,7 +463,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 %n 個項目中移除權限。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -691,15 +691,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 位元組，</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 行，</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 列，</numerusform></translation>
     </message>
 </context>
 <context>
@@ -857,12 +857,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform> 線程</numerusform></translation>
     </message>
 </context>
 <context>
@@ -944,7 +944,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation>啟用&amp;壓縮 (推薦)</translation>
+        <translation>啟用壓縮 (推薦)  (&amp;C)</translation>
     </message>
 </context>
 <context>
@@ -1378,7 +1378,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>使用產生的密碼？</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
@@ -1813,7 +1813,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>確定移除 %n 個附件？</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -2578,33 +2578,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 位元</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 位元</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 位元</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – 推薦)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -3212,7 +3185,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>資訊熵：%1 位元</translation>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -3512,6 +3485,30 @@ Available commands:
         <translation>缺少右引號</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 位元</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 位元</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 位元</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – 推薦)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>群組</translation>
     </message>
@@ -3714,7 +3711,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 KeePassX/Http Settings 移除 %n 加密金鑰。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3746,7 +3743,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>成功從 %n 個項目中移除權限。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
