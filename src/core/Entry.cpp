@@ -71,6 +71,8 @@ Entry::~Entry()
     }
 
     qDeleteAll(m_history);
+
+    delete m_tmpHistoryItem;
 }
 
 template <class T> inline bool Entry::set(T& property, const T& value)
