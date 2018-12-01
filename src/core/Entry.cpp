@@ -40,7 +40,6 @@ Entry::Entry()
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
     , m_customData(new CustomData(this))
-    , m_tmpHistoryItem()
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
