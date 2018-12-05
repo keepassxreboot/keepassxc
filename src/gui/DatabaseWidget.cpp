@@ -449,6 +449,7 @@ void DatabaseWidget::deleteEntries()
     bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid());
     if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
         QString prompt;
+        refreshSearch();
         if (selected.size() == 1) {
             prompt = tr("Do you really want to delete the entry \"%1\" for good?")
                          .arg(selectedEntries.first()->title().toHtmlEscaped());
@@ -456,18 +457,16 @@ void DatabaseWidget::deleteEntries()
             prompt = tr("Do you really want to delete %n entry(s) for good?", "", selected.size());
         }
 
-        QMessageBox question;
-        question.setIcon(QMessageBox::Question);
-        question.setWindowTitle(tr("Delete entry(s)?"));
-        question.setText(prompt);
-        auto del = question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = question.addButton(QMessageBox::Cancel);
-        question.setDefaultButton(cancel);
-        question.exec();
+        auto answer = MessageBox::question(this,
+                                           tr("Delete entry(s)?"),
+                                           prompt,
+                                           MessageBox::Delete | MessageBox::Cancel,
+                                           MessageBox::Cancel);
 
-        if (question.clickedButton() == del) {
+        if (answer == MessageBox::Delete) {
             for (Entry* entry : asConst(selectedEntries)) {
                 delete entry;
+                    refreshSearch();
             }
             refreshSearch();
         }
@@ -480,16 +479,13 @@ void DatabaseWidget::deleteEntries()
             prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", selected.size());
         }
 
-        QMessageBox question;
-        question.setIcon(QMessageBox::Question);
-        question.setWindowTitle(tr("Move entry(s) to recycle bin?", "", selected.size()));
-        question.setText(prompt);
-        question.addButton(tr("Move"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = question.addButton(QMessageBox::Cancel);
-        question.setDefaultButton(cancel);
-        question.exec();
+        auto answer = MessageBox::question(this,
+                                           tr("Move entry(s) to recycle bin?", "", selected.size()),
+                                           prompt,
+                                           MessageBox::Move | MessageBox::Cancel,
+                                           MessageBox::Cancel);
 
-        if (question.clickedButton() == cancel) {
+        if (answer == MessageBox::Cancel) {
             return;
         }
 
@@ -666,30 +662,25 @@ void DatabaseWidget::deleteGroup()
     bool isRecycleBin = recycleBin && (currentGroup == recycleBin);
     bool isRecycleBinSubgroup = recycleBin && currentGroup->findGroupByUuid(recycleBin->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
-        QMessageBox question;
-        question.setIcon(QMessageBox::Question);
-        question.setWindowTitle(tr("Delete group"));
-        question.setText(tr("Do you really want to delete the group \"%1\" for good?").arg(currentGroup->name().toHtmlEscaped()));
-        auto del = question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = question.addButton(QMessageBox::Cancel);
-        question.setDefaultButton(cancel);
-        question.exec();
+        auto result = MessageBox::question(this,
+                                           tr("Delete group"),
+                                           tr("Do you really want to delete the group \"%1\" for good?")
+                                               .arg(currentGroup->name().toHtmlEscaped()),
+                                           MessageBox::Delete | MessageBox::Cancel,
+                                           MessageBox::Cancel);
 
-        if (question.clickedButton() == del) {
+        if (result == MessageBox::Delete) {
             delete currentGroup;
         }
     } else {
-        QMessageBox question;
-        question.setIcon(QMessageBox::Question);
-        question.setWindowTitle(tr("Move group to recycle bin?"));
-        question.setText(tr("Do you really want to move the group "
-                            "\"%1\" to the recycle bin?").arg(currentGroup->name().toHtmlEscaped()));
-        auto move = question.addButton(tr("Move"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = question.addButton(QMessageBox::Cancel);
-        question.setDefaultButton(cancel);
-        question.exec();
-
-        if (question.clickedButton() == move) {
+        auto result = MessageBox::question(this,
+                                           tr("Move group to recycle bin?"),
+                                           tr("Do you really want to move the group "
+                                              "\"%1\" to the recycle bin?")
+                                              .arg(currentGroup->name().toHtmlEscaped()),
+                                           MessageBox::Move | MessageBox::Cancel,
+                                           MessageBox::Cancel);
+        if (result == MessageBox::Move) {
             m_db->recycleGroup(currentGroup);
         }
     }
@@ -1161,8 +1152,8 @@ bool DatabaseWidget::lock()
     if (currentMode() == DatabaseWidget::Mode::EditMode) {
         auto result = MessageBox::question(this, tr("Lock Database?"),
             tr("You are editing an entry. Discard changes and lock anyway?"),
-            QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
-        if (result == QMessageBox::Cancel) {
+            MessageBox::Discard | MessageBox::Cancel, MessageBox::Cancel);
+        if (result == MessageBox::Cancel) {
             return false;
         }
     }
@@ -1180,10 +1171,10 @@ bool DatabaseWidget::lock()
                 msg = tr("Database was modified.\nSave changes?");
             }
             auto result = MessageBox::question(this, tr("Save changes?"), msg,
-                QMessageBox::Yes | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Yes);
-            if (result == QMessageBox::Yes && !m_db->save(nullptr, false, false)) {
+                MessageBox::Yes | MessageBox::Discard | MessageBox::Cancel, MessageBox::Yes);
+            if (result == MessageBox::Yes && !m_db->save(nullptr, false, false)) {
                 return false;
-            } else if (result == QMessageBox::Cancel) {
+            } else if (result == MessageBox::Cancel) {
                 return false;
             }
         }
@@ -1274,9 +1265,9 @@ void DatabaseWidget::reloadDatabaseFile()
         auto result = MessageBox::question(this,
             tr("File has changed"),
             tr("The database file has changed. Do you want to load the changes?"),
-            QMessageBox::Yes | QMessageBox::No);
+            MessageBox::Yes | MessageBox::No);
 
-        if (result == QMessageBox::No) {
+        if (result == MessageBox::No) {
             // Notify everyone the database does not match the file
             m_db->markAsModified();
             // Rewatch the database file
@@ -1293,9 +1284,9 @@ void DatabaseWidget::reloadDatabaseFile()
             auto result = MessageBox::question(this,
                 tr("Merge Request"),
                 tr("The database file has changed and you have unsaved changes.\nDo you want to merge your changes?"),
-                QMessageBox::Yes | QMessageBox::No);
+                MessageBox::Yes | MessageBox::No);
 
-            if (result == QMessageBox::Yes) {
+            if (result == MessageBox::Yes) {
                 // Merge the old database into the new one
                 Merger merger(m_db.data(), db.data());
                 merger.merge();
@@ -1486,9 +1477,9 @@ bool DatabaseWidget::save(int attempt)
                                            tr("KeePassXC has failed to save the database multiple times. "
                                               "This is likely caused by file sync services holding a lock on "
                                               "the save file.\nDisable safe saves and try again?"),
-                                           QMessageBox::Yes | QMessageBox::No,
-                                           QMessageBox::Yes);
-        if (choice == QMessageBox::Yes) {
+                                           MessageBox::Yes | MessageBox::No,
+                                           MessageBox::Yes);
+        if (choice == MessageBox::Yes) {
             config()->set("UseAtomicSaves", false);
             return save(attempt + 1);
         }
@@ -1563,16 +1554,13 @@ void DatabaseWidget::emptyRecycleBin()
         return;
     }
 
-    QMessageBox question;
-    question.setIcon(QMessageBox::Question);
-    question.setWindowTitle(tr("Empty recycle bin?"));
-    question.setText(tr("Are you sure you want to permanently delete everything from your recycle bin?"));
-    auto empty = question.addButton(tr("Empty"), QMessageBox::ButtonRole::AcceptRole);
-    auto cancel = question.addButton(QMessageBox::Cancel);
-    question.setDefaultButton(cancel);
-    question.exec();
+    auto result = MessageBox::question(this,
+                                       tr("Empty recycle bin?"),
+                                       tr("Are you sure you want to permanently delete everything from your recycle bin?"),
+                                       MessageBox::Empty | MessageBox::Cancel,
+                                       MessageBox::Cancel);
 
-    if (question.clickedButton() == empty) {
+    if (result == MessageBox::Empty) {
         m_db->emptyRecycleBin();
         refreshSearch();
     }

@@ -415,19 +415,15 @@ void EditWidgetIcons::removeCustomIcon()
             if (iconUseCount > 0) {
 
 
-                QMessageBox question;
-                question.setIcon(QMessageBox::Question);
-                question.setWindowTitle(tr("Confirm Delete"));
-                question.setText(tr("This icon is used by %n entry(s), and will be replaced "
-                                    "by the default icon. Are you sure you want to delete it?",
-                                    "",
-                                    iconUseCount));
-                question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
-                auto cancel = question.addButton(QMessageBox::Cancel);
-                question.setDefaultButton(cancel);
-                question.exec();
+                auto result = MessageBox::question(this,
+                                                   tr("Confirm Delete"),
+                                                   tr("This icon is used by %n entry(s), and will be replaced "
+                                                      "by the default icon. Are you sure you want to delete it?",
+                                                      "", iconUseCount),
+                                                   MessageBox::Delete | MessageBox::Cancel,
+                                                   MessageBox::Cancel);
 
-                if (question.clickedButton() == cancel) {
+                if (result == MessageBox::Cancel) {
                     // Early out, nothing is changed
                     return;
                 } else {

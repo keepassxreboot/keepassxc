@@ -135,10 +135,10 @@ void TestGui::cleanup()
 {
     // DO NOT save the database
     m_db->markAsClean();
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::No);
     triggerAction("actionDatabaseClose");
     QApplication::processEvents();
-    MessageBox::setNextAnswer(QMessageBox::NoButton);
+    MessageBox::setNextAnswer(MessageBox::NoButton);
 
     if (m_dbWidget) {
         delete m_dbWidget;
@@ -205,7 +205,7 @@ void TestGui::testCreateDatabase()
     QCOMPARE(m_db->key()->rawKey(), compositeKey->rawKey());
 
     // close the new database
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::No);
     triggerAction("actionDatabaseClose");
 }
 
@@ -339,7 +339,7 @@ void TestGui::testAutoreloadDatabase()
     mergeDbFile.close();
 
     // Test accepting new file in autoreload
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Yes);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile->open());
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
@@ -357,7 +357,7 @@ void TestGui::testAutoreloadDatabase()
     init();
 
     // Test rejecting new file in autoreload
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::No);
     // Overwrite the current temp database with a new file
     m_dbFile->open();
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
@@ -381,7 +381,7 @@ void TestGui::testAutoreloadDatabase()
     testEditEntry();
 
     // This is saying yes to merging the entries
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Yes);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile->open());
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
@@ -605,7 +605,7 @@ void TestGui::testAddEntry()
     // Add entry "something 5" but click cancel button (does NOT add entry)
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 5");
-    MessageBox::setNextAnswer(QMessageBox::Discard);
+    MessageBox::setNextAnswer(MessageBox::Discard);
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
 
     QApplication::processEvents();
@@ -935,7 +935,7 @@ void TestGui::testDeleteEntry()
     QVERIFY(entryDeleteWidget->isEnabled());
     QVERIFY(!m_db->metadata()->recycleBin());
 
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Move);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
 
     QCOMPARE(entryView->model()->rowCount(), 3);
@@ -945,12 +945,12 @@ void TestGui::testDeleteEntry()
     clickIndex(entryView->model()->index(2, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
     QCOMPARE(entryView->selectionModel()->selectedRows().size(), 2);
 
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::Cancel);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 3);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
 
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Move);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 1);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
@@ -963,19 +963,19 @@ void TestGui::testDeleteEntry()
     QCOMPARE(groupView->currentGroup()->name(), m_db->metadata()->recycleBin()->name());
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::Cancel);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 3);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 3);
 
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Delete);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 2);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 2);
 
     clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton, Qt::ControlModifier);
-    MessageBox::setNextAnswer(QMessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Delete);
     QTest::mouseClick(entryDeleteWidget, Qt::LeftButton);
     QCOMPARE(entryView->model()->rowCount(), 0);
     QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 0);
@@ -1170,7 +1170,7 @@ void TestGui::testKeePass1Import()
     QTRY_COMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
 
     // Close the KeePass1 Database
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::No);
     triggerAction("actionDatabaseClose");
     QApplication::processEvents();
 }
@@ -1179,7 +1179,7 @@ void TestGui::testDatabaseLocking()
 {
     QString origDbName = m_tabWidget->tabText(0);
 
-    MessageBox::setNextAnswer(QMessageBox::Cancel);
+    MessageBox::setNextAnswer(MessageBox::Cancel);
     triggerAction("actionLockDatabases");
 
     QCOMPARE(m_tabWidget->tabName(0), origDbName + " [Locked]");
@@ -1235,7 +1235,7 @@ void TestGui::testDragAndDropKdbxFiles()
 
     QCOMPARE(m_tabWidget->count(), openedDatabasesCount + 1);
 
-    MessageBox::setNextAnswer(QMessageBox::No);
+    MessageBox::setNextAnswer(MessageBox::No);
     triggerAction("actionDatabaseClose");
 
     QTRY_COMPARE(m_tabWidget->count(), openedDatabasesCount);

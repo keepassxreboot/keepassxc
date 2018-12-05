@@ -20,7 +20,6 @@
 #include <QJsonArray>
 #include <QInputDialog>
 #include <QProgressDialog>
-#include <QMessageBox>
 #include <QUuid>
 
 #include "BrowserService.h"
@@ -34,6 +33,7 @@
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 
 const char BrowserService::KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 const char BrowserService::KEEPASSXCBROWSER_OLD_NAME[] = "keepassxc-browser Settings";
@@ -156,7 +156,7 @@ QString BrowserService::storeKey(const QString& key)
     }
 
     bool contains;
-    QMessageBox::ButtonRole dialogResult = QMessageBox::ButtonRole::RejectRole;
+    MessageBox::Button dialogResult = MessageBox::Cancel;
 
     do {
         QInputDialog keyDialog;
@@ -179,18 +179,14 @@ QString BrowserService::storeKey(const QString& key)
 
         contains = db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
         if (contains) {
-            QMessageBox warning;
-            warning.setIcon(QMessageBox::Warning);
-            warning.setWindowTitle(tr("KeePassXC: Overwrite existing key?"));
-            warning.setText(tr("A shared encryption key with the name \"%1\" "
-                               "already exists.\nDo you want to overwrite it?").arg(id));
-            warning.addButton(tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole);
-            auto cancel = warning.addButton(QMessageBox::Cancel);
-            warning.setDefaultButton(cancel);
-            warning.exec();
-            dialogResult = warning.buttonRole(warning.clickedButton());
+            dialogResult = MessageBox::warning(nullptr,
+                                               tr("KeePassXC: Overwrite existing key?"),
+                                               tr("A shared encryption key with the name \"%1\" "
+                                                  "already exists.\nDo you want to overwrite it?").arg(id),
+                                               MessageBox::Overwrite | MessageBox::Cancel,
+                                               MessageBox::Cancel);
         }
-    } while (contains && dialogResult == QMessageBox::ButtonRole::RejectRole);
+    } while (contains && dialogResult == MessageBox::Cancel);
 
     db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key);
     return id;
@@ -360,21 +356,17 @@ void BrowserService::updateEntry(const QString& id,
     }
 
     if (username.compare(login, Qt::CaseSensitive) != 0 || entry->password().compare(password, Qt::CaseSensitive) != 0) {
-        int dialogResult = QMessageBox::No;
+        MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
-            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username));
-            msgBox.addButton(QMessageBox::Save);
-            msgBox.addButton(QMessageBox::Cancel);
-            msgBox.setDefaultButton(QMessageBox::Cancel);
-            msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
-            msgBox.activateWindow();
-            msgBox.raise();
-            dialogResult = msgBox.exec();
+            dialogResult = MessageBox::question(nullptr,
+                                                tr("KeePassXC: Update Entry"),
+                                                tr("Do you want to update the information in %1 - %2?")
+                                                    .arg(QUrl(url).host(), username),
+                                                MessageBox::Save | MessageBox::Cancel,
+                                                MessageBox::Cancel);
         }
 
-        if (browserSettings()->alwaysAllowUpdate() || dialogResult == QMessageBox::Save) {
+        if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
             entry->beginUpdate();
             entry->setUsername(login);
             entry->setPassword(password);
@@ -488,18 +480,21 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> curr
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                 tr("Successfully converted attributes from %1 entry(s).\n"
-                                    "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                tr("Successfully converted attributes from %1 entry(s).\n"
+                                   "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
+                                MessageBox::Ok);
     } else if (counter == 0 && keyCounter > 0) {
-        QMessageBox::information(nullptr, tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                 tr("Successfully moved %n keys to custom data.", "", keyCounter),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                tr("Successfully moved %n keys to custom data.", "", keyCounter),
+                                MessageBox::Ok);
     } else {
-        QMessageBox::information(nullptr, tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
-                                 tr("The active database does not contain an entry with KeePassHTTP attributes."),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
+                                tr("The active database does not contain an entry with KeePassHTTP attributes."),
+                                MessageBox::Ok);
     }
 
     // Rename password groupName
@@ -877,14 +872,14 @@ bool BrowserService::checkLegacySettings()
         return false;
     }
 
-    auto dialogResult = QMessageBox::warning(nullptr,
-                                             tr("KeePassXC: Legacy browser integration settings detected"),
-                                             tr("Legacy browser integration settings have been detected.\n"
-                                                "Do you want to upgrade the settings to the latest standard?\n"
-                                                "This is necessary to maintain compatibility with the browser plugin."),
-                                             QMessageBox::Yes | QMessageBox::No);
+    auto dialogResult = MessageBox::warning(nullptr,
+                                            tr("KeePassXC: Legacy browser integration settings detected"),
+                                            tr("Legacy browser integration settings have been detected.\n"
+                                               "Do you want to upgrade the settings to the latest standard?\n"
+                                               "This is necessary to maintain compatibility with the browser plugin."),
+                                            MessageBox::Yes | MessageBox::No);
 
-    return dialogResult == QMessageBox::Yes;
+    return dialogResult == MessageBox::Yes;
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)

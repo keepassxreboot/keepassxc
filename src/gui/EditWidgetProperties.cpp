@@ -66,17 +66,14 @@ const CustomData* EditWidgetProperties::customData() const
 
 void EditWidgetProperties::removeSelectedPluginData()
 {
-    QMessageBox question;
-    question.setIcon(QMessageBox::Question);
-    question.setWindowTitle(tr("Delete plugin data?"));
-    question.setText(tr("Do you really want to delete the selected plugin data?\n"
-                       "This may cause the affected plugins to malfunction."));
-    question.addButton(tr("Delete"), QMessageBox::ButtonRole::AcceptRole);
-    auto cancel = question.addButton(QMessageBox::Cancel);
-    question.setDefaultButton(cancel);
-    question.exec();
+    auto result = MessageBox::question(this,
+                                       tr("Delete plugin data?"),
+                                       tr("Do you really want to delete the selected plugin data?\n"
+                                          "This may cause the affected plugins to malfunction."),
+                                       MessageBox::Delete | MessageBox::Cancel,
+                                       MessageBox::Cancel);
 
-    if (question.clickedButton() == cancel) {
+    if (result == MessageBox::Cancel) {
         return;
     }
 

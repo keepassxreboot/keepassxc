@@ -819,9 +819,9 @@ bool EditEntryWidget::commitEntry()
         auto answer = MessageBox::question(this,
                                            tr("Apply generated password?"),
                                            tr("Do you want to apply the generated password to this entry?"),
-                                           QMessageBox::Yes | QMessageBox::No,
-                                           QMessageBox::Yes);
-        if (answer == QMessageBox::Yes) {
+                                           MessageBox::Yes | MessageBox::No,
+                                           MessageBox::Yes);
+        if (answer == MessageBox::Yes) {
             m_mainUi->passwordGenerator->applyPassword();
         }
     }
@@ -945,13 +945,13 @@ void EditEntryWidget::cancel()
         auto result = MessageBox::question(this,
                                            QString(),
                                            tr("Entry has unsaved changes"),
-                                           QMessageBox::Cancel | QMessageBox::Save | QMessageBox::Discard,
-                                           QMessageBox::Cancel);
-        if (result == QMessageBox::Cancel) {
+                                           MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
+                                           MessageBox::Cancel);
+        if (result == MessageBox::Cancel) {
             m_mainUi->passwordGenerator->reset();
             return;
         }
-        if (result == QMessageBox::Save) {
+        if (result == MessageBox::Save) {
             commitEntry();
             m_saved = true;
         }
@@ -1057,16 +1057,13 @@ void EditEntryWidget::removeCurrentAttribute()
 
     if (index.isValid()) {
 
-        QMessageBox question;
-        question.setIcon(QMessageBox::Question);
-        question.setWindowTitle(tr("Confirm Removal"));
-        question.setText(tr("Are you sure you want to remove this attribute?"));
-        auto remove = question.addButton(tr("Remove"), QMessageBox::ButtonRole::AcceptRole);
-        auto cancel = question.addButton(QMessageBox::Cancel);
-        question.setDefaultButton(cancel);
-        question.exec();
+        auto result = MessageBox::question(this,
+                                           tr("Confirm Removal"),
+                                           tr("Are you sure you want to remove this attribute?"),
+                                           MessageBox::Remove | MessageBox::Cancel,
+                                           MessageBox::Cancel);
 
-        if (question.clickedButton() == remove) {
+        if (result == MessageBox::Remove) {
             m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
             setUnsavedChanges(true);
         }

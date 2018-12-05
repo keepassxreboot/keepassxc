@@ -97,7 +97,7 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
         MessageBox::critical(this, tr("Database creation error"),
             tr("The created database has no key or KDF, refusing to save it.\n"
                "This is definitely a bug, please report it to the developers."),
-            QMessageBox::Ok, QMessageBox::Ok);
+            MessageBox::Ok, MessageBox::Ok);
         return {};
     }
 
