@@ -1,31 +1,32 @@
 /*
-*  Copyright (C) 2013 Francois Ferrand
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include <QJsonArray>
 #include <QInputDialog>
+#include <QJsonArray>
+#include <QMessageBox>
 #include <QProgressDialog>
 #include <QUuid>
 
-#include "BrowserService.h"
 #include "BrowserAccessControlDialog.h"
 #include "BrowserEntryConfig.h"
 #include "BrowserEntrySaveDialog.h"
+#include "BrowserService.h"
 #include "BrowserSettings.h"
 #include "core/Database.h"
 #include "core/EntrySearcher.h"
@@ -54,7 +55,8 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
     if (m_dbTabWidget) {
         connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), this, SLOT(databaseLocked(DatabaseWidget*)));
-        connect(m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
+        connect(
+            m_dbTabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), this, SLOT(databaseUnlocked(DatabaseWidget*)));
         connect(m_dbTabWidget,
                 SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
                 this,
@@ -355,7 +357,8 @@ void BrowserService::updateEntry(const QString& id,
         return;
     }
 
-    if (username.compare(login, Qt::CaseSensitive) != 0 || entry->password().compare(password, Qt::CaseSensitive) != 0) {
+    if (username.compare(login, Qt::CaseSensitive) != 0
+        || entry->password().compare(password, Qt::CaseSensitive) != 0) {
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             dialogResult = MessageBox::question(nullptr,
@@ -390,15 +393,16 @@ QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const Q
         QUrl qUrl(url);
 
         // Ignore entry if port or scheme defined in the URL doesn't match
-        if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) ||
-            (browserSettings()->matchUrlScheme() && !entryScheme.isEmpty() && entryScheme.compare(qUrl.scheme()) != 0)) {
+        if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port())
+            || (browserSettings()->matchUrlScheme() && !entryScheme.isEmpty()
+                && entryScheme.compare(qUrl.scheme()) != 0)) {
             continue;
         }
 
         // Filter to match hostname in URL field
         if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
             || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
-                entries.append(entry);
+            entries.append(entry);
         }
     }
 
@@ -416,7 +420,8 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
                 if (const auto& db = dbWidget->database()) {
                      // Check if database is connected with KeePassXC-Browser
                     for (const StringPair& keyPair : keyList) {
-                        QString key = db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
+                        QString key =
+                            db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
                         if (!key.isEmpty() && keyPair.second == key) {
                             databases << db;
                         }
@@ -483,7 +488,10 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> curr
         MessageBox::information(nullptr,
                                 tr("KeePassXC: Converted KeePassHTTP attributes"),
                                 tr("Successfully converted attributes from %1 entry(s).\n"
-                                   "Moved %2 keys to custom data.", "").arg(counter).arg(keyCounter),
+                                   "Moved %2 keys to custom data.",
+                                   "")
+                                    .arg(counter)
+                                    .arg(keyCounter),
                                 MessageBox::Ok);
     } else if (counter == 0 && keyCounter > 0) {
         MessageBox::information(nullptr,
@@ -538,9 +546,14 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
             // Sort same priority entries by Title or UserName
             auto entries = priorities.values(i);
             std::sort(entries.begin(), entries.end(), [&field](Entry* left, Entry* right) {
-                return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) < 0) ||
-                       ((QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field)) == 0) &&
-                        (QString::localeAwareCompare(left->attributes()->value("UserName"), right->attributes()->value("UserName")) < 0));
+                return (QString::localeAwareCompare(left->attributes()->value(field), right->attributes()->value(field))
+                        < 0)
+                       || ((QString::localeAwareCompare(left->attributes()->value(field),
+                                                        right->attributes()->value(field))
+                            == 0)
+                           && (QString::localeAwareCompare(left->attributes()->value("UserName"),
+                                                           right->attributes()->value("UserName"))
+                               < 0));
             });
             results << entries;
             if (browserSettings()->bestMatchOnly() && !pwEntries.isEmpty()) {
@@ -842,7 +855,8 @@ int BrowserService::moveKeysToCustomData(Entry* entry, QSharedPointer<Database> 
 
             // Add key to database custom data
             if (db && !db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + publicKey)) {
-                db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + publicKey, entry->attributes()->value(key));
+                db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + publicKey,
+                                                  entry->attributes()->value(key));
                 ++keyCounter;
             }
         }

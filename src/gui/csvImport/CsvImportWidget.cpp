@@ -40,7 +40,7 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     , m_columnHeader(QStringList() << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username")
                                    << QObject::tr("Password") << QObject::tr("URL") << QObject::tr("Notes")
                                    << QObject::tr("Last Modified") << QObject::tr("Created")
-                                   /*  << QObject::tr("Future field1") */ )
+                     /*  << QObject::tr("Future field1") */)
 {
     m_ui->setupUi(this);
 
@@ -87,9 +87,11 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
         m_combos.append(combo);
         combo->setModel(m_comboModel);
 #if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
-        connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), [=]{ comboChanged(combo, i); });
+        connect(combo, QOverload<int>::of(&QComboBox::currentIndexChanged), [=] { comboChanged(combo, i); });
 #else
-        connect(combo, static_cast<void(QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=]{ comboChanged(combo, i); });
+        connect(combo, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), [=] {
+            comboChanged(combo, i);
+        });
 #endif
 
         // layout labels and combo fields in column-first order

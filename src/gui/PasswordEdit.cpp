@@ -71,8 +71,9 @@ void PasswordEdit::setShowPassword(bool show)
     emit showPasswordChanged(show);
 }
 
-bool PasswordEdit::isPasswordVisible() const {
-  return isEnabled();
+bool PasswordEdit::isPasswordVisible() const
+{
+    return isEnabled();
 }
 
 bool PasswordEdit::passwordsEqual() const

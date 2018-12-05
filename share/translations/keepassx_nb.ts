@@ -23,11 +23,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Se bidrag på GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Se Bidrag på GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Feilsøkingsinformasjon</translation>
+        <translation>Debuggingsinfo</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Kopier til utklippstavla</translation>
+        <translation>Kopier til utklippstavle</translation>
     </message>
     <message>
         <source>Version %1
@@ -60,7 +60,7 @@
 CPU architecture: %2
 Kernel: %3 %4</source>
         <translation>Operativsystem: %1
-CPU-arkitektur: %2
+CPU arkitektur: %2
 Kjerne: %3 %4</translation>
     </message>
     <message>
@@ -69,7 +69,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Prosjektets vedlikeholdere:</translation>
+        <translation>Prosjektets Vedlikeholdere:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -86,7 +86,7 @@ Kjerne: %3 %4</translation>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC HTTP Confirm Access</source>
-        <translation>KeePassXC HTTP: Bekreft tilgang</translation>
+        <translation>KeePassXC HTTP Bekreft Tilgang</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -118,7 +118,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Finner ingen oppføring som samsvarer med vindustittelen:</translation>
+        <translation>Kunne ikke finne en oppføring som samsvarer med vindutittelen:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -153,7 +153,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Rekkefølge</translation>
+        <translation>Sekvens</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -227,15 +227,15 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>Slå på integrasjon for nettlesere</translation>
+        <translation>Slå på nettlesertillegget</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Generell</translation>
+        <translation>Generelt</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Slå på integrasjon for disse nettleserne:</translation>
+        <translation>Bruk tillegget i disse nettleserne:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
@@ -329,7 +329,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Oppdaterer KeePassXC eller keepassxc-proxy binær-sti automatisk til innebygd meldings-skript ved oppstart.</translation>
+        <translation>Oppdaterer automatisk KeePassXC eller sti til binær keepassxc-proxy til lokale meldings-skript ved oppstart.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
@@ -367,7 +367,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation>Kørbare filer (*)</translation>
+        <translation>Programfiler (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
@@ -375,7 +375,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>KeePassXC sin nettleserintegrasjon er ikke tilgjengelig for «Snap»-utgaver enda.</translation>
+        <translation>Nettlesertillegget er foreløpig ikke tilgjengelig for «Snap»-utgaver.</translation>
     </message>
 </context>
 <context>
@@ -490,7 +490,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>&amp;Key file</source>
-        <translation>&amp;Nøkkelfil</translation>
+        <translation>Nø&amp;kkelfil</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -561,7 +561,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Klonevalg</translation>
+        <translation>Endring av hovednøkkel feilet: YubiKey ikke satt inn</translation>
     </message>
 </context>
 <context>
@@ -572,7 +572,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Tilføy &apos; - Clone&apos; til tittel</translation>
+        <translation>Tilføy &apos; - Klone&apos; til tittel</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
@@ -643,7 +643,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Tomt filnavn</translation>
+        <translation>Tomt feltnavn</translation>
     </message>
     <message>
         <source>column </source>
@@ -717,7 +717,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Bla gjennom</translation>
+        <translation>Bla</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -729,11 +729,11 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Klarte ikke åpne databasen.</translation>
+        <translation>Kunne ikke åpne databasen.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Klarte ikke åpne nøkkelfilen.</translation>
+        <translation>Kan ikke åpne nøkkelfil</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -777,11 +777,11 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Klarte ikke åpne nøkkelfilen.</translation>
+        <translation>Kan ikke åpne nøkkelfil</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Klarte ikke åpne databasen.</translation>
+        <translation>Kunne ikke åpne databasen.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -799,14 +799,14 @@ Du kan nå lagre den.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Klarte ikke reparere databasen.</translation>
+        <translation>Kan ikke fikse databasen.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidget</name>
     <message>
         <source>General</source>
-        <translation>Generelt</translation>
+        <translation>Generell</translation>
     </message>
     <message>
         <source>Encryption</source>
@@ -823,7 +823,7 @@ Du kan nå lagre den.</translation>
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
         <translation>Du bruker et svært høyt antall nøkkeltransformasjons-runder med Argon2.
 
-Dersom du beholder dette tallet så vil det ta timer eller dager (og kanskje lengre) å åpne databasen!</translation>
+Dersom du beholder dette antallet så vil det ta timer eller dager (og kanskje lengre) å åpne databasen!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -869,7 +869,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Krypteringsalgoritme</translation>
+        <translation>Krypteringsalgoritme:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -920,15 +920,15 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Historie-innstillinger</translation>
+        <translation>Historikk-innstillinger</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Maks. historisk antall:</translation>
+        <translation>Maks. historikk-antall:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Maks. historisk størrelse:</translation>
+        <translation>Maks. historikk-størrelse:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -1057,8 +1057,8 @@ Lagre endringer?</translation>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Kan ikke låse database fordi du redigerer den.
-Klikk avbryt for å fullføre endringene eller forkaste dem.</translation>
+        <translation>Kan ikke låse databasen fordi du redigerer den.
+Klikk Avbryt for å fullføre eller forkaste endringene.</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -1103,7 +1103,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation>Vil du virkelig slette %1 oppføringer for godt?</translation>
+        <translation>Ønsker du virkelig å slette %1 oppføringer for godt?</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
@@ -1135,7 +1135,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Delete group?</source>
-        <translation>Slett gruppe</translation>
+        <translation>Slett gruppe?</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
@@ -1212,7 +1212,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>Adresse</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -1248,7 +1248,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Rekkefølge</translation>
+        <translation>Sekvens</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1299,7 +1299,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Historikk</translation>
+        <translation>Historie</translation>
     </message>
     <message>
         <source>SSH Agent</source>
@@ -1379,11 +1379,11 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation>Bruk generert passord?</translation>
+        <translation>Vil du bruke det lagde passordet?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation>Vil du bruke det genererte passordet for denne oppføringen?</translation>
+        <translation>Vil du bruke det lagde passordet for denne oppføringen?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
@@ -1433,7 +1433,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Slå på Autoskriv for denne oppføringa</translation>
+        <translation>Aktiver Autoskriv for denne oppføringa</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
@@ -1487,7 +1487,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>URL:</source>
-        <translation>Adresse:</translation>
+        <translation>URL:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -1566,7 +1566,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Kopier til utklippstavla</translation>
+        <translation>Kopier til utklippstavle</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -1657,18 +1657,18 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>Br&amp;uk standard Autoskriv-sekvens fra foreldre-gruppa</translation>
+        <translation>&amp;Bruk standard Autoskriv-sekvens fra foreldre-gruppa</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Angi standard Autoskriv-&amp;sekvens</translation>
+        <translation>&amp;Angi standard Autoskriv-sekvens</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation>&amp;Bruk et standardikon</translation>
+        <translation>&amp;Bruk standard ikon</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
@@ -1680,7 +1680,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Fjern selvvalgt ikon</translation>
+        <translation>Slett selvvalgt ikon</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -1887,7 +1887,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>Adresse</translation>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -1911,7 +1911,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>Adresse</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Never</source>
@@ -1954,11 +1954,11 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Skjul brukernavn</translation>
+        <translation>Masker brukernavn</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Skjul passord</translation>
+        <translation>Masker passord</translation>
     </message>
     <message>
         <source>Fit to window</source>
@@ -1970,7 +1970,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Tilbakestill til standardinnstillinger</translation>
+        <translation>Resette til standard</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
@@ -2091,7 +2091,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>Manglende database-headere.</translation>
+        <translation>manglende database-headere</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2115,15 +2115,15 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ugyldig størrelse: header-id</translation>
+        <translation>Ugyldig: Header id size</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>Ugyldig lengde: header-felt</translation>
+        <translation>Ugyldig: Header field length</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>Ugyldig lengde: header-data</translation>
+        <translation>Ugyldig: Header data length</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -2139,15 +2139,15 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Ugyldig størrelse: indre header-id</translation>
+        <translation>Ugyldig: Inner header id size</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation>Ugyldig lengde: indre header-felt</translation>
+        <translation>Ugyldig: Inner header field length</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Ugyldig størrelse: binary inner header</translation>
+        <translation>Ugyldig: Inner header binary size</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
@@ -2376,7 +2376,7 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation>Duplikat: Attachment found</translation>
+        <translation>Duplikat: Attachment</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
@@ -2424,7 +2424,7 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kunne ikke åpne databasen.</translation>
+        <translation>Kan ikke åpne databasen.</translation>
     </message>
 </context>
 <context>
@@ -2452,11 +2452,11 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Ugyldig: Number of groups</translation>
+        <translation>Ugyldig antall grupper</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Ugyldig: Number of entries</translation>
+        <translation>Ugyldig antall oppføringer</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
@@ -2504,11 +2504,11 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Stemmer ikke: Group id field size</translation>
+        <translation>Feil: Group id field size</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Stemmer ikke: Group creation time field size</translation>
+        <translation>Feil: Group creation time field size</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
@@ -2532,19 +2532,19 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Ugyldig felttype: gruppe</translation>
+        <translation>Ugyldig: Group field type</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>Manglende gruppe-id eller nivå</translation>
+        <translation>Mangler: group id or level</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Manglende felt-type i oppføring: nummer</translation>
+        <translation>Mangler: Entry field type number</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring</translation>
+        <translation>Ugyldig: Entry field size</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
@@ -2552,58 +2552,31 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: uuid</translation>
+        <translation>Ugyldig: Entry uuid field size</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: gruppe-id</translation>
+        <translation>Ugyldig: Entry group id field size</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: ikon</translation>
+        <translation>Ugyldig: Entry icon field size</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: opprettelsestidspunkt</translation>
+        <translation>Ugyldig: Entry creation time field size</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: endringstidspunkt</translation>
+        <translation>Ugyldig: Entry modification time field size</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Ugyldig felt-størrelse i oppføring: utløpstidspunkt</translation>
+        <translation>Ugyldig: Entry expiry time field size</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Ugyldig felt-type i oppføring</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – anbefalt)</translation>
+        <translation>Ugyldig: Entry field type</translation>
     </message>
 </context>
 <context>
@@ -2721,11 +2694,11 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation>La&amp;gre database som...</translation>
+        <translation>Lag&amp;re database som...</translation>
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation>Endre &amp;hovednøkkel</translation>
+        <translation>Endre &amp;hovednøkkel...</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -2773,7 +2746,7 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>Åpne &amp;nettadresse</translation>
+        <translation>Åpne &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
@@ -2817,7 +2790,7 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Re&amp;pair database...</source>
-        <translation>&amp;Reparer database</translation>
+        <translation>Re&amp;parer database...</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -2841,7 +2814,7 @@ Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med de
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Feil ved tilgang for filen %1</translation>
+        <translation>Feil ved tilgang for konfigurasjonsfilen %1</translation>
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
@@ -2984,7 +2957,7 @@ Denne versjonen er ikke ment for produksjonsmiljø.</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Cipher IV er for kort for MD5 kdf</translation>
+        <translation>Krypterings-IV er for kort for MD5 kdf</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -3068,7 +3041,7 @@ Denne versjonen er ikke ment for produksjonsmiljø.</translation>
     </message>
     <message>
         <source>Always allow &amp;updating entries</source>
-        <translation>Alltid tillat å oppdatere oppføringer</translation>
+        <translation>Tillat alltid å &amp;oppdatere oppføringer</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -3104,7 +3077,7 @@ Denne versjonen er ikke ment for produksjonsmiljø.</translation>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;KeePassHTTP er blitt gammeldags og vil bli fjerna i framtida.&lt;br&gt;Vær vennlig å bytt til KeePassXC-nettleseren isteden! For hjelp med overgangen, besøk vår &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;overgangs-håndbok&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;KeePassHTTP er blitt gammeldags og vil bli fjerna i framtida.&lt;br&gt;Vennligst bytt til KeePassXC-nettleseren isteden! For hjelp med overgangen, besøk vår &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;overgangs-håndbok&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3170,7 +3143,7 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Bruk tegn fra hver gruppe</translation>
+        <translation>Velg tegn fra hver gruppe</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
@@ -3178,7 +3151,7 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Adgangsfrase</translation>
+        <translation>Passordfrase</translation>
     </message>
     <message>
         <source>Wordlist:</source>
@@ -3190,11 +3163,11 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Skilleord:</translation>
+        <translation>Ord-skilletegn:</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Generer</translation>
+        <translation>Lag passord</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -3233,7 +3206,7 @@ Bruker standard port 19455.</translation>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>God</translation>
+        <translation>Bra</translation>
     </message>
     <message>
         <source>Excellent</source>
@@ -3329,7 +3302,7 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>brukernamn</translation>
+        <translation>brukernavn</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
@@ -3345,11 +3318,11 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Generer et passord til oppføringen.</translation>
+        <translation>Generer et passord til oppføringa.</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation>Lengde for det genererte passordet.</translation>
+        <translation>Lengde på det genererte passordet.</translation>
     </message>
     <message>
         <source>length</source>
@@ -3390,7 +3363,7 @@ Bruker standard port 19455.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>Beregn entropien til pasordet.</translation>
+        <translation>Beregn entropien til et passord.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
@@ -3481,7 +3454,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Navn på attributtene som skal vises. Dette alternativet kan spesifiseres mer enn en gang, med hvert attributt vist ett per linje i den oppgitte rekkefølgen. Hvis ingen attributter er oppgitt, er det gitt en oppsummering av standardattributtene.</translation>
+        <translation>Navn på attributtene som skal vises. Dette alternativet kan spesifiseres mer enn en gang, med hvert attributt vist ett per linje i den oppgitte rekkefølgen. Hvis ingen attributter er oppgitt, blir det gitt en oppsummering av standardattributtene.</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -3514,6 +3487,30 @@ Tilgjengelige kommandoer:
         <translation>Manglende avsluttende anførselstegn</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – anbefalt)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Gruppe</translation>
     </message>
@@ -3535,7 +3532,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Sist endret</translation>
+        <translation>Sist endra</translation>
     </message>
     <message>
         <source>Created</source>
@@ -3585,7 +3582,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>Lag et nytt tilfeldig passord.</translation>
+        <translation>Generer et nytt tilfeldig passord.</translation>
     </message>
     <message>
         <source>Length of the generated password.</source>
@@ -3609,7 +3606,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation>Bruk utvida ASCII i det genererte passordet.</translation>
+        <translation>Bruk utvida ASCII i det lagde passordet.</translation>
     </message>
 </context>
 <context>
@@ -3724,7 +3721,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
-        <translation>Ingen delte krypteringsnøkler funnet i KeePassHttp-innstillinger</translation>
+        <translation>Ingen delte krypteringsnøkler funnet i KeePassHttp-oppføringa.</translation>
     </message>
     <message>
         <source>KeePassXC: Settings not available!</source>
@@ -3732,7 +3729,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry of KeePassHttp Settings.</source>
-        <translation>Den aktive databasen mangler oppføring for KeePassHttp-innstillinger.</translation>
+        <translation>Den aktive databasen mangler KeePassHttp-oppføring.</translation>
     </message>
     <message>
         <source>Removing stored permissions...</source>
@@ -3748,7 +3745,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Fjernet tillatelser fra %n oppføringer.</numerusform><numerusform>Fjernet tillatelser fra %n oppføringer.</numerusform></translation>
+        <translation><numerusform>Fjernet tillatelser fra %n oppføring.</numerusform><numerusform>Fjernet tillatelser fra %n oppføringer.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3767,7 +3764,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Generelt</translation>
+        <translation>Generell</translation>
     </message>
     <message>
         <source>Security</source>
@@ -3786,7 +3783,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Kjør kun én instans av KeePassXC om gangen</translation>
+        <translation>Tillat kun én instans av KeePassXC om gangen</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -3806,7 +3803,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Lagre automatisk etter enhver endring</translation>
+        <translation>Lagre automatisk etter hver endring</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -3814,7 +3811,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Minimer ved kopiering til utklippstavla</translation>
+        <translation>Minimer ved kopi til utklippstavla</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -3838,15 +3835,15 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Skjul vindu til systemstatusfelt når minimert</translation>
+        <translation>Skjul vindu til systemkurven når minimert</translation>
     </message>
     <message>
         <source>Hide window to system tray instead of app exit</source>
-        <translation>Skjul vindu til systemstatusfelt i stedet for app-avslutning</translation>
+        <translation>Skjul vindu til systemkurven i stedet for app-avslutning</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation>Mørkt ikon i systemkurven</translation>
+        <translation>Mørkt systemkurvikon</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3899,7 +3896,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Oppførings-administrasjon</translation>
+        <translation>Oppføringshåndtering</translation>
     </message>
     <message>
         <source>General</source>
@@ -3978,7 +3975,7 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
-        <translation>Standard RFC 6238 token innstillinger</translation>
+        <translation>Standard RFC 6238 token-innstillinger</translation>
     </message>
     <message>
         <source>Steam token settings</source>
@@ -4060,11 +4057,11 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Importer fra KeePass 1</translation>
+        <translation>Importer KeePass 1-database</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Importer fra CSV</translation>
+        <translation>Importer fra CSV-fil</translation>
     </message>
     <message>
         <source>Recent databases</source>
@@ -4107,11 +4104,11 @@ Lås opp valgt database eller velg en annen som er åpen.</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>Les database-passord fra stdin</translation>
+        <translation>Les database-passord fra standard input</translation>
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation>Adresse til foreldre-vindu</translation>
+        <translation>Foreldre-vindu handle</translation>
     </message>
 </context>
 </TS>

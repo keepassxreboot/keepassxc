@@ -46,11 +46,11 @@ int List::execute(const QStringList& arguments)
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addPositionalArgument("group", QObject::tr("Path of the group to list. Default is /"), "[group]");
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
-    QCommandLineOption recursiveOption(QStringList() << "R" << "recursive",
+    parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
+
+    QCommandLineOption recursiveOption(QStringList() << "R"
+                                                     << "recursive",
                                        QObject::tr("Recursively list the elements of the group."));
     parser.addOption(recursiveOption);
     parser.addHelpOption();
@@ -64,7 +64,10 @@ int List::execute(const QStringList& arguments)
 
     bool recursive = parser.isSet(recursiveOption);
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(Command::KeyFileOption),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }

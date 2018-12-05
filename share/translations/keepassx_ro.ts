@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contribuțiile pe GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vezi contibuțiile pe GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -40,7 +40,7 @@
     <message>
         <source>Version %1
 </source>
-        <translation>Versiune %1
+        <translation>Versiunea %1
 </translation>
     </message>
     <message>
@@ -116,7 +116,7 @@ Please select whether you want to allow access.</source>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nu a putut fi gasită nicio intrare care să coincidă cu titlul ferestrei:</translation>
+        <translation>Nu a putut fi gasită o intrare care să coincidă cu titlul ferestrei:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -471,7 +471,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>ChangeMasterKeyWidget</name>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>Enter password:</source>
@@ -684,11 +684,11 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n rând, </numerusform><numerusform>%n rânduri, </numerusform><numerusform>%n rânduri, </numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n coloană</numerusform><numerusform>%n coloane</numerusform><numerusform>%n coloane</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -769,7 +769,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Baza de date nu poate fi deschisă.</translation>
+        <translation>Nu pot deschide baza de date.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -955,7 +955,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Baza de date nu poate fi deschisă.</translation>
+        <translation>Nu pot deschide baza de date.</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -975,7 +975,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Îmbina baza de date</translation>
+        <translation>Îmbină baza de date</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -1125,7 +1125,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Nu există o bază de date curentă.</translation>
+        <translation>Nu există o baza de date curentă.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -1173,7 +1173,7 @@ Do you want to merge your changes?</source>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation>Generează token TOTP</translation>
+        <translation>Genereaza token TOTP</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1185,7 +1185,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1328,7 +1328,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Sigur doriți să eliminați acest atribut?</translation>
+        <translation>Sunteți sigur că doriți să eliminați acest atribut?</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -1344,11 +1344,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n săptămână</numerusform><numerusform>%n săptămâni</numerusform><numerusform>%n săptămâni</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n lună</numerusform><numerusform>%n luni</numerusform><numerusform>%n luni</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1767,7 +1767,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formular</translation>
+        <translation>De la</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1890,7 +1890,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parola</translation>
+        <translation>Parolă</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -2544,33 +2544,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3278,7 +3251,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Calea către baza de date.</translation>
+        <translation>Calea către baza de date</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
@@ -3474,6 +3447,30 @@ Comenzi disponibile:
     </message>
     <message>
         <source>missing closing quote</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
         <translation type="unfinished"/>
     </message>
     <message>

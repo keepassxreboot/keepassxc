@@ -181,7 +181,6 @@ void TestModified::testGroupSets()
     root->setIcon(root->iconUuid());
     QTRY_COMPARE(spyModified.count(), spyCount);
 
-
     group->setUuid(QUuid::createUuid());
     ++spyCount;
     QTRY_COMPARE(spyModified.count(), spyCount);

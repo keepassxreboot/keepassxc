@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <stdio.h>
 
@@ -161,18 +161,13 @@ bool YubiKey::getSerial(unsigned int& serial)
 
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
-    if (!m_mutex.tryLock()) {
-        return ALREADY_RUNNING;
+    // ensure that YubiKey::init() succeeded
+    if (!init()) {
+        return ERROR;
     }
 
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChallenge = challenge;
-
-    // ensure that YubiKey::init() succeeded
-    if (!init()) {
-        m_mutex.unlock();
-        return ERROR;
-    }
 
     // yk_challenge_response() insists on 64 byte response buffer */
     response.clear();
@@ -194,9 +189,12 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
     r = reinterpret_cast<unsigned char*>(response.data());
 
-    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
-    emit challenged();
+    // Try to grab a lock for 1 second, fail out if not possible
+    if (!m_mutex.tryLock(1000)) {
+        return ALREADY_RUNNING;
+    }
 
+    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
     m_mutex.unlock();
 
     if (!ret) {

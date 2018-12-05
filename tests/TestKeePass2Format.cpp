@@ -146,7 +146,8 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
-    QCOMPARE(group->lastTopVisibleEntry()->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
+    QCOMPARE(group->lastTopVisibleEntry()->uuid(),
+             QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
     QCOMPARE(group->children().size(), 3);
     QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 

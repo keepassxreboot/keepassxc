@@ -124,7 +124,6 @@ bool PasswordGenerator::isValid() const
     }
 
     return !passwordGroups().isEmpty();
-
 }
 
 QVector<PasswordGroup> PasswordGenerator::passwordGroups() const

@@ -71,7 +71,7 @@ public:
     ~QtIOCompressorPrivate();
     void flushZlib(int flushMode);
     bool writeBytes(ZlibByte *buffer, ZlibSize outputSize);
-    void setZlibError(const QString &erroMessage, int zlibErrorCode);
+    void setZlibError(const QString &errorMessage, int zlibErrorCode);
 
     QIODevice *device;
     bool manageDevice;

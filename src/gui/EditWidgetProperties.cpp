@@ -16,11 +16,11 @@
  */
 
 #include "EditWidgetProperties.h"
-
-#include <QUuid>
+#include "ui_EditWidgetProperties.h"
 
 #include "MessageBox.h"
-#include "ui_EditWidgetProperties.h"
+
+#include <QUuid>
 
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)
@@ -32,9 +32,11 @@ EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     m_ui->removeCustomDataButton->setEnabled(false);
     m_ui->customDataTable->setModel(m_customDataModel);
 
+    // clang-format off
     connect(m_ui->customDataTable->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
+    // clang-format on
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedPluginData()));
 }
 
@@ -99,8 +101,8 @@ void EditWidgetProperties::updateModel()
     m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value")});
 
     for (const QString& key : m_customData->keys()) {
-        m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(key)
-                                                             << new QStandardItem(m_customData->value(key)));
+        m_customDataModel->appendRow(QList<QStandardItem*>()
+                                     << new QStandardItem(key) << new QStandardItem(m_customData->value(key)));
     }
 
     m_ui->removeCustomDataButton->setEnabled(false);

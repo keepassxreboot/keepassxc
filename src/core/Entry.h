@@ -36,7 +36,8 @@
 
 class Database;
 class Group;
-namespace Totp {
+namespace Totp
+{
     struct Settings;
 }
 
@@ -248,7 +249,7 @@ private:
     QPointer<CustomData> m_customData;
     QList<Entry*> m_history; // Items sorted from oldest to newest
 
-    Entry* m_tmpHistoryItem;
+    QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     bool m_updateTimeinfo;

@@ -48,13 +48,11 @@ int Edit::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
+    parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
 
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
-
-    QCommandLineOption username(QStringList() << "u" << "username",
+    QCommandLineOption username(QStringList() << "u"
+                                              << "username",
                                 QObject::tr("Username for the entry."),
                                 QObject::tr("username"));
     parser.addOption(username);
@@ -62,20 +60,24 @@ int Edit::execute(const QStringList& arguments)
     QCommandLineOption url(QStringList() << "url", QObject::tr("URL for the entry."), QObject::tr("URL"));
     parser.addOption(url);
 
-    QCommandLineOption title(QStringList() << "t" << "title",
+    QCommandLineOption title(QStringList() << "t"
+                                           << "title",
                              QObject::tr("Title for the entry."),
                              QObject::tr("title"));
     parser.addOption(title);
 
-    QCommandLineOption prompt(QStringList() << "p" << "password-prompt",
+    QCommandLineOption prompt(QStringList() << "p"
+                                            << "password-prompt",
                               QObject::tr("Prompt for the entry's password."));
     parser.addOption(prompt);
 
-    QCommandLineOption generate(QStringList() << "g" << "generate",
+    QCommandLineOption generate(QStringList() << "g"
+                                              << "generate",
                                 QObject::tr("Generate a password for the entry."));
     parser.addOption(generate);
 
-    QCommandLineOption length(QStringList() << "l" << "password-length",
+    QCommandLineOption length(QStringList() << "l"
+                                            << "password-length",
                               QObject::tr("Length for the generated password."),
                               QObject::tr("length"));
     parser.addOption(length);
@@ -93,7 +95,10 @@ int Edit::execute(const QStringList& arguments)
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    auto db = Database::unlockFromStdin(databasePath, parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(databasePath,
+                                        parser.value(Command::KeyFileOption),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
@@ -111,8 +116,7 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty()
-        && !parser.isSet(prompt)
-        && !parser.isSet(generate)) {
+        && !parser.isSet(prompt) && !parser.isSet(generate)) {
         err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
@@ -132,8 +136,10 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        out << QObject::tr("Enter new password for entry: ") << flush;
-        QString password = Utils::getPassword();
+        if (!parser.isSet(Command::QuietOption)) {
+            out << QObject::tr("Enter new password for entry: ") << flush;
+        }
+        QString password = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
         PasswordGenerator passwordGenerator;
@@ -158,6 +164,8 @@ int Edit::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    if (!parser.isSet(Command::QuietOption)) {
+        out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    }
     return EXIT_SUCCESS;
 }

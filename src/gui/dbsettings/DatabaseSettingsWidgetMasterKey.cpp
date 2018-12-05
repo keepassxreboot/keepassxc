@@ -16,18 +16,19 @@
  */
 
 #include "DatabaseSettingsWidgetMasterKey.h"
-#include "core/Database.h"
-#include "keys/PasswordKey.h"
-#include "keys/FileKey.h"
-#include "keys/YkChallengeResponseKey.h"
-#include "gui/MessageBox.h"
-#include "gui/masterkey/PasswordEditWidget.h"
-#include "gui/masterkey/KeyFileEditWidget.h"
-#include "gui/masterkey/YubiKeyEditWidget.h"
 
-#include <QVBoxLayout>
-#include <QSpacerItem>
+#include "core/Database.h"
+#include "gui/MessageBox.h"
+#include "gui/masterkey/KeyFileEditWidget.h"
+#include "gui/masterkey/PasswordEditWidget.h"
+#include "gui/masterkey/YubiKeyEditWidget.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
+#include "keys/YkChallengeResponseKey.h"
+
 #include <QPushButton>
+#include <QSpacerItem>
+#include <QVBoxLayout>
 
 DatabaseSettingsWidgetMasterKey::DatabaseSettingsWidgetMasterKey(QWidget* parent)
     : DatabaseSettingsWidget(parent)
@@ -82,7 +83,7 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
 
     bool isDirty = false;
     bool hasAdditionalKeys = false;
-    for (const auto& key: m_db->key()->keys()) {
+    for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
             m_passwordEditWidget->setComponentAdded(true);
         } else if (key->uuid() == FileKey::UUID) {
@@ -92,7 +93,7 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
     }
 
 #ifdef WITH_XC_YUBIKEY
-    for (const auto& key: m_db->key()->challengeResponseKeys()) {
+    for (const auto& key : m_db->key()->challengeResponseKeys()) {
         if (key->uuid() == YkChallengeResponseKey::UUID) {
             m_yubiKeyEditWidget->setComponentAdded(true);
             hasAdditionalKeys = true;
@@ -128,7 +129,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 #endif
 
-    if (m_db->key() && ! m_db->key()->keys().isEmpty() && !m_isDirty) {
+    if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
         // key unchanged
         return true;
     }
@@ -139,7 +140,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
     QSharedPointer<Key> fileKey;
     QSharedPointer<ChallengeResponseKey> ykCrKey;
 
-    for (const auto& key: m_db->key()->keys()) {
+    for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
             passwordKey = key;
         } else if (key->uuid() == FileKey::UUID) {
@@ -147,7 +148,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
         }
     }
 
-    for (const auto& key: m_db->key()->challengeResponseKeys()) {
+    for (const auto& key : m_db->key()->challengeResponseKeys()) {
         if (key->uuid() == YkChallengeResponseKey::UUID) {
             ykCrKey = key;
         }
@@ -168,18 +169,22 @@ bool DatabaseSettingsWidgetMasterKey::save()
 #endif
 
     if (newKey->keys().isEmpty() && newKey->challengeResponseKeys().isEmpty()) {
-        MessageBox::critical(this, tr("No encryption key added"),
+        MessageBox::critical(this,
+                             tr("No encryption key added"),
                              tr("You must add at least one encryption key to secure your database!"),
-                             MessageBox::Ok, MessageBox::Ok);
+                             MessageBox::Ok,
+                             MessageBox::Ok);
         return false;
     }
 
     if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::AddNew) {
-        auto answer = MessageBox::warning(this, tr("No password set"),
+        auto answer = MessageBox::warning(this,
+                                          tr("No password set"),
                                           tr("WARNING! You have not set a password. Using a database without "
                                              "a password is strongly discouraged!\n\n"
                                              "Are you sure you want to continue without a password?"),
-                                          MessageBox::Yes | MessageBox::Cancel, MessageBox::Cancel);
+                                          MessageBox::Yes | MessageBox::Cancel,
+                                          MessageBox::Cancel);
         if (answer != MessageBox::Yes) {
             return false;
         }
@@ -210,7 +215,8 @@ void DatabaseSettingsWidgetMasterKey::setAdditionalKeyOptionsVisible(bool show)
 }
 
 bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widget,
-    QSharedPointer<CompositeKey>& newKey, QSharedPointer<Key>& oldKey)
+                                                        QSharedPointer<CompositeKey>& newKey,
+                                                        QSharedPointer<Key>& oldKey)
 {
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");
@@ -226,7 +232,8 @@ bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widg
 }
 
 bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widget,
-    QSharedPointer<CompositeKey>& newKey, QSharedPointer<ChallengeResponseKey>& oldKey)
+                                                        QSharedPointer<CompositeKey>& newKey,
+                                                        QSharedPointer<ChallengeResponseKey>& oldKey)
 {
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");

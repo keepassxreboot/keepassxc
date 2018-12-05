@@ -16,6 +16,7 @@
  */
 
 #include "KeePass1OpenWidget.h"
+#include "ui_DatabaseOpenWidget.h"
 
 #include <QFile>
 #include <QFileInfo>
@@ -24,7 +25,6 @@
 #include "core/Metadata.h"
 #include "format/KeePass1Reader.h"
 #include "gui/MessageBox.h"
-#include "ui_DatabaseOpenWidget.h"
 
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)

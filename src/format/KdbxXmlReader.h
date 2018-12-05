@@ -21,7 +21,6 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/TimeInfo.h"
-#include "core/Database.h"
 
 #include <QCoreApplication>
 #include <QPair>
@@ -42,7 +41,7 @@ class KdbxXmlReader
 
 public:
     explicit KdbxXmlReader(quint32 version);
-    explicit KdbxXmlReader(quint32 version, QHash<QString, QByteArray>  binaryPool);
+    explicit KdbxXmlReader(quint32 version, QHash<QString, QByteArray> binaryPool);
     virtual ~KdbxXmlReader() = default;
 
     virtual QSharedPointer<Database> readDatabase(const QString& filename);

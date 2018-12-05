@@ -287,7 +287,6 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
 
     // Tint close icon
     auto closeButtonPixmap = d->closeButtonPixmap;
-    QPixmap mask(closeButtonPixmap);
     QPainter painter;
     painter.begin(&closeButtonPixmap);
     painter.setRenderHints(QPainter::HighQualityAntialiasing);

@@ -42,8 +42,7 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
 
     // check if all required headers were present
     if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_streamStartBytes.isEmpty()
-        || m_protectedStreamKey.isEmpty()
-        || db->cipher().isNull()) {
+        || m_protectedStreamKey.isEmpty() || db->cipher().isNull()) {
         raiseError(tr("missing database headers"));
         return false;
     }

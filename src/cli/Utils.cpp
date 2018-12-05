@@ -28,66 +28,75 @@
 
 namespace Utils
 {
-/**
- * STDOUT file handle for the CLI.
- */
-FILE* STDOUT = stdout;
+    /**
+     * STDOUT file handle for the CLI.
+     */
+    FILE* STDOUT = stdout;
+
+    /**
+     * STDERR file handle for the CLI.
+     */
+    FILE* STDERR = stderr;
+
+    /**
+     * STDIN file handle for the CLI.
+     */
+    FILE* STDIN = stdin;
 
 /**
- * STDERR file handle for the CLI.
+ * DEVNULL file handle for the CLI.
  */
-FILE* STDERR = stderr;
+#ifdef Q_OS_WIN
+FILE* DEVNULL = fopen("nul", "w");
+#else
+FILE* DEVNULL = fopen("/dev/null", "w");
+#endif
 
-/**
- * STDIN file handle for the CLI.
- */
-FILE* STDIN = stdin;
 
 void setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN
-    HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
-    DWORD mode;
-    GetConsoleMode(hIn, &mode);
+        HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
+        DWORD mode;
+        GetConsoleMode(hIn, &mode);
 
-    if (enable) {
-        mode |= ENABLE_ECHO_INPUT;
-    } else {
-        mode &= ~ENABLE_ECHO_INPUT;
-    }
+        if (enable) {
+            mode |= ENABLE_ECHO_INPUT;
+        } else {
+            mode &= ~ENABLE_ECHO_INPUT;
+        }
 
-    SetConsoleMode(hIn, mode);
-
+        SetConsoleMode(hIn, mode);
 #else
-    struct termios t;
-    tcgetattr(STDIN_FILENO, &t);
+        struct termios t;
+        tcgetattr(STDIN_FILENO, &t);
 
-    if (enable) {
-        t.c_lflag |= ECHO;
-    } else {
-        t.c_lflag &= ~ECHO;
+        if (enable) {
+            t.c_lflag |= ECHO;
+        } else {
+            t.c_lflag &= ~ECHO;
+        }
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#endif
     }
 
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
-#endif
-}
+    namespace Test
+    {
+        QStringList nextPasswords = {};
 
-namespace Test
-{
-QStringList nextPasswords = {};
-
-/**
- * Set the next password returned by \link getPassword() instead of reading it from STDIN.
- * Multiple calls to this method will fill a queue of passwords.
- * This function is intended for testing purposes.
- *
- * @param password password to return next
- */
-void setNextPassword(const QString& password)
-{
-    nextPasswords.append(password);
-}
-}   // namespace Test
+        /**
+         * Set the next password returned by \link getPassword() instead of reading it from STDIN.
+         * Multiple calls to this method will fill a queue of passwords.
+         * This function is intended for testing purposes.
+         *
+         * @param password password to return next
+         */
+        void setNextPassword(const QString& password)
+        {
+            nextPasswords.append(password);
+        }
+    } // namespace Test
 
 /**
  * Read a user password from STDIN or return a password previously
@@ -95,78 +104,78 @@ void setNextPassword(const QString& password)
  *
  * @return the password
  */
-QString getPassword()
+QString getPassword(FILE* outputDescriptor)
 {
-    TextStream out(STDOUT, QIODevice::WriteOnly);
+    TextStream out(outputDescriptor, QIODevice::WriteOnly);
 
-    // return preset password if one is set
-    if (!Test::nextPasswords.isEmpty()) {
-        auto password = Test::nextPasswords.takeFirst();
-        // simulate user entering newline
+        // return preset password if one is set
+        if (!Test::nextPasswords.isEmpty()) {
+            auto password = Test::nextPasswords.takeFirst();
+            // simulate user entering newline
+            out << endl;
+            return password;
+        }
+
+        TextStream in(STDIN, QIODevice::ReadOnly);
+
+        setStdinEcho(false);
+        QString line = in.readLine();
+        setStdinEcho(true);
         out << endl;
-        return password;
+
+        return line;
     }
 
-    TextStream in(STDIN, QIODevice::ReadOnly);
+    /**
+     * A valid and running event loop is needed to use the global QClipboard,
+     * so we need to use this from the CLI.
+     */
+    int clipText(const QString& text)
+    {
+        TextStream err(Utils::STDERR);
 
-    setStdinEcho(false);
-    QString line = in.readLine();
-    setStdinEcho(true);
-    out << endl;
-
-    return line;
-}
-
-/**
- * A valid and running event loop is needed to use the global QClipboard,
- * so we need to use this from the CLI.
- */
-int clipText(const QString& text)
-{
-    TextStream err(Utils::STDERR);
-
-    QString programName = "";
-    QStringList arguments;
+        QString programName = "";
+        QStringList arguments;
 
 #ifdef Q_OS_UNIX
-    programName = "xclip";
-    arguments << "-i"
-              << "-selection"
-              << "clipboard";
+        programName = "xclip";
+        arguments << "-i"
+                  << "-selection"
+                  << "clipboard";
 #endif
 
 #ifdef Q_OS_MACOS
-    programName = "pbcopy";
+        programName = "pbcopy";
 #endif
 
 #ifdef Q_OS_WIN
-    programName = "clip";
+        programName = "clip";
 #endif
 
-    if (programName.isEmpty()) {
-        err << QObject::tr("No program defined for clipboard manipulation");
-        err.flush();
-        return EXIT_FAILURE;
+        if (programName.isEmpty()) {
+            err << QObject::tr("No program defined for clipboard manipulation");
+            err.flush();
+            return EXIT_FAILURE;
+        }
+
+        auto* clipProcess = new QProcess(nullptr);
+        clipProcess->start(programName, arguments);
+        clipProcess->waitForStarted();
+
+        if (clipProcess->state() != QProcess::Running) {
+            err << QObject::tr("Unable to start program %1").arg(programName);
+            err.flush();
+            return EXIT_FAILURE;
+        }
+
+        if (clipProcess->write(text.toLatin1()) == -1) {
+            qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+        }
+        clipProcess->waitForBytesWritten();
+        clipProcess->closeWriteChannel();
+        clipProcess->waitForFinished();
+
+        return clipProcess->exitCode();
     }
 
-    auto* clipProcess = new QProcess(nullptr);
-    clipProcess->start(programName, arguments);
-    clipProcess->waitForStarted();
-
-    if (clipProcess->state() != QProcess::Running) {
-        err << QObject::tr("Unable to start program %1").arg(programName);
-        err.flush();
-        return EXIT_FAILURE;
-    }
-
-    if (clipProcess->write(text.toLatin1()) == -1) {
-        qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
-    }
-    clipProcess->waitForBytesWritten();
-    clipProcess->closeWriteChannel();
-    clipProcess->waitForFinished();
-
-    return clipProcess->exitCode();
-}
-
-}   // namespace Utils
+} // namespace Utils

@@ -47,9 +47,12 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 
+    // clang-format off
     connect(m_editGroupWidgetIcons,
             SIGNAL(messageEditEntry(QString,MessageWidget::MessageType)),
             SLOT(showMessage(QString,MessageWidget::MessageType)));
+    // clang-format on
+
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 }
 

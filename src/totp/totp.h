@@ -21,54 +21,57 @@
 
 #include <QMap>
 #include <QString>
-#include <QtCore/qglobal.h>
 #include <QtCore/QSharedPointer>
+#include <QtCore/qglobal.h>
 
 class QUrl;
 
-namespace Totp {
-
-struct Encoder
+namespace Totp
 {
-    QString name;
-    QString shortName;
-    QString alphabet;
-    uint digits;
-    uint step;
-    bool reverse;
-};
 
-struct Settings
-{
-    Totp::Encoder encoder;
-    QString key;
-    bool otpUrl;
-    bool custom;
-    uint digits;
-    uint step;
-};
+    struct Encoder
+    {
+        QString name;
+        QString shortName;
+        QString alphabet;
+        uint digits;
+        uint step;
+        bool reverse;
+    };
 
-constexpr uint DEFAULT_STEP = 30u;
-constexpr uint DEFAULT_DIGITS = 6u;
-constexpr uint STEAM_DIGITS = 5u;
-static const QString STEAM_SHORTNAME = "S";
+    struct Settings
+    {
+        Totp::Encoder encoder;
+        QString key;
+        bool otpUrl;
+        bool custom;
+        uint digits;
+        uint step;
+    };
 
-static const QString ATTRIBUTE_OTP = "otp";
-static const QString ATTRIBUTE_SEED = "TOTP Seed";
-static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
+    constexpr uint DEFAULT_STEP = 30u;
+    constexpr uint DEFAULT_DIGITS = 6u;
+    constexpr uint STEAM_DIGITS = 5u;
+    static const QString STEAM_SHORTNAME = "S";
 
-QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
-QSharedPointer<Totp::Settings> createSettings(const QString& key, const uint digits, const uint step,
-                                              const QString& encoderShortName = {});
-QString writeSettings(const QSharedPointer<Totp::Settings>& settings, const QString& title = {},
-                      const QString& username = {}, bool forceOtp = false);
+    static const QString ATTRIBUTE_OTP = "otp";
+    static const QString ATTRIBUTE_SEED = "TOTP Seed";
+    static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
 
-QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
+    QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
+    QSharedPointer<Totp::Settings>
+    createSettings(const QString& key, const uint digits, const uint step, const QString& encoderShortName = {});
+    QString writeSettings(const QSharedPointer<Totp::Settings>& settings,
+                          const QString& title = {},
+                          const QString& username = {},
+                          bool forceOtp = false);
 
-Encoder& defaultEncoder();
-Encoder& steamEncoder();
-Encoder& getEncoderByShortName(const QString& shortName);
-Encoder& getEncoderByName(const QString& name);
-}
+    QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
+
+    Encoder& defaultEncoder();
+    Encoder& steamEncoder();
+    Encoder& getEncoderByShortName(const QString& shortName);
+    Encoder& getEncoderByName(const QString& name);
+} // namespace Totp
 
 #endif // QTOTP_H

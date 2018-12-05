@@ -44,6 +44,7 @@ void TestSymmetricCipher::testAlgorithmToCipher()
     QCOMPARE(SymmetricCipher::algorithmToCipher(SymmetricCipher::Algorithm::InvalidAlgorithm), QUuid());
 }
 
+// clang-format off
 void TestSymmetricCipher::testEncryptionDecryption_data()
 {
     QTest::addColumn<SymmetricCipher::Algorithm>("algorithm");
@@ -109,6 +110,7 @@ void TestSymmetricCipher::testEncryptionDecryption_data()
         << QByteArray::fromHex("601ec313775789a5b7a7f504bbf3d228f443e3ca4d62b59aca84e990cacaf5c5")
         << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51");
 }
+// clang-format on
 
 void TestSymmetricCipher::testEncryptionDecryption()
 {
@@ -165,19 +167,17 @@ void TestSymmetricCipher::testAesCbcPadding_data()
     QTest::addColumn<QByteArray>("plainText");
     QTest::addColumn<QByteArray>("padding");
 
-    QTest::newRow("AES128")
-        << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
-        << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
-        << QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d5086cb9b507219ee95db113a917678b2")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
-        << QByteArray::fromHex("55e21d7100b988ffec32feeafaf23538");
+    QTest::newRow("AES128") << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
+                            << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
+                            << QByteArray::fromHex("7649abac8119b246cee98e9b12e9197d5086cb9b507219ee95db113a917678b2")
+                            << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
+                            << QByteArray::fromHex("55e21d7100b988ffec32feeafaf23538");
 
-    QTest::newRow("AES256")
-        << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
-        << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
-        << QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
-        << QByteArray::fromHex("3a3aa5e0213db1a9901f9036cf5102d2");
+    QTest::newRow("AES256") << QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4")
+                            << QByteArray::fromHex("000102030405060708090a0b0c0d0e0f")
+                            << QByteArray::fromHex("f58c4c04d6e5f1ba779eabfb5f7bfbd69cfc4e967edb808d679f777bc6702c7d")
+                            << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172aae2d8a571e03ac9c9eb76fac45af8e51")
+                            << QByteArray::fromHex("3a3aa5e0213db1a9901f9036cf5102d2");
 }
 
 void TestSymmetricCipher::testAesCbcPadding()
@@ -215,17 +215,16 @@ void TestSymmetricCipher::testInplaceEcb_data()
     QTest::addColumn<QByteArray>("plainText");
     QTest::addColumn<QByteArray>("cipherText");
 
-    QTest::newRow("AES128")
-        << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
-        << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
-        << QByteArray::fromHex("3ad77bb40d7a3660a89ecaf32466ef97");
+    QTest::newRow("AES128") << QByteArray::fromHex("2b7e151628aed2a6abf7158809cf4f3c")
+                            << QByteArray::fromHex("6bc1bee22e409f96e93d7e117393172a")
+                            << QByteArray::fromHex("3ad77bb40d7a3660a89ecaf32466ef97");
 }
 
 void TestSymmetricCipher::testInplaceEcb()
 {
-   QFETCH(QByteArray, key);
-   QFETCH(QByteArray, plainText);
-   QFETCH(QByteArray, cipherText);
+    QFETCH(QByteArray, key);
+    QFETCH(QByteArray, plainText);
+    QFETCH(QByteArray, cipherText);
 
     SymmetricCipher cipherInPlaceEnc(SymmetricCipher::Aes128, SymmetricCipher::Ecb, SymmetricCipher::Encrypt);
     QVERIFY(cipherInPlaceEnc.init(key, QByteArray(16, 0)));

@@ -51,9 +51,11 @@ static void estimate(const char* pwd, bool advanced)
     int len = static_cast<int>(strlen(pwd));
     if (!advanced) {
         e = ZxcvbnMatch(pwd, nullptr, nullptr);
+        // clang-format off
         out << QObject::tr("Length %1").arg(len, 0) << '\t'
             << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
             << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << endl;
+        // clang-format on
     } else {
         int ChkLen = 0;
         ZxcMatch_t *info, *p;
@@ -63,10 +65,12 @@ static void estimate(const char* pwd, bool advanced)
             m += p->Entrpy;
         }
         m = e - m;
+        // clang-format off
         out << QObject::tr("Length %1").arg(len) << '\t'
             << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
             << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << "\n  "
             << QObject::tr("Multi-word extra bits %1").arg(m, 0, 'f', 1) << endl;
+        // clang-format on
         p = info;
         ChkLen = 0;
         while (p) {
@@ -132,9 +136,10 @@ static void estimate(const char* pwd, bool advanced)
                 break;
             }
             ChkLen += p->Length;
-
+            // clang-format off
             out << QObject::tr("Length %1").arg(p->Length) << '\t'
                 << QObject::tr("Entropy %1 (%2)").arg(p->Entrpy, 6, 'f', 3).arg(p->Entrpy * 0.301029996, 0, 'f', 2) << '\t';
+            // clang-format on
             for (n = 0; n < p->Length; ++n, ++pwd) {
                 out << *pwd;
             }
@@ -143,7 +148,8 @@ static void estimate(const char* pwd, bool advanced)
         }
         ZxcvbnFreeInfo(info);
         if (ChkLen != len) {
-            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen) << endl;
+            out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(ChkLen)
+                << endl;
         }
     }
 }
@@ -156,7 +162,8 @@ int Estimate::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("password", QObject::tr("Password for which to estimate the entropy."), "[password]");
-    QCommandLineOption advancedOption(QStringList() << "a" << "advanced",
+    QCommandLineOption advancedOption(QStringList() << "a"
+                                                    << "advanced",
                                       QObject::tr("Perform advanced analysis on the password."));
     parser.addOption(advancedOption);
     parser.addHelpOption();

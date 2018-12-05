@@ -18,6 +18,7 @@
 
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
+
 #include <QPushButton>
 #include <QScrollArea>
 

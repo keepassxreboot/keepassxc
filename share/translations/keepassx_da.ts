@@ -268,7 +268,7 @@ Vælg venligst hvorvidt du vil tillade denne adgang.</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>&amp;Match URL skemaer</translation>
+        <translation>&amp;Match URL skemaer (f.eks., https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -448,7 +448,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Succesfuldt fjernet %n kryptering nøgle(r) fra KeePassXC indstillinger.</numerusform><numerusform>Fjernede succesfuldt %n krypteringsnøgle(r) fra KeePassXC indstillinger.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -692,15 +692,15 @@ Overvej at generere en ny nøglefil.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n byte(s),</numerusform><numerusform>%n byte(s),</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n række(r),</numerusform><numerusform>%n række(r),</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolonne(r)</numerusform><numerusform>%n kolonne(r)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -899,7 +899,7 @@ Hvis du beholder dette antal, så kan din database være nem af knække!</transl
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Parallelitet</translation>
+        <translation>Parallelitet:</translation>
     </message>
 </context>
 <context>
@@ -1026,7 +1026,7 @@ Gem disse ændringer?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Kan ikke skrive til databasen.</translation>
+        <translation>Skrivning til database fejler.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1121,7 +1121,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Ønsker du virkelig at flytte %n post over i  papirkurven?</numerusform><numerusform>Ønsker du virkelig at flytte %n poster over i  papirkurven?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1133,7 +1133,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation type="unfinished"/>
+        <translation>Husk mit valg</translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -1145,7 +1145,7 @@ Så sikre gem fra og prøv igen?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Kan ikke  beregne hovednøgle</translation>
+        <translation>Kan ikke beregne hovednøgle</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1182,7 +1182,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke åbne den nye databasefil i forsøget på at auto-indlæse denne database.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -1320,7 +1320,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>Filen er for stor til at være en privat nøgle</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
@@ -1368,11 +1368,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n uge</numerusform><numerusform>%n uger</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n måned</numerusform><numerusform>%n måneder</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1442,7 +1442,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation type="unfinished"/>
+        <translation>Brug brugerdefineret Auto-Indsæt sekvens:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -1752,7 +1752,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Slet plugin data</translation>
+        <translation>Slet plugin data?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
@@ -1993,7 +1993,7 @@ Dette kan få det påvirkede plugin til at svigte.</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke gemme besked-script filen!</translation>
     </message>
 </context>
 <context>
@@ -2112,7 +2112,7 @@ Dette kan få det påvirkede plugin til at svigte.</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation type="unfinished"/>
+        <translation>Ukendt ciffer</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
@@ -2272,7 +2272,7 @@ Dette kan få det påvirkede plugin til at svigte.</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>Invalid ciffer for indre tilfældig strøm</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2436,7 +2436,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Ikke en KeePass database.</translation>
+        <translation>Dette er ikke en KeePass database.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
@@ -2444,7 +2444,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Ikke understøttet KeePass database version</translation>
+        <translation>KeePass database version ikke understøttet.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -2581,33 +2581,6 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – anbefalet)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2666,7 +2639,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Værktøj</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -2774,7 +2747,7 @@ Dette er en envejs konvertering. Du vil ikke være i stand til at åbne den impo
     </message>
     <message>
         <source>&amp;Open URL</source>
-        <translation>&amp;Åbn URL</translation>
+        <translation>&amp;Åben URL</translation>
     </message>
     <message>
         <source>&amp;Lock databases</source>
@@ -3045,7 +3018,7 @@ Denne version er ikke beregnet til at blive brugt i produktion.</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation>Sorter &amp;passende poster efter navn</translation>
+        <translation>Sorter matchende poster efter &amp;navn</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
@@ -3191,7 +3164,7 @@ Bruger standard port 19455.</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Ord separator</translation>
+        <translation>Ord separator:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -3211,7 +3184,7 @@ Bruger standard port 19455.</translation>
     </message>
     <message>
         <source>Apply</source>
-        <translation>Entropy: %1 bit</translation>
+        <translation>Gennemfør</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
@@ -3310,7 +3283,7 @@ Bruger standard port 19455.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Tilføj en ny post til en database</translation>
+        <translation>Tilføj en ny post til en database.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -3403,7 +3376,7 @@ Bruger standard port 19455.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>Udtræk og print indeholdet af en database.</translation>
+        <translation>Dekomprimer og print indeholdet af en database.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
@@ -3498,20 +3471,45 @@ Tilgængelige kommandoer:
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>fejl ved læsning fra enhed</translation>
     </message>
     <message>
         <source>file empty !
 </source>
-        <translation type="unfinished"/>
+        <translation>fil tom !
+</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation type="unfinished"/>
+        <translation>Misdannet streng</translation>
     </message>
     <message>
         <source>missing closing quote</source>
         <translation>Mangler afsluttende kvoteringstegn</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – anbefalet)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3827,7 +3825,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
+        <translation>Markér ikke databasen som ændret når ikke-data ændres (f.eks. udvidelse af grupper)</translation>
     </message>
     <message>
         <source>Hide the Details view</source>
@@ -3928,11 +3926,11 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation type="unfinished"/>
+        <translation>Bekvemmelighed</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation>Lås databaser når sessionen låses eller låget er lukket</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -3948,7 +3946,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Skjul kodeord i forhåndsvisningspanelet</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -4019,7 +4017,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation type="unfinished"/>
+        <translation>Tidsbaseret kodeord</translation>
     </message>
     <message>
         <source>000000</source>
@@ -4088,7 +4086,7 @@ Lås den valgte database op eller vælg en anden som er åbnet.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Sti til posten, som skal fjernes.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>

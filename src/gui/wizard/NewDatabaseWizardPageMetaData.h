@@ -27,7 +27,7 @@ class Database;
 
 class NewDatabaseWizardPageMetaData : public NewDatabaseWizardPage
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizardPageMetaData(QWidget* parent = nullptr);
@@ -35,4 +35,4 @@ public:
     ~NewDatabaseWizardPageMetaData() override;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H

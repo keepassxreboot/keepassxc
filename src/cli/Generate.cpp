@@ -43,26 +43,33 @@ int Generate::execute(const QStringList& arguments)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
-    QCommandLineOption len(QStringList() << "L" << "length",
+    QCommandLineOption len(QStringList() << "L"
+                                         << "length",
                            QObject::tr("Length of the generated password"),
                            QObject::tr("length"));
     parser.addOption(len);
-    QCommandLineOption lower(QStringList() << "l" << "lower",
+    QCommandLineOption lower(QStringList() << "l"
+                                           << "lower",
                              QObject::tr("Use lowercase characters"));
     parser.addOption(lower);
-    QCommandLineOption upper(QStringList() << "u" << "upper",
+    QCommandLineOption upper(QStringList() << "u"
+                                           << "upper",
                              QObject::tr("Use uppercase characters"));
     parser.addOption(upper);
-    QCommandLineOption numeric(QStringList() << "n" << "numeric",
+    QCommandLineOption numeric(QStringList() << "n"
+                                             << "numeric",
                                QObject::tr("Use numbers."));
     parser.addOption(numeric);
-    QCommandLineOption special(QStringList() << "s" << "special",
+    QCommandLineOption special(QStringList() << "s"
+                                             << "special",
                                QObject::tr("Use special characters"));
     parser.addOption(special);
-    QCommandLineOption extended(QStringList() << "e" << "extended",
+    QCommandLineOption extended(QStringList() << "e"
+                                              << "extended",
                                 QObject::tr("Use extended ASCII"));
     parser.addOption(extended);
-    QCommandLineOption exclude(QStringList() << "x" << "exclude",
+    QCommandLineOption exclude(QStringList() << "x"
+                                             << "exclude",
                                QObject::tr("Exclude character set"),
                                QObject::tr("chars"));
     parser.addOption(exclude);

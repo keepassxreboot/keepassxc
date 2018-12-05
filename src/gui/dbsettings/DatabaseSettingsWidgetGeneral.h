@@ -26,7 +26,7 @@
 class Database;
 namespace Ui
 {
-class DatabaseSettingsWidgetGeneral;
+    class DatabaseSettingsWidgetGeneral;
 }
 
 class DatabaseSettingsWidgetGeneral : public DatabaseSettingsWidget
@@ -38,7 +38,10 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetGeneral);
     ~DatabaseSettingsWidgetGeneral() override;
 
-    inline bool hasAdvancedMode() const override { return false; }
+    inline bool hasAdvancedMode() const override
+    {
+        return false;
+    }
 
 public slots:
     void initialize() override;
@@ -51,4 +54,4 @@ protected:
     const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_ui;
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H

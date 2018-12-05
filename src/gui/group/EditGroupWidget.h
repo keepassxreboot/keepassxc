@@ -31,7 +31,7 @@ namespace Ui
 {
     class EditGroupWidgetMain;
     class EditWidget;
-}
+} // namespace Ui
 
 class EditGroupWidget : public EditWidget
 {

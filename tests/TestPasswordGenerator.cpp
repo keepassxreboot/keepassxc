@@ -19,8 +19,8 @@
 #include "core/PasswordGenerator.h"
 #include "crypto/Crypto.h"
 
-#include <QTest>
 #include <QRegularExpression>
+#include <QTest>
 
 QTEST_GUILESS_MAIN(TestPasswordGenerator)
 
@@ -89,14 +89,14 @@ void TestPasswordGenerator::testCharClasses()
     regex.setPattern(R"(^[^a-zA-Z0-9\.,:;"'\-/\\_|!\*\+\-<=>\?#`~%&^$@]+$)");
     QVERIFY(regex.match(password).hasMatch());
 
-    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters
-        | PasswordGenerator::CharClass::UpperLetters | PasswordGenerator::CharClass::Braces);
+    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
+                             | PasswordGenerator::CharClass::Braces);
     password = generator.generatePassword();
     regex.setPattern(R"(^[a-zA-Z\(\)\[\]\{\}]+$)");
     QVERIFY(regex.match(password).hasMatch());
 
-    generator.setCharClasses(PasswordGenerator::CharClass::Quotes
-        | PasswordGenerator::CharClass::Numbers | PasswordGenerator::CharClass::Dashes);
+    generator.setCharClasses(PasswordGenerator::CharClass::Quotes | PasswordGenerator::CharClass::Numbers
+                             | PasswordGenerator::CharClass::Dashes);
     password = generator.generatePassword();
     regex.setPattern(R"(^["'\d\-/\\_|]+$)");
     QVERIFY(regex.match(password).hasMatch());
@@ -116,15 +116,14 @@ void TestPasswordGenerator::testLookalikeExclusion()
     QRegularExpression regex("^[^lI0]+$");
     QVERIFY(regex.match(password).hasMatch());
 
-    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters |
-        PasswordGenerator::CharClass::UpperLetters | PasswordGenerator::CharClass::Numbers);
+    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
+                             | PasswordGenerator::CharClass::Numbers);
     password = generator.generatePassword();
     regex.setPattern("^[^lI01]+$");
     QVERIFY(regex.match(password).hasMatch());
 
-    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters
-        | PasswordGenerator::CharClass::UpperLetters | PasswordGenerator::CharClass::Numbers
-        | PasswordGenerator::CharClass::EASCII);
+    generator.setCharClasses(PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
+                             | PasswordGenerator::CharClass::Numbers | PasswordGenerator::CharClass::EASCII);
     password = generator.generatePassword();
     regex.setPattern("^[^lI01﹒]+$");
     QVERIFY(regex.match(password).hasMatch());

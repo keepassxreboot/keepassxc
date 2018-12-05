@@ -52,7 +52,7 @@ public:
 
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
-    void entrySelectionChanged();
+    void entrySelectionChanged(Entry* entry);
     void viewStateChanged();
 
 public slots:
@@ -66,6 +66,7 @@ protected:
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
+    void emitEntrySelectionChanged();
     void showHeaderMenu(const QPoint& position);
     void toggleColumnVisibility(QAction* action);
     void fitColumnsToWindow();

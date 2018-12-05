@@ -26,7 +26,7 @@ class Database;
 class DatabaseSettingsWidget;
 namespace Ui
 {
-class NewDatabaseWizardPage;
+    class NewDatabaseWizardPage;
 }
 
 /**
@@ -34,7 +34,7 @@ class NewDatabaseWizardPage;
  */
 class NewDatabaseWizardPage : public QWizardPage
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizardPage(QWidget* parent = nullptr);
@@ -58,4 +58,4 @@ protected:
     const QScopedPointer<Ui::NewDatabaseWizardPage> m_ui;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARDPAGE_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGE_H

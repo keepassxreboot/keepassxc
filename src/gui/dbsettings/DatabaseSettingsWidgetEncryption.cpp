@@ -17,13 +17,14 @@
 
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "ui_DatabaseSettingsWidgetEncryption.h"
-#include "core/Database.h"
-#include "core/Metadata.h"
-#include "core/Global.h"
+
 #include "core/AsyncTask.h"
-#include "gui/MessageBox.h"
+#include "core/Database.h"
+#include "core/Global.h"
+#include "core/Metadata.h"
 #include "crypto/kdf/Argon2Kdf.h"
 #include "format/KeePass2.h"
+#include "gui/MessageBox.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -260,7 +261,7 @@ bool DatabaseSettingsWidgetEncryption::save()
             return false;
         }
     } else if ((kdf->uuid() == KeePass2::KDF_AES_KDBX3 || kdf->uuid() == KeePass2::KDF_AES_KDBX4)
-        && m_ui->transformRoundsSpinBox->value() < 100000) {
+               && m_ui->transformRoundsSpinBox->value() < 100000) {
         QMessageBox warning;
         warning.setIcon(QMessageBox::Warning);
         warning.setWindowTitle(tr("Number of rounds too low", "Key transformation rounds"));
@@ -394,7 +395,7 @@ void DatabaseSettingsWidgetEncryption::updateFormatCompatibility(int index, bool
         m_ui->compatibilitySelection->blockSignals(block);
     }
 
-     if (retransform) {
+    if (retransform) {
         QUuid kdfUuid(m_ui->compatibilitySelection->itemData(index).toByteArray());
         auto kdf = KeePass2::uuidToKdf(kdfUuid);
         m_db->setKdf(kdf);

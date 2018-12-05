@@ -47,4 +47,4 @@ public:
 #endif
 };
 
-#endif //KEEPASSXC_TEMPORARYFILE_H
+#endif // KEEPASSXC_TEMPORARYFILE_H

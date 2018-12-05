@@ -31,6 +31,7 @@
 
 #ifdef WITH_XC_NETWORKING
 #include <QtNetwork>
+#include <QNetworkAccessManager>
 #endif
 
 IconStruct::IconStruct()
@@ -44,6 +45,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     , m_ui(new Ui::EditWidgetIcons())
     , m_db(nullptr)
 #ifdef WITH_XC_NETWORKING
+    , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
 #endif
     , m_defaultIconModel(new DefaultIconModel(this))
@@ -54,6 +56,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     m_ui->defaultIconsView->setModel(m_defaultIconModel);
     m_ui->customIconsView->setModel(m_customIconModel);
 
+    // clang-format off
     connect(m_ui->defaultIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonDefaultIcons()));
     connect(m_ui->customIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonCustomIcons()));
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SLOT(updateWidgetsDefaultIcons(bool)));
@@ -64,14 +67,11 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
 
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
-    connect(m_ui->defaultIconsView->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            this,
-            SIGNAL(widgetUpdated()));
-    connect(m_ui->customIconsView->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            this,
-            SIGNAL(widgetUpdated()));
+    connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            this, SIGNAL(widgetUpdated()));
+    connect(m_ui->customIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            this, SIGNAL(widgetUpdated()));
+    // clang-format on
 
     m_ui->faviconButton->setVisible(false);
     m_ui->addButton->setEnabled(true);
@@ -156,7 +156,8 @@ void EditWidgetIcons::setUrl(const QString& url)
 }
 
 #ifdef WITH_XC_NETWORKING
-namespace {
+namespace
+{
     // Try to get the 2nd level domain of the host part of a QUrl. For example,
     // "foo.bar.example.com" would become "example.com", and "foo.bar.example.co.uk"
     // would become "example.co.uk".
@@ -173,17 +174,17 @@ namespace {
     {
         QUrl url;
         if (var.canConvert<QUrl>())
-            url = var.value<QUrl>();
+            url = var.toUrl();
         return url;
     }
 
-    QUrl getRedirectTarget(QNetworkReply *reply)
+    QUrl getRedirectTarget(QNetworkReply* reply)
     {
         QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
         QUrl url = convertVariantToUrl(var);
         return url;
     }
-}
+} // namespace
 #endif
 
 void EditWidgetIcons::downloadFavicon()
@@ -264,9 +265,10 @@ void EditWidgetIcons::fetchFinished()
         return;
     } else {
         if (!fallbackEnabled) {
-            emit messageEditEntry(tr("Unable to fetch favicon.") + "\n" +
-                                  tr("Hint: You can enable DuckDuckGo as a fallback under Tools>Settings>Security"),
-                                  MessageWidget::Error);
+            emit messageEditEntry(
+                tr("Unable to fetch favicon.") + "\n"
+                    + tr("Hint: You can enable DuckDuckGo as a fallback under Tools>Settings>Security"),
+                MessageWidget::Error);
         } else {
             emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);
         }
@@ -294,7 +296,7 @@ void EditWidgetIcons::startFetchFavicon(const QUrl& url)
 
     QNetworkRequest request(url);
 
-    m_reply = m_netMgr.get(request);
+    m_reply = m_netMgr->get(request);
     connect(m_reply, &QNetworkReply::finished, this, &EditWidgetIcons::fetchFinished);
     connect(m_reply, &QIODevice::readyRead, this, &EditWidgetIcons::fetchReadyRead);
 #else
@@ -339,8 +341,9 @@ void EditWidgetIcons::addCustomIconFromFile()
             if (!errornames.empty()) {
                 // Show the first 8 icons that failed to load
                 errornames = errornames.mid(0, 8);
-                emit messageEditEntry(msg + "\n" + tr("The following icon(s) failed:", "", errornames.size()) +
-                                      "\n" + errornames.join("\n"), MessageWidget::Error);
+                emit messageEditEntry(msg + "\n" + tr("The following icon(s) failed:", "", errornames.size()) + "\n"
+                                          + errornames.join("\n"),
+                                      MessageWidget::Error);
             } else if (numloaded > 0) {
                 emit messageEditEntry(msg, MessageWidget::Positive);
             } else {

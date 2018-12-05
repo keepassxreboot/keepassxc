@@ -7,11 +7,11 @@
     </message>
     <message>
         <source>About</source>
-        <translation>عن</translation>
+        <translation>حول</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>للإبلاغ عن الأخطاء: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>للإبلاغ عن العلل: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>المساهمين</translation>
+        <translation>المساهمون</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>قم بتضمين المعلومات التالية عند الإبلاغ عن خطأ:</translation>
+        <translation>قم بتضمين المعلومات التالية عند الإبلاغ عن علة:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -73,7 +73,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
+        <translation>شكر خاص من فريق KeePassXC يذهب إلى debfx لإنشاء KeePassX الأصلي.</translation>
     </message>
     <message>
         <source>Build Type: %1
@@ -98,7 +98,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Deny</source>
-        <translation>رفض</translation>
+        <translation>ارفض</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
@@ -122,7 +122,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>المكمل التلقائي - KeePassXC</translation>
+        <translation>الطباعة التلقائية - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -183,11 +183,11 @@ Please select whether you want to allow access.</source>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>المكمل التلقائي - KeePassXC</translation>
+        <translation>الطباعة التلقائية - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>حدد مدخل للمكمل التلقائي:</translation>
+        <translation>حدد مدخل للطباعة التلقائية:</translation>
     </message>
 </context>
 <context>
@@ -206,7 +206,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Deny</source>
-        <translation>رفض</translation>
+        <translation>ارفض</translation>
     </message>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
@@ -272,11 +272,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>لا تعرض سوى أفضل التطابقات للرابط المحدد بدلًا من جميع الإدخالات للنطاق بأكمله.</translation>
+        <translation>لا تعرض سوى أفضل التطابقات للرابط المحدد بدلا من جميع الإدخالات للنطاق بأكمله.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>&amp;عرض أفضل مطابقة لبيانات الإعتماد فقط</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
@@ -317,7 +317,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>البحث في جميع قواعد البيانات لمطابقة بيانات الإعتماد</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -329,11 +329,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>تحديثات مسارات KeePassXC أو keepassxc-proxy تلقائيًا لبرامج المراسلات الأصلية عند بدء التشغيل.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>تحديث &amp;أصل ملفات manifest للمراسلات الأصلية عند بدء التشغيل</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -382,14 +382,17 @@ Please select whether you want to allow access.</source>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: طلب مصادقة مفتاح جديد</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 
 If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>لقد تلقيت طلب ارتباط للمفتاح أعلاه.
+
+إذا كنت ترغب في السماح له بالوصول إلى قاعدة بيانات KeePassXC ،
+إعطه اسم فريد لمعرفته وقبوله.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -402,7 +405,8 @@ give it a unique name to identify and accept it.</source>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
+        <translation>مفتاح التشفير المشترك مع إسم &quot;%1&quot; موجود بالفعل.
+هل تريد الكتابة عليه؟</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -444,7 +448,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>حٌذفت %n مفتاح تشفير من إعدادات KeePassXC.</numerusform><numerusform>حٌذفت %n مفتاح تشفير من إعدادات KeePassXC.</numerusform><numerusform>حٌذفت %n مفتاح تشفير من إعدادات KeePassXC.</numerusform><numerusform>حُذفت %n مفاتيح تشفير من إعدادات KeePassXC.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassXC.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -460,11 +464,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مُدخل.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: لا يوجد مُدخل مع الصلاحيات الموجودة!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -479,7 +483,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Enter password:</source>
-        <translation>أدخل كلمة المرور:</translation>
+        <translation>أدخل كلمة السر:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
@@ -499,7 +503,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation type="unfinished"/>
+        <translation>استجابة التحدي</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -531,7 +535,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Do you really want to use an empty string as password?</source>
-        <translation>هل تريد حقًا استخدام كلمات فارغة ككلمة مرور؟</translation>
+        <translation>هل تريد حقًا استخدام مُدخل فارغ ككلمة مرور؟</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -540,7 +544,8 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>أخفق إعداد %1 كملف مفتاح:
+%2</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -551,11 +556,14 @@ Please unlock the selected database or choose another one which is unlocked.</so
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>أنت تستخدم تنسيق ملف مفتاح قديم قد يصبح
+غير مُعتمد في المستقبل.
+
+يرجى النظر في إنشاء ملف مفتاح جديد.</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>إستبدال المفتاح الرئيسي أخفق: لم يُدرج YubiKey.</translation>
     </message>
 </context>
 <context>
@@ -566,11 +574,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation type="unfinished"/>
+        <translation>أضف &apos; - Clone&apos; إلى العنوان</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation type="unfinished"/>
+        <translation>إستبدل اسم المستخدم وكلمة المرور بالتوصيات</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -601,7 +609,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation type="unfinished"/>
+        <translation>النص مؤهل من قبل</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
@@ -613,7 +621,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>First record has field names</source>
-        <translation type="unfinished"/>
+        <translation>يحتوي السجل الأول على أسماء الحقول</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
@@ -621,7 +629,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation type="unfinished"/>
+        <translation>يعتبر &apos;\&apos; حرف هروب</translation>
     </message>
     <message>
         <source>Preview</source>
@@ -637,7 +645,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation type="unfinished"/>
+        <translation>إسم الحقل فارغ</translation>
     </message>
     <message>
         <source>column </source>
@@ -685,15 +693,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n بت،</numerusform><numerusform>%n بت،</numerusform><numerusform>%n بت،</numerusform><numerusform>%n بت،</numerusform><numerusform>%n بتات،</numerusform><numerusform>%n بت،</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n صف،</numerusform><numerusform>%n صف،</numerusform><numerusform>%n صف،</numerusform><numerusform>%n صف،</numerusform><numerusform>%n صف،</numerusform><numerusform>%n صف،</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n عمود</numerusform><numerusform>%n عمود</numerusform><numerusform>%n عمود</numerusform><numerusform>%n عمود</numerusform><numerusform>%n عمود</numerusform><numerusform>%n عمود</numerusform></translation>
     </message>
 </context>
 <context>
@@ -724,11 +732,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>فتح قاعدة البيانات غير ممكن.</translation>
+        <translation>يتعذر فتح قاعدة البيانات.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>لا يمكن فتح ملف المفتاح</translation>
+        <translation>يتعذر فتح ملف المفتاح</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -739,7 +747,10 @@ Please consider generating a new key file.</source>
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>أنت تستخدم تنسيق ملف مفتاح قديم قد يصبح
+غير مُعتمد في المستقبل.
+
+يرجى النظر في إنشاء ملف مفتاح جديد.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
@@ -770,7 +781,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>لا يمكن فتح ملف المفتاح</translation>
+        <translation>يتعذر فتح ملف المفتاح</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -803,7 +814,7 @@ You can now save it.</source>
     </message>
     <message>
         <source>Encryption</source>
-        <translation>التشفير</translation>
+        <translation>التعمية</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -814,15 +825,17 @@ You can now save it.</source>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation type="unfinished"/>
+        <translation>أنت تستخدم عدد كبير جدًا من جولات تحول المفتاح مع Argon2.
+
+إذا احتفظت بهذا الرقم، فقد تستغرق قاعدة البيانات ساعات أو أيام (أو حتى أطول) لفتحها!</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation type="unfinished"/>
+        <translation>مفهوم، حافظ على العدد</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>إلغاء</translation>
+        <translation>ألغ</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
@@ -833,32 +846,34 @@ If you keep this number, your database may take hours or days (or even longer) t
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database may be too easy to crack!</source>
-        <translation type="unfinished"/>
+        <translation>أنت تستخدم عدد قليل جدًا من جولات تحول المفتاح مع  AES-KDF.
+
+إذا احتفزت بهذا الرقم، قد تكون قاعدة البيانات الخاصة بك من السهل جدًا كسرها!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation type="unfinished"/>
+        <translation>KDF دون تغيير</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation type="unfinished"/>
+        <translation>أخفق تحويل المفتاح مع معطيات KDF الجديدة; KDF دون تغيير.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>موضوع</numerusform><numerusform>موضوع</numerusform><numerusform>موضوع</numerusform><numerusform>مواضيع</numerusform><numerusform>مواضيع</numerusform><numerusform>مواضيع</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>خورزامية التشفير:</translation>
+        <translation>خورزامية التعمية:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -870,15 +885,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation type="unfinished"/>
+        <translation>وظيفة مفتاح الإشتقاق:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation type="unfinished"/>
+        <translation>جولات التحول:</translation>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
-        <translation type="unfinished"/>
+        <translation>مؤشر تأخير 1-ثانية</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
@@ -886,14 +901,14 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation type="unfinished"/>
+        <translation>التماثل:</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>البيانات الوصفية لقاعدة البيانات</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -933,7 +948,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>تفعيل &amp;الضغط (مستحسن)</translation>
     </message>
 </context>
 <context>
@@ -941,7 +956,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation type="unfinished"/>
+        <translation>الجذر</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -1072,11 +1087,11 @@ Disable safe saves and try again?</source>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>البحث...</translation>
+        <translation>يبْحَث...</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>تغيير كلمة المرور الرئيسية</translation>
+        <translation>تغيير كلمة السر الرئيسية</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -1084,7 +1099,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد حقًا حذف الإدخال &quot;%1&quot; بشكل دائم؟</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -1092,11 +1107,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to delete %1 entries for good?</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد حقًا حذف %1 إدخالات بشكل دائم؟</translation>
     </message>
     <message>
         <source>Move entry to recycle bin?</source>
-        <translation>نقل المدخل إلى سلة المحذوفات؟</translation>
+        <translation>نقل المُدخل إلى سلة المهملات؟</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -1104,11 +1119,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move entries to recycle bin?</source>
-        <translation>نقل المدخلات إلى سلة المحذوفات؟</translation>
+        <translation>نقل المُدخلات إلى سلة المهملات؟</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform><numerusform>هل تريد حقًا نقل %n مُدخل إلى سلة المهملات؟</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1116,11 +1131,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد حقًا تنفيذ الأمر التالي؟&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>تذكر إختياري</translation>
+        <translation>تذكر ما اخترته</translation>
     </message>
     <message>
         <source>Delete group?</source>
@@ -1128,7 +1143,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد حقًا حذف المجموعة &quot;%1&quot; بشكل دائم؟</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -1136,7 +1151,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>لا يوجد قاعدة بيانات حالية </translation>
+        <translation>لا يوجد قاعدة بيانات حالية.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -1165,11 +1180,12 @@ Disable safe saves and try again?</source>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>تم تغيير ملف قاعدة البيانات ولديك تغييرات لم يتم حفظها.
+هل تريد دمج التغييرات؟</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload this database.</source>
-        <translation type="unfinished"/>
+        <translation>تعذر فتح ملف قاعدة البيانات الجديد أثناء محاولة إعادة تحميل قاعدة البيانات هذه تلقائيًا.</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -1184,7 +1200,7 @@ Do you want to merge your changes?</source>
     <name>DetailsWidget</name>
     <message>
         <source>Generate TOTP Token</source>
-        <translation type="unfinished"/>
+        <translation>إنشاء رمز TOTP</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1204,7 +1220,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Expiration</source>
-        <translation type="unfinished"/>
+        <translation>الإنتهاء</translation>
     </message>
     <message>
         <source>Username</source>
@@ -1212,7 +1228,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Autotype</source>
-        <translation type="unfinished"/>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Searching</source>
@@ -1267,7 +1283,7 @@ Do you want to merge your changes?</source>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>دخول</translation>
+        <translation>مُدخلة</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1275,11 +1291,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>رمز</translation>
+        <translation>أيقونة</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>المكمل التلقائي</translation>
+        <translation>الطباعة التلقائية</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1299,7 +1315,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(مشفر)</translation>
+        <translation>(مُعمّى)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -1347,7 +1363,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation type="unfinished"/>
+        <translation>إضغط استكشاف للعرض او التحرير</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1355,27 +1371,27 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n أسبوع</numerusform><numerusform>أسبوع</numerusform><numerusform>أسبوعين</numerusform><numerusform>%n أسابيع</numerusform><numerusform>%n أسبوع</numerusform><numerusform>%n أسابيع</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n شهر</numerusform><numerusform>شهر</numerusform><numerusform>شهرين</numerusform><numerusform>%n شهور</numerusform><numerusform>%n شهور</numerusform><numerusform>%n شهور</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>سنة 1</translation>
+        <translation>سنة واحدة</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>تطبيق كلمة المرور المولدة؟</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد تطبيق كلمة المرور المولدة لهذا المُدخل؟</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>حُدث المُدخل بنجاح.</translation>
     </message>
 </context>
 <context>
@@ -1402,7 +1418,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"/>
+        <translation>إستكشاف</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1410,11 +1426,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>لون المقدمة:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>لون الخلفية:</translation>
     </message>
 </context>
 <context>
@@ -1433,7 +1449,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation type="unfinished"/>
+        <translation>مصادقات النافذة</translation>
     </message>
     <message>
         <source>+</source>
@@ -1449,7 +1465,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation type="unfinished"/>
+        <translation>إستخدم تسلسل محدد لهذا الإرتباط:</translation>
     </message>
 </context>
 <context>
@@ -1495,15 +1511,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Presets</source>
-        <translation type="unfinished"/>
+        <translation>المسبقة</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"/>
+        <translation>إختر مربع الإختيار لإستكشاف قسم الملاحظات.</translation>
     </message>
     <message>
         <source>Username:</source>
-        <translation>اسم المستخدم</translation>
+        <translation>اسم المستخدم:</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -1526,7 +1542,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>بصمة</translation>
+        <translation>البصمة</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
@@ -1546,7 +1562,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>فك تشفير</translation>
+        <translation>فك التعمية</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -1594,7 +1610,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Icon</source>
-        <translation>رمز</translation>
+        <translation>أيقونة</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1614,11 +1630,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Disable</source>
-        <translation>قم ب تعطيل</translation>
+        <translation>تعطيل</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation type="unfinished"/>
+        <translation>ورث من المجموعة الرئيسية (%1)</translation>
     </message>
 </context>
 <context>
@@ -1641,7 +1657,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>المكمل التلقائي</translation>
+        <translation>الطباعة التلقائية</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
@@ -1660,15 +1676,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation>إستخدم الرمز المخصص</translation>
+        <translation>استخدم أيقونة مخصصة</translation>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>إضافة رمز مخصص</translation>
+        <translation>أضف أيقونة مخصصة</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>حذف الرمز المخصص</translation>
+        <translation>احذف أيقونة مخصصة</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -1680,7 +1696,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation type="unfinished"/>
+        <translation>تلميح: يمكنك تمكين قوقل كإجراء إضافي ضمن ألادوات&gt;الإعدادات&gt;الأمان</translation>
     </message>
     <message>
         <source>Images</source>
@@ -1727,11 +1743,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>المعرف الفريد:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>بيانات الإضافة</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1739,20 +1755,21 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>حذف بيانات الإضافة؟</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>هل تريد حقًا حذف بيانات الإضافة المحددة؟
+قد يؤدي إلى حدوث خلل في الإضافات المتأثرة.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>المفتاح</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>القيمة</translation>
     </message>
 </context>
 <context>
@@ -1794,7 +1811,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation>حفظ</translation>
+        <translation>احفظ</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -1802,7 +1819,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>هل أنت متأكد من حذف %n مرفق؟</numerusform><numerusform>هل أنت متأكد من حذف %n مرفق؟</numerusform><numerusform>هل أنت متأكد من حذف %n مرفق؟</numerusform><numerusform>هل أنت متأكد من حذف %n مرفقات؟</numerusform><numerusform>هل أنت متأكد من حذف %n مرفق؟</numerusform><numerusform>هل أنت متأكد من حذف %n مرفقات؟</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1882,7 +1899,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation type="unfinished"/>
+        <translation>المرجع:</translation>
     </message>
     <message>
         <source>Group</source>
@@ -1922,11 +1939,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"/>
+        <translation>التعديل</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>الوصول</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1941,11 +1958,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>إخفاء أسماء المستخدم</translation>
+        <translation>اخفي أسماء المستخدمين</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>إخفاء كلمات المرور</translation>
+        <translation>اخفي كلمات السر</translation>
     </message>
     <message>
         <source>Fit to window</source>
@@ -1979,7 +1996,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن حفظ ملف برنامج المراسلات الأصلية.</translation>
     </message>
 </context>
 <context>
@@ -2018,7 +2035,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>رموز مخصصة</translation>
+        <translation>محارف خاصة</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
@@ -2030,7 +2047,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
-        <translation type="unfinished"/>
+        <translation>تأكد من أن كلمة المرور تحتوي على أحرف من كل مجموعة</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -2056,7 +2073,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
+        <translation>تعذر إصدار إستجابة التحدي.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2067,7 +2084,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation type="unfinished"/>
+        <translation>تعذر إصدار إستجابة التحدي.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2086,110 +2103,110 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation type="unfinished"/>
+        <translation>حجم رأس تدقيق المجموع غير صحيح</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation type="unfinished"/>
+        <translation>رأس SHA256 غير متطابق</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>المفتاح خاطئ أو ملف قاعدة البيانات تالف. (HMAC غير متطابق)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation type="unfinished"/>
+        <translation>تشفير غير معروف</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation type="unfinished"/>
+        <translation>حجم معرف الرأس غير صحيح</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>رأس حقل الطول غير صحيح</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation type="unfinished"/>
+        <translation>طول بيانات الرأس غير صحيح</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation type="unfinished"/>
+        <translation>أخفق فتح مخزن بيانات مؤقت لمعطيات KDF في الرأس</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation type="unfinished"/>
+        <translation>وظيفة إشتقاق المفاتيح غير مدعومة (KDF) أو المعطيات غير صحيحة</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation type="unfinished"/>
+        <translation>عُثر على حقول رأس قديمة في ملف KDBX4.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation type="unfinished"/>
+        <translation>حجم معرف الرأس الداخلي غير صحيح</translation>
     </message>
     <message>
         <source>Invalid inner header field length</source>
-        <translation type="unfinished"/>
+        <translation>رأس حقل الطول الداخلي غير صحيح</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation type="unfinished"/>
+        <translation>حجم ثنائي الرأس الداخلي غير صحيح</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>نسخة خريطة KeePass المتنوعة غير مدعومة.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول ادخال الاسم للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>بيانات ادخال الاسم الخريطة المتنوعة غير صحيحة</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال الخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>بيانات قيمة إدخال الخريطة المتنوعة غير صحيحة</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال Bool للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال Int32 للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال UInt32 للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال Int64 للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>طول قيمة إدخال UInt64 للخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>نوع إدخال الخريطة المتنوعة غير صحيح</translation>
+        <translation>إدخال نوع الخريطة المتنوعة غير صحيح</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
@@ -2215,7 +2232,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>أخفق تسلسل معطيات KDF للخريطة المتنوعة</translation>
     </message>
 </context>
 <context>
@@ -2226,7 +2243,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation type="unfinished"/>
+        <translation>تشفير غير مدعوم</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
@@ -2269,7 +2286,10 @@ This may cause the affected plugins to malfunction.</source>
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation type="unfinished"/>
+        <translation>الملف المحدد هو قاعدة بيانات KeePass 1 القديمة (.kdb).
+
+يمكنك إستيراده عن طريق النقر على قاعدة البيانات &gt; &apos;إستيراد قاعدة بيانات KeePass 1...&apos;.
+هذه الطريقة الوحيدة للترحيل. لن تتمكن من فتح قاعدة البيانات المستوردة من القديم في إصدار KeePassXC 0.4.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
@@ -2284,7 +2304,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>No root group</source>
-        <translation type="unfinished"/>
+        <translation>لا يوجد مجموعة رئيسية</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
@@ -2296,7 +2316,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation type="unfinished"/>
+        <translation>عناصر المجموعة المتعددة</translation>
     </message>
     <message>
         <source>Null group uuid</source>
@@ -2308,7 +2328,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation type="unfinished"/>
+        <translation>قيمة EnableAutoType غير صحيحة</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
@@ -2316,7 +2336,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>لم يُعثر على uuid المجموعة</translation>
+        <translation>لم يُعثر على مُعرف المجموعة الفريد</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
@@ -2340,11 +2360,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>لم يُعثر على uuid المُدخل</translation>
+        <translation>لم يُعثر على مُعرف المُدخل الفريد</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>سجل العنصر مع uuid مختلف</translation>
+        <translation>أرِخ العنصر مسخدمًا معرف فريد مختلف</translation>
     </message>
     <message>
         <source>Unable to decrypt entry string</source>
@@ -2392,7 +2412,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>قيمة uuid غير صحيحة</translation>
+        <translation>قيمة المُعرف الفريد غير صحيحة</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
@@ -2460,7 +2480,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>الجذر</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2472,7 +2492,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>فشل تحول المفتاح</translation>
+        <translation>تعذر تحويل المفتاح</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
@@ -2484,7 +2504,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>قراءة بيانات الحقل للمجموعة لا تتطابق مع الحجم</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
@@ -2564,33 +2584,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – مستحسن)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2598,7 +2591,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>تعذر إنشاء ملف القفل. تم تعطيل وضع المثيل الأحادي.</translation>
+        <translation>تعذر إنشاء ملف القفل. وضع المثيل الأحادي مُعطل.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
@@ -2633,7 +2626,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation type="unfinished"/>
+        <translation>المُدخلات</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute to clipboard</source>
@@ -2753,7 +2746,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Perform Auto-Type</source>
-        <translation>&amp;تنفيذ الضغط التلقائي</translation>
+        <translation>&amp;تنفيذ الطباعة التلقائية</translation>
     </message>
     <message>
         <source>&amp;Open URL</source>
@@ -2781,7 +2774,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;ملاحظات</translation>
+        <translation>&amp;الملاحظات</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
@@ -2805,15 +2798,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation type="unfinished"/>
+        <translation>إظهار TOTP</translation>
     </message>
     <message>
         <source>Set up TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>إعداد TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation type="unfinished"/>
+        <translation>نسخ &amp;TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -2825,15 +2818,15 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>خطأ في الوصول لملف التكوين %1</translation>
     </message>
     <message>
         <source>&lt;p&gt;It looks like you are using KeePassHTTP for browser integration. This feature has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt; (warning %1 of 3).&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;يبدو أنك تستخدم KeePassHTTP كتكامل للمتصفح. تم إهمال هذه الميزة وستتم إزالتها في المستقبل.&lt;br&gt;يرجى التبديل إلى KeePassXC-Browser! للحصول على مساعدة بالإستبدال، إنتقل إلى دليل الإستبدال&lt;a class=&quot;link&quot;  href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;&lt;/a&gt; (التحذير %1 من 3).&lt;/p&gt;</translation>
     </message>
     <message>
         <source>read-only</source>
-        <translation type="unfinished"/>
+        <translation>للقراءة فقط</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -2841,7 +2834,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Toggle window</source>
-        <translation type="unfinished"/>
+        <translation>تبديل النافذة</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -2869,20 +2862,22 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation type="unfinished"/>
+        <translation>يرجى لمس الزر المتواجد على YubiKey!</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>تحذير: أنت تستخدم بناء غير مستقر من KeePassXC!
+هناك خطر كبير للعطب، حافظ على أخذ نسخة إحتياطية لقاعدة البيانات.
+ليس المقصود من هذا الإصدار للإستخدام الأساسي.</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation type="unfinished"/>
+        <translation>ملف المفتاح غير صحيح، متوقع أنه مفتاح OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -2890,7 +2885,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation type="unfinished"/>
+        <translation>تعذر فك تشفير Base64</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
@@ -2970,7 +2965,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation type="unfinished"/>
+        <translation>KDF غير معروف: %1</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
@@ -3022,11 +3017,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation type="unfinished"/>
+        <translation>فرز الإدخالات المطابقة حسب اسم المستخدم</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation type="unfinished"/>
+        <translation>فرز الإدخالات المطابقة حسب العنوان</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
@@ -3058,7 +3053,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation type="unfinished"/>
+        <translation>بحث في جميع قواعد البيانات المفتوحة لمطابقة الإدخالات</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -3086,7 +3081,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&lt;p&gt;KeePassHTTP has been deprecated and will be removed in the future.&lt;br&gt;Please switch to KeePassXC-Browser instead! For help with migration, visit our &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;migration guide&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;يبدو أنك تستخدم KeePassHTTP كتكامل للمتصفح. تم إهمال هذه الميزة وستتم إزالتها في المستقبل.&lt;br&gt;يرجى التبديل إلى KeePassXC-Browser! للحصول على مساعدة بالإستبدال، &lt;a href=&quot;https://keepassxc.org/docs/keepassxc-browser-migration&quot;&gt;إنتقل إلى دليل الإستبدال&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Cannot bind to privileged ports</source>
@@ -3116,7 +3111,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>entropy</source>
-        <translation>غير قادر</translation>
+        <translation>entropy</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3132,7 +3127,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>الحروف صغيرة</translation>
+        <translation>أحرف صغيرة</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -3299,7 +3294,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>ملف المفتاح لقاعدة البيانات</translation>
+        <translation>ملف المفتاح لقاعدة البيانات.</translation>
     </message>
     <message>
         <source>path</source>
@@ -3315,7 +3310,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>الرابط للمُدخل</translation>
+        <translation>الرابط للمُدخل.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3392,7 +3387,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
-        <translation>ادخل كلمة المرور لإلغاء القفل %1:</translation>
+        <translation>ادخل كلمة المرور لإلغاء قفل %1:</translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
@@ -3436,7 +3431,7 @@ Available commands:
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>مصطلح البحث.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -3456,7 +3451,7 @@ Available commands:
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>ملف قاعدة البيانات للدمج منه.</translation>
+        <translation>ملف المفتاح لقاعدة البيانات للدمج منه.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
@@ -3464,7 +3459,7 @@ Available commands:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation type="unfinished"/>
+        <translation>أسماء الخصائص المراد عرضها. يمكن تحديد هذا الخيار أكثر من مرة، مع عرض كل خاصية لكل سطر بالترتيب المحدد. إذا لم يتم تحديد خاصية، يتم إعطاء ملخص للخصائص الإفتراضية.</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -3476,11 +3471,11 @@ Available commands:
     </message>
     <message>
         <source>NULL device</source>
-        <translation type="unfinished"/>
+        <translation>جهاز  غير معروف</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation type="unfinished"/>
+        <translation>خطأ القراءة من الجهاز</translation>
     </message>
     <message>
         <source>file empty !
@@ -3490,11 +3485,35 @@ Available commands:
     </message>
     <message>
         <source>malformed string</source>
-        <translation type="unfinished"/>
+        <translation>سلسلة غير صحيحة</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation type="unfinished"/>
+        <translation>إغلاق الإقتباس مفقود</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – مستحسن)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3534,11 +3553,11 @@ Available commands:
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey[%1] إستجابة التحدي - فتحة %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
-        <translation type="unfinished"/>
+        <translation>اضغط</translation>
     </message>
     <message>
         <source>Passive</source>
@@ -3550,11 +3569,11 @@ Available commands:
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>إنشاء عبارة مرور diceware عشوائية جديدة.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation type="unfinished"/>
+        <translation>عدد الكلمات لعبارة مرور diceware.</translation>
     </message>
     <message>
         <source>count</source>
@@ -3563,7 +3582,8 @@ Available commands:
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation type="unfinished"/>
+        <translation>قائمة الكلمات لمولد diceware.
+[الإفتراضية: EFF English]</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
@@ -3571,7 +3591,7 @@ Available commands:
     </message>
     <message>
         <source>Length of the generated password.</source>
-        <translation>طول كلمة المرور المُنشئة.</translation>
+        <translation>طول كلمة المرور المولدة.</translation>
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
@@ -3602,7 +3622,7 @@ Available commands:
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation type="unfinished"/>
+        <translation>حدث خطأ أثناء الكتابة إلى الجهاز الأساسي:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
@@ -3614,18 +3634,18 @@ Available commands:
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation type="unfinished"/>
+        <translation>خطأ zlib داخلي عند فك الضغط:</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>تنسيق gzip غير مدعوم في ه</translation>
+        <translation>تنسيق gzip غير مدعوم في هذا الإصدار من zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation type="unfinished"/>
+        <translation>خطأ zlib داخلي:</translation>
     </message>
 </context>
 <context>
@@ -3648,20 +3668,22 @@ Available commands:
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation type="unfinished"/>
+        <translation>حدد البحث في المجموعة المحددة</translation>
     </message>
 </context>
 <context>
     <name>Service</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: طلب مصادقة مفتاح جديد</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
 If you would like to allow it access to your KeePassXC database
 give it a unique name to identify and accept it.</source>
-        <translation type="unfinished"/>
+        <translation>لقد تلقيت طلب ارتباط للمفتاح أعلاه.
+إذا كنت ترغب في السماح له بالوصول إلى قاعدة بيانات KeePassXC
+إعطه اسم فريد لمعرفته وقبوله.</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
@@ -3697,11 +3719,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>حذف %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform><numerusform>حذف %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform><numerusform>حُذفت %n مفتاح تشفير من إعدادات KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: لم يتم العثور على أية مفاتيح</translation>
+        <translation>KeePassXC: لم يُعثر على أية مفاتيح</translation>
     </message>
     <message>
         <source>No shared encryption-keys found in KeePassHttp Settings.</source>
@@ -3729,11 +3751,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>حُذفت الصلاحيات من %n مدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مدخل.</numerusform><numerusform>حُذفت الصلاحيات من %n مدخلات.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: لا يوجد مُدخل مع الصلاحيات الموجودة!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -3752,11 +3774,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Security</source>
-        <translation>الأمن</translation>
+        <translation>الأمان</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation type="unfinished"/>
+        <translation>خطأ في الوصول لملف التكوين %1</translation>
     </message>
 </context>
 <context>
@@ -3787,7 +3809,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation type="unfinished"/>
+        <translation>الحفظ تلقائيًا بعد كل تعديل</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -3811,11 +3833,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide the Details view</source>
-        <translation type="unfinished"/>
+        <translation>إخفاء عرض التفاصيل</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>إظهار علامة تبويب</translation>
+        <translation>اظهر أيقونة البرنامج في صينية النظام</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -3827,7 +3849,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation type="unfinished"/>
+        <translation>رمز شريط المهام المظلم</translation>
     </message>
     <message>
         <source>Language</source>
@@ -3835,7 +3857,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>المكمل التلقائي</translation>
+        <translation>الطباعة التلقائية</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -3860,7 +3882,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>م.ثانية</translation>
+        <translation>مل.ثانية</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -3880,7 +3902,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Entry Management</source>
-        <translation type="unfinished"/>
+        <translation>إدارة الإدخالات</translation>
     </message>
     <message>
         <source>General</source>
@@ -3904,11 +3926,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>أغلق قواعد البيانات بعد حالات عدم النشاط ل</translation>
+        <translation>أغلق قواعد البيانات بعد حالة عدم النشاط ل</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation type="unfinished"/>
+        <translation>السهولة</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -3920,7 +3942,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation type="unfinished"/>
+        <translation>لا تطلب تكرار كلمة المرور عندما تكون مرئية</translation>
     </message>
     <message>
         <source>Show passwords in cleartext by default</source>
@@ -3940,7 +3962,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>إستخدم قوقل كمرجع لتنزيل رموز مواقع الويب</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
@@ -3951,7 +3973,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>SetupTotpDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation type="unfinished"/>
+        <translation>إعداد TOTP</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -4007,11 +4029,11 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Copy</source>
-        <translation>نسخة</translation>
+        <translation>نسخ</translation>
     </message>
     <message>
         <source>Expires in</source>
-        <translation>وتنتهي في</translation>
+        <translation>تنتهي في</translation>
     </message>
     <message>
         <source>seconds</source>
@@ -4033,7 +4055,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Create new database</source>
-        <translation>إنشاء قاعدة بيانات جديدة</translation>
+        <translation>أنشىء قاعدة بيانات جديدة</translation>
     </message>
     <message>
         <source>Open existing database</source>
@@ -4049,7 +4071,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>قواعد البيانات الحديثة</translation>
+        <translation>المفتوحة مؤخرًا</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
@@ -4068,7 +4090,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>مسار المُدخل للحذف.</translation>
+        <translation>مسار المُدخل التي ستحذف.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
@@ -4080,15 +4102,15 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>مسار ملف التكوين المخصص</translation>
+        <translation>مسار ملف الاعدادات المخصص</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>ملف المفتاح لقاعدة البيانات</translation>
+        <translation>ملف مفتاح قاعدة البيانات</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>قراءة كلمة مرور قاعدة البيانات من stdin</translation>
+        <translation>قراءة كلمة سر قاعدة البيانات من الدخل القياسي &quot;stdin&quot;</translation>
     </message>
     <message>
         <source>Parent window handle</source>

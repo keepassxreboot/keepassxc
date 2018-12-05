@@ -30,4 +30,4 @@ private slots:
     void testLookalikeExclusion();
 };
 
-#endif //KEEPASSXC_TESTPASSWORDGENERATOR_H
+#endif // KEEPASSXC_TESTPASSWORDGENERATOR_H

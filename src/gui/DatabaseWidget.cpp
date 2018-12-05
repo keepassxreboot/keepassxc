@@ -50,8 +50,8 @@
 #include "gui/EntryPreviewWidget.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
-#include "gui/TotpSetupDialog.h"
 #include "gui/TotpDialog.h"
+#include "gui/TotpSetupDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
@@ -155,18 +155,17 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     addChildWidget(m_csvImportWizard);
     addChildWidget(m_keepass1OpenWidget);
 
+    // clang-format off
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
-    connect(this, SIGNAL(pressedEntry(Entry*)), m_previewView, SLOT(setEntry(Entry*)));
-    connect(this, SIGNAL(pressedGroup(Group*)), m_previewView, SLOT(setGroup(Group*)));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
     connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), this, SLOT(onGroupChanged(Group*)));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), SIGNAL(groupChanged()));
+    connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SLOT(onGroupChanged(Group*)));
+    connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SIGNAL(groupChanged()));
     connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
         SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
-    connect(m_entryView, SIGNAL(entrySelectionChanged()), SIGNAL(entrySelectionChanged()));
+    connect(m_entryView, SIGNAL(entrySelectionChanged(Entry*)), SLOT(onEntryChanged(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_editEntryWidget, SIGNAL(historyEntryActivated(Entry*)), SLOT(switchToHistoryView(Entry*)));
     connect(m_historyEditEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchBackToEntryEdit()));
@@ -179,11 +178,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
-
-    connect(m_groupView, SIGNAL(groupPressed(Group*)), SLOT(emitPressedGroup(Group*)));
-    connect(m_groupView, SIGNAL(groupChanged(Group*)), SLOT(emitPressedGroup(Group*)));
-    connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(emitEntrySelectionChanged()));
-
+    // clang-format on
+    
     connectDatabaseSignals();
 
     m_fileWatchTimer.setSingleShot(true);
@@ -719,6 +715,12 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
     }
 
     setCurrentWidget(m_mainWidget);
+
+    if (sender() == m_entryView) {
+        onEntryChanged(m_entryView->currentEntry());
+    } else if (sender() == m_groupView) {
+        onGroupChanged(m_groupView->currentGroup());
+    }
 }
 
 void DatabaseWidget::switchToHistoryView(Entry* entry)
@@ -898,7 +900,6 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         // Call this first to clear out of search mode, otherwise
         // the desired entry is not properly selected
         endSearch();
-        emit clearSearch();
         m_groupView->setCurrentGroup(entry->group());
         m_entryView->setCurrentEntry(entry);
         break;
@@ -1049,14 +1050,15 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
 void DatabaseWidget::onGroupChanged(Group* group)
 {
     // Intercept group changes if in search mode
-    if (isSearchActive()) {
+    if (isSearchActive() && m_searchLimitGroup) {
         search(m_lastSearchText);
     } else if (isSearchActive()) {
-        // Otherwise cancel search
-        emit clearSearch();
+        endSearch();
     } else {
         m_entryView->displayGroup(group);
     }
+
+    m_previewView->setGroup(group);
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1079,6 +1081,9 @@ void DatabaseWidget::endSearch()
     m_searchingLabel->setText(tr("Searching..."));
 
     m_lastSearchText.clear();
+
+    // Tell the search widget to clear
+    emit clearSearch();
 }
 
 void DatabaseWidget::emitGroupContextMenuRequested(const QPoint& pos)
@@ -1091,24 +1096,13 @@ void DatabaseWidget::emitEntryContextMenuRequested(const QPoint& pos)
     emit entryContextMenuRequested(m_entryView->viewport()->mapToGlobal(pos));
 }
 
-void DatabaseWidget::emitEntrySelectionChanged()
+void DatabaseWidget::onEntryChanged(Entry* entry)
 {
-    Entry* currentEntry = m_entryView->currentEntry();
-    if (currentEntry) {
-        m_previewView->setEntry(currentEntry);
+    if (entry) {
+        m_previewView->setEntry(entry);
     }
 
     emit entrySelectionChanged();
-}
-
-void DatabaseWidget::emitPressedGroup(Group* currentGroup)
-{
-    if (!currentGroup) {
-        // if no group is pressed, leave in details the last group
-        return;
-    }
-
-    emit pressedGroup(currentGroup);
 }
 
 bool DatabaseWidget::canDeleteCurrentGroup() const

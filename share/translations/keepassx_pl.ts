@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Uwzględnij następujące informacje, gdy zgłaszasz błąd:</translation>
+        <translation>Przy zgłaszaniu błędów uwzględnij następujące informacje:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -60,7 +60,7 @@
 CPU architecture: %2
 Kernel: %3 %4</source>
         <translation>System operacyjny: %1
-Architektura CPU: %2
+Architektura procesora: %2
 Jądro: %3 %4</translation>
     </message>
     <message>
@@ -118,31 +118,31 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Nie mogę znaleźć wpisu, który by pasował do tytułu okna: </translation>
+        <translation>Nie znaleziono wpisu pasującego do nazwy okna:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-uzupełnianie - KeePassXC</translation>
+        <translation>Autouzupełnianie - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-uzupełnianie</translation>
+        <translation>Autouzupełnianie</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Składnia instrukcji auto-uzupełniania jest niepoprawna!</translation>
+        <translation>Składnia instrukcji autouzupełniania jest niepoprawna!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Polecenie auto-uzupełniania zawiera bardzo długie opóźnienie. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autouzupełniania zawiera bardzo długie opóźnienie. Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Polecenie auto-uzupełniania zawiera bardzo wolne wciśnięcia klawiszy. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autouzupełniania zawiera bardzo wolne wciśnięcia klawiszy. Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Polecenie auto-uzupełniania zawiera argumenty, które powtarzają się bardzo często. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autouzupełniania zawiera argumenty, które powtarzają się bardzo często. Czy chcesz kontynuować?</translation>
     </message>
 </context>
 <context>
@@ -183,11 +183,11 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-uzupełnianie - KeePassXC</translation>
+        <translation>Autouzupełnianie - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Wybierz wpis do auto-uzupełniania:</translation>
+        <translation>Wybierz wpis do autouzupełnienia:</translation>
     </message>
 </context>
 <context>
@@ -223,7 +223,7 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Wymagane jest to w celu uzyskania dostępu do baz danych za pomocą KeePassXC-Browser</translation>
+        <translation>Wymagane jest to aby uzyskać dostęp do baz danych za pomocą KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
@@ -272,7 +272,7 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Zwracaj tylko najlepsze dopasowania wpisów dla URL zamiast wszystkich wpisów całej domeny.</translation>
+        <translation>Zwracaj tylko najlepsze dopasowania wpisów dla URL zamiast wszystkich wpisów domeny.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
@@ -341,11 +341,11 @@ Wybierz, czy chcesz zezwolić na dostęp.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>Używaj aplikacj &amp;proxy pomiędzy KeePassXC a rozszerzeniem przeglądarki</translation>
+        <translation>Używaj aplikację &amp;proxy pomiędzy KeePassXC a rozszerzeniem przeglądarki</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Używaj niestandardowej lokalizacji proxy, jeżeli zainstalowałeś proxy ręcznie.</translation>
+        <translation>Używaj niestandardowej lokalizacji proxy, jeżeli została zainstalowana ręcznie.</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
@@ -464,7 +464,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu(ów).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -523,11 +523,11 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Nie można utworzyć pliku klucza :</translation>
+        <translation>Nie można utworzyć pliku klucza : </translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Wybierz plik z kluczem</translation>
+        <translation>Wybierz plik klucza</translation>
     </message>
     <message>
         <source>Empty password</source>
@@ -556,8 +556,8 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>Używasz przestarzałego formatu pliku klucza, który może być
-nieobsługiwany w przyszłości.
+        <translation>Używasz przestarzałego formatu pliku klucza, który może nie być
+obsługiwany w przyszłości.
 
 Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
@@ -645,11 +645,11 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Empty fieldname </source>
-        <translation>Puste pole tytuł</translation>
+        <translation>Pusty tytuł pola</translation>
     </message>
     <message>
         <source>column </source>
-        <translation>kolumna</translation>
+        <translation>kolumna </translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -657,11 +657,11 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Oryginalne dane:</translation>
+        <translation>Oryginalne dane: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
-        <translation>Wykryto błąd lub błędy w pliku CSV !</translation>
+        <translation>Wykryto błąd(błędy) w pliku CSV !</translation>
     </message>
     <message>
         <source> more messages skipped]</source>
@@ -693,15 +693,15 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n bajt, </numerusform><numerusform>%n bajty, </numerusform><numerusform>%n bajtów, </numerusform><numerusform>%n bajt, </numerusform></translation>
+        <translation><numerusform>%n bajt, </numerusform><numerusform>%n bajty, </numerusform><numerusform>%n bajtów, </numerusform><numerusform>%n bajtów, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n rząd, </numerusform><numerusform>%n rzędy, </numerusform><numerusform>%n rzędów, </numerusform><numerusform>%n rząd, </numerusform></translation>
+        <translation><numerusform>%n rząd, </numerusform><numerusform>%n rzędy, </numerusform><numerusform>%n rzędów, </numerusform><numerusform>%n rzędów, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolumna</numerusform><numerusform>%n kolumny</numerusform><numerusform>%n kolumn</numerusform><numerusform>%n kolumna</numerusform></translation>
+        <translation><numerusform>%n kolumna</numerusform><numerusform>%n kolumny</numerusform><numerusform>%n kolumn</numerusform><numerusform>%n kolumn</numerusform></translation>
     </message>
 </context>
 <context>
@@ -736,7 +736,7 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nie mogę otworzyć pliku z kluczem</translation>
+        <translation>Nie można otworzyć pliku klucza</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -747,8 +747,8 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>Używasz przestarzałego formatu pliku klucza, który może być
-nieobsługiwany w przyszłości.
+        <translation>Używasz przestarzałego formatu pliku klucza, który może nie być
+obsługiwany w przyszłości.
 
 Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
@@ -766,7 +766,7 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Wybierz plik z kluczem</translation>
+        <translation>Wybierz plik klucza</translation>
     </message>
 </context>
 <context>
@@ -781,7 +781,7 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nie mogę otworzyć pliku z kluczem</translation>
+        <translation>Nie mogę otworzyć pliku klucza</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -799,11 +799,11 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
         <source>The database has been successfully repaired
 You can now save it.</source>
         <translation>Baza danych została naprawiona
-Możesz teraz ją już zapisać.</translation>
+Możesz ją teraz zapisać.</translation>
     </message>
     <message>
         <source>Unable to repair the database.</source>
-        <translation>Nie mogę naprawić bazy danych.</translation>
+        <translation>Nie udało się naprawić bazy danych.</translation>
     </message>
 </context>
 <context>
@@ -819,7 +819,7 @@ Możesz teraz ją już zapisać.</translation>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>Liczba rund zbyt duża</translation>
+        <translation>Zbyt duża liczba rund</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
@@ -840,7 +840,7 @@ Jeśli zachowasz ten numer, otworzenie twojej bazy danych może zająć kilka go
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>Liczba rund zbyt mała</translation>
+        <translation>Za mała liczba rund</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
@@ -848,7 +848,7 @@ Jeśli zachowasz ten numer, otworzenie twojej bazy danych może zająć kilka go
 If you keep this number, your database may be too easy to crack!</source>
         <translation>Używasz bardzo małej liczby rund transformacji klucza z AES-KDF.
 
-Jeśli zachowasz ten numer, twoja baza danych może być zbyt łatwa do złamania!</translation>
+Jeśli zachowasz tę liczbę, twoja baza danych może być zbyt łatwa do złamania!</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -968,7 +968,7 @@ Jeśli zachowasz ten numer, twoja baza danych może być zbyt łatwa do złamani
     </message>
     <message>
         <source>Open database</source>
-        <translation>Otwieranie bazy danych</translation>
+        <translation>Otwórz bazę danych</translation>
     </message>
     <message>
         <source>File not found!</source>
@@ -984,7 +984,7 @@ Jeśli zachowasz ten numer, twoja baza danych może być zbyt łatwa do złamani
     </message>
     <message>
         <source>Open CSV file</source>
-        <translation>Otwieranie pliku CSV</translation>
+        <translation>Otwórz plik CSV</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -996,11 +996,11 @@ Jeśli zachowasz ten numer, twoja baza danych może być zbyt łatwa do złamani
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Połączenie baz danych</translation>
+        <translation>Połącz bazy danych</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Otwieranie bazy danych KeePass 1</translation>
+        <translation>Otwórz bazę danych KeePass 1</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
@@ -1028,7 +1028,7 @@ Zapisać zmiany?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Błąd w zapisywaniu bazy danych.</translation>
+        <translation>Błąd przy zapisie bazy danych.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1040,7 +1040,7 @@ Zapisać zmiany?</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Eksportowanie bazy danych do pliku CSV</translation>
+        <translation>Eksportuj bazę danych do pliku CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
@@ -1069,7 +1069,7 @@ Naciśnij anuluj, aby zakończyć zmiany albo porzucić je.</translation>
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
         <translation>Baza danych została zmodyfikowana.
-Czy chcesz zapisać przed zablokowaniem jej?
+Czy chcesz zapisać zmiany przed zablokowaniem?
 W przeciwnym wypadku zmiany zostaną porzucone.</translation>
     </message>
     <message>
@@ -1123,7 +1123,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
+        <translation><numerusform>Czy na pewno chcesz przenieść %n wpis do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisy do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform><numerusform>Czy na pewno chcesz przenieść %n wpisów do kosza?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1371,11 +1371,11 @@ Czy chcesz połączyć twoje zmiany?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n tydzień</numerusform><numerusform>%n tygodni(e)</numerusform><numerusform>%n tygodni(e)</numerusform><numerusform>%n tygodni(e)</numerusform></translation>
+        <translation><numerusform>%n tydzień</numerusform><numerusform>%n tygodnie</numerusform><numerusform>%n tygodni</numerusform><numerusform>%n tygodni</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n miesiąc</numerusform><numerusform>%n miesiąc(e)</numerusform><numerusform>%n miesiąc(e)</numerusform><numerusform>%n miesiąc(e)</numerusform></translation>
+        <translation><numerusform>%n miesiąc</numerusform><numerusform>%n miesiące</numerusform><numerusform>%n miesięcy</numerusform><numerusform>%n miesięcy</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1899,7 +1899,7 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>Odniesienie:</translation>
+        <translation>Odniesienie: </translation>
     </message>
     <message>
         <source>Group</source>
@@ -2435,7 +2435,7 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Nie można otworzyć pliku z kluczem.</translation>
+        <translation>Nie można otworzyć pliku klucza.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -2581,33 +2581,6 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     <message>
         <source>Invalid entry field type</source>
         <translation>Nieprawidłowy typ pola wpisu</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bitowy</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bitowy</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bitowy</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – zalecany)</translation>
     </message>
 </context>
 <context>
@@ -3150,7 +3123,7 @@ Używam domyślnego portu 19455.</translation>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Duże litery</translation>
+        <translation>Wielkie litery</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -3353,7 +3326,7 @@ Używam domyślnego portu 19455.</translation>
     </message>
     <message>
         <source>Length for the generated password.</source>
-        <translation>Długość wygenerowanego hasła</translation>
+        <translation>Długość wygenerowanego hasła.</translation>
     </message>
     <message>
         <source>length</source>
@@ -3418,7 +3391,7 @@ Używam domyślnego portu 19455.</translation>
     </message>
     <message>
         <source>Failed to load key file %1 : %2</source>
-        <translation>Nieudane ładowanie pliku z kluczem %1 : %2</translation>
+        <translation>Nieudane ładowanie pliku klucza %1 : %2</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
@@ -3454,7 +3427,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Szybkie wyszukiwanie wpisów. </translation>
+        <translation>Szybkie wyszukiwanie wpisów.</translation>
     </message>
     <message>
         <source>Search term.</source>
@@ -3517,6 +3490,30 @@ Dostępne polecenia:
     <message>
         <source>missing closing quote</source>
         <translation>brak cytatu zamknięcia</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bitowy</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bitowy</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bitowy</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – zalecany)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3621,34 +3618,34 @@ Dostępne polecenia:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Błąd wewnętrzny zlib podczas kompresowania:</translation>
+        <translation>Błąd wewnętrzny zlib podczas kompresowania: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Błąd w zapisie na urządzenie:</translation>
+        <translation>Błąd w zapisie na urządzenie: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Błąd w otwieraniu z urządzenia:</translation>
+        <translation>Błąd w otwieraniu z urządzenia: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Błąd w odczycie danych z urządzenia:</translation>
+        <translation>Błąd w odczycie danych z urządzenia: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Błąd wewnętrzny zlib podczas dekompresowania:</translation>
+        <translation>Błąd wewnętrzny zlib podczas dekompresowania: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Format gzip nie wspierany przez tą wersję zlib.</translation>
+        <translation>Format gzip nie wspierany przez tę wersję zlib.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Błąd wewnętrzny zlib:</translation>
+        <translation>Błąd wewnętrzny zlib: </translation>
     </message>
 </context>
 <context>
@@ -3722,7 +3719,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucze szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto %n klucz szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n klucze szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform><numerusform>Pomyślnie usunięto %n kluczy szyfrowania z ustawień KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3754,7 +3751,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform></translation>
+        <translation><numerusform>Pomyślnie usunięto uprawnienia z %n wpisu.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform><numerusform>Pomyślnie usunięto uprawnienia z %n wpisów.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3773,7 +3770,7 @@ Proszę odblokować wybraną bazę albo wybrać inną, która jest odblokowana.<
     </message>
     <message>
         <source>General</source>
-        <translation>Główne</translation>
+        <translation>Ogólne</translation>
     </message>
     <message>
         <source>Security</source>

@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Información de Depuración</translation>
+        <translation>Información de depuración</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -73,12 +73,12 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Un agradecimiento especial del equipo de KeePassXC a debfx por crear el KeePassX original.</translation>
+        <translation>El equipo de KeePassXC quiere agradecer de manera especial el trabajo de debfx por la creación de KeePassX.</translation>
     </message>
     <message>
         <source>Build Type: %1
 </source>
-        <translation>Tipo de compilación: %1
+        <translation>Tipo de Build: %1
 </translation>
     </message>
 </context>
@@ -391,9 +391,9 @@ If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
         <translation>¿Quiere asociar la base de datos al navegador? 
 
-Si quiere autirizar el acceso a la base de datos de KeePassXC 
-de un nombre único para identificar la autorización
-(se guarda como una entrada más)</translation>
+Si quiere autorizar el acceso a la base de datos de KeePassXC,
+proporcione un nombre único para identificar la autorización
+y acepte.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -449,7 +449,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Quitado con éxito %n llaves de cifrado de configuración KeePassXC.</numerusform><numerusform>Quitado con éxito %n llaves de cifrado de configuración KeePassXC.</numerusform></translation>
+        <translation><numerusform>Quitado con éxito %n llave(s) de cifrado de la configuración de KeePassXC.</numerusform><numerusform>Quitado con éxito %n llave(s) de cifrado de la configuración de KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -465,7 +465,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Con éxito quitar permisos de %n ello.</numerusform><numerusform>Removidos con éxito permisos de %n entrada(s).</numerusform></translation>
+        <translation><numerusform>Los permisos fueron eliminados exitosamente de %n entrada(s).</numerusform><numerusform>Los permisos fueron eliminados exitosamente de %n entrada(s).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -496,7 +496,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message>
         <source>Browse</source>
-        <translation>Abrir archivo</translation>
+        <translation>Navegar</translation>
     </message>
     <message>
         <source>Create</source>
@@ -626,7 +626,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Cantidad de líneas a descartar del encabezado</translation>
+        <translation>Cantidad de líneas a descartar de la cabecera</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -698,11 +698,11 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>filas de %n, </numerusform><numerusform>%n fila(s), </numerusform></translation>
+        <translation><numerusform>%n fila(s), </numerusform><numerusform>%n fila(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n columnas</numerusform><numerusform>%n columna(s)</numerusform></translation>
+        <translation><numerusform>%n columna(s)</numerusform><numerusform>%n columna(s) </numerusform></translation>
     </message>
 </context>
 <context>
@@ -733,7 +733,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Incapaz de abrir la base de datos.</translation>
+        <translation>No se pudo abrir la base de datos.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -774,7 +774,7 @@ Considere generar un nuevo archivo llave.</translation>
     <name>DatabaseRepairWidget</name>
     <message>
         <source>Repair database</source>
-        <translation>Reparar base de datos</translation>
+        <translation>Reparar la base de datos</translation>
     </message>
     <message>
         <source>Error</source>
@@ -867,7 +867,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> o de los hilos</numerusform><numerusform>hilo(s)</numerusform></translation>
+        <translation><numerusform>hilo(s)</numerusform><numerusform>hilo(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -961,7 +961,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Base de datos KeePass 2</translation>
+        <translation>Base de datos de KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1029,7 +1029,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>La escritura de la base de datos falló.</translation>
+        <translation>Fallo al escribir la base de datos.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1075,13 +1075,13 @@ De lo contrario se perderán los cambios.</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>¿Inhabilitar guardado seguro?</translation>
+        <translation>¿Deshabilitar guardados seguros?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC no ha podido guardar varias veces la base de datos. Es probable que esto se deba a que los servicios de sincronización de archivos mantienen un bloqueo en el archivo guardado.
-¿Deshabilite las copias seguras y vuelva a intentarlo?</translation>
+        <translation>KeePassXC no ha podido guardar la base de datos varias veces. Esto es probablemente causado por los servicios de sincronización de archivos manteniendo un bloqueo en el archivo.
+¿Desactivar la guarda segura y volver a intentarlo?</translation>
     </message>
 </context>
 <context>
@@ -1124,7 +1124,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>¿Realmente quiere mover la entrada &quot;%1&quot; a la papelera de reciclaje?</numerusform><numerusform>¿Realmente quiere mover las entradas &quot;%1&quot; a la papelera de reciclaje?</numerusform></translation>
+        <translation><numerusform>¿Estás seguro de mover %n entrada(s) a la papelera de reciclaje?</numerusform><numerusform>¿Estás seguro de mover %n entrada(s) a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1148,7 +1148,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>No se puede calcular la llave maestra</translation>
+        <translation>No se puede calcular la clave maestra</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1371,11 +1371,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n semana</numerusform><numerusform>%n semana(s)</numerusform></translation>
+        <translation><numerusform>%n semana(s)</numerusform><numerusform>%n semana(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mes</numerusform><numerusform>%n mes(es)</numerusform></translation>
+        <translation><numerusform>%n mes(es)</numerusform><numerusform>%n mes(es)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1383,15 +1383,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation>¿Aplicar la contraseña generada?</translation>
+        <translation>¿Aplicar contraseña generada?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation>¿Desea aplicar la contraseña generada a esta entrada?</translation>
+        <translation>¿Desea aplicar la contraseña generada en esta entrada?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Entrada actualizada con éxito.</translation>
+        <translation>Entrada actualizada.</translation>
     </message>
 </context>
 <context>
@@ -1426,11 +1426,11 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Color de Primer Plano:</translation>
+        <translation>Color de primer plano:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Color de Segundo Plano:</translation>
+        <translation>Color de fondo:</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1465,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Usa una secuencia específica para esta asociación:</translation>
+        <translation>Utilizar una secuencia específica para esta asociación:</translation>
     </message>
 </context>
 <context>
@@ -1534,7 +1534,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>Eliminar después la clave del agente  </translation>
+        <translation>Retirar la llave del agente después</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -1755,7 +1755,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Eliminar los datos del complemento?</translation>
+        <translation>Eliminar los datos del plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
@@ -1819,7 +1819,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform><numerusform>¿Está seguro que desea eliminar %n adjunto(s)?</numerusform></translation>
+        <translation><numerusform>¿Confirma que desea quitar %n dato(s) adjunto(s)?</numerusform><numerusform>¿Confirma que desea quitar %n dato(s) adjunto(s)?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1858,7 +1858,8 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>No se pueden abrir los datos adjuntos:%1</translation>
+        <translation>No se pueden abrir los datos adjuntos:
+%1</translation>
     </message>
     <message>
         <source>Unable to open files:
@@ -1886,7 +1887,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message>
         <source>Username</source>
-        <translation>Nombre de usuario</translation>
+        <translation>Nombre de usuario:</translation>
     </message>
     <message>
         <source>URL</source>
@@ -2185,32 +2186,32 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada Int32 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de entrada Int32 de mapa variante</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt32 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de entrada UInt32 de mapa variante</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada Int64 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de entrada Int64 de mapa variante</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt64 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de entrada UInt64 de mapa variante</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Tipo de entrada inválida de mapeo devariante</translation>
+        <translation>Entrada inválida de mapa variante</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Mapei de variante inválido en campo de tipo tamaño</translation>
+        <translation>Tamaño inválido de mapa variante</translation>
     </message>
 </context>
 <context>
@@ -2246,7 +2247,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Largo de banderas de compresión inválido</translation>
+        <translation>Tamaño de flags de compresión inválido</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
@@ -2307,7 +2308,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Datos o uuid del ícono faltantes</translation>
+        <translation>Falta icono uuid o datos</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
@@ -2351,11 +2352,11 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Número de ícono de entrada inválido</translation>
+        <translation>Número de icono de entrada no válida</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Elemento de la historia en la entrada de la historia</translation>
+        <translation>Elemento del historial en la entrada del historial</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
@@ -2375,7 +2376,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Falta clave de entrada o valor</translation>
+        <translation>Falta clave de entrada de texto o valor</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
@@ -2427,7 +2428,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Incapaz de abrir la base de datos.</translation>
+        <translation>No se pudo abrir la base de datos.</translation>
     </message>
 </context>
 <context>
@@ -2579,34 +2580,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Tipo del campo de entrada inválido</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – recomendado)</translation>
+        <translation>Tipo de la entrada para el campo inválido</translation>
     </message>
 </context>
 <context>
@@ -2903,7 +2877,7 @@ Esta versión no es para uso de producción.</translation>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Archivo de clave no válida, esperando una clave de OpenSSH</translation>
+        <translation>Archivo llave no válido, esperando una llave de OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -2947,11 +2921,11 @@ Esta versión no es para uso de producción.</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>Derivación de la llave falló, ¿archivo llave dañado?</translation>
+        <translation>La derivación de la clave falló, ¿archivo de claves dañado?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>¿Error de descifrado, contraseña incorrecta?</translation>
+        <translation>¿Error de descifrado, frase de contraseña incorrecta?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
@@ -3161,7 +3135,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Caracteres especiales:</translation>
+        <translation>Caracteres especiales</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -3304,7 +3278,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>No se encuentraron logins</translation>
+        <translation>No se encontraron logins</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -3401,7 +3375,7 @@ Usando el puerto por defecto 19455</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>Realizar análisis avanzado en la contraseña.</translation>
+        <translation>Realizar análisis avanzado sobre la contraseña.</translation>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
@@ -3424,9 +3398,10 @@ Usando el puerto por defecto 19455</translation>
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ADVERTENCIA: Usted está utilizando un formato de archivo llave heredado que puede ser no compatible en el futuro.
+        <translation>ADVERTENCIA: Está usando un fichero de claves con un formato antiguo que puede ser
+incompatible en el futuro.
 
-Por favor considere generar un nuevo archivo de llave.</translation>
+Por favor, considere generar un nuevo fichero.</translation>
     </message>
     <message>
         <source>
@@ -3517,6 +3492,30 @@ Comandos disponibles:
         <translation>comilla de cierre faltante</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – recomendado)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Grupo</translation>
     </message>
@@ -3578,7 +3577,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>count</source>
-        <translation>Número</translation>
+        <translation>número</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
@@ -3596,23 +3595,23 @@ Comandos disponibles:
     </message>
     <message>
         <source>Use lowercase characters in the generated password.</source>
-        <translation>Utilizar caracteres en minúsculas en la contraseña generada.</translation>
+        <translation>Usar caracteres en minúsculas en la contraseña generada.</translation>
     </message>
     <message>
         <source>Use uppercase characters in the generated password.</source>
-        <translation>Utilizar caracteres en mayúsculas en la contraseña generada.</translation>
+        <translation>Usar caracteres en mayúsculas en la contraseña generada.</translation>
     </message>
     <message>
         <source>Use numbers in the generated password.</source>
-        <translation>Utilizar números en la contraseña generada.</translation>
+        <translation>Usar números en la contraseña generada.</translation>
     </message>
     <message>
         <source>Use special characters in the generated password.</source>
-        <translation>Utilizar caracteres especiales en la contraseña generada.</translation>
+        <translation>Usar caracteres especiales en la contraseña generada.</translation>
     </message>
     <message>
         <source>Use extended ASCII in the generated password.</source>
-        <translation>Utilizar ASCII extendido en la contraseña generada.</translation>
+        <translation>Usar ASCII extendido en la contraseña generada.</translation>
     </message>
 </context>
 <context>
@@ -3720,7 +3719,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Quitado con éxito cifrado %n-llaves de KeePassX y Http.</numerusform><numerusform>Quitadas con éxito %n- llaves de encriptación de las opciones de KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Quitado con éxito %n llave(s) de cifrado de la configuración de KeePassXC/Http.</numerusform><numerusform>Quitado con éxito %n llave(s) de cifrado de la configuración de KeePassXC/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3752,7 +3751,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Con éxito quitar permisos de entradas %n.</numerusform><numerusform>Removidos permisos de %n entradas exitosamente.</numerusform></translation>
+        <translation><numerusform>Los permisos fueron eliminados exitosamente de %n entradas.</numerusform><numerusform>Los permisos fueron eliminados exitosamente de %n entradas.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -3862,7 +3861,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Use título de entrada para acertar ventanas en Auto-Tipeado global.</translation>
+        <translation>Use título de entrada para acertar ventanas en Auto-Tipeado</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
@@ -3967,7 +3966,7 @@ Por favor desbloquee la base de datos seleccionada o elija otra que esté desblo
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Volver a bloquear la base de datos previamente bloqueada después de hacer Auto-Escritura </translation>
+        <translation>Volver a bloquear la base de datos tras realizar una Auto-Escritura </translation>
     </message>
 </context>
 <context>

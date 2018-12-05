@@ -49,10 +49,12 @@ EntryView::EntryView(QWidget* parent)
     // QAbstractItemView::startDrag() uses this property as the default drag action
     setDefaultDropAction(Qt::MoveAction);
 
+    // clang-format off
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(entrySelectionChanged()));
+    connect(selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SLOT(emitEntrySelectionChanged()));
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
+    // clang-format on
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
@@ -93,10 +95,21 @@ EntryView::EntryView(QWidget* parent)
     header()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(header(), SIGNAL(customContextMenuRequested(QPoint)), SLOT(showHeaderMenu(QPoint)));
+    // clang-format off
     connect(header(), SIGNAL(sectionCountChanged(int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sectionMoved(int,int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sectionResized(int,int,int)), SIGNAL(viewStateChanged()));
+    // clang-format on
+
+    // clang-format off
     connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SIGNAL(viewStateChanged()));
+    // clang-format on
 
     resetFixedColumns();
 
@@ -144,13 +157,13 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 
 void EntryView::focusInEvent(QFocusEvent* event)
 {
-    emit entrySelectionChanged();
+    emit entrySelectionChanged(currentEntry());
     QTreeView::focusInEvent(event);
 }
 
 void EntryView::focusOutEvent(QFocusEvent* event)
 {
-    emit entrySelectionChanged();
+    emit entrySelectionChanged(nullptr);
     QTreeView::focusOutEvent(event);
 }
 
@@ -181,7 +194,7 @@ void EntryView::setFirstEntryActive()
         QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
         setCurrentEntry(m_model->entryFromIndex(index));
     } else {
-        emit entrySelectionChanged();
+        emit entrySelectionChanged(currentEntry());
     }
 }
 
@@ -194,6 +207,11 @@ void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
     emit entryActivated(entry, static_cast<EntryModel::ModelColumn>(m_sortModel->mapToSource(index).column()));
+}
+
+void EntryView::emitEntrySelectionChanged()
+{
+    emit entrySelectionChanged(currentEntry());
 }
 
 void EntryView::setModel(QAbstractItemModel* model)

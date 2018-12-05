@@ -40,7 +40,6 @@ Entry::Entry()
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
     , m_customData(new CustomData(this))
-    , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
@@ -657,12 +656,14 @@ Entry* Entry::clone(CloneFlags flags) const
     if (flags & CloneUserAsRef) {
         // Build the username reference
         QString username = "{REF:U@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+        entry->m_attributes->set(
+            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
         QString password = "{REF:P@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+        entry->m_attributes->set(
+            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
@@ -704,9 +705,9 @@ void Entry::copyDataFrom(const Entry* other)
 
 void Entry::beginUpdate()
 {
-    Q_ASSERT(!m_tmpHistoryItem);
+    Q_ASSERT(m_tmpHistoryItem.isNull());
 
-    m_tmpHistoryItem = new Entry();
+    m_tmpHistoryItem.reset(new Entry());
     m_tmpHistoryItem->setUpdateTimeinfo(false);
     m_tmpHistoryItem->m_uuid = m_uuid;
     m_tmpHistoryItem->m_data = m_data;
@@ -719,16 +720,14 @@ void Entry::beginUpdate()
 
 bool Entry::endUpdate()
 {
-    Q_ASSERT(m_tmpHistoryItem);
+    Q_ASSERT(!m_tmpHistoryItem.isNull());
     if (m_modifiedSinceBegin) {
         m_tmpHistoryItem->setUpdateTimeinfo(true);
-        addHistoryItem(m_tmpHistoryItem);
+        addHistoryItem(m_tmpHistoryItem.take());
         truncateHistory();
-    } else {
-        delete m_tmpHistoryItem;
     }
 
-    m_tmpHistoryItem = nullptr;
+    m_tmpHistoryItem.reset();
 
     return m_modifiedSinceBegin;
 }
@@ -1065,7 +1064,8 @@ QString Entry::resolveUrl(const QString& url) const
 
     // Validate the URL
     QUrl tempUrl = QUrl(newUrl);
-    if (tempUrl.isValid() && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
+    if (tempUrl.isValid()
+        && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
         return tempUrl.url();
     }
 

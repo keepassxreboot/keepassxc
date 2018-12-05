@@ -18,8 +18,8 @@
 #ifndef KEEPASSX_KDF_H
 #define KEEPASSX_KDF_H
 
-#include <QVariant>
 #include <QUuid>
+#include <QVariant>
 
 #define KDF_DEFAULT_SEED_SIZE 32
 #define KDF_DEFAULT_ROUNDS 1000000ull

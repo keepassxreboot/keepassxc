@@ -22,9 +22,9 @@
 
 #include <QCommandLineParser>
 
+#include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
-#include "Utils.h"
 
 Diceware::Diceware()
 {
@@ -43,11 +43,13 @@ int Diceware::execute(const QStringList& arguments)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
-    QCommandLineOption words(QStringList() << "W" << "words",
+    QCommandLineOption words(QStringList() << "W"
+                                           << "words",
                              QObject::tr("Word count for the diceware passphrase."),
                              QObject::tr("count", "CLI parameter"));
     parser.addOption(words);
-    QCommandLineOption wordlistFile(QStringList() << "w" << "word-list",
+    QCommandLineOption wordlistFile(QStringList() << "w"
+                                                  << "word-list",
                                     QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
                                     QObject::tr("path"));
     parser.addOption(wordlistFile);

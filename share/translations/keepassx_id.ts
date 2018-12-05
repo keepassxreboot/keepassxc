@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Lihat Semua Kontribusi pada GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Lihat Semua Kontribusi di GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -514,7 +514,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua berkas</translation>
+        <translation>Semua Berkas</translation>
     </message>
     <message>
         <source>Create Key File...</source>
@@ -592,11 +592,11 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>filename</translation>
+        <translation>nama berkas</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>size, rows, columns</translation>
+        <translation>ukuran, baris, kolom</translation>
     </message>
     <message>
         <source>Encoding</source>
@@ -757,7 +757,7 @@ Harap pertimbangkan membuat berkas kunci baru.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua berkas</translation>
+        <translation>Semua Berkas</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -955,11 +955,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>Basis data KeePass 2</translation>
+        <translation>Basis Data KeePass 2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua berkas</translation>
+        <translation>Semua Berkas</translation>
     </message>
     <message>
         <source>Open database</source>
@@ -1023,7 +1023,7 @@ Simpan perubahan?</translation>
     </message>
     <message>
         <source>Writing the database failed.</source>
-        <translation>Gagal membuat basis data.</translation>
+        <translation>Gagal menyimpan basis data.</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1699,7 +1699,7 @@ Apakah Anda ingin menggabungkan ubahan Anda?</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua berkas</translation>
+        <translation>Semua Berkas</translation>
     </message>
     <message>
         <source>Select Image</source>
@@ -2576,33 +2576,6 @@ Ini adalah migrasi satu arah. Anda tidak akan bisa membuka basis data yang diimp
     <message>
         <source>Invalid entry field type</source>
         <translation>Tipe ruas entri tidak valid</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – direkomendasikan)</translation>
     </message>
 </context>
 <context>
@@ -3514,6 +3487,30 @@ Perintah yang tersedia:
         <translation>kehilangan tanda kutip tutup</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – direkomendasikan)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>Grup</translation>
     </message>
@@ -3717,7 +3714,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Berhasil membuang %n kunci terenkripsi dari Pengaturan KeePassXC/Http.</numerusform></translation>
+        <translation><numerusform>Berhasil membuang %n kunci enkripsi dari Pengaturan KeePassX/Http</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3749,7 +3746,7 @@ Silakan buka kunci atau pilih yang lainnya yang tidak terkunci.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entries.</source>
-        <translation><numerusform>Berhasil membuang izin dari %n entri.</numerusform></translation>
+        <translation><numerusform>Berhasil membuang perizinan dari %n entri.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>

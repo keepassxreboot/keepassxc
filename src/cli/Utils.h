@@ -18,23 +18,24 @@
 #ifndef KEEPASSXC_UTILS_H
 #define KEEPASSXC_UTILS_H
 
-#include <QtCore/qglobal.h>
 #include "cli/TextStream.h"
+#include <QtCore/qglobal.h>
 
 namespace Utils
 {
-extern FILE* STDOUT;
-extern FILE* STDERR;
-extern FILE* STDIN;
+    extern FILE* STDOUT;
+    extern FILE* STDERR;
+    extern FILE* STDIN;
+    extern FILE* DEVNULL;
 
-void setStdinEcho(bool enable);
-QString getPassword();
-int clipText(const QString& text);
+    void setStdinEcho(bool enable);
+    QString getPassword(FILE* outputDescriptor = STDOUT);
+    int clipText(const QString& text);
 
-namespace Test
-{
-void setNextPassword(const QString& password);
-}
-};
+    namespace Test
+    {
+        void setNextPassword(const QString& password);
+    }
+}; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H

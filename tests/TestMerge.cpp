@@ -37,7 +37,7 @@ namespace
     }
 
     MockClock* m_clock = nullptr;
-}
+} // namespace
 
 void TestMerge::initTestCase()
 {
@@ -302,7 +302,9 @@ void TestMerge::testResolveConflictDuplicate()
              "KeepBoth should not reuse the UUIDs when cloning.");
 }
 
-void TestMerge::testResolveConflictTemplate(int mergeMode, std::function<void(Database*, const QMap<const char*, QDateTime>&)> verification)
+void TestMerge::testResolveConflictTemplate(
+    int mergeMode,
+    std::function<void(Database*, const QMap<const char*, QDateTime>&)> verification)
 {
     QMap<const char*, QDateTime> timestamps;
     timestamps["initialTime"] = m_clock->currentDateTimeUtc();
@@ -434,7 +436,8 @@ void TestMerge::testResolveConflictTemplate(int mergeMode, std::function<void(Da
     QVERIFY(dbDestination->rootGroup()->findEntryByPath("entrySource"));
 }
 
-void TestMerge::testDeletionConflictTemplate(int mergeMode, std::function<void(Database*, const QMap<QString, QUuid>&)> verification)
+void TestMerge::testDeletionConflictTemplate(int mergeMode,
+                                             std::function<void(Database*, const QMap<QString, QUuid>&)> verification)
 {
     QMap<QString, QUuid> identifiers;
     m_clock->currentDateTimeUtc();
@@ -609,7 +612,7 @@ void TestMerge::assertDeletionNewerOnly(Database* db, const QMap<QString, QUuid>
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInTargetAfterEntryUpdatedInSource"]));
 }
 
-void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid> &identifiers)
+void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>& identifiers)
 {
     QPointer<Group> mergedRootGroup = db->rootGroup();
 
@@ -647,66 +650,80 @@ void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInTargetAfterEntryUpdatedInSource"]));
 }
 
-void TestMerge::assertUpdateMergedEntry1(Entry *mergedEntry1, const QMap<const char *, QDateTime> &timestamps)
+void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 4);
     QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
     QCOMPARE(mergedEntry1->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString(""));
-    QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(), timestamps["oldestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
+             timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
-    QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(), timestamps["newestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(),
+             timestamps["newestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QString("2 Source"));
-    QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(), timestamps["oldestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(),
+             timestamps["oldestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry1->notes(), QString("3 Destination"));
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
 }
 
-void TestMerge::assertUpdateReappliedEntry2(Entry *mergedEntry2, const QMap<const char *, QDateTime> &timestamps)
+void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 5);
     QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
     QCOMPARE(mergedEntry2->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString(""));
-    QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(), timestamps["oldestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
+             timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));
-    QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(), timestamps["newestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(),
+             timestamps["newestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QString("2 Destination"));
-    QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(), timestamps["oldestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(),
+             timestamps["oldestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(4)->notes(), QString("3 Source"));
-    QCOMPARE(mergedEntry2->historyItems().at(4)->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(4)->timeInfo().lastModificationTime(),
+             timestamps["newestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry2->notes(), QString("2 Destination"));
     QCOMPARE(mergedEntry2->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
-void TestMerge::assertUpdateReappliedEntry1(Entry *mergedEntry1, const QMap<const char *, QDateTime> &timestamps)
+void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 5);
     QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
     QCOMPARE(mergedEntry1->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString(""));
-    QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(), timestamps["oldestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
+             timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
-    QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(), timestamps["newestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(),
+             timestamps["newestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QString("2 Source"));
-    QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(), timestamps["oldestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(),
+             timestamps["oldestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(4)->notes(), QString("3 Destination"));
-    QCOMPARE(mergedEntry1->historyItems().at(4)->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry1->historyItems().at(4)->timeInfo().lastModificationTime(),
+             timestamps["newestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry1->notes(), QString("2 Source"));
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
-void TestMerge::assertUpdateMergedEntry2(Entry *mergedEntry2, const QMap<const char *, QDateTime> &timestamps)
+void TestMerge::assertUpdateMergedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 4);
     QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
     QCOMPARE(mergedEntry2->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString(""));
-    QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(), timestamps["oldestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
+             timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));
-    QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(), timestamps["newestCommonHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(),
+             timestamps["newestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QString("2 Destination"));
-    QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(), timestamps["oldestDivergingHistoryTime"]);
+    QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(),
+             timestamps["oldestDivergingHistoryTime"]);
     QCOMPARE(mergedEntry2->notes(), QString("3 Source"));
     QCOMPARE(mergedEntry2->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
 }

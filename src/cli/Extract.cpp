@@ -49,10 +49,8 @@ int Extract::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
-    QCommandLineOption keyFile(QStringList() << "k" << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
+    parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -62,16 +60,18 @@ int Extract::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+    if (!parser.isSet(Command::QuietOption)) {
+        out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+    }
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 
-    QString line = Utils::getPassword();
+    QString line = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
     auto passwordKey = QSharedPointer<PasswordKey>::create();
     passwordKey->setPassword(line);
     compositeKey->addKey(passwordKey);
 
-    QString keyFilePath = parser.value(keyFile);
+    QString keyFilePath = parser.value(Command::KeyFileOption);
     if (!keyFilePath.isEmpty()) {
         // LCOV_EXCL_START
         auto fileKey = QSharedPointer<FileKey>::create();
@@ -84,7 +84,8 @@ int Extract::execute(const QStringList& arguments)
         if (fileKey->type() != FileKey::Hashed) {
             err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
                                "unsupported in the future.\n\n"
-                               "Please consider generating a new key file.") << endl;
+                               "Please consider generating a new key file.")
+                << endl;
         }
         // LCOV_EXCL_STOP
 

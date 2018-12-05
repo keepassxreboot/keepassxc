@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Prispievatelia</translation>
+        <translation>K vývoju prispeli</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -130,7 +130,7 @@ Prosím, zvoľte, či chcete povoliť prístup.</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Syntax Vášho Automatického vypĺňania nie je správna!</translation>
+        <translation>Syntax Vášho Automatického vypĺňania nieje správna!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
@@ -138,7 +138,7 @@ Prosím, zvoľte, či chcete povoliť prístup.</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Tento príkaz Automatického vypĺňania obsahuje príliš pomalé stlačenia kláves. Naozaj ho chcete vykonať?</translation>
+        <translation>Tento príkaz Automatického vypĺňania obsahuje príliš pomalé stlačenia kláves. Do you really want to proceed?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
@@ -329,7 +329,7 @@ Prosím, zvoľte, či chcete povoliť prístup.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Pri štarte automaticky aktualizovať cestu spustiteľného súboru s KeePassXC alebo keepassxc-proxy na skripty posielania správ medzi prehliadačom a KeePassXC (native messaging).</translation>
+        <translation>Pri spúšťaní automaticky aktualizovať cestu spustiteľného súboru s KeePassXC alebo keepassxc-proxy na skripty posielania správ medzi prehliadačom a KeePassXC (native messaging).</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
@@ -617,7 +617,7 @@ Prosím, zvážte vygenerovanie nového súboru kľúča.</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Komentáre začínajú znakom</translation>
+        <translation>Komentáre začínajú</translation>
     </message>
     <message>
         <source>First record has field names</source>
@@ -861,7 +861,7 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform>MiB</numerusform><numerusform>MiB</numerusform><numerusform>MiB</numerusform><numerusform>MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -877,7 +877,7 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 bitov (predvolené)</translation>
+        <translation>AES:  256 bit (predvolené)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
@@ -1375,7 +1375,7 @@ Chcete zlúčiť svoje zmeny?</translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mesiac</numerusform><numerusform>%n mesiace</numerusform><numerusform>%n mesiacov</numerusform><numerusform>%n mesiacov</numerusform></translation>
+        <translation><numerusform>%n mesiacoch</numerusform><numerusform>%n mesiacoch</numerusform><numerusform>%n mesiacoch</numerusform><numerusform>%n mesiacoch</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1692,7 +1692,7 @@ Chcete zlúčiť svoje zmeny?</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Nemožno stiahnuť ikonu stránky.</translation>
+        <translation>Nemožno stiahnuť ikonu stránky</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -1887,7 +1887,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Username</source>
-        <translation>Použ. meno:</translation>
+        <translation>Používateľské meno</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1911,7 +1911,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Username</source>
-        <translation>Použ. meno:</translation>
+        <translation>Používateľské meno</translation>
     </message>
     <message>
         <source>URL</source>
@@ -2015,7 +2015,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>A-Z</source>
-        <translation>A-Ž</translation>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -2023,7 +2023,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>a-z</source>
-        <translation>a-ž</translation>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -2161,22 +2161,23 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Neplatná dĺžka názvu položky meta-dát</translation>
+        <translation>Neplatná dĺžka názvu položky mapy varianty</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Neplatné dáta názvu položky meta-dát</translation>
+        <translation>Neplatné dáta názvu položky mapy varianty</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Neplatná dĺžka hodnoty položky meta-dát</translation>
+        <translation>Neplatná dĺžka hodnoty položky mapy varianty
+        </translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Neplatné dáta hodnoty položky meta-dát</translation>
+        <translation>Neplatné dáta hodnoty položky mapy varianty</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
@@ -2247,7 +2248,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Neplatná dĺžka príznakov komprimácie</translation>
+        <translation>Nepodporovaný komprimačný algoritmus</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
@@ -2259,7 +2260,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Neplatná transformácia náhodnosti (seed)</translation>
+        <translation>Neplatná transformácia hlavnej náhodnosti (seed)</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
@@ -2320,11 +2321,11 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>Žiadne UUID skupiny</translation>
+        <translation>Nulový UUID skupiny</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Neplatné číslo ikony skupiny</translation>
+        <translation>Neplatný počet ikon skupiny</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -2340,7 +2341,7 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>Žiadne UUID DeleteObject</translation>
+        <translation>Nulový UUID DeleteObject</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
@@ -2348,11 +2349,11 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Žiadne UUID položky</translation>
+        <translation>Nulový UUID položky</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Neplatné číslo ikony položky</translation>
+        <translation>Neplatný počet ikon položky</translation>
     </message>
     <message>
         <source>History element in history entry</source>
@@ -2376,7 +2377,7 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Chýba textový kľúč alebo hodnota položky</translation>
+        <translation>Chýba kľúč alebo hodnota reťazca položky</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
@@ -2404,7 +2405,7 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Neplatná časť RGB farby</translation>
+        <translation>neplatná časť RGB farby</translation>
     </message>
     <message>
         <source>Invalid number value</source>
@@ -2581,33 +2582,6 @@ Je to jednosmerná migrácia. Importovanú databázu už nebude možné otvoriť
     <message>
         <source>Invalid entry field type</source>
         <translation>Neplatný typ poľa položky</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-b</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-b</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-b</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – odporúčané)</translation>
     </message>
 </context>
 <context>
@@ -3080,7 +3054,7 @@ Táto verzia nie je určená na produkčné použitie.</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching entries</source>
-        <translation>&amp;Hľadať vyhovujúce položky vo všetkých otvorených databázach</translation>
+        <translation>&amp;Hľadať vyhovujúce položky vo všetkých databázach</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -3227,7 +3201,7 @@ Použitý predvolený port 19455.</translation>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Biedne</translation>
+        <translation>Slabé</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -3305,7 +3279,7 @@ Použitý predvolený port 19455.</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>Neboli nájdené prihlásenia</translation>
+        <translation>Nebolo nájdené prihlásenie</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -3361,7 +3335,7 @@ Použitý predvolený port 19455.</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Cesta pridávanej položky.</translation>
+        <translation>Cesta pridávanej položky</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
@@ -3507,8 +3481,7 @@ Dostupné príkazy:
     <message>
         <source>file empty !
 </source>
-        <translation>súbor je prázdny!
-</translation>
+        <translation>súbor je prázdny!</translation>
     </message>
     <message>
         <source>malformed string</source>
@@ -3516,7 +3489,31 @@ Dostupné príkazy:
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>chýbajúca koncová úvodzovka</translation>
+        <translation>chýba koncová úvodzovka</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-b</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-b</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-b</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – odporúčané)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3722,7 +3719,7 @@ Prosím, odomknite zvolenú databázu alebo zvoľte inú, ktorá nie je zamknut�
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>
-        <translation><numerusform>Úspešne odstránený %n šifrovací kľúč z nastavenia KeePassX/Http.</numerusform><numerusform>Úspešne odstránené %n šifrovacie kľúče z nastavenia KeePassX/Http.</numerusform><numerusform>Úspešne odstránených %n šifrovacích kľúčov z nastavenia KeePassX/Http.</numerusform><numerusform>Úspešne odstránených %n šifrovacích kľúčov z nastavenia KeePassX/Http.</numerusform></translation>
+        <translation><numerusform>Úspešne odstránený %n šifrovací kľúč z nastavenia KeePassX/Http.</numerusform><numerusform>Úspešne odstránené %n šifrovacie kľúče z nastavenia KeePassX/Http.</numerusform><numerusform>Úspešne odstránených %n šifrovacích kľúčov z nastavenia KeePassX/Htt</numerusform><numerusform>Úspešne odstránených %n šifrovacích kľúčov z nastavenia KeePassX/Http.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -3856,7 +3853,7 @@ Prosím, odomknite zvolenú databázu alebo zvoľte inú, ktorá nie je zamknut�
     </message>
     <message>
         <source>Language</source>
-        <translation>Jazyk</translation>
+        <translation>jazyk</translation>
     </message>
     <message>
         <source>Auto-Type</source>

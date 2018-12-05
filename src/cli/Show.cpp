@@ -22,12 +22,12 @@
 
 #include <QCommandLineParser>
 
+#include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/Database.h"
 #include "core/Entry.h"
-#include "core/Group.h"
 #include "core/Global.h"
-#include "Utils.h"
+#include "core/Group.h"
 
 Show::Show()
 {
@@ -46,15 +46,15 @@ int Show::execute(const QStringList& arguments)
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    QCommandLineOption keyFile(QStringList() << "k"  << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
-    QCommandLineOption totp(QStringList() << "t"  << "totp",
+    parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
+    QCommandLineOption totp(QStringList() << "t"
+                                          << "totp",
                             QObject::tr("Show the entry's current TOTP."));
     parser.addOption(totp);
     QCommandLineOption attributes(
-        QStringList() << "a" << "attributes",
+        QStringList() << "a"
+                      << "attributes",
         QObject::tr(
             "Names of the attributes to show. "
             "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
@@ -71,7 +71,10 @@ int Show::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    auto db = Database::unlockFromStdin(args.at(0), parser.value(keyFile), Utils::STDOUT, Utils::STDERR);
+    auto db = Database::unlockFromStdin(args.at(0),
+                                        parser.value(Command::KeyFileOption),
+                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                        Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
