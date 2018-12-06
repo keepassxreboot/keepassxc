@@ -54,12 +54,14 @@ void MessageBox::initializeButtonDefs()
             {Ignore, {stdButtonText(QMessageBox::Ignore), QMessageBox::ButtonRole::AcceptRole}},
 
             // KeePassXC Buttons
-            {Overwrite, {QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::DestructiveRole}},
-            {Delete, {QMessageBox::tr("Delete"), QMessageBox::ButtonRole::DestructiveRole}},
+            {Overwrite, {QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole}},
+            {Delete, {QMessageBox::tr("Delete"), QMessageBox::ButtonRole::AcceptRole}},
             {Move, {QMessageBox::tr("Move"), QMessageBox::ButtonRole::AcceptRole}},
-            {Empty, {QMessageBox::tr("Empty"), QMessageBox::ButtonRole::DestructiveRole}},
-            {Remove, {QMessageBox::tr("Remove"), QMessageBox::ButtonRole::DestructiveRole}},
-            {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::RejectRole}}
+            {Empty, {QMessageBox::tr("Empty"), QMessageBox::ButtonRole::AcceptRole}},
+            {Remove, {QMessageBox::tr("Remove"), QMessageBox::ButtonRole::AcceptRole}},
+            {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
+            {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
+            {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
         };
 }
 

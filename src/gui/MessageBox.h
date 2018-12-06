@@ -55,10 +55,12 @@ public:
         Empty           = 1 << 22,
         Remove          = 1 << 23,
         Skip            = 1 << 24,
+        Disable         = 1 << 25,
+        Merge           = 1 << 26,
 
         // Internal loop markers. Update Last when new KeePassXC button is added
         First = Ok,
-        Last = Skip,
+        Last = Merge,
     };
 
     typedef uint64_t Buttons;

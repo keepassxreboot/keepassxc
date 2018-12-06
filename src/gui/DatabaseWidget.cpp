@@ -1165,8 +1165,8 @@ bool DatabaseWidget::lock()
                 msg = tr("Database was modified.\nSave changes?");
             }
             auto result = MessageBox::question(this, tr("Save changes?"), msg,
-                MessageBox::Yes | MessageBox::Discard | MessageBox::Cancel, MessageBox::Yes);
-            if (result == MessageBox::Yes && !m_db->save(nullptr, false, false)) {
+                MessageBox::Save | MessageBox::Discard | MessageBox::Cancel, MessageBox::Save);
+            if (result == MessageBox::Save && !m_db->save(nullptr, false, false)) {
                 return false;
             } else if (result == MessageBox::Cancel) {
                 return false;
@@ -1278,9 +1278,10 @@ void DatabaseWidget::reloadDatabaseFile()
             auto result = MessageBox::question(this,
                 tr("Merge Request"),
                 tr("The database file has changed and you have unsaved changes.\nDo you want to merge your changes?"),
-                MessageBox::Yes | MessageBox::No);
+                MessageBox::Merge | MessageBox::Cancel,
+                MessageBox::Merge);
 
-            if (result == MessageBox::Yes) {
+            if (result == MessageBox::Merge) {
                 // Merge the old database into the new one
                 Merger merger(m_db.data(), db.data());
                 merger.merge();
@@ -1466,14 +1467,14 @@ bool DatabaseWidget::save(int attempt)
 
     if (attempt > 2 && useAtomicSaves) {
         // Saving failed 3 times, issue a warning and attempt to resolve
-        auto choice = MessageBox::question(this,
+        auto result = MessageBox::question(this,
                                            tr("Disable safe saves?"),
                                            tr("KeePassXC has failed to save the database multiple times. "
                                               "This is likely caused by file sync services holding a lock on "
                                               "the save file.\nDisable safe saves and try again?"),
-                                           MessageBox::Yes | MessageBox::No,
-                                           MessageBox::Yes);
-        if (choice == MessageBox::Yes) {
+                                           MessageBox::Disable | MessageBox::Cancel,
+                                           MessageBox::Disable);
+        if (result == MessageBox::Disable) {
             config()->set("UseAtomicSaves", false);
             return save(attempt + 1);
         }
