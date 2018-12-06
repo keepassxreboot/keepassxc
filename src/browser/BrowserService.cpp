@@ -184,7 +184,8 @@ QString BrowserService::storeKey(const QString& key)
             dialogResult = MessageBox::warning(nullptr,
                                                tr("KeePassXC: Overwrite existing key?"),
                                                tr("A shared encryption key with the name \"%1\" "
-                                                  "already exists.\nDo you want to overwrite it?").arg(id),
+                                                  "already exists.\nDo you want to overwrite it?")
+                                                   .arg(id),
                                                MessageBox::Overwrite | MessageBox::Cancel,
                                                MessageBox::Cancel);
         }

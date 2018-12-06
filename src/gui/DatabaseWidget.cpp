@@ -454,7 +454,7 @@ void DatabaseWidget::deleteEntries()
         }
 
         auto answer = MessageBox::question(this,
-                                           tr("Delete entry(s)?"),
+                                           tr("Delete entry(s)?", "", selected.size()),
                                            prompt,
                                            MessageBox::Delete | MessageBox::Cancel,
                                            MessageBox::Cancel);

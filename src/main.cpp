@@ -103,6 +103,9 @@ int main(int argc, char** argv)
         return 0;
     }
 
+    // Populate MessageBox button labels with text from QMessageBox
+    MessageBox::initializeButtonDefs();
+
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {

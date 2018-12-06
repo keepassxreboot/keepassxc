@@ -422,7 +422,8 @@ void EditWidgetIcons::removeCustomIcon()
                                                    tr("Confirm Delete"),
                                                    tr("This icon is used by %n entry(s), and will be replaced "
                                                       "by the default icon. Are you sure you want to delete it?",
-                                                      "", iconUseCount),
+                                                      "",
+                                                      iconUseCount),
                                                    MessageBox::Delete | MessageBox::Cancel,
                                                    MessageBox::Cancel);
 

@@ -63,6 +63,9 @@ public:
 
     typedef uint64_t Buttons;
 
+    static void initializeButtonDefs();
+    static void setNextAnswer(Button button);
+
     static Button critical(QWidget* parent,
                            const QString& title,
                            const QString& text,
@@ -84,10 +87,10 @@ public:
                           Buttons buttons = MessageBox::Ok,
                           Button defaultButton = MessageBox::NoButton);
 
-    static void setNextAnswer(Button button);
-
 private:
     static Button m_nextAnswer;
+    static QMap<QAbstractButton*, Button> m_addedButtonLookup;
+    static QMap<Button, std::pair<QString, QMessageBox::ButtonRole>> m_buttonDefs;
     
     static Button messageBox(QWidget* parent,
                              QMessageBox::Icon icon,
@@ -96,9 +99,10 @@ private:
                              Buttons buttons = MessageBox::Ok,
                              Button defaultButton = MessageBox::NoButton);
 
-    static void addButton(QMessageBox &box, Button button);
+    static QString stdButtonText(QMessageBox::StandardButton button);
 
-    static QMap<QAbstractButton*, Button> m_buttonMap;
+
+
 };
 
 #endif // KEEPASSX_MESSAGEBOX_H

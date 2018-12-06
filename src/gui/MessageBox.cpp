@@ -19,8 +19,55 @@
 #include "MessageBox.h"
 
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
-QMap<QAbstractButton*, MessageBox::Button> MessageBox::m_buttonMap = QMap<QAbstractButton*, MessageBox::Button>();
 
+QMap<QAbstractButton*, MessageBox::Button>
+MessageBox::m_addedButtonLookup =
+    QMap<QAbstractButton*, MessageBox::Button>();
+
+QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>>
+MessageBox::m_buttonDefs =
+    QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>>();
+
+void MessageBox::initializeButtonDefs()
+{
+    m_buttonDefs =
+        QMap<Button, std::pair<QString, QMessageBox::ButtonRole>>
+        {
+            // Reimplementation of Qt StandardButtons
+            {Ok, {stdButtonText(QMessageBox::Ok), QMessageBox::ButtonRole::AcceptRole}},
+            {Open, {stdButtonText(QMessageBox::Open), QMessageBox::ButtonRole::AcceptRole}},
+            {Save, {stdButtonText(QMessageBox::Save), QMessageBox::ButtonRole::AcceptRole}},
+            {Cancel, {stdButtonText(QMessageBox::Cancel), QMessageBox::ButtonRole::RejectRole}},
+            {Close, {stdButtonText(QMessageBox::Close), QMessageBox::ButtonRole::RejectRole}},
+            {Discard, {stdButtonText(QMessageBox::Discard), QMessageBox::ButtonRole::DestructiveRole}},
+            {Apply, {stdButtonText(QMessageBox::Apply), QMessageBox::ButtonRole::ApplyRole}},
+            {Reset, {stdButtonText(QMessageBox::Reset), QMessageBox::ButtonRole::ResetRole}},
+            {RestoreDefaults, {stdButtonText(QMessageBox::RestoreDefaults), QMessageBox::ButtonRole::ResetRole}},
+            {Help, {stdButtonText(QMessageBox::Help), QMessageBox::ButtonRole::HelpRole}},
+            {SaveAll, {stdButtonText(QMessageBox::SaveAll), QMessageBox::ButtonRole::AcceptRole}},
+            {Yes, {stdButtonText(QMessageBox::Yes), QMessageBox::ButtonRole::YesRole}},
+            {YesToAll, {stdButtonText(QMessageBox::YesToAll), QMessageBox::ButtonRole::YesRole}},
+            {No, {stdButtonText(QMessageBox::No), QMessageBox::ButtonRole::NoRole}},
+            {NoToAll, {stdButtonText(QMessageBox::NoToAll), QMessageBox::ButtonRole::NoRole}},
+            {Abort, {stdButtonText(QMessageBox::Abort), QMessageBox::ButtonRole::RejectRole}},
+            {Retry, {stdButtonText(QMessageBox::Retry), QMessageBox::ButtonRole::AcceptRole}},
+            {Ignore, {stdButtonText(QMessageBox::Ignore), QMessageBox::ButtonRole::AcceptRole}},
+
+            // KeePassXC Buttons
+            {Overwrite, {QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::DestructiveRole}},
+            {Delete, {QMessageBox::tr("Delete"), QMessageBox::ButtonRole::DestructiveRole}},
+            {Move, {QMessageBox::tr("Move"), QMessageBox::ButtonRole::AcceptRole}},
+            {Empty, {QMessageBox::tr("Empty"), QMessageBox::ButtonRole::DestructiveRole}},
+            {Remove, {QMessageBox::tr("Remove"), QMessageBox::ButtonRole::DestructiveRole}},
+            {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::RejectRole}}
+        };
+}
+
+QString MessageBox::stdButtonText(QMessageBox::StandardButton button)
+{
+    QMessageBox buttonHost;
+    return buttonHost.addButton(button)->text();
+}
 
 MessageBox::Button MessageBox::messageBox(QWidget* parent,
                                           QMessageBox::Icon icon,
@@ -37,21 +84,25 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
 
         for (uint64_t b = First; b <= Last; b <<= 1) {
             if (b & buttons) {
-                addButton(msgBox, static_cast<Button>(b));
+                QString text = m_buttonDefs[static_cast<Button>(b)].first;
+                QMessageBox::ButtonRole role = m_buttonDefs[static_cast<Button>(b)].second;
+
+                auto buttonPtr = msgBox.addButton(text, role);
+                m_addedButtonLookup.insert(buttonPtr, static_cast<Button>(b));
             }
         }
 
         if (defaultButton != MessageBox::NoButton) {
-            QList<QAbstractButton*> defPtrList = m_buttonMap.keys(defaultButton);
+            QList<QAbstractButton*> defPtrList = m_addedButtonLookup.keys(defaultButton);
             if (defPtrList.count() > 0) {
                 msgBox.setDefaultButton(static_cast<QPushButton*>(defPtrList[0]));
             }
         }
-        
+
         msgBox.exec();
 
-        Button returnButton = m_buttonMap[msgBox.clickedButton()];
-        m_buttonMap.clear();
+        Button returnButton = m_addedButtonLookup[msgBox.clickedButton()];
+        m_addedButtonLookup.clear();
         return returnButton;
 
     } else {
@@ -100,110 +151,4 @@ MessageBox::Button MessageBox::warning(QWidget* parent,
 void MessageBox::setNextAnswer(MessageBox::Button button)
 {
     m_nextAnswer = button;
-}
-
-void MessageBox::addButton(QMessageBox &box, MessageBox::Button button)
-{
-    QAbstractButton *b;
-    QMessageBox buttonHost;
-    QPushButton *btn = nullptr;
-    switch(button) {
-
-        // Reimplementation of Qt StandardButtons
-        case NoButton:
-            return;
-        case Ok:
-            btn = buttonHost.addButton(QMessageBox::Ok);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Open:
-            btn = buttonHost.addButton(QMessageBox::Open);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Save:
-            btn = buttonHost.addButton(QMessageBox::Save);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Cancel:
-            btn = buttonHost.addButton(QMessageBox::Cancel);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::RejectRole);
-            break;
-        case Close:
-            btn = buttonHost.addButton(QMessageBox::Close);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::RejectRole);
-            break;
-        case Discard:
-            btn = buttonHost.addButton(QMessageBox::Discard);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::DestructiveRole);
-            break;
-        case Apply:
-            btn = buttonHost.addButton(QMessageBox::Apply);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::ApplyRole);
-            break;
-        case Reset:
-            btn = buttonHost.addButton(QMessageBox::Reset);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::ResetRole);
-            break;
-        case RestoreDefaults:
-            btn = buttonHost.addButton(QMessageBox::RestoreDefaults);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::ResetRole);
-            break;
-        case Help:
-            btn = buttonHost.addButton(QMessageBox::Help);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::HelpRole);
-            break;
-        case SaveAll:
-            btn = buttonHost.addButton(QMessageBox::SaveAll);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Yes:
-            btn = buttonHost.addButton(QMessageBox::Yes);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::YesRole);
-            break;
-        case YesToAll:
-            btn = buttonHost.addButton(QMessageBox::YesToAll);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::YesRole);
-            break;
-        case No:
-            btn = buttonHost.addButton(QMessageBox::No);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::NoRole);
-            break;
-        case NoToAll:
-            btn = buttonHost.addButton(QMessageBox::NoToAll);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::NoRole);
-            break;
-        case Abort:
-            btn = buttonHost.addButton(QMessageBox::Abort);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::RejectRole);
-            break;
-        case Retry:
-            btn = buttonHost.addButton(QMessageBox::Retry);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Ignore:
-            btn = buttonHost.addButton(QMessageBox::Ignore);
-            b = box.addButton(btn->text(), QMessageBox::ButtonRole::AcceptRole);
-            break;
-
-        // KeePassXC Buttons
-        case Overwrite:
-            b = box.addButton(QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::DestructiveRole);
-            break;
-        case Delete:
-            b = box.addButton(QMessageBox::tr("Delete"), QMessageBox::ButtonRole::DestructiveRole);
-            break;
-        case Move:
-            b = box.addButton(QMessageBox::tr("Move"), QMessageBox::ButtonRole::AcceptRole);
-            break;
-        case Empty:
-            b = box.addButton(QMessageBox::tr("Empty"), QMessageBox::ButtonRole::DestructiveRole);
-            break;
-        case Remove:
-            b = box.addButton(QMessageBox::tr("Remove"), QMessageBox::ButtonRole::DestructiveRole);
-            break;
-        case Skip:
-            b = box.addButton(QMessageBox::tr("Skip"), QMessageBox::ButtonRole::RejectRole);
-            break;
-    }
-    m_buttonMap.insert(b, button);
 }
