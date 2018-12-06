@@ -87,6 +87,11 @@ void TestCli::initTestCase()
     QVERIFY(sourceDbFile4.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile4, m_keyFileProtectedNoPasswordDbData));
     sourceDbFile4.close();
+
+    QFile sourceDbFileYubiKeyProtected(QString(KEEPASSX_TEST_DATA_DIR).append("/YubiKeyProtectedPasswords.kdbx"));
+    QVERIFY(sourceDbFileYubiKeyProtected.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFileYubiKeyProtected, m_yubiKeyProtectedDbData));
+    sourceDbFileYubiKeyProtected.close();
 }
 
 void TestCli::init()
@@ -110,6 +115,11 @@ void TestCli::init()
     m_keyFileProtectedNoPasswordDbFile->open();
     m_keyFileProtectedNoPasswordDbFile->write(m_keyFileProtectedNoPasswordDbData);
     m_keyFileProtectedNoPasswordDbFile->close();
+
+    m_yubiKeyProtectedDbFile.reset(new TemporaryFile());
+    m_yubiKeyProtectedDbFile->open();
+    m_yubiKeyProtectedDbFile->write(m_yubiKeyProtectedDbData);
+    m_yubiKeyProtectedDbFile->close();
 
     m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
@@ -153,7 +163,7 @@ void TestCli::cleanupTestCase()
 QSharedPointer<Database> TestCli::readTestDatabase() const
 {
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", m_stdoutHandle));
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", "", m_stdoutHandle));
     m_stdoutFile->seek(ftell(m_stdoutHandle)); // re-synchronize handles
     return db;
 }
@@ -342,7 +352,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", Utils::DEVNULL));
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", "", Utils::DEVNULL));
     QVERIFY(db);
 
     // Should refuse to create the database if it already exists.
@@ -371,7 +381,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, true, keyfilePath, Utils::DEVNULL));
+    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, true, keyfilePath, "", Utils::DEVNULL));
     QVERIFY(db2);
 
     // Testing with existing keyfile
@@ -388,7 +398,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, Utils::DEVNULL));
+    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, "", Utils::DEVNULL));
     QVERIFY(db3);
 }
 
@@ -1164,3 +1174,70 @@ void TestCli::testShow()
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }
+
+/**
+ * Secret key for the YubiKey slot used by the unit test is
+ * 1c e3 0f d7 8d 20 dc fa 40 b5 0c 18 77 9a fb 0f 02 28 8d b7
+ * This secret should be configured at slot 2, and the slot
+ * should be configured as passive.
+ */
+void TestCli::testYubiKeyOption()
+{
+    if (!YubiKey::instance()->init()) {
+        QSKIP("Unable to connect to YubiKey");
+    }
+
+    QString errorMessage;
+    bool isBlocking = YubiKey::instance()->isBlocking(2, errorMessage);
+    if (isBlocking && errorMessage.isEmpty()) {
+        QSKIP("Skipping YubiKey in press mode.");
+    }
+
+    List listCmd;
+    Add addCmd;
+
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-y", "2", m_yubiKeyProtectedDbFile->fileName()});
+    m_stdoutFile->reset();
+    m_stderrFile->reset();
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("entry1\n"
+                                                 "entry2\n"));
+
+     // Should raise an error with no yubikey slot.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", m_yubiKeyProtectedDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(),
+             QByteArray("Error while reading the database: Wrong key or database file is corrupt. (HMAC mismatch)\n"));
+
+     // Should raise an error if yubikey slot is not a string
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-y", "invalidslot", m_yubiKeyProtectedDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll().split(':').at(0),
+             QByteArray("Invalid YubiKey slot invalidslot\n"));
+
+     // Should raise an error if yubikey slot is invalid.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-y", "3", m_yubiKeyProtectedDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll().split(':').at(0),
+             QByteArray("Invalid YubiKey slot 3\n"));
+}
+

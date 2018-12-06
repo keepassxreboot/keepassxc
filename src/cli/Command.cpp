@@ -50,6 +50,12 @@ const QCommandLineOption Command::NoPasswordOption =
     QCommandLineOption(QStringList() << "no-password",
                        QObject::tr("Deactivate password key for the database."));
 
+const QCommandLineOption Command::YubiKeyOption =
+     QCommandLineOption(QStringList() << "y"
+                                      << "yubikey",
+                        QObject::tr("Yubikey slot used to encrypt the database."),
+                        QObject::tr("yubikey"));
+
 QMap<QString, Command*> commands;
 
 Command::~Command()

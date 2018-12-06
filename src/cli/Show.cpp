@@ -49,7 +49,9 @@ int Show::execute(const QStringList& arguments)
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
     parser.addOption(Command::NoPasswordOption);
-
+#ifdef WITH_XC_YUBIKEY
+    parser.addOption(Command::YubiKeyOption);
+#endif
     QCommandLineOption totp(QStringList() << "t"
                                           << "totp",
                             QObject::tr("Show the entry's current TOTP."));
@@ -76,6 +78,7 @@ int Show::execute(const QStringList& arguments)
     auto db = Utils::unlockDatabase(args.at(0),
                                     !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
+                                    parser.value(Command::YubiKeyOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);
     if (!db) {

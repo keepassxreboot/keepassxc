@@ -59,16 +59,19 @@ private slots:
     void testRemove();
     void testRemoveQuiet();
     void testShow();
+    void testYubiKeyOption();
 
 private:
     QByteArray m_dbData;
     QByteArray m_dbData2;
+    QByteArray m_yubiKeyProtectedDbData;
     QByteArray m_keyFileProtectedDbData;
     QByteArray m_keyFileProtectedNoPasswordDbData;
     QScopedPointer<TemporaryFile> m_dbFile;
     QScopedPointer<TemporaryFile> m_dbFile2;
     QScopedPointer<TemporaryFile> m_keyFileProtectedDbFile;
     QScopedPointer<TemporaryFile> m_keyFileProtectedNoPasswordDbFile;
+    QScopedPointer<TemporaryFile> m_yubiKeyProtectedDbFile;
     QScopedPointer<TemporaryFile> m_stdoutFile;
     QScopedPointer<TemporaryFile> m_stderrFile;
     QScopedPointer<TemporaryFile> m_stdinFile;

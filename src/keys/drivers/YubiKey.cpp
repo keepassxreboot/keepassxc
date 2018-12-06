@@ -120,26 +120,13 @@ void YubiKey::detect()
 {
     bool found = false;
 
-    if (init()) {
-        YubiKey::ChallengeResult result;
-        QByteArray rand = randomGen()->randomArray(1);
-        QByteArray resp;
-
-        // Check slot 1 and 2 for Challenge-Response HMAC capability
-        for (int i = 1; i <= 2; ++i) {
-            result = challenge(i, false, rand, resp);
-            if (result == ALREADY_RUNNING) {
-                // Try this slot again after waiting
-                Tools::sleep(300);
-                result = challenge(i, false, rand, resp);
-            }
-
-            if (result != ALREADY_RUNNING && result != ERROR) {
-                emit detected(i, result == WOULDBLOCK);
-                found = true;
-            }
-            // Wait between slots to let the yubikey settle
-            Tools::sleep(150);
+    // Check slot 1 and 2 for Challenge-Response HMAC capability
+    for (int i = 1; i <= 2; ++i) {
+        QString errorMsg;
+        bool isBlocking = this->isBlocking(i, errorMsg);
+        if (errorMsg.isEmpty()) {
+            found = true;
+            emit detected(i, isBlocking);
         }
     }
 
@@ -148,6 +135,44 @@ void YubiKey::detect()
     } else {
         emit detectComplete();
     }
+}
+
+bool YubiKey::isBlocking(int slot, QString& errorMessage)
+{
+    if (!init()) {
+        errorMessage = QString("Could not initialize YubiKey.");
+        return false;
+    }
+
+    YubiKey::ChallengeResult result;
+    QByteArray rand = randomGen()->randomArray(1);
+    QByteArray resp;
+
+    result = challenge(slot, false, rand, resp);
+    if (result == ALREADY_RUNNING) {
+        // Try this slot again after waiting
+        Tools::sleep(300);
+        result = challenge(slot, false, rand, resp);
+    }
+
+    if (result == SUCCESS || result == WOULDBLOCK) {
+        return result == WOULDBLOCK;
+    } else if (result == TIMEOUT) {
+        errorMessage = QString("Timeout error");
+        return false;
+    } else if (result == USBERROR) {
+        errorMessage = QString("USB error");
+        return false;
+    } else if (result == ALREADY_RUNNING) {
+        errorMessage = QString("YubiKey busy");
+        return false;
+    } else if (result == ERROR) {
+        errorMessage = QString("YubiKey error");
+        return false;
+    }
+
+    errorMessage = QString("Error while polling YubiKey");
+    return false;
 }
 
 bool YubiKey::getSerial(unsigned int& serial)
@@ -173,14 +198,14 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChallenge = challenge;
 
-    // yk_challenge_response() insists on 64 byte response buffer */
+    // yk_challenge_response() insists on 64 bytes response buffer */
     response.clear();
     response.resize(64);
 
     /* The challenge sent to the yubikey should always be 64 bytes for
      * compatibility with all configurations.  Follow PKCS7 padding.
      *
-     * There is some question whether or not 64 byte fixed length
+     * There is some question whether or not 64 bytes fixed length
      * configurations even work, some docs say avoid it.
      */
     const int padLen = 64 - paddedChallenge.size();
@@ -205,21 +230,15 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
         if (yk_errno == YK_EWOULDBLOCK) {
             return WOULDBLOCK;
         } else if (yk_errno == YK_ETIMEOUT) {
-            return ERROR;
-        } else if (yk_errno) {
-
+            return TIMEOUT;
+        } else if (yk_errno == YK_EUSBERR) {
             /* Something went wrong, close the key, so that the next call to
              * can try to re-open.
              *
              * Likely caused by the YubiKey being unplugged.
              */
-
-            if (yk_errno == YK_EUSBERR) {
-                qWarning("USB error: %s", yk_usb_strerror());
-            } else {
-                qWarning("YubiKey core error: %s", yk_strerror(yk_errno));
-            }
-
+            return USBERROR;
+        } else {
             return ERROR;
         }
     }

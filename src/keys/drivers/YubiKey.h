@@ -34,6 +34,8 @@ public:
     {
         ERROR = -1,
         SUCCESS = 0,
+        TIMEOUT,
+        USBERROR,
         WOULDBLOCK,
         ALREADY_RUNNING
     };
@@ -83,6 +85,14 @@ public:
      * @brief YubiKey::detect - probe for attached YubiKeys
      */
     void detect();
+
+    /**
+     * @param slot the yubikey slot.
+     * @param errorMessage populated if an error occured.
+     *
+     * @return whether the key is blocking or not.
+     */
+    bool isBlocking(int slot, QString& errorMessage);
 
 signals:
     /** Emitted in response to detect() when a device is found

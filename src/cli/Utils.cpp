@@ -100,6 +100,7 @@ namespace Utils
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
+                                            const QString& yubiKeySlot,
                                             FILE* outputDescriptor,
                                             FILE* errorDescriptor)
     {
@@ -133,6 +134,36 @@ namespace Utils
             // LCOV_EXCL_STOP
 
             compositeKey->addKey(fileKey);
+        }
+
+        if (!yubiKeySlot.isEmpty()) {
+            bool ok = false;
+            int slot = yubiKeySlot.toInt(&ok, 10);
+            if (!ok) {
+              err << QString("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+              return {};
+            }
+            if (slot != 1 && slot != 2) {
+              err << QString("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+              return {};
+            }
+
+            QString errorMessage;
+            bool blocking = YubiKey::instance()->isBlocking(slot, errorMessage);
+            if (!errorMessage.isEmpty()) {
+              err << errorMessage << endl;
+              return {};
+            }
+
+            auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
+                        slot,
+                        blocking,
+                        QString("Please touch the button on your YubiKey to unlock " + databaseFilename),
+                        QString("Challenge-response with YubiKey " + QString::number(slot) + " succeeded!!!"),
+                        QString("Failed to unlock " + databaseFilename + " with YubiKey " + QString::number(slot)),
+                        outputDescriptor,
+                        errorDescriptor));
+            compositeKey->addChallengeResponseKey(key);
         }
 
         auto db = QSharedPointer<Database>::create();
