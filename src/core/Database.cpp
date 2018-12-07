@@ -18,8 +18,6 @@
 
 #include "Database.h"
 
-#include "cli/Utils.h"
-#include "cli/TextStream.h"
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Merger.h"
@@ -699,45 +697,6 @@ void Database::startModifiedTimer()
 QSharedPointer<const CompositeKey> Database::key() const
 {
     return m_data.key;
-}
-
-QSharedPointer<Database> Database::unlockFromStdin(const QString& databaseFilename, const QString& keyFilename,
-                                                   FILE* outputDescriptor, FILE* errorDescriptor)
-{
-    auto compositeKey = QSharedPointer<CompositeKey>::create();
-    TextStream out(outputDescriptor);
-    TextStream err(errorDescriptor);
-
-    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
-
-    QString line = Utils::getPassword(outputDescriptor);
-    auto passwordKey = QSharedPointer<PasswordKey>::create();
-    passwordKey->setPassword(line);
-    compositeKey->addKey(passwordKey);
-
-    if (!keyFilename.isEmpty()) {
-        auto fileKey = QSharedPointer<FileKey>::create();
-        QString errorMessage;
-        // LCOV_EXCL_START
-        if (!fileKey->load(keyFilename, &errorMessage)) {
-            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
-            return {};
-        }
-
-        if (fileKey->type() != FileKey::Hashed) {
-            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                               "unsupported in the future.\n\n"
-                               "Please consider generating a new key file.")
-                << endl;
-        }
-        // LCOV_EXCL_STOP
-
-        compositeKey->addKey(fileKey);
-    }
-
-    auto db = QSharedPointer<Database>::create();
-    db->open(databaseFilename, compositeKey, nullptr, false);
-    return db;
 }
 
 QSharedPointer<Kdf> Database::kdf() const
