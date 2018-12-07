@@ -19,6 +19,9 @@ Adds a new entry to a database. A password can be generated (\fI-g\fP option), o
 .IP "clip [options] <database> <entry> [timeout]"
 Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
+.IP "create [options] <database>"
+Creates a new database with a key file and/or password. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
+
 .IP "diceware [options]"
 Generate a random diceware passphrase.
 

@@ -16,6 +16,7 @@
 set(cli_SOURCES
         Add.cpp
         Clip.cpp
+        Create.cpp
         Command.cpp
         Diceware.cpp
         Edit.cpp
