@@ -137,9 +137,10 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 12);
+    QCOMPARE(Command::getCommands().size(), 13);
     QVERIFY(Command::getCommand("add"));
     QVERIFY(Command::getCommand("clip"));
+    QVERIFY(Command::getCommand("create"));
     QVERIFY(Command::getCommand("diceware"));
     QVERIFY(Command::getCommand("edit"));
     QVERIFY(Command::getCommand("estimate"));
