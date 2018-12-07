@@ -130,7 +130,7 @@ void TestCli::cleanupTestCase()
 QSharedPointer<Database> TestCli::readTestDatabase() const
 {
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Database::unlockFromStdin(m_dbFile->fileName(), "", m_stdoutHandle));
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), "", m_stdoutHandle));
     m_stdoutFile->seek(ftell(m_stdoutHandle)); // re-synchronize handles
     return db;
 }
