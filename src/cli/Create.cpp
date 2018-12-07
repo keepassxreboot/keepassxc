@@ -65,7 +65,7 @@ int Create::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     QCommandLineOption keyFile(
         QStringList() << "k" << "key-file",
-        QObject::tr("Key file of the database. If file does not exist, new key file will be generated"),
+        QObject::tr("Key file of the database. If the file does not exist, it will be generated."),
         QObject::tr("path"));
     parser.addOption(keyFile);
 
@@ -99,16 +99,16 @@ int Create::execute(const QStringList& arguments)
     }
 
     if (key->isEmpty()) {
-        err << QObject::tr("No key is set, aborting creating database") << endl;
+        err << QObject::tr("No key is set. Aborting database creation.") << endl;
         return EXIT_FAILURE;
     }
 
     Database db;
     db.setKey(key);
 
-    QString dberror = db.saveToFile(args.at(0));
-    if (dberror.length() > 0) {
-        err << QObject::tr("Failed to save the database: ") << dberror << endl;
+    QString errorMessage;
+    if (!db.save(args.at(0), &errorMessage, true, false)) {
+        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
@@ -160,13 +160,13 @@ bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
         fileKey->create(path, &error);
 
         if (error.length() > 0) {
-            err << QObject::tr("Creating KeyFile failed: %1").arg(error) << endl;
+            err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
             return false;
         }
     }
 
     if (!fileKey->load(path, &error)) {
-        err << QObject::tr("Loading KeyFile failed: ") << error << endl;
+        err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << endl;
         return false;
     }
 
