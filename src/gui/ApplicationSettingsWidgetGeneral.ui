@@ -83,6 +83,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="checkForUpdatesOnStartupCheckBox">
+            <property name="text">
+             <string>Check for updates at application startup</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

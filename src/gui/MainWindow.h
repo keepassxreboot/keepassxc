@@ -83,6 +83,9 @@ private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
+    void showUpdateCheckStartup();
+    void showUpdateCheckDialog();
+    void hasUpdateAvailable(bool hasUpdate, const QString& version);
     void openDonateUrl();
     void openBugReportUrl();
     void switchToDatabases();

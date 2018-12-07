@@ -101,10 +101,9 @@ These steps place the compiled KeePassXC binary inside the `./build/src/` direct
 	  -DWITH_XC_SSHAGENT=[ON|OFF] Enable/Disable SSHAgent support (default: OFF)
 	  -DWITH_XC_KEESHARE=[ON|OFF] Enable/Disable KeeShare group syncronization extension (default: OFF)
 	  -DWITH_XC_TOUCHID=[ON|OFF] (macOS Only) Enable/Disable Touch ID unlock (default:OFF)
+	  -DWITH_XC_UPDATECHECK=[ON|OFF] Enable/Disable checking for updates when KeePassXC starts. (default: OFF)
 	  -DWITH_XC_ALL=[ON|OFF] Enable/Disable compiling all plugins above (default: OFF)
-	  
 	  -DWITH_XC_KEESHARE_SECURE=[ON|OFF] Enable/Disable KeeShare secure containers, requires libquazip5 (default: OFF)
-	  
 	  -DWITH_TESTS=[ON|OFF] Enable/Disable building of unit tests (default: ON)
 	  -DWITH_GUI_TESTS=[ON|OFF] Enable/Disable building of GUI tests (default: OFF)
 	  -DWITH_DEV_BUILD=[ON|OFF] Enable/Disable deprecated method warnings (default: OFF)

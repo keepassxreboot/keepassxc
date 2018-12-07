@@ -162,6 +162,11 @@ add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
 add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
         LIBS ${TEST_LIBRARIES})
 
+if(WITH_XC_UPDATECHECK)
+    add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
+            LIBS ${TEST_LIBRARIES})
+endif()
+
 if(WITH_XC_AUTOTYPE)
     add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
             LIBS ${TEST_LIBRARIES})

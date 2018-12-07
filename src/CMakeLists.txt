@@ -205,6 +205,7 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(KeeShare-Secure WITH_XC_KEESHARE_SECURE "Sharing integration with KeeShare with secure sources")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(Update-Check WITH_XC_UPDATECHECK "Check for updates on application startup")
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
@@ -255,6 +256,10 @@ if(WITH_XC_YUBIKEY)
     list(APPEND keepassx_SOURCES keys/drivers/YubiKey.cpp)
 else()
     list(APPEND keepassx_SOURCES keys/drivers/YubiKey.h keys/drivers/YubiKeyStub.cpp)
+endif()
+
+if(WITH_XC_UPDATECHECK AND WITH_XC_NETWORKING)
+    list(APPEND keepassx_SOURCES updatecheck/UpdateCheck.cpp gui/UpdateCheckDialog.cpp)
 endif()
 
 if(WITH_XC_TOUCHID)

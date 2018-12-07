@@ -41,6 +41,12 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+#ifdef WITH_XC_UPDATECHECK
+#include "updatecheck/UpdateCheck.h"
+#include "gui/MessageBox.h"
+#include "gui/UpdateCheckDialog.h"
+#endif
+
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
@@ -282,6 +288,7 @@ MainWindow::MainWindow()
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator"));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
+    m_ui->actionCheckForUpdates->setIcon(filePath()->icon("actions", "system-software-update"));
 
     m_actionMultiplexer.connect(
         SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(setMenuActionState(DatabaseWidget::Mode)));
@@ -364,6 +371,14 @@ MainWindow::MainWindow()
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
+
+#ifdef WITH_XC_UPDATECHECK
+    connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
+    QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
+#else
+    m_ui->actionCheckForUpdates->setVisible(false);
+#endif
+
     // clang-format off
 	 connect(m_ui->tabWidget,
 				SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
@@ -659,6 +674,49 @@ void MainWindow::showAboutDialog()
 {
     auto* aboutDialog = new AboutDialog(this);
     aboutDialog->open();
+}
+
+void MainWindow::showUpdateCheckStartup()
+{
+#ifdef WITH_XC_UPDATECHECK
+    if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
+        auto result = MessageBox::question(this,
+                                           tr("Check for updates on startup?"),
+                                           tr("Would you like KeePassXC to check for updates on startup?") + "\n\n" +
+                                           tr("You can always check for updates manually from the application menu."),
+                                           MessageBox::Yes | MessageBox::No,
+                                           MessageBox::Yes);
+
+        config()->set("GUI/CheckForUpdates", (result == MessageBox::Yes));
+        config()->set("UpdateCheckMessageShown", true);
+    } else if (config()->get("GUI/CheckForUpdates", false).toBool()) {
+        updateCheck()->checkForUpdates();
+    }
+
+    connect(UpdateCheck::instance(), SIGNAL(updateCheckFinished(bool, QString)), this, SLOT(hasUpdateAvailable(bool, QString)));
+#endif
+}
+
+void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version)
+{
+#ifdef WITH_XC_UPDATECHECK
+    disconnect(UpdateCheck::instance(), nullptr, this, nullptr);
+
+    if (hasUpdate) {
+        auto* updateCheckDialog = new UpdateCheckDialog(this);
+        updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
+        updateCheckDialog->show();
+    }
+#endif
+}
+
+void MainWindow::showUpdateCheckDialog()
+{
+#ifdef WITH_XC_UPDATECHECK
+    updateCheck()->checkForUpdates();
+    auto* updateCheckDialog = new UpdateCheckDialog(this);
+    updateCheckDialog->show();
+#endif
 }
 
 void MainWindow::openDonateUrl()

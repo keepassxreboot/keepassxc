@@ -91,6 +91,10 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
+#ifndef WITH_XC_UPDATECHECK
+    m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
+#endif
+
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
 #endif
@@ -174,6 +178,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
+    m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get("GUI/CheckForUpdates").toBool());
     m_generalUi->autoTypeAskCheckBox->setChecked(config()->get("security/autotypeask").toBool());
 
     if (autoType()->isAvailable()) {
@@ -256,6 +261,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->minimizeOnCloseCheckBox->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
+    config()->set("GUI/CheckForUpdates", m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
 
     config()->set("security/autotypeask", m_generalUi->autoTypeAskCheckBox->isChecked());
 
