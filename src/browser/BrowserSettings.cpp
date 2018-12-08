@@ -121,6 +121,16 @@ void BrowserSettings::setAlwaysAllowUpdate(bool alwaysAllowUpdate)
     config()->set("Browser/AlwaysAllowUpdate", alwaysAllowUpdate);
 }
 
+bool BrowserSettings::httpAuthPermission()
+{
+    return config()->get("Browser/HttpAuthPermission", false).toBool();
+}
+
+void BrowserSettings::setHttpAuthPermission(bool httpAuthPermission)
+{
+    config()->set("Browser/HttpAuthPermission", httpAuthPermission);
+}
+
 bool BrowserSettings::searchInAllDatabases()
 {
     return config()->get("Browser/SearchInAllDatabases", false).toBool();

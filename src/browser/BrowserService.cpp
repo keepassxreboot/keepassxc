@@ -207,7 +207,8 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                                const QString& url,
                                                const QString& submitUrl,
                                                const QString& realm,
-                                               const StringPairList& keyList)
+                                               const StringPairList& keyList,
+                                               const bool httpAuth)
 {
     QJsonArray result;
     if (thread() != QThread::currentThread()) {
@@ -219,11 +220,13 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
                                   Q_ARG(QString, url),
                                   Q_ARG(QString, submitUrl),
                                   Q_ARG(QString, realm),
-                                  Q_ARG(StringPairList, keyList));
+                                  Q_ARG(StringPairList, keyList),
+                                  Q_ARG(bool, httpAuth));
         return result;
     }
 
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
+    const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
     const QString host = QUrl(url).host();
     const QString submitHost = QUrl(submitUrl).host();
 
@@ -231,6 +234,12 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
     for (Entry* entry : searchEntries(url, keyList)) {
+        // HTTP Basic Auth always needs a confirmation
+        if (!ignoreHttpAuth && httpAuth) {
+            pwEntriesToConfirm.append(entry);
+            continue;
+        }
+
         switch (checkAccess(entry, host, submitHost, realm)) {
         case Denied:
             continue;
@@ -642,7 +651,10 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 }
 
 BrowserService::Access
-BrowserService::checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm)
+BrowserService::checkAccess(const Entry* entry,
+                            const QString& host,
+                            const QString& submitHost,
+                            const QString& realm)
 {
     BrowserEntryConfig config;
     if (!config.load(entry)) {

@@ -51,6 +51,8 @@ public:
     void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
     bool searchInAllDatabases();
     void setSearchInAllDatabases(bool searchInAllDatabases);
+    bool httpAuthPermission();
+    void setHttpAuthPermission(bool httpAuthPermission);
     bool supportKphFields();
     void setSupportKphFields(bool supportKphFields);
 
