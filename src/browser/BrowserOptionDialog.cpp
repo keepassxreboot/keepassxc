@@ -100,6 +100,7 @@ void BrowserOptionDialog::loadSettings()
 
     m_ui->alwaysAllowAccess->setChecked(settings->alwaysAllowAccess());
     m_ui->alwaysAllowUpdate->setChecked(settings->alwaysAllowUpdate());
+    m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
     m_ui->supportBrowserProxy->setChecked(settings->supportBrowserProxy());
@@ -156,6 +157,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
     settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
     settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
+    settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
 

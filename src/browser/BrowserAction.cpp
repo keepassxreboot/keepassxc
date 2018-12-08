@@ -251,7 +251,9 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
     const QString id = decrypted.value("id").toString();
     const QString submit = decrypted.value("submitUrl").toString();
-    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList);
+    const QString auth = decrypted.value("httpAuth").toString();
+    const bool httpAuth = auth.compare("true", Qt::CaseSensitive) == 0 ? true : false;
+    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList, httpAuth);
 
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
