@@ -71,20 +71,60 @@
      <property name="leftMargin">
       <number>5</number>
      </property>
+     <property name="horizontalSpacing">
+      <number>6</number>
+     </property>
      <property name="verticalSpacing">
       <number>8</number>
      </property>
-     <item row="1" column="0" alignment="Qt::AlignVCenter">
-      <widget class="QCheckBox" name="checkKeyFile">
-       <property name="text">
-        <string>Key File:</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0" alignment="Qt::AlignVCenter">
       <widget class="QCheckBox" name="checkPassword">
        <property name="text">
         <string>Password:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="2">
+      <layout class="QHBoxLayout" name="passwordLayout">
+       <property name="leftMargin">
+        <number>5</number>
+       </property>
+       <property name="rightMargin">
+        <number>5</number>
+       </property>
+       <item>
+        <widget class="PasswordEdit" name="editPassword">
+         <property name="echoMode">
+          <enum>QLineEdit::Password</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="buttonTogglePassword">
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0" alignment="Qt::AlignVCenter">
+      <widget class="QCheckBox" name="checkKeyFile">
+       <property name="text">
+        <string>Key File:</string>
        </property>
       </widget>
      </item>
@@ -116,30 +156,6 @@
         <widget class="QPushButton" name="buttonBrowseFile">
          <property name="text">
           <string>Browse</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="2">
-      <layout class="QHBoxLayout" name="passwordLayout">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="PasswordEdit" name="editPassword">
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QToolButton" name="buttonTogglePassword">
-         <property name="checkable">
-          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -206,6 +222,13 @@
        </item>
       </layout>
      </item>
+     <item row="3" column="0">
+      <widget class="QCheckBox" name="checkTouchID">
+       <property name="text">
+        <string>TouchID for quick unlock</string>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QCheckBox" name="checkChallengeResponse">
        <property name="enabled">
@@ -216,25 +239,15 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QCheckBox" name="checkTouchID">
+     <item row="4" column="2">
+      <widget class="QComboBox" name="comboGnuPGKey"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="checkGPGKey">
        <property name="text">
-        <string>TouchID for quick unlock</string>
+        <string>GPG Key Pair</string>
        </property>
       </widget>
-     </item>
-     <item row="3" column="2">
-      <spacer name="verticalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
      </item>
     </layout>
    </item>

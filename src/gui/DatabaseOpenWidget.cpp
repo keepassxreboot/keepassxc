@@ -29,6 +29,7 @@
 #include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "keys/OpenPGP.h"
 #include "keys/YkChallengeResponseKey.h"
 #include "touchid/TouchID.h"
 

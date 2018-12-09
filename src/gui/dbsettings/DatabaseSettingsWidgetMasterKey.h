@@ -32,6 +32,7 @@ class PasswordEditWidget;
 class KeyFileEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
+class OpenPGPEditWidget;
 
 class DatabaseSettingsWidgetMasterKey : public DatabaseSettingsWidget
 {
@@ -79,6 +80,9 @@ private:
     const QPointer<KeyFileEditWidget> m_keyFileEditWidget;
 #ifdef WITH_XC_YUBIKEY
     const QPointer<YubiKeyEditWidget> m_yubiKeyEditWidget;
+#endif
+#ifdef WITH_XC_OPENPGP
+    const QPointer<OpenPGPEditWidget> m_openPGPEditWidget;
 #endif
 };
 

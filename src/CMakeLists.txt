@@ -135,6 +135,7 @@ set(keepassx_SOURCES
         gui/masterkey/KeyComponentWidget.cpp
         gui/masterkey/PasswordEditWidget.cpp
         gui/masterkey/YubiKeyEditWidget.cpp
+        gui/masterkey/OpenPGPEditWidget.cpp
         gui/masterkey/KeyFileEditWidget.cpp
         gui/dbsettings/DatabaseSettingsWidget.cpp
         gui/dbsettings/DatabaseSettingsDialog.cpp
@@ -154,6 +155,7 @@ set(keepassx_SOURCES
         keys/FileKey.cpp
         keys/PasswordKey.cpp
         keys/YkChallengeResponseKey.cpp
+        keys/OpenPGP.cpp
         streams/HashedBlockStream.cpp
         streams/HmacBlockStream.cpp
         streams/LayeredStream.cpp
@@ -196,6 +198,7 @@ add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(KeeShare-Secure WITH_XC_KEESHARE_SECURE "Sharing integration with KeeShare with secure sources")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
+add_feature_info(OpenPGP WITH_XC_OPENPGP "OpenPGP support, including Smart Cards")
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
@@ -251,6 +254,10 @@ endif()
 
 if(WITH_XC_NETWORKING)
     list(APPEND keepassx_SOURCES updatecheck/UpdateChecker.cpp gui/UpdateCheckDialog.cpp)
+endif()
+
+if(WITH_XC_OPENPGP)
+    list(APPEND keepassx_SOURCES keys/drivers/GnuPGKey.cpp)
 endif()
 
 if(WITH_XC_TOUCHID)
