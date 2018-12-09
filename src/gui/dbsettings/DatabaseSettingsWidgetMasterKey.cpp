@@ -22,9 +22,11 @@
 #include "gui/masterkey/KeyFileEditWidget.h"
 #include "gui/masterkey/PasswordEditWidget.h"
 #include "gui/masterkey/YubiKeyEditWidget.h"
+#include "gui/masterkey/OpenPGPEditWidget.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "keys/YkChallengeResponseKey.h"
+#include "keys/OpenPGP.h"
 
 #include <QPushButton>
 #include <QSpacerItem>
@@ -38,6 +40,9 @@ DatabaseSettingsWidgetMasterKey::DatabaseSettingsWidgetMasterKey(QWidget* parent
     , m_keyFileEditWidget(new KeyFileEditWidget(this))
 #ifdef WITH_XC_YUBIKEY
     , m_yubiKeyEditWidget(new YubiKeyEditWidget(this))
+#endif
+#ifdef WITH_XC_OPENPGP
+    , m_openPGPEditWidget(new OpenPGPEditWidget(this))
 #endif
 {
     auto* vbox = new QVBoxLayout(this);
@@ -56,6 +61,9 @@ DatabaseSettingsWidgetMasterKey::DatabaseSettingsWidgetMasterKey(QWidget* parent
     m_additionalKeyOptions->layout()->addWidget(m_keyFileEditWidget);
 #ifdef WITH_XC_YUBIKEY
     m_additionalKeyOptions->layout()->addWidget(m_yubiKeyEditWidget);
+#endif
+#ifdef WITH_XC_OPENPGP
+    m_additionalKeyOptions->layout()->addWidget(m_openPGPEditWidget);
 #endif
     m_additionalKeyOptions->setVisible(false);
 
@@ -101,6 +109,15 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
     }
 #endif
 
+#ifdef WITH_XC_OPENPGP
+    for (const auto& key : m_db->key()->keys()) {
+        if (key->uuid() == OpenPGPKey::UUID) { // TODO: Implement function in keys/OpenPGP.cpp
+            m_openPGPEditWidget->setComponentAdded(true);
+            hasAdditionalKeys = true;
+        }
+    }
+#endif
+
     setAdditionalKeyOptionsVisible(hasAdditionalKeys);
 
     m_isDirty = isDirty;
@@ -113,6 +130,9 @@ void DatabaseSettingsWidgetMasterKey::initialize()
     m_keyFileEditWidget->setComponentAdded(false);
 #ifdef WITH_XC_YUBIKEY
     m_yubiKeyEditWidget->setComponentAdded(false);
+#endif
+#ifdef WITH_XC_OPENPGP
+    m_openPGPEditWidget->setComponentAdded(false);
 #endif
     blockSignals(blocked);
 }
@@ -128,7 +148,10 @@ bool DatabaseSettingsWidgetMasterKey::save()
 #ifdef WITH_XC_YUBIKEY
     m_isDirty |= (m_yubiKeyEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
 #endif
-
+#ifdef WITH_XC_OPENPGP
+    // TODO: implement functions
+    m_isDirty |= (m_openPGPEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
+#endif
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
         // key unchanged
         return true;
@@ -138,6 +161,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
 
     QSharedPointer<Key> passwordKey;
     QSharedPointer<Key> fileKey;
+    QSharedPointer<Key> openPGPKey;
     QSharedPointer<ChallengeResponseKey> ykCrKey;
 
     for (const auto& key : m_db->key()->keys()) {
@@ -145,6 +169,8 @@ bool DatabaseSettingsWidgetMasterKey::save()
             passwordKey = key;
         } else if (key->uuid() == FileKey::UUID) {
             fileKey = key;
+        } else if (key->uuid() == OpenPGPKey::UUID) {
+            openPGPKey = key;
         }
     }
 
@@ -164,6 +190,12 @@ bool DatabaseSettingsWidgetMasterKey::save()
 
 #ifdef WITH_XC_YUBIKEY
     if (!addToCompositeKey(m_yubiKeyEditWidget, newKey, ykCrKey)) {
+        return false;
+    }
+#endif
+
+#ifdef WITH_XC_OPENPGP
+    if (!addToCompositeKey(m_openPGPEditWidget, newKey, fileKey)) {
         return false;
     }
 #endif
