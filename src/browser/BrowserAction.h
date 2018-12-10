@@ -87,6 +87,8 @@ private:
     QByteArray base64Decode(const QString& str);
     QString incrementNonce(const QString& nonce);
 
+    void setKeys(const QString& publicKey, const QString& secretKey, const QString& clientPublicKey);
+
 private:
     QMutex m_mutex;
     BrowserService& m_browserService;
@@ -94,6 +96,8 @@ private:
     QString m_publicKey;
     QString m_secretKey;
     bool m_associated;
+
+    friend class TestBrowser;
 };
 
 #endif // BROWSERACTION_H

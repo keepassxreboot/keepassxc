@@ -220,6 +220,11 @@ add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS ${TEST_LIBRARIES})
 
+if(WITH_XC_BROWSER)
+add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
+        LIBS ${TEST_LIBRARIES})
+endif()
+
 
 if(WITH_GUI_TESTS)
     # CLI clip tests need X environment on Linux

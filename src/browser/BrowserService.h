@@ -44,7 +44,7 @@ public:
     bool openDatabase(bool triggerUnlock);
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
-    QJsonObject getDatabaseGroups();
+    QJsonObject getDatabaseGroups(const QSharedPointer<Database>& selectedDb = {});
     QJsonObject createNewGroup(const QString& groupName);
     QString getKey(const QString& id);
     void addEntry(const QString& id,
@@ -135,6 +135,8 @@ private:
     bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
+
+    friend class TestBrowser;
 };
 
 #endif // BROWSERSERVICE_H

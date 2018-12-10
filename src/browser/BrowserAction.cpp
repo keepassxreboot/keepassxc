@@ -650,3 +650,11 @@ QString BrowserAction::incrementNonce(const QString& nonce)
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
 }
+
+// For TestBrowser
+void BrowserAction::setKeys(const QString& publicKey, const QString& secretKey, const QString& clientPublicKey)
+{
+    m_publicKey = publicKey;
+    m_secretKey = secretKey;
+    m_clientPublicKey = clientPublicKey;
+}
