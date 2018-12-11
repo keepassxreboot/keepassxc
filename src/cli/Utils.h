@@ -19,6 +19,10 @@
 #define KEEPASSXC_UTILS_H
 
 #include "cli/TextStream.h"
+#include "core/Database.h"
+#include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 #include <QtCore/qglobal.h>
 
 namespace Utils
@@ -31,6 +35,10 @@ namespace Utils
     void setStdinEcho(bool enable);
     QString getPassword(FILE* outputDescriptor = STDOUT);
     int clipText(const QString& text);
+    QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                                   const QString& keyFilename = {},
+                                                   FILE* outputDescriptor = STDOUT,
+                                                   FILE* errorDescriptor = STDERR);
 
     namespace Test
     {

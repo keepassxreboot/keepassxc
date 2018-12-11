@@ -90,10 +90,10 @@ int Add::execute(const QStringList& arguments)
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    auto db = Database::unlockFromStdin(databasePath,
-                                        parser.value(Command::KeyFileOption),
-                                        parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                        Utils::STDERR);
+    auto db = Utils::unlockDatabase(databasePath,
+                                    parser.value(Command::KeyFileOption),
+                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                    Utils::STDERR);
     if (!db) {
         return EXIT_FAILURE;
     }
