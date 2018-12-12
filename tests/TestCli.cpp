@@ -306,7 +306,7 @@ void TestCli::testCreate()
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
 
-    QString databaseFilename = testDir->filePath("testCreate1.kdbx");
+    QString databaseFilename = testDir->path() + "testCreate1.kdbx";
     // Password
     Utils::Test::setNextPassword("a");
     createCmd.execute({"create", databaseFilename});
