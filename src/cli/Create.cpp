@@ -74,6 +74,12 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
+    QString databaseFilename = args.at(0);
+    if (QFileInfo::exists(databaseFilename)) {
+        err << QObject::tr("File %1 already exists.").arg(databaseFilename) << endl;
+        return EXIT_FAILURE;
+    }
+
     auto key = QSharedPointer<CompositeKey>::create();
 
     QSharedPointer<FileKey> fileKey;
@@ -102,11 +108,12 @@ int Create::execute(const QStringList& arguments)
     db.setKey(key);
 
     QString errorMessage;
-    if (!db.save(args.at(0), &errorMessage, true, false)) {
+    if (!db.save(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
+    out << QObject::tr("Successfully created new database.") << endl;
     return EXIT_SUCCESS;
 }
 
@@ -121,7 +128,7 @@ QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
     QSharedPointer<PasswordKey> passwordKey;
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
-    out << QObject::tr("Insert password to encrypt database (Press enter leave blank): ");
+    out << QObject::tr("Insert password to encrypt database (Press enter to leave blank): ");
     out.flush();
     QString password = Utils::getPassword();
 
@@ -147,11 +154,10 @@ bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
 {
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    QFileInfo fileInfo(path);
     QString error;
     fileKey = QSharedPointer<FileKey>(new FileKey());
 
-    if (!fileInfo.exists()) {
+    if (!QFileInfo::exists(path)) {
         fileKey->create(path, &error);
 
         if (error.length() > 0) {
