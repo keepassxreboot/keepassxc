@@ -331,6 +331,24 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
     QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
+
+
+    // Testing with keyfile creation
+    QString databaseFilename2 = testDir->path() + "testCreate2.kdbx";
+    QString keyfilePath = testDir->path() + "keyfile.txt";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", databaseFilename2, "-k", keyfilePath});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, keyfilePath, Utils::DEVNULL));
+    QVERIFY(db2);
 }
 
 void TestCli::testDiceware()
