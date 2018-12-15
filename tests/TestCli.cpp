@@ -349,6 +349,23 @@ void TestCli::testCreate()
     Utils::Test::setNextPassword("a");
     auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, keyfilePath, Utils::DEVNULL));
     QVERIFY(db2);
+
+
+    // Testing with existing keyfile
+    QString databaseFilename3 = testDir->path() + "testCreate3.kdbx";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", databaseFilename3, "-k", keyfilePath});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, keyfilePath, Utils::DEVNULL));
+    QVERIFY(db3);
 }
 
 void TestCli::testDiceware()
