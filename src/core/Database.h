@@ -118,8 +118,6 @@ public:
 
     static Database* databaseByUuid(const QUuid& uuid);
     static Database* databaseByFilePath(const QString& filePath);
-    static QSharedPointer<Database> unlockFromStdin(const QString& databaseFilename, const QString& keyFilename = {},
-                                                    FILE* outputDescriptor = stdout, FILE* errorDescriptor = stderr);
 
 public slots:
     void markAsModified();

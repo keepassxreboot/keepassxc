@@ -268,6 +268,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="httpAuthPermission">
+         <property name="text">
+          <string extracomment="An extra HTTP Basic Auth setting">Do not ask permission for HTTP &amp;Basic Auth</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="searchInAllDatabases">
          <property name="toolTip">
           <string>Only the selected database has to be connected with a client.</string>
