@@ -114,13 +114,13 @@ public:
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
-    Entry* findEntry(QString entryId);
     Entry* findEntryByUuid(const QUuid& uuid) const;
-    Entry* findEntryByPath(QString entryPath, QString basePath = QString(""));
+    Entry* findEntryByPath(const QString& entryPath);
+    Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
-    Group* findGroupByPath(QString groupPath);
-    QStringList locate(QString locateTerm, QString currentPath = QString("/"));
-    Entry* addEntryWithPath(QString entryPath);
+    Group* findGroupByPath(const QString& groupPath);
+    QStringList locate(const QString& locateTerm, const QString& currentPath = {"/"}) const;
+    Entry* addEntryWithPath(const QString& entryPath);
     void setUuid(const QUuid& uuid);
     void setName(const QString& name);
     void setNotes(const QString& notes);
@@ -150,15 +150,12 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
+    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group = nullptr);
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<QUuid> customIconsRecursive() const;
-    /**
-     * Creates a duplicate of this group.
-     * Note that you need to copy the custom icons manually when inserting the
-     * new group into another database.
-     */
+
     Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
@@ -167,27 +164,21 @@ public:
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+
 signals:
-    void dataChanged(Group* group);
-
-    void aboutToAdd(Group* group, int index);
-    void added();
-    void aboutToRemove(Group* group);
-    void removed();
-    /**
-     * Group moved within the database.
-     */
+    void groupDataChanged(Group* group);
+    void groupAboutToAdd(Group* group, int index);
+    void groupAdded();
+    void groupAboutToRemove(Group* group);
+    void groupRemoved();
     void aboutToMove(Group* group, Group* toGroup, int index);
-    void moved();
-
+    void groupMoved();
+    void groupModified();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
     void entryRemoved(Entry* entry);
-
     void entryDataChanged(Entry* entry);
-
-    void modified();
 
 private slots:
     void updateTimeinfo();
@@ -197,11 +188,12 @@ private:
 
     void setParent(Database* db);
 
-    void recSetDatabase(Database* db);
+    void connectDatabaseSignalsRecursive(Database* db);
     void cleanupParent();
     void recCreateDelObjects();
 
-    Group* findGroupByPathRecursion(QString groupPath, QString basePath);
+    Entry* findEntryByPathRecursive(const QString& entryPath, const QString& basePath);
+    Group* findGroupByPathRecursive(const QString& groupPath, const QString& basePath);
 
     QPointer<Database> m_db;
     QUuid m_uuid;

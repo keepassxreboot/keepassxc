@@ -53,13 +53,13 @@ public:
     static void setReferenceTo(Group* group, const KeeShareSettings::Reference& reference);
     static QString referenceTypeLabel(const KeeShareSettings::Reference& reference);
 
-    void connectDatabase(Database* newDb, Database* oldDb);
-    void handleDatabaseOpened(Database* db);
-    void handleDatabaseSaved(Database* db);
+    void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
+    void handleDatabaseOpened(QSharedPointer<Database> db);
+    void handleDatabaseSaved(QSharedPointer<Database> db);
 
 signals:
     void activeChanged();
-    void sharingMessage(Database*, QString, MessageWidget::MessageType);
+    void sharingMessage(QSharedPointer<Database>, QString, MessageWidget::MessageType);
 
 private slots:
     void emitSharingMessage(const QString&, MessageWidget::MessageType);
@@ -73,7 +73,7 @@ private:
     explicit KeeShare(QObject* parent);
 
     QMap<QObject*, QPointer<ShareObserver>> m_observersByDatabase;
-    QMap<QObject*, QPointer<Database>> m_databasesByObserver;
+    QMap<QObject*, QSharedPointer<Database>> m_databasesByObserver;
 };
 
 #endif // KEEPASSXC_KEESHARE_H

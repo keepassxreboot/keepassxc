@@ -19,7 +19,11 @@
 #include "AutoTypeSelectDialog.h"
 
 #include <QApplication>
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+#include <QScreen>
+#else
 #include <QDesktopWidget>
+#endif
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QLabel>
@@ -44,7 +48,11 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     setWindowTitle(tr("Auto-Type - KeePassXC"));
     setWindowIcon(filePath()->applicationIcon());
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    QRect screenGeometry = QApplication::screenAt(QCursor::pos())->availableGeometry();
+#else
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
+#endif
     QSize size = config()->get("GUI/AutoTypeSelectDialogSize", QSize(600, 250)).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));
@@ -59,10 +67,13 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     QLabel* descriptionLabel = new QLabel(tr("Select entry to Auto-Type:"), this);
     layout->addWidget(descriptionLabel);
 
+    // clang-format off
     connect(m_view, SIGNAL(activated(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(m_view, SIGNAL(clicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
-    connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex, int, int)), SLOT(matchRemoved()));
+    connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(matchRemoved()));
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
+    // clang-format on
+
     layout->addWidget(m_view);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, Qt::Horizontal, this);

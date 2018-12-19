@@ -190,7 +190,7 @@ void KdbxXmlWriter::writeBinaries()
         m_xml.writeAttribute("ID", QString::number(i.value()));
 
         QByteArray data;
-        if (m_db->compressionAlgo() == Database::CompressionGZip) {
+        if (m_db->compressionAlgorithm() == Database::CompressionGZip) {
             m_xml.writeAttribute("Compressed", "True");
 
             QBuffer buffer;
@@ -356,12 +356,14 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     for (const QString& key : attributesKeyList) {
         m_xml.writeStartElement("String");
 
+        // clang-format off
         bool protect =
             (((key == "Title") && m_meta->protectTitle()) || ((key == "UserName") && m_meta->protectUsername())
-             || ((key == "Password") && m_meta->protectPassword())
-             || ((key == "URL") && m_meta->protectUrl())
-             || ((key == "Notes") && m_meta->protectNotes())
-             || entry->attributes()->isProtected(key));
+            || ((key == "Password") && m_meta->protectPassword())
+            || ((key == "URL") && m_meta->protectUrl())
+            || ((key == "Notes") && m_meta->protectNotes())
+            || entry->attributes()->isProtected(key));
+        // clang-format on
 
         writeString("Key", key);
 
@@ -369,7 +371,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         QString value;
 
         if (protect) {
-            if (m_randomStream) {
+            if (!m_innerStreamProtectionDisabled && m_randomStream) {
                 m_xml.writeAttribute("Protected", "True");
                 bool ok;
                 QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8(), &ok);
@@ -595,4 +597,25 @@ void KdbxXmlWriter::raiseError(const QString& errorMessage)
 {
     m_error = true;
     m_errorStr = errorMessage;
+}
+
+/**
+ * Disable inner stream protection and write protected fields
+ * in plaintext instead. This is useful for plaintext XML exports
+ * where the inner stream key is not available.
+ *
+ * @param disable true to disable protection
+ */
+void KdbxXmlWriter::disableInnerStreamProtection(bool disable)
+{
+    m_innerStreamProtectionDisabled = disable;
+}
+
+/**
+ * @return true if inner stream protection is disabled and protected
+ *         fields will be saved in plaintext
+ */
+bool KdbxXmlWriter::innerStreamProtectionDisabled() const
+{
+    return m_innerStreamProtectionDisabled;
 }

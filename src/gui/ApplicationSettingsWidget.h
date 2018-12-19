@@ -25,7 +25,7 @@ namespace Ui
 {
     class ApplicationSettingsWidgetGeneral;
     class ApplicationSettingsWidgetSecurity;
-}
+} // namespace Ui
 
 class ISettingsPage
 {

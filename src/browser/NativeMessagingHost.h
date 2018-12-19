@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef NATIVEMESSAGINGHOST_H
 #define NATIVEMESSAGINGHOST_H
@@ -31,22 +31,18 @@ class NativeMessagingHost : public NativeMessagingBase
     typedef QList<QLocalSocket*> SocketList;
 
 public:
-    explicit NativeMessagingHost(DatabaseTabWidget* parent = 0, const bool enabled = false);
+    explicit NativeMessagingHost(DatabaseTabWidget* parent = nullptr, const bool enabled = false);
     ~NativeMessagingHost();
     int init();
     void run();
     void stop();
 
-public slots:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
-
 signals:
     void quit();
 
 private:
-    void readLength();
-    bool readStdIn(const quint32 length);
+    void readLength() override;
+    bool readStdIn(const quint32 length) override;
     void sendReplyToAllClients(const QJsonObject& json);
 
 private slots:

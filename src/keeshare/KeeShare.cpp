@@ -160,18 +160,18 @@ QString KeeShare::indicatorSuffix(const Group* group, const QString& text)
     return text;
 }
 
-void KeeShare::connectDatabase(Database* newDb, Database* oldDb)
+void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb)
 {
-    if (oldDb && m_observersByDatabase.contains(oldDb)) {
-        QPointer<ShareObserver> observer = m_observersByDatabase.take(oldDb);
+    if (oldDb && m_observersByDatabase.contains(oldDb.data())) {
+        QPointer<ShareObserver> observer = m_observersByDatabase.take(oldDb.data());
         if (observer) {
             delete observer;
         }
     }
 
-    if (newDb && !m_observersByDatabase.contains(newDb)) {
-        QPointer<ShareObserver> observer(new ShareObserver(newDb, newDb));
-        m_observersByDatabase[newDb] = observer;
+    if (newDb && !m_observersByDatabase.contains(newDb.data())) {
+        QPointer<ShareObserver> observer(new ShareObserver(newDb, this));
+        m_observersByDatabase[newDb.data()] = observer;
         connect(observer.data(),
                 SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
                 this,
@@ -179,17 +179,17 @@ void KeeShare::connectDatabase(Database* newDb, Database* oldDb)
     }
 }
 
-void KeeShare::handleDatabaseOpened(Database* db)
+void KeeShare::handleDatabaseOpened(QSharedPointer<Database> db)
 {
-    QPointer<ShareObserver> observer = m_observersByDatabase.value(db);
+    QPointer<ShareObserver> observer = m_observersByDatabase.value(db.data());
     if (observer) {
         observer->handleDatabaseOpened();
     }
 }
 
-void KeeShare::handleDatabaseSaved(Database* db)
+void KeeShare::handleDatabaseSaved(QSharedPointer<Database> db)
 {
-    QPointer<ShareObserver> observer = m_observersByDatabase.value(db);
+    QPointer<ShareObserver> observer = m_observersByDatabase.value(db.data());
     if (observer) {
         observer->handleDatabaseSaved();
     }
@@ -198,7 +198,7 @@ void KeeShare::handleDatabaseSaved(Database* db)
 void KeeShare::emitSharingMessage(const QString& message, KMessageWidget::MessageType type)
 {
     QObject* observer = sender();
-    Database* db = m_databasesByObserver.value(observer);
+    auto db = m_databasesByObserver.value(observer);
     if (db) {
         emit sharingMessage(db, message, type);
     }
@@ -216,7 +216,7 @@ void KeeShare::handleObserverDeleted(QObject* observer)
 {
     auto database = m_databasesByObserver.take(observer);
     if (database) {
-        m_observersByDatabase.remove(database);
+        m_observersByDatabase.remove(database.data());
     }
 }
 

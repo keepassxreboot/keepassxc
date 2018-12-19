@@ -21,7 +21,6 @@
 #include "MainWindow.h"
 #include "core/Config.h"
 
-#include <QAbstractNativeEventFilter>
 #include <QFileInfo>
 #include <QFileOpenEvent>
 #include <QLockFile>
@@ -31,6 +30,10 @@
 
 #include "autotype/AutoType.h"
 #include "core/Global.h"
+
+#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
+#include "core/OSEventFilter.h"
+#endif
 
 #if defined(Q_OS_UNIX)
 #include <signal.h>
@@ -42,60 +45,21 @@ namespace
 {
     constexpr int WaitTimeoutMSec = 150;
     const char BlockSizeProperty[] = "blockSize";
-}
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
-class XcbEventFilter : public QAbstractNativeEventFilter
-{
-public:
-    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override
-    {
-        Q_UNUSED(result)
-
-        if (eventType == QByteArrayLiteral("xcb_generic_event_t")) {
-            int retCode = autoType()->callEventFilter(message);
-            if (retCode == 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-};
-#elif defined(Q_OS_WIN)
-class WinEventFilter : public QAbstractNativeEventFilter
-{
-public:
-    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override
-    {
-        Q_UNUSED(result);
-
-        if (eventType == QByteArrayLiteral("windows_generic_MSG")
-            || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
-            int retCode = autoType()->callEventFilter(message);
-            if (retCode == 1) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-};
-#endif
+} // namespace
 
 Application::Application(int& argc, char** argv)
     : QApplication(argc, argv)
-    , m_mainWindow(nullptr)
 #ifdef Q_OS_UNIX
     , m_unixSignalNotifier(nullptr)
 #endif
     , m_alreadyRunning(false)
     , m_lockFile(nullptr)
+#if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
+    , m_osEventFilter(new OSEventFilter())
 {
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
-    installNativeEventFilter(new XcbEventFilter());
-#elif defined(Q_OS_WIN)
-    installNativeEventFilter(new WinEventFilter());
+    installNativeEventFilter(m_osEventFilter.data());
+#else
+{
 #endif
 #if defined(Q_OS_UNIX)
     registerUnixSignals();
@@ -178,16 +142,6 @@ Application::~Application()
     }
 }
 
-QWidget* Application::mainWindow() const
-{
-    return m_mainWindow;
-}
-
-void Application::setMainWindow(QWidget* mainWindow)
-{
-    m_mainWindow = mainWindow;
-}
-
 bool Application::event(QEvent* event)
 {
     // Handle Apple QFileOpenEvent from finder (double click on .kdbx file)
@@ -195,7 +149,7 @@ bool Application::event(QEvent* event)
         emit openFile(static_cast<QFileOpenEvent*>(event)->file());
         return true;
     }
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     // restore main window when clicking on the docker icon
     else if (event->type() == QEvent::ApplicationActivate) {
         emit applicationActivated();

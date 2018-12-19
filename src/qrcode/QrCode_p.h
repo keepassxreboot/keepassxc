@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2016 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,35 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
-#define KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+/* This class exists to isolate <qrencode.h> from the rest of the code base. */
 
-#include <QDialog>
+#ifndef KEEPASSX_QRCODEPRIVATE_H
+#define KEEPASSX_QRCODEPRIVATE_H
 
-//#include <gui/DatabaseTabWidget.h>
+#include <qrencode.h>
 
-#include "core/Global.h"
-
-class UnlockDatabaseWidget;
-class Database;
-
-class UnlockDatabaseDialog : public QDialog
+struct QrCodePrivate
 {
-    Q_OBJECT
-public:
-    explicit UnlockDatabaseDialog(QWidget* parent = nullptr);
-    void setFilePath(const QString& filePath);
-    void clearForms();
-    Database* database();
+    QRcode* m_qrcode;
 
-signals:
-    void unlockDone(bool);
-
-public slots:
-    void complete(bool r);
-
-private:
-    UnlockDatabaseWidget* const m_view;
+    QrCodePrivate();
+    ~QrCodePrivate();
 };
 
-#endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#endif // KEEPASSX_QRCODEPRIVATE_H

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,14 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UnlockDatabaseWidget.h"
+#ifndef KEEPASSXC_TESTPASSWORDGENERATOR_H
+#define KEEPASSXC_TESTPASSWORDGENERATOR_H
 
-#include "core/Database.h"
-#include "gui/MessageBox.h"
-#include "ui_DatabaseOpenWidget.h"
+#include <QObject>
 
-UnlockDatabaseWidget::UnlockDatabaseWidget(QWidget* parent)
-    : DatabaseOpenWidget(parent)
+class TestPasswordGenerator : public QObject
 {
-    m_ui->labelHeadline->setText(tr("Unlock database"));
-}
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void testCharClasses();
+    void testLookalikeExclusion();
+};
+
+#endif // KEEPASSXC_TESTPASSWORDGENERATOR_H

@@ -16,14 +16,14 @@
  */
 
 #include "NewDatabaseWizard.h"
-#include "NewDatabaseWizardPageMetaData.h"
 #include "NewDatabaseWizardPageEncryption.h"
 #include "NewDatabaseWizardPageMasterKey.h"
+#include "NewDatabaseWizardPageMetaData.h"
 
-#include "core/Global.h"
 #include "core/Database.h"
-#include "core/Group.h"
 #include "core/FilePath.h"
+#include "core/Global.h"
+#include "core/Group.h"
 #include "format/KeePass2.h"
 
 #include <QVBoxLayout>
@@ -35,11 +35,13 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     setWizardStyle(QWizard::MacStyle);
     setOption(QWizard::WizardOption::HaveHelpButton, false);
 
+    // clang-format off
     m_pages << new NewDatabaseWizardPageMetaData()
             << new NewDatabaseWizardPageEncryption()
             << new NewDatabaseWizardPageMasterKey();
+    // clang-format on
 
-    for (auto const& page: asConst(m_pages)) {
+    for (const auto& page : asConst(m_pages)) {
         addPage(page);
     }
 
@@ -54,23 +56,34 @@ NewDatabaseWizard::~NewDatabaseWizard()
 
 bool NewDatabaseWizard::validateCurrentPage()
 {
-    return m_pages[currentId()]->validatePage();
+    bool ok = m_pages[currentId()]->validatePage();
+    if (ok && currentId() == m_pages.size() - 1) {
+        m_db->setInitialized(true);
+    }
+    return ok;
 }
 
-Database* NewDatabaseWizard::takeDatabase()
+/**
+ * Take configured database and reset internal pointer.
+ *
+ * @return the configured database
+ */
+QSharedPointer<Database> NewDatabaseWizard::takeDatabase()
 {
-    return m_db.take();
+    auto tmpPointer = m_db;
+    m_db.reset();
+    return tmpPointer;
 }
 
 void NewDatabaseWizard::initializePage(int id)
 {
     if (id == startId()) {
-        m_db.reset(new Database());
+        m_db = QSharedPointer<Database>::create();
         m_db->rootGroup()->setName(tr("Root", "Root group"));
         m_db->setKdf({});
         m_db->setKey({});
     }
 
-    m_pages[id]->setDatabase(m_db.data());
+    m_pages[id]->setDatabase(m_db);
     m_pages[id]->initializePage();
 }

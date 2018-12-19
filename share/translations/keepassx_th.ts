@@ -412,7 +412,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ฐานข้อมูลถูกล็อก!</translation>
+        <translation>KeePassXC: ฐานข้อมูลล็อกอยู่!</translation>
     </message>
     <message>
         <source>The active database is locked!
@@ -437,7 +437,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: กุญแจถูกนำออกจากฐานข้อมูล</translation>
+        <translation>KeePassXC: เอากุญแจออกจากฐานข้อมูล</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -682,15 +682,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n ไบต์, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n แถว, </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n คอลัมน์</numerusform></translation>
     </message>
 </context>
 <context>
@@ -721,7 +721,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -958,7 +958,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -1101,7 +1101,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>คุณต้องการจะย้ายรายการ %1 รายการไปยังถังขยะจริงๆ?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2400,7 +2400,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูล</translation>
+        <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
     </message>
 </context>
 <context>
@@ -2553,33 +2553,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Invalid entry field type</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 บิต</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 บิต</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 บิต</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – แนะนำ)</translation>
     </message>
 </context>
 <context>
@@ -3119,7 +3092,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>อักษรพิมพ์ใหญ่</translation>
+        <translation>อักษรตัวพิมพ์ใหญ่</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -3375,7 +3348,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>สกัดและแสดงเนื้อหาของฐานข้อมูล</translation>
+        <translation>สกัดและพิมพ์เนื้อหาของฐานข้อมูล</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
@@ -3480,6 +3453,30 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation>ไม่มีเครื่องหมายคำพูดปิด</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 บิต</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 บิต</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 บิต</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – แนะนำ)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3667,7 +3664,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Database locked!</source>
-        <translation>KeePassXC: ฐานข้อมูลถูกล็อก!</translation>
+        <translation>KeePassXC: ฐานข้อมูลล็อกอยู่!</translation>
     </message>
     <message>
         <source>The active database is locked!
@@ -3676,7 +3673,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: กุญแจถูกนำออกจากฐานข้อมูล</translation>
+        <translation>KeePassXC: เอากุญแจออกจากฐานข้อมูล</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption-key(s) from KeePassX/Http Settings.</source>

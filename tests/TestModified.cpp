@@ -16,7 +16,7 @@
  */
 
 #include "TestModified.h"
-#include "stub/TestClock.h"
+#include "mock/MockClock.h"
 
 #include <QSignalSpy>
 #include <QTest>
@@ -31,7 +31,7 @@ QTEST_GUILESS_MAIN(TestModified)
 
 namespace
 {
-    TestClock* m_clock = nullptr;
+    MockClock* m_clock = nullptr;
 }
 
 void TestModified::initTestCase()
@@ -42,13 +42,13 @@ void TestModified::initTestCase()
 void TestModified::init()
 {
     Q_ASSERT(m_clock == nullptr);
-    m_clock = new TestClock(2010, 5, 5, 10, 30, 10);
-    TestClock::setup(m_clock);
+    m_clock = new MockClock(2010, 5, 5, 10, 30, 10);
+    MockClock::setup(m_clock);
 }
 
 void TestModified::cleanup()
 {
-    TestClock::teardown();
+    MockClock::teardown();
     m_clock = nullptr;
 }
 
@@ -61,67 +61,83 @@ void TestModified::testSignals()
 
     QScopedPointer<Database> db(new Database());
     auto* root = db->rootGroup();
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->setKey(compositeKey);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     auto* group1 = new Group();
     group1->setParent(root);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     auto* group2 = new Group();
     group2->setParent(root);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group2->setParent(root, 0);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     auto* entry1 = new Entry();
     entry1->setGroup(group1);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     QScopedPointer<Database> db2(new Database());
     auto* root2 = db2->rootGroup();
-    QSignalSpy spyModified2(db2.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified2(db2.data(), SIGNAL(databaseModified()));
 
     group1->setParent(root2);
-    QCOMPARE(spyModified.count(), ++spyCount);
-    QCOMPARE(spyModified2.count(), ++spyCount2);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    ++spyCount2;
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
     entry1->setTitle("test");
-    QCOMPARE(spyModified.count(), spyCount);
-    QCOMPARE(spyModified2.count(), ++spyCount2);
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    ++spyCount2;
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
     auto* entry2 = new Entry();
     entry2->setGroup(group2);
-    QCOMPARE(spyModified.count(), ++spyCount);
-    QCOMPARE(spyModified2.count(), spyCount2);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
     entry2->setGroup(root2);
-    QCOMPARE(spyModified.count(), ++spyCount);
-    QCOMPARE(spyModified2.count(), ++spyCount2);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    ++spyCount2;
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
     entry2->setTitle("test2");
-    QCOMPARE(spyModified.count(), spyCount);
-    QCOMPARE(spyModified2.count(), ++spyCount2);
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    ++spyCount2;
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
     auto* group3 = new Group();
     group3->setParent(root);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     auto* group4 = new Group();
     group4->setParent(group3);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     delete group4;
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     delete entry2;
-    QCOMPARE(spyModified2.count(), ++spyCount2);
+    ++spyCount2;
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 
-    QCOMPARE(spyModified.count(), spyCount);
-    QCOMPARE(spyModified2.count(), spyCount2);
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified2.count(), spyCount2);
 }
 
 void TestModified::testGroupSets()
@@ -133,58 +149,67 @@ void TestModified::testGroupSets()
     auto* group = new Group();
     group->setParent(root);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     root->setUuid(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     root->setUuid(root->uuid());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     root->setName("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     root->setName(root->name());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     root->setNotes("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     root->setNotes(root->notes());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     root->setIcon(1);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     root->setIcon(root->iconNumber());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     root->setIcon(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     root->setIcon(root->iconUuid());
-    QCOMPARE(spyModified.count(), spyCount);
-
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->setUuid(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->setUuid(group->uuid());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->setName("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->setName(group->name());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->setNotes("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->setNotes(group->notes());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->setIcon(1);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->setIcon(group->iconNumber());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->setIcon(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->setIcon(group->iconUuid());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 }
 
 void TestModified::testEntrySets()
@@ -198,106 +223,127 @@ void TestModified::testEntrySets()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     entry->setUuid(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setUuid(entry->uuid());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setTitle("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setTitle(entry->title());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setUrl("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setUrl(entry->url());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setUsername("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setUsername(entry->username());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setPassword("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setPassword(entry->password());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setNotes("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setNotes(entry->notes());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setIcon(1);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setIcon(entry->iconNumber());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setIcon(QUuid::createUuid());
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setIcon(entry->iconUuid());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setTags("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setTags(entry->tags());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setExpires(true);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setExpires(entry->timeInfo().expires());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setExpiryTime(Clock::currentDateTimeUtc().addYears(1));
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setExpiryTime(entry->timeInfo().expiryTime());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setAutoTypeEnabled(false);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setAutoTypeEnabled(entry->autoTypeEnabled());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setAutoTypeObfuscation(1);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setAutoTypeObfuscation(entry->autoTypeObfuscation());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setDefaultAutoTypeSequence("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setDefaultAutoTypeSequence(entry->defaultAutoTypeSequence());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setForegroundColor(Qt::red);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setForegroundColor(entry->foregroundColor());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setBackgroundColor(Qt::red);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setBackgroundColor(entry->backgroundColor());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->setOverrideUrl("test");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setOverrideUrl(entry->overrideUrl());
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->attributes()->set("test key", "test value", false);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key", entry->attributes()->value("test key"), false);
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key", entry->attributes()->value("test key"), true);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key", "new test value", true);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->attributes()->set("test key2", "test value2", true);
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key2", entry->attributes()->value("test key2"), true);
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 }
 
 void TestModified::testHistoryItems()
@@ -601,20 +647,23 @@ void TestModified::testCustomData()
     auto* entry = new Entry();
     entry->setGroup(group);
 
-    QSignalSpy spyModified(db.data(), SIGNAL(modifiedImmediate()));
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
 
     db->metadata()->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     db->metadata()->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     entry->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     entry->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 
     group->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), ++spyCount);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
     group->customData()->set("Key", "Value");
-    QCOMPARE(spyModified.count(), spyCount);
+    QTRY_COMPARE(spyModified.count(), spyCount);
 }

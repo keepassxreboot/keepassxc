@@ -28,7 +28,7 @@ DialogyWidget::DialogyWidget(QWidget* parent)
 
 void DialogyWidget::keyPressEvent(QKeyEvent* e)
 {
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     if (e->modifiers() == Qt::ControlModifier && e->key() == Qt::Key_Period) {
         if (!clickButton(QDialogButtonBox::Cancel)) {
             e->ignore();
@@ -71,8 +71,7 @@ bool DialogyWidget::clickButton(QDialogButtonBox::StandardButton standardButton)
     }
 
     QList<QDialogButtonBox*> buttonBoxes = findChildren<QDialogButtonBox*>();
-    for (int i = 0; i < buttonBoxes.size(); ++i) {
-        QDialogButtonBox* buttonBox = buttonBoxes.at(i);
+    for (auto buttonBox : buttonBoxes) {
         pb = buttonBox->button(standardButton);
         if (pb && pb->isVisible() && pb->isEnabled()) {
             pb->click();

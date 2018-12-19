@@ -26,7 +26,7 @@ class Database;
 class DatabaseSettingsWidget;
 namespace Ui
 {
-class NewDatabaseWizardPage;
+    class NewDatabaseWizardPage;
 }
 
 /**
@@ -34,7 +34,7 @@ class NewDatabaseWizardPage;
  */
 class NewDatabaseWizardPage : public QWizardPage
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizardPage(QWidget* parent = nullptr);
@@ -43,7 +43,7 @@ public:
 
     void setPageWidget(DatabaseSettingsWidget* page);
     DatabaseSettingsWidget* pageWidget();
-    void setDatabase(Database* db);
+    void setDatabase(QSharedPointer<Database> db);
 
     void initializePage() override;
     bool validatePage() override;
@@ -53,9 +53,9 @@ public slots:
 
 protected:
     QPointer<DatabaseSettingsWidget> m_pageWidget;
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
 
     const QScopedPointer<Ui::NewDatabaseWizardPage> m_ui;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARDPAGE_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGE_H

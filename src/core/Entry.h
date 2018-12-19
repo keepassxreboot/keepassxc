@@ -36,7 +36,8 @@
 
 class Database;
 class Group;
-namespace Totp {
+namespace Totp
+{
     struct Settings;
 }
 
@@ -222,9 +223,8 @@ signals:
     /**
      * Emitted when a default attribute has been changed.
      */
-    void dataChanged(Entry* entry);
-
-    void modified();
+    void entryDataChanged(Entry* entry);
+    void entryModified();
 
 private slots:
     void emitDataChanged();
@@ -250,7 +250,7 @@ private:
     QPointer<CustomData> m_customData;
     QList<Entry*> m_history; // Items sorted from oldest to newest
 
-    Entry* m_tmpHistoryItem;
+    QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     bool m_updateTimeinfo;

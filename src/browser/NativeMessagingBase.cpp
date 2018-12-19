@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "NativeMessagingBase.h"
 #include <QStandardPaths>
@@ -135,11 +135,12 @@ void NativeMessagingBase::sendReply(const QString& reply)
 QString NativeMessagingBase::getLocalServerPath() const
 {
     const QString serverPath = "/kpxc_server";
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     // Use XDG_RUNTIME_DIR instead of /tmp if it's available
     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
-    return path.isEmpty() ? QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverPath : path + serverPath;
-#else // Q_OS_MAC, Q_OS_WIN and others
+    return path.isEmpty() ? QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverPath
+                          : path + serverPath;
+#else // Q_OS_MACOS, Q_OS_WIN and others
     return QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverPath;
 #endif
 }

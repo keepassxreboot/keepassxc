@@ -17,7 +17,7 @@
 
 #include "TestKeePass2Format.h"
 #include "TestGlobal.h"
-#include "stub/TestClock.h"
+#include "mock/MockClock.h"
 
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
@@ -34,7 +34,7 @@ void TestKeePass2Format::initTestCase()
     // read raw XML database
     bool hasError;
     QString errorString;
-    m_xmlDb.reset(readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString));
+    m_xmlDb = readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading XML: ").append(errorString)));
     }
@@ -44,7 +44,7 @@ void TestKeePass2Format::initTestCase()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("test"));
 
-    m_kdbxSourceDb.reset(new Database());
+    m_kdbxSourceDb = QSharedPointer<Database>::create();
     m_kdbxSourceDb->setKey(key);
     m_kdbxSourceDb->metadata()->setName("TESTDB");
     Group* group = m_kdbxSourceDb->rootGroup();
@@ -78,14 +78,14 @@ void TestKeePass2Format::testXmlMetadata()
 {
     QCOMPARE(m_xmlDb->metadata()->generator(), QString("KeePass"));
     QCOMPARE(m_xmlDb->metadata()->name(), QString("ANAME"));
-    QCOMPARE(m_xmlDb->metadata()->nameChanged(), TestClock::datetimeUtc(2010, 8, 8, 17, 24, 53));
+    QCOMPARE(m_xmlDb->metadata()->nameChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 53));
     QCOMPARE(m_xmlDb->metadata()->description(), QString("ADESC"));
-    QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), TestClock::datetimeUtc(2010, 8, 8, 17, 27, 12));
+    QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 27, 12));
     QCOMPARE(m_xmlDb->metadata()->defaultUserName(), QString("DEFUSERNAME"));
-    QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), TestClock::datetimeUtc(2010, 8, 8, 17, 27, 45));
+    QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 27, 45));
     QCOMPARE(m_xmlDb->metadata()->maintenanceHistoryDays(), 127);
     QCOMPARE(m_xmlDb->metadata()->color(), QColor(0xff, 0xef, 0x00));
-    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), TestClock::datetimeUtc(2012, 4, 5, 17, 9, 34));
+    QCOMPARE(m_xmlDb->metadata()->masterKeyChanged(), MockClock::datetimeUtc(2012, 4, 5, 17, 9, 34));
     QCOMPARE(m_xmlDb->metadata()->masterKeyChangeRec(), 101);
     QCOMPARE(m_xmlDb->metadata()->masterKeyChangeForce(), -1);
     QCOMPARE(m_xmlDb->metadata()->protectTitle(), false);
@@ -96,9 +96,9 @@ void TestKeePass2Format::testXmlMetadata()
     QCOMPARE(m_xmlDb->metadata()->recycleBinEnabled(), true);
     QVERIFY(m_xmlDb->metadata()->recycleBin() != nullptr);
     QCOMPARE(m_xmlDb->metadata()->recycleBin()->name(), QString("Recycle Bin"));
-    QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), TestClock::datetimeUtc(2010, 8, 25, 16, 12, 57));
+    QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), MockClock::datetimeUtc(2010, 8, 25, 16, 12, 57));
     QVERIFY(m_xmlDb->metadata()->entryTemplatesGroup() == nullptr);
-    QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), TestClock::datetimeUtc(2010, 8, 8, 17, 24, 19));
+    QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 19));
     QVERIFY(m_xmlDb->metadata()->lastSelectedGroup() != nullptr);
     QCOMPARE(m_xmlDb->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
     QVERIFY(m_xmlDb->metadata()->lastTopVisibleGroup() == m_xmlDb->metadata()->lastSelectedGroup());
@@ -136,17 +136,18 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(group->iconUuid(), QUuid());
     QVERIFY(group->isExpanded());
     TimeInfo ti = group->timeInfo();
-    QCOMPARE(ti.lastModificationTime(), TestClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
-    QCOMPARE(ti.creationTime(), TestClock::datetimeUtc(2010, 8, 7, 17, 24, 27));
-    QCOMPARE(ti.lastAccessTime(), TestClock::datetimeUtc(2010, 8, 9, 9, 9, 44));
-    QCOMPARE(ti.expiryTime(), TestClock::datetimeUtc(2010, 8, 8, 17, 24, 17));
+    QCOMPARE(ti.lastModificationTime(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
+    QCOMPARE(ti.creationTime(), MockClock::datetimeUtc(2010, 8, 7, 17, 24, 27));
+    QCOMPARE(ti.lastAccessTime(), MockClock::datetimeUtc(2010, 8, 9, 9, 9, 44));
+    QCOMPARE(ti.expiryTime(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 17));
     QVERIFY(!ti.expires());
     QCOMPARE(ti.usageCount(), 52);
-    QCOMPARE(ti.locationChanged(), TestClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
+    QCOMPARE(ti.locationChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
-    QCOMPARE(group->lastTopVisibleEntry()->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
+    QCOMPARE(group->lastTopVisibleEntry()->uuid(),
+             QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
     QCOMPARE(group->children().size(), 3);
     QVERIFY(m_xmlDb->metadata()->recycleBin() == m_xmlDb->rootGroup()->children().at(2));
 
@@ -203,13 +204,13 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->tags(), QString("a b c"));
 
     const TimeInfo ti = entry->timeInfo();
-    QCOMPARE(ti.lastModificationTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 19, 25));
-    QCOMPARE(ti.creationTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
-    QCOMPARE(ti.lastAccessTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 19, 25));
-    QCOMPARE(ti.expiryTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 12, 57));
+    QCOMPARE(ti.lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 19, 25));
+    QCOMPARE(ti.creationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
+    QCOMPARE(ti.lastAccessTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 19, 25));
+    QCOMPARE(ti.expiryTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 12, 57));
     QVERIFY(!ti.expires());
     QCOMPARE(ti.usageCount(), 8);
-    QCOMPARE(ti.locationChanged(), TestClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
+    QCOMPARE(ti.locationChanged(), MockClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
 
     QList<QString> attrs = entry->attributes()->keys();
     QCOMPARE(entry->attributes()->value("Notes"), QString("Notes"));
@@ -308,7 +309,7 @@ void TestKeePass2Format::testXmlEntryHistory()
         const Entry* entry = entryMain->historyItems().at(0);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->timeInfo().lastModificationTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
+        QCOMPARE(entry->timeInfo().lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
         QCOMPARE(entry->timeInfo().usageCount(), 3);
         QCOMPARE(entry->title(), QString("Sample Entry"));
         QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
@@ -318,7 +319,7 @@ void TestKeePass2Format::testXmlEntryHistory()
         const Entry* entry = entryMain->historyItems().at(1);
         QCOMPARE(entry->uuid(), entryMain->uuid());
         QVERIFY(!entry->parent());
-        QCOMPARE(entry->timeInfo().lastModificationTime(), TestClock::datetimeUtc(2010, 8, 25, 16, 15, 43));
+        QCOMPARE(entry->timeInfo().lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 15, 43));
         QCOMPARE(entry->timeInfo().usageCount(), 7);
         QCOMPARE(entry->title(), QString("Sample Entry 1"));
         QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
@@ -332,11 +333,11 @@ void TestKeePass2Format::testXmlDeletedObjects()
 
     delObj = objList.takeFirst();
     QCOMPARE(delObj.uuid, QUuid::fromRfc4122(QByteArray::fromBase64("5K/bzWCSmkCv5OZxYl4N/w==")));
-    QCOMPARE(delObj.deletionTime, TestClock::datetimeUtc(2010, 8, 25, 16, 14, 12));
+    QCOMPARE(delObj.deletionTime, MockClock::datetimeUtc(2010, 8, 25, 16, 14, 12));
 
     delObj = objList.takeFirst();
     QCOMPARE(delObj.uuid, QUuid::fromRfc4122(QByteArray::fromBase64("80h8uSNWgkKhKCp1TgXF7g==")));
-    QCOMPARE(delObj.deletionTime, TestClock::datetimeUtc(2010, 8, 25, 16, 14, 14));
+    QCOMPARE(delObj.deletionTime, MockClock::datetimeUtc(2010, 8, 25, 16, 14, 14));
 
     QVERIFY(objList.isEmpty());
 }
@@ -351,7 +352,7 @@ void TestKeePass2Format::testXmlBroken()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> db(readXml(xmlFile, strictMode, hasError, errorString));
+    auto db = readXml(xmlFile, strictMode, hasError, errorString);
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
@@ -392,7 +393,7 @@ void TestKeePass2Format::testXmlEmptyUuids()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> dbp(readXml(xmlFile, true, hasError, errorString));
+    auto db = readXml(xmlFile, true, hasError, errorString);
     if (hasError) {
         qWarning("Reader error: %s", qPrintable(errorString));
     }
@@ -446,7 +447,7 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
     QVERIFY(!hasError);
     buffer.seek(0);
 
-    QScopedPointer<Database> dbRead(readXml(&buffer, true, hasError, errorString));
+    auto dbRead = readXml(&buffer, true, hasError, errorString);
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
@@ -474,7 +475,7 @@ void TestKeePass2Format::testXmlRepairUuidHistoryItem()
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
-    QScopedPointer<Database> db(readXml(xmlFile, false, hasError, errorString));
+    auto db = readXml(xmlFile, false, hasError, errorString);
     if (hasError) {
         qWarning("Database read error: %s", qPrintable(errorString));
     }
@@ -503,6 +504,7 @@ void TestKeePass2Format::testReadBackTargetDb()
     QString errorString;
 
     m_kdbxTargetBuffer.seek(0);
+    m_kdbxTargetDb = QSharedPointer<Database>::create();
     readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
     if (hasError) {
         QFAIL(qPrintable(QString("Error while reading database: ").append(errorString)));
@@ -548,7 +550,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QScopedPointer<Database> db(new Database());
     db->setKey(key);
     // Disable compression so we write a predictable number of bytes.
-    db->setCompressionAlgo(Database::CompressionNone);
+    db->setCompressionAlgorithm(Database::CompressionNone);
 
     auto entry = new Entry();
     entry->setParent(db->rootGroup());
@@ -569,7 +571,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
  */
 void TestKeePass2Format::testDuplicateAttachments()
 {
-    QScopedPointer<Database> db(new Database());
+    auto db = QSharedPointer<Database>::create();
     db->setKey(QSharedPointer<CompositeKey>::create());
 
     const QByteArray attachment1("abc");

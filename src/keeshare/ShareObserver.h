@@ -38,14 +38,14 @@ class ShareObserver : public QObject
     Q_OBJECT
 
 public:
-    explicit ShareObserver(Database* db, QObject* parent = nullptr);
+    explicit ShareObserver(QSharedPointer<Database> db, QObject* parent = nullptr);
     ~ShareObserver();
 
     void handleDatabaseSaved();
     void handleDatabaseOpened();
 
-    const Database* database() const;
-    Database* database();
+    const QSharedPointer<Database> database() const;
+    QSharedPointer<Database> database();
 
 signals:
     void sharingMessage(QString, MessageWidget::MessageType);
@@ -101,7 +101,7 @@ private:
     void notifyAbout(const QStringList& success, const QStringList& warning, const QStringList& error);
 
 private:
-    Database* const m_db;
+    QSharedPointer<Database> m_db;
     QMap<KeeShareSettings::Reference, QPointer<Group>> m_referenceToGroup;
     QMap<QPointer<Group>, KeeShareSettings::Reference> m_groupToReference;
     QMap<QString, QPointer<Group>> m_shareToGroup;

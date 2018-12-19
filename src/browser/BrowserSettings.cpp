@@ -1,21 +1,21 @@
 /*
-*  Copyright (C) 2013 Francois Ferrand
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BrowserSettings.h"
 #include "core/Config.h"
@@ -121,6 +121,16 @@ void BrowserSettings::setAlwaysAllowUpdate(bool alwaysAllowUpdate)
     config()->set("Browser/AlwaysAllowUpdate", alwaysAllowUpdate);
 }
 
+bool BrowserSettings::httpAuthPermission()
+{
+    return config()->get("Browser/HttpAuthPermission", false).toBool();
+}
+
+void BrowserSettings::setHttpAuthPermission(bool httpAuthPermission)
+{
+    config()->set("Browser/HttpAuthPermission", httpAuthPermission);
+}
+
 bool BrowserSettings::searchInAllDatabases()
 {
     return config()->get("Browser/SearchInAllDatabases", false).toBool();
@@ -169,7 +179,7 @@ QString BrowserSettings::customProxyLocation()
     return config()->get("Browser/CustomProxyLocation", "").toString();
 }
 
-void BrowserSettings::setCustomProxyLocation(QString location)
+void BrowserSettings::setCustomProxyLocation(const QString& location)
 {
     config()->set("Browser/CustomProxyLocation", location);
 }
@@ -192,7 +202,7 @@ bool BrowserSettings::chromeSupport()
 void BrowserSettings::setChromeSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-            HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
+        HostInstaller::SupportedBrowsers::CHROME, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::chromiumSupport()
@@ -203,7 +213,7 @@ bool BrowserSettings::chromiumSupport()
 void BrowserSettings::setChromiumSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-            HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
+        HostInstaller::SupportedBrowsers::CHROMIUM, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::firefoxSupport()
@@ -214,7 +224,7 @@ bool BrowserSettings::firefoxSupport()
 void BrowserSettings::setFirefoxSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-            HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
+        HostInstaller::SupportedBrowsers::FIREFOX, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::vivaldiSupport()
@@ -225,7 +235,18 @@ bool BrowserSettings::vivaldiSupport()
 void BrowserSettings::setVivaldiSupport(bool enabled)
 {
     m_hostInstaller.installBrowser(
-            HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
+        HostInstaller::SupportedBrowsers::VIVALDI, enabled, supportBrowserProxy(), customProxyLocation());
+}
+
+bool BrowserSettings::torBrowserSupport()
+{
+    return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::TOR_BROWSER);
+}
+
+void BrowserSettings::setTorBrowserSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::TOR_BROWSER, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::passwordUseNumbers()
@@ -353,7 +374,7 @@ QString BrowserSettings::passwordExcludedChars()
     return config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString();
 }
 
-void BrowserSettings::setPasswordExcludedChars(QString chars)
+void BrowserSettings::setPasswordExcludedChars(const QString& chars)
 {
     config()->set("generator/ExcludedChars", chars);
 }
@@ -373,7 +394,7 @@ QString BrowserSettings::passPhraseWordSeparator()
     return config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString();
 }
 
-void BrowserSettings::setPassPhraseWordSeparator(QString separator)
+void BrowserSettings::setPassPhraseWordSeparator(const QString& separator)
 {
     config()->set("generator/WordSeparator", separator);
 }
@@ -485,13 +506,13 @@ QString BrowserSettings::generatePassword()
     }
 }
 
-int BrowserSettings::getbits()
-{
-    return m_passwordGenerator.getbits();
-}
-
-void BrowserSettings::updateBinaryPaths(QString customProxyLocation)
+void BrowserSettings::updateBinaryPaths(const QString& customProxyLocation)
 {
     bool isProxy = supportBrowserProxy();
     m_hostInstaller.updateBinaryPaths(isProxy, customProxyLocation);
+}
+
+bool BrowserSettings::checkIfProxyExists(QString& path)
+{
+    return m_hostInstaller.checkIfProxyExists(supportBrowserProxy(), customProxyLocation(), path);
 }

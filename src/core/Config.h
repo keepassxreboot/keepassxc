@@ -50,6 +50,7 @@ private:
     Config(const QString& fileName, QObject* parent);
     explicit Config(QObject* parent);
     void init(const QString& fileName);
+    void upgrade();
 
     static Config* m_instance;
 

@@ -23,7 +23,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 
-bool CsvExporter::exportDatabase(const QString& filename, const Database* db)
+bool CsvExporter::exportDatabase(const QString& filename, QSharedPointer<const Database> db)
 {
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
@@ -33,7 +33,7 @@ bool CsvExporter::exportDatabase(const QString& filename, const Database* db)
     return exportDatabase(&file, db);
 }
 
-bool CsvExporter::exportDatabase(QIODevice* device, const Database* db)
+bool CsvExporter::exportDatabase(QIODevice* device, QSharedPointer<const Database> db)
 {
     QString header;
     addColumn(header, "Group");
@@ -64,7 +64,7 @@ bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString grou
     }
     groupPath.append(group->name());
 
-    const QList<Entry*> entryList = group->entries();
+    const QList<Entry*>& entryList = group->entries();
     for (const Entry* entry : entryList) {
         QString line;
 
@@ -83,7 +83,7 @@ bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString grou
         }
     }
 
-    const QList<Group*> children = group->children();
+    const QList<Group*>& children = group->children();
     for (const Group* child : children) {
         if (!writeGroup(device, child, groupPath)) {
             return false;

@@ -39,7 +39,7 @@ DatabaseSettingsWidgetKeeShare::~DatabaseSettingsWidgetKeeShare()
 {
 }
 
-void DatabaseSettingsWidgetKeeShare::loadSettings(Database* db)
+void DatabaseSettingsWidgetKeeShare::loadSettings(QSharedPointer<Database> db)
 {
     m_db = db;
 

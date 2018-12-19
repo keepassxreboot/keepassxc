@@ -66,7 +66,7 @@ public:
     static const QString SearchTextGroupName;
 
 signals:
-    void modified();
+    void entryAttributesModified();
     void defaultKeyModified();
     void customKeyModified(const QString& key);
     void aboutToBeAdded(const QString& key);

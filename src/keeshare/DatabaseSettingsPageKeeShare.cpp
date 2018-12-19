@@ -40,7 +40,7 @@ QWidget* DatabaseSettingsPageKeeShare::createWidget()
     return new DatabaseSettingsWidgetKeeShare();
 }
 
-void DatabaseSettingsPageKeeShare::loadSettings(QWidget* widget, Database* db)
+void DatabaseSettingsPageKeeShare::loadSettings(QWidget* widget, QSharedPointer<Database> db)
 {
     DatabaseSettingsWidgetKeeShare* settingsWidget = reinterpret_cast<DatabaseSettingsWidgetKeeShare*>(widget);
     settingsWidget->loadSettings(db);

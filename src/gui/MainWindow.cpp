@@ -20,10 +20,10 @@
 #include "ui_MainWindow.h"
 
 #include <QCloseEvent>
+#include <QDesktopServices>
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
-#include <QDesktopServices>
 
 #include "config-keepassx.h"
 
@@ -32,6 +32,9 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
+#include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
+#include "keys/FileKey.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/SearchWidget.h"
@@ -50,14 +53,14 @@
 #include "browser/NativeMessagingHost.h"
 #endif
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "gui/MainWindowAdaptor.h"
 #include <QList>
 #include <QtDBus/QtDBus>
 #endif
 
-#include "gui/PasswordGeneratorWidget.h"
 #include "gui/ApplicationSettingsWidget.h"
+#include "gui/PasswordGeneratorWidget.h"
 
 #include "touchid/TouchID.h"
 
@@ -67,7 +70,8 @@ class BrowserPlugin : public ISettingsPage
 public:
     BrowserPlugin(DatabaseTabWidget* tabWidget)
     {
-        m_nativeMessagingHost = QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
+        m_nativeMessagingHost =
+            QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
     }
 
     ~BrowserPlugin()
@@ -87,12 +91,6 @@ public:
     QWidget* createWidget() override
     {
         BrowserOptionDialog* dlg = new BrowserOptionDialog();
-        QObject::connect(dlg,
-                         SIGNAL(removeSharedEncryptionKeys()),
-                         m_nativeMessagingHost.data(),
-                         SLOT(removeSharedEncryptionKeys()));
-        QObject::connect(
-            dlg, SIGNAL(removeStoredPermissions()), m_nativeMessagingHost.data(), SLOT(removeStoredPermissions()));
         return dlg;
     }
 
@@ -118,15 +116,20 @@ private:
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
+MainWindow* g_MainWindow = nullptr;
+MainWindow* getMainWindow() { return g_MainWindow; }
+
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
     , m_trayIcon(nullptr)
     , m_appExitCalled(false)
     , m_appExiting(false)
 {
+    g_MainWindow = this;
+
     m_ui->setupUi(this);
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
     new MainWindowAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();
     dbus.registerObject("/keepassxc", this);
@@ -136,7 +139,7 @@ MainWindow::MainWindow()
     setAcceptDrops(true);
 
     // Setup the search widget in the toolbar
-    SearchWidget* search = new SearchWidget();
+    auto* search = new SearchWidget();
     search->connectSignals(m_actionMultiplexer);
     m_searchWidgetAction = m_ui->toolBar->addWidget(search);
     m_searchWidgetAction->setEnabled(false);
@@ -196,7 +199,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
     setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
     setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
+    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
     m_ui->actionLockDatabases->setShortcut(Qt::CTRL + Qt::Key_L);
     setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
@@ -209,11 +212,37 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    setShortcut(m_ui->actionEntryAutoType, QKeySequence::Paste, Qt::CTRL + Qt::Key_V);
-    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_U);
+    m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
+    // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
+    m_ui->actionEntryNew->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryEdit->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryDelete->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryClone->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
+#endif
+
+    // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    // Control database tabs
+    new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectPreviousDatabaseTab()));
+    // Toggle password and username visibility in entry view
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
 
     m_ui->actionDatabaseNew->setIcon(filePath()->icon("actions", "document-new"));
     m_ui->actionDatabaseOpen->setIcon(filePath()->icon("actions", "document-open"));
@@ -275,7 +304,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
-    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeDatabase()));
+    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
@@ -294,6 +323,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntrySetupTotp, SIGNAL(triggered()), SLOT(setupTotp()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()), SLOT(copyTotp()));
+    m_actionMultiplexer.connect(m_ui->actionEntryTotpQRCode, SIGNAL(triggered()), SLOT(showTotpKeyQrCode()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()), SLOT(copyTitle()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()), SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), SLOT(copyPassword()));
@@ -321,20 +351,17 @@ MainWindow::MainWindow()
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
     connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
+    // clang-format off
+    connect(m_ui->tabWidget,
+            SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
+            this,
+            SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
+    // clang-format on
 
-    connect(m_ui->tabWidget,
-            SIGNAL(messageGlobal(QString, MessageWidget::MessageType)),
-            this,
-            SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
-    connect(m_ui->tabWidget,
-            SIGNAL(messageTab(QString, MessageWidget::MessageType)),
-            this,
-            SLOT(displayTabMessage(QString, MessageWidget::MessageType)));
-    connect(m_ui->tabWidget, SIGNAL(messageDismissTab()), this, SLOT(hideTabMessage()));
 
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
@@ -351,13 +378,15 @@ MainWindow::MainWindow()
         tr("WARNING: You are using an unstable build of KeePassXC!\n"
            "There is a high risk of corruption, maintain a backup of your databases.\n"
            "This version is not meant for production use."),
-        MessageWidget::Warning, -1);
+        MessageWidget::Warning,
+        -1);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
     if (!config()->get("QtErrorMessageShown", false).toBool()) {
         m_ui->globalMessageWidget->showMessage(
             tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!\n"
                "We recommend you use the AppImage available on our downloads page."),
-            MessageWidget::Warning, -1);
+            MessageWidget::Warning,
+            -1);
         config()->set("QtErrorMessageShown", true);
     }
 #endif
@@ -431,9 +460,28 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& fileName, const QString& pw, const QString& keyFile)
+void MainWindow::openDatabase(const QString& filePath, const QString& pw, const QString& keyFile)
 {
-    m_ui->tabWidget->openDatabase(fileName, pw, keyFile);
+    if (pw.isEmpty() && keyFile.isEmpty()) {
+        m_ui->tabWidget->addDatabaseTab(filePath);
+        return;
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    if (!pw.isEmpty()) {
+        key->addKey(QSharedPointer<PasswordKey>::create(pw));
+    }
+    if (!keyFile.isEmpty()) {
+        auto fileKey = QSharedPointer<FileKey>::create();
+        fileKey->load(keyFile);
+        key->addKey(fileKey);
+    }
+    if (db->open(filePath, key, nullptr, false)) {
+        auto* dbWidget = new DatabaseWidget(db, this);
+        m_ui->tabWidget->addDatabaseTab(dbWidget);
+        dbWidget->switchToMainView(true);
+    }
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
@@ -457,15 +505,15 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
 
-        if (mode == DatabaseWidget::None) {
+        if (mode == DatabaseWidget::Mode::None) {
             mode = dbWidget->currentMode();
         }
 
         switch (mode) {
-        case DatabaseWidget::ViewMode: {
+        case DatabaseWidget::Mode::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -479,12 +527,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
-            m_ui->menuEntryTotp->setEnabled(true);
+            m_ui->menuEntryTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryAutoType->setEnabled(singleEntrySelected);
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
+            m_ui->actionEntryTotpQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
@@ -501,9 +550,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
             break;
         }
-        case DatabaseWidget::EditMode:
-        case DatabaseWidget::ImportMode:
-        case DatabaseWidget::LockedMode: {
+        case DatabaseWidget::Mode::EditMode:
+        case DatabaseWidget::Mode::ImportMode:
+        case DatabaseWidget::Mode::LockedMode: {
             const QList<QAction*> entryActions = m_ui->menuEntries->actions();
             for (QAction* action : entryActions) {
                 action->setEnabled(false);
@@ -513,13 +562,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             for (QAction* action : groupActions) {
                 action->setEnabled(false);
             }
-            m_ui->actionEntryCopyTitle->setEnabled(false);
-            m_ui->actionEntryCopyUsername->setEnabled(false);
-            m_ui->actionEntryCopyPassword->setEnabled(false);
-            m_ui->actionEntryCopyURL->setEnabled(false);
-            m_ui->actionEntryCopyNotes->setEnabled(false);
-            m_ui->menuEntryCopyAttribute->setEnabled(false);
-            m_ui->menuEntryTotp->setEnabled(false);
 
             m_ui->actionChangeMasterKey->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -545,13 +587,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         for (QAction* action : groupActions) {
             action->setEnabled(false);
         }
-        m_ui->actionEntryCopyTitle->setEnabled(false);
-        m_ui->actionEntryCopyUsername->setEnabled(false);
-        m_ui->actionEntryCopyPassword->setEnabled(false);
-        m_ui->actionEntryCopyURL->setEnabled(false);
-        m_ui->actionEntryCopyNotes->setEnabled(false);
-        m_ui->menuEntryCopyAttribute->setEnabled(false);
-        m_ui->menuEntryTotp->setEnabled(false);
 
         m_ui->actionChangeMasterKey->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
@@ -583,13 +618,10 @@ void MainWindow::updateWindowTitle()
     bool isModified = m_ui->tabWidget->isModified(tabWidgetIndex);
 
     if (stackedWidgetIndex == DatabaseTabScreen && tabWidgetIndex != -1) {
-        customWindowTitlePart = m_ui->tabWidget->tabText(tabWidgetIndex);
+        customWindowTitlePart = m_ui->tabWidget->tabName(tabWidgetIndex);
         if (isModified) {
             // remove asterisk '*' from title
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
-        }
-        if (m_ui->tabWidget->readOnly(tabWidgetIndex)) {
-            customWindowTitlePart = tr("%1 [read-only]", "window title modifier").arg(customWindowTitlePart);
         }
         m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
     } else if (stackedWidgetIndex == 1) {
@@ -606,17 +638,16 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
         setWindowFilePath("");
     } else {
-        setWindowFilePath(m_ui->tabWidget->databasePath(tabWidgetIndex));
+        setWindowFilePath(m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex)->database()->filePath());
     }
 
-    setWindowModified(isModified);
-
     setWindowTitle(windowTitle);
+    setWindowModified(isModified);
 }
 
 void MainWindow::showAboutDialog()
 {
-    AboutDialog* aboutDialog = new AboutDialog(this);
+    auto* aboutDialog = new AboutDialog(this);
     aboutDialog->open();
 }
 
@@ -652,10 +683,10 @@ void MainWindow::switchToSettings(bool enabled)
 void MainWindow::switchToPasswordGen(bool enabled)
 {
     if (enabled) {
-      m_ui->passwordGeneratorWidget->loadSettings();
-      m_ui->passwordGeneratorWidget->regeneratePassword();
-      m_ui->passwordGeneratorWidget->setStandaloneMode(true);
-      m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
+        m_ui->passwordGeneratorWidget->loadSettings();
+        m_ui->passwordGeneratorWidget->regeneratePassword();
+        m_ui->passwordGeneratorWidget->setStandaloneMode(true);
+        m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
         switchToDatabases();
@@ -679,9 +710,9 @@ void MainWindow::switchToOpenDatabase()
     switchToDatabases();
 }
 
-void MainWindow::switchToDatabaseFile(QString file)
+void MainWindow::switchToDatabaseFile(const QString& file)
 {
-    m_ui->tabWidget->openDatabase(file);
+    m_ui->tabWidget->addDatabaseTab(file);
     switchToDatabases();
 }
 
@@ -697,9 +728,34 @@ void MainWindow::switchToCsvImport()
     switchToDatabases();
 }
 
-void MainWindow::databaseStatusChanged(DatabaseWidget*)
+void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
 {
+    Q_UNUSED(dbWidget);
     updateTrayIcon();
+}
+
+void MainWindow::selectNextDatabaseTab()
+{
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        int index = m_ui->tabWidget->currentIndex() + 1;
+        if (index >= m_ui->tabWidget->count()) {
+            m_ui->tabWidget->setCurrentIndex(0);
+        } else {
+            m_ui->tabWidget->setCurrentIndex(index);
+        }
+    }
+}
+
+void MainWindow::selectPreviousDatabaseTab()
+{
+    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
+        int index = m_ui->tabWidget->currentIndex() - 1;
+        if (index < 0) {
+            m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
+        } else {
+            m_ui->tabWidget->setCurrentIndex(index);
+        }
+    }
 }
 
 void MainWindow::databaseTabChanged(int tabIndex)
@@ -713,6 +769,22 @@ void MainWindow::databaseTabChanged(int tabIndex)
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
 }
 
+void MainWindow::togglePasswordsHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setPasswordsHidden(!dbWidget->isPasswordsHidden());
+    }
+}
+
+void MainWindow::toggleUsernamesHidden()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        dbWidget->setUsernamesHidden(!dbWidget->isUsernamesHidden());
+    }
+}
+
 void MainWindow::closeEvent(QCloseEvent* event)
 {
     // ignore double close events (happens on macOS when closing from the dock)
@@ -721,15 +793,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
         return;
     }
 
-    bool minimizeOnClose = isTrayIconEnabled() && config()->get("GUI/MinimizeOnClose").toBool();
-    if (minimizeOnClose && !m_appExitCalled) {
-        event->accept();
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
+        event->ignore();
         hideWindow();
-
-        if (config()->get("security/lockdatabaseminimize").toBool()) {
-            m_ui->tabWidget->lockDatabases();
-        }
-
         return;
     }
 
@@ -777,18 +843,14 @@ bool MainWindow::saveLastDatabases()
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
     if (openPreviousDatabasesOnStartup) {
-        connect(m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+        connect(m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
     }
 
-    if (!m_ui->tabWidget->closeAllDatabases()) {
-        accept = false;
-    } else {
-        accept = true;
-    }
+    accept = m_ui->tabWidget->closeAllDatabaseTabs();
 
     if (openPreviousDatabasesOnStartup) {
         disconnect(
-            m_ui->tabWidget, SIGNAL(databaseWithFileClosed(QString)), this, SLOT(rememberOpenDatabases(QString)));
+            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
         config()->set("LastOpenedDatabases", m_openDatabases);
     }
 
@@ -805,7 +867,7 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
             QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
             menu->addAction(actionQuit);
 
@@ -906,14 +968,19 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
-#if !defined(Q_OS_LINUX) && !defined(Q_OS_MAC)
+#if !defined(Q_OS_LINUX) && !defined(Q_OS_MACOS)
     // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
     // the same time (which would happen if both minimize on startup and minimize to tray are set)
     // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
     // TODO: Add an explanation for why this is also not done on Mac (or remove the check)
     setWindowState(windowState() | Qt::WindowMinimized);
 #endif
-    QTimer::singleShot(0, this, SLOT(hide()));
+    // Only hide if tray icon is active, otherwise window will be gone forever
+    if (isTrayIconEnabled()) {
+        hide();
+    } else {
+        showMinimized();
+    }
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
         m_ui->tabWidget->lockDatabases();
@@ -927,7 +994,7 @@ void MainWindow::toggleWindow()
     } else {
         bringToFront();
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
         // re-register global D-Bus menu (needed on Ubuntu with Unity)
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
@@ -989,13 +1056,6 @@ void MainWindow::displayTabMessage(const QString& text,
 void MainWindow::hideGlobalMessage()
 {
     m_ui->globalMessageWidget->hideMessage();
-}
-
-void MainWindow::hideTabMessage()
-{
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        m_ui->tabWidget->currentDatabaseWidget()->hideMessage();
-    }
 }
 
 void MainWindow::showYubiKeyPopup()
@@ -1076,7 +1136,7 @@ void MainWindow::dropEvent(QDropEvent* event)
 
 void MainWindow::closeAllDatabases()
 {
-    m_ui->tabWidget->closeAllDatabases();
+    m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
 void MainWindow::lockAllDatabases()

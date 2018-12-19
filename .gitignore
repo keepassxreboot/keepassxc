@@ -12,3 +12,11 @@ release*/
 .DS_Store
 .version
 \.scannerwork/
+
+/snap/.snapcraft/
+/parts/
+/stage/
+/prime/
+/*.snap
+/*_source.tar.bz2
+

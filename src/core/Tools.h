@@ -27,12 +27,11 @@
 #include <algorithm>
 
 class QIODevice;
+class QRegularExpression;
 
 namespace Tools
 {
-
     QString humanReadableFileSize(qint64 bytes, quint32 precision = 2);
-    bool hasChild(const QObject* parent, const QObject* child);
     bool readFromDevice(QIODevice* device, QByteArray& data, int size = 16384);
     bool readAllFromDevice(QIODevice* device, QByteArray& data);
     QString imageReaderFilter();
@@ -40,9 +39,8 @@ namespace Tools
     bool isBase64(const QByteArray& ba);
     void sleep(int ms);
     void wait(int ms);
-    void disableCoreDumps();
-    void setupSearchPaths();
-    bool createWindowsDACL();
+    QRegularExpression convertToRegex(const QString& string, bool useWildcards = false, 
+                                      bool exactMatch = false, bool caseSensitive = false);
 
     template <typename RandomAccessIterator, typename T>
     RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)

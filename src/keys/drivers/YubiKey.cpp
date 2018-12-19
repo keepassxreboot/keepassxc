@@ -1,24 +1,22 @@
 /*
-*  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include <stdio.h>
-
-#include <QDebug>
 
 #include <ykcore.h>
 #include <ykdef.h>
@@ -37,8 +35,8 @@
 #define m_ykds (static_cast<YK_STATUS*>(m_ykds_void))
 
 YubiKey::YubiKey()
-    : m_yk_void(NULL)
-    , m_ykds_void(NULL)
+    : m_yk_void(nullptr)
+    , m_ykds_void(nullptr)
     , m_mutex(QMutex::Recursive)
 {
 }
@@ -59,7 +57,7 @@ bool YubiKey::init()
     m_mutex.lock();
 
     // previously initialized
-    if (m_yk != NULL && m_ykds != NULL) {
+    if (m_yk != nullptr && m_ykds != nullptr) {
 
         if (yk_get_status(m_yk, m_ykds)) {
             // Still connected
@@ -78,15 +76,15 @@ bool YubiKey::init()
 
     // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
-    if (m_yk == NULL) {
+    if (m_yk == nullptr) {
         m_mutex.unlock();
         return false;
     }
 
     m_ykds_void = static_cast<void*>(ykds_alloc());
-    if (m_ykds == NULL) {
+    if (m_ykds == nullptr) {
         yk_close_key(m_yk);
-        m_yk_void = NULL;
+        m_yk_void = nullptr;
         m_mutex.unlock();
         return false;
     }
@@ -101,12 +99,12 @@ bool YubiKey::deinit()
 
     if (m_yk) {
         yk_close_key(m_yk);
-        m_yk_void = NULL;
+        m_yk_void = nullptr;
     }
 
     if (m_ykds) {
         ykds_free(m_ykds);
-        m_ykds_void = NULL;
+        m_ykds_void = nullptr;
     }
 
     m_mutex.unlock();
@@ -163,18 +161,13 @@ bool YubiKey::getSerial(unsigned int& serial)
 
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
-    if (!m_mutex.tryLock()) {
-        return ALREADY_RUNNING;
+    // ensure that YubiKey::init() succeeded
+    if (!init()) {
+        return ERROR;
     }
 
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChallenge = challenge;
-
-    // ensure that YubiKey::init() succeeded
-    if (!init()) {
-        m_mutex.unlock();
-        return ERROR;
-    }
 
     // yk_challenge_response() insists on 64 byte response buffer */
     response.clear();
@@ -196,9 +189,12 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     c = reinterpret_cast<const unsigned char*>(paddedChallenge.constData());
     r = reinterpret_cast<unsigned char*>(response.data());
 
-    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
-    emit challenged();
+    // Try to grab a lock for 1 second, fail out if not possible
+    if (!m_mutex.tryLock(1000)) {
+        return ALREADY_RUNNING;
+    }
 
+    int ret = yk_challenge_response(m_yk, yk_cmd, mayBlock, paddedChallenge.size(), c, response.size(), r);
     m_mutex.unlock();
 
     if (!ret) {
@@ -215,9 +211,9 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
              */
 
             if (yk_errno == YK_EUSBERR) {
-                qWarning() << "USB error:" << yk_usb_strerror();
+                qWarning("USB error: %s",  yk_usb_strerror());
             } else {
-                qWarning() << "YubiKey core error:" << yk_strerror(yk_errno);
+                qWarning("YubiKey core error: %s", yk_strerror(yk_errno));
             }
 
             return ERROR;

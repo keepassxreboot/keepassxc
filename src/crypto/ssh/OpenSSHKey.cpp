@@ -36,38 +36,38 @@ const QString OpenSSHKey::TYPE_OPENSSH_PRIVATE = "OPENSSH PRIVATE KEY";
 
 namespace
 {
-    QPair<QString, QList<QByteArray>> binaryDeserialize(const QByteArray& serialized)
-    {
-        if (serialized.isEmpty()) {
-            return {};
-        }
-        QBuffer buffer;
-        buffer.setData(serialized);
-        buffer.open(QBuffer::ReadOnly);
-        BinaryStream stream(&buffer);
-        QString type;
-        stream.readString(type);
-        QByteArray temp;
-        QList<QByteArray> data;
-        while (stream.readString(temp)) {
-            data << temp;
-        }
-        return ::qMakePair(type, data);
+QPair<QString, QList<QByteArray>> binaryDeserialize(const QByteArray& serialized)
+{
+    if (serialized.isEmpty()) {
+        return {};
     }
+    QBuffer buffer;
+    buffer.setData(serialized);
+    buffer.open(QBuffer::ReadOnly);
+    BinaryStream stream(&buffer);
+    QString type;
+    stream.readString(type);
+    QByteArray temp;
+    QList<QByteArray> data;
+    while (stream.readString(temp)) {
+        data << temp;
+    }
+    return ::qMakePair(type, data);
+}
 
-    QByteArray binarySerialize(const QString& type, const QList<QByteArray>& data)
-    {
-        if (type.isEmpty() && data.isEmpty()) {
-            return {};
-        }
-        QByteArray buffer;
-        BinaryStream stream(&buffer);
-        stream.writeString(type);
-        for (const QByteArray& part : data) {
-            stream.writeString(part);
-        }
-        return buffer;
+QByteArray binarySerialize(const QString& type, const QList<QByteArray>& data)
+{
+    if (type.isEmpty() && data.isEmpty()) {
+        return {};
     }
+    QByteArray buffer;
+    BinaryStream stream(&buffer);
+    stream.writeString(type);
+    for (const QByteArray& part : data) {
+        stream.writeString(part);
+    }
+    return buffer;
+}
 }
 
 // bcrypt_pbkdf.cpp
@@ -204,32 +204,32 @@ OpenSSHKey OpenSSHKey::generate(bool secure)
 }
 
 OpenSSHKey::OpenSSHKey(QObject* parent)
-    : QObject(parent)
-    , m_type(QString())
-    , m_cipherName(QString("none"))
-    , m_kdfName(QString("none"))
-    , m_kdfOptions(QByteArray())
-    , m_rawType(QString())
-    , m_rawData(QByteArray())
-    , m_rawPublicData(QList<QByteArray>())
-    , m_rawPrivateData(QList<QByteArray>())
-    , m_comment(QString())
-    , m_error(QString())
+        : QObject(parent)
+        , m_type(QString())
+        , m_cipherName(QString("none"))
+        , m_kdfName(QString("none"))
+        , m_kdfOptions(QByteArray())
+        , m_rawType(QString())
+        , m_rawData(QByteArray())
+        , m_rawPublicData(QList<QByteArray>())
+        , m_rawPrivateData(QList<QByteArray>())
+        , m_comment(QString())
+        , m_error(QString())
 {
 }
 
 OpenSSHKey::OpenSSHKey(const OpenSSHKey& other)
-    : QObject(nullptr)
-    , m_type(other.m_type)
-    , m_cipherName(other.m_cipherName)
-    , m_kdfName(other.m_kdfName)
-    , m_kdfOptions(other.m_kdfOptions)
-    , m_rawType(other.m_rawType)
-    , m_rawData(other.m_rawData)
-    , m_rawPublicData(other.m_rawPublicData)
-    , m_rawPrivateData(other.m_rawPrivateData)
-    , m_comment(other.m_comment)
-    , m_error(other.m_error)
+        : QObject(nullptr)
+        , m_type(other.m_type)
+        , m_cipherName(other.m_cipherName)
+        , m_kdfName(other.m_kdfName)
+        , m_kdfOptions(other.m_kdfOptions)
+        , m_rawType(other.m_rawType)
+        , m_rawData(other.m_rawData)
+        , m_rawPublicData(other.m_rawPublicData)
+        , m_rawPrivateData(other.m_rawPrivateData)
+        , m_comment(other.m_comment)
+        , m_error(other.m_error)
 {
 }
 

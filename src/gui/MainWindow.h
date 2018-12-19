@@ -39,7 +39,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
     Q_CLASSINFO("D-Bus Interface", "org.keepassxc.KeePassXC.MainWindow")
 #endif
 
@@ -56,7 +56,7 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& fileName, const QString& pw = QString(), const QString& keyFile = QString());
+    void openDatabase(const QString& filePath, const QString& pw = {}, const QString& keyFile = {});
     void appExit();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
@@ -69,6 +69,8 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void hideWindow();
+    void toggleWindow();
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
@@ -78,7 +80,7 @@ protected:
     void changeEvent(QEvent* event) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
+    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
     void openDonateUrl();
@@ -88,7 +90,7 @@ private slots:
     void switchToPasswordGen(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
-    void switchToDatabaseFile(QString file);
+    void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
     void switchToCsvImport();
     void closePasswordGen();
@@ -103,13 +105,14 @@ private slots:
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
-    void hideWindow();
-    void toggleWindow();
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
-    void hideTabMessage();
     void handleScreenLock();
     void showErrorMessage(const QString& message);
+    void selectNextDatabaseTab();
+    void selectPreviousDatabaseTab();
+    void togglePasswordsHidden();
+    void toggleUsernamesHidden();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -144,8 +147,12 @@ private:
     bool m_appExiting;
 };
 
-#define KEEPASSXC_MAIN_WINDOW                                                                                          \
-    (qobject_cast<Application*>(qApp) ? qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow())      \
-                                      : nullptr)
+/**
+ * Return instance of MainWindow created on app load
+ * non-gui instances will return nullptr
+ *
+ * @return MainWindow instance or nullptr
+ */
+MainWindow* getMainWindow();
 
 #endif // KEEPASSX_MAINWINDOW_H

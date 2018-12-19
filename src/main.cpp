@@ -20,16 +20,15 @@
 #include <QFile>
 #include <QTextStream>
 
+#include "cli/Utils.h"
 #include "config-keepassx.h"
+#include "core/Bootstrap.h"
 #include "core/Config.h"
 #include "core/Tools.h"
-#include "core/Translator.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
-
-#include "cli/Utils.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
@@ -40,40 +39,23 @@
 
 #if defined(Q_OS_WIN)
 Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
-#elif defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
 Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #endif
 #endif
 
-static inline void earlyQNetworkAccessManagerWorkaround()
-{
-    // When QNetworkAccessManager is instantiated it regularly starts polling
-    // all network interfaces to see if anything changes and if so, what. This
-    // creates a latency spike every 10 seconds on Mac OS 10.12+ and Windows 7 >=
-    // when on a wifi connection.
-    // So here we disable it for lack of better measure.
-    // This will also cause this message: QObject::startTimer: Timers cannot
-    // have negative intervals
-    // For more info see:
-    // - https://bugreports.qt.io/browse/QTBUG-40332
-    // - https://bugreports.qt.io/browse/QTBUG-46015
-    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
-}
-
 int main(int argc, char** argv)
 {
-#ifdef QT_NO_DEBUG
-    Tools::disableCoreDumps();
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-    Tools::setupSearchPaths();
-
-    earlyQNetworkAccessManagerWorkaround();
 
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
-    Application::setApplicationVersion(KEEPASSX_VERSION);
+    Application::setApplicationVersion(KEEPASSXC_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)
+    Bootstrap::bootstrapApplication();
 
     QCommandLineParser parser;
     parser.setApplicationDescription(
@@ -95,7 +77,7 @@ int main(int argc, char** argv)
                                           QCoreApplication::translate("main", "Parent window handle"),
                                           "handle");
 
-    parser.addHelpOption();
+    QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
@@ -103,9 +85,15 @@ int main(int argc, char** argv)
     parser.addOption(parentWindowOption);
 
     parser.process(app);
+
+    // Don't try and do anything with the application if we're only showing the help / version
+    if (parser.isSet(versionOption) || parser.isSet(helpOption)) {
+        return 0;
+    }
+
     const QStringList fileNames = parser.positionalArguments();
 
-    if (app.isAlreadyRunning() && !parser.isSet(versionOption)) {
+    if (app.isAlreadyRunning()) {
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
@@ -129,46 +117,13 @@ int main(int argc, char** argv)
         Config::createConfigFromFile(parser.value(configOption));
     }
 
-    Translator::installTranslators();
-
-#ifdef Q_OS_MAC
-    // Don't show menu icons on OSX
-    QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
-
     MainWindow mainWindow;
-    app.setMainWindow(&mainWindow);
-
     QObject::connect(&app, SIGNAL(anotherInstanceStarted()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(applicationActivated()), &mainWindow, SLOT(bringToFront()));
     QObject::connect(&app, SIGNAL(openFile(QString)), &mainWindow, SLOT(openDatabase(QString)));
     QObject::connect(&app, SIGNAL(quitSignalReceived()), &mainWindow, SLOT(appExit()), Qt::DirectConnection);
 
-    // start minimized if configured
-    bool minimizeOnStartup = config()->get("GUI/MinimizeOnStartup").toBool();
-    bool minimizeToTray = config()->get("GUI/MinimizeToTray").toBool();
-#ifndef Q_OS_LINUX
-    if (minimizeOnStartup) {
-#else
-    // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
-    // the same time (which would happen if both minimize on startup and minimize to tray are set)
-    // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
-    if (minimizeOnStartup && !minimizeToTray) {
-#endif
-        mainWindow.setWindowState(Qt::WindowMinimized);
-    }
-    if (!(minimizeOnStartup && minimizeToTray)) {
-        mainWindow.show();
-    }
-
-    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-        const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
-        for (const QString& filename : fileNames) {
-            if (!filename.isEmpty() && QFile::exists(filename)) {
-                mainWindow.openDatabase(filename);
-            }
-        }
-    }
+    Bootstrap::restoreMainWindowState(mainWindow);
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename : fileNames) {
@@ -187,7 +142,7 @@ int main(int argc, char** argv)
         }
     }
 
-    int exitCode = app.exec();
+    int exitCode = Application::exec();
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
     // do leak check here to prevent massive tail of end-of-process leak errors from third-party libraries

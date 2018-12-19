@@ -18,19 +18,20 @@
  */
 
 #include "Tools.h"
+#include "core/Config.h"
+#include "core/Translator.h"
 
 #include <QCoreApplication>
+#include <QElapsedTimer>
 #include <QIODevice>
 #include <QImageReader>
 #include <QLocale>
+#include <QRegularExpression>
 #include <QStringList>
 #include <cctype>
 
-#include <QElapsedTimer>
-
 #ifdef Q_OS_WIN
-#include <aclapi.h> // for SetSecurityInfo()
-#include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
+#include <windows.h> // for Sleep()
 #endif
 
 #ifdef Q_OS_UNIX
@@ -56,7 +57,6 @@
 
 namespace Tools
 {
-
     QString humanReadableFileSize(qint64 bytes, quint32 precision)
     {
         constexpr auto kibibyte = 1024;
@@ -75,21 +75,6 @@ namespace Tools
         }
 
         return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
-    }
-
-    bool hasChild(const QObject* parent, const QObject* child)
-    {
-        if (!parent || !child) {
-            return false;
-        }
-
-        const QObjectList children = parent->children();
-        for (QObject* c : children) {
-            if (child == c || hasChild(c, child)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     bool readFromDevice(QIODevice* device, QByteArray& data, int size)
@@ -135,8 +120,8 @@ namespace Tools
         QStringList formatsStringList;
 
         for (const QByteArray& format : formats) {
-            for (int i = 0; i < format.size(); i++) {
-                if (!QChar(format.at(i)).isLetterOrNumber()) {
+            for (char codePoint : format) {
+                if (!QChar(codePoint).isLetterOrNumber()) {
                     continue;
                 }
             }
@@ -212,139 +197,32 @@ namespace Tools
         }
     }
 
-    void disableCoreDumps()
-    {
-        // default to true
-        // there is no point in printing a warning if this is not implemented on the platform
-        bool success = true;
+// Escape common regex symbols except for *, ?, and |
+auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
 
-#if defined(HAVE_RLIMIT_CORE)
-        struct rlimit limit;
-        limit.rlim_cur = 0;
-        limit.rlim_max = 0;
-        success = success && (setrlimit(RLIMIT_CORE, &limit) == 0);
-#endif
+QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+{
+    QString pattern = string;
 
-#if defined(HAVE_PR_SET_DUMPABLE)
-        success = success && (prctl(PR_SET_DUMPABLE, 0) == 0);
-#endif
-
-// Mac OS X
-#ifdef HAVE_PT_DENY_ATTACH
-        success = success && (ptrace(PT_DENY_ATTACH, 0, 0, 0) == 0);
-#endif
-
-#ifdef Q_OS_WIN
-        success = success && createWindowsDACL();
-#endif
-
-        if (!success) {
-            qWarning("Unable to disable core dumps.");
-        }
+    // Wildcard support (*, ?, |)
+    if (useWildcards) {
+        pattern.replace(regexEscape, "\\\\1");
+        pattern.replace("*", ".*");
+        pattern.replace("?", ".");
     }
 
-    void setupSearchPaths()
-    {
-#ifdef Q_OS_WIN
-        // Make sure Windows doesn't load DLLs from the current working directory
-        SetDllDirectoryA("");
-        SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
-#endif
+    // Exact modifier
+    if (exactMatch) {
+        pattern = "^" + pattern + "$";
     }
 
-    //
-    // This function grants the user associated with the process token minimal access rights and
-    // denies everything else on Windows. This includes PROCESS_QUERY_INFORMATION and
-    // PROCESS_VM_READ access rights that are required for MiniDumpWriteDump() or ReadProcessMemory().
-    // We do this using a discretionary access control list (DACL). Effectively this prevents
-    // crash dumps and disallows other processes from accessing our memory. This works as long
-    // as you do not have admin privileges, since then you are able to grant yourself the
-    // SeDebugPrivilege or SeTakeOwnershipPrivilege and circumvent the DACL.
-    //
-    bool createWindowsDACL()
-    {
-        bool bSuccess = false;
-
-#ifdef Q_OS_WIN
-        // Process token and user
-        HANDLE hToken = nullptr;
-        PTOKEN_USER pTokenUser = nullptr;
-        DWORD cbBufferSize = 0;
-
-        // Access control list
-        PACL pACL = nullptr;
-        DWORD cbACL = 0;
-
-        // Open the access token associated with the calling process
-        if (!OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hToken)) {
-            goto Cleanup;
-        }
-
-        // Retrieve the token information in a TOKEN_USER structure
-        GetTokenInformation(hToken, TokenUser, nullptr, 0, &cbBufferSize);
-
-        pTokenUser = static_cast<PTOKEN_USER>(HeapAlloc(GetProcessHeap(), 0, cbBufferSize));
-        if (pTokenUser == nullptr) {
-            goto Cleanup;
-        }
-
-        if (!GetTokenInformation(hToken, TokenUser, pTokenUser, cbBufferSize, &cbBufferSize)) {
-            goto Cleanup;
-        }
-
-        if (!IsValidSid(pTokenUser->User.Sid)) {
-            goto Cleanup;
-        }
-
-        // Calculate the amount of memory that must be allocated for the DACL
-        cbACL = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid);
-
-        // Create and initialize an ACL
-        pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
-        if (pACL == nullptr) {
-            goto Cleanup;
-        }
-
-        if (!InitializeAcl(pACL, cbACL, ACL_REVISION)) {
-            goto Cleanup;
-        }
-
-        // Add allowed access control entries, everything else is denied
-        if (!AddAccessAllowedAce(
-                pACL,
-                ACL_REVISION,
-                SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE, // same as protected process
-                pTokenUser->User.Sid // pointer to the trustee's SID
-                )) {
-            goto Cleanup;
-        }
-
-        // Set discretionary access control list
-        bSuccess = ERROR_SUCCESS
-                   == SetSecurityInfo(GetCurrentProcess(), // object handle
-                                      SE_KERNEL_OBJECT, // type of object
-                                      DACL_SECURITY_INFORMATION, // change only the objects DACL
-                                      nullptr,
-                                      nullptr, // do not change owner or group
-                                      pACL, // DACL specified
-                                      nullptr // do not change SACL
-                      );
-
-    Cleanup:
-
-        if (pACL != nullptr) {
-            HeapFree(GetProcessHeap(), 0, pACL);
-        }
-        if (pTokenUser != nullptr) {
-            HeapFree(GetProcessHeap(), 0, pTokenUser);
-        }
-        if (hToken != nullptr) {
-            CloseHandle(hToken);
-        }
-#endif
-
-        return bSuccess;
+    auto regex = QRegularExpression(pattern);
+    if (!caseSensitive) {
+        regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     }
+
+    return regex;
+}
 
 
     Buffer::Buffer()

@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>In Zwischenablage kopieren</translation>
+        <translation>In die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Version %1
@@ -272,7 +272,7 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Zeige nur die am besten passenden Einträge für eine URL anstatt aller Einträge der ganzen Domäne.</translation>
+        <translation>Nur die am besten passenden Einträge für eine URL anstatt aller Einträge der ganzen Domäne anzeigen.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
@@ -341,7 +341,7 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     </message>
     <message>
         <source>Use a &amp;proxy application between KeePassXC and browser extension</source>
-        <translation>Verwende eine &amp;Proxy-Anwendungen zwischen KeePassXC und Browser-Erweiterung</translation>
+        <translation>&amp;Proxy-Anwendung zwischen KeePassXC und Browser-Erweiterung verwenden</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
@@ -448,7 +448,7 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform></translation>
+        <translation><numerusform>Es wurde erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform><numerusform>Es wurden erfolgreich %n Schlüssel aus den KeePassXC-Einstellungen entfernt.</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -472,7 +472,7 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>The aktive Datenbank enthält keinen Eintrag mit Zugangsdaten.</translation>
+        <translation>Diese Datenbank enthält keinen Eintrag mit Zugangsdaten.</translation>
     </message>
 </context>
 <context>
@@ -561,7 +561,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
-        <translation>Ändern des Hauptschlüssels fehlgeschlagen: kein YubiKey eingesteckt.</translation>
+        <translation>Ändern des Master-Passworts fehlgeschlagen: kein YubiKey eingesteckt.</translation>
     </message>
 </context>
 <context>
@@ -576,7 +576,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Benutzernamen und Passwort mit Referencen ersetzen</translation>
+        <translation>Benutzernamen und Passwort mit Referenzen ersetzen</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -683,14 +683,14 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
+        <translation>Berechnung des Master-Passworts gescheitert</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n Byte,</numerusform><numerusform>%n Byte,</numerusform></translation>
+        <translation><numerusform>%n Byte</numerusform><numerusform>%n Bytes</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
@@ -705,7 +705,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Hauptschlüssel eingeben</translation>
+        <translation>Master-Passwort eingeben</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -729,7 +729,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
@@ -781,7 +781,7 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
     </message>
     <message>
         <source>Database opened fine. Nothing to do.</source>
@@ -862,7 +862,7 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>Thread</numerusform><numerusform>Threads</numerusform></translation>
+        <translation><numerusform> Thread</numerusform><numerusform> Threads</numerusform></translation>
     </message>
 </context>
 <context>
@@ -996,11 +996,11 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank öffnen</translation>
+        <translation>KeePass 1-Datenbank öffnen</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 Datenbank</translation>
+        <translation>KeePass 1-Datenbank</translation>
     </message>
     <message>
         <source>Close?</source>
@@ -1032,7 +1032,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Datenbank speichern unter</translation>
+        <translation>Datenbank speichern als</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1057,16 +1057,16 @@ Save changes?</source>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation>Datenbank kann nicht gesperrt werden, da sie gerade bearbeitet wird.
+        <translation>Die Datenbank kann nicht gesperrt werden, da sie gerade bearbeitet wird.
 Wählen sie „Abbrechen“, um die Änderungen zu speichern oder sie zurückzunehmen.</translation>
     </message>
     <message>
         <source>This database has been modified.
 Do you want to save the database before locking it?
 Otherwise your changes are lost.</source>
-        <translation>Dieses Datenbank wurde geändert.
+        <translation>Diese Datenbank wurde geändert.
 Soll sie gespeichert werden bevor sie gesperrt wird?
-Anderenfalls gehen Ihre Änderungen verloren.</translation>
+Anderenfalls gehen Ihre Änderungen seit dem letzten Speichern verloren.</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
@@ -1087,7 +1087,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Change master key</source>
-        <translation>Hauptschlüssel ändern</translation>
+        <translation>Master-Passwort ändern</translation>
     </message>
     <message>
         <source>Delete entry?</source>
@@ -1119,7 +1119,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wollen Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Wollen Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
+        <translation><numerusform>Möchten Sie wirklich %n Eintrag aus dem Papierkorb löschen?</numerusform><numerusform>Möchten Sie wirklich %n Einträge aus dem Papierkorb löschen?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1143,7 +1143,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
+        <translation>Berechnung des Master-Passworts gescheitert</translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -1339,7 +1339,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Unterschiedliche Passwörter eingegeben.</translation>
+        <translation>Passwörter sind unterschiedlich</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -1367,11 +1367,11 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n Woche</numerusform><numerusform>%n Woche(n)</numerusform></translation>
+        <translation><numerusform>%n Woche</numerusform><numerusform>%n Wochen</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monat(en)</numerusform></translation>
+        <translation><numerusform>%n Monat</numerusform><numerusform>%n Monate</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1566,7 +1566,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>In die Zwischenablage kopieren</translation>
+        <translation>In Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -1645,7 +1645,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Erlischt</translation>
+        <translation>Verfällt</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1708,7 +1708,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>Can&apos;t read icon</source>
-        <translation>Icon kann nicht gelesen werden</translation>
+        <translation>Symbol kann nicht gelesen werden</translation>
     </message>
     <message>
         <source>Custom icon already exists</source>
@@ -1720,7 +1720,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message>
         <source>This icon is used by %1 entries, and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation>Dieses Icon wird noch von %1 Einträgen verwendet und würde mit dem Standard-Icon ersetzt. Sind Sie sicher, dass die fortfahren wollen?</translation>
+        <translation>Dieses Symbol wird noch von %1 Einträgen verwendet und würde mit dem Standard-Symbol ersetzt. Sind Sie sicher, dass die fortfahren wollen?</translation>
     </message>
 </context>
 <context>
@@ -1803,7 +1803,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message>
         <source>Open</source>
-        <translation>Öffnen</translation>
+        <translation>Offen</translation>
     </message>
     <message>
         <source>Save</source>
@@ -1815,7 +1815,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sind Sie sicher, dass Sie %n Anhang löschen wollen?</numerusform><numerusform>Sind Sie sicher, dass Sie %n Anhänge löschen möchten?</numerusform></translation>
+        <translation><numerusform>Sind Sie sicher, dass sie einen Anhang löschen möchten?</numerusform><numerusform>Sind Sie sicher, dass sie %n Anhänge löschen möchten?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1973,7 +1973,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation>Anhänge (Icon)</translation>
+        <translation>Anhänge (Symbol)</translation>
     </message>
 </context>
 <context>
@@ -2303,7 +2303,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Fehlende Icon-UUID oder -Daten</translation>
+        <translation>Fehlende Symbol-UUID oder -Daten</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
@@ -2319,7 +2319,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Ungültige Gruppen-Icon-Anzahl</translation>
+        <translation>Ungültige Gruppen-Symbol-Anzahl</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -2347,7 +2347,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Ungültige Eintrags-Icon-Anzahl</translation>
+        <translation>Ungültige Eintrags-Symbol-Anzahl</translation>
     </message>
     <message>
         <source>History element in history entry</source>
@@ -2423,7 +2423,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Öffnen der Datenbank nicht möglich.</translation>
+        <translation>Öffnen der Datenbank ist nicht möglich.</translation>
     </message>
 </context>
 <context>
@@ -2479,7 +2479,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Berechnung des Hauptschlüssels gescheitert</translation>
+        <translation>Berechnung des Master-Passworts gescheitert</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2523,7 +2523,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Falsche Feldgröße für Gruppen-Icon</translation>
+        <translation>Falsche Feldgröße für Gruppen-Symbol</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
@@ -2559,7 +2559,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Falsche Feldgröße für Eintrags-Icon</translation>
+        <translation>Falsche Feldgröße für Eintrags-Symbol</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
@@ -2576,33 +2576,6 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     <message>
         <source>Invalid entry field type</source>
         <translation>Ungültiger Eintrags-Feldtyp</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – empfohlen)</translation>
     </message>
 </context>
 <context>
@@ -2692,7 +2665,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Aus KeePassXC-Datenbank zusammenführen</translation>
+        <translation>Mit KeePassXC-Datenbank zusammenführen</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -2724,7 +2697,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Change &amp;master key...</source>
-        <translation>Ha&amp;uptschlüssel ändern...</translation>
+        <translation>&amp;Master-Passwort ändern...</translation>
     </message>
     <message>
         <source>&amp;Database settings</source>
@@ -2748,7 +2721,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Benutzername in die Zwischenablage kopieren</translation>
+        <translation>Benutzernamen in die Zwischenablage kopieren</translation>
     </message>
     <message>
         <source>Cop&amp;y password</source>
@@ -2776,7 +2749,7 @@ Dieser Vorgang ist nur in eine Richtung möglich. Die importierte Datenbank kann
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>Datenbanken &amp;sperren</translation>
+        <translation>Datenbank &amp;sperren</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3019,7 +2992,7 @@ Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Zeige nur die am besten passenden Einträge für eine URL anstatt aller Einträge der ganzen Domäne.</translation>
+        <translation>Nur die am besten passenden Einträge für eine URL anstatt aller Einträge der ganzen Domäne anzeigen.</translation>
     </message>
     <message>
         <source>&amp;Return only best matching entries</source>
@@ -3039,11 +3012,11 @@ Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
     </message>
     <message>
         <source>Sort matching entries by &amp;username</source>
-        <translation>Sortiere gefundene Einträge nach &amp;Benutzername</translation>
+        <translation>Passende Einträge nach &amp;Benutzernamen sortieren</translation>
     </message>
     <message>
         <source>Sort &amp;matching entries by title</source>
-        <translation>Sortiere gefundene Einträge nach Titel</translation>
+        <translation>&amp;Passende Einträge nach Titel sortieren</translation>
     </message>
     <message>
         <source>R&amp;emove all shared encryption keys from active database</source>
@@ -3324,11 +3297,11 @@ Es wird der Standard-Port 19455 verwendet.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Nutzername für den Eintrag</translation>
+        <translation>Benutzername für den Eintrag</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>Nutzername</translation>
+        <translation>Benutzername</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
@@ -3510,6 +3483,30 @@ Verfügbare Kommandos:
     <message>
         <source>missing closing quote</source>
         <translation>Schließendes Anführungszeichen fehlt</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – empfohlen)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3959,7 +3956,7 @@ Bitte entsperren Sie die ausgewählte Datenbank oder wählen Sie eine andere, di
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
-        <translation>Verwende Google als Fallback fürs Herunterladen von Website-Icons</translation>
+        <translation>Google als Reservesystem fürs Herunterladen von Website-Symbolen verwenden</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>

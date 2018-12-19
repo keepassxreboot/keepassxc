@@ -21,8 +21,8 @@
 #include "Edit.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -41,19 +41,15 @@ Edit::~Edit()
 
 int Edit::execute(const QStringList& arguments)
 {
-
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
+    parser.setApplicationDescription(description);
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-
-    QCommandLineOption keyFile(QStringList() << "k"
-                                             << "key-file",
-                               QObject::tr("Key file of the database."),
-                               QObject::tr("path"));
-    parser.addOption(keyFile);
+    parser.addOption(Command::QuietOption);
+    parser.addOption(Command::KeyFileOption);
 
     QCommandLineOption username(QStringList() << "u"
                                               << "username",
@@ -87,38 +83,41 @@ int Edit::execute(const QStringList& arguments)
     parser.addOption(length);
 
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to edit."));
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
+        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
         return EXIT_FAILURE;
     }
 
-    QString databasePath = args.at(0);
-    QString entryPath = args.at(1);
+    const QString& databasePath = args.at(0);
+    const QString& entryPath = args.at(1);
 
-    Database* db = Database::unlockFromStdin(databasePath, parser.value(keyFile));
-    if (db == nullptr) {
+    auto db = Utils::unlockDatabase(databasePath,
+                                    parser.value(Command::KeyFileOption),
+                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                    Utils::STDERR);
+    if (!db) {
         return EXIT_FAILURE;
     }
 
     QString passwordLength = parser.value(length);
     if (!passwordLength.isEmpty() && !passwordLength.toInt()) {
-        qCritical("Invalid value for password length %s.", qPrintable(passwordLength));
+        err << QObject::tr("Invalid value for password length: %1").arg(passwordLength) << endl;
         return EXIT_FAILURE;
     }
 
     Entry* entry = db->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        qCritical("Could not find entry with path %s.", qPrintable(entryPath));
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty()
-        && !parser.isSet(prompt)
-        && !parser.isSet(generate)) {
-        qCritical("Not changing any field for entry %s.", qPrintable(entryPath));
+        && !parser.isSet(prompt) && !parser.isSet(generate)) {
+        err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
@@ -137,9 +136,10 @@ int Edit::execute(const QStringList& arguments)
     }
 
     if (parser.isSet(prompt)) {
-        outputTextStream << "Enter new password for entry: ";
-        outputTextStream.flush();
-        QString password = Utils::getPassword();
+        if (!parser.isSet(Command::QuietOption)) {
+            out << QObject::tr("Enter new password for entry: ") << flush;
+        }
+        QString password = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
         entry->setPassword(password);
     } else if (parser.isSet(generate)) {
         PasswordGenerator passwordGenerator;
@@ -147,7 +147,7 @@ int Edit::execute(const QStringList& arguments)
         if (passwordLength.isEmpty()) {
             passwordGenerator.setLength(PasswordGenerator::DefaultLength);
         } else {
-            passwordGenerator.setLength(passwordLength.toInt());
+            passwordGenerator.setLength(static_cast<size_t>(passwordLength.toInt()));
         }
 
         passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
@@ -158,12 +158,14 @@ int Edit::execute(const QStringList& arguments)
 
     entry->endUpdate();
 
-    QString errorMessage = db->saveToFile(databasePath);
-    if (!errorMessage.isEmpty()) {
-        qCritical("Writing the database failed %s.", qPrintable(errorMessage));
+    QString errorMessage;
+    if (!db->save(databasePath, &errorMessage, true, false)) {
+        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
-    outputTextStream << "Successfully edited entry " << entry->title() << "." << endl;
+    if (!parser.isSet(Command::QuietOption)) {
+        out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    }
     return EXIT_SUCCESS;
 }

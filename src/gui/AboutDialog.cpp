@@ -37,7 +37,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     setWindowFlags(Qt::Sheet);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    m_ui->nameLabel->setText(m_ui->nameLabel->text().replace("${VERSION}", KEEPASSX_VERSION));
+    m_ui->nameLabel->setText(m_ui->nameLabel->text().replace("${VERSION}", KEEPASSXC_VERSION));
     QFont nameLabelFont = m_ui->nameLabel->font();
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
@@ -52,7 +52,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     }
 
     QString debugInfo = "KeePassXC - ";
-    debugInfo.append(tr("Version %1").arg(KEEPASSX_VERSION).append("\n"));
+    debugInfo.append(tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
     debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
 #endif
@@ -64,10 +64,9 @@ AboutDialog::AboutDialog(QWidget* parent)
     debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
 #endif
 
-    debugInfo.append("\n").append(QString("%1\n- Qt %2\n- %3\n\n")
-                                      .arg(tr("Libraries:"))
-                                      .arg(QString::fromLocal8Bit(qVersion()))
-                                      .arg(Crypto::backendVersion()));
+    debugInfo.append("\n").append(
+        QString("%1\n- Qt %2\n- %3\n\n")
+            .arg(tr("Libraries:"), QString::fromLocal8Bit(qVersion()), Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
     debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")

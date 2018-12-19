@@ -61,7 +61,7 @@ void PasswordEdit::setShowPassword(bool show)
             setText(m_basePasswordEdit->text());
         } else {
             // This fix a bug when the QLineEdit is disabled while switching config
-            if (isEnabled() == false) {
+            if (!isEnabled()) {
                 setEnabled(true);
                 setReadOnly(false);
             }
@@ -69,6 +69,11 @@ void PasswordEdit::setShowPassword(bool show)
     }
     updateStylesheet();
     emit showPasswordChanged(show);
+}
+
+bool PasswordEdit::isPasswordVisible() const
+{
+    return isEnabled();
 }
 
 bool PasswordEdit::passwordsEqual() const
@@ -94,7 +99,7 @@ void PasswordEdit::updateStylesheet()
     setStyleSheet(stylesheet);
 }
 
-void PasswordEdit::autocompletePassword(QString password)
+void PasswordEdit::autocompletePassword(const QString& password)
 {
     if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);

@@ -18,17 +18,22 @@
 
 #include "DatabaseSettingsDialog.h"
 #include "ui_DatabaseSettingsDialog.h"
-#include "DatabaseSettingsWidgetGeneral.h"
+
 #include "DatabaseSettingsWidgetEncryption.h"
+#include "DatabaseSettingsWidgetGeneral.h"
 #include "DatabaseSettingsWidgetMasterKey.h"
+#ifdef WITH_XC_BROWSER
+#include "DatabaseSettingsWidgetBrowser.h"
+#endif
 #ifdef WITH_XC_KEESHARE
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
 
 #include "core/Global.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
 #include "core/Database.h"
+#include "core/FilePath.h"
+#include "touchid/TouchID.h"
 
 class DatabaseSettingsDialog::ExtraPage
 {
@@ -38,7 +43,7 @@ public:
             , widget(widget)
     {
     }
-    void loadSettings(Database* db) const
+    void loadSettings(QSharedPointer<Database> db) const
     {
         settingsPage->loadSettings(widget, db);
     }
@@ -58,6 +63,9 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     , m_securityTabWidget(new QTabWidget(this))
     , m_masterKeyWidget(new DatabaseSettingsWidgetMasterKey(this))
     , m_encryptionWidget(new DatabaseSettingsWidgetEncryption(this))
+#ifdef WITH_XC_BROWSER
+    , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
+#endif
 {
     m_ui->setupUi(this);
 
@@ -79,9 +87,15 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->setCurrentIndex(0);
     m_securityTabWidget->setCurrentIndex(0);
 
-    connect(m_securityTabWidget, SIGNAL(currentChanged(int)),  SLOT(pageChanged()));
+    connect(m_securityTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged()));
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_ui->advancedSettingsToggle, SIGNAL(toggled(bool)), SLOT(toggleAdvancedMode(bool)));
+
+#ifdef WITH_XC_BROWSER
+    m_ui->categoryList->addCategory(tr("Browser Integration"),
+                                    FilePath::instance()->icon("apps", "internet-web-browser"));
+    m_ui->stackedWidget->addWidget(m_browserWidget);
+#endif
 
     pageChanged();
 }
@@ -90,12 +104,15 @@ DatabaseSettingsDialog::~DatabaseSettingsDialog()
 {
 }
 
-void DatabaseSettingsDialog::load(Database* db)
+void DatabaseSettingsDialog::load(QSharedPointer<Database> db)
 {
     m_ui->categoryList->setCurrentCategory(0);
     m_generalWidget->load(db);
     m_masterKeyWidget->load(db);
     m_encryptionWidget->load(db);
+#ifdef WITH_XC_BROWSER
+    m_browserWidget->load(db);
+#endif
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings(db);
     }

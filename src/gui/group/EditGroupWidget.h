@@ -32,7 +32,7 @@ namespace Ui
 {
     class EditGroupWidgetMain;
     class EditWidget;
-}
+} // namespace Ui
 
 class IEditGroupPage
 {
@@ -55,7 +55,7 @@ public:
     explicit EditGroupWidget(QWidget* parent = nullptr);
     ~EditGroupWidget();
 
-    void loadGroup(Group* group, bool create, Database* database);
+    void loadGroup(Group* group, bool create, QSharedPointer<Database> database);
     void clear();
 
     void addEditPage(IEditGroupPage* page);
@@ -84,6 +84,7 @@ private:
     QScopedPointer<Group> m_temporaryGroup;
     QPointer<Database> m_database;
     QPointer<Group> m_group;
+    QSharedPointer<Database> m_db;
 
     class ExtraPage;
     QList<ExtraPage> m_extraPages;

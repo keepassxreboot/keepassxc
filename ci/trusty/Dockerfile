@@ -39,6 +39,7 @@ RUN set -x \
         clang-3.6 \
         libclang-common-3.6-dev \
         clang-format-3.6 \
+        llvm-3.6 \
         cmake3 \
         make \
         libgcrypt20-18-dev \
@@ -49,12 +50,15 @@ RUN set -x \
         ${QT5_VERSION}tools \
         ${QT5_VERSION}x11extras \
         ${QT5_VERSION}translations \
+        ${QT5_VERSION}svg \
         zlib1g-dev \
         libyubikey-dev \
         libykpers-1-dev \
         libquazip-dev \
         libxi-dev \
         libxtst-dev \
+        libqrencode-dev \
+        xclip \
         xvfb
 
 ENV PATH="/opt/${QT5_VERSION}/bin:${PATH}"

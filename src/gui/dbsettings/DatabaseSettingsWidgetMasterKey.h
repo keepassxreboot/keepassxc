@@ -18,8 +18,9 @@
 #ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
 #define KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
 
-#include "config-keepassx.h"
 #include "DatabaseSettingsWidget.h"
+#include "config-keepassx.h"
+
 #include <QPointer>
 
 class Database;
@@ -32,7 +33,7 @@ class KeyFileEditWidget;
 class YubiKeyEditWidget;
 class QPushButton;
 
-class DatabaseSettingsWidgetMasterKey: public DatabaseSettingsWidget
+class DatabaseSettingsWidgetMasterKey : public DatabaseSettingsWidget
 {
     Q_OBJECT
 
@@ -41,9 +42,12 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetMasterKey);
     ~DatabaseSettingsWidgetMasterKey() override;
 
-    void load(Database* db) override;
+    void load(QSharedPointer<Database> db) override;
 
-    inline bool hasAdvancedMode() const override { return false; }
+    inline bool hasAdvancedMode() const override
+    {
+        return false;
+    }
 
 public slots:
     void initialize() override;
@@ -58,9 +62,12 @@ private slots:
 private:
     void setAdditionalKeyOptionsVisible(bool show);
 
+    // clang-format off
     bool addToCompositeKey(KeyComponentWidget* widget,
                            QSharedPointer<CompositeKey>& newKey,
                            QSharedPointer<Key>& oldKey);
+    // clang-format on
+
     bool addToCompositeKey(KeyComponentWidget* widget,
                            QSharedPointer<CompositeKey>& newKey,
                            QSharedPointer<ChallengeResponseKey>& oldKey);
@@ -75,4 +82,4 @@ private:
 #endif
 };
 
-#endif //KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H
+#endif // KEEPASSXC_DATABASESETTINGSPAGECHANGEMASTERKEY_H

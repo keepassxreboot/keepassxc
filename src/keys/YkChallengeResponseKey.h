@@ -13,7 +13,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef KEEPASSX_YK_CHALLENGERESPONSEKEY_H
 #define KEEPASSX_YK_CHALLENGERESPONSEKEY_H
@@ -35,7 +35,7 @@ public:
 
     QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;
-    bool challenge(const QByteArray& challenge, unsigned retries);
+    bool challenge(const QByteArray& challenge, unsigned int retries);
     QString getName() const;
     bool isBlocking() const;
 

@@ -338,10 +338,8 @@ void PasswordGeneratorWidget::selectSimpleMode()
     m_ui->checkBoxLower->setChecked(m_ui->checkBoxLowerAdv->isChecked());
     m_ui->checkBoxNumbers->setChecked(m_ui->checkBoxNumbersAdv->isChecked());
     m_ui->checkBoxSpecialChars->setChecked(m_ui->checkBoxBraces->isChecked() | m_ui->checkBoxPunctuation->isChecked()
-                                           | m_ui->checkBoxQuotes->isChecked()
-                                           | m_ui->checkBoxMath->isChecked()
-                                           | m_ui->checkBoxDashes->isChecked()
-                                           | m_ui->checkBoxLogograms->isChecked());
+                                           | m_ui->checkBoxQuotes->isChecked() | m_ui->checkBoxMath->isChecked()
+                                           | m_ui->checkBoxDashes->isChecked() | m_ui->checkBoxLogograms->isChecked());
     m_ui->checkBoxExtASCII->setChecked(m_ui->checkBoxExtASCIIAdv->isChecked());
     m_ui->simpleBar->show();
 }

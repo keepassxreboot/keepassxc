@@ -16,10 +16,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DetailsWidget.h"
-#include "ui_DetailsWidget.h"
+#include "EntryPreviewWidget.h"
+#include "ui_EntryPreviewWidget.h"
 
-#include <QDebug>
 #include <QDesktopServices>
 #include <QDir>
 
@@ -33,43 +32,45 @@
 
 namespace
 {
-    constexpr int GeneralTabIndex = 0;
+constexpr int GeneralTabIndex = 0;
 }
 
-DetailsWidget::DetailsWidget(QWidget* parent)
-    : QWidget(parent)
-    , m_ui(new Ui::DetailsWidget())
-    , m_locked(false)
-    , m_currentEntry(nullptr)
-    , m_currentGroup(nullptr)
-    , m_selectedTabEntry(0)
-    , m_selectedTabGroup(0)
+EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
+        : QWidget(parent)
+        , m_ui(new Ui::EntryPreviewWidget())
+        , m_locked(false)
+        , m_currentEntry(nullptr)
+        , m_currentGroup(nullptr)
+        , m_selectedTabEntry(0)
+        , m_selectedTabGroup(0)
 {
     m_ui->setupUi(this);
 
     // Entry
     m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
-    connect(m_ui->entryCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
+    connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     connect(&m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
 
     // Group
     m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
-    connect(m_ui->groupCloseButton, SIGNAL(toggled(bool)), SLOT(hide()));
+    connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 }
 
-DetailsWidget::~DetailsWidget()
+EntryPreviewWidget::~EntryPreviewWidget()
 {
 }
 
-void DetailsWidget::setEntry(Entry* selectedEntry)
+void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
     if (!selectedEntry) {
         hide();
@@ -86,7 +87,7 @@ void DetailsWidget::setEntry(Entry* selectedEntry)
     updateEntryAttachmentsTab();
     updateEntryAutotypeTab();
 
-    setVisible(!config()->get("GUI/HideDetailsView").toBool());
+    setVisible(!config()->get("GUI/HidePreviewPanel").toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
     const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
@@ -94,7 +95,7 @@ void DetailsWidget::setEntry(Entry* selectedEntry)
     m_ui->entryTabWidget->setCurrentIndex(tabIndex);
 }
 
-void DetailsWidget::setGroup(Group* selectedGroup)
+void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
     if (!selectedGroup) {
         hide();
@@ -105,10 +106,12 @@ void DetailsWidget::setGroup(Group* selectedGroup)
     updateGroupHeaderLine();
     updateGroupGeneralTab();
     updateGroupNotesTab();
+
 #ifdef WITH_XC_KEESHARE
     updateGroupSharingTab();
 #endif
-    setVisible(!config()->get("GUI/HideDetailsView").toBool());
+
+    setVisible(!config()->get("GUI/HidePreviewPanel").toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
     const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
@@ -116,14 +119,14 @@ void DetailsWidget::setGroup(Group* selectedGroup)
     m_ui->groupTabWidget->setCurrentIndex(tabIndex);
 }
 
-void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
+void EntryPreviewWidget::setDatabaseMode(DatabaseWidget::Mode mode)
 {
-    m_locked = mode == DatabaseWidget::LockedMode;
+    m_locked = mode == DatabaseWidget::Mode::LockedMode;
     if (m_locked) {
         return;
     }
 
-    if (mode == DatabaseWidget::ViewMode) {
+    if (mode == DatabaseWidget::Mode::ViewMode) {
         if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
             setGroup(m_currentGroup);
         } else {
@@ -132,7 +135,7 @@ void DetailsWidget::setDatabaseMode(DatabaseWidget::Mode mode)
     }
 }
 
-void DetailsWidget::updateEntryHeaderLine()
+void EntryPreviewWidget::updateEntryHeaderLine()
 {
     Q_ASSERT(m_currentEntry);
     const QString title = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title());
@@ -140,7 +143,7 @@ void DetailsWidget::updateEntryHeaderLine()
     m_ui->entryIcon->setPixmap(preparePixmap(m_currentEntry->iconPixmap(), 16));
 }
 
-void DetailsWidget::updateEntryTotp()
+void EntryPreviewWidget::updateEntryTotp()
 {
     Q_ASSERT(m_currentEntry);
     const bool hasTotp = m_currentEntry->hasTotp();
@@ -157,18 +160,40 @@ void DetailsWidget::updateEntryTotp()
     }
 }
 
-void DetailsWidget::updateEntryGeneralTab()
+void EntryPreviewWidget::setPasswordVisible(bool state)
+{
+    const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
+    auto flags = m_ui->entryPasswordLabel->textInteractionFlags();
+    if (state) {
+        m_ui->entryPasswordLabel->setRawText(password);
+        m_ui->entryPasswordLabel->setToolTip(password);
+        m_ui->entryPasswordLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
+    } else {
+        m_ui->entryPasswordLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
+        m_ui->entryPasswordLabel->setToolTip({});
+        if (password.isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
+            m_ui->entryPasswordLabel->setRawText("");
+        } else {
+            m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
+        }
+    }
+}
+
+void EntryPreviewWidget::updateEntryGeneralTab()
 {
     Q_ASSERT(m_currentEntry);
     m_ui->entryUsernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
 
-    if (!config()->get("security/hidepassworddetails").toBool()) {
-        const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
-        m_ui->entryPasswordLabel->setRawText(password);
-        m_ui->entryPasswordLabel->setToolTip(password);
+    if (config()->get("security/HidePasswordPreviewPanel").toBool()) {
+        // Hide password
+        setPasswordVisible(false);
+        // Show the password toggle button if there are dots in the label
+        m_ui->togglePasswordButton->setVisible(!m_ui->entryPasswordLabel->rawText().isEmpty());
+        m_ui->togglePasswordButton->setChecked(false);
     } else {
-        m_ui->entryPasswordLabel->setRawText(QString("\u25cf").repeated(6));
-        m_ui->entryPasswordLabel->setToolTip({});
+        // Show password
+        setPasswordVisible(true);
+        m_ui->togglePasswordButton->setVisible(false);
     }
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
@@ -184,11 +209,11 @@ void DetailsWidget::updateEntryGeneralTab()
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires =
-        entryTime.expires() ? entryTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+            entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
 }
 
-void DetailsWidget::updateEntryNotesTab()
+void EntryPreviewWidget::updateEntryNotesTab()
 {
     Q_ASSERT(m_currentEntry);
     const QString notes = m_currentEntry->notes();
@@ -196,13 +221,13 @@ void DetailsWidget::updateEntryNotesTab()
     m_ui->entryNotesEdit->setText(notes);
 }
 
-void DetailsWidget::updateEntryAttributesTab()
+void EntryPreviewWidget::updateEntryAttributesTab()
 {
     Q_ASSERT(m_currentEntry);
     m_ui->entryAttributesEdit->clear();
     const EntryAttributes* attributes = m_currentEntry->attributes();
     const QStringList customAttributes = attributes->customKeys();
-    const bool haveAttributes = customAttributes.size() > 0;
+    const bool haveAttributes = !customAttributes.isEmpty();
     setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttributesTab, haveAttributes);
     if (haveAttributes) {
         QString attributesText;
@@ -217,7 +242,7 @@ void DetailsWidget::updateEntryAttributesTab()
     }
 }
 
-void DetailsWidget::updateEntryAttachmentsTab()
+void EntryPreviewWidget::updateEntryAttachmentsTab()
 {
     Q_ASSERT(m_currentEntry);
     const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
@@ -225,7 +250,7 @@ void DetailsWidget::updateEntryAttachmentsTab()
     m_ui->entryAttachmentsWidget->setEntryAttachments(m_currentEntry->attachments());
 }
 
-void DetailsWidget::updateEntryAutotypeTab()
+void EntryPreviewWidget::updateEntryAutotypeTab()
 {
     Q_ASSERT(m_currentEntry);
     m_ui->entryAutotypeTree->clear();
@@ -234,7 +259,7 @@ void DetailsWidget::updateEntryAutotypeTab()
     const auto associations = autotypeAssociations->getAll();
     for (const auto& assoc : associations) {
         const QString sequence =
-            assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
+                assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
         items.append(new QTreeWidgetItem(m_ui->entryAutotypeTree, {assoc.window, sequence}));
     }
 
@@ -242,14 +267,14 @@ void DetailsWidget::updateEntryAutotypeTab()
     setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, !items.isEmpty());
 }
 
-void DetailsWidget::updateGroupHeaderLine()
+void EntryPreviewWidget::updateGroupHeaderLine()
 {
     Q_ASSERT(m_currentGroup);
     m_ui->groupTitleLabel->setRawText(hierarchy(m_currentGroup, {}));
     m_ui->groupIcon->setPixmap(preparePixmap(m_currentGroup->iconPixmap(), 32));
 }
 
-void DetailsWidget::updateGroupGeneralTab()
+void EntryPreviewWidget::updateGroupGeneralTab()
 {
     Q_ASSERT(m_currentGroup);
     const QString searchingText = m_currentGroup->resolveSearchingEnabled() ? tr("Enabled") : tr("Disabled");
@@ -260,11 +285,11 @@ void DetailsWidget::updateGroupGeneralTab()
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
     const QString expiresText =
-        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+            groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 }
 
-void DetailsWidget::updateGroupNotesTab()
+void EntryPreviewWidget::updateGroupNotesTab()
 {
     Q_ASSERT(m_currentGroup);
     const QString notes = m_currentGroup->notes();
@@ -273,7 +298,7 @@ void DetailsWidget::updateGroupNotesTab()
 }
 
 #ifdef WITH_XC_KEESHARE
-void DetailsWidget::updateGroupSharingTab()
+void EntryPreviewWidget::updateGroupSharingTab()
 {
     Q_ASSERT(m_currentGroup);
     setTabEnabled(m_ui->groupTabWidget, m_ui->groupShareTab, KeeShare::isShared(m_currentGroup));
@@ -283,7 +308,7 @@ void DetailsWidget::updateGroupSharingTab()
 }
 #endif
 
-void DetailsWidget::updateTotpLabel()
+void EntryPreviewWidget::updateTotpLabel()
 {
     if (!m_locked && m_currentEntry && m_currentEntry->hasTotp()) {
         const QString totpCode = m_currentEntry->totp();
@@ -296,20 +321,20 @@ void DetailsWidget::updateTotpLabel()
     }
 }
 
-void DetailsWidget::updateTabIndexes()
+void EntryPreviewWidget::updateTabIndexes()
 {
     m_selectedTabEntry = m_ui->entryTabWidget->currentIndex();
     m_selectedTabGroup = m_ui->groupTabWidget->currentIndex();
 }
 
-void DetailsWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)
+void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)
 {
     const int tabIndex = tabWidget->indexOf(widget);
     Q_ASSERT(tabIndex != -1);
     tabWidget->setTabEnabled(tabIndex, enabled);
 }
 
-QPixmap DetailsWidget::preparePixmap(const QPixmap& pixmap, int size)
+QPixmap EntryPreviewWidget::preparePixmap(const QPixmap& pixmap, int size)
 {
     if (pixmap.width() > size || pixmap.height() > size) {
         return pixmap.scaled(size, size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -317,7 +342,7 @@ QPixmap DetailsWidget::preparePixmap(const QPixmap& pixmap, int size)
     return pixmap;
 }
 
-QString DetailsWidget::hierarchy(const Group* group, const QString& title)
+QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)
 {
     const QString separator(" / ");
     QStringList hierarchy = group->hierarchy();

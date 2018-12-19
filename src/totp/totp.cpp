@@ -22,14 +22,15 @@
 
 #include <QCryptographicHash>
 #include <QMessageAuthenticationCode>
-#include <QRegExp>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QUrl>
 #include <QUrlQuery>
 #include <QVariant>
 #include <QtEndian>
 #include <cmath>
 
-static QList<Totp::Encoder> encoders {
+static QList<Totp::Encoder> encoders{
     {"", "", "0123456789", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP, false},
     {"steam", Totp::STEAM_SHORTNAME, "23456789BCDFGHJKMNPQRTVWXY", Totp::STEAM_DIGITS, Totp::DEFAULT_STEP, true},
 };
@@ -79,7 +80,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     settings->step = qBound(1u, settings->step, 60u);
 
     // Detect custom settings, used by setup GUI
-    if (settings->encoder.shortName != STEAM_SHORTNAME
+    if (settings->encoder.shortName.isEmpty()
         && (settings->digits != DEFAULT_DIGITS || settings->step != DEFAULT_STEP)) {
         settings->custom = true;
     }
@@ -87,24 +88,32 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     return settings;
 }
 
-QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key, const uint digits, const uint step,
-                                                    const QString& encoderShortName)
+QSharedPointer<Totp::Settings>
+Totp::createSettings(const QString& key, const uint digits, const uint step, const QString& encoderShortName)
 {
     bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP;
-    return QSharedPointer<Totp::Settings>(new Totp::Settings {
-        getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step
-    });
+    return QSharedPointer<Totp::Settings>(
+        new Totp::Settings{getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step});
 }
 
-QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
+QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
+                            const QString& title,
+                            const QString& username,
+                            bool forceOtp)
 {
     if (settings.isNull()) {
         return {};
     }
 
     // OTP Url output
-    if (settings->otpUrl) {
-        auto urlstring = QString("key=%1&step=%2&size=%3").arg(settings->key).arg(settings->step).arg(settings->digits);
+    if (settings->otpUrl || forceOtp) {
+        auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
+                             .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
+                                  username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
+                                  QString(Base32::sanitizeInput(settings->key.toLatin1())))
+                             .arg(settings->step)
+                             .arg(settings->digits);
+
         if (!settings->encoder.name.isEmpty()) {
             urlstring.append("&encoder=").append(settings->encoder.name);
         }
@@ -120,7 +129,7 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings> settings)
     return QString("%1;%2").arg(settings->step).arg(settings->digits);
 }
 
-QString Totp::generateTotp(const QSharedPointer<Totp::Settings> settings, const quint64 time)
+QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time)
 {
     Q_ASSERT(!settings.isNull());
     if (settings.isNull()) {
@@ -187,7 +196,7 @@ Totp::Encoder& Totp::steamEncoder()
     return getEncoderByShortName("S");
 }
 
-Totp::Encoder& Totp::getEncoderByShortName(QString shortName)
+Totp::Encoder& Totp::getEncoderByShortName(const QString& shortName)
 {
     for (auto& encoder : encoders) {
         if (encoder.shortName == shortName) {
@@ -197,7 +206,7 @@ Totp::Encoder& Totp::getEncoderByShortName(QString shortName)
     return defaultEncoder();
 }
 
-Totp::Encoder& Totp::getEncoderByName(QString name)
+Totp::Encoder& Totp::getEncoderByName(const QString& name)
 {
     for (auto& encoder : encoders) {
         if (encoder.name == name) {

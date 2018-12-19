@@ -38,14 +38,14 @@ public:
     explicit DatabaseSettingsWidgetKeeShare(QWidget* parent = nullptr);
     ~DatabaseSettingsWidgetKeeShare();
 
-    void loadSettings(Database* db);
+    void loadSettings(QSharedPointer<Database> db);
     void saveSettings();
 
 private:
     QScopedPointer<Ui::DatabaseSettingsWidgetKeeShare> m_ui;
 
     QScopedPointer<QStandardItemModel> m_referencesModel;
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H

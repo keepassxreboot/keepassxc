@@ -180,7 +180,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>30</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -197,7 +197,7 @@
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
-      <string>Import</string>
+      <string>&amp;Import</string>
      </property>
      <addaction name="actionImportKeePass1"/>
      <addaction name="actionImportCsv"/>
@@ -234,8 +234,11 @@
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="toolTip">
+      <string/>
+     </property>
      <property name="title">
-      <string>Copy att&amp;ribute to clipboard</string>
+      <string>Copy att&amp;ribute...</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
      <addaction name="actionEntryCopyURL"/>
@@ -247,22 +250,25 @@
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>Time-based one-time password</string>
+      <string>TOTP...</string>
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
+     <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
-    <addaction name="actionEntryCopyUsername"/>
-    <addaction name="actionEntryCopyPassword"/>
-    <addaction name="menuEntryCopyAttribute"/>
-    <addaction name="menuEntryTotp"/>
-    <addaction name="actionEntryAutoType"/>
-    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryDelete"/>
-    <addaction name="actionEntryNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryCopyUsername"/>
+    <addaction name="actionEntryCopyPassword"/>
+    <addaction name="menuEntryCopyAttribute"/>
+    <addaction name="separator"/>
+    <addaction name="menuEntryTotp"/>
+    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryAutoType"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -365,12 +371,18 @@
   </action>
   <action name="actionDatabaseNew">
    <property name="text">
-    <string>&amp;New database</string>
+    <string>&amp;New database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new database</string>
    </property>
   </action>
   <action name="actionDatabaseMerge">
    <property name="text">
-    <string>Merge from KeePassX database</string>
+    <string>&amp;Merge from database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Merge from another KDBX database</string>
    </property>
   </action>
   <action name="actionEntryNew">
@@ -378,7 +390,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Add new entry</string>
+    <string>&amp;New entry</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new entry</string>
    </property>
   </action>
   <action name="actionEntryEdit">
@@ -386,7 +401,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;View/Edit entry</string>
+    <string>&amp;Edit entry</string>
+   </property>
+   <property name="toolTip">
+    <string>View or edit entry</string>
    </property>
   </action>
   <action name="actionEntryDelete">
@@ -402,7 +420,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Add new group</string>
+    <string>&amp;New group</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new group</string>
    </property>
   </action>
   <action name="actionGroupEdit">
@@ -434,7 +455,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change &amp;master key...</string>
+    <string>Change master &amp;key...</string>
    </property>
   </action>
   <action name="actionChangeDatabaseSettings">
@@ -442,7 +463,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Database settings</string>
+    <string>&amp;Database settings...</string>
    </property>
    <property name="toolTip">
     <string>Database settings</string>
@@ -475,7 +496,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Cop&amp;y password</string>
+    <string>Copy &amp;password</string>
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
@@ -505,7 +526,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Perform Auto-Type</string>
+    <string>Perform &amp;Auto-Type</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
@@ -513,7 +534,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Open URL</string>
+    <string>Open &amp;URL</string>
    </property>
   </action>
   <action name="actionLockDatabases">
@@ -567,17 +588,28 @@
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
-    <string>Import KeePass 1 database...</string>
+    <string>KeePass 1 database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a KeePass 1 database</string>
    </property>
   </action>
   <action name="actionImportCsv">
    <property name="text">
-    <string>Import CSV file...</string>
+    <string>CSV file...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a CSV file</string>
    </property>
   </action>
   <action name="actionEntryTotp">
    <property name="text">
-    <string>Show TOTP</string>
+    <string>Show TOTP...</string>
+   </property>
+  </action>
+  <action name="actionEntryTotpQRCode">
+   <property name="text">
+    <string>Show TOTP QR Code...</string>
    </property>
   </action>
   <action name="actionEntrySetupTotp">

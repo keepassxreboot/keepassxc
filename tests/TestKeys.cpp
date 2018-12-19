@@ -87,8 +87,8 @@ void TestKeys::testFileKey()
 
     compositeKey->addKey(fileKey);
 
-    QScopedPointer<Database> db(reader.readDatabase(dbFilename, compositeKey));
-    QVERIFY(db);
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(db->open(dbFilename, compositeKey, nullptr, false));
     QVERIFY(!reader.hasError());
     QCOMPARE(db->metadata()->name(), QString("%1 Database").arg(name));
 }
@@ -152,7 +152,8 @@ void TestKeys::testCreateAndOpenFileKey()
     dbBuffer.reset();
 
     KeePass2Reader reader;
-    QScopedPointer<Database> dbRead(reader.readDatabase(&dbBuffer, compositeKey));
+    auto dbRead = QSharedPointer<Database>::create();
+    reader.readDatabase(&dbBuffer, compositeKey, dbRead.data());
     if (reader.hasError()) {
         QFAIL(reader.errorString().toUtf8().constData());
     }
@@ -226,7 +227,7 @@ void TestKeys::testCompositeKeyComponents()
     auto fileKeyEnc = QSharedPointer<FileKey>::create();
     QString error;
     fileKeyEnc->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"), &error);
-    if (!error.isNull()) {
+    if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }
     auto challengeResponseKeyEnc = QSharedPointer<MockChallengeResponseKey>::create(QByteArray(16, 0x10));
@@ -236,7 +237,7 @@ void TestKeys::testCompositeKeyComponents()
     compositeKeyEnc->addKey(fileKeyEnc);
     compositeKeyEnc->addChallengeResponseKey(challengeResponseKeyEnc);
 
-    QScopedPointer<Database> db1(new Database());
+    auto db1 = QSharedPointer<Database>::create();
     db1->setKey(compositeKeyEnc);
 
     KeePass2Writer writer;
@@ -245,27 +246,27 @@ void TestKeys::testCompositeKeyComponents()
     QVERIFY(writer.writeDatabase(&buffer, db1.data()));
 
     buffer.seek(0);
-    QScopedPointer<Database> db2;
+    auto db2 = QSharedPointer<Database>::create();
     KeePass2Reader reader;
     auto compositeKeyDec1 = QSharedPointer<CompositeKey>::create();
 
     // try decryption and subsequently add key components until decryption is successful
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec1));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec1, db2.data()));
     QVERIFY(reader.hasError());
 
     compositeKeyDec1->addKey(passwordKeyEnc);
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec1));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec1, db2.data()));
     QVERIFY(reader.hasError());
 
     compositeKeyDec1->addKey(fileKeyEnc);
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec1));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec1, db2.data()));
     QVERIFY(reader.hasError());
 
     compositeKeyDec1->addChallengeResponseKey(challengeResponseKeyEnc);
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec1));
+    QVERIFY(reader.readDatabase(&buffer, compositeKeyDec1, db2.data()));
     // now we should be able to open the database
     if (reader.hasError()) {
         QFAIL(qPrintable(reader.errorString()));
@@ -277,20 +278,20 @@ void TestKeys::testCompositeKeyComponents()
     compositeKeyDec2->addKey(fileKeyEnc);
     compositeKeyDec2->addChallengeResponseKey(challengeResponseKeyEnc);
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec2));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec2, db2.data()));
     QVERIFY(reader.hasError());
 
     auto compositeKeyDec3 = QSharedPointer<CompositeKey>::create();
     compositeKeyDec3->addKey(passwordKeyEnc);
     auto fileKeyWrong = QSharedPointer<FileKey>::create();
     fileKeyWrong->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed2.key"), &error);
-    if (!error.isNull()) {
+    if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }
     compositeKeyDec3->addKey(fileKeyWrong);
     compositeKeyDec3->addChallengeResponseKey(challengeResponseKeyEnc);
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec3));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec3, db2.data()));
     QVERIFY(reader.hasError());
 
     auto compositeKeyDec4 = QSharedPointer<CompositeKey>::create();
@@ -298,6 +299,6 @@ void TestKeys::testCompositeKeyComponents()
     compositeKeyDec4->addKey(fileKeyEnc);
     compositeKeyDec4->addChallengeResponseKey(QSharedPointer<MockChallengeResponseKey>::create(QByteArray(16, 0x20)));
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKeyDec4));
+    QVERIFY(!reader.readDatabase(&buffer, compositeKeyDec4, db2.data()));
     QVERIFY(reader.hasError());
 }

@@ -22,7 +22,7 @@
 
 class NewDatabaseWizardPageMasterKey : public NewDatabaseWizardPage
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizardPageMasterKey(QWidget* parent = nullptr);
@@ -33,4 +33,4 @@ private slots:
     void updateWindowSize();
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARDPAGEMASTERKEY_H
+#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEMASTERKEY_H

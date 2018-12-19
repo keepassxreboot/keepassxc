@@ -18,12 +18,13 @@
 #include "WildcardMatcher.h"
 
 #include <QStringList>
+#include <utility>
 
 const QChar WildcardMatcher::Wildcard = '*';
 const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;
 
-WildcardMatcher::WildcardMatcher(const QString& text)
-    : m_text(text)
+WildcardMatcher::WildcardMatcher(QString text)
+    : m_text(std::move(text))
 {
 }
 

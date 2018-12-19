@@ -17,6 +17,7 @@
 
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "ui_DatabaseSettingsWidgetGeneral.h"
+
 #include "core/Clock.h"
 #include "core/Database.h"
 #include "core/Entry.h"
@@ -24,7 +25,8 @@
 #include "core/Metadata.h"
 
 DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
-    : DatabaseSettingsWidget(parent), m_ui(new Ui::DatabaseSettingsWidgetGeneral())
+    : DatabaseSettingsWidget(parent)
+    , m_ui(new Ui::DatabaseSettingsWidgetGeneral())
 {
     m_ui->setupUi(this);
 
@@ -44,7 +46,7 @@ void DatabaseSettingsWidgetGeneral::initialize()
     m_ui->dbDescriptionEdit->setText(meta->description());
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
-    m_ui->compressionCheckbox->setChecked(m_db->compressionAlgo() != Database::CompressionNone);
+    m_ui->compressionCheckbox->setChecked(m_db->compressionAlgorithm() != Database::CompressionNone);
 
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
@@ -53,7 +55,7 @@ void DatabaseSettingsWidgetGeneral::initialize()
         m_ui->historyMaxItemsSpinBox->setValue(Metadata::DefaultHistoryMaxItems);
         m_ui->historyMaxItemsCheckBox->setChecked(false);
     }
-    int historyMaxSizeMiB = qRound(meta->historyMaxSize()/qreal(1048576));
+    int historyMaxSizeMiB = qRound(meta->historyMaxSize() / qreal(1048576));
     if (historyMaxSizeMiB > 0) {
         m_ui->historyMaxSizeSpinBox->setValue(historyMaxSizeMiB);
         m_ui->historyMaxSizeCheckBox->setChecked(true);
@@ -75,8 +77,8 @@ void DatabaseSettingsWidgetGeneral::showEvent(QShowEvent* event)
 
 bool DatabaseSettingsWidgetGeneral::save()
 {
-    m_db->setCompressionAlgo(m_ui->compressionCheckbox->isChecked() ? Database::CompressionGZip
-                                                                    : Database::CompressionNone);
+    m_db->setCompressionAlgorithm(m_ui->compressionCheckbox->isChecked() ? Database::CompressionGZip
+                                                                         : Database::CompressionNone);
     Metadata* meta = m_db->metadata();
 
     meta->setName(m_ui->dbNameEdit->text());
@@ -100,7 +102,7 @@ bool DatabaseSettingsWidgetGeneral::save()
 
     int historyMaxSize;
     if (m_ui->historyMaxSizeCheckBox->isChecked()) {
-        historyMaxSize = m_ui->historyMaxSizeSpinBox->value()*1048576;
+        historyMaxSize = m_ui->historyMaxSizeSpinBox->value() * 1048576;
     } else {
         historyMaxSize = -1;
     }

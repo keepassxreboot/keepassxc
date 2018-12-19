@@ -28,7 +28,7 @@ class MessageWidget : public KMessageWidget
     Q_OBJECT
 
 public:
-    explicit MessageWidget(QWidget* parent = 0);
+    explicit MessageWidget(QWidget* parent = nullptr);
 
     int autoHideTimeout() const;
 

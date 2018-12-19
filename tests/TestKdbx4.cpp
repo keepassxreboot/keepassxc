@@ -37,7 +37,7 @@ void TestKdbx4::initTestCaseImpl()
     m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
 }
 
-Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -47,7 +47,7 @@ Database* TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasErro
     return db;
 }
 
-Database* TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -67,12 +67,12 @@ void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
 
 void TestKdbx4::readKdbx(QIODevice* device,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(device, key));
+    reader.readDatabase(device, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -82,12 +82,12 @@ void TestKdbx4::readKdbx(QIODevice* device,
 
 void TestKdbx4::readKdbx(const QString& path,
                          QSharedPointer<const CompositeKey> key,
-                         QScopedPointer<Database>& db,
+                         QSharedPointer<Database> db,
                          bool& hasError,
                          QString& errorString)
 {
     KeePass2Reader reader;
-    db.reset(reader.readDatabase(path, key));
+    reader.readDatabase(path, key, db.data());
     hasError = reader.hasError();
     if (hasError) {
         errorString = reader.errorString();
@@ -116,7 +116,8 @@ void TestKdbx4::testFormat400()
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("t"));
     KeePass2Reader reader;
-    QScopedPointer<Database> db(reader.readDatabase(filename, key));
+    auto db = QSharedPointer<Database>::create();
+    reader.readDatabase(filename, key, db.data());
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
@@ -174,7 +175,8 @@ void TestKdbx4::testFormat400Upgrade()
     // read buffer back
     buffer.seek(0);
     KeePass2Reader reader;
-    QScopedPointer<Database> targetDb(reader.readDatabase(&buffer, key));
+    auto targetDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, key, targetDb.data());
     if (reader.hasError()) {
         QFAIL(qPrintable(QString("Error while reading database: %1").arg(reader.errorString())));
     }
@@ -199,12 +201,12 @@ void TestKdbx4::testFormat400Upgrade_data()
     auto constexpr kdbx3 = KeePass2::FILE_VERSION_3_1 & KeePass2::FILE_VERSION_CRITICAL_MASK;
     auto constexpr kdbx4 = KeePass2::FILE_VERSION_4   & KeePass2::FILE_VERSION_CRITICAL_MASK;
 
-    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << false << kdbx4;
-    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << false << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << false << kdbx3;
-    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES       << true  << kdbx4;
-    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES       << true  << kdbx4;
-    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES       << true  << kdbx4;
+    QTest::newRow("Argon2           + AES")                   << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << false << kdbx4;
+    QTest::newRow("AES-KDF          + AES")                   << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << false << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES")                   << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << false << kdbx3;
+    QTest::newRow("Argon2           + AES     + CustomData")  << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_AES256       << true  << kdbx4;
+    QTest::newRow("AES-KDF          + AES     + CustomData")  << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_AES256       << true  << kdbx4;
+    QTest::newRow("AES-KDF (legacy) + AES     + CustomData")  << KeePass2::KDF_AES_KDBX3 << KeePass2::CIPHER_AES256       << true  << kdbx4;
 
     QTest::newRow("Argon2           + ChaCha20")              << KeePass2::KDF_ARGON2    << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
     QTest::newRow("AES-KDF          + ChaCha20")              << KeePass2::KDF_AES_KDBX4 << KeePass2::CIPHER_CHACHA20  << false << kdbx4;
@@ -292,14 +294,15 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
     // paranoid check that we cannot decrypt the database without a key
     buffer.seek(0);
     KeePass2Reader reader;
-    QScopedPointer<Database> db2;
-    db2.reset(reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create()));
+    auto db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), db2.data());
     QVERIFY(reader.hasError());
 
     // check that we can read back the database with the original composite key,
     // i.e., no components have been lost on the way
     buffer.seek(0);
-    db2.reset(reader.readDatabase(&buffer, compositeKey));
+    db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, compositeKey, db2.data());
     if (reader.hasError()) {
         QFAIL(qPrintable(reader.errorString()));
     }
@@ -317,11 +320,11 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity_data()
     QTest::newRow("Upgrade (explicit): kdf-argon2") << QString("kdf-argon2") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4") << QString("kdf-aes-kdbx4") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): public-customdata") << QString("public-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): rootgroup-customdata") << QString("rootgroup-customdata")
-                                                              << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootgroup-customdata")
+        << QString("rootgroup-customdata") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): group-customdata") << QString("group-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): rootentry-customdata") << QString("rootentry-customdata")
-                                                              << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): rootentry-customdata")
+        << QString("rootentry-customdata") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): entry-customdata") << QString("entry-customdata") << KeePass2::FILE_VERSION_4;
 }
 
@@ -396,7 +399,8 @@ void TestKdbx4::testCustomData()
     // read buffer back
     buffer.seek(0);
     KeePass2Reader reader;
-    QSharedPointer<Database> newDb(reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create()));
+    auto newDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), newDb.data());
 
     // test all custom data are read back successfully from KDBX
     QCOMPARE(newDb->publicCustomData(), publicCustomData);

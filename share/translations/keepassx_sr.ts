@@ -3,11 +3,11 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>О KeePassXC</translation>
+        <translation>O KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>О апликацији</translation>
+        <translation>O aplikaciji</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -40,8 +40,7 @@
     <message>
         <source>Version %1
 </source>
-        <translation>Верзија %1
-</translation>
+        <translation>Верзија %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -102,7 +101,7 @@ Kernel: %3 %4</source>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 тражи приступ лозинкама за следећу ставку (или ставке).
+        <translation>%1 тражи приступ лозинкама за следеће ставке.
 Молим вас одаберите да ли желите да одобрите приступ.</translation>
     </message>
 </context>
@@ -152,7 +151,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Редослед</translation>
+        <translation>Секвенца</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -210,7 +209,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 тражи приступ лозинкама за следећу ставку (или ставке).
+        <translation>%1 тражи приступ лозинкама за следеће ставке.
 Молим вас одаберите да ли желите да одобрите приступ.</translation>
     </message>
 </context>
@@ -489,7 +488,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Browse</source>
-        <translation>Преглед</translation>
+        <translation>Разгледај</translation>
     </message>
     <message>
         <source>Create</source>
@@ -505,7 +504,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Key files</source>
-        <translation>Кључ-Датотеке</translation>
+        <translation>Датотеке са кључем</translation>
     </message>
     <message>
         <source>All files</source>
@@ -513,15 +512,15 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Креирај Кључ-Датотеку...</translation>
+        <translation>Креирај датотеку са кључем...</translation>
     </message>
     <message>
         <source>Unable to create Key File : </source>
-        <translation>Није могуће креирати Кључ-Датотеку:</translation>
+        <translation>Није могуће креирати Датотеку са Кључем:</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Одаберите кључ-датотеку</translation>
+        <translation>Одаберите датотеку са кључем</translation>
     </message>
     <message>
         <source>Empty password</source>
@@ -538,7 +537,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <message>
         <source>Failed to set %1 as the Key file:
 %2</source>
-        <translation>Неуспешно постављање %1 као Кључ-Датотеку:
+        <translation>Неуспешно постављање %1 као Датотеке са Кључем:
 %2</translation>
     </message>
     <message>
@@ -569,7 +568,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Замени корисничко име и лозинку са референцама</translation>
+        <translation>Замените корисничко име и лозинку са референцама</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -624,7 +623,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Преглед</translation>
+        <translation>Приказ</translation>
     </message>
     <message>
         <source>Column layout</source>
@@ -684,15 +683,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation><numerusform>%n бајт(ова),</numerusform><numerusform>%n бајт(ова),</numerusform><numerusform>%n бајт(ова),</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation><numerusform>%n ред(ова),</numerusform><numerusform>%n ред(ова),</numerusform><numerusform>%n ред(ова),</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n колона</numerusform><numerusform>%n колона</numerusform><numerusform>%n колона</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -984,7 +983,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Отвори KeePass 1 базу података</translation>
+        <translation>Отвори KeePass 1  базу података</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
@@ -1106,7 +1105,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Да ли сте сигурни да желите да преместите %n ставку у корпу за отпатке?</numerusform><numerusform>Да ли сте сигурни да желите да преместите %n ставке у корпу за отпатке?</numerusform><numerusform>Да ли сте сигурни да желите да преместите %n ставку(ставке) у корпу за отпатке?</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1234,7 +1233,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Редослед</translation>
+        <translation>Секвенца</translation>
     </message>
     <message>
         <source>Search</source>
@@ -1353,11 +1352,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n недеља</numerusform><numerusform>%n недеље(а)</numerusform><numerusform>%n недеље(а)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n месец</numerusform><numerusform>%n месеца(и)</numerusform><numerusform>%n месеца(и)</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1647,7 +1646,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Подеси као подразумевану секвенцу за Аутоматско-Куцање</translation>
+        <translation>Унеси подразумевану секвенцу за Аутоматско-Куцање</translation>
     </message>
 </context>
 <context>
@@ -1662,19 +1661,19 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Додај посебну иконицу</translation>
+        <translation>Додај посебну икону</translation>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Обриши посебну иконицу</translation>
+        <translation>Обриши посебну икону</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Преузми иконицу са сајта</translation>
+        <translation>Преузми икону са сајта</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Није могуће добавити иконицу са сајта.</translation>
+        <translation>Неуспело добављање иконе са сајта.</translation>
     </message>
     <message>
         <source>Hint: You can enable Google as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -2558,33 +2557,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -3157,7 +3129,7 @@ Using default port 19455.</source>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Листа фраза:</translation>
+        <translation>Листа речи:</translation>
     </message>
     <message>
         <source>Word Count:</source>
@@ -3198,7 +3170,7 @@ Using default port 19455.</source>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Бедан</translation>
+        <translation>Слаб</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -3485,6 +3457,30 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation>недостаје завршни наводник</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Group</source>

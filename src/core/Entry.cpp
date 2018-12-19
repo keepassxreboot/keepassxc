@@ -26,9 +26,9 @@
 #include "core/Metadata.h"
 #include "totp/totp.h"
 
-#include <QDebug>
 #include <QDir>
 #include <QRegularExpression>
+#include <utility>
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
@@ -40,7 +40,6 @@ Entry::Entry()
     , m_attachments(new EntryAttachments(this))
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
     , m_customData(new CustomData(this))
-    , m_tmpHistoryItem(nullptr)
     , m_modifiedSinceBegin(false)
     , m_updateTimeinfo(true)
 {
@@ -48,15 +47,15 @@ Entry::Entry()
     m_data.autoTypeEnabled = true;
     m_data.autoTypeObfuscation = 0;
 
-    connect(m_attributes, SIGNAL(modified()), SLOT(updateTotp()));
-    connect(m_attributes, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), SLOT(updateTotp()));
+    connect(m_attributes, SIGNAL(entryAttributesModified()), this, SIGNAL(entryModified()));
     connect(m_attributes, SIGNAL(defaultKeyModified()), SLOT(emitDataChanged()));
-    connect(m_attachments, SIGNAL(modified()), this, SIGNAL(modified()));
-    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(modified()));
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_attachments, SIGNAL(entryAttachmentsModified()), this, SIGNAL(entryModified()));
+    connect(m_autoTypeAssociations, SIGNAL(modified()), SIGNAL(entryModified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(entryModified()));
 
-    connect(this, SIGNAL(modified()), SLOT(updateTimeinfo()));
-    connect(this, SIGNAL(modified()), SLOT(updateModifiedSinceBegin()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateTimeinfo()));
+    connect(this, SIGNAL(entryModified()), SLOT(updateModifiedSinceBegin()));
 }
 
 Entry::~Entry()
@@ -77,7 +76,7 @@ template <class T> inline bool Entry::set(T& property, const T& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit entryModified();
         return true;
     }
     return false;
@@ -367,9 +366,9 @@ QString Entry::totp() const
 void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
 {
     beginUpdate();
-    m_data.totpSettings = settings;
+    m_data.totpSettings = std::move(settings);
 
-    auto text = Totp::writeSettings(m_data.totpSettings);
+    auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
     if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
         m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
     } else {
@@ -408,7 +407,7 @@ void Entry::setIcon(int iconNumber)
         m_data.iconNumber = iconNumber;
         m_data.customIcon = QUuid();
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -421,7 +420,7 @@ void Entry::setIcon(const QUuid& uuid)
         m_data.customIcon = uuid;
         m_data.iconNumber = 0;
 
-        emit modified();
+        emit entryModified();
         emitDataChanged();
     }
 }
@@ -501,7 +500,7 @@ void Entry::setExpires(const bool& value)
 {
     if (m_data.timeInfo.expires() != value) {
         m_data.timeInfo.setExpires(value);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -509,7 +508,7 @@ void Entry::setExpiryTime(const QDateTime& dateTime)
 {
     if (m_data.timeInfo.expiryTime() != dateTime) {
         m_data.timeInfo.setExpiryTime(dateTime);
-        emit modified();
+        emit entryModified();
     }
 }
 
@@ -528,7 +527,7 @@ void Entry::addHistoryItem(Entry* entry)
     Q_ASSERT(!entry->parent());
 
     m_history.append(entry);
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
@@ -546,7 +545,7 @@ void Entry::removeHistoryItems(const QList<Entry*>& historyEntries)
         delete entry;
     }
 
-    emit modified();
+    emit entryModified();
 }
 
 void Entry::truncateHistory()
@@ -657,12 +656,14 @@ Entry* Entry::clone(CloneFlags flags) const
     if (flags & CloneUserAsRef) {
         // Build the username reference
         QString username = "{REF:U@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
+        entry->m_attributes->set(
+            EntryAttributes::UserNameKey, username.toUpper(), m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
         QString password = "{REF:P@I:" + uuidToHex() + "}";
-        entry->m_attributes->set(EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
+        entry->m_attributes->set(
+            EntryAttributes::PasswordKey, password.toUpper(), m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
@@ -704,9 +705,9 @@ void Entry::copyDataFrom(const Entry* other)
 
 void Entry::beginUpdate()
 {
-    Q_ASSERT(!m_tmpHistoryItem);
+    Q_ASSERT(m_tmpHistoryItem.isNull());
 
-    m_tmpHistoryItem = new Entry();
+    m_tmpHistoryItem.reset(new Entry());
     m_tmpHistoryItem->setUpdateTimeinfo(false);
     m_tmpHistoryItem->m_uuid = m_uuid;
     m_tmpHistoryItem->m_data = m_data;
@@ -719,16 +720,14 @@ void Entry::beginUpdate()
 
 bool Entry::endUpdate()
 {
-    Q_ASSERT(m_tmpHistoryItem);
+    Q_ASSERT(!m_tmpHistoryItem.isNull());
     if (m_modifiedSinceBegin) {
         m_tmpHistoryItem->setUpdateTimeinfo(true);
-        addHistoryItem(m_tmpHistoryItem);
+        addHistoryItem(m_tmpHistoryItem.take());
         truncateHistory();
-    } else {
-        delete m_tmpHistoryItem;
     }
 
-    m_tmpHistoryItem = nullptr;
+    m_tmpHistoryItem.reset();
 
     return m_modifiedSinceBegin;
 }
@@ -741,7 +740,7 @@ void Entry::updateModifiedSinceBegin()
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
@@ -765,7 +764,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
 QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 
@@ -829,7 +828,7 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
 {
     if (maxDepth <= 0) {
-        qWarning() << QString("Maximum depth of replacement has been reached. Entry uuid: %1").arg(uuid().toString());
+        qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return placeholder;
     }
 
@@ -849,7 +848,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     Q_ASSERT(m_group);
     Q_ASSERT(m_group->database());
-    const Entry* refEntry = m_group->database()->resolveEntry(searchText, searchInType);
+    const Entry* refEntry = m_group->findEntryBySearchTerm(searchText, searchInType);
 
     if (refEntry) {
         const QString wantedField = match.captured(EntryAttributes::WantedFieldGroupName);
@@ -929,7 +928,7 @@ void Entry::setGroup(Group* group)
 
 void Entry::emitDataChanged()
 {
-    emit dataChanged(this);
+    emit entryDataChanged(this);
 }
 
 const Database* Entry::database() const
@@ -966,7 +965,7 @@ Entry* Entry::resolveReference(const QString& str) const
     const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
 
     const EntryReferenceType searchInType = Entry::referenceType(searchIn);
-    return m_group->database()->resolveEntry(searchText, searchInType);
+    return m_group->database()->rootGroup()->findEntryBySearchTerm(searchText, searchInType);
 }
 
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
@@ -1079,7 +1078,8 @@ QString Entry::resolveUrl(const QString& url) const
 
     // Validate the URL
     QUrl tempUrl = QUrl(newUrl);
-    if (tempUrl.isValid() && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
+    if (tempUrl.isValid()
+        && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
         return tempUrl.url();
     }
 

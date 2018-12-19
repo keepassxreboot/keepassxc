@@ -31,8 +31,8 @@ class EditGroupWidget::ExtraPage
 {
 public:
     ExtraPage(IEditGroupPage* page, QWidget* widget)
-        : editPage(page)
-        , widget(widget)
+            : editPage(page)
+            , widget(widget)
     {
     }
 
@@ -52,11 +52,12 @@ private:
 };
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
-    : EditWidget(parent)
-    , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_editGroupWidgetMain(new QWidget())
-    , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editWidgetProperties(new EditWidgetProperties())
+        : EditWidget(parent)
+        , m_mainUi(new Ui::EditGroupWidgetMain())
+        , m_editGroupWidgetMain(new QWidget())
+        , m_editGroupWidgetIcons(new EditWidgetIcons())
+        , m_editWidgetProperties(new EditWidgetProperties())
+        , m_group(nullptr)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
@@ -74,9 +75,12 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     connect(this, SIGNAL(accepted()), SLOT(save()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
 
+    // clang-format off
     connect(m_editGroupWidgetIcons,
-            SIGNAL(messageEditEntry(QString, MessageWidget::MessageType)),
-            SLOT(showMessage(QString, MessageWidget::MessageType)));
+            SIGNAL(messageEditEntry(QString,MessageWidget::MessageType)),
+            SLOT(showMessage(QString,MessageWidget::MessageType)));
+    // clang-format on
+
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 
 #ifdef WITH_XC_KEESHARE
@@ -88,10 +92,10 @@ EditGroupWidget::~EditGroupWidget()
 {
 }
 
-void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
+void EditGroupWidget::loadGroup(Group* group, bool create, QSharedPointer<Database> database)
 {
     m_group = group;
-    m_database = database;
+    m_db = database;
 
     m_temporaryGroup.reset(group->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
 
@@ -125,7 +129,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, Database* database)
     IconStruct iconStruct;
     iconStruct.uuid = m_temporaryGroup->iconUuid();
     iconStruct.number = m_temporaryGroup->iconNumber();
-    m_editGroupWidgetIcons->load(m_temporaryGroup->uuid(), m_database, iconStruct);
+    m_editGroupWidgetIcons->load(m_temporaryGroup->uuid(), m_db, iconStruct);
     m_editWidgetProperties->setFields(m_temporaryGroup->timeInfo(), m_temporaryGroup->uuid());
     m_editWidgetProperties->setCustomData(m_temporaryGroup->customData());
 
@@ -181,15 +185,19 @@ void EditGroupWidget::apply()
 
 void EditGroupWidget::cancel()
 {
+    if (!m_group->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_group->iconUuid())) {
+        m_group->setIcon(Entry::DefaultIconNumber);
+    }
+
     clear();
     emit editFinished(false);
 }
 
 void EditGroupWidget::clear()
 {
+    m_group = nullptr;
+    m_db.reset();
     m_temporaryGroup.reset(nullptr);
-    m_database.clear();
-    m_group.clear();
     m_editGroupWidgetIcons->reset();
 }
 

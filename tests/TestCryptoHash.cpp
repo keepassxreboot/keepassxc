@@ -50,8 +50,9 @@ void TestCryptoHash::test()
                                  "8d2877eec2f63b931bd47417a81a538327af927da3e"));
 
     QByteArray result3 = CryptoHash::hash(source2, CryptoHash::Sha512);
-    QCOMPARE(result3, QByteArray::fromHex("0d41b612584ed39ff72944c29494573e40f4bb95283455fae2e0be1e3565aa9f48057d59e6ff"
-                                          "d777970e282871c25a549a2763e5b724794f312c97021c42f91d"));
+    QCOMPARE(result3,
+             QByteArray::fromHex("0d41b612584ed39ff72944c29494573e40f4bb95283455fae2e0be1e3565aa9f48057d59e6ff"
+                                 "d777970e282871c25a549a2763e5b724794f312c97021c42f91d"));
 
     CryptoHash cryptoHash4(CryptoHash::Sha512);
     cryptoHash4.addData(QString("KeePa").toLatin1());

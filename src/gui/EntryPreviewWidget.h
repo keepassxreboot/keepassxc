@@ -25,16 +25,16 @@
 
 namespace Ui
 {
-    class DetailsWidget;
+    class EntryPreviewWidget;
 }
 
-class DetailsWidget : public QWidget
+class EntryPreviewWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DetailsWidget(QWidget* parent = nullptr);
-    ~DetailsWidget() override;
+    explicit EntryPreviewWidget(QWidget* parent = nullptr);
+    ~EntryPreviewWidget() override;
 
 public slots:
     void setEntry(Entry* selectedEntry);
@@ -52,6 +52,7 @@ private slots:
     void updateEntryAttributesTab();
     void updateEntryAttachmentsTab();
     void updateEntryAutotypeTab();
+    void setPasswordVisible(bool state);
 
     void updateGroupHeaderLine();
     void updateGroupGeneralTab();
@@ -69,7 +70,7 @@ private:
     static QPixmap preparePixmap(const QPixmap& pixmap, int size);
     static QString hierarchy(const Group* group, const QString& title);
 
-    const QScopedPointer<Ui::DetailsWidget> m_ui;
+    const QScopedPointer<Ui::EntryPreviewWidget> m_ui;
     bool m_locked;
     Entry* m_currentEntry;
     Group* m_currentGroup;

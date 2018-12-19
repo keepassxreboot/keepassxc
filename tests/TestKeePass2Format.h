@@ -21,7 +21,7 @@
 #include <QBuffer>
 #include <QDateTime>
 #include <QObject>
-#include <QScopedPointer>
+#include <QSharedPointer>
 
 #include "core/Database.h"
 
@@ -67,25 +67,25 @@ private slots:
 protected:
     virtual void initTestCaseImpl() = 0;
 
-    virtual Database* readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) = 0;
-    virtual Database* readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) = 0;
+    virtual QSharedPointer<Database> readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) = 0;
+    virtual QSharedPointer<Database> readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) = 0;
     virtual void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) = 0;
 
     virtual void readKdbx(QIODevice* device,
                           QSharedPointer<const CompositeKey> key,
-                          QScopedPointer<Database>& db,
+                          QSharedPointer<Database> db,
                           bool& hasError,
                           QString& errorString) = 0;
     virtual void readKdbx(const QString& path,
                           QSharedPointer<const CompositeKey> key,
-                          QScopedPointer<Database>& db,
+                          QSharedPointer<Database> db,
                           bool& hasError,
                           QString& errorString) = 0;
     virtual void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) = 0;
 
-    QScopedPointer<Database> m_xmlDb;
-    QScopedPointer<Database> m_kdbxSourceDb;
-    QScopedPointer<Database> m_kdbxTargetDb;
+    QSharedPointer<Database> m_xmlDb;
+    QSharedPointer<Database> m_kdbxSourceDb;
+    QSharedPointer<Database> m_kdbxTargetDb;
 
 private:
     QBuffer m_kdbxTargetBuffer;

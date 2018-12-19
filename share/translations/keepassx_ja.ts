@@ -657,7 +657,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>元データ:</translation>
+        <translation>元データ: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file !</source>
@@ -861,7 +861,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform>MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -1023,7 +1023,7 @@ Discard changes and close anyway?</source>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; は編集されています。
+        <translation>&quot;%1&quot; は更新されています。
 変更を保存しますか？</translation>
     </message>
     <message>
@@ -1036,7 +1036,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>データベースを別名で保存</translation>
+        <translation>ファイル名をつけてデータベースを保存</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1319,15 +1319,15 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>私有鍵を選択</translation>
+        <translation>秘密鍵を選択</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>ファイルが大きすぎるため私有鍵にできません</translation>
+        <translation>ファイルが大きすぎるため秘密鍵にできません</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>私有鍵を開くのに失敗しました</translation>
+        <translation>秘密鍵を開くのに失敗しました</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1371,11 +1371,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n週間</numerusform></translation>
+        <translation><numerusform>%n 週間</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%nヶ月</numerusform></translation>
+        <translation><numerusform>%n ヶ月</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1574,7 +1574,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation>私有鍵</translation>
+        <translation>秘密鍵</translation>
     </message>
     <message>
         <source>External file</source>
@@ -1641,7 +1641,7 @@ Do you want to merge your changes?</source>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>グループ名</translation>
+        <translation>名前</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1899,7 +1899,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>参照:</translation>
+        <translation>参照: </translation>
     </message>
     <message>
         <source>Group</source>
@@ -2584,33 +2584,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 ビット</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 ビット</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 ビット</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – 推奨)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2932,11 +2905,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>キーファイルが破損しているため私有鍵の読み取りに失敗しました</translation>
+        <translation>キーファイルが破損しているため秘密鍵の読み取りに失敗しました</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>復号する私有鍵のペイロードがありません</translation>
+        <translation>復号する秘密鍵のデータがありません</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
@@ -2960,7 +2933,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>私有鍵の読み取り中に予期しない EOF がありました</translation>
+        <translation>秘密鍵の読み取り中に予期しない EOF がありました</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -2972,11 +2945,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>私有鍵が空のため書き込めません</translation>
+        <translation>秘密鍵が空欄のままでは保存できません</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>私有鍵の書き込み中に予期しない EOF がありました</translation>
+        <translation>秘密鍵の書き込み中に予期しない EOF がありました</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -3519,6 +3492,30 @@ Available commands:
         <translation>閉じ引用符がありません</translation>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 ビット</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 ビット</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 ビット</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – 推奨)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
+    </message>
+    <message>
         <source>Group</source>
         <translation>グループ</translation>
     </message>
@@ -3625,15 +3622,15 @@ Available commands:
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>基本デバイスへの書き込み時にエラーが発生しました:</translation>
+        <translation>基本デバイスへの書き込み時にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>基本デバイスを開く時にエラーが発生しました:</translation>
+        <translation>基本デバイスを開く際にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>基本デバイスから読み込み時にエラーが発生しました:</translation>
+        <translation>基本デバイスから読み込み時にエラーが発生しました: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>

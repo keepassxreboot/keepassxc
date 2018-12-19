@@ -14,45 +14,43 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(EXCLUDED_DIRS
-    # third-party directories
-    zxcvbn/
-    streams/QtIOCompressor
-    # objective-c directories
-    autotype/mac
-)
+        # third-party directories
+        zxcvbn/
+        streams/QtIOCompressor
+        # objective-c directories
+        autotype/mac)
 
 set(EXCLUDED_FILES
-    # third-party files
-    streams/qtiocompressor.cpp
-    streams/qtiocompressor.h
-    gui/KMessageWidget.h
-    gui/KMessageWidget.cpp
-    gui/MainWindowAdaptor.h
-    gui/MainWindowAdaptor.cpp
-    crypto/ssh/bcrypt_pbkdf.cpp
-    crypto/ssh/blf.h
-    crypto/ssh/blowfish.c
-    tests/modeltest.cpp
-    tests/modeltest.h
-    # objective-c files
-    core/ScreenLockListenerMac.h
-    core/ScreenLockListenerMac.cpp
-)
+        # third-party files
+        streams/qtiocompressor.cpp
+        streams/qtiocompressor.h
+        gui/KMessageWidget.h
+        gui/KMessageWidget.cpp
+        gui/MainWindowAdaptor.h
+        gui/MainWindowAdaptor.cpp
+        crypto/ssh/bcrypt_pbkdf.cpp
+        crypto/ssh/blf.h
+        crypto/ssh/blowfish.c
+        tests/modeltest.cpp
+        tests/modeltest.h
+        # objective-c files
+        core/ScreenLockListenerMac.h
+        core/ScreenLockListenerMac.cpp)
 
 file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
-foreach (SOURCE_FILE ${ALL_SOURCE_FILES})
-    foreach (EXCLUDED_DIR ${EXCLUDED_DIRS})
+foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
+    foreach(EXCLUDED_DIR ${EXCLUDED_DIRS})
         string(FIND ${SOURCE_FILE} ${EXCLUDED_DIR} SOURCE_FILE_EXCLUDED)
-        if (NOT ${SOURCE_FILE_EXCLUDED} EQUAL -1)
+        if(NOT ${SOURCE_FILE_EXCLUDED} EQUAL -1)
             list(REMOVE_ITEM ALL_SOURCE_FILES ${SOURCE_FILE})
-        endif ()
-    endforeach ()
-    foreach (EXCLUDED_FILE ${EXCLUDED_FILES})
-        if (${SOURCE_FILE} MATCHES ".*${EXCLUDED_FILE}$")
+        endif()
+    endforeach()
+    foreach(EXCLUDED_FILE ${EXCLUDED_FILES})
+        if(${SOURCE_FILE} MATCHES ".*${EXCLUDED_FILE}$")
             list(REMOVE_ITEM ALL_SOURCE_FILES ${SOURCE_FILE})
-        endif ()
-    endforeach ()
-endforeach ()
+        endif()
+    endforeach()
+endforeach()
 
 add_custom_target(
         format

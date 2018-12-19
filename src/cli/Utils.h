@@ -18,14 +18,32 @@
 #ifndef KEEPASSXC_UTILS_H
 #define KEEPASSXC_UTILS_H
 
+#include "cli/TextStream.h"
+#include "core/Database.h"
+#include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 #include <QtCore/qglobal.h>
 
-class Utils
+namespace Utils
 {
-public:
-    static void setStdinEcho(bool enable);
-    static QString getPassword();
-    static int clipText(const QString& text);
-};
+    extern FILE* STDOUT;
+    extern FILE* STDERR;
+    extern FILE* STDIN;
+    extern FILE* DEVNULL;
+
+    void setStdinEcho(bool enable);
+    QString getPassword(FILE* outputDescriptor = STDOUT);
+    int clipText(const QString& text);
+    QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                                   const QString& keyFilename = {},
+                                                   FILE* outputDescriptor = STDOUT,
+                                                   FILE* errorDescriptor = STDERR);
+
+    namespace Test
+    {
+        void setNextPassword(const QString& password);
+    }
+}; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H

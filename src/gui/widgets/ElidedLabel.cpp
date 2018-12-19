@@ -17,7 +17,6 @@
 
 #include "ElidedLabel.h"
 
-#include <QDebug>
 #include <QResizeEvent>
 
 namespace

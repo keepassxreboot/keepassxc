@@ -25,98 +25,198 @@
 #endif
 
 #include <QProcess>
-#include <QTextStream>
 
-void Utils::setStdinEcho(bool enable = true)
+namespace Utils
+{
+    /**
+     * STDOUT file handle for the CLI.
+     */
+    FILE* STDOUT = stdout;
+
+    /**
+     * STDERR file handle for the CLI.
+     */
+    FILE* STDERR = stderr;
+
+    /**
+     * STDIN file handle for the CLI.
+     */
+    FILE* STDIN = stdin;
+
+/**
+ * DEVNULL file handle for the CLI.
+ */
+#ifdef Q_OS_WIN
+FILE* DEVNULL = fopen("nul", "w");
+#else
+FILE* DEVNULL = fopen("/dev/null", "w");
+#endif
+
+
+void setStdinEcho(bool enable = true)
 {
 #ifdef Q_OS_WIN
-    HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
-    DWORD mode;
-    GetConsoleMode(hIn, &mode);
+        HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
+        DWORD mode;
+        GetConsoleMode(hIn, &mode);
 
-    if (enable) {
-        mode |= ENABLE_ECHO_INPUT;
-    } else {
-        mode &= ~ENABLE_ECHO_INPUT;
-    }
+        if (enable) {
+            mode |= ENABLE_ECHO_INPUT;
+        } else {
+            mode &= ~ENABLE_ECHO_INPUT;
+        }
 
-    SetConsoleMode(hIn, mode);
-
+        SetConsoleMode(hIn, mode);
 #else
-    struct termios t;
-    tcgetattr(STDIN_FILENO, &t);
+        struct termios t;
+        tcgetattr(STDIN_FILENO, &t);
 
-    if (enable) {
-        t.c_lflag |= ECHO;
-    } else {
-        t.c_lflag &= ~ECHO;
+        if (enable) {
+            t.c_lflag |= ECHO;
+        } else {
+            t.c_lflag &= ~ECHO;
+        }
+
+        tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#endif
     }
 
-    tcsetattr(STDIN_FILENO, TCSANOW, &t);
-#endif
-}
+    namespace Test
+    {
+        QStringList nextPasswords = {};
 
-QString Utils::getPassword()
+        /**
+         * Set the next password returned by \link getPassword() instead of reading it from STDIN.
+         * Multiple calls to this method will fill a queue of passwords.
+         * This function is intended for testing purposes.
+         *
+         * @param password password to return next
+         */
+        void setNextPassword(const QString& password)
+        {
+            nextPasswords.append(password);
+        }
+    } // namespace Test
+
+QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                        const QString& keyFilename,
+                                        FILE* outputDescriptor,
+                                        FILE* errorDescriptor)
 {
-    static QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    static QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
+    TextStream out(outputDescriptor);
+    TextStream err(errorDescriptor);
 
-    setStdinEcho(false);
-    QString line = inputTextStream.readLine();
-    setStdinEcho(true);
+    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
 
-    // The new line was also not echoed, but we do want to echo it.
-    outputTextStream << "\n";
-    outputTextStream.flush();
+    QString line = Utils::getPassword(outputDescriptor);
+    auto passwordKey = QSharedPointer<PasswordKey>::create();
+    passwordKey->setPassword(line);
+    compositeKey->addKey(passwordKey);
 
-    return line;
+    if (!keyFilename.isEmpty()) {
+        auto fileKey = QSharedPointer<FileKey>::create();
+        QString errorMessage;
+        // LCOV_EXCL_START
+        if (!fileKey->load(keyFilename, &errorMessage)) {
+            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
+            return {};
+        }
+
+        if (fileKey->type() != FileKey::Hashed) {
+            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                               "unsupported in the future.\n\n"
+                               "Please consider generating a new key file.")
+                << endl;
+        }
+        // LCOV_EXCL_STOP
+
+        compositeKey->addKey(fileKey);
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    db->open(databaseFilename, compositeKey, nullptr, false);
+    return db;
 }
 
-/*
- * A valid and running event loop is needed to use the global QClipboard,
- * so we need to use this from the CLI.
+/**
+ * Read a user password from STDIN or return a password previously
+ * set by \link setNextPassword().
+ *
+ * @return the password
  */
-int Utils::clipText(const QString& text)
+QString getPassword(FILE* outputDescriptor)
 {
+    TextStream out(outputDescriptor, QIODevice::WriteOnly);
 
-    QString programName = "";
-    QStringList arguments;
+        // return preset password if one is set
+        if (!Test::nextPasswords.isEmpty()) {
+            auto password = Test::nextPasswords.takeFirst();
+            // simulate user entering newline
+            out << endl;
+            return password;
+        }
+
+        TextStream in(STDIN, QIODevice::ReadOnly);
+
+        setStdinEcho(false);
+        QString line = in.readLine();
+        setStdinEcho(true);
+        out << endl;
+
+        return line;
+    }
+
+    /**
+     * A valid and running event loop is needed to use the global QClipboard,
+     * so we need to use this from the CLI.
+     */
+    int clipText(const QString& text)
+    {
+        TextStream err(Utils::STDERR);
+
+        QString programName = "";
+        QStringList arguments;
 
 #ifdef Q_OS_UNIX
-    programName = "xclip";
-    arguments << "-i"
-              << "-selection"
-              << "clipboard";
+        programName = "xclip";
+        arguments << "-i"
+                  << "-selection"
+                  << "clipboard";
 #endif
 
 #ifdef Q_OS_MACOS
-    programName = "pbcopy";
+        programName = "pbcopy";
 #endif
 
 #ifdef Q_OS_WIN
-    programName = "clip";
+        programName = "clip";
 #endif
 
-    if (programName.isEmpty()) {
-        qCritical("No program defined for clipboard manipulation");
-        return EXIT_FAILURE;
+        if (programName.isEmpty()) {
+            err << QObject::tr("No program defined for clipboard manipulation");
+            err.flush();
+            return EXIT_FAILURE;
+        }
+
+        auto* clipProcess = new QProcess(nullptr);
+        clipProcess->start(programName, arguments);
+        clipProcess->waitForStarted();
+
+        if (clipProcess->state() != QProcess::Running) {
+            err << QObject::tr("Unable to start program %1").arg(programName);
+            err.flush();
+            return EXIT_FAILURE;
+        }
+
+        if (clipProcess->write(text.toLatin1()) == -1) {
+            qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+        }
+        clipProcess->waitForBytesWritten();
+        clipProcess->closeWriteChannel();
+        clipProcess->waitForFinished();
+
+        return clipProcess->exitCode();
     }
 
-    QProcess* clipProcess = new QProcess(nullptr);
-    clipProcess->start(programName, arguments);
-    clipProcess->waitForStarted();
-
-    if (clipProcess->state() != QProcess::Running) {
-        qCritical("Unable to start program %s", qPrintable(programName));
-        return EXIT_FAILURE;
-    }
-
-    if (clipProcess->write(text.toLatin1()) == -1) {
-        qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
-    }
-    clipProcess->waitForBytesWritten();
-    clipProcess->closeWriteChannel();
-    clipProcess->waitForFinished();
-
-    return clipProcess->exitCode();
-}
+} // namespace Utils

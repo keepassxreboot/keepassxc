@@ -50,7 +50,7 @@ QString FilePath::pluginPath(const QString& name)
     // for TestAutoType
     pluginPaths << QCoreApplication::applicationDirPath() + "/../src/autotype/test";
 
-#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
+#if defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     pluginPaths << QCoreApplication::applicationDirPath() + "/../PlugIns";
 #endif
 
@@ -157,7 +157,7 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
                 icon.addFile(filename, QSize(size, size));
             }
         }
-        filename = QString("%1/icons/application/scalable/%2.svgz").arg(m_dataPath, combinedName);
+        filename = QString("%1/icons/application/scalable/%2.svg").arg(m_dataPath, combinedName);
         if (QFile::exists(filename)) {
             icon.addFile(filename);
         }
@@ -200,7 +200,7 @@ QIcon FilePath::onOffIcon(const QString& category, const QString& name)
                 icon.addFile(filename, QSize(size, size), QIcon::Normal, state);
             }
         }
-        filename = QString("%1/icons/application/scalable/%2-%3.svgz").arg(m_dataPath, combinedName, stateName);
+        filename = QString("%1/icons/application/scalable/%2-%3.svg").arg(m_dataPath, combinedName, stateName);
         if (QFile::exists(filename)) {
             icon.addFile(filename, QSize(), QIcon::Normal, state);
         }
@@ -223,13 +223,13 @@ FilePath::FilePath()
     else if (testSetDir(QString(KEEPASSX_SOURCE_DIR) + "/share")) {
     }
 #endif
-#if defined(Q_OS_UNIX) && !(defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE))
+#if defined(Q_OS_UNIX) && !(defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE))
     else if (isDataDirAbsolute && testSetDir(KEEPASSX_DATA_DIR)) {
     } else if (!isDataDirAbsolute && testSetDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))) {
     } else if (!isDataDirAbsolute && testSetDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR))) {
     }
 #endif
-#if defined(Q_OS_MAC) && defined(WITH_APP_BUNDLE)
+#if defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     else if (testSetDir(appDirPath + "/../Resources")) {
     }
 #endif

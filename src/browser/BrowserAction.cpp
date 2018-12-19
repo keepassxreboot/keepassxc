@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "BrowserAction.h"
 #include "BrowserSettings.h"
@@ -167,9 +167,10 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
 
     QMutexLocker locker(&m_mutex);
     if (key.compare(m_clientPublicKey, Qt::CaseSensitive) == 0) {
-        // Check for identification key. If it's not found, ensure backwards compatibility and use the current public key
+        // Check for identification key. If it's not found, ensure backwards compatibility and use the current public
+        // key
         const QString idKey = decrypted.value("idKey").toString();
-        const QString id = m_browserService.storeKey((idKey.isEmpty() ? key: idKey));
+        const QString id = m_browserService.storeKey((idKey.isEmpty() ? key : idKey));
         if (id.isEmpty()) {
             return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
         }
@@ -250,7 +251,9 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
     const QString id = decrypted.value("id").toString();
     const QString submit = decrypted.value("submitUrl").toString();
-    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList);
+    const QString auth = decrypted.value("httpAuth").toString();
+    const bool httpAuth = auth.compare("true", Qt::CaseSensitive) == 0 ? true : false;
+    const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList, httpAuth);
 
     if (users.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
@@ -271,7 +274,6 @@ QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const
 {
     const QString nonce = json.value("nonce").toString();
     const QString password = browserSettings()->generatePassword();
-    const QString bits = QString::number(browserSettings()->getbits()); // For some reason this always returns 1140 bits?
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
@@ -322,7 +324,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url);
+        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -377,7 +379,7 @@ QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorC
 QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 {
     QJsonObject message;
-    message["version"] = KEEPASSX_VERSION;
+    message["version"] = KEEPASSXC_VERSION;
     message["success"] = "true";
     message["nonce"] = nonce;
     return message;
@@ -469,7 +471,7 @@ QJsonObject BrowserAction::decryptMessage(const QString& message, const QString&
     return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
 }
 
-QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
+QString BrowserAction::encrypt(const QString& plaintext, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = plaintext.toUtf8();
@@ -497,7 +499,7 @@ QString BrowserAction::encrypt(const QString plaintext, const QString nonce)
     return QString();
 }
 
-QByteArray BrowserAction::decrypt(const QString encrypted, const QString nonce)
+QByteArray BrowserAction::decrypt(const QString& encrypted, const QString& nonce)
 {
     QMutexLocker locker(&m_mutex);
     const QByteArray ma = base64Decode(encrypted);
@@ -547,14 +549,14 @@ QJsonObject BrowserAction::getJsonObject(const uchar* pArray, const uint len) co
     return doc.object();
 }
 
-QJsonObject BrowserAction::getJsonObject(const QByteArray ba) const
+QJsonObject BrowserAction::getJsonObject(const QByteArray& ba) const
 {
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
     return doc.object();
 }
 
-QByteArray BrowserAction::base64Decode(const QString str)
+QByteArray BrowserAction::base64Decode(const QString& str)
 {
     return QByteArray::fromBase64(str.toUtf8());
 }
@@ -566,16 +568,4 @@ QString BrowserAction::incrementNonce(const QString& nonce)
 
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
-}
-
-void BrowserAction::removeSharedEncryptionKeys()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeSharedEncryptionKeys();
-}
-
-void BrowserAction::removeStoredPermissions()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeStoredPermissions();
 }

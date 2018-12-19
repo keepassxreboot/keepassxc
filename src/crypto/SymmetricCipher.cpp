@@ -1,26 +1,24 @@
 /*
-*  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "SymmetricCipher.h"
 
 #include "config-keepassx.h"
 #include "crypto/SymmetricCipherGcrypt.h"
-
-#include <QDebug>
 
 SymmetricCipher::SymmetricCipher(Algorithm algo, Mode mode, Direction direction)
     : m_backend(createBackend(algo, mode, direction))
@@ -94,7 +92,7 @@ QString SymmetricCipher::errorString() const
 
 SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& cipher)
 {
-    if (cipher == KeePass2::CIPHER_AES) {
+    if (cipher == KeePass2::CIPHER_AES256) {
         return Aes256;
     } else if (cipher == KeePass2::CIPHER_CHACHA20) {
         return ChaCha20;
@@ -102,22 +100,24 @@ SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& ciphe
         return Twofish;
     }
 
-    qWarning() << "SymmetricCipher::cipherToAlgorithm: invalid UUID " << cipher;
+    qWarning("SymmetricCipher::cipherToAlgorithm: invalid UUID %s", cipher.toString().toLatin1().data());
     return InvalidAlgorithm;
 }
 
 QUuid SymmetricCipher::algorithmToCipher(Algorithm algo)
 {
     switch (algo) {
+    case Aes128:
+        return KeePass2::CIPHER_AES128;
     case Aes256:
-        return KeePass2::CIPHER_AES;
+        return KeePass2::CIPHER_AES256;
     case ChaCha20:
         return KeePass2::CIPHER_CHACHA20;
     case Twofish:
         return KeePass2::CIPHER_TWOFISH;
     default:
         qWarning("SymmetricCipher::algorithmToCipher: invalid algorithm %d", algo);
-        return QUuid();
+        return {};
     }
 }
 

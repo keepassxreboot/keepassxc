@@ -16,14 +16,13 @@
  */
 
 #include "EditWidgetProperties.h"
-
-#include <QUuid>
-
-#include "MessageBox.h"
 #include "ui_EditWidgetProperties.h"
 
 #include "core/CustomData.h"
 #include "core/TimeInfo.h"
+#include "MessageBox.h"
+
+#include <QUuid>
 
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)
@@ -34,9 +33,11 @@ EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     m_ui->removeCustomDataButton->setEnabled(false);
     m_ui->customDataTable->setModel(m_customDataModel);
 
+    // clang-format off
     connect(m_ui->customDataTable->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
+    // clang-format on
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedPluginData()));
 }
 
@@ -70,12 +71,13 @@ void EditWidgetProperties::setCustomData(CustomData* customData)
 
 void EditWidgetProperties::removeSelectedPluginData()
 {
-    if (QMessageBox::Yes != MessageBox::question(this,
-                                                 tr("Delete plugin data?"),
-                                                 tr("Do you really want to delete the selected plugin data?\n"
-                                                    "This may cause the affected plugins to malfunction."),
-                                                 QMessageBox::Yes | QMessageBox::Cancel,
-                                                 QMessageBox::Cancel)) {
+    if (QMessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Delete plugin data?"),
+                                tr("Do you really want to delete the selected plugin data?\n"
+                                   "This may cause the affected plugins to malfunction."),
+                                QMessageBox::Yes | QMessageBox::Cancel,
+                                QMessageBox::Cancel)) {
         return;
     }
 

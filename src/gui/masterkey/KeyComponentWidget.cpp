@@ -17,6 +17,7 @@
 
 #include "KeyComponentWidget.h"
 #include "ui_KeyComponentWidget.h"
+
 #include <QStackedWidget>
 #include <QTimer>
 
@@ -38,8 +39,8 @@ KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
 
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(reset()));
 
-    connect(this, SIGNAL(nameChanged(const QString&)), SLOT(updateComponentName(const QString&)));
-    connect(this, SIGNAL(descriptionChanged(const QString&)), SLOT(updateComponentDescription(const QString&)));
+    connect(this, SIGNAL(nameChanged(QString)), SLOT(updateComponentName(QString)));
+    connect(this, SIGNAL(descriptionChanged(QString)), SLOT(updateComponentDescription(QString)));
     connect(this, SIGNAL(componentAddRequested()), SLOT(doAdd()));
     connect(this, SIGNAL(componentEditRequested()), SLOT(doEdit()));
     connect(this, SIGNAL(componentRemovalRequested()), SLOT(doRemove()));
@@ -124,7 +125,8 @@ void KeyComponentWidget::updateComponentName(const QString& name)
     m_ui->addButton->setText(tr("Add %1", "Add a key component").arg(name));
     m_ui->changeButton->setText(tr("Change %1", "Change a key component").arg(name));
     m_ui->removeButton->setText(tr("Remove %1", "Remove a key component").arg(name));
-    m_ui->changeOrRemoveLabel->setText(tr("%1 set, click to change or remove", "Change or remove a key component").arg(name));
+    m_ui->changeOrRemoveLabel->setText(
+        tr("%1 set, click to change or remove", "Change or remove a key component").arg(name));
 }
 
 void KeyComponentWidget::updateComponentDescription(const QString& description)

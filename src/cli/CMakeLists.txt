@@ -14,46 +14,33 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 set(cli_SOURCES
-    Add.cpp
-    Add.h
-    Clip.cpp
-    Clip.h
-    Command.cpp
-    Command.h
-    Diceware.cpp
-    Diceware.h
-    Edit.cpp
-    Edit.h
-    Estimate.cpp
-    Estimate.h
-    Extract.cpp
-    Extract.h
-    Generate.cpp
-    Generate.h
-    List.cpp
-    List.h
-    Locate.cpp
-    Locate.h
-    Merge.cpp
-    Merge.h
-    Remove.cpp
-    Remove.h
-    Show.cpp
-    Show.h)
+        Add.cpp
+        Clip.cpp
+        Command.cpp
+        Diceware.cpp
+        Edit.cpp
+        Estimate.cpp
+        Extract.cpp
+        Generate.cpp
+        List.cpp
+        Locate.cpp
+        Merge.cpp
+        Remove.cpp
+        Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
-                      cli
-                      keepassx_core
-                      Qt5::Core
-                      ${GCRYPT_LIBRARIES}
-                      ${ARGON2_LIBRARIES}
-                      ${GPGERROR_LIBRARIES}
-                      ${ZLIB_LIBRARIES}
-                      ${ZXCVBN_LIBRARIES})
+        cli
+        keepassx_core
+        Qt5::Core
+        ${GCRYPT_LIBRARIES}
+        ${ARGON2_LIBRARIES}
+        ${GPGERROR_LIBRARIES}
+        ${ZLIB_LIBRARIES}
+        ${ZXCVBN_LIBRARIES})
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime

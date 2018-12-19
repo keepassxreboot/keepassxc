@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>A KeePassXC a GNU General Public License (GPL) 2. vagy (válaszhatóan ) 3. verziója szerint kerül terjesztésre.</translation>
+        <translation>A KeePassXC a GNU General Public License (GPL) 2-es vagy (válaszhatóan) 3-as verziója szerint kerül terjesztésre.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -777,7 +777,7 @@ Megfontolandó egy új kulcsfájl készítése.</translation>
     </message>
     <message>
         <source>Can&apos;t open key file</source>
-        <translation>Nem lehet megnyitni a kulcsfájl</translation>
+        <translation>Nem lehet megnyitni a kulcsfájlt</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -992,7 +992,7 @@ Ezt a számot megtartva az adatbázis nagyon könnyen törhető lesz.</translati
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Adatbázis összeolvasztása</translation>
+        <translation>Adatbázis egyesítése</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
@@ -1171,7 +1171,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Összeolvasztási kérelem</translation>
+        <translation>Egyesítési kérelem</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
@@ -1422,7 +1422,7 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Előtérszín:</translation>
+        <translation>Előtérszín</translation>
     </message>
     <message>
         <source>Background Color:</source>
@@ -1739,11 +1739,11 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation>UUID:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Bővítmény adati</translation>
+        <translation>Beépülő adati</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2035,7 +2035,7 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     </message>
     <message>
         <source>/*_&amp; ...</source>
-        <translation>/*_&amp; ...</translation>
+        <translation>/*_&amp; …</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -2580,33 +2580,6 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
 </context>
 <context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256 bites</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256 bites</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256 bites</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
-    </message>
-</context>
-<context>
     <name>Main</name>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -2693,7 +2666,7 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
     <message>
         <source>Merge from KeePassX database</source>
-        <translation>Összeolvasztás KeePassX adatbázisból</translation>
+        <translation>Egyesítés KeePassX adatbázisból</translation>
     </message>
     <message>
         <source>&amp;Add new entry</source>
@@ -3511,6 +3484,30 @@ Elérhető parancsok:
     <message>
         <source>missing closing quote</source>
         <translation>hiányzó lezáró idézőjel</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256 bites</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256 bites</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256 bites</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – ajánlott)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

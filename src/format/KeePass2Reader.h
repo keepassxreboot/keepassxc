@@ -35,8 +35,8 @@ class KeePass2Reader
     Q_DECLARE_TR_FUNCTIONS(KdbxReader)
 
 public:
-    Database* readDatabase(const QString& filename, QSharedPointer<const CompositeKey> key);
-    Database* readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, bool keepDatabase = false);
+    bool readDatabase(const QString& filename, QSharedPointer<const CompositeKey> key, Database* db);
+    bool readDatabase(QIODevice* device, QSharedPointer<const CompositeKey> key, Database* db);
 
     bool hasError() const;
     QString errorString() const;

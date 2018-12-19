@@ -94,7 +94,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
-    closeAction->setIcon(FilePath::instance()->icon("actions", "message-close"));
+    closeAction->setIcon(FilePath::instance()->icon("actions", "message-close", false));
     
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
 
@@ -102,7 +102,7 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
     closeButton->setAutoRaise(true);
     closeButton->setDefaultAction(closeAction);
     closeButtonPixmap = QPixmap(closeButton->icon().pixmap(closeButton->icon().actualSize(QSize(16, 16))));
-#ifdef Q_OS_MAC
+#ifdef Q_OS_MACOS
     closeButton->setStyleSheet("QToolButton { background: transparent;"
                                    "border-radius: 2px; padding: 3px; }"
                                "QToolButton::hover, QToolButton::focus {"
@@ -287,7 +287,6 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
 
     // Tint close icon
     auto closeButtonPixmap = d->closeButtonPixmap;
-    QPixmap mask(closeButtonPixmap);
     QPainter painter;
     painter.begin(&closeButtonPixmap);
     painter.setRenderHints(QPainter::HighQualityAntialiasing);
@@ -309,10 +308,10 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         "}"
         ".QLabel { color: %6; }"
         ))
-        .arg(bg0.name())
-        .arg(bg1.name())
-        .arg(bg2.name())
-        .arg(border.name())
+        .arg(bg0.name(),
+             bg1.name(),
+             bg2.name(),
+             border.name())
         // DefaultFrameWidth returns the size of the external margin + border width. We know our border is 1px,
         // so we subtract this from the frame normal QStyle FrameWidth to get our margin
         .arg(style()->pixelMetric(QStyle::PM_DefaultFrameWidth, nullptr, this) - 1)
@@ -411,7 +410,7 @@ void KMessageWidget::removeAction(QAction *action)
 
 void KMessageWidget::animatedShow()
 {
-    if (!style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
+    if (!style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
         show();
         emit showAnimationFinished();
         return;
@@ -436,7 +435,7 @@ void KMessageWidget::animatedShow()
 
 void KMessageWidget::animatedHide()
 {
-    if (!style()->styleHint(QStyle::SH_Widget_Animate, 0, this)) {
+    if (!style()->styleHint(QStyle::SH_Widget_Animate, nullptr, this)) {
         hide();
         emit hideAnimationFinished();
         return;

@@ -55,14 +55,22 @@ private:
     bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod);
     void moveEntry(Entry* entry, Group* targetGroup);
     void moveGroup(Group* group, Group* targetGroup);
-    void eraseEntry(Entry* entry); // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
-    void eraseGroup(Group* group); // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
+    // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
+    void eraseEntry(Entry* entry);
+    // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
+    void eraseGroup(Group* group);
     ChangeList resolveEntryConflict(const MergeContext& context, const Entry* existingEntry, Entry* otherEntry);
     ChangeList resolveGroupConflict(const MergeContext& context, const Group* existingGroup, Group* otherGroup);
-    Merger::ChangeList resolveEntryConflict_Duplicate(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList resolveEntryConflict_KeepLocal(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList resolveEntryConflict_KeepRemote(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList resolveEntryConflict_MergeHistories(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod);
+    Merger::ChangeList
+    resolveEntryConflict_Duplicate(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
+    Merger::ChangeList
+    resolveEntryConflict_KeepLocal(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
+    Merger::ChangeList
+    resolveEntryConflict_KeepRemote(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
+    Merger::ChangeList resolveEntryConflict_MergeHistories(const MergeContext& context,
+                                                           const Entry* sourceEntry,
+                                                           Entry* targetEntry,
+                                                           Group::MergeMode mergeMethod);
 
 private:
     MergeContext m_context;

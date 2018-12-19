@@ -17,6 +17,7 @@
 
 #include "DatabaseSettingsWidgetMetaDataSimple.h"
 #include "ui_DatabaseSettingsWidgetMetaDataSimple.h"
+
 #include "core/Database.h"
 #include "core/Metadata.h"
 

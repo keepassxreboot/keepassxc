@@ -45,7 +45,7 @@
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Berrikuspena: </translation>
+        <translation>Berrikuspena: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
@@ -680,15 +680,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>byte %n</numerusform><numerusform>%n byte</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>lerro %n</numerusform><numerusform>%n lerro</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>zutabe %n</numerusform><numerusform>%n zutabe</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1097,7 +1097,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ziur zaude sarrera %n zakarrontzira mugitu nahi duzula?</numerusform><numerusform>Ziur zaude %n sarrera zakarrontzira mugitu nahi dituzula?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1344,11 +1344,11 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>aste %n</numerusform><numerusform>%n aste</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>hilabete %n</numerusform><numerusform>%n hilabete</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
@@ -1434,7 +1434,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Leihoaren titulua:</translation>
+        <translation>Leihoaren izenburua:</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
@@ -1791,7 +1791,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ziur zaude eranskin %n kendu nahi duzula?</numerusform><numerusform>Ziur zaude %n eranskin kendu nahi dituzula?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -2545,33 +2545,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     <message>
         <source>Invalid entry field type</source>
         <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 – gomendatua)</translation>
     </message>
 </context>
 <context>
@@ -3471,6 +3444,30 @@ Available commands:
     <message>
         <source>missing closing quote</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bit</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bit</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bit</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – gomendatua)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>

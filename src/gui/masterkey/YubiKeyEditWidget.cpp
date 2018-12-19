@@ -17,11 +17,12 @@
 
 #include "YubiKeyEditWidget.h"
 #include "ui_YubiKeyEditWidget.h"
-#include "gui/MessageBox.h"
+
+#include "config-keepassx.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "keys/CompositeKey.h"
 #include "keys/YkChallengeResponseKey.h"
-#include "config-keepassx.h"
 
 #include <QtConcurrent>
 
@@ -30,10 +31,11 @@ YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     , m_compUi(new Ui::YubiKeyEditWidget())
 {
     setComponentName(tr("YubiKey Challenge-Response"));
-    setComponentDescription(tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a>, you can use it "
-                               "for additional security.</p><p>The YubiKey requires one of its slots to be programmed as "
-                               "<a href=\"https://www.yubico.com/products/services-software/personalization-tools/challenge-response/\">"
-                               "HMAC-SHA1 Challenge-Response</a>.</p>"));
+    setComponentDescription(
+        tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a>, you can use it "
+           "for additional security.</p><p>The YubiKey requires one of its slots to be programmed as "
+           "<a href=\"https://www.yubico.com/products/services-software/personalization-tools/challenge-response/\">"
+           "HMAC-SHA1 Challenge-Response</a>.</p>"));
 }
 
 YubiKeyEditWidget::~YubiKeyEditWidget()
@@ -75,7 +77,10 @@ QWidget* YubiKeyEditWidget::componentEditWidget()
 #ifdef WITH_XC_YUBIKEY
     connect(m_compUi->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
 
-    connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)), Qt::QueuedConnection);
+    // clang-format off
+    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
+    // clang-format on
+
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
 
     pollYubikey();

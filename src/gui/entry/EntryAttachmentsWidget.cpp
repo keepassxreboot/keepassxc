@@ -43,9 +43,12 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
 
     connect(this, SIGNAL(readOnlyChanged(bool)), SLOT(updateButtonsEnabled()));
     connect(m_attachmentsModel, SIGNAL(modelReset()), SLOT(updateButtonsEnabled()));
+
+    // clang-format off
     connect(m_ui->attachmentsView->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(updateButtonsEnabled()));
+    // clang-format on
 
     connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
     connect(m_ui->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));

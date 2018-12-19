@@ -96,13 +96,6 @@ void CryptoHash::setKey(const QByteArray& data)
     Q_ASSERT(error == 0);
 }
 
-void CryptoHash::reset()
-{
-    Q_D(CryptoHash);
-
-    gcry_md_reset(d->ctx);
-}
-
 QByteArray CryptoHash::result() const
 {
     Q_D(const CryptoHash);

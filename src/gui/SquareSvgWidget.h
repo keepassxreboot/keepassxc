@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,17 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_UNLOCKDATABASEWIDGET_H
-#define KEEPASSX_UNLOCKDATABASEWIDGET_H
+#ifndef KEEPASSX_SquareSvgWidget_H
+#define KEEPASSX_SquareSvgWidget_H
 
-#include "gui/DatabaseOpenWidget.h"
+#include <QtSvg/QSvgWidget>
 
-class UnlockDatabaseWidget : public DatabaseOpenWidget
+class SquareSvgWidget : public QSvgWidget
 {
-    Q_OBJECT
-
 public:
-    explicit UnlockDatabaseWidget(QWidget* parent = nullptr);
+    SquareSvgWidget() = default;
+    ~SquareSvgWidget() override = default;
+
+    bool hasHeightForWidth() const override;
+    int heightForWidth(int width) const override;
 };
 
-#endif // KEEPASSX_UNLOCKDATABASEWIDGET_H
+#endif // KEEPASSX_SquareSvgWidget_H

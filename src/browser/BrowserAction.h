@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #ifndef BROWSERACTION_H
 #define BROWSERACTION_H
@@ -54,10 +54,6 @@ public:
 
     QJsonObject readResponse(const QJsonObject& json);
 
-public slots:
-    void removeSharedEncryptionKeys();
-    void removeStoredPermissions();
-
 private:
     QJsonObject handleAction(const QJsonObject& json);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
@@ -77,14 +73,14 @@ private:
 
     QString encryptMessage(const QJsonObject& message, const QString& nonce);
     QJsonObject decryptMessage(const QString& message, const QString& nonce, const QString& action = QString());
-    QString encrypt(const QString plaintext, const QString nonce);
-    QByteArray decrypt(const QString encrypted, const QString nonce);
+    QString encrypt(const QString& plaintext, const QString& nonce);
+    QByteArray decrypt(const QString& encrypted, const QString& nonce);
 
     QString getBase64FromKey(const uchar* array, const uint len);
     QByteArray getQByteArray(const uchar* array, const uint len) const;
     QJsonObject getJsonObject(const uchar* pArray, const uint len) const;
-    QJsonObject getJsonObject(const QByteArray ba) const;
-    QByteArray base64Decode(const QString str);
+    QJsonObject getJsonObject(const QByteArray& ba) const;
+    QByteArray base64Decode(const QString& str);
     QString incrementNonce(const QString& nonce);
 
 private:

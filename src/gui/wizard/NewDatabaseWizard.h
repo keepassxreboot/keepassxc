@@ -19,7 +19,7 @@
 #define KEEPASSXC_NEWDATABASEWIZARD_H
 
 #include <QPointer>
-#include <QScopedPointer>
+#include <QSharedPointer>
 #include <QWizard>
 
 class Database;
@@ -30,21 +30,21 @@ class NewDatabaseWizardPage;
  */
 class NewDatabaseWizard : public QWizard
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit NewDatabaseWizard(QWidget* parent = nullptr);
     ~NewDatabaseWizard() override;
 
-    Database* takeDatabase();
+    QSharedPointer<Database> takeDatabase();
     bool validateCurrentPage() override;
 
 protected:
     void initializePage(int id) override;
 
 private:
-    QScopedPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
     QList<QPointer<NewDatabaseWizardPage>> m_pages;
 };
 
-#endif //KEEPASSXC_NEWDATABASEWIZARD_H
+#endif // KEEPASSXC_NEWDATABASEWIZARD_H

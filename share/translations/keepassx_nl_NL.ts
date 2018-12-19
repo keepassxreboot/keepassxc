@@ -503,7 +503,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Cha&amp;llenge Response</source>
-        <translation>Test - Antwoord</translation>
+        <translation>Cha&amp;llenge/response</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -727,7 +727,7 @@ Overweeg a.u.b. een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Challenge Response:</source>
-        <translation>Test - Resultaat:</translation>
+        <translation>Challenge/response:</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -1097,7 +1097,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Weet je zeker dat je het item &quot;%1&quot; wil verwijderen?</translation>
+        <translation>Weet je zeker dat je het item &quot;%1&quot; definitief wil verwijderen?</translation>
     </message>
     <message>
         <source>Delete entries?</source>
@@ -1361,7 +1361,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Press reveal to view or edit</source>
-        <translation>Druk Weergeven om te bekijken of bewerken</translation>
+        <translation>Druk Tonen om te bekijken of bewerken</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1416,7 +1416,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Weergeven</translation>
+        <translation>Tonen</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1470,7 +1470,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Weergeven</translation>
+        <translation>Tonen</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -1513,7 +1513,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Selecteer om notities weer te geven.</translation>
+        <translation>Schakelen aan om notities te tonen.</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -2071,7 +2071,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>Kan Test-Resultaat niet uitgeven.</translation>
+        <translation>Kan challenge/response niet uitvoeren.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -2082,7 +2082,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <name>Kdbx3Writer</name>
     <message>
         <source>Unable to issue challenge-response.</source>
-        <translation>Kan Test-Resultaat niet uitgeven.</translation>
+        <translation>Kan challenge/response niet uitvoeren.</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2579,33 +2579,6 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     <message>
         <source>Invalid entry field type</source>
         <translation>Ongeldig item veldtype</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation>AES: 256-bit</translation>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation>Twofish: 256-bit</translation>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation>ChaCha20: 256-bit</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation>AES-KDF (KDBX 4)</translation>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation>AES-KDF (KDBX 3.1)</translation>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
-        <translation>Argon2 (KDBX 4 - aanbevolen)</translation>
     </message>
 </context>
 <context>
@@ -3483,7 +3456,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Namen van de weer te geven kenmerken. Deze optie kan meer dan eens worden opgegeven, waarbij elk kenmerk op een regel wordt getoond in de opgegeven volgorde. Als er geen kenmerken worden opgegeven, wordt een samenvatting van de standaardkenmerken gegeven.</translation>
+        <translation>Namen van de te tonen kenmerken. Deze optie kan meer dan eens worden opgegeven, waarbij elk kenmerk op een regel wordt getoond in de opgegeven volgorde. Als er geen kenmerken worden opgegeven, wordt een samenvatting van de standaardkenmerken gegeven.</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -3514,6 +3487,30 @@ Beschikbare opdrachten:
     <message>
         <source>missing closing quote</source>
         <translation>afsluitend aanhalingsteken ontbreekt</translation>
+    </message>
+    <message>
+        <source>AES: 256-bit</source>
+        <translation>AES: 256-bits</translation>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation>Twofish: 256-bits</translation>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation>ChaCha20: 256-bits</translation>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation>Argon2 (KDBX 4 – aanbevolen)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation>AES-KDF (KDBX 4)</translation>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation>AES-KDF (KDBX 3.1)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -3553,7 +3550,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation>YubiKey[%1] Test - Resultaat - Slot %2 - %3</translation>
+        <translation>YubiKey[%1] challenge/response - slot %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
@@ -3837,7 +3834,7 @@ Ontgrendel de geselecteerde database of kies een ontgrendelde database.</transla
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Icoon in het systeemvak weergeven</translation>
+        <translation>Icoon in het systeemvak tonen</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>

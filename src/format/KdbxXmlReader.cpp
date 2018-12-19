@@ -28,6 +28,7 @@
 
 #include <QBuffer>
 #include <QFile>
+#include <utility>
 
 #define UUID_LENGTH 16
 
@@ -43,9 +44,9 @@ KdbxXmlReader::KdbxXmlReader(quint32 version)
  * @param version KDBX version
  * @param binaryPool binary pool
  */
-KdbxXmlReader::KdbxXmlReader(quint32 version, const QHash<QString, QByteArray>& binaryPool)
+KdbxXmlReader::KdbxXmlReader(quint32 version, QHash<QString, QByteArray> binaryPool)
     : m_kdbxVersion(version)
-    , m_binaryPool(binaryPool)
+    , m_binaryPool(std::move(binaryPool))
 {
 }
 
@@ -55,7 +56,7 @@ KdbxXmlReader::KdbxXmlReader(quint32 version, const QHash<QString, QByteArray>& 
  * @param device input file
  * @return pointer to the new database
  */
-Database* KdbxXmlReader::readDatabase(const QString& filename)
+QSharedPointer<Database> KdbxXmlReader::readDatabase(const QString& filename)
 {
     QFile file(filename);
     file.open(QIODevice::ReadOnly);
@@ -68,10 +69,10 @@ Database* KdbxXmlReader::readDatabase(const QString& filename)
  * @param device input device
  * @return pointer to the new database
  */
-Database* KdbxXmlReader::readDatabase(QIODevice* device)
+QSharedPointer<Database> KdbxXmlReader::readDatabase(QIODevice* device)
 {
-    auto db = new Database();
-    readDatabase(device, db);
+    auto db = QSharedPointer<Database>::create();
+    readDatabase(device, db.data());
     return db;
 }
 
@@ -82,7 +83,6 @@ Database* KdbxXmlReader::readDatabase(QIODevice* device)
  * @param db database to read into
  * @param randomStream random stream to use for decryption
  */
-#include "QDebug"
 void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
 {
     m_error = false;
@@ -731,7 +731,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
         }
         if (m_xml.name() == "Binary") {
             QPair<QString, QString> ref = parseEntryBinary(entry);
-            if (!ref.first.isNull() && !ref.second.isNull()) {
+            if (!ref.first.isEmpty() && !ref.second.isEmpty()) {
                 binaryRefs.append(ref);
             }
             continue;

@@ -15,11 +15,11 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>GNU General Public License (GPL) সংস্করণ ২ বা (আপনার ইচ্ছানুসারে) সংস্করণ ৩ এর অধীনে KeePassXC বিনামূল্যে বিতরন করা হয়।</translation>
+        <translation>GNU General Public License (GPL) সংস্করণ 2 বা (আপনার ইচ্ছানুসারে) সংস্করণ 3 এর অধীনে KeePassXC বিনামূল্যে বিতরন করা হয়।</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>অবদানকারী</translation>
+        <translation>অবদানকারীগণ</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>ডিবাগ তথ্য</translation>
+        <translation>ডিবাগের তথ্য</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>যখন আপনি একটি বাগ রিপোর্ট করুন নিচের তথ্যগুলো অন্তর্ভুক্ত করুন:</translation>
+        <translation>যখন আপনি একটি বাগ রিপোর্ট করবেন, নিচের তথ্যগুলো অন্তর্ভুক্ত করুন:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -256,7 +256,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>প্রমাণপ্রত্রাদি অনুরোধ করা হলে একটি &amp;বিজ্ঞপ্তি দেখান</translation>
+        <translation>প্রমাণপ্রত্রাদি অনুরোধ করা হলে একটি বিজ্ঞপ্তি দেখান</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
@@ -303,7 +303,7 @@ Please select whether you want to allow access.</source>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>তথে প্রবেশ করার পূর্বে কখনোই জিজ্ঞাসা করবেন না</translation>
+        <translation>তথ্যে প্রবেশ করার পূর্বে কখনোই জিজ্ঞাসা করবেন না</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
@@ -367,7 +367,7 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Executable Files (*)</source>
-        <translation type="unfinished"/>
+        <translation>এক্সিকিউটেবল ফাইল (*)</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
@@ -382,7 +382,7 @@ Please select whether you want to allow access.</source>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: নতুন কী (key) যুক্ত করার আবেদন</translation>
+        <translation>KeePassXC: নতুন কী যুক্ত করার আবেদন</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
@@ -431,7 +431,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>The active database does not contain a settings entry.</source>
-        <translation type="unfinished"/>
+        <translation>সক্রিয় ডাটাবেস সেটিংসের এন্ট্রি ধারণ করে না।</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -447,7 +447,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>KeePassXC সেটিংস থেকে সফলভাবে %n এনক্রিপশন key(s) অপসারণ করা হয়েছে।</numerusform><numerusform>KeePassXC সেটিংস থেকে সফলভাবে %n এনক্রিপশন key(s) অপসারণ করা হয়েছে।</numerusform></translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -463,7 +463,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%N entry(s) থেকে সফলভাবে অনুমতিসমূহ অপসারণ করা হয়েছে।</numerusform><numerusform>%N entry(s) থেকে সফলভাবে অনুমতিসমূহ অপসারণ করা হয়েছে।</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -557,7 +557,7 @@ unsupported in the future.
 Please consider generating a new key file.</source>
         <translation>আপনি পূর্ববর্তী কী ফাইল ফরম্যাট ব্যবহার করেছেন
  যা ভবিষ্যতে অসমর্থিত হতে পারে ।
-নতুন কী (key) ফাইল তৈরি করুন।</translation>
+নতুন কী ফাইল তৈরি করুন।</translation>
     </message>
     <message>
         <source>Changing master key failed: no YubiKey inserted.</source>
@@ -615,7 +615,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>মন্তব্য দিয়ে শুরু</translation>
+        <translation>মন্তব্য শুরু হয়েছে</translation>
     </message>
     <message>
         <source>First record has field names</source>
@@ -647,7 +647,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>column </source>
-        <translation type="unfinished"/>
+        <translation>কলাম</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
@@ -691,15 +691,15 @@ Please consider generating a new key file.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n byte(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte(s), </numerusform><numerusform>%n byte(s), </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s), </source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n সারি (সমূহ) </numerusform><numerusform>%n সারি (সমূহ) </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n column(s)</numerusform><numerusform>%n কলাম(সমূহ)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -858,12 +858,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> এম-বি</numerusform><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> thread(s)</numerusform><numerusform> thread(s)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -969,7 +969,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>File not found!</source>
-        <translation type="unfinished"/>
+        <translation>ফাইল খুঁজে পাওয়া যায়নি।</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -989,7 +989,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>All files (*)</source>
-        <translation type="unfinished"/>
+        <translation>সব ফাইল (*)</translation>
     </message>
     <message>
         <source>Merge database</source>
@@ -1049,16 +1049,17 @@ Save changes?</source>
     </message>
     <message>
         <source>locked</source>
-        <translation>আটকানো</translation>
+        <translation>তালাবদ্ধ</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>তালাবদ্ধ ডাকাবেস</translation>
+        <translation>তালাবদ্ধ ডাটাবেস</translation>
     </message>
     <message>
         <source>Can't lock the database as you are currently editing it.
 Please press cancel to finish your changes or discard them.</source>
-        <translation type="unfinished"/>
+        <translation>আপনি বর্তমানে এটি সম্পাদনা করছেন তাই ডাটাবেস লক করতে পারছি না।
+অনুগ্রহ করে আপনার পরিবর্তনগুলো সমাপ্ত করুন বা বাতিল চাপুন।</translation>
     </message>
     <message>
         <source>This database has been modified.
@@ -1119,7 +1120,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>আপনি কি সত্যিই %n entry(s) রিসাইকেল বিনে সরাতে চান?</numerusform><numerusform>আপনি কি সত্যিই %n এন্ট্রি(সমূহ) রিসাইকেল বিনে সরাতে চান?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1327,7 +1328,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Entry history</source>
-        <translation type="unfinished"/>
+        <translation>এন্ট্রি ইতিহাস</translation>
     </message>
     <message>
         <source>Add entry</source>
@@ -1367,15 +1368,15 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>দিনগুলো সপ্তাহগুলো মাসগুলো %n</numerusform><numerusform>%n সপ্তাহ(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n month(s)</numerusform><numerusform>%n মাস(s)</numerusform></translation>
     </message>
     <message>
         <source>1 year</source>
-        <translation>১ বছর</translation>
+        <translation>1 বছর</translation>
     </message>
     <message>
         <source>Apply generated password?</source>
@@ -1595,7 +1596,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation type="unfinished"/>
+        <translation>এ কী যখন ব্যবহার করা হয় ব্যবহারকারী অনুমোদন প্রয়োজন</translation>
     </message>
 </context>
 <context>
@@ -1614,7 +1615,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Add group</source>
-        <translation>দলযোগ করুন</translation>
+        <translation>দল যোগ করুন</translation>
     </message>
     <message>
         <source>Edit group</source>
@@ -1684,7 +1685,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation type="unfinished"/>
+        <translation>Favicon ডাউনলোড করুন</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
@@ -1773,7 +1774,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source> - Clone</source>
         <comment>Suffix added to cloned entries</comment>
-        <translation> -ক্লোন</translation>
+        <translation> -নকল</translation>
     </message>
 </context>
 <context>
@@ -1815,7 +1816,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>আপনি কি নিশ্চিত যে আপনি %n সংযোজন (গুলো) অপসারণ করতে চান?</numerusform><numerusform>আপনি কি নিশ্চিত যে আপনি %n সংযুক্তি (গুলো) অপসারণ করতে চান?</numerusform></translation>
     </message>
     <message>
         <source>Confirm Remove</source>
@@ -1931,7 +1932,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>সৃষ্টি করেছেন</translation>
+        <translation>সৃষ্টি করা হয়েছে</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -1939,7 +1940,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Accessed</source>
-        <translation type="unfinished"/>
+        <translation>প্রবেশ করা হয়েছে</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -1966,7 +1967,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>বিষয়বস্তুর সাথে মিল করুন</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
@@ -1988,11 +1989,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: ফাইল সংরক্ষণ হয়নি!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
-        <translation type="unfinished"/>
+        <translation>স্থানীয় মেসেজিং স্ক্রিপ্ট ফাইল সংরক্ষণ হয়নি।</translation>
     </message>
 </context>
 <context>
@@ -2011,7 +2012,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>A-Z</source>
-        <translation type="unfinished"/>
+        <translation>A-Z</translation>
     </message>
     <message>
         <source>Lower Case Letters</source>
@@ -2019,7 +2020,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>a-z</source>
-        <translation type="unfinished"/>
+        <translation>a-z</translation>
     </message>
     <message>
         <source>Numbers</source>
@@ -2039,7 +2040,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation type="unfinished"/>
+        <translation>একই ধরনের অক্ষরসমূহ বাদ দিন</translation>
     </message>
     <message>
         <source>Ensure that the password contains characters from every group</source>
@@ -2091,7 +2092,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>ডাটাবেসের শিরোনাম নেই</translation>
+        <translation>ডাটাবেসের হেডারসমূহ নেই</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -2099,7 +2100,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>শিরোনামের চেকসাম আকার সঠিক নয়</translation>
+        <translation>হেডারের চেকসাম আকার সঠিক নয়</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
@@ -2119,7 +2120,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation type="unfinished"/>
+        <translation>হেডার ক্ষেত্রের দৈর্ঘ্য সঠিক নয়</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
@@ -2573,33 +2574,6 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>KeePass2</name>
-    <message>
-        <source>AES: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Twofish: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>ChaCha20: 256-bit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 4)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES-KDF (KDBX 3.1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Argon2 (KDBX 4 – recommended)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3504,6 +3478,30 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>AES: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Twofish: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>ChaCha20: 256-bit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Argon2 (KDBX 4 – recommended)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 4)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES-KDF (KDBX 3.1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Group</source>
         <translation>দল</translation>
     </message>
@@ -3934,7 +3932,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Hide passwords in the preview panel</source>
-        <translation type="unfinished"/>
+        <translation>প্রদর্শন প্যানেলে পাসওয়ার্ড লুকান</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -3942,7 +3940,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Privacy</source>
-        <translation type="unfinished"/>
+        <translation>গোপণীয়তা</translation>
     </message>
     <message>
         <source>Use Google as fallback for downloading website icons</source>
@@ -3973,7 +3971,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation type="unfinished"/>
+        <translation>সচারচর সেটিংসমূহ ব্যবহার করুন</translation>
     </message>
     <message>
         <source>Note: Change these settings only if you know what you are doing.</source>
@@ -3985,7 +3983,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>8 digits</source>
-        <translation>8 (আট) ডিজিট</translation>
+        <translation>৮ ডিজিট</translation>
     </message>
     <message>
         <source>6 digits</source>
@@ -4009,7 +4007,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>000000</source>
-        <translation>০০০০০০</translation>
+        <translation>000000</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -4035,7 +4033,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation type="unfinished"/>
+        <translation>আপনার পাসওয়ার্ডসমূহ নিরাপদে KeePassXC ডাটাবেসে সংরক্ষণ করুন</translation>
     </message>
     <message>
         <source>Create new database</source>
@@ -4094,7 +4092,7 @@ Please unlock the selected database or choose another one which is unlocked.</so
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation type="unfinished"/>
+        <translation>stdin থেকে ডাটাবেসের পাসওয়ার্ড পড়</translation>
     </message>
     <message>
         <source>Parent window handle</source>

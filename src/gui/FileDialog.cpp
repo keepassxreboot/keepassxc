@@ -154,7 +154,7 @@ QString FileDialog::getSaveFileName(QWidget* parent,
         }
 
         QString result;
-#if defined(Q_OS_MAC) || defined(Q_OS_WIN)
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
         Q_UNUSED(defaultName);
         Q_UNUSED(defaultExtension);
         // the native dialogs on these platforms already append the file extension
@@ -238,7 +238,7 @@ FileDialog::FileDialog()
 {
 }
 
-void FileDialog::saveLastDir(QString dir)
+void FileDialog::saveLastDir(const QString& dir)
 {
     if (!dir.isEmpty() && !m_forgetLastDir) {
         config()->set("LastDir", QFileInfo(dir).absolutePath());

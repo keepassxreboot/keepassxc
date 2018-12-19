@@ -114,14 +114,14 @@ namespace
     }
 }
 
-ShareObserver::ShareObserver(Database* db, QObject* parent)
+ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
     : QObject(parent)
-    , m_db(db)
+    , m_db(std::move(db))
     , m_fileWatcher(new BulkFileWatcher(this))
 {
     connect(KeeShare::instance(), SIGNAL(activeChanged()), this, SLOT(handleDatabaseChanged()));
 
-    connect(m_db, SIGNAL(modified()), this, SLOT(handleDatabaseChanged()));
+    connect(m_db.data(), SIGNAL(modified()), this, SLOT(handleDatabaseChanged()));
 
     connect(m_fileWatcher, SIGNAL(fileCreated(QString)), this, SLOT(handleFileCreated(QString)));
     connect(m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(handleFileChanged(QString)));
@@ -319,8 +319,8 @@ ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings:
     KeePass2Reader reader;
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
-    auto* sourceDb = reader.readDatabase(&buffer, key);
-    if (reader.hasError()) {
+    auto sourceDb = QSharedPointer<Database>::create();
+    if (!reader.readDatabase(&buffer, key, sourceDb.data())) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return {reference.path, Result::Error, reader.errorString()};
     }
@@ -352,7 +352,7 @@ ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings:
             KeeShare::setForeign(foreign);
         }
     }
-    [[gnu::fallthrough]];
+    [[fallthrough]];
     case Single:
     case Own: {
         qDebug("Synchronize %s %s with %s",
@@ -414,7 +414,7 @@ void ShareObserver::resolveReferenceAttributes(Entry* targetEntry, const Databas
         }
         // We could do more sophisticated **** trying to point the reference to the next in-scope reference
         // but those cases with high propability constructed examples and very rare in real usage
-        const auto* sourceReference = sourceDb->resolveEntry(targetEntry->uuid());
+        const auto* sourceReference = sourceDb->rootGroup()->findEntryByUuid(targetEntry->uuid());
         const auto resolvedValue = sourceReference->resolveMultiplePlaceholders(standardValue);
         targetEntry->setUpdateTimeinfo(false);
         targetEntry->attributes()->set(attribute, resolvedValue, targetEntry->attributes()->isProtected(attribute));
@@ -471,12 +471,12 @@ Database* ShareObserver::exportIntoContainer(const KeeShareSettings::Reference& 
     return targetDb;
 }
 
-const Database* ShareObserver::database() const
+const QSharedPointer<Database> ShareObserver::database() const
 {
     return m_db;
 }
 
-Database* ShareObserver::database()
+QSharedPointer<Database> ShareObserver::database()
 {
     return m_db;
 }

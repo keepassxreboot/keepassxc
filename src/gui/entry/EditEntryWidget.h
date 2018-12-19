@@ -19,9 +19,11 @@
 #ifndef KEEPASSX_EDITENTRYWIDGET_H
 #define KEEPASSX_EDITENTRYWIDGET_H
 
+#include <QButtonGroup>
 #include <QModelIndex>
 #include <QScopedPointer>
 #include <QButtonGroup>
+#include <QPointer>
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
@@ -39,7 +41,6 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
-class QStackedLayout;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
@@ -53,7 +54,7 @@ namespace Ui
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
     class EditWidget;
-}
+} // namespace Ui
 
 class EditEntryWidget : public EditWidget
 {
@@ -61,11 +62,11 @@ class EditEntryWidget : public EditWidget
 
 public:
     explicit EditEntryWidget(QWidget* parent = nullptr);
-    ~EditEntryWidget();
+    ~EditEntryWidget() override;
 
-    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName, Database* database);
+    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
+                   QSharedPointer<Database> database);
 
-    void createPresetsMenu(QMenu* expirePresetsMenu);
     QString entryTitle() const;
     void clear();
     bool hasBeenModified() const;
@@ -80,6 +81,9 @@ private slots:
     void cancel();
     void togglePasswordGeneratorButton(bool checked);
     void setGeneratedPassword(const QString& password);
+#ifdef WITH_XC_NETWORKING
+    void updateFaviconButtonEnable(const QString& url);
+#endif
     void insertAttribute();
     void editCurrentAttribute();
     void removeCurrentAttribute();
@@ -129,7 +133,7 @@ private:
     void setupColorButton(bool foreground, const QColor& color);
 
     bool passwordsEqual();
-    void setForms(const Entry* entry, bool restore = false);
+    void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
@@ -139,8 +143,8 @@ private:
 
     void displayAttribute(QModelIndex index, bool showProtected);
 
-    Entry* m_entry;
-    Database* m_database;
+    QPointer<Entry> m_entry;
+    QSharedPointer<Database> m_db;
 
     bool m_create;
     bool m_history;

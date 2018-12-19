@@ -87,3 +87,9 @@ void AutoTypeExecutor::execClearField(AutoTypeClearField* action)
 {
     Q_UNUSED(action);
 }
+
+AutoTypeAction::~AutoTypeAction()
+{
+    // This makes sure that AutoTypeAction's vtable is placed
+    // in this translation unit.
+}

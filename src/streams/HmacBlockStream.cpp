@@ -1,21 +1,23 @@
 /*
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "HmacBlockStream.h"
+
+#include <utility>
 
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
@@ -25,7 +27,7 @@ const QSysInfo::Endian HmacBlockStream::ByteOrder = QSysInfo::LittleEndian;
 HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
     : LayeredStream(baseDevice)
     , m_blockSize(1024 * 1024)
-    , m_key(key)
+    , m_key(std::move(key))
 {
     init();
 }
@@ -33,7 +35,7 @@ HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key)
 HmacBlockStream::HmacBlockStream(QIODevice* baseDevice, QByteArray key, qint32 blockSize)
     : LayeredStream(baseDevice)
     , m_blockSize(blockSize)
-    , m_key(key)
+    , m_key(std::move(key))
 {
     init();
 }
@@ -245,7 +247,7 @@ QByteArray HmacBlockStream::getCurrentHmacKey() const
     return getHmacKey(m_blockIndex, m_key);
 }
 
-QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, QByteArray key)
+QByteArray HmacBlockStream::getHmacKey(quint64 blockIndex, const QByteArray& key)
 {
     Q_ASSERT(key.size() == 64);
     QByteArray indexBytes = Endian::sizedIntToBytes<quint64>(blockIndex, ByteOrder);

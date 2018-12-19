@@ -37,7 +37,7 @@ AutoTypeMatch AutoTypeMatchModel::matchFromIndex(const QModelIndex& index) const
     return m_matches.at(index.row());
 }
 
-QModelIndex AutoTypeMatchModel::indexFromMatch(AutoTypeMatch match) const
+QModelIndex AutoTypeMatchModel::indexFromMatch(const AutoTypeMatch& match) const
 {
     int row = m_matches.indexOf(match);
     Q_ASSERT(row != -1);
@@ -101,7 +101,6 @@ QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
     AutoTypeMatch match = matchFromIndex(index);
 
     if (role == Qt::DisplayRole) {
-        QString result;
         switch (index.column()) {
         case ParentGroup:
             if (match.entry->group()) {
