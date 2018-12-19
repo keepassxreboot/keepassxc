@@ -82,7 +82,6 @@ private:
     QPointer<EditWidgetProperties> m_editWidgetProperties;
 
     QScopedPointer<Group> m_temporaryGroup;
-    QPointer<Database> m_database;
     QPointer<Group> m_group;
     QSharedPointer<Database> m_db;
 

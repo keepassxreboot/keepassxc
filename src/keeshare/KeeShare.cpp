@@ -32,10 +32,10 @@
 
 namespace
 {
-    static const QString KeeShare_Reference("KeeShare/Reference");
-    static const QString KeeShare_Own("KeeShare/Settings.own");
-    static const QString KeeShare_Foreign("KeeShare/Settings.foreign");
-    static const QString KeeShare_Active("KeeShare/Settings.active");
+static const QString KeeShare_Reference("KeeShare/Reference");
+static const QString KeeShare_Own("KeeShare/Settings.own");
+static const QString KeeShare_Foreign("KeeShare/Settings.foreign");
+static const QString KeeShare_Active("KeeShare/Settings.active");
 }
 
 KeeShare* KeeShare::m_instance = nullptr;
@@ -47,6 +47,12 @@ KeeShare* KeeShare::instance()
     }
 
     return m_instance;
+}
+
+KeeShare::KeeShare(QObject* parent)
+    : QObject(parent)
+{
+    connect(config(), SIGNAL(changed(QString)), SLOT(handleSettingsChanged(QString)));
 }
 
 void KeeShare::init(QObject* parent)
@@ -162,61 +168,19 @@ QString KeeShare::indicatorSuffix(const Group* group, const QString& text)
 
 void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb)
 {
-    if (oldDb && m_observersByDatabase.contains(oldDb.data())) {
-        QPointer<ShareObserver> observer = m_observersByDatabase.take(oldDb.data());
+    if (oldDb && m_observersByDatabase.contains(oldDb->uuid())) {
+        QPointer<ShareObserver> observer = m_observersByDatabase.take(oldDb->uuid());
         if (observer) {
             delete observer;
         }
     }
 
-    if (newDb && !m_observersByDatabase.contains(newDb.data())) {
+    if (newDb && !m_observersByDatabase.contains(newDb->uuid())) {
         QPointer<ShareObserver> observer(new ShareObserver(newDb, this));
-        m_observersByDatabase[newDb.data()] = observer;
+        m_observersByDatabase[newDb->uuid()] = observer;
         connect(observer.data(),
                 SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
-                this,
-                SLOT(emitSharingMessage(QString, MessageWidget::MessageType)));
-    }
-}
-
-void KeeShare::handleDatabaseOpened(QSharedPointer<Database> db)
-{
-    QPointer<ShareObserver> observer = m_observersByDatabase.value(db.data());
-    if (observer) {
-        observer->handleDatabaseOpened();
-    }
-}
-
-void KeeShare::handleDatabaseSaved(QSharedPointer<Database> db)
-{
-    QPointer<ShareObserver> observer = m_observersByDatabase.value(db.data());
-    if (observer) {
-        observer->handleDatabaseSaved();
-    }
-}
-
-void KeeShare::emitSharingMessage(const QString& message, KMessageWidget::MessageType type)
-{
-    QObject* observer = sender();
-    auto db = m_databasesByObserver.value(observer);
-    if (db) {
-        emit sharingMessage(db, message, type);
-    }
-}
-
-void KeeShare::handleDatabaseDeleted(QObject* db)
-{
-    auto observer = m_observersByDatabase.take(db);
-    if (observer) {
-        m_databasesByObserver.remove(observer);
-    }
-}
-
-void KeeShare::handleObserverDeleted(QObject* observer)
-{
-    auto database = m_databasesByObserver.take(observer);
-    if (database) {
-        m_observersByDatabase.remove(database.data());
+                SIGNAL(sharingMessage(QString, MessageWidget::MessageType)));
     }
 }
 
@@ -225,10 +189,4 @@ void KeeShare::handleSettingsChanged(const QString& key)
     if (key == KeeShare_Active) {
         emit activeChanged();
     }
-}
-
-KeeShare::KeeShare(QObject* parent)
-    : QObject(parent)
-{
-    connect(config(), SIGNAL(changed(QString)), this, SLOT(handleSettingsChanged(QString)));
 }

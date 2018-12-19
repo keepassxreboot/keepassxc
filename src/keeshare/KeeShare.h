@@ -19,7 +19,7 @@
 #define KEEPASSXC_KEESHARE_H
 
 #include <QMap>
-#include <QObject>
+#include <QUuid>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"
@@ -32,7 +32,7 @@ class QXmlStreamReader;
 
 class KeeShare : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 public:
     static KeeShare* instance();
     static void init(QObject* parent);
@@ -54,17 +54,12 @@ public:
     static QString referenceTypeLabel(const KeeShareSettings::Reference& reference);
 
     void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
-    void handleDatabaseOpened(QSharedPointer<Database> db);
-    void handleDatabaseSaved(QSharedPointer<Database> db);
 
 signals:
     void activeChanged();
-    void sharingMessage(QSharedPointer<Database>, QString, MessageWidget::MessageType);
+    void sharingMessage(QString, MessageWidget::MessageType);
 
 private slots:
-    void emitSharingMessage(const QString&, MessageWidget::MessageType);
-    void handleDatabaseDeleted(QObject*);
-    void handleObserverDeleted(QObject*);
     void handleSettingsChanged(const QString&);
 
 private:
@@ -72,8 +67,7 @@ private:
 
     explicit KeeShare(QObject* parent);
 
-    QMap<QObject*, QPointer<ShareObserver>> m_observersByDatabase;
-    QMap<QObject*, QSharedPointer<Database>> m_databasesByObserver;
+    QMap<QUuid, QPointer<ShareObserver>> m_observersByDatabase;
 };
 
 #endif // KEEPASSXC_KEESHARE_H

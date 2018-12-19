@@ -63,6 +63,9 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 
     addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
+#ifdef WITH_XC_KEESHARE
+    addEditPage(new EditGroupPageKeeShare(this));
+#endif
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -82,10 +85,6 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     // clang-format on
 
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
-
-#ifdef WITH_XC_KEESHARE
-    addEditPage(new EditGroupPageKeeShare(this));
-#endif
 }
 
 EditGroupWidget::~EditGroupWidget()

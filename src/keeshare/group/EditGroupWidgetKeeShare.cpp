@@ -55,10 +55,10 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
 
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(showSharingState()));
 
-    const auto types = QList<KeeShareSettings::Type>() << KeeShareSettings::Inactive 
-                                                        << KeeShareSettings::ImportFrom
-                                                        << KeeShareSettings::ExportTo
-                                                        << KeeShareSettings::SynchronizeWith;
+    const auto types = QList<KeeShareSettings::Type>() << KeeShareSettings::Inactive
+                                                       << KeeShareSettings::ImportFrom
+                                                       << KeeShareSettings::ExportTo
+                                                       << KeeShareSettings::SynchronizeWith;
     for (const auto& type : types) {
         QString name;
         switch (type) {
@@ -121,7 +121,6 @@ void EditGroupWidgetKeeShare::update()
         m_ui->pathEdit->clear();
         m_ui->passwordGenerator->hide();
         m_ui->togglePasswordGeneratorButton->setChecked(false);
-
     } else {
         const auto reference = KeeShare::referenceOf(m_temporaryGroup);
 
@@ -179,14 +178,9 @@ void EditGroupWidgetKeeShare::selectPath()
     }
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
-        filename = fileDialog()->getFileName(this,
-                                             tr("Select import source"),
-                                             defaultDirPath,
-                                             filters,
-                                             nullptr,
-                                             QFileDialog::DontConfirmOverwrite,
-                                             filetype,
-                                             filename);
+        filename = fileDialog()->getFileName(
+            this, tr("Select import source"), defaultDirPath, filters, nullptr, QFileDialog::DontConfirmOverwrite,
+            filetype, filename);
         break;
     case KeeShareSettings::ExportTo:
         filename = fileDialog()->getFileName(
@@ -203,7 +197,7 @@ void EditGroupWidgetKeeShare::selectPath()
         return;
     }
 
-    setPath(filename);
+    m_ui->pathEdit->setText(filename);
     config()->set("KeeShare/LastShareDir", QFileInfo(filename).absolutePath());
 }
 

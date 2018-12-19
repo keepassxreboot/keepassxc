@@ -35,37 +35,23 @@ class Database;
 
 class ShareObserver : public QObject
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
     explicit ShareObserver(QSharedPointer<Database> db, QObject* parent = nullptr);
     ~ShareObserver();
 
-    void handleDatabaseSaved();
-    void handleDatabaseOpened();
-
-    const QSharedPointer<Database> database() const;
     QSharedPointer<Database> database();
 
 signals:
     void sharingMessage(QString, MessageWidget::MessageType);
 
-public slots:
-    void handleDatabaseChanged();
-
 private slots:
-    void handleFileCreated(const QString& path);
-    void handleFileChanged(const QString& path);
-    void handleFileRemoved(const QString& path);
+    void handleDatabaseChanged();
+    void handleDatabaseSaved();
+    void handleFileUpdated(const QString& path);
 
 private:
-    enum Change
-    {
-        Creation,
-        Update,
-        Deletion
-    };
-
     struct Result
     {
         enum Type
@@ -97,7 +83,6 @@ private:
     QList<ShareObserver::Result> exportIntoReferenceContainers();
     void deinitialize();
     void reinitialize();
-    void handleFileUpdated(const QString& path, Change change);
     void notifyAbout(const QStringList& success, const QStringList& warning, const QStringList& error);
 
 private:

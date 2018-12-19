@@ -95,10 +95,6 @@ void SettingsWidgetKeeShare::saveSettings()
     // TODO HNH: This depends on the order of saving new data - a better model would be to
     //           store changes to the settings in a temporary object and check on the final values
     //           of this object (similar scheme to Entry) - this way we could validate the settings before save
-    if (active.in) {
-        emit settingsMessage(tr("Make sure to have a history size greater than 2 to prevent data loss when importing!"), MessageWidget::Warning);
-    }
-
     KeeShare::setOwn(m_own);
     KeeShare::setForeign(m_foreign);
     KeeShare::setActive(active);

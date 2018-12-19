@@ -161,12 +161,16 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_KEESHARE
     KeeShare::init(this);
     m_ui->settingsWidget->addSettingsPage(new SettingsPageKeeShare(m_ui->tabWidget));
+    connect(KeeShare::instance(), SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
+            SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
 #endif
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
+    // clang-format off
     connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
     connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
     connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
+    // clang-format on
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);

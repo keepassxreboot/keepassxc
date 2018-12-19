@@ -99,7 +99,12 @@ set(TEST_LIBRARIES
         ${GPGERROR_LIBRARIES}
         ${ZLIB_LIBRARIES})
 
-set(testsupport_SOURCES TestGlobal.h modeltest.cpp FailDevice.cpp mock/MockClock.cpp util/TemporaryFile.cpp stub/TestRandom.cpp)
+set(testsupport_SOURCES
+        modeltest.cpp
+        FailDevice.cpp
+        mock/MockClock.cpp
+        util/TemporaryFile.cpp
+        stub/TestRandom.cpp)
 add_library(testsupport STATIC ${testsupport_SOURCES})
 target_link_libraries(testsupport Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Test)
 

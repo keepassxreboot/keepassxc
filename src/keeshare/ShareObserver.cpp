@@ -48,84 +48,96 @@
 
 namespace
 {
-    static const QString KeeShare_Signature("container.share.signature");
-    static const QString KeeShare_Container("container.share.kdbx");
+static const QString KeeShare_Signature("container.share.signature");
+static const QString KeeShare_Container("container.share.kdbx");
 
-    enum Trust
-    {
-        None,
-        Invalid,
-        Single,
-        Lasting,
-        Known,
-        Own
-    };
+enum Trust
+{
+    None,
+    Invalid,
+    Single,
+    Lasting,
+    Known,
+    Own
+};
 
-    QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
-                                                      const KeeShareSettings::Reference& reference,
-                                                      const KeeShareSettings::Certificate& ownCertificate,
-                                                      const QList<KeeShareSettings::Certificate>& knownCertificates,
-                                                      const KeeShareSettings::Sign& sign)
-    {
-        if (sign.signature.isEmpty()) {
-            QMessageBox warning;
-            warning.setIcon(QMessageBox::Warning);
-            warning.setWindowTitle(ShareObserver::tr("Untrustworthy container without signature"));
-            warning.setText(ShareObserver::tr("Do you want to import from unsigned container %1").arg(reference.path));
-            auto yes = warning.addButton(ShareObserver::tr("Import once"), QMessageBox::ButtonRole::YesRole);
-            auto no = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
-            warning.setDefaultButton(no);
-            warning.exec();
-            const auto trust = warning.clickedButton() == yes ? Single : None;
-            return qMakePair(trust, KeeShareSettings::Certificate());
-        }
-        auto key = sign.certificate.sshKey();
-        key.openKey(QString());
-        const Signature signer;
-        if (!signer.verify(data, sign.signature, key)) {
-            const QFileInfo info(reference.path);
-            qCritical("Invalid signature for sharing container %s.", qPrintable(info.absoluteFilePath()));
-            return qMakePair(Invalid, KeeShareSettings::Certificate());
-        }
-        if (ownCertificate.key == sign.certificate.key) {
-            return qMakePair(Own, ownCertificate);
-        }
-        for (const auto& certificate : knownCertificates) {
-            if (certificate.key == certificate.key && certificate.trusted) {
-                return qMakePair(Known, certificate);
-            }
-        }
-
+QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
+                                                  const KeeShareSettings::Reference& reference,
+                                                  const KeeShareSettings::Certificate& ownCertificate,
+                                                  const QList<KeeShareSettings::Certificate>& knownCertificates,
+                                                  const KeeShareSettings::Sign& sign)
+{
+    if (sign.signature.isEmpty()) {
         QMessageBox warning;
-        warning.setIcon(QMessageBox::Question);
-        warning.setWindowTitle(ShareObserver::tr("Import from untrustworthy certificate for sharing container"));
-        warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2")
-                            .arg(sign.certificate.signer)
-                            .arg(sign.certificate.fingerprint()));
-        auto yes = warning.addButton(ShareObserver::tr("Import and trust"), QMessageBox::ButtonRole::YesRole);
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(ShareObserver::tr("Untrustworthy container without signature"));
+        warning.setText(ShareObserver::tr("Do you want to import from unsigned container %1").arg(reference.path));
+        auto yes = warning.addButton(ShareObserver::tr("Import once"), QMessageBox::ButtonRole::YesRole);
         auto no = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
         warning.setDefaultButton(no);
         warning.exec();
-        if (warning.clickedButton() != yes) {
-            qWarning("Prevented import due to untrusted certificate of %s", qPrintable(sign.certificate.signer));
-            return qMakePair(None, sign.certificate);
-        }
-        return qMakePair(Lasting, sign.certificate);
+        const auto trust = warning.clickedButton() == yes ? Single : None;
+        return qMakePair(trust, KeeShareSettings::Certificate());
     }
+
+    auto key = sign.certificate.sshKey();
+    key.openKey(QString());
+    const Signature signer;
+    if (!signer.verify(data, sign.signature, key)) {
+        const QFileInfo info(reference.path);
+        qCritical("Invalid signature for sharing container %s.", qPrintable(info.absoluteFilePath()));
+        return qMakePair(Invalid, KeeShareSettings::Certificate());
+    }
+
+    if (ownCertificate.key == sign.certificate.key) {
+        return qMakePair(Own, ownCertificate);
+    }
+
+    for (const auto& certificate : knownCertificates) {
+        if (certificate.key == certificate.key && certificate.trusted) {
+            return qMakePair(Known, certificate);
+        }
+    }
+
+    QMessageBox warning;
+    warning.setIcon(QMessageBox::Question);
+    warning.setWindowTitle(ShareObserver::tr("Import from untrustworthy certificate for sharing container"));
+    warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2")
+                            .arg(sign.certificate.signer)
+                            .arg(sign.certificate.fingerprint()));
+    auto yes = warning.addButton(ShareObserver::tr("Import and trust"), QMessageBox::ButtonRole::YesRole);
+    auto no = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
+    warning.setDefaultButton(no);
+    warning.exec();
+    if (warning.clickedButton() != yes) {
+        qWarning("Prevented import due to untrusted certificate of %s", qPrintable(sign.certificate.signer));
+        return qMakePair(None, sign.certificate);
+    }
+    return qMakePair(Lasting, sign.certificate);
 }
 
+} // End Namespace
+
 ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
-    : QObject(parent)
-    , m_db(std::move(db))
-    , m_fileWatcher(new BulkFileWatcher(this))
+        : QObject(parent)
+        , m_db(std::move(db))
+        , m_fileWatcher(new BulkFileWatcher(this))
 {
-    connect(KeeShare::instance(), SIGNAL(activeChanged()), this, SLOT(handleDatabaseChanged()));
+    connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(handleDatabaseChanged()));
 
-    connect(m_db.data(), SIGNAL(modified()), this, SLOT(handleDatabaseChanged()));
+    connect(m_db.data(), SIGNAL(modified()), SLOT(handleDatabaseChanged()));
+    connect(m_db.data(), SIGNAL(databaseSaved()), SLOT(handleDatabaseSaved()));
 
-    connect(m_fileWatcher, SIGNAL(fileCreated(QString)), this, SLOT(handleFileCreated(QString)));
-    connect(m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(handleFileChanged(QString)));
-    connect(m_fileWatcher, SIGNAL(fileRemoved(QString)), this, SLOT(handleFileRemoved(QString)));
+    connect(m_fileWatcher, SIGNAL(fileCreated(QString)), SLOT(handleFileUpdated(QString)));
+    connect(m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(handleFileUpdated(QString)));
+    connect(m_fileWatcher, SIGNAL(fileRemoved(QString)), SLOT(handleFileUpdated(QString)));
+
+    const auto active = KeeShare::active();
+    if (!active.in && !active.out) {
+        deinitialize();
+    } else {
+        reinitialize();
+    }
 }
 
 ShareObserver::~ShareObserver()
@@ -147,6 +159,7 @@ void ShareObserver::reinitialize()
         KeeShareSettings::Reference oldReference;
         KeeShareSettings::Reference newReference;
     };
+
     const auto active = KeeShare::active();
     QList<Update> updated;
     QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
@@ -155,6 +168,7 @@ void ShareObserver::reinitialize()
         if (couple.oldReference == couple.newReference) {
             continue;
         }
+
         m_groupToReference.remove(couple.group);
         m_referenceToGroup.remove(couple.oldReference);
         m_shareToGroup.remove(couple.oldReference.path);
@@ -174,6 +188,7 @@ void ShareObserver::reinitialize()
         if (!update.oldReference.path.isEmpty()) {
             m_fileWatcher->removePath(update.oldReference.path);
         }
+
         if (!update.newReference.path.isEmpty() && update.newReference.type != KeeShareSettings::Inactive) {
             m_fileWatcher->addPath(update.newReference.path);
         }
@@ -196,6 +211,7 @@ void ShareObserver::reinitialize()
             }
         }
     }
+
     notifyAbout(success, warning, error);
 }
 
@@ -229,20 +245,8 @@ void ShareObserver::handleDatabaseChanged()
     }
 }
 
-void ShareObserver::handleFileUpdated(const QString& path, Change change)
+void ShareObserver::handleFileUpdated(const QString& path)
 {
-    switch (change) {
-    case Creation:
-        qDebug("File created %s", qPrintable(path));
-        break;
-    case Update:
-        qDebug("File changed %s", qPrintable(path));
-        break;
-    case Deletion:
-        qDebug("File deleted %s", qPrintable(path));
-        break;
-    }
-
     const Result result = this->importFromReferenceContainer(path);
     if (!result.isValid()) {
         return;
@@ -260,21 +264,6 @@ void ShareObserver::handleFileUpdated(const QString& path, Change change)
         success << tr("Imported from %1").arg(result.path);
     }
     notifyAbout(success, warning, error);
-}
-
-void ShareObserver::handleFileCreated(const QString& path)
-{
-    handleFileUpdated(path, Creation);
-}
-
-void ShareObserver::handleFileChanged(const QString& path)
-{
-    handleFileUpdated(path, Update);
-}
-
-void ShareObserver::handleFileRemoved(const QString& path)
-{
-    handleFileUpdated(path, Deletion);
 }
 
 ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
@@ -471,28 +460,9 @@ Database* ShareObserver::exportIntoContainer(const KeeShareSettings::Reference& 
     return targetDb;
 }
 
-const QSharedPointer<Database> ShareObserver::database() const
-{
-    return m_db;
-}
-
 QSharedPointer<Database> ShareObserver::database()
 {
     return m_db;
-}
-
-void ShareObserver::handleDatabaseOpened()
-{
-    if (!m_db) {
-        Q_ASSERT(m_db);
-        return;
-    }
-    const auto active = KeeShare::active();
-    if (!active.in && !active.out) {
-        deinitialize();
-    } else {
-        reinitialize();
-    }
 }
 
 QList<ShareObserver::Result> ShareObserver::exportIntoReferenceContainers()

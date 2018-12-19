@@ -58,6 +58,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
+#include "keeshare/KeeShare.h"
 #include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
@@ -372,6 +373,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     processAutoOpen();
+#ifdef WITH_XC_KEESHARE
+    KeeShare::instance()->connectDatabase(m_db, oldDb);
+#endif
 }
 
 void DatabaseWidget::cloneEntry()
