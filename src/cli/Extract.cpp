@@ -43,8 +43,8 @@ Extract::~Extract()
 
 int Extract::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -56,12 +56,12 @@ int Extract::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
         return EXIT_FAILURE;
     }
 
     if (!parser.isSet(Command::QuietOption)) {
-        out << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+        outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
     }
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
@@ -77,12 +77,12 @@ int Extract::execute(const QStringList& arguments)
         auto fileKey = QSharedPointer<FileKey>::create();
         QString errorMsg;
         if (!fileKey->load(keyFilePath, &errorMsg)) {
-            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath, errorMsg) << endl;
+            errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath, errorMsg) << endl;
             return EXIT_FAILURE;
         }
 
         if (fileKey->type() != FileKey::Hashed) {
-            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+            errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
                                "unsupported in the future.\n\n"
                                "Please consider generating a new key file.")
                 << endl;
@@ -95,11 +95,11 @@ int Extract::execute(const QStringList& arguments)
     const QString& databaseFilename = args.at(0);
     QFile dbFile(databaseFilename);
     if (!dbFile.exists()) {
-        err << QObject::tr("File %1 does not exist.").arg(databaseFilename) << endl;
+        errorTextStream << QObject::tr("File %1 does not exist.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
     }
     if (!dbFile.open(QIODevice::ReadOnly)) {
-        err << QObject::tr("Unable to open file %1.").arg(databaseFilename) << endl;
+        errorTextStream << QObject::tr("Unable to open file %1.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
     }
 
@@ -112,14 +112,14 @@ int Extract::execute(const QStringList& arguments)
 
     if (reader.hasError()) {
         if (xmlData.isEmpty()) {
-            err << QObject::tr("Error while reading the database:\n%1").arg(reader.errorString()) << endl;
+            errorTextStream << QObject::tr("Error while reading the database:\n%1").arg(reader.errorString()) << endl;
         } else {
-            err << QObject::tr("Error while parsing the database:\n%1").arg(reader.errorString()) << endl;
+            errorTextStream << QObject::tr("Error while parsing the database:\n%1").arg(reader.errorString()) << endl;
         }
         return EXIT_FAILURE;
     }
 
-    out << xmlData.constData() << endl;
+    outputTextStream << xmlData.constData() << endl;
 
     return EXIT_SUCCESS;
 }

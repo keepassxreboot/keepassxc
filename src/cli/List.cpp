@@ -40,7 +40,7 @@ List::~List()
 
 int List::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -58,7 +58,7 @@ int List::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
         return EXIT_FAILURE;
     }
 
@@ -80,20 +80,20 @@ int List::execute(const QStringList& arguments)
 
 int List::listGroup(Database* database, bool recursive, const QString& groupPath)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     if (groupPath.isEmpty()) {
-        out << database->rootGroup()->print(recursive) << flush;
+        outputTextStream << database->rootGroup()->print(recursive) << flush;
         return EXIT_SUCCESS;
     }
 
     Group* group = database->rootGroup()->findGroupByPath(groupPath);
     if (!group) {
-        err << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;
+        errorTextStream << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;
         return EXIT_FAILURE;
     }
 
-    out << group->print(recursive) << flush;
+    outputTextStream << group->print(recursive) << flush;
     return EXIT_SUCCESS;
 }

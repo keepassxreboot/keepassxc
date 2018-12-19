@@ -42,7 +42,7 @@ Locate::~Locate()
 
 int Locate::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -55,7 +55,7 @@ int Locate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
         return EXIT_FAILURE;
     }
 
@@ -72,17 +72,17 @@ int Locate::execute(const QStringList& arguments)
 
 int Locate::locateEntry(Database* database, const QString& searchTerm)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QStringList results = database->rootGroup()->locate(searchTerm);
     if (results.isEmpty()) {
-        err << "No results for that search term." << endl;
+        errorTextStream << "No results for that search term." << endl;
         return EXIT_FAILURE;
     }
 
     for (const QString& result : asConst(results)) {
-        out << result << endl;
+        outputTextStream << result << endl;
     }
     return EXIT_SUCCESS;
 }

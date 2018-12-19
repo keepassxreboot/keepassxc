@@ -41,7 +41,7 @@ Show::~Show()
 
 int Show::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -67,7 +67,7 @@ int Show::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
         return EXIT_FAILURE;
     }
 
@@ -84,18 +84,17 @@ int Show::execute(const QStringList& arguments)
 
 int Show::showEntry(Database* database, QStringList attributes, bool showTotp, const QString& entryPath)
 {
-    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        errorTextStream << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     if (showTotp && !entry->hasTotp()) {
-        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+        errorTextStream << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
@@ -110,20 +109,20 @@ int Show::showEntry(Database* database, QStringList attributes, bool showTotp, c
     for (const QString& attribute : asConst(attributes)) {
         if (!entry->attributes()->contains(attribute)) {
             sawUnknownAttribute = true;
-            err << QObject::tr("ERROR: unknown attribute %1.").arg(attribute) << endl;
+            errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attribute) << endl;
             continue;
         }
         if (showAttributeNames) {
-            out << attribute << ": ";
+            outputTextStream << attribute << ": ";
         }
-        out << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
+        outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
     }
 
     if (showTotp) {
         if (showAttributeNames) {
-            out << "TOTP: ";
+            outputTextStream << "TOTP: ";
         }
-        out << entry->totp() << endl;
+        outputTextStream << entry->totp() << endl;
     }
 
     return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
