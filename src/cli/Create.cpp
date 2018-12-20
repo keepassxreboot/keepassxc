@@ -82,6 +82,11 @@ int Create::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
+    auto password = getPasswordFromStdin();
+    if (!password.isNull()) {
+        key->addKey(password);
+    }
+
     QSharedPointer<FileKey> fileKey;
     if(parser.isSet(Command::KeyFileOption)) {
         if (!loadFileKey(parser.value(Command::KeyFileOption), fileKey)) {
@@ -92,11 +97,6 @@ int Create::execute(const QStringList& arguments)
 
     if (!fileKey.isNull()) {
         key->addKey(fileKey);
-    }
-
-    auto password = getPasswordFromStdin();
-    if (!password.isNull()) {
-        key->addKey(password);
     }
 
     if (key->isEmpty()) {
@@ -132,7 +132,7 @@ QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
     out.flush();
     QString password = Utils::getPassword();
 
-    if (password.length() > 0) {
+    if (!password.isEmpty()) {
         passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
     }
 
@@ -160,7 +160,7 @@ bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
     if (!QFileInfo::exists(path)) {
         fileKey->create(path, &error);
 
-        if (error.length() > 0) {
+        if (!error.isEmpty()) {
             err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
             return false;
         }
