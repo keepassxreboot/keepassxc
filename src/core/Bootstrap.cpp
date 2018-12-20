@@ -18,10 +18,12 @@
 #include "Bootstrap.h"
 #include "core/Config.h"
 #include "core/Translator.h"
+#include "gui/MessageBox.h"
 
 #ifdef Q_OS_WIN
 #include <aclapi.h> // for createWindowsDACL()
 #include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
+#undef MessageBox
 #endif
 
 namespace Bootstrap
@@ -56,6 +58,7 @@ namespace Bootstrap
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
         Translator::installTranslators();
+        MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS
         // Don't show menu icons on OSX

@@ -172,8 +172,8 @@ bool DatabaseSettingsWidgetMasterKey::save()
         MessageBox::critical(this,
                              tr("No encryption key added"),
                              tr("You must add at least one encryption key to secure your database!"),
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
+                             MessageBox::Ok,
+                             MessageBox::Ok);
         return false;
     }
 
@@ -183,9 +183,9 @@ bool DatabaseSettingsWidgetMasterKey::save()
                                           tr("WARNING! You have not set a password. Using a database without "
                                              "a password is strongly discouraged!\n\n"
                                              "Are you sure you want to continue without a password?"),
-                                          QMessageBox::Yes | QMessageBox::Cancel,
-                                          QMessageBox::Cancel);
-        if (answer != QMessageBox::Yes) {
+                                          MessageBox::Yes | MessageBox::Cancel,
+                                          MessageBox::Cancel);
+        if (answer != MessageBox::Yes) {
             return false;
         }
     }
@@ -221,7 +221,7 @@ bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widg
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");
         if (!widget->validate(error) || !widget->addToCompositeKey(newKey)) {
-            QMessageBox::critical(this, tr("Failed to change master key"), error, QMessageBox::Ok);
+            MessageBox::critical(this, tr("Failed to change master key"), error, MessageBox::Ok);
             return false;
         }
     } else if (widget->visiblePage() == KeyComponentWidget::LeaveOrRemove) {
@@ -238,7 +238,7 @@ bool DatabaseSettingsWidgetMasterKey::addToCompositeKey(KeyComponentWidget* widg
     if (widget->visiblePage() == KeyComponentWidget::Edit) {
         QString error = tr("Unknown error");
         if (!widget->validate(error) || !widget->addToCompositeKey(newKey)) {
-            QMessageBox::critical(this, tr("Failed to change master key"), error, QMessageBox::Ok);
+            MessageBox::critical(this, tr("Failed to change master key"), error, MessageBox::Ok);
             return false;
         }
     } else if (widget->visiblePage() == KeyComponentWidget::LeaveOrRemove) {
