@@ -43,6 +43,7 @@ private slots:
     void testCommand();
     void testAdd();
     void testClip();
+    void testCreate();
     void testDiceware();
     void testEdit();
     void testEstimate_data();

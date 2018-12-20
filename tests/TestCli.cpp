@@ -34,6 +34,7 @@
 #include "cli/Add.h"
 #include "cli/Clip.h"
 #include "cli/Command.h"
+#include "cli/Create.h"
 #include "cli/Diceware.h"
 #include "cli/Edit.h"
 #include "cli/Estimate.h"
@@ -137,9 +138,10 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 12);
+    QCOMPARE(Command::getCommands().size(), 13);
     QVERIFY(Command::getCommand("add"));
     QVERIFY(Command::getCommand("clip"));
+    QVERIFY(Command::getCommand("create"));
     QVERIFY(Command::getCommand("diceware"));
     QVERIFY(Command::getCommand("edit"));
     QVERIFY(Command::getCommand("estimate"));
@@ -274,7 +276,7 @@ void TestCli::testClip()
     // clang-format off
     QFuture<void> future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
-    
+
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
 
@@ -294,6 +296,76 @@ void TestCli::testClip()
     clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+}
+
+void TestCli::testCreate()
+{
+    Create createCmd;
+    QVERIFY(!createCmd.name.isEmpty());
+    QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
+
+    QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+
+    QString databaseFilename = testDir->path() + "testCreate1.kdbx";
+    // Password
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", databaseFilename});
+
+    m_stderrFile->reset();
+    m_stdoutFile->reset();
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, "", Utils::DEVNULL));
+    QVERIFY(db);
+
+    // Should refuse to create the database if it already exists.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 errPos = m_stderrFile->pos();
+    createCmd.execute({"create", databaseFilename});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+    // Output should be empty when there is an error.
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
+    QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
+
+
+    // Testing with keyfile creation
+    QString databaseFilename2 = testDir->path() + "testCreate2.kdbx";
+    QString keyfilePath = testDir->path() + "keyfile.txt";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", databaseFilename2, "-k", keyfilePath});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, keyfilePath, Utils::DEVNULL));
+    QVERIFY(db2);
+
+
+    // Testing with existing keyfile
+    QString databaseFilename3 = testDir->path() + "testCreate3.kdbx";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", databaseFilename3, "-k", keyfilePath});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, keyfilePath, Utils::DEVNULL));
+    QVERIFY(db3);
 }
 
 void TestCli::testDiceware()
