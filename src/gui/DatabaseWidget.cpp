@@ -799,7 +799,9 @@ void DatabaseWidget::mergeDatabase(bool accepted)
         Merger merger(srcDb.data(), m_db.data());
         bool databaseChanged = merger.merge();
 
-        if (!databaseChanged) {
+        if (databaseChanged) {
+            showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
+        } else {
             showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
         }
     }
