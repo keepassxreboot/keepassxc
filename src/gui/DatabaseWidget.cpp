@@ -426,68 +426,116 @@ void DatabaseWidget::setupTotp()
     setupTotpDialog->open();
 }
 
-void DatabaseWidget::deleteEntries()
+void DatabaseWidget::deleteSelectedEntries()
 {
     const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
-
-    Q_ASSERT(!selected.isEmpty());
     if (selected.isEmpty()) {
         return;
     }
 
-    // get all entry pointers as the indexes change when removing multiple entries
+    // Resolve entries from the selection model
     QList<Entry*> selectedEntries;
     for (const QModelIndex& index : selected) {
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
+    // Confirm entry removal before moving forward
     auto* recycleBin = m_db->metadata()->recycleBin();
-    bool inRecycleBin = recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid());
-    if (inRecycleBin || !m_db->metadata()->recycleBinEnabled()) {
+    bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))
+            || !m_db->metadata()->recycleBinEnabled();
+
+    if (!confirmDeleteEntries(selectedEntries, permanent)) {
+        return;
+    }
+
+    // Find references to selected entries and prompt for direction if necessary
+    auto it = selectedEntries.begin();
+    while (it != selectedEntries.end()) {
+        auto references = m_db->rootGroup()->referencesRecursive(*it);
+        if (!references.isEmpty()) {
+            // Ignore references that are selected for deletion
+            for (auto* entry : selectedEntries) {
+                references.removeAll(entry);
+            }
+
+            if (!references.isEmpty()) {
+                // Prompt for reference handling
+                auto result = MessageBox::question(
+                        this,
+                        tr("Replace references to entry?"),
+                        tr("Entry \"%1\" has %2 reference(s). "
+                           "Do you want to overwrite references with values, skip this entry, or delete anyway?", "",
+                           references.size())
+                                .arg((*it)->title().toHtmlEscaped())
+                                .arg(references.size()),
+                        MessageBox::Overwrite | MessageBox::Skip | MessageBox::Delete,
+                        MessageBox::Overwrite);
+
+                if (result == MessageBox::Overwrite) {
+                    for (auto* entry : references) {
+                        entry->replaceReferencesWithValues(*it);
+                    }
+                } else if (result == MessageBox::Skip) {
+                    it = selectedEntries.erase(it);
+                    continue;
+                }
+            }
+        }
+
+        it++;
+    }
+
+    if (permanent) {
+        for (auto* entry : asConst(selectedEntries)) {
+            delete entry;
+        }
+    } else {
+        for (auto* entry : asConst(selectedEntries)) {
+            m_db->recycleEntry(entry);
+        }
+    }
+
+    refreshSearch();
+}
+
+bool DatabaseWidget::confirmDeleteEntries(QList<Entry*> entries, bool permanent)
+{
+    if (entries.isEmpty()) {
+        return false;
+    }
+
+    if (permanent) {
         QString prompt;
-        refreshSearch();
-        if (selected.size() == 1) {
+        if (entries.size() == 1) {
             prompt = tr("Do you really want to delete the entry \"%1\" for good?")
-                         .arg(selectedEntries.first()->title().toHtmlEscaped());
+                         .arg(entries.first()->title().toHtmlEscaped());
         } else {
-            prompt = tr("Do you really want to delete %n entry(s) for good?", "", selected.size());
+            prompt = tr("Do you really want to delete %n entry(s) for good?", "", entries.size());
         }
 
         auto answer = MessageBox::question(this,
-                                           tr("Delete entry(s)?", "", selected.size()),
+                                           tr("Delete entry(s)?", "", entries.size()),
                                            prompt,
                                            MessageBox::Delete | MessageBox::Cancel,
                                            MessageBox::Cancel);
 
-        if (answer == MessageBox::Delete) {
-            for (Entry* entry : asConst(selectedEntries)) {
-                delete entry;
-                    refreshSearch();
-            }
-            refreshSearch();
-        }
+        return answer == MessageBox::Delete;
     } else {
         QString prompt;
-        if (selected.size() == 1) {
+        if (entries.size() == 1) {
             prompt = tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                         .arg(selectedEntries.first()->title().toHtmlEscaped());
+                         .arg(entries.first()->title().toHtmlEscaped());
         } else {
-            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", selected.size());
+            prompt = tr("Do you really want to move %n entry(s) to the recycle bin?", "", entries.size());
         }
 
         auto answer = MessageBox::question(this,
-                                           tr("Move entry(s) to recycle bin?", "", selected.size()),
+                                           tr("Move entry(s) to recycle bin?", "", entries.size()),
                                            prompt,
                                            MessageBox::Move | MessageBox::Cancel,
                                            MessageBox::Cancel);
 
-        if (answer == MessageBox::Cancel) {
-            return;
-        }
-
-        for (Entry* entry : asConst(selectedEntries)) {
-            m_db->recycleEntry(entry);
-        }
+        return answer == MessageBox::Move;
     }
 }
 
