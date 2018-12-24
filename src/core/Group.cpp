@@ -25,6 +25,8 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
+#include <QtConcurrent>
+
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
@@ -547,6 +549,12 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     }
 
     return entryList;
+}
+
+QList<Entry*> Group::referencesRecursive(const Entry* entry) const
+{
+    auto entries = entriesRecursive();
+    return QtConcurrent::blockingFiltered(entries, [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
 }
 
 Entry* Group::findEntryByUuid(const QUuid& uuid) const

@@ -105,7 +105,7 @@ QString Entry::buildReference(const QUuid& uuid, const QString& field)
 {
     Q_ASSERT(EntryAttributes::DefaultAttributes.count(field) > 0);
 
-    QString uuidStr = Tools::uuidToHex(uuid);
+    QString uuidStr = Tools::uuidToHex(uuid).toUpper();
     QString shortField;
 
     if (field == EntryAttributes::TitleKey) {
@@ -370,6 +370,15 @@ bool Entry::hasReferencesTo(const QUuid& uuid) const
         }
     }
     return false;
+}
+
+void Entry::replaceReferencesWithValues(const Entry* other)
+{
+    for (const QString& key : EntryAttributes::DefaultAttributes) {
+        if (isAttributeReferenceOf(key, other->uuid())) {
+            setDefaultAttribute(key, other->attribute(key));
+        }
+    }
 }
 
 EntryAttributes* Entry::attributes()

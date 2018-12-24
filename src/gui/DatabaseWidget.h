@@ -149,7 +149,7 @@ public slots:
     void replaceDatabase(QSharedPointer<Database> db);
     void createEntry();
     void cloneEntry();
-    void deleteEntries();
+    void deleteSelectedEntries();
     void setFocus();
     void copyTitle();
     void copyUsername();
@@ -225,10 +225,9 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void setIconFromParent();
     void processAutoOpen();
+    bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
 
     QSharedPointer<Database> m_db;
-    bool handleEntryWithReferences(Entry* entry, QList<Entry*> references);
-    void deleteEntries(QList<Entry*> entries);
 
     QPointer<QWidget> m_mainWidget;
     QPointer<QSplitter> m_mainSplitter;

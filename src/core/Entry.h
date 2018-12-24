@@ -112,6 +112,7 @@ public:
     bool hasTotp() const;
     bool isExpired() const;
     bool isAttributeReferenceOf(const QString& key, const QUuid& uuid) const;
+    void replaceReferencesWithValues(const Entry* other);
     bool hasReferences() const;
     bool hasReferencesTo(const QUuid& uuid) const;
     EntryAttributes* attributes();

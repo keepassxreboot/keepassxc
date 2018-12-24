@@ -92,9 +92,6 @@ public:
     void recycleGroup(Group* group);
     void recycleEntry(Entry* entry);
     void emptyRecycleBin();
-    QList<Entry*> resolveReferences(const QUuid& uuid) const;
-    QList<Entry*> resolveReferences(const QUuid& uuid, const Group* group) const;
-    void replaceReferencesWithValues(Entry* entry, QList<Entry*> references);
     QList<DeletedObject> deletedObjects();
     const QList<DeletedObject>& deletedObjects() const;
     void addDeletedObject(const DeletedObject& delObj);
