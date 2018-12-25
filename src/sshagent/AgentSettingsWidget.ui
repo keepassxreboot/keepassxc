@@ -31,6 +31,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="useOpenSSHCheckBox">
+     <property name="text">
+      <string>Use OpenSSH for Windows instead of Pageant</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

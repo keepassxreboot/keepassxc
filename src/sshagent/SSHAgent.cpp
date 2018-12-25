@@ -19,10 +19,10 @@
 #include "SSHAgent.h"
 #include "BinaryStream.h"
 #include "KeeAgentSettings.h"
-
-#ifndef Q_OS_WIN
+#include "core/Config.h"
 #include <QtNetwork>
-#else
+
+#ifdef Q_OS_WIN
 #include <windows.h>
 #endif
 
@@ -33,6 +33,8 @@ SSHAgent::SSHAgent(QObject* parent)
 {
 #ifndef Q_OS_WIN
     m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
+#else
+    m_socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
 #endif
 }
 
@@ -70,13 +72,22 @@ bool SSHAgent::isAgentRunning() const
 #ifndef Q_OS_WIN
     return !m_socketPath.isEmpty();
 #else
-    return (FindWindowA("Pageant", "Pageant") != nullptr);
+    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+        return (FindWindowA("Pageant", "Pageant") != nullptr);
+    } else {
+        return WaitNamedPipe(m_socketPath.toLatin1().data(), 100);
+    }
 #endif
 }
 
 bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
 {
-#ifndef Q_OS_WIN
+#ifdef Q_OS_WIN
+    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+        return sendMessagePageant(in, out);
+    }
+#endif
+
     QLocalSocket socket;
     BinaryStream stream(&socket);
 
@@ -97,7 +108,11 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
     socket.close();
 
     return true;
-#else
+}
+
+#ifdef Q_OS_WIN
+bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
+{
     HWND hWnd = FindWindowA("Pageant", "Pageant");
 
     if (!hWnd) {
@@ -157,8 +172,8 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
     CloseHandle(handle);
 
     return (res > 0);
-#endif
 }
+#endif
 
 /**
  * Add the identity to the SSH agent.
