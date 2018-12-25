@@ -27,6 +27,21 @@
 #undef MessageBox
 #endif
 
+#if defined(HAVE_RLIMIT_CORE)
+#include <sys/resource.h>
+#endif
+
+#if defined(HAVE_PR_SET_DUMPABLE)
+#include <sys/prctl.h>
+#endif
+
+#ifdef HAVE_PT_DENY_ATTACH
+// clang-format off
+#include <sys/types.h>
+#include <sys/ptrace.h>
+// clang-format on
+#endif
+
 namespace Bootstrap
 {
     /**
