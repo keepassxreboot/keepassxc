@@ -62,11 +62,10 @@ namespace Bootstrap
     }
 
     /**
-     * Perform early application bootstrapping such as setting up search paths,
-     * configuration OS security properties, and loading translators.
-     * A QApplication object has to be instantiated before calling this function.
+     * Perform early application bootstrapping that does not rely on a QApplication
+     * being present.
      */
-    void bootstrapApplication()
+    void bootstrap()
     {
 #ifdef QT_NO_DEBUG
         disableCoreDumps();
@@ -74,6 +73,16 @@ namespace Bootstrap
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
         Translator::installTranslators();
+    }
+
+    /**
+     * Perform early application bootstrapping such as setting up search paths,
+     * configuration OS security properties, and loading translators.
+     * A QApplication object has to be instantiated before calling this function.
+     */
+    void bootstrapApplication()
+    {
+        bootstrap();
         MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS
