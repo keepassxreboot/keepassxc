@@ -22,6 +22,7 @@
 
 namespace Bootstrap
 {
+    void bootstrap();
     void bootstrapApplication();
     void restoreMainWindowState(MainWindow& mainWindow);
     void disableCoreDumps();

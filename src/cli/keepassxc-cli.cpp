@@ -42,9 +42,7 @@ int main(int argc, char** argv)
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
 
-#ifdef QT_NO_DEBUG
-    Bootstrap::bootstrapApplication();
-#endif
+    Bootstrap::bootstrap();
 
     TextStream out(stdout);
     QStringList arguments;

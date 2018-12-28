@@ -32,14 +32,6 @@ if(WITH_XC_BROWSER)
             RUNTIME DESTINATION ${PROXY_INSTALL_DIR} COMPONENT Runtime)
 
     if(APPLE AND WITH_APP_BUNDLE)
-        set(PROXY_BINARY_DIR "${CMAKE_BINARY_DIR}/src/proxy/keepassxc-proxy")
-        set(PROXY_APP_DIR "KeePassXC.app/Contents/MacOS/keepassxc-proxy")
-        add_custom_command(TARGET keepassxc-proxy
-                           POST_BUILD
-                           COMMAND ${CMAKE_COMMAND} -E copy ${PROXY_BINARY_DIR} ${PROXY_APP_DIR}
-                           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
-                           COMMENT "Copying keepassxc-proxy inside the application")
-
         add_custom_command(TARGET keepassxc-proxy
                            POST_BUILD
                            COMMAND ${CMAKE_INSTALL_NAME_TOOL}
@@ -51,8 +43,7 @@ if(WITH_XC_BROWSER)
                                     "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
                                 -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork
                                     "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
-                           ${PROXY_APP_DIR}
-                           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+                           keepassxc-proxy
                            COMMENT "Changing linking of keepassxc-proxy")
     endif()
     if(MINGW)

@@ -560,26 +560,11 @@ void TestCli::testEstimate()
     QTextStream out(m_stdoutFile.data());
 
     in << input << endl;
-    auto inEnd = in.pos();
     in.seek(0);
-    estimateCmd.execute({"estimate"});
-    auto outEnd = out.pos();
+    estimateCmd.execute({"estimate", "-a"});
     out.seek(0);
     auto result = out.readAll();
-    QVERIFY(result.startsWith("Length " + length));
-    QVERIFY(result.contains("Entropy " + entropy));
-    QVERIFY(result.contains("Log10 " + log10));
-
-    // seek to end of stream
-    in.seek(inEnd);
-    out.seek(outEnd);
-
-    in << input << endl;
-    in.seek(inEnd);
-    estimateCmd.execute({"estimate", "-a"});
-    out.seek(outEnd);
-    result = out.readAll();
-    QVERIFY(result.startsWith("Length " + length));
+    QVERIFY(result.contains("Length " + length));
     QVERIFY(result.contains("Entropy " + entropy));
     QVERIFY(result.contains("Log10 " + log10));
     for (const auto& string : asConst(searchStrings)) {
