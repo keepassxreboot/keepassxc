@@ -344,7 +344,7 @@ void TestGui::testAutoreloadDatabase()
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile->close();
 
-    Tools::wait(800);
+    QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
 
     // the General group contains one entry from the new db data
@@ -358,16 +358,13 @@ void TestGui::testAutoreloadDatabase()
     // Test rejecting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::No);
     // Overwrite the current temp database with a new file
-    m_dbFile->open();
+    QVERIFY(m_dbFile->open());
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile->close();
-    Tools::wait(800);
-
-    m_db = m_dbWidget->database();
 
     // Ensure the merge did not take place
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
-    QVERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
+    QTRY_VERIFY(m_tabWidget->tabName(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
     cleanup();
@@ -380,13 +377,13 @@ void TestGui::testAutoreloadDatabase()
     testEditEntry();
 
     // This is saying yes to merging the entries
-    MessageBox::setNextAnswer(MessageBox::Yes);
+    MessageBox::setNextAnswer(MessageBox::Merge);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile->open());
     QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
     m_dbFile->close();
-    Tools::wait(800);
 
+    QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
 
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
@@ -403,6 +400,9 @@ void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    entryView->setFocus();
+    QVERIFY(entryView->hasFocus());
 
     // Select the first entry in the database
     QModelIndex entryItem = entryView->model()->index(0, 1);
@@ -937,6 +937,7 @@ void TestGui::testDeleteEntry()
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
     QWidget* entryDeleteWidget = toolBar->widgetForAction(entryDeleteAction);
+    entryView->setFocus();
 
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
@@ -996,6 +997,7 @@ void TestGui::testDeleteEntry()
 void TestGui::testCloneEntry()
 {
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    entryView->setFocus();
 
     QCOMPARE(entryView->model()->rowCount(), 1);
 
