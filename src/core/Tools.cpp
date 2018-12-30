@@ -28,6 +28,7 @@
 #include <QLocale>
 #include <QRegularExpression>
 #include <QStringList>
+#include <QUuid>
 #include <cctype>
 
 #ifdef Q_OS_WIN
@@ -36,23 +37,6 @@
 
 #ifdef Q_OS_UNIX
 #include <time.h> // for nanosleep()
-#endif
-
-#include "config-keepassx.h"
-
-#if defined(HAVE_RLIMIT_CORE)
-#include <sys/resource.h>
-#endif
-
-#if defined(HAVE_PR_SET_DUMPABLE)
-#include <sys/prctl.h>
-#endif
-
-#ifdef HAVE_PT_DENY_ATTACH
-// clang-format off
-#include <sys/types.h>
-#include <sys/ptrace.h>
-// clang-format on
 #endif
 
 namespace Tools
@@ -197,33 +181,36 @@ namespace Tools
         }
     }
 
-// Escape common regex symbols except for *, ?, and |
-auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
+    // Escape common regex symbols except for *, ?, and |
+    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
 
-QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
-{
-    QString pattern = string;
+    QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+    {
+        QString pattern = string;
 
-    // Wildcard support (*, ?, |)
-    if (useWildcards) {
-        pattern.replace(regexEscape, "\\\\1");
-        pattern.replace("*", ".*");
-        pattern.replace("?", ".");
+        // Wildcard support (*, ?, |)
+        if (useWildcards) {
+            pattern.replace(regexEscape, "\\\\1");
+            pattern.replace("*", ".*");
+            pattern.replace("?", ".");
+        }
+
+        // Exact modifier
+        if (exactMatch) {
+            pattern = "^" + pattern + "$";
+        }
+
+        auto regex = QRegularExpression(pattern);
+        if (!caseSensitive) {
+            regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+        }
+
+        return regex;
     }
 
-    // Exact modifier
-    if (exactMatch) {
-        pattern = "^" + pattern + "$";
+    QString uuidToHex(const QUuid& uuid) {
+        return QString::fromLatin1(uuid.toRfc4122().toHex());
     }
-
-    auto regex = QRegularExpression(pattern);
-    if (!caseSensitive) {
-        regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-    }
-
-    return regex;
-}
-
 
     Buffer::Buffer()
         : raw(nullptr)
@@ -249,6 +236,5 @@ QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool
     {
         return QByteArray(reinterpret_cast<char*>(raw), size );
     }
-
 
 } // namespace Tools

@@ -23,6 +23,9 @@
 #include "core/DatabaseIcons.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
+
+#include <QtConcurrent>
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
@@ -119,7 +122,7 @@ const QUuid& Group::uuid() const
 
 const QString Group::uuidToHex() const
 {
-    return QString::fromLatin1(m_uuid.toRfc4122().toHex());
+    return Tools::uuidToHex(m_uuid);
 }
 
 QString Group::name() const
@@ -546,6 +549,12 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
     }
 
     return entryList;
+}
+
+QList<Entry*> Group::referencesRecursive(const Entry* entry) const
+{
+    auto entries = entriesRecursive();
+    return QtConcurrent::blockingFiltered(entries, [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
 }
 
 Entry* Group::findEntryByUuid(const QUuid& uuid) const

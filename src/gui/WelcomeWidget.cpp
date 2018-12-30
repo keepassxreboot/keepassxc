@@ -16,6 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QKeyEvent>
 #include "WelcomeWidget.h"
 #include "ui_WelcomeWidget.h"
 
@@ -75,4 +76,12 @@ void WelcomeWidget::refreshLastDatabases()
         itm->setText(database);
         m_ui->recentListWidget->addItem(itm);
     }
+}
+
+void WelcomeWidget::keyPressEvent(QKeyEvent *event) {
+    if (m_ui->recentListWidget->hasFocus() && (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)) {
+        openDatabaseFromFile(m_ui->recentListWidget->currentItem());
+    }
+
+    QWidget::keyPressEvent(event);
 }

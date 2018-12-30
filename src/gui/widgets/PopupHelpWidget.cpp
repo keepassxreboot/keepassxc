@@ -30,7 +30,11 @@ PopupHelpWidget::PopupHelpWidget(QWidget* parent)
 {
     Q_ASSERT(parent);
 
+#ifdef Q_OS_MACOS
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Drawer);
+#else
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
+#endif
     hide();
 
     m_appWindow->installEventFilter(this);

@@ -117,11 +117,14 @@ private:
     bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
     int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const;
     bool checkLegacySettings();
+    void hideWindow() const;
+    void raiseWindow(const bool force = false);
 
 private:
     DatabaseTabWidget* const m_dbTabWidget;
     bool m_dialogActive;
     bool m_bringToFrontRequested;
+    bool m_wasMinimized;
     QUuid m_keepassBrowserUUID;
 };
 

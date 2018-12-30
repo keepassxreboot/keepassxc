@@ -148,7 +148,7 @@ void TestAutoType::testSingleAutoType()
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
 {
     m_test->setActiveWindowTitle("nomatch");
-    MessageBox::setNextAnswer(QMessageBox::Ok);
+    MessageBox::setNextAnswer(MessageBox::Ok);
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString());
@@ -195,7 +195,7 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
 {
     m_test->setActiveWindowTitle("An Entry Title!");
-    MessageBox::setNextAnswer(QMessageBox::Ok);
+    MessageBox::setNextAnswer(MessageBox::Ok);
     m_autoType->performGlobalAutoType(m_dbList);
 
     QCOMPARE(m_test->actionChars(), QString());

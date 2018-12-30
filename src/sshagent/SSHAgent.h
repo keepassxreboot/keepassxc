@@ -62,12 +62,14 @@ private:
     ~SSHAgent();
 
     bool sendMessage(const QByteArray& in, QByteArray& out);
+#ifdef Q_OS_WIN
+    bool sendMessagePageant(const QByteArray& in, QByteArray& out);
+#endif
 
     static SSHAgent* m_instance;
 
-#ifndef Q_OS_WIN
     QString m_socketPath;
-#else
+#ifdef Q_OS_WIN
     const quint32 AGENT_MAX_MSGLEN = 8192;
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif

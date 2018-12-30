@@ -91,13 +91,13 @@ bool DatabaseSettingsWidgetBrowser::save()
 
 void DatabaseSettingsWidgetBrowser::removeSelectedKey()
 {
-    if (QMessageBox::Yes
+    if (MessageBox::Yes
         != MessageBox::question(this,
                                 tr("Delete the selected key?"),
                                 tr("Do you really want to delete the selected key?\n"
                                    "This may prevent connection to the browser plugin."),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel)) {
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)) {
         return;
     }
 
@@ -156,13 +156,13 @@ void DatabaseSettingsWidgetBrowser::settingsWarning()
 
 void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
 {
-    if (QMessageBox::Yes
+    if (MessageBox::Yes
         != MessageBox::question(this,
                                 tr("Disconnect all browsers"),
                                 tr("Do you really want to disconnect all browsers?\n"
                                    "This may prevent connection to the browser plugin."),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel)) {
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)) {
         return;
     }
 
@@ -174,10 +174,10 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
     }
 
     if (keysToRemove.isEmpty()) {
-        QMessageBox::information(this,
+        MessageBox::information(this,
                                  tr("KeePassXC: No keys found"),
                                  tr("No shared encryption keys found in KeePassXC settings."),
-                                 QMessageBox::Ok);
+                                 MessageBox::Ok);
         return;
     }
 
@@ -186,21 +186,21 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
     }
 
     const int count = keysToRemove.count();
-    QMessageBox::information(this,
+    MessageBox::information(this,
                              tr("KeePassXC: Removed keys from database"),
                              tr("Successfully removed %n encryption key(s) from KeePassXC settings.", "", count),
-                             QMessageBox::Ok);
+                             MessageBox::Ok);
 }
 
 void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
 {
-    if (QMessageBox::Yes
+    if (MessageBox::Yes
         != MessageBox::question(this,
                                 tr("Forget all site-specific settings on entries"),
                                 tr("Do you really want forget all site-specific settings on every entry?\n"
                                    "Permissions to access entries will be revoked."),
-                                QMessageBox::Yes | QMessageBox::Cancel,
-                                QMessageBox::Cancel)) {
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)) {
         return;
     }
 
@@ -226,28 +226,28 @@ void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(this,
+        MessageBox::information(this,
                                  tr("KeePassXC: Removed permissions"),
                                  tr("Successfully removed permissions from %n entry(s).", "", counter),
-                                 QMessageBox::Ok);
+                                 MessageBox::Ok);
     } else {
-        QMessageBox::information(this,
+        MessageBox::information(this,
                                  tr("KeePassXC: No entry with permissions found!"),
                                  tr("The active database does not contain an entry with permissions."),
-                                 QMessageBox::Ok);
+                                 MessageBox::Ok);
     }
 }
 
 void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
 {
-    if (QMessageBox::Yes
+    if (MessageBox::Yes
         != MessageBox::question(
                this,
                tr("Move KeePassHTTP attributes to custom data"),
                tr("Do you really want to move all legacy browser integration data to the latest standard?\n"
                   "This is necessary to maintain compatibility with the browser plugin."),
-               QMessageBox::Yes | QMessageBox::Cancel,
-               QMessageBox::Cancel)) {
+               MessageBox::Yes | MessageBox::Cancel,
+               MessageBox::Cancel)) {
         return;
     }
 

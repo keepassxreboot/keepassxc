@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
-#define KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#ifndef KEEPASSX_UNLOCKDATABASEDIALOG_H
+#define KEEPASSX_UNLOCKDATABASEDIALOG_H
 
 #include "core/Global.h"
 
@@ -37,7 +37,8 @@ public:
     {
         None,
         AutoType,
-        Merge
+        Merge,
+        Browser
     };
 
     explicit DatabaseOpenDialog(QWidget* parent = nullptr);
@@ -61,4 +62,4 @@ private:
     Intent m_intent = Intent::None;
 };
 
-#endif // KEEPASSX_AUTOTYPEUNLOCKDIALOG_H
+#endif // KEEPASSX_UNLOCKDATABASEDIALOG_H

@@ -278,8 +278,8 @@ void CsvImportWidget::writeDatabase()
         MessageBox::warning(this,
                             tr("Error"),
                             tr("CSV import: writer has errors:\n%1").arg(writer.errorString()),
-                            QMessageBox::Ok,
-                            QMessageBox::Ok);
+                            MessageBox::Ok,
+                            MessageBox::Ok);
     }
     emit editFinished(true);
 }

@@ -1,6 +1,8 @@
 set(autotype_mac_SOURCES AutoTypeMac.cpp)
 
-set(autotype_mac_mm_SOURCES AppKitImpl.mm)
+set(autotype_mac_mm_SOURCES
+        ${CMAKE_SOURCE_DIR}/src/gui/macutils/AppKitImpl.mm
+        ${CMAKE_SOURCE_DIR}/src/gui/macutils/MacUtils.cpp)
 
 add_library(keepassx-autotype-cocoa MODULE ${autotype_mac_SOURCES} ${autotype_mac_mm_SOURCES})
 set_target_properties(keepassx-autotype-cocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit -framework Carbon")

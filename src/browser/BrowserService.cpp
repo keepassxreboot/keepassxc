@@ -33,7 +33,12 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
+#include "core/Tools.h"
 #include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
+#ifdef Q_OS_MACOS
+#include "gui/macutils/MacUtils.h"
+#endif
 
 const char BrowserService::KEEPASSXCBROWSER_NAME[] = "KeePassXC-Browser Settings";
 const char BrowserService::KEEPASSXCBROWSER_OLD_NAME[] = "keepassxc-browser Settings";
@@ -49,6 +54,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
+    , m_wasMinimized(false)
     , m_keepassBrowserUUID(QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224")))
 {
     // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
@@ -89,8 +95,9 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
-        getMainWindow()->bringToFront();
         m_bringToFrontRequested = true;
+        m_wasMinimized = getMainWindow()->isMinimized();
+        raiseWindow(true);
     }
 
     return false;
@@ -157,7 +164,7 @@ QString BrowserService::storeKey(const QString& key)
     }
 
     bool contains;
-    QMessageBox::StandardButton dialogResult = QMessageBox::No;
+    MessageBox::Button dialogResult = MessageBox::Cancel;
 
     do {
         QInputDialog keyDialog;
@@ -167,6 +174,7 @@ QString BrowserService::storeKey(const QString& key)
                                   "give it a unique name to identify and accept it."));
         keyDialog.setOkButtonText(tr("Save and allow access"));
         keyDialog.setWindowFlags(keyDialog.windowFlags() | Qt::WindowStaysOnTopHint);
+        raiseWindow();
         keyDialog.show();
         keyDialog.activateWindow();
         keyDialog.raise();
@@ -175,20 +183,23 @@ QString BrowserService::storeKey(const QString& key)
         id = keyDialog.textValue();
 
         if (ok != QDialog::Accepted || id.isEmpty()) {
+            hideWindow();
             return {};
         }
 
         contains = db->metadata()->customData()->contains(QLatin1String(ASSOCIATE_KEY_PREFIX) + id);
         if (contains) {
-            dialogResult = QMessageBox::warning(nullptr,
-                                                tr("KeePassXC: Overwrite existing key?"),
-                                                tr("A shared encryption key with the name \"%1\" "
-                                                   "already exists.\nDo you want to overwrite it?")
-                                                    .arg(id),
-                                                QMessageBox::Yes | QMessageBox::No);
+            dialogResult = MessageBox::warning(nullptr,
+                                               tr("KeePassXC: Overwrite existing key?"),
+                                               tr("A shared encryption key with the name \"%1\" "
+                                                  "already exists.\nDo you want to overwrite it?")
+                                                   .arg(id),
+                                               MessageBox::Overwrite | MessageBox::Cancel,
+                                               MessageBox::Cancel);
         }
-    } while (contains && dialogResult == QMessageBox::No);
+    } while (contains && dialogResult == MessageBox::Cancel);
 
+    hideWindow();
     db->metadata()->customData()->set(QLatin1String(ASSOCIATE_KEY_PREFIX) + id, key);
     return id;
 }
@@ -367,26 +378,25 @@ void BrowserService::updateEntry(const QString& id,
 
     if (username.compare(login, Qt::CaseSensitive) != 0
         || entry->password().compare(password, Qt::CaseSensitive) != 0) {
-        int dialogResult = QMessageBox::No;
+        MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(tr("KeePassXC: Update Entry"));
-            msgBox.setText(tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username));
-            msgBox.setStandardButtons(QMessageBox::Yes);
-            msgBox.addButton(QMessageBox::No);
-            msgBox.setDefaultButton(QMessageBox::No);
-            msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
-            msgBox.activateWindow();
-            msgBox.raise();
-            dialogResult = msgBox.exec();
+            raiseWindow();
+            dialogResult = MessageBox::question(nullptr,
+                                                tr("KeePassXC: Update Entry"),
+                                                tr("Do you want to update the information in %1 - %2?")
+                                                    .arg(QUrl(url).host(), username),
+                                                MessageBox::Save | MessageBox::Cancel,
+                                                MessageBox::Cancel, MessageBox::Raise);
         }
 
-        if (browserSettings()->alwaysAllowUpdate() || dialogResult == QMessageBox::Yes) {
+        if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
             entry->beginUpdate();
             entry->setUsername(login);
             entry->setPassword(password);
             entry->endUpdate();
         }
+
+        hideWindow();
     }
 }
 
@@ -497,24 +507,24 @@ void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> curr
     progress.reset();
 
     if (counter > 0) {
-        QMessageBox::information(nullptr,
-                                 tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                 tr("Successfully converted attributes from %1 entry(s).\n"
-                                    "Moved %2 keys to custom data.",
-                                    "")
-                                     .arg(counter)
-                                     .arg(keyCounter),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                tr("Successfully converted attributes from %1 entry(s).\n"
+                                   "Moved %2 keys to custom data.",
+                                   "")
+                                    .arg(counter)
+                                    .arg(keyCounter),
+                                MessageBox::Ok);
     } else if (counter == 0 && keyCounter > 0) {
-        QMessageBox::information(nullptr,
-                                 tr("KeePassXC: Converted KeePassHTTP attributes"),
-                                 tr("Successfully moved %n keys to custom data.", "", keyCounter),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: Converted KeePassHTTP attributes"),
+                                tr("Successfully moved %n keys to custom data.", "", keyCounter),
+                                MessageBox::Ok);
     } else {
-        QMessageBox::information(nullptr,
-                                 tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
-                                 tr("The active database does not contain an entry with KeePassHTTP attributes."),
-                                 QMessageBox::Ok);
+        MessageBox::information(nullptr,
+                                tr("KeePassXC: No entry with KeePassHTTP attributes found!"),
+                                tr("The active database does not contain an entry with KeePassHTTP attributes."),
+                                MessageBox::Ok);
     }
 
     // Rename password groupName
@@ -593,6 +603,11 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     accessControlDialog.setUrl(url);
     accessControlDialog.setItems(pwEntriesToConfirm);
 
+    raiseWindow();
+    accessControlDialog.show();
+    accessControlDialog.activateWindow();
+    accessControlDialog.raise();
+
     int res = accessControlDialog.exec();
     if (accessControlDialog.remember()) {
         for (Entry* entry : pwEntriesToConfirm) {
@@ -616,6 +631,7 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     }
 
     m_dialogActive = false;
+    hideWindow();
     if (res == QDialog::Accepted) {
         return true;
     }
@@ -901,13 +917,40 @@ bool BrowserService::checkLegacySettings()
         return false;
     }
 
-    auto dialogResult = QMessageBox::warning(nullptr,
-                                             tr("KeePassXC: Legacy browser integration settings detected"),
-                                             tr("Legacy browser integration settings have been detected.\n"
-                                                "Do you want to upgrade the settings to the latest standard?\n"
-                                                "This is necessary to maintain compatibility with the browser plugin."),
-                                             QMessageBox::Yes | QMessageBox::No);
-    return dialogResult == QMessageBox::Yes;
+    auto dialogResult = MessageBox::warning(nullptr,
+                                            tr("KeePassXC: Legacy browser integration settings detected"),
+                                            tr("Legacy browser integration settings have been detected.\n"
+                                               "Do you want to upgrade the settings to the latest standard?\n"
+                                               "This is necessary to maintain compatibility with the browser plugin."),
+                                            MessageBox::Yes | MessageBox::No);
+
+    return dialogResult == MessageBox::Yes;
+}
+
+void BrowserService::hideWindow() const
+{
+    if (m_wasMinimized) {
+        getMainWindow()->showMinimized();
+    } else {
+#ifdef Q_OS_MACOS
+        macUtils()->raiseLastActiveWindow();
+#else
+        getMainWindow()->lower();
+#endif
+    }
+}
+
+void BrowserService::raiseWindow(const bool force)
+{
+    m_wasMinimized = getMainWindow()->isMinimized();
+#ifdef Q_OS_MACOS
+    macUtils()->raiseOwnWindow();
+    Tools::wait(500);
+#else
+    if (force) {
+        getMainWindow()->bringToFront();
+    }
+#endif
 }
 
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
@@ -921,7 +964,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         if (m_bringToFrontRequested) {
-            getMainWindow()->lower();
+            hideWindow();
             m_bringToFrontRequested = false;
         }
         emit databaseUnlocked();

@@ -15,19 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BOOTSTRAP_H
-#define KEEPASSXC_BOOTSTRAP_H
+#ifndef KEEPASSXC_CREATE_H
+#define KEEPASSXC_CREATE_H
 
-#include "gui/MainWindow.h"
+#include "Command.h"
 
-namespace Bootstrap
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
+
+class Create : public Command
 {
-    void bootstrap();
-    void bootstrapApplication();
-    void restoreMainWindowState(MainWindow& mainWindow);
-    void disableCoreDumps();
-    bool createWindowsDACL();
-    void setupSearchPaths();
-}; // namespace Bootstrap
+public:
+    Create();
+    ~Create();
+    int execute(const QStringList& arguments);
 
-#endif // KEEPASSXC_BOOTSTRAP_H
+private:
+    QSharedPointer<PasswordKey> getPasswordFromStdin();
+    QSharedPointer<FileKey> getFileKeyFromStdin();
+    bool loadFileKey(QString path, QSharedPointer<FileKey>& fileKey);
+};
+
+#endif // KEEPASSXC_CREATE_H

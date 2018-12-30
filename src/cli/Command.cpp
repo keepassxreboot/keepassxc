@@ -24,6 +24,7 @@
 
 #include "Add.h"
 #include "Clip.h"
+#include "Create.h"
 #include "Diceware.h"
 #include "Edit.h"
 #include "Estimate.h"
@@ -69,6 +70,7 @@ void populateCommands()
     if (commands.isEmpty()) {
         commands.insert(QString("add"), new Add());
         commands.insert(QString("clip"), new Clip());
+        commands.insert(QString("create"), new Create());
         commands.insert(QString("diceware"), new Diceware());
         commands.insert(QString("edit"), new Edit());
         commands.insert(QString("estimate"), new Estimate());

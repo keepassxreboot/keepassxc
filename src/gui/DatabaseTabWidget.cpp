@@ -39,6 +39,9 @@
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
+#ifdef Q_OS_MACOS
+#include "gui/macutils/MacUtils.h"
+#endif
 #include "gui/wizard/NewDatabaseWizard.h"
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
@@ -98,8 +101,8 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
                              tr("Database creation error"),
                              tr("The created database has no key or KDF, refusing to save it.\n"
                                 "This is definitely a bug, please report it to the developers."),
-                             QMessageBox::Ok,
-                             QMessageBox::Ok);
+                             MessageBox::Ok,
+                             MessageBox::Ok);
         return {};
     }
 
@@ -544,8 +547,8 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget, Databas
     m_databaseOpenDialog->setFilePath(filePath);
 
 #ifdef Q_OS_MACOS
-    if (intent == DatabaseOpenDialog::Intent::AutoType) {
-        autoType()->raiseWindow();
+    if (intent == DatabaseOpenDialog::Intent::AutoType || intent == DatabaseOpenDialog::Intent::Browser) {
+        macUtils()->raiseOwnWindow();
         Tools::wait(500);
     }
 #endif

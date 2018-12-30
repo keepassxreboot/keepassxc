@@ -16,41 +16,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_WELCOMEWIDGET_H
-#define KEEPASSX_WELCOMEWIDGET_H
+#ifndef KEEPASSXC_MACUTILS_H
+#define KEEPASSXC_MACUTILS_H
 
-#include <QListWidgetItem>
+#include <QObject>
 #include <QWidget>
+#include "AppKit.h"
 
-namespace Ui
-{
-    class WelcomeWidget;
-}
-
-class WelcomeWidget : public QWidget
+class MacUtils : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit WelcomeWidget(QWidget* parent = nullptr);
-    ~WelcomeWidget();
-    void refreshLastDatabases();
+    static MacUtils* instance();
+    static void createTestInstance();
 
-signals:
-    void newDatabase();
-    void openDatabase();
-    void openDatabaseFile(QString);
-    void importKeePass1Database();
-    void importCsv();
-
-protected:
-    void keyPressEvent(QKeyEvent *event) override;
-
-private slots:
-    void openDatabaseFromFile(QListWidgetItem* item);
+    WId activeWindow();
+    bool raiseWindow(WId pid);
+    bool raiseLastActiveWindow();
+    bool raiseOwnWindow();
 
 private:
-    const QScopedPointer<Ui::WelcomeWidget> m_ui;
+    explicit MacUtils(QObject* parent = nullptr);
+    ~MacUtils();
+
+private:
+    std::unique_ptr<AppKit> m_appkit;
+    static MacUtils* m_instance;
+    void* self;
+
+    Q_DISABLE_COPY(MacUtils)
 };
 
-#endif // KEEPASSX_WELCOMEWIDGET_H
+inline MacUtils* macUtils()
+{
+    return MacUtils::instance();
+}
+
+#endif // KEEPASSXC_MACUTILS_H

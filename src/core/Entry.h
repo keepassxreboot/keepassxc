@@ -105,12 +105,16 @@ public:
     QString username() const;
     QString password() const;
     QString notes() const;
+    QString attribute(const QString& key) const;
     QString totp() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
 
     bool hasTotp() const;
     bool isExpired() const;
+    bool isAttributeReferenceOf(const QString& key, const QUuid& uuid) const;
+    void replaceReferencesWithValues(const Entry* other);
     bool hasReferences() const;
+    bool hasReferencesTo(const QUuid& uuid) const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
@@ -139,6 +143,7 @@ public:
     void setUsername(const QString& username);
     void setPassword(const QString& password);
     void setNotes(const QString& notes);
+    void setDefaultAttribute(const QString& attribute, const QString& value);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
     void setTotp(QSharedPointer<Totp::Settings> settings);
@@ -238,6 +243,7 @@ private:
     QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
     QString referenceFieldValue(EntryReferenceType referenceType) const;
 
+    static QString buildReference(const QUuid& uuid, const QString& field);
     static EntryReferenceType referenceType(const QString& referenceStr);
 
     template <class T> bool set(T& property, const T& value);
