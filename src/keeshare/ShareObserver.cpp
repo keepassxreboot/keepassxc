@@ -125,7 +125,7 @@ ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
 {
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(handleDatabaseChanged()));
 
-    connect(m_db.data(), SIGNAL(modified()), SLOT(handleDatabaseChanged()));
+    connect(m_db.data(), SIGNAL(databaseModified()), SLOT(handleDatabaseChanged()));
     connect(m_db.data(), SIGNAL(databaseSaved()), SLOT(handleDatabaseSaved()));
 
     connect(m_fileWatcher, SIGNAL(fileCreated(QString)), SLOT(handleFileUpdated(QString)));

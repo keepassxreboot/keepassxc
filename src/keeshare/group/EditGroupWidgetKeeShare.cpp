@@ -92,7 +92,7 @@ void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup)
     m_temporaryGroup = temporaryGroup;
 
     if (m_temporaryGroup) {
-        connect(m_temporaryGroup, SIGNAL(modified()), SLOT(update()));
+        connect(m_temporaryGroup, SIGNAL(groupModified()), SLOT(update()));
     }
     update();
 }
