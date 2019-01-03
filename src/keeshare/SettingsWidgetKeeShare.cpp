@@ -46,6 +46,7 @@ SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
     connect(m_ui->exportOwnCertificateButton, SIGNAL(clicked(bool)), SLOT(exportCertificate()));
 
     connect(m_ui->trustImportedCertificateButton, SIGNAL(clicked(bool)), SLOT(trustSelectedCertificates()));
+    connect(m_ui->askImportedCertificateButton, SIGNAL(clicked(bool)), SLOT(askSelectedCertificates()));
     connect(m_ui->untrustImportedCertificateButton, SIGNAL(clicked(bool)), SLOT(untrustSelectedCertificates()));
     connect(m_ui->removeImportedCertificateButton, SIGNAL(clicked(bool)), SLOT(removeSelectedCertificates()));
 }
@@ -79,11 +80,11 @@ void SettingsWidgetKeeShare::updateForeignCertificates()
     for (const auto& scopedCertificate : m_foreign.certificates) {
         const auto items = QList<QStandardItem*>()
             << new QStandardItem(scopedCertificate.path)
-            << new QStandardItem(scopedCertificate.trusted ? tr("Trusted") : tr("Untrusted"))
+            << new QStandardItem(scopedCertificate.trust == KeeShareSettings::Trust::Ask ? tr("Ask")
+                                                                                         : (scopedCertificate.trust == KeeShareSettings::Trust::Trusted ? tr("Trusted")
+                                                                                                                                                        : tr("Untrusted")))
 #if defined(WITH_XC_KEESHARE_SECURE)
-            << new QStandardItem(scopedCertificate.isKnown()
-                                                 ? scopedCertificate.certificate.signer
-                                                 : tr("Unknown"))
+            << new QStandardItem(scopedCertificate.isKnown() ? scopedCertificate.certificate.signer : tr("Unknown"))
             << new QStandardItem(scopedCertificate.certificate.fingerprint())
             << new QStandardItem(scopedCertificate.certificate.publicKey())
 #endif
@@ -194,7 +195,18 @@ void SettingsWidgetKeeShare::trustSelectedCertificates()
     const auto* selectionModel = m_ui->importedCertificateTableView->selectionModel();
     Q_ASSERT(selectionModel);
     for (const auto& index : selectionModel->selectedRows()) {
-        m_foreign.certificates[index.row()].trusted = true;
+        m_foreign.certificates[index.row()].trust = KeeShareSettings::Trust::Trusted;
+    }
+
+    updateForeignCertificates();
+}
+
+void SettingsWidgetKeeShare::askSelectedCertificates()
+{
+    const auto* selectionModel = m_ui->importedCertificateTableView->selectionModel();
+    Q_ASSERT(selectionModel);
+    for (const auto& index : selectionModel->selectedRows()) {
+        m_foreign.certificates[index.row()].trust = KeeShareSettings::Trust::Ask;
     }
 
     updateForeignCertificates();
@@ -205,7 +217,7 @@ void SettingsWidgetKeeShare::untrustSelectedCertificates()
     const auto* selectionModel = m_ui->importedCertificateTableView->selectionModel();
     Q_ASSERT(selectionModel);
     for (const auto& index : selectionModel->selectedRows()) {
-        m_foreign.certificates[index.row()].trusted = false;
+        m_foreign.certificates[index.row()].trust = KeeShareSettings::Trust::Untrusted;
     }
 
     updateForeignCertificates();

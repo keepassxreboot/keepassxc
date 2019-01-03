@@ -41,6 +41,7 @@ QTEST_GUILESS_MAIN(TestSharing)
 Q_DECLARE_METATYPE(KeeShareSettings::Type)
 Q_DECLARE_METATYPE(KeeShareSettings::Key)
 Q_DECLARE_METATYPE(KeeShareSettings::Certificate)
+Q_DECLARE_METATYPE(KeeShareSettings::Trust)
 Q_DECLARE_METATYPE(KeeShareSettings::ScopedCertificate)
 Q_DECLARE_METATYPE(QList<KeeShareSettings::ScopedCertificate>)
 
@@ -140,7 +141,7 @@ void TestSharing::testNullObjects()
 
 void TestSharing::testCertificateSerialization()
 {
-    QFETCH(bool, trusted);
+    QFETCH(KeeShareSettings::Trust, trusted);
     const OpenSSHKey& key = stubkey();
     KeeShareSettings::ScopedCertificate original;
     original.path = "/path";
@@ -149,7 +150,7 @@ void TestSharing::testCertificateSerialization()
         OpenSSHKey::serializeToBinary(OpenSSHKey::Public, key),
         "Some <!> &#_\"\" weird string"
     };
-    original.trusted = trusted;
+    original.trust = trusted;
 
     QString buffer;
     QXmlStreamWriter writer(&buffer);
@@ -165,7 +166,7 @@ void TestSharing::testCertificateSerialization()
 
     QCOMPARE(restored.certificate.key, original.certificate.key);
     QCOMPARE(restored.certificate.signer, original.certificate.signer);
-    QCOMPARE(restored.trusted, original.trusted);
+    QCOMPARE(restored.trust, original.trust);
     QCOMPARE(restored.path, original.path);
 
     QCOMPARE(restored.certificate.sshKey().publicParts(), key.publicParts());
@@ -173,9 +174,10 @@ void TestSharing::testCertificateSerialization()
 
 void TestSharing::testCertificateSerialization_data()
 {
-    QTest::addColumn<bool>("trusted");
-    QTest::newRow("Trusted") << true;
-    QTest::newRow("Untrusted") << false;
+    QTest::addColumn<KeeShareSettings::Trust>("trusted");
+    QTest::newRow("Ask") << KeeShareSettings::Trust::Ask;
+    QTest::newRow("Trusted") << KeeShareSettings::Trust::Trusted;
+    QTest::newRow("Untrusted") << KeeShareSettings::Trust::Untrusted;
 }
 
 void TestSharing::testKeySerialization()
@@ -280,7 +282,7 @@ void TestSharing::testSettingsSerialization_data()
         OpenSSHKey::serializeToBinary(OpenSSHKey::Public, sshKey0),
         "Some <!> &#_\"\" weird string"
     };
-    certificate0.trusted = true;
+    certificate0.trust = KeeShareSettings::Trust::Trusted;
 
     KeeShareSettings::Key key0;
     key0.key = OpenSSHKey::serializeToBinary(OpenSSHKey::Private, sshKey0);
@@ -293,7 +295,7 @@ void TestSharing::testSettingsSerialization_data()
         OpenSSHKey::serializeToBinary(OpenSSHKey::Public, sshKey1),
         "Another "
     };
-    certificate1.trusted = false;
+    certificate1.trust = KeeShareSettings::Trust::Untrusted;
 
     QTest::addColumn<bool>("importing");
     QTest::addColumn<bool>("exporting");

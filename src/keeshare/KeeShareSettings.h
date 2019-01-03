@@ -99,11 +99,16 @@ namespace KeeShareSettings
         static Own generate();
     };
 
+    enum class Trust {
+        Ask,
+        Untrusted,
+        Trusted
+    };
     struct ScopedCertificate
     {
         QString path;
         Certificate certificate;
-        bool trusted;
+        Trust trust;
 
         bool operator==(const ScopedCertificate& other) const;
         bool operator!=(const ScopedCertificate& other) const;

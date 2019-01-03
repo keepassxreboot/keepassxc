@@ -55,6 +55,7 @@ private slots:
     void exportCertificate();
 
     void trustSelectedCertificates();
+    void askSelectedCertificates();
     void untrustSelectedCertificates();
     void removeSelectedCertificates();
 

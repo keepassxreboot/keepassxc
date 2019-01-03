@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>327</width>
-    <height>423</height>
+    <height>434</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
@@ -207,6 +207,13 @@
          <widget class="QPushButton" name="trustImportedCertificateButton">
           <property name="text">
            <string>Trust</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="askImportedCertificateButton">
+          <property name="text">
+           <string>Ask</string>
           </property>
          </widget>
         </item>

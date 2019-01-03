@@ -92,22 +92,22 @@ QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
     }
     enum Scope { Invalid, Global, Local };
     Scope scope = Invalid;
-    bool trusted = false;
+    KeeShareSettings::Trust trusted = KeeShareSettings::Trust::Ask;
     for (const auto& scopedCertificate : knownCertificates) {
         if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
             // Global scope is overwritten by local scope
             scope = Global;
-            trusted = scopedCertificate.trusted;
+            trusted = scopedCertificate.trust;
         }
         if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
             scope = Local;
-            trusted = scopedCertificate.trusted;
+            trusted = scopedCertificate.trust;
             break;
         }
     }
-    if (scope != Invalid){
+    if (scope != Invalid && trusted != KeeShareSettings::Trust::Ask){
         // we introduce now scopes if there is a global
-        return {trusted ? TrustedForever : UntrustedForever, certificate};
+        return {trusted == KeeShareSettings::Trust::Trusted ? TrustedForever : UntrustedForever, certificate};
     }
 
     QMessageBox warning;
@@ -352,12 +352,12 @@ ShareObserver::Result ShareObserver::importSecureContainerInto(const KeeShareSet
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        bool trusted = trust.first == TrustedForever;
+        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;
                 scopedCertificate.path = reference.path;
-                scopedCertificate.trusted = trusted;
+                scopedCertificate.trust = trusted;
                 found = true;
             }
         }
@@ -366,7 +366,7 @@ ShareObserver::Result ShareObserver::importSecureContainerInto(const KeeShareSet
             // we need to update with the new signer
             KeeShare::setForeign(foreign);
         }
-        if (trusted) {
+        if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
                    qPrintable(reference.path),
                    qPrintable(targetGroup->name()),
@@ -435,12 +435,12 @@ ShareObserver::Result ShareObserver::importInsecureContainerInto(const KeeShareS
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        bool trusted = trust.first == TrustedForever;
+        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;
                 scopedCertificate.path = reference.path;
-                scopedCertificate.trusted = trusted;
+                scopedCertificate.trust = trusted;
                 found = true;
             }
         }
@@ -449,7 +449,7 @@ ShareObserver::Result ShareObserver::importInsecureContainerInto(const KeeShareS
             // we need to update with the new signer
             KeeShare::setForeign(foreign);
         }
-        if (trusted) {
+        if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
                    qPrintable(reference.path),
                    qPrintable(targetGroup->name()),

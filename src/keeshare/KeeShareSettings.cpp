@@ -297,7 +297,7 @@ namespace KeeShareSettings
 
     bool ScopedCertificate::operator==(const ScopedCertificate &other) const
     {
-        return trusted == other.trusted && path == other.path && certificate == other.certificate;
+        return trust == other.trust && path == other.path && certificate == other.certificate;
     }
 
     bool ScopedCertificate::operator!=(const ScopedCertificate &other) const
@@ -308,7 +308,15 @@ namespace KeeShareSettings
     void ScopedCertificate::serialize(QXmlStreamWriter& writer, const ScopedCertificate& scopedCertificate)
     {
         writer.writeAttribute("Path", scopedCertificate.path);
-        writer.writeAttribute("Trusted", scopedCertificate.trusted ? "True" : "False");
+        if(scopedCertificate.trust == KeeShareSettings::Trust::Trusted) {
+            writer.writeAttribute("Trust", "Trusted");
+        }
+        else if(scopedCertificate.trust == KeeShareSettings::Trust::Untrusted){
+            writer.writeAttribute("Trust", "Untrusted");
+        }
+        else {
+            writer.writeAttribute("Trust", "Ask");
+        }
         Certificate::serialize(writer, scopedCertificate.certificate);
     }
 
@@ -316,7 +324,16 @@ namespace KeeShareSettings
     {
         ScopedCertificate scopedCertificate;
         scopedCertificate.path = reader.attributes().value("Path").toString();
-        scopedCertificate.trusted = reader.attributes().value("Trusted") == "True";
+        auto trust = reader.attributes().value("Trusted").toString();
+        if(trust.compare("Trusted", Qt::CaseInsensitive)) {
+            scopedCertificate.trust = KeeShareSettings::Trust::Trusted;
+        }
+        if(trust.compare("Unrusted", Qt::CaseInsensitive)) {
+            scopedCertificate.trust = KeeShareSettings::Trust::Untrusted;
+        }
+        else {
+            scopedCertificate.trust = KeeShareSettings::Trust::Ask;
+        }
         scopedCertificate.certificate = Certificate::deserialize(reader);
         return scopedCertificate;
     }
