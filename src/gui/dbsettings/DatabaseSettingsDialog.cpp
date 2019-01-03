@@ -25,7 +25,7 @@
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
 
@@ -80,7 +80,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_securityTabWidget->addTab(m_masterKeyWidget, tr("Master Key"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
 
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
 #endif
 

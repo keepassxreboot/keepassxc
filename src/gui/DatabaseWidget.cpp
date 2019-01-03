@@ -373,7 +373,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     processAutoOpen();
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
     KeeShare::instance()->connectDatabase(m_db, oldDb);
 #endif
 }

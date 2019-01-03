@@ -170,26 +170,36 @@ void EditGroupWidgetKeeShare::selectPath()
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
     }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
-    const auto filetype = tr("kdbx.share", "Filetype for KeeShare container");
-    const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare Container"), tr("All files"));
+    QString defaultFiletype = "";
+    auto knownFilters = QStringList() << QString("%1 (*)").arg("All files");
+#if defined(WITH_XC_KEESHARE_INSECURE)
+    defaultFiletype = KeeShare::secureContainerFileType();
+    knownFilters.prepend(QString("%1 (*.%2)").arg(tr("KeeShare insecure container"), KeeShare::insecureContainerFileType()));
+#endif
+#if defined(WITH_XC_KEESHARE_SECURE)
+    defaultFiletype = KeeShare::secureContainerFileType();
+    knownFilters.prepend(QString("%1 (*.%2)").arg(tr("KeeShare secure container"), KeeShare::secureContainerFileType()));
+#endif
+
+    const auto filters = knownFilters.join(";;");
     auto filename = reference.path;
     if (filename.isEmpty()) {
-        filename = tr("%1.%2", "Template for KeeShare container").arg(m_temporaryGroup->name()).arg(filetype);
+        filename = tr("%1.%2", "Template for KeeShare container").arg(m_temporaryGroup->name()).arg(defaultFiletype);
     }
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
         filename = fileDialog()->getFileName(
             this, tr("Select import source"), defaultDirPath, filters, nullptr, QFileDialog::DontConfirmOverwrite,
-            filetype, filename);
+            defaultFiletype, filename);
         break;
     case KeeShareSettings::ExportTo:
         filename = fileDialog()->getFileName(
-            this, tr("Select export target"), defaultDirPath, filters, nullptr, 0, filetype, filename);
+            this, tr("Select export target"), defaultDirPath, filters, nullptr, QFileDialog::Option(0), defaultFiletype, filename);
         break;
     case KeeShareSettings::SynchronizeWith:
     case KeeShareSettings::Inactive:
         filename = fileDialog()->getFileName(
-            this, tr("Select import/export file"), defaultDirPath, filters, nullptr, 0, filetype, filename);
+            this, tr("Select import/export file"), defaultDirPath, filters, nullptr, QFileDialog::Option(0), defaultFiletype, filename);
         break;
     }
 

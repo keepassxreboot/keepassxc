@@ -77,10 +77,16 @@ private:
     static void resolveReferenceAttributes(Entry* targetEntry, const Database* sourceDb);
 
     static Database* exportIntoContainer(const KeeShareSettings::Reference& reference, const Group* sourceRoot);
+    static Result exportIntoReferenceInsecureContainer(const KeeShareSettings::Reference &reference, Database *targetDb);
+    static Result exportIntoReferenceSecureContainer(const KeeShareSettings::Reference &reference, Database *targetDb);
+    static Result importSecureContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
+    static Result importInsecureContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
     static Result importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
+    static Result importDatabaseInto();
 
     Result importFromReferenceContainer(const QString& path);
-    QList<ShareObserver::Result> exportIntoReferenceContainers();
+    QList<Result> exportIntoReferenceContainers();
+
     void deinitialize();
     void reinitialize();
     void notifyAbout(const QStringList& success, const QStringList& warning, const QStringList& error);

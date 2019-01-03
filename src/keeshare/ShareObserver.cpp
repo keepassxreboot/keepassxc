@@ -16,6 +16,7 @@
  */
 
 #include "ShareObserver.h"
+#include "config-keepassx.h"
 #include "core/Clock.h"
 #include "core/Config.h"
 #include "core/CustomData.h"
@@ -43,8 +44,10 @@
 #include <QPushButton>
 #include <QStringBuilder>
 
+#if defined(WITH_XC_KEESHARE_SECURE)
 #include <quazip5/quazip.h>
 #include <quazip5/quazipfile.h>
+#endif
 
 namespace
 {
@@ -61,6 +64,11 @@ enum Trust
     Own
 };
 
+bool isOfExportType(const QFileInfo &fileInfo, const QString type)
+{
+    return fileInfo.fileName().endsWith(type, Qt::CaseInsensitive);
+}
+
 QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
                                                   const KeeShareSettings::Reference& reference,
                                                   const KeeShareSettings::Certificate& ownCertificate,
@@ -68,52 +76,61 @@ QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
                                                   const KeeShareSettings::Sign& sign)
 {
     if (sign.signature.isEmpty()) {
-        QMessageBox warning;
-        warning.setIcon(QMessageBox::Warning);
-        warning.setWindowTitle(ShareObserver::tr("Untrustworthy container without signature"));
-        warning.setText(ShareObserver::tr("Do you want to import from unsigned container %1").arg(reference.path));
-        auto yes = warning.addButton(ShareObserver::tr("Import once"), QMessageBox::ButtonRole::YesRole);
-        auto no = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
-        warning.setDefaultButton(no);
-        warning.exec();
-        const auto trust = warning.clickedButton() == yes ? Single : None;
-        return qMakePair(trust, KeeShareSettings::Certificate());
+        for (const auto& certificate : knownCertificates) {
+            if (certificate.key == certificate.key && certificate.trusted) {
+                return {Known, certificate};
+            }
+        }
     }
+    else {
+        auto key = sign.certificate.sshKey();
+        key.openKey(QString());
+        const Signature signer;
+        if (!signer.verify(data, sign.signature, key)) {
+            qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
+            return {Invalid, KeeShareSettings::Certificate()};
+        }
 
-    auto key = sign.certificate.sshKey();
-    key.openKey(QString());
-    const Signature signer;
-    if (!signer.verify(data, sign.signature, key)) {
-        const QFileInfo info(reference.path);
-        qCritical("Invalid signature for sharing container %s.", qPrintable(info.absoluteFilePath()));
-        return qMakePair(Invalid, KeeShareSettings::Certificate());
-    }
+        if (ownCertificate.key == sign.certificate.key) {
+            return {Own, ownCertificate};
+        }
 
-    if (ownCertificate.key == sign.certificate.key) {
-        return qMakePair(Own, ownCertificate);
-    }
-
-    for (const auto& certificate : knownCertificates) {
-        if (certificate.key == certificate.key && certificate.trusted) {
-            return qMakePair(Known, certificate);
+        for (const auto& certificate : knownCertificates) {
+            if (certificate.key == certificate.key && certificate.trusted) {
+                return {Known, certificate};
+            }
         }
     }
 
     QMessageBox warning;
-    warning.setIcon(QMessageBox::Question);
-    warning.setWindowTitle(ShareObserver::tr("Import from untrustworthy certificate for sharing container"));
-    warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2")
-                            .arg(sign.certificate.signer)
-                            .arg(sign.certificate.fingerprint()));
-    auto yes = warning.addButton(ShareObserver::tr("Import and trust"), QMessageBox::ButtonRole::YesRole);
-    auto no = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
-    warning.setDefaultButton(no);
-    warning.exec();
-    if (warning.clickedButton() != yes) {
-        qWarning("Prevented import due to untrusted certificate of %s", qPrintable(sign.certificate.signer));
-        return qMakePair(None, sign.certificate);
+    KeeShareSettings::Certificate certificate;
+    if (sign.signature.isEmpty()){
+        warning.setIcon(QMessageBox::Warning);
+        warning.setWindowTitle(ShareObserver::tr("Untrustworthy container without signature"));
+        warning.setText(ShareObserver::tr("We cannot verify the source of the shared container because it is not signed. Do you really want to import %1?").arg(reference.path));
+        certificate = KeeShareSettings::Certificate();
     }
-    return qMakePair(Lasting, sign.certificate);
+    else {
+        warning.setIcon(QMessageBox::Question);
+        warning.setWindowTitle(ShareObserver::tr("Import from untrustworthy certificate for sharing container"));
+        warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2")
+                                .arg(sign.certificate.signer)
+                                .arg(sign.certificate.fingerprint()));
+        certificate = sign.certificate;
+    }
+    auto once = warning.addButton(ShareObserver::tr("Only this time"), QMessageBox::ButtonRole::YesRole);
+    auto always = warning.addButton(ShareObserver::tr("Always"), QMessageBox::ButtonRole::YesRole);
+    auto abort = warning.addButton(ShareObserver::tr("No"), QMessageBox::ButtonRole::NoRole);
+    warning.setDefaultButton(abort);
+    warning.exec();
+    if (warning.clickedButton() == once){
+        return {Single, certificate};
+    }
+    if (warning.clickedButton() == always){
+        return {Lasting, certificate};
+    }
+    qWarning("Prevented import due to untrusted certificate of %s", qPrintable(sign.certificate.signer));
+    return {None, certificate};
 }
 
 } // End Namespace
@@ -266,16 +283,15 @@ void ShareObserver::handleFileUpdated(const QString& path)
     notifyAbout(success, warning, error);
 }
 
-ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+ShareObserver::Result ShareObserver::importSecureContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
 {
-    const QFileInfo info(reference.path);
-    if (!info.exists()) {
-        qCritical("File %s does not exist.", qPrintable(info.absoluteFilePath()));
-        return {reference.path, Result::Warning, tr("File does not exist")};
-    }
-    QuaZip zip(info.absoluteFilePath());
+#if !defined(WITH_XC_KEESHARE_SECURE)
+    Q_UNUSED(targetGroup);
+    return { reference.path, Result::Error, tr("Secured share container are not supported") };
+#else
+    QuaZip zip(reference.path);
     if (!zip.open(QuaZip::mdUnzip)) {
-        qCritical("Unable to open file %s.", qPrintable(info.absoluteFilePath()));
+        qCritical("Unable to open file %s.", qPrintable(reference.path));
         return {reference.path, Result::Error, tr("File is not readable")};
     }
     const auto expected = QSet<QString>() << KeeShare_Signature << KeeShare_Container;
@@ -285,7 +301,7 @@ ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings:
         actual << file.name;
     }
     if (expected != actual) {
-        qCritical("Invalid sharing container %s.", qPrintable(info.absoluteFilePath()));
+        qCritical("Invalid sharing container %s.", qPrintable(reference.path));
         return {reference.path, Result::Error, tr("Invalid sharing container")};
     }
 
@@ -313,6 +329,7 @@ ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings:
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return {reference.path, Result::Error, reader.errorString()};
     }
+
     auto foreign = KeeShare::foreign();
     auto own = KeeShare::own();
     auto trusted = check(payload, reference, own.certificate, foreign.certificates, sign);
@@ -352,14 +369,99 @@ ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings:
         merger.setForcedMergeMode(Group::Synchronize);
         const bool changed = merger.merge();
         if (changed) {
-            return {reference.path, Result::Success, tr("Successful import")};
+            return {reference.path, Result::Success, tr("Successful secured import")};
         }
         return {};
     }
     default:
         Q_ASSERT(false);
+        return {reference.path, Result::Error, tr("Unexpected error")};
+    }
+#endif
+}
+
+ShareObserver::Result ShareObserver::importInsecureContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+{
+#if !defined(WITH_XC_KEESHARE_INSECURE)
+    Q_UNUSED(targetGroup);
+    return {reference.path, Result::Error, tr("Insecured share container are not supported")};
+#else
+    QFile file(reference.path);
+    if (!file.open(QIODevice::ReadOnly)){
+        qCritical("Unable to open file %s.", qPrintable(reference.path));
+        return {reference.path, Result::Error, tr("File is not readable")};
+    }
+    auto payload = file.readAll();
+    file.close();
+    QBuffer buffer(&payload);
+    buffer.open(QIODevice::ReadOnly);
+
+    KeePass2Reader reader;
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
+    auto sourceDb = QSharedPointer<Database>::create();
+    if (!reader.readDatabase(&buffer, key, sourceDb.data())) {
+        qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
+        return {reference.path, Result::Error, reader.errorString()};
+    }
+
+    auto foreign = KeeShare::foreign();
+    auto own = KeeShare::own();
+    static KeeShareSettings::Sign sign; // invalid sign
+    auto trusted = check(payload, reference, own.certificate, foreign.certificates, sign);
+    switch(trusted.first) {
+    case Known:
+    case Lasting: {
+        bool found = false;
+        for (KeeShareSettings::Certificate& knownCertificate : foreign.certificates) {
+            if (knownCertificate.key == trusted.second.key) {
+                knownCertificate.signer = trusted.second.signer;
+                knownCertificate.trusted = true;
+                found = true;
+            }
+        }
+        if (!found) {
+            foreign.certificates << trusted.second;
+            // we need to update with the new signer
+            KeeShare::setForeign(foreign);
+        }
+    }
+    [[fallthrough]];
+    case Single: {
+        qDebug("Synchronize %s %s with %s",
+               qPrintable(reference.path),
+               qPrintable(targetGroup->name()),
+               qPrintable(sourceDb->rootGroup()->name()));
+        Merger merger(sourceDb->rootGroup(), targetGroup);
+        merger.setForcedMergeMode(Group::Synchronize);
+        const bool changed = merger.merge();
+        if (changed) {
+            return {reference.path, Result::Success, tr("Successful unsecured import")};
+        }
         return {};
     }
+    default:
+        qWarning("Prevent untrusted import");
+        return {reference.path, Result::Warning, tr("Untrusted import prevented")};
+    }
+#endif
+}
+
+ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+{
+    const QFileInfo info(reference.path);
+    if (!info.exists()) {
+        qCritical("File %s does not exist.", qPrintable(info.absoluteFilePath()));
+        return {reference.path, Result::Warning, tr("File does not exist")};
+    }
+
+    if (isOfExportType(info, KeeShare::secureContainerFileType())) {
+        return importSecureContainerInto(reference, targetGroup);
+    }
+    if (isOfExportType(info, KeeShare::insecureContainerFileType())) {
+        return importInsecureContainerInto(reference, targetGroup);
+    }
+    return {reference.path, Result::Error, tr("Unknown share container type")};
 }
 
 ShareObserver::Result ShareObserver::importFromReferenceContainer(const QString& path)
@@ -465,10 +567,98 @@ QSharedPointer<Database> ShareObserver::database()
     return m_db;
 }
 
+ShareObserver::Result ShareObserver::exportIntoReferenceSecureContainer(const KeeShareSettings::Reference &reference, Database *targetDb)
+{
+#if !defined(WITH_XC_KEESHARE_SECURE)
+    Q_UNUSED(targetDb);
+    return {reference.path, Result::Error, tr("Overwriting secured share container is not supported")};
+#else
+    QByteArray bytes;
+    {
+        QBuffer buffer(&bytes);
+        buffer.open(QIODevice::WriteOnly);
+        KeePass2Writer writer;
+        writer.writeDatabase(&buffer, targetDb);
+        if (writer.hasError()) {
+            qWarning("Serializing export dabase failed: %s.", writer.errorString().toLatin1().data());
+            return {reference.path, Result::Error, writer.errorString()};
+        }
+    }
+    const auto own = KeeShare::own();
+    QuaZip zip(reference.path);
+    zip.setFileNameCodec("UTF-8");
+    const bool zipOpened = zip.open(QuaZip::mdCreate);
+    if (!zipOpened) {
+        ::qWarning("Opening export file failed: %d", zip.getZipError());
+        return {reference.path, Result::Error, tr("Could not write export container (%1)").arg(zip.getZipError())};
+    }
+    {
+        QuaZipFile file(&zip);
+        const auto signatureOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Signature));
+        if (!signatureOpened) {
+            ::qWarning("Embedding signature failed: %d", zip.getZipError());
+            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+        }
+        QTextStream stream(&file);
+        KeeShareSettings::Sign sign;
+        auto sshKey = own.key.sshKey();
+        sshKey.openKey(QString());
+        const Signature signer;
+        sign.signature = signer.create(bytes, sshKey);
+        sign.certificate = own.certificate;
+        stream << KeeShareSettings::Sign::serialize(sign);
+        stream.flush();
+        if (file.getZipError() != ZIP_OK) {
+            ::qWarning("Embedding signature failed: %d", zip.getZipError());
+            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+        }
+        file.close();
+    }
+    {
+        QuaZipFile file(&zip);
+        const auto dbOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Container));
+        if (!dbOpened) {
+            ::qWarning("Embedding database failed: %d", zip.getZipError());
+            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
+        }
+        if (file.getZipError() != ZIP_OK) {
+            ::qWarning("Embedding database failed: %d", zip.getZipError());
+            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
+        }
+        file.write(bytes);
+        file.close();
+    }
+    zip.close();
+    return {reference.path};
+#endif
+}
+
+ShareObserver::Result ShareObserver::exportIntoReferenceInsecureContainer(const KeeShareSettings::Reference &reference, Database *targetDb)
+{
+#if !defined(WITH_XC_KEESHARE_INSECURE)
+    Q_UNUSED(targetDb);
+    return {reference.path, Result::Error, tr("Overwriting secured share container is not supported")};
+#else
+    QFile file(reference.path);
+    const bool fileOpened = file.open(QIODevice::WriteOnly);
+    if (!fileOpened) {
+        ::qWarning("Opening export file failed");
+        return {reference.path, Result::Error, tr("Could not write export container")};
+    }
+    KeePass2Writer writer;
+    writer.writeDatabase(&file, targetDb);
+    if (writer.hasError()) {
+        qWarning("Exporting dabase failed: %s.", writer.errorString().toLatin1().data());
+        return {reference.path, Result::Error, writer.errorString()};
+    }
+    file.close();
+#endif
+    return {reference.path};
+}
+
 QList<ShareObserver::Result> ShareObserver::exportIntoReferenceContainers()
 {
     QList<Result> results;
-    const auto own = KeeShare::own();
     const auto groups = m_db->rootGroup()->groupsRecursive(true);
     for (const auto* group : groups) {
         const auto reference = KeeShare::referenceOf(group);
@@ -478,76 +668,19 @@ QList<ShareObserver::Result> ShareObserver::exportIntoReferenceContainers()
 
         m_fileWatcher->ignoreFileChanges(reference.path);
         QScopedPointer<Database> targetDb(exportIntoContainer(reference, group));
-        QByteArray bytes;
-        {
-            QBuffer buffer(&bytes);
-            buffer.open(QIODevice::WriteOnly);
-            KeePass2Writer writer;
-            writer.writeDatabase(&buffer, targetDb.data());
-            if (writer.hasError()) {
-                qWarning("Serializing export dabase failed: %s.", writer.errorString().toLatin1().data());
-                results << Result{reference.path, Result::Error, writer.errorString()};
-                m_fileWatcher->observeFileChanges(true);
-                continue;
-            }
-        }
-        QuaZip zip(reference.path);
-        zip.setFileNameCodec("UTF-8");
-        const bool zipOpened = zip.open(QuaZip::mdCreate);
-        if (!zipOpened) {
-            ::qWarning("Opening export file failed: %d", zip.getZipError());
-            results << Result{reference.path, Result::Error, tr("Could not write export container (%1)").arg(zip.getZipError())};
+        QFileInfo info(reference.path);
+        if (isOfExportType(info, KeeShare::secureContainerFileType())) {
+            results << exportIntoReferenceSecureContainer(reference, targetDb.data());
             m_fileWatcher->observeFileChanges(true);
             continue;
         }
-        {
-            QuaZipFile file(&zip);
-            const auto signatureOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Signature));
-            if (!signatureOpened) {
-                ::qWarning("Embedding signature failed: %d", zip.getZipError());
-                results << Result{reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
-                m_fileWatcher->observeFileChanges(true);
-                continue;
-            }
-            QTextStream stream(&file);
-            KeeShareSettings::Sign sign;
-            auto sshKey = own.key.sshKey();
-            sshKey.openKey(QString());
-            const Signature signer;
-            sign.signature = signer.create(bytes, sshKey);
-            sign.certificate = own.certificate;
-            stream << KeeShareSettings::Sign::serialize(sign);
-            stream.flush();
-            if (file.getZipError() != ZIP_OK) {
-                ::qWarning("Embedding signature failed: %d", zip.getZipError());
-                results << Result{reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
-                m_fileWatcher->observeFileChanges(true);
-                continue;
-            }
-            file.close();
+        if (isOfExportType(info, KeeShare::insecureContainerFileType())) {
+            results << exportIntoReferenceInsecureContainer(reference, targetDb.data());
+            m_fileWatcher->observeFileChanges(true);
+            continue;
         }
-        {
-            QuaZipFile file(&zip);
-            const auto dbOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Container));
-            if (!dbOpened) {
-                ::qWarning("Embedding database failed: %d", zip.getZipError());
-                results << Result{reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
-                m_fileWatcher->observeFileChanges(true);
-                continue;
-            }
-            if (file.getZipError() != ZIP_OK) {
-                ::qWarning("Embedding database failed: %d", zip.getZipError());
-                results << Result{reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
-                m_fileWatcher->observeFileChanges(true);
-                continue;
-            }
-            file.write(bytes);
-            file.close();
-        }
-        zip.close();
-
-        m_fileWatcher->observeFileChanges(true);
-        results << Result{reference.path};
+        Q_ASSERT(false);
+        results << Result{reference.path, Result::Error, tr("Unexpected export error occurred")};
     }
     return results;
 }

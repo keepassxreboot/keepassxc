@@ -125,14 +125,14 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::DisplayRole) {
         QString nameTemplate = tr("%1", "Template for name without annotation");
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
         nameTemplate = KeeShare::indicatorSuffix(group, nameTemplate);
 #endif
         return nameTemplate.arg(group->name());
     } else if (role == Qt::DecorationRole) {
         QPixmap pixmap = group->isExpired() ? databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex)
                                             : group->iconScaledPixmap();
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
         pixmap = KeeShare::indicatorBadge(group, pixmap);
 #endif
         return pixmap;

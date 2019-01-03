@@ -26,7 +26,7 @@
 #include "core/FilePath.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #endif
 
@@ -107,7 +107,7 @@ void EntryPreviewWidget::setGroup(Group* selectedGroup)
     updateGroupGeneralTab();
     updateGroupNotesTab();
 
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
     updateGroupSharingTab();
 #endif
 
@@ -297,7 +297,7 @@ void EntryPreviewWidget::updateGroupNotesTab()
     m_ui->groupNotesEdit->setText(notes);
 }
 
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
 void EntryPreviewWidget::updateGroupSharingTab()
 {
     Q_ASSERT(m_currentGroup);

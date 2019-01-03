@@ -43,7 +43,7 @@
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
 #endif
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsPageKeeShare.h"
 #endif
@@ -158,7 +158,7 @@ MainWindow::MainWindow()
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
 #endif
 
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
     m_ui->settingsWidget->addSettingsPage(new SettingsPageKeeShare(m_ui->tabWidget));
     connect(KeeShare::instance(), SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),

@@ -23,7 +23,7 @@
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
 #include "keeshare/group/EditGroupPageKeeShare.h"
 #endif
 
@@ -63,7 +63,7 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
 
     addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
-#ifdef WITH_XC_KEESHARE
+#if defined(WITH_XC_KEESHARE)
     addEditPage(new EditGroupPageKeeShare(this));
 #endif
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);

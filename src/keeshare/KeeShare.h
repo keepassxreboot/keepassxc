@@ -55,6 +55,9 @@ public:
 
     void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
 
+    static const QString& secureContainerFileType();
+    static const QString& insecureContainerFileType();
+
 signals:
     void activeChanged();
     void sharingMessage(QString, MessageWidget::MessageType);

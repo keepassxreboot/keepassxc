@@ -184,6 +184,18 @@ void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Da
     }
 }
 
+const QString &KeeShare::secureContainerFileType()
+{
+    static const QString filetype("kdbx.share");
+    return filetype;
+}
+
+const QString &KeeShare::insecureContainerFileType()
+{
+    static const QString filetype("kdbx");
+    return filetype;
+}
+
 void KeeShare::handleSettingsChanged(const QString& key)
 {
     if (key == KeeShare_Active) {
