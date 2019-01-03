@@ -32,10 +32,9 @@ namespace KeeShareSettings
 {
     namespace
     {
-        Certificate packCertificate(const OpenSSHKey& key, bool verified, const QString& signer)
+        Certificate packCertificate(const OpenSSHKey& key, const QString& signer)
         {
             KeeShareSettings::Certificate extracted;
-            extracted.trusted = verified;
             extracted.signer = signer;
             Q_ASSERT(key.type() == "ssh-rsa");
             extracted.key = OpenSSHKey::serializeToBinary(OpenSSHKey::Public, key);
@@ -108,9 +107,6 @@ namespace KeeShareSettings
         writer.writeStartElement("Signer");
         writer.writeCharacters(certificate.signer);
         writer.writeEndElement();
-        writer.writeStartElement("Trusted");
-        writer.writeCharacters(certificate.trusted ? "True" : "False");
-        writer.writeEndElement();
         writer.writeStartElement("Key");
         writer.writeCharacters(certificate.key.toBase64());
         writer.writeEndElement();
@@ -118,7 +114,7 @@ namespace KeeShareSettings
 
     bool Certificate::operator==(const Certificate& other) const
     {
-        return trusted == other.trusted && key == other.key && signer == other.signer;
+        return key == other.key && signer == other.signer;
     }
 
     bool Certificate::operator!=(const Certificate& other) const
@@ -128,7 +124,7 @@ namespace KeeShareSettings
 
     bool Certificate::isNull() const
     {
-        return !trusted && key.isEmpty() && signer.isEmpty();
+        return key.isEmpty() && signer.isEmpty();
     }
 
     QString Certificate::fingerprint() const
@@ -158,8 +154,6 @@ namespace KeeShareSettings
         while (!reader.error() && reader.readNextStartElement()) {
             if (reader.name() == "Signer") {
                 certificate.signer = reader.readElementText();
-            } else if (reader.name() == "Trusted") {
-                certificate.trusted = reader.readElementText() == "True";
             } else if (reader.name() == "Key") {
                 certificate.key = QByteArray::fromBase64(reader.readElementText().toLatin1());
             }
@@ -217,7 +211,7 @@ namespace KeeShareSettings
         Own own;
         own.key = packKey(key);
         const QString name = qgetenv("USER"); // + "@" + QHostInfo::localHostName();
-        own.certificate = packCertificate(key, true, name);
+        own.certificate = packCertificate(key, name);
         return own;
     }
 
@@ -301,13 +295,39 @@ namespace KeeShareSettings
         return own;
     }
 
+    bool ScopedCertificate::operator==(const ScopedCertificate &other) const
+    {
+        return trusted == other.trusted && path == other.path && certificate == other.certificate;
+    }
+
+    bool ScopedCertificate::operator!=(const ScopedCertificate &other) const
+    {
+        return !operator==(other);
+    }
+
+    void ScopedCertificate::serialize(QXmlStreamWriter& writer, const ScopedCertificate& scopedCertificate)
+    {
+        writer.writeAttribute("Path", scopedCertificate.path);
+        writer.writeAttribute("Trusted", scopedCertificate.trusted ? "True" : "False");
+        Certificate::serialize(writer, scopedCertificate.certificate);
+    }
+
+    ScopedCertificate ScopedCertificate::deserialize(QXmlStreamReader &reader)
+    {
+        ScopedCertificate scopedCertificate;
+        scopedCertificate.path = reader.attributes().value("Path").toString();
+        scopedCertificate.trusted = reader.attributes().value("Trusted") == "True";
+        scopedCertificate.certificate = Certificate::deserialize(reader);
+        return scopedCertificate;
+    }
+
     QString Foreign::serialize(const Foreign& foreign)
     {
         return xmlSerialize([&](QXmlStreamWriter& writer) {
             writer.writeStartElement("Foreign");
-            for (const Certificate& certificate : foreign.certificates) {
+            for (const ScopedCertificate& scopedCertificate : foreign.certificates) {
                 writer.writeStartElement("Certificate");
-                Certificate::serialize(writer, certificate);
+                ScopedCertificate::serialize(writer, scopedCertificate);
                 writer.writeEndElement();
             }
             writer.writeEndElement();
@@ -322,7 +342,7 @@ namespace KeeShareSettings
                 if (reader.name() == "Foreign") {
                     while (!reader.error() && reader.readNextStartElement()) {
                         if (reader.name() == "Certificate") {
-                            foreign.certificates << Certificate::deserialize(reader);
+                            foreign.certificates << ScopedCertificate::deserialize(reader);
                         } else {
                             ::qWarning() << "Unknown Cerificates element" << reader.name();
                             reader.skipCurrentElement();

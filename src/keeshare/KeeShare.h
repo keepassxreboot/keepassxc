@@ -41,6 +41,7 @@ public:
     static QPixmap indicatorBadge(const Group* group, QPixmap pixmap);
 
     static bool isShared(const Group* group);
+    static bool isEnabled(const Group *group);
 
     static KeeShareSettings::Own own();
     static KeeShareSettings::Active active();

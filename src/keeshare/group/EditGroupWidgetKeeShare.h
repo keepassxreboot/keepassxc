@@ -46,8 +46,8 @@ private slots:
     void update();
     void selectType();
     void selectPassword();
+    void launchPathSelectionDialog();
     void selectPath();
-    void setPath(const QString& path);
     void setGeneratedPassword(const QString& password);
     void togglePasswordGeneratorButton(bool checked);
 

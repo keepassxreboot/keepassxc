@@ -49,8 +49,8 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     connect(m_ui->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
     connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), SLOT(selectPassword()));
     connect(m_ui->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
-    connect(m_ui->pathEdit, SIGNAL(textChanged(QString)), SLOT(setPath(QString)));
-    connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(selectPath()));
+    connect(m_ui->pathEdit, SIGNAL(editingFinished()), SLOT(selectPath()));
+    connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(launchPathSelectionDialog()));
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
 
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(showSharingState()));
@@ -102,15 +102,40 @@ void EditGroupWidgetKeeShare::showSharingState()
     if (!m_temporaryGroup) {
         return;
     }
+
+    auto supportedExtensions = QStringList();
+#if defined(WITH_XC_KEESHARE_INSECURE)
+    supportedExtensions << KeeShare::insecureContainerFileType();
+#endif
+#if defined(WITH_XC_KEESHARE_SECURE)
+    supportedExtensions << KeeShare::secureContainerFileType();
+#endif
+    const auto reference = KeeShare::referenceOf(m_temporaryGroup);
+    if (!reference.path.isEmpty()) {
+        bool supported = false;
+        for(const auto &extension : supportedExtensions){
+            if (reference.path.endsWith(extension, Qt::CaseInsensitive)){
+                supported = true;
+                break;
+            }
+        }
+        if (!supported) {
+            m_ui->messageWidget->showMessage(tr("Your KeePassXC version does not support sharing your container type. Please use %1.").arg(supportedExtensions.join(", ")), MessageWidget::Warning);
+            return;
+        }
+    }
     const auto active = KeeShare::active();
     if (!active.in && !active.out) {
         m_ui->messageWidget->showMessage(tr("Database sharing is disabled"), MessageWidget::Information);
+        return;
     }
     if (active.in && !active.out) {
         m_ui->messageWidget->showMessage(tr("Database export is disabled"), MessageWidget::Information);
+        return;
     }
     if (!active.in && active.out) {
         m_ui->messageWidget->showMessage(tr("Database import is disabled"), MessageWidget::Information);
+        return;
     }
 }
 
@@ -149,17 +174,17 @@ void EditGroupWidgetKeeShare::setGeneratedPassword(const QString& password)
     m_ui->togglePasswordGeneratorButton->setChecked(false);
 }
 
-void EditGroupWidgetKeeShare::setPath(const QString& path)
+void EditGroupWidgetKeeShare::selectPath()
 {
     if (!m_temporaryGroup) {
         return;
     }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
-    reference.path = path;
+    reference.path = m_ui->pathEdit->text();
     KeeShare::setReferenceTo(m_temporaryGroup, reference);
 }
 
-void EditGroupWidgetKeeShare::selectPath()
+void EditGroupWidgetKeeShare::launchPathSelectionDialog()
 {
     if (!m_temporaryGroup) {
         return;
@@ -171,20 +196,28 @@ void EditGroupWidgetKeeShare::selectPath()
     }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
     QString defaultFiletype = "";
+    auto supportedExtensions = QStringList();
+    auto unsupportedExtensions = QStringList();
     auto knownFilters = QStringList() << QString("%1 (*)").arg("All files");
 #if defined(WITH_XC_KEESHARE_INSECURE)
-    defaultFiletype = KeeShare::secureContainerFileType();
+    defaultFiletype = KeeShare::insecureContainerFileType();
+    supportedExtensions << KeeShare::insecureContainerFileType();
     knownFilters.prepend(QString("%1 (*.%2)").arg(tr("KeeShare insecure container"), KeeShare::insecureContainerFileType()));
+#else
+    unsupportedExtensions << KeeShare::insecureContainerFileType();
 #endif
 #if defined(WITH_XC_KEESHARE_SECURE)
     defaultFiletype = KeeShare::secureContainerFileType();
+    supportedExtensions << KeeShare::secureContainerFileType();
     knownFilters.prepend(QString("%1 (*.%2)").arg(tr("KeeShare secure container"), KeeShare::secureContainerFileType()));
+#else
+    unsupportedExtensions << KeeShare::secureContainerFileType();
 #endif
 
     const auto filters = knownFilters.join(";;");
     auto filename = reference.path;
     if (filename.isEmpty()) {
-        filename = tr("%1.%2", "Template for KeeShare container").arg(m_temporaryGroup->name()).arg(defaultFiletype);
+        filename = m_temporaryGroup->name();
     }
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
@@ -205,6 +238,16 @@ void EditGroupWidgetKeeShare::selectPath()
 
     if (filename.isEmpty()) {
         return;
+    }
+    bool validFilename = false;
+    for(const auto& extension : supportedExtensions + unsupportedExtensions){
+        if (filename.endsWith(extension, Qt::CaseInsensitive)) {
+            validFilename = true;
+            break;
+        }
+    }
+    if (!validFilename){
+        filename += (!filename.endsWith(".") ? "." : "") + defaultFiletype;
     }
 
     m_ui->pathEdit->setText(filename);

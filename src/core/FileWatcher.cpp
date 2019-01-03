@@ -182,28 +182,28 @@ void BulkFileWatcher::handleFileChanged(const QString& path)
 void BulkFileWatcher::handleDirectoryChanged(const QString& path)
 {
     qDebug("Directory changed %s", qPrintable(path));
-    const QFileInfo directory(path);
-    const QMap<QString, bool>& watchedFiles = m_watchedFilesInDirectory[directory.absolutePath()];
-    for (const QString& file : watchedFiles.keys()) {
-        const QFileInfo info(file);
-        const bool existed = watchedFiles[info.absoluteFilePath()];
-        if (!info.exists() && existed) {
-            qDebug("Remove watch file %s", qPrintable(info.absoluteFilePath()));
-            m_fileWatcher.removePath(info.absolutePath());
-            emit fileRemoved(info.absoluteFilePath());
+    const QFileInfo directoryInfo(path);
+    const QMap<QString, bool>& watchedFiles = m_watchedFilesInDirectory[directoryInfo.absoluteFilePath()];
+    for (const QString& filename : watchedFiles.keys()) {
+        const QFileInfo fileInfo(filename);
+        const bool existed = watchedFiles[fileInfo.absoluteFilePath()];
+        if (!fileInfo.exists() && existed) {
+            qDebug("Remove watch file %s", qPrintable(fileInfo.absoluteFilePath()));
+            m_fileWatcher.removePath(fileInfo.absolutePath());
+            emit fileRemoved(fileInfo.absoluteFilePath());
         }
-        if (!existed && info.exists()) {
-            qDebug("Add watch file %s", qPrintable(info.absoluteFilePath()));
-            m_fileWatcher.addPath(info.absolutePath());
-            emit fileCreated(info.absoluteFilePath());
+        if (!existed && fileInfo.exists()) {
+            qDebug("Add watch file %s", qPrintable(fileInfo.absoluteFilePath()));
+            m_fileWatcher.addPath(fileInfo.absolutePath());
+            emit fileCreated(fileInfo.absoluteFilePath());
         }
-        if (existed && info.exists()) {
-            qDebug("Refresh watch file %s", qPrintable(info.absoluteFilePath()));
-            m_fileWatcher.removePath(info.absolutePath());
-            m_fileWatcher.addPath(info.absolutePath());
-            emit fileChanged(info.absoluteFilePath());
+        if (existed && fileInfo.exists()) {
+            qDebug("Refresh watch file %s", qPrintable(fileInfo.absoluteFilePath()));
+            m_fileWatcher.removePath(fileInfo.absolutePath());
+            m_fileWatcher.addPath(fileInfo.absolutePath());
+            emit fileChanged(fileInfo.absoluteFilePath());
         }
-        m_watchedFilesInDirectory[info.absolutePath()][info.absoluteFilePath()] = info.exists();
+        m_watchedFilesInDirectory[fileInfo.absolutePath()][fileInfo.absoluteFilePath()] = fileInfo.exists();
     }
 }
 

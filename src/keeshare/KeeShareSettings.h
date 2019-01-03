@@ -33,15 +33,9 @@ namespace KeeShareSettings
     {
         QByteArray key;
         QString signer;
-        bool trusted;
 
         bool operator==(const Certificate& other) const;
         bool operator!=(const Certificate& other) const;
-
-        Certificate()
-            : trusted(false)
-        {
-        }
 
         bool isNull() const;
         QString fingerprint() const;
@@ -71,11 +65,13 @@ namespace KeeShareSettings
     {
         bool in;
         bool out;
+
         Active()
             : in(false)
             , out(false)
         {
         }
+
         bool isNull() const
         {
             return !in && !out;
@@ -92,6 +88,7 @@ namespace KeeShareSettings
 
         bool operator==(const Own& other) const;
         bool operator!=(const Own& other) const;
+
         bool isNull() const
         {
             return key.isNull() && certificate.isNull();
@@ -102,14 +99,25 @@ namespace KeeShareSettings
         static Own generate();
     };
 
+    struct ScopedCertificate
+    {
+        QString path;
+        Certificate certificate;
+        bool trusted;
+
+        bool operator==(const ScopedCertificate& other) const;
+        bool operator!=(const ScopedCertificate& other) const;
+
+        bool isUnknown() const { return certificate.isNull(); }
+        bool isKnown() const { return !certificate.isNull(); }
+
+        static void serialize(QXmlStreamWriter& writer, const ScopedCertificate& certificate);
+        static ScopedCertificate deserialize(QXmlStreamReader& reader);
+    };
+
     struct Foreign
     {
-        QList<Certificate> certificates;
-
-        bool isNull() const
-        {
-            return certificates.isEmpty();
-        }
+        QList<ScopedCertificate> certificates;
 
         static QString serialize(const Foreign& foreign);
         static Foreign deserialize(const QString& raw);

@@ -114,7 +114,9 @@ QString FileDialog::getFileName(QWidget* parent,
             dialog.selectFile(defaultName);
         }
         dialog.setOptions(options);
-        dialog.setDefaultSuffix(defaultExtension);
+        if (!defaultExtension.isEmpty()) {
+            dialog.setDefaultSuffix(defaultExtension);
+        }
         dialog.setLabelText(QFileDialog::Accept, QFileDialog::tr("Select"));
         QStringList results;
         if (dialog.exec()) {

@@ -125,16 +125,30 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
     customData->set(KeeShare_Reference, encoded);
 }
 
+bool KeeShare::isEnabled(const Group* group)
+{
+    const auto reference = KeeShare::referenceOf(group);
+#if !defined(WITH_XC_KEESHARE_SECURE)
+    if (reference.path.endsWith(secureContainerFileType(), Qt::CaseInsensitive)){
+         return false;
+    }
+#endif
+#if !defined(WITH_XC_KEESHARE_INSECURE)
+    if (reference.path.endsWith(insecureContainerFileType(), Qt::CaseInsensitive)){
+         return false;
+    }
+#endif
+    const auto active = KeeShare::active();
+    return (reference.isImporting() && active.in) || (reference.isExporting() && active.out);
+}
+
 QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
 {
     if (!isShared(group)) {
         return pixmap;
     }
-    const auto reference = KeeShare::referenceOf(group);
-    const auto active = KeeShare::active();
-    const bool enabled = (reference.isImporting() && active.in) || (reference.isExporting() && active.out);
-    const QPixmap badge = enabled ? databaseIcons()->iconPixmap(DatabaseIcons::SharedIconIndex)
-                                  : databaseIcons()->iconPixmap(DatabaseIcons::UnsharedIconIndex);
+    const QPixmap badge = isEnabled(group) ? databaseIcons()->iconPixmap(DatabaseIcons::SharedIconIndex)
+                                           : databaseIcons()->iconPixmap(DatabaseIcons::UnsharedIconIndex);
     QImage canvas = pixmap.toImage();
     const QRectF target(canvas.width() * 0.4, canvas.height() * 0.4, canvas.width() * 0.6, canvas.height() * 0.6);
     QPainter painter(&canvas);

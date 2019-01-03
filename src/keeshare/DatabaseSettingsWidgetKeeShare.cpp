@@ -57,7 +57,7 @@ void DatabaseSettingsWidgetKeeShare::loadSettings(QSharedPointer<Database> db)
         QStringList hierarchy = group->hierarchy();
         hierarchy.removeFirst();
         QList<QStandardItem*> row = QList<QStandardItem*>();
-        row << new QStandardItem(hierarchy.join(" > "));
+        row << new QStandardItem(hierarchy.join(tr(" > ", "Breadcrumb separator")));
         row << new QStandardItem(KeeShare::referenceTypeLabel(reference));
         row << new QStandardItem(reference.path);
         m_referencesModel->appendRow(row);

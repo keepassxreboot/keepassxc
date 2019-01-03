@@ -34,6 +34,11 @@ SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+#if !defined(WITH_XC_KEESHARE_SECURE)
+    // Setting does not help the user of Version without secure export
+    m_ui->ownCertificateGroupBox->setVisible(false);
+#endif
+
     connect(m_ui->ownCertificateSignerEdit, SIGNAL(textChanged(QString)), SLOT(setVerificationExporter(QString)));
 
     connect(m_ui->generateOwnCerticateButton, SIGNAL(clicked(bool)), SLOT(generateCertificate()));
@@ -65,15 +70,25 @@ void SettingsWidgetKeeShare::loadSettings()
 void SettingsWidgetKeeShare::updateForeignCertificates()
 {
     m_importedCertificateModel.reset(new QStandardItemModel());
-    m_importedCertificateModel->setHorizontalHeaderLabels(
-        QStringList() << tr("Signer") << tr("Status") << tr("Fingerprint") << tr("Certificate"));
+    m_importedCertificateModel->setHorizontalHeaderLabels(QStringList() << tr("Path") << tr("Status")
+#if defined(WITH_XC_KEESHARE_SECURE)
+                                                          << tr("Signer") << tr("Fingerprint") << tr("Certificate")
+#endif
+                                                          );
 
-    for (const KeeShareSettings::Certificate& certificate : m_foreign.certificates) {
-        QStandardItem* signer = new QStandardItem(certificate.signer);
-        QStandardItem* verified = new QStandardItem(certificate.trusted ? tr("trusted") : tr("untrusted"));
-        QStandardItem* fingerprint = new QStandardItem(certificate.fingerprint());
-        QStandardItem* key = new QStandardItem(certificate.publicKey());
-        m_importedCertificateModel->appendRow(QList<QStandardItem*>() << signer << verified << fingerprint << key);
+    for (const auto& scopedCertificate : m_foreign.certificates) {
+        const auto items = QList<QStandardItem*>()
+            << new QStandardItem(scopedCertificate.path)
+            << new QStandardItem(scopedCertificate.trusted ? tr("Trusted") : tr("Untrusted"))
+#if defined(WITH_XC_KEESHARE_SECURE)
+            << new QStandardItem(scopedCertificate.isKnown()
+                                                 ? scopedCertificate.certificate.signer
+                                                 : tr("Unknown"))
+            << new QStandardItem(scopedCertificate.certificate.fingerprint())
+            << new QStandardItem(scopedCertificate.certificate.publicKey())
+#endif
+            ;
+        m_importedCertificateModel->appendRow(items);
     }
 
     m_ui->importedCertificateTableView->setModel(m_importedCertificateModel.data());
@@ -124,7 +139,7 @@ void SettingsWidgetKeeShare::importCertificate()
     }
     const auto filetype = tr("key.share", "Filetype for KeeShare key");
     const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare key file"), tr("All files"));
-    QString filename = fileDialog()->getOpenFileName(this, tr("Select path"), defaultDirPath, filters, nullptr, 0);
+    QString filename = fileDialog()->getOpenFileName(this, tr("Select path"), defaultDirPath, filters, nullptr, QFileDialog::Options(0));
     if (filename.isEmpty()) {
         return;
     }
@@ -161,7 +176,7 @@ void SettingsWidgetKeeShare::exportCertificate()
     const auto filetype = tr("key.share", "Filetype for KeeShare key");
     const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare key file"), tr("All files"));
     QString filename = tr("%1.%2", "Template for KeeShare key file").arg(m_own.certificate.signer).arg(filetype);
-    filename = fileDialog()->getSaveFileName(this, tr("Select path"), defaultDirPath, filters, nullptr, 0, filetype, filename);
+    filename = fileDialog()->getSaveFileName(this, tr("Select path"), defaultDirPath, filters, nullptr, QFileDialog::Options(0), filetype, filename);
     if (filename.isEmpty()) {
         return;
     }
@@ -198,7 +213,7 @@ void SettingsWidgetKeeShare::untrustSelectedCertificates()
 
 void SettingsWidgetKeeShare::removeSelectedCertificates()
 {
-    QList<KeeShareSettings::Certificate> certificates = m_foreign.certificates;
+    auto certificates = m_foreign.certificates;
     const auto* selectionModel = m_ui->importedCertificateTableView->selectionModel();
     Q_ASSERT(selectionModel);
     for (const auto& index : selectionModel->selectedRows()) {
