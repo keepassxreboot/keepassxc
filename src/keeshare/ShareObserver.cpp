@@ -80,7 +80,7 @@ QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
         certificate = sign.certificate;
         auto key = sign.certificate.sshKey();
         key.openKey(QString());
-        const auto signer = Signature{};
+        const auto signer = Signature();
         if (!signer.verify(data, sign.signature, key)) {
             qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
             return {Invalid, KeeShareSettings::Certificate()};
@@ -429,7 +429,7 @@ ShareObserver::Result ShareObserver::importInsecureContainerInto(const KeeShareS
 
     auto foreign = KeeShare::foreign();
     const auto own = KeeShare::own();
-    const auto sign = KeeShareSettings::Sign{}; // invalid sign
+    const auto sign = KeeShareSettings::Sign(); // invalid sign
     auto trust = check(payload, reference, own.certificate, foreign.certificates, sign);
     switch(trust.first) {
     case UntrustedForever:

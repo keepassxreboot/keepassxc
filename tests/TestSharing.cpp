@@ -108,32 +108,32 @@ void TestSharing::testNullObjects()
     const QString empty;
     QXmlStreamReader reader(empty);
 
-    const auto nullKey = KeeShareSettings::Key{};
+    const auto nullKey = KeeShareSettings::Key();
     QVERIFY(nullKey.isNull());
     const auto xmlKey = KeeShareSettings::Key::deserialize(reader);
     QVERIFY(xmlKey.isNull());
 
-    const auto certificate = KeeShareSettings::Certificate{};
+    const auto certificate = KeeShareSettings::Certificate();
     QVERIFY(certificate.isNull());
     const auto xmlCertificate = KeeShareSettings::Certificate::deserialize(reader);
     QVERIFY(xmlCertificate.isNull());
 
-    const auto own = KeeShareSettings::Own{};
+    const auto own = KeeShareSettings::Own();
     QVERIFY(own.isNull());
     const auto xmlOwn = KeeShareSettings::Own::deserialize(empty);
     QVERIFY(xmlOwn.isNull());
 
-    const auto active = KeeShareSettings::Active{};
+    const auto active = KeeShareSettings::Active();
     QVERIFY(active.isNull());
     const auto xmlActive = KeeShareSettings::Active::deserialize(empty);
     QVERIFY(xmlActive.isNull());
 
-    const auto foreign = KeeShareSettings::Foreign{};
+    const auto foreign = KeeShareSettings::Foreign();
     QVERIFY(foreign.certificates.isEmpty());
     const auto xmlForeign = KeeShareSettings::Foreign::deserialize(empty);
     QVERIFY(xmlForeign.certificates.isEmpty());
 
-    const auto reference = KeeShareSettings::Reference{};
+    const auto reference = KeeShareSettings::Reference();
     QVERIFY(reference.isNull());
     const auto xmlReference = KeeShareSettings::Reference::deserialize(empty);
     QVERIFY(xmlReference.isNull());
