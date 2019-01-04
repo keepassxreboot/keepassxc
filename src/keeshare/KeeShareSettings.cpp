@@ -308,15 +308,14 @@ namespace KeeShareSettings
     void ScopedCertificate::serialize(QXmlStreamWriter& writer, const ScopedCertificate& scopedCertificate)
     {
         writer.writeAttribute("Path", scopedCertificate.path);
+        QString trust = "Ask";
         if(scopedCertificate.trust == KeeShareSettings::Trust::Trusted) {
-            writer.writeAttribute("Trust", "Trusted");
+            trust = "Trusted";
         }
-        else if(scopedCertificate.trust == KeeShareSettings::Trust::Untrusted){
-            writer.writeAttribute("Trust", "Untrusted");
+        if(scopedCertificate.trust == KeeShareSettings::Trust::Untrusted){
+            trust = "Untrusted";
         }
-        else {
-            writer.writeAttribute("Trust", "Ask");
-        }
+        writer.writeAttribute("Trust", trust);
         Certificate::serialize(writer, scopedCertificate.certificate);
     }
 
@@ -324,15 +323,13 @@ namespace KeeShareSettings
     {
         ScopedCertificate scopedCertificate;
         scopedCertificate.path = reader.attributes().value("Path").toString();
-        auto trust = reader.attributes().value("Trusted").toString();
-        if(trust.compare("Trusted", Qt::CaseInsensitive)) {
+        scopedCertificate.trust = KeeShareSettings::Trust::Ask;
+        auto trust = reader.attributes().value("Trust").toString();
+        if(trust.compare("Trusted", Qt::CaseInsensitive) == 0) {
             scopedCertificate.trust = KeeShareSettings::Trust::Trusted;
         }
-        if(trust.compare("Unrusted", Qt::CaseInsensitive)) {
+        if(trust.compare("Untrusted", Qt::CaseInsensitive) == 0) {
             scopedCertificate.trust = KeeShareSettings::Trust::Untrusted;
-        }
-        else {
-            scopedCertificate.trust = KeeShareSettings::Trust::Ask;
         }
         scopedCertificate.certificate = Certificate::deserialize(reader);
         return scopedCertificate;

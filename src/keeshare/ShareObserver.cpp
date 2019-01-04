@@ -80,7 +80,7 @@ QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
         certificate = sign.certificate;
         auto key = sign.certificate.sshKey();
         key.openKey(QString());
-        const Signature signer;
+        const  auto signer = Signature{};
         if (!signer.verify(data, sign.signature, key)) {
             qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
             return {Invalid, KeeShareSettings::Certificate()};
@@ -212,7 +212,7 @@ void ShareObserver::reinitialize()
     QStringList success;
     QStringList warning;
     QStringList error;
-    for (Update update : updated) {
+    for (const auto& update : updated) {
         if (!update.oldReference.path.isEmpty()) {
             m_fileWatcher->removePath(update.oldReference.path);
         }
@@ -222,7 +222,7 @@ void ShareObserver::reinitialize()
         }
 
         if (update.newReference.isImporting()) {
-            const Result result = this->importFromReferenceContainer(update.newReference.path);
+            const  auto result = this->importFromReferenceContainer(update.newReference.path);
             if (!result.isValid()) {
                 // tolerable result - blocked import or missing source
                 continue;
