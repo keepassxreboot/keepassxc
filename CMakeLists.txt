@@ -359,8 +359,9 @@ include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
 
 # Optional
 if(WITH_XC_KEESHARE)
+    # ZLIB is needed and already required
     find_package(QuaZip QUIET)
-    if(QuaZip_FOUND)
+    if(QUAZIP_FOUND)
         message(STATUS "Found QuaZip - allow KeeShare with secure container\n")
         set(WITH_XC_KEESHARE_INSECURE ON)
         set(WITH_XC_KEESHARE_SECURE ON)

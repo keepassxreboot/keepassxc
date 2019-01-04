@@ -54,7 +54,8 @@ RUN set -x \
         zlib1g-dev \
         libxi-dev \
         libxtst-dev \
-        libquazip-dev \
+        # ubuntu:14.04 has no quazip (it's optional)
+        # libquazip5-dev \
         mesa-common-dev \
         libyubikey-dev \
         libykpers-1-dev \
