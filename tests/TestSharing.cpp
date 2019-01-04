@@ -108,34 +108,34 @@ void TestSharing::testNullObjects()
     const QString empty;
     QXmlStreamReader reader(empty);
 
-    const KeeShareSettings::Key nullKey = {};
+    const auto nullKey = KeeShareSettings::Key{};
     QVERIFY(nullKey.isNull());
-    const KeeShareSettings::Key xmlKey = KeeShareSettings::Key::deserialize(reader);
+    const auto xmlKey = KeeShareSettings::Key::deserialize(reader);
     QVERIFY(xmlKey.isNull());
 
-    const KeeShareSettings::Certificate certificate = {};
+    const auto certificate = KeeShareSettings::Certificate{};
     QVERIFY(certificate.isNull());
-    const KeeShareSettings::Certificate xmlCertificate = KeeShareSettings::Certificate::deserialize(reader);
+    const auto xmlCertificate = KeeShareSettings::Certificate::deserialize(reader);
     QVERIFY(xmlCertificate.isNull());
 
-    const KeeShareSettings::Own own = {};
+    const auto own = KeeShareSettings::Own{};
     QVERIFY(own.isNull());
-    const KeeShareSettings::Own xmlOwn = KeeShareSettings::Own::deserialize(empty);
+    const auto xmlOwn = KeeShareSettings::Own::deserialize(empty);
     QVERIFY(xmlOwn.isNull());
 
-    const KeeShareSettings::Active active = {};
+    const auto active = KeeShareSettings::Active{};
     QVERIFY(active.isNull());
-    const KeeShareSettings::Active xmlActive = KeeShareSettings::Active::deserialize(empty);
+    const auto xmlActive = KeeShareSettings::Active::deserialize(empty);
     QVERIFY(xmlActive.isNull());
 
-    const KeeShareSettings::Foreign foreign = {};
+    const auto foreign = KeeShareSettings::Foreign{};
     QVERIFY(foreign.certificates.isEmpty());
-    const KeeShareSettings::Foreign xmlForeign = KeeShareSettings::Foreign::deserialize(empty);
+    const auto xmlForeign = KeeShareSettings::Foreign::deserialize(empty);
     QVERIFY(xmlForeign.certificates.isEmpty());
 
-    const KeeShareSettings::Reference reference = {};
+    const auto reference = KeeShareSettings::Reference{};
     QVERIFY(reference.isNull());
-    const KeeShareSettings::Reference xmlReference = KeeShareSettings::Reference::deserialize(empty);
+    const auto xmlReference = KeeShareSettings::Reference::deserialize(empty);
     QVERIFY(xmlReference.isNull());
 }
 
