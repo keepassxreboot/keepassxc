@@ -91,9 +91,9 @@ AboutDialog::AboutDialog(QWidget* parent)
 #if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
     extensions += "\n- " + tr("KeeShare (secure and insecure sharing)");
 #elif defined(WITH_XC_KEESHARE_SECURE)
-    extensions += "\n- " + tr("KeeShare (secure sharing)");
+    extensions += "\n- " + tr("KeeShare (only secure sharing)");
 #elif defined(WITH_XC_KEESHARE_INSECURE)
-    extensions += "\n- " + tr("KeeShare (insecure sharing)");
+    extensions += "\n- " + tr("KeeShare (only insecure sharing)");
 #endif
 #ifdef WITH_XC_YUBIKEY
     extensions += "\n- " + tr("YubiKey");
