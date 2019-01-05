@@ -83,6 +83,13 @@ if(APPLE AND WITH_APP_BUNDLE)
                                 "@executable_path/../Frameworks/libykpers-1.1.dylib"
                        keepassxc-cli
                        COMMENT "Changing linking of keepassxc-cli")
+
+    # Copy app to staging directory for pre-install testing
+    set(CLI_APP_DIR "${CMAKE_BINARY_DIR}/src/${CLI_INSTALL_DIR}")
+    add_custom_command(TARGET keepassxc-cli
+                       POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
+                       COMMENT "Copying keepassxc-cli inside the application")
 endif()
 
 if(APPLE OR UNIX)
