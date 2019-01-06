@@ -94,6 +94,7 @@ void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup)
     if (m_temporaryGroup) {
         connect(m_temporaryGroup, SIGNAL(groupModified()), SLOT(update()));
     }
+
     update();
 }
 
@@ -120,7 +121,10 @@ void EditGroupWidgetKeeShare::showSharingState()
             }
         }
         if (!supported) {
-            m_ui->messageWidget->showMessage(tr("Your KeePassXC version does not support sharing your container type. Please use %1.").arg(supportedExtensions.join(", ")), MessageWidget::Warning);
+            m_ui->messageWidget->showMessage(
+                    tr("Your KeePassXC version does not support sharing your container type. Please use %1.")
+                        .arg(supportedExtensions.join(", ")),
+                    MessageWidget::Warning);
             return;
         }
     }
@@ -144,8 +148,6 @@ void EditGroupWidgetKeeShare::update()
     if (!m_temporaryGroup) {
         m_ui->passwordEdit->clear();
         m_ui->pathEdit->clear();
-        m_ui->passwordGenerator->hide();
-        m_ui->togglePasswordGeneratorButton->setChecked(false);
     } else {
         const auto reference = KeeShare::referenceOf(m_temporaryGroup);
 
@@ -155,6 +157,10 @@ void EditGroupWidgetKeeShare::update()
 
         showSharingState();
     }
+
+    m_ui->passwordGenerator->hide();
+    m_ui->togglePasswordGeneratorButton->setChecked(false);
+    m_ui->togglePasswordButton->setChecked(false);
 }
 
 void EditGroupWidgetKeeShare::togglePasswordGeneratorButton(bool checked)
@@ -251,6 +257,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     }
 
     m_ui->pathEdit->setText(filename);
+    selectPath();
     config()->set("KeeShare/LastShareDir", QFileInfo(filename).absolutePath());
 }
 
