@@ -60,3 +60,13 @@ bool MacUtils::raiseLastActiveWindow()
 {
     return m_appkit->activateProcess(m_appkit->lastActiveProcessId());
 }
+
+bool MacUtils::hideOwnWindow()
+{
+    return m_appkit->hideProcess(m_appkit->ownProcessId());
+}
+
+bool MacUtils::isHidden()
+{
+    return m_appkit->isHidden(m_appkit->ownProcessId());
+}

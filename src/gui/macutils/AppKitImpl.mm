@@ -72,8 +72,25 @@ AppKit::~AppKit()
 - (bool) activateProcess:(pid_t) pid
 {
     NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
-
     return [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+}
+
+//
+// Hide application by process id
+//
+- (bool) hideProcess:(pid_t) pid
+{
+    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    return [app hide];
+}
+
+//
+// Get application hidden state by process id
+//
+- (bool) isHidden:(pid_t) pid
+{
+    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    return [app isHidden];
 }
 
 //
@@ -98,6 +115,16 @@ pid_t AppKit::ownProcessId()
 bool AppKit::activateProcess(pid_t pid)
 {
     return [static_cast<id>(self) activateProcess:pid];
+}
+
+bool AppKit::hideProcess(pid_t pid)
+{
+    return [static_cast<id>(self) hideProcess:pid];
+}
+
+bool AppKit::isHidden(pid_t pid)
+{
+    return [static_cast<id>(self) isHidden:pid];
 }
 
 @end
