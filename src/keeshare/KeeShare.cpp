@@ -129,12 +129,12 @@ bool KeeShare::isEnabled(const Group* group)
 {
     const auto reference = KeeShare::referenceOf(group);
 #if !defined(WITH_XC_KEESHARE_SECURE)
-    if (reference.path.endsWith(secureContainerFileType(), Qt::CaseInsensitive)){
+    if (reference.path.endsWith(signedContainerFileType(), Qt::CaseInsensitive)){
          return false;
     }
 #endif
 #if !defined(WITH_XC_KEESHARE_INSECURE)
-    if (reference.path.endsWith(insecureContainerFileType(), Qt::CaseInsensitive)){
+    if (reference.path.endsWith(unsignedContainerFileType(), Qt::CaseInsensitive)){
          return false;
     }
 #endif
@@ -198,13 +198,13 @@ void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Da
     }
 }
 
-const QString &KeeShare::secureContainerFileType()
+const QString &KeeShare::signedContainerFileType()
 {
     static const QString filetype("kdbx.share");
     return filetype;
 }
 
-const QString &KeeShare::insecureContainerFileType()
+const QString &KeeShare::unsignedContainerFileType()
 {
     static const QString filetype("kdbx");
     return filetype;

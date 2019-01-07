@@ -56,8 +56,8 @@ public:
 
     void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
 
-    static const QString& secureContainerFileType();
-    static const QString& insecureContainerFileType();
+    static const QString& signedContainerFileType();
+    static const QString& unsignedContainerFileType();
 
 signals:
     void activeChanged();
