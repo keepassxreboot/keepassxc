@@ -44,6 +44,8 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     m_ui->passwordGenerator->reset();
 
     m_ui->messageWidget->hide();
+    m_ui->messageWidget->setCloseButtonVisible(false);
+    m_ui->messageWidget->setAutoHideTimeout(-1);
 
     connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_ui->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
