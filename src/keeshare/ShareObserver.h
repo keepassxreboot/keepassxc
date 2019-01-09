@@ -49,7 +49,9 @@ signals:
 private slots:
     void handleDatabaseChanged();
     void handleDatabaseSaved();
+    void handleFileCreated(const QString& path);
     void handleFileUpdated(const QString& path);
+    void handleFileDeleted(const QString& path);
 
 private:
     struct Result

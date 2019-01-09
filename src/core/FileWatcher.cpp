@@ -37,8 +37,7 @@ DelayingFileWatcher::DelayingFileWatcher(QObject* parent)
 {
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
     connect(&m_fileUnblockTimer, SIGNAL(timeout()), this, SLOT(observeFileChanges()));
-    connect(&m_fileChangeDelayTimer, SIGNAL(timeout()), SIGNAL(fileChanged()));
-
+    connect(&m_fileChangeDelayTimer, SIGNAL(timeout()), this, SIGNAL(fileChanged()));
     m_fileChangeDelayTimer.setSingleShot(true);
     m_fileUnblockTimer.setSingleShot(true);
 }
@@ -122,6 +121,7 @@ BulkFileWatcher::BulkFileWatcher(QObject* parent)
     connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(handleFileChanged(QString)));
     connect(&m_fileWatcher, SIGNAL(directoryChanged(QString)), SLOT(handleDirectoryChanged(QString)));
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(observeFileChanges()));
+    connect(&m_pendingSignalsTimer, SIGNAL(timeout()), this, SLOT(emitSignals()));
     m_fileWatchUnblockTimer.setSingleShot(true);
 }
 
@@ -132,7 +132,7 @@ void BulkFileWatcher::clear()
         m_fileWatcher.removePath(info.absoluteFilePath());
         m_fileWatcher.removePath(info.absolutePath());
     }
-    m_filePaths.clear();
+    m_watchedPaths.clear();
     m_watchedFilesInDirectory.clear();
     m_ignoreFilesChangess.clear();
 }
@@ -140,70 +140,127 @@ void BulkFileWatcher::clear()
 void BulkFileWatcher::removePath(const QString& path)
 {
     const QFileInfo info(path);
-    m_fileWatcher.removePath(info.absoluteFilePath());
-    m_fileWatcher.removePath(info.absolutePath());
-    m_filePaths.remove(info.absoluteFilePath());
-    m_filePaths.remove(info.absolutePath());
-    m_watchedFilesInDirectory[info.absolutePath()].remove(info.absoluteFilePath());
+    const QString filePath = info.absoluteFilePath();
+    const QString directoryPath = info.absolutePath();
+    m_watchedFilesInDirectory[directoryPath].remove(filePath);
+    m_fileWatcher.removePath(filePath);
+    m_watchedPaths.remove(filePath);
+    if (m_watchedFilesInDirectory[directoryPath].isEmpty()) {
+        m_fileWatcher.removePath(directoryPath);
+        m_watchedPaths.remove(directoryPath);
+        m_watchedFilesInDirectory.remove(directoryPath);
+    }
 }
 
 void BulkFileWatcher::addPath(const QString& path)
 {
     const QFileInfo info(path);
-    m_fileWatcher.addPath(info.absoluteFilePath());
-    m_fileWatcher.addPath(info.absolutePath());
-    m_filePaths.insert(info.absoluteFilePath());
-    m_filePaths.insert(info.absolutePath());
-    m_watchedFilesInDirectory[info.absolutePath()][info.absoluteFilePath()] = info.exists();
-}
-
-void BulkFileWatcher::restart(const QString& path)
-{
-    const QFileInfo info(path);
-    Q_ASSERT(m_filePaths.contains(info.absoluteFilePath()));
-    Q_ASSERT(m_filePaths.contains(info.absolutePath()));
-    m_fileWatcher.addPath(info.absoluteFilePath());
-    m_fileWatcher.addPath(info.absolutePath());
+    const QString filePath = info.absoluteFilePath();
+    const QString directoryPath = info.absolutePath();
+    if (!m_watchedPaths.value(filePath)) {
+        const bool fileSuccess = m_fileWatcher.addPath(filePath);
+        m_watchedPaths[filePath] = fileSuccess;
+    }
+    if (!m_watchedPaths.value(directoryPath)) {
+        const bool directorySuccess = m_fileWatcher.addPath(directoryPath);
+        m_watchedPaths[directoryPath] = directorySuccess;
+    }
+    m_watchedFilesInDirectory[directoryPath][filePath] = info.exists();
 }
 
 void BulkFileWatcher::handleFileChanged(const QString& path)
 {
+    const QFileInfo info(path);
+    const QString filePath = info.absoluteFilePath();
+    const QString directoryPath = info.absolutePath();
+    const QMap<QString, bool>& watchedFiles = m_watchedFilesInDirectory[directoryPath];
+    const bool created = !watchedFiles[filePath] && info.exists();
+    const bool deleted = watchedFiles[filePath] && !info.exists();
+    const bool changed = !created && !deleted;
     addPath(path);
 
-    const QFileInfo info(path);
     if (m_ignoreFilesChangess[info.canonicalFilePath()] > Clock::currentDateTimeUtc()) {
         // changes are blocked
         return;
     }
-
-    emit fileChanged(path);
+    if (created) {
+        qDebug("File created %s", qPrintable(path));
+        scheduleSignal(Created, filePath);
+    }
+    if (changed) {
+        qDebug("File changed %s", qPrintable(path));
+        scheduleSignal(Updated, filePath);
+    }
+    if (deleted) {
+        qDebug("File removed %s", qPrintable(path));
+        scheduleSignal(Removed, filePath);
+    }
 }
 
 void BulkFileWatcher::handleDirectoryChanged(const QString& path)
 {
     qDebug("Directory changed %s", qPrintable(path));
     const QFileInfo directoryInfo(path);
-    const QMap<QString, bool>& watchedFiles = m_watchedFilesInDirectory[directoryInfo.absoluteFilePath()];
+    const QString directoryPath = directoryInfo.absoluteFilePath();
+    QMap<QString, bool>& watchedFiles = m_watchedFilesInDirectory[directoryPath];
     for (const QString& filename : watchedFiles.keys()) {
         const QFileInfo fileInfo(filename);
-        const bool existed = watchedFiles[fileInfo.absoluteFilePath()];
+        const QString filePath = fileInfo.absoluteFilePath();
+        const bool existed = watchedFiles[filePath];
         if (!fileInfo.exists() && existed) {
-            qDebug("Remove watch file %s", qPrintable(fileInfo.absoluteFilePath()));
-            m_fileWatcher.removePath(fileInfo.absolutePath());
-            emit fileRemoved(fileInfo.absoluteFilePath());
+            qDebug("Remove watch file %s", qPrintable(filePath));
+            m_fileWatcher.removePath(filePath);
+            m_watchedPaths.remove(filePath);
+            watchedFiles.remove(filePath);
+            scheduleSignal(Removed, filePath);
         }
         if (!existed && fileInfo.exists()) {
-            qDebug("Add watch file %s", qPrintable(fileInfo.absoluteFilePath()));
-            m_fileWatcher.addPath(fileInfo.absolutePath());
-            emit fileCreated(fileInfo.absoluteFilePath());
+            qDebug("Add watch file %s", qPrintable(filePath));
+            if (!m_watchedPaths.value(filePath)) {
+                const bool success = m_fileWatcher.addPath(filePath);
+                m_watchedPaths[filePath] = success;
+                watchedFiles[filePath] = fileInfo.exists();
+            }
+            scheduleSignal(Created, filePath);
         }
         if (existed && fileInfo.exists()) {
+            // this case is handled using
             qDebug("Refresh watch file %s", qPrintable(fileInfo.absoluteFilePath()));
             m_fileWatcher.removePath(fileInfo.absolutePath());
             m_fileWatcher.addPath(fileInfo.absolutePath());
-            emit fileChanged(fileInfo.absoluteFilePath());
+            scheduleSignal(Updated, filePath);
         }
-        m_watchedFilesInDirectory[fileInfo.absolutePath()][fileInfo.absoluteFilePath()] = fileInfo.exists();
+        m_watchedFilesInDirectory[directoryPath][filePath] = fileInfo.exists();
+    }
+}
+
+void BulkFileWatcher::emitSignals()
+{
+    QMap<QString, QList<Signal>> queued;
+    m_pendingSignals.swap(queued);
+    for (const auto& path : queued.keys()){
+        const auto &signal = queued[path];
+        if (signal.last() == Removed) {
+            emit fileRemoved(path);
+            continue;
+        }
+        if (signal.first() == Created){
+            emit fileCreated(path);
+            continue;
+        }
+        emit fileChanged(path);
+    }
+}
+
+void BulkFileWatcher::scheduleSignal(Signal signal, const QString &path)
+{
+    // we need to collect signals since the file watcher API may send multiple signals for a "single" change
+    // therefore we wait until the event loop finished before starting to import any changes
+    const QString filePath = QFileInfo(path).absoluteFilePath();
+    m_pendingSignals[filePath] << signal;
+
+    if (!m_pendingSignalsTimer.isActive()) {
+        m_pendingSignalsTimer.start();
     }
 }
 
