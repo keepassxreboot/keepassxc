@@ -21,7 +21,8 @@
 #include <QUuid>
 #include <QVariant>
 
-#define KDF_DEFAULT_SEED_SIZE 32
+#define KDF_MIN_SEED_SIZE 8
+#define KDF_MAX_SEED_SIZE 32
 #define KDF_DEFAULT_ROUNDS 1000000ull
 
 class Kdf
