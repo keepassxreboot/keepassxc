@@ -24,7 +24,7 @@
 
 Kdf::Kdf(const QUuid& uuid)
     : m_rounds(KDF_DEFAULT_ROUNDS)
-    , m_seed(QByteArray(KDF_DEFAULT_SEED_SIZE, 0))
+    , m_seed(QByteArray(KDF_MAX_SEED_SIZE, 0))
     , m_uuid(uuid)
 {
 }
@@ -56,7 +56,7 @@ bool Kdf::setRounds(int rounds)
 
 bool Kdf::setSeed(const QByteArray& seed)
 {
-    if (seed.size() != m_seed.size()) {
+    if (seed.size() < KDF_MIN_SEED_SIZE || seed.size() > KDF_MAX_SEED_SIZE) {
         return false;
     }
 
