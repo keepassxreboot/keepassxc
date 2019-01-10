@@ -364,14 +364,11 @@ include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
 
 # Optional
 if(WITH_XC_KEESHARE)
-    # ZLIB is needed and already required
+    set(WITH_XC_KEESHARE_INSECURE ON)
     if(WITH_XC_KEESHARE_SECURE)
+        # ZLIB is needed and already required
         find_package(QuaZip REQUIRED)
-        set(WITH_XC_KEESHARE_INSECURE ON)
-        set(WITH_XC_KEESHARE_SECURE ON)
         include_directories(SYSTEM ${QUAZIP_INCLUDE_DIR})
-    else()
-        set(WITH_XC_KEESHARE_INSECURE ON)
     endif()
 else()
     set(WITH_XC_KEESHARE_INSECURE OFF)
