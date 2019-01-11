@@ -10,6 +10,7 @@ Exec=keepassxc %f
 TryExec=keepassxc
 Icon=keepassxc
 StartupWMClass=keepassxc
+StartupNotify=true
 Terminal=false
 Type=Application
 Version=1.0
