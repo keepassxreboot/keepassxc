@@ -1207,10 +1207,10 @@ bool DatabaseWidget::lock()
 
     if (m_db->isModified()) {
         if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!m_db->save(nullptr, false, false)) {
+            if (!save()) {
                 return false;
             }
-        } else if (!isLocked()) {
+        } else {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
@@ -1219,8 +1219,10 @@ bool DatabaseWidget::lock()
             }
             auto result = MessageBox::question(this, tr("Save changes?"), msg,
                 MessageBox::Save | MessageBox::Discard | MessageBox::Cancel, MessageBox::Save);
-            if (result == MessageBox::Save && !m_db->save(nullptr, false, false)) {
-                return false;
+            if (result == MessageBox::Save) {
+                if (!save()) {
+                    return false;
+                }
             } else if (result == MessageBox::Cancel) {
                 return false;
             }
