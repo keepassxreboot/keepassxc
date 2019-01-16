@@ -45,6 +45,13 @@ if(WITH_XC_BROWSER)
                                     "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
                            keepassxc-proxy
                            COMMENT "Changing linking of keepassxc-proxy")
+
+        # Copy app to staging directory for pre-install testing
+        set(PROXY_APP_DIR "${CMAKE_BINARY_DIR}/src/${PROXY_INSTALL_DIR}")
+        add_custom_command(TARGET keepassxc-proxy
+                           POST_BUILD
+                           COMMAND ${CMAKE_COMMAND} -E copy keepassxc-proxy ${PROXY_APP_DIR}/keepassxc-proxy
+                           COMMENT "Copying keepassxc-proxy inside the application")
     endif()
     if(MINGW)
       target_link_libraries(keepassxc-proxy Wtsapi32.lib Ws2_32.lib)
