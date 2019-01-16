@@ -38,8 +38,8 @@ Merge::~Merge()
 
 int Merge::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -64,7 +64,7 @@ int Merge::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli merge");
         return EXIT_FAILURE;
     }
 
@@ -83,7 +83,7 @@ int Merge::execute(const QStringList& arguments)
         db2 = QSharedPointer<Database>::create();
         QString errorMessage;
         if (!db2->open(args.at(1), db1->key(), &errorMessage, false)) {
-            err << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
+            errorTextStream << QObject::tr("Error reading merge file:\n%1").arg(errorMessage);
             return EXIT_FAILURE;
         }
     }
@@ -94,14 +94,14 @@ int Merge::execute(const QStringList& arguments)
     if (databaseChanged) {
         QString errorMessage;
         if (!db1->save(args.at(0), &errorMessage, true, false)) {
-            err << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
+            errorTextStream << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
         if (!parser.isSet(Command::QuietOption)) {
-            out << "Successfully merged the database files." << endl;
+            outputTextStream << "Successfully merged the database files." << endl;
         }
     } else if (!parser.isSet(Command::QuietOption)) {
-        out << "Database was not modified by merge operation." << endl;
+        outputTextStream << "Database was not modified by merge operation." << endl;
     }
 
     return EXIT_SUCCESS;

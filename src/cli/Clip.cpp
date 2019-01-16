@@ -42,7 +42,7 @@ Clip::~Clip()
 
 int Clip::execute(const QStringList& arguments)
 {
-    TextStream out(Utils::STDOUT);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -62,7 +62,7 @@ int Clip::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 3) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
         return EXIT_FAILURE;
     }
 
@@ -83,11 +83,11 @@ int Clip::clipEntry(QSharedPointer<Database> database,
                     bool clipTotp,
                     bool silent)
 {
-    TextStream err(Utils::STDERR);
+    TextStream errorTextStream(Utils::STDERR);
 
     int timeoutSeconds = 0;
     if (!timeout.isEmpty() && !timeout.toInt()) {
-        err << QObject::tr("Invalid timeout value %1.").arg(timeout) << endl;
+        errorTextStream << QObject::tr("Invalid timeout value %1.").arg(timeout) << endl;
         return EXIT_FAILURE;
     } else if (!timeout.isEmpty()) {
         timeoutSeconds = timeout.toInt();
@@ -96,14 +96,14 @@ int Clip::clipEntry(QSharedPointer<Database> database,
     TextStream outputTextStream(silent ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
+        errorTextStream << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     QString value;
     if (clipTotp) {
         if (!entry->hasTotp()) {
-            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+            errorTextStream << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
             return EXIT_FAILURE;
         }
 

@@ -38,8 +38,8 @@ Generate::~Generate()
 
 int Generate::execute(const QStringList& arguments)
 {
-    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -84,7 +84,7 @@ int Generate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
@@ -128,12 +128,12 @@ int Generate::execute(const QStringList& arguments)
     passwordGenerator.setExcludedChars(parser.value(exclude));
 
     if (!passwordGenerator.isValid()) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
         return EXIT_FAILURE;
     }
 
     QString password = passwordGenerator.generatePassword();
-    out << password << endl;
+    outputTextStream << password << endl;
 
     return EXIT_SUCCESS;
 }
