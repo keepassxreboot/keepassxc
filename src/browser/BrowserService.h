@@ -125,6 +125,7 @@ private:
     bool m_dialogActive;
     bool m_bringToFrontRequested;
     bool m_wasMinimized;
+    bool m_wasHidden;
     QUuid m_keepassBrowserUUID;
 };
 
