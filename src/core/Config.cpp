@@ -187,6 +187,8 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/resettouchidscreenlock", true);
     m_defaults.insert("GUI/Language", "system");
     m_defaults.insert("GUI/HideToolbar", false);
+    m_defaults.insert("GUI/MovableToolbar", false);
+    m_defaults.insert("GUI/ToolButtonStyle", Qt::ToolButtonIconOnly);
     m_defaults.insert("GUI/ShowTrayIcon", false);
     m_defaults.insert("GUI/DarkTrayIcon", false);
     m_defaults.insert("GUI/MinimizeToTray", false);
