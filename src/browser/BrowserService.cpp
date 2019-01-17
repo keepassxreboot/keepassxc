@@ -348,7 +348,7 @@ void BrowserService::addEntry(const QString& id,
                               const QString& realm,
                               const QString& group,
                               const QString& groupUuid,
-                              QSharedPointer<Database> selectedDb)
+                              const QSharedPointer<Database>& selectedDb)
 {
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(this,
@@ -482,7 +482,7 @@ void BrowserService::updateEntry(const QString& id,
     }
 }
 
-QList<Entry*> BrowserService::searchEntries(QSharedPointer<Database> db, const QString& hostname, const QString& url)
+QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url)
 {
     QList<Entry*> entries;
     auto* rootGroup = db->rootGroup();
@@ -549,7 +549,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
     return entries;
 }
 
-void BrowserService::convertAttributesToCustomData(QSharedPointer<Database> currentDb)
+void BrowserService::convertAttributesToCustomData(const QSharedPointer<Database>& currentDb)
 {
     auto db = currentDb ? currentDb : getDatabase();
     if (!db) {
@@ -770,7 +770,7 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
     return Unknown;
 }
 
-Group* BrowserService::findCreateAddEntryGroup(QSharedPointer<Database> selectedDb)
+Group* BrowserService::findCreateAddEntryGroup(const QSharedPointer<Database>& selectedDb)
 {
     auto db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
@@ -955,7 +955,7 @@ bool BrowserService::moveSettingsToCustomData(Entry* entry, const QString& name)
     return false;
 }
 
-int BrowserService::moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const
+int BrowserService::moveKeysToCustomData(Entry* entry, const QSharedPointer<Database>& db) const
 {
     int keyCounter = 0;
     for (const auto& key : entry->attributes()->keys()) {

@@ -77,7 +77,7 @@ int Clip::execute(const QStringList& arguments)
     return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp), parser.isSet(Command::QuietOption));
 }
 
-int Clip::clipEntry(QSharedPointer<Database> database,
+int Clip::clipEntry(const QSharedPointer<Database>& database,
                     const QString& entryPath,
                     const QString& timeout,
                     bool clipTotp,

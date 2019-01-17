@@ -61,7 +61,7 @@ public:
     ~DatabaseSettingsDialog() override;
     Q_DISABLE_COPY(DatabaseSettingsDialog);
 
-    void load(QSharedPointer<Database> db);
+    void load(const QSharedPointer<Database>& db);
     void addSettingsPage(IDatabaseSettingsPage* page);
     void showMasterKeySettings();
 

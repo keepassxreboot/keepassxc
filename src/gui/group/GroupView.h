@@ -30,7 +30,7 @@ class GroupView : public QTreeView
 
 public:
     explicit GroupView(Database* db, QWidget* parent = nullptr);
-    void changeDatabase(QSharedPointer<Database> newDb);
+    void changeDatabase(const QSharedPointer<Database>& newDb);
     void setModel(QAbstractItemModel* model) override;
     Group* currentGroup();
     void setCurrentGroup(Group* group);

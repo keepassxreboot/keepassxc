@@ -50,7 +50,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 }
 
-void GroupView::changeDatabase(QSharedPointer<Database> newDb)
+void GroupView::changeDatabase(const QSharedPointer<Database>& newDb)
 {
     m_model->changeDatabase(newDb.data());
 }

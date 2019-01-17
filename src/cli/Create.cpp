@@ -74,7 +74,7 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    QString databaseFilename = args.at(0);
+    const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
         err << QObject::tr("File %1 already exists.").arg(databaseFilename) << endl;
         return EXIT_FAILURE;
@@ -150,7 +150,7 @@ QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
  * @param fileKey Resulting fileKey
  * @return true if the key file was loaded succesfully
  */
-bool Create::loadFileKey(QString path, QSharedPointer<FileKey>& fileKey)
+bool Create::loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
 {
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
