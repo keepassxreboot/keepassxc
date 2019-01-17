@@ -17,6 +17,8 @@
 
 #include "EntryAttachments.h"
 
+#include "core/Global.h"
+
 #include <QSet>
 #include <QStringList>
 
@@ -37,7 +39,7 @@ bool EntryAttachments::hasKey(const QString& key) const
 
 QSet<QByteArray> EntryAttachments::values() const
 {
-    return m_attachments.values().toSet();
+    return asConst(m_attachments).values().toSet();
 }
 
 QByteArray EntryAttachments::value(const QString& key) const

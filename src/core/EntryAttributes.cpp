@@ -18,6 +18,8 @@
 
 #include "EntryAttributes.h"
 
+#include "core/Global.h"
+
 const QString EntryAttributes::TitleKey = "Title";
 const QString EntryAttributes::UserNameKey = "UserName";
 const QString EntryAttributes::PasswordKey = "Password";
@@ -72,7 +74,7 @@ bool EntryAttributes::contains(const QString& key) const
 
 bool EntryAttributes::containsValue(const QString& value) const
 {
-    return m_attributes.values().contains(value);
+    return asConst(m_attributes).values().contains(value);
 }
 
 bool EntryAttributes::isProtected(const QString& key) const

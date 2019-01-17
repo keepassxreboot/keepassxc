@@ -91,7 +91,8 @@ void Config::sync()
 
 void Config::upgrade()
 {
-    for (const auto& setting : deprecationMap.keys()) {
+    const auto keys = deprecationMap.keys();
+    for (const auto& setting : keys) {
         if (m_settings->contains(setting)) {
             if (!deprecationMap.value(setting).isEmpty()) {
                 // Add entry with new name and old entry's value
