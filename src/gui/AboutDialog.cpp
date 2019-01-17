@@ -28,90 +28,90 @@
 #include <QSysInfo>
 
 AboutDialog::AboutDialog(QWidget* parent)
-	 : QDialog(parent)
-	 , m_ui(new Ui::AboutDialog())
+    : QDialog(parent)
+    , m_ui(new Ui::AboutDialog())
 {
-	 m_ui->setupUi(this);
+    m_ui->setupUi(this);
 
-	 resize(minimumSize());
-	 setWindowFlags(Qt::Sheet);
-	 setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    resize(minimumSize());
+    setWindowFlags(Qt::Sheet);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-	 m_ui->nameLabel->setText(m_ui->nameLabel->text().replace("${VERSION}", KEEPASSXC_VERSION));
-	 QFont nameLabelFont = m_ui->nameLabel->font();
-	 nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
-	 m_ui->nameLabel->setFont(nameLabelFont);
+    m_ui->nameLabel->setText(m_ui->nameLabel->text().replace("${VERSION}", KEEPASSXC_VERSION));
+    QFont nameLabelFont = m_ui->nameLabel->font();
+    nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
+    m_ui->nameLabel->setFont(nameLabelFont);
 
-	 m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
+    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
-	 QString commitHash;
-	 if (!QString(GIT_HEAD).isEmpty()) {
-		  commitHash = GIT_HEAD;
-	 } else if (!QString(DIST_HASH).contains("Format")) {
-		  commitHash = DIST_HASH;
-	 }
+    QString commitHash;
+    if (!QString(GIT_HEAD).isEmpty()) {
+        commitHash = GIT_HEAD;
+    } else if (!QString(DIST_HASH).contains("Format")) {
+        commitHash = DIST_HASH;
+    }
 
-	 QString debugInfo = "KeePassXC - ";
-	 debugInfo.append(tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
+    QString debugInfo = "KeePassXC - ";
+    debugInfo.append(tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-	 debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
+    debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
 #endif
-	 if (!commitHash.isEmpty()) {
-		  debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
-	 }
+    if (!commitHash.isEmpty()) {
+        debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
+    }
 
 #ifdef KEEPASSXC_DIST
-	 debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
+    debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
 #endif
 
-	 debugInfo.append("\n").append(
-		  QString("%1\n- Qt %2\n- %3\n\n")
-				.arg(tr("Libraries:"), QString::fromLocal8Bit(qVersion()), Crypto::backendVersion()));
+    debugInfo.append("\n").append(
+            QString("%1\n- Qt %2\n- %3\n\n")
+                    .arg(tr("Libraries:"), QString::fromLocal8Bit(qVersion()), Crypto::backendVersion()));
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-	 debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-								 .arg(QSysInfo::prettyProductName(),
-										QSysInfo::currentCpuArchitecture(),
-										QSysInfo::kernelType(),
-										QSysInfo::kernelVersion()));
+    debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
+                             .arg(QSysInfo::prettyProductName(),
+                                  QSysInfo::currentCpuArchitecture(),
+                                  QSysInfo::kernelType(),
+                                  QSysInfo::kernelVersion()));
 
-	 debugInfo.append("\n\n");
+    debugInfo.append("\n\n");
 #endif
 
-	 QString extensions;
+    QString extensions;
 #ifdef WITH_XC_AUTOTYPE
-	 extensions += "\n- " + tr("Auto-Type");
+    extensions += "\n- " + tr("Auto-Type");
 #endif
 #ifdef WITH_XC_BROWSER
-	 extensions += "\n- " + tr("Browser Integration");
+    extensions += "\n- " + tr("Browser Integration");
 #endif
 #ifdef WITH_XC_SSHAGENT
-	 extensions += "\n- " + tr("SSH Agent");
+    extensions += "\n- " + tr("SSH Agent");
 #endif
 #if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
-	 extensions += "\n- " + tr("KeeShare (signed and unsigned sharing)");
+    extensions += "\n- " + tr("KeeShare (signed and unsigned sharing)");
 #elif defined(WITH_XC_KEESHARE_SECURE)
-	 extensions += "\n- " + tr("KeeShare (only signed sharing)");
+    extensions += "\n- " + tr("KeeShare (only signed sharing)");
 #elif defined(WITH_XC_KEESHARE_INSECURE)
-	 extensions += "\n- " + tr("KeeShare (only unsigned sharing)");
+    extensions += "\n- " + tr("KeeShare (only unsigned sharing)");
 #endif
 #ifdef WITH_XC_YUBIKEY
-	 extensions += "\n- " + tr("YubiKey");
+    extensions += "\n- " + tr("YubiKey");
 #endif
 #ifdef WITH_XC_TOUCHID
-	 extensions += "\n- " + tr("TouchID");
+    extensions += "\n- " + tr("TouchID");
 #endif
 
-	 if (extensions.isEmpty())
-		  extensions = " " + tr("None");
+    if (extensions.isEmpty())
+        extensions = " " + tr("None");
 
-	 debugInfo.append(tr("Enabled extensions:").append(extensions));
+    debugInfo.append(tr("Enabled extensions:").append(extensions));
 
-	 m_ui->debugInfo->setPlainText(debugInfo);
+    m_ui->debugInfo->setPlainText(debugInfo);
 
-	 setAttribute(Qt::WA_DeleteOnClose);
-	 connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
-	 connect(m_ui->copyToClipboard, SIGNAL(clicked()), SLOT(copyToClipboard()));
+    setAttribute(Qt::WA_DeleteOnClose);
+    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
+    connect(m_ui->copyToClipboard, SIGNAL(clicked()), SLOT(copyToClipboard()));
 }
 
 AboutDialog::~AboutDialog()
@@ -120,6 +120,6 @@ AboutDialog::~AboutDialog()
 
 void AboutDialog::copyToClipboard()
 {
-	 QClipboard* clipboard = QApplication::clipboard();
-	 clipboard->setText(m_ui->debugInfo->toPlainText());
+    QClipboard* clipboard = QApplication::clipboard();
+    clipboard->setText(m_ui->debugInfo->toPlainText());
 }
