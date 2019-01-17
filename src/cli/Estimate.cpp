@@ -156,8 +156,8 @@ static void estimate(const char* pwd, bool advanced)
 
 int Estimate::execute(const QStringList& arguments)
 {
-    TextStream in(Utils::STDIN, QIODevice::ReadOnly);
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
@@ -171,7 +171,7 @@ int Estimate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() > 1) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
         return EXIT_FAILURE;
     }
 
@@ -179,7 +179,7 @@ int Estimate::execute(const QStringList& arguments)
     if (args.size() == 1) {
         password = args.at(0);
     } else {
-        password = in.readLine();
+        password = inputTextStream.readLine();
     }
 
     estimate(password.toLatin1(), parser.isSet(advancedOption));

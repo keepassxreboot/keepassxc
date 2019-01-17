@@ -55,6 +55,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
     , m_wasMinimized(false)
+    , m_wasHidden(false)
     , m_keepassBrowserUUID(QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224")))
 {
     // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
@@ -96,7 +97,6 @@ bool BrowserService::openDatabase(bool triggerUnlock)
 
     if (triggerUnlock) {
         m_bringToFrontRequested = true;
-        m_wasMinimized = getMainWindow()->isMinimized();
         raiseWindow(true);
     }
 
@@ -933,7 +933,11 @@ void BrowserService::hideWindow() const
         getMainWindow()->showMinimized();
     } else {
 #ifdef Q_OS_MACOS
-        macUtils()->raiseLastActiveWindow();
+        if (m_wasHidden) {
+            macUtils()->hideOwnWindow();
+        } else {
+            macUtils()->raiseLastActiveWindow();
+        }
 #else
         getMainWindow()->lower();
 #endif
@@ -944,6 +948,7 @@ void BrowserService::raiseWindow(const bool force)
 {
     m_wasMinimized = getMainWindow()->isMinimized();
 #ifdef Q_OS_MACOS
+    m_wasHidden = macUtils()->isHidden();
     macUtils()->raiseOwnWindow();
     Tools::wait(500);
 #else

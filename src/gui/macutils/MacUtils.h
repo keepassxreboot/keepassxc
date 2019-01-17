@@ -35,6 +35,8 @@ public:
     bool raiseWindow(WId pid);
     bool raiseLastActiveWindow();
     bool raiseOwnWindow();
+    bool hideOwnWindow();
+    bool isHidden();
 
 private:
     explicit MacUtils(QObject* parent = nullptr);
