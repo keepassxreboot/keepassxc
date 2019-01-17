@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_MESSAGEBOX_H
 #define KEEPASSX_MESSAGEBOX_H
 
+#include <QHash>
 #include <QMap>
 #include <QMessageBox>
 #include <QPushButton>
@@ -102,7 +103,7 @@ public:
 
 private:
     static Button m_nextAnswer;
-    static QMap<QAbstractButton*, Button> m_addedButtonLookup;
+    static QHash<QAbstractButton*, Button> m_addedButtonLookup;
     static QMap<Button, std::pair<QString, QMessageBox::ButtonRole>> m_buttonDefs;
 
     static Button messageBox(QWidget* parent,
