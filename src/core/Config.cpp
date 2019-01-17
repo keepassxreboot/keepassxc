@@ -32,13 +32,13 @@
  */
 static const QMap<QString, QString> deprecationMap = {
     // >2.3.4
-    {"security/hidepassworddetails", "security/HidePasswordPreviewPanel"},
+    {QStringLiteral("security/hidepassworddetails"), QStringLiteral("security/HidePasswordPreviewPanel")},
     // >2.3.4
-    {"GUI/HideDetailsView", "GUI/HidePreviewPanel"},
+    {QStringLiteral("GUI/HideDetailsView"), QStringLiteral("GUI/HidePreviewPanel")},
     // >2.3.4
-    {"GUI/DetailSplitterState", "GUI/PreviewSplitterState"},
+    {QStringLiteral("GUI/DetailSplitterState"), QStringLiteral("GUI/PreviewSplitterState")},
     // >2.3.4
-    {"security/IconDownloadFallbackToGoogle", "security/IconDownloadFallback"},
+    {QStringLiteral("security/IconDownloadFallbackToGoogle"), QStringLiteral("security/IconDownloadFallback")},
 };
 
 Config* Config::m_instance(nullptr);
