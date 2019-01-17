@@ -375,7 +375,7 @@ void BrowserService::updateEntry(const QString& id,
     while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
         const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
         if (!referenceUuid.isNull()) {
-            entry = db->resolveEntry(referenceUuid);
+            entry = db->rootGroup()->findEntryByUuid(referenceUuid);
             if (!entry) {
                 return;
             }
