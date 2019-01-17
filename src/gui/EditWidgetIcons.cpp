@@ -229,7 +229,6 @@ void EditWidgetIcons::fetchFinished()
     QImage image;
     bool fallbackEnabled = config()->get("security/IconDownloadFallback", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
-    QUrl url = m_reply->url();
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
