@@ -36,6 +36,7 @@
 #include "core/Config.h"
 #include "core/EntrySearcher.h"
 #include "core/FilePath.h"
+#include "core/FileWatcher.h"
 #include "core/Group.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
@@ -57,6 +58,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
+#include "keeshare/KeeShare.h"
 #include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
@@ -72,7 +74,6 @@
 DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(std::move(db))
-
     , m_mainWidget(new QWidget(this))
     , m_mainSplitter(new QSplitter(m_mainWidget))
     , m_messageWidget(new MessageWidget(this))
@@ -87,6 +88,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_databaseOpenWidget(new DatabaseOpenWidget(this))
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
+    , m_fileWatcher(new DelayingFileWatcher(this))
 {
     m_messageWidget->setHidden(true);
 
@@ -129,7 +131,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_searchingLabel->setStyleSheet("color: rgb(0, 0, 0);"
                                     "background-color: rgb(255, 253, 160);"
                                     "border: 2px solid rgb(190, 190, 190);"
-                                    "border-radius: 2px;");
+                                    "border-radius: 4px;");
     m_searchingLabel->setVisible(false);
 
     m_previewView->hide();
@@ -174,17 +176,11 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
-    connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), this, SLOT(onWatchedFileChanged()));
-    connect(&m_fileWatchTimer, SIGNAL(timeout()), this, SLOT(reloadDatabaseFile()));
-    connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(unblockAutoReload()));
+    connect(m_fileWatcher.data(), SIGNAL(fileChanged()), this, SLOT(reloadDatabaseFile()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
     // clang-format on
-    
-    connectDatabaseSignals();
 
-    m_fileWatchTimer.setSingleShot(true);
-    m_fileWatchUnblockTimer.setSingleShot(true);
-    m_ignoreAutoReload = false;
+    connectDatabaseSignals();
 
     m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
@@ -377,6 +373,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     processAutoOpen();
+#if defined(WITH_XC_KEESHARE)
+    KeeShare::instance()->connectDatabase(m_db, oldDb);
+#endif
 }
 
 void DatabaseWidget::cloneEntry()
@@ -831,10 +830,10 @@ void DatabaseWidget::loadDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(openWidget->database());
         switchToMainView();
-        m_fileWatcher.addPath(m_db->filePath());
+        m_fileWatcher->restart();
         emit databaseUnlocked();
     } else {
-        m_fileWatcher.removePath(m_db->filePath());
+        m_fileWatcher->stop();
         if (m_databaseOpenWidget->database()) {
             m_databaseOpenWidget->database().reset();
         }
@@ -1246,54 +1245,17 @@ bool DatabaseWidget::lock()
 
 void DatabaseWidget::updateFilePath(const QString& filePath)
 {
-    if (!m_db->filePath().isEmpty()) {
-        m_fileWatcher.removePath(m_db->filePath());
-    }
-
-#ifdef Q_OS_LINUX
-    struct statfs statfsBuf;
-    bool forcePolling = false;
-    const auto NFS_SUPER_MAGIC = 0x6969;
-
-    if (!statfs(filePath.toLocal8Bit().constData(), &statfsBuf)) {
-        forcePolling = (statfsBuf.f_type == NFS_SUPER_MAGIC);
-    } else {
-        // if we can't get the fs type let's fall back to polling
-        forcePolling = true;
-    }
-    auto objectName = forcePolling ? QLatin1String("_qt_autotest_force_engine_poller") : QLatin1String("");
-    m_fileWatcher.setObjectName(objectName);
-#endif
-
-    m_fileWatcher.addPath(filePath);
+    m_fileWatcher->start(filePath);
     m_db->setFilePath(filePath);
 }
 
 void DatabaseWidget::blockAutoReload(bool block)
 {
     if (block) {
-        m_ignoreAutoReload = true;
-        m_fileWatchTimer.stop();
+        m_fileWatcher->ignoreFileChanges();
     } else {
-        m_fileWatchUnblockTimer.start(500);
+        m_fileWatcher->observeFileChanges(true);
     }
-}
-
-void DatabaseWidget::unblockAutoReload()
-{
-    m_ignoreAutoReload = false;
-    updateFilePath(m_db->filePath());
-}
-
-void DatabaseWidget::onWatchedFileChanged()
-{
-    if (m_ignoreAutoReload) {
-        return;
-    }
-    if (m_fileWatchTimer.isActive())
-        return;
-
-    m_fileWatchTimer.start(500);
 }
 
 void DatabaseWidget::reloadDatabaseFile()
@@ -1313,7 +1275,7 @@ void DatabaseWidget::reloadDatabaseFile()
             // Notify everyone the database does not match the file
             m_db->markAsModified();
             // Rewatch the database file
-            m_fileWatcher.addPath(m_db->filePath());
+            m_fileWatcher->restart();
             return;
         }
     }
@@ -1361,7 +1323,7 @@ void DatabaseWidget::reloadDatabaseFile()
     }
 
     // Rewatch the database file
-    m_fileWatcher.addPath(m_db->filePath());
+    m_fileWatcher->restart();
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const

@@ -124,8 +124,7 @@ bool TimeInfo::equals(const TimeInfo& other, CompareItemOptions options) const
     if (::compare(m_creationTime, other.m_creationTime, options) != 0) {
         return false;
     }
-    if (::compare(!options.testFlag(CompareItemIgnoreStatistics), m_lastAccessTime, other.m_lastAccessTime, options)
-        != 0) {
+    if (::compare(!options.testFlag(CompareItemIgnoreStatistics), m_lastAccessTime, other.m_lastAccessTime, options) != 0) {
         return false;
     }
     if (::compare(m_expires, m_expiryTime, other.m_expires, other.expiryTime(), options) != 0) {
@@ -134,8 +133,7 @@ bool TimeInfo::equals(const TimeInfo& other, CompareItemOptions options) const
     if (::compare(!options.testFlag(CompareItemIgnoreStatistics), m_usageCount, other.m_usageCount, options) != 0) {
         return false;
     }
-    if (::compare(!options.testFlag(CompareItemIgnoreLocation), m_locationChanged, other.m_locationChanged, options)
-        != 0) {
+    if (::compare(!options.testFlag(CompareItemIgnoreLocation), m_locationChanged, other.m_locationChanged, options) != 0) {
         return false;
     }
     return true;

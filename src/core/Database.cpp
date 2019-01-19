@@ -472,8 +472,11 @@ QByteArray Database::challengeResponseKey() const
 
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
-    m_data.masterSeed = masterSeed;
-    return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
+    if (m_data.key) {
+        m_data.masterSeed = masterSeed;
+        return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
+    }
+    return false;
 }
 
 void Database::setCipher(const QUuid& cipher)

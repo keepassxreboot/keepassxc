@@ -1,7 +1,6 @@
 # <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC
 [![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1) [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
 
-
 ## About KeePassXC
 [KeePassXC](https://keepassxc.org) is a cross-platform community fork of
 [KeePassX](https://www.keepassx.org/).
@@ -35,6 +34,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepasshttp-connector/dafgdjggglmmknipkhngniifhplpcldb), and
 [passafari](https://github.com/mmichaa/passafari.safariextension/) in Safari. [[See note about KeePassHTTP]](#note-about-keepasshttp)
 - Browser integration with KeePassXC-Browser using [native messaging](https://developer.chrome.com/extensions/nativeMessaging) for [Mozilla Firefox](https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/) and [Google Chrome or Chromium](https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk)
+- Synchronize passwords using KeeShare. See [Using Sharing](./docs/QUICKSTART.md#using-sharing) for more details.
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.

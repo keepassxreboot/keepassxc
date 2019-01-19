@@ -58,8 +58,7 @@ CryptoHash::CryptoHash(Algorithm algo, bool hmac)
 
     gcry_error_t error = gcry_md_open(&d->ctx, algoGcrypt, flagsGcrypt);
     if (error != GPG_ERR_NO_ERROR) {
-        qWarning("Gcrypt error (ctor): %s", gcry_strerror(error));
-        qWarning("Gcrypt error (ctor): %s", gcry_strsource(error));
+        qWarning("Gcrypt error (ctor): %s\n                     %s", gcry_strerror(error), gcry_strsource(error));
     }
     Q_ASSERT(error == 0); // TODO: error handling
 
@@ -92,8 +91,7 @@ void CryptoHash::setKey(const QByteArray& data)
 
     gcry_error_t error = gcry_md_setkey(d->ctx, data.constData(), static_cast<size_t>(data.size()));
     if (error) {
-        qWarning("Gcrypt error (setKey): %s", gcry_strerror(error));
-        qWarning("Gcrypt error (setKey): %s", gcry_strsource(error));
+        qWarning("Gcrypt error (setKey): %s\n                       %s", gcry_strerror(error), gcry_strsource(error));
     }
     Q_ASSERT(error == 0);
 }

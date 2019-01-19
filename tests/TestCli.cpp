@@ -919,7 +919,7 @@ void TestCli::testRemove()
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(readBackDb->rootGroup()->findEntryByPath("/Recycle Bin/Sample Entry"));
+    QVERIFY(readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     pos = m_stdoutFile->pos();
 
@@ -937,7 +937,7 @@ void TestCli::testRemove()
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Recycle Bin/Sample Entry"));
+    QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     pos = m_stdoutFile->pos();
 
@@ -977,13 +977,13 @@ void TestCli::testRemoveQuiet()
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(readBackDb->rootGroup()->findEntryByPath("/Recycle Bin/Sample Entry"));
+    QVERIFY(readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     pos = m_stdoutFile->pos();
 
     // remove the entry completely
     Utils::Test::setNextPassword("a");
-    removeCmd.execute({"rm", "-q", m_dbFile->fileName(), "/Recycle Bin/Sample Entry"});
+    removeCmd.execute({"rm", "-q", m_dbFile->fileName(), QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
     m_stdoutFile->seek(pos);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
 
@@ -994,7 +994,7 @@ void TestCli::testRemoveQuiet()
     readBack.close();
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Recycle Bin/Sample Entry"));
+    QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 }
 
 void TestCli::testShow()

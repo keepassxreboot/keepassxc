@@ -56,6 +56,33 @@ namespace Tools
         }
     }
 
+    template <typename Key, typename Value, void deleter(Value)> struct Map
+    {
+        QMap<Key, Value> values;
+        Value& operator[](const Key index)
+        {
+            return values[index];
+        }
+
+        ~Map()
+        {
+            for (Value m : values) {
+                deleter(m);
+            }
+        }
+    };
+
+    struct Buffer
+    {
+        unsigned char* raw;
+        size_t size;
+
+        Buffer();
+        ~Buffer();
+
+        void clear();
+        QByteArray content() const;
+    };
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

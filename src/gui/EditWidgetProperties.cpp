@@ -18,6 +18,8 @@
 #include "EditWidgetProperties.h"
 #include "ui_EditWidgetProperties.h"
 
+#include "core/CustomData.h"
+#include "core/TimeInfo.h"
 #include "MessageBox.h"
 
 #include <QUuid>
@@ -25,7 +27,6 @@
 EditWidgetProperties::EditWidgetProperties(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetProperties())
-    , m_customData(new CustomData(this))
     , m_customDataModel(new QStandardItemModel(this))
 {
     m_ui->setupUi(this);
@@ -53,17 +54,19 @@ void EditWidgetProperties::setFields(const TimeInfo& timeInfo, const QUuid& uuid
     m_ui->uuidEdit->setText(uuid.toRfc4122().toHex());
 }
 
-void EditWidgetProperties::setCustomData(const CustomData* customData)
+void EditWidgetProperties::setCustomData(CustomData* customData)
 {
-    Q_ASSERT(customData);
-    m_customData->copyDataFrom(customData);
+    if (m_customData) {
+        m_customData->disconnect(this);
+    }
 
-    updateModel();
-}
+    m_customData = customData;
 
-const CustomData* EditWidgetProperties::customData() const
-{
-    return m_customData;
+    if (m_customData) {
+        connect(m_customData, SIGNAL(customDataModified()), SLOT(update()));
+    }
+
+    update();
 }
 
 void EditWidgetProperties::removeSelectedPluginData()
@@ -85,7 +88,7 @@ void EditWidgetProperties::removeSelectedPluginData()
             const QString key = index.data().toString();
             m_customData->remove(key);
         }
-        updateModel();
+        update();
     }
 }
 
@@ -94,16 +97,17 @@ void EditWidgetProperties::toggleRemoveButton(const QItemSelection& selected)
     m_ui->removeCustomDataButton->setEnabled(!selected.isEmpty());
 }
 
-void EditWidgetProperties::updateModel()
+void EditWidgetProperties::update()
 {
     m_customDataModel->clear();
-
     m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value")});
-
-    for (const QString& key : m_customData->keys()) {
-        m_customDataModel->appendRow(QList<QStandardItem*>()
-                                     << new QStandardItem(key) << new QStandardItem(m_customData->value(key)));
+    if (!m_customData) {
+        m_ui->removeCustomDataButton->setEnabled(false);
+    } else {
+        for (const QString& key : m_customData->keys()) {
+            m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(key)
+                                                                 << new QStandardItem(m_customData->value(key)));
+        }
+        m_ui->removeCustomDataButton->setEnabled(!m_customData->isEmpty());
     }
-
-    m_ui->removeCustomDataButton->setEnabled(false);
 }

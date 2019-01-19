@@ -34,6 +34,7 @@ class DatabaseOpenWidget;
 class KeePass1OpenWidget;
 class DatabaseSettingsDialog;
 class Database;
+class DelayingFileWatcher;
 class EditEntryWidget;
 class EditGroupWidget;
 class Entry;
@@ -47,7 +48,6 @@ class QSplitter;
 class QLabel;
 class MessageWidget;
 class EntryPreviewWidget;
-class QFileSystemWatcher;
 
 namespace Ui
 {
@@ -215,10 +215,8 @@ private slots:
     void mergeDatabase(bool accepted);
     void emitCurrentModeChanged();
     // Database autoreload slots
-    void onWatchedFileChanged();
     void reloadDatabaseFile();
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
-    void unblockAutoReload();
 
 private:
     int addChildWidget(QWidget* w);
@@ -258,10 +256,7 @@ private:
     bool m_searchLimitGroup;
 
     // Autoreload
-    QFileSystemWatcher m_fileWatcher;
-    QTimer m_fileWatchTimer;
-    QTimer m_fileWatchUnblockTimer;
-    bool m_ignoreAutoReload;
+    QPointer<DelayingFileWatcher> m_fileWatcher;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

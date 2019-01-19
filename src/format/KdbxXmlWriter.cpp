@@ -34,7 +34,7 @@ KdbxXmlWriter::KdbxXmlWriter(quint32 version)
 }
 
 void KdbxXmlWriter::writeDatabase(QIODevice* device,
-                                  Database* db,
+                                  const Database* db,
                                   KeePass2RandomStream* randomStream,
                                   const QByteArray& headerHash)
 {

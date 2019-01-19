@@ -24,6 +24,7 @@
 #include <QObject>
 #include <QPointer>
 
+#include "config-keepassx.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"

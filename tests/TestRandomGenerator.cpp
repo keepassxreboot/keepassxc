@@ -15,21 +15,31 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "TestRandom.h"
+#include "TestRandomGenerator.h"
 #include "TestGlobal.h"
 #include "core/Endian.h"
 #include "core/Global.h"
+#include "stub/TestRandom.h"
 
-QTEST_GUILESS_MAIN(TestRandom)
+#include <QTest>
 
-void TestRandom::initTestCase()
+QTEST_GUILESS_MAIN(TestRandomGenerator)
+
+void TestRandomGenerator::initTestCase()
 {
-    m_backend = new RandomBackendTest();
+    m_backend = new RandomBackendPreset();
 
-    Random::createWithBackend(m_backend);
+    TestRandom::setup(m_backend);
 }
 
-void TestRandom::testUInt()
+void TestRandomGenerator::cleanupTestCase()
+{
+    TestRandom::teardown();
+
+    m_backend = nullptr;
+}
+
+void TestRandomGenerator::testUInt()
 {
     QByteArray nextBytes;
 
@@ -60,35 +70,11 @@ void TestRandom::testUInt()
     QCOMPARE(randomGen()->randomUInt((QUINT32_MAX / 2U) + 1U), QUINT32_MAX / 2U);
 }
 
-void TestRandom::testUIntRange()
+void TestRandomGenerator::testUIntRange()
 {
     QByteArray nextBytes;
 
     nextBytes = Endian::sizedIntToBytes(42, QSysInfo::ByteOrder);
     m_backend->setNextBytes(nextBytes);
     QCOMPARE(randomGen()->randomUIntRange(100, 200), 142U);
-}
-
-RandomBackendTest::RandomBackendTest()
-    : m_bytesIndex(0)
-{
-}
-
-void RandomBackendTest::randomize(void* data, int len)
-{
-    QVERIFY(len <= (m_nextBytes.size() - m_bytesIndex));
-
-    char* charData = reinterpret_cast<char*>(data);
-
-    for (int i = 0; i < len; i++) {
-        charData[i] = m_nextBytes[m_bytesIndex + i];
-    }
-
-    m_bytesIndex += len;
-}
-
-void RandomBackendTest::setNextBytes(const QByteArray& nextBytes)
-{
-    m_nextBytes = nextBytes;
-    m_bytesIndex = 0;
 }

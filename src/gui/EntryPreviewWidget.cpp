@@ -26,10 +26,12 @@
 #include "core/FilePath.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
+#if defined(WITH_XC_KEESHARE)
+#include "keeshare/KeeShare.h"
+#endif
 
-namespace
-{
-    constexpr int GeneralTabIndex = 0;
+namespace {
+constexpr int GeneralTabIndex = 0;
 }
 
 EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
@@ -103,6 +105,10 @@ void EntryPreviewWidget::setGroup(Group* selectedGroup)
     updateGroupHeaderLine();
     updateGroupGeneralTab();
     updateGroupNotesTab();
+
+#if defined(WITH_XC_KEESHARE)
+    updateGroupSharingTab();
+#endif
 
     setVisible(!config()->get("GUI/HidePreviewPanel").toBool());
 
@@ -202,7 +208,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires =
-        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+            entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
 }
 
@@ -252,7 +258,7 @@ void EntryPreviewWidget::updateEntryAutotypeTab()
     const auto associations = autotypeAssociations->getAll();
     for (const auto& assoc : associations) {
         const QString sequence =
-            assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
+                assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
         items.append(new QTreeWidgetItem(m_ui->entryAutotypeTree, {assoc.window, sequence}));
     }
 
@@ -278,7 +284,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
     const QString expiresText =
-        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+            groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 }
 
@@ -289,6 +295,17 @@ void EntryPreviewWidget::updateGroupNotesTab()
     setTabEnabled(m_ui->groupTabWidget, m_ui->groupNotesTab, !notes.isEmpty());
     m_ui->groupNotesEdit->setText(notes);
 }
+
+#if defined(WITH_XC_KEESHARE)
+void EntryPreviewWidget::updateGroupSharingTab()
+{
+    Q_ASSERT(m_currentGroup);
+    setTabEnabled(m_ui->groupTabWidget, m_ui->groupShareTab, KeeShare::isShared(m_currentGroup));
+    auto reference = KeeShare::referenceOf(m_currentGroup);
+    m_ui->groupShareTypeLabel->setText(KeeShare::referenceTypeLabel(reference));
+    m_ui->groupSharePathLabel->setText(reference.path);
+}
+#endif
 
 void EntryPreviewWidget::updateTotpLabel()
 {

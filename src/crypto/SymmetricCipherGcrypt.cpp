@@ -80,13 +80,12 @@ int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
     }
 }
 
-void SymmetricCipherGcrypt::setErrorString(gcry_error_t err)
+void SymmetricCipherGcrypt::setError(const gcry_error_t& err)
 {
     const char* gcryptError = gcry_strerror(err);
     const char* gcryptErrorSource = gcry_strsource(err);
 
-    m_errorString =
-        QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource), QString::fromLocal8Bit(gcryptError));
+    m_error = QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource), QString::fromLocal8Bit(gcryptError));
 }
 
 bool SymmetricCipherGcrypt::init()
@@ -99,7 +98,7 @@ bool SymmetricCipherGcrypt::init()
         gcry_cipher_close(m_ctx);
     error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -112,7 +111,7 @@ bool SymmetricCipherGcrypt::setKey(const QByteArray& key)
     gcry_error_t error = gcry_cipher_setkey(m_ctx, m_key.constData(), m_key.size());
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -131,7 +130,7 @@ bool SymmetricCipherGcrypt::setIv(const QByteArray& iv)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -154,7 +153,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         *ok = false;
     } else {
         *ok = true;
@@ -176,7 +175,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -195,7 +194,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
             error = gcry_cipher_decrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
-                setErrorString(error);
+                setError(error);
                 return false;
             }
         }
@@ -204,7 +203,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
             error = gcry_cipher_encrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
-                setErrorString(error);
+                setError(error);
                 return false;
             }
         }
@@ -219,13 +218,13 @@ bool SymmetricCipherGcrypt::reset()
 
     error = gcry_cipher_reset(m_ctx);
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
     error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -256,7 +255,7 @@ int SymmetricCipherGcrypt::blockSize() const
     return blockSizeT;
 }
 
-QString SymmetricCipherGcrypt::errorString() const
+QString SymmetricCipherGcrypt::error() const
 {
-    return m_errorString;
+    return m_error;
 }

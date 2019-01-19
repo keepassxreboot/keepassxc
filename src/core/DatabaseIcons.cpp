@@ -22,6 +22,8 @@
 DatabaseIcons* DatabaseIcons::m_instance(nullptr);
 const int DatabaseIcons::IconCount(69);
 const int DatabaseIcons::ExpiredIconIndex(45);
+const int DatabaseIcons::SharedIconIndex(1);
+const int DatabaseIcons::UnsharedIconIndex(45);
 
 // clang-format off
 const char* const DatabaseIcons::m_indexToName[] = {

@@ -21,6 +21,7 @@
 
 #include <QCloseEvent>
 #include <QDesktopServices>
+#include <QFileInfo>
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
@@ -32,18 +33,21 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
-#include "keys/CompositeKey.h"
-#include "keys/PasswordKey.h"
-#include "keys/FileKey.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/SearchWidget.h"
+#include "keys/CompositeKey.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
 #endif
-
+#if defined(WITH_XC_KEESHARE)
+#include "keeshare/KeeShare.h"
+#include "keeshare/SettingsPageKeeShare.h"
+#endif
 #ifdef WITH_XC_BROWSER
 #include "browser/BrowserOptionDialog.h"
 #include "browser/BrowserSettings.h"
@@ -114,7 +118,10 @@ private:
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow* g_MainWindow = nullptr;
-MainWindow* getMainWindow() { return g_MainWindow; }
+MainWindow* getMainWindow()
+{
+    return g_MainWindow;
+}
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
@@ -148,19 +155,27 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
 #endif
+
 #ifdef WITH_XC_SSHAGENT
     SSHAgent::init(this);
     connect(SSHAgent::instance(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
 #endif
 
+#if defined(WITH_XC_KEESHARE)
+    KeeShare::init(this);
+    m_ui->settingsWidget->addSettingsPage(new SettingsPageKeeShare(m_ui->tabWidget));
+    connect(KeeShare::instance(),
+            SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
+            SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
+#endif
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
-    connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
-    connect(
-        m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
-    connect(
-        m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
+    // clang-format off
+	 connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
+	 connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+	 connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
+    // clang-format on
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
     m_lastDatabasesActions = new QActionGroup(m_ui->menuRecentDatabases);
@@ -349,10 +364,10 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
     // clang-format off
-    connect(m_ui->tabWidget,
-            SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
-            this,
-            SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
+	 connect(m_ui->tabWidget,
+				SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
+				this,
+				SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     // clang-format on
 
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
@@ -838,7 +853,8 @@ bool MainWindow::saveLastDatabases()
     bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
 
     if (openPreviousDatabasesOnStartup) {
-        connect(m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
+        connect(
+            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
     }
 
     accept = m_ui->tabWidget->closeAllDatabaseTabs();

@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_DETAILSWIDGET_H
 #define KEEPASSX_DETAILSWIDGET_H
 
+#include "config-keepassx.h"
 #include "gui/DatabaseWidget.h"
 
 #include <QWidget>
@@ -56,6 +57,9 @@ private slots:
     void updateGroupHeaderLine();
     void updateGroupGeneralTab();
     void updateGroupNotesTab();
+#if defined(WITH_XC_KEESHARE)
+    void updateGroupSharingTab();
+#endif
 
     void updateTotpLabel();
     void updateTabIndexes();

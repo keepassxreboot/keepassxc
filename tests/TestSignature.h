@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,36 +16,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTRANDOM_H
-#define KEEPASSX_TESTRANDOM_H
-
-#include "crypto/Random.h"
+#ifndef KEEPASSXC_TESTSIGNATURE_H
+#define KEEPASSXC_TESTSIGNATURE_H
 
 #include <QObject>
 
-class RandomBackendTest : public RandomBackend
-{
-public:
-    RandomBackendTest();
-    void randomize(void* data, int len) override;
-    void setNextBytes(const QByteArray& nextBytes);
-
-private:
-    QByteArray m_nextBytes;
-    int m_bytesIndex;
-};
-
-class TestRandom : public QObject
+class TestSignature : public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
-    void testUInt();
-    void testUIntRange();
 
-private:
-    RandomBackendTest* m_backend;
+    void testSigningOpenSSH_RSA_PrivateOnly();
+    void testSigningOpenSSH_RSA();
+
+    void testSigningGenerated_RSA_PrivateOnly();
+
+    void testSigningTest_RSA_PrivateOnly();
+    void testSigningTest_RSA();
 };
 
-#endif // KEEPASSX_TESTRANDOM_H
+#endif // KEEPASSX_TESTSIGNATURE_H

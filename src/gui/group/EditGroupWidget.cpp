@@ -23,18 +23,49 @@
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 
+#if defined(WITH_XC_KEESHARE)
+#include "keeshare/group/EditGroupPageKeeShare.h"
+#endif
+
+class EditGroupWidget::ExtraPage
+{
+public:
+    ExtraPage(IEditGroupPage* page, QWidget* widget)
+            : editPage(page)
+            , widget(widget)
+    {
+    }
+
+    void set(Group* temporaryGroup) const
+    {
+        editPage->set(widget, temporaryGroup);
+    }
+
+    void assign() const
+    {
+        editPage->assign(widget);
+    }
+
+private:
+    QSharedPointer<IEditGroupPage> editPage;
+    QWidget* widget;
+};
+
 EditGroupWidget::EditGroupWidget(QWidget* parent)
-    : EditWidget(parent)
-    , m_mainUi(new Ui::EditGroupWidgetMain())
-    , m_editGroupWidgetMain(new QWidget())
-    , m_editGroupWidgetIcons(new EditWidgetIcons())
-    , m_editWidgetProperties(new EditWidgetProperties())
-    , m_group(nullptr)
+        : EditWidget(parent)
+        , m_mainUi(new Ui::EditGroupWidgetMain())
+        , m_editGroupWidgetMain(new QWidget())
+        , m_editGroupWidgetIcons(new EditWidgetIcons())
+        , m_editWidgetProperties(new EditWidgetProperties())
+        , m_group(nullptr)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
     addPage(tr("Group"), FilePath::instance()->icon("actions", "document-edit"), m_editGroupWidgetMain);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_editGroupWidgetIcons);
+#if defined(WITH_XC_KEESHARE)
+    addEditPage(new EditGroupPageKeeShare(this));
+#endif
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
 
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
@@ -65,6 +96,8 @@ void EditGroupWidget::loadGroup(Group* group, bool create, QSharedPointer<Databa
     m_group = group;
     m_db = database;
 
+    m_temporaryGroup.reset(group->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
+
     if (create) {
         setHeadline(tr("Add group"));
     } else {
@@ -93,12 +126,15 @@ void EditGroupWidget::loadGroup(Group* group, bool create, QSharedPointer<Databa
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
 
     IconStruct iconStruct;
-    iconStruct.uuid = group->iconUuid();
-    iconStruct.number = group->iconNumber();
-    m_editGroupWidgetIcons->load(group->uuid(), database, iconStruct);
+    iconStruct.uuid = m_temporaryGroup->iconUuid();
+    iconStruct.number = m_temporaryGroup->iconNumber();
+    m_editGroupWidgetIcons->load(m_temporaryGroup->uuid(), m_db, iconStruct);
+    m_editWidgetProperties->setFields(m_temporaryGroup->timeInfo(), m_temporaryGroup->uuid());
+    m_editWidgetProperties->setCustomData(m_temporaryGroup->customData());
 
-    m_editWidgetProperties->setFields(group->timeInfo(), group->uuid());
-    m_editWidgetProperties->setCustomData(group->customData());
+    for (const ExtraPage& page : asConst(m_extraPages)) {
+        page.set(m_temporaryGroup.data());
+    }
 
     setCurrentPage(0);
 
@@ -114,31 +150,36 @@ void EditGroupWidget::save()
 
 void EditGroupWidget::apply()
 {
-    m_group->setName(m_mainUi->editName->text());
-    m_group->setNotes(m_mainUi->editNotes->toPlainText());
-    m_group->setExpires(m_mainUi->expireCheck->isChecked());
-    m_group->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
+    m_temporaryGroup->setName(m_mainUi->editName->text());
+    m_temporaryGroup->setNotes(m_mainUi->editNotes->toPlainText());
+    m_temporaryGroup->setExpires(m_mainUi->expireCheck->isChecked());
+    m_temporaryGroup->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
-    m_group->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
-    m_group->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
-
-    m_group->customData()->copyDataFrom(m_editWidgetProperties->customData());
+    m_temporaryGroup->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
+    m_temporaryGroup->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
 
     if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
-        m_group->setDefaultAutoTypeSequence(QString());
+        m_temporaryGroup->setDefaultAutoTypeSequence(QString());
     } else {
-        m_group->setDefaultAutoTypeSequence(m_mainUi->autoTypeSequenceCustomEdit->text());
+        m_temporaryGroup->setDefaultAutoTypeSequence(m_mainUi->autoTypeSequenceCustomEdit->text());
     }
 
     IconStruct iconStruct = m_editGroupWidgetIcons->state();
 
     if (iconStruct.number < 0) {
-        m_group->setIcon(Group::DefaultIconNumber);
+        m_temporaryGroup->setIcon(Group::DefaultIconNumber);
     } else if (iconStruct.uuid.isNull()) {
-        m_group->setIcon(iconStruct.number);
+        m_temporaryGroup->setIcon(iconStruct.number);
     } else {
-        m_group->setIcon(iconStruct.uuid);
+        m_temporaryGroup->setIcon(iconStruct.uuid);
     }
+
+    for (const ExtraPage& page : asConst(m_extraPages)) {
+        page.assign();
+    }
+
+    // Icons add/remove are applied globally outside the transaction!
+    m_group->copyDataFrom(m_temporaryGroup.data());
 }
 
 void EditGroupWidget::cancel()
@@ -155,7 +196,17 @@ void EditGroupWidget::clear()
 {
     m_group = nullptr;
     m_db.reset();
+    m_temporaryGroup.reset(nullptr);
     m_editGroupWidgetIcons->reset();
+}
+
+void EditGroupWidget::addEditPage(IEditGroupPage* page)
+{
+    QWidget* widget = page->createWidget();
+    widget->setParent(this);
+
+    m_extraPages.append(ExtraPage(page, widget));
+    addPage(page->name(), page->icon(), widget);
 }
 
 void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)

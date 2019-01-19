@@ -69,8 +69,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
     }
 
     QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, db->transformedMasterKey());
-    if (headerHmac
-        != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
+    if (headerHmac != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
         raiseError(tr("Wrong key or database file is corrupt. (HMAC mismatch)"));
         return false;
     }
@@ -85,8 +84,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         raiseError(tr("Unknown cipher"));
         return false;
     }
-    SymmetricCipherStream cipherStream(
-        &hmacStream, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
+    SymmetricCipherStream cipherStream(&hmacStream, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
         return false;

@@ -30,6 +30,7 @@
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
+class CustomData;
 class Database;
 class EditWidgetIcons;
 class EditWidgetProperties;
@@ -157,11 +158,15 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
+    const QScopedPointer<CustomData> m_customData;
+
     QWidget* const m_mainWidget;
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
+#ifdef WITH_XC_SSHAGENT
     QWidget* const m_sshAgentWidget;
+#endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
     EntryAttributes* const m_entryAttributes;

@@ -25,11 +25,36 @@
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
+#if defined(WITH_XC_KEESHARE)
+#include "keeshare/DatabaseSettingsPageKeeShare.h"
+#endif
 
+#include "core/Global.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
 #include "touchid/TouchID.h"
+
+class DatabaseSettingsDialog::ExtraPage
+{
+public:
+    ExtraPage(IDatabaseSettingsPage* page, QWidget* widget)
+            : settingsPage(page)
+            , widget(widget)
+    {
+    }
+    void loadSettings(QSharedPointer<Database> db) const
+    {
+        settingsPage->loadSettings(widget, db);
+    }
+    void saveSettings() const
+    {
+        settingsPage->saveSettings(widget);
+    }
+private:
+    QSharedPointer<IDatabaseSettingsPage> settingsPage;
+    QWidget* widget;
+};
 
 DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     : DialogyWidget(parent)
@@ -54,6 +79,10 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
     m_securityTabWidget->addTab(m_masterKeyWidget, tr("Master Key"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
+
+#if defined(WITH_XC_KEESHARE)
+    addSettingsPage(new DatabaseSettingsPageKeeShare());
+#endif
 
     m_ui->stackedWidget->setCurrentIndex(0);
     m_securityTabWidget->setCurrentIndex(0);
@@ -84,8 +113,22 @@ void DatabaseSettingsDialog::load(QSharedPointer<Database> db)
 #ifdef WITH_XC_BROWSER
     m_browserWidget->load(db);
 #endif
+    for (const ExtraPage& page : asConst(m_extraPages)) {
+        page.loadSettings(db);
+    }
     m_ui->advancedSettingsToggle->setChecked(config()->get("GUI/AdvancedSettings", false).toBool());
     m_db = db;
+}
+
+void DatabaseSettingsDialog::addSettingsPage(IDatabaseSettingsPage* page)
+{
+    const int category = m_ui->categoryList->currentCategory();
+    QWidget* widget = page->createWidget();
+    widget->setParent(this);
+    m_extraPages.append(ExtraPage(page, widget));
+    m_ui->stackedWidget->addWidget(widget);
+    m_ui->categoryList->addCategory(page->name(), page->icon());
+    m_ui->categoryList->setCurrentCategory(category);
 }
 
 /**
@@ -109,6 +152,10 @@ void DatabaseSettingsDialog::save()
 
     if (!m_encryptionWidget->save()) {
         return;
+    }
+
+    for (const ExtraPage& extraPage : asConst(m_extraPages)) {
+        extraPage.saveSettings();
     }
 
 #ifdef WITH_XC_TOUCHID

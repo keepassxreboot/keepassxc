@@ -1027,6 +1027,20 @@ QString Entry::maskPasswordPlaceholders(const QString& str) const
     return result;
 }
 
+Entry* Entry::resolveReference(const QString& str) const
+{
+    QRegularExpressionMatch match = EntryAttributes::matchReference(str);
+    if (!match.hasMatch()) {
+        return nullptr;
+    }
+
+    const QString searchIn = match.captured(EntryAttributes::SearchInGroupName);
+    const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
+
+    const EntryReferenceType searchInType = Entry::referenceType(searchIn);
+    return m_group->database()->rootGroup()->findEntryBySearchTerm(searchText, searchInType);
+}
+
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
     return resolveMultiplePlaceholdersRecursive(str, ResolveMaximumDepth);

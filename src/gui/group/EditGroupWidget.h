@@ -24,6 +24,7 @@
 #include "core/Group.h"
 #include "gui/EditWidget.h"
 
+class CustomData;
 class EditWidgetIcons;
 class EditWidgetProperties;
 
@@ -32,6 +33,19 @@ namespace Ui
     class EditGroupWidgetMain;
     class EditWidget;
 } // namespace Ui
+
+class IEditGroupPage
+{
+public:
+    virtual ~IEditGroupPage()
+    {
+    }
+    virtual QString name() = 0;
+    virtual QIcon icon() = 0;
+    virtual QWidget* createWidget() = 0;
+    virtual void set(QWidget* widget, Group* tempoaryGroup) = 0;
+    virtual void assign(QWidget* widget) = 0;
+};
 
 class EditGroupWidget : public EditWidget
 {
@@ -43,6 +57,8 @@ public:
 
     void loadGroup(Group* group, bool create, QSharedPointer<Database> database);
     void clear();
+
+    void addEditPage(IEditGroupPage* page);
 
 signals:
     void editFinished(bool accepted);
@@ -60,12 +76,17 @@ private:
     Group::TriState triStateFromIndex(int index);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
+
     QPointer<QWidget> m_editGroupWidgetMain;
     QPointer<EditWidgetIcons> m_editGroupWidgetIcons;
     QPointer<EditWidgetProperties> m_editWidgetProperties;
 
+    QScopedPointer<Group> m_temporaryGroup;
     QPointer<Group> m_group;
     QSharedPointer<Database> m_db;
+
+    class ExtraPage;
+    QList<ExtraPage> m_extraPages;
 
     Q_DISABLE_COPY(EditGroupWidget)
 };

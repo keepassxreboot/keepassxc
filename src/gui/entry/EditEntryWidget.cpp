@@ -44,8 +44,8 @@
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
 #ifdef WITH_XC_SSHAGENT
+#include "crypto/ssh/OpenSSHKey.h"
 #include "sshagent/KeeAgentSettings.h"
-#include "sshagent/OpenSSHKey.h"
 #include "sshagent/SSHAgent.h"
 #endif
 #include "gui/Clipboard.h"
@@ -67,11 +67,14 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
+    , m_customData(new CustomData())
     , m_mainWidget(new QWidget())
     , m_advancedWidget(new QWidget())
     , m_iconsWidget(new EditWidgetIcons())
     , m_autoTypeWidget(new QWidget())
+#ifdef WITH_XC_SSHAGENT
     , m_sshAgentWidget(new QWidget())
+#endif
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
     , m_entryAttributes(new EntryAttributes(this))
@@ -87,6 +90,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupAdvanced();
     setupIcon();
     setupAutoType();
+
 #ifdef WITH_XC_SSHAGENT
     if (config()->get("SSHAgent", false).toBool()) {
         setupSSHAgent();
@@ -95,6 +99,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
         m_sshAgentEnabled = false;
     }
 #endif
+
     setupProperties();
     setupHistory();
     setupEntryUpdate();
@@ -111,6 +116,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 
     m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
+
+    m_editWidgetProperties->setCustomData(m_customData.data());
 }
 
 EditEntryWidget::~EditEntryWidget()
@@ -543,13 +550,13 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
         return false;
     }
 
-    if (!key.parse(privateKeyData)) {
+    if (!key.parsePKCS1PEM(privateKeyData)) {
         showMessage(key.errorString(), MessageWidget::Error);
         return false;
     }
 
     if (key.encrypted() && (decrypt || key.publicKey().isEmpty())) {
-        if (!key.openPrivateKey(m_entry->password())) {
+        if (!key.openKey(m_entry->password())) {
             showMessage(key.errorString(), MessageWidget::Error);
             return false;
         }
@@ -684,6 +691,8 @@ void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const Q
 
 void EditEntryWidget::setForms(Entry* entry, bool restore)
 {
+    m_customData->copyDataFrom(entry->customData());
+
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameEdit->setReadOnly(m_history);
     m_mainUi->urlEdit->setReadOnly(m_history);
@@ -779,7 +788,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #endif
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());
-    m_editWidgetProperties->setCustomData(entry->customData());
 
     if (!m_history && !restore) {
         m_historyModel->setEntries(entry->historyItems());
@@ -888,7 +896,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
-    entry->customData()->copyDataFrom(m_editWidgetProperties->customData());
+    entry->customData()->copyDataFrom(m_customData.data());
     entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
     entry->setUsername(m_mainUi->usernameEdit->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));

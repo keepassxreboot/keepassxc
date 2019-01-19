@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ASN1KEY_H
-#define ASN1KEY_H
+#ifndef KEEPASSXC_ASN1KEY_H
+#define KEEPASSXC_ASN1KEY_H
 
 #include "OpenSSHKey.h"
 #include <QtCore>
@@ -25,7 +25,8 @@
 namespace ASN1Key
 {
     bool parseDSA(QByteArray& ba, OpenSSHKey& key);
-    bool parseRSA(QByteArray& ba, OpenSSHKey& key);
-} // namespace ASN1Key
+    bool parsePrivateRSA(QByteArray& ba, OpenSSHKey& key);
+    bool parsePublicRSA(QByteArray& ba, OpenSSHKey& key);
+}
 
-#endif // ASN1KEY_H
+#endif // KEEPASSXC_ASN1KEY_H

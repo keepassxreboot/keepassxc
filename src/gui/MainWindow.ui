@@ -640,8 +640,19 @@
     <string>Report a &amp;bug</string>
    </property>
   </action>
+  <action name="actionShare_entry">
+   <property name="text">
+    <string>Share entry</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>MessageWidget</class>
    <extends>QWidget</extends>
@@ -664,12 +675,6 @@
    <class>WelcomeWidget</class>
    <extends>QWidget</extends>
    <header>gui/WelcomeWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PasswordGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/PasswordGeneratorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
