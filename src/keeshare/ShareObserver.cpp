@@ -51,105 +51,111 @@
 
 namespace
 {
-static const QString KeeShare_Signature("container.share.signature");
-static const QString KeeShare_Container("container.share.kdbx");
+    static const QString KeeShare_Signature("container.share.signature");
+    static const QString KeeShare_Container("container.share.kdbx");
 
-enum Trust
-{
-    Invalid,
-    Own,
-    UntrustedForever,
-    UntrustedOnce,
-    TrustedOnce,
-    TrustedForever,
-};
+    enum Trust
+    {
+        Invalid,
+        Own,
+        UntrustedForever,
+        UntrustedOnce,
+        TrustedOnce,
+        TrustedForever,
+    };
 
-bool isOfExportType(const QFileInfo &fileInfo, const QString type)
-{
-     return fileInfo.fileName().endsWith(type, Qt::CaseInsensitive);
-}
+    bool isOfExportType(const QFileInfo& fileInfo, const QString type)
+    {
+        return fileInfo.fileName().endsWith(type, Qt::CaseInsensitive);
+    }
 
-QPair<Trust, KeeShareSettings::Certificate> check(QByteArray& data,
-                                                                  const KeeShareSettings::Reference& reference,
-                                                                  const KeeShareSettings::Certificate& ownCertificate,
-                                                                  const QList<KeeShareSettings::ScopedCertificate>& knownCertificates,
-                                                                  const KeeShareSettings::Sign& sign)
-{
-     KeeShareSettings::Certificate certificate;
-     if (!sign.signature.isEmpty()) {
-          certificate = sign.certificate;
-          auto key = sign.certificate.sshKey();
-          key.openKey(QString());
-          const auto signer = Signature();
-          if (!signer.verify(data, sign.signature, key)) {
+    QPair<Trust, KeeShareSettings::Certificate>
+    check(QByteArray& data,
+          const KeeShareSettings::Reference& reference,
+          const KeeShareSettings::Certificate& ownCertificate,
+          const QList<KeeShareSettings::ScopedCertificate>& knownCertificates,
+          const KeeShareSettings::Sign& sign)
+    {
+        KeeShareSettings::Certificate certificate;
+        if (!sign.signature.isEmpty()) {
+            certificate = sign.certificate;
+            auto key = sign.certificate.sshKey();
+            key.openKey(QString());
+            const auto signer = Signature();
+            if (!signer.verify(data, sign.signature, key)) {
                 qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
                 return {Invalid, KeeShareSettings::Certificate()};
-          }
+            }
 
-          if (ownCertificate.key == sign.certificate.key) {
-                return {Own, ownCertificate };
-          }
-     }
-     enum Scope { Invalid, Global, Local };
-     Scope scope = Invalid;
-     KeeShareSettings::Trust trusted = KeeShareSettings::Trust::Ask;
-     for (const auto& scopedCertificate : knownCertificates) {
-          if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
+            if (ownCertificate.key == sign.certificate.key) {
+                return {Own, ownCertificate};
+            }
+        }
+        enum Scope
+        {
+            Invalid,
+            Global,
+            Local
+        };
+        Scope scope = Invalid;
+        KeeShareSettings::Trust trusted = KeeShareSettings::Trust::Ask;
+        for (const auto& scopedCertificate : knownCertificates) {
+            if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
                 // Global scope is overwritten by local scope
                 scope = Global;
                 trusted = scopedCertificate.trust;
-          }
-          if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
+            }
+            if (scopedCertificate.certificate.key == certificate.key && scopedCertificate.path == reference.path) {
                 scope = Local;
                 trusted = scopedCertificate.trust;
                 break;
-          }
-     }
-     if (scope != Invalid && trusted != KeeShareSettings::Trust::Ask){
-          // we introduce now scopes if there is a global
-          return {trusted == KeeShareSettings::Trust::Trusted ? TrustedForever : UntrustedForever, certificate};
-     }
+            }
+        }
+        if (scope != Invalid && trusted != KeeShareSettings::Trust::Ask) {
+            // we introduce now scopes if there is a global
+            return {trusted == KeeShareSettings::Trust::Trusted ? TrustedForever : UntrustedForever, certificate};
+        }
 
-     QMessageBox warning;
-     if (sign.signature.isEmpty()){
-          warning.setIcon(QMessageBox::Warning);
-          warning.setWindowTitle(ShareObserver::tr("Import from container without signature"));
-          warning.setText(ShareObserver::tr("We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?")
+        QMessageBox warning;
+        if (sign.signature.isEmpty()) {
+            warning.setIcon(QMessageBox::Warning);
+            warning.setWindowTitle(ShareObserver::tr("Import from container without signature"));
+            warning.setText(ShareObserver::tr("We cannot verify the source of the shared container because it is not "
+                                              "signed. Do you really want to import from %1?")
                                 .arg(reference.path));
-     }
-     else {
-          warning.setIcon(QMessageBox::Question);
-          warning.setWindowTitle(ShareObserver::tr("Import from container with certificate"));
-          warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2 from %3")
+        } else {
+            warning.setIcon(QMessageBox::Question);
+            warning.setWindowTitle(ShareObserver::tr("Import from container with certificate"));
+            warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2 from %3")
                                 .arg(certificate.signer, certificate.fingerprint(), reference.path));
-     }
-     auto untrustedOnce = warning.addButton(ShareObserver::tr("Not this time"), QMessageBox::ButtonRole::NoRole);
-     auto untrustedForever = warning.addButton(ShareObserver::tr("Never"), QMessageBox::ButtonRole::NoRole);
-     auto trustedForever = warning.addButton(ShareObserver::tr("Always"), QMessageBox::ButtonRole::YesRole);
-     auto trustedOnce = warning.addButton(ShareObserver::tr("Just this time"), QMessageBox::ButtonRole::YesRole);
-     warning.setDefaultButton(untrustedOnce);
-     warning.exec();
-     if (warning.clickedButton() == trustedForever){
-          return {TrustedForever, certificate };
-     }
-     if (warning.clickedButton() == trustedOnce){
-          return {TrustedOnce, certificate};
-     }
-     if (warning.clickedButton() == untrustedOnce){
-          return {UntrustedOnce, certificate };
-     }
-     if (warning.clickedButton() == untrustedForever){
-          return {UntrustedForever, certificate };
-     }
-     return {UntrustedOnce, certificate };
-}
+        }
+        auto untrustedOnce = warning.addButton(ShareObserver::tr("Not this time"), QMessageBox::ButtonRole::NoRole);
+        auto untrustedForever = warning.addButton(ShareObserver::tr("Never"), QMessageBox::ButtonRole::NoRole);
+        auto trustedForever = warning.addButton(ShareObserver::tr("Always"), QMessageBox::ButtonRole::YesRole);
+        auto trustedOnce = warning.addButton(ShareObserver::tr("Just this time"), QMessageBox::ButtonRole::YesRole);
+        warning.setDefaultButton(untrustedOnce);
+        warning.exec();
+        if (warning.clickedButton() == trustedForever) {
+            return {TrustedForever, certificate};
+        }
+        if (warning.clickedButton() == trustedOnce) {
+            return {TrustedOnce, certificate};
+        }
+        if (warning.clickedButton() == untrustedOnce) {
+            return {UntrustedOnce, certificate};
+        }
+        if (warning.clickedButton() == untrustedForever) {
+            return {UntrustedForever, certificate};
+        }
+        return {UntrustedOnce, certificate};
+    }
 
 } // End Namespace
 
 ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
-          : QObject(parent)
-          , m_db(std::move(db))
-          , m_fileWatcher(new BulkFileWatcher(this))
+    : QObject(parent)
+    , m_db(std::move(db))
+    , m_fileWatcher(new BulkFileWatcher(this))
 {
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(handleDatabaseChanged()));
 
@@ -195,8 +201,9 @@ void ShareObserver::reinitialize()
         m_groupToReference.remove(couple.group);
         m_referenceToGroup.remove(couple.oldReference);
         m_shareToGroup.remove(couple.oldReference.path);
-        if (couple.newReference.isValid() && ((active.in && couple.newReference.isImporting())
-                                              || (active.out && couple.newReference.isExporting()))) {
+        if (couple.newReference.isValid()
+            && ((active.in && couple.newReference.isImporting())
+                || (active.out && couple.newReference.isExporting()))) {
             m_groupToReference[couple.group] = couple.newReference;
             m_referenceToGroup[couple.newReference] = couple.group;
             m_shareToGroup[couple.newReference.path] = couple.group;
@@ -213,27 +220,27 @@ void ShareObserver::reinitialize()
         }
 
         if (!update.newReference.path.isEmpty() && update.newReference.type != KeeShareSettings::Inactive) {
-           m_fileWatcher->addPath(update.newReference.path);
+            m_fileWatcher->addPath(update.newReference.path);
         }
 
         if (update.newReference.isImporting()) {
-            const  auto result = this->importFromReferenceContainer(update.newReference.path);
+            const auto result = this->importFromReferenceContainer(update.newReference.path);
             if (!result.isValid()) {
-                 // tolerable result - blocked import or missing source
-                 continue;
-             }
+                // tolerable result - blocked import or missing source
+                continue;
+            }
 
-             if (result.isError()) {
-                  error << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
-             } else if (result.isWarning()) {
-                 warning << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
-             } else if (result.isInfo()) {
-                  success << tr("Import from %1 successful (%2)").arg(result.path).arg(result.message);
-             } else {
-                  success << tr("Imported from %1").arg(result.path);
-             }
-          }
-     }
+            if (result.isError()) {
+                error << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
+            } else if (result.isWarning()) {
+                warning << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
+            } else if (result.isInfo()) {
+                success << tr("Import from %1 successful (%2)").arg(result.path).arg(result.message);
+            } else {
+                success << tr("Imported from %1").arg(result.path);
+            }
+        }
+    }
 
     notifyAbout(success, warning, error);
 }
@@ -301,11 +308,12 @@ void ShareObserver::handleFileUpdated(const QString& path)
     notifyAbout(success, warning, error);
 }
 
-ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSettings::Reference& reference,
+                                                               Group* targetGroup)
 {
 #if !defined(WITH_XC_KEESHARE_SECURE)
     Q_UNUSED(targetGroup);
-    return { reference.path, Result::Warning, tr("Signed share container are not supported - import prevented") };
+    return {reference.path, Result::Warning, tr("Signed share container are not supported - import prevented")};
 #else
     QuaZip zip(reference.path);
     if (!zip.open(QuaZip::mdUnzip)) {
@@ -359,25 +367,26 @@ ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSet
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
+        const auto trusted =
+            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
-                 scopedCertificate.certificate.signer = trust.second.signer;
-                 scopedCertificate.path = reference.path;
-                  scopedCertificate.trust = trusted;
-                  found = true;
+                scopedCertificate.certificate.signer = trust.second.signer;
+                scopedCertificate.path = reference.path;
+                scopedCertificate.trust = trusted;
+                found = true;
             }
         }
         if (!found) {
-            foreign.certificates << KeeShareSettings::ScopedCertificate{ reference.path, trust.second, trusted};
+            foreign.certificates << KeeShareSettings::ScopedCertificate{reference.path, trust.second, trusted};
             // we need to update with the new signer
             KeeShare::setForeign(foreign);
         }
         if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
-                     qPrintable(reference.path),
-                     qPrintable(targetGroup->name()),
-                     qPrintable(sourceDb->rootGroup()->name()));
+                   qPrintable(reference.path),
+                   qPrintable(targetGroup->name()),
+                   qPrintable(sourceDb->rootGroup()->name()));
             Merger merger(sourceDb->rootGroup(), targetGroup);
             merger.setForcedMergeMode(Group::Synchronize);
             const bool changed = merger.merge();
@@ -391,16 +400,16 @@ ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSet
     case TrustedOnce:
     case Own: {
         qDebug("Synchronize %s %s with %s",
-                qPrintable(reference.path),
-                qPrintable(targetGroup->name()),
-                qPrintable(sourceDb->rootGroup()->name()));
-       Merger merger(sourceDb->rootGroup(), targetGroup);
-       merger.setForcedMergeMode(Group::Synchronize);
-       const bool changed = merger.merge();
-       if (changed) {
-           return {reference.path, Result::Success, tr("Successful signed import")};
-       }
-       return {};
+               qPrintable(reference.path),
+               qPrintable(targetGroup->name()),
+               qPrintable(sourceDb->rootGroup()->name()));
+        Merger merger(sourceDb->rootGroup(), targetGroup);
+        merger.setForcedMergeMode(Group::Synchronize);
+        const bool changed = merger.merge();
+        if (changed) {
+            return {reference.path, Result::Success, tr("Successful signed import")};
+        }
+        return {};
     }
     default:
         Q_ASSERT(false);
@@ -409,14 +418,15 @@ ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSet
 #endif
 }
 
-ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareSettings::Reference& reference,
+                                                                 Group* targetGroup)
 {
 #if !defined(WITH_XC_KEESHARE_INSECURE)
     Q_UNUSED(targetGroup);
     return {reference.path, Result::Warning, tr("Unsigned share container are not supported - import prevented")};
 #else
     QFile file(reference.path);
-    if (!file.open(QIODevice::ReadOnly)){
+    if (!file.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open file %s.", qPrintable(reference.path));
         return {reference.path, Result::Error, tr("File is not readable")};
     }
@@ -438,34 +448,35 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
     const auto own = KeeShare::own();
     const auto sign = KeeShareSettings::Sign(); // invalid sign
     auto trust = check(payload, reference, own.certificate, foreign.certificates, sign);
-    switch(trust.first) {
+    switch (trust.first) {
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
+        const auto trusted =
+            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
-                 scopedCertificate.certificate.signer = trust.second.signer;
-                 scopedCertificate.path = reference.path;
-                 scopedCertificate.trust = trusted;
-                 found = true;
+                scopedCertificate.certificate.signer = trust.second.signer;
+                scopedCertificate.path = reference.path;
+                scopedCertificate.trust = trusted;
+                found = true;
             }
         }
         if (!found) {
-            foreign.certificates << KeeShareSettings::ScopedCertificate{ reference.path, trust.second, trusted};
+            foreign.certificates << KeeShareSettings::ScopedCertificate{reference.path, trust.second, trusted};
             // we need to update with the new signer
             KeeShare::setForeign(foreign);
         }
         if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
-                    qPrintable(reference.path),
-                    qPrintable(targetGroup->name()),
-                    qPrintable(sourceDb->rootGroup()->name()));
+                   qPrintable(reference.path),
+                   qPrintable(targetGroup->name()),
+                   qPrintable(sourceDb->rootGroup()->name()));
             Merger merger(sourceDb->rootGroup(), targetGroup);
             merger.setForcedMergeMode(Group::Synchronize);
             const bool changed = merger.merge();
             if (changed) {
-                 return {reference.path, Result::Success, tr("Successful signed import")};
+                return {reference.path, Result::Success, tr("Successful signed import")};
             }
         }
         return {};
@@ -491,7 +502,8 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
 #endif
 }
 
-ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup)
+ShareObserver::Result ShareObserver::importContainerInto(const KeeShareSettings::Reference& reference,
+                                                         Group* targetGroup)
 {
     const QFileInfo info(reference.path);
     if (!info.exists()) {
@@ -601,7 +613,7 @@ Database* ShareObserver::exportIntoContainer(const KeeShareSettings::Reference& 
     }
     for (auto* targetEntry : targetRoot->entriesRecursive(false)) {
         if (targetEntry->hasReferences()) {
-           resolveReferenceAttributes(targetEntry, sourceDb);
+            resolveReferenceAttributes(targetEntry, sourceDb);
         }
     }
     return targetDb;
@@ -612,11 +624,13 @@ QSharedPointer<Database> ShareObserver::database()
     return m_db;
 }
 
-ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const KeeShareSettings::Reference &reference, Database *targetDb)
+ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const KeeShareSettings::Reference& reference,
+                                                                        Database* targetDb)
 {
 #if !defined(WITH_XC_KEESHARE_SECURE)
     Q_UNUSED(targetDb);
-    return {reference.path, Result::Warning, tr("Overwriting signed share container is not supported - export prevented")};
+    return {
+        reference.path, Result::Warning, tr("Overwriting signed share container is not supported - export prevented")};
 #else
     QByteArray bytes;
     {
@@ -657,7 +671,7 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
             ::qWarning("Embedding signature failed: %d", zip.getZipError());
             return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
         }
-          file.close();
+        file.close();
     }
     {
         QuaZipFile file(&zip);
@@ -678,11 +692,14 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
 #endif
 }
 
-ShareObserver::Result ShareObserver::exportIntoReferenceUnsignedContainer(const KeeShareSettings::Reference &reference, Database *targetDb)
+ShareObserver::Result ShareObserver::exportIntoReferenceUnsignedContainer(const KeeShareSettings::Reference& reference,
+                                                                          Database* targetDb)
 {
 #if !defined(WITH_XC_KEESHARE_INSECURE)
     Q_UNUSED(targetDb);
-    return {reference.path, Result::Warning, tr("Overwriting unsigned share container is not supported - export prevented")};
+    return {reference.path,
+            Result::Warning,
+            tr("Overwriting unsigned share container is not supported - export prevented")};
 #else
     QFile file(reference.path);
     const bool fileOpened = file.open(QIODevice::WriteOnly);

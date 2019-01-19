@@ -35,7 +35,7 @@ class Database;
 
 class ShareObserver : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit ShareObserver(QSharedPointer<Database> db, QObject* parent = nullptr);
@@ -79,8 +79,9 @@ private:
     static void resolveReferenceAttributes(Entry* targetEntry, const Database* sourceDb);
 
     static Database* exportIntoContainer(const KeeShareSettings::Reference& reference, const Group* sourceRoot);
-    static Result exportIntoReferenceUnsignedContainer(const KeeShareSettings::Reference &reference, Database *targetDb);
-    static Result exportIntoReferenceSignedContainer(const KeeShareSettings::Reference &reference, Database *targetDb);
+    static Result exportIntoReferenceUnsignedContainer(const KeeShareSettings::Reference& reference,
+                                                       Database* targetDb);
+    static Result exportIntoReferenceSignedContainer(const KeeShareSettings::Reference& reference, Database* targetDb);
     static Result importSingedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
     static Result importUnsignedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
     static Result importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);

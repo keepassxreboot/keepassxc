@@ -45,8 +45,8 @@ void DatabaseSettingsWidgetKeeShare::loadSettings(QSharedPointer<Database> db)
 
     m_referencesModel.reset(new QStandardItemModel());
 
-    m_referencesModel->setHorizontalHeaderLabels(
-        QStringList() << tr("Breadcrumb") << tr("Type") << tr("Path") << tr("Last Signer") << tr("Certificates"));
+    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Breadcrumb") << tr("Type") << tr("Path")
+                                                               << tr("Last Signer") << tr("Certificates"));
     const QList<Group*> groups = db->rootGroup()->groupsRecursive(true);
     for (const Group* group : groups) {
         if (!KeeShare::isShared(group)) {

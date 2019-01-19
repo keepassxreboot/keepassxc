@@ -97,7 +97,7 @@ namespace KeeShareSettings
             }
             specific(reader);
         }
-    }
+    } // namespace
 
     void Certificate::serialize(QXmlStreamWriter& writer, const Certificate& certificate)
     {
@@ -295,12 +295,12 @@ namespace KeeShareSettings
         return own;
     }
 
-    bool ScopedCertificate::operator==(const ScopedCertificate &other) const
+    bool ScopedCertificate::operator==(const ScopedCertificate& other) const
     {
         return trust == other.trust && path == other.path && certificate == other.certificate;
     }
 
-    bool ScopedCertificate::operator!=(const ScopedCertificate &other) const
+    bool ScopedCertificate::operator!=(const ScopedCertificate& other) const
     {
         return !operator==(other);
     }
@@ -309,26 +309,26 @@ namespace KeeShareSettings
     {
         writer.writeAttribute("Path", scopedCertificate.path);
         QString trust = "Ask";
-        if(scopedCertificate.trust == KeeShareSettings::Trust::Trusted) {
+        if (scopedCertificate.trust == KeeShareSettings::Trust::Trusted) {
             trust = "Trusted";
         }
-        if(scopedCertificate.trust == KeeShareSettings::Trust::Untrusted){
+        if (scopedCertificate.trust == KeeShareSettings::Trust::Untrusted) {
             trust = "Untrusted";
         }
         writer.writeAttribute("Trust", trust);
         Certificate::serialize(writer, scopedCertificate.certificate);
     }
 
-    ScopedCertificate ScopedCertificate::deserialize(QXmlStreamReader &reader)
+    ScopedCertificate ScopedCertificate::deserialize(QXmlStreamReader& reader)
     {
         ScopedCertificate scopedCertificate;
         scopedCertificate.path = reader.attributes().value("Path").toString();
         scopedCertificate.trust = KeeShareSettings::Trust::Ask;
         auto trust = reader.attributes().value("Trust").toString();
-        if(trust.compare("Trusted", Qt::CaseInsensitive) == 0) {
+        if (trust.compare("Trusted", Qt::CaseInsensitive) == 0) {
             scopedCertificate.trust = KeeShareSettings::Trust::Trusted;
         }
-        if(trust.compare("Untrusted", Qt::CaseInsensitive) == 0) {
+        if (trust.compare("Untrusted", Qt::CaseInsensitive) == 0) {
             scopedCertificate.trust = KeeShareSettings::Trust::Untrusted;
         }
         scopedCertificate.certificate = Certificate::deserialize(reader);
@@ -494,4 +494,4 @@ namespace KeeShareSettings
         });
         return sign;
     }
-}
+} // namespace KeeShareSettings

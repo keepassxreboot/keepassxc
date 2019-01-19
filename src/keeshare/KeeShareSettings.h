@@ -99,7 +99,8 @@ namespace KeeShareSettings
         static Own generate();
     };
 
-    enum class Trust {
+    enum class Trust
+    {
         Ask,
         Untrusted,
         Trusted
@@ -113,8 +114,14 @@ namespace KeeShareSettings
         bool operator==(const ScopedCertificate& other) const;
         bool operator!=(const ScopedCertificate& other) const;
 
-        bool isUnknown() const { return certificate.isNull(); }
-        bool isKnown() const { return !certificate.isNull(); }
+        bool isUnknown() const
+        {
+            return certificate.isNull();
+        }
+        bool isKnown() const
+        {
+            return !certificate.isNull();
+        }
 
         static void serialize(QXmlStreamWriter& writer, const ScopedCertificate& certificate);
         static ScopedCertificate deserialize(QXmlStreamReader& reader);
@@ -169,6 +176,6 @@ namespace KeeShareSettings
         static QString serialize(const Reference& reference);
         static Reference deserialize(const QString& raw);
     };
-};
+}; // namespace KeeShareSettings
 
 #endif // KEEPASSXC_KEESHARESETTINGS_H

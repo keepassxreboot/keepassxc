@@ -32,11 +32,11 @@
 
 namespace
 {
-static const QString KeeShare_Reference("KeeShare/Reference");
-static const QString KeeShare_Own("KeeShare/Settings.own");
-static const QString KeeShare_Foreign("KeeShare/Settings.foreign");
-static const QString KeeShare_Active("KeeShare/Settings.active");
-}
+    static const QString KeeShare_Reference("KeeShare/Reference");
+    static const QString KeeShare_Own("KeeShare/Settings.own");
+    static const QString KeeShare_Foreign("KeeShare/Settings.foreign");
+    static const QString KeeShare_Active("KeeShare/Settings.active");
+} // namespace
 
 KeeShare* KeeShare::m_instance = nullptr;
 
@@ -129,13 +129,13 @@ bool KeeShare::isEnabled(const Group* group)
 {
     const auto reference = KeeShare::referenceOf(group);
 #if !defined(WITH_XC_KEESHARE_SECURE)
-    if (reference.path.endsWith(signedContainerFileType(), Qt::CaseInsensitive)){
-         return false;
+    if (reference.path.endsWith(signedContainerFileType(), Qt::CaseInsensitive)) {
+        return false;
     }
 #endif
 #if !defined(WITH_XC_KEESHARE_INSECURE)
-    if (reference.path.endsWith(unsignedContainerFileType(), Qt::CaseInsensitive)){
-         return false;
+    if (reference.path.endsWith(unsignedContainerFileType(), Qt::CaseInsensitive)) {
+        return false;
     }
 #endif
     const auto active = KeeShare::active();
@@ -198,13 +198,13 @@ void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Da
     }
 }
 
-const QString &KeeShare::signedContainerFileType()
+const QString& KeeShare::signedContainerFileType()
 {
     static const QString filetype("kdbx.share");
     return filetype;
 }
 
-const QString &KeeShare::unsignedContainerFileType()
+const QString& KeeShare::unsignedContainerFileType()
 {
     static const QString filetype("kdbx");
     return filetype;
