@@ -127,6 +127,8 @@ void EditGroupWidgetKeeShare::showSharingState()
                     .arg(supportedExtensions.join(", ")),
                 MessageWidget::Warning);
             return;
+        } else {
+            m_ui->messageWidget->hide();
         }
     }
     const auto active = KeeShare::active();

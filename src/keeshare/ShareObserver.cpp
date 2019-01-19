@@ -367,21 +367,23 @@ ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSet
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted =
-            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
+        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted
+                                                           : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;
                 scopedCertificate.path = reference.path;
                 scopedCertificate.trust = trusted;
                 found = true;
+                break;
             }
         }
         if (!found) {
             foreign.certificates << KeeShareSettings::ScopedCertificate{reference.path, trust.second, trusted};
-            // we need to update with the new signer
-            KeeShare::setForeign(foreign);
         }
+        // update foreign certificates with new settings
+        KeeShare::setForeign(foreign);
+
         if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
                    qPrintable(reference.path),
@@ -452,21 +454,23 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted =
-            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
+        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted
+                                                           : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;
                 scopedCertificate.path = reference.path;
                 scopedCertificate.trust = trusted;
                 found = true;
+                break;
             }
         }
         if (!found) {
             foreign.certificates << KeeShareSettings::ScopedCertificate{reference.path, trust.second, trusted};
-            // we need to update with the new signer
-            KeeShare::setForeign(foreign);
         }
+        // update foreign certificates with new settings
+        KeeShare::setForeign(foreign);
+
         if (trust.first == TrustedForever) {
             qDebug("Synchronize %s %s with %s",
                    qPrintable(reference.path),
