@@ -135,8 +135,14 @@ QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
     }
 
     auto db = QSharedPointer<Database>::create();
-    db->open(databaseFilename, compositeKey, nullptr, false);
-    return db;
+    QString error;
+    if (db->open(databaseFilename, compositeKey, &error, false)) {
+        return db;
+    }
+    else {
+        err << error << endl;
+        return {};
+    }
 }
 
 /**
