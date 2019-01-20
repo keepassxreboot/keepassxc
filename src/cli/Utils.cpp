@@ -138,8 +138,7 @@ QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
     QString error;
     if (db->open(databaseFilename, compositeKey, &error, false)) {
         return db;
-    }
-    else {
+    } else {
         err << error << endl;
         return {};
     }
