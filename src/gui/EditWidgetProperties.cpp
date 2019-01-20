@@ -18,9 +18,9 @@
 #include "EditWidgetProperties.h"
 #include "ui_EditWidgetProperties.h"
 
+#include "MessageBox.h"
 #include "core/CustomData.h"
 #include "core/TimeInfo.h"
-#include "MessageBox.h"
 
 #include <QUuid>
 
@@ -105,8 +105,8 @@ void EditWidgetProperties::update()
         m_ui->removeCustomDataButton->setEnabled(false);
     } else {
         for (const QString& key : m_customData->keys()) {
-            m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(key)
-                                                                 << new QStandardItem(m_customData->value(key)));
+            m_customDataModel->appendRow(QList<QStandardItem*>()
+                                         << new QStandardItem(key) << new QStandardItem(m_customData->value(key)));
         }
         m_ui->removeCustomDataButton->setEnabled(!m_customData->isEmpty());
     }

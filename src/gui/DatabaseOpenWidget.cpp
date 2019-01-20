@@ -202,9 +202,8 @@ void DatabaseOpenWidget::openDatabase()
     bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
     if (!ok) {
-        m_ui->messageWidget->showMessage(
-            tr("Unable to open the database:\n%1").arg(error),
-            MessageWidget::MessageType::Error);
+        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
+                                         MessageWidget::MessageType::Error);
         return;
     }
 
@@ -232,8 +231,7 @@ void DatabaseOpenWidget::openDatabase()
         }
         emit dialogFinished(true);
     } else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
-                                         MessageWidget::Error);
+        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error), MessageWidget::Error);
         m_ui->editPassword->setText("");
 
 #ifdef WITH_XC_TOUCHID

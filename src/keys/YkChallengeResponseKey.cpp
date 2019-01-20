@@ -67,9 +67,8 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int
             emit userInteractionRequired();
         }
 
-        auto result = AsyncTask::runAndWaitForFuture([this, challenge]() {
-            return YubiKey::instance()->challenge(m_slot, true, challenge, m_key);
-        });
+        auto result = AsyncTask::runAndWaitForFuture(
+            [this, challenge]() { return YubiKey::instance()->challenge(m_slot, true, challenge, m_key); });
 
         if (m_blocking) {
             emit userConfirmed();

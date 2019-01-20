@@ -138,7 +138,6 @@ void EditEntryWidget::setupMain()
     m_mainUi->fetchFaviconButton->setVisible(false);
 #endif
 
-
     connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
 #ifdef WITH_XC_NETWORKING
@@ -309,8 +308,8 @@ void EditEntryWidget::setupEntryUpdate()
         connect(m_sshAgentUi->externalFileEdit, SIGNAL(textChanged(QString)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->addKeyToAgentCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->removeKeyFromAgentCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
-        connect(m_sshAgentUi->requireUserConfirmationCheckBox, SIGNAL(stateChanged(int)),
-                this, SLOT(setUnsavedChanges()));
+        connect(
+            m_sshAgentUi->requireUserConfirmationCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->lifetimeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setUnsavedChanges()));
         connect(m_sshAgentUi->lifetimeSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setUnsavedChanges()));
     }
@@ -370,7 +369,9 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->decryptButton, SIGNAL(clicked()), SLOT(decryptPrivateKey()));
     connect(m_sshAgentUi->copyToClipboardButton, SIGNAL(clicked()), SLOT(copyPublicKey()));
 
-    connect(m_advancedUi->attachmentsWidget->entryAttachments(), SIGNAL(entryAttachmentsModified()), SLOT(updateSSHAgentAttachments()));
+    connect(m_advancedUi->attachmentsWidget->entryAttachments(),
+            SIGNAL(entryAttachmentsModified()),
+            SLOT(updateSSHAgentAttachments()));
 
     addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
 }
@@ -591,8 +592,8 @@ void EditEntryWidget::addKeyToAgent()
         lifetime = m_sshAgentUi->lifetimeSpinBox->value();
     }
 
-    if (!SSHAgent::instance()->addIdentity(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked(),
-                                           static_cast<quint32>(lifetime), confirm)) {
+    if (!SSHAgent::instance()->addIdentity(
+            key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked(), static_cast<quint32>(lifetime), confirm)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
         return;
     }
@@ -662,7 +663,11 @@ QString EditEntryWidget::entryTitle() const
     }
 }
 
-void EditEntryWidget::loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database)
+void EditEntryWidget::loadEntry(Entry* entry,
+                                bool create,
+                                bool history,
+                                const QString& parentName,
+                                QSharedPointer<Database> database)
 {
     m_entry = entry;
     m_db = std::move(database);

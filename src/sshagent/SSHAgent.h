@@ -19,12 +19,12 @@
 #ifndef KEEPASSXC_SSHAGENT_H
 #define KEEPASSXC_SSHAGENT_H
 
-#include <QList>
 #include <QHash>
+#include <QList>
 #include <QtCore>
 
-#include "gui/DatabaseWidget.h"
 #include "crypto/ssh/OpenSSHKey.h"
+#include "gui/DatabaseWidget.h"
 
 class SSHAgent : public QObject
 {

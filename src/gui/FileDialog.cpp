@@ -193,7 +193,8 @@ QString FileDialog::getSaveFileName(QWidget* parent,
     }
 }
 
-QString FileDialog::getExistingDirectory(QWidget* parent, const QString& caption, QString dir, QFileDialog::Options options)
+QString
+FileDialog::getExistingDirectory(QWidget* parent, const QString& caption, QString dir, QFileDialog::Options options)
 {
     if (!m_nextDirName.isEmpty()) {
         QString result = m_nextDirName;

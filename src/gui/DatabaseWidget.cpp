@@ -32,8 +32,8 @@
 #include <QSplitter>
 
 #include "autotype/AutoType.h"
-#include "core/Database.h"
 #include "core/Config.h"
+#include "core/Database.h"
 #include "core/EntrySearcher.h"
 #include "core/FilePath.h"
 #include "core/FileWatcher.h"
@@ -42,18 +42,18 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/KeePass2Reader.h"
-#include "gui/FileDialog.h"
 #include "gui/Clipboard.h"
 #include "gui/CloneDialog.h"
-#include "gui/DatabaseOpenWidget.h"
 #include "gui/DatabaseOpenDialog.h"
-#include "gui/dbsettings/DatabaseSettingsDialog.h"
+#include "gui/DatabaseOpenWidget.h"
 #include "gui/EntryPreviewWidget.h"
+#include "gui/FileDialog.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
 #include "gui/TotpDialog.h"
-#include "gui/TotpSetupDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
+#include "gui/TotpSetupDialog.h"
+#include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -443,7 +443,7 @@ void DatabaseWidget::deleteSelectedEntries()
     // Confirm entry removal before moving forward
     auto* recycleBin = m_db->metadata()->recycleBin();
     bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))
-            || !m_db->metadata()->recycleBinEnabled();
+                     || !m_db->metadata()->recycleBinEnabled();
 
     if (!confirmDeleteEntries(selectedEntries, permanent)) {
         return;
@@ -462,15 +462,16 @@ void DatabaseWidget::deleteSelectedEntries()
             if (!references.isEmpty()) {
                 // Prompt for reference handling
                 auto result = MessageBox::question(
-                        this,
-                        tr("Replace references to entry?"),
-                        tr("Entry \"%1\" has %2 reference(s). "
-                           "Do you want to overwrite references with values, skip this entry, or delete anyway?", "",
-                           references.size())
-                                .arg((*it)->title().toHtmlEscaped())
-                                .arg(references.size()),
-                        MessageBox::Overwrite | MessageBox::Skip | MessageBox::Delete,
-                        MessageBox::Overwrite);
+                    this,
+                    tr("Replace references to entry?"),
+                    tr("Entry \"%1\" has %2 reference(s). "
+                       "Do you want to overwrite references with values, skip this entry, or delete anyway?",
+                       "",
+                       references.size())
+                        .arg((*it)->title().toHtmlEscaped())
+                        .arg(references.size()),
+                    MessageBox::Overwrite | MessageBox::Skip | MessageBox::Delete,
+                    MessageBox::Overwrite);
 
                 if (result == MessageBox::Overwrite) {
                     for (auto* entry : references) {
@@ -590,8 +591,7 @@ void DatabaseWidget::copyAttribute(QAction* action)
     Entry* currentEntry = m_entryView->currentEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(
-                currentEntry->resolveMultiplePlaceholders(
-                        currentEntry->attributes()->value(action->data().toString())));
+            currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
     }
 }
 
@@ -707,12 +707,12 @@ void DatabaseWidget::deleteGroup()
     bool isRecycleBin = recycleBin && (currentGroup == recycleBin);
     bool isRecycleBinSubgroup = recycleBin && currentGroup->findGroupByUuid(recycleBin->uuid());
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
-        auto result = MessageBox::question(this,
-                                           tr("Delete group"),
-                                           tr("Do you really want to delete the group \"%1\" for good?")
-                                               .arg(currentGroup->name().toHtmlEscaped()),
-                                           MessageBox::Delete | MessageBox::Cancel,
-                                           MessageBox::Cancel);
+        auto result = MessageBox::question(
+            this,
+            tr("Delete group"),
+            tr("Do you really want to delete the group \"%1\" for good?").arg(currentGroup->name().toHtmlEscaped()),
+            MessageBox::Delete | MessageBox::Cancel,
+            MessageBox::Cancel);
 
         if (result == MessageBox::Delete) {
             delete currentGroup;
@@ -722,7 +722,7 @@ void DatabaseWidget::deleteGroup()
                                            tr("Move group to recycle bin?"),
                                            tr("Do you really want to move the group "
                                               "\"%1\" to the recycle bin?")
-                                              .arg(currentGroup->name().toHtmlEscaped()),
+                                               .arg(currentGroup->name().toHtmlEscaped()),
                                            MessageBox::Move | MessageBox::Cancel,
                                            MessageBox::Cancel);
         if (result == MessageBox::Move) {
@@ -815,7 +815,10 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::connectDatabaseSignals()
 {
     // relayed Database events
-    connect(m_db.data(), SIGNAL(filePathChanged(QString,QString)), SIGNAL(databaseFilePathChanged(QString,QString)));
+    connect(m_db.data(),
+            SIGNAL(filePathChanged(QString, QString)),
+
+            SIGNAL(databaseFilePathChanged(QString, QString)));
     connect(m_db.data(), SIGNAL(databaseModified()), SIGNAL(databaseModified()));
     connect(m_db.data(), SIGNAL(databaseModified()), SLOT(onDatabaseModified()));
     connect(m_db.data(), SIGNAL(databaseSaved()), SIGNAL(databaseSaved()));
@@ -1208,9 +1211,11 @@ bool DatabaseWidget::lock()
     clipboard()->clearCopiedText();
 
     if (currentMode() == DatabaseWidget::Mode::EditMode) {
-        auto result = MessageBox::question(this, tr("Lock Database?"),
-            tr("You are editing an entry. Discard changes and lock anyway?"),
-            MessageBox::Discard | MessageBox::Cancel, MessageBox::Cancel);
+        auto result = MessageBox::question(this,
+                                           tr("Lock Database?"),
+                                           tr("You are editing an entry. Discard changes and lock anyway?"),
+                                           MessageBox::Discard | MessageBox::Cancel,
+                                           MessageBox::Cancel);
         if (result == MessageBox::Cancel) {
             return false;
         }
@@ -1228,8 +1233,11 @@ bool DatabaseWidget::lock()
             } else {
                 msg = tr("Database was modified.\nSave changes?");
             }
-            auto result = MessageBox::question(this, tr("Save changes?"), msg,
-                MessageBox::Save | MessageBox::Discard | MessageBox::Cancel, MessageBox::Save);
+            auto result = MessageBox::question(this,
+                                               tr("Save changes?"),
+                                               msg,
+                                               MessageBox::Save | MessageBox::Discard | MessageBox::Cancel,
+                                               MessageBox::Save);
             if (result == MessageBox::Save) {
                 if (!save()) {
                     return false;
@@ -1288,9 +1296,9 @@ void DatabaseWidget::reloadDatabaseFile()
     if (!config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db
         auto result = MessageBox::question(this,
-            tr("File has changed"),
-            tr("The database file has changed. Do you want to load the changes?"),
-            MessageBox::Yes | MessageBox::No);
+                                           tr("File has changed"),
+                                           tr("The database file has changed. Do you want to load the changes?"),
+                                           MessageBox::Yes | MessageBox::No);
 
         if (result == MessageBox::No) {
             // Notify everyone the database does not match the file
@@ -1306,7 +1314,8 @@ void DatabaseWidget::reloadDatabaseFile()
     if (db->open(database()->key(), &error, true)) {
         if (m_db->isModified()) {
             // Ask if we want to merge changes into new database
-            auto result = MessageBox::question(this,
+            auto result = MessageBox::question(
+                this,
                 tr("Merge Request"),
                 tr("The database file has changed and you have unsaved changes.\nDo you want to merge your changes?"),
                 MessageBox::Merge | MessageBox::Cancel,
@@ -1336,9 +1345,8 @@ void DatabaseWidget::reloadDatabaseFile()
         m_db->setReadOnly(isReadOnly);
         restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
     } else {
-        showMessage(
-            tr("Could not open the new database file while attempting to autoreload.\nError: %1").arg(error),
-            MessageWidget::Error);
+        showMessage(tr("Could not open the new database file while attempting to autoreload.\nError: %1").arg(error),
+                    MessageWidget::Error);
         // Mark db as modified since existing data may differ from file or file was deleted
         m_db->markAsModified();
     }
@@ -1525,12 +1533,16 @@ bool DatabaseWidget::saveAs()
     while (true) {
         QString oldFilePath = m_db->filePath();
         if (!QFileInfo(oldFilePath).exists()) {
-            oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString()
-                + "/" + tr("Passwords").append(".kdbx"));
+            oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString() + "/"
+                                                   + tr("Passwords").append(".kdbx"));
         }
-        QString newFilePath = fileDialog()->getSaveFileName(
-            this, tr("Save database as"), oldFilePath,
-            tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr, "kdbx");
+        QString newFilePath = fileDialog()->getSaveFileName(this,
+                                                            tr("Save database as"),
+                                                            oldFilePath,
+                                                            tr("KeePass 2 Database").append(" (*.kdbx)"),
+                                                            nullptr,
+                                                            nullptr,
+                                                            "kdbx");
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
@@ -1550,8 +1562,10 @@ bool DatabaseWidget::saveAs()
     }
 }
 
-void DatabaseWidget::showMessage(const QString& text, MessageWidget::MessageType type,
-                                 bool showClosebutton, int autoHideTimeout)
+void DatabaseWidget::showMessage(const QString& text,
+                                 MessageWidget::MessageType type,
+                                 bool showClosebutton,
+                                 int autoHideTimeout)
 {
     m_messageWidget->setCloseButtonVisible(showClosebutton);
     m_messageWidget->showMessage(text, type, autoHideTimeout);
@@ -1580,11 +1594,12 @@ void DatabaseWidget::emptyRecycleBin()
         return;
     }
 
-    auto result = MessageBox::question(this,
-                                       tr("Empty recycle bin?"),
-                                       tr("Are you sure you want to permanently delete everything from your recycle bin?"),
-                                       MessageBox::Empty | MessageBox::Cancel,
-                                       MessageBox::Cancel);
+    auto result =
+        MessageBox::question(this,
+                             tr("Empty recycle bin?"),
+                             tr("Are you sure you want to permanently delete everything from your recycle bin?"),
+                             MessageBox::Empty | MessageBox::Cancel,
+                             MessageBox::Cancel);
 
     if (result == MessageBox::Empty) {
         m_db->emptyRecycleBin();

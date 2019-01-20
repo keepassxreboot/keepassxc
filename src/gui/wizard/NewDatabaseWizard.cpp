@@ -34,7 +34,7 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
 {
     setWizardStyle(QWizard::MacStyle);
     setOption(QWizard::WizardOption::HaveHelpButton, false);
-    setOption(QWizard::WizardOption::NoDefaultButton, false);  // Needed for macOS
+    setOption(QWizard::WizardOption::NoDefaultButton, false); // Needed for macOS
 
     // clang-format off
     m_pages << new NewDatabaseWizardPageMetaData()

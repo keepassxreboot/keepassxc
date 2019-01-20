@@ -30,8 +30,8 @@
 #include "gui/MessageBox.h"
 
 #ifdef WITH_XC_NETWORKING
-#include <QtNetwork>
 #include <QNetworkAccessManager>
+#include <QtNetwork>
 #endif
 
 IconStruct::IconStruct()
@@ -416,7 +416,6 @@ void EditWidgetIcons::removeCustomIcon()
 
             int iconUseCount = entriesWithSameIcon.size() + groupsWithSameIcon.size();
             if (iconUseCount > 0) {
-
 
                 auto result = MessageBox::question(this,
                                                    tr("Confirm Delete"),

@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_ENTRYSEARCHER_H
 #define KEEPASSX_ENTRYSEARCHER_H
 
-#include <QString>
 #include <QRegularExpression>
+#include <QString>
 
 class Group;
 class Entry;
@@ -39,7 +39,8 @@ public:
 private:
     bool searchEntryImpl(const QString& searchString, Entry* entry);
 
-    enum class Field {
+    enum class Field
+    {
         Undefined,
         Title,
         Username,
@@ -58,7 +59,7 @@ private:
         bool exclude;
     };
 
-    QList<QSharedPointer<SearchTerm> > parseSearchTerms(const QString& searchString);
+    QList<QSharedPointer<SearchTerm>> parseSearchTerms(const QString& searchString);
 
     bool m_caseSensitive;
     QRegularExpression m_termParser;

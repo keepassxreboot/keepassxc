@@ -554,7 +554,8 @@ QList<Entry*> Group::entriesRecursive(bool includeHistoryItems) const
 QList<Entry*> Group::referencesRecursive(const Entry* entry) const
 {
     auto entries = entriesRecursive();
-    return QtConcurrent::blockingFiltered(entries, [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
+    return QtConcurrent::blockingFiltered(entries,
+                                          [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
 }
 
 Entry* Group::findEntryByUuid(const QUuid& uuid) const
@@ -600,29 +601,29 @@ Entry* Group::findEntryBySearchTerm(const QString& term, EntryReferenceType refe
         const QList<Entry*>& entryList = group->entries();
         for (Entry* entry : entryList) {
             switch (referenceType) {
-                case EntryReferenceType::Unknown:
-                    return nullptr;
-                case EntryReferenceType::Title:
-                    found = entry->title() == term;
-                    break;
-                case EntryReferenceType::UserName:
-                    found = entry->username() == term;
-                    break;
-                case EntryReferenceType::Password:
-                    found = entry->password() == term;
-                    break;
-                case EntryReferenceType::Url:
-                    found = entry->url() == term;
-                    break;
-                case EntryReferenceType::Notes:
-                    found = entry->notes() == term;
-                    break;
-                case EntryReferenceType::QUuid:
-                    found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(term.toLatin1()));
-                    break;
-                case EntryReferenceType::CustomAttributes:
-                    found = entry->attributes()->containsValue(term);
-                    break;
+            case EntryReferenceType::Unknown:
+                return nullptr;
+            case EntryReferenceType::Title:
+                found = entry->title() == term;
+                break;
+            case EntryReferenceType::UserName:
+                found = entry->username() == term;
+                break;
+            case EntryReferenceType::Password:
+                found = entry->password() == term;
+                break;
+            case EntryReferenceType::Url:
+                found = entry->url() == term;
+                break;
+            case EntryReferenceType::Notes:
+                found = entry->notes() == term;
+                break;
+            case EntryReferenceType::QUuid:
+                found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(term.toLatin1()));
+                break;
+            case EntryReferenceType::CustomAttributes:
+                found = entry->attributes()->containsValue(term);
+                break;
             }
 
             if (found) {

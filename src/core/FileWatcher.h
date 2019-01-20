@@ -58,11 +58,13 @@ class BulkFileWatcher : public QObject
 {
     Q_OBJECT
 
-    enum Signal {
+    enum Signal
+    {
         Created,
         Updated,
         Removed
     };
+
 public:
     explicit BulkFileWatcher(QObject* parent = nullptr);
 
@@ -70,7 +72,6 @@ public:
 
     void removePath(const QString& path);
     void addPath(const QString& path);
-
 
     void ignoreFileChanges(const QString& path);
 
@@ -88,7 +89,7 @@ private slots:
     void emitSignals();
 
 private:
-    void scheduleSignal(Signal event, const QString &path);
+    void scheduleSignal(Signal event, const QString& path);
 
 private:
     QMap<QString, bool> m_watchedPaths;
@@ -96,9 +97,9 @@ private:
     QFileSystemWatcher m_fileWatcher;
     QMap<QString, QMap<QString, bool>> m_watchedFilesInDirectory;
     // needed for Import/Export-References to prevent update after self-write
-    QTimer m_fileWatchUnblockTimer; 
+    QTimer m_fileWatchUnblockTimer;
     // needed to tolerate multiple signals for same event
-    QTimer m_pendingSignalsTimer; 
+    QTimer m_pendingSignalsTimer;
     QMap<QString, QList<Signal>> m_pendingSignals;
 };
 

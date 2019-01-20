@@ -30,8 +30,9 @@
 #include "keeshare/KeeShare.h"
 #endif
 
-namespace {
-constexpr int GeneralTabIndex = 0;
+namespace
+{
+    constexpr int GeneralTabIndex = 0;
 }
 
 EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
@@ -208,7 +209,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires =
-            entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
 }
 
@@ -258,7 +259,7 @@ void EntryPreviewWidget::updateEntryAutotypeTab()
     const auto associations = autotypeAssociations->getAll();
     for (const auto& assoc : associations) {
         const QString sequence =
-                assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
+            assoc.sequence.isEmpty() ? m_currentEntry->effectiveAutoTypeSequence() : assoc.sequence;
         items.append(new QTreeWidgetItem(m_ui->entryAutotypeTree, {assoc.window, sequence}));
     }
 
@@ -284,7 +285,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
     const QString expiresText =
-            groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 }
 

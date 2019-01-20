@@ -20,49 +20,45 @@
 
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
 
-QMap<QAbstractButton*, MessageBox::Button>
-MessageBox::m_addedButtonLookup =
+QMap<QAbstractButton*, MessageBox::Button> MessageBox::m_addedButtonLookup =
     QMap<QAbstractButton*, MessageBox::Button>();
 
-QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>>
-MessageBox::m_buttonDefs =
+QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>> MessageBox::m_buttonDefs =
     QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>>();
 
 void MessageBox::initializeButtonDefs()
 {
-    m_buttonDefs =
-        QMap<Button, std::pair<QString, QMessageBox::ButtonRole>>
-        {
-            // Reimplementation of Qt StandardButtons
-            {Ok, {stdButtonText(QMessageBox::Ok), QMessageBox::ButtonRole::AcceptRole}},
-            {Open, {stdButtonText(QMessageBox::Open), QMessageBox::ButtonRole::AcceptRole}},
-            {Save, {stdButtonText(QMessageBox::Save), QMessageBox::ButtonRole::AcceptRole}},
-            {Cancel, {stdButtonText(QMessageBox::Cancel), QMessageBox::ButtonRole::RejectRole}},
-            {Close, {stdButtonText(QMessageBox::Close), QMessageBox::ButtonRole::RejectRole}},
-            {Discard, {stdButtonText(QMessageBox::Discard), QMessageBox::ButtonRole::DestructiveRole}},
-            {Apply, {stdButtonText(QMessageBox::Apply), QMessageBox::ButtonRole::ApplyRole}},
-            {Reset, {stdButtonText(QMessageBox::Reset), QMessageBox::ButtonRole::ResetRole}},
-            {RestoreDefaults, {stdButtonText(QMessageBox::RestoreDefaults), QMessageBox::ButtonRole::ResetRole}},
-            {Help, {stdButtonText(QMessageBox::Help), QMessageBox::ButtonRole::HelpRole}},
-            {SaveAll, {stdButtonText(QMessageBox::SaveAll), QMessageBox::ButtonRole::AcceptRole}},
-            {Yes, {stdButtonText(QMessageBox::Yes), QMessageBox::ButtonRole::YesRole}},
-            {YesToAll, {stdButtonText(QMessageBox::YesToAll), QMessageBox::ButtonRole::YesRole}},
-            {No, {stdButtonText(QMessageBox::No), QMessageBox::ButtonRole::NoRole}},
-            {NoToAll, {stdButtonText(QMessageBox::NoToAll), QMessageBox::ButtonRole::NoRole}},
-            {Abort, {stdButtonText(QMessageBox::Abort), QMessageBox::ButtonRole::RejectRole}},
-            {Retry, {stdButtonText(QMessageBox::Retry), QMessageBox::ButtonRole::AcceptRole}},
-            {Ignore, {stdButtonText(QMessageBox::Ignore), QMessageBox::ButtonRole::AcceptRole}},
+    m_buttonDefs = QMap<Button, std::pair<QString, QMessageBox::ButtonRole>>{
+        // Reimplementation of Qt StandardButtons
+        {Ok, {stdButtonText(QMessageBox::Ok), QMessageBox::ButtonRole::AcceptRole}},
+        {Open, {stdButtonText(QMessageBox::Open), QMessageBox::ButtonRole::AcceptRole}},
+        {Save, {stdButtonText(QMessageBox::Save), QMessageBox::ButtonRole::AcceptRole}},
+        {Cancel, {stdButtonText(QMessageBox::Cancel), QMessageBox::ButtonRole::RejectRole}},
+        {Close, {stdButtonText(QMessageBox::Close), QMessageBox::ButtonRole::RejectRole}},
+        {Discard, {stdButtonText(QMessageBox::Discard), QMessageBox::ButtonRole::DestructiveRole}},
+        {Apply, {stdButtonText(QMessageBox::Apply), QMessageBox::ButtonRole::ApplyRole}},
+        {Reset, {stdButtonText(QMessageBox::Reset), QMessageBox::ButtonRole::ResetRole}},
+        {RestoreDefaults, {stdButtonText(QMessageBox::RestoreDefaults), QMessageBox::ButtonRole::ResetRole}},
+        {Help, {stdButtonText(QMessageBox::Help), QMessageBox::ButtonRole::HelpRole}},
+        {SaveAll, {stdButtonText(QMessageBox::SaveAll), QMessageBox::ButtonRole::AcceptRole}},
+        {Yes, {stdButtonText(QMessageBox::Yes), QMessageBox::ButtonRole::YesRole}},
+        {YesToAll, {stdButtonText(QMessageBox::YesToAll), QMessageBox::ButtonRole::YesRole}},
+        {No, {stdButtonText(QMessageBox::No), QMessageBox::ButtonRole::NoRole}},
+        {NoToAll, {stdButtonText(QMessageBox::NoToAll), QMessageBox::ButtonRole::NoRole}},
+        {Abort, {stdButtonText(QMessageBox::Abort), QMessageBox::ButtonRole::RejectRole}},
+        {Retry, {stdButtonText(QMessageBox::Retry), QMessageBox::ButtonRole::AcceptRole}},
+        {Ignore, {stdButtonText(QMessageBox::Ignore), QMessageBox::ButtonRole::AcceptRole}},
 
-            // KeePassXC Buttons
-            {Overwrite, {QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole}},
-            {Delete, {QMessageBox::tr("Delete"), QMessageBox::ButtonRole::AcceptRole}},
-            {Move, {QMessageBox::tr("Move"), QMessageBox::ButtonRole::AcceptRole}},
-            {Empty, {QMessageBox::tr("Empty"), QMessageBox::ButtonRole::AcceptRole}},
-            {Remove, {QMessageBox::tr("Remove"), QMessageBox::ButtonRole::AcceptRole}},
-            {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
-            {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
-            {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
-        };
+        // KeePassXC Buttons
+        {Overwrite, {QMessageBox::tr("Overwrite"), QMessageBox::ButtonRole::AcceptRole}},
+        {Delete, {QMessageBox::tr("Delete"), QMessageBox::ButtonRole::AcceptRole}},
+        {Move, {QMessageBox::tr("Move"), QMessageBox::ButtonRole::AcceptRole}},
+        {Empty, {QMessageBox::tr("Empty"), QMessageBox::ButtonRole::AcceptRole}},
+        {Remove, {QMessageBox::tr("Remove"), QMessageBox::ButtonRole::AcceptRole}},
+        {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
+        {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
+        {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
+    };
 }
 
 QString MessageBox::stdButtonText(QMessageBox::StandardButton button)

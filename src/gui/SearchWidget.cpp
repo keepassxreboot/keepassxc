@@ -17,8 +17,8 @@
  */
 
 #include "SearchWidget.h"
-#include "ui_SearchWidget.h"
 #include "ui_SearchHelpWidget.h"
+#include "ui_SearchWidget.h"
 
 #include <QKeyEvent>
 #include <QMenu>
@@ -38,7 +38,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     m_helpWidget = new PopupHelpWidget(m_ui->searchEdit);
-    m_helpWidget->setOffset(QPoint(0,1));
+    m_helpWidget->setOffset(QPoint(0, 1));
     Ui::SearchHelpWidget helpUi;
     helpUi.setupUi(m_helpWidget);
 
@@ -56,7 +56,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     new QShortcut(Qt::Key_Escape, m_ui->searchEdit, SLOT(clear()), nullptr, Qt::ApplicationShortcut);
 
     m_ui->searchEdit->setPlaceholderText(tr("Search (%1)...", "Search placeholder text, %1 is the keyboard shortcut")
-                                            .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
+                                             .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
     m_ui->searchEdit->installEventFilter(this);
 
     QMenu* searchMenu = new QMenu();

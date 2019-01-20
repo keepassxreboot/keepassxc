@@ -469,7 +469,7 @@ bool EntryModel::isUsernamesHidden() const
 void EntryModel::setUsernamesHidden(bool hide)
 {
     m_hideUsernames = hide;
-    emit dataChanged(index(0, 0), index(rowCount()-1, columnCount() - 1));
+    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
     emit usernamesHiddenChanged();
 }
 
@@ -487,7 +487,7 @@ bool EntryModel::isPasswordsHidden() const
 void EntryModel::setPasswordsHidden(bool hide)
 {
     m_hidePasswords = hide;
-    emit dataChanged(index(0, 0), index(rowCount()-1, columnCount() - 1));
+    emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
     emit passwordsHiddenChanged();
 }
 

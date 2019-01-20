@@ -174,7 +174,7 @@ void TestCli::testAdd()
                     "/newuser-entry"});
     m_stderrFile->reset();
     m_stdoutFile->reset();
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry.\n"));
 
     auto db = readTestDatabase();
@@ -284,7 +284,8 @@ void TestCli::testClip()
 
     // TOTP with timeout
     Utils::Test::setNextPassword("a");
-    future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
+    future = QtConcurrent::run(
+        &clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
     QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
@@ -314,7 +315,8 @@ void TestCli::testCreate()
     m_stderrFile->reset();
     m_stdoutFile->reset();
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(),
+             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -332,7 +334,6 @@ void TestCli::testCreate()
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
     QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
 
-
     // Testing with keyfile creation
     QString databaseFilename2 = testDir->path() + "testCreate2.kdbx";
     QString keyfilePath = testDir->path() + "keyfile.txt";
@@ -343,13 +344,13 @@ void TestCli::testCreate()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(),
+             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
     auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, keyfilePath, Utils::DEVNULL));
     QVERIFY(db2);
-
 
     // Testing with existing keyfile
     QString databaseFilename3 = testDir->path() + "testCreate3.kdbx";
@@ -360,7 +361,8 @@ void TestCli::testCreate()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+    QCOMPARE(m_stdoutFile->readLine(),
+             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -681,14 +683,14 @@ void TestCli::testList()
     Utils::Test::setNextPassword("a");
     listCmd.execute({"ls", "-q", m_dbFile->fileName()});
     m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"
-                                                 "General/\n"
-                                                 "Windows/\n"
-                                                 "Network/\n"
-                                                 "Internet/\n"
-                                                 "eMail/\n"
-                                                 "Homebanking/\n"));
-
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "General/\n"
+                        "Windows/\n"
+                        "Network/\n"
+                        "Internet/\n"
+                        "eMail/\n"
+                        "Homebanking/\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
@@ -1018,11 +1020,12 @@ void TestCli::testShow()
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Title: Sample Entry\n"
-                                                 "UserName: User Name\n"
-                                                 "Password: Password\n"
-                                                 "URL: http://www.somesite.com/\n"
-                                                 "Notes: Notes\n"));
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: Password\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
@@ -1053,14 +1056,14 @@ void TestCli::testShow()
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QVERIFY(isTOTP(m_stdoutFile->readAll()));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Sample Entry\n"));
     QVERIFY(isTOTP(m_stdoutFile->readAll()));
 
@@ -1069,7 +1072,7 @@ void TestCli::testShow()
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stdoutFile->seek(pos);
-    m_stdoutFile->readLine();   // skip password prompt
+    m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));

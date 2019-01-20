@@ -27,6 +27,6 @@ namespace ASN1Key
     bool parseDSA(QByteArray& ba, OpenSSHKey& key);
     bool parsePrivateRSA(QByteArray& ba, OpenSSHKey& key);
     bool parsePublicRSA(QByteArray& ba, OpenSSHKey& key);
-}
+} // namespace ASN1Key
 
 #endif // KEEPASSXC_ASN1KEY_H

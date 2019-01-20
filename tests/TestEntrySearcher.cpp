@@ -177,7 +177,8 @@ void TestEntrySearcher::testAllAttributesAreSearched()
 void TestEntrySearcher::testSearchTermParser()
 {
     // Test standard search terms
-    auto terms = m_entrySearcher.parseSearchTerms("-test \"quoted \\\"string\\\"\"  user:user pass:\"test me\" noquote  ");
+    auto terms =
+        m_entrySearcher.parseSearchTerms("-test \"quoted \\\"string\\\"\"  user:user pass:\"test me\" noquote  ");
 
     QCOMPARE(terms.length(), 5);
 

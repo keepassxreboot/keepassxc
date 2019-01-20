@@ -29,7 +29,7 @@ namespace
 {
     const int FileChangeDelay = 500;
     const int TimerResolution = 100;
-}
+} // namespace
 
 DelayingFileWatcher::DelayingFileWatcher(QObject* parent)
     : QObject(parent)
@@ -238,13 +238,13 @@ void BulkFileWatcher::emitSignals()
 {
     QMap<QString, QList<Signal>> queued;
     m_pendingSignals.swap(queued);
-    for (const auto& path : queued.keys()){
-        const auto &signal = queued[path];
+    for (const auto& path : queued.keys()) {
+        const auto& signal = queued[path];
         if (signal.last() == Removed) {
             emit fileRemoved(path);
             continue;
         }
-        if (signal.first() == Created){
+        if (signal.first() == Created) {
             emit fileCreated(path);
             continue;
         }
@@ -252,7 +252,7 @@ void BulkFileWatcher::emitSignals()
     }
 }
 
-void BulkFileWatcher::scheduleSignal(Signal signal, const QString &path)
+void BulkFileWatcher::scheduleSignal(Signal signal, const QString& path)
 {
     // we need to collect signals since the file watcher API may send multiple signals for a "single" change
     // therefore we wait until the event loop finished before starting to import any changes

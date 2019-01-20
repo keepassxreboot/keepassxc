@@ -18,11 +18,11 @@
 #ifndef KEEPASSX_DATABASETABWIDGET_H
 #define KEEPASSX_DATABASETABWIDGET_H
 
-#include "gui/MessageWidget.h"
 #include "DatabaseOpenDialog.h"
+#include "gui/MessageWidget.h"
 
-#include <QTabWidget>
 #include <QPointer>
+#include <QTabWidget>
 
 class Database;
 class DatabaseWidget;

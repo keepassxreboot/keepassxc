@@ -68,7 +68,8 @@ protected:
     virtual void initTestCaseImpl() = 0;
 
     virtual QSharedPointer<Database> readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) = 0;
-    virtual QSharedPointer<Database> readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) = 0;
+    virtual QSharedPointer<Database>
+    readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) = 0;
     virtual void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) = 0;
 
     virtual void readKdbx(QIODevice* device,

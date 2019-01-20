@@ -18,8 +18,8 @@
 #ifndef KEEPASSXC_POPUPHELPWIDGET_H
 #define KEEPASSXC_POPUPHELPWIDGET_H
 
-#include <QPointer>
 #include <QFrame>
+#include <QPointer>
 
 class PopupHelpWidget : public QFrame
 {
@@ -44,5 +44,4 @@ private:
     Qt::Corner m_corner;
 };
 
-
-#endif //KEEPASSXC_POPUPHELPWIDGET_H
+#endif // KEEPASSXC_POPUPHELPWIDGET_H

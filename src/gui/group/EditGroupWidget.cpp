@@ -31,8 +31,8 @@ class EditGroupWidget::ExtraPage
 {
 public:
     ExtraPage(IEditGroupPage* page, QWidget* widget)
-            : editPage(page)
-            , widget(widget)
+        : editPage(page)
+        , widget(widget)
     {
     }
 
@@ -52,12 +52,12 @@ private:
 };
 
 EditGroupWidget::EditGroupWidget(QWidget* parent)
-        : EditWidget(parent)
-        , m_mainUi(new Ui::EditGroupWidgetMain())
-        , m_editGroupWidgetMain(new QWidget())
-        , m_editGroupWidgetIcons(new EditWidgetIcons())
-        , m_editWidgetProperties(new EditWidgetProperties())
-        , m_group(nullptr)
+    : EditWidget(parent)
+    , m_mainUi(new Ui::EditGroupWidgetMain())
+    , m_editGroupWidgetMain(new QWidget())
+    , m_editGroupWidgetIcons(new EditWidgetIcons())
+    , m_editWidgetProperties(new EditWidgetProperties())
+    , m_group(nullptr)
 {
     m_mainUi->setupUi(m_editGroupWidgetMain);
 
