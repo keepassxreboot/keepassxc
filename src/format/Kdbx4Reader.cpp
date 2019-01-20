@@ -68,6 +68,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
+    // clang-format off
     QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, db->transformedMasterKey());
     if (headerHmac != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
         raiseError(tr("Wrong key or database file is corrupt. (HMAC mismatch)"));
@@ -93,6 +94,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         raiseError(cipherStream.errorString());
         return false;
     }
+    // clang-format on
 
     QIODevice* xmlDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;

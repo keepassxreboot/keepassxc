@@ -35,7 +35,8 @@ protected:
     void initTestCaseImpl() override;
 
     QSharedPointer<Database> readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString) override;
-    QSharedPointer<Database> readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) override;
+    QSharedPointer<Database>
+    readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString) override;
     void writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString) override;
 
     void readKdbx(QIODevice* device,

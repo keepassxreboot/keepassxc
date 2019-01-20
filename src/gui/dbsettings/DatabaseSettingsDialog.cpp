@@ -29,18 +29,18 @@
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
 
-#include "core/Global.h"
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
+#include "core/Global.h"
 #include "touchid/TouchID.h"
 
 class DatabaseSettingsDialog::ExtraPage
 {
 public:
     ExtraPage(IDatabaseSettingsPage* page, QWidget* widget)
-            : settingsPage(page)
-            , widget(widget)
+        : settingsPage(page)
+        , widget(widget)
     {
     }
     void loadSettings(QSharedPointer<Database> db) const
@@ -51,6 +51,7 @@ public:
     {
         settingsPage->saveSettings(widget);
     }
+
 private:
     QSharedPointer<IDatabaseSettingsPage> settingsPage;
     QWidget* widget;

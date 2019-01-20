@@ -88,7 +88,7 @@ int Create::execute(const QStringList& arguments)
     }
 
     QSharedPointer<FileKey> fileKey;
-    if(parser.isSet(Command::KeyFileOption)) {
+    if (parser.isSet(Command::KeyFileOption)) {
         if (!loadFileKey(parser.value(Command::KeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;

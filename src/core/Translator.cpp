@@ -47,8 +47,7 @@ void Translator::installTranslators()
 #ifdef QT_DEBUG
         QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-        filePath()->dataPath("translations")
-    };
+        filePath()->dataPath("translations")};
 
     bool translationsLoaded = false;
     for (const QString& path : paths) {

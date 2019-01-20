@@ -208,7 +208,8 @@ namespace Tools
         return regex;
     }
 
-    QString uuidToHex(const QUuid& uuid) {
+    QString uuidToHex(const QUuid& uuid)
+    {
         return QString::fromLatin1(uuid.toRfc4122().toHex());
     }
 
@@ -216,7 +217,6 @@ namespace Tools
         : raw(nullptr)
         , size(0)
     {
-
     }
 
     Buffer::~Buffer()
@@ -226,15 +226,16 @@ namespace Tools
 
     void Buffer::clear()
     {
-        if(size > 0){
+        if (size > 0) {
             free(raw);
         }
-        raw = nullptr; size = 0;
+        raw = nullptr;
+        size = 0;
     }
 
     QByteArray Buffer::content() const
     {
-        return QByteArray(reinterpret_cast<char*>(raw), size );
+        return QByteArray(reinterpret_cast<char*>(raw), size);
     }
 
 } // namespace Tools

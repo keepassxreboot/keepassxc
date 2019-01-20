@@ -28,11 +28,11 @@
 #include "keys/PasswordKey.h"
 
 #include <QFile>
+#include <QFileInfo>
 #include <QSaveFile>
 #include <QTemporaryFile>
 #include <QTimer>
 #include <QXmlStreamReader>
-#include <QFileInfo>
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 QHash<QString, QPointer<Database>> Database::s_filePathMap;

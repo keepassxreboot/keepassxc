@@ -102,10 +102,7 @@ private:
                         const QString& submitHost,
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
-    Access checkAccess(const Entry* entry,
-                       const QString& host,
-                       const QString& submitHost,
-                       const QString& realm);
+    Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
     Group* findCreateAddEntryGroup(QSharedPointer<Database> selectedDb = {});
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;

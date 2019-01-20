@@ -56,7 +56,8 @@ KeePass1Reader::KeePass1Reader()
 {
 }
 
-QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
+QSharedPointer<Database>
+KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice)
 {
     m_error = false;
     m_errorStr.clear();
@@ -248,7 +249,8 @@ QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const Q
     return db;
 }
 
-QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
+QSharedPointer<Database>
+KeePass1Reader::readDatabase(QIODevice* device, const QString& password, const QString& keyfileName)
 {
     QScopedPointer<QFile> keyFile;
     if (!keyfileName.isEmpty()) {
@@ -262,7 +264,8 @@ QSharedPointer<Database> KeePass1Reader::readDatabase(QIODevice* device, const Q
     return QSharedPointer<Database>(readDatabase(device, password, keyFile.data()));
 }
 
-QSharedPointer<Database> KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
+QSharedPointer<Database>
+KeePass1Reader::readDatabase(const QString& filename, const QString& password, const QString& keyfileName)
 {
     QFile dbFile(filename);
     if (!dbFile.open(QFile::ReadOnly)) {
@@ -290,7 +293,8 @@ QString KeePass1Reader::errorString()
     return m_errorStr;
 }
 
-SymmetricCipherStream* KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos)
+SymmetricCipherStream*
+KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos)
 {
     const QList<PasswordEncoding> encodings = {Windows1252, Latin1, UTF8};
 

@@ -36,9 +36,9 @@ namespace Utils
     QString getPassword(FILE* outputDescriptor = STDOUT);
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
-                                                   const QString& keyFilename = {},
-                                                   FILE* outputDescriptor = STDOUT,
-                                                   FILE* errorDescriptor = STDERR);
+                                            const QString& keyFilename = {},
+                                            FILE* outputDescriptor = STDOUT,
+                                            FILE* errorDescriptor = STDERR);
 
     namespace Test
     {

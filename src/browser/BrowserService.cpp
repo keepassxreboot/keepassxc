@@ -77,7 +77,8 @@ bool BrowserService::isDatabaseOpened() const
         return false;
     }
 
-    return dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode;
+    return dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode
+           || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode;
 }
 
 bool BrowserService::openDatabase(bool triggerUnlock)
@@ -91,7 +92,8 @@ bool BrowserService::openDatabase(bool triggerUnlock)
         return false;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode
+        || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         return true;
     }
 
@@ -114,7 +116,8 @@ void BrowserService::lockDatabase()
         return;
     }
 
-    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
+    if (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode
+        || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode) {
         dbWidget->lock();
     }
 }
@@ -289,9 +292,12 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     return result;
 }
 
-void BrowserService::addEntry(const QString& id, const QString& login,
-                              const QString& password, const QString& url,
-                              const QString& submitUrl, const QString& realm,
+void BrowserService::addEntry(const QString& id,
+                              const QString& login,
+                              const QString& password,
+                              const QString& url,
+                              const QString& submitUrl,
+                              const QString& realm,
                               QSharedPointer<Database> selectedDb)
 {
     if (thread() != QThread::currentThread()) {
@@ -392,12 +398,13 @@ void BrowserService::updateEntry(const QString& id,
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
-            dialogResult = MessageBox::question(nullptr,
-                                                tr("KeePassXC: Update Entry"),
-                                                tr("Do you want to update the information in %1 - %2?")
-                                                    .arg(QUrl(url).host(), username),
-                                                MessageBox::Save | MessageBox::Cancel,
-                                                MessageBox::Cancel, MessageBox::Raise);
+            dialogResult = MessageBox::question(
+                nullptr,
+                tr("KeePassXC: Update Entry"),
+                tr("Do you want to update the information in %1 - %2?").arg(QUrl(url).host(), username),
+                MessageBox::Save | MessageBox::Cancel,
+                MessageBox::Cancel,
+                MessageBox::Raise);
         }
 
         if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
@@ -453,7 +460,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
         for (int i = 0; i < count; ++i) {
             if (auto* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (const auto& db = dbWidget->database()) {
-                     // Check if database is connected with KeePassXC-Browser
+                    // Check if database is connected with KeePassXC-Browser
                     for (const StringPair& keyPair : keyList) {
                         QString key =
                             db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
@@ -680,10 +687,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 }
 
 BrowserService::Access
-BrowserService::checkAccess(const Entry* entry,
-                            const QString& host,
-                            const QString& submitHost,
-                            const QString& realm)
+BrowserService::checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm)
 {
     BrowserEntryConfig config;
     if (!config.load(entry)) {
@@ -841,12 +845,12 @@ QSharedPointer<Database> BrowserService::getDatabase()
 QSharedPointer<Database> BrowserService::selectedDatabase()
 {
     QList<DatabaseWidget*> databaseWidgets;
-    for (int i = 0; ; ++i) {
+    for (int i = 0;; ++i) {
         auto* dbWidget = m_dbTabWidget->databaseWidgetFromIndex(i);
         // Add only open databases
-        if (dbWidget && dbWidget->database()->hasKey() &&
-            (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode ||
-             dbWidget->currentMode() == DatabaseWidget::Mode::EditMode)) {
+        if (dbWidget && dbWidget->database()->hasKey()
+            && (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode
+                || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode)) {
             databaseWidgets.push_back(dbWidget);
             continue;
         }
@@ -919,8 +923,8 @@ bool BrowserService::checkLegacySettings()
     bool legacySettingsFound = false;
     QList<Entry*> entries = db->rootGroup()->entriesRecursive();
     for (const auto& e : entries) {
-        if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME)) ||
-            (e->title() == KEEPASSHTTP_NAME || e->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive))) {
+        if ((e->attributes()->contains(KEEPASSHTTP_NAME) || e->attributes()->contains(KEEPASSXCBROWSER_NAME))
+            || (e->title() == KEEPASSHTTP_NAME || e->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive))) {
             legacySettingsFound = true;
             break;
         }

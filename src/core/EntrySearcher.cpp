@@ -24,7 +24,7 @@
 EntrySearcher::EntrySearcher(bool caseSensitive)
     : m_caseSensitive(caseSensitive)
     , m_termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re")
-    // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
+// Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
 {
 }
 
@@ -46,9 +46,9 @@ QList<Entry*> EntrySearcher::searchEntries(const QString& searchString, const QL
 {
     QList<Entry*> results;
     for (Entry* entry : entries) {
-       if (searchEntryImpl(searchString, entry)) {
-           results.append(entry);
-       }
+        if (searchEntryImpl(searchString, entry)) {
+            results.append(entry);
+        }
     }
     return results;
 }
@@ -97,10 +97,10 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
             break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
-            found = term->regex.match(entry->resolvePlaceholder(entry->title())).hasMatch() ||
-                    term->regex.match(entry->resolvePlaceholder(entry->username())).hasMatch() ||
-                    term->regex.match(entry->resolvePlaceholder(entry->url())).hasMatch() ||
-                    term->regex.match(entry->notes()).hasMatch();
+            found = term->regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
+                    || term->regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
+                    || term->regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
+                    || term->regex.match(entry->notes()).hasMatch();
         }
 
         // Short circuit if we failed to match or we matched and are excluding this term
@@ -112,9 +112,9 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
     return true;
 }
 
-QList<QSharedPointer<EntrySearcher::SearchTerm> > EntrySearcher::parseSearchTerms(const QString& searchString)
+QList<QSharedPointer<EntrySearcher::SearchTerm>> EntrySearcher::parseSearchTerms(const QString& searchString)
 {
-    auto terms = QList<QSharedPointer<SearchTerm> >();
+    auto terms = QList<QSharedPointer<SearchTerm>>();
 
     auto results = m_termParser.globalMatch(searchString);
     while (results.hasNext()) {

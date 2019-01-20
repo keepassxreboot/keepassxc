@@ -25,10 +25,10 @@
 #include <QPointer>
 
 #include "config-keepassx.h"
+#include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
-#include "crypto/kdf/AesKdf.h"
 
 class Entry;
 enum class EntryReferenceType;
@@ -66,7 +66,10 @@ public:
     ~Database() override;
 
     bool open(QSharedPointer<const CompositeKey> key, QString* error = nullptr, bool readOnly = false);
-    bool open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error = nullptr, bool readOnly = false);
+    bool open(const QString& filePath,
+              QSharedPointer<const CompositeKey> key,
+              QString* error = nullptr,
+              bool readOnly = false);
     bool save(QString* error = nullptr, bool atomic = true, bool backup = false);
     bool save(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
 
@@ -103,7 +106,9 @@ public:
 
     bool hasKey() const;
     QSharedPointer<const CompositeKey> key() const;
-    bool setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime = true, bool updateTransformSalt = false);
+    bool setKey(const QSharedPointer<const CompositeKey>& key,
+                bool updateChangedTime = true,
+                bool updateTransformSalt = false);
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
     bool verifyKey(const QSharedPointer<CompositeKey>& key) const;

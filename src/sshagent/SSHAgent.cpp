@@ -18,10 +18,10 @@
 
 #include "SSHAgent.h"
 
-#include "crypto/ssh/OpenSSHKey.h"
-#include "crypto/ssh/BinaryStream.h"
-#include "sshagent/KeeAgentSettings.h"
 #include "core/Config.h"
+#include "crypto/ssh/BinaryStream.h"
+#include "crypto/ssh/OpenSSHKey.h"
+#include "sshagent/KeeAgentSettings.h"
 
 #include <QtNetwork>
 
@@ -371,8 +371,8 @@ void SSHAgent::databaseModeChanged()
                 lifetime = static_cast<quint32>(settings.lifetimeConstraintDuration());
             }
 
-            if (!addIdentity(key, settings.removeAtDatabaseClose(),
-                lifetime, settings.useConfirmConstraintWhenAdding())) {
+            if (!addIdentity(
+                    key, settings.removeAtDatabaseClose(), lifetime, settings.useConfirmConstraintWhenAdding())) {
                 emit error(m_error);
             }
         }

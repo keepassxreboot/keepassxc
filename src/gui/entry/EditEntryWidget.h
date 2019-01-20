@@ -21,9 +21,8 @@
 
 #include <QButtonGroup>
 #include <QModelIndex>
-#include <QScopedPointer>
-#include <QButtonGroup>
 #include <QPointer>
+#include <QScopedPointer>
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
@@ -64,8 +63,8 @@ public:
     explicit EditEntryWidget(QWidget* parent = nullptr);
     ~EditEntryWidget() override;
 
-    void loadEntry(Entry* entry, bool create, bool history, const QString& parentName,
-                   QSharedPointer<Database> database);
+    void
+    loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database);
 
     QString entryTitle() const;
     void clear();

@@ -44,7 +44,7 @@ signals:
     void importCsv();
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void openDatabaseFromFile(QListWidgetItem* item);

@@ -15,10 +15,11 @@
 
 set(EXCLUDED_DIRS
         # third-party directories
-        zxcvbn/
-        streams/QtIOCompressor
+        src/zxcvbn/
         # objective-c directories
-        autotype/mac)
+        src/touchid/
+        src/autotype/mac/
+        src/gui/macutils/)
 
 set(EXCLUDED_FILES
         # third-party files
@@ -37,7 +38,7 @@ set(EXCLUDED_FILES
         core/ScreenLockListenerMac.h
         core/ScreenLockListenerMac.cpp)
 
-file(GLOB_RECURSE ALL_SOURCE_FILES *.cpp *.h)
+file(GLOB_RECURSE ALL_SOURCE_FILES RELATIVE ${CMAKE_SOURCE_DIR} src/*.cpp src/*.h tests/*.cpp tests/*.h)
 foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
     foreach(EXCLUDED_DIR ${EXCLUDED_DIRS})
         string(FIND ${SOURCE_FILE} ${EXCLUDED_DIR} SOURCE_FILE_EXCLUDED)
@@ -52,7 +53,12 @@ foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
     endforeach()
 endforeach()
 
-add_custom_target(
-        format
-        COMMAND echo ${ALL_SOURCE_FILES} | xargs clang-format -style=file -i
-)
+add_custom_target(format)
+foreach(SOURCE_FILE ${ALL_SOURCE_FILES})
+    add_custom_command(
+            TARGET format
+            PRE_BUILD
+            COMMAND echo Formatting ${SOURCE_FILE}
+            COMMAND clang-format -style=file -i \"${SOURCE_FILE}\"
+            WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+endforeach()

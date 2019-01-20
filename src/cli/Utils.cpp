@@ -47,14 +47,13 @@ namespace Utils
  * DEVNULL file handle for the CLI.
  */
 #ifdef Q_OS_WIN
-FILE* DEVNULL = fopen("nul", "w");
+    FILE* DEVNULL = fopen("nul", "w");
 #else
-FILE* DEVNULL = fopen("/dev/null", "w");
+    FILE* DEVNULL = fopen("/dev/null", "w");
 #endif
 
-
-void setStdinEcho(bool enable = true)
-{
+    void setStdinEcho(bool enable = true)
+    {
 #ifdef Q_OS_WIN
         HANDLE hIn = GetStdHandle(STD_INPUT_HANDLE);
         DWORD mode;
@@ -98,61 +97,61 @@ void setStdinEcho(bool enable = true)
         }
     } // namespace Test
 
-QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
-                                        const QString& keyFilename,
-                                        FILE* outputDescriptor,
-                                        FILE* errorDescriptor)
-{
-    auto compositeKey = QSharedPointer<CompositeKey>::create();
-    TextStream out(outputDescriptor);
-    TextStream err(errorDescriptor);
+    QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                            const QString& keyFilename,
+                                            FILE* outputDescriptor,
+                                            FILE* errorDescriptor)
+    {
+        auto compositeKey = QSharedPointer<CompositeKey>::create();
+        TextStream out(outputDescriptor);
+        TextStream err(errorDescriptor);
 
-    out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
+        out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
 
-    QString line = Utils::getPassword(outputDescriptor);
-    auto passwordKey = QSharedPointer<PasswordKey>::create();
-    passwordKey->setPassword(line);
-    compositeKey->addKey(passwordKey);
+        QString line = Utils::getPassword(outputDescriptor);
+        auto passwordKey = QSharedPointer<PasswordKey>::create();
+        passwordKey->setPassword(line);
+        compositeKey->addKey(passwordKey);
 
-    if (!keyFilename.isEmpty()) {
-        auto fileKey = QSharedPointer<FileKey>::create();
-        QString errorMessage;
-        // LCOV_EXCL_START
-        if (!fileKey->load(keyFilename, &errorMessage)) {
-            err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
-            return {};
+        if (!keyFilename.isEmpty()) {
+            auto fileKey = QSharedPointer<FileKey>::create();
+            QString errorMessage;
+            // LCOV_EXCL_START
+            if (!fileKey->load(keyFilename, &errorMessage)) {
+                err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
+                return {};
+            }
+
+            if (fileKey->type() != FileKey::Hashed) {
+                err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
+                                   "unsupported in the future.\n\n"
+                                   "Please consider generating a new key file.")
+                    << endl;
+            }
+            // LCOV_EXCL_STOP
+
+            compositeKey->addKey(fileKey);
         }
 
-        if (fileKey->type() != FileKey::Hashed) {
-            err << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                               "unsupported in the future.\n\n"
-                               "Please consider generating a new key file.")
-                << endl;
-        }
-        // LCOV_EXCL_STOP
-
-        compositeKey->addKey(fileKey);
-    }
-
-    auto db = QSharedPointer<Database>::create();
-    QString error;
+        auto db = QSharedPointer<Database>::create();
+        QString error;
     if (db->open(databaseFilename, compositeKey, &error, false)) {
         return db;
-    } else {
+    }else {
         err << error << endl;
         return {};
     }
 }
 
-/**
- * Read a user password from STDIN or return a password previously
- * set by \link setNextPassword().
- *
- * @return the password
- */
-QString getPassword(FILE* outputDescriptor)
-{
-    TextStream out(outputDescriptor, QIODevice::WriteOnly);
+    /**
+     * Read a user password from STDIN or return a password previously
+     * set by \link setNextPassword().
+     *
+     * @return the password
+     */
+    QString getPassword(FILE* outputDescriptor)
+    {
+        TextStream out(outputDescriptor, QIODevice::WriteOnly);
 
         // return preset password if one is set
         if (!Test::nextPasswords.isEmpty()) {

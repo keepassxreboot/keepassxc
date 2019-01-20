@@ -248,7 +248,8 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/MovableToolbar", m_generalUi->toolbarMovableCheckBox->isChecked());
 
     int currentToolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->currentIndex();
-    config()->set("GUI/ToolButtonStyle", m_generalUi->toolButtonStyleComboBox->itemData(currentToolButtonStyleIndex).toString());
+    config()->set("GUI/ToolButtonStyle",
+                  m_generalUi->toolButtonStyleComboBox->itemData(currentToolButtonStyleIndex).toString());
 
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
@@ -329,4 +330,3 @@ void ApplicationSettingsWidget::enableToolbarSettings(bool checked)
     m_generalUi->toolButtonStyleComboBox->setEnabled(!checked);
     m_generalUi->toolButtonStyleLabel->setEnabled(!checked);
 }
-

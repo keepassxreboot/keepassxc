@@ -367,8 +367,8 @@ ShareObserver::Result ShareObserver::importSingedContainerInto(const KeeShareSet
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted
-                                                           : KeeShareSettings::Trust::Untrusted;
+        const auto trusted =
+            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;
@@ -454,8 +454,8 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
     case UntrustedForever:
     case TrustedForever: {
         bool found = false;
-        const auto trusted = trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted
-                                                           : KeeShareSettings::Trust::Untrusted;
+        const auto trusted =
+            trust.first == TrustedForever ? KeeShareSettings::Trust::Trusted : KeeShareSettings::Trust::Untrusted;
         for (KeeShareSettings::ScopedCertificate& scopedCertificate : foreign.certificates) {
             if (scopedCertificate.certificate.key == trust.second.key && scopedCertificate.path == reference.path) {
                 scopedCertificate.certificate.signer = trust.second.signer;

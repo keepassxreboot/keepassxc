@@ -31,12 +31,12 @@
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
+#include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/DragTabBar.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-#include "gui/DatabaseOpenDialog.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 #ifdef Q_OS_MACOS
@@ -54,12 +54,15 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     setTabBar(tabBar);
     setDocumentMode(true);
 
+    // clang-format off
     connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeDatabaseTab(int)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitActivateDatabaseChanged()));
-    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)), m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
+    connect(this, SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
+            m_dbWidgetStateSync, SLOT(setActive(DatabaseWidget*)));
     connect(autoType(), SIGNAL(globalShortcutTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
+    // clang-format on
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()
@@ -186,8 +189,9 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
         setCurrentIndex(index);
     }
 
-    connect(dbWidget, SIGNAL(databaseFilePathChanged(QString,QString)), SLOT(updateTabName()));
-    connect(dbWidget, SIGNAL(requestOpenDatabase(QString,bool,QString)), SLOT(addDatabaseTab(QString,bool,QString)));
+    connect(dbWidget, SIGNAL(databaseFilePathChanged(QString, QString)), SLOT(updateTabName()));
+    connect(
+        dbWidget, SIGNAL(requestOpenDatabase(QString, bool, QString)), SLOT(addDatabaseTab(QString, bool, QString)));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
@@ -520,7 +524,6 @@ void DatabaseTabWidget::lockDatabases()
             // If we locked a database without a file close the tab
             closeDatabaseTab(dbWidget);
         }
-
     }
 }
 
@@ -542,7 +545,8 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget, Databas
  * @param intent intent for unlocking
  * @param file path of the database to be unlocked
  */
-void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent,
+void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
+                                               DatabaseOpenDialog::Intent intent,
                                                const QString& filePath)
 {
     m_databaseOpenDialog->setTargetDatabaseWidget(dbWidget);

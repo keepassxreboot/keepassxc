@@ -726,17 +726,15 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_attachments->copyDataFrom(m_attachments);
 
     if (flags & CloneUserAsRef) {
-        entry->m_attributes->set(
-            EntryAttributes::UserNameKey,
-            buildReference(uuid(), EntryAttributes::UserNameKey),
-            m_attributes->isProtected(EntryAttributes::UserNameKey));
+        entry->m_attributes->set(EntryAttributes::UserNameKey,
+                                 buildReference(uuid(), EntryAttributes::UserNameKey),
+                                 m_attributes->isProtected(EntryAttributes::UserNameKey));
     }
 
     if (flags & ClonePassAsRef) {
-        entry->m_attributes->set(
-            EntryAttributes::PasswordKey,
-            buildReference(uuid(), EntryAttributes::PasswordKey),
-            m_attributes->isProtected(EntryAttributes::PasswordKey));
+        entry->m_attributes->set(EntryAttributes::PasswordKey,
+                                 buildReference(uuid(), EntryAttributes::PasswordKey),
+                                 m_attributes->isProtected(EntryAttributes::PasswordKey));
     }
 
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);

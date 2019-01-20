@@ -223,11 +223,8 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
             const QString questionText(
                 tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
 
-            auto result = MessageBox::question(this,
-                                               tr("Confirm overwrite"),
-                                               questionText.arg(filename),
-                                               buttons,
-                                               MessageBox::Cancel);
+            auto result = MessageBox::question(
+                this, tr("Confirm overwrite"), questionText.arg(filename), buttons, MessageBox::Cancel);
 
             if (result == MessageBox::Skip) {
                 continue;

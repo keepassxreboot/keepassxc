@@ -48,10 +48,10 @@ bool KeePass2Writer::writeDatabase(const QString& filename, Database* db)
  */
 bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
 {
-    if (db->kdf()->uuid() != KeePass2::KDF_AES_KDBX3 ) {
+    if (db->kdf()->uuid() != KeePass2::KDF_AES_KDBX3) {
         return false;
     }
-    
+
     if (!db->publicCustomData().isEmpty()) {
         return true;
     }
