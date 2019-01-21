@@ -51,6 +51,13 @@ int main(int argc, char** argv)
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
+#ifdef Q_OS_LINUX
+    if (qgetenv("XDG_SESSION_TYPE") == QByteArrayLiteral("wayland")) {
+        qWarning() << "Warning: disregarding XDG_SESSION_TYPE=wayland";
+        qWarning() << "To use wayland anyway, please set QT_QPA_PLATFORM=wayland";
+        qunsetenv("XDG_SESSION_TYPE");
+    }
+#endif
 
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
