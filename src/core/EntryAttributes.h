@@ -24,6 +24,7 @@
 #include <QRegularExpression>
 #include <QSet>
 #include <QStringList>
+#include <QUuid>
 
 class EntryAttributes : public QObject
 {
@@ -47,6 +48,7 @@ public:
     void clear();
     int attributesSize() const;
     void copyDataFrom(const EntryAttributes* other);
+    QUuid referenceUuid(const QString& key) const;
     bool operator==(const EntryAttributes& other) const;
     bool operator!=(const EntryAttributes& other) const;
 
