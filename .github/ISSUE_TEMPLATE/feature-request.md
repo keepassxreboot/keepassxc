@@ -1,9 +1,9 @@
 ---
-name: 
-about: 
+name: Feature Request
+about: tell us about a new capability you want to see
 title: Feature Request
 labels: new feature
-assignees: 
+assignees: ''
 
 ---
 
