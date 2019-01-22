@@ -33,6 +33,7 @@
 #include "core/FilePath.h"
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/SearchWidget.h"
@@ -1017,11 +1018,14 @@ void MainWindow::toggleWindow()
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
         // check for !isVisible(), because isNativeMenuBar() does not work with appmenu-qt5
-        if (!m_ui->menubar->isVisible()) {
-            QDBusMessage msg = QDBusMessage::createMethodCall("com.canonical.AppMenu.Registrar",
-                                                              "/com/canonical/AppMenu/Registrar",
-                                                              "com.canonical.AppMenu.Registrar",
-                                                              "RegisterWindow");
+        const static auto isDesktopSessionUnity = qgetenv("XDG_CURRENT_DESKTOP") == "Unity";
+
+        if (isDesktopSessionUnity && Tools::qtRuntimeVersion() < QT_VERSION_CHECK(5, 9, 0)
+            && !m_ui->menubar->isVisible()) {
+            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("com.canonical.AppMenu.Registrar"),
+                                                              QStringLiteral("/com/canonical/AppMenu/Registrar"),
+                                                              QStringLiteral("com.canonical.AppMenu.Registrar"),
+                                                              QStringLiteral("RegisterWindow"));
             QList<QVariant> args;
             args << QVariant::fromValue(static_cast<uint32_t>(winId()))
                  << QVariant::fromValue(QDBusObjectPath("/MenuBar/1"));
