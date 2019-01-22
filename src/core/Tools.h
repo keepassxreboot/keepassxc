@@ -41,8 +41,10 @@ namespace Tools
     void sleep(int ms);
     void wait(int ms);
     QString uuidToHex(const QUuid& uuid);
-    QRegularExpression convertToRegex(const QString& string, bool useWildcards = false,
-                                      bool exactMatch = false, bool caseSensitive = false);
+    QRegularExpression convertToRegex(const QString& string,
+                                      bool useWildcards = false,
+                                      bool exactMatch = false,
+                                      bool caseSensitive = false);
 
     template <typename RandomAccessIterator, typename T>
     RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
