@@ -515,9 +515,12 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
 void DatabaseTabWidget::lockDatabases()
 {
     for (int i = 0, c = count(); i < c; ++i) {
-        if (!databaseWidgetFromIndex(i)->lock()) {
-            return;
+        auto dbWidget = databaseWidgetFromIndex(i);
+        if (dbWidget->lock() && dbWidget->database()->filePath().isEmpty()) {
+            // If we locked a database without a file close the tab
+            closeDatabaseTab(dbWidget);
         }
+
     }
 }
 

@@ -209,6 +209,7 @@ private slots:
     void emitEntryContextMenuRequested(const QPoint& pos);
     void onEntryChanged(Entry* entry);
     void onGroupChanged(Group* group);
+    void onDatabaseModified();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -257,6 +258,7 @@ private:
 
     // Autoreload
     QPointer<DelayingFileWatcher> m_fileWatcher;
+    bool m_blockAutoSave;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

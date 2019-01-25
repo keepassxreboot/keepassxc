@@ -182,6 +182,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     connectDatabaseSignals();
 
+    m_blockAutoSave = false;
+
     m_EntrySearcher = new EntrySearcher(false);
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
@@ -813,10 +815,10 @@ void DatabaseWidget::switchToGroupEdit(Group* group, bool create)
 void DatabaseWidget::connectDatabaseSignals()
 {
     // relayed Database events
-    connect(m_db.data(), SIGNAL(filePathChanged(QString,QString)),
-            this, SIGNAL(databaseFilePathChanged(QString,QString)));
-    connect(m_db.data(), SIGNAL(databaseModified()), this, SIGNAL(databaseModified()));
-    connect(m_db.data(), SIGNAL(databaseSaved()), this, SIGNAL(databaseSaved()));
+    connect(m_db.data(), SIGNAL(filePathChanged(QString,QString)), SIGNAL(databaseFilePathChanged(QString,QString)));
+    connect(m_db.data(), SIGNAL(databaseModified()), SIGNAL(databaseModified()));
+    connect(m_db.data(), SIGNAL(databaseModified()), SLOT(onDatabaseModified()));
+    connect(m_db.data(), SIGNAL(databaseSaved()), SIGNAL(databaseSaved()));
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1114,6 +1116,15 @@ void DatabaseWidget::onGroupChanged(Group* group)
     m_previewView->setGroup(group);
 }
 
+void DatabaseWidget::onDatabaseModified()
+{
+    if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool()) {
+        save();
+    }
+
+    m_blockAutoSave = false;
+}
+
 QString DatabaseWidget::getCurrentSearch()
 {
     return m_lastSearchText;
@@ -1207,10 +1218,10 @@ bool DatabaseWidget::lock()
 
     if (m_db->isModified()) {
         if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!m_db->save(nullptr, false, false)) {
+            if (!save()) {
                 return false;
             }
-        } else if (!isLocked()) {
+        } else {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
@@ -1219,8 +1230,10 @@ bool DatabaseWidget::lock()
             }
             auto result = MessageBox::question(this, tr("Save changes?"), msg,
                 MessageBox::Save | MessageBox::Discard | MessageBox::Cancel, MessageBox::Save);
-            if (result == MessageBox::Save && !m_db->save(nullptr, false, false)) {
-                return false;
+            if (result == MessageBox::Save) {
+                if (!save()) {
+                    return false;
+                }
             } else if (result == MessageBox::Cancel) {
                 return false;
             }
@@ -1269,6 +1282,8 @@ void DatabaseWidget::reloadDatabaseFile()
     if (!m_db || isLocked()) {
         return;
     }
+
+    m_blockAutoSave = true;
 
     if (!config()->get("AutoReloadOnChange").toBool()) {
         // Ask if we want to reload the db

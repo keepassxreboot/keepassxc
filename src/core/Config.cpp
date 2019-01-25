@@ -100,6 +100,11 @@ void Config::upgrade()
             m_settings->remove(setting);
         }
     }
+
+    // > 2.3.4
+    if (m_settings->value("AutoSaveAfterEveryChange").toBool()) {
+        m_settings->setValue("AutoSaveOnExit", true);
+    }
 }
 
 Config::Config(const QString& fileName, QObject* parent)
@@ -167,7 +172,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
     m_defaults.insert("AutoSaveAfterEveryChange", true);
     m_defaults.insert("AutoReloadOnChange", true);
-    m_defaults.insert("AutoSaveOnExit", false);
+    m_defaults.insert("AutoSaveOnExit", true);
     m_defaults.insert("BackupBeforeSave", false);
     m_defaults.insert("UseAtomicSaves", true);
     m_defaults.insert("SearchLimitGroup", false);

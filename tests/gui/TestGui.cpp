@@ -81,6 +81,7 @@ void TestGui::initTestCase()
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
     config()->set("AutoSaveAfterEveryChange", false);
+    config()->set("AutoSaveOnExit", false);
     // Enable the tray icon so we can test hiding/restoring the windowQByteArray
     config()->set("GUI/ShowTrayIcon", true);
     // Disable advanced settings mode (activate within individual tests to test advanced settings)
