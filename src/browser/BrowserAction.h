@@ -72,7 +72,7 @@ private:
     QString getDatabaseHash();
 
     QString encryptMessage(const QJsonObject& message, const QString& nonce);
-    QJsonObject decryptMessage(const QString& message, const QString& nonce, const QString& action = QString());
+    QJsonObject decryptMessage(const QString& message, const QString& nonce);
     QString encrypt(const QString& plaintext, const QString& nonce);
     QByteArray decrypt(const QString& encrypted, const QString& nonce);
 

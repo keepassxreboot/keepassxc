@@ -36,7 +36,7 @@ BrowserAction::BrowserAction(BrowserService& browserService)
 QJsonObject BrowserAction::readResponse(const QJsonObject& json)
 {
     if (json.isEmpty()) {
-        return QJsonObject();
+        return getErrorReply("", ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED);
     }
 
     bool triggerUnlock = false;
@@ -47,7 +47,7 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
 
     const QString action = json.value("action").toString();
     if (action.isEmpty()) {
-        return QJsonObject();
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
     QMutexLocker locker(&m_mutex);
@@ -68,9 +68,6 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
 QJsonObject BrowserAction::handleAction(const QJsonObject& json)
 {
     QString action = json.value("action").toString();
-    if (action.isEmpty()) {
-        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
-    }
 
     if (action.compare("change-public-keys", Qt::CaseSensitive) == 0) {
         return handleChangePublicKeys(json, action);
@@ -111,6 +108,10 @@ QJsonObject BrowserAction::handleChangePublicKeys(const QJsonObject& json, const
 
     const QString publicKey = getBase64FromKey(pk, crypto_box_PUBLICKEYBYTES);
     const QString secretKey = getBase64FromKey(sk, crypto_box_SECRETKEYBYTES);
+    if (publicKey.isEmpty() || secretKey.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED);
+    }
+
     m_clientPublicKey = clientPublicKey;
     m_publicKey = publicKey;
     m_secretKey = secretKey;
@@ -127,7 +128,7 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
     const QString hash = getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
     const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
 
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -154,7 +155,7 @@ QJsonObject BrowserAction::handleAssociate(const QJsonObject& json, const QStrin
     const QString hash = getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
     const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
 
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -192,7 +193,7 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     const QString hash = getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
     const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
 
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -231,7 +232,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
@@ -304,7 +305,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
     }
 
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
     }
@@ -343,7 +344,7 @@ QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QSt
     const QString hash = getDatabaseHash();
     const QString nonce = json.value("nonce").toString();
     const QString encrypted = json.value("message").toString();
-    const QJsonObject decrypted = decryptMessage(encrypted, nonce, action);
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
 
     if (decrypted.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
@@ -388,8 +389,13 @@ QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 QJsonObject BrowserAction::buildResponse(const QString& action, const QJsonObject& message, const QString& nonce)
 {
     QJsonObject response;
+    QString encryptedMessage = encryptMessage(message, nonce);
+    if (encryptedMessage.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE);
+    }
+
     response["action"] = action;
-    response["message"] = encryptMessage(message, nonce);
+    response["message"] = encryptedMessage;
     response["nonce"] = nonce;
     return response;
 }
@@ -405,20 +411,14 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
         return QObject::tr("Client public key not received");
     case ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE:
         return QObject::tr("Cannot decrypt message");
-    case ERROR_KEEPASS_TIMEOUT_OR_NOT_CONNECTED:
-        return QObject::tr("Timeout or cannot connect to KeePassXC");
     case ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED:
         return QObject::tr("Action cancelled or denied");
     case ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE:
-        return QObject::tr("Cannot encrypt message or public key not found. Is Native Messaging enabled in KeePassXC?");
+        return QObject::tr("Message encryption failed.");
     case ERROR_KEEPASS_ASSOCIATION_FAILED:
         return QObject::tr("KeePassXC association failed, try again");
-    case ERROR_KEEPASS_KEY_CHANGE_FAILED:
-        return QObject::tr("Key change was not successful");
     case ERROR_KEEPASS_ENCRYPTION_KEY_UNRECOGNIZED:
         return QObject::tr("Encryption key is not recognized");
-    case ERROR_KEEPASS_NO_SAVED_DATABASES_FOUND:
-        return QObject::tr("No saved databases found");
     case ERROR_KEEPASS_INCORRECT_ACTION:
         return QObject::tr("Incorrect action");
     case ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED:
@@ -457,18 +457,18 @@ QString BrowserAction::encryptMessage(const QJsonObject& message, const QString&
     return QString();
 }
 
-QJsonObject BrowserAction::decryptMessage(const QString& message, const QString& nonce, const QString& action)
+QJsonObject BrowserAction::decryptMessage(const QString& message, const QString& nonce)
 {
     if (message.isEmpty() || nonce.isEmpty()) {
         return QJsonObject();
     }
 
     QByteArray ba = decrypt(message, nonce);
-    if (!ba.isEmpty()) {
-        return getJsonObject(ba);
+    if (ba.isEmpty()) {
+        return QJsonObject();
     }
 
-    return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    return getJsonObject(ba);
 }
 
 QString BrowserAction::encrypt(const QString& plaintext, const QString& nonce)
