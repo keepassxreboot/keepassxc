@@ -46,6 +46,8 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 
 int main(int argc, char** argv)
 {
+    QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
+
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif

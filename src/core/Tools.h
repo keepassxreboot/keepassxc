@@ -41,8 +41,10 @@ namespace Tools
     void sleep(int ms);
     void wait(int ms);
     QString uuidToHex(const QUuid& uuid);
-    QRegularExpression convertToRegex(const QString& string, bool useWildcards = false,
-                                      bool exactMatch = false, bool caseSensitive = false);
+    QRegularExpression convertToRegex(const QString& string,
+                                      bool useWildcards = false,
+                                      bool exactMatch = false,
+                                      bool caseSensitive = false);
 
     template <typename RandomAccessIterator, typename T>
     RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)
@@ -83,6 +85,20 @@ namespace Tools
         void clear();
         QByteArray content() const;
     };
+
+    inline int qtRuntimeVersion()
+    {
+        // Cache the result since the Qt version can't change during
+        // the execution, computing it once will be enough
+        const static int version = []() {
+            const auto sq = QString::fromLatin1(qVersion());
+            return (sq.section(QChar::fromLatin1('.'), 0, 0).toInt() << 16)
+                   + (sq.section(QChar::fromLatin1('.'), 1, 1).toInt() << 8)
+                   + (sq.section(QChar::fromLatin1('.'), 2, 2).toInt());
+        }();
+
+        return version;
+    }
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H
