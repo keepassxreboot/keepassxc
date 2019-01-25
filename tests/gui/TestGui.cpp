@@ -86,6 +86,8 @@ void TestGui::initTestCase()
     config()->set("GUI/ShowTrayIcon", true);
     // Disable advanced settings mode (activate within individual tests to test advanced settings)
     config()->set("GUI/AdvancedSettings", false);
+    // Disable the update check first time alert
+    config()->set("UpdateCheckMessageShown", true);
 
     m_mainWindow.reset(new MainWindow());
     Bootstrap::restoreMainWindowState(*m_mainWindow);
