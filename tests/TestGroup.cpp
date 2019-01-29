@@ -766,3 +766,35 @@ void TestGroup::testAddEntryWithPath()
 
     delete db;
 }
+
+void TestGroup::testIsRecycled()
+{
+    Database* db = new Database();
+    db->rootGroup()->createRecycleBin();
+
+    Group* group1 = new Group();
+    group1->setName("group1");
+    group1->setParent(db->rootGroup());
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(db->rootGroup());
+
+    Group* group3 = new Group();
+    group3->setName("group3");
+    group3->setParent(group2);
+
+    Group* group4 = new Group();
+    group4->setName("group4");
+    group4->setParent(db->rootGroup());
+
+    db->recycleGroup(group2);
+
+    QVERIFY(!group1->isRecycled());
+    QVERIFY(group2->isRecycled());
+    QVERIFY(group3->isRecycled());
+    QVERIFY(!group4->isRecycled());
+
+    db->recycleGroup(group4);
+    QVERIFY(group4->isRecycled());
+}

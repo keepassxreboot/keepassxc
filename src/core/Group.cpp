@@ -257,6 +257,25 @@ Entry* Group::lastTopVisibleEntry() const
     return m_lastTopVisibleEntry;
 }
 
+bool Group::isRecycled()
+{
+    Group* group = this;
+    if (!group->database()) {
+        return false;
+    }
+
+    do {
+        if (group->m_parent && group->m_db->metadata()) {
+            if (group->m_parent == group->m_db->metadata()->recycleBin()) {
+                return true;
+            }
+        }
+        group = group->m_parent;
+    } while (group && group->m_parent && group->m_parent != group->m_db->rootGroup());
+
+    return false;
+}
+
 bool Group::isExpired() const
 {
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();

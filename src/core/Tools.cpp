@@ -213,6 +213,11 @@ namespace Tools
         return QString::fromLatin1(uuid.toRfc4122().toHex());
     }
 
+    QUuid hexToUuid(const QString& uuid)
+    {
+        return QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1()));
+    }
+
     Buffer::Buffer()
         : raw(nullptr)
         , size(0)

@@ -85,6 +85,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleSetLogin(json, action);
     } else if (action.compare("lock-database", Qt::CaseSensitive) == 0) {
         return handleLockDatabase(json, action);
+    } else if (action.compare("get-database-groups", Qt::CaseSensitive) == 0) {
+        return handleGetDatabaseGroups(json, action);
     }
 
     // Action was not recognized
@@ -320,10 +322,12 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const QString password = decrypted.value("password").toString();
     const QString submitUrl = decrypted.value("submitUrl").toString();
     const QString uuid = decrypted.value("uuid").toString();
+    const QString group = decrypted.value("group").toString();
+    const QString groupUuid = decrypted.value("groupUuid").toString();
     const QString realm;
 
     if (uuid.isEmpty()) {
-        m_browserService.addEntry(id, login, password, url, submitUrl, realm);
+        m_browserService.addEntry(id, login, password, url, submitUrl, realm, group, groupUuid);
     } else {
         m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
@@ -366,6 +370,40 @@ QJsonObject BrowserAction::handleLockDatabase(const QJsonObject& json, const QSt
     }
 
     return getErrorReply(action, ERROR_KEEPASS_DATABASE_HASH_NOT_RECEIVED);
+}
+
+QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, const QString& action)
+{
+    const QString hash = getDatabaseHash();
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    QString command = decrypted.value("action").toString();
+    if (command.isEmpty() || command.compare("get-database-groups", Qt::CaseSensitive) != 0) {
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    const QJsonObject groups = m_browserService.getDatabaseGroups();
+    if (groups.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
+    }
+
+    const QString newNonce = incrementNonce(nonce);
+
+    QJsonObject message = buildMessage(newNonce);
+    message["groups"] = groups;
+
+    return buildResponse(action, message, newNonce);
 }
 
 QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorCode) const
@@ -427,6 +465,8 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
         return QObject::tr("No URL provided");
     case ERROR_KEEPASS_NO_LOGINS_FOUND:
         return QObject::tr("No logins found");
+    case ERROR_KEEPASS_NO_GROUPS_FOUND:
+        return QObject::tr("No groups found");
     default:
         return QObject::tr("Unknown error");
     }
