@@ -1,7 +1,7 @@
 ---
 name: Feature Request
 about: tell us about a new capability you want to see
-title: Feature Request
+title: 
 labels: new feature
 assignees: ''
 
