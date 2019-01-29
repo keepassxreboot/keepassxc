@@ -17,12 +17,12 @@
 
 #include "UpdateCheckDialog.h"
 #include "ui_UpdateCheckDialog.h"
-#include "updatecheck/UpdateCheck.h"
+#include "updatecheck/UpdateChecker.h"
 #include "core/FilePath.h"
 
 UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
-: QDialog(parent)
-, m_ui(new Ui::UpdateCheckDialog())
+    : QDialog(parent)
+    , m_ui(new Ui::UpdateCheckDialog())
 {
     m_ui->setupUi(this);
     setWindowFlags(Qt::Window);
@@ -31,8 +31,7 @@ UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
-    connect(UpdateCheck::instance(), SIGNAL(updateCheckFinished(bool, QString)), this, SLOT(
-            showUpdateCheckResponse(bool, QString)));
+    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString)), SLOT(close()));
 }
 
 void UpdateCheckDialog::showUpdateCheckResponse(bool status, const QString& version) {

@@ -41,8 +41,8 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-#ifdef WITH_XC_UPDATECHECK
-#include "updatecheck/UpdateCheck.h"
+#ifdef WITH_XC_NETWORKING
+#include "updatecheck/UpdateChecker.h"
 #include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
 #endif
@@ -372,8 +372,9 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
-#ifdef WITH_XC_UPDATECHECK
+#ifdef WITH_XC_NETWORKING
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
+    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString)), SLOT(hasUpdateAvailable(bool, QString)));
     QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
@@ -678,7 +679,7 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::showUpdateCheckStartup()
 {
-#ifdef WITH_XC_UPDATECHECK
+#ifdef WITH_XC_NETWORKING
     if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
         auto result = MessageBox::question(this,
                                            tr("Check for updates on startup?"),
@@ -689,19 +690,18 @@ void MainWindow::showUpdateCheckStartup()
 
         config()->set("GUI/CheckForUpdates", (result == MessageBox::Yes));
         config()->set("UpdateCheckMessageShown", true);
-    } else if (config()->get("GUI/CheckForUpdates", false).toBool()) {
+    }
+
+    if (config()->get("GUI/CheckForUpdates", false).toBool()) {
         updateCheck()->checkForUpdates();
     }
 
-    connect(UpdateCheck::instance(), SIGNAL(updateCheckFinished(bool, QString)), this, SLOT(hasUpdateAvailable(bool, QString)));
 #endif
 }
 
 void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version)
 {
-#ifdef WITH_XC_UPDATECHECK
-    disconnect(UpdateCheck::instance(), nullptr, this, nullptr);
-
+#ifdef WITH_XC_NETWORKING
     if (hasUpdate) {
         auto* updateCheckDialog = new UpdateCheckDialog(this);
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
@@ -712,7 +712,7 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version)
 
 void MainWindow::showUpdateCheckDialog()
 {
-#ifdef WITH_XC_UPDATECHECK
+#ifdef WITH_XC_NETWORKING
     updateCheck()->checkForUpdates();
     auto* updateCheckDialog = new UpdateCheckDialog(this);
     updateCheckDialog->show();

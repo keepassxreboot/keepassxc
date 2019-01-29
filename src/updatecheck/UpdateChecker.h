@@ -19,22 +19,20 @@
 #define KEEPASSXC_UPDATECHECK_H
 #include <QString>
 #include <QObject>
-#include <QtNetwork>
-#include <QNetworkAccessManager>
 
 class QNetworkAccessManager;
 class QNetworkReply;
 
-class UpdateCheck : public QObject
+class UpdateChecker : public QObject
 {
     Q_OBJECT
 public:
-    UpdateCheck(QObject* parent = nullptr);
-    ~UpdateCheck();
+    UpdateChecker(QObject* parent = nullptr);
+    ~UpdateChecker() override;
 
     void checkForUpdates();
     static bool compareVersions(const QString& remoteVersion, const QString& localVersion);
-    static UpdateCheck* instance();
+    static UpdateChecker* instance();
 
 signals:
     void updateCheckFinished(bool hasNewVersion, QString version);
@@ -48,14 +46,14 @@ private:
     QNetworkReply* m_reply;
     QByteArray m_bytesReceived;
 
-    static UpdateCheck* m_instance;
+    static UpdateChecker* m_instance;
 
-    Q_DISABLE_COPY(UpdateCheck)
+    Q_DISABLE_COPY(UpdateChecker)
 };
 
-inline UpdateCheck* updateCheck()
+inline UpdateChecker* updateCheck()
 {
-    return UpdateCheck::instance();
+    return UpdateChecker::instance();
 }
 
 #endif //KEEPASSXC_UPDATECHECK_H

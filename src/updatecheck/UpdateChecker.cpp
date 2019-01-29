@@ -15,24 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "UpdateCheck.h"
+#include "UpdateChecker.h"
 #include "config-keepassx.h"
 #include <QJsonObject>
+#include <QtNetwork>
+#include <QNetworkAccessManager>
 
-UpdateCheck* UpdateCheck::m_instance(nullptr);
+UpdateChecker* UpdateChecker::m_instance(nullptr);
 
-UpdateCheck::UpdateCheck(QObject* parent)
+UpdateChecker::UpdateChecker(QObject* parent)
     : QObject(parent)
     , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
 {
 }
 
-UpdateCheck::~UpdateCheck()
+UpdateChecker::~UpdateChecker()
 {
 }
 
-void UpdateCheck::checkForUpdates()
+void UpdateChecker::checkForUpdates()
 {
     m_bytesReceived.clear();
 
@@ -41,16 +43,16 @@ void UpdateCheck::checkForUpdates()
 
     m_reply = m_netMgr->get(request);
 
-    connect(m_reply, &QNetworkReply::finished, this, &UpdateCheck::fetchFinished);
-    connect(m_reply, &QIODevice::readyRead, this, &UpdateCheck::fetchReadyRead);
+    connect(m_reply, &QNetworkReply::finished, this, &UpdateChecker::fetchFinished);
+    connect(m_reply, &QIODevice::readyRead, this, &UpdateChecker::fetchReadyRead);
 }
 
-void UpdateCheck::fetchReadyRead()
+void UpdateChecker::fetchReadyRead()
 {
     m_bytesReceived += m_reply->readAll();
 }
 
-void UpdateCheck::fetchFinished()
+void UpdateChecker::fetchFinished()
 {
     bool error = (m_reply->error() != QNetworkReply::NoError);
     bool hasNewVersion = false;
@@ -75,7 +77,7 @@ void UpdateCheck::fetchFinished()
     emit updateCheckFinished(hasNewVersion, version);
 }
 
-bool UpdateCheck::compareVersions(const QString& remoteVersion, const QString& localVersion)
+bool UpdateChecker::compareVersions(const QString& remoteVersion, const QString& localVersion)
 {
     if (localVersion == remoteVersion) {
         return false; // Currently using updated version
@@ -121,10 +123,10 @@ bool UpdateCheck::compareVersions(const QString& remoteVersion, const QString& l
     return false; // Invalid version string
 }
 
-UpdateCheck* UpdateCheck::instance()
+UpdateChecker* UpdateChecker::instance()
 {
     if (!m_instance) {
-        m_instance = new UpdateCheck();
+        m_instance = new UpdateChecker();
     }
 
     return m_instance;

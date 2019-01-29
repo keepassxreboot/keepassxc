@@ -17,7 +17,7 @@
 
 #include "TestUpdateCheck.h"
 #include "TestGlobal.h"
-#include "updatecheck/UpdateCheck.h"
+#include "updatecheck/UpdateChecker.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestUpdateCheck)
@@ -30,12 +30,12 @@ void TestUpdateCheck::initTestCase()
 void TestUpdateCheck::testCompareVersion()
 {
                                        // Remote Version , Installed Version
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.4.0"), QString("2.3.4")), true);
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.3.0"), QString("2.4.0")), false);
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.3.0"), QString("2.3.0")), false);
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.3.0"), QString("2.3.0-beta1")), true);
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.3.0-beta2"), QString("2.3.0-beta1")), true);
-    QCOMPARE(UpdateCheck::compareVersions(QString("2.3.4"), QString("2.4.0-snapshot")), false);
-    QCOMPARE(UpdateCheck::compareVersions(QString("invalid"), QString("2.4.0")), false);
-    QCOMPARE(UpdateCheck::compareVersions(QString(""), QString("2.4.0")), false);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.4.0"), QString("2.3.4")), true);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0"), QString("2.4.0")), false);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0"), QString("2.3.0")), false);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0"), QString("2.3.0-beta1")), true);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0-beta2"), QString("2.3.0-beta1")), true);
+    QCOMPARE(UpdateChecker::compareVersions(QString("2.3.4"), QString("2.4.0-snapshot")), false);
+    QCOMPARE(UpdateChecker::compareVersions(QString("invalid"), QString("2.4.0")), false);
+    QCOMPARE(UpdateChecker::compareVersions(QString(""), QString("2.4.0")), false);
 }

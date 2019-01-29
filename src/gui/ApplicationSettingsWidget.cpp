@@ -91,11 +91,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
-#ifndef WITH_XC_UPDATECHECK
-    m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
-#endif
-
 #ifndef WITH_XC_NETWORKING
+    m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
     m_secUi->privacy->setVisible(false);
 #endif
 

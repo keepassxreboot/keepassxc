@@ -24,7 +24,7 @@
 #include "gui/MessageBox.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
-#include "updatecheck/UpdateCheck.h"
+#include "updatecheck/UpdateChecker.h"
 
 namespace Ui
 {
@@ -40,7 +40,7 @@ public:
     ~UpdateCheckDialog() override;
 
 public slots:
-    void showUpdateCheckResponse(bool status, const QString &version);
+    void showUpdateCheckResponse(bool status, const QString& version);
 
 private:
     QScopedPointer<Ui::UpdateCheckDialog> m_ui;
