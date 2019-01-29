@@ -1,9 +1,9 @@
 ---
-name: 
-about: 
-title: Bug report
-labels: bug
-assignees: 
+name: Release Preview Bug report
+about: report a bug with a release preview (eg, 2.4.0-beta1)
+title: "[PRE-RELEASE] "
+labels: PRE-RELEASE BUG
+assignees: droidmonkey
 
 ---
 
