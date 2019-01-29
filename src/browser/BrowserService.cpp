@@ -482,7 +482,8 @@ void BrowserService::updateEntry(const QString& id,
     }
 }
 
-QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url)
+QList<Entry*>
+BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url)
 {
     QList<Entry*> entries;
     auto* rootGroup = db->rootGroup();
