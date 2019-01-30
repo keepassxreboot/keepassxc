@@ -187,6 +187,13 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
+           <widget class="QCheckBox" name="checkForUpdatesIncludeBetasCheckBox">
+            <property name="text">
+             <string>Include pre-releases when checking for updates</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="toolbarHideCheckBox">
             <property name="text">
              <string>Hide toolbar (icons)</string>

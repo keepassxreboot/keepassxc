@@ -16,6 +16,7 @@
  */
 
 #include "UpdateChecker.h"
+#include "core/Config.h"
 #include "config-keepassx.h"
 #include <QJsonObject>
 #include <QtNetwork>
@@ -39,7 +40,15 @@ void UpdateChecker::checkForUpdates(bool manuallyRequested)
     m_isManuallyRequested = manuallyRequested;
     m_bytesReceived.clear();
 
-    QNetworkRequest request(QUrl("https://api.github.com/repos/keepassxreboot/keepassxc/releases/latest"));
+    QString apiUrlStr = QString("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
+
+    if (!config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
+        apiUrlStr += "/latest";
+    }
+
+    QUrl apiUrl = QUrl(apiUrlStr);
+
+    QNetworkRequest request(apiUrl);
     request.setRawHeader("Accept", "application/json");
 
     m_reply = m_netMgr->get(request);
@@ -66,6 +75,11 @@ void UpdateChecker::fetchFinished()
     if (!error) {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(m_bytesReceived);
         QJsonObject jsonObject = jsonResponse.object();
+
+        if (config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
+            QJsonArray jsonArray = jsonResponse.array();
+            jsonObject = jsonArray.at(0).toObject();
+        }
 
         if (!jsonObject.value("tag_name").isUndefined()) {
             version = jsonObject.value("tag_name").toString();
