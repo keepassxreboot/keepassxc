@@ -399,13 +399,19 @@ MainWindow::MainWindow()
                                                MessageWidget::Error);
     }
 
-#if !defined(KEEPASSXC_BUILD_TYPE_RELEASE)
+#if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT)
     m_ui->globalMessageWidget->showMessage(
         tr("WARNING: You are using an unstable build of KeePassXC!\n"
            "There is a high risk of corruption, maintain a backup of your databases.\n"
            "This version is not meant for production use."),
         MessageWidget::Warning,
         -1);
+#elif defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
+    m_ui->globalMessageWidget->showMessage(
+        tr("NOTE: You are using a pre-release version of KeePassXC!\n"
+           "Expect some bugs and minor issues, this version is not meant for production use."),
+        MessageWidget::Information,
+        15000);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
     if (!config()->get("QtErrorMessageShown", false).toBool()) {
         m_ui->globalMessageWidget->showMessage(
