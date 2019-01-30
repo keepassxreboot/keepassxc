@@ -346,7 +346,7 @@ checkSigntoolCommandExists() {
 }
 
 checkCodesignCommandExists() {
-    if !cmdExists codesign; then
+    if ! cmdExists codesign; then
         exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
     fi
 }
