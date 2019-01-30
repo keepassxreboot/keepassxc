@@ -44,6 +44,7 @@ public:
     bool openDatabase(bool triggerUnlock);
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
+    QJsonObject getDatabaseGroups();
     QString getKey(const QString& id);
     void addEntry(const QString& id,
                   const QString& login,
@@ -51,6 +52,8 @@ public:
                   const QString& url,
                   const QString& submitUrl,
                   const QString& realm,
+                  const QString& group,
+                  const QString& groupUuid,
                   QSharedPointer<Database> selectedDb = {});
     QList<Entry*> searchEntries(QSharedPointer<Database> db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
@@ -111,6 +114,7 @@ private:
     QString baseDomain(const QString& url) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
+    QJsonArray addChildrenToGroup(Group* group);
     bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
     int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const;
     bool checkLegacySettings();

@@ -42,6 +42,7 @@ private slots:
     void testPrint();
     void testLocate();
     void testAddEntryWithPath();
+    void testIsRecycled();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

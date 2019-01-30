@@ -41,6 +41,7 @@ namespace Tools
     void sleep(int ms);
     void wait(int ms);
     QString uuidToHex(const QUuid& uuid);
+    QUuid hexToUuid(const QString& uuid);
     QRegularExpression convertToRegex(const QString& string,
                                       bool useWildcards = false,
                                       bool exactMatch = false,

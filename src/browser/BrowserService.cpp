@@ -56,7 +56,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     , m_bringToFrontRequested(false)
     , m_wasMinimized(false)
     , m_wasHidden(false)
-    , m_keepassBrowserUUID(QUuid::fromRfc4122(QByteArray::fromHex("de887cc3036343b8974b5911b8816224")))
+    , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
     // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
     if (m_dbTabWidget) {
@@ -149,6 +149,54 @@ QString BrowserService::getDatabaseRecycleBinUuid()
         return {};
     }
     return recycleBin->uuidToHex();
+}
+
+QJsonArray BrowserService::addChildrenToGroup(Group* group)
+{
+    QJsonArray groupList;
+
+    if (!group) {
+        return groupList;
+    }
+
+    for (const auto& c : group->children()) {
+        if (c == group->database()->metadata()->recycleBin()) {
+            continue;
+        }
+
+        QJsonObject jsonGroup;
+        jsonGroup["name"] = c->name();
+        jsonGroup["uuid"] = Tools::uuidToHex(c->uuid());
+        jsonGroup["children"] = addChildrenToGroup(c);
+        groupList.push_back(jsonGroup);
+    }
+    return groupList;
+}
+
+QJsonObject BrowserService::getDatabaseGroups()
+{
+    auto db = getDatabase();
+    if (!db) {
+        return {};
+    }
+
+    Group* rootGroup = db->rootGroup();
+    if (!rootGroup) {
+        return {};
+    }
+
+    QJsonObject root;
+    root["name"] = rootGroup->name();
+    root["uuid"] = Tools::uuidToHex(rootGroup->uuid());
+    root["children"] = addChildrenToGroup(rootGroup);
+
+    QJsonArray groups;
+    groups.push_back(root);
+
+    QJsonObject result;
+    result["groups"] = groups;
+
+    return result;
 }
 
 QString BrowserService::storeKey(const QString& key)
@@ -298,6 +346,8 @@ void BrowserService::addEntry(const QString& id,
                               const QString& url,
                               const QString& submitUrl,
                               const QString& realm,
+                              const QString& group,
+                              const QString& groupUuid,
                               QSharedPointer<Database> selectedDb)
 {
     if (thread() != QThread::currentThread()) {
@@ -310,6 +360,8 @@ void BrowserService::addEntry(const QString& id,
                                   Q_ARG(QString, url),
                                   Q_ARG(QString, submitUrl),
                                   Q_ARG(QString, realm),
+                                  Q_ARG(QString, group),
+                                  Q_ARG(QString, groupUuid),
                                   Q_ARG(QSharedPointer<Database>, selectedDb));
     }
 
@@ -318,8 +370,8 @@ void BrowserService::addEntry(const QString& id,
         return;
     }
 
-    Group* group = findCreateAddEntryGroup(db);
-    if (!group) {
+    auto* addEntryGroup = findCreateAddEntryGroup(db);
+    if (!addEntryGroup) {
         return;
     }
 
@@ -330,7 +382,17 @@ void BrowserService::addEntry(const QString& id,
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     entry->setUsername(login);
     entry->setPassword(password);
-    entry->setGroup(group);
+    entry->setGroup(addEntryGroup);
+
+    // Select a group for the entry
+    if (!group.isEmpty()) {
+        if (db->rootGroup()) {
+            auto selectedGroup = db->rootGroup()->findGroupByUuid(Tools::hexToUuid(groupUuid));
+            if (selectedGroup && selectedGroup->name() == group) {
+                entry->setGroup(selectedGroup);
+            }
+        }
+    }
 
     const QString host = QUrl(url).host();
     const QString submitHost = QUrl(submitUrl).host();
@@ -370,10 +432,10 @@ void BrowserService::updateEntry(const QString& id,
         return;
     }
 
-    Entry* entry = db->rootGroup()->findEntryByUuid(QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1())));
+    Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
-        addEntry(id, login, password, url, submitUrl, "", db);
+        addEntry(id, login, password, url, submitUrl, "", "", "", db);
         return;
     }
 
@@ -715,7 +777,7 @@ Group* BrowserService::findCreateAddEntryGroup(QSharedPointer<Database> selected
         return nullptr;
     }
 
-    Group* rootGroup = db->rootGroup();
+    auto* rootGroup = db->rootGroup();
     if (!rootGroup) {
         return nullptr;
     }
@@ -723,8 +785,8 @@ Group* BrowserService::findCreateAddEntryGroup(QSharedPointer<Database> selected
     const QString groupName =
         QLatin1String(KEEPASSXCBROWSER_GROUP_NAME); // TODO: setting to decide where new keys are created
 
-    for (const Group* g : rootGroup->groupsRecursive(true)) {
-        if (g->name() == groupName) {
+    for (auto* g : rootGroup->groupsRecursive(true)) {
+        if (g->name() == groupName && !g->isRecycled()) {
             return db->rootGroup()->findGroupByUuid(g->uuid());
         }
     }
