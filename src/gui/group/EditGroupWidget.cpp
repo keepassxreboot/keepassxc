@@ -91,7 +91,7 @@ EditGroupWidget::~EditGroupWidget()
 {
 }
 
-void EditGroupWidget::loadGroup(Group* group, bool create, QSharedPointer<Database> database)
+void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<Database>& database)
 {
     m_group = group;
     m_db = database;

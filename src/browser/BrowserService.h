@@ -54,10 +54,10 @@ public:
                   const QString& realm,
                   const QString& group,
                   const QString& groupUuid,
-                  QSharedPointer<Database> selectedDb = {});
-    QList<Entry*> searchEntries(QSharedPointer<Database> db, const QString& hostname, const QString& url);
+                  const QSharedPointer<Database>& selectedDb = {});
+    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url);
     QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
-    void convertAttributesToCustomData(QSharedPointer<Database> currentDb = {});
+    void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
 
 public:
     static const char KEEPASSXCBROWSER_NAME[];
@@ -106,7 +106,7 @@ private:
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group* findCreateAddEntryGroup(QSharedPointer<Database> selectedDb = {});
+    Group* findCreateAddEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
@@ -116,7 +116,7 @@ private:
     QSharedPointer<Database> selectedDatabase();
     QJsonArray addChildrenToGroup(Group* group);
     bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
-    int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db) const;
+    int moveKeysToCustomData(Entry* entry, const QSharedPointer<Database>& db) const;
     bool checkLegacySettings();
     void hideWindow() const;
     void raiseWindow(const bool force = false);

@@ -33,7 +33,7 @@ public:
 private:
     QSharedPointer<PasswordKey> getPasswordFromStdin();
     QSharedPointer<FileKey> getFileKeyFromStdin();
-    bool loadFileKey(QString path, QSharedPointer<FileKey>& fileKey);
+    bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
 
 #endif // KEEPASSXC_CREATE_H

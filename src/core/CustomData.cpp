@@ -17,6 +17,8 @@
 
 #include "CustomData.h"
 
+#include "core/Global.h"
+
 CustomData::CustomData(QObject* parent)
     : QObject(parent)
 {
@@ -44,7 +46,7 @@ bool CustomData::contains(const QString& key) const
 
 bool CustomData::containsValue(const QString& value) const
 {
-    return m_data.values().contains(value);
+    return asConst(m_data).values().contains(value);
 }
 
 void CustomData::set(const QString& key, const QString& value)

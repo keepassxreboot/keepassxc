@@ -32,13 +32,13 @@
  */
 static const QMap<QString, QString> deprecationMap = {
     // >2.3.4
-    {"security/hidepassworddetails", "security/HidePasswordPreviewPanel"},
+    {QStringLiteral("security/hidepassworddetails"), QStringLiteral("security/HidePasswordPreviewPanel")},
     // >2.3.4
-    {"GUI/HideDetailsView", "GUI/HidePreviewPanel"},
+    {QStringLiteral("GUI/HideDetailsView"), QStringLiteral("GUI/HidePreviewPanel")},
     // >2.3.4
-    {"GUI/DetailSplitterState", "GUI/PreviewSplitterState"},
+    {QStringLiteral("GUI/DetailSplitterState"), QStringLiteral("GUI/PreviewSplitterState")},
     // >2.3.4
-    {"security/IconDownloadFallbackToGoogle", "security/IconDownloadFallback"},
+    {QStringLiteral("security/IconDownloadFallbackToGoogle"), QStringLiteral("security/IconDownloadFallback")},
 };
 
 Config* Config::m_instance(nullptr);
@@ -91,7 +91,8 @@ void Config::sync()
 
 void Config::upgrade()
 {
-    for (const auto& setting : deprecationMap.keys()) {
+    const auto keys = deprecationMap.keys();
+    for (const auto& setting : keys) {
         if (m_settings->contains(setting)) {
             if (!deprecationMap.value(setting).isEmpty()) {
                 // Add entry with new name and old entry's value

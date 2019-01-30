@@ -55,7 +55,7 @@ public:
     explicit EditGroupWidget(QWidget* parent = nullptr);
     ~EditGroupWidget();
 
-    void loadGroup(Group* group, bool create, QSharedPointer<Database> database);
+    void loadGroup(Group* group, bool create, const QSharedPointer<Database>& database);
     void clear();
 
     void addEditPage(IEditGroupPage* page);

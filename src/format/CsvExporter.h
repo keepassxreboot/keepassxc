@@ -29,8 +29,8 @@ class QIODevice;
 class CsvExporter
 {
 public:
-    bool exportDatabase(const QString& filename, QSharedPointer<const Database> db);
-    bool exportDatabase(QIODevice* device, QSharedPointer<const Database> db);
+    bool exportDatabase(const QString& filename, const QSharedPointer<const Database>& db);
+    bool exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db);
     QString errorString() const;
 
 private:

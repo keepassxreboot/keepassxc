@@ -18,6 +18,8 @@
 #include "DatabaseSettingsWidget.h"
 #include "core/Database.h"
 
+#include <utility>
+
 #include <QTimer>
 #include <QWidget>
 
@@ -38,6 +40,6 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget()
  */
 void DatabaseSettingsWidget::load(QSharedPointer<Database> db)
 {
-    m_db = db;
+    m_db = std::move(db);
     initialize();
 }

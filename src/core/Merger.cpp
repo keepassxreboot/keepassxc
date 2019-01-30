@@ -616,7 +616,8 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     auto* sourceMetadata = context.m_sourceDb->metadata();
     auto* targetMetadata = context.m_targetDb->metadata();
 
-    for (QUuid customIconId : sourceMetadata->customIcons().keys()) {
+    const auto keys = sourceMetadata->customIcons().keys();
+    for (QUuid customIconId : keys) {
         QImage customIcon = sourceMetadata->customIcon(customIconId);
         if (!targetMetadata->containsCustomIcon(customIconId)) {
             targetMetadata->addCustomIcon(customIconId, customIcon);

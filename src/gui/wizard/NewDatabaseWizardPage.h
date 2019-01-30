@@ -38,7 +38,7 @@ class NewDatabaseWizardPage : public QWizardPage
 
 public:
     explicit NewDatabaseWizardPage(QWidget* parent = nullptr);
-    Q_DISABLE_COPY(NewDatabaseWizardPage);
+    Q_DISABLE_COPY(NewDatabaseWizardPage)
     ~NewDatabaseWizardPage() override;
 
     void setPageWidget(DatabaseSettingsWidget* page);

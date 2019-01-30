@@ -135,13 +135,13 @@ namespace Utils
 
         auto db = QSharedPointer<Database>::create();
         QString error;
-    if (db->open(databaseFilename, compositeKey, &error, false)) {
-        return db;
-    }else {
-        err << error << endl;
-        return {};
+        if (db->open(databaseFilename, compositeKey, &error, false)) {
+            return db;
+        } else {
+            err << error << endl;
+            return {};
+        }
     }
-}
 
     /**
      * Read a user password from STDIN or return a password previously

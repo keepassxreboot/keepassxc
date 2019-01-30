@@ -20,8 +20,8 @@
 
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
 
-QMap<QAbstractButton*, MessageBox::Button> MessageBox::m_addedButtonLookup =
-    QMap<QAbstractButton*, MessageBox::Button>();
+QHash<QAbstractButton*, MessageBox::Button> MessageBox::m_addedButtonLookup =
+    QHash<QAbstractButton*, MessageBox::Button>();
 
 QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>> MessageBox::m_buttonDefs =
     QMap<MessageBox::Button, std::pair<QString, QMessageBox::ButtonRole>>();

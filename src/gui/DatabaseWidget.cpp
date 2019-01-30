@@ -1532,7 +1532,7 @@ bool DatabaseWidget::saveAs()
 {
     while (true) {
         QString oldFilePath = m_db->filePath();
-        if (!QFileInfo(oldFilePath).exists()) {
+        if (!QFileInfo::exists(oldFilePath)) {
             oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString() + "/"
                                                    + tr("Passwords").append(".kdbx"));
         }

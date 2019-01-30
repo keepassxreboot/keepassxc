@@ -113,7 +113,7 @@ void EditWidgetIcons::reset()
 }
 
 void EditWidgetIcons::load(const QUuid& currentUuid,
-                           QSharedPointer<Database> database,
+                           const QSharedPointer<Database>& database,
                            const IconStruct& iconStruct,
                            const QString& url)
 {
@@ -229,7 +229,6 @@ void EditWidgetIcons::fetchFinished()
     QImage image;
     bool fallbackEnabled = config()->get("security/IconDownloadFallback", false).toBool();
     bool error = (m_reply->error() != QNetworkReply::NoError);
-    QUrl url = m_reply->url();
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
