@@ -34,8 +34,9 @@ UpdateChecker::~UpdateChecker()
 {
 }
 
-void UpdateChecker::checkForUpdates()
+void UpdateChecker::checkForUpdates(bool manuallyRequested)
 {
+    m_isManuallyRequested = manuallyRequested;
     m_bytesReceived.clear();
 
     QNetworkRequest request(QUrl("https://api.github.com/repos/keepassxreboot/keepassxc/releases/latest"));
@@ -74,7 +75,7 @@ void UpdateChecker::fetchFinished()
         version = "error";
     }
 
-    emit updateCheckFinished(hasNewVersion, version);
+    emit updateCheckFinished(hasNewVersion, version, m_isManuallyRequested);
 }
 
 bool UpdateChecker::compareVersions(const QString& remoteVersion, const QString& localVersion)

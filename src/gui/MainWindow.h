@@ -85,7 +85,7 @@ private slots:
     void showAboutDialog();
     void showUpdateCheckStartup();
     void showUpdateCheckDialog();
-    void hasUpdateAvailable(bool hasUpdate, const QString& version);
+    void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
     void switchToDatabases();

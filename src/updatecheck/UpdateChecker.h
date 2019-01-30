@@ -30,12 +30,12 @@ public:
     UpdateChecker(QObject* parent = nullptr);
     ~UpdateChecker() override;
 
-    void checkForUpdates();
+    void checkForUpdates(bool manuallyRequested);
     static bool compareVersions(const QString& remoteVersion, const QString& localVersion);
     static UpdateChecker* instance();
 
 signals:
-    void updateCheckFinished(bool hasNewVersion, QString version);
+    void updateCheckFinished(bool hasNewVersion, QString version, bool isManuallyRequested);
 
 private slots:
     void fetchFinished();
@@ -45,6 +45,7 @@ private:
     QNetworkAccessManager* m_netMgr;
     QNetworkReply* m_reply;
     QByteArray m_bytesReceived;
+    bool m_isManuallyRequested;
 
     static UpdateChecker* m_instance;
 

@@ -374,7 +374,7 @@ MainWindow::MainWindow()
 
 #ifdef WITH_XC_NETWORKING
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
-    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString)), SLOT(hasUpdateAvailable(bool, QString)));
+    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString, bool)), SLOT(hasUpdateAvailable(bool, QString, bool)));
     QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
@@ -693,16 +693,16 @@ void MainWindow::showUpdateCheckStartup()
     }
 
     if (config()->get("GUI/CheckForUpdates", false).toBool()) {
-        updateCheck()->checkForUpdates();
+        updateCheck()->checkForUpdates(false);
     }
 
 #endif
 }
 
-void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version)
+void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested)
 {
 #ifdef WITH_XC_NETWORKING
-    if (hasUpdate) {
+    if (hasUpdate && !isManuallyRequested) {
         auto* updateCheckDialog = new UpdateCheckDialog(this);
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
         updateCheckDialog->show();
@@ -713,7 +713,7 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version)
 void MainWindow::showUpdateCheckDialog()
 {
 #ifdef WITH_XC_NETWORKING
-    updateCheck()->checkForUpdates();
+    updateCheck()->checkForUpdates(true);
     auto* updateCheckDialog = new UpdateCheckDialog(this);
     updateCheckDialog->show();
 #endif

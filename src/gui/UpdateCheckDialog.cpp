@@ -31,7 +31,7 @@ UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
-    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString)), SLOT(close()));
+    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString, bool)), SLOT(showUpdateCheckResponse(bool, QString)));
 }
 
 void UpdateCheckDialog::showUpdateCheckResponse(bool status, const QString& version) {
