@@ -257,6 +257,10 @@ else()
     list(APPEND keepassx_SOURCES keys/drivers/YubiKey.h keys/drivers/YubiKeyStub.cpp)
 endif()
 
+if(WITH_XC_NETWORKING)
+    list(APPEND keepassx_SOURCES updatecheck/UpdateChecker.cpp gui/UpdateCheckDialog.cpp)
+endif()
+
 if(WITH_XC_TOUCHID)
     list(APPEND keepassx_SOURCES touchid/TouchID.mm)
 endif()

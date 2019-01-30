@@ -83,6 +83,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QCheckBox" name="checkForUpdatesOnStartupCheckBox">
+            <property name="text">
+             <string>Check for updates at application startup</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -179,6 +186,13 @@
           <string>General</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QCheckBox" name="checkForUpdatesIncludeBetasCheckBox">
+            <property name="text">
+             <string>Include pre-releases when checking for updates</string>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="toolbarHideCheckBox">
             <property name="text">
