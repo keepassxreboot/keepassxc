@@ -84,11 +84,25 @@ set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${K
 set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
 set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release PreRelease)
 
+# Retrieve git HEAD revision hash
+set(GIT_HEAD_OVERRIDE "" CACHE STRING "Manually set the Git HEAD hash when missing (eg, when no .git folder exists)")
+execute_process(COMMAND git rev-parse --short=7 HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_HEAD
+        ERROR_QUIET)
+string(STRIP "${GIT_HEAD}" GIT_HEAD)
+if(GIT_HEAD STREQUAL "")
+    string(SUBSTRING "${GIT_HEAD_OVERRIDE}" 0 7 GIT_HEAD)
+endif()
+message(STATUS "Found Git HEAD Revision: ${GIT_HEAD}\n")
+
 # Check if on a tag, if so build as a release
 execute_process(COMMAND git tag --points-at HEAD
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_TAG)
+        OUTPUT_VARIABLE GIT_TAG
+        ERROR_QUIET)
 if(GIT_TAG)
+    string(STRIP "${GIT_TAG}" GIT_TAG)
     set(OVERRIDE_VERSION ${GIT_TAG})
 elseif(EXISTS ${CMAKE_SOURCE_DIR}/.version)
     file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)

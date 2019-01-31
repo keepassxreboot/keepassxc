@@ -20,9 +20,9 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
+#include "git-info.h"
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
-#include "version.h"
 
 #include <QClipboard>
 #include <QSysInfo>
@@ -47,8 +47,6 @@ AboutDialog::AboutDialog(QWidget* parent)
     QString commitHash;
     if (!QString(GIT_HEAD).isEmpty()) {
         commitHash = GIT_HEAD;
-    } else if (!QString(DIST_HASH).contains("Format")) {
-        commitHash = DIST_HASH;
     }
 
     QString debugInfo = "KeePassXC - ";

@@ -35,7 +35,7 @@ TAG_NAME=""
 DOCKER_IMAGE=""
 DOCKER_CONTAINER_NAME="keepassxc-build-container"
 CMAKE_OPTIONS=""
-CPACK_GENERATORS="NSIS;ZIP"
+CPACK_GENERATORS="WIX;ZIP"
 COMPILER="g++"
 MAKE_OPTIONS="-j8"
 BUILD_PLUGINS="all"
@@ -346,7 +346,7 @@ checkSigntoolCommandExists() {
 }
 
 checkCodesignCommandExists() {
-    if !cmdExists codesign; then
+    if ! cmdExists codesign; then
         exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
     fi
 }

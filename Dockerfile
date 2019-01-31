@@ -24,45 +24,44 @@ ENV TERM=xterm-256color
 
 RUN set -x \
     && apt-get update -y \
-    && apt-get -y install software-properties-common \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get -y install software-properties-common
 
 RUN set -x \
     && add-apt-repository ppa:beineri/opt-${QT5_PPA_VERSION}-trusty \
     && add-apt-repository ppa:phoerious/keepassxc
 
-# build and runtime dependencies
 RUN set -x \
     && apt-get update -y \
-    && apt-get upgrade -y \
+    && apt-get upgrade -y
+
+# build and runtime dependencies
+RUN set -x \
     && apt-get install -y \
         cmake3 \
         curl \
         g++ \
         git \
-        libargon2-0-dev \
-        libcurl-no-gcrypt-dev \
-        libfuse2 \
         libgcrypt20-18-dev \
-        libqrencode-dev \
+        libargon2-0-dev \
         libsodium-dev \
-        libxi-dev \
-        libxtst-dev \
-        libyubikey-dev \
-        libykpers-1-dev \
-        mesa-common-dev \
-        xclip \
-        xvfb \
-        zlib1g-dev \
-        # ubuntu:14.04 has no quazip, put here as placeholder
-        # libquazip5-dev
+        libcurl-no-gcrypt-dev \
         ${QT5_VERSION}base \
         ${QT5_VERSION}tools \
         ${QT5_VERSION}x11extras \
         ${QT5_VERSION}translations \
         ${QT5_VERSION}imageformats \
         ${QT5_VERSION}svg \
-    && rm -rf /var/lib/apt/lists/*
+        zlib1g-dev \
+        libxi-dev \
+        libxtst-dev \
+        # ubuntu:14.04 has no quazip (it's optional)
+        # libquazip5-dev \
+        mesa-common-dev \
+        libyubikey-dev \
+        libykpers-1-dev \
+        libqrencode-dev \
+        xclip \
+        xvfb
 
 ENV PATH="/opt/${QT5_VERSION}/bin:${PATH}"
 ENV CMAKE_PREFIX_PATH="/opt/${QT5_VERSION}/lib/cmake"
@@ -75,6 +74,12 @@ RUN set -x \
     && echo "/opt/${QT5_VERSION}/lib" > /etc/ld.so.conf.d/${QT5_VERSION}.conf \
     && echo "/opt/keepassxc-libs/lib/x86_64-linux-gnu" > /etc/ld.so.conf.d/keepassxc.conf
 
+# AppImage dependencies
+RUN set -x \
+    && apt-get install -y \
+        curl \
+        libfuse2
+
 RUN set -x \
     && curl -L "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" > /usr/bin/linuxdeploy \
     && curl -L "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" > /usr/bin/linuxdeploy-plugin-qt \
@@ -82,6 +87,10 @@ RUN set -x \
     && chmod +x /usr/bin/linuxdeploy \
     && chmod +x /usr/bin/linuxdeploy-plugin-qt \
     && chmod +x /usr/bin/appimagetool
+
+RUN set -x \
+    && apt-get autoremove --purge \
+    && rm -rf /var/lib/apt/lists/*
 
 VOLUME /keepassxc/src
 VOLUME /keepassxc/out

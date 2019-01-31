@@ -17,15 +17,7 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
-
-include(GetGitRevisionDescription)
-get_git_head_revision(GIT_REFSPEC GIT_HEAD)
-git_describe(GIT_DESCRIBE --long)
-
-if(NOT GIT_HEAD OR NOT GIT_DESCRIBE)
-    set(GIT_HEAD "")
-    set(GIT_DESCRIBE "")
-endif()
+configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
 find_library(ZXCVBN_LIBRARIES zxcvbn)
 if(NOT ZXCVBN_LIBRARIES)
@@ -33,8 +25,6 @@ if(NOT ZXCVBN_LIBRARIES)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zxcvbn)
     set(ZXCVBN_LIBRARIES zxcvbn)
 endif(NOT ZXCVBN_LIBRARIES)
-
-configure_file(version.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
 
 set(keepassx_SOURCES
         core/AutoTypeAssociations.cpp
@@ -380,7 +370,7 @@ if(MINGW)
 
     string(REGEX REPLACE "-snapshot$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 
-    set(CPACK_GENERATOR "ZIP;NSIS")
+    set(CPACK_GENERATOR "ZIP;WIX")
     set(CPACK_STRIP_FILES OFF)
     set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROGNAME})
@@ -414,9 +404,7 @@ if(MINGW)
     set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
     include(CPack)
 
-    install(CODE "
-    set(gp_tool \"objdump\")
-    " COMPONENT Runtime)
+    install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
 
     include(DeployQt4)
     install_qt4_executable(${PROGNAME}.exe)

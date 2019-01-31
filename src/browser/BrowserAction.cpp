@@ -20,9 +20,10 @@
 #include "BrowserSettings.h"
 #include "NativeMessagingBase.h"
 #include "config-keepassx.h"
-#include "sodium.h"
-#include "sodium/crypto_box.h"
-#include "sodium/randombytes.h"
+
+#include <sodium.h>
+#include <sodium/crypto_box.h>
+#include <sodium/randombytes.h>
 #include <QJsonDocument>
 #include <QJsonParseError>
 
