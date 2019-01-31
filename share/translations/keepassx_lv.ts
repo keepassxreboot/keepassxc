@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="kk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lv" version="2.1">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -77,7 +77,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -127,15 +127,15 @@ Kernel: %3 %4</source>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Қолданба баптаулары</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Security</source>
-        <translation>Қауіпсіздік</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -178,7 +178,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Remember last databases</source>
-        <translation>Соңғы дерекқорларды есте сақтау:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
@@ -206,11 +206,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Әр өзгерістен кейін автосақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Automatically save on exit</source>
-        <translation>Шығу кезінде автосақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
@@ -226,11 +226,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Жазбаны жасау кезінде топ таңбашасын қолдану</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
-        <translation>Алмасу буферіне көшіру кезінде қолданбаны қайыру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide the entry preview panel</source>
@@ -238,7 +238,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
@@ -250,7 +250,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Жүйелік трей таңбашасын қолдану</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Dark system tray icon</source>
@@ -258,15 +258,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Қолданба қайырылған кезде терезені жүйелік трейге жасыру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Language</source>
-        <translation>Тіл</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -282,7 +282,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Глобалды автотеру жарлығы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type typing delay</source>
@@ -322,16 +322,16 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Алмасу буферін тазалау алдындағы кідіріс</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Дерекқорларды белсенділік жоқ кезде блоктау алдындағы кідіріс</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> min</source>
@@ -394,7 +394,7 @@ Kernel: %3 %4</source>
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>Терезе атауына сай келетін жазбаны табу мүмкін емес:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -402,7 +402,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
@@ -425,34 +425,34 @@ Kernel: %3 %4</source>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Терезе</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Тізбек</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Үнсіз келісім тізбегі</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Тізбек</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -463,7 +463,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Автотеру үшін жазбаны таңдаңыз:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -526,7 +526,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
@@ -585,7 +585,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Кеңейтілген</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
@@ -735,7 +735,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -843,7 +843,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Қате</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Empty fieldname %1</source>
@@ -859,7 +859,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -871,7 +871,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
@@ -880,11 +880,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -892,7 +892,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Root</source>
         <comment>Root group name</comment>
-        <translation>Түбір</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>File %1 does not exist.</source>
@@ -926,19 +926,19 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>Басты парольді енгізіңіз:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Кілттер файлы:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Browse</source>
-        <translation>Шолу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Refresh</source>
@@ -965,15 +965,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Кілттер файлдары</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Кілттер файлын таңдаңыз</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>TouchID for quick unlock</source>
@@ -1005,11 +1005,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Security</source>
-        <translation>Қауіпсіздік</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Master Key</source>
@@ -1048,7 +1048,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -1094,7 +1094,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
@@ -1119,7 +1119,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1159,7 +1159,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Түрлендірулер саны:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
@@ -1259,22 +1259,22 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -1285,15 +1285,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Дерекқор аты:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Дерекқор сипаттамасы:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Үнсіз келісім пайдаланушы аты:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>History Settings</source>
@@ -1301,15 +1301,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Макс. тарих саны:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Макс. тарих өлшемі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source> MiB</source>
-        <translation>МиБ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1404,19 +1404,19 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseTabWidget</name>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 дерекқоры</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Дерекқорды ашу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>CSV файлы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Merge database</source>
@@ -1424,19 +1424,19 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 дерекқорын ашу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 дерекқоры</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Дерекқорды CSV файлына экспорттау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>CSV файлына жазу сәтсіз аяқталды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database creation error</source>
@@ -1483,15 +1483,15 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; жазбасын өшіруді шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>&quot;%1&quot; жазбасын қоқыс шелегіне тастауды шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1507,7 +1507,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; тобын өшіруді шынымен қалайсыз ба?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>No current database.</source>
@@ -1552,15 +1552,15 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -1577,8 +1577,7 @@ Do you want to merge your changes?</source>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; өзгертілген.
-Өзгерістерді сақтау керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Database was modified.
@@ -1587,7 +1586,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Өзгерістерді сақтау керек пе?</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
@@ -1614,11 +1613,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Дерекқорды қалайша сақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 дерекқоры</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -1626,7 +1625,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1653,27 +1652,27 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Жазба</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Кеңейтілген</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Таңбаша</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Қасиеттері</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>History</source>
-        <translation>Тарихы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>SSH Agent</source>
@@ -1701,23 +1700,23 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Жазба тарихы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Жазбаны қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Жазбаны түзету</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Different passwords supplied.</source>
-        <translation>Әр түрлі парольдер көрсетілді.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Жаңа атрибут</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
@@ -1725,15 +1724,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Tomorrow</source>
-        <translation>Ертең</translation>
+        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Apply generated password?</source>
@@ -1761,7 +1760,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Removal</source>
@@ -1772,15 +1771,15 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Қосымша атрибуттар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Edit Name</source>
@@ -1796,7 +1795,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Салынымдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Foreground Color:</source>
@@ -1811,7 +1810,7 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Бұл жазба үшін автотеруді іске қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
@@ -1827,15 +1826,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>+</source>
-        <translation>+</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>-</source>
-        <translation>-</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Терезе атауы:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
@@ -1846,46 +1845,46 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Show</source>
-        <translation>Көрсету</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Қалпына келтіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Барлығын өшіру</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>URL:</source>
-        <translation>URL:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>Қайталау:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title:</source>
-        <translation>Атауы:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Сақталған баптаулар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
@@ -1893,11 +1892,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Username:</source>
-        <translation>Пайдаланушы аты:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Мерзімі аяқталады</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1980,35 +1979,35 @@ Disable safe saves and try again?</source>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Таңбаша</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Қасиеттері</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Топты қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Топты түзету</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Іске қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Сөндіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Аталық топтан мұралау (%1)</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2031,7 +2030,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Inactive</source>
@@ -2090,23 +2089,23 @@ Disable safe saves and try again?</source>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Мерзімі аяқталады</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Автотеру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
@@ -2129,11 +2128,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Add custom icon</source>
-        <translation>Таңдауыңызша таңбашаны қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete custom icon</source>
-        <translation>Таңдауыңызша таңбашаны өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Download favicon</source>
@@ -2145,11 +2144,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Images</source>
-        <translation>Суреттер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Custom icon already exists</source>
@@ -2173,7 +2172,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2181,34 +2180,34 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Жасалған:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Өзгертілген:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Қатынаған:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Plugin Data</source>
@@ -2216,7 +2215,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Delete plugin data?</source>
@@ -2247,7 +2246,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Size</source>
@@ -2262,19 +2261,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Add</source>
-        <translation>Қосу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Open</source>
-        <translation>Ашу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Save</source>
-        <translation>Сақтау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select files</source>
@@ -2282,7 +2281,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -2323,33 +2322,33 @@ This may cause the affected plugins to malfunction.</source>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Аты</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Last modified</source>
-        <translation>Соңғы өзгертілген</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2361,19 +2360,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Never</source>
@@ -2381,15 +2380,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Мерзімі аяқталады</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Created</source>
@@ -2405,7 +2404,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Салынымдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Yes</source>
@@ -2428,15 +2427,15 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>General</source>
-        <translation>Жалпы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Expiration</source>
@@ -2444,7 +2443,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Attributes</source>
@@ -2452,11 +2451,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Салынымдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Autotype</source>
@@ -2464,11 +2463,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Window</source>
-        <translation>Терезе</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Тізбек</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Searching</source>
@@ -2476,7 +2475,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear</source>
@@ -2543,7 +2542,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Group</name>
     <message>
         <source>Recycle Bin</source>
-        <translation>Қоқыс шелегі</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>[empty]</source>
@@ -2585,7 +2584,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx3Reader</name>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
@@ -2593,7 +2592,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Пароль қате, немесе дерекқор файлы зақымдалған.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>missing database headers</source>
@@ -2624,7 +2623,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2635,7 +2634,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -2763,7 +2762,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
@@ -2811,7 +2810,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>KeePass дерекқоры емес.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
@@ -2967,30 +2966,30 @@ Line %2, column %3</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>KeePass1 дерекқорын импорттау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Дерекқорды ашу мүмкін емес.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Кілттер файлын оқу мүмкін емес.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>KeePass дерекқоры емес.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Шифрлеу алгоритміне қолдау жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>KeePass дерекқоры нұсқасына қолдау жоқ.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
@@ -3023,15 +3022,15 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Root</source>
-        <translation>Түбір</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>Басты парольді есептеу мүмкін емес</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Пароль қате, немесе дерекқор файлы зақымдалған.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -3192,7 +3191,7 @@ Line %2, column %3</source>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Browse</source>
-        <translation>Шолу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Generate</source>
@@ -3224,15 +3223,15 @@ Message: %2</source>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Кілттер файлдары</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Кілттер файлын жасау...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error creating key file</source>
@@ -3244,7 +3243,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Кілттер файлын таңдаңыз</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3311,7 +3310,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Дерекқор баптаулары</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Clone entry</source>
@@ -3323,11 +3322,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Пайдаланушы атын алмасу буферіне көшіріп алу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Парольді алмасу буферіне көшіріп алу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -3391,11 +3390,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Баптаулар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Терезені көрсету/жасыру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -3614,7 +3613,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Түбір</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3776,7 +3775,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>Парольді енгізіңіз:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Confirm password:</source>
@@ -3784,7 +3783,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
@@ -3811,7 +3810,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password:</source>
-        <translation>Пароль:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>strength</source>
@@ -3824,27 +3823,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Таңбалар түрлері</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upper Case Letters</source>
-        <translation>Бас әріптер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Lower Case Letters</source>
-        <translation>Кіші әріптер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Сандар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Арнайы таңбалар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -3852,7 +3851,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Ұқсайтын таңбаларға жол бермеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Pick characters from every group</source>
@@ -3880,7 +3879,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Accept</source>
-        <translation>Қабылдау</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Close</source>
@@ -3924,7 +3923,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Кеңейтілген</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Upper Case Letters A to F</source>
@@ -4053,7 +4052,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Delete</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Move</source>
@@ -4065,7 +4064,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Skip</source>
@@ -4073,7 +4072,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Disable</source>
-        <translation>Сөндіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Merge</source>
@@ -4160,7 +4159,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
@@ -4323,23 +4322,23 @@ Available commands:
     </message>
     <message>
         <source>Group</source>
-        <translation>Топ</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title</source>
-        <translation>Атауы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Username</source>
-        <translation>Пайдаланушы аты</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Естеліктер</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Last Modified</source>
@@ -4432,7 +4431,7 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -4790,11 +4789,11 @@ Available commands:
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>таңдауыңызша баптаулар файлына дейінгі жол</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>дерекқордың кілттер файлы</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>read password of the database from stdin</source>
@@ -4810,7 +4809,7 @@ Available commands:
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Криптографиялық функцияларды сынау кезіндегі қатаң қате орын алды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>KeePassXC - Error</source>
@@ -4825,34 +4824,34 @@ Available commands:
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Сығу кезінде zlib ішкі қатесі орын алған:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Астындағы құрылғыға жазу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Астындағы құрылғыны ашу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Астындағы құрылғыдан деректерді оқу қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Тарқату кезінде zlib ішкі қатесі орын алған:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>zlib-тің бұл нұсқасы gzip пішімін қолдамайды.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Ішкі zlib қатесі:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4949,7 +4948,7 @@ Available commands:
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation>Іздеу</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear</source>
@@ -5037,7 +5036,7 @@ Available commands:
     </message>
     <message>
         <source>Remove</source>
-        <translation>Өшіру</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Path</source>
@@ -5078,7 +5077,7 @@ Available commands:
     </message>
     <message>
         <source>All files</source>
-        <translation>Барлық файлдар</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Select path</source>
@@ -5241,7 +5240,7 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -5297,7 +5296,7 @@ Available commands:
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Code size:</source>

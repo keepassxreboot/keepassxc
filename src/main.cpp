@@ -68,22 +68,22 @@ int main(int argc, char** argv)
 
     QCommandLineParser parser;
     parser.setApplicationDescription(
-        QCoreApplication::translate("main", "KeePassXC - cross-platform password manager"));
+        QObject::tr("KeePassXC - cross-platform password manager"));
     parser.addPositionalArgument(
         "filename",
-        QCoreApplication::translate("main", "filenames of the password databases to open (*.kdbx)"),
+        QObject::tr("filenames of the password databases to open (*.kdbx)"),
         "[filename(s)]");
 
     QCommandLineOption configOption(
-        "config", QCoreApplication::translate("main", "path to a custom config file"), "config");
+        "config", QObject::tr("path to a custom config file"), "config");
     QCommandLineOption keyfileOption(
-        "keyfile", QCoreApplication::translate("main", "key file of the database"), "keyfile");
+        "keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin",
-                                     QCoreApplication::translate("main", "read password of the database from stdin"));
+                                     QObject::tr("read password of the database from stdin"));
     // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
     QCommandLineOption parentWindowOption(QStringList() << "pw"
                                                         << "parent-window",
-                                          QCoreApplication::translate("main", "Parent window handle"),
+                                          QObject::tr("Parent window handle"),
                                           "handle");
 
     QCommandLineOption helpOption = parser.addHelpOption();
@@ -106,7 +106,7 @@ int main(int argc, char** argv)
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
-        qWarning() << QCoreApplication::translate("Main", "Another instance of KeePassXC is already running.")
+        qWarning() << QObject::tr("Another instance of KeePassXC is already running.")
                           .toUtf8()
                           .constData();
         return 0;
@@ -115,10 +115,10 @@ int main(int argc, char** argv)
     QApplication::setQuitOnLastWindowClosed(false);
 
     if (!Crypto::init()) {
-        QString error = QCoreApplication::translate("Main", "Fatal error while testing the cryptographic functions.");
+        QString error = QObject::tr("Fatal error while testing the cryptographic functions.");
         error.append("\n");
         error.append(Crypto::errorString());
-        MessageBox::critical(nullptr, QCoreApplication::translate("Main", "KeePassXC - Error"), error);
+        MessageBox::critical(nullptr, QObject::tr("KeePassXC - Error"), error);
         return 1;
     }
 
@@ -142,7 +142,7 @@ int main(int argc, char** argv)
             // buffer for native messaging, even if the specified file does not exist
             static QTextStream in(stdin, QIODevice::ReadOnly);
             static QTextStream out(stdout, QIODevice::WriteOnly);
-            out << QCoreApplication::translate("Main", "Database password: ") << flush;
+            out << QObject::tr("Database password: ") << flush;
             password = Utils::getPassword();
         }
 
