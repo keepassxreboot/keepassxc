@@ -833,3 +833,11 @@ void TestGroup::testCopyDataFrom()
     QCOMPARE(spyGroupDataChanged.count(), 1);
     QCOMPARE(spyGroupModified.count(), 2);
 }
+
+void TestGroup::testEquals()
+{
+    QScopedPointer<Group> group(new Group());
+    group->setName("TestGroup");
+
+    QVERIFY(group->equals(group.data(), CompareItemDefault));
+}

@@ -1081,7 +1081,7 @@ bool Group::GroupData::equals(const Group::GroupData& other, CompareItemOptions 
     if (::compare(customIcon, other.customIcon) != 0) {
         return false;
     }
-    if (timeInfo.equals(other.timeInfo, options) != 0) {
+    if (!timeInfo.equals(other.timeInfo, options)) {
         return false;
     }
     // TODO HNH: Some properties are configurable - should they be ignored?
