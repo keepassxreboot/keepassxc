@@ -54,8 +54,7 @@ BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
-    , m_wasMinimized(false)
-    , m_wasHidden(false)
+    , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
     // Don't connect the signals when used from DatabaseSettingsWidgetBrowser (parent is nullptr)
@@ -1009,29 +1008,42 @@ bool BrowserService::checkLegacySettings()
 
 void BrowserService::hideWindow() const
 {
-    if (m_wasMinimized) {
+    if (m_prevWindowState == WindowState::Minimized) {
         getMainWindow()->showMinimized();
     } else {
 #ifdef Q_OS_MACOS
-        if (m_wasHidden) {
+        if (m_prevWindowState == WindowState::Hidden) {
             macUtils()->hideOwnWindow();
         } else {
             macUtils()->raiseLastActiveWindow();
         }
 #else
-        getMainWindow()->lower();
+        if (m_prevWindowState == WindowState::Hidden) {
+            getMainWindow()->hideWindow();
+        } else {
+            getMainWindow()->lower();
+        }
 #endif
     }
 }
 
 void BrowserService::raiseWindow(const bool force)
 {
-    m_wasMinimized = getMainWindow()->isMinimized();
+    m_prevWindowState = WindowState::Normal;
+    if (getMainWindow()->isMinimized()) {
+        m_prevWindowState = WindowState::Minimized;
+    }
 #ifdef Q_OS_MACOS
-    m_wasHidden = macUtils()->isHidden();
+    if (macUtils()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
     macUtils()->raiseOwnWindow();
     Tools::wait(500);
 #else
+    if (getMainWindow()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
+
     if (force) {
         getMainWindow()->bringToFront();
     }
