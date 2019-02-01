@@ -812,8 +812,8 @@ void TestGroup::testCopyDataFrom()
     group3->customData()->set("testKey", "value");
 
 
-    QSignalSpy spyGroupModified(group.data(), &Group::groupModified);
-    QSignalSpy spyGroupDataChanged(group.data(), &Group::groupDataChanged);
+    QSignalSpy spyGroupModified(group.data(), SIGNAL(groupModified()));
+    QSignalSpy spyGroupDataChanged(group.data(), SIGNAL(groupDataChanged(Group*)));
 
     group->copyDataFrom(group2.data());
     QCOMPARE(spyGroupModified.count(), 1);
