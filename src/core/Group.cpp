@@ -865,7 +865,9 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
 void Group::copyDataFrom(const Group* other)
 {
-    m_data = other->m_data;
+    if (set(m_data, other->m_data)) {
+        emit groupDataChanged(this);
+    }
     m_customData->copyDataFrom(other->m_customData);
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
