@@ -79,9 +79,9 @@ QWidget* YubiKeyEditWidget::componentEditWidget()
 
     // clang-format off
     connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
-    // clang-format on
-
+    connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+    // clang-format on
 
     pollYubikey();
 #endif
@@ -102,9 +102,11 @@ void YubiKeyEditWidget::pollYubikey()
     if (!m_compEditWidget) {
         return;
     }
+
+    m_isDetected = false;
+    m_compUi->comboChallengeResponse->clear();
     m_compUi->buttonRedetectYubikey->setEnabled(false);
     m_compUi->comboChallengeResponse->setEnabled(false);
-    m_compUi->comboChallengeResponse->clear();
     m_compUi->yubikeyProgress->setVisible(true);
 
     // YubiKey init is slow, detect asynchronously to not block the UI
@@ -119,17 +121,20 @@ void YubiKeyEditWidget::yubikeyDetected(int slot, bool blocking)
         return;
     }
     YkChallengeResponseKey yk(slot, blocking);
-    m_compUi->comboChallengeResponse->clear();
     // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
     m_compUi->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1u) | blocking));
-    m_compUi->comboChallengeResponse->setEnabled(true);
-    m_compUi->buttonRedetectYubikey->setEnabled(true);
-    m_compUi->yubikeyProgress->setVisible(false);
     m_isDetected = true;
 #else
     Q_UNUSED(slot);
     Q_UNUSED(blocking);
 #endif
+}
+
+void YubiKeyEditWidget::yubikeyDetectComplete()
+{
+    m_compUi->comboChallengeResponse->setEnabled(true);
+    m_compUi->buttonRedetectYubikey->setEnabled(true);
+    m_compUi->yubikeyProgress->setVisible(false);
 }
 
 void YubiKeyEditWidget::noYubikeyFound()

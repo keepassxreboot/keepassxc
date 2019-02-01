@@ -46,6 +46,7 @@ protected:
 
 private slots:
     void yubikeyDetected(int slot, bool blocking);
+    void yubikeyDetectComplete();
     void noYubikeyFound();
     void pollYubikey();
 
