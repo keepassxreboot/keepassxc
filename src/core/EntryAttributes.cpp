@@ -137,7 +137,6 @@ void EntryAttributes::remove(const QString& key)
     Q_ASSERT(!isDefaultAttribute(key));
 
     if (!m_attributes.contains(key)) {
-        Q_ASSERT(false);
         return;
     }
 

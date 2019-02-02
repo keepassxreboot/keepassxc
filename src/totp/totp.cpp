@@ -55,10 +55,16 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
         QUrlQuery query(rawSettings);
         if (query.hasQueryItem("key")) {
             // Compatibility with "KeeOtp" plugin
-            // if settings are changed, will convert to semi-colon format
+            settings->keeOtp = true;
             settings->key = query.queryItemValue("key");
-            settings->digits = query.queryItemValue("size").toUInt();
-            settings->step = query.queryItemValue("step").toUInt();
+            settings->digits = DEFAULT_DIGITS;
+            settings->step = DEFAULT_STEP;
+            if (query.hasQueryItem("size")) {
+                settings->digits = query.queryItemValue("size").toUInt();
+            }
+            if (query.hasQueryItem("step")) {
+                settings->step = query.queryItemValue("step").toUInt();
+            }
         } else {
             // Parse semi-colon separated values ([step];[digits|S])
             auto vars = rawSettings.split(";");
@@ -88,12 +94,24 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     return settings;
 }
 
-QSharedPointer<Totp::Settings>
-Totp::createSettings(const QString& key, const uint digits, const uint step, const QString& encoderShortName)
+QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key,
+                                                    const uint digits,
+                                                    const uint step,
+                                                    const QString& encoderShortName,
+                                                    QSharedPointer<Totp::Settings> prevSettings)
 {
     bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP;
-    return QSharedPointer<Totp::Settings>(
-        new Totp::Settings{getEncoderByShortName(encoderShortName), key, false, isCustom, digits, step});
+    if (prevSettings) {
+        prevSettings->key = key;
+        prevSettings->digits = digits;
+        prevSettings->step = step;
+        prevSettings->encoder = Totp::getEncoderByShortName(encoderShortName);
+        prevSettings->custom = isCustom;
+        return prevSettings;
+    } else {
+        return QSharedPointer<Totp::Settings>(
+            new Totp::Settings{getEncoderByShortName(encoderShortName), key, false, false, isCustom, digits, step});
+    }
 }
 
 QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
@@ -118,15 +136,19 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
             urlstring.append("&encoder=").append(settings->encoder.name);
         }
         return urlstring;
-    }
-
-    // Semicolon output [step];[encoder]
-    if (!settings->encoder.shortName.isEmpty()) {
+    } else if (settings->keeOtp) {
+        // KeeOtp output
+        return QString("key=%1&size=%2&step=%3")
+            .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
+            .arg(settings->digits)
+            .arg(settings->step);
+    } else if (!settings->encoder.shortName.isEmpty()) {
+        // Semicolon output [step];[encoder]
         return QString("%1;%2").arg(settings->step).arg(settings->encoder.shortName);
+    } else {
+        // Semicolon output [step];[digits]
+        return QString("%1;%2").arg(settings->step).arg(settings->digits);
     }
-
-    // Semicolon output [step];[digits]
-    return QString("%1;%2").arg(settings->step).arg(settings->digits);
 }
 
 QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time)
