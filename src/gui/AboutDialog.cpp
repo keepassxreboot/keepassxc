@@ -20,12 +20,112 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "git-info.h"
 #include "core/FilePath.h"
 #include "crypto/Crypto.h"
+#include "git-info.h"
 
 #include <QClipboard>
 #include <QSysInfo>
+
+static const QString aboutMaintainers = R"(
+<p><ul>
+    <li>Jonathan White (<a href="https://github.com/droidmonkey">droidmonkey</a>)</li>
+    <li>Janek Bevendorff (<a href="https://github.com/phoerious">phoerious</a>)</li>
+    <li><a href="https://github.com/TheZ3ro">TheZ3ro</a></li>
+    <li>Louis-Bertrand (<a href="https://github.com/louib">louib</a>)</li>
+    <li>Weslly Honorato (<a href="https://github.com/weslly">weslly</a>)</li>
+    <li>Toni Spets (<a href="https://github.com/hifi">hifi</a>)</li>
+    <li>Sami V&auml;nttinen (<a href="https://github.com/varjolintu">varjolintu</a>)</li>
+</ul></p>
+)";
+
+static const QString aboutContributors = R"(
+<h3>VIP Patreon Supporters:</h3>
+<ul>
+    <li>John Cook</li>
+    <li>Max Anderson</li>
+    <li>l0b0</li>
+    <li>NarwhalOfAges</li>
+    <li>Caleb Currie</li>
+    <li>Igor Zinovik</li>
+    <li>Morgan Courbet</li>
+    <li>Sergiu Coroi</li>
+</ul>
+<h3>Notable Code Contributions:</h3>
+<ul>
+    <li>droidmonkey</li>
+    <li>phoerious</li>
+    <li>TheZ3ro</li>
+    <li>louib</li>
+    <li>weslly</li>
+    <li>varjolintu (KeePassXC-Browser)</li>
+    <li>hifi (SSH Agent)</li>
+    <li>ckieschnick (KeeShare)</li>
+    <li>seatedscribe (CSV Import)</li>
+    <li>brainplot (many improvements)</li>
+    <li>kneitinger (many improvements)</li>
+    <li>frostasm (many improvements)</li>
+    <li>fonic (Entry Table View)</li>
+    <li>kylemanna (YubiKey)</li>
+    <li>keithbennett (KeePassHTTP)</li>
+    <li>Typz (KeePassHTTP)</li>
+    <li>denk-mal (KeePassHTTP)</li>
+    <li>angelsl (KDBX 4)</li>
+    <li>debfx (KeePassX)</li>
+    <li>BlueIce (KeePassX)</li>
+</ul>
+<h3>Patreon Supporters:</h3>
+<ul>
+    <li>Ashura</li>
+    <li>Alexanderjb</li>
+    <li>Andreas Kollmann</li>
+    <li>Richard Ames</li>
+    <li>Christian Rasmussen</li>
+    <li>Gregory Werbin</li>
+    <li>Nuutti Toivola</li>
+    <li>SLmanDR</li>
+    <li>Tyler Gass</li>
+    <li>Lionel Laské</li>
+    <li>Dmitrii Galinskii</li>
+    <li>Sergei Maximov</li>
+    <li>John-Ivar</li>
+    <li>Clayton Casciato</li>
+</ul>
+<h3>Translations:</h3>
+<ul>
+    <li><strong>Basque</strong>: azken_tximinoa, Hey_neken</li>
+    <li><strong>Catalan</strong>: capitantrueno, dsoms, mcus, raulua, ZJaume</li>
+    <li><strong>Chinese (China)</strong>: Biggulu, Brandon_c, hoilc, ligyxy,
+        vc5, Small_Ku</li>
+    <li><strong>Chinese (Taiwan)</strong>: BestSteve, MiauLightouch, Small_Ku,
+        yan12125, ymhuang0808</li>
+    <li><strong>Czech</strong>: DanielMilde, JosefVitu, pavelb, tpavelek</li>
+    <li><strong>Danish</strong>: nlkl</li>
+    <li><strong>Dutch</strong>: apie, bartlibert, evanoosten, fvw, KnooL, srgvg,
+        Vistaus, wanderingidea</li>
+    <li><strong>Finnish</strong>: artnay, Jarppi, MawKKe</li>
+    <li><strong>French</strong>: A1RO, aghilas.messara, bisaloo, frgnca,
+        ggtr1138, gilbsgilbs, gtalbot, Gui13, iannick, jlutran, kyodev, logut,
+        MartialBis, narzb, pBouillon, plunkets, Raphi111, Scrat15, tl_pierre,
+        wilfriedroset</li>
+    <li><strong>German</strong>: antsas, BasicBaer, Calyrx, codejunky,
+        DavidHamburg, eth0, for1real, jensrutschmann, joe776, kflesch,
+        MarcEdinger, marcbone, mcliquid, mfernau77, montilo, nursoda, omnisome4,
+        origin_de, pcrcoding, phoerious, rgloor, transi_222, vlenzer, waster</li>
+    <li><strong>Greek</strong>: magkopian, nplatis, tassos.b, xinomilo</li>
+    <li><strong>Hungarian</strong>: bubu, meskobalazs, urbalazs</li>
+    <li><strong>Indonesian</strong>: zk</li>
+    <li><strong>Italian</strong>: amaxis, bovirus, duncanmid, FranzMari, lucaim,
+        Mte90, Peo, TheZ3ro, tosky, VosaxAlo</li>
+    <li><strong>Japanese</strong>: masoo, metalic_cat, p2635,
+        Shinichirou_Yamada, vargas.peniel, vmemjp, yukinakato</li>
+    <li><strong>Korean</strong>: cancantun, peremen</li>
+    <li><strong>Lithuanian</strong>: Moo</li>
+    <li><strong>Polish</strong>: keypress, konradmb, mrerexx, psobczak</li>
+    <li><strong>Portuguese (Brazil)</strong>: danielbibit, fabiom, flaviobn,
+        vitor895, weslly</li>
+</ul>
+)";
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog(parent)
@@ -106,6 +206,9 @@ AboutDialog::AboutDialog(QWidget* parent)
     debugInfo.append(tr("Enabled extensions:").append(extensions));
 
     m_ui->debugInfo->setPlainText(debugInfo);
+
+    m_ui->maintainers->setText(aboutMaintainers);
+    m_ui->contributors->setText(aboutContributors);
 
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
