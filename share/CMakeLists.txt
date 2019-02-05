@@ -121,6 +121,9 @@ add_custom_target(icons
     COMMAND inkscape -z -w 128 -h 128
         icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/128x128/mimetypes/application-x-keepassxc.png
 
+    # Shrink PNGs using pngcrush
+    COMMAND bash ./crushpng.sh icons
+
     # ICNS for MacOS
     COMMAND png2icns macosx/keepassxc.icns
         icons/application/16x16/apps/keepassxc.png
