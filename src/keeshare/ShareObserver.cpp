@@ -787,7 +787,7 @@ ShareObserver::Result::Result(const QString& path, ShareObserver::Result::Type t
 
 bool ShareObserver::Result::isValid() const
 {
-    return !path.isEmpty() || !message.isEmpty() || !message.isEmpty() || !message.isEmpty();
+    return !path.isEmpty() || !message.isEmpty();
 }
 
 bool ShareObserver::Result::isError() const
