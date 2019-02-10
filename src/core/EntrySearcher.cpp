@@ -96,11 +96,12 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
             found = !attachments.filter(term->regex).empty();
             break;
         default:
-            // Terms without a specific field try to match title, username, url, and notes
+            // Terms without a specific field try to match title, username, url, notes and group name.
             found = term->regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term->regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
                     || term->regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || term->regex.match(entry->notes()).hasMatch();
+                    || term->regex.match(entry->notes()).hasMatch()
+                    || term->regex.match(entry->resolvePlaceholder(entry->group()->name())).hasMatch();
         }
 
         // Short circuit if we failed to match or we matched and are excluding this term
