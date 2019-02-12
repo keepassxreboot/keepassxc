@@ -192,7 +192,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_gcc_compiler_flags("-Werror")
 endif()
 
-if (UNIX AND NOT HAIKU)
+if (NOT HAIKU)
 if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_flags("-fstack-protector-strong")
 else()
