@@ -41,16 +41,12 @@ public:
     bool hasError() const;
     QString errorString() const;
 
-    bool saveXml() const;
-    void setSaveXml(bool save);
-
     QSharedPointer<KdbxReader> reader() const;
     quint32 version() const;
 
 private:
     void raiseError(const QString& errorMessage);
 
-    bool m_saveXml = false;
     bool m_error = false;
     QString m_errorStr = "";
 

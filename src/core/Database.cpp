@@ -292,6 +292,21 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     return true;
 }
 
+bool Database::extract(QByteArray& xmlOutput, QString* error)
+{
+    KeePass2Writer writer;
+    writer.extractDatabase(this, xmlOutput);
+
+    if (writer.hasError()) {
+        // the writer failed
+        if (error) {
+            *error = writer.errorString();
+        }
+        return false;
+    }
+    return true;
+}
+
 /**
  * Remove the old backup and replace it with a new one
  * backups are named <filename>.old.kdbx

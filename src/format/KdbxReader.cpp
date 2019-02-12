@@ -20,7 +20,6 @@
 #include "KdbxReader.h"
 #include "core/Database.h"
 #include "core/Endian.h"
-#include "format/KdbxXmlWriter.h"
 
 #include <QBuffer>
 
@@ -67,7 +66,6 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
     device->seek(0);
 
     m_db = db;
-    m_xmlData.clear();
     m_masterSeed.clear();
     m_encryptionIV.clear();
     m_streamStartBytes.clear();
@@ -97,14 +95,7 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
     }
 
     // read payload
-    bool ok = readDatabaseImpl(device, headerStream.storedData(), std::move(key), db);
-
-    if (saveXml()) {
-        m_xmlData.clear();
-        decryptXmlInnerStream(m_xmlData, db);
-    }
-
-    return ok;
+    return readDatabaseImpl(device, headerStream.storedData(), std::move(key), db);
 }
 
 bool KdbxReader::hasError() const
@@ -115,21 +106,6 @@ bool KdbxReader::hasError() const
 QString KdbxReader::errorString() const
 {
     return m_errorStr;
-}
-
-bool KdbxReader::saveXml() const
-{
-    return m_saveXml;
-}
-
-void KdbxReader::setSaveXml(bool save)
-{
-    m_saveXml = save;
-}
-
-QByteArray KdbxReader::xmlData() const
-{
-    return m_xmlData;
 }
 
 KeePass2::ProtectedStreamAlgo KdbxReader::protectedStreamAlgo() const
@@ -268,23 +244,6 @@ void KdbxReader::setInnerRandomStreamID(const QByteArray& data)
         return;
     }
     m_irsAlgo = irsAlgo;
-}
-
-/**
- * Decrypt protected inner stream fields in XML dump on demand.
- * Without the stream key from the KDBX header, the values become worthless.
- *
- * @param xmlOutput XML dump with decrypted fields
- * @param db the database object for which to generate the decrypted XML dump
- */
-void KdbxReader::decryptXmlInnerStream(QByteArray& xmlOutput, Database* db) const
-{
-    QBuffer buffer;
-    buffer.setBuffer(&xmlOutput);
-    buffer.open(QIODevice::WriteOnly);
-    KdbxXmlWriter writer(m_kdbxVersion);
-    writer.disableInnerStreamProtection(true);
-    writer.writeDatabase(&buffer, db);
 }
 
 /**

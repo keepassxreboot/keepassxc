@@ -52,6 +52,8 @@ public:
      */
     virtual bool writeDatabase(QIODevice* device, Database* db) = 0;
 
+    void extractDatabase(QByteArray& xmlOutput, Database* db);
+
     bool hasError() const;
     QString errorString() const;
 
@@ -82,6 +84,8 @@ protected:
 
     bool writeData(QIODevice* device, const QByteArray& data);
     void raiseError(const QString& errorMessage);
+
+    quint32 m_kdbxVersion = 0;
 
     bool m_error = false;
     QString m_errorStr = "";

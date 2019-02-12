@@ -17,6 +17,10 @@
 
 #include "KdbxWriter.h"
 
+#include <QBuffer>
+
+#include "format/KdbxXmlWriter.h"
+
 bool KdbxWriter::hasError() const
 {
     return m_error;
@@ -60,6 +64,16 @@ bool KdbxWriter::writeData(QIODevice* device, const QByteArray& data)
         return false;
     }
     return true;
+}
+
+void KdbxWriter::extractDatabase(QByteArray& xmlOutput, Database* db)
+{
+    QBuffer buffer;
+    buffer.setBuffer(&xmlOutput);
+    buffer.open(QIODevice::WriteOnly);
+    KdbxXmlWriter writer(m_kdbxVersion);
+    writer.disableInnerStreamProtection(true);
+    writer.writeDatabase(&buffer, db);
 }
 
 /**
