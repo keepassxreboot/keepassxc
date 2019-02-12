@@ -883,6 +883,14 @@ void TestCli::testMerge()
     mergeCmd.execute({"merge", "-q", "-s", sourceFile.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+
+    // Quiet option without the -s option
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge", "-q", sourceFile.fileName(), sourceFile.fileName()});
+    m_stdoutFile->seek(pos);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
 }
 
 void TestCli::testRemove()

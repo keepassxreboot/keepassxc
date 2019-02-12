@@ -78,7 +78,10 @@ int Merge::execute(const QStringList& arguments)
 
     QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
-        db2 = Utils::unlockDatabase(args.at(1), parser.value(keyFileFromOption), Utils::STDOUT, Utils::STDERR);
+        db2 = Utils::unlockDatabase(args.at(1),
+                                    parser.value(keyFileFromOption),
+                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                    Utils::STDERR);
         if (!db2) {
             return EXIT_FAILURE;
         }
