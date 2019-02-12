@@ -192,10 +192,12 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
     add_gcc_compiler_flags("-Werror")
 endif()
 
+if (UNIX AND NOT HAIKU)
 if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.8.999) OR CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_flags("-fstack-protector-strong")
 else()
     add_gcc_compiler_flags("-fstack-protector --param=ssp-buffer-size=4")
+endif()
 endif()
 
 add_gcc_compiler_cxxflags("-fno-exceptions -fno-rtti")
