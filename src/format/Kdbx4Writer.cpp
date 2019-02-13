@@ -70,7 +70,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         QBuffer header;
         header.open(QIODevice::WriteOnly);
 
-        writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, m_kdbxVersion);
+        writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, getFormatVersion());
 
         CHECK_RETURN_FALSE(
             writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
@@ -171,7 +171,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         return false;
     }
 
-    KdbxXmlWriter xmlWriter(m_kdbxVersion);
+    KdbxXmlWriter xmlWriter(getFormatVersion());
     xmlWriter.writeDatabase(outputDevice, db, &randomStream, headerHash);
 
     // Explicitly close/reset streams so they are flushed and we can detect
@@ -310,4 +310,9 @@ bool Kdbx4Writer::serializeVariantMap(const QVariantMap& map, QByteArray& output
     endBytes[0] = static_cast<char>(KeePass2::VariantMapFieldType::End);
     CHECK_RETURN_FALSE(buf.write(endBytes) == 1);
     return true;
+}
+
+quint32 Kdbx4Writer::getFormatVersion()
+{
+    return KeePass2::FILE_VERSION_4;
 }

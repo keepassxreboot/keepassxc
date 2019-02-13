@@ -67,7 +67,7 @@ int Extract::execute(const QStringList& arguments)
     QByteArray xmlData;
     QString errorMessage;
     if (!db->extract(xmlData, &errorMessage)) {
-        errorTextStream << QObject::tr("Unable to extract database : %1").arg(errorMessage) << endl;
+        errorTextStream << QObject::tr("Unable to extract database %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
     outputTextStream << xmlData.constData() << endl;

@@ -29,8 +29,7 @@ class Kdbx4Writer : public KdbxWriter
 
 public:
     bool writeDatabase(QIODevice* device, Database* db) override;
-
-    quint32 m_kdbxVersion = KeePass2::FILE_VERSION_4;
+    quint32 getFormatVersion() override;
 
 private:
     bool writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeaderFieldID fieldId, const QByteArray& data);
