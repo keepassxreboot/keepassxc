@@ -72,6 +72,7 @@ public:
               bool readOnly = false);
     bool save(QString* error = nullptr, bool atomic = true, bool backup = false);
     bool save(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
+    bool extract(QByteArray&, QString* error = nullptr);
 
     bool isInitialized() const;
     void setInitialized(bool initialized);

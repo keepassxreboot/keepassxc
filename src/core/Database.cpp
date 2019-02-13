@@ -281,7 +281,6 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     setEmitModified(true);
 
     if (writer.hasError()) {
-        // the writer failed
         if (error) {
             *error = writer.errorString();
         }
@@ -289,6 +288,20 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     }
 
     markAsClean();
+    return true;
+}
+
+bool Database::extract(QByteArray& xmlOutput, QString* error)
+{
+    KeePass2Writer writer;
+    writer.extractDatabase(this, xmlOutput);
+    if (writer.hasError()) {
+        if (error) {
+            *error = writer.errorString();
+        }
+        return false;
+    }
+
     return true;
 }
 

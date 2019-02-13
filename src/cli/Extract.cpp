@@ -26,10 +26,6 @@
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
-#include "format/KeePass2Reader.h"
-#include "keys/CompositeKey.h"
-#include "keys/FileKey.h"
-#include "keys/PasswordKey.h"
 
 Extract::Extract()
 {
@@ -60,66 +56,20 @@ int Extract::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    if (!parser.isSet(Command::QuietOption)) {
-        outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
-    }
-
-    auto compositeKey = QSharedPointer<CompositeKey>::create();
-
-    QString line = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
-    auto passwordKey = QSharedPointer<PasswordKey>::create();
-    passwordKey->setPassword(line);
-    compositeKey->addKey(passwordKey);
-
-    QString keyFilePath = parser.value(Command::KeyFileOption);
-    if (!keyFilePath.isEmpty()) {
-        // LCOV_EXCL_START
-        auto fileKey = QSharedPointer<FileKey>::create();
-        QString errorMsg;
-        if (!fileKey->load(keyFilePath, &errorMsg)) {
-            errorTextStream << QObject::tr("Failed to load key file %1: %2").arg(keyFilePath, errorMsg) << endl;
-            return EXIT_FAILURE;
-        }
-
-        if (fileKey->type() != FileKey::Hashed) {
-            errorTextStream << QObject::tr("WARNING: You are using a legacy key file format which may become\n"
-                                           "unsupported in the future.\n\n"
-                                           "Please consider generating a new key file.")
-                            << endl;
-        }
-        // LCOV_EXCL_STOP
-
-        compositeKey->addKey(fileKey);
-    }
-
-    const QString& databaseFilename = args.at(0);
-    QFile dbFile(databaseFilename);
-    if (!dbFile.exists()) {
-        errorTextStream << QObject::tr("File %1 does not exist.").arg(databaseFilename) << endl;
-        return EXIT_FAILURE;
-    }
-    if (!dbFile.open(QIODevice::ReadOnly)) {
-        errorTextStream << QObject::tr("Unable to open file %1.").arg(databaseFilename) << endl;
+    auto db = Utils::unlockDatabase(args.at(0),
+                                    parser.value(Command::KeyFileOption),
+                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                    Utils::STDERR);
+    if (!db) {
         return EXIT_FAILURE;
     }
 
-    KeePass2Reader reader;
-    reader.setSaveXml(true);
-    auto db = QSharedPointer<Database>::create();
-    reader.readDatabase(&dbFile, compositeKey, db.data());
-
-    QByteArray xmlData = reader.reader()->xmlData();
-
-    if (reader.hasError()) {
-        if (xmlData.isEmpty()) {
-            errorTextStream << QObject::tr("Error while reading the database:\n%1").arg(reader.errorString()) << endl;
-        } else {
-            errorTextStream << QObject::tr("Error while parsing the database:\n%1").arg(reader.errorString()) << endl;
-        }
+    QByteArray xmlData;
+    QString errorMessage;
+    if (!db->extract(xmlData, &errorMessage)) {
+        errorTextStream << QObject::tr("Unable to extract database %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
-
     outputTextStream << xmlData.constData() << endl;
-
     return EXIT_SUCCESS;
 }
