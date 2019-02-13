@@ -8,7 +8,7 @@
 #endif
 #include <sys/types.h>
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(__HAIKU__)
 #include <stdint.h>
 
 typedef uint32_t u_int32_t;
