@@ -63,7 +63,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     QBuffer header;
     header.open(QIODevice::WriteOnly);
 
-    writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, getFormatVersion());
+    writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, formatVersion());
 
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
     CHECK_RETURN_FALSE(
@@ -133,7 +133,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
         return false;
     }
 
-    KdbxXmlWriter xmlWriter(getFormatVersion());
+    KdbxXmlWriter xmlWriter(formatVersion());
     xmlWriter.writeDatabase(outputDevice, db, &randomStream, headerHash);
 
     // Explicitly close/reset streams so they are flushed and we can detect
@@ -158,7 +158,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     return true;
 }
 
-quint32 Kdbx3Writer::getFormatVersion()
+quint32 Kdbx3Writer::formatVersion()
 {
     return KeePass2::FILE_VERSION_3_1;
 }
