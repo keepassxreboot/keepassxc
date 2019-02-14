@@ -93,37 +93,68 @@ static const QString aboutContributors = R"(
 </ul>
 <h3>Translations:</h3>
 <ul>
+    <li><strong>Arabic</strong>: AboShanab, Night1, kmutahar, muha_abdulaziz, omar.nsy</li>
     <li><strong>Basque</strong>: azken_tximinoa, Hey_neken</li>
+    <li><strong>Bengali</strong>: codesmite</li>
+    <li><strong>Burmese</strong>: Phyu</li>
     <li><strong>Catalan</strong>: capitantrueno, dsoms, mcus, raulua, ZJaume</li>
-    <li><strong>Chinese (China)</strong>: Biggulu, Brandon_c, hoilc, ligyxy,
-        vc5, Small_Ku</li>
-    <li><strong>Chinese (Taiwan)</strong>: BestSteve, MiauLightouch, Small_Ku,
-        yan12125, ymhuang0808</li>
-    <li><strong>Czech</strong>: DanielMilde, JosefVitu, pavelb, tpavelek</li>
-    <li><strong>Danish</strong>: nlkl</li>
-    <li><strong>Dutch</strong>: apie, bartlibert, evanoosten, fvw, KnooL, srgvg,
-        Vistaus, wanderingidea</li>
-    <li><strong>Finnish</strong>: artnay, Jarppi, MawKKe</li>
-    <li><strong>French</strong>: A1RO, aghilas.messara, bisaloo, frgnca,
-        ggtr1138, gilbsgilbs, gtalbot, Gui13, iannick, jlutran, kyodev, logut,
-        MartialBis, narzb, pBouillon, plunkets, Raphi111, Scrat15, tl_pierre,
-        wilfriedroset</li>
-    <li><strong>German</strong>: antsas, BasicBaer, Calyrx, codejunky,
-        DavidHamburg, eth0, for1real, jensrutschmann, joe776, kflesch,
-        MarcEdinger, marcbone, mcliquid, mfernau77, montilo, nursoda, omnisome4,
-        origin_de, pcrcoding, phoerious, rgloor, transi_222, vlenzer, waster</li>
+    <li><strong>Chinese (China)</strong>: Biggulu, Brandon_c, Dy64, Felix2yu, Small_Ku, Z4HD, 
+        carp0129, ef6, holic, kikyous, kofzhanganguo, ligyxy, remonli, slgray, umi_neko, vc5</li>
+    <li><strong>Chinese (Taiwan)</strong>: BestSteve, MiauLightouch, Small_Ku, flachesis, gojpdchx, 
+        raymondtau, th3lusive, yan12125, ymhuang0808</li>
+    <li><strong>Czech</strong>: DanielMilde, JosefVitu, awesomevojta, pavelb, tpavelek</li>
+    <li><strong>Danish</strong>: nlkl, KalleDK, MannVera, alfabetacain, ebbe, thniels</li>
+    <li><strong>Dutch</strong>: Bubbel, Dr.Default, apie, bartlibert, evanoosten, fvw, KnooL, 
+        srgvg, Vistaus, wanderingidea, Stephan_P, Zombaya1, e2jk, ovisicnarf, pietermj, rigrig, 
+        theniels17</li>
+    <li><strong>English (UK)</strong>: YCMHARHZ, rookwood01, throne3d</li>
+    <li><strong>Esperanto</strong>: batisteo</li>
+    <li><strong>Estonian</strong>: Hermanio</li>
+    <li><strong>Finnish</strong>: artnay, Jarppi, MawKKe, petri, tomisalmi, hifi, varjolintu</li>
+    <li><strong>French</strong>: yahoe.001, A1RO, Albynton, Cabirto, Fumble, Gui13, MartialBis, 
+        MrHeadwar, Nesousx, Raphi111, Scrat15, aghilas.messara, alexisju, b_mortgat, benoitbalon, 
+        bisaloo, e2jk, ebrious, frgnca, ggtr1138, gilbsgilbs, gtalbot, houdini, houdini69, 
+        iannick, jlutran, kyodev, lacnic, laetilodie, logut, mlpo, narzb, nekopep, pBouillon, 
+        plunkets, theodex, tl_pierre, wilfriedroset</li>
+    <li><strong>German</strong>: origin_de, mithrial, andreas.maier, NotAName, Atalanttore, 
+        Hativ, muellerma, mircsicz, derhagen, Wyrrrd, mbetz, kflesch, nursoda, BasicBaer, 
+        mfernau77, for1real, joe776, waster, eth0, marcbone, mcliquid, transi_222, MarcEdinger, 
+        DavidHamburg, jensrutschmann, codejunky, vlenzer, montilo, antsas, rgloor, Calyrx, 
+        omnisome4, pcrcoding</li>
     <li><strong>Greek</strong>: magkopian, nplatis, tassos.b, xinomilo</li>
-    <li><strong>Hungarian</strong>: bubu, meskobalazs, urbalazs</li>
-    <li><strong>Indonesian</strong>: zk</li>
-    <li><strong>Italian</strong>: amaxis, bovirus, duncanmid, FranzMari, lucaim,
-        Mte90, Peo, TheZ3ro, tosky, VosaxAlo</li>
-    <li><strong>Japanese</strong>: masoo, metalic_cat, p2635,
-        Shinichirou_Yamada, vargas.peniel, vmemjp, yukinakato</li>
+    <li><strong>Hungarian</strong>: bubu, meskobalazs, urbalazs, andras_tim</li>
+    <li><strong>Indonesian</strong>: zk, bora_ach</li>
+    <li><strong>Italian</strong>: the.sailor, VosaxAlo, tosky, seatedscribe, bovirus, Peo, 
+        NITAL, FranzMari, Gringoarg, amaxis, salvatorecordiano, duncanmid, lucaim</li>
+    <li><strong>Japanese</strong>: masoo, metalic_cat, p2635, Shinichirou_Yamada, 
+        vargas.peniel, vmemjp, yukinakato, gojpdchx, saita</li>
     <li><strong>Korean</strong>: cancantun, peremen</li>
-    <li><strong>Lithuanian</strong>: Moo</li>
-    <li><strong>Polish</strong>: keypress, konradmb, mrerexx, psobczak</li>
-    <li><strong>Portuguese (Brazil)</strong>: danielbibit, fabiom, flaviobn,
-        vitor895, weslly</li>
+    <li><strong>Lithuanian</strong>: Moo, pauliusbaulius, rookwood101</li>
+    <li><strong>Norweigian Bokmål</strong>: sattor, ysteinalver, jumpingmushroom, 
+            JardarBolin, eothred, torgeirf, haarek</li>
+    <li><strong>Polish</strong>: keypress, konradmb, mrerexx, psobczak, SebJez, hoek</li>
+    <li><strong>Portuguese</strong>: weslly, xendez</li>
+    <li><strong>Portuguese (Brazil)</strong>: danielbibit, guilherme__sr, Havokdan, fabiom, 
+        flaviobn, weslly, newmanisaac, rafaelnp, RockyTV, xendez, lucasjsoliveira, vitor895, 
+        mauri.andres, andersoniop</li>
+    <li><strong>Portuguese (Portugal)</strong>: American_Jesus, xendez, hds, arainho, a.santos, 
+        pfialho, smarquespt, mihai.ile, smiguel, lmagomes, xnenjm</li>
+    <li><strong>Russian</strong>: Mogost, alexminza, KekcuHa, NcNZllQnHVU, ruslan.denisenko, 
+        agag11507, anm, cl0ne, JayDi85, RKuchma, Rakleed, vsvyatski, NetWormKido, DG, 
+        Mr.GreyWolf, VictorR2007, _nomoretears_, netforhack, denoos, wkill95, Shevchuk, 
+        talvind, artemkonenko, ShareDVI</li>
+    <li><strong>Slovak</strong>: l.martinicky, Slavko, crazko, pecer</li>
+    <li><strong>Spanish</strong>: gonrial, iglpdc, vsvyatski, Xlate1984, erinm, AndreachongB, 
+        piegope, lupa18, e2jk, capitantrueno, LeoBeltran, antifaz, Zranz, AdrianClv, 
+        EdwardNavarro, rodolfo.guagnini, NicolasCGN, caralu74, puchrojo, DarkHolme, 
+        pdinoto, masanchez5000, adolfogc, systurbed, mauri.andres, Bendhet, vargas.peniel, 
+        eliluminado, jojobrambs, pquin</li>
+    <li><strong>Swedish</strong>: theschitz, Anders_Bergqvist, LIINdd, krklns, henziger, 
+        jpyllman, peron, Thelin, baxtex, zeroxfourc</li>
+    <li><strong>Thai</strong>: arthit, rayg</li>
+    <li><strong>Turkish</strong>: TeknoMobil, etc, SeLeNLeR, ethem578, cagries, N3pp</li>
+    <li><strong>Ukrainian</strong>: brisk022, exlevan, chulivska, cl0ne, zoresvit, 
+        netforhack, ShareDVI</li>
 </ul>
 )";
 
