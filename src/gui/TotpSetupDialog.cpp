@@ -45,16 +45,21 @@ void TotpSetupDialog::saveSettings()
 {
     QString encShortName;
     uint digits = Totp::DEFAULT_DIGITS;
-    if (m_ui->radio8Digits->isChecked()) {
-        digits = 8;
-    } else if (m_ui->radio7Digits->isChecked()) {
-        digits = 7;
-    } else if (m_ui->radioSteam->isChecked()) {
+    uint step = Totp::DEFAULT_STEP;
+
+    if (m_ui->radioSteam->isChecked()) {
         digits = Totp::STEAM_DIGITS;
         encShortName = Totp::STEAM_SHORTNAME;
+    } else if (m_ui->radioCustom->isChecked()) {
+        step = m_ui->stepSpinBox->value();
+        if (m_ui->radio8Digits->isChecked()) {
+            digits = 8;
+        } else if (m_ui->radio7Digits->isChecked()) {
+            digits = 7;
+        }
     }
 
-    auto settings = Totp::createSettings(m_ui->seedEdit->text(), digits, m_ui->stepSpinBox->value(), encShortName);
+    auto settings = Totp::createSettings(m_ui->seedEdit->text(), digits, step, encShortName, m_entry->totpSettings());
     m_entry->setTotp(settings);
     emit totpUpdated();
     close();

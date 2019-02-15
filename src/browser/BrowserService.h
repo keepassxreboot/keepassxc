@@ -97,6 +97,13 @@ private:
         Allowed
     };
 
+    enum WindowState
+    {
+        Normal,
+        Minimized,
+        Hidden
+    };
+
 private:
     QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
     bool confirmEntries(QList<Entry*>& pwEntriesToConfirm,
@@ -125,8 +132,7 @@ private:
     DatabaseTabWidget* const m_dbTabWidget;
     bool m_dialogActive;
     bool m_bringToFrontRequested;
-    bool m_wasMinimized;
-    bool m_wasHidden;
+    WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 };
 

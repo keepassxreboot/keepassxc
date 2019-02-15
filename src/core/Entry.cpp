@@ -427,14 +427,21 @@ QString Entry::totp() const
 void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
 {
     beginUpdate();
-    m_data.totpSettings = std::move(settings);
-
-    auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
-    if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
-        m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
+    if (settings->key.isEmpty()) {
+        m_data.totpSettings.reset();
+        m_attributes->remove(Totp::ATTRIBUTE_OTP);
+        m_attributes->remove(Totp::ATTRIBUTE_SEED);
+        m_attributes->remove(Totp::ATTRIBUTE_SETTINGS);
     } else {
-        m_attributes->set(Totp::ATTRIBUTE_SEED, m_data.totpSettings->key, true);
-        m_attributes->set(Totp::ATTRIBUTE_SETTINGS, text);
+        m_data.totpSettings = std::move(settings);
+
+        auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
+        if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
+            m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
+        } else {
+            m_attributes->set(Totp::ATTRIBUTE_SEED, m_data.totpSettings->key, true);
+            m_attributes->set(Totp::ATTRIBUTE_SETTINGS, text);
+        }
     }
     endUpdate();
 }

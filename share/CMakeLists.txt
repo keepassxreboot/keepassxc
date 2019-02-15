@@ -45,98 +45,96 @@ install(DIRECTORY icons/application/ DESTINATION ${DATA_INSTALL_DIR}/icons/appli
         FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
 
 add_custom_target(icons
-                  # SVGZ to PNGs for KeePassXC
-                  COMMAND inkscape -z -w 16 -h 16
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/16x16/apps/keepassxc.png
-                  COMMAND inkscape -z -w  24 -h 24
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/24x24/apps/keepassxc.png
-                  COMMAND inkscape -z -w  32 -h 32
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/32x32/apps/keepassxc.png
-                  COMMAND inkscape -z -w 48 -h 48
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/48x48/apps/keepassxc.png
-                  COMMAND inkscape -z -w 64 -h 64
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/64x64/apps/keepassxc.png
-                  COMMAND inkscape -z -w 128 -h 128
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/128x128/apps/keepassxc.png
-                  COMMAND inkscape -z -w 256 -h 256
-                    icons/application/scalable/apps/keepassxc.svg -e icons/application/256x256/apps/keepassxc.png
+    # SVG to PNGs for KeePassXC
+    COMMAND inkscape -z -w 16 -h 16
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/16x16/apps/keepassxc.png
+    COMMAND inkscape -z -w  24 -h 24
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/24x24/apps/keepassxc.png
+    COMMAND inkscape -z -w  32 -h 32
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/32x32/apps/keepassxc.png
+    COMMAND inkscape -z -w 48 -h 48
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/48x48/apps/keepassxc.png
+    COMMAND inkscape -z -w 64 -h 64
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/64x64/apps/keepassxc.png
+    COMMAND inkscape -z -w 128 -h 128
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/128x128/apps/keepassxc.png
+    COMMAND inkscape -z -w 256 -h 256
+        icons/application/scalable/apps/keepassxc.svg -e icons/application/256x256/apps/keepassxc.png
 
-                  # SVGZ to PNGs for KeePassXC
-                  COMMAND inkscape -z -w 16 -h 16
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/16x16/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w  24 -h 24
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/24x24/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w  32 -h 32
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/32x32/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w 48 -h 48
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/48x48/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w 64 -h 64
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/64x64/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w 128 -h 128
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/128x128/apps/keepassxc-dark.png
-                  COMMAND inkscape -z -w 256 -h 256
-                    icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/256x256/apps/keepassxc-dark.png
+    # SVG to PNGs for KeePassXC
+    COMMAND inkscape -z -w 16 -h 16
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/16x16/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w  24 -h 24
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/24x24/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w  32 -h 32
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/32x32/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w 48 -h 48
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/48x48/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w 64 -h 64
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/64x64/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w 128 -h 128
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/128x128/apps/keepassxc-dark.png
+    COMMAND inkscape -z -w 256 -h 256
+        icons/application/scalable/apps/keepassxc-dark.svg -e icons/application/256x256/apps/keepassxc-dark.png
 
-                  # SVGZ to PNGs for KeePassXC
-                  COMMAND inkscape -z -w 16 -h 16
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/16x16/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w  24 -h 24
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/24x24/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w  32 -h 32
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/32x32/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w 48 -h 48
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/48x48/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w 64 -h 64
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/64x64/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w 128 -h 128
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/128x128/apps/keepassxc-locked.png
-                  COMMAND inkscape -z -w 256 -h 256
-                    icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/256x256/apps/keepassxc-locked.png
+    # SVG to PNGs for KeePassXC
+    COMMAND inkscape -z -w 16 -h 16
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/16x16/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w  24 -h 24
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/24x24/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w  32 -h 32
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/32x32/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w 48 -h 48
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/48x48/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w 64 -h 64
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/64x64/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w 128 -h 128
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/128x128/apps/keepassxc-locked.png
+    COMMAND inkscape -z -w 256 -h 256
+        icons/application/scalable/apps/keepassxc-locked.svg -e icons/application/256x256/apps/keepassxc-locked.png
 
-                  # SVGZ to PNGs for KeePassXC
-                  COMMAND inkscape -z -w 16 -h 16
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/16x16/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w  24 -h 24
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/24x24/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w  32 -h 32
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/32x32/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w 48 -h 48
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/48x48/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w 64 -h 64
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/64x64/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w 128 -h 128
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/128x128/apps/keepassxc-unlocked.png
-                  COMMAND inkscape -z -w 256 -h 256
-                    icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/256x256/apps/keepassxc-unlocked.png
+    # SVG to PNGs for KeePassXC
+    COMMAND inkscape -z -w 16 -h 16
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/16x16/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w  24 -h 24
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/24x24/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w  32 -h 32
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/32x32/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w 48 -h 48
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/48x48/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w 64 -h 64
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/64x64/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w 128 -h 128
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/128x128/apps/keepassxc-unlocked.png
+    COMMAND inkscape -z -w 256 -h 256
+        icons/application/scalable/apps/keepassxc-unlocked.svg -e icons/application/256x256/apps/keepassxc-unlocked.png
 
-                  # SVGZ to PNGs for KeePassXC MIME-Type
-                  COMMAND inkscape -z -w 16 -h 16
-                    icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/16x16/mimetypes/application-x-keepassxc.png
-                  COMMAND inkscape -z -w 22 -h 22
-                    icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/22x22/mimetypes/application-x-keepassxc.png
-                  COMMAND inkscape -z -w 32 -h 32
-                    icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/32x32/mimetypes/application-x-keepassxc.png
-                  COMMAND inkscape -z -w 64 -h 64
-                    icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/64x64/mimetypes/application-x-keepassxc.png
-                  COMMAND inkscape -z -w 128 -h 128
-                    icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/128x128/mimetypes/application-x-keepassxc.png
+    # SVG to PNGs for KeePassXC MIME-Type
+    COMMAND inkscape -z -w 16 -h 16
+        icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/16x16/mimetypes/application-x-keepassxc.png
+    COMMAND inkscape -z -w 22 -h 22
+        icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/22x22/mimetypes/application-x-keepassxc.png
+    COMMAND inkscape -z -w 32 -h 32
+        icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/32x32/mimetypes/application-x-keepassxc.png
+    COMMAND inkscape -z -w 64 -h 64
+        icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/64x64/mimetypes/application-x-keepassxc.png
+    COMMAND inkscape -z -w 128 -h 128
+        icons/application/scalable/mimetypes/application-x-keepassxc.svg -e icons/application/128x128/mimetypes/application-x-keepassxc.png
 
-                  # ICNS for MacOS
-                  COMMAND png2icns macosx/keepassxc.icns
-                    icons/application/16x16/apps/keepassxc.png
-                    icons/application/32x32/apps/keepassxc.png
-                    icons/application/48x48/apps/keepassxc.png
-                    icons/application/128x128/apps/keepassxc.png
-                    icons/application/256x256/apps/keepassxc.png
+    # Shrink PNGs using pngcrush
+    COMMAND bash ./crushpng.sh icons
 
-                  # ICO for Windows
-                  COMMAND icotool -c -o windows/keepassxc.ico
-                    icons/application/16x16/apps/keepassxc.png
-                    icons/application/24x24/apps/keepassxc.png
-                    icons/application/32x32/apps/keepassxc.png
-                    icons/application/48x48/apps/keepassxc.png
-                    icons/application/64x64/apps/keepassxc.png
-                    icons/application/128x128/apps/keepassxc.png
-                    icons/application/256x256/apps/keepassxc.png
-                  VERBATIM
-                  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    # ICNS for MacOS
+    COMMAND png2icns macosx/keepassxc.icns
+        icons/application/16x16/apps/keepassxc.png
+        icons/application/32x32/apps/keepassxc.png
+        icons/application/48x48/apps/keepassxc.png
+        icons/application/128x128/apps/keepassxc.png
+        icons/application/256x256/apps/keepassxc.png
+
+    # ICO for Windows
+    COMMAND bash ./windows/create-ico.sh icons/application/scalable/apps/keepassxc.svg windows/keepassxc.ico
+    COMMAND bash ./windows/create-ico.sh icons/application/scalable/mimetypes/application-x-keepassxc.svg windows/keepassxc-kdbx.ico
+
+    VERBATIM
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

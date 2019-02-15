@@ -1162,7 +1162,7 @@ void MainWindow::hideYubiKeyPopup()
 void MainWindow::bringToFront()
 {
     ensurePolished();
-    setWindowState(windowState() & ~Qt::WindowMinimized);
+    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
     show();
     raise();
     activateWindow();

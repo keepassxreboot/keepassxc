@@ -367,6 +367,10 @@ void KdbxXmlReader::parseIcon()
     }
 
     if (uuidSet && iconSet) {
+        // Check for duplicate UUID (corruption)
+        if (m_meta->containsCustomIcon(uuid)) {
+            uuid = QUuid::createUuid();
+        }
         m_meta->addCustomIcon(uuid, icon);
         return;
     }

@@ -47,11 +47,11 @@ int Remove::execute(const QStringList& arguments)
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(QCoreApplication::tr("main", "Remove an entry from the database."));
-    parser.addPositionalArgument("database", QCoreApplication::tr("main", "Path of the database."));
+    parser.setApplicationDescription(QObject::tr("Remove an entry from the database."));
+    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
-    parser.addPositionalArgument("entry", QCoreApplication::tr("main", "Path of the entry to remove."));
+    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to remove."));
     parser.addHelpOption();
     parser.process(arguments);
 

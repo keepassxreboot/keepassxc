@@ -312,7 +312,7 @@ bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QSt
     }
 
     if (!errors.isEmpty()) {
-        errorMessage = tr("Unable to open files:\n%1").arg(errors.join('\n'));
+        errorMessage = tr("Unable to open file(s):\n%1", "", errors.size()).arg(errors.join('\n'));
     }
 
     return errors.isEmpty();

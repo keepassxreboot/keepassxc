@@ -44,6 +44,7 @@ namespace Totp
         Totp::Encoder encoder;
         QString key;
         bool otpUrl;
+        bool keeOtp;
         bool custom;
         uint digits;
         uint step;
@@ -59,8 +60,11 @@ namespace Totp
     static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
 
     QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
-    QSharedPointer<Totp::Settings>
-    createSettings(const QString& key, const uint digits, const uint step, const QString& encoderShortName = {});
+    QSharedPointer<Totp::Settings> createSettings(const QString& key,
+                                                  const uint digits,
+                                                  const uint step,
+                                                  const QString& encoderShortName = {},
+                                                  QSharedPointer<Totp::Settings> prevSettings = {});
     QString writeSettings(const QSharedPointer<Totp::Settings>& settings,
                           const QString& title = {},
                           const QString& username = {},

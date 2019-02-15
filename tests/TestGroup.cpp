@@ -798,3 +798,46 @@ void TestGroup::testIsRecycled()
     db->recycleGroup(group4);
     QVERIFY(group4->isRecycled());
 }
+
+void TestGroup::testCopyDataFrom()
+{
+    QScopedPointer<Group> group(new Group());
+    group->setName("TestGroup");
+
+    QScopedPointer<Group> group2(new Group());
+    group2->setName("TestGroup2");
+
+    QScopedPointer<Group> group3(new Group());
+    group3->setName("TestGroup3");
+    group3->customData()->set("testKey", "value");
+
+
+    QSignalSpy spyGroupModified(group.data(), SIGNAL(groupModified()));
+    QSignalSpy spyGroupDataChanged(group.data(), SIGNAL(groupDataChanged(Group*)));
+
+    group->copyDataFrom(group2.data());
+    QCOMPARE(spyGroupModified.count(), 1);
+    QCOMPARE(spyGroupDataChanged.count(), 1);
+
+    // if no change, no signals
+    spyGroupModified.clear();
+    spyGroupDataChanged.clear();
+    group->copyDataFrom(group2.data());
+    QCOMPARE(spyGroupModified.count(), 0);
+    QCOMPARE(spyGroupDataChanged.count(), 0);
+
+    // custom data change triggers a separate modified signal
+    spyGroupModified.clear();
+    spyGroupDataChanged.clear();
+    group->copyDataFrom(group3.data());
+    QCOMPARE(spyGroupDataChanged.count(), 1);
+    QCOMPARE(spyGroupModified.count(), 2);
+}
+
+void TestGroup::testEquals()
+{
+    QScopedPointer<Group> group(new Group());
+    group->setName("TestGroup");
+
+    QVERIFY(group->equals(group.data(), CompareItemDefault));
+}
