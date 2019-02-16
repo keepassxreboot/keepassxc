@@ -713,6 +713,10 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
         updateCheckDialog->show();
     }
+#else
+    Q_UNUSED(hasUpdate)
+    Q_UNUSED(version)
+    Q_UNUSED(isManuallyRequested)
 #endif
 }
 
