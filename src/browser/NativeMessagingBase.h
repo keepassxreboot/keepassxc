@@ -53,7 +53,7 @@ protected slots:
 protected:
     virtual void readLength() = 0;
     virtual bool readStdIn(const quint32 length) = 0;
-    void readNativeMessages();
+    virtual void readNativeMessages();
     QString jsonToString(const QJsonObject& json) const;
     void sendReply(const QJsonObject& json);
     void sendReply(const QString& reply);
