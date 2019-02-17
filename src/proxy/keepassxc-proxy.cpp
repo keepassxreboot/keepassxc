@@ -57,9 +57,10 @@ void catchUnixSignals(std::initializer_list<int> quitSignals)
 }
 #else
 #include <windows.h>
+
 BOOL WINAPI ConsoleHandler(DWORD dwType)
 {
-    switch(dwType) {
+    switch (dwType) {
     case CTRL_C_EVENT:
     case CTRL_SHUTDOWN_EVENT:
     case CTRL_LOGOFF_EVENT:
