@@ -84,7 +84,8 @@ int Kdf::benchmark(int msec) const
 }
 
 Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)
-    : m_msec(msec)
+    : m_rounds(1)
+    , m_msec(msec)
     , m_kdf(kdf)
 {
 }

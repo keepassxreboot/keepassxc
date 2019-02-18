@@ -28,6 +28,7 @@ UpdateChecker::UpdateChecker(QObject* parent)
     : QObject(parent)
     , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
+    , m_isManuallyRequested(false)
 {
 }
 

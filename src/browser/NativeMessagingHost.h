@@ -32,7 +32,7 @@ class NativeMessagingHost : public NativeMessagingBase
 
 public:
     explicit NativeMessagingHost(DatabaseTabWidget* parent = nullptr, const bool enabled = false);
-    ~NativeMessagingHost();
+    ~NativeMessagingHost() override;
     int init();
     void run();
     void stop();

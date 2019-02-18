@@ -25,7 +25,7 @@ class NativeMessagingHost : public NativeMessagingBase
     Q_OBJECT
 public:
     NativeMessagingHost();
-    ~NativeMessagingHost();
+    ~NativeMessagingHost() override;
 
 public slots:
     void newLocalMessage();
@@ -33,12 +33,14 @@ public slots:
     void socketStateChanged(QLocalSocket::LocalSocketState socketState);
 
 private:
-    void readNativeMessages();
-    void readLength();
-    bool readStdIn(const quint32 length);
+    void readNativeMessages() override;
+    void readLength() override;
+    bool readStdIn(const quint32 length) override;
 
 private:
     QLocalSocket* m_localSocket;
+
+    Q_DISABLE_COPY(NativeMessagingHost)
 };
 
 #endif // NATIVEMESSAGINGHOST_H

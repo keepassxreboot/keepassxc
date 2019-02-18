@@ -926,7 +926,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     Q_ASSERT(m_group);
     Q_ASSERT(m_group->database());
-    const Entry* refEntry = m_group->findEntryBySearchTerm(searchText, searchInType);
+    const Entry* refEntry = m_group->database()->rootGroup()->findEntryBySearchTerm(searchText, searchInType);
 
     if (refEntry) {
         const QString wantedField = match.captured(EntryAttributes::WantedFieldGroupName);
