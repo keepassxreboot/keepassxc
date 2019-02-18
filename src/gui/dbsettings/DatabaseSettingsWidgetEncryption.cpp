@@ -81,7 +81,7 @@ void DatabaseSettingsWidgetEncryption::initialize()
         isDirty = true;
     }
     if (!m_db->key()) {
-        m_db->setKey(QSharedPointer<CompositeKey>::create());
+        m_db->setKey(QSharedPointer<CompositeKey>::create(), true, false, false);
         m_db->setCipher(KeePass2::CIPHER_AES256);
         isDirty = true;
     }

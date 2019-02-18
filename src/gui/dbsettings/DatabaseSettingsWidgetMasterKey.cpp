@@ -190,9 +190,13 @@ bool DatabaseSettingsWidgetMasterKey::save()
         }
     }
 
-    m_db->setKey(newKey);
+    m_db->setKey(newKey, true, false, false);
 
     emit editFinished(true);
+    if (m_isDirty) {
+        m_db->markAsModified();
+    }
+
     return true;
 }
 
