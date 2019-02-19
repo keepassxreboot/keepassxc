@@ -26,6 +26,7 @@
 
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
@@ -60,6 +61,9 @@ int main(int argc, char** argv)
 
     parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
 
+    QCommandLineOption debugInfoOption(QStringList() << "debug-info",
+                                       QObject::tr("Displays debugging information."));
+    parser.addOption(debugInfoOption);
     parser.addHelpOption();
     parser.addVersionOption();
     // TODO : use the setOptionsAfterPositionalArgumentsMode (Qt 5.6) function
@@ -71,6 +75,10 @@ int main(int argc, char** argv)
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
             out << KEEPASSXC_VERSION << endl;
+            return EXIT_SUCCESS;
+        } else if (parser.isSet(debugInfoOption)) {
+            QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
+            out << debugInfo << endl;
             return EXIT_SUCCESS;
         }
         parser.showHelp();
