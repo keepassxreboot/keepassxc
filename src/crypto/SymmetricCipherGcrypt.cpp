@@ -90,7 +90,7 @@ void SymmetricCipherGcrypt::setError(const gcry_error_t& err)
 
 bool SymmetricCipherGcrypt::init()
 {
-    Q_ASSERT(Crypto::initalized());
+    Q_ASSERT(Crypto::initialized());
 
     gcry_error_t error;
 
