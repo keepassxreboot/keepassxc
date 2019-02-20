@@ -82,6 +82,35 @@ int Edit::execute(const QStringList& arguments)
                               QObject::tr("length"));
     parser.addOption(length);
 
+    QCommandLineOption numeric(QStringList() << "n"
+                                             << "numeric",
+                               QObject::tr("Use numbers."));
+    parser.addOption(numeric);
+
+    QCommandLineOption special(QStringList() << "s"
+                                             << "special",
+                               QObject::tr("Use special characters"));
+    parser.addOption(special);
+
+    QCommandLineOption extended(QStringList() << "e"
+                                              << "extended",
+                                QObject::tr("Use extended ASCII"));
+    parser.addOption(extended);
+
+    QCommandLineOption exclude(QStringList() << "x"
+                                             << "exclude",
+                               QObject::tr("Exclude character set"),
+                               QObject::tr("chars"));
+    parser.addOption(exclude);
+
+    QCommandLineOption exclude_similar(QStringList() << "exclude-similar",
+                                       QObject::tr("Exclude similar looking characters"));
+    parser.addOption(exclude_similar);
+
+    QCommandLineOption every_group(QStringList() << "every-group",
+                                   QObject::tr("Include characters from every selected group"));
+    parser.addOption(every_group);
+
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to edit."));
     parser.addHelpOption();
     parser.process(arguments);
@@ -145,14 +174,39 @@ int Edit::execute(const QStringList& arguments)
     } else if (parser.isSet(generate)) {
         PasswordGenerator passwordGenerator;
 
+        PasswordGenerator::CharClasses classes = 0x0;
+
+        classes |= PasswordGenerator::DefaultCharset;
+
+        if (parser.isSet(numeric)) {
+            classes |= PasswordGenerator::Numbers;
+        }
+        if (parser.isSet(special)) {
+            classes |= PasswordGenerator::SpecialCharacters;
+        }
+        if (parser.isSet(extended)) {
+            classes |= PasswordGenerator::EASCII;
+        }
+
+        PasswordGenerator::GeneratorFlags flags = 0x0;
+
+        if (parser.isSet(exclude_similar)) {
+            flags |= PasswordGenerator::ExcludeLookAlike;
+        }
+        if (parser.isSet(every_group)) {
+            flags |= PasswordGenerator::CharFromEveryGroup;
+        }
+
+        passwordGenerator.setExcludedChars(parser.value(exclude));
+
         if (passwordLength.isEmpty()) {
             passwordGenerator.setLength(PasswordGenerator::DefaultLength);
         } else {
             passwordGenerator.setLength(static_cast<size_t>(passwordLength.toInt()));
         }
 
-        passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
-        passwordGenerator.setFlags(PasswordGenerator::DefaultFlags);
+        passwordGenerator.setCharClasses(classes);
+        passwordGenerator.setFlags(flags);
         QString password = passwordGenerator.generatePassword();
         entry->setPassword(password);
     }
