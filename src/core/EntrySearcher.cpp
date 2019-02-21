@@ -140,11 +140,19 @@ bool EntrySearcher::searchEntryImpl(Entry* entry)
         case Field::Notes:
             found = term->regex.match(entry->notes()).hasMatch();
             break;
-        case Field::Attribute:
+        case Field::AttributeKey:
             found = !attributes.filter(term->regex).empty();
             break;
         case Field::Attachment:
             found = !attachments.filter(term->regex).empty();
+            break;
+        case Field::AttributeValue:
+            // skip protected attributes
+            if (entry->attributes()->isProtected(term->word)) {
+                continue;
+            }
+            found = entry->attributes()->contains(term->word)
+                    && term->regex.match(entry->attributes()->value(term->word)).hasMatch();
             break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
@@ -207,12 +215,18 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
             } else if (field.compare("notes", cs) == 0) {
                 term->field = Field::Notes;
             } else if (field.startsWith("attr", cs)) {
-                term->field = Field::Attribute;
+                term->field = Field::AttributeKey;
             } else if (field.startsWith("attach", cs)) {
                 term->field = Field::Attachment;
-            } else {
-                term->field = Field::Undefined;
+            } else if (field.startsWith("_", cs)) {
+                term->field = Field::AttributeValue;
+                // searching a custom attribute
+                // in this case term->word is the attribute key (removing the leading "_")
+                // and term->regex is used to match attribute value
+                term->word = field.mid(1);
             }
+        } else {
+            term->field = Field::Undefined;
         }
 
         m_searchTerms.append(term);

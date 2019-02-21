@@ -101,7 +101,18 @@ public:
                           Button defaultButton = MessageBox::NoButton,
                           Action action = MessageBox::None);
 
+    class OverrideParent
+    {
+    public:
+        explicit OverrideParent(QWindow* newParent);
+        ~OverrideParent();
+
+    private:
+        QWindow* m_oldParent;
+    };
+
 private:
+    static QWindow* m_overrideParent;
     static Button m_nextAnswer;
     static QHash<QAbstractButton*, Button> m_addedButtonLookup;
     static QMap<Button, std::pair<QString, QMessageBox::ButtonRole>> m_buttonDefs;

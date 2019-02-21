@@ -362,25 +362,8 @@ void DatabaseWidget::createEntry()
     m_newEntry->setUuid(QUuid::createUuid());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
-    setIconFromParent();
+    m_newParent->applyGroupIconTo(m_newEntry.data());
     switchToEntryEdit(m_newEntry.data(), true);
-}
-
-void DatabaseWidget::setIconFromParent()
-{
-    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
-        return;
-    }
-
-    if (m_newParent->iconNumber() == Group::DefaultIconNumber && m_newParent->iconUuid().isNull()) {
-        return;
-    }
-
-    if (m_newParent->iconUuid().isNull()) {
-        m_newEntry->setIcon(m_newParent->iconNumber());
-    } else {
-        m_newEntry->setIcon(m_newParent->iconUuid());
-    }
 }
 
 void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
@@ -393,6 +376,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     processAutoOpen();
+
+    emit databaseReplaced(oldDb, m_db);
+
 #if defined(WITH_XC_KEESHARE)
     KeeShare::instance()->connectDatabase(m_db, oldDb);
 #else
@@ -461,6 +447,11 @@ void DatabaseWidget::deleteSelectedEntries()
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
+    deleteEntries(std::move(selectedEntries));
+}
+
+void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries)
+{
     // Confirm entry removal before moving forward
     auto* recycleBin = m_db->metadata()->recycleBin();
     bool permanent = (recycleBin && recycleBin->findEntryByUuid(selectedEntries.first()->uuid()))

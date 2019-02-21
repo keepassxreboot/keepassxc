@@ -60,7 +60,7 @@ public slots:
     bool closeDatabaseTabFromSender();
     void updateTabName(int index = -1);
 
-    void newDatabase();
+    DatabaseWidget* newDatabase();
     void openDatabase();
     void mergeDatabase();
     void importCsv();
@@ -80,6 +80,7 @@ public slots:
     void performGlobalAutoType();
 
 signals:
+    void databaseOpened(DatabaseWidget* dbWidget);
     void databaseClosed(const QString& filePath);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);

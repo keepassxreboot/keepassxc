@@ -1261,3 +1261,20 @@ void MainWindow::lockAllDatabases()
 {
     lockDatabasesAfterInactivity();
 }
+
+void MainWindow::displayDesktopNotification(const QString& msg, QString title, int msTimeoutHint)
+{
+    if (!m_trayIcon || !QSystemTrayIcon::supportsMessages()) {
+        return;
+    }
+
+    if (title.isEmpty()) {
+        title = BaseWindowTitle;
+    }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
+    m_trayIcon->showMessage(title, msg, filePath()->applicationIcon(), msTimeoutHint);
+#else
+    m_trayIcon->showMessage(title, msg, QSystemTrayIcon::Information, msTimeoutHint);
+#endif
+}

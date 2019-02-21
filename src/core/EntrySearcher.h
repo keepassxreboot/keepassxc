@@ -48,8 +48,9 @@ private:
         Password,
         Url,
         Notes,
-        Attribute,
-        Attachment
+        AttributeKey,
+        Attachment,
+        AttributeValue
     };
 
     struct SearchTerm

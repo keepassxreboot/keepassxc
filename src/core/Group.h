@@ -167,6 +167,8 @@ public:
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
 
+    void applyGroupIconTo(Entry* entry);
+
 signals:
     void groupDataChanged(Group* group);
     void groupAboutToAdd(Group* group, int index);

@@ -210,4 +210,40 @@ void TestEntrySearcher::testSearchTermParser()
 
     QCOMPARE(terms[1]->field, EntrySearcher::Field::Username);
     QCOMPARE(terms[1]->regex.pattern(), QString("\\d+\\w{2}"));
+
+    // Test custom attribute search terms
+    m_entrySearcher.parseSearchTerms("+_abc:efg _def:\"ddd\"");
+    terms = m_entrySearcher.m_searchTerms;
+
+    QCOMPARE(terms.length(), 2);
+
+    QCOMPARE(terms[0]->field, EntrySearcher::Field::AttributeValue);
+    QCOMPARE(terms[0]->word, QString("abc"));
+    QCOMPARE(terms[0]->regex.pattern(), QString("^efg$"));
+
+    QCOMPARE(terms[1]->field, EntrySearcher::Field::AttributeValue);
+    QCOMPARE(terms[1]->word, QString("def"));
+    QCOMPARE(terms[1]->regex.pattern(), QString("ddd"));
+}
+
+void TestEntrySearcher::testCustomAttributesAreSearched()
+{
+    QScopedPointer<Entry> e1(new Entry());
+    e1->setGroup(m_rootGroup);
+
+    e1->attributes()->set("testAttribute", "testE1");
+    e1->attributes()->set("testProtected", "testP", true);
+
+    QScopedPointer<Entry> e2(new Entry());
+    e2->setGroup(m_rootGroup);
+    e2->attributes()->set("testAttribute", "testE2");
+    e2->attributes()->set("testProtected", "testP2", true);
+
+    // search for custom entries
+    m_searchResult = m_entrySearcher.search("_testAttribute:test", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // protected attributes are ignored
+    m_searchResult = m_entrySearcher.search("_testAttribute:test _testProtected:testP2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
 }

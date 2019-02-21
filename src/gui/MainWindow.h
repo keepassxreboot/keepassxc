@@ -74,6 +74,7 @@ public slots:
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
+    void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
 
 protected:
     void closeEvent(QCloseEvent* event) override;

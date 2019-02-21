@@ -125,6 +125,9 @@ signals:
     void databaseUnlocked();
     void databaseLocked();
 
+    // Emitted in replaceDatabase, may be caused by lock, reload, unlock, load.
+    void databaseReplaced(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb);
+
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
@@ -151,6 +154,7 @@ public slots:
     void createEntry();
     void cloneEntry();
     void deleteSelectedEntries();
+    void deleteEntries(QList<Entry*> entries);
     void setFocus();
     void copyTitle();
     void copyUsername();
@@ -223,7 +227,6 @@ private slots:
 private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
-    void setIconFromParent();
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
 
