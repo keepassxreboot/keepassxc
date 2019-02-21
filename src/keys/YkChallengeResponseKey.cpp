@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@
 #include <QXmlStreamReader>
 #include <QtConcurrent>
 
+#include <gcrypt.h>
+#include <sodium.h>
+#include <cstring>
+
 QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
 
 YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
@@ -45,9 +49,18 @@ YkChallengeResponseKey::YkChallengeResponseKey(int slot, bool blocking)
     }
 }
 
+YkChallengeResponseKey::~YkChallengeResponseKey()
+{
+    if (m_key) {
+        gcry_free(m_key);
+        m_keySize = 0;
+        m_key = nullptr;
+    }
+}
+
 QByteArray YkChallengeResponseKey::rawKey() const
 {
-    return m_key;
+    return QByteArray::fromRawData(m_key, static_cast<int>(m_keySize));
 }
 
 /**
@@ -67,14 +80,22 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int
             emit userInteractionRequired();
         }
 
+        QByteArray key;
         auto result = AsyncTask::runAndWaitForFuture(
-            [this, challenge]() { return YubiKey::instance()->challenge(m_slot, true, challenge, m_key); });
+            [this, challenge, &key]() { return YubiKey::instance()->challenge(m_slot, true, challenge, key); });
 
         if (m_blocking) {
             emit userConfirmed();
         }
 
         if (result == YubiKey::SUCCESS) {
+            if (m_key) {
+                gcry_free(m_key);
+            }
+            m_keySize = static_cast<std::size_t>(key.size());
+            m_key = static_cast<char*>(gcry_malloc_secure(m_keySize));
+            std::memcpy(m_key, key.data(), m_keySize);
+            sodium_memzero(key.data(), static_cast<std::size_t>(key.capacity()));
             return true;
         }
     } while (retries > 0);

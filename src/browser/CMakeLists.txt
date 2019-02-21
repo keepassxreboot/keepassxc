@@ -16,7 +16,6 @@
 
 if(WITH_XC_BROWSER)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
-    find_package(sodium 1.0.12 REQUIRED)
 
     set(keepassxcbrowser_SOURCES
             BrowserAccessControlDialog.cpp
@@ -33,5 +32,5 @@ if(WITH_XC_BROWSER)
             Variant.cpp)
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
-    target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network sodium)
+    target_link_libraries(keepassxcbrowser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${sodium_LIBRARY_RELEASE})
 endif()

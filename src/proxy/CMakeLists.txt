@@ -18,12 +18,13 @@ if(WITH_XC_BROWSER)
     include_directories(${BROWSER_SOURCE_DIR})
 
     set(proxy_SOURCES
+        ../core/Alloc.cpp
         keepassxc-proxy.cpp
         ${BROWSER_SOURCE_DIR}/NativeMessagingBase.cpp
         NativeMessagingHost.cpp)
 
     add_library(proxy STATIC ${proxy_SOURCES})
-    target_link_libraries(proxy Qt5::Core Qt5::Network)
+    target_link_libraries(proxy Qt5::Core Qt5::Network ${sodium_LIBRARY_RELEASE})
     add_executable(keepassxc-proxy keepassxc-proxy.cpp)
     target_link_libraries(keepassxc-proxy proxy)
 

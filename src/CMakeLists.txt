@@ -27,6 +27,7 @@ if(NOT ZXCVBN_LIBRARIES)
 endif(NOT ZXCVBN_LIBRARIES)
 
 set(keepassx_SOURCES
+        core/Alloc.cpp
         core/AutoTypeAssociations.cpp
         core/AutoTypeMatch.cpp
         core/Compare.cpp
@@ -254,6 +255,8 @@ endif()
 
 if(WITH_XC_TOUCHID)
     list(APPEND keepassx_SOURCES touchid/TouchID.mm)
+    # TODO: Remove -Wno-error once deprecation warnings have been resolved.
+    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast -Wno-error")
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
@@ -270,6 +273,7 @@ target_link_libraries(keepassx_core
         Qt5::Concurrent
         Qt5::Network
         Qt5::Widgets
+        ${sodium_LIBRARY_RELEASE}
         ${YUBIKEY_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ARGON2_LIBRARIES}
