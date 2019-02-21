@@ -116,15 +116,17 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
     return db;
 }
 
-void DatabaseTabWidget::newDatabase()
+DatabaseWidget* DatabaseTabWidget::newDatabase()
 {
     auto db = execNewDatabaseWizard();
     if (!db) {
-        return;
+        return nullptr;
     }
 
-    addDatabaseTab(new DatabaseWidget(db, this));
+    auto dbWidget = new DatabaseWidget(db, this);
+    addDatabaseTab(dbWidget);
     db->markAsModified();
+    return dbWidget;
 }
 
 void DatabaseTabWidget::openDatabase()
@@ -187,10 +189,12 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
 {
     Q_ASSERT(dbWidget->database());
 
+    // emit before index change
+    emit databaseOpened(dbWidget);
+
     int index = addTab(dbWidget, "");
     updateTabName(index);
     toggleTabbar();
-
     if (!inBackground) {
         setCurrentIndex(index);
     }

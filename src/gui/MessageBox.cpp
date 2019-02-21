@@ -18,6 +18,10 @@
 
 #include "MessageBox.h"
 
+#include <QWindow>
+
+QWindow* MessageBox::m_overrideParent(nullptr);
+
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
 
 QHash<QAbstractButton*, MessageBox::Button> MessageBox::m_addedButtonLookup =
@@ -80,6 +84,14 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
         msgBox.setIcon(icon);
         msgBox.setWindowTitle(title);
         msgBox.setText(text);
+
+        if (m_overrideParent) {
+            // Force the creation of the QWindow, without this windowHandle() will return nullptr
+            msgBox.winId();
+            auto msgBoxWindow = msgBox.windowHandle();
+            Q_ASSERT(msgBoxWindow);
+            msgBoxWindow->setTransientParent(m_overrideParent);
+        }
 
         for (uint64_t b = First; b <= Last; b <<= 1) {
             if (b & buttons) {
@@ -159,4 +171,15 @@ MessageBox::Button MessageBox::warning(QWidget* parent,
 void MessageBox::setNextAnswer(MessageBox::Button button)
 {
     m_nextAnswer = button;
+}
+
+MessageBox::OverrideParent::OverrideParent(QWindow* newParent)
+    : m_oldParent(MessageBox::m_overrideParent)
+{
+    MessageBox::m_overrideParent = newParent;
+}
+
+MessageBox::OverrideParent::~OverrideParent()
+{
+    MessageBox::m_overrideParent = m_oldParent;
 }

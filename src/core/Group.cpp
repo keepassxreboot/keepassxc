@@ -1057,6 +1057,23 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
     return entry;
 }
 
+void Group::applyGroupIconTo(Entry* entry)
+{
+    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+        return;
+    }
+
+    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
+        return;
+    }
+
+    if (iconUuid().isNull()) {
+        entry->setIcon(iconNumber());
+    } else {
+        entry->setIcon(iconUuid());
+    }
+}
+
 bool Group::GroupData::operator==(const Group::GroupData& other) const
 {
     return equals(other, CompareItemDefault);
