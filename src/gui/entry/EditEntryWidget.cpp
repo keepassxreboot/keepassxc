@@ -981,6 +981,13 @@ void EditEntryWidget::clear()
 {
     m_entry = nullptr;
     m_db.reset();
+
+    m_mainUi->titleEdit->setText("");
+    m_mainUi->passwordEdit->setText("");
+    m_mainUi->passwordRepeatEdit->setText("");
+    m_mainUi->urlEdit->setText("");
+    m_mainUi->notesEdit->clear();
+
     m_entryAttributes->clear();
     m_advancedUi->attachmentsWidget->clearAttachments();
     m_autoTypeAssoc->clear();

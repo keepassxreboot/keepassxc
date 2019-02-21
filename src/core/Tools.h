@@ -100,6 +100,20 @@ namespace Tools
 
         return version;
     }
+
+    /**
+     * Securely wipe a memory buffer.
+     *
+     * @param ptr pointer to first buffer element
+     * @param size number of bytes to erase
+     */
+    inline void wipeBuffer(void* ptr, std::size_t size)
+    {
+        volatile auto* mem = static_cast<volatile char*>(ptr);
+        while (size--) {
+            *mem++ = 0;
+        }
+    }
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

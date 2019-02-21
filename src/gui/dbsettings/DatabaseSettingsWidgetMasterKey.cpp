@@ -77,11 +77,8 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
         // database has no key, we are about to add a new one
         m_passwordEditWidget->changeVisiblePage(KeyComponentWidget::Page::Edit);
         m_passwordEditWidget->setPasswordVisible(true);
-        m_isDirty = true;
-        return;
     }
 
-    bool isDirty = false;
     bool hasAdditionalKeys = false;
     for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
@@ -103,7 +100,9 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
 
     setAdditionalKeyOptionsVisible(hasAdditionalKeys);
 
-    m_isDirty = isDirty;
+    connect(m_passwordEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
+    connect(m_keyFileEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
+    connect(m_yubiKeyEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
 }
 
 void DatabaseSettingsWidgetMasterKey::initialize()

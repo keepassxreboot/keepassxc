@@ -27,6 +27,7 @@ if(NOT ZXCVBN_LIBRARIES)
 endif(NOT ZXCVBN_LIBRARIES)
 
 set(keepassx_SOURCES
+        core/Alloc.cpp
         core/AutoTypeAssociations.cpp
         core/AutoTypeMatch.cpp
         core/Compare.cpp
