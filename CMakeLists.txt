@@ -41,7 +41,7 @@ option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
-set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
+set(WITH_XC_ALL OFF CACHE BOOL "Build in all available plugins")
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
 option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
@@ -163,11 +163,15 @@ if("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
     set(IS_32BIT TRUE)
 endif()
 
-if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_C_COMPILER}" MATCHES "clang$"
+        OR "${CMAKE_EXTRA_GENERATOR_C_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
+        OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_COMPILER_IS_CLANG 1)
 endif()
 
-if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$"
+        OR "${CMAKE_EXTRA_GENERATOR_CXX_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
+        OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_COMPILER_IS_CLANGXX 1)
 endif()
 
@@ -263,6 +267,11 @@ endif()
 
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
+
+if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9.99) OR
+    (CMAKE_COMPILER_IS_CLANGXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.6.99))
+    add_gcc_compiler_cxxflags("-fsized-deallocation")
+endif()
 
 if(APPLE)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
@@ -387,6 +396,7 @@ find_package(Gcrypt 1.7.0 REQUIRED)
 find_package(Argon2 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(QREncode REQUIRED)
+find_package(sodium 1.0.12 REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
@@ -394,7 +404,7 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
     message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
-include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
+include_directories(SYSTEM ${ARGON2_INCLUDE_DIR} ${sodium_INCLUDE_DIR})
 
 # Optional
 if(WITH_XC_KEESHARE)
