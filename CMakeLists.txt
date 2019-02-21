@@ -264,6 +264,11 @@ endif()
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
+if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9.99) OR
+    (CMAKE_COMPILER_IS_CLANGXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.6.99))
+    add_gcc_compiler_cxxflags("-fsized-deallocation")
+endif()
+
 if(APPLE)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
 endif()
