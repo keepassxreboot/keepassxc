@@ -66,7 +66,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
 
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
-    connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this, SIGNAL(widgetUpdated()));
     connect(m_ui->customIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
