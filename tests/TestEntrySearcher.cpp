@@ -177,8 +177,8 @@ void TestEntrySearcher::testAllAttributesAreSearched()
 void TestEntrySearcher::testSearchTermParser()
 {
     // Test standard search terms
-    auto terms =
-        m_entrySearcher.parseSearchTerms("-test \"quoted \\\"string\\\"\"  user:user pass:\"test me\" noquote  ");
+    m_entrySearcher.parseSearchTerms("-test \"quoted \\\"string\\\"\"  user:user pass:\"test me\" noquote  ");
+    auto terms = m_entrySearcher.m_searchTerms;
 
     QCOMPARE(terms.length(), 5);
 
@@ -200,7 +200,8 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms[4]->word, QString("noquote"));
 
     // Test wildcard and regex search terms
-    terms = m_entrySearcher.parseSearchTerms("+url:*.google.com *user:\\d+\\w{2}");
+    m_entrySearcher.parseSearchTerms("+url:*.google.com *user:\\d+\\w{2}");
+    terms = m_entrySearcher.m_searchTerms;
 
     QCOMPARE(terms.length(), 2);
 
