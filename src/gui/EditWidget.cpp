@@ -59,6 +59,7 @@ void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* w
      */
     auto* scrollArea = new QScrollArea(m_ui->stackedWidget);
     scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setWidget(widget);
     scrollArea->setWidgetResizable(true);
     m_ui->stackedWidget->addWidget(scrollArea);
