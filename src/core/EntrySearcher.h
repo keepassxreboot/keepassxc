@@ -31,14 +31,15 @@ public:
     explicit EntrySearcher(bool caseSensitive = false);
 
     QList<Entry*> search(const QString& searchString, const Group* baseGroup, bool forceSearch = false);
+    QList<Entry*> repeat(const Group* baseGroup, bool forceSearch = false);
+
     QList<Entry*> searchEntries(const QString& searchString, const QList<Entry*>& entries);
+    QList<Entry*> repeatEntries(const QList<Entry*>& entries);
 
     void setCaseSensitive(bool state);
     bool isCaseSensitive();
 
 private:
-    bool searchEntryImpl(const QString& searchString, Entry* entry);
-
     enum class Field
     {
         Undefined,
@@ -59,10 +60,12 @@ private:
         bool exclude;
     };
 
-    QList<QSharedPointer<SearchTerm>> parseSearchTerms(const QString& searchString);
+    bool searchEntryImpl(Entry* entry);
+    void parseSearchTerms(const QString& searchString);
 
     bool m_caseSensitive;
     QRegularExpression m_termParser;
+    QList<QSharedPointer<SearchTerm>> m_searchTerms;
 
     friend class TestEntrySearcher;
 };
