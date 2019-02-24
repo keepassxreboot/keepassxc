@@ -28,6 +28,15 @@ EntrySearcher::EntrySearcher(bool caseSensitive)
 {
 }
 
+/**
+ * Search group, and its children, by parsing the provided search
+ * string for search terms.
+ *
+ * @param searchString search terms
+ * @param baseGroup group to start search from, cannot be null
+ * @param forceSearch ignore group search settings
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::search(const QString& searchString, const Group* baseGroup, bool forceSearch)
 {
     Q_ASSERT(baseGroup);
@@ -36,6 +45,13 @@ QList<Entry*> EntrySearcher::search(const QString& searchString, const Group* ba
     return repeat(baseGroup, forceSearch);
 }
 
+/**
+ * Repeat the last search starting from the given group
+ *
+ * @param baseGroup group to start search from, cannot be null
+ * @param forceSearch ignore group search settings
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::repeat(const Group* baseGroup, bool forceSearch)
 {
     Q_ASSERT(baseGroup);
@@ -53,12 +69,26 @@ QList<Entry*> EntrySearcher::repeat(const Group* baseGroup, bool forceSearch)
     return results;
 }
 
+/**
+ * Search provided entries by parsing the search string
+ * for search terms.
+ *
+ * @param searchString search terms
+ * @param entries list of entries to include in the search
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::searchEntries(const QString& searchString, const QList<Entry*>& entries)
 {
     parseSearchTerms(searchString);
     return repeatEntries(entries);
 }
 
+/**
+ * Repeat the last search on the given entries
+ *
+ * @param entries list of entries to include in the search
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
 {
     QList<Entry*> results;
@@ -70,6 +100,11 @@ QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
     return results;
 }
 
+/**
+ * Set the next search to be case sensitive or not
+ *
+ * @param state 
+ */
 void EntrySearcher::setCaseSensitive(bool state)
 {
     m_caseSensitive = state;
