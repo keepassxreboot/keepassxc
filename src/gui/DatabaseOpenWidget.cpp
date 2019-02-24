@@ -251,7 +251,11 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
 
 #ifdef WITH_XC_TOUCHID
     // check if TouchID is available and enabled for unlocking the database
-    if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable() && masterKey->isEmpty()) {
+    if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()
+        && m_ui->editPassword->text().isEmpty()) {
+        // clear empty password from composite key
+        masterKey->clear();
+
         // try to get, decrypt and use PasswordKey
         QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
         if (passwordKey != NULL) {
