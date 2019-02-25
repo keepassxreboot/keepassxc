@@ -659,8 +659,10 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         QuaZipFile file(&zip);
         const auto signatureOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Signature));
         if (!signatureOpened) {
-            ::qWarning("Embedding signature failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding signature failed: Could not open file to write (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed signature: Could not open file to write (%1)").arg(file.getZipError())};
         }
         QTextStream stream(&file);
         KeeShareSettings::Sign sign;
@@ -672,8 +674,10 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         stream << KeeShareSettings::Sign::serialize(sign);
         stream.flush();
         if (file.getZipError() != ZIP_OK) {
-            ::qWarning("Embedding signature failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding signature failed: Could not write file (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed signature: Could not write file (%1)").arg(file.getZipError())};
         }
         file.close();
     }
@@ -681,14 +685,18 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         QuaZipFile file(&zip);
         const auto dbOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Container));
         if (!dbOpened) {
-            ::qWarning("Embedding database failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
-        }
-        if (file.getZipError() != ZIP_OK) {
-            ::qWarning("Embedding database failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding database failed: Could not open file to write (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed database: Could not open file to write (%1)").arg(file.getZipError())};
         }
         file.write(bytes);
+        if (file.getZipError() != ZIP_OK) {
+            ::qWarning("Embedding database failed: Could not write file (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed database: Could not write file (%1)").arg(file.getZipError())};
+        }
         file.close();
     }
     zip.close();
