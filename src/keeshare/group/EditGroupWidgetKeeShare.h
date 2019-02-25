@@ -44,6 +44,7 @@ private slots:
 
 private slots:
     void update();
+    void clearInputs();
     void selectType();
     void selectPassword();
     void launchPathSelectionDialog();

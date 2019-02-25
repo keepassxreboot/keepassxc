@@ -54,6 +54,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     connect(m_ui->pathEdit, SIGNAL(editingFinished()), SLOT(selectPath()));
     connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(launchPathSelectionDialog()));
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
+    connect(m_ui->clearButton, SIGNAL(clicked(bool)), SLOT(clearInputs()));
 
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(showSharingState()));
 
@@ -164,6 +165,17 @@ void EditGroupWidgetKeeShare::update()
     m_ui->passwordGenerator->hide();
     m_ui->togglePasswordGeneratorButton->setChecked(false);
     m_ui->togglePasswordButton->setChecked(false);
+}
+
+void EditGroupWidgetKeeShare::clearInputs()
+{
+    if (m_temporaryGroup) {
+        KeeShare::setReferenceTo(m_temporaryGroup, KeeShareSettings::Reference());
+    }
+    m_ui->passwordEdit->clear();
+    m_ui->pathEdit->clear();
+    m_ui->typeComboBox->setCurrentIndex(KeeShareSettings::Inactive);
+    m_ui->passwordGenerator->setVisible(false);
 }
 
 void EditGroupWidgetKeeShare::togglePasswordGeneratorButton(bool checked)
