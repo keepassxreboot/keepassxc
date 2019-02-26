@@ -61,8 +61,6 @@
 #include "keeshare/KeeShare.h"
 #include "touchid/TouchID.h"
 
-#include "config-keepassx.h"
-
 #ifdef Q_OS_LINUX
 #include <sys/vfs.h>
 #endif
@@ -80,6 +78,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_previewView(new EntryPreviewWidget(this))
     , m_previewSplitter(new QSplitter(m_mainWidget))
     , m_searchingLabel(new QLabel(this))
+#ifdef WITH_XC_KEESHARE
+    , m_shareLabel(new QLabel(this))
+#endif
     , m_csvImportWizard(new CsvImportWizard(this))
     , m_editEntryWidget(new EditEntryWidget(this))
     , m_editGroupWidget(new EditGroupWidget(this))
@@ -103,6 +104,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     auto* vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->addWidget(m_searchingLabel);
+#ifdef WITH_XC_KEESHARE
+    vbox->addWidget(m_shareLabel);
+#endif
     vbox->addWidget(m_previewSplitter);
     rightHandSideWidget->setLayout(vbox);
     m_entryView = new EntryView(rightHandSideWidget);
@@ -133,6 +137,16 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 4px;");
     m_searchingLabel->setVisible(false);
+
+#ifdef WITH_XC_KEESHARE
+    m_shareLabel->setText(tr("Shared group..."));
+    m_shareLabel->setAlignment(Qt::AlignCenter);
+    m_shareLabel->setStyleSheet("color: rgb(0, 0, 0);"
+                                "background-color: rgb(255, 253, 160);"
+                                "border: 2px solid rgb(190, 190, 190);"
+                                "border-radius: 4px;");
+    m_shareLabel->setVisible(false);
+#endif
 
     m_previewView->hide();
     m_previewSplitter->addWidget(m_entryView);
@@ -1117,6 +1131,15 @@ void DatabaseWidget::onGroupChanged(Group* group)
     }
 
     m_previewView->setGroup(group);
+
+#ifdef WITH_XC_KEESHARE
+    if (group && KeeShare::isShared(group)) {
+        m_shareLabel->setText(KeeShare::sharingLabel(group));
+        m_shareLabel->setVisible(true);
+    } else {
+        m_shareLabel->setVisible(false);
+    }
+#endif
 }
 
 void DatabaseWidget::onDatabaseModified()

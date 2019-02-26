@@ -142,6 +142,25 @@ bool KeeShare::isEnabled(const Group* group)
     return (reference.isImporting() && active.in) || (reference.isExporting() && active.out);
 }
 
+QString KeeShare::sharingLabel(const Group* group)
+{
+    if (!isShared(group)) {
+        return "";
+    }
+    const auto reference = referenceOf(group);
+    switch (reference.type) {
+    case KeeShareSettings::Inactive:
+        return tr("Disabled share %1").arg(reference.path);
+    case KeeShareSettings::ImportFrom:
+        return tr("Import from share %1").arg(reference.path);
+    case KeeShareSettings::ExportTo:
+        return tr("Export to share %1").arg(reference.path);
+    case KeeShareSettings::SynchronizeWith:
+        return tr("Synchronize with share %1").arg(reference.path);
+    }
+    return "";
+}
+
 QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
 {
     if (!isShared(group)) {
