@@ -103,15 +103,15 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (署名共有と未署名共有)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (署名共有のみ)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (未署名共有のみ)</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Pageant の代わりに OpenSSH for Windows を使用する</translation>
     </message>
 </context>
 <context>
@@ -145,23 +145,23 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>アイコンのみ</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>テキストのみ</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>アイコンの横にテキスト</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>アイコンの下にテキスト</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>スタイルに準拠</translation>
     </message>
 </context>
 <context>
@@ -301,19 +301,19 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>アプリケーション起動時に更新を確認する</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>更新の確認にプレリリースを含める</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>ツールバーを移動可能にする</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>ボタンのスタイル</translation>
     </message>
 </context>
 <context>
@@ -683,7 +683,7 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation>HTTP ベーシック認証でアクセス許可を確認しない(&amp;B)</translation>
     </message>
 </context>
 <context>
@@ -740,11 +740,11 @@ Do you want to overwrite it?</source>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
         <translation>%1 個のエントリーから属性を正常に変換しました。
-%2 個のキーをカスタムデータに移動しました。</translation>
+%2 個のキーをカスタムデータに移行しました。</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>%n 個のキーを正常にカスタムデータに移動しました。</numerusform></translation>
+        <translation><numerusform>%n 個のキーを正常にカスタムデータに移行しました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -1353,32 +1353,32 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>共有</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>階層リンク</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>種類</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>パス</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>最終署名者</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>証明書</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1601,7 +1601,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>エントリーを編集中です。変更を破棄してロックしてしまってもよろしいですか？</translation>
+        <translation>エントリーを編集中です。変更を破棄してロックしてもよろしいですか？</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
@@ -1655,31 +1655,31 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>エントリーの参照を置き換えますか？</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>エントリー &quot;%1&quot; には %2 個の参照があります。上書き、スキップ、削除のどれを行いますか？</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>グループの削除</translation>
+        <translation>グループを削除</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>グループをゴミ箱に移動しますか？</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>本当にグループ &quot;%1&quot; をゴミ箱に移動しますか？</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>データベースファイルは正常にマージされました。</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>データベースはマージ処理で更新されませんでした。</translation>
     </message>
 </context>
 <context>
@@ -1798,7 +1798,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>削除の確認</translation>
     </message>
 </context>
 <context>
@@ -2052,15 +2052,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>種類:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>パス:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2068,55 +2068,55 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>非アクティブ</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>パスからインポート</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>パスにエクスポート</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>パスと同期</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>このバージョンの KeePassXC は現在のコンテナ形式の共有をサポートしていません。%1 を使用してください。</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>データベースの共有は無効です</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>データベースのエクスポートは無効です</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>データベースのインポートは無効です</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare 未署名コンテナ</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare 署名コンテナ</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>インポートソースを選択</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>エクスポート対象を選択</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation type="unfinished"/>
+        <translation>インポート/エクスポートファイルを選択</translation>
     </message>
 </context>
 <context>
@@ -2361,7 +2361,8 @@ This may cause the affected plugins to malfunction.</source>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>ファイルを開けません:
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2544,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>共有</translation>
     </message>
 </context>
 <context>
@@ -2594,7 +2595,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1</source>
         <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -2875,7 +2876,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>データベースファイルの読み取りに失敗しました。</translation>
     </message>
 </context>
 <context>
@@ -3177,19 +3178,19 @@ Line %2, column %3</source>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>共有無効</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>インポート</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>エクスポート</translation>
     </message>
     <message>
         <source>Synchronize with</source>
-        <translation type="unfinished"/>
+        <translation>同期</translation>
     </message>
 </context>
 <context>
@@ -3247,7 +3248,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;セキュリティ対策でランダムなバイトを含むキーファイルを追加できます。&lt;/p&gt;&lt;p&gt;キーファイルは誰にも知られず、無くさないようにしてください。そうしないとロックアウトされることになりかねません。&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;セキュリティ対策でランダムバイトを含むキーファイルを追加できます。&lt;/p&gt;&lt;p&gt;キーファイルは誰にも知られず、無くさないようにしてください。そうしないとロックアウトされることになりかねません。&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -3572,28 +3573,29 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>更新を確認...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>エントリーを共有</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>メモ: KeePassXC のプレリリース版を使用しています。
+複数のバグや小さな問題点が残っている可能性があるため、このバージョンは実用的ではありません。</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>起動時に更新を確認しますか？</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 起動時に更新を確認しますか？</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>更新の確認はいつでもメニューから手動で実行できます。</translation>
     </message>
 </context>
 <context>
@@ -4085,21 +4087,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>選択</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>上書き</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4107,11 +4109,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>移動</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>空にする</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4119,7 +4121,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>スキップ</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4127,7 +4129,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>マージ</translation>
     </message>
 </context>
 <context>
@@ -4782,47 +4784,47 @@ Available commands:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>メッセージの暗号化に失敗しました。</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>グループが見つかりません</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>新しいデータベースを作成する。</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>ファイル %1 は既に存在します。</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルの読み込みに失敗しました</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>キーが設定されていません。データベースの作成を中止します。</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>データベースの保存に失敗しました: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>新しいデータベースは正常に作成されました。</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>データベースを暗号化するパスワードを入力してください (空のままにする場合は Enter を押してください): </translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>キーファイル %1 の作成に失敗しました: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>キーファイル %1 の読み込みに失敗しました: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -5037,31 +5039,31 @@ Available commands:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>アクティブ</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>エクスポートを許可する</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>インポートを許可する</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>自身の証明書</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>フィンガープリント:</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>証明書:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>署名者</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5077,23 +5079,23 @@ Available commands:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>エクスポート</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>インポートされた証明書</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>信用</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>不信</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5101,11 +5103,11 @@ Available commands:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>パス</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>ステータス</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5113,28 +5115,28 @@ Available commands:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>証明書</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>信用</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>不信</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>不明</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare キーファイル</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5142,147 +5144,147 @@ Available commands:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>パスを選択</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>変更された証明書をエクスポートしています</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>エクスポートされる証明書は使用中の証明書と同一ではありません。現在の証明書をエクスポートしますか？</translation>
     </message>
     <message>
         <source>%1.%2</source>
         <comment>Template for KeeShare key file</comment>
-        <translation type="unfinished"/>
+        <translation>%1.%2</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>署名なしコンテナからのインポート</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>共有コンテナは署名されていないため、ソースを確認できません。本当に %1 からインポートしますか？</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
+        <translation>署名付きコンテナからのインポート</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>%3 の %1 (フィンガープリント %2) を信用しますか？</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>今回はしない</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>なし</translation>
+        <translation>常にしない</translation>
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>常にする</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>今回はする</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 からのインポートに失敗しました (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 からのインポートに成功しました (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 からインポートされました</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>署名共有コンテナはサポートされていません - インポートは阻害されました</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>ファイルが読み取り可能ではありません</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>共有コンテナが不正です</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>不信なインポートが阻害されました</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>署名付きのもののインポートに成功しました</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>予期しないエラーです</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>未署名共有コンテナはサポートされていません - インポートは阻害されました</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>未署名のもののインポートに成功しました</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>ファイルが存在しません</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>不明な共有コンテナ形式です</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>署名共有コンテナの上書きはサポートされていません - エクスポートは阻害されました</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
+        <translation>コンテナを書き込めませんでした (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
+        <translation>署名を埋め込めませんでした (%1)</translation>
     </message>
     <message>
         <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>データベースを埋め込めませんでした (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>未署名共有コンテナの上書きはサポートされていません - エクスポートは阻害されました</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>コンテナを書き込めませんでした</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>予期しないエクスポートエラーが発生しました</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 へのエクスポートに失敗しました (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 へのエクスポートに成功しました (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 にエクスポート</translation>
     </message>
 </context>
 <context>
@@ -5380,11 +5382,11 @@ Available commands:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>更新を確認中</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>更新を確認中...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5392,39 +5394,39 @@ Available commands:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>更新エラー！</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>更新情報の確認中にエラーが発生しました。</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>後で再試行してください。</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>ソフトウェアの更新</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC の新しいバージョンが利用可能です。</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 が利用可能です (現在のバージョンは %2)。</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>keepassxc.org からダウンロードしてください</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>最新です！</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 は現在利用可能な最新バージョンです</translation>
     </message>
 </context>
 <context>

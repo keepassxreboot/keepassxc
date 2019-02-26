@@ -71,11 +71,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"/>
+        <translation>版本 %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>建置型態: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -99,7 +99,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>無</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
@@ -145,19 +145,19 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>只有圖示</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>只有文字</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>圖示旁有文字</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>圖示下有文字</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -389,7 +389,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>使用 DuckDuckGo 作為下載網站圖示失敗時的備案</translation>
     </message>
 </context>
 <context>
@@ -673,11 +673,11 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation>可執行檔案</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation>所有檔案</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
@@ -883,15 +883,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"/>
+        <translation>%1，%2，%3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 位元組</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n 列</numerusform></translation>
     </message>
 </context>
 <context>
@@ -903,23 +903,23 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>檔案 %1 不存在。</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>無法開啟檔案 %1。</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation type="unfinished"/>
+        <translation>讀取資料庫時發生錯誤：%1</translation>
     </message>
     <message>
         <source>Could not save, database has no file name.</source>
-        <translation type="unfinished"/>
+        <translation>無法存檔，沒有資料庫的檔名。</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>無法寫入檔案，因為該檔案以唯獨模式開啟。</translation>
     </message>
 </context>
 <context>
@@ -1184,23 +1184,23 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation type="unfinished"/>
+        <translation>解密所需時間：</translation>
     </message>
     <message>
         <source>?? s</source>
-        <translation type="unfinished"/>
+        <translation>?? 秒</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"/>
+        <translation>更改</translation>
     </message>
     <message>
         <source>100 ms</source>
-        <translation type="unfinished"/>
+        <translation>100 毫秒</translation>
     </message>
     <message>
         <source>5 s</source>
-        <translation type="unfinished"/>
+        <translation>5 秒</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1208,24 +1208,24 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Database format:</source>
-        <translation type="unfinished"/>
+        <translation>資料庫格式：</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
-        <translation type="unfinished"/>
+        <translation>只有在您需要使用其他程式處理此資料庫時才重要。</translation>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (推薦)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 3.1</translation>
     </message>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation type="unfinished"/>
+        <translation>未更改</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -1272,22 +1272,22 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>執行緒</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 毫秒</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1 秒</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1406,11 +1406,11 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>資料庫名稱：</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>描述：</translation>
     </message>
 </context>
 <context>
@@ -1470,7 +1470,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>新建資料庫</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
@@ -1814,11 +1814,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>前景顏色：</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>背景顏色：</translation>
     </message>
 </context>
 <context>
@@ -2574,7 +2574,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1</source>
         <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -4605,11 +4605,11 @@ Available commands:
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>檔案 %1 不存在。</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>無法開啟檔案 %1。</translation>
     </message>
     <message>
         <source>Error while reading the database:

@@ -145,19 +145,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Solo icone</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Solo icone</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Testo accanto alle icone</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Testo sotto le icone</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -301,19 +301,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Cerca aggiornamenti all&apos;avvio dell&apos;applicazione</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Includi versioni preliminari nella ricerca degli aggiornamenti</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Barra degli strumenti spostabile</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Stile dei pulsanti</translation>
     </message>
 </context>
 <context>
@@ -369,19 +369,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>Non nascondere le password quando vengono modificate</translation>
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Non usare segnaposti per campi password vuoti</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Nascondi la password nel pannello di anteprima della voce</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Nascondere le note della voce per impostazione predefinita</translation>
+        <translation>Nascondi le note della voce per impostazione predefinita</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -389,7 +389,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>Usa DuckDuckGo come alternativa per scaricare le icone dal sito web</translation>
     </message>
 </context>
 <context>
@@ -865,7 +865,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[%n altro messaggio saltato]</numerusform><numerusform>[altri %n messaggi saltati]</numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -1078,11 +1078,11 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Abilita l&apos;integrazione con i browser per accedere a queste impostazioni.</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>Scollegare tutti i browser</translation>
+        <translation>Scollega tutti i browser</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1103,7 +1103,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassXC. </numerusform><numerusform> Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassXC. </numerusform></translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
@@ -1128,7 +1128,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Permessi rimossi con successo da %n voce.</numerusform><numerusform>Permessi rimossi con successo da %n voci.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1212,7 +1212,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
-        <translation type="unfinished"/>
+        <translation>Questo è importante solo se si vuole usare il database con altri programmi.</translation>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
@@ -1349,24 +1349,24 @@ Se continui con questo numero, il tuo database potrebbe essere decifrato molto f
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Percorso</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Ultimo firmatario</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certificati</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation>&gt;</translation>
     </message>
 </context>
 <context>
@@ -1381,7 +1381,7 @@ Se continui con questo numero, il tuo database potrebbe essere decifrato molto f
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation type="unfinished"/>
+        <translation>Bisogna aggiungere almeno un&apos;altra chiave di cifratura per rendere sicuro il database.</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -1621,7 +1621,8 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     <message>
         <source>Writing the database failed.
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Scrittura nel database non riuscita.
+%1</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1649,11 +1650,11 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Cestinare il gruppo?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi davvero cestinare il gruppo &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -1661,7 +1662,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Il database non è stato modificato dall&apos;operazione di unione.</translation>
     </message>
 </context>
 <context>
@@ -1780,7 +1781,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Conferma rimozione</translation>
     </message>
 </context>
 <context>
@@ -2034,15 +2035,15 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tipo:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Percorso:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2050,15 +2051,15 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Inattivo</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Importa da percorso</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Esporta su percorso</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
@@ -2188,7 +2189,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Caricate con successo %1 di %n icona.</numerusform><numerusform>Caricate con successo %1 di %n icone.</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2196,11 +2197,11 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n icona esiste già nel database</numerusform><numerusform>%n icone esistono già nel database</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>La seguente icona presenta degli errori:</numerusform><numerusform>Le seguenti icone presentano degli errori:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -2343,7 +2344,9 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Impossibile aprire il file:
+%1</numerusform><numerusform>Impossibile aprire i file:
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2576,7 +2579,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     <message>
         <source>%1</source>
         <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -2857,7 +2860,7 @@ Si tratta di una migrazione unidirezionale. Non sarà possibile aprire il databa
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile leggere il file di database.</translation>
     </message>
 </context>
 <context>
@@ -2983,7 +2986,9 @@ Si tratta di una migrazione unidirezionale. Non sarà possibile aprire il databa
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation type="unfinished"/>
+        <translation>Errore XML:
+%1
+Riga %2, colonna %3</translation>
     </message>
 </context>
 <context>
@@ -3161,15 +3166,15 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importa da</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Esporta verso</translation>
     </message>
     <message>
         <source>Synchronize with</source>
-        <translation type="unfinished"/>
+        <translation>Sincronizza con</translation>
     </message>
 </context>
 <context>
@@ -3243,7 +3248,8 @@ Please go to the master key settings and generate a new key file.</source>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation type="unfinished"/>
+        <translation>Errore nel caricamento del file chiave &apos;%1&apos;
+Messaggio: %2</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -3263,7 +3269,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile creare il file chiave: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -3552,7 +3558,7 @@ Si consiglia di utilizzare l&apos;AppImage disponibile sulla nostra pagina di do
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Condividi voce</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
@@ -3651,7 +3657,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>En&amp;cryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni di &amp;crittografia</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -4449,7 +4455,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Voce %1 non trovata.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
@@ -5074,7 +5080,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Percorso</translation>
     </message>
     <message>
         <source>Status</source>
@@ -5381,7 +5387,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>È disponibile una nuova versione di KeePassXC!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
@@ -5389,7 +5395,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Scaricalo da keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>

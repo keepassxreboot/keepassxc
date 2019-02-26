@@ -71,11 +71,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"/>
+        <translation>Verzia %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Typ zostavenia: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -91,7 +91,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>YubiKey</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey</translation>
     </message>
     <message>
         <source>TouchID</source>
@@ -99,19 +99,19 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Žiadny</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (podpísané a nepodpísané zdieľanie)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (len podpísané zdieľanie)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (len nepodpísané zdieľanie)</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Použiť OpenSSH pre Windows namiesto Pageant</translation>
     </message>
 </context>
 <context>
@@ -145,19 +145,19 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Len ikona</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Len text</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Text vedľa ikony</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Text pod ikonou</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -244,11 +244,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation type="unfinished"/>
+        <translation>Skryť panel nástrojov (ikony)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>Minimalizovať namiesto ukončenia</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -301,19 +301,19 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Pri štarte skontrolovať aktualizácie</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Pri kontrole aktualizácii zahrnúť pred-vydania</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Presúvateľný panel nástrojov</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Štýl tlačidla</translation>
     </message>
 </context>
 <context>
@@ -369,15 +369,15 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>Neskrývať heslo pri jeho úprave</translation>
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Nepoužiť zástupné pole na prázdne polia hesiel</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Skryť heslá v paneli ukážky položky </translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -389,7 +389,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>Na sťahovanie ikon použiť ako záložné riešenie DuckDuckGo</translation>
     </message>
 </context>
 <context>
@@ -501,7 +501,7 @@ Prosím, zvoľte, či chcete povoliť prístup.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -510,7 +510,8 @@ Prosím, zvoľte, či chcete povoliť prístup.</translation>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation type="unfinished"/>
+        <translation>Máte otvorených viac databáz.
+Prosím, vyberte správnu databázu na uloženie prihlasovacích údajov.</translation>
     </message>
 </context>
 <context>
@@ -665,24 +666,24 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tor Browser</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Upozornenie&lt;/b&gt;, nebola nájdená aplikácia keepassxc-proxy!&lt;br /&gt;Prosím, skontrolujte inštalačný adresár KeePassXC alebo potvrďte vlastnú cestu v pokročilých nastaveniach.&lt;br /&gt;Integrácia prehliadača NEBUDE FUNGOVAŤ bez tejto proxy.&lt;br /&gt;Očakávaná cesta:</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation>Spustiteľné súbory</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation>Všetky súbory</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation>Nepýtať povolenie na HTTP &amp;Basic Auth</translation>
     </message>
 </context>
 <context>
@@ -854,15 +855,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Empty fieldname %1</source>
-        <translation type="unfinished"/>
+        <translation>Prázdne meno poľa %1</translation>
     </message>
     <message>
         <source>column %1</source>
-        <translation type="unfinished"/>
+        <translation>stĺpec %1</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation type="unfinished"/>
+        <translation>V súbore CSV zistená chyba(y)!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
@@ -883,11 +884,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"/>
+        <translation>%1, %2, %3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n bajt</numerusform><numerusform>%n bajty</numerusform><numerusform>%n bajtov</numerusform><numerusform>%n bajt(y)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
@@ -903,19 +904,19 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Súbor %1 neexistuje.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno otvoriť súbor %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Chyba čítania databázy: %1</translation>
     </message>
     <message>
         <source>Could not save, database has no file name.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno uložiť, databáza nemá meno súboru.</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
@@ -1023,11 +1024,11 @@ Prosím, zvážte vygenerovanie nového súboru kľúča.</translation>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Hlavný kľúč</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavenia šifrovania</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1054,7 +1055,7 @@ Prosím, zvážte vygenerovanie nového súboru kľúča.</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation type="unfinished"/>
+        <translation>Uložené kľúče</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1062,12 +1063,13 @@ Prosím, zvážte vygenerovanie nového súboru kľúča.</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť zvolený kľúč?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation type="unfinished"/>
+        <translation>Naozaj chcete odstrániť zvolený kľúč?
+Môže to brániť pripojeniu zásuvného modulu prehliadača.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -1079,16 +1081,17 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Zapnúť Integráciu prehliadača na prístup k týmto nastaveniam.</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>Odpojiť všetky prehliadače</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation type="unfinished"/>
+        <translation>Naozaj chcete odpojiť všetky prehliadače?
+Môže to brániť pripojeniu zásuvného modulu prehliadača.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -1096,7 +1099,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation type="unfinished"/>
+        <translation>V nastavení KeePassXC neboli nájdené zdieľané šifrovacie kľúče.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -1108,7 +1111,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>Zabudnúť všetky nastavenia položiek špecifické pre stránky</translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1185,7 +1188,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation type="unfinished"/>
+        <translation>Čas dešifrovania:</translation>
     </message>
     <message>
         <source>?? s</source>
@@ -1193,40 +1196,40 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"/>
+        <translation>Zmeniť</translation>
     </message>
     <message>
         <source>100 ms</source>
-        <translation type="unfinished"/>
+        <translation>100 ms</translation>
     </message>
     <message>
         <source>5 s</source>
-        <translation type="unfinished"/>
+        <translation>5 s</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation type="unfinished"/>
+        <translation>Vyššie hodnoty poskytujú viac ochrany, ale otvorenie databázy bude trvať dlhšie.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation type="unfinished"/>
+        <translation>Formát databázy:</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
-        <translation type="unfinished"/>
+        <translation>Toto je dôležité len ak potrebujete používať svoju databázu z iných programov.</translation>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (odporúčané)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 3.1</translation>
     </message>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation type="unfinished"/>
+        <translation>bez zmeny</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -1273,7 +1276,7 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -1283,12 +1286,12 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1342,7 +1345,7 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Zdieľanie</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
@@ -1350,11 +1353,11 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Cesta</translation>
     </message>
     <message>
         <source>Last Signer</source>
@@ -1362,12 +1365,12 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certifikáty</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1407,11 +1410,11 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>Meno databázy:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Popis:</translation>
     </message>
 </context>
 <context>
@@ -1454,7 +1457,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database creation error</source>
-        <translation type="unfinished"/>
+        <translation>Chyba vytvorenia databázy</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
@@ -1467,26 +1470,26 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Zvoľte súbor CSV</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>Nová databáza</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Nová databáza]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Zamknutá]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Len na čítanie]</translation>
     </message>
 </context>
 <context>
@@ -1583,7 +1586,7 @@ Chcete zlúčiť svoje zmeny?</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation type="unfinished"/>
+        <translation>Zamknúť databázu?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -3672,7 +3675,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Nastavenia šifrovania</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -4612,11 +4615,11 @@ Dostupné príkazy:
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Súbor %1 neexistuje.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno otvoriť súbor %1.</translation>
     </message>
     <message>
         <source>Error while reading the database:
@@ -5076,7 +5079,7 @@ Dostupné príkazy:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Cesta</translation>
     </message>
     <message>
         <source>Status</source>

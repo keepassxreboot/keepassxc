@@ -103,15 +103,15 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (allekirjoitettu ja allekirjoittamaton jakaminen)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (vain allekirjoitettu jakaminen)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (vain allekirjoittamaton jakaminen)</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Käytä Windowsissa OpenSSH:ta Pageant:in sijasta</translation>
     </message>
 </context>
 <context>
@@ -145,23 +145,23 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Vain kuvake</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Vain teksti</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Teksti kuvakkeen vieressä</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Teksti kuvakkeen alla</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Seuraa tyyliä</translation>
     </message>
 </context>
 <context>
@@ -301,19 +301,19 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Tarkista päivitykset sovelluksen käynnistyessä</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Sisällytä esijulkaisut tarkistaessa päivityksiä</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Siirrettävä työkalupalkki</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Painiketyyli</translation>
     </message>
 </context>
 <context>
@@ -683,7 +683,7 @@ Valitse oikea tietokanta tietueen tallentamiseksi</translation>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation>Älä kysy lupaa HTTP-autentikointiin</translation>
     </message>
 </context>
 <context>
@@ -930,7 +930,7 @@ Tämä on välttämätöntä selainintegraation yhteensopivuuden takaamiseksi.</
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Avaa Tietokanta - KeePassXC</translation>
+        <translation>Avaa tietokanta - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1352,32 +1352,32 @@ Jos pidät tämän arvon, tietokanta voi olla liian helppo murtaa!</translation>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Jakaminen</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Leipätiedosto</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Polku</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Viimeinen allekirjoittaja</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Varmenteet</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation>&gt;</translation>
     </message>
 </context>
 <context>
@@ -1654,31 +1654,31 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>Korvaa tietueen viittaukset?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Tietueella &quot;%1&quot; on %2 viittaus. Haluatko ylikirjoittaa viittaukset arvoilla, ohittaa tietueen tai poistaa sen?</numerusform><numerusform>Tietueella &quot;%1&quot; on %2 viittausta. Haluatko ylikirjoittaa viittaukset arvoilla, ohittaa tietueen tai poistaa sen?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"/>
+        <translation>Poista ryhmä</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Siirretäänkö ryhmä roskakoriin?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko varmasti siirtää ryhmän &quot;%1&quot; roskakoriin?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantatiedostot yhdistettiin onnistuneesti.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan sisältö ei muuttunut yhdistämisen yhteydessä.</translation>
     </message>
 </context>
 <context>
@@ -1797,7 +1797,7 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Vahvista poistaminen</translation>
     </message>
 </context>
 <context>
@@ -2051,15 +2051,15 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Polku:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2067,55 +2067,55 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Toimeton</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Tuo polusta</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Vie polkuun</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>Synkronoi polun kanssa</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-versiosi ei tue jakamista tällä säiliötyypillä. Ole hyvä ja käytä tyyppiä %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan jakaminen on poistettu käytöstä</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan vieminen on poistettu käytöstä</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan tuominen on poistettu käytöstä</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>KeeSharen allekirjoittamaton säiliö</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>KeeSharen allekirjoitettu säiliö</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Valitse tuonnin lähde</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Valitse viennin kohde</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation type="unfinished"/>
+        <translation>Valitse tuonti-/vientitiedosto</translation>
     </message>
 </context>
 <context>
@@ -2360,7 +2360,9 @@ Tämä voi vikaannuttaa tietoa käyttävän liitännäisen.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Tiedostoa ei voitu avata:
+%1</numerusform><numerusform>Tiedostoja ei voitu avata:
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2542,7 +2544,7 @@ Tämä voi vikaannuttaa tietoa käyttävän liitännäisen.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Jaa</translation>
     </message>
 </context>
 <context>
@@ -2593,7 +2595,7 @@ Tämä voi vikaannuttaa tietoa käyttävän liitännäisen.</translation>
     <message>
         <source>%1</source>
         <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -2874,7 +2876,7 @@ Tämä muunnos toimii yhdensuuntaisesti. Et välttämättä saa enää tietokant
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantatiedoston lukeminen epäonnistui.</translation>
     </message>
 </context>
 <context>
@@ -3176,19 +3178,19 @@ Rivi %2, sarake %3</translation>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>Jakaminen poistettu käytöstä</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Tuo</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Vie</translation>
     </message>
     <message>
         <source>Synchronize with</source>
-        <translation type="unfinished"/>
+        <translation>Synkronoi</translation>
     </message>
 </context>
 <context>
@@ -3570,28 +3572,29 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Tarkista päivitykset...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Jaa tietue</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>HUOM: Käytät KeePassXC:n esiversiota!
+Bugeja ja ongelmia voi esiintyä. Tämä versio ei ole tarkoitettu päivittäiseen käyttöön.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Tarkistetaanko päivitykset käynnistyksen yhteydessä?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko että KeePassXC tarkistaa päivitykset käynnistyessään?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>Voit tarkistaa päivitykset manuaalisesti sovellusvalikosta.</translation>
     </message>
 </context>
 <context>
@@ -4032,7 +4035,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>\_|-/</source>
-        <translation type="unfinished"/>
+        <translation>\_|-/</translation>
     </message>
     <message>
         <source>Logograms</source>
@@ -4083,21 +4086,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Valitse</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Korvaa</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4105,11 +4108,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Siirrä</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Tyhjä</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4117,7 +4120,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>Ohita</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4125,7 +4128,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Yhdistä</translation>
     </message>
 </context>
 <context>
@@ -4443,59 +4446,59 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Invalid value for password length %1.</source>
-        <translation type="unfinished"/>
+        <translation>Väärä arvo salasanan pituudeksi %1.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietuetta ei voitu luoda polun %1 kanssa.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation type="unfinished"/>
+        <translation>Anna uuden tietueen salasana:</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantaan kirjoittaminen epäonnistui %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietueen %1 lisäys onnistui.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi nykyinen TOTP leikepöydälle.</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen aikakatkaisun arvo %1.</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Tietuetta %1 ei löytynyt.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation type="unfinished"/>
+        <translation>Tietueella joka käyttää polkua %1 ei ole TOTP:ia asetettuna.</translation>
     </message>
     <message>
         <source>Entry&apos;s current TOTP copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>Tietueen tämän hetkinen TOTP on kopioitu leikepöydälle!</translation>
     </message>
     <message>
         <source>Entry&apos;s password copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>Tietueen salasana on kopioitu leikepöydälle!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Tyhjennetään leikepöytä %1 sekunnissa...</numerusform><numerusform>Tyhjennetään leikepöytä %1 sekunnissa...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation type="unfinished"/>
+        <translation>Leikepöytä tyhjennetty!</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation type="unfinished"/>
+        <translation>Hiljennä salasanamuistutus ja muut toissijaiset tulostukset.</translation>
     </message>
     <message>
         <source>count</source>
@@ -4504,131 +4507,131 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Invalid value for password length: %1</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen arvo salasanan pituudelle: %1</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietuetta polulla %1 ei löydetty.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Yhtään kenttää tietueelle %1 ei vaihdettu.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation type="unfinished"/>
+        <translation>Anna tietueelle uusi salasana:</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan kirjoittaminen epäonnistui: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietuetta %1 muokattiin onnistuneesti.</translation>
     </message>
     <message>
         <source>Length %1</source>
-        <translation type="unfinished"/>
+        <translation>Pituus %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation type="unfinished"/>
+        <translation>Entropia %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
-        <translation type="unfinished"/>
+        <translation>Log10 %1</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation type="unfinished"/>
+        <translation>Monisanaiset ylimääräiset tavut %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Väsytyshyökkäys</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sanakirja</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sanakirja + Leet</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Käyttäjän sanat</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Käyttäjän sanat + Leet</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Toistettu</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sekvenssi</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Spatiaalinen</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Päivämäärä</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Väsytyshyökkäys (toistettu)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sanakirja (toistettu)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sanakirja + Leet (toistettu)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Käyttäjän sanat (toistettu)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Käyttäjän sanat + Leet (toistettu)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Toistettu (toistettu)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Sekvenssi (toistettu)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Spatiaalinen (toistettu)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Päivämäärä (toistettu)</translation>
     </message>
     <message>
         <source>Type: Unknown%1</source>
-        <translation type="unfinished"/>
+        <translation>Tyyppi: Tuntematon %1</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Entropia %1 (%2)</translation>
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation type="unfinished"/>
+        <translation>*** Salasanan pituus (%1) != osien (%2) summa ***</translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedoston %1 lataaminen epäonnistui: %2</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
@@ -4641,105 +4644,108 @@ Käytettävissä olevat komennot:
     <message>
         <source>Error while reading the database:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Virhe tietokantaa luettaessa:
+%1</translation>
     </message>
     <message>
         <source>Error while parsing the database:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Virhe tietokantaa jäsennettäessä:
+%1</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Luodun salasanan pituus</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation type="unfinished"/>
+        <translation>Käytiä pieniä merkkejä</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation type="unfinished"/>
+        <translation>Käytä isoja merkkejä</translation>
     </message>
     <message>
         <source>Use numbers.</source>
-        <translation type="unfinished"/>
+        <translation>Käytä numeroita.</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation type="unfinished"/>
+        <translation>Käytä erikoismerkkejä</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation type="unfinished"/>
+        <translation>Käytä laajennettua ASCII-merkistöä</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation type="unfinished"/>
+        <translation>Älä sisällytä merkkejä</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation type="unfinished"/>
+        <translation>merkit</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation type="unfinished"/>
+        <translation>Älä sisällytä samankaltaisilta vaikuttavia kirjaimia</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation type="unfinished"/>
+        <translation>Sisällytä kirjaimia jokaisesta valitusta ryhmästä</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation type="unfinished"/>
+        <translation>Listaa ryhmän elementit rekursiivisesti</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ryhmää %1 ei löytynyt.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Virhe lukiessa yhdistämiseen tarvittavaa tiedostoa:
+%1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan tallentaminen tiedostoon ei onnistu: %1</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantaa ei voitu tallentaa tiedostoon: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietue %1 siirrettiin onnistuneesti roskakoriin.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietue %1 poistettiin onnistuneesti.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"/>
+        <translation>Näytä tietueen tämän hetkinen TOTP.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
+        <translation>VIRHE: Tuntematon attribuutti %1.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation type="unfinished"/>
+        <translation>Ohjelmaa leikepöydän hallintaan ei ole määritelty.</translation>
     </message>
     <message>
         <source>Unable to start program %1</source>
-        <translation type="unfinished"/>
+        <translation>Ohjelmaa %1 ei voitu käynnistää</translation>
     </message>
     <message>
         <source>file empty</source>
-        <translation type="unfinished"/>
+        <translation>tyhjä tiedosto</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation type="unfinished"/>
+        <translation>%1: (rivi, sarake) %2,%3</translation>
     </message>
     <message>
         <source>AES: 256-bit</source>
@@ -4768,56 +4774,56 @@ Käytettävissä olevat komennot:
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Virheelliset asetukset</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Virheellinen avain</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Viestin salaus epäonnistui</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Ryhmiä ei löytynyt</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Luo uusi tietokanta.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Tiedosto %1 on jo olemassa.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedoston lataaminen epäonnistui</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>Avainta ei ole asetettu. Perutaan tietokannan luominen.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannan tallentaminen epäonnistui: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Luotiin onnistuneesti uusi tietokanta.</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>Syötä salasana salataksesi tietokannan (Paina enter jättääksesi se tyhjäksi):</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedoston %1 luonti epäonnistui: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Avaintiedoston %1 lataus epäonnistui: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -4914,90 +4920,90 @@ Käytettävissä olevat komennot:
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation type="unfinished"/>
+        <translation>Agentin yhteydenotto epäonnistui.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
-        <translation type="unfinished"/>
+        <translation>Agentin protokollavirhe.</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation type="unfinished"/>
+        <translation>Agentti ei ole käynnissä. Identiteettiä ei voitu lisätä.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation type="unfinished"/>
+        <translation>Agentti ei ole käynnissä. Identiteettiä ei voitu poistaa.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation type="unfinished"/>
+        <translation>Agentti hylkäsi tämän identiteetin. Mahdolliset syyt sisältävät: </translation>
     </message>
     <message>
         <source>The key has already been added.</source>
-        <translation type="unfinished"/>
+        <translation>Avain on jo lisätty.</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Agentti ei tue rajoitettua käyttöikää (tarkista asetukset).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Agentti ei tue vahvistuspyyntöä (tarkista asetukset).</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation type="unfinished"/>
+        <translation>Etsi apua</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation type="unfinished"/>
+        <translation>Hakutermit ovat seuraavat: [modifikaattorit][kenttä:][&quot;]termi[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation type="unfinished"/>
+        <translation>Jokaisen hakutermin on sovittava yhteen (esim. looginen AND)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation type="unfinished"/>
+        <translation>Modifikaattorit</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation type="unfinished"/>
+        <translation>älä sisällytä termiä hakutuloksiin</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation type="unfinished"/>
+        <translation>termin on sovittava täysin yhteen</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation type="unfinished"/>
+        <translation>käytä termissä regex:iä</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation type="unfinished"/>
+        <translation>Kentät</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation type="unfinished"/>
+        <translation>Termin jokerimerkit (wildcards)</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation type="unfinished"/>
+        <translation>vastaa minkä tahansa kanssa</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation type="unfinished"/>
+        <translation>vastaa yhtä</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"/>
+        <translation>looginen OR</translation>
     </message>
     <message>
         <source>Examples</source>
-        <translation type="unfinished"/>
+        <translation>Esimerkit</translation>
     </message>
 </context>
 <context>
@@ -5016,47 +5022,47 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Search Help</source>
-        <translation type="unfinished"/>
+        <translation>Etsi apua</translation>
     </message>
     <message>
         <source>Search (%1)...</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <translation>Etsi (%1)...</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation type="unfinished"/>
+        <translation>Merkkikokoriippuvainen</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Aktiivinen</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>Salli vienti</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>Salli tuonti</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Oma varmenne</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>Sormenjälki:</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Varmenne:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoittaja</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5072,23 +5078,23 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Vie</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Tuodut varmenteet</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>Luota</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Kysy</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>Älä luota</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5096,11 +5102,11 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Polku</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Tila</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5108,28 +5114,28 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Varmenne</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Luotettu</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Ei luotettu</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Tuntematon</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare-avaintiedosto</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5137,43 +5143,43 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Valitse polku</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Viedään muuttuneita sertifikaatteja</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Viety sertifikaatti ei ole sama kuin käytössä oleva. Haluatko viedä tämän hetkisen sertifikaatin?</translation>
     </message>
     <message>
         <source>%1.%2</source>
         <comment>Template for KeeShare key file</comment>
-        <translation type="unfinished"/>
+        <translation>%1.%2</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Tuo säiliöstä ilman allekirjoitusta</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>Jaetun säiliön lähdettä ei voitu vahvistaa, sillä se ei ole allekirjoitettu. Haluatko todella tuoda sen kohteesta %1?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
+        <translation>Tuo säiliöstä sertifikaatin kanssa</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko luottaa kohteeseen %1 sormenjäljen %2 kanssa, jonka lähde on %3</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>Ei tällä kertaa</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5181,103 +5187,103 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Aina</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>Vain tämän kerran</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Tuonti kohteesta %1 epäonnistui (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Tuonti kohteesta %1 onnistui (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>Tuotu kohteesta %1</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoitettu jaettu säiliö ei ole tuettu - tuonti estettiin</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Tiedosto ei ole luettavissa</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen jaettu säiliö</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Ei-luotettu tuonti estettiin</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>Onnistunut allekirjoitettu tuonti</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>Odottamaton virhe</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoittamattoman jaetut säiliöt eivät ole tuettu - tuonti estettiin</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>Onnistunut allekirjoittamaton tuonti</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>Tiedostoa ei ole olemassa</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>Tuntematon jaetun säiliön tyyppi</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoitetun jaetun säiliön ylikirjoittaminen ei ole tuettu - vienti estettiin</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Vietyä säiliötä ei voitu kirjoittaa (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoitusta ei voitu sisällyttää (%1)</translation>
     </message>
     <message>
         <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantaa ei voitu sisällyttää (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoittamattoman jaetun säiliön ylikirjoitus ei ole tuettu - vienti estettiin</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Vietyä säiliötä ei voitu kirjoittaa</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Tapahtui odottamaton vientivirhe</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Vienti kohteeseen %1 epäonnistui (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Vienti kohteeseen %1 onnistui (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>Vie kohteeseen %1</translation>
     </message>
 </context>
 <context>
@@ -5296,7 +5302,7 @@ Käytettävissä olevat komennot:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Umpeutuu &lt;b&gt;%n&lt;/b&gt; sekunnin kuluttua</numerusform><numerusform>Umpeutuu &lt;b&gt;%n&lt;/b&gt; sekunnin kuluttua</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5308,15 +5314,15 @@ Käytettävissä olevat komennot:
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation type="unfinished"/>
+        <translation>HUOM: Nämä TOTP-asetukset ovat mukautettuja eivätkä ne välttämättä toimi muiden autentikaattoreiden kanssa.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation type="unfinished"/>
+        <translation>QR-koodia luotaessa tapahtui virhe.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation type="unfinished"/>
+        <translation>Suljetaan %1 sekunnin kuluttua.</translation>
     </message>
 </context>
 <context>
@@ -5343,7 +5349,7 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation type="unfinished"/>
+        <translation>Mukautetut asetukset</translation>
     </message>
     <message>
         <source>Time step:</source>
@@ -5364,7 +5370,7 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>7 digits</source>
-        <translation type="unfinished"/>
+        <translation>7 numeroa</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -5375,11 +5381,11 @@ Käytettävissä olevat komennot:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Tarkistetaan päivityksiä</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Tarkistetaan päivityksiä...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5387,39 +5393,39 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Päivitysvirhe!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Päivitystietoja haettassa tapahtui virhe.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Yritä myöhemmin uudelleen.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Ohjelmistopäivitys</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>Uusi versio KeePassXC:stä on saatavilla!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 on nyt saatavilla — käytössäsi on %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Lataa se osoitteesta keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Olet ajan tasalla!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 on uusin saatavilla oleva versio</translation>
     </message>
 </context>
 <context>
@@ -5461,15 +5467,15 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>YubiKey Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>YubiKeyn haaste/vastaus</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Jos omistat &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey:n&lt;/a&gt;, voit käyttää sitä lisäturvakeinona.&lt;/p&gt;&lt;p&gt;YubiKey vaatii yhden paikan asettamista &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Responseksi&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation type="unfinished"/>
+        <translation>YubiKeyta ei ole valittu, varmista että se on liitetty.</translation>
     </message>
     <message>
         <source>No YubiKey inserted.</source>

@@ -71,11 +71,11 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"/>
+        <translation>Version %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Build Type: %1</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -91,27 +91,27 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>YubiKey</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey</translation>
     </message>
     <message>
         <source>TouchID</source>
-        <translation type="unfinished"/>
+        <translation>TouchID</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (signerad och osignerad delning)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (endast signerad delning)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (endast osignerad delning)</translation>
     </message>
 </context>
 <context>
@@ -122,7 +122,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Använd OpenSSH för Windows istället för Pageant</translation>
     </message>
 </context>
 <context>
@@ -145,19 +145,19 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Endast Ikon</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Endast text</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Text bredvid ikon</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Text under ikon</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -168,7 +168,7 @@ Kärna: %3 %4</translation>
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Grund inställningar</translation>
+        <translation>Grundinställningar</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -337,7 +337,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source> min</source>
-        <translation type="unfinished"/>
+        <translation> min</translation>
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
@@ -369,11 +369,11 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>Dölj inte lösenord vid editering</translation>
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>Använd inte platshållare för tomma lösenordsfält</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -501,7 +501,7 @@ Vill du tillåta det?</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -665,7 +665,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tor Browser</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
@@ -673,11 +673,11 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation>Exekverbara filer</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation>Alla filer</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
@@ -729,7 +729,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Konverterade KeePassHTTP attribut</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
@@ -850,24 +850,25 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Empty fieldname %1</source>
-        <translation type="unfinished"/>
+        <translation>Tomt fältnamn %1</translation>
     </message>
     <message>
         <source>column %1</source>
-        <translation type="unfinished"/>
+        <translation>kolumn %1</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation type="unfinished"/>
+        <translation>Fel upptäckta i CSV-fil!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[%n fler meddelande(n) hoppades över]</numerusform><numerusform>[%n fler meddelande(n) hoppades över]</numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV importering: skrivare har fel:
+%1</translation>
     </message>
 </context>
 <context>
@@ -879,15 +880,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"/>
+        <translation>%1, %2, %3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte(s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n rad(er)</numerusform><numerusform>%n rad(er)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -899,19 +900,19 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Fil %1 finns inte.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna fil %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fel vid inläsning av databas: %1</translation>
     </message>
     <message>
         <source>Could not save, database has no file name.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte spara, databasen har inget filnamn.</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
@@ -980,17 +981,19 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>TouchID for quick unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID för snabbupplåsning</translation>
     </message>
     <message>
         <source>Unable to open the database:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna databasen:
+%1</translation>
     </message>
     <message>
         <source>Can't open key file:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna nyckelfilen:
+%1</translation>
     </message>
 </context>
 <context>
@@ -1004,7 +1007,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Avancerade inställningar</translation>
     </message>
     <message>
         <source>General</source>
@@ -1020,7 +1023,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsinställningar</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1031,7 +1034,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser inställningar</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -1047,7 +1050,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation type="unfinished"/>
+        <translation>Sparade nycklar</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1055,7 +1058,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation type="unfinished"/>
+        <translation>Radera den valda nyckeln?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
@@ -1182,19 +1185,19 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>?? s</source>
-        <translation type="unfinished"/>
+        <translation>?? s</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"/>
+        <translation>Ändra</translation>
     </message>
     <message>
         <source>100 ms</source>
-        <translation type="unfinished"/>
+        <translation>100 ms</translation>
     </message>
     <message>
         <source>5 s</source>
-        <translation type="unfinished"/>
+        <translation>5 s</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1202,7 +1205,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Database format:</source>
-        <translation type="unfinished"/>
+        <translation>Databasformat:</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
@@ -1210,16 +1213,16 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (rekommenderad)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 3.1</translation>
     </message>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation type="unfinished"/>
+        <translation>oförändrad</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -1262,22 +1265,22 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>tråd(ar)</numerusform><numerusform>tråd(ar)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1324,26 +1327,26 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera &amp;komprimering (rekommenderas)</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Delning</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Brödsmulor</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg</translation>
     </message>
     <message>
         <source>Last Signer</source>
@@ -1351,12 +1354,12 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certifikat</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1367,7 +1370,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation type="unfinished"/>
+        <translation>Ingen krypteringsnyckel tillagd</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
@@ -1375,7 +1378,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>No password set</source>
-        <translation type="unfinished"/>
+        <translation>Inget lösenord satt</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
@@ -1396,11 +1399,11 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>Databasnamn:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivning:</translation>
     </message>
 </context>
 <context>
@@ -1456,21 +1459,21 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Välj CSV-fil</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>Ny databas</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Ny databas]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Låst]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
@@ -1571,7 +1574,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation type="unfinished"/>
+        <translation>Lås databas?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -1756,7 +1759,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>New attribute %1</source>
-        <translation type="unfinished"/>
+        <translation>Nytt attribut %1</translation>
     </message>
     <message>
         <source>[PROTECTED] Press reveal to view or edit</source>
@@ -1764,11 +1767,11 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta borttagning</translation>
     </message>
 </context>
 <context>
@@ -2022,15 +2025,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2038,19 +2041,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Importera från sökväg</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Exportera till sökväg</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>Synkronisera med sökväg</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
@@ -2058,15 +2061,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Databasdelning är inaktiverad</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Databasexport är inaktiverad</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Databasimport är inaktiverad</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
@@ -2078,15 +2081,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Välj källa för import</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Välj mål för export</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation type="unfinished"/>
+        <translation>Välj fil för import/export</translation>
     </message>
 </context>
 <context>
@@ -2172,7 +2175,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation type="unfinished"/>
+        <translation>Välj bild(er)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
@@ -2243,7 +2246,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation type="unfinished"/>
+        <translation>%1 - Klona</translation>
     </message>
 </context>
 <context>
@@ -2302,7 +2305,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta överskrivning</translation>
     </message>
     <message>
         <source>Unable to save attachments:
@@ -2324,7 +2327,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta borttagning</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
@@ -2415,7 +2418,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -2499,7 +2502,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;: %2</source>
         <comment>attributes line</comment>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;%1&lt;/b&gt;: %2</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -2511,7 +2514,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Dela</translation>
     </message>
 </context>
 <context>
@@ -2554,7 +2557,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation type="unfinished"/>
+        <translation>[tom]</translation>
     </message>
 </context>
 <context>
@@ -2562,7 +2565,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1</source>
         <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3176,17 +3179,17 @@ Line %2, column %3</source>
     <message>
         <source>Add %1</source>
         <comment>Add a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Lägg till %1</translation>
     </message>
     <message>
         <source>Change %1</source>
         <comment>Change a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Ändra %1</translation>
     </message>
     <message>
         <source>Remove %1</source>
         <comment>Remove a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Ta bort %1</translation>
     </message>
     <message>
         <source>%1 set, click to change or remove</source>
@@ -3419,11 +3422,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Donera</translation>
     </message>
     <message>
         <source>Report a &amp;bug</source>
-        <translation type="unfinished"/>
+        <translation>Rapportera en &amp;bug</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
@@ -3432,31 +3435,31 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Import</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute...</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera att&amp;ribut...</translation>
     </message>
     <message>
         <source>TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>TOTP...</translation>
     </message>
     <message>
         <source>&amp;New database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny databas...</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation type="unfinished"/>
+        <translation>Skapa ny databas</translation>
     </message>
     <message>
         <source>&amp;Merge from database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sammanfoga från databas...</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation type="unfinished"/>
+        <translation>Sammanfoga från annan KDBX-databas</translation>
     </message>
     <message>
         <source>&amp;New entry</source>
@@ -3492,7 +3495,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation type="unfinished"/>
+        <translation>Kopiera &amp;lösenord</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -3504,35 +3507,35 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>KeePass 1 database...</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 databas...</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation type="unfinished"/>
+        <translation>Importera en KeePass1 databas</translation>
     </message>
     <message>
         <source>CSV file...</source>
-        <translation type="unfinished"/>
+        <translation>CSV-fil...</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Importera en CSV-fil</translation>
     </message>
     <message>
         <source>Show TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>Visa TOTP...</translation>
     </message>
     <message>
         <source>Show TOTP QR Code...</source>
-        <translation type="unfinished"/>
+        <translation>Visa TOTP QR-kod...</translation>
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Sök efter uppdateringar...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Dela post</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
@@ -3564,7 +3567,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Skriver över %1[%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
@@ -3639,7 +3642,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Avancerade inställningar</translation>
     </message>
     <message>
         <source>Simple Settings</source>
@@ -3650,7 +3653,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsinställningar</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -4586,11 +4589,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Fil %1 finns inte.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna fil %1.</translation>
     </message>
     <message>
         <source>Error while reading the database:
@@ -4689,11 +4692,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>file empty</source>
-        <translation type="unfinished"/>
+        <translation>filen är tom</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation type="unfinished"/>
+        <translation>%1: (rad, kolumn) %2,%3</translation>
     </message>
     <message>
         <source>AES: 256-bit</source>
@@ -4722,28 +4725,28 @@ Tillgängliga kommandon:
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Ogiltiga inställningar</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig nyckel</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Meddelandekryptering misslyckad.</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Inga grupper funna</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Skapa en ny databas.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Filen %1 existerar redan.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
@@ -4827,7 +4830,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Database password: </source>
-        <translation type="unfinished"/>
+        <translation>Databaslösenord:</translation>
     </message>
 </context>
 <context>
@@ -4931,7 +4934,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Fields</source>
-        <translation type="unfinished"/>
+        <translation>Fält</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
@@ -4951,7 +4954,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Examples</source>
-        <translation type="unfinished"/>
+        <translation>Exempel</translation>
     </message>
 </context>
 <context>
@@ -4975,7 +4978,7 @@ Tillgängliga kommandon:
     <message>
         <source>Search (%1)...</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <translation>Sök (%1)...</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -4986,7 +4989,7 @@ Tillgängliga kommandon:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Aktiv</translation>
     </message>
     <message>
         <source>Allow export</source>
@@ -5006,7 +5009,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Certifikat:</translation>
     </message>
     <message>
         <source>Signer</source>
@@ -5026,7 +5029,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Export</translation>
     </message>
     <message>
         <source>Imported certificates</source>
@@ -5038,7 +5041,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Fråga</translation>
     </message>
     <message>
         <source>Untrust</source>
@@ -5050,11 +5053,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5062,7 +5065,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Certifikat</translation>
     </message>
     <message>
         <source>Trusted</source>
@@ -5074,7 +5077,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Okänd</translation>
     </message>
     <message>
         <source>key.share</source>
@@ -5127,7 +5130,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>Inte denna gång</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5135,23 +5138,23 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Alltid</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>Bara denna gång</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Import från %1 misslyckades (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Import från %1 lyckades (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>Importerad ifrån %1</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
@@ -5159,11 +5162,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Filen är inte läsbar</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig delningscontainer</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
@@ -5175,7 +5178,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>Oväntat fel</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
@@ -5187,7 +5190,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>Filen existerar inte.</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
@@ -5231,7 +5234,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>Exportera till %1</translation>
     </message>
 </context>
 <context>
@@ -5250,7 +5253,7 @@ Tillgängliga kommandon:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Löper ut om %n sekund(er)</numerusform><numerusform>Löper ut om &lt;b&gt;%n&lt;/b&gt; sekund(er)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5266,11 +5269,11 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation type="unfinished"/>
+        <translation>Det uppstod ett fel vid skapandet av QR-koden.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation type="unfinished"/>
+        <translation>Stänger om %1 sekunder.</translation>
     </message>
 </context>
 <context>
@@ -5297,7 +5300,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation type="unfinished"/>
+        <translation>Anpassade inställningar</translation>
     </message>
     <message>
         <source>Time step:</source>
@@ -5318,7 +5321,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>7 digits</source>
-        <translation type="unfinished"/>
+        <translation>7 siffror</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -5329,11 +5332,11 @@ Tillgängliga kommandon:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Söker efter uppdateringar</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Söker efter uppdateringar...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5341,39 +5344,39 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Uppdateringsfel!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Ett felinträffade vid inhämtning av information.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Vänligen försök igen senare.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Mjukvaruuppdatering</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>En ny version av KeePassXC är tillgänglig!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 är nu tillgänglig — du har %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner den nu på keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Du är uppdaterad!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 är för närvarande den nyaste tillgängliga version</translation>
     </message>
 </context>
 <context>
