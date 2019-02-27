@@ -18,7 +18,8 @@
 
 #include <stdio.h>
 
-#include <ykcore.h>
+//#include <ykcore.h>
+#include <okcore.h>
 #include <ykdef.h>
 #include <ykstatus.h>
 #include <yubikey.h>
@@ -75,13 +76,11 @@ bool YubiKey::init()
     }
 
     // TODO: handle multiple attached hardware devices
-    m_yk_void = static_cast<void*>(yk_open_first_key());
-    if (m_yk == nullptr) {
+    m_yk_void = static_cast<void*>(ok_open_first_key());
+	 if (m_yk == nullptr) {
         m_mutex.unlock();
         return false;
     }
-
-    m_ykds_void = static_cast<void*>(ykds_alloc());
     if (m_ykds == nullptr) {
         yk_close_key(m_yk);
         m_yk_void = nullptr;

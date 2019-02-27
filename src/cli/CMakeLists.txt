@@ -81,6 +81,8 @@ if(APPLE AND WITH_APP_BUNDLE)
                                 "@executable_path/../Frameworks/libyubikey.0.dylib"
                             -change /usr/local/opt/ykpers/lib/libykpers-1.1.dylib
                                 "@executable_path/../Frameworks/libykpers-1.1.dylib"
+                            -change /usr/local/opt/okpers/lib/libokpers-1.1.dylib
+                                "@executable_path/../Frameworks/libokpers-1.1.dylib"
                        keepassxc-cli
                        COMMENT "Changing linking of keepassxc-cli")
 
