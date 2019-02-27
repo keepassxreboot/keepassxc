@@ -14,11 +14,13 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 find_path(YUBIKEY_CORE_INCLUDE_DIR yubikey.h)
+find_path(YUBIKEY_PERS_INCLUDE_DIR ykcore.h PATH_SUFFIXES ykpers-1)
 find_path(ONLYKEY_PERS_INCLUDE_DIR okcore.h PATH_SUFFIXES okpers-1)
-set(YUBIKEY_INCLUDE_DIRS ${YUBIKEY_CORE_INCLUDE_DIR} ${ONLYKEY_PERS_INCLUDE_DIR})
+set(YUBIKEY_INCLUDE_DIRS ${YUBIKEY_CORE_INCLUDE_DIR} ${YUBIKEY_PERS_INCLUDE_DIR} ${ONLYKEY_PERS_INCLUDE_DIR})
 
 find_library(YUBIKEY_CORE_LIBRARY NAMES yubikey.dll libyubikey.so yubikey)
-find_library(YUBIKEY_PERS_LIBRARY NAMES okpers-1.dll libokpers-1.so okpers-1)
+find_library(YUBIKEY_PERS_LIBRARY NAMES ykpers-1.dll libykpers-1.so ykpers-1)
+find_library(ONLYKEY_PERS_LIBRARY NAMES okpers-1.dll libokpers-1.so okpers-1)
 
 set(YUBIKEY_LIBRARIES ${YUBIKEY_CORE_LIBRARY} ${YUBIKEY_PERS_LIBRARY} ${ONLYKEY_PERS_LIBRARY})
 
