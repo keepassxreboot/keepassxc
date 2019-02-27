@@ -370,7 +370,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // TODO: instead of increasing the ref count temporarily, there should be a clean
     // break from the old database. Without this crashes occur due to the change
     // signals triggering dangling pointers.
+#if defined(WITH_XC_KEESHARE)
     auto oldDb = m_db;
+#endif
     m_db = std::move(db);
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
@@ -1548,7 +1550,11 @@ bool DatabaseWidget::saveAs()
             // Ensure we don't recurse back into this function
             m_db->setReadOnly(false);
             m_db->setFilePath(newFilePath);
-
+#ifdef WITH_XC_KEESHARE
+            // We need to reregister the database to allow exports
+            // from a newly created database
+            KeeShare::instance()->connectDatabase(m_db, m_db);
+#endif
             if (!save(-1)) {
                 // Failed to save, try again
                 continue;
