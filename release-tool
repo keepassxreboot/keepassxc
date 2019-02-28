@@ -1147,7 +1147,7 @@ appsign() {
                 fi
 
                 logInfo "Signing app using codesign..."
-                codesign --sign "${key}" --verbose --deep ./app/KeePassXC.app
+                codesign --sign "${key}" --verbose --deep --entitlements ${orig_dir}/share/macosx/keepassxc.entitlements ./app/KeePassXC.app
 
                 if [ 0 -ne $? ]; then
                     cd "${orig_dir}"

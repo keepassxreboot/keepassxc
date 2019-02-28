@@ -368,7 +368,7 @@ if(MINGW)
             "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2"
             "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
 
-    string(REGEX REPLACE "-snapshot$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
+    string(REGEX REPLACE "-.*$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 
     set(CPACK_GENERATOR "ZIP;WIX")
     set(CPACK_STRIP_FILES OFF)
@@ -428,4 +428,10 @@ if(MINGW)
 
     # install CA cert chains
     install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
+    # install OpenSSL library
+    if(WITH_XC_NETWORKING)
+        find_library(OPENSSL_DLL NAMES libssl-1_1.dll libssl-1_1-x64.dll PATH_SUFFIXES bin)
+        find_library(CRYPTO_DLL NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll PATH_SUFFIXES bin)
+        install(FILES ${OPENSSL_DLL} ${CRYPTO_DLL} DESTINATION ".")
+    endif()
 endif()

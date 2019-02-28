@@ -865,7 +865,9 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
 void Group::copyDataFrom(const Group* other)
 {
-    m_data = other->m_data;
+    if (set(m_data, other->m_data)) {
+        emit groupDataChanged(this);
+    }
     m_customData->copyDataFrom(other->m_customData);
     m_lastTopVisibleEntry = other->m_lastTopVisibleEntry;
 }
@@ -1079,7 +1081,7 @@ bool Group::GroupData::equals(const Group::GroupData& other, CompareItemOptions 
     if (::compare(customIcon, other.customIcon) != 0) {
         return false;
     }
-    if (timeInfo.equals(other.timeInfo, options) != 0) {
+    if (!timeInfo.equals(other.timeInfo, options)) {
         return false;
     }
     // TODO HNH: Some properties are configurable - should they be ignored?

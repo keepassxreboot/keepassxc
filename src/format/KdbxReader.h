@@ -45,9 +45,6 @@ public:
     bool hasError() const;
     QString errorString() const;
 
-    bool saveXml() const;
-    void setSaveXml(bool save);
-    QByteArray xmlData() const;
     KeePass2::ProtectedStreamAlgo protectedStreamAlgo() const;
 
 protected:
@@ -86,8 +83,6 @@ protected:
 
     void raiseError(const QString& errorMessage);
 
-    void decryptXmlInnerStream(QByteArray& xmlOutput, Database* db) const;
-
     quint32 m_kdbxVersion = 0;
 
     QByteArray m_masterSeed;
@@ -96,13 +91,10 @@ protected:
     QByteArray m_protectedStreamKey;
     KeePass2::ProtectedStreamAlgo m_irsAlgo = KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo;
 
-    QByteArray m_xmlData;
-
 private:
     QPair<quint32, quint32> m_kdbxSignature;
     QPointer<Database> m_db;
 
-    bool m_saveXml = false;
     bool m_error = false;
     QString m_errorStr = "";
 };

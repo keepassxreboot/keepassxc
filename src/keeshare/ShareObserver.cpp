@@ -126,7 +126,7 @@ namespace
         } else {
             warning.setIcon(QMessageBox::Question);
             warning.setWindowTitle(ShareObserver::tr("Import from container with certificate"));
-            warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2 from %3")
+            warning.setText(ShareObserver::tr("Do you want to trust %1 with the fingerprint of %2 from %3?")
                                 .arg(certificate.signer, certificate.fingerprint(), reference.path));
         }
         auto untrustedOnce = warning.addButton(ShareObserver::tr("Not this time"), QMessageBox::ButtonRole::NoRole);

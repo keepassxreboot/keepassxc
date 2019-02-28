@@ -11,6 +11,7 @@ release*/
 
 .DS_Store
 .version
+desktop.ini
 \.scannerwork/
 
 /snap/.snapcraft/

@@ -111,8 +111,7 @@ Application::Application(int& argc, char** argv)
 
             if (!m_alreadyRunning) {
                 // If we get here then the original instance is likely dead
-                qWarning() << QCoreApplication::translate(
-                                  "Main", "Existing single-instance lock file is invalid. Launching new instance.")
+                qWarning() << QObject::tr("Existing single-instance lock file is invalid. Launching new instance.")
                                   .toUtf8()
                                   .constData();
 
@@ -126,8 +125,7 @@ Application::Application(int& argc, char** argv)
         break;
     }
     default:
-        qWarning() << QCoreApplication::translate("Main",
-                                                  "The lock file could not be created. Single-instance mode disabled.")
+        qWarning() << QObject::tr("The lock file could not be created. Single-instance mode disabled.")
                           .toUtf8()
                           .constData();
     }
