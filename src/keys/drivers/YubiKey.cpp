@@ -77,6 +77,7 @@ bool YubiKey::init()
     // TODO: handle multiple attached hardware devices
     m_yk_void = static_cast<void*>(yk_open_first_key());
     if (m_yk == nullptr) {
+        yk_release();
         m_mutex.unlock();
         return false;
     }
@@ -85,6 +86,7 @@ bool YubiKey::init()
     if (m_ykds == nullptr) {
         yk_close_key(m_yk);
         m_yk_void = nullptr;
+        yk_release();
         m_mutex.unlock();
         return false;
     }
@@ -106,6 +108,8 @@ bool YubiKey::deinit()
         ykds_free(m_ykds);
         m_ykds_void = nullptr;
     }
+
+    yk_release();
 
     m_mutex.unlock();
 
