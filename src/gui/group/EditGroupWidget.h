@@ -43,7 +43,7 @@ public:
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
     virtual QWidget* createWidget() = 0;
-    virtual void set(QWidget* widget, Group* tempoaryGroup, const Database* database) = 0;
+    virtual void set(QWidget* widget, Group* tempoaryGroup, QSharedPointer<Database> database) = 0;
     virtual void assign(QWidget* widget) = 0;
 };
 

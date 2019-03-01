@@ -84,7 +84,7 @@ EditGroupWidgetKeeShare::~EditGroupWidgetKeeShare()
 {
 }
 
-void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, const Database* database)
+void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, QSharedPointer<Database> database)
 {
     if (m_temporaryGroup) {
         m_temporaryGroup->disconnect(this);

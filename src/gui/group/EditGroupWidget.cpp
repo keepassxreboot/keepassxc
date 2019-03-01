@@ -36,7 +36,7 @@ public:
     {
     }
 
-    void set(Group* temporaryGroup, const Database* database) const
+    void set(Group* temporaryGroup, QSharedPointer<Database> database) const
     {
         editPage->set(widget, temporaryGroup, database);
     }
@@ -133,7 +133,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     m_editWidgetProperties->setCustomData(m_temporaryGroup->customData());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
-        page.set(m_temporaryGroup.data(), m_db.data());
+        page.set(m_temporaryGroup.data(), m_db);
     }
 
     setCurrentPage(0);
