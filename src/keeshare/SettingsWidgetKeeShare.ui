@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>327</width>
-    <height>434</height>
+    <width>378</width>
+    <height>508</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
@@ -82,7 +82,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="ownCertificateSignerLabel">
         <property name="text">
-         <string>Signer</string>
+         <string>Signer:</string>
         </property>
        </widget>
       </item>
