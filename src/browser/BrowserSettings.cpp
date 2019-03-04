@@ -186,7 +186,7 @@ void BrowserSettings::setCustomProxyLocation(const QString& location)
 
 bool BrowserSettings::updateBinaryPath()
 {
-    return config()->get("Browser/UpdateBinaryPath", false).toBool();
+    return config()->get("Browser/UpdateBinaryPath", true).toBool();
 }
 
 void BrowserSettings::setUpdateBinaryPath(bool enabled)
