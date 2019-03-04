@@ -630,7 +630,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
 {
     QUrl url(entryUrl);
     if (url.scheme().isEmpty()) {
-        url.setScheme("http");
+        url.setScheme("https");
     }
 
     const QString submitUrl = url.toString(QUrl::StripTrailingSlash);
