@@ -43,6 +43,7 @@ public:
     static bool isShared(const Group* group);
     static bool isEnabled(const Group* group);
 
+    static const Group* resolveSharedGroup(const Group* group);
     static QString sharingLabel(const Group* group);
 
     static KeeShareSettings::Own own();

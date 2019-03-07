@@ -779,9 +779,9 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 
     setCurrentWidget(m_mainWidget);
 
-    if (sender() == m_entryView) {
+    if (sender() == m_entryView || sender() == m_editEntryWidget) {
         onEntryChanged(m_entryView->currentEntry());
-    } else if (sender() == m_groupView) {
+    } else if (sender() == m_groupView || sender() == m_editGroupWidget) {
         onGroupChanged(m_groupView->currentGroup());
     }
 }
@@ -1103,6 +1103,7 @@ void DatabaseWidget::search(const QString& searchtext)
     }
 
     m_searchingLabel->setVisible(true);
+    m_shareLabel->setVisible(false);
 
     emit searchModeActivated();
 }
@@ -1133,8 +1134,9 @@ void DatabaseWidget::onGroupChanged(Group* group)
     m_previewView->setGroup(group);
 
 #ifdef WITH_XC_KEESHARE
-    if (group && KeeShare::isShared(group)) {
-        m_shareLabel->setText(KeeShare::sharingLabel(group));
+    auto shareLabel = KeeShare::sharingLabel(group);
+    if (!shareLabel.isEmpty()) {
+        m_shareLabel->setText(shareLabel);
         m_shareLabel->setVisible(true);
     } else {
         m_shareLabel->setVisible(false);
@@ -1163,6 +1165,7 @@ void DatabaseWidget::endSearch()
 
         // Show the normal entry view of the current group
         m_entryView->displayGroup(currentGroup());
+        onGroupChanged(currentGroup());
 
         emit listModeActivated();
     }

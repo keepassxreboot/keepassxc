@@ -93,7 +93,7 @@ void KeeShare::setOwn(const KeeShareSettings::Own& own)
 
 bool KeeShare::isShared(const Group* group)
 {
-    return group->customData()->contains(KeeShare_Reference);
+    return group && group->customData()->contains(KeeShare_Reference);
 }
 
 KeeShareSettings::Reference KeeShare::referenceOf(const Group* group)
@@ -142,12 +142,26 @@ bool KeeShare::isEnabled(const Group* group)
     return (reference.isImporting() && active.in) || (reference.isExporting() && active.out);
 }
 
+const Group* KeeShare::resolveSharedGroup(const Group* group)
+{
+    while (group && group != group->database()->rootGroup()) {
+        if (isShared(group)) {
+            return group;
+        }
+        group = group->parentGroup();
+    }
+
+    return nullptr;
+}
+
 QString KeeShare::sharingLabel(const Group* group)
 {
-    if (!isShared(group)) {
-        return "";
+    auto* share = resolveSharedGroup(group);
+    if (!share) {
+        return {};
     }
-    const auto reference = referenceOf(group);
+
+    const auto reference = referenceOf(share);
     switch (reference.type) {
     case KeeShareSettings::Inactive:
         return tr("Disabled share %1").arg(reference.path);
@@ -158,7 +172,8 @@ QString KeeShare::sharingLabel(const Group* group)
     case KeeShareSettings::SynchronizeWith:
         return tr("Synchronize with share %1").arg(reference.path);
     }
-    return "";
+
+    return {};
 }
 
 QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
