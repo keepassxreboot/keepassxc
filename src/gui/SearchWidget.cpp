@@ -120,6 +120,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 
 void SearchWidget::connectSignals(SignalMultiplexer& mx)
 {
+    // Connects basically only to the current DatabaseWidget, but allows to switch between instances!
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
