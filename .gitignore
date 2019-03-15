@@ -3,6 +3,7 @@ build*/
 cmake-build-*/
 release*/
 .idea/
+.vagrant/
 *.iml
 *.kdev4
 
