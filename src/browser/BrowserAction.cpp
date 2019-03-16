@@ -88,6 +88,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleLockDatabase(json, action);
     } else if (action.compare("get-database-groups", Qt::CaseSensitive) == 0) {
         return handleGetDatabaseGroups(json, action);
+    } else if (action.compare("create-new-group", Qt::CaseSensitive) == 0) {
+        return handleCreateNewGroup(json, action);
     }
 
     // Action was not recognized
@@ -407,6 +409,42 @@ QJsonObject BrowserAction::handleGetDatabaseGroups(const QJsonObject& json, cons
     return buildResponse(action, message, newNonce);
 }
 
+QJsonObject BrowserAction::handleCreateNewGroup(const QJsonObject& json, const QString& action)
+{
+    const QString hash = getDatabaseHash();
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    QMutexLocker locker(&m_mutex);
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    QString command = decrypted.value("action").toString();
+    if (command.isEmpty() || command.compare("create-new-group", Qt::CaseSensitive) != 0) {
+        return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
+    }
+
+    QString group = decrypted.value("groupName").toString();
+    const QJsonObject newGroup = m_browserService.createNewGroup(group);
+    if (newGroup.isEmpty() || newGroup["name"].toString().isEmpty() || newGroup["uuid"].toString().isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP);
+    }
+
+    const QString newNonce = incrementNonce(nonce);
+
+    QJsonObject message = buildMessage(newNonce);
+    message["name"] = newGroup["name"];
+    message["uuid"] = newGroup["uuid"];
+
+    return buildResponse(action, message, newNonce);
+}
+
 QJsonObject BrowserAction::getErrorReply(const QString& action, const int errorCode) const
 {
     QJsonObject response;
@@ -468,6 +506,8 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
         return QObject::tr("No logins found");
     case ERROR_KEEPASS_NO_GROUPS_FOUND:
         return QObject::tr("No groups found");
+    case ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP:
+        return QObject::tr("Cannot create new group");
     default:
         return QObject::tr("Unknown error");
     }
