@@ -30,7 +30,7 @@ public:
     QString name() override;
     QIcon icon() override;
     QWidget* createWidget() override;
-    void set(QWidget* widget, Group* temporaryGroup) override;
+    void set(QWidget* widget, Group* temporaryGroup, QSharedPointer<Database> database) override;
     void assign(QWidget* widget) override;
 };
 

@@ -42,10 +42,10 @@ QWidget* EditGroupPageKeeShare::createWidget()
     return new EditGroupWidgetKeeShare();
 }
 
-void EditGroupPageKeeShare::set(QWidget* widget, Group* temporaryGroup)
+void EditGroupPageKeeShare::set(QWidget* widget, Group* temporaryGroup, QSharedPointer<Database> database)
 {
     EditGroupWidgetKeeShare* settingsWidget = reinterpret_cast<EditGroupWidgetKeeShare*>(widget);
-    settingsWidget->setGroup(temporaryGroup);
+    settingsWidget->setGroup(temporaryGroup, database);
 }
 
 void EditGroupPageKeeShare::assign(QWidget* widget)

@@ -85,12 +85,13 @@ EditGroupWidgetKeeShare::~EditGroupWidgetKeeShare()
 {
 }
 
-void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup)
+void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, QSharedPointer<Database> database)
 {
     if (m_temporaryGroup) {
         m_temporaryGroup->disconnect(this);
     }
 
+    m_database = database;
     m_temporaryGroup = temporaryGroup;
 
     if (m_temporaryGroup) {
@@ -128,9 +129,43 @@ void EditGroupWidgetKeeShare::showSharingState()
                     .arg(supportedExtensions.join(", ")),
                 MessageWidget::Warning);
             return;
-        } else {
-            m_ui->messageWidget->hide();
         }
+
+        const auto groups = m_database->rootGroup()->groupsRecursive(true);
+        bool conflictExport = false;
+        bool multipleImport = false;
+        bool cycleImportExport = false;
+        for (const auto* group : groups) {
+            if (group->uuid() == m_temporaryGroup->uuid()) {
+                continue;
+            }
+            const auto other = KeeShare::referenceOf(group);
+            if (other.path != reference.path) {
+                continue;
+            }
+            multipleImport |= other.isImporting() && reference.isImporting();
+            conflictExport |= other.isExporting() && reference.isExporting();
+            cycleImportExport |=
+                (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
+        }
+        if (conflictExport) {
+            m_ui->messageWidget->showMessage(tr("The export container %1 is already referenced.").arg(reference.path),
+                                             MessageWidget::Error);
+            return;
+        }
+        if (multipleImport) {
+            m_ui->messageWidget->showMessage(tr("The import container %1 is already imported.").arg(reference.path),
+                                             MessageWidget::Warning);
+            return;
+        }
+        if (cycleImportExport) {
+            m_ui->messageWidget->showMessage(
+                tr("The container %1 imported and export by different groups.").arg(reference.path),
+                MessageWidget::Warning);
+            return;
+        }
+
+        m_ui->messageWidget->hide();
     }
     const auto active = KeeShare::active();
     if (!active.in && !active.out) {
