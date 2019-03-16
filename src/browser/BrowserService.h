@@ -45,6 +45,7 @@ public:
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
     QJsonObject getDatabaseGroups();
+    QJsonObject createNewGroup(const QString& groupName);
     QString getKey(const QString& id);
     void addEntry(const QString& id,
                   const QString& login,
@@ -121,7 +122,7 @@ private:
     QString baseDomain(const QString& url) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
-    QJsonArray addChildrenToGroup(Group* group);
+    QJsonArray getChildrenFromGroup(Group* group);
     bool moveSettingsToCustomData(Entry* entry, const QString& name) const;
     int moveKeysToCustomData(Entry* entry, const QSharedPointer<Database>& db) const;
     bool checkLegacySettings();
