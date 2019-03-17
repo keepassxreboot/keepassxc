@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
-#include <QSet>
 #include <QUrl>
 #include <QUuid>
 #include <QWidget>
@@ -66,6 +65,7 @@ public:
 
 public slots:
     void setUrl(const QString& url);
+    void abortRequests();
 
 signals:
     void messageEditEntry(QString, MessageWidget::MessageType);
@@ -77,7 +77,6 @@ private slots:
     void startFetchFavicon(const QUrl& url);
     void fetchFinished();
     void fetchReadyRead();
-    void fetchCanceled();
     void addCustomIconFromFile();
     bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
