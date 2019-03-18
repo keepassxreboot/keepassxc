@@ -304,16 +304,18 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
 
 /**
  * Remove the old backup and replace it with a new one
- * backups are named <filename>.old.kdbx
+ * backups are named <filename>.old.<extension>
  *
  * @param filePath Path to the file to backup
  * @return true on success
  */
 bool Database::backupDatabase(const QString& filePath)
 {
-    QString backupFilePath = filePath;
-    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
-    backupFilePath.replace(re, ".old.kdbx");
+    static auto re = QRegularExpression("(\\.[^.]+)$");
+
+    auto match = re.match(filePath);
+    auto backupFilePath = filePath;
+    backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);
 }
