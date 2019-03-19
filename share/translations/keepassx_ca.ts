@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Quant</translation>
+        <translation>Quant a</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Veure els contribuïdors a GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vegeu les contribucions a GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -38,80 +38,12 @@
         <translation>Copia al porta-retalls</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revisió: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribució: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Llibreries</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Sistema operatiu: %1
-Arquitectura  de la CPU: %2
-Nucli: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Extensions habilitades:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Mantenidors del projecte:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Agraïments de l&apos;equip de KeePassXC a debfx per crear el KeePassX original.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Compleció automàtica</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Integració amb el navegador</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>Agent SSH</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -145,19 +77,19 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Només la icona</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Només text</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Text enlloc d&apos;icona</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Text sota la icona</translation>
     </message>
     <message>
         <source>Follow style</source>
@@ -337,7 +269,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source> min</source>
-        <translation type="unfinished"/>
+        <translation>min</translation>
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
@@ -656,14 +588,6 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation type="unfinished"/>
     </message>
@@ -677,11 +601,23 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation>Tots els fitxers</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -754,9 +690,19 @@ Moved %2 keys to custom data.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -875,20 +821,20 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n columna(es)</numerusform><numerusform>%n columna(es)</numerusform></translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"/>
+        <translation>%1, %2, %3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n byte(s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n fila(es)</numerusform><numerusform>%n fila(es)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -916,6 +862,10 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1005,7 +955,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuració avançada</translation>
     </message>
     <message>
         <source>General</source>
@@ -1017,11 +967,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Clau Mestra</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuració del xifrat</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1048,7 +998,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation type="unfinished"/>
+        <translation>Claus emmagatzemades</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1056,7 +1006,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation type="unfinished"/>
+        <translation>Voleu eliminar la clau seleccionada?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
@@ -1065,11 +1015,11 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Clau</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -1171,7 +1121,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation type="unfinished"/>
+        <translation>Ús de memòria:</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -1179,11 +1129,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation type="unfinished"/>
+        <translation>Temps de desxifrat:</translation>
     </message>
     <message>
         <source>?? s</source>
-        <translation type="unfinished"/>
+        <translation>?? s</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1191,11 +1141,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>100 ms</source>
-        <translation type="unfinished"/>
+        <translation>100 ms</translation>
     </message>
     <message>
         <source>5 s</source>
-        <translation type="unfinished"/>
+        <translation>5 s</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1211,11 +1161,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (recomanat)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 3.1</translation>
     </message>
     <message>
         <source>unchanged</source>
@@ -1263,7 +1213,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -1273,12 +1223,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1340,19 +1290,19 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Tipus</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Camí</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Últim signant</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certificats</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -1386,22 +1336,22 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Error desconegut</translation>
     </message>
     <message>
         <source>Failed to change master key</source>
-        <translation type="unfinished"/>
+        <translation>No s&apos;ha pogut canviar la clau mestra</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>Nom de la base de dades:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Descripció:</translation>
     </message>
 </context>
 <context>
@@ -1461,7 +1411,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>Base de dades nova</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
@@ -1650,6 +1600,10 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2089,6 +2043,22 @@ Disable safe saves and try again?</source>
         <source>Select import/export file</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation>Neteja</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -2233,11 +2203,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Clau</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Valor</translation>
     </message>
 </context>
 <context>
@@ -2552,14 +2522,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3155,6 +3117,22 @@ Line %2, column %3</source>
         <source>Synchronize with</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3640,7 +3618,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Configuració avançada</translation>
     </message>
     <message>
         <source>Simple Settings</source>
@@ -3651,7 +3629,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Opcions de xifrat</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -3795,10 +3773,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4135,7 +4109,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Error desconegut</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -4827,6 +4801,10 @@ Available commands:
         <source>Database password: </source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5048,7 +5026,7 @@ Available commands:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Camí</translation>
     </message>
     <message>
         <source>Status</source>
@@ -5100,8 +5078,7 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5117,10 +5094,6 @@ Available commands:
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5200,14 +5173,6 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation type="unfinished"/>
     </message>
@@ -5229,6 +5194,34 @@ Available commands:
     </message>
     <message>
         <source>Export to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>

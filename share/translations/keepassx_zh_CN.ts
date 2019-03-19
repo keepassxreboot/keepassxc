@@ -38,80 +38,12 @@
         <translation>复制到剪贴板</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>修订版本：%1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>发行版: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>库：</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>操作系统：%1
-CPU 架构：%2
-内核：%3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>已启用的扩展：</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>项目维护者：</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>KeePassXC 团队特别感谢 debfx 开发了最初版 KeePassX</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>版本 %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>构建类型： %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>自动输入</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>浏览器配合</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH 代理</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>无</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -122,7 +54,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>使用OpenSSH for Windows而不是Pageant</translation>
     </message>
 </context>
 <context>
@@ -145,23 +77,23 @@ CPU 架构：%2
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>仅限图标</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>仅文本</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>图标旁边的文字</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>图标下的文本</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>跟随风格</translation>
     </message>
 </context>
 <context>
@@ -301,19 +233,19 @@ CPU 架构：%2
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>在应用程序启动时检查更新</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>检查更新时包括预发布</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>可移动工具栏</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>按钮样式</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Please select the correct database for saving credentials.</source>
         <translation>选择自定义代理路径</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>非常抱歉，KeePassXC-Browser 当前不支持 Snap 发行包</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>浏览器集成需要KeePassXC-Browser才能工作。&lt;br /&gt;下载 %1 和 %2。</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor浏览器</translation>
     </message>
@@ -683,6 +607,18 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation>不要请求 http 和基本身份验证的许可</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -759,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC：检测到旧版浏览器集成设置</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>已检测到旧版浏览器集成设置
-是否要将设置升级到最新标准？
-这对于保持与浏览器插件的兼容性是必要的。</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -925,6 +869,10 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>文件无法写入，因为它以只读模式打开。</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1352,32 +1300,32 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>共享</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>痕迹</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>类型</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>路径</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>最后的签名者</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>证书</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation>&gt;</translation>
     </message>
 </context>
 <context>
@@ -1654,11 +1602,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>替换对条目的引用？</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>条目&quot;%1&quot;具有 %2 引用。是否要用值覆盖引用、跳过此项或是否无论如何删除引用？</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1666,18 +1614,22 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>是否将组移动到回收站？</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>是否确实要将组&quot;%1&quot;移动到回收站？</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>已成功合并数据库文件。</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation>合并操作未修改数据库。</translation>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1797,7 +1749,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>确认删除</translation>
     </message>
 </context>
 <context>
@@ -2051,15 +2003,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>类型：</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>路径：</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2067,54 +2019,70 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>无效</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>从路径导入</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>导出到路径</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>与路径同步</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>您的KeePassXC版本不支持共享您的容器类型。请使用%1。</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>数据库共享已禁用</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>数据库导出被禁用</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>数据库导入被禁用</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>keshare 未签名的容器</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>签名容器</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>选择导入源</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>选择导出目标</translation>
     </message>
     <message>
         <source>Select import/export file</source>
+        <translation>选择导入文件</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2359,7 +2327,8 @@ This may cause the affected plugins to malfunction.</source>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>无法打开文件：
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2541,7 +2510,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>共享</translation>
     </message>
 </context>
 <context>
@@ -2585,14 +2554,6 @@ This may cause the affected plugins to malfunction.</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[空]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2872,7 +2833,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>无法读取数据库文件。</translation>
     </message>
 </context>
 <context>
@@ -3174,18 +3135,34 @@ Line %2, column %3</source>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>禁用共享</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>从导入</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>导出到</translation>
     </message>
     <message>
         <source>Synchronize with</source>
+        <translation>与同步</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3569,28 +3546,29 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>正在检查更新..。</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>共享条目</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>注意：您使用的是KeePassXC的预发行版本！
+预计一些错误和小问题, 这个版本并不打算用于生产使用。</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>是否在启动时检查更新？</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>是否希望KeePassXC在启动时检查更新？</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>您始终可以从应用程序菜单手动检查更新。</translation>
     </message>
 </context>
 <context>
@@ -3838,10 +3816,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>&lt;p&gt;密码是保护数据库的主要方法。&lt;/p&gt;&lt;p&gt;良好的密码长且独特。 KeePassXC可以为您生成一个。&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Password cannot be empty.</source>
-        <translation>密码不能为空。</translation>
-    </message>
-    <message>
         <source>Passwords do not match.</source>
         <translation>密码不匹配。</translation>
     </message>
@@ -4082,21 +4056,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>覆盖</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4104,11 +4078,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>移动</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>空</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4116,7 +4090,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>跳过</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4124,7 +4098,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>合并</translation>
     </message>
 </context>
 <context>
@@ -4779,47 +4753,47 @@ Available commands:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>消息加密失败。</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>未找到组</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>创建新数据库。</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>文件%1 已存在。</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>加载密钥文件失败</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>没有设置密钥。正在中止数据库创建。</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>未能保存数据库: %1。</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>已成功创建新数据库。</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>插入密码加密数据库 (按回车键留空):</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>创建密钥文件%1失败:%2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>加载密钥文件 %1 失败: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -4876,6 +4850,10 @@ Available commands:
     <message>
         <source>Database password: </source>
         <translation>数据库密码：</translation>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5034,31 +5012,31 @@ Available commands:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Active</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>允许导出</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>允许导入</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>自己的证书</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>指纹：</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>证书：</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>签名</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5074,23 +5052,23 @@ Available commands:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>输出</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>导入的证书</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>信任</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>询问</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>不信任</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5098,11 +5076,11 @@ Available commands:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>路径</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>状态</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5110,28 +5088,28 @@ Available commands:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>证书</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>信任</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>不可信</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>未知</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare密钥文件</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5139,19 +5117,18 @@ Available commands:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>选择路径</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>导出已更改的证书</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>导出的证书与正在使用的证书不同。是否要导出当前证书？</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5159,23 +5136,19 @@ Available commands:
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>从没有签名的容器导入</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>我们无法验证共享容器的来源, 因为它未签名。是否确实要从%1导入？</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>从带有证书的容器导入</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>本次取消</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5183,102 +5156,122 @@ Available commands:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>总是</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>现在</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>从%1 导入失败 (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>从%1导入成功 (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>从%1导入</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>不支持签名共享容器-导入已防止</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>文件不可读</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>无效的共享容器</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>防止不受信任的导入</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>成功导入签名</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>意外错误</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>不支持未签名的共享容器-导入已防止</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>未签名成功导入</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>文件不存在</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>未知的共享容器类型</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>不支持覆盖签名的共享容器-防止导出</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>无法写入导出容器 (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>不支持覆盖未签名的共享容器-防止导出</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>无法写入导出容器</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>出现意外的导出错误</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>导出到 %1 失败 (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>导出到 %1 成功 (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation>导出到%1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>是否要信任 %1, 来自 %3 的 %2 的指纹? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5377,11 +5370,11 @@ Available commands:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>检查更新</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>正在检查更新...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5389,39 +5382,39 @@ Available commands:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>更新错误!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>检索更新信息时出错。</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>请稍后再试。</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>软件更新</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>有一个新的KeePassXC版本!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 现已推出 — 您拥有 %2。</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>在 keepassxc.org下载</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>您使用的是最新的!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 是当前可用的最新版本</translation>
     </message>
 </context>
 <context>

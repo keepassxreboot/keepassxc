@@ -38,87 +38,19 @@
         <translation>Kopier til utklippstavle</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revisjon: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribusjon: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Biblioteker:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Operativsystem: %1
-CPU arkitektur: %2
-Kjerne: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Aktive utvidelser:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
-        <translation>Prosjektets Vedlikeholdere:</translation>
+        <translation>Prosjektets vedlikeholdere:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>En spesiell takk fra KeePassXC-laget går til debfx, utvikler av programmet KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Versjon %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Byggetype: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Autoskriv</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Nettlesertillegg</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH-agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>Berørings-id</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Ingen</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Slå på SSH-agenten (krever programomstart)</translation>
+        <translation>Slå på SSH-agenten (krever omstart)</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
@@ -141,27 +73,27 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Feil ved tilgang for konfigurasjonsfilen %1</translation>
+        <translation>Feil ved tilgang til konfigurasjonsfilen %1</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Kun ikon</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Kun tekst</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst ved siden av ikon</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst under ikon</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Følg stil</translation>
     </message>
 </context>
 <context>
@@ -216,7 +148,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Ikke marker database som endret ved non-dataendringer (f.eks. ekspandere grupper)</translation>
+        <translation>Ikke marker database som endret ved ikke-dataendringer (f.eks. ekspandere grupper)</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -272,19 +204,19 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Bruk tittel i oppføringa for å matche vindu ved global Autoskriv</translation>
+        <translation>Bruk tittel i oppføringa for å matche vindu ved global autoskriv</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Bruk URL i oppføringa for å matche vindu ved global Autoskriv</translation>
+        <translation>Bruk URL i oppføringa for å matche vindu ved global autoskriv</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Alltid spør før utførelse av Autoskriv</translation>
+        <translation>Alltid spør før utførelse av autoskriv</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Global Autoskriv-hurtigtast</translation>
+        <translation>Global autoskriv-hurtigtast</translation>
     </message>
     <message>
         <source>Auto-Type typing delay</source>
@@ -297,7 +229,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation>Autoskriv start-tidsforsinkelse</translation>
+        <translation>Autoskriv start-forsinkelse</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
@@ -313,7 +245,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Knappestil</translation>
     </message>
 </context>
 <context>
@@ -361,7 +293,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Lås tidligere låst database etter utført Autoskriv</translation>
+        <translation>Lås tidligere låst database etter utført autoskriv</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -408,19 +340,19 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Syntaksen til Autoskrivuttrykket er galt.</translation>
+        <translation>Syntaksen til autoskrivuttrykket er galt.</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Denne Autoskrivkommandoen inneholder en lang forsinkelse. Vil du fortsette?</translation>
+        <translation>Denne autoskrivkommandoen inneholder en lang forsinkelse. Vil du fortsette?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Denne Autoskriv-kommandoen inneholder svært sene tastetrykk. Vil du virkelig fortsette?</translation>
+        <translation>Denne autoskriv-kommandoen inneholder svært sene tastetrykk. Vil du virkelig fortsette?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Denne Autoskriv-kommandoen inneholder argument som repeteres svært hyppig. Vil du virkelig fortsette?</translation>
+        <translation>Denne autoskriv-kommandoen inneholder argument som gjentas svært hyppig. Vil du virkelig fortsette?</translation>
     </message>
 </context>
 <context>
@@ -465,7 +397,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Velg oppføring som skal Autoskrives:</translation>
+        <translation>Velg oppføring som skal autoskrives:</translation>
     </message>
 </context>
 <context>
@@ -501,7 +433,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -584,7 +516,7 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Sort matching credentials by &amp;username</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Sorter samsvarende berettigelsesbevis etter &amp;brukernavn</translation>
+        <translation>Sorter matchende identifikasjoner etter &amp;brukernavn</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -593,12 +525,12 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Spør &amp;aldri før tilgang til berettigelsesbevis gis</translation>
+        <translation>&amp;Aldri spør før det gis tilgang til identifikasjon</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Spør aldri før berettigelsesbevis &amp;oppdateres</translation>
+        <translation>Aldri spør før &amp;oppdatering av identifikasjon</translation>
     </message>
     <message>
         <source>Only the selected database has to be connected with a client.</source>
@@ -607,7 +539,7 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>&amp;Søk i de åpnede databasene etter samsvarende berettigelsesbevis</translation>
+        <translation>&amp;Søk etter matchende identifikasjon i alle åpne databaser</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -656,16 +588,8 @@ Please select the correct database for saving credentials.</source>
         <translation>Oppgi en selvvalgt mellomtjerneradresse</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Nettlesertillegget er foreløpig ikke tilgjengelig for «Snap»-utgaver.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Browser er nødvendig for at nettleserintegrasjonen skal fungere. &lt;br /&gt;Last den ned for %1 og %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tor nettleser</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
@@ -673,15 +597,27 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation>Kjørbare filer</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation>Alle Filer</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation>Ikke spør om tillatelse til &amp;enkel HTTP autentisering</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -756,9 +692,19 @@ Moved %2 keys to custom data.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -774,7 +720,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Bytt ut brukernamn og passord med referansene</translation>
+        <translation>Bytt ut brukernavn og passord med referansene</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -805,7 +751,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Tekst er kvalifisert av</translation>
+        <translation>Tekst er markert ved</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
@@ -920,12 +866,16 @@ This is necessary to maintain compatibility with the browser plugin.</source>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Lås opp database - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1021,11 +971,11 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Hovednøkkel</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsinnstillinger</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1036,7 +986,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC nettleser-innstillinger</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -1052,7 +1002,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation type="unfinished"/>
+        <translation>Lagrede nøkler</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1060,7 +1010,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation type="unfinished"/>
+        <translation>Slette den valgte nøkkelen?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
@@ -1081,7 +1031,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>Koble fra alle nettlesere</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1183,7 +1133,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringstid:</translation>
     </message>
     <message>
         <source>?? s</source>
@@ -1191,15 +1141,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Change</source>
-        <translation type="unfinished"/>
+        <translation>Endring</translation>
     </message>
     <message>
         <source>100 ms</source>
-        <translation type="unfinished"/>
+        <translation>100 ms</translation>
     </message>
     <message>
         <source>5 s</source>
-        <translation type="unfinished"/>
+        <translation>5 s</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1207,7 +1157,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Database format:</source>
-        <translation type="unfinished"/>
+        <translation>Databaseformat:</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
@@ -1215,16 +1165,16 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 4.0 (anbefalt)</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation type="unfinished"/>
+        <translation>KDBX 3.1</translation>
     </message>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation type="unfinished"/>
+        <translation>uendret</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -1271,22 +1221,22 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>MiB</numerusform><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>tråd(er)</numerusform><numerusform>tråd(er)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1340,7 +1290,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Deling</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
@@ -1348,11 +1298,11 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Sti</translation>
     </message>
     <message>
         <source>Last Signer</source>
@@ -1360,31 +1310,31 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Sertifikat</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation>&gt;</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMasterKey</name>
     <message>
         <source>Add additional protection...</source>
-        <translation type="unfinished"/>
+        <translation>Legg til ekstra beskyttelse</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation type="unfinished"/>
+        <translation>Ingen krypteringsnøkkel lagt til</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation type="unfinished"/>
+        <translation>Du må legge til minst en krypteringsnøkkel for å sikre databasen!</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation type="unfinished"/>
+        <translation>Passord ikke satt</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
@@ -1416,7 +1366,7 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseTabWidget</name>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Database</translation>
+        <translation>KeePass2-database</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1436,11 +1386,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>Åpne KeePass 1 database</translation>
+        <translation>Åpne KeePass1-database</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1 database</translation>
+        <translation>KeePass1-database</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -1465,11 +1415,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Velg CSV fil</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>Ny database</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
@@ -1581,7 +1531,7 @@ Vil du slå sammen fila med endringene dine?</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation type="unfinished"/>
+        <translation>Låse database?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -1632,7 +1582,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 Database</translation>
+        <translation>KeePass2-database</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -1644,7 +1594,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"/>
+        <translation>Slett gruppe</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
@@ -1660,6 +1610,10 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1825,15 +1779,15 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Aktiver Autoskriv for denne oppføringa</translation>
+        <translation>Aktiver autoskriv for denne oppføringa</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Arv standard Autoskriv-sekvens fra &amp;gruppen</translation>
+        <translation>Arv standard autoskriv-sekvens fra &amp;gruppen</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>Br&amp;uk tilpasset Autoskriv-sekvens:</translation>
+        <translation>Br&amp;uk tilpasset autoskriv-sekvens:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2037,11 +1991,11 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Sti:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2049,7 +2003,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiv</translation>
     </message>
     <message>
         <source>Import from path</source>
@@ -2099,6 +2053,22 @@ Deaktivere sikker lagring og prøve igjen?</translation>
         <source>Select import/export file</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation>Tøm</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -2124,11 +2094,11 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Bruk standard Autoskriv-sekvens fra foreldre-gruppa</translation>
+        <translation>&amp;Bruk standard autoskriv-sekvens fra foreldre-gruppa</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>&amp;Angi standard Autoskriv-sekvens</translation>
+        <translation>&amp;Angi standard autoskriv-sekvens</translation>
     </message>
 </context>
 <context>
@@ -2571,14 +2541,6 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
 </context>
 <context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
@@ -2837,14 +2799,14 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Den valgte fila er en gammel KeePass 1-database (.kdb).
+        <translation>Den valgte fila er en gammel KeePass1-database (.kdb).
 
-Du kan importere den ved å velge «Database → Importer KeePass 1-database...»
+Du kan importere den ved å velge «Database → Importer KeePass1-database...»
 Dette er en en-veis-migrasjon. Du kan ikke åpne den importerte databasen med den gamle versjonen KeePassX 0.4. </translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Ikke støttet KeePass2 databaseversjon.</translation>
+        <translation>Ikke støttet KeePass2-databaseversjon.</translation>
     </message>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
@@ -2989,7 +2951,7 @@ Line %2, column %3</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 database</source>
-        <translation>Importer KeePass 1-database</translation>
+        <translation>Importer KeePass1-database</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
@@ -3170,6 +3132,22 @@ Line %2, column %3</source>
         <source>Synchronize with</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3230,7 +3208,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Eldre nøkkelfilformat</translation>
+        <translation>Eldre nøkkelfil-format</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
@@ -3437,7 +3415,7 @@ Denne versjonen er ikke ment for produksjonsmiljø.</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Doner</translation>
+        <translation>&amp;Donér</translation>
     </message>
     <message>
         <source>Report a &amp;bug</source>
@@ -3669,7 +3647,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsinnstillinger</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
@@ -3813,10 +3791,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -4385,7 +4359,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation>YubiKey[%1] challenge-respons - slot %2 - %3</translation>
+        <translation>YubiKey[%1] utfordrings-respons - slot %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
@@ -4851,6 +4825,10 @@ Tilgjengelige kommandoer:
         <source>Database password: </source>
         <translation>Databasepassord: </translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5048,11 +5026,11 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Eksporter</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Importerte sertikikat</translation>
     </message>
     <message>
         <source>Trust</source>
@@ -5060,7 +5038,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Spør</translation>
     </message>
     <message>
         <source>Untrust</source>
@@ -5072,11 +5050,11 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Sti</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5084,19 +5062,19 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Sertifikat</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Klarert</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Uklarert</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ukjent</translation>
     </message>
     <message>
         <source>key.share</source>
@@ -5113,19 +5091,18 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Velg sti</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Eksporterer endret sertifikat</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Eksportert sertifikat er ikke det samme som det som er i bruk. Vil du eksportere gjeldende sertifikat?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5141,10 +5118,6 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5224,35 +5197,55 @@ Tilgjengelige kommandoer:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke skrive eksport-container</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Uventet feil oppstått</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksport til %1 feilet (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksport til %1 vellykket (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation>Eksporter til %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5272,7 +5265,7 @@ Tilgjengelige kommandoer:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Utløper om %n sekund</numerusform><numerusform>Utløper om &lt;b&gt;%n&lt;/b&gt; sekunder</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5284,15 +5277,15 @@ Tilgjengelige kommandoer:
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation type="unfinished"/>
+        <translation>MERK: Disse TOTP-innstillingene er egendefinerte og fungerer kanskje ikke med andre autentifikatorer.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation type="unfinished"/>
+        <translation>Feil ved opprettelse av QR-koden.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation type="unfinished"/>
+        <translation>Lukker om %1 sekunder.</translation>
     </message>
 </context>
 <context>
@@ -5315,11 +5308,11 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Use custom settings</source>
-        <translation>Bruk selvvalgt oppsett</translation>
+        <translation>Bruk egendefinerte innstillinger</translation>
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation type="unfinished"/>
+        <translation>Egendefinerte innstillinger</translation>
     </message>
     <message>
         <source>Time step:</source>
@@ -5340,7 +5333,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>7 digits</source>
-        <translation type="unfinished"/>
+        <translation>7 siffer</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -5351,11 +5344,11 @@ Tilgjengelige kommandoer:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Sjekker for oppdateringer</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Sjekker for oppdateringer...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5363,39 +5356,39 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Feil ved oppdatering!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>En feil oppstod ved mottak av oppdateringsinformasjon.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Prøv igjen senere.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Programvareoppdatering</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>En ny versjon av KeePassXC er tilgjengelig!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 er nå tilgjengelig — du har  %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Lastes ned fra keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Du er oppdatert!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 er nå nyeste versjon som er tilgjengelig</translation>
     </message>
 </context>
 <context>
@@ -5414,7 +5407,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Importer KeePass 1-database</translation>
+        <translation>Importer KeePass1-database</translation>
     </message>
     <message>
         <source>Import from CSV</source>
@@ -5437,19 +5430,19 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>YubiKey Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey utfordrings-respons</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Dersom du har en &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, så kan du bruke den for økt sikkerhet.&lt;/p&gt;&lt;p&gt;Ett av sporene på YubiKey må programmeres med &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 utfordrings-respons&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation type="unfinished"/>
+        <translation>Ingen YubiKey oppdaga. Sjekk om den er satt inn.</translation>
     </message>
     <message>
         <source>No YubiKey inserted.</source>
-        <translation type="unfinished"/>
+        <translation>Ingen YubiKey satt inn.</translation>
     </message>
 </context>
 </TS>

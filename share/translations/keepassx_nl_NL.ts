@@ -15,7 +15,7 @@
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC wordt verspreid onder de voorwaarden van de GNU General Public License (GPL) versie 2 of (deswenst) versie 3.</translation>
+        <translation>KeePassXC wordt verspreid onder de voorwaarden van de GNU General Public License (GPL) versie 2 of (desgewenst) versie 3.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -38,80 +38,12 @@
         <translation>Naar klembord kopiëren</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revisie: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distributie: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Bibliotheken:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Besturingssysteem: %1
-CPU-architectuur: %2
-Kernelversie: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Geactiveerde extensies:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Projectbeheerders:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Een extra dank-u-wel van het KeePassXC-team voor debfx voor het creëren van het oorspronkelijke KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Versie %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Bouwtype: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto-type</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH-agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Geen</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>Een extra dank-je-wel van het KeePassXC-team gaat naar debfx voor het creëren van het oorspronkelijke KeePassX.</translation>
     </message>
 </context>
 <context>
@@ -122,7 +54,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Gebruik OpenSSH voor Windows in plaats van Pageant</translation>
     </message>
 </context>
 <context>
@@ -145,23 +77,23 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Alleen pictogram</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Alleen tekst</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst naast pictogram</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst onder pictogram</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Volg stijl</translation>
     </message>
 </context>
 <context>
@@ -176,7 +108,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Hoogstens een enkele instantie van KeePassXC starten</translation>
+        <translation>Start niet meer dan één instantie van KeePassXC</translation>
     </message>
     <message>
         <source>Remember last databases</source>
@@ -228,7 +160,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Gebruik groepsicoon voor nieuwe items</translation>
+        <translation>Gebruik groepspictogram voor nieuwe items</translation>
     </message>
     <message>
         <source>Minimize when copying to clipboard</source>
@@ -252,11 +184,11 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Icoon in het systeemvak weergeven</translation>
+        <translation>Pictogram in het systeemvak weergeven</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
-        <translation>Donker systeemvak-icoon</translation>
+        <translation>Donker systeemvak-pictogram</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
@@ -297,23 +229,23 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation>Auto-type start vertraging</translation>
+        <translation>Auto-type startvertraging</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Controleer op updates bij het starten van de applicatie</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Zoek ook naar pre-releases bij het controleren op updates</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Beweegbare gereedschapsbalk</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Knopstijl</translation>
     </message>
 </context>
 <context>
@@ -361,7 +293,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Vergrendelde database na Auto-type weer vergrendelen.</translation>
+        <translation>Vergrendelde database na Auto-type weer vergrendelen</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -489,7 +421,7 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 vraagt toegang tot jouw wachtwoorden voor het volgende).
+        <translation>%1 vraagt toegang tot jouw wachtwoorden voor het volgende.
 Geef aan of je toegang wilt verlenen of niet.</translation>
     </message>
 </context>
@@ -657,21 +589,12 @@ Selecteer de database voor het opslaan van de inloggegevens.</translation>
         <translation>Selecteer aangepaste proxy-locatie</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Het spijt ons, maar KeePassXC-Browser wordt momenteel niet ondersteund voor Snap releases.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePaasXC-Browser is nodig voor de browser integratie.
-Download hem voor %1 en %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor browser</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation>&lt;b&gt;Waarschuwing&lt;/b&gt;, de keepassxc-proxy applicatie is niet gevonden!&lt;br /&gt;Controleer de installatie directory van KeePassXC of bevestig het aangepaste pad in geavanceerde opties.&lt;br /&gt;De browser integratie zal NIET WERKEN zonder de proxy application.&lt;br /&gt;Verwacht pad: </translation>
+        <translation>&lt;b&gt;Waarschuwing&lt;/b&gt;, de keepassxc-proxy-applicatie is niet gevonden!&lt;br /&gt;Controleer de installatiemap van KeePassXC of bevestig het aangepaste pad in geavanceerde opties.&lt;br /&gt;De browserintegratie zal NIET WERKEN zonder de proxy-applicatie.&lt;br /&gt;Verwacht pad: </translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -684,6 +607,18 @@ Download hem voor %1 en %2.</translation>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation>Vraag geen toestemming voor HTTP en Basis Authentificatie</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -760,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: instellingen voor oudere browserintegratie gedetecteerd</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Instellingen voor oudere browserintegratie gedetecteerd.
-Wil je de instellingen veranderen naar de nieuwste standaard?
-Dit is nodig om compatibiliteit met de browser plugin te behouden.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -927,6 +870,10 @@ Dit is nodig om compatibiliteit met de browser plugin te behouden.</translation>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Bestand kan niet worden geschreven omdat het in de alleen-lezen modus is geopend.</translation>
     </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
@@ -1053,7 +1000,7 @@ Overweeg a.u.b. een nieuw sleutelbestand te genereren.</translation>
     </message>
     <message>
         <source>Forg&amp;et all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>Vergeet alle site-specifieke instellingen bij items</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
@@ -1117,16 +1064,16 @@ Hierdoor werkt de verbinding met de browser plugin mogelijk niet meer.</translat
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>Vergeet alle site-specifieke instellingen bij items</translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u echt alle site-specifieke instellingen bij items vergeten? Machtigingen voor toegang zullen worden ingetrokken.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Opgeslagen permissies verwijderen…</translation>
+        <translation>Opgeslagen machtigingen verwijderen…</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -1134,19 +1081,19 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Permissies verwijderd</translation>
+        <translation>KeePassXC: machtigingen verwijderd</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Machtigingen zijn verwijderd uit %n item(s).</numerusform><numerusform>Machtigingen zijn verwijderd uit %n item(s).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Geen item met permissies gevonden!</translation>
+        <translation>KeePassXC: Geen item met machtigingen gevonden!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>De actieve database bevat geen items met permissies.</translation>
+        <translation>De actieve database bevat geen items met machtigingen.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1247,7 +1194,7 @@ Dit is nodig om compatibiliteit met de browser plugin te behouden.</translation>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours or days (or even longer) to open!</source>
-        <translation>Je gebruikt een zeer groot aantal sleuteltransformatie-iteratiesmet Argon2.
+        <translation>Je gebruikt een zeer groot aantal sleuteltransformatie-iteraties met Argon2.
 
 Als je dit aantal aanhoudt, kan het uren, dagen (of zelfs langer) duren om de database te openen!</translation>
     </message>
@@ -1352,32 +1299,32 @@ Als je dit aantal aanhoudt is het mogelijk heel gemakkelijk om de database te kr
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Delen</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Broodkruimel</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Pad</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Laatste Ondertekenaar</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certificaten</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1578,7 @@ Fout: %1</translation>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC heeft meerdere keren geprobeerd de database op te slaan. Dit wordt waarschijnlijk veroorzaakt door een blokkade op het bestand door een synchronisatie-dienst.
+        <translation>KeePassXC heeft meerdere keren geprobeerd de database op te slaan maar het is niet gelukt. Dit wordt waarschijnlijk veroorzaakt doordat een synchronisatie-dienst het bestand bezet houd.
 Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
@@ -1646,7 +1593,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Database Opslaan Als</translation>
+        <translation>Database opslaan als</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -1654,11 +1601,11 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>Referenties naar items vervangen?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Vermelding &quot;%1&quot; heeft %2 reference(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of verwijderen toch?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referentie(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1666,18 +1613,22 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Groep naar prullenbak verplaatsen?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u echt de groep &apos;%1&apos; naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>De databasebestanden zijn samengevoegd.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation>Database werd niet gewijzigd door het samenvoegen.</translation>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1797,7 +1748,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Verwijdering bevestigen</translation>
     </message>
 </context>
 <context>
@@ -2051,15 +2002,15 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Pad:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2067,54 +2018,70 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Inactief</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Importeren van pad</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren naar pad</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>Synchroniseren met pad</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>Uw KeePassXC-versie biedt geen ondersteuning voor het delen van uw Containertype. Gebruik %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Database delen is uitgeschakeld</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Database exporteren is uitgeschakeld</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Database importeren is uitgeschakeld</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare niet-ondertekende container</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare ondertekende container</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer bron voor import</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer doel voor export</translation>
     </message>
     <message>
         <source>Select import/export file</source>
+        <translation>Selecteer import/export bestand</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wissen</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2193,7 +2160,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Custom icon successfully downloaded</source>
-        <translation>Icon is gedownload</translation>
+        <translation>Pictogram is gedownload</translation>
     </message>
     <message>
         <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -2350,7 +2317,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Bijlagen niet kunnen openen:
+        <translation>Kon de bijlagen niet openen:
 %1</translation>
     </message>
     <message>
@@ -2360,7 +2327,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Kan niet openen van bestanden: %1</numerusform><numerusform>Kan  bestand(en): %1 niet openen</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2542,7 +2509,7 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Delen</translation>
     </message>
 </context>
 <context>
@@ -2586,14 +2553,6 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[leeg]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2874,7 +2833,7 @@ Deze actie is niet omkeerbaar. Je kunt de geïmporteerde database niet meer open
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>Lezen van databasebestand is mislukt.</translation>
     </message>
 </context>
 <context>
@@ -3176,18 +3135,34 @@ Lijn %2, kolom %3</translation>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>Delen uitgeschakeld</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importeren uit</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren naar</translation>
     </message>
     <message>
         <source>Synchronize with</source>
+        <translation>Synchroniseren met</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3494,11 +3469,11 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>&amp;Merge from database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Samenvoegen uit database...</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation type="unfinished"/>
+        <translation>Samenvoegen uit een andere KDBX database</translation>
     </message>
     <message>
         <source>&amp;New entry</source>
@@ -3518,11 +3493,11 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>&amp;New group</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Nieuwe groep</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation type="unfinished"/>
+        <translation>Een nieuwe groep toevoegen</translation>
     </message>
     <message>
         <source>Change master &amp;key...</source>
@@ -3530,7 +3505,7 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>&amp;Database settings...</source>
-        <translation type="unfinished"/>
+        <translation>&amp; Database instellingen...</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
@@ -3538,27 +3513,27 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Uitvoeren &amp; Auto-Type</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>Open &amp; URL</translation>
     </message>
     <message>
         <source>KeePass 1 database...</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 database...</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation type="unfinished"/>
+        <translation>Een KeePass 1-database importeren</translation>
     </message>
     <message>
         <source>CSV file...</source>
-        <translation type="unfinished"/>
+        <translation>CSV-bestand...</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Importeren een CSV-bestand</translation>
     </message>
     <message>
         <source>Show TOTP...</source>
@@ -3570,55 +3545,56 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Controleren op Updates...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Deel item</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>Opmerking: U gebruikt een pre-release versie van KeePassXC!
+Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor productiedoeleinden.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Controleren op updates bij het opstarten?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Wil je dat KeePassXC controleert op updates bij het opstarten?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>U kunt altijd handmatig controleren op updates vanuit het programmamenu.</translation>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Creëren van ontbrekende %1 [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Verhuizen van %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Overschrijven van %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation type="unfinished"/>
+        <translation>ouder item samengevoegd uit database &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Voeg back-up toe voor ouder doel %1 [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Voeg back-up toe voor oudere bron %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
@@ -3630,34 +3606,34 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Synchroniseren van nieuwere bron %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Synchroniseren van oudere bron %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Verwijderen van kind %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Verwijderen wees %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation type="unfinished"/>
+        <translation>Verwijderde objecten gewijzigd</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation type="unfinished"/>
+        <translation>Toevoegen van ontbrekend pictogram %1</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database...</source>
-        <translation type="unfinished"/>
+        <translation>Nieuwe KeePassXC database aanmaken...</translation>
     </message>
     <message>
         <source>Root</source>
@@ -3669,15 +3645,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation type="unfinished"/>
+        <translation>Wizard pagina</translation>
     </message>
     <message>
         <source>En&amp;cryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>En&amp;cryptie-instellingen</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Hier kun je de coderingsinstellingen van de database aanpassen. Maak je geen zorgen, je kunt dit later in de database-instellingen wijzigen.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -3685,7 +3661,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation type="unfinished"/>
+        <translation>Eenvoudige instellingen</translation>
     </message>
 </context>
 <context>
@@ -3696,7 +3672,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Hier kun je de coderingsinstellingen van de database aanpassen. Maak je geen zorgen, je kunt dit later in de database-instellingen wijzigen.</translation>
     </message>
 </context>
 <context>
@@ -3714,11 +3690,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation type="unfinished"/>
+        <translation>Algemene database-informatie</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation type="unfinished"/>
+        <translation>Geef de weergavenaam en een optionele beschrijving voor de nieuwe database:</translation>
     </message>
 </context>
 <context>
@@ -3741,7 +3717,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Ongeldig magic header-id in sleutelbestand</translation>
+        <translation>Ongeldig &apos;magic header id&apos; in sleutelbestand</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -3837,10 +3813,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Een wachtwoord is de primaire methode voor het beveiligen van een database.&lt;/p&gt; &lt;p&gt;Goede wachtwoorden zijn lang en uniek. KeePassXC kan er een voor je genereren.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Wachtwoord mag niet leeg zijn.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -3964,11 +3936,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>ExtendedASCII</source>
-        <translation type="unfinished"/>
+        <translation>Uitgebreid ASCII</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation type="unfinished"/>
+        <translation>Schakel over naar de geavanceerde modus</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3976,7 +3948,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Upper Case Letters A to F</source>
-        <translation type="unfinished"/>
+        <translation>Hoofdletters A tot F</translation>
     </message>
     <message>
         <source>A-Z</source>
@@ -3984,7 +3956,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Lower Case Letters A to F</source>
-        <translation type="unfinished"/>
+        <translation>Kleine letters A tot F</translation>
     </message>
     <message>
         <source>a-z</source>
@@ -3996,15 +3968,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Braces</source>
-        <translation type="unfinished"/>
+        <translation>Haakjes</translation>
     </message>
     <message>
         <source>{[(</source>
-        <translation type="unfinished"/>
+        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
-        <translation type="unfinished"/>
+        <translation>Leestekens</translation>
     </message>
     <message>
         <source>.,:;</source>
@@ -4020,7 +3992,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Math</source>
-        <translation type="unfinished"/>
+        <translation>Wiskunde</translation>
     </message>
     <message>
         <source>&lt;*+!?=</source>
@@ -4040,7 +4012,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>#$%&amp;&amp;@^`~</source>
-        <translation type="unfinished"/>
+        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Switch to simple mode</source>
@@ -4083,21 +4055,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Selecteer</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Overschrijven</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4105,11 +4077,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Verplaatsen</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Leeg</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4117,7 +4089,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>Overslaan</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4125,7 +4097,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Samenvoegen</translation>
     </message>
 </context>
 <context>
@@ -4519,7 +4491,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Het schrijven van de database is mislukt: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -4527,19 +4499,19 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Length %1</source>
-        <translation type="unfinished"/>
+        <translation>Lengte %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation type="unfinished"/>
+        <translation>Entropie %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
-        <translation type="unfinished"/>
+        <translation>Log10 %1</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation type="unfinished"/>
+        <translation>Multi-word extra bits %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
@@ -4579,39 +4551,39 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Type: bruut geweld (Rep)</translation>
+        <translation>Type: bruut geweld (herhalend)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>Type: woordenboek (Rep)</translation>
+        <translation>Type: woordenboek (herhalend)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>Type: woordenboek+Leet (Rep)</translation>
+        <translation>Type: woordenboek+Leet (herhalend)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>Type: Gebruikerwoorden (Rep)</translation>
+        <translation>Type: Gebruikerwoorden (herhalend)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>Type: Gebruikerwoorden + Leet (Rep)</translation>
+        <translation>Type: Gebruikerwoorden + Leet (herhalend)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>Type: herhaald (Rep)</translation>
+        <translation>Type: herhaald (herhalend)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>Type: Reeks (Rep)</translation>
+        <translation>Type: Reeks (herhalend)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>Type: Ruimtelijk (Rep)</translation>
+        <translation>Type: Ruimtelijk (herhalend)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>Type: Datum (Rep)</translation>
+        <translation>Type: Datum (herhalend)</translation>
     </message>
     <message>
         <source>Type: Unknown%1</source>
@@ -4675,11 +4647,11 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation type="unfinished"/>
+        <translation>Niet te gebruiken karakterset</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation type="unfinished"/>
+        <translation>karakters</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
@@ -4691,24 +4663,25 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation type="unfinished"/>
+        <translation>Recursief de elementen van de groep opsommen</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kan groep %1 niet vinden.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Er ging iets fout bij het lezen van het samenvoegbestand:
+%1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan de database niet bewaren naar bestand: %1</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan de database niet bewaren naar bestand: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
@@ -4724,7 +4697,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
+        <translation>FOUT: onbekend kenmerk %1.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
@@ -4778,47 +4751,47 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Berichtcodering is mislukt.</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Geen groepen gevonden</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Nieuwe database aanmaken</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Bestand %1 bestaat al.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Er ging iets fout bij het laden van het sleutelbestand</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>Geen sleutel ingesteld. Aanmaken van de database is gestopt.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Opslaan van de database is mislukt: %1</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Nieuwe database is gemaakt</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>Voer het wachtwoord in voor het versleutelen van de database (druk op enter om het te laat leeg): </translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Creëren van sleutelbestand %1 is mislukt: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Laden van sleutelbestand %1 is mislukt: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -4875,6 +4848,10 @@ Beschikbare opdrachten:
     <message>
         <source>Database password: </source>
         <translation>Databasewachtwoord: </translation>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4962,7 +4939,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Modifiers</source>
-        <translation type="unfinished"/>
+        <translation>Modifiers</translation>
     </message>
     <message>
         <source>exclude term from results</source>
@@ -5033,31 +5010,31 @@ Beschikbare opdrachten:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Actieve</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren toestaan</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>Importeren toestaan</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Eigen certificaat</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>Vingerafdruk</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Certificaat:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Ondertekenaar</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5073,23 +5050,23 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Geïmporteerde certificaten</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>Vertrouwen</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Vraag</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>Niet vertrouwen</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5097,11 +5074,11 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Pad</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5109,28 +5086,28 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Certificaat</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Vertrouwd</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Niet-vertrouwd</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Onbekend</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>Key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare sleutelbestand</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5138,19 +5115,18 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Pad selecteren</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Gewijzigd certificaat exporteren</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Het geëxporteerde certificaat is niet hetzelfde als die in gebruik is. Wilt u het huidige certificaat exporteren?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5158,23 +5134,19 @@ Beschikbare opdrachten:
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Importeren vanuit de container zonder handtekening</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>De bron van de gedeelde container kan niet gecontroleerd worden omdat het niet is ondertekend. Wil je echt uit %1 importeren?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>Importeren uit de container met certificaat</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>Deze keer niet</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5182,102 +5154,122 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Altijd</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>Alleen deze keer</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importeren van %1 is mislukt (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importeren van %1 is gelukt (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>Geïmporteerd van %1</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Ondertekende deel-containers worden niet ondersteund - import is voorkomen</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Bestand is niet leesbaar</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige deel-container</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Niet vertrouwde import voorkomen</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>Ondertekende import is voltooid</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>Onverwachte fout</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Niet ondertekende deel-container worden niet ondersteund - import is voorkomen</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>Niet ondertekende import voltooid</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>Bestand bestaat niet</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>Type van deel-container is onbekend</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Het overschrijven van een ondertekende deel-container wordt niet ondersteund - export is voorkomen</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Kan geen export container schrijven (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Overschrijven van een niet-ondertekende deel-container wordt niet ondersteund - export is voorkomen</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Kan niet schrijven naar export container</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Onverwachte fout bij het exporteren</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren naar %1 is mislukt (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Exporteren naar %1 gelukt (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation>Exporteer naar %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Wilt u %1 met de vingerafdruk van %2 vanaf %3 vertrouwen? {1 ?} {2 ?} </translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5376,11 +5368,11 @@ Beschikbare opdrachten:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Controleren op updates</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Controleren op updates...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5388,39 +5380,39 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Update fout!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Er is iets fout gegaan bij het ophalen van update informatie.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Probeer het later nog eens.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Software-update</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>Er is een nieuwe versie van KeePassXC!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 is nu beschikbaar — jij hebt %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Download het op keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Je bent up-to-date!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 is de nieuwste versie</translation>
     </message>
 </context>
 <context>
@@ -5470,7 +5462,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation>Geen YubiKey gedetecteerd, plug deze aub in.</translation>
+        <translation>Geen YubiKey gedetecteerd, plug deze a.u.b. in.</translation>
     </message>
     <message>
         <source>No YubiKey inserted.</source>

@@ -38,80 +38,12 @@
         <translation>Skopiuj do schowka</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Rewizja: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Dystrybucja: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Biblioteki:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>System operacyjny: %1
-Architektura procesora: %2
-Jądro: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Włączone rozszerzenia:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Opiekunowie projektu:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Specjalne podziękowania od zespołu KeePassXC dla debfx za stworzenie oryginalnego KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Wersja %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Typ kompilacji: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Autouzupełnianie</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Integracja z przeglądarką</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>Agent SSH</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Żaden</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -122,7 +54,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Użyj OpenSSH dla Windows zamiast Pageanta</translation>
     </message>
 </context>
 <context>
@@ -145,23 +77,23 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Tylko ikona</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Tylko tekst</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst obok ikony</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Tekst pod ikoną</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Utrzymaj styl</translation>
     </message>
 </context>
 <context>
@@ -268,27 +200,27 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autouzupełnianie</translation>
+        <translation>Autowpisywanie</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Użyj tytułu wpisy, aby dopasować okna dla globalnego auto-uzupełniania</translation>
+        <translation>Użyj tytułu wpisy, aby dopasować okna dla globalnego autowpisywania</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Użyj adresu URL wpisy, aby dopasować okna dla globalnego auto-uzupełniania</translation>
+        <translation>Użyj adresu URL wpisu, aby dopasować okna dla globalnego autowpisywania</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Zawsze pytaj przed wykonaniem auto-uzupełninia</translation>
+        <translation>Zawsze pytaj przed wykonaniem autowpisywania</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Globalny skrót auto-uzupełnianie</translation>
+        <translation>Globalny skrót autowpisywania</translation>
     </message>
     <message>
         <source>Auto-Type typing delay</source>
-        <translation>Opóźnienie pisania auto-uzupełniania</translation>
+        <translation>Opóźnienie pisania autowpisywania</translation>
     </message>
     <message>
         <source> ms</source>
@@ -297,23 +229,23 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation>Opóźnienie rozpoczęcia auto-uzupełniania</translation>
+        <translation>Opóźnienie rozpoczęcia autowpisywania</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdź aktualizacje podczas uruchomienia aplikacji</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Uwzględnij wstępne wydania podczas sprawdzania aktualizacji</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Ruchomy pasek narzędzi</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Styl przycisku</translation>
     </message>
 </context>
 <context>
@@ -361,8 +293,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Ponownie zablokuj poprzednio zablokowaną bazę danych po wykonaniu auto-uzupełninia
-</translation>
+        <translation>Ponownie zablokuj poprzednio zablokowaną bazę danych po wykonaniu autowpisywania</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -401,27 +332,27 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Autouzupełnianie - KeePassXC</translation>
+        <translation>Autowpisywanie - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autouzupełnianie</translation>
+        <translation>Autowpisywanie</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>Składnia instrukcji autouzupełniania jest niepoprawna!</translation>
+        <translation>Składnia instrukcji autowpisywania jest niepoprawna!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Polecenie autouzupełniania zawiera bardzo długie opóźnienie. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autowpisywania zawiera bardzo długie opóźnienie. Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Polecenie autouzupełniania zawiera bardzo wolne wciśnięcia klawiszy. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autowpisywania zawiera bardzo wolne wciśnięcia klawiszy. Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Polecenie autouzupełniania zawiera argumenty, które powtarzają się bardzo często. Czy chcesz kontynuować?</translation>
+        <translation>Polecenie autowpisywania zawiera argumenty, które powtarzają się bardzo często. Czy chcesz kontynuować?</translation>
     </message>
 </context>
 <context>
@@ -462,11 +393,11 @@ Jądro: %3 %4</translation>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Autouzupełnianie - KeePassXC</translation>
+        <translation>Autowpisywanie - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Wybierz wpis do autouzupełnienia:</translation>
+        <translation>Wybierz wpis do autowpisywania:</translation>
     </message>
 </context>
 <context>
@@ -527,7 +458,7 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
-        <translation>Włącz integrację KeepassXC z przeglądarką</translation>
+        <translation>Włącz integrację KeePassXC z przeglądarką</translation>
     </message>
     <message>
         <source>General</source>
@@ -621,11 +552,11 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Aktualizuje automatycznie ścieżkę binarną KeePassXC albo keepassxc-proxy do skryptów Native Messaging podczas uruchamiania.</translation>
+        <translation>Aktualizuje automatycznie ścieżkę binarną KeePassXC albo keepassxc-proxy do skryptów Native Messaging podczas uruchomienia.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation>Aktualizuj pliki manifestu &amp;Native Messaging podczas uruchamiania</translation>
+        <translation>Aktualizuj pliki manifestu &amp;Native Messaging podczas uruchomienia</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -658,14 +589,6 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
         <translation>Wybierz niestandardową lokalizację proxy</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Przykro nam, ale KeePassXC-Browser obecnie nie obsługuje wydań Snap.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Browser jest potrzebny, aby działała integracja z przeglądarką. &lt;br /&gt;Pobierz go dla %1 oraz %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Browser</translation>
     </message>
@@ -684,6 +607,18 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation>Nie pytaj o uprawnienie dla HTTP &amp;Basic Auth</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -760,12 +695,20 @@ Przeniesiono %2 klucze do niestandardowych danych.</translation>
         <translation>KeePassXC: Wykryto ustawienia przestarzałej integracji z przeglądarką</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Wykryto ustawienia przestarzałej integracji z przeglądarką.
-Czy chcesz uaktualnić ustawienia do najnowszego standardu?
-Jest to konieczne, aby zachować zgodność z wtyczką przeglądarki.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -926,6 +869,10 @@ Jest to konieczne, aby zachować zgodność z wtyczką przeglądarki.</translati
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Plik nie może zostać zapisany, ponieważ jest otwarty w trybie tylko do odczytu.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1354,32 +1301,32 @@ Jeśli zachowasz tę liczbę, twoja baza danych może być zbyt łatwa do złama
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Udostępnianie</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Nawigacja okruszkowa</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Typ</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Ścieżka</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Ostatni podpisujący</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Certyfikaty</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1394,7 +1341,7 @@ Jeśli zachowasz tę liczbę, twoja baza danych może być zbyt łatwa do złama
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Musisz dodać co najmniej jeden klucz szyfrowania, aby zabezpieczyć bazę danych.</translation>
+        <translation>Musisz dodać co najmniej jeden klucz szyfrowania, aby zabezpieczyć bazę danych!</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -1516,7 +1463,7 @@ Jest to z pewnością błąd, zgłoś go programistom.</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Czy na pewno chcesz przenieść wpis&quot; %1&quot; do kosza?</translation>
+        <translation>Czy na pewno chcesz przenieść wpis &quot;%1&quot; do kosza?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
@@ -1656,11 +1603,11 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>Zastąpić odniesienia do wpisu?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Wpis &quot;%1&quot; ma %2 odniesienie. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesienia. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesień. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform><numerusform>Wpis &quot;%1&quot; ma %2 odniesień. Czy chcesz zastąpić odniesienia wartościami, pominąć ten wpis, czy usunąć mimo to?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1668,18 +1615,22 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Przenieść grupę do kosza?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz przenieść grupę &quot;%1&quot; do kosza?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie scalono pliki bazy danych.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation>Baza danych nie została zmodyfikowana operacją scalania.</translation>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1699,7 +1650,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-uzupełnianie</translation>
+        <translation>Autowpisywanie</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1799,7 +1750,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Potwierdź usunięcie</translation>
     </message>
 </context>
 <context>
@@ -1845,15 +1796,15 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Włącz auto-uzupełnianie dla tego wpisu</translation>
+        <translation>Włącz autowpisywanie dla tego wpisu</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Dziedzicz domyślną sekwencję auto-uzupełniania z &amp;grupy</translation>
+        <translation>Dziedzicz domyślną sekwencję autowpisywania z &amp;grupy</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Używaj niestandardowej sekwencji auto-uzupełniania:</translation>
+        <translation>&amp;Używaj niestandardowej sekwencji autowpisywania:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2053,15 +2004,15 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Typ:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Ścieżka:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2069,54 +2020,70 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Nieaktywne</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Importuj ze ścieżki</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Eksportuj do ścieżki</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>Synchronizuj ze ścieżką</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>Twoja wersja KeePassXC nie obsługuje udostępniania tego typu kontenera. Proszę użyć %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Udostępnianie bazy danych jest wyłączone</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Eksportowanie bazy danych jest wyłączone</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Importowanie bazy danych jest wyłączone</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>Niepodpisany kontener KeeShare</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>Podpisany kontener KeeShare</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz cel importu</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz cel eksportu</translation>
     </message>
     <message>
         <source>Select import/export file</source>
+        <translation>Wybierz plik importu/eksportu</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wyczyść</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2140,15 +2107,15 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-uzupełnianie</translation>
+        <translation>Autowpisywanie</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Korzystaj z domyślnej sekwencji auto-uzupełniania z nadrzędnej grupy</translation>
+        <translation>&amp;Korzystaj z domyślnej sekwencji autowpisywania z nadrzędnej grupy</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Ustaw domyślną se&amp;kwencję auto-uzupełniania</translation>
+        <translation>Ustaw domyślną se&amp;kwencję autowpisywania</translation>
     </message>
 </context>
 <context>
@@ -2362,7 +2329,11 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Nie można otworzyć pliku:
+%1</numerusform><numerusform>Nie można otworzyć plików:
+%1</numerusform><numerusform>Nie można otworzyć plików:
+%1</numerusform><numerusform>Nie można otworzyć plików:
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2499,7 +2470,7 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Autouzupełnianie</translation>
+        <translation>Autowpisywanie</translation>
     </message>
     <message>
         <source>Window</source>
@@ -2544,7 +2515,7 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Udział</translation>
     </message>
 </context>
 <context>
@@ -2588,14 +2559,6 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[pusty]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2876,7 +2839,7 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się odczytać pliku bazy danych.</translation>
     </message>
 </context>
 <context>
@@ -2967,7 +2930,7 @@ Jest to migracja w jedną stronę. Nie będzie można otworzyć importowanej baz
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Brak przypisanego okna lub sekwencji auto-uzupełniania</translation>
+        <translation>Brak przypisanego okna lub sekwencji autowpisywania</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -3178,18 +3141,34 @@ Wiersz %2, kolumna %3</translation>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>Wyłączony udział</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importuj z</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Eksportuj do</translation>
     </message>
     <message>
         <source>Synchronize with</source>
+        <translation>Synchronizuj z</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3541,7 +3520,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Wykonaj &amp;auto-uzupełnianie</translation>
+        <translation>Wykonaj &amp;autowpisywanie</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -3573,28 +3552,28 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdź aktualizacje...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Udostępnij wpis</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>UWAGA: Używasz wstępnej wersji KeePassXC! Spodziewaj się pewnych błędów i drobnych problemów, ta wersja nie jest przeznaczona do użytku produkcyjnego.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdzać aktualizacje podczas uruchomienia?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz, aby KeePassXC sprawdzał aktualizacje podczas uruchomienia?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>Zawsze możesz sprawdzić aktualizacje ręcznie w menu aplikacji.</translation>
     </message>
 </context>
 <context>
@@ -3633,7 +3612,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation> Synchronizacja z nowszego źródła %1 [%2]</translation>
+        <translation>Synchronizacja z nowszego źródła %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
@@ -3840,10 +3819,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Hasło jest podstawową metodą zabezpieczania bazy danych.&lt;/p&gt;&lt;p&gt;Dobre hasła są długie i niepowtarzalne. KeePassXC może je wygenerować dla ciebie.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Hasło nie może być puste.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4086,21 +4061,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Zastąp</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4108,11 +4083,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Przenieś</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Pusty</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4120,7 +4095,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>Pomiń</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4128,7 +4103,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Scal</translation>
     </message>
 </context>
 <context>
@@ -4511,7 +4486,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation> Nie można znaleźć wpisu ze ścieżką %1.</translation>
+        <translation>Nie można znaleźć wpisu ze ścieżką %1.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
@@ -4783,47 +4758,47 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Szyfrowanie wiadomości nie powiodło się.</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Nie znaleziono grup</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Stwórz nową bazę danych.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Plik %1 już istnieje.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Ładowanie pliku klucza nie powiodło się</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>Żaden klawisz nie jest ustawiony. Przerwanie tworzenia bazy danych.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nie udało się zapisać bazy danych: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie utworzono nową bazę danych.</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>Wstaw hasło, aby zaszyfrować bazę danych (naciśnij Enter, aby pozostawić puste): </translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Tworzenie pliku klucza %1 nie powiodło się: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>Ładowanie pliku klucza %1 nie powiodło się: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -4879,7 +4854,11 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Database password: </source>
-        <translation>Hasło bazy danych:</translation>
+        <translation>Hasło bazy danych: </translation>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5038,31 +5017,31 @@ Dostępne polecenia:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Aktywuj</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>Pozwól eksportować</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>Pozwól importować</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Własny certyfikat</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>Odcisk palca:</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Certyfikat:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Podpisujący</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5078,23 +5057,23 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Eksportuj</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Importowane certyfikaty</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>Zaufaj</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Zapytaj</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>Nie ufaj</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5102,11 +5081,11 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Ścieżka</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5114,28 +5093,28 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Certyfikat</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Zaufany</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Niezaufany</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Nieznany</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>Plik klucza KeeShare</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5143,19 +5122,18 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz ścieżkę</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Eksportowanie zmienionego certyfikatu</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Wyeksportowany certyfikat nie jest tym samym, co używany. Czy chcesz wyeksportować bieżący certyfikat?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5163,23 +5141,19 @@ Dostępne polecenia:
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Importuj z kontenera bez podpisu</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>Nie możemy zweryfikować źródła udostępnionego kontenera, ponieważ nie jest on podpisany. Czy na pewno chcesz importować dane z %1?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>Importuj z kontenera z certyfikatem</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>Nie tym razem</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5187,102 +5161,122 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Zawsze</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>Tylko tym razem</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Import z %1 zakończył się niepomyślnie (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Import z %1 zakończył się pomyślnie (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>Importowane z %1</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Podpisany kontener udostępniania nie jest obsługiwany - import został zablokowany</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>Plik nie jest czytelny</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Nieprawidłowy kontener udostępniania</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Uniemożliwiono niezaufany import</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie podpisany import</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>Niespodziewany błąd</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Niepodpisany kontener udostępniania nie jest obsługiwany - import został zablokowany</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>Pomyślnie niepodpisany import</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>Plik nie istnieje</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>Nieznany typ kontenera udostępniania</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Zastąpienie podpisanego kontenera udostępniania nie jest obsługiwane - eksport został zablokowany</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nie można zapisać kontenera eksportu (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Zastąpienie niepodpisanego kontenera udostępniania nie jest obsługiwane - eksport został zablokowany</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Nie można zapisać kontenera eksportu</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Wystąpił nieoczekiwany błąd eksportu</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksport do %1 zakończył się niepomyślnie (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Eksport do %1 zakończył się pomyślnie (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation>Eksportuj do %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Czy chcesz zaufać %1 z odciskiem palca %2 z %3? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5381,11 +5375,11 @@ Dostępne polecenia:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdzanie aktualizacji</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdzanie aktualizacji...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5393,39 +5387,39 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Błąd aktualizacji!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Wystąpił błąd podczas pobierania informacji o aktualizacji.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Spróbuj ponownie później.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizacja oprogramowania</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>Nowa wersja KeePassXC jest dostępna!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 jest już dostępny — masz %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Pobierz to z keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Jesteś aktualny!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 to obecnie najnowsza dostępna wersja</translation>
     </message>
 </context>
 <context>

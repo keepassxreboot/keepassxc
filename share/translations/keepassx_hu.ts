@@ -38,80 +38,12 @@
         <translation>Vágólapra másolás</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revízió: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Disztribúció: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Függvénykönyvtárak:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Operációs rendszer: %1
-CPU architektúra: %2
-Kernel: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Engedélyezett kiterjesztések:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Projektkarbantartók:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>A KeePassXC fejlesztőcsapata ezúton külön köszönetet mond debfx-nek az eredetei KeePassX létrehozásáért.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Verzió: %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Összeállítás típusa: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Automatikus beírás</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Böngészőintegráció</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH ügynök</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Nincs</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -122,7 +54,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>OpenSSH alkalmazása Windowson a Pageant helyett</translation>
     </message>
 </context>
 <context>
@@ -145,23 +77,23 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Csak ikonok</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Csak szöveg</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Szöveg az ikonok mellett</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Szöveg az ikonok alatt</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Stílus követése</translation>
     </message>
 </context>
 <context>
@@ -301,19 +233,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése a program indulásakor</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>A frissítések keresése az előzetes kiadásokra is terjedjen ki</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Mozgatható eszköztár</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Gombstílus</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Válassza ki a helyes adatbázist a hitelesítő adatok mentéséhez.</translati
         <translation>Egyedi proxyhely kijelölése</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Sajnáljuk, de a KeePassXC-Browser pillanatnyilag nem támogatja a Snap kiadásokat.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>A böngészőintegráció működéséhez a KeePassXC-böngészőre van szükség. &lt;br /&gt;Letölthető ezen böngészőkre: %1 és %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor böngésző</translation>
     </message>
@@ -683,6 +607,18 @@ Válassza ki a helyes adatbázist a hitelesítő adatok mentéséhez.</translati
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation>Ne kérjen engedélyt a HTTP &amp;Basic Auth számára</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -758,12 +694,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: Örökölt böngészőintegrációs beállítások észlelve</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Örökölt böngészőintegrációs beállítások észlelve
-Frissíti a beállításokat a legfrissebb szabványra?
-Ez szükséges a böngészőbővítménnyel történő kompatibilitáshoz.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -924,6 +868,10 @@ Ez szükséges a böngészőbővítménnyel történő kompatibilitáshoz.</tran
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>A fájlba nem lehet írni, mert csak olvasható módban van megnyitva.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1351,32 +1299,32 @@ Ezt a számot megtartva az adatbázis nagyon könnyen törhető lesz.</translati
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Megosztás</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Morzsamenü</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Típus</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Legutóbbi aláíró</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Tanúsítványok</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -1653,30 +1601,34 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
+        <translation>Lecserélhető a bejegyzésre való hivatkozás?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felül lehet írni a hivatkozást az értékekkel, vagy legyen átugorva, ill. legyen mindenképpen törölve?</numerusform><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felül lehet írni a hivatkozásokat az értékekkel, vagy legyenek átugorva, ill. legyenek mindenképpen törölve?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"/>
+        <translation>Csoport törlése</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Legyen a csoport áthelyezve a kukába?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Valóban legyen a(z) „%1” csoport áthelyezve a kukába?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázisfájlok sikeresen egyesítve lettek.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation>Az adatbázis nem változott az összeolvasztási művelet során.</translation>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1796,7 +1748,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Törlés jóváhagyása</translation>
     </message>
 </context>
 <context>
@@ -2050,15 +2002,15 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Típus:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation type="unfinished"/>
+        <translation>Útvonal:</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"/>
+        <translation>...</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2066,54 +2018,70 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Inactive</source>
-        <translation type="unfinished"/>
+        <translation>Inaktív</translation>
     </message>
     <message>
         <source>Import from path</source>
-        <translation type="unfinished"/>
+        <translation>Importálás útvonalról</translation>
     </message>
     <message>
         <source>Export to path</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás útvonalra</translation>
     </message>
     <message>
         <source>Synchronize with path</source>
-        <translation type="unfinished"/>
+        <translation>Útvonallal való szinkronizálás</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>A KeePassXC jelen verziója nem támogatja ennek a tárolótípusnak a megosztását. Javasolt ezen verzió alkalmazása: %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis-megosztás tiltva</translation>
     </message>
     <message>
         <source>Database export is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis export tiltva</translation>
     </message>
     <message>
         <source>Database import is disabled</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis import tiltva</translation>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare aláíratlan tároló</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare aláírt tároló</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Importálási forrás kijelölése</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Exportálási cél kijelölése</translation>
     </message>
     <message>
         <source>Select import/export file</source>
+        <translation>Importálási vagy exportálási fájl kijelölése</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2359,7 +2327,9 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A fájl nem megnyitható:
+%1</numerusform><numerusform>A fájlok nem megnyithatóak:
+%1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2541,7 +2511,7 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Megosztás</translation>
     </message>
 </context>
 <context>
@@ -2585,14 +2555,6 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[üres]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2873,7 +2835,7 @@ Ez egyirányú migráció. Nem lehet majd megnyitni az importált adatbázist a 
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázis olvasása sikertelen.</translation>
     </message>
 </context>
 <context>
@@ -3175,18 +3137,34 @@ Line %2, column %3</source>
     <name>KeeShare</name>
     <message>
         <source>Disabled share</source>
-        <translation type="unfinished"/>
+        <translation>Letiltott megosztás</translation>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importálás innen</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás ide</translation>
     </message>
     <message>
         <source>Synchronize with</source>
+        <translation>Szinkronizálás ezzel</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3568,28 +3546,29 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése...</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzés megosztása</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation type="unfinished"/>
+        <translation>MEGJEGYZÉS: Ez egy előzetes kiadású KeePassXC verzió!
+Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió nem ajánlott éles használatra.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Keressen a program induláskor frissítéseket?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Valóban keressen a program induláskor frissítéseket?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>A program menüjéből bármikor saját kezűleg is indítható a frissítések keresése.</translation>
     </message>
 </context>
 <context>
@@ -3837,10 +3816,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>&lt;p&gt;A jelszó az adatbázis biztonságban tartásának elsődleges módja.&lt;/p&gt;&lt;p&gt;A jó jelszavak hosszúak és egyediek. A KeePassXC elő tud állítani egyet Önnek.&lt;/p&gt;</translation>
     </message>
     <message>
-        <source>Password cannot be empty.</source>
-        <translation>A jelszó nem lehet üres.</translation>
-    </message>
-    <message>
         <source>Passwords do not match.</source>
         <translation>A jelszavak nem egyeznek</translation>
     </message>
@@ -4081,21 +4056,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Kijelölés</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Felülírás</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4103,11 +4078,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Áthelyezés</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Üres</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4115,7 +4090,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>Kihagyás</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4123,7 +4098,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Egyesítés</translation>
     </message>
 </context>
 <context>
@@ -4271,11 +4246,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Extract and print the content of a database.</source>
-        <translation>Adatbázis tartalmának kinyerése és kiírása.</translation>
+        <translation>Adatbázis tartalmának kibontása és kiírása.</translation>
     </message>
     <message>
         <source>Path of the database to extract.</source>
-        <translation>Kinyerendő adatbázis útvonala.</translation>
+        <translation>Kibontandó adatbázis útvonala.</translation>
     </message>
     <message>
         <source>Insert password to unlock %1: </source>
@@ -4633,7 +4608,7 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>A(z) %1 fájl nem nyitható meg</translation>
+        <translation>A(z) %1 fájl nem nyitható meg.</translation>
     </message>
     <message>
         <source>Error while reading the database:
@@ -4777,47 +4752,47 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Az üzenet titkosítása sikertelen.</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation type="unfinished"/>
+        <translation>Nem találhatóak csoportok</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Új adatbázis létrehozása.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>A fájl már létezik: %1.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Hiba a kulcsfájl betöltésekor</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>A kulcs nem lett megadva. Az adatbázis létrehozása megszakítva.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázis nem menthető: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázis sikeresen létre lett hozva.</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>A beírt jelszóval lesz titkosítva az adatbázis (Entert ütve üres marad):</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>A(z) %1 KeyFile létrehozása sikertelen: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation type="unfinished"/>
+        <translation>A(z) %1 KeyFile betöltése sikertelen: %2</translation>
     </message>
     <message>
         <source>Remove an entry from the database.</source>
@@ -4874,6 +4849,10 @@ Elérhető parancsok:
     <message>
         <source>Database password: </source>
         <translation>Adatbázis jelszava</translation>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5032,31 +5011,31 @@ Elérhető parancsok:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Aktív</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás engedélyezése</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>Importálás engedélyezése</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Saját tanúsítvány</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>Ujjlenyomat:</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Tanúsítvány:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Aláíró</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5072,23 +5051,23 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Importált tanúsítványok</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>Megbízható </translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Kérdéses</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>Megbízhatatlan</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5096,11 +5075,11 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>Útvonal</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Állapot</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -5108,28 +5087,28 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Tanúsítvány</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Megbízható</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Megbízhatatlan</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ismeretlen</translation>
     </message>
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>kulcs.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare kulcsfájl</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5137,19 +5116,18 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Útvonal kijelölése</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Módosult tanúsítványok exportálása</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Az exportált tanúsítvány nem egyezik meg a jelenleg használattal. Exportálható a jelenlegi?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5157,23 +5135,19 @@ Elérhető parancsok:
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Importálás a tárolóból aláírás nélkül</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>Nem ellenőrizhető a megosztott tároló forrása, mivel nincs aláírva. Valóban importálható: %1? </translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation type="unfinished"/>
+        <translation>Importálás a tárolóból aláírással</translation>
     </message>
     <message>
         <source>Not this time</source>
-        <translation type="unfinished"/>
+        <translation>Most nem</translation>
     </message>
     <message>
         <source>Never</source>
@@ -5181,102 +5155,122 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Always</source>
-        <translation type="unfinished"/>
+        <translation>Mindig</translation>
     </message>
     <message>
         <source>Just this time</source>
-        <translation type="unfinished"/>
+        <translation>Csak most</translation>
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 importálása sikeretlen (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 importálása sikeres (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation type="unfinished"/>
+        <translation>Importálva innen: %1</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Az aláírt tárolók nem támogatottak – az importálás megakadályozva</translation>
     </message>
     <message>
         <source>File is not readable</source>
-        <translation type="unfinished"/>
+        <translation>A fájl nem olvasható</translation>
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Érvénytelen megosztási tároló</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Nem megbízható importálás megakadályozva</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres aláírt importálás</translation>
     </message>
     <message>
         <source>Unexpected error</source>
-        <translation type="unfinished"/>
+        <translation>Váratlan hiba</translation>
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>A nem aláírt tárolók nem támogatottak – az importálás megakadályozva</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres aláíratlan importálás</translation>
     </message>
     <message>
         <source>File does not exist</source>
-        <translation type="unfinished"/>
+        <translation>A fájl nem létezik</translation>
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>Ismeretlen megosztási tárolótípus</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Az aláírt tárolók felülírása nem támogatott – az exportálás megakadályozva</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nem írható az exportálási tároló (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>A nem aláírt tárolók felülírása nem támogatott – az exportálás megakadályozva</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Az exportálási tároló nem írható</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Váratlan exportálás hiba történt</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>%1 exportálása sikertelen (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Sikeres exportálás: %1 (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation>Exportálás: %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Megbízhatónak minősíthető a(z) %1, melynek ujjlenyomata %2 / %3? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5375,11 +5369,11 @@ Elérhető parancsok:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Frissítések keresése...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5387,39 +5381,39 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Frissítési hiba!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Hiba történt a frissítési információk letöltése közben.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Javasolt később újra megpróbálni.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Szoftverfrissítés</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>Elérhető a KeePassXC egy újabb verziója!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>Elérhető a KeePassXC %1 verziója – a jenlegi verzió: %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Letöltés a keepassxc.org webhelyről.</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>A jelenlegi verzió az aktuális.</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>A most elérhető legfrissebb KeePassXC verzió: %1</translation>
     </message>
 </context>
 <context>
