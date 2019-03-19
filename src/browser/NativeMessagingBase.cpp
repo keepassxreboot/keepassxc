@@ -137,7 +137,9 @@ void NativeMessagingBase::sendReply(const QString& reply)
 QString NativeMessagingBase::getLocalServerPath() const
 {
     const QString serverPath = "/kpxc_server";
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+#if defined(KEEPASSXC_DIST_SNAP)
+    return QProcessEnvironment::systemEnvironment().value("SNAP_COMMON") + serverPath;
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     // Use XDG_RUNTIME_DIR instead of /tmp if it's available
     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
     return path.isEmpty() ? QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverPath
