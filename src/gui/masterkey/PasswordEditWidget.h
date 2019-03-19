@@ -38,6 +38,7 @@ public:
     bool addToCompositeKey(QSharedPointer<CompositeKey> key) override;
     void setPasswordVisible(bool visible);
     bool isPasswordVisible() const;
+    bool isEmpty() const;
     bool validate(QString& errorMessage) const override;
 
 protected:
