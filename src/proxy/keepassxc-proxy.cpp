@@ -55,13 +55,29 @@ void catchUnixSignals(std::initializer_list<int> quitSignals)
         sigaction(sig, &sa, nullptr);
     }
 }
+#else
+#include <windows.h>
+
+BOOL WINAPI ConsoleHandler(DWORD dwType)
+{
+    switch (dwType) {
+    case CTRL_C_EVENT:
+    case CTRL_SHUTDOWN_EVENT:
+    case CTRL_LOGOFF_EVENT:
+        QCoreApplication::quit();
+        break;
+    }
+    return TRUE;
+}
 #endif
 
 int main(int argc, char* argv[])
 {
     QCoreApplication a(argc, argv);
-#if defined(Q_OS_UNIX) || defined(Q_OS_LINUX)
+#ifndef Q_OS_WIN
     catchUnixSignals({SIGQUIT, SIGINT, SIGTERM, SIGHUP});
+#else
+    SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(ConsoleHandler), TRUE);
 #endif
     NativeMessagingHost host;
     return a.exec();

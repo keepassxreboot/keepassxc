@@ -46,7 +46,8 @@ class BrowserAction : public QObject
         ERROR_KEEPASS_EMPTY_MESSAGE_RECEIVED = 13,
         ERROR_KEEPASS_NO_URL_PROVIDED = 14,
         ERROR_KEEPASS_NO_LOGINS_FOUND = 15,
-        ERROR_KEEPASS_NO_GROUPS_FOUND = 16
+        ERROR_KEEPASS_NO_GROUPS_FOUND = 16,
+        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17
     };
 
 public:
@@ -66,6 +67,7 @@ private:
     QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
     QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseGroups(const QJsonObject& json, const QString& action);
+    QJsonObject handleCreateNewGroup(const QJsonObject& json, const QString& action);
 
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);

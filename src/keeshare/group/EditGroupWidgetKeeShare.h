@@ -37,13 +37,14 @@ public:
     explicit EditGroupWidgetKeeShare(QWidget* parent = nullptr);
     ~EditGroupWidgetKeeShare();
 
-    void setGroup(Group* temporaryGroup);
+    void setGroup(Group* temporaryGroup, QSharedPointer<Database> database);
 
 private slots:
     void showSharingState();
 
 private slots:
     void update();
+    void clearInputs();
     void selectType();
     void selectPassword();
     void launchPathSelectionDialog();
@@ -54,6 +55,7 @@ private slots:
 private:
     QScopedPointer<Ui::EditGroupWidgetKeeShare> m_ui;
     QPointer<Group> m_temporaryGroup;
+    QSharedPointer<Database> m_database;
 };
 
 #endif // KEEPASSXC_EDITGROUPWIDGETKEESHARE_H

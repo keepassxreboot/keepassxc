@@ -67,6 +67,15 @@ QString EntryAttributes::value(const QString& key) const
     return m_attributes.value(key);
 }
 
+QList<QString> EntryAttributes::values(const QList<QString>& keys) const
+{
+    QList<QString> values;
+    for (const QString& key : keys) {
+        values.append(m_attributes.value(key));
+    }
+    return values;
+}
+
 bool EntryAttributes::contains(const QString& key) const
 {
     return m_attributes.contains(key);

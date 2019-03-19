@@ -65,6 +65,7 @@ void NativeMessagingBase::newNativeMessage()
     EV_SET(ev, fileno(stdin), EVFILT_READ, EV_ADD, 0, 0, nullptr);
     if (kevent(fd, ev, 1, nullptr, 0, &ts) == -1) {
         m_notifier->setEnabled(false);
+        ::close(fd);
         return;
     }
 
@@ -81,6 +82,7 @@ void NativeMessagingBase::newNativeMessage()
     event.data.fd = 0;
     if (epoll_ctl(fd, EPOLL_CTL_ADD, 0, &event) != 0) {
         m_notifier->setEnabled(false);
+        ::close(fd);
         return;
     }
 
@@ -135,7 +137,9 @@ void NativeMessagingBase::sendReply(const QString& reply)
 QString NativeMessagingBase::getLocalServerPath() const
 {
     const QString serverPath = "/kpxc_server";
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+#if defined(KEEPASSXC_DIST_SNAP)
+    return QProcessEnvironment::systemEnvironment().value("SNAP_COMMON") + serverPath;
+#elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     // Use XDG_RUNTIME_DIR instead of /tmp if it's available
     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
     return path.isEmpty() ? QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverPath

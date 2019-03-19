@@ -236,15 +236,8 @@ checkGitRepository() {
     fi
 }
 
-checkTagExists() {
-    git tag | grep -q "$TAG_NAME"
-    if [ $? -ne 0 ]; then
-        exitError "Tag '${TAG_NAME}' does not exist!"
-    fi
-}
-
 checkReleaseDoesNotExist() {
-    git tag | grep -q "$TAG_NAME"
+    git tag | grep -q "^$TAG_NAME$"
     if [ $? -eq 0 ]; then
         exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
     fi
@@ -325,17 +318,16 @@ checkSnapcraft() {
     if [ $? -ne 0 ]; then
         exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
+
+    grep -qPzo "KEEPASSXC_BUILD_TYPE=Release" snapcraft.yaml
+    if [ $? -ne 0 ]; then
+        exitError "'snapcraft.yaml' is not set for a release build!"
+    fi
 }
 
 checkTransifexCommandExists() {
     if ! cmdExists tx; then
         exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'."
-    fi
-}
-
-checkOsslsigncodeCommandExists() {
-    if ! cmdExists osslsigncode; then
-        exitError "osslsigncode command not found on the PATH! Please install it using 'pacman -S mingw-w64-osslsigncode'."
     fi
 }
 
@@ -818,6 +810,10 @@ build() {
         shift
     done
 
+    if [[ ${build_appsign} && ! -f ${build_key} ]]; then
+        exitError "--appsign specified with invalid key file\n"
+    fi
+
     init
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
@@ -912,7 +908,7 @@ build() {
             make ${MAKE_OPTIONS} package
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} && ! -z ${build_key} ]]; then
+            if [[ ${build_appsign} ]]; then
                 logInfo "Signing executable files"
                 appsign "-f" "./${APP_NAME}-${RELEASE_NAME}.dmg" "-k" "${build_key}"
             fi
@@ -928,9 +924,9 @@ build() {
             mingw32-make ${MAKE_OPTIONS} preinstall
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} && ! -z ${build_key} ]]; then
+            if [[ ${build_appsign} ]]; then
                 logInfo "Signing executable files"
-                appsign "-f" $(find src | grep '\.exe') "-k" "${build_key}"
+                appsign "-f" $(find src | grep -P '\.exe$|\.dll$') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
@@ -1172,8 +1168,6 @@ appsign() {
         done
 
     elif [ "$(uname -o)" == "Msys" ]; then
-        checkOsslsigncodeCommandExists
-
         if [[ ! -f "${key}" ]]; then
             exitError "Key file was not found!"
         fi
@@ -1182,20 +1176,8 @@ appsign() {
         echo
 
         for f in "${sign_files[@]}"; do
-            if [[ ${f: -4} == ".exe" ]]; then
-                logInfo "Signing file '${f}' using osslsigncode..."
-                # output a signed exe; we have to use a different name due to osslsigntool limitations
-                osslsigncode sign -pkcs12 "${key}" -pass "${password}" -n "KeePassXC" \
-                    -t "http://timestamp.comodoca.com/authenticode" -in "${f}" -out "${f}.signed"
-
-                if [ 0 -ne $? ]; then
-                    rm -f "${f}.signed"
-                    exitError "Signing failed!"
-                fi
-
-                # overwrite the original exe with the signed exe
-                mv -f "${f}.signed" "${f}"
-            elif [[ ${f: -4} == ".msi" ]]; then
+            ext=${f: -4}
+            if [[ $ext == ".msi" || $ext == ".exe" || $ext == ".dll" ]]; then
                 # Make sure we can find the signtool
                 checkSigntoolCommandExists
 

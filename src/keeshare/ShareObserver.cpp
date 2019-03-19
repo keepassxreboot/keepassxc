@@ -25,6 +25,7 @@
 #include "core/Entry.h"
 #include "core/FilePath.h"
 #include "core/FileWatcher.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
@@ -191,7 +192,7 @@ void ShareObserver::reinitialize()
 
     const auto active = KeeShare::active();
     QList<Update> updated;
-    QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
+    const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
     for (Group* group : groups) {
         Update couple{group, m_groupToReference.value(group), KeeShare::referenceOf(group)};
         if (couple.oldReference == couple.newReference) {
@@ -214,7 +215,9 @@ void ShareObserver::reinitialize()
     QStringList success;
     QStringList warning;
     QStringList error;
-    for (const auto& update : updated) {
+    QMap<QString, QStringList> imported;
+    QMap<QString, QStringList> exported;
+    for (const auto& update : asConst(updated)) {
         if (!update.oldReference.path.isEmpty()) {
             m_fileWatcher->removePath(update.oldReference.path);
         }
@@ -222,8 +225,12 @@ void ShareObserver::reinitialize()
         if (!update.newReference.path.isEmpty() && update.newReference.type != KeeShareSettings::Inactive) {
             m_fileWatcher->addPath(update.newReference.path);
         }
+        if (update.newReference.isExporting()) {
+            exported[update.newReference.path] << update.group->name();
+        }
 
         if (update.newReference.isImporting()) {
+            imported[update.newReference.path] << update.group->name();
             const auto result = this->importFromReferenceContainer(update.newReference.path);
             if (!result.isValid()) {
                 // tolerable result - blocked import or missing source
@@ -239,6 +246,16 @@ void ShareObserver::reinitialize()
             } else {
                 success << tr("Imported from %1").arg(result.path);
             }
+        }
+    }
+    for (auto it = imported.cbegin(); it != imported.cend(); ++it) {
+        if (it.value().count() > 1) {
+            warning << tr("Multiple import source path to %1 in %2").arg(it.key(), it.value().join(", "));
+        }
+    }
+    for (auto it = exported.cbegin(); it != exported.cend(); ++it) {
+        if (it.value().count() > 1) {
+            error << tr("Conflicting export target path %1 in %2").arg(it.key(), it.value().join(", "));
         }
     }
 
@@ -659,8 +676,10 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         QuaZipFile file(&zip);
         const auto signatureOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Signature));
         if (!signatureOpened) {
-            ::qWarning("Embedding signature failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding signature failed: Could not open file to write (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed signature: Could not open file to write (%1)").arg(file.getZipError())};
         }
         QTextStream stream(&file);
         KeeShareSettings::Sign sign;
@@ -672,8 +691,10 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         stream << KeeShareSettings::Sign::serialize(sign);
         stream.flush();
         if (file.getZipError() != ZIP_OK) {
-            ::qWarning("Embedding signature failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed signature (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding signature failed: Could not write file (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed signature: Could not write file (%1)").arg(file.getZipError())};
         }
         file.close();
     }
@@ -681,14 +702,18 @@ ShareObserver::Result ShareObserver::exportIntoReferenceSignedContainer(const Ke
         QuaZipFile file(&zip);
         const auto dbOpened = file.open(QIODevice::WriteOnly, QuaZipNewInfo(KeeShare_Container));
         if (!dbOpened) {
-            ::qWarning("Embedding database failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
-        }
-        if (file.getZipError() != ZIP_OK) {
-            ::qWarning("Embedding database failed: %d", zip.getZipError());
-            return {reference.path, Result::Error, tr("Could not embed database (%1)").arg(file.getZipError())};
+            ::qWarning("Embedding database failed: Could not open file to write (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed database: Could not open file to write (%1)").arg(file.getZipError())};
         }
         file.write(bytes);
+        if (file.getZipError() != ZIP_OK) {
+            ::qWarning("Embedding database failed: Could not write file (%d)", zip.getZipError());
+            return {reference.path,
+                    Result::Error,
+                    tr("Could not embed database: Could not write file (%1)").arg(file.getZipError())};
+        }
         file.close();
     }
     zip.close();
@@ -725,28 +750,55 @@ ShareObserver::Result ShareObserver::exportIntoReferenceUnsignedContainer(const 
 QList<ShareObserver::Result> ShareObserver::exportIntoReferenceContainers()
 {
     QList<Result> results;
+    struct Reference
+    {
+        KeeShareSettings::Reference config;
+        const Group* group;
+    };
+
+    QMap<QString, QList<Reference>> references;
     const auto groups = m_db->rootGroup()->groupsRecursive(true);
     for (const auto* group : groups) {
         const auto reference = KeeShare::referenceOf(group);
         if (!reference.isExporting()) {
             continue;
         }
+        references[reference.path] << Reference{reference, group};
+    }
 
-        m_fileWatcher->ignoreFileChanges(reference.path);
-        QScopedPointer<Database> targetDb(exportIntoContainer(reference, group));
-        QFileInfo info(reference.path);
+    for (auto it = references.cbegin(); it != references.cend(); ++it) {
+        if (it.value().count() != 1) {
+            const auto path = it.value().first().config.path;
+            QStringList groups;
+            for (const auto& reference : it.value()) {
+                groups << reference.group->name();
+            }
+            results << Result{
+                path, Result::Error, tr("Conflicting export target path %1 in %2").arg(path, groups.join(", "))};
+        }
+    }
+    if (!results.isEmpty()) {
+        // We need to block export due to config
+        return results;
+    }
+
+    for (auto it = references.cbegin(); it != references.cend(); ++it) {
+        const auto& reference = it.value().first();
+        m_fileWatcher->ignoreFileChanges(reference.config.path);
+        QScopedPointer<Database> targetDb(exportIntoContainer(reference.config, reference.group));
+        QFileInfo info(reference.config.path);
         if (isOfExportType(info, KeeShare::signedContainerFileType())) {
-            results << exportIntoReferenceSignedContainer(reference, targetDb.data());
+            results << exportIntoReferenceSignedContainer(reference.config, targetDb.data());
             m_fileWatcher->observeFileChanges(true);
             continue;
         }
         if (isOfExportType(info, KeeShare::unsignedContainerFileType())) {
-            results << exportIntoReferenceUnsignedContainer(reference, targetDb.data());
+            results << exportIntoReferenceUnsignedContainer(reference.config, targetDb.data());
             m_fileWatcher->observeFileChanges(true);
             continue;
         }
         Q_ASSERT(false);
-        results << Result{reference.path, Result::Error, tr("Unexpected export error occurred")};
+        results << Result{reference.config.path, Result::Error, tr("Unexpected export error occurred")};
     }
     return results;
 }
@@ -759,6 +811,7 @@ void ShareObserver::handleDatabaseSaved()
     QStringList error;
     QStringList warning;
     QStringList success;
+
     const auto results = exportIntoReferenceContainers();
     for (const Result& result : results) {
         if (!result.isValid()) {
@@ -787,7 +840,7 @@ ShareObserver::Result::Result(const QString& path, ShareObserver::Result::Type t
 
 bool ShareObserver::Result::isValid() const
 {
-    return !path.isEmpty() || !message.isEmpty() || !message.isEmpty() || !message.isEmpty();
+    return !path.isEmpty() || !message.isEmpty();
 }
 
 bool ShareObserver::Result::isError() const

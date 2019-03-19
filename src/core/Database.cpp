@@ -275,6 +275,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
+    QByteArray oldTransformedKey = m_data.transformedMasterKey;
     KeePass2Writer writer;
     setEmitModified(false);
     writer.writeDatabase(device, this);
@@ -283,6 +284,15 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     if (writer.hasError()) {
         if (error) {
             *error = writer.errorString();
+        }
+        return false;
+    }
+
+    Q_ASSERT(!m_data.transformedMasterKey.isEmpty());
+    Q_ASSERT(m_data.transformedMasterKey != oldTransformedKey);
+    if (m_data.transformedMasterKey.isEmpty() || m_data.transformedMasterKey == oldTransformedKey) {
+        if (error) {
+            *error = tr("Key not transformed. This is a bug, please report it to the developers!");
         }
         return false;
     }
@@ -307,16 +317,18 @@ bool Database::extract(QByteArray& xmlOutput, QString* error)
 
 /**
  * Remove the old backup and replace it with a new one
- * backups are named <filename>.old.kdbx
+ * backups are named <filename>.old.<extension>
  *
  * @param filePath Path to the file to backup
  * @return true on success
  */
 bool Database::backupDatabase(const QString& filePath)
 {
-    QString backupFilePath = filePath;
-    auto re = QRegularExpression("\\.kdbx$|(?<!\\.kdbx)$", QRegularExpression::CaseInsensitiveOption);
-    backupFilePath.replace(re, ".old.kdbx");
+    static auto re = QRegularExpression("(\\.[^.]+)$");
+
+    auto match = re.match(filePath);
+    auto backupFilePath = filePath;
+    backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);
 }
@@ -512,9 +524,13 @@ void Database::setCompressionAlgorithm(Database::CompressionAlgorithm algo)
  * @param key key to set and transform or nullptr to reset the key
  * @param updateChangedTime true to update database change time
  * @param updateTransformSalt true to update the transform salt
+ * @param transformKey trigger the KDF after setting the key
  * @return true on success
  */
-bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime, bool updateTransformSalt)
+bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
+                      bool updateChangedTime,
+                      bool updateTransformSalt,
+                      bool transformKey)
 {
     Q_ASSERT(!m_data.isReadOnly);
 
@@ -532,7 +548,9 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool update
 
     QByteArray oldTransformedMasterKey = m_data.transformedMasterKey;
     QByteArray transformedMasterKey;
-    if (!key->transform(*m_data.kdf, transformedMasterKey)) {
+    if (!transformKey) {
+        transformedMasterKey = oldTransformedMasterKey;
+    } else if (!key->transform(*m_data.kdf, transformedMasterKey)) {
         return false;
     }
 

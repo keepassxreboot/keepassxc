@@ -38,80 +38,12 @@
         <translation>Naar klembord kopiëren</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revisie: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distributie: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Bibliotheken:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Besturingssysteem: %1
-CPU-architectuur: %2
-Kernelversie: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Geactiveerde extensies:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Projectbeheerders:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Een extra dank-je-wel van het KeePassXC-team gaat naar debfx voor het creëren van het oorspronkelijke KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Versie %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Bouwtype: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto-type</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH-agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Geen</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (getekend en ongetekend delen)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (alleen ondertekend delen)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (alleen niet-ondertekend delen)</translation>
     </message>
 </context>
 <context>
@@ -297,7 +229,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation>Auto-type start vertraging</translation>
+        <translation>Auto-type startvertraging</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
@@ -313,7 +245,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation>Knop stijl</translation>
+        <translation>Knopstijl</translation>
     </message>
 </context>
 <context>
@@ -361,7 +293,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Vergrendelde database na Auto-type weer vergrendelen.</translation>
+        <translation>Vergrendelde database na Auto-type weer vergrendelen</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -489,7 +421,7 @@ Kernelversie: %3 %4</translation>
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 vraagt toegang tot jouw wachtwoorden voor het volgende).
+        <translation>%1 vraagt toegang tot jouw wachtwoorden voor het volgende.
 Geef aan of je toegang wilt verlenen of niet.</translation>
     </message>
 </context>
@@ -657,21 +589,12 @@ Selecteer de database voor het opslaan van de inloggegevens.</translation>
         <translation>Selecteer aangepaste proxy-locatie</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Het spijt ons, maar KeePassXC-Browser wordt momenteel niet ondersteund voor Snap releases.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePaasXC-Browser is nodig voor de browser integratie.
-Download hem voor %1 en %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor browser</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation>&lt;b&gt;Waarschuwing&lt;/b&gt;, de keepassxc-proxy applicatie is niet gevonden!&lt;br /&gt;Controleer de installatie directory van KeePassXC of bevestig het aangepaste pad in geavanceerde opties.&lt;br /&gt;De browser integratie zal NIET WERKEN zonder de proxy application.&lt;br /&gt;Verwacht pad: </translation>
+        <translation>&lt;b&gt;Waarschuwing&lt;/b&gt;, de keepassxc-proxy-applicatie is niet gevonden!&lt;br /&gt;Controleer de installatiemap van KeePassXC of bevestig het aangepaste pad in geavanceerde opties.&lt;br /&gt;De browserintegratie zal NIET WERKEN zonder de proxy-applicatie.&lt;br /&gt;Verwacht pad: </translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -685,6 +608,18 @@ Download hem voor %1 en %2.</translation>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>Vraag geen toestemming voor HTTP en Basis Authentificatie</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -760,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: instellingen voor oudere browserintegratie gedetecteerd</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Instellingen voor oudere browserintegratie gedetecteerd.
-Wil je de instellingen veranderen naar de nieuwste standaard?
-Dit is nodig om compatibiliteit met de browser plugin te behouden.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -926,6 +869,10 @@ Dit is nodig om compatibiliteit met de browser plugin te behouden.</translation>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Bestand kan niet worden geschreven omdat het in de alleen-lezen modus is geopend.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1680,6 +1627,10 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
         <source>Database was not modified by merge operation.</source>
         <translation>Database werd niet gewijzigd door het samenvoegen.</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2116,6 +2067,22 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     <message>
         <source>Select import/export file</source>
         <translation>Selecteer import/export bestand</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Wissen</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2586,14 +2553,6 @@ Hierdoor werken de plugins mogelijk niet meer goed.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[leeg]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3190,6 +3149,22 @@ Lijn %2, kolom %3</translation>
         <source>Synchronize with</source>
         <translation>Synchroniseren met</translation>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3715,7 +3690,7 @@ Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor p
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Algemene databaseinformatie</translation>
+        <translation>Algemene database-informatie</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
@@ -3838,10 +3813,6 @@ Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor p
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Een wachtwoord is de primaire methode voor het beveiligen van een database.&lt;/p&gt; &lt;p&gt;Goede wachtwoorden zijn lang en uniek. KeePassXC kan er een voor je genereren.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Wachtwoord mag niet leeg zijn.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4878,6 +4849,10 @@ Beschikbare opdrachten:
         <source>Database password: </source>
         <translation>Databasewachtwoord: </translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5151,9 +5126,8 @@ Beschikbare opdrachten:
         <translation>Het geëxporteerde certificaat is niet hetzelfde als die in gebruik is. Wilt u het huidige certificaat exporteren?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1. %2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5169,10 +5143,6 @@ Beschikbare opdrachten:
     <message>
         <source>Import from container with certificate</source>
         <translation>Importeren uit de container met certificaat</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>Wil je %1 met de vingerafdruk van %2 van %3 vertrouwen?</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5251,14 +5221,6 @@ Beschikbare opdrachten:
         <translation>Kan geen export container schrijven (%1)</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>Kon ondertekening niet opnemen in zip bestand (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>Kon database niet opnemen in zip bestand (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>Overschrijven van een niet-ondertekende deel-container wordt niet ondersteund - export is voorkomen</translation>
     </message>
@@ -5281,6 +5243,34 @@ Beschikbare opdrachten:
     <message>
         <source>Export to %1</source>
         <translation>Exporteer naar %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Wilt u %1 met de vingerafdruk van %2 vanaf %3 vertrouwen? {1 ?} {2 ?} </translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5402,7 +5392,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Software Update</source>
-        <translation>Software update</translation>
+        <translation>Software-update</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
@@ -5472,7 +5462,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation>Geen YubiKey gedetecteerd, plug deze aub in.</translation>
+        <translation>Geen YubiKey gedetecteerd, plug deze a.u.b. in.</translation>
     </message>
     <message>
         <source>No YubiKey inserted.</source>

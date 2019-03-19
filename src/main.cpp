@@ -67,19 +67,13 @@ int main(int argc, char** argv)
     Bootstrap::bootstrapApplication();
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(
-        QObject::tr("KeePassXC - cross-platform password manager"));
+    parser.setApplicationDescription(QObject::tr("KeePassXC - cross-platform password manager"));
     parser.addPositionalArgument(
-        "filename",
-        QObject::tr("filenames of the password databases to open (*.kdbx)"),
-        "[filename(s)]");
+        "filename", QObject::tr("filenames of the password databases to open (*.kdbx)"), "[filename(s)]");
 
-    QCommandLineOption configOption(
-        "config", QObject::tr("path to a custom config file"), "config");
-    QCommandLineOption keyfileOption(
-        "keyfile", QObject::tr("key file of the database"), "keyfile");
-    QCommandLineOption pwstdinOption("pw-stdin",
-                                     QObject::tr("read password of the database from stdin"));
+    QCommandLineOption configOption("config", QObject::tr("path to a custom config file"), "config");
+    QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
+    QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     // This is needed under Windows where clients send --parent-window parameter with Native Messaging connect method
     QCommandLineOption parentWindowOption(QStringList() << "pw"
                                                         << "parent-window",
@@ -106,9 +100,7 @@ int main(int argc, char** argv)
         if (!fileNames.isEmpty()) {
             app.sendFileNamesToRunningInstance(fileNames);
         }
-        qWarning() << QObject::tr("Another instance of KeePassXC is already running.")
-                          .toUtf8()
-                          .constData();
+        qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
         return 0;
     }
 

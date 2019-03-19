@@ -123,6 +123,7 @@ BulkFileWatcher::BulkFileWatcher(QObject* parent)
     connect(&m_fileWatchUnblockTimer, SIGNAL(timeout()), this, SLOT(observeFileChanges()));
     connect(&m_pendingSignalsTimer, SIGNAL(timeout()), this, SLOT(emitSignals()));
     m_fileWatchUnblockTimer.setSingleShot(true);
+    m_pendingSignalsTimer.setSingleShot(true);
 }
 
 void BulkFileWatcher::clear()

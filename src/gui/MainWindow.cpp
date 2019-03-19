@@ -42,9 +42,9 @@
 #include "keys/PasswordKey.h"
 
 #ifdef WITH_XC_NETWORKING
-#include "updatecheck/UpdateChecker.h"
 #include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
+#include "updatecheck/UpdateChecker.h"
 #endif
 
 #ifdef WITH_XC_SSHAGENT
@@ -76,7 +76,7 @@
 class BrowserPlugin : public ISettingsPage
 {
 public:
-    BrowserPlugin(DatabaseTabWidget* tabWidget)
+    explicit BrowserPlugin(DatabaseTabWidget* tabWidget)
     {
         m_nativeMessagingHost =
             QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
@@ -374,7 +374,9 @@ MainWindow::MainWindow()
 
 #ifdef WITH_XC_NETWORKING
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
-    connect(UpdateChecker::instance(), SIGNAL(updateCheckFinished(bool, QString, bool)), SLOT(hasUpdateAvailable(bool, QString, bool)));
+    connect(UpdateChecker::instance(),
+            SIGNAL(updateCheckFinished(bool, QString, bool)),
+            SLOT(hasUpdateAvailable(bool, QString, bool)));
     QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
@@ -687,12 +689,13 @@ void MainWindow::showUpdateCheckStartup()
 {
 #ifdef WITH_XC_NETWORKING
     if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
-        auto result = MessageBox::question(this,
-                                           tr("Check for updates on startup?"),
-                                           tr("Would you like KeePassXC to check for updates on startup?") + "\n\n" +
-                                           tr("You can always check for updates manually from the application menu."),
-                                           MessageBox::Yes | MessageBox::No,
-                                           MessageBox::Yes);
+        auto result =
+            MessageBox::question(this,
+                                 tr("Check for updates on startup?"),
+                                 tr("Would you like KeePassXC to check for updates on startup?") + "\n\n"
+                                     + tr("You can always check for updates manually from the application menu."),
+                                 MessageBox::Yes | MessageBox::No,
+                                 MessageBox::Yes);
 
         config()->set("GUI/CheckForUpdates", (result == MessageBox::Yes));
         config()->set("UpdateCheckMessageShown", true);
@@ -713,6 +716,10 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
         updateCheckDialog->show();
     }
+#else
+    Q_UNUSED(hasUpdate)
+    Q_UNUSED(version)
+    Q_UNUSED(isManuallyRequested)
 #endif
 }
 

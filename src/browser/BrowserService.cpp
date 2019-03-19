@@ -150,7 +150,7 @@ QString BrowserService::getDatabaseRecycleBinUuid()
     return recycleBin->uuidToHex();
 }
 
-QJsonArray BrowserService::addChildrenToGroup(Group* group)
+QJsonArray BrowserService::getChildrenFromGroup(Group* group)
 {
     QJsonArray groupList;
 
@@ -166,7 +166,7 @@ QJsonArray BrowserService::addChildrenToGroup(Group* group)
         QJsonObject jsonGroup;
         jsonGroup["name"] = c->name();
         jsonGroup["uuid"] = Tools::uuidToHex(c->uuid());
-        jsonGroup["children"] = addChildrenToGroup(c);
+        jsonGroup["children"] = getChildrenFromGroup(c);
         groupList.push_back(jsonGroup);
     }
     return groupList;
@@ -187,7 +187,7 @@ QJsonObject BrowserService::getDatabaseGroups()
     QJsonObject root;
     root["name"] = rootGroup->name();
     root["uuid"] = Tools::uuidToHex(rootGroup->uuid());
-    root["children"] = addChildrenToGroup(rootGroup);
+    root["children"] = getChildrenFromGroup(rootGroup);
 
     QJsonArray groups;
     groups.push_back(root);
@@ -195,6 +195,84 @@ QJsonObject BrowserService::getDatabaseGroups()
     QJsonObject result;
     result["groups"] = groups;
 
+    return result;
+}
+
+QJsonObject BrowserService::createNewGroup(const QString& groupName)
+{
+    QJsonObject result;
+    if (thread() != QThread::currentThread()) {
+        QMetaObject::invokeMethod(this,
+                                  "createNewGroup",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QJsonObject, result),
+                                  Q_ARG(QString, groupName));
+        return result;
+    }
+
+    auto db = getDatabase();
+    if (!db) {
+        return {};
+    }
+
+    Group* rootGroup = db->rootGroup();
+    if (!rootGroup) {
+        return {};
+    }
+
+    auto group = rootGroup->findGroupByPath(groupName);
+
+    // Group already exists
+    if (group) {
+        result["name"] = group->name();
+        result["uuid"] = Tools::uuidToHex(group->uuid());
+        return result;
+    }
+
+    auto dialogResult = MessageBox::warning(nullptr,
+                                            tr("KeePassXC: Create a new group"),
+                                            tr("A request for creating a new group \"%1\" has been received.\n"
+                                               "Do you want to create this group?\n")
+                                                .arg(groupName),
+                                            MessageBox::Yes | MessageBox::No);
+
+    if (dialogResult != MessageBox::Yes) {
+        return result;
+    }
+
+    QString name, uuid;
+    Group* previousGroup = rootGroup;
+    auto groups = groupName.split("/");
+
+    // Returns the group name based on depth
+    auto getGroupName = [&](int depth) {
+        QString gName;
+        for (int i = 0; i < depth + 1; ++i) {
+            gName.append((i == 0 ? "" : "/") + groups[i]);
+        }
+        return gName;
+    };
+
+    // Create new group(s) always when the path is not found
+    for (int i = 0; i < groups.length(); ++i) {
+        QString gName = getGroupName(i);
+        auto tempGroup = rootGroup->findGroupByPath(gName);
+        if (!tempGroup) {
+            Group* newGroup = new Group();
+            newGroup->setName(groups[i]);
+            newGroup->setUuid(QUuid::createUuid());
+            newGroup->setParent(previousGroup);
+            name = newGroup->name();
+            uuid = Tools::uuidToHex(newGroup->uuid());
+            previousGroup = newGroup;
+            continue;
+        }
+
+        previousGroup = tempGroup;
+    }
+
+    result["name"] = name;
+    result["uuid"] = uuid;
     return result;
 }
 
@@ -630,7 +708,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
 {
     QUrl url(entryUrl);
     if (url.scheme().isEmpty()) {
-        url.setScheme("http");
+        url.setScheme("https");
     }
 
     const QString submitUrl = url.toString(QUrl::StripTrailingSlash);
@@ -996,12 +1074,13 @@ bool BrowserService::checkLegacySettings()
         return false;
     }
 
-    auto dialogResult = MessageBox::warning(nullptr,
-                                            tr("KeePassXC: Legacy browser integration settings detected"),
-                                            tr("Legacy browser integration settings have been detected.\n"
-                                               "Do you want to upgrade the settings to the latest standard?\n"
-                                               "This is necessary to maintain compatibility with the browser plugin."),
-                                            MessageBox::Yes | MessageBox::No);
+    auto dialogResult =
+        MessageBox::warning(nullptr,
+                            tr("KeePassXC: Legacy browser integration settings detected"),
+                            tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
+                               "This is necessary to maintain your current browser connections.\n"
+                               "Would you like to migrate your existing settings now?"),
+                            MessageBox::Yes | MessageBox::No);
 
     return dialogResult == MessageBox::Yes;
 }
@@ -1034,6 +1113,8 @@ void BrowserService::raiseWindow(const bool force)
         m_prevWindowState = WindowState::Minimized;
     }
 #ifdef Q_OS_MACOS
+    Q_UNUSED(force);
+
     if (macUtils()->isHidden()) {
         m_prevWindowState = WindowState::Hidden;
     }

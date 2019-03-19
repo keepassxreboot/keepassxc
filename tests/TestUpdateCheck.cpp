@@ -17,8 +17,8 @@
 
 #include "TestUpdateCheck.h"
 #include "TestGlobal.h"
-#include "updatecheck/UpdateChecker.h"
 #include "crypto/Crypto.h"
+#include "updatecheck/UpdateChecker.h"
 
 QTEST_GUILESS_MAIN(TestUpdateCheck)
 
@@ -29,7 +29,7 @@ void TestUpdateCheck::initTestCase()
 
 void TestUpdateCheck::testCompareVersion()
 {
-                                       // Remote Version , Installed Version
+    // Remote Version , Installed Version
     QCOMPARE(UpdateChecker::compareVersions(QString("2.4.0"), QString("2.3.4")), true);
     QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0"), QString("2.4.0")), false);
     QCOMPARE(UpdateChecker::compareVersions(QString("2.3.0"), QString("2.3.0")), false);

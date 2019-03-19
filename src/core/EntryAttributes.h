@@ -36,6 +36,7 @@ public:
     bool hasKey(const QString& key) const;
     QList<QString> customKeys() const;
     QString value(const QString& key) const;
+    QList<QString> values(const QList<QString>& keys) const;
     bool contains(const QString& key) const;
     bool containsValue(const QString& value) const;
     bool isProtected(const QString& key) const;

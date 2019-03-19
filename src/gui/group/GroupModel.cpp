@@ -124,7 +124,7 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
     Group* group = groupFromIndex(index);
 
     if (role == Qt::DisplayRole) {
-        QString nameTemplate = tr("%1", "Template for name without annotation");
+        QString nameTemplate = "%1";
 #if defined(WITH_XC_KEESHARE)
         nameTemplate = KeeShare::indicatorSuffix(group, nameTemplate);
 #endif

@@ -54,6 +54,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     connect(m_ui->pathEdit, SIGNAL(editingFinished()), SLOT(selectPath()));
     connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(launchPathSelectionDialog()));
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
+    connect(m_ui->clearButton, SIGNAL(clicked(bool)), SLOT(clearInputs()));
 
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(showSharingState()));
 
@@ -84,12 +85,13 @@ EditGroupWidgetKeeShare::~EditGroupWidgetKeeShare()
 {
 }
 
-void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup)
+void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, QSharedPointer<Database> database)
 {
     if (m_temporaryGroup) {
         m_temporaryGroup->disconnect(this);
     }
 
+    m_database = database;
     m_temporaryGroup = temporaryGroup;
 
     if (m_temporaryGroup) {
@@ -127,9 +129,43 @@ void EditGroupWidgetKeeShare::showSharingState()
                     .arg(supportedExtensions.join(", ")),
                 MessageWidget::Warning);
             return;
-        } else {
-            m_ui->messageWidget->hide();
         }
+
+        const auto groups = m_database->rootGroup()->groupsRecursive(true);
+        bool conflictExport = false;
+        bool multipleImport = false;
+        bool cycleImportExport = false;
+        for (const auto* group : groups) {
+            if (group->uuid() == m_temporaryGroup->uuid()) {
+                continue;
+            }
+            const auto other = KeeShare::referenceOf(group);
+            if (other.path != reference.path) {
+                continue;
+            }
+            multipleImport |= other.isImporting() && reference.isImporting();
+            conflictExport |= other.isExporting() && reference.isExporting();
+            cycleImportExport |=
+                (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
+        }
+        if (conflictExport) {
+            m_ui->messageWidget->showMessage(tr("The export container %1 is already referenced.").arg(reference.path),
+                                             MessageWidget::Error);
+            return;
+        }
+        if (multipleImport) {
+            m_ui->messageWidget->showMessage(tr("The import container %1 is already imported.").arg(reference.path),
+                                             MessageWidget::Warning);
+            return;
+        }
+        if (cycleImportExport) {
+            m_ui->messageWidget->showMessage(
+                tr("The container %1 imported and export by different groups.").arg(reference.path),
+                MessageWidget::Warning);
+            return;
+        }
+
+        m_ui->messageWidget->hide();
     }
     const auto active = KeeShare::active();
     if (!active.in && !active.out) {
@@ -164,6 +200,17 @@ void EditGroupWidgetKeeShare::update()
     m_ui->passwordGenerator->hide();
     m_ui->togglePasswordGeneratorButton->setChecked(false);
     m_ui->togglePasswordButton->setChecked(false);
+}
+
+void EditGroupWidgetKeeShare::clearInputs()
+{
+    if (m_temporaryGroup) {
+        KeeShare::setReferenceTo(m_temporaryGroup, KeeShareSettings::Reference());
+    }
+    m_ui->passwordEdit->clear();
+    m_ui->pathEdit->clear();
+    m_ui->typeComboBox->setCurrentIndex(KeeShareSettings::Inactive);
+    m_ui->passwordGenerator->setVisible(false);
 }
 
 void EditGroupWidgetKeeShare::togglePasswordGeneratorButton(bool checked)

@@ -19,12 +19,6 @@
 #include "BinaryStream.h"
 #include <QtEndian>
 
-BinaryStream::BinaryStream(QObject* parent)
-    : QObject(parent)
-    , m_timeout(-1)
-{
-}
-
 BinaryStream::BinaryStream(QIODevice* device)
     : QObject(device)
     , m_timeout(-1)
@@ -36,7 +30,10 @@ BinaryStream::BinaryStream(QByteArray* ba, QObject* parent)
     : QObject(parent)
     , m_timeout(-1)
 {
-    setData(ba);
+    m_buffer.reset(new QBuffer(ba));
+    m_buffer->open(QIODevice::ReadWrite);
+
+    m_device = m_buffer.data();
 }
 
 BinaryStream::~BinaryStream()
@@ -51,19 +48,6 @@ const QString BinaryStream::errorString() const
 QIODevice* BinaryStream::device() const
 {
     return m_device;
-}
-
-void BinaryStream::setDevice(QIODevice* device)
-{
-    m_device = device;
-}
-
-void BinaryStream::setData(QByteArray* ba)
-{
-    m_buffer.reset(new QBuffer(ba));
-    m_buffer->open(QIODevice::ReadWrite);
-
-    m_device = m_buffer.data();
 }
 
 void BinaryStream::setTimeout(int timeout)

@@ -38,80 +38,12 @@
         <translation>Copier dans le presse-papiers</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Révision : %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribution : %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Bibliothèques :</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Système d’exploitation : %1
-Architecture d’UCT : %2
-Noyau : %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Extensions activées :</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Mainteneurs du projet :</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>L’équipe de KeePassXC remercie tout particulièrement debfx pour la création du KeePassX original.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Type de Version : %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Saisie automatique</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Intégration aux navigateurs</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>Agent SSH</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Aucun</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (partage signé et non signé)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (partage signé uniquement)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (partage non signé uniquement)</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
         <translation>Sélectionner un proxy personnalisé</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Nous sommes désolés, mais KeePassXC-Browser n’est pas disponible via Snap pour le moment.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Browser est nécessaire pour que l&apos;intégration au navigateur fonctionne. &lt;br /&gt;Téléchargez-le pour %1 et%2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Navigateur Tor</translation>
     </message>
@@ -684,6 +608,18 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>Ne pas demander d&apos;autorisation pour l&apos;authentification HTTP &amp;Basic</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -759,9 +695,19 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC : Ancienne integration au navigateur détectée</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -923,6 +869,10 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Le fichier ne peut pas être enregistré car il est ouvert en lecture seule.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1676,6 +1626,10 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
         <source>Database was not modified by merge operation.</source>
         <translation>La base de données n&apos;a pas été modifiée par l&apos;opération de fusion.</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2112,6 +2066,22 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     <message>
         <source>Select import/export file</source>
         <translation>Sélectionner le fichier d&apos;import/export</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Effacer</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2583,14 +2553,6 @@ This may cause the affected plugins to malfunction.</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[vide]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3186,6 +3148,22 @@ Ligne %2, colonne %3</translation>
     <message>
         <source>Synchronize with</source>
         <translation>Synchroniser avec</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3835,10 +3813,6 @@ Attendez-vous à des bogues et des problèmes mineurs. Cette version n’est pas
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Le mot de passe est le moyen principal pour sécuriser votre base de données.&lt;/p&gt;&lt;p&gt;Un bon mot de passe est long et unique. KeePassXC peut en générer un pour vous.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Le mot de passe ne peut pas être vide.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4875,6 +4849,10 @@ Commandes disponibles :
         <source>Database password: </source>
         <translation>Mot de passe de la base de données :</translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -4993,7 +4971,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>logical OR</source>
-        <translation type="unfinished"/>
+        <translation>OU logique</translation>
     </message>
     <message>
         <source>Examples</source>
@@ -5137,7 +5115,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Select path</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionner le chemin</translation>
     </message>
     <message>
         <source>Exporting changed certificate</source>
@@ -5148,8 +5126,7 @@ Commandes disponibles :
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
+        <source>Signer:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5165,10 +5142,6 @@ Commandes disponibles :
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5248,14 +5221,6 @@ Commandes disponibles :
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation type="unfinished"/>
     </message>
@@ -5277,6 +5242,34 @@ Commandes disponibles :
     </message>
     <message>
         <source>Export to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>

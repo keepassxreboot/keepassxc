@@ -30,6 +30,7 @@
 #include "gui/MessageBox.h"
 
 #ifdef WITH_XC_NETWORKING
+#include <QHostInfo>
 #include <QNetworkAccessManager>
 #include <QtNetwork>
 #endif
@@ -65,7 +66,6 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
 
-    connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this, SIGNAL(widgetUpdated()));
@@ -196,13 +196,27 @@ void EditWidgetIcons::downloadFavicon()
     m_urlsToTry.clear();
 
     QString fullyQualifiedDomain = m_url.host();
-    QString secondLevelDomain = getSecondLevelDomain(m_url);
 
-    // Attempt to simply load the favicon.ico file
-    if (fullyQualifiedDomain != secondLevelDomain) {
-        m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+
+    // Determine if host portion of URL is an IP address by resolving it and
+    // searching for a match with the returned address(es).
+    bool hostIsIp = false;
+    QList<QHostAddress> hostAddressess = QHostInfo::fromName(fullyQualifiedDomain).addresses();
+    for (auto addr : hostAddressess) {
+        if (addr.toString() == fullyQualifiedDomain) {
+            hostIsIp = true;
+        }
     }
-    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+
+    if (!hostIsIp) {
+        QString secondLevelDomain = getSecondLevelDomain(m_url);
+
+        // Attempt to simply load the favicon.ico file
+        if (fullyQualifiedDomain != secondLevelDomain) {
+            m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+        }
+    }
 
     // Try to use alternative fallback URL, if enabled
     if (config()->get("security/IconDownloadFallback", false).toBool()) {
@@ -210,6 +224,15 @@ void EditWidgetIcons::downloadFavicon()
         fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
 
         m_urlsToTry.append(fallbackUrl);
+
+        if (!hostIsIp) {
+            QString secondLevelDomain = getSecondLevelDomain(m_url);
+
+            if (fullyQualifiedDomain != secondLevelDomain) {
+                fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(secondLevelDomain) + ".ico");
+                m_urlsToTry.append(fallbackUrl);
+            }
+        }
     }
 
     startFetchFavicon(m_urlsToTry.takeFirst());
@@ -277,7 +300,7 @@ void EditWidgetIcons::fetchFinished()
 #endif
 }
 
-void EditWidgetIcons::fetchCanceled()
+void EditWidgetIcons::abortRequests()
 {
 #ifdef WITH_XC_NETWORKING
     if (m_reply) {

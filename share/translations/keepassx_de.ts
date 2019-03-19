@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Melden Sie Bugs auf: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Melden Sie Fehler auf: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -31,35 +31,11 @@
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Geben Sie folgende Informationen an, wenn Sie einen Bug melden:</translation>
+        <translation>Geben Sie folgende Informationen an, wenn Sie einen Fehler melden:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
         <translation>In die Zwischenablage kopieren</translation>
-    </message>
-    <message>
-        <source>Revision: %1</source>
-        <translation>Revision: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribution: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Bibliotheken:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Betriebssystem: %1
-CPU-Architektur: %2
-Kernel: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Aktivierte Erweiterungen:</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -68,50 +44,6 @@ Kernel: %3 %4</translation>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Das KeePassXC-Team möchte ganz besonders debfx danken für die Entwicklung des ursprünglichen KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Build Typ: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Browser-Integration</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH-Agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Keine</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (bestätigtes und unbestätigtes Teilen)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (nur bestätigtes Teilen)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (nur unbestätigtes Teilen)</translation>
     </message>
 </context>
 <context>
@@ -180,7 +112,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Remember last databases</source>
-        <translation>Letzte Datenbank merken</translation>
+        <translation>Letzte Datenbanken merken</translation>
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
@@ -389,7 +321,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation>Verwende DuckDuckGo als Ersatz für das Herunterladen von Website-Symbole</translation>
+        <translation>DuckDuckGo als Ersatz für das Herunterladen von Website-Symbolen verwenden</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
         <translation>Benutzerdefinierten Proxy-Pfad auswählen</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Sorry, aber KeePassXC-Browser wird derzeit für Snap-Releases nicht unterstützt.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Browser wird für die Funktion der Browserintegration benötig. &lt;br /&gt;Lade es für %1 und %2 herunter.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Browser</translation>
     </message>
@@ -684,6 +608,18 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>Nicht nach HTTP Basic Auth fragen</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -759,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: native Browser-Integrations-Einstellungen gefunden</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Einstellungen zur veralteten Browserintegration gefunden
-Sollen diese Einstellungen zur aktuellen Version migriert werden?
-Das ist nötig um das Browser-Plugin kompatibel zu halten.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -924,6 +868,10 @@ Das ist nötig um das Browser-Plugin kompatibel zu halten.</translation>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Datei ist schreibgeschützt</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1145,7 +1093,7 @@ Zugriffserlaubnisse zu allen Einträgen werden gelöscht.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>Diese Datenbank enthält keinen Eintrag mit Zugangsdaten.</translation>
+        <translation>Die aktive Datenbank enthält keinen Eintrag mit Zugangsdaten.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1162,7 +1110,7 @@ Das ist nötig um das Browser-Plugin kompatibel zu halten.</translation>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Verschlüsselungs-Algorithmus.</translation>
+        <translation>Verschlüsselungs-Algorithmus:</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
@@ -1174,7 +1122,7 @@ Das ist nötig um das Browser-Plugin kompatibel zu halten.</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Schlüssel-Ableitungsfunktion</translation>
+        <translation>Schlüssel-Ableitungsfunktion:</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
@@ -1218,7 +1166,7 @@ Das ist nötig um das Browser-Plugin kompatibel zu halten.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Datenbanformat:</translation>
+        <translation>Datenbankformat:</translation>
     </message>
     <message>
         <source>This is only important if you need to use your database with other programs.</source>
@@ -1479,7 +1427,7 @@ Das ist definitiv ein Fehler, teile das bitte den Entwicklern mit.</translation>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation>Ausgewählte CSV-Datei</translation>
+        <translation>CSV-Datei auswählen</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -1680,6 +1628,10 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
         <source>Database was not modified by merge operation.</source>
         <translation>Datenbank wurde nicht zusammengeführt</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -1729,7 +1681,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Privatschlüsel konnte nicht geöffnet werden</translation>
+        <translation>Privatschlüssel konnte nicht geöffnet werden</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -2117,6 +2069,22 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
         <source>Select import/export file</source>
         <translation>Wähle Datei für Import/Export</translation>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -2197,7 +2165,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Tipp: Sie können DuckDuckgo als Ausweichelösung unter Werkzeuge&gt;Einstellungen&gt;Sicherheit festlegen</translation>
+        <translation>Tipp: Sie können DuckDuckGo als Ersatz unter Werkzeuge&gt;Einstellungen&gt;Sicherheit aktivieren</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2221,7 +2189,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Dieses Symbol wird von %n Eintrag/Einträgen benutzt und wird mit dem Standardsymbol ersetzt. Bist du sicher, dass es gelöscht werden soll?</numerusform><numerusform>Dieses Symbol wird von %n Eintrag/Einträgen benutzt und wird mit dem Standardsymbol ersetzt. Bist du sicher, dass es gelöscht werden soll?</numerusform></translation>
+        <translation><numerusform>Dieses Symbol wird von %n Eintrag benutzt und wird mit dem Standardsymbol ersetzt. Sind Sie sicher, dass es gelöscht werden soll?</numerusform><numerusform>Dieses Symbol wird von %n Einträgen benutzt und wird mit dem Standardsymbol ersetzt. Sind Sie sicher, dass es gelöscht werden soll?</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2315,7 +2283,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sind Sie sicher, dass sie einen Anhang löschen möchten?</numerusform><numerusform>Sind Sie sicher, dass sie %n Anhänge löschen möchten?</numerusform></translation>
+        <translation><numerusform>Sind Sie sicher, dass Sie einen Anhang löschen möchten?</numerusform><numerusform>Sind Sie sicher, dass Sie %n Anhänge löschen möchten?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -2350,7 +2318,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Öffnen des Anhangs nicht möglich:
+        <translation>Öffnen der Anhänge nicht möglich:
 %1</translation>
     </message>
     <message>
@@ -2588,14 +2556,6 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[leer]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3192,6 +3152,22 @@ Zeile %2, Spalte %3</translation>
         <source>Synchronize with</source>
         <translation>Synchronisieren mit</translation>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3532,7 +3508,7 @@ Wir empfehlen dir die Verwendung des auf unserer Downloadseite verfügbaren AppI
     </message>
     <message>
         <source>&amp;Database settings...</source>
-        <translation>&amp;Datenbankeinstellungen</translation>
+        <translation>&amp;Datenbankeinstellungen...</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
@@ -3617,7 +3593,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation>Backup für alten Eintrag %1 hinzugefügt [%2]</translation>
+        <translation>Backup für älteres Ziel %1 hinzugefügt [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
@@ -3744,7 +3720,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Magic-Header-ID der Schlüsseldate ungültig</translation>
+        <translation>Magic-Header-ID der Schlüsseldatei ungültig</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -3756,7 +3732,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Korrupte Schlüsseldatei, lesen des Privatschlüssels fehlgeschlagen</translation>
+        <translation>Korrupte Schlüsseldatei, Lesen des Privatschlüssels fehlgeschlagen</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
@@ -3839,11 +3815,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>1</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Passwort kann nicht leer sein.</translation>
+        <translation>&lt;p&gt;Ein Passwort ist die primäre Methode, Ihre Datenbank abzusichern.&lt;/p&gt;&lt;p&gt;Gute Passwörter sind lang und einzigartig. KeepassXC kann eins für Sie generieren.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -3943,7 +3915,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Passwort Qualität: %1</translation>
+        <translation>Passwort-Qualität: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -4215,7 +4187,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Nach dem Passwort des Eintrags fragen</translation>
+        <translation>Nach dem Passwort des Eintrags fragen.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
@@ -4260,11 +4232,11 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Pfad des zu bearbeitenden Eintrags</translation>
+        <translation>Pfad des zu bearbeitenden Eintrags.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>Entropy des Passworts abschätzen</translation>
+        <translation>Entropie des Passworts abschätzen.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
@@ -4445,7 +4417,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Invalid value for password length %1.</source>
-        <translation>Passwortlänge ungültig %1</translation>
+        <translation>Ungültiger Wert für Passwortlänge %1.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
@@ -4506,7 +4478,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Invalid value for password length: %1</source>
-        <translation>Passwortlänge ungültig %1</translation>
+        <translation>Ungültiger Wert für Passwortlänge: %1</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
@@ -4724,7 +4696,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>Zeige TOTP</translation>
+        <translation>Aktuelles TOTP des Eintrags zeigen.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
@@ -4802,7 +4774,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>Kein Schlüssel gewählt. Datenbankerstellung wird abgebrochen</translation>
+        <translation>Kein Schlüssel gewählt. Datenbankerstellung wird abgebrochen.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
@@ -4814,7 +4786,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation>Passwort zur Datenbankverschlüsselung eingeben (Enter drücken um es leer zu lassen)</translation>
+        <translation>Passwort zur Datenbankverschlüsselung eingeben (Enter drücken, um es leer zu lassen):</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -4879,6 +4851,10 @@ Verfügbare Kommandos:
     <message>
         <source>Database password: </source>
         <translation>Datenbankpasswort:</translation>
+    </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5153,9 +5129,8 @@ Verfügbare Kommandos:
         <translation>Das exportierte Zertifikat ist nicht das selbe wie das benutzte. Soll das aktuelle Zertifikat exportiert werden?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1.%2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5171,10 +5146,6 @@ Verfügbare Kommandos:
     <message>
         <source>Import from container with certificate</source>
         <translation>Von Container mit Zertifikat importieren</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>Soll %1 mit dem Fingerabdruck %2 von %3 vertraut werden?</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5253,14 +5224,6 @@ Verfügbare Kommandos:
         <translation>Export-Container (%1) kann nicht gespeichert werden</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>Unterschrift kann nicht eingebettet werden (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>Datenbank kann nicht eingebettet werden (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>Überschreiben von nicht unterzeichneten geteilten Containern nicht unterstützt. Export verhindert.</translation>
     </message>
@@ -5283,6 +5246,34 @@ Verfügbare Kommandos:
     <message>
         <source>Export to %1</source>
         <translation>Export nach %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Möchten Sie %1 mit dem Fingerabdruck %2 von %3 vertrauen? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5412,7 +5403,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation>Version %1 ist verfügbar, aktuell: %2.</translation>
+        <translation>KeepassXC %1 ist jetzt verfügbar — Sie haben %2.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>

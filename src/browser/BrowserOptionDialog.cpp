@@ -32,13 +32,24 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
 {
     m_ui->setupUi(this);
 
+    // clang-format off
+    QString snapInstructions;
+#if defined(KEEPASSXC_DIST_SNAP)
+    snapInstructions = "<br /><br />" +
+            tr("Due to Snap sandboxing, you must run a script to enable browser integration."
+               "<br />"
+               "You can obtain this script from %1")
+               .arg("<a href=\"https://keepassxc.org/download#linux\">https://keepassxc.org</a>");
+#endif
+
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2.")
+        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2. %3")
             .arg("<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
-                 "<a "
-                 "href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/"
-                 "oboonakemofpalcgghocfoadofidjkkk\">Google Chrome / Chromium / Vivaldi</a>"));
+                 "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
+                 "Google Chrome / Chromium / Vivaldi</a>",
+                 snapInstructions));
+    // clang-format on
 
     m_ui->scriptWarningWidget->setVisible(false);
     m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
@@ -119,11 +130,18 @@ void BrowserOptionDialog::loadSettings()
     m_ui->supportBrowserProxy->setChecked(true);
     m_ui->supportBrowserProxy->setEnabled(false);
 #elif defined(KEEPASSXC_DIST_SNAP)
-    m_ui->enableBrowserSupport->setChecked(false);
-    m_ui->enableBrowserSupport->setEnabled(false);
-    m_ui->browserGlobalWarningWidget->showMessage(
-        tr("We're sorry, but KeePassXC-Browser is not supported for Snap releases at the moment."),
-        MessageWidget::Warning);
+    // Disable settings that will not work
+    m_ui->supportBrowserProxy->setChecked(true);
+    m_ui->supportBrowserProxy->setEnabled(false);
+    m_ui->useCustomProxy->setChecked(false);
+    m_ui->useCustomProxy->setEnabled(false);
+    m_ui->browsersGroupBox->setVisible(false);
+    m_ui->browsersGroupBox->setEnabled(false);
+    m_ui->updateBinaryPath->setChecked(false);
+    m_ui->updateBinaryPath->setEnabled(false);
+    // Show notice to user
+    m_ui->browserGlobalWarningWidget->showMessage(tr("Please see special instructions for browser extension use below"),
+                                                  MessageWidget::Warning);
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif

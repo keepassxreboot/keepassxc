@@ -26,16 +26,14 @@
 class BinaryStream : QObject
 {
     Q_OBJECT
+    Q_DISABLE_COPY(BinaryStream)
 public:
-    BinaryStream(QObject* parent = nullptr);
-    BinaryStream(QIODevice* device);
-    BinaryStream(QByteArray* ba, QObject* parent = nullptr);
-    ~BinaryStream();
+    explicit BinaryStream(QIODevice* device);
+    explicit BinaryStream(QByteArray* ba, QObject* parent = nullptr);
+    ~BinaryStream() override;
 
     const QString errorString() const;
     QIODevice* device() const;
-    void setDevice(QIODevice* device);
-    void setData(QByteArray* ba);
     void setTimeout(int timeout);
 
     bool read(QByteArray& ba);

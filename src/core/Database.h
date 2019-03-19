@@ -109,7 +109,8 @@ public:
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
                 bool updateChangedTime = true,
-                bool updateTransformSalt = false);
+                bool updateTransformSalt = false,
+                bool transformKey = true);
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
     bool verifyKey(const QSharedPointer<CompositeKey>& key) const;

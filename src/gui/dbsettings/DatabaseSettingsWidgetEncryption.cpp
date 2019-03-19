@@ -81,7 +81,7 @@ void DatabaseSettingsWidgetEncryption::initialize()
         isDirty = true;
     }
     if (!m_db->key()) {
-        m_db->setKey(QSharedPointer<CompositeKey>::create());
+        m_db->setKey(QSharedPointer<CompositeKey>::create(), true, false, false);
         m_db->setCipher(KeePass2::CIPHER_AES256);
         isDirty = true;
     }
@@ -127,8 +127,7 @@ void DatabaseSettingsWidgetEncryption::setupAlgorithmComboBox()
 {
     m_ui->algorithmComboBox->clear();
     for (auto& cipher : asConst(KeePass2::CIPHERS)) {
-        m_ui->algorithmComboBox->addItem(cipher.second.toUtf8(),
-                                         cipher.first.toByteArray());
+        m_ui->algorithmComboBox->addItem(cipher.second.toUtf8(), cipher.first.toByteArray());
     }
     int cipherIndex = m_ui->algorithmComboBox->findData(m_db->cipher().toByteArray());
     if (cipherIndex > -1) {
@@ -142,8 +141,7 @@ void DatabaseSettingsWidgetEncryption::setupKdfComboBox()
     bool block = m_ui->kdfComboBox->blockSignals(true);
     m_ui->kdfComboBox->clear();
     for (auto& kdf : asConst(KeePass2::KDFS)) {
-        m_ui->kdfComboBox->addItem(kdf.second.toUtf8(),
-                                   kdf.first.toByteArray());
+        m_ui->kdfComboBox->addItem(kdf.second.toUtf8(), kdf.first.toByteArray());
     }
     m_ui->kdfComboBox->blockSignals(block);
 }

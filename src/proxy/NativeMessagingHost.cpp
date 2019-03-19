@@ -19,7 +19,7 @@
 #include <QCoreApplication>
 
 #ifdef Q_OS_WIN
-#include <Winsock2.h>
+#include <winsock2.h>
 #endif
 
 NativeMessagingHost::NativeMessagingHost()
@@ -36,14 +36,12 @@ NativeMessagingHost::NativeMessagingHost()
     }
 #ifdef Q_OS_WIN
     m_running.store(true);
-    m_future =
-        QtConcurrent::run(this, static_cast<void (NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
+    m_future = QtConcurrent::run(this, &NativeMessagingHost::readNativeMessages);
 #endif
     connect(m_localSocket, SIGNAL(readyRead()), this, SLOT(newLocalMessage()));
     connect(m_localSocket, SIGNAL(disconnected()), this, SLOT(deleteSocket()));
     connect(m_localSocket,
             SIGNAL(stateChanged(QLocalSocket::LocalSocketState)),
-            this,
             SLOT(socketStateChanged(QLocalSocket::LocalSocketState)));
 }
 

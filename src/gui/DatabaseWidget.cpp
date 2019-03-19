@@ -61,8 +61,6 @@
 #include "keeshare/KeeShare.h"
 #include "touchid/TouchID.h"
 
-#include "config-keepassx.h"
-
 #ifdef Q_OS_LINUX
 #include <sys/vfs.h>
 #endif
@@ -80,6 +78,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_previewView(new EntryPreviewWidget(this))
     , m_previewSplitter(new QSplitter(m_mainWidget))
     , m_searchingLabel(new QLabel(this))
+#ifdef WITH_XC_KEESHARE
+    , m_shareLabel(new QLabel(this))
+#endif
     , m_csvImportWizard(new CsvImportWizard(this))
     , m_editEntryWidget(new EditEntryWidget(this))
     , m_editGroupWidget(new EditGroupWidget(this))
@@ -103,6 +104,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     auto* vbox = new QVBoxLayout();
     vbox->setMargin(0);
     vbox->addWidget(m_searchingLabel);
+#ifdef WITH_XC_KEESHARE
+    vbox->addWidget(m_shareLabel);
+#endif
     vbox->addWidget(m_previewSplitter);
     rightHandSideWidget->setLayout(vbox);
     m_entryView = new EntryView(rightHandSideWidget);
@@ -133,6 +137,16 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
                                     "border: 2px solid rgb(190, 190, 190);"
                                     "border-radius: 4px;");
     m_searchingLabel->setVisible(false);
+
+#ifdef WITH_XC_KEESHARE
+    m_shareLabel->setText(tr("Shared group..."));
+    m_shareLabel->setAlignment(Qt::AlignCenter);
+    m_shareLabel->setStyleSheet("color: rgb(0, 0, 0);"
+                                "background-color: rgb(255, 253, 160);"
+                                "border: 2px solid rgb(190, 190, 190);"
+                                "border-radius: 4px;");
+    m_shareLabel->setVisible(false);
+#endif
 
     m_previewView->hide();
     m_previewSplitter->addWidget(m_entryView);
@@ -192,6 +206,12 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
         connect(this, SIGNAL(databaseLocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
         connect(this, SIGNAL(databaseUnlocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
     }
+#endif
+
+#ifdef WITH_XC_KEESHARE
+    // We need to reregister the database to allow exports
+    // from a newly created database
+    KeeShare::instance()->connectDatabase(m_db, {});
 #endif
 
     switchToMainView();
@@ -377,6 +397,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     processAutoOpen();
 #if defined(WITH_XC_KEESHARE)
     KeeShare::instance()->connectDatabase(m_db, oldDb);
+#else
+    // Keep the instance active till the end of this function
+    Q_UNUSED(oldDb);
 #endif
 }
 
@@ -765,9 +788,9 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 
     setCurrentWidget(m_mainWidget);
 
-    if (sender() == m_entryView) {
+    if (sender() == m_entryView || sender() == m_editEntryWidget) {
         onEntryChanged(m_entryView->currentEntry());
-    } else if (sender() == m_groupView) {
+    } else if (sender() == m_groupView || sender() == m_editGroupWidget) {
         onGroupChanged(m_groupView->currentGroup());
     }
 }
@@ -1089,6 +1112,7 @@ void DatabaseWidget::search(const QString& searchtext)
     }
 
     m_searchingLabel->setVisible(true);
+    m_shareLabel->setVisible(false);
 
     emit searchModeActivated();
 }
@@ -1117,6 +1141,16 @@ void DatabaseWidget::onGroupChanged(Group* group)
     }
 
     m_previewView->setGroup(group);
+
+#ifdef WITH_XC_KEESHARE
+    auto shareLabel = KeeShare::sharingLabel(group);
+    if (!shareLabel.isEmpty()) {
+        m_shareLabel->setText(shareLabel);
+        m_shareLabel->setVisible(true);
+    } else {
+        m_shareLabel->setVisible(false);
+    }
+#endif
 }
 
 void DatabaseWidget::onDatabaseModified()
@@ -1140,6 +1174,7 @@ void DatabaseWidget::endSearch()
 
         // Show the normal entry view of the current group
         m_entryView->displayGroup(currentGroup());
+        onGroupChanged(currentGroup());
 
         emit listModeActivated();
     }

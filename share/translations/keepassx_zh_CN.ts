@@ -38,80 +38,12 @@
         <translation>复制到剪贴板</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>修订版本：%1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>发行版: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>库：</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>操作系统：%1
-CPU 架构：%2
-内核：%3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>已启用的扩展：</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>项目维护者：</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>KeePassXC 团队特别感谢 debfx 开发了最初版 KeePassX</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>版本 %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>构建类型： %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>自动输入</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>浏览器配合</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH 代理</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>无</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (签名和未签名共享)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (仅限签名共享)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (仅限未签名共享)</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Please select the correct database for saving credentials.</source>
         <translation>选择自定义代理路径</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>非常抱歉，KeePassXC-Browser 当前不支持 Snap 发行包</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>浏览器集成需要KeePassXC-Browser才能工作。&lt;br /&gt;下载 %1 和 %2。</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor浏览器</translation>
     </message>
@@ -684,6 +608,18 @@ Please select the correct database for saving credentials.</source>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>不要请求 http 和基本身份验证的许可</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -759,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC：检测到旧版浏览器集成设置</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>已检测到旧版浏览器集成设置
-是否要将设置升级到最新标准？
-这对于保持与浏览器插件的兼容性是必要的。</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -925,6 +869,10 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>文件无法写入，因为它以只读模式打开。</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1680,6 +1628,10 @@ Disable safe saves and try again?</source>
         <source>Database was not modified by merge operation.</source>
         <translation>合并操作未修改数据库。</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2116,6 +2068,22 @@ Disable safe saves and try again?</source>
     <message>
         <source>Select import/export file</source>
         <translation>选择导入文件</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2586,14 +2554,6 @@ This may cause the affected plugins to malfunction.</source>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[空]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3188,6 +3148,22 @@ Line %2, column %3</source>
     <message>
         <source>Synchronize with</source>
         <translation>与同步</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3838,10 +3814,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;密码是保护数据库的主要方法。&lt;/p&gt;&lt;p&gt;良好的密码长且独特。 KeePassXC可以为您生成一个。&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>密码不能为空。</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4879,6 +4851,10 @@ Available commands:
         <source>Database password: </source>
         <translation>数据库密码：</translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5152,9 +5128,8 @@ Available commands:
         <translation>导出的证书与正在使用的证书不同。是否要导出当前证书？</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1.%2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5170,10 +5145,6 @@ Available commands:
     <message>
         <source>Import from container with certificate</source>
         <translation>从带有证书的容器导入</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>是否要信任 %1 , 来自 %3的%2的指纹</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5252,14 +5223,6 @@ Available commands:
         <translation>无法写入导出容器 (%1)</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>无法嵌入签名 (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>无法嵌入数据库 (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>不支持覆盖未签名的共享容器-防止导出</translation>
     </message>
@@ -5282,6 +5245,34 @@ Available commands:
     <message>
         <source>Export to %1</source>
         <translation>导出到%1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>是否要信任 %1, 来自 %3 的 %2 的指纹? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

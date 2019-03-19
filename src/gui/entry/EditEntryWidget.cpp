@@ -142,6 +142,7 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
@@ -193,6 +194,8 @@ void EditEntryWidget::setupAdvanced()
 void EditEntryWidget::setupIcon()
 {
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_iconsWidget);
+    connect(this, SIGNAL(accepted()), m_iconsWidget, SLOT(abortRequests()));
+    connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));
 }
 
 void EditEntryWidget::setupAutoType()
@@ -764,7 +767,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     iconStruct.uuid = entry->iconUuid();
     iconStruct.number = entry->iconNumber();
     m_iconsWidget->load(entry->uuid(), m_db, iconStruct, entry->webUrl());
-    connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
 
     m_autoTypeUi->enableButton->setChecked(entry->autoTypeEnabled());
     if (entry->defaultAutoTypeSequence().isEmpty()) {

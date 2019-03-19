@@ -38,82 +38,12 @@
         <translation>Zkopírovat do schránky</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revize: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribuce: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Knihovny:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Operační systém: %1
-Architektura procesoru: %2
-Jádro systému: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Zapnutá rozšíření:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Správci projektu:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Tým KeePassXC děkuje zvláště vývojáři debfx za vytvoření původního KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Verze %1
-</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Typ sestavení: %1
-</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Automatické vyplňování</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Napojení webového prohlížeče</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Žádné</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (podepsané a nepodepsané sdílení)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (pouze podepsané sdílení)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (pouze nepodepsané sdílení)</translation>
     </message>
 </context>
 <context>
@@ -659,14 +589,6 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
         <translation>Vybrat uživatelem určené umístění zprostředkovávající aplikace</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Je nám líto, ale KeePassXC-Browser v tuto chvíli není ve snap vydáních podporován.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>Aby fungovalo napojení na prohlížeč, je třeba KeePassXC. &lt;br /&gt; Stáhnete ho pro %1 a %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Browser</translation>
     </message>
@@ -686,6 +608,18 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>Neptat se na oprávnění pro HTTP &amp;Basic Auth</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -761,12 +695,20 @@ Přesunuto %2 klíčů do uživatelsky určených dat.</translation>
         <translation>KeePassXC: zjištěna nastavení starého napojení na webový prohlížeč</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Byla zjištěna nastavení starého napojení na prohlížeč.
-Chcete povýšit nastavení na nejnovější standard?
-Toto je nezbytné pro zachování kompatibility se zásuvným modulem pro prohlížeč.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -927,6 +869,10 @@ Toto je nezbytné pro zachování kompatibility se zásuvným modulem pro prohl�
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Do souboru nelze zapisovat, protože je otevřen v režimu pouze pro čtení.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1682,6 +1628,10 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <source>Database was not modified by merge operation.</source>
         <translation>Databáze nebyla operací slučování upravena.</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2118,6 +2068,22 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     <message>
         <source>Select import/export file</source>
         <translation>Vybrat importní/exportní soubor</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Vyčistit</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2592,14 +2558,6 @@ Dotčený zásuvný modul to může rozbít.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[prázdné]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3195,6 +3153,22 @@ Line %2, column %3</source>
     <message>
         <source>Synchronize with</source>
         <translation>Synchronizovat s</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3844,10 +3818,6 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Heslo je hlavní metodou zabezpečení databáze.&lt;/p&gt;&lt;p&gt;Dobrá hesla jsou dlouhá a nepoužívaná stejná na více místech. KeePassXC ho pro vás může vytvořit.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Heslo nemůže zůstat nevyplněné.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4884,6 +4854,10 @@ Příkazy k dispozici:
         <source>Database password: </source>
         <translation>Heslo databáze:</translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5157,9 +5131,8 @@ Příkazy k dispozici:
         <translation>Exportovaný certifikát se liší od toho, který je používán. Chcete exportovat stávající certifikát?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1.%2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5175,10 +5148,6 @@ Příkazy k dispozici:
     <message>
         <source>Import from container with certificate</source>
         <translation>Importovat z kontejneru s certifikátem</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>Chcete věřit %1 s otiskem %2 z %3</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5257,14 +5226,6 @@ Příkazy k dispozici:
         <translation>Nedaří se zapsat exportní kontejner (%1)</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>Nedaří se zapouzdřit podpis (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>Nedaří se zapouzdřit databázi (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>Přepsání nepodepsaného kontejneru sdílení není podporováno – exportu zabráněno</translation>
     </message>
@@ -5287,6 +5248,34 @@ Příkazy k dispozici:
     <message>
         <source>Export to %1</source>
         <translation>Exportovat do %1</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>Věříte %1 s otiskem %2 od %3? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

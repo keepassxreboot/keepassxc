@@ -28,6 +28,7 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice,
     , m_error(false)
     , m_isInitialized(false)
     , m_dataWritten(false)
+    , m_streamCipher(false)
 {
 }
 

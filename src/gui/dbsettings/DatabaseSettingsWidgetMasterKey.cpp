@@ -136,34 +136,34 @@ bool DatabaseSettingsWidgetMasterKey::save()
 
     auto newKey = QSharedPointer<CompositeKey>::create();
 
-    QSharedPointer<Key> passwordKey;
-    QSharedPointer<Key> fileKey;
-    QSharedPointer<ChallengeResponseKey> ykCrKey;
+    QSharedPointer<Key> oldPasswordKey;
+    QSharedPointer<Key> oldFileKey;
+    QSharedPointer<ChallengeResponseKey> oldChallengeResponse;
 
     for (const auto& key : m_db->key()->keys()) {
         if (key->uuid() == PasswordKey::UUID) {
-            passwordKey = key;
+            oldPasswordKey = key;
         } else if (key->uuid() == FileKey::UUID) {
-            fileKey = key;
+            oldFileKey = key;
         }
     }
 
     for (const auto& key : m_db->key()->challengeResponseKeys()) {
         if (key->uuid() == YkChallengeResponseKey::UUID) {
-            ykCrKey = key;
+            oldChallengeResponse = key;
         }
     }
 
-    if (!addToCompositeKey(m_passwordEditWidget, newKey, passwordKey)) {
+    if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
         return false;
     }
 
-    if (!addToCompositeKey(m_keyFileEditWidget, newKey, fileKey)) {
+    if (!addToCompositeKey(m_keyFileEditWidget, newKey, oldFileKey)) {
         return false;
     }
 
 #ifdef WITH_XC_YUBIKEY
-    if (!addToCompositeKey(m_yubiKeyEditWidget, newKey, ykCrKey)) {
+    if (!addToCompositeKey(m_yubiKeyEditWidget, newKey, oldChallengeResponse)) {
         return false;
     }
 #endif
@@ -177,7 +177,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
         return false;
     }
 
-    if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::AddNew) {
+    if (m_passwordEditWidget->isEmpty()) {
         auto answer = MessageBox::warning(this,
                                           tr("No password set"),
                                           tr("WARNING! You have not set a password. Using a database without "
@@ -190,9 +190,13 @@ bool DatabaseSettingsWidgetMasterKey::save()
         }
     }
 
-    m_db->setKey(newKey);
+    m_db->setKey(newKey, true, false, false);
 
     emit editFinished(true);
+    if (m_isDirty) {
+        m_db->markAsModified();
+    }
+
     return true;
 }
 

@@ -28,31 +28,83 @@ EntrySearcher::EntrySearcher(bool caseSensitive)
 {
 }
 
+/**
+ * Search group, and its children, by parsing the provided search
+ * string for search terms.
+ *
+ * @param searchString search terms
+ * @param baseGroup group to start search from, cannot be null
+ * @param forceSearch ignore group search settings
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::search(const QString& searchString, const Group* baseGroup, bool forceSearch)
+{
+    Q_ASSERT(baseGroup);
+
+    parseSearchTerms(searchString);
+    return repeat(baseGroup, forceSearch);
+}
+
+/**
+ * Repeat the last search starting from the given group
+ *
+ * @param baseGroup group to start search from, cannot be null
+ * @param forceSearch ignore group search settings
+ * @return list of entries that match the search terms
+ */
+QList<Entry*> EntrySearcher::repeat(const Group* baseGroup, bool forceSearch)
 {
     Q_ASSERT(baseGroup);
 
     QList<Entry*> results;
     for (const auto group : baseGroup->groupsRecursive(true)) {
         if (forceSearch || group->resolveSearchingEnabled()) {
-            results.append(searchEntries(searchString, group->entries()));
+            for (auto* entry : group->entries()) {
+                if (searchEntryImpl(entry)) {
+                    results.append(entry);
+                }
+            }
         }
     }
-
     return results;
 }
 
+/**
+ * Search provided entries by parsing the search string
+ * for search terms.
+ *
+ * @param searchString search terms
+ * @param entries list of entries to include in the search
+ * @return list of entries that match the search terms
+ */
 QList<Entry*> EntrySearcher::searchEntries(const QString& searchString, const QList<Entry*>& entries)
 {
+    parseSearchTerms(searchString);
+    return repeatEntries(entries);
+}
+
+/**
+ * Repeat the last search on the given entries
+ *
+ * @param entries list of entries to include in the search
+ * @return list of entries that match the search terms
+ */
+QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
+{
     QList<Entry*> results;
-    for (Entry* entry : entries) {
-        if (searchEntryImpl(searchString, entry)) {
+    for (auto* entry : entries) {
+        if (searchEntryImpl(entry)) {
             results.append(entry);
         }
     }
     return results;
 }
 
+/**
+ * Set the next search to be case sensitive or not
+ *
+ * @param state
+ */
 void EntrySearcher::setCaseSensitive(bool state)
 {
     m_caseSensitive = state;
@@ -63,16 +115,15 @@ bool EntrySearcher::isCaseSensitive()
     return m_caseSensitive;
 }
 
-bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
+bool EntrySearcher::searchEntryImpl(Entry* entry)
 {
     // Pre-load in case they are needed
-    auto attributes = QStringList(entry->attributes()->keys());
+    auto attributes_keys = entry->attributes()->customKeys();
+    auto attributes = QStringList(attributes_keys + entry->attributes()->values(attributes_keys));
     auto attachments = QStringList(entry->attachments()->keys());
 
     bool found;
-    auto searchTerms = parseSearchTerms(searchString);
-
-    for (const auto& term : searchTerms) {
+    for (const auto& term : m_searchTerms) {
         switch (term->field) {
         case Field::Title:
             found = term->regex.match(entry->resolvePlaceholder(entry->title())).hasMatch();
@@ -112,10 +163,9 @@ bool EntrySearcher::searchEntryImpl(const QString& searchString, Entry* entry)
     return true;
 }
 
-QList<QSharedPointer<EntrySearcher::SearchTerm>> EntrySearcher::parseSearchTerms(const QString& searchString)
+void EntrySearcher::parseSearchTerms(const QString& searchString)
 {
-    auto terms = QList<QSharedPointer<SearchTerm>>();
-
+    m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);
     while (results.hasNext()) {
         auto result = results.next();
@@ -165,8 +215,6 @@ QList<QSharedPointer<EntrySearcher::SearchTerm>> EntrySearcher::parseSearchTerms
             }
         }
 
-        terms.append(term);
+        m_searchTerms.append(term);
     }
-
-    return terms;
 }

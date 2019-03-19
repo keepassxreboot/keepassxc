@@ -38,80 +38,12 @@
         <translation>Panoya kopyala</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Düzeltme: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Dağıtım: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Kütüphaneler:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>İşletim sistemi: %1
-MİB mimarisi: %2
-Çekirdek: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Etkin eklentiler:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Proje Sahipleri:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>KeePassXC ekibinden özel teşekkürler, özgün KeePassX&apos;i yaptığı için debfx&apos;e gider.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Sürüm %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Yapı: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Oto-Yazım</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Tarayıcı Bütünleşmesi</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH Aracısı</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>Yok</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (imzalı ve imzasız paylaşım)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (sadece imzalanmış paylaşım)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (sadece imzasız paylaşım)</translation>
     </message>
 </context>
 <context>
@@ -657,14 +589,6 @@ Lütfen kimlik bilgilerini kaydetmek için doğru veritabanını seç.</translat
         <translation>Özel proxy konumunu seçin</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>Üzgünüz, ancak şu anda Snap yayınları için KeePassXC-Tarayıcı desteklenmiyor.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Tarayıcı tarayıcı entegrasyonunun çalışması için gereklidir. &lt;br /&gt; Şunları indirin %1 ve %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Tarayıcı</translation>
     </message>
@@ -684,6 +608,18 @@ Lütfen kimlik bilgilerini kaydetmek için doğru veritabanını seç.</translat
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>HTTP ve Temel Kimlik Doğrulama için izin isteme</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -759,12 +695,20 @@ Moved %2 keys to custom data.</source>
         <translation>KeePassXC: Eski tarayıcı entegrasyon ayarları tespit edildi</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Eski tarayıcı bütünleşmesi ayarları tespit edildi.
-Ayarları en son standarda yükseltmek ister misiniz?
-Tarayıcı eklentisiyle uyumluluğu korumak için bu gereklidir.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -925,6 +869,10 @@ Tarayıcı eklentisiyle uyumluluğu korumak için bu gereklidir.</translation>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>Dosya salt okunur kipinde açıldığı için yazılamıyor.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1681,6 +1629,10 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
         <source>Database was not modified by merge operation.</source>
         <translation>Veritabanı birleştirme işlemi tarafından değiştirilmedi.</translation>
     </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2117,6 +2069,22 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     <message>
         <source>Select import/export file</source>
         <translation>Aktarma dosyasını seç içe/dışa</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Temizle</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2590,14 +2558,6 @@ Bu etkilenen eklentilerin bozulmasına neden olabilir.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[boş]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -3194,6 +3154,22 @@ Satır %2, sütun %3</translation>
     <message>
         <source>Synchronize with</source>
         <translation>Şununla eşitle</translation>
+    </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3844,10 +3820,6 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Parola, veritabanınızın güvenliğini sağlamak için birincil yöntemdir.&lt;/p&gt;&lt;p&gt;Güçlü parolalar uzun ve benzersizdir. KeePassXC sizin için bir tane üretebilir.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Parola boş olamaz.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4885,6 +4857,10 @@ Kullanılabilir komutlar:
         <source>Database password: </source>
         <translation>Veritabanı parolası:</translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5158,9 +5134,8 @@ Kullanılabilir komutlar:
         <translation>Aktarılan sertifika kullanılan sertifika ile aynı değil. Mevcut sertifikayı vermek aktarmak musunuz?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1.%2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5176,10 +5151,6 @@ Kullanılabilir komutlar:
     <message>
         <source>Import from container with certificate</source>
         <translation>Sertifikayı kapsayıcıdan içe aktar</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>%3&apos; ten %2 parmak iziyle %1  e güveniyor musunuz?</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5258,14 +5229,6 @@ Kullanılabilir komutlar:
         <translation>Dışa aktarma kapsayıcısı (%1) yazılamadı</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>İmza gömülemedi (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>Veritabanı gömülemedi (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>İmzalanmamış paylaşım kapsayıcısının üzerine yazma desteklenmiyor -dışa aktarma engellendi</translation>
     </message>
@@ -5288,6 +5251,34 @@ Kullanılabilir komutlar:
     <message>
         <source>Export to %1</source>
         <translation>%1&apos;e aktar</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>%3&apos;ten %2 parmak izi ile %1&apos;e güvenmek ister misiniz? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

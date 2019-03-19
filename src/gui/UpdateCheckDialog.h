@@ -18,13 +18,13 @@
 #ifndef KEEPASSXC_UPDATECHECKDIALOG_H
 #define KEEPASSXC_UPDATECHECKDIALOG_H
 
-#include <QUrl>
-#include <QDialog>
-#include <QScopedPointer>
-#include "gui/MessageBox.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "gui/MessageBox.h"
 #include "updatecheck/UpdateChecker.h"
+#include <QDialog>
+#include <QScopedPointer>
+#include <QUrl>
 
 namespace Ui
 {
@@ -33,7 +33,7 @@ namespace Ui
 
 class UpdateCheckDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit UpdateCheckDialog(QWidget* parent = nullptr);
@@ -46,5 +46,4 @@ private:
     QScopedPointer<Ui::UpdateCheckDialog> m_ui;
 };
 
-
-#endif //KEEPASSXC_UPDATECHECKDIALOG_H
+#endif // KEEPASSXC_UPDATECHECKDIALOG_H

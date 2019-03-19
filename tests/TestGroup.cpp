@@ -811,7 +811,6 @@ void TestGroup::testCopyDataFrom()
     group3->setName("TestGroup3");
     group3->customData()->set("testKey", "value");
 
-
     QSignalSpy spyGroupModified(group.data(), SIGNAL(groupModified()));
     QSignalSpy spyGroupDataChanged(group.data(), SIGNAL(groupDataChanged(Group*)));
 

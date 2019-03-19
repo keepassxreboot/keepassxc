@@ -16,11 +16,11 @@
  */
 
 #include "UpdateChecker.h"
-#include "core/Config.h"
 #include "config-keepassx.h"
+#include "core/Config.h"
 #include <QJsonObject>
-#include <QtNetwork>
 #include <QNetworkAccessManager>
+#include <QtNetwork>
 
 UpdateChecker* UpdateChecker::m_instance(nullptr);
 
@@ -28,6 +28,7 @@ UpdateChecker::UpdateChecker(QObject* parent)
     : QObject(parent)
     , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
+    , m_isManuallyRequested(false)
 {
 }
 
