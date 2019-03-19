@@ -1072,9 +1072,9 @@ bool BrowserService::checkLegacySettings()
 
     auto dialogResult = MessageBox::warning(nullptr,
                                             tr("KeePassXC: Legacy browser integration settings detected"),
-                                            tr("Legacy browser integration settings have been detected.\n"
-                                               "Do you want to upgrade the settings to the latest standard?\n"
-                                               "This is necessary to maintain compatibility with the browser plugin."),
+                                            tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
+                                               "This is necessary to maintain your current browser connections.\n"
+                                               "Would you like to migrate your existing settings now?"),
                                             MessageBox::Yes | MessageBox::No);
 
     return dialogResult == MessageBox::Yes;
@@ -1108,6 +1108,8 @@ void BrowserService::raiseWindow(const bool force)
         m_prevWindowState = WindowState::Minimized;
     }
 #ifdef Q_OS_MACOS
+    Q_UNUSED(force);
+
     if (macUtils()->isHidden()) {
         m_prevWindowState = WindowState::Hidden;
     }
