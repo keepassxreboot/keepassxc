@@ -40,7 +40,10 @@ PasswordEditWidget::~PasswordEditWidget()
 
 bool PasswordEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {
-    key->addKey(QSharedPointer<PasswordKey>::create(m_compUi->enterPasswordEdit->text()));
+    QString pw = m_compUi->enterPasswordEdit->text();
+    if (!pw.isEmpty()) {
+        key->addKey(QSharedPointer<PasswordKey>::create(pw));
+    }
     return true;
 }
 
@@ -58,6 +61,11 @@ void PasswordEditWidget::setPasswordVisible(bool visible)
 bool PasswordEditWidget::isPasswordVisible() const
 {
     return m_compUi->togglePasswordButton->isChecked();
+}
+
+bool PasswordEditWidget::isEmpty() const
+{
+    return m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
 QWidget* PasswordEditWidget::componentEditWidget()
@@ -86,11 +94,6 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
 
 bool PasswordEditWidget::validate(QString& errorMessage) const
 {
-    if (m_compUi->enterPasswordEdit->text().isEmpty()) {
-        errorMessage = tr("Password cannot be empty.");
-        return false;
-    }
-
     if (m_compUi->enterPasswordEdit->text() != m_compUi->repeatPasswordEdit->text()) {
         errorMessage = tr("Passwords do not match.");
         return false;
