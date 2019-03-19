@@ -24,6 +24,7 @@
 
 #include "Add.h"
 #include "Clip.h"
+#include "Create.h"
 #include "Diceware.h"
 #include "Edit.h"
 #include "Estimate.h"
@@ -35,25 +36,30 @@
 #include "Remove.h"
 #include "Show.h"
 
+const QCommandLineOption Command::QuietOption =
+    QCommandLineOption(QStringList() << "q"
+                                     << "quiet",
+                       QObject::tr("Silence password prompt and other secondary outputs."));
+
+const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList() << "k"
+                                                                                   << "key-file",
+                                                                     QObject::tr("Key file of the database."),
+                                                                     QObject::tr("path"));
+
 QMap<QString, Command*> commands;
 
 Command::~Command()
 {
 }
 
-int Command::execute(const QStringList&)
-{
-    return EXIT_FAILURE;
-}
-
 QString Command::getDescriptionLine()
 {
 
-    QString response = this->name;
+    QString response = name;
     QString space(" ");
-    QString spaces = space.repeated(15 - this->name.length());
+    QString spaces = space.repeated(15 - name.length());
     response = response.append(spaces);
-    response = response.append(this->description);
+    response = response.append(description);
     response = response.append("\n");
     return response;
 }
@@ -63,6 +69,7 @@ void populateCommands()
     if (commands.isEmpty()) {
         commands.insert(QString("add"), new Add());
         commands.insert(QString("clip"), new Clip());
+        commands.insert(QString("create"), new Create());
         commands.insert(QString("diceware"), new Diceware());
         commands.insert(QString("edit"), new Edit());
         commands.insert(QString("estimate"), new Estimate());
@@ -76,7 +83,7 @@ void populateCommands()
     }
 }
 
-Command* Command::getCommand(QString commandName)
+Command* Command::getCommand(const QString& commandName)
 {
     populateCommands();
     if (commands.contains(commandName)) {

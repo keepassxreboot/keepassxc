@@ -21,11 +21,10 @@
 
 #include "CsvImportWidget.h"
 
-#include <QStackedWidget>
 #include <QGridLayout>
+#include <QStackedWidget>
 
 #include "core/Database.h"
-#include "gui/ChangeMasterKeyWidget.h"
 #include "gui/DialogyWidget.h"
 
 class CsvImportWidget;
@@ -35,10 +34,9 @@ class CsvImportWizard : public DialogyWidget
     Q_OBJECT
 
 public:
-    explicit CsvImportWizard(QWidget *parent = nullptr);
-    ~CsvImportWizard();
-    void load(const QString& filename, Database *database);
-    void keyFinished(bool accepted, CompositeKey key);
+    explicit CsvImportWizard(QWidget* parent = nullptr);
+    ~CsvImportWizard() override;
+    void load(const QString& filename, Database* database);
 
 signals:
     void importFinished(bool accepted);
@@ -47,9 +45,9 @@ private slots:
     void parseFinished(bool accepted);
 
 private:
-    Database* m_db;
+    QPointer<Database> m_db;
     CsvImportWidget* m_parse;
-    QGridLayout *m_layout;
+    QGridLayout* m_layout;
 };
 
-#endif //KEEPASSX_CSVIMPORTWIZARD_H
+#endif // KEEPASSX_CSVIMPORTWIZARD_H

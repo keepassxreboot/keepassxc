@@ -17,6 +17,8 @@
 
 #include "CustomData.h"
 
+#include "core/Global.h"
+
 CustomData::CustomData(QObject* parent)
     : QObject(parent)
 {
@@ -44,7 +46,7 @@ bool CustomData::contains(const QString& key) const
 
 bool CustomData::containsValue(const QString& value) const
 {
-    return m_data.values().contains(value);
+    return asConst(m_data).values().contains(value);
 }
 
 void CustomData::set(const QString& key, const QString& value)
@@ -54,11 +56,11 @@ void CustomData::set(const QString& key, const QString& value)
 
     if (addAttribute) {
         emit aboutToBeAdded(key);
-     }
+    }
 
     if (addAttribute || changeValue) {
         m_data.insert(key, value);
-        emit modified();
+        emit customDataModified();
     }
 
     if (addAttribute) {
@@ -73,7 +75,7 @@ void CustomData::remove(const QString& key)
     m_data.remove(key);
 
     emit removed(key);
-    emit modified();
+    emit customDataModified();
 }
 
 void CustomData::rename(const QString& oldKey, const QString& newKey)
@@ -92,7 +94,7 @@ void CustomData::rename(const QString& oldKey, const QString& newKey)
     m_data.remove(oldKey);
     m_data.insert(newKey, data);
 
-    emit modified();
+    emit customDataModified();
     emit renamed(oldKey, newKey);
 }
 
@@ -107,7 +109,7 @@ void CustomData::copyDataFrom(const CustomData* other)
     m_data = other->m_data;
 
     emit reset();
-    emit modified();
+    emit customDataModified();
 }
 bool CustomData::operator==(const CustomData& other) const
 {
@@ -126,7 +128,7 @@ void CustomData::clear()
     m_data.clear();
 
     emit reset();
-    emit modified();
+    emit customDataModified();
 }
 
 bool CustomData::isEmpty() const

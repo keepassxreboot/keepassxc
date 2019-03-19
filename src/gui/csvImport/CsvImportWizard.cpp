@@ -23,8 +23,7 @@
 
 #include "gui/MessageBox.h"
 
-
-CsvImportWizard::CsvImportWizard(QWidget *parent)
+CsvImportWizard::CsvImportWizard(QWidget* parent)
     : DialogyWidget(parent)
 {
     m_layout = new QGridLayout(this);
@@ -34,29 +33,13 @@ CsvImportWizard::CsvImportWizard(QWidget *parent)
 }
 
 CsvImportWizard::~CsvImportWizard()
-{}
+{
+}
 
 void CsvImportWizard::load(const QString& filename, Database* database)
 {
     m_db = database;
     m_parse->load(filename, database);
-}
-
-void CsvImportWizard::keyFinished(bool accepted, CompositeKey key)
-{
-    if (!accepted) {
-        emit importFinished(false);
-        return;
-    }
-
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    bool result = m_db->setKey(key);
-    QApplication::restoreOverrideCursor();
-
-    if (!result) {
-        MessageBox::critical(this, tr("Error"), tr("Unable to calculate master key"));
-        emit importFinished(false);
-    }
 }
 
 void CsvImportWizard::parseFinished(bool accepted)

@@ -25,8 +25,12 @@ class Clip : public Command
 public:
     Clip();
     ~Clip();
-    int execute(const QStringList& arguments);
-    int clipEntry(Database* database, QString entryPath, QString timeout);
+    int execute(const QStringList& arguments) override;
+    int clipEntry(const QSharedPointer<Database>& database,
+                  const QString& entryPath,
+                  const QString& timeout,
+                  bool clipTotp,
+                  bool silent);
 };
 
 #endif // KEEPASSXC_CLIP_H

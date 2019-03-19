@@ -1,3 +1,35 @@
+2.4.0 (2019-03-19)
+=========================
+
+- New Database Wizard [#1952]
+- Advanced Search [#1797]
+- Automatic update checker [#2648]
+- KeeShare database synchronization [#2109, #1992, #2738, #2742, #2746, #2739]
+- Improve favicon fetching; transition to Duck-Duck-Go [#2795, #2011, #2439]
+- Remove KeePassHttp support [#1752]
+- CLI: output info to stderr for easier scripting [#2558]
+- CLI: Add --quiet option [#2507]
+- CLI: Add create command [#2540]
+- CLI: Add recursive listing of entries [#2345]
+- CLI: Fix stdin/stdout encoding on Windows [#2425]
+- SSH Agent: Support OpenSSH for Windows [#1994]
+- macOS: TouchID Quick Unlock [#1851]
+- macOS: Multiple improvements; include CLI in DMG [#2165, #2331, #2583]
+- Linux: Prevent Klipper from storing secrets in clipboard [#1969]
+- Linux: Use polling based file watching for NFS [#2171]
+- Linux: Enable use of browser plugin in Snap build [#2802]
+- TOTP QR Code Generator [#1167]
+- High-DPI Scaling for 4k screens [#2404]
+- Make keyboard shortcuts more consistent [#2431]
+- Warn user if deleting referenced entries [#1744]
+- Allow toolbar to be hidden and repositioned [#1819, #2357]
+- Increase max allowed database timeout to 12 hours [#2173]
+- Password generator uses existing password length by default [#2318]
+- Improve alert message box button labels [#2376]
+- Show message when a database merge makes no changes [#2551]
+- Browser Integration Enhancements [#1497, #2253, #1904, #2232, #1850, #2218, #2391, #2396, #2542, #2622, #2637, #2790]
+- Overall Code Improvements [#2316, #2284, #2351, #2402, #2410, #2419, #2422, #2443, #2491, #2506, #2610, #2667, #2709, #2731]
+
 2.3.4 (2018-08-21)
 =========================
 

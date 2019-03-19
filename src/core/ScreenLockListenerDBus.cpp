@@ -22,60 +22,54 @@
 #include <QDBusReply>
 #include <QProcessEnvironment>
 
-ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget *parent):
-    ScreenLockListenerPrivate(parent)
+ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
+    : ScreenLockListenerPrivate(parent)
 {
     QDBusConnection sessionBus = QDBusConnection::sessionBus();
     QDBusConnection systemBus = QDBusConnection::systemBus();
 
-    sessionBus.connect(
-                "org.freedesktop.ScreenSaver", // service
-                "/org/freedesktop/ScreenSaver", // path
-                "org.freedesktop.ScreenSaver", // interface
-                "ActiveChanged", // signal name
-                this, //receiver
-                SLOT(freedesktopScreenSaver(bool)));
+    sessionBus.connect("org.freedesktop.ScreenSaver", // service
+                       "/org/freedesktop/ScreenSaver", // path
+                       "org.freedesktop.ScreenSaver", // interface
+                       "ActiveChanged", // signal name
+                       this, // receiver
+                       SLOT(freedesktopScreenSaver(bool)));
 
-    sessionBus.connect(
-                "org.gnome.ScreenSaver", // service
-                "/org/gnome/ScreenSaver", // path
-                "org.gnome.ScreenSaver", // interface
-                "ActiveChanged", // signal name
-                this, //receiver
-                SLOT(freedesktopScreenSaver(bool)));
+    sessionBus.connect("org.gnome.ScreenSaver", // service
+                       "/org/gnome/ScreenSaver", // path
+                       "org.gnome.ScreenSaver", // interface
+                       "ActiveChanged", // signal name
+                       this, // receiver
+                       SLOT(freedesktopScreenSaver(bool)));
 
-    sessionBus.connect(
-                "org.gnome.SessionManager", // service
-                "/org/gnome/SessionManager/Presence", // path
-                "org.gnome.SessionManager.Presence", // interface
-                "StatusChanged", // signal name
-                this, //receiver
-                SLOT(gnomeSessionStatusChanged(uint)));
+    sessionBus.connect("org.gnome.SessionManager", // service
+                       "/org/gnome/SessionManager/Presence", // path
+                       "org.gnome.SessionManager.Presence", // interface
+                       "StatusChanged", // signal name
+                       this, // receiver
+                       SLOT(gnomeSessionStatusChanged(uint)));
 
-    systemBus.connect(
-                "org.freedesktop.login1", // service
-                "/org/freedesktop/login1", // path
-                "org.freedesktop.login1.Manager", // interface
-                "PrepareForSleep", // signal name
-                this, //receiver
-                SLOT(logindPrepareForSleep(bool)));
+    systemBus.connect("org.freedesktop.login1", // service
+                      "/org/freedesktop/login1", // path
+                      "org.freedesktop.login1.Manager", // interface
+                      "PrepareForSleep", // signal name
+                      this, // receiver
+                      SLOT(logindPrepareForSleep(bool)));
 
     QString sessionId = QProcessEnvironment::systemEnvironment().value("XDG_SESSION_ID");
-    systemBus.connect(
-                "", // service
-                QString("/org/freedesktop/login1/session/") + sessionId, // path
-                "org.freedesktop.login1.Session", // interface
-                "Lock", // signal name
-                this, //receiver
-                SLOT(unityLocked()));
+    systemBus.connect("", // service
+                      QString("/org/freedesktop/login1/session/") + sessionId, // path
+                      "org.freedesktop.login1.Session", // interface
+                      "Lock", // signal name
+                      this, // receiver
+                      SLOT(unityLocked()));
 
-    sessionBus.connect(
-                "com.canonical.Unity", // service
-                "/com/canonical/Unity/Session", // path
-                "com.canonical.Unity.Session", // interface
-                "Locked", // signal name
-                this, //receiver
-                SLOT(unityLocked()));
+    sessionBus.connect("com.canonical.Unity", // service
+                       "/com/canonical/Unity/Session", // path
+                       "com.canonical.Unity.Session", // interface
+                       "Locked", // signal name
+                       this, // receiver
+                       SLOT(unityLocked()));
 }
 
 void ScreenLockListenerDBus::gnomeSessionStatusChanged(uint status)

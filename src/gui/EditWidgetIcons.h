@@ -19,25 +19,24 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
-#include <QWidget>
-#include <QSet>
-#include <QProgressDialog>
 #include <QUrl>
-#include <QNetworkAccessManager>
+#include <QUuid>
+#include <QWidget>
 
 #include "config-keepassx.h"
 #include "core/Global.h"
-#include "core/Uuid.h"
 #include "gui/MessageWidget.h"
 
 class Database;
 class DefaultIconModel;
 class CustomIconModel;
 #ifdef WITH_XC_NETWORKING
+class QNetworkAccessManager;
 class QNetworkReply;
 #endif
 
-namespace Ui {
+namespace Ui
+{
     class EditWidgetIcons;
 }
 
@@ -45,19 +44,8 @@ struct IconStruct
 {
     IconStruct();
 
-    Uuid uuid;
+    QUuid uuid;
     int number;
-};
-
-class UrlFetchProgressDialog : public QProgressDialog
-{
-    Q_OBJECT
-
-public:
-    explicit UrlFetchProgressDialog(const QUrl &url, QWidget *parent = nullptr);
-
-public slots:
-    void networkReplyProgress(qint64 bytesRead, qint64 totalBytes);
 };
 
 class EditWidgetIcons : public QWidget
@@ -70,23 +58,27 @@ public:
 
     IconStruct state();
     void reset();
-    void load(const Uuid& currentUuid, Database* database, const IconStruct& iconStruct, const QString& url = "");
+    void load(const QUuid& currentUuid,
+              const QSharedPointer<Database>& database,
+              const IconStruct& iconStruct,
+              const QString& url = "");
 
 public slots:
     void setUrl(const QString& url);
+    void abortRequests();
 
 signals:
     void messageEditEntry(QString, MessageWidget::MessageType);
     void messageEditEntryDismiss();
+    void widgetUpdated();
 
 private slots:
     void downloadFavicon();
     void startFetchFavicon(const QUrl& url);
     void fetchFinished();
     void fetchReadyRead();
-    void fetchCanceled();
     void addCustomIconFromFile();
-    void addCustomIcon(const QImage& icon);
+    bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
     void updateWidgetsDefaultIcons(bool checked);
     void updateWidgetsCustomIcons(bool checked);
@@ -95,15 +87,15 @@ private slots:
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
-    Database* m_database;
-    Uuid m_currentUuid;
+    QSharedPointer<Database> m_db;
+    QUuid m_currentUuid;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;
     QUrl m_fetchUrl;
     QList<QUrl> m_urlsToTry;
     QByteArray m_bytesReceived;
-    QNetworkAccessManager m_netMgr;
-    QNetworkReply *m_reply;
+    QNetworkAccessManager* m_netMgr;
+    QNetworkReply* m_reply;
     int m_redirects;
 #endif
     DefaultIconModel* const m_defaultIconModel;

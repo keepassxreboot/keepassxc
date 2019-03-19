@@ -30,21 +30,18 @@ class GroupView : public QTreeView
 
 public:
     explicit GroupView(Database* db, QWidget* parent = nullptr);
-    void changeDatabase(Database* newDb);
+    void changeDatabase(const QSharedPointer<Database>& newDb);
     void setModel(QAbstractItemModel* model) override;
     Group* currentGroup();
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);
 
 signals:
-    void groupChanged(Group* group);
-    void groupPressed(Group* group);
+    void groupSelectionChanged(Group* group);
 
 private slots:
     void expandedChanged(const QModelIndex& index);
-    void emitGroupChanged(const QModelIndex& index);
     void emitGroupChanged();
-    void emitGroupPressed(const QModelIndex& index);
     void syncExpandedState(const QModelIndex& parent, int start, int end);
     void modelReset();
 

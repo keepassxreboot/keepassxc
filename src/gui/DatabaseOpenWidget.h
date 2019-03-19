@@ -27,7 +27,8 @@
 class Database;
 class QFile;
 
-namespace Ui {
+namespace Ui
+{
     class DatabaseOpenWidget;
 }
 
@@ -41,13 +42,13 @@ public:
     void load(const QString& filename);
     void clearForms();
     void enterKey(const QString& pw, const QString& keyFile);
-    Database* database();
+    QSharedPointer<Database> database();
 
 public slots:
     void pollYubikey();
 
 signals:
-    void editFinished(bool accepted);
+    void dialogFinished(bool accepted);
 
 protected:
     void showEvent(QShowEvent* event) override;
@@ -69,7 +70,7 @@ private slots:
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
-    Database* m_db;
+    QSharedPointer<Database> m_db;
     QString m_filename;
 
 private:

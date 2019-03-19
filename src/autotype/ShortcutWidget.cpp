@@ -24,7 +24,7 @@
 ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)
     , m_key(static_cast<Qt::Key>(0))
-    , m_modifiers(0)
+    , m_modifiers(nullptr)
     , m_locked(false)
 {
     setReadOnly(true);
@@ -50,8 +50,7 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 
     if (autoType()->registerGlobalShortcut(m_key, m_modifiers)) {
         setStyleSheet("");
-    }
-    else {
+    } else {
         setStyleSheet("background-color: #FF9696;");
     }
 }
@@ -59,7 +58,7 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 void ShortcutWidget::resetShortcut()
 {
     m_key = static_cast<Qt::Key>(0);
-    m_modifiers = 0;
+    m_modifiers = nullptr;
     m_locked = false;
     autoType()->unregisterGlobalShortcut();
 }
@@ -112,14 +111,12 @@ void ShortcutWidget::keyEvent(QKeyEvent* event)
     if (!release && !keyIsModifier) {
         if (modifiers != 0) {
             setShortcut(key, modifiers);
-        }
-        else {
+        } else {
             resetShortcut();
             setStyleSheet("");
             displayShortcut(key, modifiers);
         }
-    }
-    else {
+    } else {
         if (m_locked) {
             resetShortcut();
             setStyleSheet("");

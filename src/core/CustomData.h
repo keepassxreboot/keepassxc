@@ -25,7 +25,7 @@
 
 class CustomData : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit CustomData(QObject* parent = nullptr);
@@ -45,9 +45,8 @@ public:
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
 
-
 signals:
-    void modified();
+    void customDataModified();
     void aboutToBeAdded(const QString& key);
     void added(const QString& key);
     void aboutToBeRemoved(const QString& key);

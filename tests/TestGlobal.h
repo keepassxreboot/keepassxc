@@ -18,52 +18,29 @@
 #ifndef KEEPASSXC_TESTGLOBAL_H
 #define KEEPASSXC_TESTGLOBAL_H
 
-#include "core/Uuid.h"
 #include "core/Group.h"
 
-#include <QTest>
 #include <QDateTime>
+#include <QTest>
 
-namespace QTest {
-
-template<>
-inline char* toString(const Uuid& uuid)
+namespace QTest
 {
-    QByteArray ba = "Uuid(";
-    ba += uuid.toHex().toLatin1().constData();
-    ba += ")";
-    return qstrdup(ba.constData());
-}
 
-template<>
-inline char* toString(const Group::TriState& triState)
-{
-    QString value;
+    template <> inline char* toString(const Group::TriState& triState)
+    {
+        QString value;
 
-    if (triState == Group::Inherit) {
-        value = "null";
-    } else if (triState == Group::Enable) {
-        value = "true";
-    } else {
-        value = "false";
+        if (triState == Group::Inherit) {
+            value = "null";
+        } else if (triState == Group::Enable) {
+            value = "true";
+        } else {
+            value = "false";
+        }
+
+        return qstrdup(value.toLocal8Bit().constData());
     }
 
-    return qstrdup(value.toLocal8Bit().constData());
-}
+} // namespace QTest
 
-}   // namespace QTest
-
-
-namespace Test {
-
-inline QDateTime datetime(int year, int month, int day, int hour, int min, int second)
-{
-    return QDateTime(
-            QDate(year, month, day),
-            QTime(hour, min, second),
-            Qt::UTC);
-}
-
-}   // namespace Test
-
-#endif //KEEPASSXC_TESTGLOBAL_H
+#endif // KEEPASSXC_TESTGLOBAL_H

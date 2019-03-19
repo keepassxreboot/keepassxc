@@ -19,20 +19,19 @@
 #ifndef KEEPASSX_CSVIMPORTWIDGET_H
 #define KEEPASSX_CSVIMPORTWIDGET_H
 
-#include <QScopedPointer>
-#include <QPushButton>
-#include <QStringListModel>
-#include <QSignalMapper>
-#include <QList>
 #include <QComboBox>
+#include <QList>
+#include <QPushButton>
+#include <QScopedPointer>
 #include <QStackedWidget>
+#include <QStringListModel>
 
 #include "core/Metadata.h"
 #include "gui/csvImport/CsvParserModel.h"
 #include "keys/PasswordKey.h"
 
-
-namespace Ui {
+namespace Ui
+{
     class CsvImportWidget;
 }
 
@@ -50,7 +49,7 @@ signals:
 
 private slots:
     void parse();
-    void comboChanged(int comboId);
+    void comboChanged(QComboBox* currentSender, int comboId);
     void skippedChanged(int rows);
     void writeDatabase();
     void updatePreview();
@@ -62,15 +61,15 @@ private:
     const QScopedPointer<Ui::CsvImportWidget> m_ui;
     CsvParserModel* const m_parserModel;
     QStringListModel* const m_comboModel;
-    QSignalMapper* m_comboMapper;
     QList<QComboBox*> m_combos;
     Database* m_db;
 
-    static const QStringList m_columnHeader;
+    const QStringList m_columnHeader;
+    QStringList m_fieldSeparatorList;
     void configParser();
     void updateTableview();
-    Group* splitGroups(QString label);
-    Group* hasChildren(Group* current, QString groupName);
+    Group* splitGroups(const QString& label);
+    Group* hasChildren(Group* current, const QString& groupName);
     QString formatStatusText() const;
 };
 

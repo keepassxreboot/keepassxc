@@ -46,6 +46,9 @@ public:
     int associationsSize() const;
     void clear();
 
+    bool operator==(const AutoTypeAssociations& other) const;
+    bool operator!=(const AutoTypeAssociations& other) const;
+
 private:
     QList<AutoTypeAssociations::Association> m_associations;
 

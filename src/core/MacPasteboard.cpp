@@ -17,9 +17,13 @@
 
 #include "MacPasteboard.h"
 
-QString MacPasteboard::convertorName() { return QLatin1String("MacPasteboard"); }
+QString MacPasteboard::convertorName()
+{
+    return QLatin1String("MacPasteboard");
+}
 
-QString MacPasteboard::flavorFor(const QString& mimetype) {
+QString MacPasteboard::flavorFor(const QString& mimetype)
+{
     if (mimetype == QLatin1String("text/plain")) {
         return QLatin1String("public.utf8-plain-text");
     } else if (mimetype == QLatin1String("application/x-nspasteboard-concealed-type")) {
@@ -38,15 +42,15 @@ QString MacPasteboard::flavorFor(const QString& mimetype) {
 
         if (cs == QLatin1String("system")) {
             return QLatin1String("public.utf8-plain-text");
-        } else if (cs == QLatin1String("iso-10646-ucs-2") ||
-                   cs == QLatin1String("utf16")) {
+        } else if (cs == QLatin1String("iso-10646-ucs-2") || cs == QLatin1String("utf16")) {
             return QLatin1String("public.utf16-plain-text");
         }
     }
     return QString();
 }
 
-QString MacPasteboard::mimeFor(QString flavor) {
+QString MacPasteboard::mimeFor(QString flavor)
+{
     if (flavor == QLatin1String("public.utf8-plain-text"))
         return QLatin1String("text/plain");
     if (flavor == QLatin1String("org.nspasteboard.ConcealedType"))
@@ -56,13 +60,15 @@ QString MacPasteboard::mimeFor(QString flavor) {
     return QString();
 }
 
-bool MacPasteboard::canConvert(const QString& mimetype, QString flavor) {
+bool MacPasteboard::canConvert(const QString& mimetype, QString flavor)
+{
     Q_UNUSED(mimetype);
     Q_UNUSED(flavor);
     return true;
 }
 
-QVariant MacPasteboard::convertToMime(const QString& mimetype, QList<QByteArray> data, QString flavor) {
+QVariant MacPasteboard::convertToMime(const QString& mimetype, QList<QByteArray> data, QString flavor)
+{
     if (data.count() > 1)
         qWarning("QMime::convertToMime: Cannot handle multiple member data");
     const QByteArray& firstData = data.first();
@@ -74,13 +80,13 @@ QVariant MacPasteboard::convertToMime(const QString& mimetype, QList<QByteArray>
     } else if (flavor == QLatin1String("public.utf16-plain-text")) {
         ret = QTextCodec::codecForName("UTF-16")->toUnicode(firstData);
     } else {
-        qWarning("QMime::convertToMime: unhandled mimetype: %s",
-                 qPrintable(mimetype));
+        qWarning("QMime::convertToMime: unhandled mimetype: %s", qPrintable(mimetype));
     }
     return ret;
 }
 
-QList<QByteArray> MacPasteboard::convertFromMime(const QString&, QVariant data, QString flavor) {
+QList<QByteArray> MacPasteboard::convertFromMime(const QString&, QVariant data, QString flavor)
+{
     QList<QByteArray> ret;
     QString string = data.toString();
     if (flavor == QLatin1String("public.utf8-plain-text"))
@@ -91,4 +97,3 @@ QList<QByteArray> MacPasteboard::convertFromMime(const QString&, QVariant data, 
         ret.append(QTextCodec::codecForName("UTF-16")->fromUnicode(string));
     return ret;
 }
-

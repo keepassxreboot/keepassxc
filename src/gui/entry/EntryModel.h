@@ -42,7 +42,8 @@ public:
         Modified = 8,
         Accessed = 9,
         Paperclip = 10,
-        Attachments = 11
+        Attachments = 11,
+        Totp = 12
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -59,25 +60,19 @@ public:
     QStringList mimeTypes() const override;
     QMimeData* mimeData(const QModelIndexList& indexes) const override;
 
-    void setEntryList(const QList<Entry*>& entries);
+    void setGroup(Group* group);
+    void setEntries(const QList<Entry*>& entries);
 
     bool isUsernamesHidden() const;
-    void setUsernamesHidden(const bool hide);
+    void setUsernamesHidden(bool hide);
     bool isPasswordsHidden() const;
-    void setPasswordsHidden(const bool hide);
+    void setPasswordsHidden(bool hide);
 
     void setPaperClipPixmap(const QPixmap& paperclip);
 
 signals:
-    void switchedToListMode();
-    void switchedToSearchMode();
     void usernamesHiddenChanged();
     void passwordsHiddenChanged();
-
-public slots:
-    void setGroup(Group* group);
-    void toggleUsernamesHidden(const bool hide);
-    void togglePasswordsHidden(const bool hide);
 
 private slots:
     void entryAboutToAdd(Entry* entry);
@@ -100,8 +95,8 @@ private:
 
     QPixmap m_paperClipPixmap;
 
-    static const QString HiddenContentDisplay;
-    static const Qt::DateFormat DateFormat;
+    const QString HiddenContentDisplay;
+    const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

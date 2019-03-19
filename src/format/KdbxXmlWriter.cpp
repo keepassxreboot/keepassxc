@@ -33,7 +33,10 @@ KdbxXmlWriter::KdbxXmlWriter(quint32 version)
 {
 }
 
-void KdbxXmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream, const QByteArray& headerHash)
+void KdbxXmlWriter::writeDatabase(QIODevice* device,
+                                  const Database* db,
+                                  KeePass2RandomStream* randomStream,
+                                  const QByteArray& headerHash)
 {
     m_db = db;
     m_meta = db->metadata();
@@ -64,7 +67,7 @@ void KdbxXmlWriter::writeDatabase(QIODevice* device, Database* db, KeePass2Rando
 void KdbxXmlWriter::writeDatabase(const QString& filename, Database* db)
 {
     QFile file(filename);
-    file.open(QIODevice::WriteOnly|QIODevice::Truncate);
+    file.open(QIODevice::WriteOnly | QIODevice::Truncate);
     writeDatabase(&file, db);
 }
 
@@ -151,15 +154,15 @@ void KdbxXmlWriter::writeCustomIcons()
 {
     m_xml.writeStartElement("CustomIcons");
 
-    const QList<Uuid> customIconsOrder = m_meta->customIconsOrder();
-    for (const Uuid& uuid : customIconsOrder) {
+    const QList<QUuid> customIconsOrder = m_meta->customIconsOrder();
+    for (const QUuid& uuid : customIconsOrder) {
         writeIcon(uuid, m_meta->customIcon(uuid));
     }
 
     m_xml.writeEndElement();
 }
 
-void KdbxXmlWriter::writeIcon(const Uuid& uuid, const QImage& icon)
+void KdbxXmlWriter::writeIcon(const QUuid& uuid, const QImage& icon)
 {
     m_xml.writeStartElement("Icon");
 
@@ -187,7 +190,7 @@ void KdbxXmlWriter::writeBinaries()
         m_xml.writeAttribute("ID", QString::number(i.value()));
 
         QByteArray data;
-        if (m_db->compressionAlgo() == Database::CompressionGZip) {
+        if (m_db->compressionAlgorithm() == Database::CompressionGZip) {
             m_xml.writeAttribute("Compressed", "True");
 
             QBuffer buffer;
@@ -204,8 +207,7 @@ void KdbxXmlWriter::writeBinaries()
 
             buffer.seek(0);
             data = buffer.readAll();
-        }
-        else {
+        } else {
             data = i.key();
         }
 
@@ -354,12 +356,14 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
     for (const QString& key : attributesKeyList) {
         m_xml.writeStartElement("String");
 
-        bool protect = ( ((key == "Title") && m_meta->protectTitle()) ||
-                         ((key == "UserName") && m_meta->protectUsername()) ||
-                         ((key == "Password") && m_meta->protectPassword()) ||
-                         ((key == "URL") && m_meta->protectUrl()) ||
-                         ((key == "Notes") && m_meta->protectNotes()) ||
-                         entry->attributes()->isProtected(key) );
+        // clang-format off
+        bool protect =
+            (((key == "Title") && m_meta->protectTitle()) || ((key == "UserName") && m_meta->protectUsername())
+            || ((key == "Password") && m_meta->protectPassword())
+            || ((key == "URL") && m_meta->protectUrl())
+            || ((key == "Notes") && m_meta->protectNotes())
+            || entry->attributes()->isProtected(key));
+        // clang-format on
 
         writeString("Key", key);
 
@@ -367,7 +371,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         QString value;
 
         if (protect) {
-            if (m_randomStream) {
+            if (!m_innerStreamProtectionDisabled && m_randomStream) {
                 m_xml.writeAttribute("Protected", "True");
                 bool ok;
                 QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8(), &ok);
@@ -375,13 +379,11 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
                     raiseError(m_randomStream->errorString());
                 }
                 value = QString::fromLatin1(rawData.toBase64());
-            }
-            else {
+            } else {
                 m_xml.writeAttribute("ProtectInMemory", "True");
                 value = entry->attributes()->value(key);
             }
-        }
-        else {
+        } else {
             value = entry->attributes()->value(key);
         }
 
@@ -462,8 +464,7 @@ void KdbxXmlWriter::writeString(const QString& qualifiedName, const QString& str
 {
     if (string.isEmpty()) {
         m_xml.writeEmptyElement(qualifiedName);
-    }
-    else {
+    } else {
         m_xml.writeTextElement(qualifiedName, stripInvalidXml10Chars(string));
     }
 }
@@ -477,8 +478,7 @@ void KdbxXmlWriter::writeBool(const QString& qualifiedName, bool b)
 {
     if (b) {
         writeString(qualifiedName, "True");
-    }
-    else {
+    } else {
         writeString(qualifiedName, "False");
     }
 }
@@ -504,18 +504,17 @@ void KdbxXmlWriter::writeDateTime(const QString& qualifiedName, const QDateTime&
     writeString(qualifiedName, dateTimeStr);
 }
 
-void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Uuid& uuid)
+void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const QUuid& uuid)
 {
-    writeString(qualifiedName, uuid.toBase64());
+    writeString(qualifiedName, uuid.toRfc4122().toBase64());
 }
 
 void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Group* group)
 {
     if (group) {
         writeUuid(qualifiedName, group->uuid());
-    }
-    else {
-        writeUuid(qualifiedName, Uuid());
+    } else {
+        writeUuid(qualifiedName, QUuid());
     }
 }
 
@@ -523,9 +522,8 @@ void KdbxXmlWriter::writeUuid(const QString& qualifiedName, const Entry* entry)
 {
     if (entry) {
         writeUuid(qualifiedName, entry->uuid());
-    }
-    else {
-        writeUuid(qualifiedName, Uuid());
+    } else {
+        writeUuid(qualifiedName, QUuid());
     }
 }
 
@@ -539,9 +537,8 @@ void KdbxXmlWriter::writeColor(const QString& qualifiedName, const QColor& color
     QString colorStr;
 
     if (color.isValid()) {
-      colorStr = QString("#%1%2%3").arg(colorPartToString(color.red()),
-                                        colorPartToString(color.green()),
-                                        colorPartToString(color.blue()));
+        colorStr = QString("#%1%2%3").arg(
+            colorPartToString(color.red()), colorPartToString(color.green()), colorPartToString(color.blue()));
     }
 
     writeString(qualifiedName, colorStr);
@@ -553,11 +550,9 @@ void KdbxXmlWriter::writeTriState(const QString& qualifiedName, Group::TriState 
 
     if (triState == Group::Inherit) {
         value = "null";
-    }
-    else if (triState == Group::Enable) {
+    } else if (triState == Group::Enable) {
         value = "true";
-    }
-    else {
+    } else {
         value = "false";
     }
 
@@ -583,13 +578,12 @@ QString KdbxXmlWriter::stripInvalidXml10Chars(QString str)
         if (ch.isLowSurrogate() && i != 0 && str.at(i - 1).isHighSurrogate()) {
             // keep valid surrogate pair
             i--;
-        }
-        else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D)  // control characters
-                 || (uc >= 0x7F && uc <= 0x84)  // control characters, valid but discouraged by XML
-                 || (uc >= 0x86 && uc <= 0x9F)  // control characters, valid but discouraged by XML
-                 || (uc > 0xFFFD)               // noncharacter
-                 || ch.isLowSurrogate()         // single low surrogate
-                 || ch.isHighSurrogate())       // single high surrogate
+        } else if ((uc < 0x20 && uc != 0x09 && uc != 0x0A && uc != 0x0D) // control characters
+                   || (uc >= 0x7F && uc <= 0x84) // control characters, valid but discouraged by XML
+                   || (uc >= 0x86 && uc <= 0x9F) // control characters, valid but discouraged by XML
+                   || (uc > 0xFFFD) // noncharacter
+                   || ch.isLowSurrogate() // single low surrogate
+                   || ch.isHighSurrogate()) // single high surrogate
         {
             qWarning("Stripping invalid XML 1.0 codepoint %x", uc);
             str.remove(i, 1);
@@ -603,4 +597,25 @@ void KdbxXmlWriter::raiseError(const QString& errorMessage)
 {
     m_error = true;
     m_errorStr = errorMessage;
+}
+
+/**
+ * Disable inner stream protection and write protected fields
+ * in plaintext instead. This is useful for plaintext XML exports
+ * where the inner stream key is not available.
+ *
+ * @param disable true to disable protection
+ */
+void KdbxXmlWriter::disableInnerStreamProtection(bool disable)
+{
+    m_innerStreamProtectionDisabled = disable;
+}
+
+/**
+ * @return true if inner stream protection is disabled and protected
+ *         fields will be saved in plaintext
+ */
+bool KdbxXmlWriter::innerStreamProtectionDisabled() const
+{
+    return m_innerStreamProtectionDisabled;
 }

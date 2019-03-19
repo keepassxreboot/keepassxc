@@ -50,6 +50,40 @@
     </screenshots>
 
     <releases>
+        <release version="2.4.0" date="2019-03-19">
+            <description>
+                <ul>
+                    <li>New Database Wizard [#1952]</li>
+                    <li>Advanced Search [#1797]</li>
+                    <li>Automatic update checker [#2648]</li>
+                    <li>KeeShare database synchronization [#2109, #1992, #2738, #2742, #2746, #2739]</li>
+                    <li>Improve favicon fetching; transition to Duck-Duck-Go [#2795, #2011, #2439]</li>
+                    <li>Remove KeePassHttp support [#1752]</li>
+                    <li>CLI: output info to stderr for easier scripting [#2558]</li>
+                    <li>CLI: Add --quiet option [#2507]</li>
+                    <li>CLI: Add create command [#2540]</li>
+                    <li>CLI: Add recursive listing of entries [#2345]</li>
+                    <li>CLI: Fix stdin/stdout encoding on Windows [#2425]</li>
+                    <li>SSH Agent: Support OpenSSH for Windows [#1994]</li>
+                    <li>macOS: TouchID Quick Unlock [#1851]</li>
+                    <li>macOS: Multiple improvements; include CLI in DMG [#2165, #2331, #2583]</li>
+                    <li>Linux: Prevent Klipper from storing secrets in clipboard [#1969]</li>
+                    <li>Linux: Use polling based file watching for NFS [#2171]</li>
+                    <li>Linux: Enable use of browser plugin in Snap build [#2802]</li>
+                    <li>TOTP QR Code Generator [#1167]</li>
+                    <li>High-DPI Scaling for 4k screens [#2404]</li>
+                    <li>Make keyboard shortcuts more consistent [#2431]</li>
+                    <li>Warn user if deleting referenced entries [#1744]</li>
+                    <li>Allow toolbar to be hidden and repositioned [#1819, #2357]</li>
+                    <li>Increase max allowed database timeout to 12 hours [#2173]</li>
+                    <li>Password generator uses existing password length by default [#2318]</li>
+                    <li>Improve alert message box button labels [#2376]</li>
+                    <li>Show message when a database merge makes no changes [#2551]</li>
+                    <li>Browser Integration Enhancements [#1497, #2253, #1904, #2232, #1850, #2218, #2391, #2396, #2542, #2622, #2637, #2790]</li>
+                    <li>Overall Code Improvements [#2316, #2284, #2351, #2402, #2410, #2419, #2422, #2443, #2491, #2506, #2610, #2667, #2709, #2731]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.3.4" date="2018-08-21">
             <description>
                 <ul>

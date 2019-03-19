@@ -42,7 +42,7 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
     m_basePasswordEdit = basePasswordEdit;
 
     updateStylesheet();
-    
+
     connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(autocompletePassword(QString)));
     connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
     connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
@@ -54,15 +54,14 @@ void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     // if I have a parent, I'm the child
-    if (m_basePasswordEdit){
+    if (m_basePasswordEdit) {
         if (config()->get("security/passwordsrepeat").toBool()) {
             setEnabled(!show);
             setReadOnly(show);
             setText(m_basePasswordEdit->text());
-        }
-        else {
+        } else {
             // This fix a bug when the QLineEdit is disabled while switching config
-            if (isEnabled() == false) {
+            if (!isEnabled()) {
                 setEnabled(true);
                 setReadOnly(false);
             }
@@ -70,6 +69,11 @@ void PasswordEdit::setShowPassword(bool show)
     }
     updateStylesheet();
     emit showPasswordChanged(show);
+}
+
+bool PasswordEdit::isPasswordVisible() const
+{
+    return isEnabled();
 }
 
 bool PasswordEdit::passwordsEqual() const
@@ -86,8 +90,7 @@ void PasswordEdit::updateStylesheet()
 
         if (m_basePasswordEdit->text().startsWith(text())) {
             stylesheet = stylesheet.arg(CorrectSoFarColor.name());
-        }
-        else {
+        } else {
             stylesheet = stylesheet.arg(ErrorColor.name());
         }
     }
@@ -96,7 +99,7 @@ void PasswordEdit::updateStylesheet()
     setStyleSheet(stylesheet);
 }
 
-void PasswordEdit::autocompletePassword(QString password)
+void PasswordEdit::autocompletePassword(const QString& password)
 {
     if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);

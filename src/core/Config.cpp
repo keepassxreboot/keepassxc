@@ -21,8 +21,25 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QSettings>
-#include <QTemporaryFile>
 #include <QStandardPaths>
+#include <QTemporaryFile>
+
+/*
+ * Map of configuration file settings that are either deprecated, or have
+ * had their name changed.  Entries in the map are of the form
+ *     {oldName, newName}
+ * Set newName to empty string to remove the setting from the file.
+ */
+static const QMap<QString, QString> deprecationMap = {
+    // >2.3.4
+    {QStringLiteral("security/hidepassworddetails"), QStringLiteral("security/HidePasswordPreviewPanel")},
+    // >2.3.4
+    {QStringLiteral("GUI/HideDetailsView"), QStringLiteral("GUI/HidePreviewPanel")},
+    // >2.3.4
+    {QStringLiteral("GUI/DetailSplitterState"), QStringLiteral("GUI/PreviewSplitterState")},
+    // >2.3.4
+    {QStringLiteral("security/IconDownloadFallbackToGoogle"), QStringLiteral("security/IconDownloadFallback")},
+};
 
 Config* Config::m_instance(nullptr);
 
@@ -48,7 +65,16 @@ QString Config::getFileName()
 
 void Config::set(const QString& key, const QVariant& value)
 {
+    if (m_settings->contains(key) && m_settings->value(key) == value) {
+        return;
+    }
+    const bool surpressSignal = !m_settings->contains(key) && m_defaults.value(key) == value;
+
     m_settings->setValue(key, value);
+
+    if (!surpressSignal) {
+        emit changed(key);
+    }
 }
 
 /**
@@ -61,6 +87,25 @@ void Config::set(const QString& key, const QVariant& value)
 void Config::sync()
 {
     m_settings->sync();
+}
+
+void Config::upgrade()
+{
+    const auto keys = deprecationMap.keys();
+    for (const auto& setting : keys) {
+        if (m_settings->contains(setting)) {
+            if (!deprecationMap.value(setting).isEmpty()) {
+                // Add entry with new name and old entry's value
+                m_settings->setValue(deprecationMap.value(setting), m_settings->value(setting));
+            }
+            m_settings->remove(setting);
+        }
+    }
+
+    // > 2.3.4
+    if (m_settings->value("AutoSaveAfterEveryChange").toBool()) {
+        m_settings->setValue("AutoSaveOnExit", true);
+    }
 }
 
 Config::Config(const QString& fileName, QObject* parent)
@@ -80,7 +125,7 @@ Config::Config(QObject* parent)
         QString userPath;
         QString homePath = QDir::homePath();
 
-    #if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
         // we can't use QStandardPaths on X11 as it uses XDG_DATA_HOME instead of XDG_CONFIG_HOME
         QByteArray env = qgetenv("XDG_CONFIG_HOME");
         if (env.isEmpty()) {
@@ -95,17 +140,17 @@ Config::Config(QObject* parent)
         }
 
         userPath += "/keepassxc/";
-    #else
+#else
         userPath = QDir::fromNativeSeparators(QStandardPaths::writableLocation(QStandardPaths::DataLocation));
         // storageLocation() appends the application name ("/keepassxc") to the end
         userPath += "/";
-    #endif
+#endif
 
-    #ifdef QT_DEBUG
+#ifdef QT_DEBUG
         userPath += "keepassxc_debug.ini";
-    #else
+#else
         userPath += "keepassxc.ini";
-    #endif
+#endif
 
         init(userPath);
     }
@@ -118,15 +163,17 @@ Config::~Config()
 void Config::init(const QString& fileName)
 {
     m_settings.reset(new QSettings(fileName, QSettings::IniFormat));
+    upgrade();
     connect(qApp, &QCoreApplication::aboutToQuit, this, &Config::sync);
 
     m_defaults.insert("SingleInstance", true);
     m_defaults.insert("RememberLastDatabases", true);
+    m_defaults.insert("NumberOfRememberedLastDatabases", 5);
     m_defaults.insert("RememberLastKeyFiles", true);
     m_defaults.insert("OpenPreviousDatabasesOnStartup", true);
     m_defaults.insert("AutoSaveAfterEveryChange", true);
     m_defaults.insert("AutoReloadOnChange", true);
-    m_defaults.insert("AutoSaveOnExit", false);
+    m_defaults.insert("AutoSaveOnExit", true);
     m_defaults.insert("BackupBeforeSave", false);
     m_defaults.insert("UseAtomicSaves", true);
     m_defaults.insert("SearchLimitGroup", false);
@@ -146,16 +193,24 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/lockdatabasescreenlock", true);
     m_defaults.insert("security/passwordsrepeat", false);
     m_defaults.insert("security/passwordscleartext", false);
-    m_defaults.insert("security/hidepassworddetails", true);
+    m_defaults.insert("security/passwordemptynodots", true);
+    m_defaults.insert("security/HidePasswordPreviewPanel", true);
     m_defaults.insert("security/autotypeask", true);
-    m_defaults.insert("security/IconDownloadFallbackToGoogle", false);
+    m_defaults.insert("security/IconDownloadFallback", false);
+    m_defaults.insert("security/resettouchid", false);
+    m_defaults.insert("security/resettouchidtimeout", 30);
+    m_defaults.insert("security/resettouchidscreenlock", true);
     m_defaults.insert("GUI/Language", "system");
+    m_defaults.insert("GUI/HideToolbar", false);
+    m_defaults.insert("GUI/MovableToolbar", false);
+    m_defaults.insert("GUI/ToolButtonStyle", Qt::ToolButtonIconOnly);
     m_defaults.insert("GUI/ShowTrayIcon", false);
     m_defaults.insert("GUI/DarkTrayIcon", false);
     m_defaults.insert("GUI/MinimizeToTray", false);
     m_defaults.insert("GUI/MinimizeOnClose", false);
     m_defaults.insert("GUI/HideUsernames", false);
     m_defaults.insert("GUI/HidePasswords", true);
+    m_defaults.insert("GUI/AdvancedSettings", false);
 }
 
 Config* Config::instance()

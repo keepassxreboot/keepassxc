@@ -26,32 +26,37 @@
 #include <QPointer>
 #include <QSet>
 #include <QUrl>
+#include <QUuid>
 
 #include "core/AutoTypeAssociations.h"
 #include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
 #include "core/TimeInfo.h"
-#include "core/Uuid.h"
 
 class Database;
 class Group;
+namespace Totp
+{
+    struct Settings;
+}
 
-enum class EntryReferenceType {
+enum class EntryReferenceType
+{
     Unknown,
     Title,
     UserName,
     Password,
     Url,
     Notes,
-    Uuid,
+    QUuid,
     CustomAttributes
 };
 
 struct EntryData
 {
     int iconNumber;
-    Uuid customIcon;
+    QUuid customIcon;
     QColor foregroundColor;
     QColor backgroundColor;
     QString overrideUrl;
@@ -60,8 +65,11 @@ struct EntryData
     int autoTypeObfuscation;
     QString defaultAutoTypeSequence;
     TimeInfo timeInfo;
-    mutable quint8 totpDigits;
-    mutable quint8 totpStep;
+    QSharedPointer<Totp::Settings> totpSettings;
+
+    bool operator==(const EntryData& other) const;
+    bool operator!=(const EntryData& other) const;
+    bool equals(const EntryData& other, CompareItemOptions options) const;
 };
 
 class Entry : public QObject
@@ -71,17 +79,18 @@ class Entry : public QObject
 public:
     Entry();
     ~Entry();
-    Uuid uuid() const;
+    const QUuid& uuid() const;
+    const QString uuidToHex() const;
     QImage icon() const;
     QPixmap iconPixmap() const;
     QPixmap iconScaledPixmap() const;
     int iconNumber() const;
-    Uuid iconUuid() const;
+    const QUuid& iconUuid() const;
     QColor foregroundColor() const;
     QColor backgroundColor() const;
     QString overrideUrl() const;
     QString tags() const;
-    TimeInfo timeInfo() const;
+    const TimeInfo& timeInfo() const;
     bool autoTypeEnabled() const;
     int autoTypeObfuscation() const;
     QString defaultAutoTypeSequence() const;
@@ -96,14 +105,16 @@ public:
     QString username() const;
     QString password() const;
     QString notes() const;
+    QString attribute(const QString& key) const;
     QString totp() const;
-    QString totpSeed() const;
-    quint8 totpDigits() const;
-    quint8 totpStep() const;
+    QSharedPointer<Totp::Settings> totpSettings() const;
 
     bool hasTotp() const;
     bool isExpired() const;
+    bool isAttributeReferenceOf(const QString& key, const QUuid& uuid) const;
+    void replaceReferencesWithValues(const Entry* other);
     bool hasReferences() const;
+    bool hasReferencesTo(const QUuid& uuid) const;
     EntryAttributes* attributes();
     const EntryAttributes* attributes() const;
     EntryAttachments* attachments();
@@ -116,9 +127,9 @@ public:
     static const QString AutoTypeSequenceUsername;
     static const QString AutoTypeSequencePassword;
 
-    void setUuid(const Uuid& uuid);
+    void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
-    void setIcon(const Uuid& uuid);
+    void setIcon(const QUuid& uuid);
     void setForegroundColor(const QColor& color);
     void setBackgroundColor(const QColor& color);
     void setOverrideUrl(const QString& url);
@@ -132,9 +143,10 @@ public:
     void setUsername(const QString& username);
     void setPassword(const QString& password);
     void setNotes(const QString& notes);
+    void setDefaultAttribute(const QString& attribute, const QString& value);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
-    void setTotp(const QString& seed, quint8& step, quint8& digits);
+    void setTotp(QSharedPointer<Totp::Settings> settings);
 
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
@@ -142,18 +154,22 @@ public:
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
 
-    enum CloneFlag {
-        CloneNoFlags        = 0,
-        CloneNewUuid        = 1,  // generate a random uuid for the clone
-        CloneResetTimeInfo  = 2,  // set all TimeInfo attributes to the current time
-        CloneIncludeHistory = 4,  // clone the history items
-        CloneRenameTitle    = 8,  // add "-Clone" after the original title
-        CloneUserAsRef      = 16, // Add the user as a reference to the original entry
-        ClonePassAsRef      = 32, // Add the password as a reference to the original entry
+    bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;
+
+    enum CloneFlag
+    {
+        CloneNoFlags = 0,
+        CloneNewUuid = 1, // generate a random uuid for the clone
+        CloneResetTimeInfo = 2, // set all TimeInfo attributes to the current time
+        CloneIncludeHistory = 4, // clone the history items
+        CloneRenameTitle = 8, // add "-Clone" after the original title
+        CloneUserAsRef = 16, // Add the user as a reference to the original entry
+        ClonePassAsRef = 32, // Add the password as a reference to the original entry
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
-    enum class PlaceholderType {
+    enum class PlaceholderType
+    {
         NotPlaceholder,
         Unknown,
         Title,
@@ -185,6 +201,7 @@ public:
     Entry* clone(CloneFlags flags) const;
     void copyDataFrom(const Entry* other);
     QString maskPasswordPlaceholders(const QString& str) const;
+    Entry* resolveReference(const QString& str) const;
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
@@ -201,16 +218,18 @@ public:
     Group* group();
     const Group* group() const;
     void setGroup(Group* group);
+    const Database* database() const;
+    Database* database();
 
+    bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
 
 signals:
     /**
      * Emitted when a default attribute has been changed.
      */
-    void dataChanged(Entry* entry);
-
-    void modified();
+    void entryDataChanged(Entry* entry);
+    void entryModified();
 
 private slots:
     void emitDataChanged();
@@ -224,20 +243,20 @@ private:
     QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
     QString referenceFieldValue(EntryReferenceType referenceType) const;
 
+    static QString buildReference(const QUuid& uuid, const QString& field);
     static EntryReferenceType referenceType(const QString& referenceStr);
 
-    const Database* database() const;
     template <class T> bool set(T& property, const T& value);
 
-    Uuid m_uuid;
+    QUuid m_uuid;
     EntryData m_data;
     QPointer<EntryAttributes> m_attributes;
     QPointer<EntryAttachments> m_attachments;
     QPointer<AutoTypeAssociations> m_autoTypeAssociations;
     QPointer<CustomData> m_customData;
+    QList<Entry*> m_history; // Items sorted from oldest to newest
 
-    QList<Entry*> m_history;
-    Entry* m_tmpHistoryItem;
+    QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
     bool m_updateTimeinfo;

@@ -1,26 +1,27 @@
 /*
-*  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "SymmetricCipherGcrypt.h"
 
 #include "config-keepassx.h"
 #include "crypto/Crypto.h"
 
-SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo, SymmetricCipher::Mode mode,
+SymmetricCipherGcrypt::SymmetricCipherGcrypt(SymmetricCipher::Algorithm algo,
+                                             SymmetricCipher::Mode mode,
                                              SymmetricCipher::Direction direction)
     : m_ctx(nullptr)
     , m_algo(gcryptAlgo(algo))
@@ -79,13 +80,12 @@ int SymmetricCipherGcrypt::gcryptMode(SymmetricCipher::Mode mode)
     }
 }
 
-void SymmetricCipherGcrypt::setErrorString(gcry_error_t err)
+void SymmetricCipherGcrypt::setError(const gcry_error_t& err)
 {
     const char* gcryptError = gcry_strerror(err);
     const char* gcryptErrorSource = gcry_strsource(err);
 
-    m_errorString = QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource),
-                                         QString::fromLocal8Bit(gcryptError));
+    m_error = QString("%1/%2").arg(QString::fromLocal8Bit(gcryptErrorSource), QString::fromLocal8Bit(gcryptError));
 }
 
 bool SymmetricCipherGcrypt::init()
@@ -94,11 +94,11 @@ bool SymmetricCipherGcrypt::init()
 
     gcry_error_t error;
 
-    if(m_ctx != nullptr)
+    if (m_ctx != nullptr)
         gcry_cipher_close(m_ctx);
     error = gcry_cipher_open(&m_ctx, m_algo, m_mode, 0);
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -111,7 +111,7 @@ bool SymmetricCipherGcrypt::setKey(const QByteArray& key)
     gcry_error_t error = gcry_cipher_setkey(m_ctx, m_key.constData(), m_key.size());
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -130,7 +130,7 @@ bool SymmetricCipherGcrypt::setIv(const QByteArray& iv)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -153,7 +153,7 @@ QByteArray SymmetricCipherGcrypt::process(const QByteArray& data, bool* ok)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         *ok = false;
     } else {
         *ok = true;
@@ -175,7 +175,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
     }
 
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -184,8 +184,6 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data)
 
 bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
 {
-    // TODO: check block size
-
     gcry_error_t error;
 
     char* rawData = data.data();
@@ -196,7 +194,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
             error = gcry_cipher_decrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
-                setErrorString(error);
+                setError(error);
                 return false;
             }
         }
@@ -205,7 +203,7 @@ bool SymmetricCipherGcrypt::processInPlace(QByteArray& data, quint64 rounds)
             error = gcry_cipher_encrypt(m_ctx, rawData, size, nullptr, 0);
 
             if (error != 0) {
-                setErrorString(error);
+                setError(error);
                 return false;
             }
         }
@@ -220,13 +218,13 @@ bool SymmetricCipherGcrypt::reset()
 
     error = gcry_cipher_reset(m_ctx);
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
     error = gcry_cipher_setiv(m_ctx, m_iv.constData(), m_iv.size());
     if (error != 0) {
-        setErrorString(error);
+        setError(error);
         return false;
     }
 
@@ -257,7 +255,7 @@ int SymmetricCipherGcrypt::blockSize() const
     return blockSizeT;
 }
 
-QString SymmetricCipherGcrypt::errorString() const
+QString SymmetricCipherGcrypt::error() const
 {
-    return m_errorString;
+    return m_error;
 }

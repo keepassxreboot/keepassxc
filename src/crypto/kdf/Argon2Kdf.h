@@ -20,7 +20,8 @@
 
 #include "Kdf.h"
 
-class Argon2Kdf : public Kdf {
+class Argon2Kdf : public Kdf
+{
 public:
     Argon2Kdf();
 
@@ -44,13 +45,13 @@ protected:
     quint32 m_parallelism;
 
 private:
-    static bool transformKeyRaw(const QByteArray& key,
-                                const QByteArray& seed,
-                                quint32 version,
-                                quint32 rounds,
-                                quint64 memory,
-                                quint32 parallelism,
-                                QByteArray& result) Q_REQUIRED_RESULT;
+    Q_REQUIRED_RESULT static bool transformKeyRaw(const QByteArray& key,
+                                                  const QByteArray& seed,
+                                                  quint32 version,
+                                                  quint32 rounds,
+                                                  quint64 memory,
+                                                  quint32 parallelism,
+                                                  QByteArray& result);
 };
 
 #endif // KEEPASSX_ARGON2KDF_H

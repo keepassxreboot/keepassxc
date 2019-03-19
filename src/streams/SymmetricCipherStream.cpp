@@ -17,8 +17,10 @@
 
 #include "SymmetricCipherStream.h"
 
-SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCipher::Algorithm algo,
-                                             SymmetricCipher::Mode mode, SymmetricCipher::Direction direction)
+SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice,
+                                             SymmetricCipher::Algorithm algo,
+                                             SymmetricCipher::Mode mode,
+                                             SymmetricCipher::Direction direction)
     : LayeredStream(baseDevice)
     , m_cipher(new SymmetricCipher(algo, mode, direction))
     , m_bufferPos(0)
@@ -26,6 +28,7 @@ SymmetricCipherStream::SymmetricCipherStream(QIODevice* baseDevice, SymmetricCip
     , m_error(false)
     , m_isInitialized(false)
     , m_dataWritten(false)
+    , m_streamCipher(false)
 {
 }
 
@@ -57,7 +60,6 @@ void SymmetricCipherStream::resetInternalState()
 bool SymmetricCipherStream::open(QIODevice::OpenMode mode)
 {
     return m_isInitialized && LayeredStream::open(mode);
-
 }
 
 bool SymmetricCipherStream::reset()
@@ -100,8 +102,7 @@ qint64 SymmetricCipherStream::readData(char* data, qint64 maxSize)
             if (!readBlock()) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -125,8 +126,7 @@ bool SymmetricCipherStream::readBlock()
 
     if (m_bufferFilling) {
         newData.resize(blockSize() - m_buffer.size());
-    }
-    else {
+    } else {
         m_buffer.clear();
         newData.resize(blockSize());
     }
@@ -144,8 +144,7 @@ bool SymmetricCipherStream::readBlock()
     if (!m_streamCipher && m_buffer.size() != blockSize()) {
         m_bufferFilling = true;
         return false;
-    }
-    else {
+    } else {
         if (!m_cipher->processInPlace(m_buffer)) {
             m_error = true;
             setErrorString(m_cipher->errorString());
@@ -178,8 +177,7 @@ bool SymmetricCipherStream::readBlock()
             } else {
                 return m_buffer.size() > 0;
             }
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -209,8 +207,7 @@ qint64 SymmetricCipherStream::writeData(const char* data, qint64 maxSize)
             if (!writeBlock(false)) {
                 if (m_error) {
                     return -1;
-                }
-                else {
+                } else {
                     return maxSize - bytesRemaining;
                 }
             }
@@ -242,14 +239,14 @@ bool SymmetricCipherStream::writeBlock(bool lastBlock)
         m_error = true;
         setErrorString(m_baseDevice->errorString());
         return false;
-    }
-    else {
+    } else {
         m_buffer.clear();
         return true;
     }
 }
 
-int SymmetricCipherStream::blockSize() const {
+int SymmetricCipherStream::blockSize() const
+{
     if (m_streamCipher) {
         return 1024;
     }

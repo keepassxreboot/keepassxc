@@ -22,8 +22,8 @@
 #include <QtPlugin>
 #include <Windows.h>
 
-#include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
+#include "autotype/AutoTypePlatformPlugin.h"
 
 class AutoTypePlatformWin : public QObject, public AutoTypePlatformInterface
 {
@@ -71,4 +71,3 @@ private:
 };
 
 #endif // KEEPASSX_AUTOTYPEWINDOWS_H
-

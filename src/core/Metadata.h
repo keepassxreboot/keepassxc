@@ -25,8 +25,8 @@
 #include <QPixmap>
 #include <QPixmapCache>
 #include <QPointer>
+#include <QUuid>
 
-#include "core/Uuid.h"
 #include "core/CustomData.h"
 
 class Database;
@@ -78,14 +78,14 @@ public:
     bool protectPassword() const;
     bool protectUrl() const;
     bool protectNotes() const;
-    QImage customIcon(const Uuid& uuid) const;
-    QPixmap customIconPixmap(const Uuid& uuid) const;
-    QPixmap customIconScaledPixmap(const Uuid& uuid) const;
-    bool containsCustomIcon(const Uuid& uuid) const;
-    QHash<Uuid, QImage> customIcons() const;
-    QList<Uuid> customIconsOrder() const;
+    QImage customIcon(const QUuid& uuid) const;
+    QPixmap customIconPixmap(const QUuid& uuid) const;
+    QPixmap customIconScaledPixmap(const QUuid& uuid) const;
+    bool containsCustomIcon(const QUuid& uuid) const;
+    QHash<QUuid, QImage> customIcons() const;
+    QList<QUuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
-    QHash<Uuid, QPixmap> customIconsScaledPixmaps() const;
+    QHash<QUuid, QPixmap> customIconsScaledPixmaps() const;
     Group* recycleBin();
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
@@ -119,11 +119,11 @@ public:
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    void addCustomIcon(const Uuid& uuid, const QImage& icon);
-    void addCustomIconScaled(const Uuid& uuid, const QImage& icon);
-    void removeCustomIcon(const Uuid& uuid);
-    void copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata);
-    Uuid findCustomIcon(const QImage& candidate);
+    void addCustomIcon(const QUuid& uuid, const QImage& icon);
+    void addCustomIconScaled(const QUuid& uuid, const QImage& icon);
+    void removeCustomIcon(const QUuid& uuid);
+    void copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* otherMetadata);
+    QUuid findCustomIcon(const QImage& candidate);
     void setRecycleBinEnabled(bool value);
     void setRecycleBin(Group* group);
     void setRecycleBinChanged(const QDateTime& value);
@@ -148,8 +148,7 @@ public:
     void copyAttributesFrom(const Metadata* other);
 
 signals:
-    void nameTextChanged();
-    void modified();
+    void metadataModified();
 
 private:
     template <class P, class V> bool set(P& property, const V& value);
@@ -159,11 +158,11 @@ private:
 
     MetadataData m_data;
 
-    QHash<Uuid, QImage> m_customIcons;
-    mutable QHash<Uuid, QPixmapCache::Key> m_customIconCacheKeys;
-    mutable QHash<Uuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
-    QList<Uuid> m_customIconsOrder;
-    QHash<QByteArray, Uuid> m_customIconsHashes;
+    QHash<QUuid, QImage> m_customIcons;
+    mutable QHash<QUuid, QPixmapCache::Key> m_customIconCacheKeys;
+    mutable QHash<QUuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
+    QList<QUuid> m_customIconsOrder;
+    QHash<QByteArray, QUuid> m_customIconsHashes;
 
     QPointer<Group> m_recycleBin;
     QDateTime m_recycleBinChanged;

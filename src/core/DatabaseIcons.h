@@ -33,6 +33,8 @@ public:
 
     static const int IconCount;
     static const int ExpiredIconIndex;
+    static const int SharedIconIndex;
+    static const int UnsharedIconIndex;
 
 private:
     DatabaseIcons();
@@ -46,7 +48,8 @@ private:
     Q_DISABLE_COPY(DatabaseIcons)
 };
 
-inline DatabaseIcons* databaseIcons() {
+inline DatabaseIcons* databaseIcons()
+{
     return DatabaseIcons::instance();
 }
 

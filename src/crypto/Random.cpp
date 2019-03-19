@@ -28,7 +28,7 @@ public:
     void randomize(void* data, int len) override;
 };
 
-Random* Random::m_instance(nullptr);
+QSharedPointer<Random> Random::m_instance;
 
 void Random::randomize(QByteArray& ba)
 {
@@ -70,18 +70,20 @@ quint32 Random::randomUIntRange(quint32 min, quint32 max)
 Random* Random::instance()
 {
     if (!m_instance) {
-        m_instance = new Random(new RandomBackendGcrypt());
+        m_instance.reset(new Random(new RandomBackendGcrypt()));
     }
 
-    return m_instance;
+    return m_instance.data();
 }
 
-void Random::createWithBackend(RandomBackend* backend)
+void Random::resetInstance()
 {
-    Q_ASSERT(backend);
-    Q_ASSERT(!m_instance);
+    m_instance.reset();
+}
 
-    m_instance = new Random(backend);
+void Random::setInstance(RandomBackend* backend)
+{
+    m_instance.reset(new Random(backend));
 }
 
 Random::Random(RandomBackend* backend)
@@ -89,10 +91,13 @@ Random::Random(RandomBackend* backend)
 {
 }
 
-
 void RandomBackendGcrypt::randomize(void* data, int len)
 {
     Q_ASSERT(Crypto::initalized());
 
     gcry_randomize(data, len, GCRY_STRONG_RANDOM);
+}
+
+RandomBackend::~RandomBackend()
+{
 }

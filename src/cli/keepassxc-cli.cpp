@@ -20,12 +20,12 @@
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QStringList>
-#include <QTextStream>
 
+#include "cli/TextStream.h"
 #include <cli/Command.h>
 
 #include "config-keepassx.h"
-#include "core/Tools.h"
+#include "core/Bootstrap.h"
 #include "crypto/Crypto.h"
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
@@ -34,19 +34,17 @@
 
 int main(int argc, char** argv)
 {
-#ifdef QT_NO_DEBUG
-    Tools::disableCoreDumps();
-#endif
-
     if (!Crypto::init()) {
         qFatal("Fatal error while testing the cryptographic functions:\n%s", qPrintable(Crypto::errorString()));
         return EXIT_FAILURE;
     }
 
     QCoreApplication app(argc, argv);
-    app.setApplicationVersion(KEEPASSX_VERSION);
+    QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
 
-    QTextStream out(stdout);
+    Bootstrap::bootstrap();
+
+    TextStream out(stdout);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
@@ -69,10 +67,10 @@ int main(int argc, char** argv)
     // recognized by this parser.
     parser.parse(arguments);
 
-    if (parser.positionalArguments().size() < 1) {
+    if (parser.positionalArguments().empty()) {
         if (parser.isSet("version")) {
             // Switch to parser.showVersion() when available (QT 5.4).
-            out << KEEPASSX_VERSION << endl;
+            out << KEEPASSXC_VERSION << endl;
             return EXIT_SUCCESS;
         }
         parser.showHelp();

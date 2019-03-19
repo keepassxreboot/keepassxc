@@ -23,7 +23,9 @@
 
 #include <QCoreApplication>
 
+// clang-format off
 #define CHECK_RETURN_FALSE(x) if (!(x)) return false;
+// clang-format on
 
 class QIODevice;
 class Database;
@@ -33,7 +35,7 @@ class Database;
  */
 class KdbxWriter
 {
-Q_DECLARE_TR_FUNCTIONS(KdbxWriter)
+    Q_DECLARE_TR_FUNCTIONS(KdbxWriter)
 
 public:
     KdbxWriter() = default;
@@ -54,7 +56,6 @@ public:
     QString errorString() const;
 
 protected:
-
     /**
      * Helper method for writing a KDBX header field to a device.
      *
@@ -72,8 +73,8 @@ protected:
         QByteArray fieldIdArr;
         fieldIdArr[0] = static_cast<char>(fieldId);
         CHECK_RETURN_FALSE(writeData(device, fieldIdArr));
-        CHECK_RETURN_FALSE(writeData(device, Endian::sizedIntToBytes<SizedQInt>(static_cast<SizedQInt>(data.size()),
-                                                                                KeePass2::BYTEORDER)));
+        CHECK_RETURN_FALSE(writeData(
+            device, Endian::sizedIntToBytes<SizedQInt>(static_cast<SizedQInt>(data.size()), KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeData(device, data));
 
         return true;
@@ -86,5 +87,4 @@ protected:
     QString m_errorStr = "";
 };
 
-
-#endif //KEEPASSXC_KDBXWRITER_H
+#endif // KEEPASSXC_KDBXWRITER_H

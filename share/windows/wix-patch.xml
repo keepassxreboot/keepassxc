@@ -5,4 +5,11 @@
               Name="KeePassXC" Icon="ProductIcon.ico"
               WorkingDirectory="INSTALL_ROOT" Advertise="yes" />
   </CPackWiXFragment>
+  <CPackWiXFragment Id="CM_CP_KeePassXC.exe">
+    <ProgId Id="KeePassXC.kdbx" Description="KeePass Password Database" Icon="CM_FP_KeePassXC.exe" IconIndex="1">
+      <Extension Id="kdbx" ContentType="application/x-keepass2">
+        <Verb Id="open" Command="open" TargetFile="CM_FP_KeePassXC.exe" Argument="&quot;%1&quot;"/>
+      </Extension>
+    </ProgId>
+  </CPackWiXFragment>
 </CPackWiXPatch>

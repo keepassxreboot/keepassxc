@@ -15,9 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QtCore/QCryptographicHash>
 #include "Metadata.h"
+#include <QtCore/QCryptographicHash>
 
+#include "core/Clock.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Tools.h"
@@ -43,7 +44,7 @@ Metadata::Metadata(QObject* parent)
     m_data.protectUrl = false;
     m_data.protectNotes = false;
 
-    QDateTime now = QDateTime::currentDateTimeUtc();
+    QDateTime now = Clock::currentDateTimeUtc();
     m_data.nameChanged = now;
     m_data.descriptionChanged = now;
     m_data.defaultUserNameChanged = now;
@@ -52,31 +53,30 @@ Metadata::Metadata(QObject* parent)
     m_masterKeyChanged = now;
     m_settingsChanged = now;
 
-    connect(m_customData, SIGNAL(modified()), this, SIGNAL(modified()));
+    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(metadataModified()));
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
 {
     if (property != value) {
         property = value;
-        emit modified();
+        emit metadataModified();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-template <class P, class V> bool Metadata::set(P& property, const V& value, QDateTime& dateTime) {
+template <class P, class V> bool Metadata::set(P& property, const V& value, QDateTime& dateTime)
+{
     if (property != value) {
         property = value;
         if (m_updateDatetime) {
-            dateTime = QDateTime::currentDateTimeUtc();
+            dateTime = Clock::currentDateTimeUtc();
         }
-        emit modified();
+        emit metadataModified();
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -161,12 +161,12 @@ bool Metadata::protectNotes() const
     return m_data.protectNotes;
 }
 
-QImage Metadata::customIcon(const Uuid& uuid) const
+QImage Metadata::customIcon(const QUuid& uuid) const
 {
     return m_customIcons.value(uuid);
 }
 
-QPixmap Metadata::customIconPixmap(const Uuid& uuid) const
+QPixmap Metadata::customIconPixmap(const QUuid& uuid) const
 {
     QPixmap pixmap;
 
@@ -184,7 +184,7 @@ QPixmap Metadata::customIconPixmap(const Uuid& uuid) const
     return pixmap;
 }
 
-QPixmap Metadata::customIconScaledPixmap(const Uuid& uuid) const
+QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid) const
 {
     QPixmap pixmap;
 
@@ -203,28 +203,28 @@ QPixmap Metadata::customIconScaledPixmap(const Uuid& uuid) const
     return pixmap;
 }
 
-bool Metadata::containsCustomIcon(const Uuid& uuid) const
+bool Metadata::containsCustomIcon(const QUuid& uuid) const
 {
     return m_customIcons.contains(uuid);
 }
 
-QHash<Uuid, QImage> Metadata::customIcons() const
+QHash<QUuid, QImage> Metadata::customIcons() const
 {
     return m_customIcons;
 }
 
-QHash<Uuid, QPixmap> Metadata::customIconsScaledPixmaps() const
+QHash<QUuid, QPixmap> Metadata::customIconsScaledPixmaps() const
 {
-    QHash<Uuid, QPixmap> result;
+    QHash<QUuid, QPixmap> result;
 
-    for (const Uuid& uuid : m_customIconsOrder) {
+    for (const QUuid& uuid : m_customIconsOrder) {
         result.insert(uuid, customIconScaledPixmap(uuid));
     }
 
     return result;
 }
 
-QList<Uuid> Metadata::customIconsOrder() const
+QList<QUuid> Metadata::customIconsOrder() const
 {
     return m_customIconsOrder;
 }
@@ -311,9 +311,7 @@ void Metadata::setGenerator(const QString& value)
 
 void Metadata::setName(const QString& value)
 {
-    if (set(m_data.name, value, m_data.nameChanged)) {
-        emit nameTextChanged();
-    }
+    set(m_data.name, value, m_data.nameChanged);
 }
 
 void Metadata::setNameChanged(const QDateTime& value)
@@ -379,7 +377,7 @@ void Metadata::setProtectNotes(bool value)
     set(m_data.protectNotes, value);
 }
 
-void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
+void Metadata::addCustomIcon(const QUuid& uuid, const QImage& icon)
 {
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));
@@ -393,26 +391,24 @@ void Metadata::addCustomIcon(const Uuid& uuid, const QImage& icon)
     QByteArray hash = hashImage(icon);
     m_customIconsHashes[hash] = uuid;
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    emit modified();
+    emit metadataModified();
 }
 
-void Metadata::addCustomIconScaled(const Uuid& uuid, const QImage& icon)
+void Metadata::addCustomIconScaled(const QUuid& uuid, const QImage& icon)
 {
     QImage iconScaled;
 
     // scale down to 128x128 if icon is larger
     if (icon.width() > 128 || icon.height() > 128) {
-        iconScaled = icon.scaled(QSize(128, 128), Qt::KeepAspectRatio,
-                                 Qt::SmoothTransformation);
-    }
-    else {
+        iconScaled = icon.scaled(QSize(128, 128), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    } else {
         iconScaled = icon;
     }
 
     addCustomIcon(uuid, iconScaled);
 }
 
-void Metadata::removeCustomIcon(const Uuid& uuid)
+void Metadata::removeCustomIcon(const QUuid& uuid)
 {
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(m_customIcons.contains(uuid));
@@ -430,18 +426,18 @@ void Metadata::removeCustomIcon(const Uuid& uuid)
     m_customIconScaledCacheKeys.remove(uuid);
     m_customIconsOrder.removeAll(uuid);
     Q_ASSERT(m_customIcons.count() == m_customIconsOrder.count());
-    emit modified();
+    emit metadataModified();
 }
 
-Uuid Metadata::findCustomIcon(const QImage &candidate)
+QUuid Metadata::findCustomIcon(const QImage& candidate)
 {
     QByteArray hash = hashImage(candidate);
-    return m_customIconsHashes.value(hash, Uuid());
+    return m_customIconsHashes.value(hash, QUuid());
 }
 
-void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* otherMetadata)
+void Metadata::copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* otherMetadata)
 {
-    for (const Uuid& uuid : iconList) {
+    for (const QUuid& uuid : iconList) {
         Q_ASSERT(otherMetadata->containsCustomIcon(uuid));
 
         if (!containsCustomIcon(uuid) && otherMetadata->containsCustomIcon(uuid)) {
@@ -452,7 +448,11 @@ void Metadata::copyCustomIcons(const QSet<Uuid>& iconList, const Metadata* other
 
 QByteArray Metadata::hashImage(const QImage& image)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    auto data = QByteArray(reinterpret_cast<const char*>(image.bits()), static_cast<int>(image.sizeInBytes()));
+#else
     auto data = QByteArray(reinterpret_cast<const char*>(image.bits()), image.byteCount());
+#endif
     return QCryptographicHash::hash(data, QCryptographicHash::Md5);
 }
 

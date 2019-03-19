@@ -22,6 +22,10 @@
 DatabaseIcons* DatabaseIcons::m_instance(nullptr);
 const int DatabaseIcons::IconCount(69);
 const int DatabaseIcons::ExpiredIconIndex(45);
+const int DatabaseIcons::SharedIconIndex(1);
+const int DatabaseIcons::UnsharedIconIndex(45);
+
+// clang-format off
 const char* const DatabaseIcons::m_indexToName[] = {
     "C00_Password.png",
     "C01_Package_Network.png",
@@ -93,6 +97,7 @@ const char* const DatabaseIcons::m_indexToName[] = {
     "C67_Certificate.png",
     "C68_BlackBerry.png"
 };
+// clang-format on
 
 QImage DatabaseIcons::icon(int index)
 {
@@ -103,8 +108,7 @@ QImage DatabaseIcons::icon(int index)
 
     if (!m_iconCache[index].isNull()) {
         return m_iconCache[index];
-    }
-    else {
+    } else {
         QString iconPath = QString("icons/database/").append(m_indexToName[index]);
         QImage icon(filePath()->dataPath(iconPath));
 

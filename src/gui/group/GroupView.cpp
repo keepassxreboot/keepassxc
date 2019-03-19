@@ -34,14 +34,13 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setHeaderHidden(true);
     setUniformRowHeights(true);
 
-    connect(this, SIGNAL(expanded(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
-    connect(this, SIGNAL(collapsed(QModelIndex)), this, SLOT(expandedChanged(QModelIndex)));
+    // clang-format off
+    connect(this, SIGNAL(expanded(QModelIndex)), SLOT(expandedChanged(QModelIndex)));
+    connect(this, SIGNAL(collapsed(QModelIndex)), SLOT(expandedChanged(QModelIndex)));
     connect(m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(syncExpandedState(QModelIndex,int,int)));
     connect(m_model, SIGNAL(modelReset()), SLOT(modelReset()));
-
     connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
-
-    connect(this, SIGNAL(clicked(QModelIndex)), SLOT(emitGroupPressed(QModelIndex)));
+    // clang-format on
 
     modelReset();
 
@@ -51,17 +50,16 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 }
 
-void GroupView::changeDatabase(Database* newDb)
+void GroupView::changeDatabase(const QSharedPointer<Database>& newDb)
 {
-    m_model->changeDatabase(newDb);
+    m_model->changeDatabase(newDb.data());
 }
 
 void GroupView::dragMoveEvent(QDragMoveEvent* event)
 {
     if (event->keyboardModifiers() & Qt::ControlModifier) {
         event->setDropAction(Qt::CopyAction);
-    }
-    else {
+    } else {
         event->setDropAction(Qt::MoveAction);
     }
 
@@ -69,7 +67,7 @@ void GroupView::dragMoveEvent(QDragMoveEvent* event)
 
     // entries may only be dropped on groups
     if (event->isAccepted() && event->mimeData()->hasFormat("application/x-keepassx-entry")
-            && (dropIndicatorPosition() == AboveItem || dropIndicatorPosition() == BelowItem)) {
+        && (dropIndicatorPosition() == AboveItem || dropIndicatorPosition() == BelowItem)) {
         event->ignore();
     }
 }
@@ -78,8 +76,7 @@ Group* GroupView::currentGroup()
 {
     if (currentIndex() == QModelIndex()) {
         return nullptr;
-    }
-    else {
+    } else {
         return m_model->groupFromIndex(currentIndex());
     }
 }
@@ -112,11 +109,6 @@ void GroupView::expandGroup(Group* group, bool expand)
     setExpanded(index, expand);
 }
 
-void GroupView::emitGroupChanged(const QModelIndex& index)
-{
-    emit groupChanged(m_model->groupFromIndex(index));
-}
-
 void GroupView::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);
@@ -125,12 +117,7 @@ void GroupView::setModel(QAbstractItemModel* model)
 
 void GroupView::emitGroupChanged()
 {
-    emit groupChanged(currentGroup());
-}
-
-void GroupView::emitGroupPressed(const QModelIndex& index)
-{
-    emit groupPressed(m_model->groupFromIndex(index));
+    emit groupSelectionChanged(currentGroup());
 }
 
 void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)

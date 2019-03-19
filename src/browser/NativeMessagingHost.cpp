@@ -1,43 +1,43 @@
 /*
-*  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 3 of the License, or
-*  (at your option) any later version.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+#include "NativeMessagingHost.h"
+#include "BrowserSettings.h"
+#include "sodium.h"
 #include <QMutexLocker>
 #include <QtNetwork>
 #include <iostream>
-#include "sodium.h"
-#include "NativeMessagingHost.h"
-#include "BrowserSettings.h"
 
 #ifdef Q_OS_WIN
 #include <Winsock2.h>
 #endif
 
-NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool enabled) :
-    NativeMessagingBase(enabled),
-    m_mutex(QMutex::Recursive),
-    m_browserClients(m_browserService),
-    m_browserService(parent)
+NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool enabled)
+    : NativeMessagingBase(enabled)
+    , m_mutex(QMutex::Recursive)
+    , m_browserService(parent)
+    , m_browserClients(m_browserService)
 {
     m_localServer.reset(new QLocalServer(this));
     m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
     m_running.store(false);
 
-    if (BrowserSettings::isEnabled() && !m_running) {
+    if (browserSettings()->isEnabled() && !m_running) {
         run();
     }
 
@@ -64,16 +64,18 @@ void NativeMessagingHost::run()
     }
 
     // Update KeePassXC/keepassxc-proxy binary paths to Native Messaging scripts
-    if (BrowserSettings::updateBinaryPath()) {
-        BrowserSettings::updateBinaryPaths(BrowserSettings::useCustomProxy() ? BrowserSettings::customProxyLocation() : "");
+    if (browserSettings()->updateBinaryPath()) {
+        browserSettings()->updateBinaryPaths(
+            browserSettings()->useCustomProxy() ? browserSettings()->customProxyLocation() : "");
     }
 
     m_running.store(true);
 #ifdef Q_OS_WIN
-    m_future = QtConcurrent::run(this, static_cast<void(NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
+    m_future =
+        QtConcurrent::run(this, static_cast<void (NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
 #endif
 
-    if (BrowserSettings::supportBrowserProxy()) {
+    if (browserSettings()->supportBrowserProxy()) {
         QString serverPath = getLocalServerPath();
         QFile::remove(serverPath);
 
@@ -110,7 +112,7 @@ void NativeMessagingHost::readLength()
     if (!std::cin.eof() && length > 0) {
         readStdIn(length);
     } else {
-    	m_notifier->setEnabled(false);
+        m_notifier->setEnabled(false);
     }
 }
 
@@ -203,18 +205,6 @@ void NativeMessagingHost::disconnectSocket()
             m_socketList.removeOne(s);
         }
     }
-}
-
-void NativeMessagingHost::removeSharedEncryptionKeys()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeSharedEncryptionKeys();
-}
-
-void NativeMessagingHost::removeStoredPermissions()
-{
-    QMutexLocker locker(&m_mutex);
-    m_browserService.removeStoredPermissions();
 }
 
 void NativeMessagingHost::databaseLocked()

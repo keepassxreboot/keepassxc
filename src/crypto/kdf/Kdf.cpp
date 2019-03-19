@@ -22,14 +22,14 @@
 
 #include "crypto/Random.h"
 
-Kdf::Kdf(Uuid uuid)
+Kdf::Kdf(const QUuid& uuid)
     : m_rounds(KDF_DEFAULT_ROUNDS)
-    , m_seed(QByteArray(KDF_DEFAULT_SEED_SIZE, 0))
+    , m_seed(QByteArray(KDF_MAX_SEED_SIZE, 0))
     , m_uuid(uuid)
 {
 }
 
-Uuid Kdf::uuid() const
+const QUuid& Kdf::uuid() const
 {
     return m_uuid;
 }
@@ -56,7 +56,7 @@ bool Kdf::setRounds(int rounds)
 
 bool Kdf::setSeed(const QByteArray& seed)
 {
-    if (seed.size() != m_seed.size()) {
+    if (seed.size() < KDF_MIN_SEED_SIZE || seed.size() > KDF_MAX_SEED_SIZE) {
         return false;
     }
 
@@ -80,11 +80,12 @@ int Kdf::benchmark(int msec) const
     thread1.wait();
     thread2.wait();
 
-    return qMax(1, qMin(thread1.rounds(), thread2.rounds()));
+    return qMax(1, (thread1.rounds() + thread2.rounds()) / 2);
 }
 
 Kdf::BenchmarkThread::BenchmarkThread(int msec, const Kdf* kdf)
-    : m_msec(msec)
+    : m_rounds(1)
+    , m_msec(msec)
     , m_kdf(kdf)
 {
 }

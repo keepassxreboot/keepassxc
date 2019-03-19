@@ -30,10 +30,10 @@
  * or associated data. KeePass uses the latest version of Argon2, v1.3.
  */
 Argon2Kdf::Argon2Kdf()
-        : Kdf::Kdf(KeePass2::KDF_ARGON2)
-        , m_version(0x13)
-        , m_memory(1 << 16)
-        , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
+    : Kdf::Kdf(KeePass2::KDF_ARGON2)
+    , m_version(0x13)
+    , m_memory(1 << 16)
+    , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
 {
     m_rounds = 1;
 }
@@ -86,7 +86,7 @@ bool Argon2Kdf::setParallelism(quint32 threads)
     return false;
 }
 
-bool Argon2Kdf::processParameters(const QVariantMap &p)
+bool Argon2Kdf::processParameters(const QVariantMap& p)
 {
     QByteArray salt = p.value(KeePass2::KDFPARAM_ARGON2_SALT).toByteArray();
     if (!setSeed(salt)) {
@@ -133,7 +133,7 @@ bool Argon2Kdf::processParameters(const QVariantMap &p)
 QVariantMap Argon2Kdf::writeParameters()
 {
     QVariantMap p;
-    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2.toByteArray());
+    p.insert(KeePass2::KDFPARAM_UUID, KeePass2::KDF_ARGON2.toRfc4122());
     p.insert(KeePass2::KDFPARAM_ARGON2_VERSION, version());
     p.insert(KeePass2::KDFPARAM_ARGON2_PARALLELISM, parallelism());
     p.insert(KeePass2::KDFPARAM_ARGON2_MEMORY, memory() * 1024);
@@ -161,13 +161,28 @@ bool Argon2Kdf::transform(const QByteArray& raw, QByteArray& result) const
     return transformKeyRaw(raw, seed(), version(), rounds(), memory(), parallelism(), result);
 }
 
-bool Argon2Kdf::transformKeyRaw(const QByteArray& key, const QByteArray& seed, quint32 version,
-                                quint32 rounds, quint64 memory, quint32 parallelism, QByteArray& result)
+bool Argon2Kdf::transformKeyRaw(const QByteArray& key,
+                                const QByteArray& seed,
+                                quint32 version,
+                                quint32 rounds,
+                                quint64 memory,
+                                quint32 parallelism,
+                                QByteArray& result)
 {
     // Time Cost, Mem Cost, Threads/Lanes, Password, length, Salt, length, out, length
-    int rc = argon2_hash(rounds, memory, parallelism, key.data(), key.size(),
-                         seed.data(), seed.size(), result.data(), result.size(),
-                         nullptr, 0, Argon2_d, version);
+    int rc = argon2_hash(rounds,
+                         memory,
+                         parallelism,
+                         key.data(),
+                         key.size(),
+                         seed.data(),
+                         seed.size(),
+                         result.data(),
+                         result.size(),
+                         nullptr,
+                         0,
+                         Argon2_d,
+                         version);
     if (rc != ARGON2_OK) {
         qWarning("Argon2 error: %s", argon2_error_message(rc));
         return false;

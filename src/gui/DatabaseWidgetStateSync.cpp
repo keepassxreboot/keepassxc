@@ -28,7 +28,7 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     , m_blockUpdates(false)
 {
     m_mainSplitterSizes = variantToIntList(config()->get("GUI/SplitterState"));
-    m_detailSplitterSizes = variantToIntList(config()->get("GUI/DetailSplitterState"));
+    m_previewSplitterSizes = variantToIntList(config()->get("GUI/PreviewSplitterState"));
     m_hideUsernames = config()->get("GUI/HideUsernames").toBool();
     m_hidePasswords = config()->get("GUI/HidePasswords").toBool();
     m_listViewState = config()->get("GUI/ListViewState").toByteArray();
@@ -47,7 +47,7 @@ DatabaseWidgetStateSync::~DatabaseWidgetStateSync()
 void DatabaseWidgetStateSync::sync()
 {
     config()->set("GUI/SplitterState", intListToVariant(m_mainSplitterSizes));
-    config()->set("GUI/DetailSplitterState", intListToVariant(m_detailSplitterSizes));
+    config()->set("GUI/PreviewSplitterState", intListToVariant(m_previewSplitterSizes));
     config()->set("GUI/HideUsernames", m_hideUsernames);
     config()->set("GUI/HidePasswords", m_hidePasswords);
     config()->set("GUI/ListViewState", m_listViewState);
@@ -70,11 +70,11 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
             m_activeDbWidget->setMainSplitterSizes(m_mainSplitterSizes);
         }
 
-        if (!m_detailSplitterSizes.isEmpty()) {
-            m_activeDbWidget->setDetailSplitterSizes(m_detailSplitterSizes);
+        if (!m_previewSplitterSizes.isEmpty()) {
+            m_activeDbWidget->setPreviewSplitterSizes(m_previewSplitterSizes);
         }
 
-        if (m_activeDbWidget->isInSearchMode()) {
+        if (m_activeDbWidget->isSearchActive()) {
             restoreSearchView();
         } else {
             restoreListView();
@@ -82,20 +82,13 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
 
         m_blockUpdates = false;
 
-        connect(m_activeDbWidget, SIGNAL(mainSplitterSizesChanged()),
-                SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(detailSplitterSizesChanged()),
-                SLOT(updateSplitterSizes()));
-        connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()),
-                SLOT(updateViewState()));
-        connect(m_activeDbWidget, SIGNAL(listModeActivated()),
-                SLOT(restoreListView()));
-        connect(m_activeDbWidget, SIGNAL(searchModeActivated()),
-                SLOT(restoreSearchView()));
-        connect(m_activeDbWidget, SIGNAL(listModeAboutToActivate()),
-                SLOT(blockUpdates()));
-        connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()),
-                SLOT(blockUpdates()));
+        connect(m_activeDbWidget, SIGNAL(mainSplitterSizesChanged()), SLOT(updateSplitterSizes()));
+        connect(m_activeDbWidget, SIGNAL(previewSplitterSizesChanged()), SLOT(updateSplitterSizes()));
+        connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()), SLOT(updateViewState()));
+        connect(m_activeDbWidget, SIGNAL(listModeActivated()), SLOT(restoreListView()));
+        connect(m_activeDbWidget, SIGNAL(searchModeActivated()), SLOT(restoreSearchView()));
+        connect(m_activeDbWidget, SIGNAL(listModeAboutToActivate()), SLOT(blockUpdates()));
+        connect(m_activeDbWidget, SIGNAL(searchModeAboutToActivate()), SLOT(blockUpdates()));
     }
 }
 
@@ -165,7 +158,7 @@ void DatabaseWidgetStateSync::updateSplitterSizes()
     }
 
     m_mainSplitterSizes = m_activeDbWidget->mainSplitterSizes();
-    m_detailSplitterSizes = m_activeDbWidget->detailSplitterSizes();
+    m_previewSplitterSizes = m_activeDbWidget->previewSplitterSizes();
 }
 
 /**
@@ -184,7 +177,7 @@ void DatabaseWidgetStateSync::updateViewState()
     m_hideUsernames = m_activeDbWidget->isUsernamesHidden();
     m_hidePasswords = m_activeDbWidget->isPasswordsHidden();
 
-    if (m_activeDbWidget->isInSearchMode()) {
+    if (m_activeDbWidget->isSearchActive()) {
         m_searchViewState = m_activeDbWidget->entryViewState();
     } else {
         m_listViewState = m_activeDbWidget->entryViewState();

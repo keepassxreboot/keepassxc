@@ -34,7 +34,7 @@ class AutoTypeMatchView : public QTreeView
 public:
     explicit AutoTypeMatchView(QWidget* parent = nullptr);
     AutoTypeMatch currentMatch();
-    void setCurrentMatch(AutoTypeMatch match);
+    void setCurrentMatch(const AutoTypeMatch& match);
     AutoTypeMatch matchFromIndex(const QModelIndex& index);
     void setMatchList(const QList<AutoTypeMatch>& matches);
     void setFirstMatchActive();

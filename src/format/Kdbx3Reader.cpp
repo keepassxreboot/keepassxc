@@ -18,86 +18,87 @@
 
 #include "Kdbx3Reader.h"
 
-#include "core/Group.h"
 #include "core/Endian.h"
+#include "core/Group.h"
 #include "crypto/CryptoHash.h"
-#include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlReader.h"
+#include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
 #include <QBuffer>
 
-Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& headerData,
-                                        const CompositeKey& key, bool keepDatabase)
+bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
+                                   const QByteArray& headerData,
+                                   QSharedPointer<const CompositeKey> key,
+                                   Database* db)
 {
     Q_ASSERT(m_kdbxVersion <= KeePass2::FILE_VERSION_3_1);
 
     if (hasError()) {
-        return nullptr;
+        return false;
     }
 
     // check if all required headers were present
-    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty()
-        || m_streamStartBytes.isEmpty() || m_protectedStreamKey.isEmpty()
-        || m_db->cipher().isNull()) {
-        raiseError("missing database headers");
-        return nullptr;
+    if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_streamStartBytes.isEmpty()
+        || m_protectedStreamKey.isEmpty() || db->cipher().isNull()) {
+        raiseError(tr("missing database headers"));
+        return false;
     }
 
-    if (!m_db->setKey(key, false)) {
+    if (!db->setKey(key, false)) {
         raiseError(tr("Unable to calculate master key"));
-        return nullptr;
+        return false;
     }
 
-    if (!m_db->challengeMasterSeed(m_masterSeed)) {
+    if (!db->challengeMasterSeed(m_masterSeed)) {
         raiseError(tr("Unable to issue challenge-response."));
-        return nullptr;
+        return false;
     }
 
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(m_masterSeed);
-    hash.addData(m_db->challengeResponseKey());
-    hash.addData(m_db->transformedMasterKey());
+    hash.addData(db->challengeResponseKey());
+    hash.addData(db->transformedMasterKey());
     QByteArray finalKey = hash.result();
 
-    SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(m_db->cipher());
-    SymmetricCipherStream cipherStream(device, cipher,
-                                       SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
+    SymmetricCipher::Algorithm cipher = SymmetricCipher::cipherToAlgorithm(db->cipher());
+    SymmetricCipherStream cipherStream(
+        device, cipher, SymmetricCipher::algorithmMode(cipher), SymmetricCipher::Decrypt);
     if (!cipherStream.init(finalKey, m_encryptionIV)) {
         raiseError(cipherStream.errorString());
-        return nullptr;
+        return false;
     }
     if (!cipherStream.open(QIODevice::ReadOnly)) {
         raiseError(cipherStream.errorString());
-        return nullptr;
+        return false;
     }
 
     QByteArray realStart = cipherStream.read(32);
 
     if (realStart != m_streamStartBytes) {
         raiseError(tr("Wrong key or database file is corrupt."));
-        return nullptr;
+        return false;
     }
 
     HashedBlockStream hashedStream(&cipherStream);
     if (!hashedStream.open(QIODevice::ReadOnly)) {
         raiseError(hashedStream.errorString());
-        return nullptr;
+        return false;
     }
 
     QIODevice* xmlDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (m_db->compressionAlgo() == Database::CompressionNone) {
+    if (db->compressionAlgorithm() == Database::CompressionNone) {
         xmlDevice = &hashedStream;
     } else {
         ioCompressor.reset(new QtIOCompressor(&hashedStream));
         ioCompressor->setStreamFormat(QtIOCompressor::GzipFormat);
         if (!ioCompressor->open(QIODevice::ReadOnly)) {
             raiseError(ioCompressor->errorString());
-            return nullptr;
+            return false;
         }
         xmlDevice = ioCompressor.data();
     }
@@ -105,28 +106,17 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
     if (!randomStream.init(m_protectedStreamKey)) {
         raiseError(randomStream.errorString());
-        return nullptr;
-    }
-
-    QBuffer buffer;
-    if (saveXml()) {
-        m_xmlData = xmlDevice->readAll();
-        buffer.setBuffer(&m_xmlData);
-        buffer.open(QIODevice::ReadOnly);
-        xmlDevice = &buffer;
+        return false;
     }
 
     Q_ASSERT(xmlDevice);
 
     KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_3_1);
-    xmlReader.readDatabase(xmlDevice, m_db.data(), &randomStream);
+    xmlReader.readDatabase(xmlDevice, db, &randomStream);
 
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
-        if (keepDatabase) {
-            return m_db.take();
-        }
-        return nullptr;
+        return false;
     }
 
     Q_ASSERT(!xmlReader.headerHash().isEmpty() || m_kdbxVersion < KeePass2::FILE_VERSION_3_1);
@@ -134,19 +124,21 @@ Database* Kdbx3Reader::readDatabaseImpl(QIODevice* device, const QByteArray& hea
     if (!xmlReader.headerHash().isEmpty()) {
         QByteArray headerHash = CryptoHash::hash(headerData, CryptoHash::Sha256);
         if (headerHash != xmlReader.headerHash()) {
-            raiseError("Header doesn't match hash");
-            return nullptr;
+            raiseError(tr("Header doesn't match hash"));
+            return false;
         }
     }
 
-    return m_db.take();
+    return true;
 }
 
-bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
+bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream, Database* db)
 {
+    Q_UNUSED(db);
+
     QByteArray fieldIDArray = headerStream.read(1);
     if (fieldIDArray.size() != 1) {
-        raiseError("Invalid header id size");
+        raiseError(tr("Invalid header id size"));
         return false;
     }
     char fieldID = fieldIDArray.at(0);
@@ -154,7 +146,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     bool ok;
     auto fieldLen = Endian::readSizedInt<quint16>(&headerStream, KeePass2::BYTEORDER, &ok);
     if (!ok) {
-        raiseError("Invalid header field length");
+        raiseError(tr("Invalid header field length"));
         return false;
     }
 
@@ -162,7 +154,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream)
     if (fieldLen != 0) {
         fieldData = headerStream.read(fieldLen);
         if (fieldData.size() != fieldLen) {
-            raiseError("Invalid header data length");
+            raiseError(tr("Invalid header data length"));
             return false;
         }
     }

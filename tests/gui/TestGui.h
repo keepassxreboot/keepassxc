@@ -19,21 +19,26 @@
 #ifndef KEEPASSX_TESTGUI_H
 #define KEEPASSX_TESTGUI_H
 
-#include "TemporaryFile.h"
+#include "gui/MainWindow.h"
+#include "util/TemporaryFile.h"
 
 #include <QAbstractItemModel>
 #include <QObject>
 #include <QPointer>
+#include <QScopedPointer>
+#include <QSharedPointer>
 
 class Database;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class QAbstractItemView;
-class MainWindow;
 
 class TestGui : public QObject
 {
     Q_OBJECT
+
+protected slots:
+    void createDatabaseCallback();
 
 private slots:
     void initTestCase();
@@ -41,6 +46,7 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
+    void testSettingsDefaultTabOrder();
     void testCreateDatabase();
     void testMergeDatabase();
     void testAutoreloadDatabase();
@@ -69,17 +75,23 @@ private:
     int addCannedEntries();
     void checkDatabase(QString dbFileName = "");
     void triggerAction(const QString& name);
-    void dragAndDropGroup(const QModelIndex& sourceIndex, const QModelIndex& targetIndex, int row,
-                          bool expectedResult, const QString& expectedParentName, int expectedPos);
-    void clickIndex(const QModelIndex& index, QAbstractItemView* view, Qt::MouseButton button,
+    void dragAndDropGroup(const QModelIndex& sourceIndex,
+                          const QModelIndex& targetIndex,
+                          int row,
+                          bool expectedResult,
+                          const QString& expectedParentName,
+                          int expectedPos);
+    void clickIndex(const QModelIndex& index,
+                    QAbstractItemView* view,
+                    Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
 
-    QPointer<MainWindow> m_mainWindow;
+    QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
-    QPointer<Database> m_db;
+    QSharedPointer<Database> m_db;
     QByteArray m_dbData;
-    TemporaryFile m_dbFile;
+    QScopedPointer<TemporaryFile> m_dbFile;
     QString m_dbFileName;
     QString m_dbFilePath;
 };

@@ -21,6 +21,7 @@
 #include <QCoreApplication>
 #include <QDateTime>
 #include <QHash>
+#include <QSharedPointer>
 
 class Database;
 class Entry;
@@ -34,12 +35,9 @@ class KeePass1Reader
 
 public:
     KeePass1Reader();
-    Database* readDatabase(QIODevice* device, const QString& password,
-                           QIODevice* keyfileDevice);
-    Database* readDatabase(QIODevice* device, const QString& password,
-                           const QString& keyfileName);
-    Database* readDatabase(const QString& filename, const QString& password,
-                           const QString& keyfileName);
+    QSharedPointer<Database> readDatabase(QIODevice* device, const QString& password, QIODevice* keyfileDevice);
+    QSharedPointer<Database> readDatabase(QIODevice* device, const QString& password, const QString& keyfileName);
+    QSharedPointer<Database> readDatabase(const QString& filename, const QString& password, const QString& keyfileName);
     bool hasError();
     QString errorString();
 
@@ -51,8 +49,7 @@ private:
         UTF8
     };
 
-    SymmetricCipherStream* testKeys(const QString& password, const QByteArray& keyfileData,
-                                    qint64 contentPos);
+    SymmetricCipherStream* testKeys(const QString& password, const QByteArray& keyfileData, qint64 contentPos);
     QByteArray key(const QByteArray& password, const QByteArray& keyfileData);
     bool verifyKey(SymmetricCipherStream* cipherStream);
     Group* readGroup(QIODevice* cipherStream);
@@ -67,7 +64,7 @@ private:
     static QDateTime dateFromPackedStruct(const QByteArray& data);
     static bool isMetaStream(const Entry* entry);
 
-    Database* m_db;
+    QSharedPointer<Database> m_db;
     Group* m_tmpParent;
     QIODevice* m_device;
     quint32 m_encryptionFlags;

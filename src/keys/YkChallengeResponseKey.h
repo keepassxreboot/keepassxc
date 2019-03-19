@@ -13,7 +13,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef KEEPASSX_YK_CHALLENGERESPONSEKEY_H
 #define KEEPASSX_YK_CHALLENGERESPONSEKEY_H
@@ -29,12 +29,13 @@ class YkChallengeResponseKey : public QObject, public ChallengeResponseKey
     Q_OBJECT
 
 public:
+    static QUuid UUID;
 
-    YkChallengeResponseKey(int slot = -1, bool blocking = false);
+    explicit YkChallengeResponseKey(int slot = -1, bool blocking = false);
 
-    QByteArray rawKey() const;
-    bool challenge(const QByteArray& challenge);
-    bool challenge(const QByteArray& challenge, unsigned retries);
+    QByteArray rawKey() const override;
+    bool challenge(const QByteArray& challenge) override;
+    bool challenge(const QByteArray& challenge, unsigned int retries);
     QString getName() const;
     bool isBlocking() const;
 

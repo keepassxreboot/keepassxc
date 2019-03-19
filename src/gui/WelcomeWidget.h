@@ -19,10 +19,11 @@
 #ifndef KEEPASSX_WELCOMEWIDGET_H
 #define KEEPASSX_WELCOMEWIDGET_H
 
-#include <QWidget>
 #include <QListWidgetItem>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
     class WelcomeWidget;
 }
 
@@ -41,6 +42,9 @@ signals:
     void openDatabaseFile(QString);
     void importKeePass1Database();
     void importCsv();
+
+protected:
+    void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void openDatabaseFromFile(QListWidgetItem* item);

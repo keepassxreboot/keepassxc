@@ -116,7 +116,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="SettingsWidget" name="settingsWidget" native="true"/>
+         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -183,6 +183,9 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>&amp;Database</string>
@@ -194,7 +197,7 @@
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
-      <string>Import</string>
+      <string>&amp;Import</string>
      </property>
      <addaction name="actionImportKeePass1"/>
      <addaction name="actionImportCsv"/>
@@ -212,7 +215,6 @@
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
     <addaction name="actionExportCsv"/>
-    <addaction name="actionRepairDatabase"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -221,6 +223,7 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionCheckForUpdates"/>
     <addaction name="actionDonate"/>
     <addaction name="actionBugReport"/>
    </widget>
@@ -232,8 +235,11 @@
      <property name="enabled">
       <bool>false</bool>
      </property>
+     <property name="toolTip">
+      <string/>
+     </property>
      <property name="title">
-      <string>Copy att&amp;ribute to clipboard</string>
+      <string>Copy att&amp;ribute...</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
      <addaction name="actionEntryCopyURL"/>
@@ -245,22 +251,25 @@
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>Time-based one-time password</string>
+      <string>TOTP...</string>
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
+     <addaction name="actionEntryTotpQRCode"/>
      <addaction name="actionEntrySetupTotp"/>
     </widget>
-    <addaction name="actionEntryCopyUsername"/>
-    <addaction name="actionEntryCopyPassword"/>
-    <addaction name="menuEntryCopyAttribute"/>
-    <addaction name="menuEntryTotp"/>
-    <addaction name="actionEntryAutoType"/>
-    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryDelete"/>
-    <addaction name="actionEntryNew"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryCopyUsername"/>
+    <addaction name="actionEntryCopyPassword"/>
+    <addaction name="menuEntryCopyAttribute"/>
+    <addaction name="separator"/>
+    <addaction name="menuEntryTotp"/>
+    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryAutoType"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -287,6 +296,9 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
    <property name="movable">
     <bool>false</bool>
    </property>
@@ -337,6 +349,14 @@
     <enum>QAction::AboutRole</enum>
    </property>
   </action>
+  <action name="actionCheckForUpdates">
+   <property name="text">
+    <string>Check for Updates...</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::ApplicationSpecificRole</enum>
+   </property>
+  </action>
   <action name="actionDatabaseOpen">
    <property name="text">
     <string>&amp;Open database...</string>
@@ -360,12 +380,18 @@
   </action>
   <action name="actionDatabaseNew">
    <property name="text">
-    <string>&amp;New database</string>
+    <string>&amp;New database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Create a new database</string>
    </property>
   </action>
   <action name="actionDatabaseMerge">
    <property name="text">
-    <string>Merge from KeePassX database</string>
+    <string>&amp;Merge from database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Merge from another KDBX database</string>
    </property>
   </action>
   <action name="actionEntryNew">
@@ -373,7 +399,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Add new entry</string>
+    <string>&amp;New entry</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new entry</string>
    </property>
   </action>
   <action name="actionEntryEdit">
@@ -381,7 +410,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;View/Edit entry</string>
+    <string>&amp;Edit entry</string>
+   </property>
+   <property name="toolTip">
+    <string>View or edit entry</string>
    </property>
   </action>
   <action name="actionEntryDelete">
@@ -397,7 +429,10 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Add new group</string>
+    <string>&amp;New group</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new group</string>
    </property>
   </action>
   <action name="actionGroupEdit">
@@ -429,7 +464,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change &amp;master key...</string>
+    <string>Change master &amp;key...</string>
    </property>
   </action>
   <action name="actionChangeDatabaseSettings">
@@ -437,7 +472,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Database settings</string>
+    <string>&amp;Database settings...</string>
    </property>
    <property name="toolTip">
     <string>Database settings</string>
@@ -470,7 +505,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Cop&amp;y password</string>
+    <string>Copy &amp;password</string>
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
@@ -500,7 +535,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Perform Auto-Type</string>
+    <string>Perform &amp;Auto-Type</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
@@ -508,7 +543,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Open URL</string>
+    <string>Open &amp;URL</string>
    </property>
   </action>
   <action name="actionLockDatabases">
@@ -562,22 +597,28 @@
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
-    <string>Import KeePass 1 database...</string>
+    <string>KeePass 1 database...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a KeePass 1 database</string>
    </property>
   </action>
   <action name="actionImportCsv">
    <property name="text">
-    <string>Import CSV file...</string>
+    <string>CSV file...</string>
    </property>
-  </action>
-  <action name="actionRepairDatabase">
-   <property name="text">
-    <string>Re&amp;pair database...</string>
+   <property name="toolTip">
+    <string>Import a CSV file</string>
    </property>
   </action>
   <action name="actionEntryTotp">
    <property name="text">
-    <string>Show TOTP</string>
+    <string>Show TOTP...</string>
+   </property>
+  </action>
+  <action name="actionEntryTotpQRCode">
+   <property name="text">
+    <string>Show TOTP QR Code...</string>
    </property>
   </action>
   <action name="actionEntrySetupTotp">
@@ -608,8 +649,19 @@
     <string>Report a &amp;bug</string>
    </property>
   </action>
+  <action name="actionShare_entry">
+   <property name="text">
+    <string>Share entry</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
+  <customwidget>
+   <class>PasswordGeneratorWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/PasswordGeneratorWidget.h</header>
+   <container>1</container>
+  </customwidget>
   <customwidget>
    <class>MessageWidget</class>
    <extends>QWidget</extends>
@@ -623,21 +675,15 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>SettingsWidget</class>
+   <class>ApplicationSettingsWidget</class>
    <extends>QWidget</extends>
-   <header>gui/SettingsWidget.h</header>
+   <header>gui/ApplicationSettingsWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>WelcomeWidget</class>
    <extends>QWidget</extends>
    <header>gui/WelcomeWidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>PasswordGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/PasswordGeneratorWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

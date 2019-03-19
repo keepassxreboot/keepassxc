@@ -17,8 +17,8 @@
 
 #include "ScreenLockListenerMac.h"
 
-#include <QMutexLocker>
 #include <CoreFoundation/CoreFoundation.h>
+#include <QMutexLocker>
 
 ScreenLockListenerMac* ScreenLockListenerMac::instance()
 {
@@ -32,8 +32,10 @@ ScreenLockListenerMac* ScreenLockListenerMac::instance()
     return m_ptr;
 }
 
-void ScreenLockListenerMac::notificationCenterCallBack(CFNotificationCenterRef, void*,
-                                                       CFStringRef, const void*,
+void ScreenLockListenerMac::notificationCenterCallBack(CFNotificationCenterRef,
+                                                       void*,
+                                                       CFStringRef,
+                                                       const void*,
                                                        CFDictionaryRef)
 {
     instance()->onSignalReception();

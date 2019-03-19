@@ -21,8 +21,9 @@
 #include "Diceware.h"
 
 #include <QCommandLineParser>
-#include <QTextStream>
 
+#include "Utils.h"
+#include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
 
 Diceware::Diceware()
@@ -37,25 +38,27 @@ Diceware::~Diceware()
 
 int Diceware::execute(const QStringList& arguments)
 {
-    QTextStream inputTextStream(stdin, QIODevice::ReadOnly);
-    QTextStream outputTextStream(stdout, QIODevice::WriteOnly);
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QCommandLineParser parser;
-    parser.setApplicationDescription(this->description);
-    QCommandLineOption words(QStringList() << "W" << "words",
-                                QObject::tr("Word count for the diceware passphrase."),
-                                QObject::tr("count"));
+    parser.setApplicationDescription(description);
+    QCommandLineOption words(QStringList() << "W"
+                                           << "words",
+                             QObject::tr("Word count for the diceware passphrase."),
+                             QObject::tr("count", "CLI parameter"));
     parser.addOption(words);
     QCommandLineOption wordlistFile(QStringList() << "w"
-                                             << "word-list",
-                               QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
-                               QObject::tr("path"));
+                                                  << "word-list",
+                                    QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
+                                    QObject::tr("path"));
     parser.addOption(wordlistFile);
+    parser.addHelpOption();
     parser.process(arguments);
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
+        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
 
@@ -78,7 +81,7 @@ int Diceware::execute(const QStringList& arguments)
         outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
         return EXIT_FAILURE;
     }
-    
+
     QString password = dicewareGenerator.generatePassphrase();
     outputTextStream << password << endl;
 

@@ -26,7 +26,7 @@ class QSettings;
 
 class Config : public QObject
 {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     Q_DISABLE_COPY(Config)
@@ -43,10 +43,14 @@ public:
     static void createConfigFromFile(const QString& file);
     static void createTempFileInstance();
 
+signals:
+    void changed(const QString& key);
+
 private:
     Config(const QString& fileName, QObject* parent);
     explicit Config(QObject* parent);
     void init(const QString& fileName);
+    void upgrade();
 
     static Config* m_instance;
 
@@ -54,7 +58,8 @@ private:
     QHash<QString, QVariant> m_defaults;
 };
 
-inline Config* config() {
+inline Config* config()
+{
     return Config::instance();
 }
 

@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_COMMAND_H
 #define KEEPASSXC_COMMAND_H
 
+#include <QCommandLineOption>
 #include <QList>
 #include <QObject>
 #include <QString>
@@ -29,13 +30,16 @@ class Command
 {
 public:
     virtual ~Command();
-    virtual int execute(const QStringList& arguments);
+    virtual int execute(const QStringList& arguments) = 0;
     QString name;
     QString description;
     QString getDescriptionLine();
 
     static QList<Command*> getCommands();
-    static Command* getCommand(QString commandName);
+    static Command* getCommand(const QString& commandName);
+
+    static const QCommandLineOption QuietOption;
+    static const QCommandLineOption KeyFileOption;
 };
 
 #endif // KEEPASSXC_COMMAND_H

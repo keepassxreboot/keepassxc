@@ -25,7 +25,7 @@ class Estimate : public Command
 public:
     Estimate();
     ~Estimate();
-    int execute(const QStringList& arguments);
+    int execute(const QStringList& arguments) override;
 };
 
 #endif // KEEPASSXC_ESTIMATE_H

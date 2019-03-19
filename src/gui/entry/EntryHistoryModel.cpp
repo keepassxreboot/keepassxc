@@ -41,8 +41,7 @@ int EntryHistoryModel::rowCount(const QModelIndex& parent) const
 {
     if (!parent.isValid()) {
         return m_historyEntries.count();
-    }
-    else {
+    } else {
         return 0;
     }
 }
@@ -55,14 +54,13 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
 
     if (role == Qt::DisplayRole || role == Qt::UserRole) {
         Entry* entry = entryFromIndex(index);
-        TimeInfo timeInfo = entry->timeInfo();
+        const TimeInfo& timeInfo = entry->timeInfo();
         QDateTime lastModificationLocalTime = timeInfo.lastModificationTime().toLocalTime();
         switch (index.column()) {
         case 0:
             if (role == Qt::DisplayRole) {
                 return lastModificationLocalTime.toString(Qt::SystemLocaleShortDate);
-            }
-            else {
+            } else {
                 return lastModificationLocalTime;
             }
         case 1:

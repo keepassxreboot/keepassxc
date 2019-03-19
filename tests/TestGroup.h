@@ -19,8 +19,8 @@
 #ifndef KEEPASSX_TESTGROUP_H
 #define KEEPASSX_TESTGROUP_H
 
-#include <QObject>
 #include "core/Database.h"
+#include <QObject>
 
 class TestGroup : public QObject
 {
@@ -28,6 +28,8 @@ class TestGroup : public QObject
 
 private slots:
     void initTestCase();
+    void init();
+    void cleanup();
     void testParenting();
     void testSignals();
     void testEntries();
@@ -40,6 +42,9 @@ private slots:
     void testPrint();
     void testLocate();
     void testAddEntryWithPath();
+    void testIsRecycled();
+    void testCopyDataFrom();
+    void testEquals();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

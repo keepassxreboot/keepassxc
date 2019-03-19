@@ -17,36 +17,43 @@
  */
 
 #include "SSHAgent.h"
-#include "BinaryStream.h"
-#include "KeeAgentSettings.h"
 
-#ifndef Q_OS_WIN
+#include "core/Config.h"
+#include "crypto/ssh/BinaryStream.h"
+#include "crypto/ssh/OpenSSHKey.h"
+#include "sshagent/KeeAgentSettings.h"
+
 #include <QtNetwork>
-#else
+
+#ifdef Q_OS_WIN
 #include <windows.h>
 #endif
 
 SSHAgent* SSHAgent::m_instance;
 
-SSHAgent::SSHAgent(QObject* parent) : QObject(parent)
+SSHAgent::SSHAgent(QObject* parent)
+    : QObject(parent)
 {
 #ifndef Q_OS_WIN
     m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
+#else
+    m_socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
 #endif
 }
 
 SSHAgent::~SSHAgent()
 {
-    for (QSet<OpenSSHKey> keys : m_keys.values()) {
-        for (OpenSSHKey key : keys) {
-            removeIdentity(key);
-        }
+    auto it = m_addedKeys.begin();
+    while (it != m_addedKeys.end()) {
+        OpenSSHKey key = it.key();
+        removeIdentity(key);
+        it = m_addedKeys.erase(it);
     }
 }
 
 SSHAgent* SSHAgent::instance()
 {
-    if (m_instance == nullptr) {
+    if (!m_instance) {
         qFatal("Race condition: instance wanted before it was initialized, this is a bug.");
     }
 
@@ -68,13 +75,22 @@ bool SSHAgent::isAgentRunning() const
 #ifndef Q_OS_WIN
     return !m_socketPath.isEmpty();
 #else
-    return (FindWindowA("Pageant", "Pageant") != nullptr);
+    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+        return (FindWindowA("Pageant", "Pageant") != nullptr);
+    } else {
+        return WaitNamedPipe(m_socketPath.toLatin1().data(), 100);
+    }
 #endif
 }
 
 bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
 {
-#ifndef Q_OS_WIN
+#ifdef Q_OS_WIN
+    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+        return sendMessagePageant(in, out);
+    }
+#endif
+
     QLocalSocket socket;
     BinaryStream stream(&socket);
 
@@ -95,7 +111,11 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
     socket.close();
 
     return true;
-#else
+}
+
+#ifdef Q_OS_WIN
+bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
+{
     HWND hWnd = FindWindowA("Pageant", "Pageant");
 
     if (!hWnd) {
@@ -108,7 +128,8 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    QByteArray mapName = (QString("SSHAgentRequest") + reinterpret_cast<intptr_t>(QThread::currentThreadId())).toLatin1();
+    QByteArray mapName =
+        (QString("SSHAgentRequest") + reinterpret_cast<intptr_t>(QThread::currentThreadId())).toLatin1();
 
     HANDLE handle = CreateFileMappingA(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, AGENT_MAX_MSGLEN, mapName.data());
 
@@ -125,8 +146,8 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
         return false;
     }
 
-    quint32 *requestLength = reinterpret_cast<quint32*>(ptr);
-    void *requestData = reinterpret_cast<void*>(reinterpret_cast<char*>(ptr) + 4);
+    quint32* requestLength = reinterpret_cast<quint32*>(ptr);
+    void* requestData = reinterpret_cast<void*>(reinterpret_cast<char*>(ptr) + 4);
 
     *requestLength = qToBigEndian<quint32>(in.length());
     memcpy(requestData, in.data(), in.length());
@@ -154,11 +175,19 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
     CloseHandle(handle);
 
     return (res > 0);
-#endif
 }
+#endif
 
-
-bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
+/**
+ * Add the identity to the SSH agent.
+ *
+ * @param key identity / key to add
+ * @param lifetime time after which the key should expire
+ * @param confirm ask for confirmation before adding the key
+ * @param removeOnLock autoremove from agent when the Database is locked
+ * @return true on success
+ */
+bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime, bool confirm)
 {
     if (!isAgentRunning()) {
         m_error = tr("No agent running, cannot add identity.");
@@ -186,8 +215,8 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
     }
 
     if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent refused this identity. Possible reasons include:")
-            + "\n" + tr("The key has already been added.");
+        m_error =
+            tr("Agent refused this identity. Possible reasons include:") + "\n" + tr("The key has already been added.");
 
         if (lifetime > 0) {
             m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
@@ -200,9 +229,18 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, quint32 lifetime, bool confirm)
         return false;
     }
 
+    OpenSSHKey keyCopy = key;
+    keyCopy.clearPrivate();
+    m_addedKeys[keyCopy] = removeOnLock;
     return true;
 }
 
+/**
+ * Remove an identity from the SSH agent.
+ *
+ * @param key identity to remove
+ * @return true on success
+ */
 bool SSHAgent::removeIdentity(OpenSSHKey& key)
 {
     if (!isAgentRunning()) {
@@ -221,120 +259,121 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
     request.writeString(keyData);
 
     QByteArray responseData;
-    if (!sendMessage(requestData, responseData)) {
-        return false;
-    }
-
-    if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_SUCCESS) {
-        m_error = tr("Agent does not have this identity.");
-        return false;
-    }
-
-    return true;
+    return sendMessage(requestData, responseData);
 }
 
-void SSHAgent::removeIdentityAtLock(const OpenSSHKey& key, const Uuid& uuid)
+/**
+ * Change "remove identity on lock" setting for a key already added to the agent.
+ * Will to nothing if the key has not been added to the agent.
+ *
+ * @param key key to change setting for
+ * @param autoRemove whether to remove the key from the agent when database is locked
+ */
+void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
 {
-    OpenSSHKey copy = key;
-    copy.clearPrivate();
-    m_keys[uuid.toHex()].insert(copy);
+    if (m_addedKeys.contains(key)) {
+        m_addedKeys[key] = autoRemove;
+    }
 }
 
-void SSHAgent::databaseModeChanged(DatabaseWidget::Mode mode)
+void SSHAgent::databaseModeChanged()
 {
-    DatabaseWidget* widget = qobject_cast<DatabaseWidget*>(sender());
-
-    if (widget == nullptr) {
+    auto* widget = qobject_cast<DatabaseWidget*>(sender());
+    if (!widget) {
         return;
     }
 
-    Uuid uuid = widget->database()->uuid();
-
-    if (mode == DatabaseWidget::LockedMode && m_keys.contains(uuid.toHex())) {
-
-        QSet<OpenSSHKey> keys = m_keys.take(uuid.toHex());
-        for (OpenSSHKey key : keys) {
-            if (!removeIdentity(key)) {
-                emit error(m_error);
-            }
-        }
-    } else if (mode == DatabaseWidget::ViewMode && !m_keys.contains(uuid.toHex())) {
-        for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
-
-            if (widget->database()->metadata()->recycleBinEnabled()
-                && e->group() == widget->database()->metadata()->recycleBin()) {
-                continue;
-            }
-
-            if (!e->attachments()->hasKey("KeeAgent.settings")) {
-                continue;
-            }
-
-            KeeAgentSettings settings;
-            settings.fromXml(e->attachments()->value("KeeAgent.settings"));
-
-            if (!settings.allowUseOfSshKey()) {
-                continue;
-            }
-
-            QByteArray keyData;
-            QString fileName;
-            if (settings.selectedType() == "attachment") {
-                fileName = settings.attachmentName();
-                keyData = e->attachments()->value(fileName);
-            } else if (!settings.fileName().isEmpty()) {
-                QFile file(settings.fileName());
-                QFileInfo fileInfo(file);
-
-                fileName = fileInfo.fileName();
-
-                if (file.size() > 1024 * 1024) {
-                    continue;
-                }
-
-                if (!file.open(QIODevice::ReadOnly)) {
-                    continue;
-                }
-
-                keyData = file.readAll();
-            }
-
-            if (keyData.isEmpty()) {
-                continue;
-            }
-
-            OpenSSHKey key;
-
-            if (!key.parse(keyData)) {
-                continue;
-            }
-
-            if (!key.openPrivateKey(e->password())) {
-                continue;
-            }
-
-            if (key.comment().isEmpty()) {
-                key.setComment(e->username());
-            }
-
-            if (key.comment().isEmpty()) {
-                key.setComment(fileName);
-            }
-
-            if (settings.removeAtDatabaseClose()) {
-                removeIdentityAtLock(key, uuid);
-            }
-
-            if (settings.addAtDatabaseOpen()) {
-                int lifetime = 0;
-
-                if (settings.useLifetimeConstraintWhenAdding()) {
-                    lifetime = settings.lifetimeConstraintDuration();
-                }
-
-                if (!addIdentity(key, lifetime, settings.useConfirmConstraintWhenAdding())) {
+    if (widget->isLocked()) {
+        auto it = m_addedKeys.begin();
+        while (it != m_addedKeys.end()) {
+            OpenSSHKey key = it.key();
+            if (it.value()) {
+                if (!removeIdentity(key)) {
                     emit error(m_error);
                 }
+                it = m_addedKeys.erase(it);
+            } else {
+                // don't remove it yet
+                m_addedKeys[key] = false;
+                ++it;
+            }
+        }
+
+        return;
+    }
+
+    for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
+
+        if (widget->database()->metadata()->recycleBinEnabled()
+            && e->group() == widget->database()->metadata()->recycleBin()) {
+            continue;
+        }
+
+        if (!e->attachments()->hasKey("KeeAgent.settings")) {
+            continue;
+        }
+
+        KeeAgentSettings settings;
+        settings.fromXml(e->attachments()->value("KeeAgent.settings"));
+
+        if (!settings.allowUseOfSshKey()) {
+            continue;
+        }
+
+        QByteArray keyData;
+        QString fileName;
+        if (settings.selectedType() == "attachment") {
+            fileName = settings.attachmentName();
+            keyData = e->attachments()->value(fileName);
+        } else if (!settings.fileName().isEmpty()) {
+            QFile file(settings.fileName());
+            QFileInfo fileInfo(file);
+
+            fileName = fileInfo.fileName();
+
+            if (file.size() > 1024 * 1024) {
+                continue;
+            }
+
+            if (!file.open(QIODevice::ReadOnly)) {
+                continue;
+            }
+
+            keyData = file.readAll();
+        }
+
+        if (keyData.isEmpty()) {
+            continue;
+        }
+
+        OpenSSHKey key;
+
+        if (!key.parsePKCS1PEM(keyData)) {
+            continue;
+        }
+
+        if (!key.openKey(e->password())) {
+            continue;
+        }
+
+        if (key.comment().isEmpty()) {
+            key.setComment(e->username());
+        }
+
+        if (key.comment().isEmpty()) {
+            key.setComment(fileName);
+        }
+
+        if (!m_addedKeys.contains(key) && settings.addAtDatabaseOpen()) {
+            quint32 lifetime = 0;
+
+            if (settings.useLifetimeConstraintWhenAdding()) {
+                lifetime = static_cast<quint32>(settings.lifetimeConstraintDuration());
+            }
+
+            if (!addIdentity(
+                    key, settings.removeAtDatabaseClose(), lifetime, settings.useConfirmConstraintWhenAdding())) {
+                emit error(m_error);
             }
         }
     }

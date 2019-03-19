@@ -19,25 +19,29 @@
 #include "TotpDialog.h"
 #include "ui_TotpDialog.h"
 
+#include "core/Clock.h"
 #include "core/Config.h"
 #include "gui/Clipboard.h"
 
-
-TotpDialog::TotpDialog(DatabaseWidget* parent, Entry* entry)
+TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)
     , m_ui(new Ui::TotpDialog())
-    , m_totpUpdateTimer(new QTimer(entry))
     , m_entry(entry)
 {
+    if (!m_entry->hasTotp()) {
+        close();
+        return;
+    }
+
     m_ui->setupUi(this);
 
-    m_step = m_entry->totpStep();
-    uCounter = resetCounter();
+    m_step = m_entry->totpSettings()->step;
+    resetCounter();
     updateProgressBar();
 
-    connect(m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
-    connect(m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
-    m_totpUpdateTimer->start(m_step * 10);
+    connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
+    connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
+    m_totpUpdateTimer.start(m_step * 10);
     updateTotp();
 
     setAttribute(Qt::WA_DeleteOnClose);
@@ -46,6 +50,10 @@ TotpDialog::TotpDialog(DatabaseWidget* parent, Entry* entry)
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
+}
+
+TotpDialog::~TotpDialog()
+{
 }
 
 void TotpDialog::copyToClipboard()
@@ -58,21 +66,20 @@ void TotpDialog::copyToClipboard()
 
 void TotpDialog::updateProgressBar()
 {
-    if (uCounter < 100) {
-        m_ui->progressBar->setValue(static_cast<int>(100 - uCounter));
+    if (m_counter < 100) {
+        m_ui->progressBar->setValue(100 - m_counter);
         m_ui->progressBar->update();
-        uCounter++;
+        ++m_counter;
     } else {
         updateTotp();
-        uCounter = resetCounter();
+        resetCounter();
     }
 }
 
-
 void TotpDialog::updateSeconds()
 {
-    uint epoch = QDateTime::currentDateTime().toTime_t() - 1;
-    m_ui->timerLabel->setText(tr("Expires in") + " <b>" + QString::number(m_step - (epoch % m_step)) + "</b> " + tr("seconds"));
+    uint epoch = Clock::currentSecondsSinceEpoch() - 1;
+    m_ui->timerLabel->setText(tr("Expires in <b>%n</b> second(s)", "", m_step - (epoch % m_step)));
 }
 
 void TotpDialog::updateTotp()
@@ -83,16 +90,8 @@ void TotpDialog::updateTotp()
     m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
 }
 
-double TotpDialog::resetCounter()
+void TotpDialog::resetCounter()
 {
-    uint epoch = QDateTime::currentDateTime().toTime_t();
-    double counter = qRound(static_cast<double>(epoch % m_step) / m_step * 100);
-    return counter;
-}
-
-TotpDialog::~TotpDialog()
-{
-    if (m_totpUpdateTimer) {
-        delete m_totpUpdateTimer;
-    }
+    uint epoch = Clock::currentSecondsSinceEpoch();
+    m_counter = static_cast<int>(static_cast<double>(epoch % m_step) / m_step * 100);
 }

@@ -18,8 +18,9 @@
 
 #include "EditWidget.h"
 #include "ui_EditWidget.h"
-#include <QScrollArea>
+
 #include <QPushButton>
+#include <QScrollArea>
 
 #include "core/FilePath.h"
 
@@ -38,8 +39,7 @@ EditWidget::EditWidget(QWidget* parent)
     headlineLabel()->setFont(headerLabelFont);
     headlineLabel()->setTextFormat(Qt::PlainText);
 
-    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)),
-            m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
+    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SIGNAL(accepted()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SIGNAL(rejected()));
@@ -57,8 +57,9 @@ void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* w
      * from automatic resizing and it now should be able to fit into a user's monitor even if the monitor is only 768
      * pixels high.
      */
-    QScrollArea* scrollArea = new QScrollArea(m_ui->stackedWidget);
+    auto* scrollArea = new QScrollArea(m_ui->stackedWidget);
     scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     scrollArea->setWidget(widget);
     scrollArea->setWidgetResizable(true);
     m_ui->stackedWidget->addWidget(scrollArea);
@@ -97,14 +98,17 @@ QLabel* EditWidget::headlineLabel()
     return m_ui->headerLabel;
 }
 
-void EditWidget::setReadOnly(bool readOnly, bool applyEnabled)
+void EditWidget::setReadOnly(bool readOnly)
 {
     m_readOnly = readOnly;
 
     if (readOnly) {
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
     } else {
-        setupButtons(applyEnabled);
+        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
+        // Find and connect the apply button
+        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
     }
 }
 
@@ -113,23 +117,24 @@ bool EditWidget::readOnly() const
     return m_readOnly;
 }
 
-void EditWidget::setupButtons(bool applyEnabled)
+void EditWidget::enableApplyButton(bool enabled)
 {
-    if (applyEnabled) {
-        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
-        // Find and connect the apply button
-        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
-        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
-    } else {
-        m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-        disconnect(SIGNAL(apply()));
+    QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
+    if (applyButton) {
+        applyButton->setEnabled(enabled);
     }
 }
 
 void EditWidget::showMessage(const QString& text, MessageWidget::MessageType type)
 {
-    m_ui->messageWidget->setCloseButtonVisible(false);
-    m_ui->messageWidget->showMessage(text, type, 2000);
+    // Show error messages for a longer time to make sure the user can read them
+    if (type == MessageWidget::Error) {
+        m_ui->messageWidget->setCloseButtonVisible(true);
+        m_ui->messageWidget->showMessage(text, type, 15000);
+    } else {
+        m_ui->messageWidget->setCloseButtonVisible(false);
+        m_ui->messageWidget->showMessage(text, type, 2000);
+    }
 }
 
 void EditWidget::hideMessage()

@@ -23,12 +23,13 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-#include "core/SignalMultiplexer.h"
 #include "core/ScreenLockListener.h"
-#include "gui/DatabaseWidget.h"
+#include "core/SignalMultiplexer.h"
 #include "gui/Application.h"
+#include "gui/DatabaseWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class MainWindow;
 }
 
@@ -37,8 +38,8 @@ class InactivityTimer;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC) && !defined(QT_NO_DBUS)
+
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
     Q_CLASSINFO("D-Bus Interface", "org.keepassxc.KeePassXC.MainWindow")
 #endif
 
@@ -55,16 +56,21 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& fileName, const QString& pw = QString(),
-                      const QString& keyFile = QString());
+    void openDatabase(const QString& filePath, const QString& pw = {}, const QString& keyFile = {});
     void appExit();
-    void displayGlobalMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+    void displayGlobalMessage(const QString& text,
+                              MessageWidget::MessageType type,
+                              bool showClosebutton = true,
                               int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
-    void displayTabMessage(const QString& text, MessageWidget::MessageType type, bool showClosebutton = true,
+    void displayTabMessage(const QString& text,
+                           MessageWidget::MessageType type,
+                           bool showClosebutton = true,
                            int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void hideWindow();
+    void toggleWindow();
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
@@ -74,9 +80,12 @@ protected:
     void changeEvent(QEvent* event) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::None);
+    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
+    void showUpdateCheckStartup();
+    void showUpdateCheckDialog();
+    void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
     void switchToDatabases();
@@ -84,11 +93,11 @@ private slots:
     void switchToPasswordGen(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
-    void switchToDatabaseFile(QString file);
+    void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
-    void switchToImportCsv();
+    void switchToCsvImport();
     void closePasswordGen();
-    void databaseStatusChanged(DatabaseWidget *dbWidget);
+    void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
     void clearLastDatabases();
@@ -99,14 +108,14 @@ private slots:
     void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
-    void hideWindow();
-    void toggleWindow();
     void lockDatabasesAfterInactivity();
-    void repairDatabase();
-    void hideTabMessage();
+    void forgetTouchIDAfterInactivity();
     void handleScreenLock();
-    void showKeePassHTTPDeprecationNotice();
     void showErrorMessage(const QString& message);
+    void selectNextDatabaseTab();
+    void selectPreviousDatabaseTab();
+    void togglePasswordsHidden();
+    void toggleUsernamesHidden();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -130,6 +139,7 @@ private:
     QActionGroup* m_copyAdditionalAttributeActions;
     QStringList m_openDatabases;
     InactivityTimer* m_inactivityTimer;
+    InactivityTimer* m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
     ScreenLockListener* m_screenLockListener;
@@ -140,7 +150,12 @@ private:
     bool m_appExiting;
 };
 
-#define KEEPASSXC_MAIN_WINDOW (qobject_cast<Application*>(qApp) ? \
-                               qobject_cast<MainWindow*>(qobject_cast<Application*>(qApp)->mainWindow()) : nullptr)
+/**
+ * Return instance of MainWindow created on app load
+ * non-gui instances will return nullptr
+ *
+ * @return MainWindow instance or nullptr
+ */
+MainWindow* getMainWindow();
 
 #endif // KEEPASSX_MAINWINDOW_H

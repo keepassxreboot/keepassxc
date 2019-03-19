@@ -20,14 +20,14 @@
 #include <QBuffer>
 #include <QFile>
 
-#include "streams/HmacBlockStream.h"
+#include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
-#include "core/CustomData.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
-#include "format/KeePass2RandomStream.h"
 #include "format/KdbxXmlWriter.h"
+#include "format/KeePass2RandomStream.h"
+#include "streams/HmacBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
 
@@ -50,7 +50,6 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(ivSize);
     QByteArray protectedStreamKey = randomGen()->randomArray(64);
-    QByteArray startBytes;
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (!db->setKey(db->key(), false, true)) {
@@ -73,10 +72,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
         writeMagicNumbers(&header, KeePass2::SIGNATURE_1, KeePass2::SIGNATURE_2, KeePass2::FILE_VERSION_4);
 
-        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toByteArray()));
-        CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CompressionFlags,
-                                                     Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgo()),
-                                                                             KeePass2::BYTEORDER)));
+        CHECK_RETURN_FALSE(
+            writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::CipherID, db->cipher().toRfc4122()));
+        CHECK_RETURN_FALSE(writeHeaderField<quint32>(
+            &header,
+            KeePass2::HeaderFieldID::CompressionFlags,
+            Endian::sizedIntToBytes(static_cast<int>(db->compressionAlgorithm()), KeePass2::BYTEORDER)));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::MasterSeed, masterSeed));
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
 
@@ -94,8 +95,8 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         if (!publicCustomData.isEmpty()) {
             QByteArray serialized;
             serializeVariantMap(publicCustomData, serialized);
-            CHECK_RETURN_FALSE(writeHeaderField<quint32>(
-                &header, KeePass2::HeaderFieldID::PublicCustomData, serialized));
+            CHECK_RETURN_FALSE(
+                writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::PublicCustomData, serialized));
         }
 
         CHECK_RETURN_FALSE(writeHeaderField<quint32>(&header, KeePass2::HeaderFieldID::EndOfHeader, endOfHeader));
@@ -109,8 +110,8 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
     // write HMAC-authenticated cipher stream
     QByteArray hmacKey = KeePass2::hmacKey(masterSeed, db->transformedMasterKey());
-    QByteArray headerHmac = CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey),
-                                             CryptoHash::Sha256);
+    QByteArray headerHmac =
+        CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256);
     CHECK_RETURN_FALSE(writeData(device, headerHash));
     CHECK_RETURN_FALSE(writeData(device, headerHmac));
 
@@ -123,9 +124,8 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
         return false;
     }
 
-    cipherStream.reset(new SymmetricCipherStream(hmacBlockStream.data(), algo,
-                                                 SymmetricCipher::algorithmMode(algo),
-                                                 SymmetricCipher::Encrypt));
+    cipherStream.reset(new SymmetricCipherStream(
+        hmacBlockStream.data(), algo, SymmetricCipher::algorithmMode(algo), SymmetricCipher::Encrypt));
 
     if (!cipherStream->init(finalKey, encryptionIV)) {
         raiseError(cipherStream->errorString());
@@ -139,7 +139,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QIODevice* outputDevice = nullptr;
     QScopedPointer<QtIOCompressor> ioCompressor;
 
-    if (db->compressionAlgo() == Database::CompressionNone) {
+    if (db->compressionAlgorithm() == Database::CompressionNone) {
         outputDevice = cipherStream.data();
     } else {
         ioCompressor.reset(new QtIOCompressor(cipherStream.data()));
@@ -153,11 +153,12 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
     Q_ASSERT(outputDevice);
 
-    CHECK_RETURN_FALSE(writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamID,
-                                             Endian::sizedIntToBytes(static_cast<int>(KeePass2::ProtectedStreamAlgo::ChaCha20),
-                                                                     KeePass2::BYTEORDER)));
-    CHECK_RETURN_FALSE(writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamKey,
-                                             protectedStreamKey));
+    CHECK_RETURN_FALSE(writeInnerHeaderField(
+        outputDevice,
+        KeePass2::InnerHeaderFieldID::InnerRandomStreamID,
+        Endian::sizedIntToBytes(static_cast<int>(KeePass2::ProtectedStreamAlgo::ChaCha20), KeePass2::BYTEORDER)));
+    CHECK_RETURN_FALSE(
+        writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamKey, protectedStreamKey));
 
     // Write attachments to the inner header
     writeAttachments(outputDevice, db);
@@ -208,7 +209,8 @@ bool Kdbx4Writer::writeInnerHeaderField(QIODevice* device, KeePass2::InnerHeader
     QByteArray fieldIdArr;
     fieldIdArr[0] = static_cast<char>(fieldId);
     CHECK_RETURN_FALSE(writeData(device, fieldIdArr));
-    CHECK_RETURN_FALSE(writeData(device, Endian::sizedIntToBytes(static_cast<quint32>(data.size()), KeePass2::BYTEORDER)));
+    CHECK_RETURN_FALSE(
+        writeData(device, Endian::sizedIntToBytes(static_cast<quint32>(data.size()), KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeData(device, data));
 
     return true;

@@ -13,7 +13,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 #ifndef KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
 #define KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
@@ -28,6 +28,7 @@ class MockChallengeResponseKey : public ChallengeResponseKey
 {
 public:
     explicit MockChallengeResponseKey(const QByteArray& secret);
+    Q_DISABLE_COPY(MockChallengeResponseKey);
     ~MockChallengeResponseKey() override;
     QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;
@@ -37,4 +38,4 @@ private:
     QByteArray m_secret;
 };
 
-#endif //KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
+#endif // KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H

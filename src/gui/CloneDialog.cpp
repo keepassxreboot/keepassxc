@@ -19,7 +19,6 @@
 #include "ui_CloneDialog.h"
 
 #include "config-keepassx.h"
-#include "version.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/FilePath.h"

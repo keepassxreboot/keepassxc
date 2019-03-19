@@ -18,12 +18,13 @@
 #include "WildcardMatcher.h"
 
 #include <QStringList>
+#include <utility>
 
 const QChar WildcardMatcher::Wildcard = '*';
 const Qt::CaseSensitivity WildcardMatcher::Sensitivity = Qt::CaseInsensitive;
 
-WildcardMatcher::WildcardMatcher(const QString& text)
-    : m_text(text)
+WildcardMatcher::WildcardMatcher(QString text)
+    : m_text(std::move(text))
 {
 }
 
@@ -33,8 +34,7 @@ bool WildcardMatcher::match(const QString& pattern)
 
     if (patternContainsWildcard()) {
         return matchWithWildcards();
-    }
-    else {
+    } else {
         return patternEqualsText();
     }
 }
@@ -63,8 +63,7 @@ bool WildcardMatcher::matchWithWildcards()
 
 bool WildcardMatcher::startOrEndDoesNotMatch(const QStringList& parts)
 {
-    return !m_text.startsWith(parts.first(), Sensitivity) ||
-           !m_text.endsWith(parts.last(), Sensitivity);
+    return !m_text.startsWith(parts.first(), Sensitivity) || !m_text.endsWith(parts.last(), Sensitivity);
 }
 
 bool WildcardMatcher::partsMatch(const QStringList& parts)

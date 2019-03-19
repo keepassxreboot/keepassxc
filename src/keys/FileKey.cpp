@@ -1,20 +1,20 @@
 /*
-*  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
-*  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
-*
-*  This program is free software: you can redistribute it and/or modify
-*  it under the terms of the GNU General Public License as published by
-*  the Free Software Foundation, either version 2 or (at your option)
-*  version 3 of the License.
-*
-*  This program is distributed in the hope that it will be useful,
-*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-*  GNU General Public License for more details.
-*
-*  You should have received a copy of the GNU General Public License
-*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #include "FileKey.h"
 
@@ -23,6 +23,13 @@
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
+
+QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
+
+FileKey::FileKey()
+    : Key(UUID)
+{
+}
 
 /**
  * Read key file from device while trying to detect its file format.
@@ -142,14 +149,6 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
 QByteArray FileKey::rawKey() const
 {
     return m_key;
-}
-
-/**
- * @return cloned \link FileKey instance
- */
-FileKey* FileKey::clone() const
-{
-    return new FileKey(*this);
 }
 
 /**
@@ -347,8 +346,7 @@ bool FileKey::loadHashed(QIODevice* device)
             return false;
         }
         cryptoHash.addData(buffer);
-    }
-    while (!buffer.isEmpty());
+    } while (!buffer.isEmpty());
 
     m_key = cryptoHash.result();
 

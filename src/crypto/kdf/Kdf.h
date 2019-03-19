@@ -18,20 +18,20 @@
 #ifndef KEEPASSX_KDF_H
 #define KEEPASSX_KDF_H
 
+#include <QUuid>
 #include <QVariant>
 
-#include "core/Uuid.h"
-
-#define KDF_DEFAULT_SEED_SIZE 32
+#define KDF_MIN_SEED_SIZE 8
+#define KDF_MAX_SEED_SIZE 32
 #define KDF_DEFAULT_ROUNDS 1000000ull
 
 class Kdf
 {
 public:
-    explicit Kdf(Uuid uuid);
+    explicit Kdf(const QUuid& uuid);
     virtual ~Kdf() = default;
 
-    Uuid uuid() const;
+    const QUuid& uuid() const;
 
     int rounds() const;
     virtual bool setRounds(int rounds);
@@ -54,8 +54,6 @@ protected:
 
 private:
     class BenchmarkThread;
-    const Uuid m_uuid;
-
+    const QUuid m_uuid;
 };
-
 #endif // KEEPASSX_KDF_H

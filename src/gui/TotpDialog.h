@@ -19,15 +19,16 @@
 #ifndef KEEPASSX_TOTPDIALOG_H
 #define KEEPASSX_TOTPDIALOG_H
 
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "gui/DatabaseWidget.h"
 #include <QDialog>
 #include <QScopedPointer>
 #include <QTimer>
 #include <totp/totp.h>
-#include "core/Entry.h"
-#include "core/Database.h"
-#include "gui/DatabaseWidget.h"
 
-namespace Ui {
+namespace Ui
+{
     class TotpDialog;
 }
 
@@ -36,24 +37,23 @@ class TotpDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit TotpDialog(DatabaseWidget* parent = nullptr, Entry* entry = nullptr);
-    ~TotpDialog();
-
-private:
-    double uCounter;
-    quint8 m_step = Totp::defaultStep;
-    QScopedPointer<Ui::TotpDialog> m_ui;
-    QPointer<QTimer> m_totpUpdateTimer;
+    explicit TotpDialog(QWidget* parent = nullptr, Entry* entry = nullptr);
+    ~TotpDialog() override;
 
 private Q_SLOTS:
     void updateTotp();
     void updateProgressBar();
     void updateSeconds();
     void copyToClipboard();
-    double resetCounter();
 
-protected:
+private:
+    QScopedPointer<Ui::TotpDialog> m_ui;
+
+    void resetCounter();
     Entry* m_entry;
+    int m_counter;
+    uint m_step;
+    QTimer m_totpUpdateTimer;
 };
 
 #endif // KEEPASSX_TOTPDIALOG_H

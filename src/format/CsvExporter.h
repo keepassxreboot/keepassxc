@@ -20,6 +20,7 @@
 #define KEEPASSX_CSVEXPORTER_H
 
 #include <QString>
+#include <QtCore/QSharedPointer>
 
 class Database;
 class Group;
@@ -28,8 +29,8 @@ class QIODevice;
 class CsvExporter
 {
 public:
-    bool exportDatabase(const QString& filename, const Database* db);
-    bool exportDatabase(QIODevice* device, const Database* db);
+    bool exportDatabase(const QString& filename, const QSharedPointer<const Database>& db);
+    bool exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db);
     QString errorString() const;
 
 private:

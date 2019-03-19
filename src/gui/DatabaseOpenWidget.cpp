@@ -22,20 +22,20 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
-#include "gui/MainWindow.h"
-#include "gui/FileDialog.h"
-#include "gui/MessageBox.h"
+#include "crypto/Random.h"
 #include "format/KeePass2Reader.h"
+#include "gui/FileDialog.h"
+#include "gui/MainWindow.h"
+#include "gui/MessageBox.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-#include "crypto/Random.h"
 #include "keys/YkChallengeResponseKey.h"
+#include "touchid/TouchID.h"
 
 #include "config-keepassx.h"
 
-#include <QtConcurrentRun>
 #include <QSharedPointer>
-
+#include <QtConcurrentRun>
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -45,6 +45,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     m_ui->messageWidget->setHidden(true);
+    m_ui->checkPassword->setChecked(true);
 
     QFont font = m_ui->labelHeadline->font();
     font.setBold(true);
@@ -52,8 +53,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->labelHeadline->setFont(font);
 
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)),
-            m_ui->editPassword, SLOT(setShowPassword(bool)));
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->editPassword, SIGNAL(textChanged(QString)), SLOT(activatePassword()));
@@ -83,6 +83,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->gridLayout->setContentsMargins(10, 0, 0, 0);
     m_ui->labelLayout->setContentsMargins(10, 0, 10, 0);
 #endif
+
+#ifndef WITH_XC_TOUCHID
+    m_ui->checkTouchID->setVisible(false);
+#else
+    if (!TouchID::getInstance().isAvailable()) {
+        m_ui->checkTouchID->setVisible(false);
+    }
+#endif
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -97,10 +105,11 @@ void DatabaseOpenWidget::showEvent(QShowEvent* event)
 #ifdef WITH_XC_YUBIKEY
     // showEvent() may be called twice, so make sure we are only polling once
     if (!m_yubiKeyBeingPolled) {
-        connect(YubiKey::instance(), SIGNAL(detected(int, bool)), SLOT(yubikeyDetected(int, bool)),
-                Qt::QueuedConnection);
+        // clang-format off
+        connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
         connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
+        // clang-format on
 
         pollYubikey();
         m_yubiKeyBeingPolled = true;
@@ -114,9 +123,15 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 
 #ifdef WITH_XC_YUBIKEY
     // Don't listen to any Yubikey events if we are hidden
-    disconnect(YubiKey::instance(), 0, this, 0);
+    disconnect(YubiKey::instance(), nullptr, this, nullptr);
     m_yubiKeyBeingPolled = false;
 #endif
+
+    if (isVisible()) {
+        return;
+    }
+
+    clearForms();
 }
 
 void DatabaseOpenWidget::load(const QString& filename)
@@ -133,29 +148,33 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
+    QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+    m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
+
     m_ui->editPassword->setFocus();
 }
 
 void DatabaseOpenWidget::clearForms()
 {
-    m_ui->editPassword->clear();
+    m_ui->editPassword->setText("");
     m_ui->comboKeyFile->clear();
-    m_ui->checkPassword->setChecked(false);
+    m_ui->comboKeyFile->setEditText("");
+    m_ui->checkPassword->setChecked(true);
     m_ui->checkKeyFile->setChecked(false);
     m_ui->checkChallengeResponse->setChecked(false);
+    m_ui->checkTouchID->setChecked(false);
     m_ui->buttonTogglePassword->setChecked(false);
-    m_db = nullptr;
+    m_db.reset();
 }
 
-
-Database* DatabaseOpenWidget::database()
+QSharedPointer<Database> DatabaseOpenWidget::database()
 {
     return m_db;
 }
 
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
-    if (!pw.isNull()) {
+    if (!pw.isEmpty()) {
         m_ui->editPassword->setText(pw);
     }
     if (!keyFile.isEmpty()) {
@@ -167,37 +186,58 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
 void DatabaseOpenWidget::openDatabase()
 {
-    KeePass2Reader reader;
     QSharedPointer<CompositeKey> masterKey = databaseKey();
-    if (masterKey.isNull()) {
+    if (!masterKey) {
         return;
     }
 
-    m_ui->editPassword->setShowPassword(false);
+    if (!m_ui->editPassword->isPasswordVisible()) {
+        m_ui->editPassword->setShowPassword(false);
+    }
     QCoreApplication::processEvents();
 
-    QFile file(m_filename);
-    if (!file.open(QIODevice::ReadOnly)) {
-        m_ui->messageWidget->showMessage(
-            tr("Unable to open the database.").append("\n").append(file.errorString()), MessageWidget::Error);
+    m_db.reset(new Database());
+    QString error;
+    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    bool ok = m_db->open(m_filename, masterKey, &error, false);
+    QApplication::restoreOverrideCursor();
+    if (!ok) {
+        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
+                                         MessageWidget::MessageType::Error);
         return;
     }
-    if (m_db) {
-        delete m_db;
-    }
-    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-    m_db = reader.readDatabase(&file, *masterKey);
-    QApplication::restoreOverrideCursor();
 
     if (m_db) {
+#ifdef WITH_XC_TOUCHID
+        QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+
+        // check if TouchID can & should be used to unlock the database next time
+        if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
+            // encrypt and store key blob
+            if (TouchID::getInstance().storeKey(m_filename, PasswordKey(m_ui->editPassword->text()).rawKey())) {
+                useTouchID.insert(m_filename, true);
+            }
+        } else {
+            // when TouchID not available or unchecked, reset for the current database
+            TouchID::getInstance().reset(m_filename);
+            useTouchID.insert(m_filename, false);
+        }
+
+        config()->set("UseTouchID", useTouchID);
+#endif
+
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
-        emit editFinished(true);
+        emit dialogFinished(true);
     } else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database.").append("\n").append(reader.errorString()),
-                                         MessageWidget::Error);
-        m_ui->editPassword->clear();
+        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error), MessageWidget::Error);
+        m_ui->editPassword->setText("");
+
+#ifdef WITH_XC_TOUCHID
+        // unable to unlock database, reset TouchID for the current database
+        TouchID::getInstance().reset(m_filename);
+#endif
     }
 }
 
@@ -206,33 +246,51 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     auto masterKey = QSharedPointer<CompositeKey>::create();
 
     if (m_ui->checkPassword->isChecked()) {
-        masterKey->addKey(PasswordKey(m_ui->editPassword->text()));
+        masterKey->addKey(QSharedPointer<PasswordKey>::create(m_ui->editPassword->text()));
     }
+
+#ifdef WITH_XC_TOUCHID
+    // check if TouchID is available and enabled for unlocking the database
+    if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()
+        && m_ui->editPassword->text().isEmpty()) {
+        // clear empty password from composite key
+        masterKey->clear();
+
+        // try to get, decrypt and use PasswordKey
+        QSharedPointer<QByteArray> passwordKey = TouchID::getInstance().getKey(m_filename);
+        if (passwordKey != NULL) {
+            // check if the user cancelled the operation
+            if (passwordKey.isNull())
+                return QSharedPointer<CompositeKey>();
+
+            masterKey->addKey(PasswordKey::fromRawKey(*passwordKey));
+        }
+    }
+#endif
 
     QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
     QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
 
     if (m_ui->checkKeyFile->isChecked()) {
-        FileKey key;
+        auto key = QSharedPointer<FileKey>::create();
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
-        if (!key.load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file").append(":\n").append(errorMsg),
-                                             MessageWidget::Error);
-            return QSharedPointer<CompositeKey>();
+        if (!key->load(keyFilename, &errorMsg)) {
+            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg), MessageWidget::Error);
+            return {};
         }
-        if (key.type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
+        if (key->type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
             QMessageBox legacyWarning;
             legacyWarning.setWindowTitle(tr("Legacy key file format"));
             legacyWarning.setText(tr("You are using a legacy key file format which may become\n"
-                                         "unsupported in the future.\n\n"
-                                         "Please consider generating a new key file."));
+                                     "unsupported in the future.\n\n"
+                                     "Please consider generating a new key file."));
             legacyWarning.setIcon(QMessageBox::Icon::Warning);
             legacyWarning.addButton(QMessageBox::Ok);
             legacyWarning.setDefaultButton(QMessageBox::Ok);
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
-            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state){
+            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state) {
                 config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
             });
 
@@ -276,7 +334,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
 
 void DatabaseOpenWidget::reject()
 {
-    emit editFinished(false);
+    emit dialogFinished(false);
 }
 
 void DatabaseOpenWidget::activatePassword()

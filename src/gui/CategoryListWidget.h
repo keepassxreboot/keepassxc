@@ -15,14 +15,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QWidget>
-#include <QStyledItemDelegate>
+#ifndef KEEPASSXC_GUI_CATEGORYLISTWIDGET_H
+#define KEEPASSXC_GUI_CATEGORYLISTWIDGET_H
+
 #include <QPointer>
+#include <QStyledItemDelegate>
+#include <QWidget>
 
 class CategoryListWidgetDelegate;
 class QListWidget;
 
-namespace Ui {
+namespace Ui
+{
     class CategoryListWidget;
 }
 
@@ -31,7 +35,7 @@ class CategoryListWidget : public QWidget
     Q_OBJECT
 
 public:
-    CategoryListWidget(QWidget* parent = 0);
+    CategoryListWidget(QWidget* parent = nullptr);
     ~CategoryListWidget();
 
     int currentCategory();
@@ -46,7 +50,7 @@ signals:
 
 protected:
     void showEvent(QShowEvent* event) override;
-    void resizeEvent(QResizeEvent * event) override;
+    void resizeEvent(QResizeEvent* event) override;
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
@@ -63,9 +67,7 @@ private:
     Q_DISABLE_COPY(CategoryListWidget)
 };
 
-
 /* =============================================================================================== */
-
 
 class CategoryListWidgetDelegate : public QStyledItemDelegate
 {
@@ -77,10 +79,9 @@ public:
 
 protected:
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 
 private:
-
     const int ICON_SIZE = 32;
 
     QPointer<QListWidget> m_listWidget;
@@ -88,3 +89,5 @@ private:
 
     Q_DISABLE_COPY(CategoryListWidgetDelegate)
 };
+
+#endif

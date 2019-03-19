@@ -27,7 +27,6 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/TimeInfo.h"
-#include "core/Uuid.h"
 
 class KeePass2RandomStream;
 class Metadata;
@@ -37,9 +36,13 @@ class KdbxXmlWriter
 public:
     explicit KdbxXmlWriter(quint32 version);
 
-    void writeDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr,
+    void writeDatabase(QIODevice* device,
+                       const Database* db,
+                       KeePass2RandomStream* randomStream = nullptr,
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
+    void disableInnerStreamProtection(bool disable);
+    bool innerStreamProtectionDisabled() const;
     bool hasError();
     QString errorString();
 
@@ -49,7 +52,7 @@ private:
     void writeMetadata();
     void writeMemoryProtection();
     void writeCustomIcons();
-    void writeIcon(const Uuid& uuid, const QImage& icon);
+    void writeIcon(const QUuid& uuid, const QImage& icon);
     void writeBinaries();
     void writeCustomData(const CustomData* customData);
     void writeCustomDataItem(const QString& key, const QString& value);
@@ -67,7 +70,7 @@ private:
     void writeNumber(const QString& qualifiedName, int number);
     void writeBool(const QString& qualifiedName, bool b);
     void writeDateTime(const QString& qualifiedName, const QDateTime& dateTime);
-    void writeUuid(const QString& qualifiedName, const Uuid& uuid);
+    void writeUuid(const QString& qualifiedName, const QUuid& uuid);
     void writeUuid(const QString& qualifiedName, const Group* group);
     void writeUuid(const QString& qualifiedName, const Entry* entry);
     void writeBinary(const QString& qualifiedName, const QByteArray& ba);
@@ -80,9 +83,11 @@ private:
 
     const quint32 m_kdbxVersion;
 
+    bool m_innerStreamProtectionDisabled = false;
+
     QXmlStreamWriter m_xml;
-    QPointer<Database> m_db;
-    QPointer<Metadata> m_meta;
+    QPointer<const Database> m_db;
+    QPointer<const Metadata> m_meta;
     KeePass2RandomStream* m_randomStream = nullptr;
     QHash<QByteArray, int> m_idMap;
     QByteArray m_headerHash;

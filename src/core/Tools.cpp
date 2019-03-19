@@ -18,343 +18,229 @@
  */
 
 #include "Tools.h"
+#include "core/Config.h"
+#include "core/Translator.h"
 
 #include <QCoreApplication>
-#include <QImageReader>
-#include <QIODevice>
-#include <QLocale>
-#include <QStringList>
-
 #include <QElapsedTimer>
+#include <QIODevice>
+#include <QImageReader>
+#include <QLocale>
+#include <QRegularExpression>
+#include <QStringList>
+#include <QUuid>
+#include <cctype>
 
 #ifdef Q_OS_WIN
-#include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
-#include <aclapi.h>  // for SetSecurityInfo()
+#include <windows.h> // for Sleep()
 #endif
 
 #ifdef Q_OS_UNIX
 #include <time.h> // for nanosleep()
 #endif
 
-#include "config-keepassx.h"
-
-#if defined(HAVE_RLIMIT_CORE)
-#include <sys/resource.h>
-#endif
-
-#if defined(HAVE_PR_SET_DUMPABLE)
-#include <sys/prctl.h>
-#endif
-
-#ifdef HAVE_PT_DENY_ATTACH
-#include <sys/types.h>
-#include <sys/ptrace.h>
-#endif
-
-namespace Tools {
-
-QString humanReadableFileSize(qint64 bytes)
+namespace Tools
 {
-    double size = bytes;
+    QString humanReadableFileSize(qint64 bytes, quint32 precision)
+    {
+        constexpr auto kibibyte = 1024;
+        double size = bytes;
 
-    QStringList units = QStringList() << "B" << "KiB" << "MiB" << "GiB";
-    int i = 0;
-    int maxI = units.size() - 1;
+        QStringList units = QStringList() << "B"
+                                          << "KiB"
+                                          << "MiB"
+                                          << "GiB";
+        int i = 0;
+        int maxI = units.size() - 1;
 
-    while ((size >= 1024) && (i < maxI)) {
-        size /= 1024;
-        i++;
+        while ((size >= kibibyte) && (i < maxI)) {
+            size /= kibibyte;
+            i++;
+        }
+
+        return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
     }
 
-    return QString("%1 %2").arg(QLocale().toString(size, 'f', 2), units.at(i));
-}
+    bool readFromDevice(QIODevice* device, QByteArray& data, int size)
+    {
+        QByteArray buffer;
+        buffer.resize(size);
 
-bool hasChild(const QObject* parent, const QObject* child)
-{
-    if (!parent || !child) {
-        return false;
-    }
-
-    const QObjectList children = parent->children();
-    for (QObject* c : children) {
-        if (child == c || hasChild(c, child)) {
+        qint64 readResult = device->read(buffer.data(), size);
+        if (readResult == -1) {
+            return false;
+        } else {
+            buffer.resize(readResult);
+            data = buffer;
             return true;
         }
     }
-    return false;
-}
 
-bool readFromDevice(QIODevice* device, QByteArray& data, int size)
-{
-    QByteArray buffer;
-    buffer.resize(size);
-
-    qint64 readResult = device->read(buffer.data(), size);
-    if (readResult == -1) {
-        return false;
-    }
-    else {
-        buffer.resize(readResult);
-        data = buffer;
-        return true;
-    }
-}
-
-bool readAllFromDevice(QIODevice* device, QByteArray& data)
-{
-    QByteArray result;
-    qint64 readBytes = 0;
-    qint64 readResult;
-    do {
-        result.resize(result.size() + 16384);
-        readResult = device->read(result.data() + readBytes, result.size() - readBytes);
-        if (readResult > 0) {
-            readBytes += readResult;
-        }
-    } while (readResult > 0);
-
-    if (readResult == -1) {
-        return false;
-    }
-    else {
-        result.resize(static_cast<int>(readBytes));
-        data = result;
-        return true;
-    }
-}
-
-QString imageReaderFilter()
-{
-    const QList<QByteArray> formats = QImageReader::supportedImageFormats();
-    QStringList formatsStringList;
-
-    for (const QByteArray& format : formats) {
-        for (int i = 0; i < format.size(); i++) {
-            if (!QChar(format.at(i)).isLetterOrNumber()) {
-                continue;
-            }
-        }
-
-        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
-    }
-
-    return formatsStringList.join(" ");
-}
-
-bool isHex(const QByteArray& ba)
-{
-    for (char c : ba) {
-        if ( !( (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') ) ) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-bool isBase64(const QByteArray& ba)
-{
-    QRegExp regexp("^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$",
-                   Qt::CaseInsensitive, QRegExp::RegExp2);
-
-    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
-
-    return regexp.exactMatch(base64);
-}
-
-void sleep(int ms)
-{
-    Q_ASSERT(ms >= 0);
-
-    if (ms == 0) {
-        return;
-    }
-
-#ifdef Q_OS_WIN
-    Sleep(uint(ms));
-#else
-    timespec ts;
-    ts.tv_sec = ms / 1000;
-    ts.tv_nsec = (ms % 1000) * 1000 * 1000;
-    nanosleep(&ts, nullptr);
-#endif
-}
-
-void wait(int ms)
-{
-    Q_ASSERT(ms >= 0);
-
-    if (ms == 0) {
-        return;
-    }
-
-    QElapsedTimer timer;
-    timer.start();
-
-    if (ms <= 50) {
-        QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
-        sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
-    }
-    else {
-        int timeLeft;
+    bool readAllFromDevice(QIODevice* device, QByteArray& data)
+    {
+        QByteArray result;
+        qint64 readBytes = 0;
+        qint64 readResult;
         do {
-            timeLeft = ms - timer.elapsed();
-            if (timeLeft > 0) {
-                QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
-                sleep(10);
+            result.resize(result.size() + 16384);
+            readResult = device->read(result.data() + readBytes, result.size() - readBytes);
+            if (readResult > 0) {
+                readBytes += readResult;
             }
-        } while (!timer.hasExpired(ms));
+        } while (readResult > 0);
+
+        if (readResult == -1) {
+            return false;
+        } else {
+            result.resize(static_cast<int>(readBytes));
+            data = result;
+            return true;
+        }
     }
-}
 
-void disableCoreDumps()
-{
-    // default to true
-    // there is no point in printing a warning if this is not implemented on the platform
-    bool success = true;
+    QString imageReaderFilter()
+    {
+        const QList<QByteArray> formats = QImageReader::supportedImageFormats();
+        QStringList formatsStringList;
 
-#if defined(HAVE_RLIMIT_CORE)
-    struct rlimit limit;
-    limit.rlim_cur = 0;
-    limit.rlim_max = 0;
-    success = success && (setrlimit(RLIMIT_CORE, &limit) == 0);
-#endif
+        for (const QByteArray& format : formats) {
+            for (char codePoint : format) {
+                if (!QChar(codePoint).isLetterOrNumber()) {
+                    continue;
+                }
+            }
 
-#if defined(HAVE_PR_SET_DUMPABLE)
-    success = success && (prctl(PR_SET_DUMPABLE, 0) == 0);
-#endif
+            formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        }
 
-    // Mac OS X
-#ifdef HAVE_PT_DENY_ATTACH
-    success = success && (ptrace(PT_DENY_ATTACH, 0, 0, 0) == 0);
-#endif
+        return formatsStringList.join(" ");
+    }
+
+    bool isHex(const QByteArray& ba)
+    {
+        for (const unsigned char c : ba) {
+            if (!std::isxdigit(c)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    bool isBase64(const QByteArray& ba)
+    {
+        constexpr auto pattern = R"(^(?:[a-z0-9+]{4})*(?:[a-z0-9+]{3}=|[a-z0-9+]{2}==)?$)";
+        QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
+
+        QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+        return regexp.exactMatch(base64);
+    }
+
+    void sleep(int ms)
+    {
+        Q_ASSERT(ms >= 0);
+
+        if (ms == 0) {
+            return;
+        }
 
 #ifdef Q_OS_WIN
-    success = success && createWindowsDACL();
+        Sleep(uint(ms));
+#else
+        timespec ts;
+        ts.tv_sec = ms / 1000;
+        ts.tv_nsec = (ms % 1000) * 1000 * 1000;
+        nanosleep(&ts, nullptr);
 #endif
-
-    if (!success) {
-        qWarning("Unable to disable core dumps.");
-    }
-}
-
-void setupSearchPaths()
-{
-#ifdef Q_OS_WIN
-    // Make sure Windows doesn't load DLLs from the current working directory
-    SetDllDirectoryA("");
-    SetSearchPathMode(BASE_SEARCH_PATH_ENABLE_SAFE_SEARCHMODE);
-#endif
-}
-
-//
-// This function grants the user associated with the process token minimal access rights and
-// denies everything else on Windows. This includes PROCESS_QUERY_INFORMATION and
-// PROCESS_VM_READ access rights that are required for MiniDumpWriteDump() or ReadProcessMemory().
-// We do this using a discretionary access control list (DACL). Effectively this prevents
-// crash dumps and disallows other processes from accessing our memory. This works as long
-// as you do not have admin privileges, since then you are able to grant yourself the
-// SeDebugPrivilege or SeTakeOwnershipPrivilege and circumvent the DACL.
-//
-bool createWindowsDACL()
-{
-    bool bSuccess = false;
-
-#ifdef Q_OS_WIN
-    // Process token and user
-    HANDLE hToken = nullptr;
-    PTOKEN_USER pTokenUser = nullptr;
-    DWORD cbBufferSize = 0;
-
-    // Access control list
-    PACL pACL = nullptr;
-    DWORD cbACL = 0;
-
-    // Open the access token associated with the calling process
-    if (!OpenProcessToken(
-        GetCurrentProcess(),
-        TOKEN_QUERY,
-        &hToken
-    )) {
-        goto Cleanup;
     }
 
-    // Retrieve the token information in a TOKEN_USER structure
-    GetTokenInformation(
-        hToken,
-        TokenUser,
-        nullptr,
-        0,
-        &cbBufferSize
-    );
+    void wait(int ms)
+    {
+        Q_ASSERT(ms >= 0);
 
-    pTokenUser = static_cast<PTOKEN_USER>(HeapAlloc(GetProcessHeap(), 0, cbBufferSize));
-    if (pTokenUser == nullptr) {
-        goto Cleanup;
+        if (ms == 0) {
+            return;
+        }
+
+        QElapsedTimer timer;
+        timer.start();
+
+        if (ms <= 50) {
+            QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
+            sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
+        } else {
+            int timeLeft;
+            do {
+                timeLeft = ms - timer.elapsed();
+                if (timeLeft > 0) {
+                    QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
+                    sleep(10);
+                }
+            } while (!timer.hasExpired(ms));
+        }
     }
 
-    if (!GetTokenInformation(
-        hToken,
-        TokenUser,
-        pTokenUser,
-        cbBufferSize,
-        &cbBufferSize
-    )) {
-        goto Cleanup;
+    // Escape common regex symbols except for *, ?, and |
+    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
+
+    QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+    {
+        QString pattern = string;
+
+        // Wildcard support (*, ?, |)
+        if (useWildcards) {
+            pattern.replace(regexEscape, "\\\\1");
+            pattern.replace("*", ".*");
+            pattern.replace("?", ".");
+        }
+
+        // Exact modifier
+        if (exactMatch) {
+            pattern = "^" + pattern + "$";
+        }
+
+        auto regex = QRegularExpression(pattern);
+        if (!caseSensitive) {
+            regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+        }
+
+        return regex;
     }
 
-    if (!IsValidSid(pTokenUser->User.Sid)) {
-        goto Cleanup;
+    QString uuidToHex(const QUuid& uuid)
+    {
+        return QString::fromLatin1(uuid.toRfc4122().toHex());
     }
 
-    // Calculate the amount of memory that must be allocated for the DACL
-    cbACL = sizeof(ACL)
-        + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid);
-
-    // Create and initialize an ACL
-    pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
-    if (pACL == nullptr) {
-        goto Cleanup;
+    QUuid hexToUuid(const QString& uuid)
+    {
+        return QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1()));
     }
 
-    if (!InitializeAcl(pACL, cbACL, ACL_REVISION)) {
-        goto Cleanup;
+    Buffer::Buffer()
+        : raw(nullptr)
+        , size(0)
+    {
     }
 
-    // Add allowed access control entries, everything else is denied
-    if (!AddAccessAllowedAce(
-        pACL,
-        ACL_REVISION,
-        SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE,    // same as protected process
-        pTokenUser->User.Sid                                                    // pointer to the trustee's SID
-    )) {
-        goto Cleanup;
+    Buffer::~Buffer()
+    {
+        clear();
     }
 
-    // Set discretionary access control list
-    bSuccess = ERROR_SUCCESS == SetSecurityInfo(
-        GetCurrentProcess(),        // object handle
-        SE_KERNEL_OBJECT,           // type of object
-        DACL_SECURITY_INFORMATION,  // change only the objects DACL
-        nullptr, nullptr,           // do not change owner or group
-        pACL,                       // DACL specified
-        nullptr                     // do not change SACL
-    );
-
-Cleanup:
-
-    if (pACL != nullptr) {
-        HeapFree(GetProcessHeap(), 0, pACL);
+    void Buffer::clear()
+    {
+        if (size > 0) {
+            free(raw);
+        }
+        raw = nullptr;
+        size = 0;
     }
-    if (pTokenUser != nullptr) {
-        HeapFree(GetProcessHeap(), 0, pTokenUser);
-    }
-    if (hToken != nullptr) {
-        CloseHandle(hToken);
-    }
-#endif
 
-    return bSuccess;
-}
+    QByteArray Buffer::content() const
+    {
+        return QByteArray(reinterpret_cast<char*>(raw), size);
+    }
 
 } // namespace Tools

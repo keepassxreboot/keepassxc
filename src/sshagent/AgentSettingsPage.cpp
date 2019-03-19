@@ -27,7 +27,6 @@ AgentSettingsPage::AgentSettingsPage(DatabaseTabWidget* tabWidget)
 
 AgentSettingsPage::~AgentSettingsPage()
 {
-
 }
 
 QString AgentSettingsPage::name()
