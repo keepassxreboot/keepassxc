@@ -202,8 +202,11 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
 {
     QJsonObject result;
     if (thread() != QThread::currentThread()) {
-        QMetaObject::invokeMethod(this, "createNewGroup", Qt::BlockingQueuedConnection,
-            Q_RETURN_ARG(QJsonObject, result), Q_ARG(QString, groupName));
+        QMetaObject::invokeMethod(this,
+                                  "createNewGroup",
+                                  Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(QJsonObject, result),
+                                  Q_ARG(QString, groupName));
         return result;
     }
 
@@ -229,7 +232,8 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
     auto dialogResult = MessageBox::warning(nullptr,
                                             tr("KeePassXC: Create a new group"),
                                             tr("A request for creating a new group \"%1\" has been received.\n"
-                                               "Do you want to create this group?\n").arg(groupName),
+                                               "Do you want to create this group?\n")
+                                                .arg(groupName),
                                             MessageBox::Yes | MessageBox::No);
 
     if (dialogResult != MessageBox::Yes) {
@@ -243,18 +247,18 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
     // Returns the group name based on depth
     auto getGroupName = [&](int depth) {
         QString gName;
-        for (int i = 0; i < depth+1; ++i) {
+        for (int i = 0; i < depth + 1; ++i) {
             gName.append((i == 0 ? "" : "/") + groups[i]);
         }
         return gName;
     };
-    
+
     // Create new group(s) always when the path is not found
     for (int i = 0; i < groups.length(); ++i) {
         QString gName = getGroupName(i);
         auto tempGroup = rootGroup->findGroupByPath(gName);
         if (!tempGroup) {
-            Group* newGroup = new Group();  
+            Group* newGroup = new Group();
             newGroup->setName(groups[i]);
             newGroup->setUuid(QUuid::createUuid());
             newGroup->setParent(previousGroup);
@@ -266,7 +270,7 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
 
         previousGroup = tempGroup;
     }
-    
+
     result["name"] = name;
     result["uuid"] = uuid;
     return result;
@@ -1070,12 +1074,13 @@ bool BrowserService::checkLegacySettings()
         return false;
     }
 
-    auto dialogResult = MessageBox::warning(nullptr,
-                                            tr("KeePassXC: Legacy browser integration settings detected"),
-                                            tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
-                                               "This is necessary to maintain your current browser connections.\n"
-                                               "Would you like to migrate your existing settings now?"),
-                                            MessageBox::Yes | MessageBox::No);
+    auto dialogResult =
+        MessageBox::warning(nullptr,
+                            tr("KeePassXC: Legacy browser integration settings detected"),
+                            tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
+                               "This is necessary to maintain your current browser connections.\n"
+                               "Would you like to migrate your existing settings now?"),
+                            MessageBox::Yes | MessageBox::No);
 
     return dialogResult == MessageBox::Yes;
 }

@@ -103,7 +103,7 @@ QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
 /**
  * Set the next search to be case sensitive or not
  *
- * @param state 
+ * @param state
  */
 void EntrySearcher::setCaseSensitive(bool state)
 {

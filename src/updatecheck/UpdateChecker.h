@@ -17,8 +17,8 @@
 
 #ifndef KEEPASSXC_UPDATECHECK_H
 #define KEEPASSXC_UPDATECHECK_H
-#include <QString>
 #include <QObject>
+#include <QString>
 
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -57,4 +57,4 @@ inline UpdateChecker* updateCheck()
     return UpdateChecker::instance();
 }
 
-#endif //KEEPASSXC_UPDATECHECK_H
+#endif // KEEPASSXC_UPDATECHECK_H

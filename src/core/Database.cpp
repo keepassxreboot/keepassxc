@@ -514,8 +514,10 @@ void Database::setCompressionAlgorithm(Database::CompressionAlgorithm algo)
  * @param transformKey trigger the KDF after setting the key
  * @return true on success
  */
-bool Database::setKey(const QSharedPointer<const CompositeKey>& key, bool updateChangedTime,
-        bool updateTransformSalt, bool transformKey)
+bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
+                      bool updateChangedTime,
+                      bool updateTransformSalt,
+                      bool transformKey)
 {
     Q_ASSERT(!m_data.isReadOnly);
 

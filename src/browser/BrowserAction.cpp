@@ -21,11 +21,11 @@
 #include "NativeMessagingBase.h"
 #include "config-keepassx.h"
 
+#include <QJsonDocument>
+#include <QJsonParseError>
 #include <sodium.h>
 #include <sodium/crypto_box.h>
 #include <sodium/randombytes.h>
-#include <QJsonDocument>
-#include <QJsonParseError>
 
 BrowserAction::BrowserAction(BrowserService& browserService)
     : m_mutex(QMutex::Recursive)

@@ -20,8 +20,8 @@
 
 #include <QByteArray>
 
-#include "gui/MainWindow.h"
 #include "autotype/AutoType.h"
+#include "gui/MainWindow.h"
 #ifdef Q_OS_WIN
 #include <windows.h>
 #endif

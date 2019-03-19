@@ -140,9 +140,8 @@ void BrowserOptionDialog::loadSettings()
     m_ui->updateBinaryPath->setChecked(false);
     m_ui->updateBinaryPath->setEnabled(false);
     // Show notice to user
-    m_ui->browserGlobalWarningWidget->showMessage(
-        tr("Please see special instructions for browser extension use below"),
-        MessageWidget::Warning);
+    m_ui->browserGlobalWarningWidget->showMessage(tr("Please see special instructions for browser extension use below"),
+                                                  MessageWidget::Warning);
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif

@@ -77,7 +77,7 @@ int main(int argc, char* argv[])
 #ifndef Q_OS_WIN
     catchUnixSignals({SIGQUIT, SIGINT, SIGTERM, SIGHUP});
 #else
-    SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(ConsoleHandler),TRUE);
+    SetConsoleCtrlHandler(static_cast<PHANDLER_ROUTINE>(ConsoleHandler), TRUE);
 #endif
     NativeMessagingHost host;
     return a.exec();

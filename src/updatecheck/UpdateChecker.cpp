@@ -16,11 +16,11 @@
  */
 
 #include "UpdateChecker.h"
-#include "core/Config.h"
 #include "config-keepassx.h"
+#include "core/Config.h"
 #include <QJsonObject>
-#include <QtNetwork>
 #include <QNetworkAccessManager>
+#include <QtNetwork>
 
 UpdateChecker* UpdateChecker::m_instance(nullptr);
 

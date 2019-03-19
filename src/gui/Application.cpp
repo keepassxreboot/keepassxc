@@ -125,9 +125,8 @@ Application::Application(int& argc, char** argv)
         break;
     }
     default:
-        qWarning() << QObject::tr("The lock file could not be created. Single-instance mode disabled.")
-                          .toUtf8()
-                          .constData();
+        qWarning()
+            << QObject::tr("The lock file could not be created. Single-instance mode disabled.").toUtf8().constData();
     }
 }
 
