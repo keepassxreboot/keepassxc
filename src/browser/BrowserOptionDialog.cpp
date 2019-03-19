@@ -44,7 +44,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
 
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2.%3")
+        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2. %3")
             .arg("<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi</a>",

@@ -183,7 +183,7 @@ void SettingsWidgetKeeShare::exportCertificate()
     }
     const auto filetype = tr("key.share", "Filetype for KeeShare key");
     const auto filters = QString("%1 (*." + filetype + ");;%2 (*)").arg(tr("KeeShare key file"), tr("All files"));
-    QString filename = tr("%1.%2", "Template for KeeShare key file").arg(m_own.certificate.signer).arg(filetype);
+    QString filename = QString("%1.%2").arg(m_own.certificate.signer).arg(filetype);
     filename = fileDialog()->getSaveFileName(
         this, tr("Select path"), defaultDirPath, filters, nullptr, QFileDialog::Options(0), filetype, filename);
     if (filename.isEmpty()) {

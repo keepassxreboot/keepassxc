@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="en">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -38,80 +40,12 @@
         <translation>Copy to clipboard</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Revision: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Distribution: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Libraries:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Enabled extensions:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation>Project Maintainers:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
         <translation>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</translation>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation>Version %1</translation>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation>Build Type: %1</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto-Type</translation>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation>Browser Integration</translation>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation>SSH Agent</translation>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation>YubiKey</translation>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation>TouchID</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>None</translation>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation>KeeShare (signed and unsigned sharing)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation>KeeShare (only signed sharing)</translation>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
-        <translation>KeeShare (only unsigned sharing)</translation>
     </message>
 </context>
 <context>
@@ -657,14 +591,6 @@ Please select the correct database for saving credentials.</translation>
         <translation>Select custom proxy location</translation>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</translation>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Browser</translation>
     </message>
@@ -684,6 +610,18 @@ Please select the correct database for saving credentials.</translation>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
         <translation>Do not ask permission for HTTP &amp;Basic Auth</translation>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -744,7 +682,10 @@ Moved %2 keys to custom data.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Successfully moved %n keys to custom data.</numerusform><numerusform>Successfully moved %n keys to custom data.</numerusform></translation>
+        <translation>
+            <numerusform>Successfully moved %n keys to custom data.</numerusform>
+            <numerusform>Successfully moved %n keys to custom data.</numerusform>
+        </translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -759,12 +700,20 @@ Moved %2 keys to custom data.</translation>
         <translation>KeePassXC: Legacy browser integration settings detected</translation>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</translation>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -870,7 +819,10 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n more message(s) skipped]</numerusform><numerusform>[%n more message(s) skipped]</numerusform></translation>
+        <translation>
+            <numerusform>[%n more message(s) skipped]</numerusform>
+            <numerusform>[%n more message(s) skipped]</numerusform>
+        </translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -883,7 +835,10 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n column(s)</numerusform><numerusform>%n column(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n column(s)</numerusform>
+            <numerusform>%n column(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
@@ -892,11 +847,17 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte(s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n byte(s)</numerusform>
+            <numerusform>%n byte(s)</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>%n row(s)</numerusform><numerusform>%n row(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n row(s)</numerusform>
+            <numerusform>%n row(s)</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -925,6 +886,10 @@ This is necessary to maintain compatibility with the browser plugin.</translatio
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>File cannot be written as it is opened in read-only mode.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1001,7 +966,7 @@ Please consider generating a new key file.</translation>
 %1</translation>
     </message>
     <message>
-        <source>Can't open key file:
+        <source>Can&apos;t open key file:
 %1</source>
         <translation>Can&apos;t open key file:
 %1</translation>
@@ -1113,7 +1078,10 @@ This may prevent connection to the browser plugin.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Successfully removed %n encryption key(s) from KeePassXC settings.</numerusform><numerusform>Successfully removed %n encryption key(s) from KeePassXC settings.</numerusform></translation>
+        <translation>
+            <numerusform>Successfully removed %n encryption key(s) from KeePassXC settings.</numerusform>
+            <numerusform>Successfully removed %n encryption key(s) from KeePassXC settings.</numerusform>
+        </translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
@@ -1139,7 +1107,10 @@ Permissions to access entries will be revoked.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Successfully removed permissions from %n entry(s).</numerusform><numerusform>Successfully removed permissions from %n entry(s).</numerusform></translation>
+        <translation>
+            <numerusform>Successfully removed permissions from %n entry(s).</numerusform>
+            <numerusform>Successfully removed permissions from %n entry(s).</numerusform>
+        </translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1284,22 +1255,34 @@ If you keep this number, your database may be too easy to crack!</translation>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation>
+            <numerusform> MiB</numerusform>
+            <numerusform> MiB</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> thread(s)</numerusform><numerusform> thread(s)</numerusform></translation>
+        <translation>
+            <numerusform> thread(s)</numerusform>
+            <numerusform> thread(s)</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
+        <translation>
+            <numerusform>%1 ms</numerusform>
+            <numerusform>%1 ms</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+        <translation>
+            <numerusform>%1 s</numerusform>
+            <numerusform>%1 s</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -1519,7 +1502,10 @@ This is definitely a bug, please report it to the developers.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform><numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform></translation>
+        <translation>
+            <numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform>
+            <numerusform>Do you really want to move %n entry(s) to the recycle bin?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1581,15 +1567,24 @@ Do you want to merge your changes?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Do you really want to delete %n entry(s) for good?</numerusform><numerusform>Do you really want to delete %n entry(s) for good?</numerusform></translation>
+        <translation>
+            <numerusform>Do you really want to delete %n entry(s) for good?</numerusform>
+            <numerusform>Do you really want to delete %n entry(s) for good?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Delete entry(s)?</numerusform><numerusform>Delete entry(s)?</numerusform></translation>
+        <translation>
+            <numerusform>Delete entry(s)?</numerusform>
+            <numerusform>Delete entry(s)?</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Move entry(s) to recycle bin?</numerusform><numerusform>Move entry(s) to recycle bin?</numerusform></translation>
+        <translation>
+            <numerusform>Move entry(s) to recycle bin?</numerusform>
+            <numerusform>Move entry(s) to recycle bin?</numerusform>
+        </translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
@@ -1659,7 +1654,10 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</numerusform><numerusform>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</numerusform></translation>
+        <translation>
+            <numerusform>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</numerusform>
+            <numerusform>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1680,6 +1678,10 @@ Disable safe saves and try again?</translation>
     <message>
         <source>Database was not modified by merge operation.</source>
         <translation>Database was not modified by merge operation.</translation>
+    </message>
+    <message>
+        <source>Shared group...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1762,11 +1764,17 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n week(s)</numerusform><numerusform>%n week(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n week(s)</numerusform>
+            <numerusform>%n week(s)</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n month(s)</numerusform><numerusform>%n month(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n month(s)</numerusform>
+            <numerusform>%n month(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>Apply generated password?</source>
@@ -1794,7 +1802,10 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n year(s)</numerusform><numerusform>%n year(s)</numerusform></translation>
+        <translation>
+            <numerusform>%n year(s)</numerusform>
+            <numerusform>%n year(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>Confirm Removal</source>
@@ -2118,6 +2129,22 @@ Disable safe saves and try again?</translation>
         <source>Select import/export file</source>
         <translation>Select import/export file</translation>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">Clear</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -2206,7 +2233,10 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Successfully loaded %1 of %n icon(s)</numerusform><numerusform>Successfully loaded %1 of %n icon(s)</numerusform></translation>
+        <translation>
+            <numerusform>Successfully loaded %1 of %n icon(s)</numerusform>
+            <numerusform>Successfully loaded %1 of %n icon(s)</numerusform>
+        </translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2214,15 +2244,24 @@ Disable safe saves and try again?</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n icon(s) already exist in the database</numerusform><numerusform>%n icon(s) already exist in the database</numerusform></translation>
+        <translation>
+            <numerusform>%n icon(s) already exist in the database</numerusform>
+            <numerusform>%n icon(s) already exist in the database</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>The following icon(s) failed:</numerusform><numerusform>The following icon(s) failed:</numerusform></translation>
+        <translation>
+            <numerusform>The following icon(s) failed:</numerusform>
+            <numerusform>The following icon(s) failed:</numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform><numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform></translation>
+        <translation>
+            <numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform>
+            <numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -2316,7 +2355,10 @@ This may cause the affected plugins to malfunction.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Are you sure you want to remove %n attachment(s)?</numerusform><numerusform>Are you sure you want to remove %n attachment(s)?</numerusform></translation>
+        <translation>
+            <numerusform>Are you sure you want to remove %n attachment(s)?</numerusform>
+            <numerusform>Are you sure you want to remove %n attachment(s)?</numerusform>
+        </translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -2361,9 +2403,12 @@ This may cause the affected plugins to malfunction.</translation>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>Unable to open file(s):
-%1</numerusform><numerusform>Unable to open file(s):
-%1</numerusform></translation>
+        <translation>
+            <numerusform>Unable to open file(s):
+%1</numerusform>
+            <numerusform>Unable to open file(s):
+%1</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -2589,14 +2634,6 @@ This may cause the affected plugins to malfunction.</translation>
         <source>[empty]</source>
         <comment>group has no children</comment>
         <translation>[empty]</translation>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation>%1</translation>
     </message>
 </context>
 <context>
@@ -2856,7 +2893,7 @@ This may cause the affected plugins to malfunction.</translation>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
-You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
+You can import it by clicking on Database &gt; &apos;Import KeePass 1 database...&apos;.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>The selected file is an old KeePass 1 database (.kdb).
 
@@ -3193,6 +3230,22 @@ Line %2, column %3</translation>
         <source>Synchronize with</source>
         <translation>Synchronize with</translation>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3266,7 +3319,7 @@ unsupported in the future.
 Please go to the master key settings and generate a new key file.</translation>
     </message>
     <message>
-        <source>Error loading the key file '%1'
+        <source>Error loading the key file &apos;%1&apos;
 Message: %2</source>
         <translation>Error loading the key file &apos;%1&apos;
 Message: %2</translation>
@@ -3842,10 +3895,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
         <translation>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation>Password cannot be empty.</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4492,7 +4541,10 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Clearing the clipboard in %1 second(s)...</numerusform><numerusform>Clearing the clipboard in %1 second(s)...</numerusform></translation>
+        <translation>
+            <numerusform>Clearing the clipboard in %1 second(s)...</numerusform>
+            <numerusform>Clearing the clipboard in %1 second(s)...</numerusform>
+        </translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -4883,6 +4935,10 @@ Available commands:
         <source>Database password: </source>
         <translation>Database password: </translation>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -5156,9 +5212,8 @@ Available commands:
         <translation>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</translation>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation>%1.%2</translation>
+        <source>Signer:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5174,10 +5229,6 @@ Available commands:
     <message>
         <source>Import from container with certificate</source>
         <translation>Import from container with certificate</translation>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
-        <translation>Do you want to trust %1 with the fingerprint of %2 from %3</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5256,14 +5307,6 @@ Available commands:
         <translation>Could not write export container (%1)</translation>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation>Could not embed signature (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation>Could not embed database (%1)</translation>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation>Overwriting unsigned share container is not supported - export prevented</translation>
     </message>
@@ -5287,6 +5330,34 @@ Available commands:
         <source>Export to %1</source>
         <translation>Export to %1</translation>
     </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation type="unfinished">Do you want to trust %1 with the fingerprint of %2 from %3? {1 ?} {2 ?}</translation>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TotpDialog</name>
@@ -5304,7 +5375,10 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</numerusform><numerusform>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</numerusform></translation>
+        <translation>
+            <numerusform>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</numerusform>
+            <numerusform>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</numerusform>
+        </translation>
     </message>
 </context>
 <context>
