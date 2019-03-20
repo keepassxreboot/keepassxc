@@ -1112,7 +1112,9 @@ void DatabaseWidget::search(const QString& searchtext)
     }
 
     m_searchingLabel->setVisible(true);
+#ifdef WITH_XC_KEESHARE
     m_shareLabel->setVisible(false);
+#endif
 
     emit searchModeActivated();
 }
