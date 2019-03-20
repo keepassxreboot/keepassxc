@@ -60,7 +60,7 @@ To use sharing, you need to enable for the application.
 3. Check _Allow import_ if you want to import shared credentials
 4. Check _Allow export_ if you want to share credentials
 
-To make sure that your data is valid when im imported by another client, please _generate_ (or _import_) a public/private key pair and enter your _signer_ name. This way your client may verify that the imported data is valid. When Importing, you'll see the known sources with names and fingerprint in the list at the bottom. This is the place to _trust_ or _untrust_ signers. It is only possible to trust someone on application level.
+To make sure that your data is valid when imported by another client, please _generate_ (or _import_) a public/private key pair and enter your _signer_ name. This way your client may verify that the imported data is valid. When Importing, you'll see the known sources with names and fingerprint in the list at the bottom. This is the place to _trust_ or _untrust_ signers. It is only possible to trust someone on application level.
 
 <img src="./KeeShare/AppSettings.png" height="600" width="800" alt="KeeShare Application Settings">
 
