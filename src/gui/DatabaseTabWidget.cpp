@@ -137,10 +137,15 @@ void DatabaseTabWidget::openDatabase()
  * database has been opened already.
  *
  * @param filePath database file path
- * @param password optional, password to unlock database
  * @param inBackground optional, don't focus tab after opening
+ * @param password optional, password to unlock database
+ * @param keyfile optional, path to keyfile to unlock database
+ *
  */
-void DatabaseTabWidget::addDatabaseTab(const QString& filePath, bool inBackground, const QString& password)
+void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
+                                       bool inBackground,
+                                       const QString& password,
+                                       const QString& keyfile)
 {
     QFileInfo fileInfo(filePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
@@ -154,7 +159,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath, bool inBackgroun
         Q_ASSERT(dbWidget);
         if (dbWidget && dbWidget->database()->filePath() == canonicalFilePath) {
             if (!password.isEmpty()) {
-                dbWidget->performUnlockDatabase(password);
+                dbWidget->performUnlockDatabase(password, keyfile);
             }
             if (!inBackground) {
                 // switch to existing tab if file is already open
@@ -167,7 +172,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath, bool inBackgroun
     auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(filePath), this);
     addDatabaseTab(dbWidget, inBackground);
     if (!password.isEmpty()) {
-        dbWidget->performUnlockDatabase(password);
+        dbWidget->performUnlockDatabase(password, keyfile);
     }
     updateLastDatabases(filePath);
 }

@@ -496,28 +496,9 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& filePath, const QString& pw, const QString& keyFile)
+void MainWindow::openDatabase(const QString& filePath, const QString& password, const QString& keyfile)
 {
-    if (pw.isEmpty() && keyFile.isEmpty()) {
-        m_ui->tabWidget->addDatabaseTab(filePath);
-        return;
-    }
-
-    auto db = QSharedPointer<Database>::create();
-    auto key = QSharedPointer<CompositeKey>::create();
-    if (!pw.isEmpty()) {
-        key->addKey(QSharedPointer<PasswordKey>::create(pw));
-    }
-    if (!keyFile.isEmpty()) {
-        auto fileKey = QSharedPointer<FileKey>::create();
-        fileKey->load(keyFile);
-        key->addKey(fileKey);
-    }
-    if (db->open(filePath, key, nullptr, false)) {
-        auto* dbWidget = new DatabaseWidget(db, this);
-        m_ui->tabWidget->addDatabaseTab(dbWidget);
-        dbWidget->switchToMainView(true);
-    }
+    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile);
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
