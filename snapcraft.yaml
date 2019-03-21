@@ -9,6 +9,12 @@ description: |
 confinement: strict
 base: core18
 
+plugs:
+  icon-themes: # fix mouse cursor theme
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+
 apps:
   keepassxc:
     command: desktop-launch keepassxc
@@ -67,6 +73,7 @@ parts:
       - libquazip5-1
       - libusb-1.0-0
       - qtwayland5
+      - qt5-style-plugins # for mouse cursor theme fix
     override-build: |
       snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
