@@ -160,7 +160,7 @@ void EditGroupWidgetKeeShare::showSharingState()
         }
         if (cycleImportExport) {
             m_ui->messageWidget->showMessage(
-                tr("The container %1 imported and export by different groups.").arg(reference.path),
+                tr("The container %1 imported and exported by different groups.").arg(reference.path),
                 MessageWidget::Warning);
             return;
         }
