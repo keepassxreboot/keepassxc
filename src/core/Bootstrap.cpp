@@ -112,6 +112,10 @@ namespace Bootstrap
                     mainWindow.openDatabase(filename);
                 }
             }
+            auto lastActiveFile = config()->get("LastActiveDatabase").toString();
+            if (!lastActiveFile.isEmpty()) {
+                mainWindow.openDatabase(lastActiveFile);
+            }
         }
     }
 
