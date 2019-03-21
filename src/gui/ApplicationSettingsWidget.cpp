@@ -81,7 +81,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // clang-format off
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), SLOT(autoSaveToggled(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
-    connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), SLOT(enableToolbarSettings(bool)));
+    connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), SLOT(toolbarSettingsToggled(bool)));
+    connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -294,11 +295,13 @@ void ApplicationSettingsWidget::saveSettings()
 
     // Security: clear storage if related settings are disabled
     if (!config()->get("RememberLastDatabases").toBool()) {
-        config()->set("LastDatabases", QVariant());
+        config()->set("LastDatabases", {});
+        config()->set("OpenPreviousDatabasesOnStartup", {});
+        config()->set("LastActiveDatabase", {});
     }
 
     if (!config()->get("RememberLastKeyFiles").toBool()) {
-        config()->set("LastKeyFiles", QVariant());
+        config()->set("LastKeyFiles", {});
         config()->set("LastDir", "");
     }
 
@@ -330,9 +333,20 @@ void ApplicationSettingsWidget::systrayToggled(bool checked)
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
 }
 
-void ApplicationSettingsWidget::enableToolbarSettings(bool checked)
+void ApplicationSettingsWidget::toolbarSettingsToggled(bool checked)
 {
     m_generalUi->toolbarMovableCheckBox->setEnabled(!checked);
     m_generalUi->toolButtonStyleComboBox->setEnabled(!checked);
     m_generalUi->toolButtonStyleLabel->setEnabled(!checked);
+}
+
+void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
+{
+    if (!checked) {
+        m_generalUi->rememberLastKeyFilesCheckBox->setChecked(false);
+        m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(false);
+    }
+
+    m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
+    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
 }

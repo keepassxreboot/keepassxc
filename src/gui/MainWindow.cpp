@@ -901,24 +901,27 @@ void MainWindow::saveWindowInformation()
 
 bool MainWindow::saveLastDatabases()
 {
-    bool accept;
-    m_openDatabases.clear();
-    bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
+    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+        auto currentDbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        if (currentDbWidget) {
+            config()->set("LastActiveDatabase", currentDbWidget->database()->filePath());
+        } else {
+            config()->set("LastActiveDatabase", {});
+        }
 
-    if (openPreviousDatabasesOnStartup) {
-        connect(
-            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
+        QStringList openDatabases;
+        for (int i=0; i < m_ui->tabWidget->count(); ++i) {
+            auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
+            openDatabases.append(dbWidget->database()->filePath());
+        }
+
+        config()->set("LastOpenedDatabases", openDatabases);
+    } else {
+        config()->set("LastActiveDatabase", {});
+        config()->set("LastOpenedDatabases", {});
     }
 
-    accept = m_ui->tabWidget->closeAllDatabaseTabs();
-
-    if (openPreviousDatabasesOnStartup) {
-        disconnect(
-            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
-        config()->set("LastOpenedDatabases", m_openDatabases);
-    }
-
-    return accept;
+    return m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
 void MainWindow::updateTrayIcon()
@@ -981,11 +984,6 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
     } else if (fallback != 0) {
         action->setShortcut(QKeySequence(fallback));
     }
-}
-
-void MainWindow::rememberOpenDatabases(const QString& filePath)
-{
-    m_openDatabases.prepend(filePath);
 }
 
 void MainWindow::applySettingsChanges()
