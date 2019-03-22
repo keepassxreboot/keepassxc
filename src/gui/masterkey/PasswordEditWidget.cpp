@@ -65,7 +65,7 @@ bool PasswordEditWidget::isPasswordVisible() const
 
 bool PasswordEditWidget::isEmpty() const
 {
-    return m_compUi->enterPasswordEdit->text().isEmpty();
+    return (visiblePage() == Page::Edit) && m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
 QWidget* PasswordEditWidget::componentEditWidget()
