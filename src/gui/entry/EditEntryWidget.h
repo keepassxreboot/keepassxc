@@ -90,6 +90,7 @@ private slots:
     void protectCurrentAttribute(bool state);
     void revealCurrentAttribute();
     void updateAutoTypeEnabled();
+    void openAutotypeHelp();
     void insertAutoTypeAssoc();
     void removeAutoTypeAssoc();
     void loadCurrentAssoc(const QModelIndex& current);
