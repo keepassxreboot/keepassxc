@@ -391,8 +391,10 @@ MainWindow::MainWindow()
 
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
 
+#ifndef Q_OS_HAIKU
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+#endif
 
     updateTrayIcon();
 
