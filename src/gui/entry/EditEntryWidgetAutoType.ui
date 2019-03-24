@@ -90,6 +90,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Open AutoType help webpage</string>
+       </property>
+       <property name="accessibleName">
+        <string>AutoType help button</string>
+       </property>
        <property name="text">
         <string/>
        </property>
