@@ -1,5 +1,5 @@
 if(WITH_XC_AUTOTYPE)
-    if(UNIX AND NOT APPLE)
+    if(UNIX AND NOT APPLE AND NOT HAIKU)
         find_package(X11)
         find_package(Qt5X11Extras 5.2)
         if(PRINT_SUMMARY)

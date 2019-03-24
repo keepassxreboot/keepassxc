@@ -23,7 +23,7 @@ file(GLOB DATABASE_ICONS icons/database/*.png)
 
 install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT HAIKU)
     install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
             FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"
             PATTERN "status" EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
@@ -33,7 +33,7 @@ if(UNIX AND NOT APPLE)
     install(FILES linux/org.keepassxc.KeePassXC.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
     install(FILES linux/org.keepassxc.KeePassXC.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
     install(FILES linux/keepassxc.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/mime/packages)
-endif(UNIX AND NOT APPLE)
+endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
 if(APPLE)
   install(FILES macosx/keepassxc.icns DESTINATION ${DATA_INSTALL_DIR})
