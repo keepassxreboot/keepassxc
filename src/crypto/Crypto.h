@@ -24,10 +24,10 @@ class Crypto
 {
 public:
     static bool init();
-    static bool initalized();
+    static bool initialized();
     static bool backendSelfTest();
     static QString errorString();
-    static QString backendVersion();
+    static QString debugInfo();
 
 private:
     Crypto();
@@ -42,7 +42,7 @@ private:
     static bool testSalsa20();
     static bool testChaCha20();
 
-    static bool m_initalized;
+    static bool m_initialized;
     static QString m_errorStr;
     static QString m_backendVersion;
 };

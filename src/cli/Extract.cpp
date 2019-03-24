@@ -47,6 +47,7 @@ int Extract::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -55,8 +56,11 @@ int Extract::execute(const QStringList& arguments)
         errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
         return EXIT_FAILURE;
     }
+    
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
 
     auto db = Utils::unlockDatabase(args.at(0),
+                                    !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);

@@ -33,7 +33,7 @@ CryptoHash::CryptoHash(Algorithm algo, bool hmac)
 {
     Q_D(CryptoHash);
 
-    Q_ASSERT(Crypto::initalized());
+    Q_ASSERT(Crypto::initialized());
 
     int algoGcrypt = -1;
     unsigned int flagsGcrypt = GCRY_MD_FLAG_SECURE;

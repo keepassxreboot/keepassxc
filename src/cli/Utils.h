@@ -36,6 +36,7 @@ namespace Utils
     QString getPassword(FILE* outputDescriptor = STDOUT);
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                            const bool isPasswordProtected = true,
                                             const QString& keyFilename = {},
                                             FILE* outputDescriptor = STDOUT,
                                             FILE* errorDescriptor = STDERR);

@@ -25,7 +25,7 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 
-bool Crypto::m_initalized(false);
+bool Crypto::m_initialized(false);
 QString Crypto::m_errorStr;
 QString Crypto::m_backendVersion;
 
@@ -35,8 +35,8 @@ Crypto::Crypto()
 
 bool Crypto::init()
 {
-    if (m_initalized) {
-        qWarning("Crypto::init: already initalized");
+    if (m_initialized) {
+        qWarning("Crypto::init: already initialized");
         return true;
     }
 
@@ -48,19 +48,19 @@ bool Crypto::init()
     }
 
     // has to be set before testing Crypto classes
-    m_initalized = true;
+    m_initialized = true;
 
     if (!backendSelfTest() || !selfTest()) {
-        m_initalized = false;
+        m_initialized = false;
         return false;
     }
 
     return true;
 }
 
-bool Crypto::initalized()
+bool Crypto::initialized()
 {
-    return m_initalized;
+    return m_initialized;
 }
 
 QString Crypto::errorString()
@@ -68,9 +68,13 @@ QString Crypto::errorString()
     return m_errorStr;
 }
 
-QString Crypto::backendVersion()
+QString Crypto::debugInfo()
 {
-    return QString("libgcrypt ").append(m_backendVersion);
+    Q_ASSERT(Crypto::initialized());
+
+    QString debugInfo = QObject::tr("Cryptographic libraries:").append("\n");
+    debugInfo.append(" libgcrypt ").append(m_backendVersion).append("\n");
+    return debugInfo;
 }
 
 bool Crypto::backendSelfTest()

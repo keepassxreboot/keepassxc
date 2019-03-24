@@ -50,6 +50,7 @@ int Locate::execute(const QStringList& arguments)
     parser.addPositionalArgument("term", QObject::tr("Search term."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -60,6 +61,7 @@ int Locate::execute(const QStringList& arguments)
     }
 
     auto db = Utils::unlockDatabase(args.at(0),
+                                    !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);

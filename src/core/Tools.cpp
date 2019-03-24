@@ -18,6 +18,8 @@
  */
 
 #include "Tools.h"
+
+#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Translator.h"
 
@@ -28,8 +30,10 @@
 #include <QLocale>
 #include <QRegularExpression>
 #include <QStringList>
+#include <QSysInfo>
 #include <QUuid>
 #include <cctype>
+#include "git-info.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
@@ -41,6 +45,78 @@
 
 namespace Tools
 {
+    QString debugInfo()
+    {
+        QString debugInfo = "KeePassXC - ";
+        debugInfo.append(QObject::tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
+#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
+        debugInfo.append(QObject::tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
+#endif
+
+        QString commitHash;
+        if (!QString(GIT_HEAD).isEmpty()) {
+            commitHash = GIT_HEAD;
+        }
+        if (!commitHash.isEmpty()) {
+            debugInfo.append(QObject::tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
+        }
+
+#ifdef KEEPASSXC_DIST
+        debugInfo.append(QObject::tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
+#endif
+
+        // Qt related debugging information.
+        debugInfo.append("\n");
+        debugInfo.append("Qt ").append(QString::fromLocal8Bit(qVersion())).append("\n");
+#ifdef QT_NO_DEBUG
+        debugInfo.append(QObject::tr("Debugging mode is disabled.").append("\n"));
+#else
+        debugInfo.append(QObject::tr("Debugging mode is enabled.").append("\n"));
+#endif
+        debugInfo.append("\n");
+
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
+        debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
+                             .arg(QSysInfo::prettyProductName(),
+                                  QSysInfo::currentCpuArchitecture(),
+                                  QSysInfo::kernelType(),
+                                  QSysInfo::kernelVersion()));
+
+        debugInfo.append("\n\n");
+#endif
+
+        QString extensions;
+#ifdef WITH_XC_AUTOTYPE
+        extensions += "\n- " + QObject::tr("Auto-Type");
+#endif
+#ifdef WITH_XC_BROWSER
+        extensions += "\n- " + QObject::tr("Browser Integration");
+#endif
+#ifdef WITH_XC_SSHAGENT
+        extensions += "\n- " + QObject::tr("SSH Agent");
+#endif
+#if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
+        extensions += "\n- " + QObject::tr("KeeShare (signed and unsigned sharing)");
+#elif defined(WITH_XC_KEESHARE_SECURE)
+        extensions += "\n- " + QObject::tr("KeeShare (only signed sharing)");
+#elif defined(WITH_XC_KEESHARE_INSECURE)
+        extensions += "\n- " + QObject::tr("KeeShare (only unsigned sharing)");
+#endif
+#ifdef WITH_XC_YUBIKEY
+        extensions += "\n- " + QObject::tr("YubiKey");
+#endif
+#ifdef WITH_XC_TOUCHID
+        extensions += "\n- " + QObject::tr("TouchID");
+#endif
+
+        if (extensions.isEmpty())
+            extensions = " " + QObject::tr("None");
+
+        debugInfo.append(QObject::tr("Enabled extensions:").append(extensions).append("\n"));
+        return debugInfo;
+    }
+
     QString humanReadableFileSize(qint64 bytes, quint32 precision)
     {
         constexpr auto kibibyte = 1024;

@@ -810,10 +810,6 @@ build() {
         shift
     done
 
-    if [[ ${build_appsign} && ! -f ${build_key} ]]; then
-        exitError "--appsign specified with invalid key file\n"
-    fi
-
     init
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
@@ -908,7 +904,7 @@ build() {
             make ${MAKE_OPTIONS} package
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} ]]; then
+            if ${build_appsign}; then
                 logInfo "Signing executable files"
                 appsign "-f" "./${APP_NAME}-${RELEASE_NAME}.dmg" "-k" "${build_key}"
             fi
@@ -924,7 +920,7 @@ build() {
             mingw32-make ${MAKE_OPTIONS} preinstall
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} ]]; then
+            if ${build_appsign} && [ -f ${build_key} ]; then
                 logInfo "Signing executable files"
                 appsign "-f" $(find src | grep -P '\.exe$|\.dll$') "-k" "${build_key}"
             fi

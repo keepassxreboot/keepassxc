@@ -56,7 +56,7 @@ public:
     };
 
 public slots:
-    void openDatabase(const QString& filePath, const QString& pw = {}, const QString& keyFile = {});
+    void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
     void appExit();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
@@ -105,7 +105,6 @@ private slots:
     void updateCopyAttributesMenu();
     void showEntryContextMenu(const QPoint& globalPos);
     void showGroupContextMenu(const QPoint& globalPos);
-    void rememberOpenDatabases(const QString& filePath);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void lockDatabasesAfterInactivity();
@@ -137,7 +136,6 @@ private:
     QAction* m_searchWidgetAction;
     QActionGroup* m_lastDatabasesActions;
     QActionGroup* m_copyAdditionalAttributeActions;
-    QStringList m_openDatabases;
     InactivityTimer* m_inactivityTimer;
     InactivityTimer* m_touchIDinactivityTimer;
     int m_countDefaultAttributes;

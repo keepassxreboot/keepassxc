@@ -198,10 +198,17 @@ void EditEntryWidget::setupIcon()
     connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));
 }
 
+void EditEntryWidget::openAutotypeHelp()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/keepassxreboot/keepassxc/wiki/Autotype-Custom-Sequence"));
+}
+
 void EditEntryWidget::setupAutoType()
 {
     m_autoTypeUi->setupUi(m_autoTypeWidget);
     addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_autoTypeWidget);
+
+    m_autoTypeUi->openHelpButton->setIcon(filePath()->icon("actions", "system-help"));
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
@@ -213,6 +220,9 @@ void EditEntryWidget::setupAutoType()
     connect(m_autoTypeUi->enableButton, SIGNAL(toggled(bool)), SLOT(updateAutoTypeEnabled()));
     connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
             m_autoTypeUi->sequenceEdit, SLOT(setEnabled(bool)));
+    connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
+            m_autoTypeUi->openHelpButton, SLOT(setEnabled(bool)));
+    connect(m_autoTypeUi->openHelpButton, SIGNAL(clicked()), SLOT(openAutotypeHelp()));
     connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
             m_autoTypeUi->windowSequenceEdit, SLOT(setEnabled(bool)));
     connect(m_autoTypeUi->assocAddButton, SIGNAL(clicked()), SLOT(insertAutoTypeAssoc()));
@@ -1185,6 +1195,7 @@ void EditEntryWidget::updateAutoTypeEnabled()
     m_autoTypeUi->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->customSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->sequenceEdit->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
+    m_autoTypeUi->openHelpButton->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
 
     m_autoTypeUi->assocView->setEnabled(autoTypeEnabled);
     m_autoTypeUi->assocAddButton->setEnabled(!m_history);

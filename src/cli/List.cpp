@@ -48,6 +48,7 @@ int List::execute(const QStringList& arguments)
     parser.addPositionalArgument("group", QObject::tr("Path of the group to list. Default is /"), "[group]");
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
 
     QCommandLineOption recursiveOption(QStringList() << "R"
                                                      << "recursive",
@@ -65,6 +66,7 @@ int List::execute(const QStringList& arguments)
     bool recursive = parser.isSet(recursiveOption);
 
     auto db = Utils::unlockDatabase(args.at(0),
+                                    !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);
