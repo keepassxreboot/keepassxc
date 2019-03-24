@@ -40,6 +40,7 @@ public:
 
     static const QCommandLineOption QuietOption;
     static const QCommandLineOption KeyFileOption;
+    static const QCommandLineOption NoPasswordOption;
 };
 
 #endif // KEEPASSXC_COMMAND_H

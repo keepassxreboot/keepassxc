@@ -52,12 +52,17 @@ int Merge::execute(const QStringList& arguments)
                                           QObject::tr("Use the same credentials for both database files."));
     parser.addOption(samePasswordOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
 
     QCommandLineOption keyFileFromOption(QStringList() << "f"
                                                        << "key-file-from",
                                          QObject::tr("Key file of the database to merge from."),
                                          QObject::tr("path"));
     parser.addOption(keyFileFromOption);
+
+    QCommandLineOption noPasswordFromOption(QStringList() << "no-password-from",
+                                            QObject::tr("Deactivate password key for the database to merge from."));
+    parser.addOption(noPasswordFromOption);
 
     parser.addHelpOption();
     parser.process(arguments);
@@ -69,6 +74,7 @@ int Merge::execute(const QStringList& arguments)
     }
 
     auto db1 = Utils::unlockDatabase(args.at(0),
+                                     !parser.isSet(Command::NoPasswordOption),
                                      parser.value(Command::KeyFileOption),
                                      parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                      Utils::STDERR);
@@ -79,6 +85,7 @@ int Merge::execute(const QStringList& arguments)
     QSharedPointer<Database> db2;
     if (!parser.isSet("same-credentials")) {
         db2 = Utils::unlockDatabase(args.at(1),
+                                    !parser.isSet(noPasswordFromOption),
                                     parser.value(keyFileFromOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);
