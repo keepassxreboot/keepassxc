@@ -194,6 +194,9 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
+if(UNIX AND NOT APPLE)
+    add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
+endif()
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
@@ -224,6 +227,11 @@ endif()
 add_subdirectory(sshagent)
 if(WITH_XC_SSHAGENT)
     set(sshagent_LIB sshagent)
+endif()
+
+add_subdirectory(fdosecrets)
+if(WITH_XC_FDOSECRETS)
+    set(fdosecrets_LIB fdosecrets)
 endif()
 
 set(autotype_SOURCES
@@ -270,6 +278,7 @@ target_link_libraries(keepassx_core
         autotype
         ${keepassxcbrowser_LIB}
         ${qrcode_LIB}
+        ${fdosecrets_LIB}
         Qt5::Core
         Qt5::Concurrent
         Qt5::Network

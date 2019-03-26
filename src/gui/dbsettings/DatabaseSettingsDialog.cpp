@@ -28,6 +28,9 @@
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
 #endif
+#if defined(WITH_XC_FDOSECRETS)
+#include "fdosecrets/DatabaseSettingsPageFdoSecrets.h"
+#endif
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -83,6 +86,10 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
+#endif
+
+#if defined(WITH_XC_FDOSECRETS)
+    addSettingsPage(new DatabaseSettingsPageFdoSecrets());
 #endif
 
     m_ui->stackedWidget->setCurrentIndex(0);

@@ -241,3 +241,7 @@ License: LGPL-2.1
 Files: share/macosx/dmg-background.tiff
 Copyright: 2008-2014, Andrey Tarantsov
 License: MIT
+
+Files: share/icons/application/scalable/apps/freedesktop.svg
+Copyright: GPL-2+
+Comment: from Freedesktop.org website
