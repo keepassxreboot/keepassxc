@@ -241,20 +241,16 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
 
             // Delete the original db and move the temp file in place
             QFile::remove(filePath);
-#ifdef Q_OS_LINUX
-            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
-            if (tempFile.copy(filePath)) {
-                // successfully saved database file
-                return true;
-            }
-#else
-            if (tempFile.rename(filePath)) {
+
+            // Note: call into the QFile rename instead of QTemporaryFile
+            // due to an undocumented difference in how the function handles
+            // errors. This prevents errors when saving across file systems.
+            if (tempFile.QFile::rename(filePath)) {
                 // successfully saved database file
                 tempFile.setAutoRemove(false);
                 setFilePath(filePath);
                 return true;
             }
-#endif
         }
         if (error) {
             *error = tempFile.errorString();
