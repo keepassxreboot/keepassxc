@@ -220,6 +220,11 @@ add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS ${TEST_LIBRARIES})
 
+if(WITH_XC_FDOSECRETS)
+    add_unit_test(NAME testfdosecrets SOURCES TestFdoSecrets.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+endif()
+
 
 if(WITH_GUI_TESTS)
     # CLI clip tests need X environment on Linux

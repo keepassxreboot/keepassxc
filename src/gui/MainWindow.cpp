@@ -59,6 +59,11 @@
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsPageKeeShare.h"
 #endif
+
+#ifdef WITH_XC_FDOSECRETS
+#include "fdosecrets/FdoSecretsPlugin.h"
+#endif
+
 #ifdef WITH_XC_BROWSER
 #include "browser/BrowserOptionDialog.h"
 #include "browser/BrowserSettings.h"
@@ -181,6 +186,16 @@ MainWindow::MainWindow()
             SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
             SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
 #endif
+
+#ifdef WITH_XC_FDOSECRETS
+    auto fdoSS = new FdoSecretsPlugin(m_ui->tabWidget);
+    connect(fdoSS, &FdoSecretsPlugin::error, this, &MainWindow::showErrorMessage);
+    connect(fdoSS, &FdoSecretsPlugin::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
+    connect(fdoSS, &FdoSecretsPlugin::requestShowNotification, this, &MainWindow::displayDesktopNotification);
+    fdoSS->updateServiceState();
+    m_ui->settingsWidget->addSettingsPage(fdoSS);
+#endif
+
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
     // clang-format off
