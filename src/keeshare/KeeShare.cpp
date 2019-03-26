@@ -164,13 +164,13 @@ QString KeeShare::sharingLabel(const Group* group)
     const auto reference = referenceOf(share);
     switch (reference.type) {
     case KeeShareSettings::Inactive:
-        return tr("Disabled share %1").arg(reference.path);
+        return tr("Inactive share %1").arg(reference.path);
     case KeeShareSettings::ImportFrom:
-        return tr("Import from share %1").arg(reference.path);
+        return tr("Imported from %1").arg(reference.path);
     case KeeShareSettings::ExportTo:
-        return tr("Export to share %1").arg(reference.path);
+        return tr("Exported to %1").arg(reference.path);
     case KeeShareSettings::SynchronizeWith:
-        return tr("Synchronize with share %1").arg(reference.path);
+        return tr("Synchronized with %1").arg(reference.path);
     }
 
     return {};
@@ -196,13 +196,13 @@ QString KeeShare::referenceTypeLabel(const KeeShareSettings::Reference& referenc
 {
     switch (reference.type) {
     case KeeShareSettings::Inactive:
-        return tr("Disabled share");
+        return tr("Inactive share");
     case KeeShareSettings::ImportFrom:
-        return tr("Import from");
+        return tr("Imported from");
     case KeeShareSettings::ExportTo:
-        return tr("Export to");
+        return tr("Exported to");
     case KeeShareSettings::SynchronizeWith:
-        return tr("Synchronize with");
+        return tr("Synchronized with");
     }
     return "";
 }

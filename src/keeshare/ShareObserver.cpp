@@ -84,7 +84,7 @@ namespace
             key.openKey(QString());
             const auto signer = Signature();
             if (!signer.verify(data, sign.signature, key)) {
-                qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
+                qCritical("Invalid signature for shared container %s.", qPrintable(reference.path));
                 return {Invalid, KeeShareSettings::Certificate()};
             }
 
