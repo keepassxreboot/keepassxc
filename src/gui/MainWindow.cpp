@@ -943,6 +943,8 @@ void MainWindow::updateTrayIcon()
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
 
+            menu->addAction(m_ui->actionLockDatabases);
+
 #ifdef Q_OS_MACOS
             QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
             menu->addAction(actionQuit);
