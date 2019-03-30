@@ -496,8 +496,8 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
                    qPrintable(sourceDb->rootGroup()->name()));
             Merger merger(sourceDb->rootGroup(), targetGroup);
             merger.setForcedMergeMode(Group::Synchronize);
-            const bool changed = merger.merge();
-            if (changed) {
+            const QStringList changeList = merger.merge();
+            if (!changeList.isEmpty()) {
                 return {reference.path, Result::Success, tr("Successful signed import")};
             }
         }
@@ -511,8 +511,8 @@ ShareObserver::Result ShareObserver::importUnsignedContainerInto(const KeeShareS
                qPrintable(sourceDb->rootGroup()->name()));
         Merger merger(sourceDb->rootGroup(), targetGroup);
         merger.setForcedMergeMode(Group::Synchronize);
-        const bool changed = merger.merge();
-        if (changed) {
+        const QStringList changeList = merger.merge();
+        if (!changeList.isEmpty()) {
             return {reference.path, Result::Success, tr("Successful unsigned import")};
         }
         return {};

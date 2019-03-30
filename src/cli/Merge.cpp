@@ -38,9 +38,6 @@ Merge::~Merge()
 
 int Merge::execute(const QStringList& arguments)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
     QCommandLineParser parser;
     parser.setApplicationDescription(description);
     parser.addPositionalArgument("database1", QObject::tr("Path of the database to merge into."));
@@ -54,6 +51,10 @@ int Merge::execute(const QStringList& arguments)
     parser.addOption(Command::KeyFileOption);
     parser.addOption(Command::NoPasswordOption);
 
+    QCommandLineOption dryRunOption(QStringList() << "dry-run",
+                                    QObject::tr("Only print the changes detected by the merge operation."));
+    parser.addOption(dryRunOption);
+
     QCommandLineOption keyFileFromOption(QStringList() << "f"
                                                        << "key-file-from",
                                          QObject::tr("Key file of the database to merge from."),
@@ -66,6 +67,10 @@ int Merge::execute(const QStringList& arguments)
 
     parser.addHelpOption();
     parser.process(arguments);
+
+    TextStream outputTextStream(
+            parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
@@ -102,18 +107,20 @@ int Merge::execute(const QStringList& arguments)
     }
 
     Merger merger(db2.data(), db1.data());
-    bool databaseChanged = merger.merge();
+    QStringList changeList = merger.merge();
 
-    if (databaseChanged) {
+    for (QString mergeChange : changeList) {
+        outputTextStream << "\t" << mergeChange << endl;
+    }
+
+    if (!changeList.isEmpty() && !parser.isSet(dryRunOption)) {
         QString errorMessage;
         if (!db1->save(args.at(0), &errorMessage, true, false)) {
             errorTextStream << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
-        if (!parser.isSet(Command::QuietOption)) {
-            outputTextStream << "Successfully merged the database files." << endl;
-        }
-    } else if (!parser.isSet(Command::QuietOption)) {
+        outputTextStream << "Successfully merged the database files." << endl;
+    } else {
         outputTextStream << "Database was not modified by merge operation." << endl;
     }
 
