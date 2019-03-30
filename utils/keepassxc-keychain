@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# fetch KeePass database passwords from keychain
+
+### change the path to suit your installation or set KDBX_SEARCH before calling ###
+: ${KDBX_SEARCH:=~/.KeePass/*.kdbx}
+
+PROG="$(basename $0)"
+KeePassXC=$(ls -f {/usr/local,/Applications}/KeePassXC.app/Contents/MacOS/KeePassXC 2>/dev/null | head -1)
+
+function daemon_main {
+  declare -A DBs
+  for DBPATH in $KDBX_SEARCH; do
+    DBs[$(python -c  "import os; print os.path.realpath('$DBPATH')")]=$(security find-generic-password -a $USER -s "${DBPATH##*/}" -w)
+  done
+
+  # launch keepassxc
+  IFS=$'\n\n\n'
+  $KeePassXC --pw-stdin "${!DBs[@]}" <<<"${DBs[*]}" &
+}
+
+if [[ '-d' = "$1" ]]; then
+  exec >&~/tmp/$PROG.log
+  set -vx
+  daemon_main
+else
+  cd /
+  daemon_main </dev/null >&/dev/null &
+  disown
+fi

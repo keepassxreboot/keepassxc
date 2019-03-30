@@ -1,9 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# fetch KeePass database passwords from kdewallet
 
 ### change the path to suit your installation or set KDBX_SEARCH before calling ###
 : ${KDBX_SEARCH:=~/.KeePass/*.kdbx}
 
-PROG="$(basename $0)"
+PROG="${0##*/}"
+KEEPASSXC=$(which -a keepassxc | sed -e "\\,$0,d" -e 'q')
 
 function daemon_main {
   # open kdewallet
@@ -12,16 +14,14 @@ function daemon_main {
     sleep 1
   done
 
-  # fetch KeePass database passwords from kdewallet
   declare -A DBs
-  for DBPATH in $KDBX_SEARCH; do
-    [[ -L "$DBPATH" ]] && DBPATH=$(readlink --canonicalize "$DBPATH")
-    DBs[$DBPATH]=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.readPassword "$handle" "Passwords" "$DBPATH" "$PROG")
+  for DBPATH in $(ls -r $KDBX_SEARCH); do
+    DBs[$(realpath $DBPATH)]=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.readPassword "$handle" "Passwords" "${DBPATH##*/}" "$PROG")
   done
 
-  # launch keepassx
+  # launch real keepassxc
   IFS=$'\n\n\n'
-  keepassx --pw-stdin "${!DBs[@]}" <<<"${DBs[*]}" &
+  "$KEEPASSXC" --pw-stdin "${!DBs[@]}" <<<"${DBs[*]}" &
 
   # done with kdewallet
   qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.close "$handle" "false" "$PROG"
