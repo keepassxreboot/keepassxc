@@ -163,7 +163,7 @@ namespace Utils
             return password;
         }
 
-        TextStream in(STDIN, QIODevice::ReadOnly);
+        static TextStream in(STDIN, QIODevice::ReadOnly);
 
         setStdinEcho(false);
         QString line = in.readLine();

@@ -144,8 +144,7 @@ int main(int argc, char** argv)
         if (pwstdin) {
             // we always need consume a line of STDIN if --pw-stdin is set to clear out the
             // buffer for native messaging, even if the specified file does not exist
-            static QTextStream in(stdin, QIODevice::ReadOnly);
-            static QTextStream out(stdout, QIODevice::WriteOnly);
+	    QTextStream out(stdout, QIODevice::WriteOnly);
             out << QObject::tr("Database password: ") << flush;
             password = Utils::getPassword();
         }
