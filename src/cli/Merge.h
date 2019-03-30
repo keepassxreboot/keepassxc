@@ -31,6 +31,7 @@ public:
     static const QCommandLineOption SameCredentialsOption;
     static const QCommandLineOption KeyFileFromOption;
     static const QCommandLineOption NoPasswordFromOption;
+    static const QCommandLineOption DryRunOption;
 };
 
 #endif // KEEPASSXC_MERGE_H

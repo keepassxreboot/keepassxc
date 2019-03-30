@@ -39,6 +39,10 @@ const QCommandLineOption Merge::NoPasswordFromOption =
     QCommandLineOption(QStringList() << "no-password-from",
                        QObject::tr("Deactivate password key for the database to merge from."));
 
+const QCommandLineOption Merge::DryRunOption =
+    QCommandLineOption(QStringList() << "dry-run",
+                       QObject::tr("Only print the changes detected by the merge operation."));
+
 Merge::Merge()
 {
     name = QString("merge");
@@ -46,6 +50,7 @@ Merge::Merge()
     options.append(Merge::SameCredentialsOption);
     options.append(Merge::KeyFileFromOption);
     options.append(Merge::NoPasswordFromOption);
+    options.append(Merge::DryRunOption);
     positionalArguments.append({QString("database2"), QObject::tr("Path of the database to merge from."), QString("")});
 }
 
@@ -55,7 +60,8 @@ Merge::~Merge()
 
 int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     const QStringList args = parser->positionalArguments();
@@ -80,18 +86,20 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
     }
 
     Merger merger(db2.data(), database.data());
-    bool databaseChanged = merger.merge();
+    QStringList changeList = merger.merge();
 
-    if (databaseChanged) {
+    for (QString mergeChange : changeList) {
+        outputTextStream << "\t" << mergeChange << endl;
+    }
+
+    if (!changeList.isEmpty() && !parser->isSet(Merge::DryRunOption)) {
         QString errorMessage;
         if (!database->save(args.at(0), &errorMessage, true, false)) {
             errorTextStream << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
-        if (!parser->isSet(Command::QuietOption)) {
-            outputTextStream << "Successfully merged the database files." << endl;
-        }
-    } else if (!parser->isSet(Command::QuietOption)) {
+        outputTextStream << "Successfully merged the database files." << endl;
+    } else {
         outputTextStream << "Database was not modified by merge operation." << endl;
     }
 

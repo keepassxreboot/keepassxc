@@ -60,7 +60,7 @@ void Merger::resetForcedMergeMode()
     m_mode = Group::Default;
 }
 
-bool Merger::merge()
+QStringList Merger::merge()
 {
     // Order of merge steps is important - it is possible that we
     // create some items before deleting them afterwards
@@ -74,9 +74,8 @@ bool Merger::merge()
     // At this point we have a list of changes we may want to show the user
     if (!changes.isEmpty()) {
         m_context.m_targetDb->markAsModified();
-        return true;
     }
-    return false;
+    return changes;
 }
 
 Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
