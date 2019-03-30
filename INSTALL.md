@@ -26,7 +26,9 @@ The following libraries are required:
 * libmicrohttpd
 * libxi, libxtst, qtx11extras (optional for auto-type on X11)
 * libsodium (>= 1.0.12, optional for KeePassXC-Browser support)
-* libargon2
+* argon2
+* qrencode
+* yubikey ykpers
 
 Prepare the Building Environment
 ================================
