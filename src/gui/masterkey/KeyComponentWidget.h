@@ -109,6 +109,9 @@ signals:
     void editCanceled();
     void componentRemovalRequested();
 
+protected:
+    void showEvent(QShowEvent* event) override ;
+
 private slots:
     void updateComponentName(const QString& name);
     void updateComponentDescription(const QString& decription);
@@ -117,7 +120,7 @@ private slots:
     void doEdit();
     void doRemove();
     void cancelEdit();
-    void reset();
+    void resetComponentEditWidget();
     void updateSize();
 
 private:

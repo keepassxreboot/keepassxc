@@ -37,7 +37,7 @@ KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
     connect(m_ui->removeButton, SIGNAL(clicked(bool)), SIGNAL(componentRemovalRequested()));
     connect(m_ui->cancelButton, SIGNAL(clicked(bool)), SLOT(cancelEdit()));
 
-    connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(reset()));
+    connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(resetComponentEditWidget()));
 
     connect(this, SIGNAL(nameChanged(QString)), SLOT(updateComponentName(QString)));
     connect(this, SIGNAL(descriptionChanged(QString)), SLOT(updateComponentDescription(QString)));
@@ -46,11 +46,13 @@ KeyComponentWidget::KeyComponentWidget(const QString& name, QWidget* parent)
     connect(this, SIGNAL(componentRemovalRequested()), SLOT(doRemove()));
     connect(this, SIGNAL(componentAddChanged(bool)), SLOT(updateAddStatus(bool)));
 
-    blockSignals(true);
+    bool prev = blockSignals(true);
     setComponentName(name);
+    blockSignals(prev);
+
+    prev = m_ui->stackedWidget->blockSignals(true);
     m_ui->stackedWidget->setCurrentIndex(Page::AddNew);
-    updateSize();
-    blockSignals(false);
+    m_ui->stackedWidget->blockSignals(prev);
 }
 
 KeyComponentWidget::~KeyComponentWidget()
@@ -164,9 +166,15 @@ void KeyComponentWidget::cancelEdit()
     emit editCanceled();
 }
 
-void KeyComponentWidget::reset()
+void KeyComponentWidget::showEvent(QShowEvent* event)
 {
-    if (static_cast<Page>(m_ui->stackedWidget->currentIndex()) == Page::Edit) {
+    QWidget::showEvent(event);
+    resetComponentEditWidget();
+}
+
+void KeyComponentWidget::resetComponentEditWidget()
+{
+    if (m_ui->componentWidgetLayout->isEmpty() || static_cast<Page>(m_ui->stackedWidget->currentIndex()) == Page::Edit) {
         if (!m_ui->componentWidgetLayout->isEmpty()) {
             auto* item = m_ui->componentWidgetLayout->takeAt(0);
             if (item->widget()) {

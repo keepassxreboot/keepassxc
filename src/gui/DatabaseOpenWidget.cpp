@@ -185,9 +185,7 @@ void DatabaseOpenWidget::openDatabase()
         return;
     }
 
-    if (!m_ui->editPassword->isPasswordVisible()) {
-        m_ui->editPassword->setShowPassword(false);
-    }
+    m_ui->editPassword->setShowPassword(false);
     QCoreApplication::processEvents();
 
     m_db.reset(new Database());
@@ -369,7 +367,7 @@ void DatabaseOpenWidget::pollYubikey()
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
-    m_ui->comboChallengeResponse->addItem(tr("-- SELECT --"), -1);
+    m_ui->comboChallengeResponse->addItem(tr("Select slot..."), -1);
     m_ui->yubikeyProgress->setVisible(true);
 
     // YubiKey init is slow, detect asynchronously to not block the UI

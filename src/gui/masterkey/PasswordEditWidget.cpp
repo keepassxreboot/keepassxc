@@ -94,8 +94,11 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
 
 void PasswordEditWidget::hideEvent(QHideEvent* event)
 {
+    Q_ASSERT(m_compUi->enterPasswordEdit);
+
     if (!isVisible() && m_compUi->enterPasswordEdit) {
         m_compUi->enterPasswordEdit->setText("");
+        m_compUi->repeatPasswordEdit->setText("");
     }
 
     QWidget::hideEvent(event);
