@@ -28,7 +28,7 @@ The following libraries are required:
 * libsodium (>= 1.0.12, optional for KeePassXC-Browser support)
 * argon2
 * qrencode
-* yubikey ykpers
+* yubikey ykpers (optional to support YubiKey)
 
 Prepare the Building Environment
 ================================
