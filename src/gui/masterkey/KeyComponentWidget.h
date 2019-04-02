@@ -20,6 +20,7 @@
 
 #include <QScopedPointer>
 #include <QWidget>
+#include <QPointer>
 
 namespace Ui
 {
@@ -128,6 +129,7 @@ private:
     Page m_previousPage = Page::AddNew;
     QString m_componentName;
     QString m_componentDescription;
+    QPointer<QWidget> m_componentWidget;
 
     const QScopedPointer<Ui::KeyComponentWidget> m_ui;
 };

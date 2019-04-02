@@ -168,25 +168,20 @@ void KeyComponentWidget::cancelEdit()
 
 void KeyComponentWidget::showEvent(QShowEvent* event)
 {
-    QWidget::showEvent(event);
     resetComponentEditWidget();
+    QWidget::showEvent(event);
 }
 
 void KeyComponentWidget::resetComponentEditWidget()
 {
-    if (m_ui->componentWidgetLayout->isEmpty() || static_cast<Page>(m_ui->stackedWidget->currentIndex()) == Page::Edit) {
-        if (!m_ui->componentWidgetLayout->isEmpty()) {
-            auto* item = m_ui->componentWidgetLayout->takeAt(0);
-            if (item->widget()) {
-                delete item->widget();
-            }
-            delete item;
+    if (!m_componentWidget || static_cast<Page>(m_ui->stackedWidget->currentIndex()) == Page::Edit) {
+        if (m_componentWidget) {
+            delete m_componentWidget;
         }
 
-        QWidget* widget = componentEditWidget();
-        m_ui->componentWidgetLayout->addWidget(widget);
-
-        initComponentEditWidget(widget);
+        m_componentWidget = componentEditWidget();
+        m_ui->componentWidgetLayout->addWidget(m_componentWidget);
+        initComponentEditWidget(m_componentWidget);
     }
 
     QTimer::singleShot(0, this, SLOT(updateSize()));
