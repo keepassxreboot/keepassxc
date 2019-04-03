@@ -23,6 +23,7 @@
 #include <QUrl>
 
 const int MessageWidget::DefaultAutoHideTimeout = 6000;
+const int MessageWidget::LongAutoHideTimeout = 15000;
 const int MessageWidget::DisableAutoHide = -1;
 
 MessageWidget::MessageWidget(QWidget* parent)

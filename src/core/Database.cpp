@@ -222,6 +222,7 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
                 return true;
             }
         }
+
         if (error) {
             *error = saveFile.errorString();
         }
@@ -246,18 +247,25 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
             // due to an undocumented difference in how the function handles
             // errors. This prevents errors when saving across file systems.
             if (tempFile.QFile::rename(filePath)) {
-                // successfully saved database file
+                // successfully saved the database
                 tempFile.setAutoRemove(false);
                 setFilePath(filePath);
                 return true;
+            } else {
+                // restore the database from the backup
+                if (backup) {
+                    restoreDatabase(filePath);
+                }
             }
         }
+
         if (error) {
             *error = tempFile.errorString();
         }
     }
 
     // Saving failed
+    markAsModified();
     return false;
 }
 
@@ -314,6 +322,24 @@ bool Database::backupDatabase(const QString& filePath)
     backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
     QFile::remove(backupFilePath);
     return QFile::copy(filePath, backupFilePath);
+}
+
+/**
+ * Restores the database file from the backup file with
+ * name <filename>.old.<extension> to filePath. This will
+ * overwrite the existing file!
+ *
+ * @param filePath Path to the file to restore
+ * @return true on success
+ */
+bool Database::restoreDatabase(const QString& filePath)
+{
+    static auto re = QRegularExpression("^(.*?)(\\.[^.]+)?$");
+
+    auto match = re.match(filePath);
+    auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
+    QFile::remove(filePath);
+    return QFile::copy(backupFilePath, filePath);
 }
 
 bool Database::isReadOnly() const

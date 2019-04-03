@@ -33,6 +33,7 @@ public:
     int autoHideTimeout() const;
 
     static const int DefaultAutoHideTimeout;
+    static const int LongAutoHideTimeout;
     static const int DisableAutoHide;
 
 signals:
