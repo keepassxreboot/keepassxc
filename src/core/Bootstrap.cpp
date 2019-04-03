@@ -100,7 +100,7 @@ namespace Bootstrap
     {
         // start minimized if configured
         if (config()->get("GUI/MinimizeOnStartup").toBool()) {
-            mainWindow.showMinimized();
+            mainWindow.hideWindow();
         } else {
             mainWindow.bringToFront();
         }
