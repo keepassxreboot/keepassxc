@@ -150,7 +150,8 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     QFileInfo fileInfo(filePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
     if (canonicalFilePath.isEmpty()) {
-        emit messageGlobal(tr("The database file does not exist or is not accessible."), MessageWidget::Error);
+        emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(filePath),
+                           MessageWidget::Error);
         return;
     }
 

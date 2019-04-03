@@ -144,7 +144,7 @@ signals:
 
 public slots:
     bool lock();
-    bool save(int attempt = 0);
+    bool save();
     bool saveAs();
 
     void replaceDatabase(QSharedPointer<Database> db);
@@ -254,6 +254,8 @@ private:
 
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
+
+    int m_saveAttempts;
 
     // Search state
     EntrySearcher* m_EntrySearcher;
