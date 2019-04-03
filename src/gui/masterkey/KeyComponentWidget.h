@@ -20,6 +20,7 @@
 
 #include <QScopedPointer>
 #include <QWidget>
+#include <QPointer>
 
 namespace Ui
 {
@@ -109,6 +110,9 @@ signals:
     void editCanceled();
     void componentRemovalRequested();
 
+protected:
+    void showEvent(QShowEvent* event) override ;
+
 private slots:
     void updateComponentName(const QString& name);
     void updateComponentDescription(const QString& decription);
@@ -117,7 +121,7 @@ private slots:
     void doEdit();
     void doRemove();
     void cancelEdit();
-    void reset();
+    void resetComponentEditWidget();
     void updateSize();
 
 private:
@@ -125,6 +129,7 @@ private:
     Page m_previousPage = Page::AddNew;
     QString m_componentName;
     QString m_componentDescription;
+    QPointer<QWidget> m_componentWidget;
 
     const QScopedPointer<Ui::KeyComponentWidget> m_ui;
 };

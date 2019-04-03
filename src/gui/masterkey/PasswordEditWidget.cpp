@@ -92,6 +92,18 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
     m_compUi->enterPasswordEdit->setFocus();
 }
 
+void PasswordEditWidget::hideEvent(QHideEvent* event)
+{
+    Q_ASSERT(m_compUi->enterPasswordEdit);
+
+    if (!isVisible() && m_compUi->enterPasswordEdit) {
+        m_compUi->enterPasswordEdit->setText("");
+        m_compUi->repeatPasswordEdit->setText("");
+    }
+
+    QWidget::hideEvent(event);
+}
+
 bool PasswordEditWidget::validate(QString& errorMessage) const
 {
     if (m_compUi->enterPasswordEdit->text() != m_compUi->repeatPasswordEdit->text()) {

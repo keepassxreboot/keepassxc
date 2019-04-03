@@ -1028,10 +1028,8 @@ bool KdbxXmlReader::readBool()
 
 QDateTime KdbxXmlReader::readDateTime()
 {
-    static QRegularExpression b64regex("^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$");
     QString str = readString();
-
-    if (b64regex.match(str).hasMatch()) {
+    if (Tools::isBase64(str.toLatin1())) {
         QByteArray secsBytes = QByteArray::fromBase64(str.toUtf8()).leftJustified(8, '\0', true).left(8);
         qint64 secs = Endian::bytesToSizedInt<quint64>(secsBytes, KeePass2::BYTEORDER);
         return QDateTime(QDate(1, 1, 1), QTime(0, 0, 0, 0), Qt::UTC).addSecs(secs);

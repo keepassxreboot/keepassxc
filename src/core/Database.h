@@ -82,6 +82,7 @@ public:
 
     QUuid uuid() const;
     QString filePath() const;
+    QString canonicalFilePath() const;
     void setFilePath(const QString& filePath);
 
     Metadata* metadata();

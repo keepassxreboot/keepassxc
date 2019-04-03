@@ -388,9 +388,29 @@ const Metadata* Database::metadata() const
     return m_metadata;
 }
 
+/**
+ * Returns the original file path that was provided for
+ * this database. This path may not exist, may contain
+ * unresolved symlinks, or have malformed slashes.
+ *
+ * @return original file path
+ */
 QString Database::filePath() const
 {
     return m_data.filePath;
+}
+
+/**
+ * Returns the canonical file path of this databases'
+ * set file path. This returns an empty string if the
+ * file does not exist or cannot be resolved.
+ *
+ * @return canonical file path
+ */
+QString Database::canonicalFilePath() const
+{
+    QFileInfo fileInfo(m_data.filePath);
+    return fileInfo.canonicalFilePath();
 }
 
 void Database::setFilePath(const QString& filePath)

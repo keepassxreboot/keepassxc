@@ -44,6 +44,7 @@ public:
 protected:
     QWidget* componentEditWidget() override;
     void initComponentEditWidget(QWidget* widget) override;
+    void hideEvent(QHideEvent* event) override;
 
 private slots:
     void showPasswordGenerator();
