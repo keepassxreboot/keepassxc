@@ -71,7 +71,8 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
     // clang-format off
     QByteArray hmacKey = KeePass2::hmacKey(m_masterSeed, db->transformedMasterKey());
     if (headerHmac != CryptoHash::hmac(headerData, HmacBlockStream::getHmacKey(UINT64_MAX, hmacKey), CryptoHash::Sha256)) {
-        raiseError(tr("Wrong key or database file is corrupt. (HMAC mismatch)"));
+        raiseError(tr("Invalid credentials were provided, please try again.\n"
+                      "If this reoccurs, then your database file may be corrupt.") + " " + tr("(HMAC mismatch)"));
         return false;
     }
     HmacBlockStream hmacStream(device, hmacKey);
