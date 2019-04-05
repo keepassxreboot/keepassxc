@@ -194,8 +194,7 @@ void DatabaseOpenWidget::openDatabase()
     bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
     if (!ok) {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
-                                         MessageWidget::MessageType::Error);
+        m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
         return;
     }
 
@@ -223,7 +222,7 @@ void DatabaseOpenWidget::openDatabase()
         }
         emit dialogFinished(true);
     } else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error), MessageWidget::Error);
+        m_ui->messageWidget->showMessage(error, MessageWidget::Error);
         m_ui->editPassword->setText("");
 
 #ifdef WITH_XC_TOUCHID
@@ -268,7 +267,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key->load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg), MessageWidget::Error);
+            m_ui->messageWidget->showMessage(tr("Failed to open key file: %1").arg(errorMsg), MessageWidget::Error);
             return {};
         }
         if (key->type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
