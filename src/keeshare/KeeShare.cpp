@@ -162,18 +162,32 @@ QString KeeShare::sharingLabel(const Group* group)
     }
 
     const auto reference = referenceOf(share);
+    if (!reference.isValid()) {
+        return tr("Invalid sharing reference");
+    }
+    QStringList messages;
     switch (reference.type) {
     case KeeShareSettings::Inactive:
-        return tr("Inactive share %1").arg(reference.path);
+        messages << tr("Inactive share %1").arg(reference.path);
+        break;
     case KeeShareSettings::ImportFrom:
-        return tr("Imported from %1").arg(reference.path);
+        messages << tr("Imported from %1").arg(reference.path);
+        break;
     case KeeShareSettings::ExportTo:
-        return tr("Exported to %1").arg(reference.path);
+        messages << tr("Exported to %1").arg(reference.path);
+        break;
     case KeeShareSettings::SynchronizeWith:
-        return tr("Synchronized with %1").arg(reference.path);
+        messages << tr("Synchronized with %1").arg(reference.path);
+        break;
     }
-
-    return {};
+    const auto active = KeeShare::active();
+    if (reference.isImporting() && !active.in) {
+        messages << tr("Import is disabled in settings");
+    }
+    if (reference.isExporting() && !active.out) {
+        messages << tr("Export is disabled in settings");
+    }
+    return messages.join("\n");
 }
 
 QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
