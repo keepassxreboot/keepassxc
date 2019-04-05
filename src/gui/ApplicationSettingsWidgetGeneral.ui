@@ -470,7 +470,7 @@
             <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="languageLabel_2">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -487,6 +487,13 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="languageLabel_3">
+              <property name="text">
+               <string>(restart program to activate)</string>
               </property>
              </widget>
             </item>
