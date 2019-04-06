@@ -92,6 +92,11 @@ setupVivaldi() {
     INSTALL_DIR="${BASE_DIR}/.config/vivaldi/NativeMessagingHosts"
 }
 
+setupBrave() {
+    buildJson
+    INSTALL_DIR="${BASE_DIR}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts"
+}
+
 setupTorBrowser() {
     buildJson "firefox"
     INSTALL_DIR="${BASE_DIR}/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts"
@@ -109,9 +114,10 @@ BROWSER=$(whiptail \
             "2" "Chrome" \
             "3" "Chromium" \
             "4" "Vivaldi" \
-            "5" "Tor Browser" \
+            "5" "Brave" \
+            "6" "Tor Browser" \
             3>&1 1>&2 2>&3)
-            
+
 clear
 
 exitstatus=$?
@@ -122,16 +128,17 @@ if [ $exitstatus = 0 ]; then
         2) setupChrome ;;
         3) setupChromium ;;
         4) setupVivaldi ;;
-        5) setupTorBrowser ;;
+        5) setupBrave ;;
+        6) setupTorBrowser ;;
     esac
 
     # Install the JSON file
     cd ~
     mkdir -p "$INSTALL_DIR"
     echo "$JSON_OUT" > ${INSTALL_DIR}/${INSTALL_FILE}
-    
+
     $DEBUG && echo "Installed to: ${INSTALL_DIR}/${INSTALL_FILE}"
- 
+
     whiptail \
         --title "Installation Complete" \
         --msgbox "You will need to restart your browser in order to connect to KeePassXC" \
@@ -139,4 +146,3 @@ if [ $exitstatus = 0 ]; then
 else
     whiptail --title "Installation Canceled" --msgbox "No changes were made to your system" 8 50
 fi
-
