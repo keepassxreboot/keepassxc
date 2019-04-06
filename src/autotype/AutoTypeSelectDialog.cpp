@@ -153,7 +153,7 @@ void AutoTypeSelectDialog::filterList(QString filterString)
 void AutoTypeSelectDialog::moveSelectionUp()
 {
     auto current = m_view->currentIndex();
-    auto previous = current.siblingAtRow(current.row() - 1);
+    auto previous = current.sibling(current.row() - 1, 0);
 
     if (previous.isValid()) {
         m_view->setCurrentIndex(previous);
@@ -163,7 +163,7 @@ void AutoTypeSelectDialog::moveSelectionUp()
 void AutoTypeSelectDialog::moveSelectionDown()
 {
     auto current = m_view->currentIndex();
-    auto next = current.siblingAtRow(current.row() + 1);
+    auto next = current.sibling(current.row() + 1, 0);
 
     if (next.isValid()) {
         m_view->setCurrentIndex(next);
