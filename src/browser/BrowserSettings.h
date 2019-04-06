@@ -72,6 +72,8 @@ public:
     void setFirefoxSupport(bool enabled);
     bool vivaldiSupport();
     void setVivaldiSupport(bool enabled);
+    bool braveSupport();
+    void setBraveSupport(bool enabled);
     bool torBrowserSupport();
     void setTorBrowserSupport(bool enabled);
 
