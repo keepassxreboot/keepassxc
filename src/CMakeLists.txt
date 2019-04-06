@@ -231,6 +231,7 @@ set(autotype_SOURCES
         core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
+        autotype/AutoTypeFilterLineEdit.cpp
         autotype/AutoTypeSelectDialog.cpp
         autotype/AutoTypeSelectView.cpp
         autotype/ShortcutWidget.cpp
