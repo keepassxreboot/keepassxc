@@ -251,11 +251,15 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
                 tempFile.setAutoRemove(false);
                 setFilePath(filePath);
                 return true;
-            } else {
-                // restore the database from the backup
-                if (backup) {
-                    restoreDatabase(filePath);
+            } else if (!backup || !restoreDatabase(filePath)) {
+                // Failed to copy new database in place, and
+                // failed to restore from backup or backups disabled
+                tempFile.setAutoRemove(false);
+                if (error) {
+                    *error = tr("%1\nBackup database located at %2").arg(tempFile.errorString(), tempFile.fileName());
                 }
+                markAsModified();
+                return false;
             }
         }
 
@@ -338,8 +342,12 @@ bool Database::restoreDatabase(const QString& filePath)
 
     auto match = re.match(filePath);
     auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
-    QFile::remove(filePath);
-    return QFile::copy(backupFilePath, filePath);
+    // Only try to restore if the backup file actually exists
+    if (QFile::exists(backupFilePath)) {
+        QFile::remove(filePath);
+        return QFile::copy(backupFilePath, filePath);
+    }
+    return false;
 }
 
 bool Database::isReadOnly() const
