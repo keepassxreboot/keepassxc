@@ -261,12 +261,11 @@ bool DatabaseWidget::isSearchActive() const
 bool DatabaseWidget::isEditWidgetModified() const
 {
     if (currentWidget() == m_editEntryWidget) {
-        return m_editEntryWidget->hasBeenModified();
-    } else {
-        // other edit widget don't have a hasBeenModified() method yet
-        // assume that they already have been modified
-        return true;
+        return m_editEntryWidget->isModified();
+    } else if (currentWidget() == m_editGroupWidget) {
+        return m_editGroupWidget->isModified();
     }
+    return false;
 }
 
 QList<int> DatabaseWidget::mainSplitterSizes() const
@@ -1249,7 +1248,7 @@ bool DatabaseWidget::lock()
 
     clipboard()->clearCopiedText();
 
-    if (currentMode() == DatabaseWidget::Mode::EditMode) {
+    if (isEditWidgetModified()) {
         auto result = MessageBox::question(this,
                                            tr("Lock Database?"),
                                            tr("You are editing an entry. Discard changes and lock anyway?"),

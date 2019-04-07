@@ -30,6 +30,7 @@ EditWidget::EditWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
     setReadOnly(false);
+    setModified(false);
 
     m_ui->messageWidget->setHidden(true);
 
@@ -43,6 +44,7 @@ EditWidget::EditWidget(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SIGNAL(accepted()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SIGNAL(rejected()));
+    connect(m_ui->buttonBox, SIGNAL(clicked(QAbstractButton*)), SLOT(buttonClicked(QAbstractButton*)));
 }
 
 EditWidget::~EditWidget()
@@ -106,9 +108,6 @@ void EditWidget::setReadOnly(bool readOnly)
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Close);
     } else {
         m_ui->buttonBox->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply);
-        // Find and connect the apply button
-        QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
-        connect(applyButton, SIGNAL(clicked()), SIGNAL(apply()));
     }
 }
 
@@ -117,11 +116,43 @@ bool EditWidget::readOnly() const
     return m_readOnly;
 }
 
+void EditWidget::setModified(bool state)
+{
+    m_modified = state;
+    enableApplyButton(state);
+}
+
+bool EditWidget::isModified() const
+{
+    return m_modified;
+}
+
 void EditWidget::enableApplyButton(bool enabled)
 {
     QPushButton* applyButton = m_ui->buttonBox->button(QDialogButtonBox::Apply);
     if (applyButton) {
         applyButton->setEnabled(enabled);
+    }
+}
+
+void EditWidget::showApplyButton(bool state)
+{
+    if (!m_readOnly) {
+        auto buttons = m_ui->buttonBox->standardButtons();
+        if (state) {
+            buttons |= QDialogButtonBox::Apply;
+        } else {
+            buttons &= ~QDialogButtonBox::Apply;
+        }
+        m_ui->buttonBox->setStandardButtons(buttons);
+    }
+}
+
+void EditWidget::buttonClicked(QAbstractButton* button)
+{
+    auto stdButton = m_ui->buttonBox->standardButton(button);
+    if (stdButton == QDialogButtonBox::Apply) {
+        emit apply();
     }
 }
 

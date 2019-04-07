@@ -49,6 +49,8 @@ public:
     void setReadOnly(bool readOnly);
     bool readOnly() const;
     void enableApplyButton(bool enabled);
+    void showApplyButton(bool state);
+    virtual bool isModified() const;
 
 signals:
     void apply();
@@ -58,10 +60,13 @@ signals:
 protected slots:
     void showMessage(const QString& text, MessageWidget::MessageType type);
     void hideMessage();
+    void setModified(bool state = true);
+    void buttonClicked(QAbstractButton* button);
 
 private:
     const QScopedPointer<Ui::EditWidget> m_ui;
     bool m_readOnly;
+    bool m_modified;
 
     Q_DISABLE_COPY(EditWidget)
 };

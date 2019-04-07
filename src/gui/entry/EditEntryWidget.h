@@ -68,7 +68,6 @@ public:
 
     QString entryTitle() const;
     void clear();
-    bool hasBeenModified() const;
 
 signals:
     void editFinished(bool accepted);
@@ -106,7 +105,6 @@ private slots:
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
     void pickColor();
-    void setUnsavedChanges(bool hasUnsaved = true);
 #ifdef WITH_XC_SSHAGENT
     void updateSSHAgent();
     void updateSSHAgentAttachment();
@@ -148,7 +146,6 @@ private:
 
     bool m_create;
     bool m_history;
-    bool m_saved;
 #ifdef WITH_XC_SSHAGENT
     bool m_sshAgentEnabled;
     KeeAgentSettings m_sshAgentSettings;

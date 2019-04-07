@@ -22,6 +22,7 @@
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
+#include "gui/MessageBox.h"
 
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/group/EditGroupPageKeeShare.h"
@@ -44,6 +45,11 @@ public:
     void assign() const
     {
         editPage->assign(widget);
+    }
+
+    QWidget* getWidget()
+    {
+        return widget;
     }
 
 private:
@@ -85,10 +91,29 @@ EditGroupWidget::EditGroupWidget(QWidget* parent)
     // clang-format on
 
     connect(m_editGroupWidgetIcons, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
+
+    setupModifiedTracking();
 }
 
 EditGroupWidget::~EditGroupWidget()
 {
+}
+
+void EditGroupWidget::setupModifiedTracking()
+{
+    // Group tab
+    connect(m_mainUi->editName, SIGNAL(textChanged(QString)), SLOT(setModified()));
+    connect(m_mainUi->editNotes, SIGNAL(textChanged()), SLOT(setModified()));
+    connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), SLOT(setModified()));
+    connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), SLOT(setModified()));
+    connect(m_mainUi->searchComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_mainUi->autotypeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_mainUi->autoTypeSequenceInherit, SIGNAL(toggled(bool)), SLOT(setModified()));
+    connect(m_mainUi->autoTypeSequenceCustomRadio, SIGNAL(toggled(bool)), SLOT(setModified()));
+    connect(m_mainUi->autoTypeSequenceCustomEdit, SIGNAL(textChanged(QString)), SLOT(setModified()));
+
+    // Icon tab
+    connect(m_editGroupWidgetIcons, SIGNAL(widgetUpdated()), SLOT(setModified()));
 }
 
 void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<Database>& database)
@@ -97,6 +122,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     m_db = database;
 
     m_temporaryGroup.reset(group->clone(Entry::CloneNoFlags, Group::CloneNoFlags));
+    connect(m_temporaryGroup->customData(), SIGNAL(customDataModified()), SLOT(setModified()));
 
     if (create) {
         setHeadline(tr("Add group"));
@@ -139,6 +165,11 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     setCurrentPage(0);
 
     m_mainUi->editName->setFocus();
+
+    // Force the user to Save/Discard new groups
+    showApplyButton(!create);
+
+    setModified(false);
 }
 
 void EditGroupWidget::save()
@@ -180,12 +211,26 @@ void EditGroupWidget::apply()
 
     // Icons add/remove are applied globally outside the transaction!
     m_group->copyDataFrom(m_temporaryGroup.data());
+
+    setModified(false);
 }
 
 void EditGroupWidget::cancel()
 {
     if (!m_group->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_group->iconUuid())) {
         m_group->setIcon(Entry::DefaultIconNumber);
+    }
+
+    if (isModified()) {
+        auto result = MessageBox::question(this,
+                                           QString(),
+                                           tr("Entry has unsaved changes"),
+                                           MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
+                                           MessageBox::Cancel);
+        if (result == MessageBox::Save) {
+            apply();
+            setModified(false);
+        }
     }
 
     clear();
