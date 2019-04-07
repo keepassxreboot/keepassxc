@@ -80,7 +80,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     layout->addWidget(m_view);
 
     connect(m_filterLineEdit, SIGNAL(textChanged(QString)), SLOT(filterList(QString)));
-    connect(m_filterLineEdit, SIGNAL(returnPressed()), SLOT(selectCurrentMatch()));
+    connect(m_filterLineEdit, SIGNAL(returnPressed()), SLOT(activateCurrentIndex()));
     connect(m_filterLineEdit, SIGNAL(keyUpPressed()), SLOT(moveSelectionUp()));
     connect(m_filterLineEdit, SIGNAL(keyDownPressed()), SLOT(moveSelectionDown()));
     connect(m_filterLineEdit, SIGNAL(escapeReleased()), SLOT(reject()));
@@ -170,14 +170,7 @@ void AutoTypeSelectDialog::moveSelectionDown()
     }
 }
 
-void AutoTypeSelectDialog::selectCurrentMatch()
+void AutoTypeSelectDialog::activateCurrentIndex()
 {
-    if (m_matchActivatedEmitted) {
-        return;
-    }
-    m_matchActivatedEmitted = true;
-
-    AutoTypeMatch match = m_view->currentMatch();
-    accept();
-    emit matchActivated(match);
+    emitMatchActivated(m_view->currentIndex());
 }

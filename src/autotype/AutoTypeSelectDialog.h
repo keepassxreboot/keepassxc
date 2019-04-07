@@ -48,7 +48,7 @@ private slots:
     void filterList(QString filterString);
     void moveSelectionUp();
     void moveSelectionDown();
-    void selectCurrentMatch();
+    void activateCurrentIndex();
 
 private:
     AutoTypeSelectView* const m_view;
