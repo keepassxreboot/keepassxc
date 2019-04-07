@@ -1,5 +1,4 @@
 /*
- *  Copyright (C) 2016 Jonathan White <support@dmapps.us>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -97,6 +96,13 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
+        } else if (keyEvent->matches(QKeySequence::Copy)) {
+            // If Control+C is pressed in the search edit when no text
+            // is selected, copy the password of the current entry.
+            if (!m_ui->searchEdit->hasSelectedText()) {
+                emit copyPressed();
+                return true;
+            }
         } else if (keyEvent->matches(QKeySequence::MoveToNextLine)) {
             if (m_ui->searchEdit->cursorPosition() == m_ui->searchEdit->text().length()) {
                 // If down is pressed at EOL, move the focus to the entry view
