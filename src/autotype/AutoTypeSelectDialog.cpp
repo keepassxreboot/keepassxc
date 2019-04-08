@@ -77,6 +77,12 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
     // clang-format on
 
+    QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
+    if (proxy) {
+        proxy->setFilterKeyColumn(-1);
+        proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    }
+
     layout->addWidget(m_view);
 
     connect(m_filterLineEdit, SIGNAL(textChanged(QString)), SLOT(filterList(QString)));
@@ -145,8 +151,6 @@ void AutoTypeSelectDialog::filterList(QString filterString)
 {
     QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
     if (proxy) {
-        proxy->setFilterKeyColumn(-1);
-        proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
         proxy->setFilterWildcard(filterString);
         if (!m_view->currentIndex().isValid()) {
             m_view->setCurrentIndex(m_view->model()->index(0, 0));
