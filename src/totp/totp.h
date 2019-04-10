@@ -39,9 +39,17 @@ namespace Totp
         bool reverse;
     };
 
+    enum HashType
+    {
+        Sha1,
+        Sha256,
+        Sha512,
+    };
+
     struct Settings
     {
         Totp::Encoder encoder;
+        Totp::HashType hashType;
         QString key;
         bool otpUrl;
         bool keeOtp;
@@ -53,6 +61,7 @@ namespace Totp
     constexpr uint DEFAULT_STEP = 30u;
     constexpr uint DEFAULT_DIGITS = 6u;
     constexpr uint STEAM_DIGITS = 5u;
+    constexpr Totp::HashType DEFAULT_HASHTYPE = Sha1;
     static const QString STEAM_SHORTNAME = "S";
 
     static const QString ATTRIBUTE_OTP = "otp";
@@ -64,6 +73,7 @@ namespace Totp
                                                   const uint digits,
                                                   const uint step,
                                                   const QString& encoderShortName = {},
+                                                  const Totp::HashType hashType = DEFAULT_HASHTYPE,
                                                   QSharedPointer<Totp::Settings> prevSettings = {});
     QString writeSettings(const QSharedPointer<Totp::Settings>& settings,
                           const QString& title = {},

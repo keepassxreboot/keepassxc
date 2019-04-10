@@ -59,7 +59,8 @@ void TotpSetupDialog::saveSettings()
         }
     }
 
-    auto settings = Totp::createSettings(m_ui->seedEdit->text(), digits, step, encShortName, m_entry->totpSettings());
+    auto settings = Totp::createSettings(
+        m_ui->seedEdit->text(), digits, step, encShortName, Totp::HashType::Sha1, m_entry->totpSettings());
     m_entry->setTotp(settings);
     emit totpUpdated();
     close();

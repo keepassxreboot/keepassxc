@@ -41,15 +41,29 @@ void TestTotp::testParseSecret()
     QCOMPARE(settings->custom, false);
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
+    QCOMPARE(settings->hashType, Totp::HashType::Sha1);
+
+    // OTP URL with non-default hash type
+    secret = "otpauth://totp/"
+             "ACME%20Co:john@example.com?secret=HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ&issuer=ACME%20Co&algorithm="
+             "SHA512&digits=6&period=30";
+    settings = Totp::parseSettings(secret);
+    QVERIFY(!settings.isNull());
+    QCOMPARE(settings->key, QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
+    QCOMPARE(settings->custom, false);
+    QCOMPARE(settings->digits, 6u);
+    QCOMPARE(settings->step, 30u);
+    QCOMPARE(settings->hashType, Totp::HashType::Sha512);
 
     // KeeOTP Parsing
-    secret = "key=HXDMVJECJJWSRBY%3d&step=25&size=8";
+    secret = "key=HXDMVJECJJWSRBY%3d&step=25&size=8&otpHashMode=Sha256";
     settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("HXDMVJECJJWSRBY="));
     QCOMPARE(settings->custom, true);
     QCOMPARE(settings->digits, 8u);
     QCOMPARE(settings->step, 25u);
+    QCOMPARE(settings->hashType, Totp::HashType::Sha256);
 
     // Semi-colon delineated "TOTP Settings"
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
@@ -59,6 +73,7 @@ void TestTotp::testParseSecret()
     QCOMPARE(settings->custom, true);
     QCOMPARE(settings->digits, 8u);
     QCOMPARE(settings->step, 30u);
+    QCOMPARE(settings->hashType, Totp::HashType::Sha1);
 
     // Bare secret (no "TOTP Settings" attribute)
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
@@ -68,6 +83,7 @@ void TestTotp::testParseSecret()
     QCOMPARE(settings->custom, false);
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
+    QCOMPARE(settings->hashType, Totp::HashType::Sha1);
 }
 
 void TestTotp::testTotpCode()

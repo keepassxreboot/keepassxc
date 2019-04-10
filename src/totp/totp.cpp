@@ -35,6 +35,29 @@ static QList<Totp::Encoder> encoders{
     {"steam", Totp::STEAM_SHORTNAME, "23456789BCDFGHJKMNPQRTVWXY", Totp::STEAM_DIGITS, Totp::DEFAULT_STEP, true},
 };
 
+static Totp::HashType getHashTypeByName(const QString& name)
+{
+    if (name.compare(QString("SHA512"), Qt::CaseInsensitive) == 0) {
+        return Totp::HashType::Sha512;
+    }
+    if (name.compare(QString("SHA256"), Qt::CaseInsensitive) == 0) {
+        return Totp::HashType::Sha256;
+    }
+    return Totp::HashType::Sha1;
+}
+
+static QString getNameForHashType(const Totp::HashType hashType)
+{
+    switch (hashType) {
+    case Totp::HashType::Sha512:
+        return QString("SHA512");
+    case Totp::HashType::Sha256:
+        return QString("SHA256");
+    default:
+        return QString("SHA1");
+    }
+}
+
 QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, const QString& key)
 {
     // Create default settings
@@ -51,6 +74,9 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
         if (query.hasQueryItem("encoder")) {
             settings->encoder = getEncoderByName(query.queryItemValue("encoder"));
         }
+        if (query.hasQueryItem("algorithm")) {
+            settings->hashType = getHashTypeByName(query.queryItemValue("algorithm"));
+        }
     } else {
         QUrlQuery query(rawSettings);
         if (query.hasQueryItem("key")) {
@@ -64,6 +90,9 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
             }
             if (query.hasQueryItem("step")) {
                 settings->step = query.queryItemValue("step").toUInt();
+            }
+            if (query.hasQueryItem("otpHashMode")) {
+                settings->hashType = getHashTypeByName(query.queryItemValue("otpHashMode"));
             }
         } else {
             // Parse semi-colon separated values ([step];[digits|S])
@@ -98,19 +127,21 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key,
                                                     const uint digits,
                                                     const uint step,
                                                     const QString& encoderShortName,
+                                                    const Totp::HashType hashType,
                                                     QSharedPointer<Totp::Settings> prevSettings)
 {
     bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP;
     if (prevSettings) {
         prevSettings->key = key;
+        prevSettings->hashType = hashType;
         prevSettings->digits = digits;
         prevSettings->step = step;
         prevSettings->encoder = Totp::getEncoderByShortName(encoderShortName);
         prevSettings->custom = isCustom;
         return prevSettings;
     } else {
-        return QSharedPointer<Totp::Settings>(
-            new Totp::Settings{getEncoderByShortName(encoderShortName), key, false, false, isCustom, digits, step});
+        return QSharedPointer<Totp::Settings>(new Totp::Settings{
+            getEncoderByShortName(encoderShortName), hashType, key, false, false, isCustom, digits, step});
     }
 }
 
@@ -135,13 +166,20 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
         if (!settings->encoder.name.isEmpty()) {
             urlstring.append("&encoder=").append(settings->encoder.name);
         }
+        if (settings->hashType != Totp::DEFAULT_HASHTYPE) {
+            urlstring.append("&algorithm=").append(getNameForHashType(settings->hashType));
+        }
         return urlstring;
     } else if (settings->keeOtp) {
         // KeeOtp output
-        return QString("key=%1&size=%2&step=%3")
-            .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
-            .arg(settings->digits)
-            .arg(settings->step);
+        auto keyString = QString("key=%1&size=%2&step=%3")
+                             .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
+                             .arg(settings->digits)
+                             .arg(settings->step);
+        if (settings->hashType != Totp::DEFAULT_HASHTYPE) {
+            keyString.append("&otpHashMode=").append(getNameForHashType(settings->hashType));
+        }
+        return keyString;
     } else if (!settings->encoder.shortName.isEmpty()) {
         // Semicolon output [step];[encoder]
         return QString("%1;%2").arg(settings->step).arg(settings->encoder.shortName);
@@ -174,7 +212,19 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const
         return QObject::tr("Invalid Key", "TOTP");
     }
 
-    QMessageAuthenticationCode code(QCryptographicHash::Sha1);
+    QCryptographicHash::Algorithm cryptoHash;
+    switch (settings->hashType) {
+    case Totp::HashType::Sha512:
+        cryptoHash = QCryptographicHash::Sha512;
+        break;
+    case Totp::HashType::Sha256:
+        cryptoHash = QCryptographicHash::Sha256;
+        break;
+    default:
+        cryptoHash = QCryptographicHash::Sha1;
+        break;
+    }
+    QMessageAuthenticationCode code(cryptoHash);
     code.setKey(secret.toByteArray());
     code.addData(QByteArray(reinterpret_cast<char*>(&current), sizeof(current)));
     QByteArray hmac = code.result();
