@@ -44,7 +44,7 @@ public:
     bool raiseWindow(WId pid) override;
     AutoTypeExecutor* createExecutor() override;
 
-    bool raiseLastActiveWindow() override;
+    bool hideOwnWindow() override;
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);

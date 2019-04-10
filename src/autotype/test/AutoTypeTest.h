@@ -44,7 +44,7 @@ public:
     AutoTypeExecutor* createExecutor() override;
 
 #if defined(Q_OS_MACOS)
-    bool raiseLastActiveWindow() override;
+    bool hideOwnWindow() override;
     bool raiseOwnWindow() override;
 #endif
 
