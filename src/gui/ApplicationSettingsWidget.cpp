@@ -92,8 +92,15 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
 
-#ifndef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
+    connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));
+#else
     m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
+    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setVisible(false);
+    m_generalUi->checkUpdatesSpacer->changeSize(0,0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+#endif
+
+#ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
 #endif
 
@@ -349,4 +356,9 @@ void ApplicationSettingsWidget::rememberDatabasesToggled(bool checked)
 
     m_generalUi->rememberLastKeyFilesCheckBox->setEnabled(checked);
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setEnabled(checked);
+}
+
+void ApplicationSettingsWidget::checkUpdatesToggled(bool checked)
+{
+    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setEnabled(checked);
 }

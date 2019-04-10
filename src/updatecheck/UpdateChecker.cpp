@@ -17,6 +17,7 @@
 
 #include "UpdateChecker.h"
 #include "config-keepassx.h"
+#include "core/Clock.h"
 #include "core/Config.h"
 #include <QJsonObject>
 #include <QNetworkAccessManager>
@@ -38,24 +39,28 @@ UpdateChecker::~UpdateChecker()
 
 void UpdateChecker::checkForUpdates(bool manuallyRequested)
 {
+    auto nextCheck = config()->get("GUI/CheckForUpdatesNextCheck", 0).toULongLong();
     m_isManuallyRequested = manuallyRequested;
-    m_bytesReceived.clear();
 
-    QString apiUrlStr = QString("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
+    if (m_isManuallyRequested || Clock::currentSecondsSinceEpoch() >= nextCheck) {
+        m_bytesReceived.clear();
 
-    if (!config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
-        apiUrlStr += "/latest";
+        QString apiUrlStr = QString("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
+
+        if (!config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
+            apiUrlStr += "/latest";
+        }
+
+        QUrl apiUrl = QUrl(apiUrlStr);
+
+        QNetworkRequest request(apiUrl);
+        request.setRawHeader("Accept", "application/json");
+
+        m_reply = m_netMgr->get(request);
+
+        connect(m_reply, &QNetworkReply::finished, this, &UpdateChecker::fetchFinished);
+        connect(m_reply, &QIODevice::readyRead, this, &UpdateChecker::fetchReadyRead);
     }
-
-    QUrl apiUrl = QUrl(apiUrlStr);
-
-    QNetworkRequest request(apiUrl);
-    request.setRawHeader("Accept", "application/json");
-
-    m_reply = m_netMgr->get(request);
-
-    connect(m_reply, &QNetworkReply::finished, this, &UpdateChecker::fetchFinished);
-    connect(m_reply, &QIODevice::readyRead, this, &UpdateChecker::fetchReadyRead);
 }
 
 void UpdateChecker::fetchReadyRead()
@@ -84,8 +89,12 @@ void UpdateChecker::fetchFinished()
 
         if (!jsonObject.value("tag_name").isUndefined()) {
             version = jsonObject.value("tag_name").toString();
-            hasNewVersion = compareVersions(version, QString(KEEPASSXC_VERSION));
+            hasNewVersion = compareVersions(QString(KEEPASSXC_VERSION), version);
         }
+
+        // Check again in 7 days
+        // TODO: change to toSecsSinceEpoch() when min Qt >= 5.8
+        config()->set("GUI/CheckForUpdatesNextCheck", Clock::currentDateTime().addDays(7).toTime_t());
     } else {
         version = "error";
     }
@@ -93,38 +102,46 @@ void UpdateChecker::fetchFinished()
     emit updateCheckFinished(hasNewVersion, version, m_isManuallyRequested);
 }
 
-bool UpdateChecker::compareVersions(const QString& remoteVersion, const QString& localVersion)
+bool UpdateChecker::compareVersions(const QString& localVersion, const QString& remoteVersion)
 {
+    // Quick full-string equivalence check
     if (localVersion == remoteVersion) {
-        return false; // Currently using updated version
+        return false;
     }
 
-    QRegularExpression verRegex("^(\\d+(\\.\\d+){0,2})(-\\w+)?$", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression verRegex(R"(^((?:\d+\.){2}\d+)(?:-(\w+?)(\d+)?)?$)");
 
-    QRegularExpressionMatch lmatch = verRegex.match(localVersion);
-    QRegularExpressionMatch rmatch = verRegex.match(remoteVersion);
+    auto lmatch = verRegex.match(localVersion);
+    auto rmatch = verRegex.match(remoteVersion);
 
-    if (!lmatch.captured(1).isNull() && !rmatch.captured(1).isNull()) {
-        if (lmatch.captured(1) == rmatch.captured(1) && !lmatch.captured(3).isNull()) {
-            // Same version, but installed version has snapshot/beta suffix and should be updated to stable
-            return true;
+    auto lVersion = lmatch.captured(1).split(".");
+    auto lSuffix = lmatch.captured(2);
+    auto lBetaNum = lmatch.captured(3);
+
+    auto rVersion = rmatch.captured(1).split(".");
+    auto rSuffix = rmatch.captured(2);
+    auto rBetaNum = rmatch.captured(3);
+
+    if (!lVersion.isEmpty() && !rVersion.isEmpty()) {
+        if (lSuffix.compare("snapshot", Qt::CaseInsensitive) == 0) {
+            // Snapshots are not checked for version updates
+            return false;
         }
 
-        QStringList lparts = lmatch.captured(1).split(".");
-        QStringList rparts = rmatch.captured(1).split(".");
-
-        if (lparts.length() < 3)
-            lparts << "0";
-
-        if (rparts.length() < 3)
-            rparts << "0";
+        // Check "-beta[X]" versions
+        if (lVersion == rVersion && !lSuffix.isEmpty()) {
+            // Check if stable version has been released or new beta is available
+            // otherwise the version numbers are equal
+            return rSuffix.isEmpty() || lBetaNum.toInt() < rBetaNum.toInt();
+        }
 
         for (int i = 0; i < 3; i++) {
-            int l = lparts[i].toInt();
-            int r = rparts[i].toInt();
+            int l = lVersion[i].toInt();
+            int r = rVersion[i].toInt();
 
-            if (l == r)
+            if (l == r) {
                 continue;
+            }
 
             if (l > r) {
                 return false; // Installed version is newer than release
