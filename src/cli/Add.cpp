@@ -77,11 +77,6 @@ int Add::execute(const QStringList& arguments)
                               QObject::tr("length"));
     parser.addOption(length);
 
-    QCommandLineOption numeric(QStringList() << "n"
-                                             << "numeric",
-                               QObject::tr("Use numbers."));
-    parser.addOption(numeric);
-
     QCommandLineOption special(QStringList() << "s"
                                              << "special",
                                QObject::tr("Use special characters"));
@@ -164,9 +159,6 @@ int Add::execute(const QStringList& arguments)
 
         classes |= PasswordGenerator::DefaultCharset;
 
-        if (parser.isSet(numeric)) {
-            classes |= PasswordGenerator::Numbers;
-        }
         if (parser.isSet(special)) {
             classes |= PasswordGenerator::SpecialCharacters;
         }

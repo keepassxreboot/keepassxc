@@ -237,27 +237,6 @@ void TestCli::testAdd()
     QCOMPARE(entry->url(), QString("https://example.net/"));
     QCOMPARE(entry->password(), QString("newpassword"));
 
-    // Test numeric
-    Utils::Test::setNextPassword("numericpassword");
-    addCmd.execute({"add",
-                    "-u",
-                    "newuser3",
-                    "--url",
-                    "https://example.net/",
-                    "-gn",
-                    "-l",
-                    "20",
-                    "-p",
-                    m_dbFile->fileName(),
-                    "/newuser-entry3"});
-
-    db = readTestDatabase();
-    entry = db->rootGroup()->findEntryByPath("/newuser-entry3");
-    QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser3"));
-    QCOMPARE(entry->url(), QString("https://example.net/"));
-    QCOMPARE(entry->password(), QString("numericpassword"));
-
     // Test special characters
     Utils::Test::setNextPassword("specialcharpassword");
     addCmd.execute({"add",
@@ -505,17 +484,6 @@ void TestCli::testEdit()
 
     Utils::Test::setNextPassword("a");
     editCmd.execute({"edit", "-g", m_dbFile->fileName(), "/newtitle"});
-    db = readTestDatabase();
-    entry = db->rootGroup()->findEntryByPath("/newtitle");
-    QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser"));
-    QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
-    QVERIFY(!entry->password().isEmpty());
-    QVERIFY(entry->password() != QString("Password"));
-
-    // Test numeric
-    Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", "-gn", m_dbFile->fileName(), "/newtitle"});
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newtitle");
     QVERIFY(entry);
