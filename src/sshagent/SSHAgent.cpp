@@ -45,8 +45,11 @@ SSHAgent::~SSHAgent()
 {
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        OpenSSHKey key = it.key();
-        removeIdentity(key);
+        // Remove key if requested to remove on lock
+        if (it.value()) {
+            OpenSSHKey key = it.key();
+            removeIdentity(key);
+        }
         it = m_addedKeys.erase(it);
     }
 }
