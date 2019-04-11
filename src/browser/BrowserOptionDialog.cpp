@@ -47,7 +47,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
         tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2. %3")
             .arg("<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
-                 "Google Chrome / Chromium / Vivaldi</a>",
+                 "Google Chrome / Chromium / Vivaldi / Brave</a>",
                  snapInstructions));
     // clang-format on
 
@@ -75,9 +75,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
 #ifdef Q_OS_WIN
+    // Brave uses Chrome's registry settings
+    m_ui->braveSupport->setHidden(true);
     // Vivaldi uses Chrome's registry settings
     m_ui->vivaldiSupport->setHidden(true);
-    m_ui->chromeSupport->setText("Chrome and Vivaldi");
+    m_ui->chromeSupport->setText("Chrome, Vivaldi, and Brave");
     // Tor Browser uses Firefox's registry settings
     m_ui->torBrowserSupport->setHidden(true);
     m_ui->firefoxSupport->setText("Firefox and Tor Browser");
@@ -122,6 +124,7 @@ void BrowserOptionDialog::loadSettings()
     m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
     m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
 #ifndef Q_OS_WIN
+    m_ui->braveSupport->setChecked(settings->braveSupport());
     m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
     m_ui->torBrowserSupport->setChecked(settings->torBrowserSupport());
 #endif
@@ -183,6 +186,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());
     settings->setFirefoxSupport(m_ui->firefoxSupport->isChecked());
 #ifndef Q_OS_WIN
+    settings->setBraveSupport(m_ui->braveSupport->isChecked());
     settings->setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
     settings->setTorBrowserSupport(m_ui->torBrowserSupport->isChecked());
 #endif

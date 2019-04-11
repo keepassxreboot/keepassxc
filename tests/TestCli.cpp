@@ -702,8 +702,7 @@ void TestCli::testKeyFileOption()
     m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(),
-             QByteArray("Error while reading the database: Wrong key or database file is corrupt. (HMAC mismatch)\n"));
+    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
 
     // Should raise an error if key file path is invalid.
     pos = m_stdoutFile->pos();
@@ -736,8 +735,7 @@ void TestCli::testNoPasswordOption()
     m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll(),
-             QByteArray("Error while reading the database: Wrong key or database file is corrupt. (HMAC mismatch)\n"));
+    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
 }
 
 void TestCli::testList()

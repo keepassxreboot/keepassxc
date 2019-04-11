@@ -83,6 +83,7 @@ public:
 
     QUuid uuid() const;
     QString filePath() const;
+    QString canonicalFilePath() const;
     void setFilePath(const QString& filePath);
 
     Metadata* metadata();
@@ -172,6 +173,7 @@ private:
 
     bool writeDatabase(QIODevice* device, QString* error = nullptr);
     bool backupDatabase(const QString& filePath);
+    bool restoreDatabase(const QString& filePath);
 
     Metadata* const m_metadata;
     DatabaseData m_data;

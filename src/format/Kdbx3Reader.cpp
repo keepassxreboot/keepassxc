@@ -78,7 +78,8 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
     QByteArray realStart = cipherStream.read(32);
 
     if (realStart != m_streamStartBytes) {
-        raiseError(tr("Wrong key or database file is corrupt."));
+        raiseError(tr("Invalid credentials were provided, please try again.\n"
+                      "If this reoccurs, then your database file may be corrupt."));
         return false;
     }
 

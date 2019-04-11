@@ -162,18 +162,32 @@ QString KeeShare::sharingLabel(const Group* group)
     }
 
     const auto reference = referenceOf(share);
+    if (!reference.isValid()) {
+        return tr("Invalid sharing reference");
+    }
+    QStringList messages;
     switch (reference.type) {
     case KeeShareSettings::Inactive:
-        return tr("Disabled share %1").arg(reference.path);
+        messages << tr("Inactive share %1").arg(reference.path);
+        break;
     case KeeShareSettings::ImportFrom:
-        return tr("Import from share %1").arg(reference.path);
+        messages << tr("Imported from %1").arg(reference.path);
+        break;
     case KeeShareSettings::ExportTo:
-        return tr("Export to share %1").arg(reference.path);
+        messages << tr("Exported to %1").arg(reference.path);
+        break;
     case KeeShareSettings::SynchronizeWith:
-        return tr("Synchronize with share %1").arg(reference.path);
+        messages << tr("Synchronized with %1").arg(reference.path);
+        break;
     }
-
-    return {};
+    const auto active = KeeShare::active();
+    if (reference.isImporting() && !active.in) {
+        messages << tr("Import is disabled in settings");
+    }
+    if (reference.isExporting() && !active.out) {
+        messages << tr("Export is disabled in settings");
+    }
+    return messages.join("\n");
 }
 
 QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
@@ -196,13 +210,13 @@ QString KeeShare::referenceTypeLabel(const KeeShareSettings::Reference& referenc
 {
     switch (reference.type) {
     case KeeShareSettings::Inactive:
-        return tr("Disabled share");
+        return tr("Inactive share");
     case KeeShareSettings::ImportFrom:
-        return tr("Import from");
+        return tr("Imported from");
     case KeeShareSettings::ExportTo:
-        return tr("Export to");
+        return tr("Exported to");
     case KeeShareSettings::SynchronizeWith:
-        return tr("Synchronize with");
+        return tr("Synchronized with");
     }
     return "";
 }

@@ -372,7 +372,8 @@ KeePass1Reader::testKeys(const QString& password, const QByteArray& keyfileData,
     }
 
     if (!cipherStream) {
-        raiseError(tr("Wrong key or database file is corrupt."));
+        raiseError(tr("Invalid credentials were provided, please try again.\n"
+                      "If this reoccurs, then your database file may be corrupt."));
     }
 
     return cipherStream.take();

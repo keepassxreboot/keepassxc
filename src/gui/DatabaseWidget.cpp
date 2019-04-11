@@ -89,6 +89,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_databaseOpenWidget(new DatabaseOpenWidget(this))
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
+    , m_saveAttempts(0)
     , m_fileWatcher(new DelayingFileWatcher(this))
 {
     m_messageWidget->setHidden(true);
@@ -260,12 +261,11 @@ bool DatabaseWidget::isSearchActive() const
 bool DatabaseWidget::isEditWidgetModified() const
 {
     if (currentWidget() == m_editEntryWidget) {
-        return m_editEntryWidget->hasBeenModified();
-    } else {
-        // other edit widget don't have a hasBeenModified() method yet
-        // assume that they already have been modified
-        return true;
+        return m_editEntryWidget->isModified();
+    } else if (currentWidget() == m_editGroupWidget) {
+        return m_editGroupWidget->isModified();
     }
+    return false;
 }
 
 QList<int> DatabaseWidget::mainSplitterSizes() const
@@ -859,6 +859,7 @@ void DatabaseWidget::loadDatabase(bool accepted)
         replaceDatabase(openWidget->database());
         switchToMainView();
         m_fileWatcher->restart();
+        m_saveAttempts = 0;
         emit databaseUnlocked();
     } else {
         m_fileWatcher->stop();
@@ -1247,7 +1248,7 @@ bool DatabaseWidget::lock()
 
     clipboard()->clearCopiedText();
 
-    if (currentMode() == DatabaseWidget::Mode::EditMode) {
+    if (isEditWidgetModified()) {
         auto result = MessageBox::question(this,
                                            tr("Lock Database?"),
                                            tr("You are editing an entry. Discard changes and lock anyway?"),
@@ -1512,7 +1513,7 @@ EntryView* DatabaseWidget::entryView()
  * @param attempt current save attempt or -1 to disable attempts
  * @return true on success
  */
-bool DatabaseWidget::save(int attempt)
+bool DatabaseWidget::save()
 {
     // Never allow saving a locked database; it causes corruption
     Q_ASSERT(!isLocked());
@@ -1527,6 +1528,8 @@ bool DatabaseWidget::save(int attempt)
     }
 
     blockAutoReload(true);
+    ++m_saveAttempts;
+
     // TODO: Make this async, but lock out the database widget to prevent re-entrance
     bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
     QString errorMessage;
@@ -1534,14 +1537,11 @@ bool DatabaseWidget::save(int attempt)
     blockAutoReload(false);
 
     if (ok) {
+        m_saveAttempts = 0;
         return true;
     }
 
-    if (attempt >= 0 && attempt <= 2) {
-        return save(attempt + 1);
-    }
-
-    if (attempt > 2 && useAtomicSaves) {
+    if (m_saveAttempts > 2 && useAtomicSaves) {
         // Saving failed 3 times, issue a warning and attempt to resolve
         auto result = MessageBox::question(this,
                                            tr("Disable safe saves?"),
@@ -1552,11 +1552,15 @@ bool DatabaseWidget::save(int attempt)
                                            MessageBox::Disable);
         if (result == MessageBox::Disable) {
             config()->set("UseAtomicSaves", false);
-            return save(attempt + 1);
+            return save();
         }
     }
 
-    showMessage(tr("Writing the database failed.\n%1").arg(errorMessage), MessageWidget::Error);
+    showMessage(tr("Writing the database failed: %1").arg(errorMessage),
+                MessageWidget::Error,
+                true,
+                MessageWidget::LongAutoHideTimeout);
+
     return false;
 }
 
@@ -1585,8 +1589,9 @@ bool DatabaseWidget::saveAs()
             // Ensure we don't recurse back into this function
             m_db->setReadOnly(false);
             m_db->setFilePath(newFilePath);
+            m_saveAttempts = 0;
 
-            if (!save(-1)) {
+            if (!save()) {
                 // Failed to save, try again
                 continue;
             }

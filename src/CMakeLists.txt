@@ -195,6 +195,7 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(KeeShare-Secure WITH_XC_KEESHARE_SECURE "Sharing integration with KeeShare with secure sources")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
+add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()

@@ -84,7 +84,7 @@ namespace
             key.openKey(QString());
             const auto signer = Signature();
             if (!signer.verify(data, sign.signature, key)) {
-                qCritical("Invalid signature for sharing container %s.", qPrintable(reference.path));
+                qCritical("Invalid signature for shared container %s.", qPrintable(reference.path));
                 return {Invalid, KeeShareSettings::Certificate()};
             }
 
@@ -190,7 +190,6 @@ void ShareObserver::reinitialize()
         KeeShareSettings::Reference newReference;
     };
 
-    const auto active = KeeShare::active();
     QList<Update> updated;
     const QList<Group*> groups = m_db->rootGroup()->groupsRecursive(true);
     for (Group* group : groups) {
@@ -202,9 +201,7 @@ void ShareObserver::reinitialize()
         m_groupToReference.remove(couple.group);
         m_referenceToGroup.remove(couple.oldReference);
         m_shareToGroup.remove(couple.oldReference.path);
-        if (couple.newReference.isValid()
-            && ((active.in && couple.newReference.isImporting())
-                || (active.out && couple.newReference.isExporting()))) {
+        if (couple.newReference.isValid()) {
             m_groupToReference[couple.group] = couple.newReference;
             m_referenceToGroup[couple.newReference] = couple.group;
             m_shareToGroup[couple.newReference.path] = couple.group;

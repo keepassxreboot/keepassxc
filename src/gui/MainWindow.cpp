@@ -41,7 +41,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
 #include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
@@ -372,12 +372,12 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
     connect(UpdateChecker::instance(),
             SIGNAL(updateCheckFinished(bool, QString, bool)),
             SLOT(hasUpdateAvailable(bool, QString, bool)));
-    QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
+    QTimer::singleShot(500, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
 #endif
@@ -670,7 +670,7 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::showUpdateCheckStartup()
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
         auto result =
             MessageBox::question(this,
@@ -693,7 +693,7 @@ void MainWindow::showUpdateCheckStartup()
 
 void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested)
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     if (hasUpdate && !isManuallyRequested) {
         auto* updateCheckDialog = new UpdateCheckDialog(this);
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
@@ -708,7 +708,7 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool
 
 void MainWindow::showUpdateCheckDialog()
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     updateCheck()->checkForUpdates(true);
     auto* updateCheckDialog = new UpdateCheckDialog(this);
     updateCheckDialog->show();

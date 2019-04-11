@@ -222,6 +222,7 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
                 return true;
             }
         }
+
         if (error) {
             *error = saveFile.errorString();
         }
@@ -241,27 +242,34 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
 
             // Delete the original db and move the temp file in place
             QFile::remove(filePath);
-#ifdef Q_OS_LINUX
-            // workaround to make this workaround work, see: https://bugreports.qt.io/browse/QTBUG-64008
-            if (tempFile.copy(filePath)) {
-                // successfully saved database file
-                return true;
-            }
-#else
-            if (tempFile.rename(filePath)) {
-                // successfully saved database file
+
+            // Note: call into the QFile rename instead of QTemporaryFile
+            // due to an undocumented difference in how the function handles
+            // errors. This prevents errors when saving across file systems.
+            if (tempFile.QFile::rename(filePath)) {
+                // successfully saved the database
                 tempFile.setAutoRemove(false);
                 setFilePath(filePath);
                 return true;
+            } else if (!backup || !restoreDatabase(filePath)) {
+                // Failed to copy new database in place, and
+                // failed to restore from backup or backups disabled
+                tempFile.setAutoRemove(false);
+                if (error) {
+                    *error = tr("%1\nBackup database located at %2").arg(tempFile.errorString(), tempFile.fileName());
+                }
+                markAsModified();
+                return false;
             }
-#endif
         }
+
         if (error) {
             *error = tempFile.errorString();
         }
     }
 
     // Saving failed
+    markAsModified();
     return false;
 }
 
@@ -333,6 +341,28 @@ bool Database::backupDatabase(const QString& filePath)
     return QFile::copy(filePath, backupFilePath);
 }
 
+/**
+ * Restores the database file from the backup file with
+ * name <filename>.old.<extension> to filePath. This will
+ * overwrite the existing file!
+ *
+ * @param filePath Path to the file to restore
+ * @return true on success
+ */
+bool Database::restoreDatabase(const QString& filePath)
+{
+    static auto re = QRegularExpression("^(.*?)(\\.[^.]+)?$");
+
+    auto match = re.match(filePath);
+    auto backupFilePath = match.captured(1) + ".old" + match.captured(2);
+    // Only try to restore if the backup file actually exists
+    if (QFile::exists(backupFilePath)) {
+        QFile::remove(filePath);
+        return QFile::copy(backupFilePath, filePath);
+    }
+    return false;
+}
+
 bool Database::isReadOnly() const
 {
     return m_data.isReadOnly;
@@ -401,9 +431,29 @@ const Metadata* Database::metadata() const
     return m_metadata;
 }
 
+/**
+ * Returns the original file path that was provided for
+ * this database. This path may not exist, may contain
+ * unresolved symlinks, or have malformed slashes.
+ *
+ * @return original file path
+ */
 QString Database::filePath() const
 {
     return m_data.filePath;
+}
+
+/**
+ * Returns the canonical file path of this databases'
+ * set file path. This returns an empty string if the
+ * file does not exist or cannot be resolved.
+ *
+ * @return canonical file path
+ */
+QString Database::canonicalFilePath() const
+{
+    QFileInfo fileInfo(m_data.filePath);
+    return fileInfo.canonicalFilePath();
 }
 
 void Database::setFilePath(const QString& filePath)
