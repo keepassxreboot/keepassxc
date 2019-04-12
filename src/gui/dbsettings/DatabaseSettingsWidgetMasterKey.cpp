@@ -102,7 +102,9 @@ void DatabaseSettingsWidgetMasterKey::load(QSharedPointer<Database> db)
 
     connect(m_passwordEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
     connect(m_keyFileEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
+#ifdef WITH_XC_YUBIKEY
     connect(m_yubiKeyEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
+#endif
 }
 
 void DatabaseSettingsWidgetMasterKey::initialize()
