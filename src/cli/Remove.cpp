@@ -51,6 +51,7 @@ int Remove::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
     parser.addPositionalArgument("entry", QObject::tr("Path of the entry to remove."));
     parser.addHelpOption();
     parser.process(arguments);
@@ -62,6 +63,7 @@ int Remove::execute(const QStringList& arguments)
     }
 
     auto db = Utils::unlockDatabase(args.at(0),
+                                    !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);

@@ -144,7 +144,7 @@ signals:
 
 public slots:
     bool lock();
-    bool save(int attempt = 0);
+    bool save();
     bool saveAs();
 
     void replaceDatabase(QSharedPointer<Database> db);
@@ -235,9 +235,7 @@ private:
     QPointer<EntryPreviewWidget> m_previewView;
     QPointer<QSplitter> m_previewSplitter;
     QPointer<QLabel> m_searchingLabel;
-#ifdef WITH_XC_KEESHARE
     QPointer<QLabel> m_shareLabel;
-#endif
     QPointer<CsvImportWizard> m_csvImportWizard;
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;
@@ -254,6 +252,8 @@ private:
 
     QUuid m_groupBeforeLock;
     QUuid m_entryBeforeLock;
+
+    int m_saveAttempts;
 
     // Search state
     EntrySearcher* m_EntrySearcher;

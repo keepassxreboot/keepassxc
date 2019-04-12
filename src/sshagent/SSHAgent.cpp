@@ -45,8 +45,11 @@ SSHAgent::~SSHAgent()
 {
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        OpenSSHKey key = it.key();
-        removeIdentity(key);
+        // Remove key if requested to remove on lock
+        if (it.value()) {
+            OpenSSHKey key = it.key();
+            removeIdentity(key);
+        }
         it = m_addedKeys.erase(it);
     }
 }
@@ -187,7 +190,7 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
  * @param removeOnLock autoremove from agent when the Database is locked
  * @return true on success
  */
-bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime, bool confirm)
+bool SSHAgent::addIdentity(OpenSSHKey& key, KeeAgentSettings& settings)
 {
     if (!isAgentRunning()) {
         m_error = tr("No agent running, cannot add identity.");
@@ -197,15 +200,17 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime,
     QByteArray requestData;
     BinaryStream request(&requestData);
 
-    request.write((lifetime > 0 || confirm) ? SSH_AGENTC_ADD_ID_CONSTRAINED : SSH_AGENTC_ADD_IDENTITY);
+    request.write((settings.useLifetimeConstraintWhenAdding() || settings.useConfirmConstraintWhenAdding())
+                      ? SSH_AGENTC_ADD_ID_CONSTRAINED
+                      : SSH_AGENTC_ADD_IDENTITY);
     key.writePrivate(request);
 
-    if (lifetime > 0) {
+    if (settings.useLifetimeConstraintWhenAdding()) {
         request.write(SSH_AGENT_CONSTRAIN_LIFETIME);
-        request.write(lifetime);
+        request.write(static_cast<quint32>(settings.lifetimeConstraintDuration()));
     }
 
-    if (confirm) {
+    if (settings.useConfirmConstraintWhenAdding()) {
         request.write(SSH_AGENT_CONSTRAIN_CONFIRM);
     }
 
@@ -218,11 +223,11 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime,
         m_error =
             tr("Agent refused this identity. Possible reasons include:") + "\n" + tr("The key has already been added.");
 
-        if (lifetime > 0) {
+        if (settings.useLifetimeConstraintWhenAdding()) {
             m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
         }
 
-        if (confirm) {
+        if (settings.useConfirmConstraintWhenAdding()) {
             m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
         }
 
@@ -231,7 +236,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime,
 
     OpenSSHKey keyCopy = key;
     keyCopy.clearPrivate();
-    m_addedKeys[keyCopy] = removeOnLock;
+    m_addedKeys[keyCopy] = settings.removeAtDatabaseClose();
     return true;
 }
 
@@ -364,15 +369,10 @@ void SSHAgent::databaseModeChanged()
             key.setComment(fileName);
         }
 
-        if (!m_addedKeys.contains(key) && settings.addAtDatabaseOpen()) {
-            quint32 lifetime = 0;
-
-            if (settings.useLifetimeConstraintWhenAdding()) {
-                lifetime = static_cast<quint32>(settings.lifetimeConstraintDuration());
-            }
-
-            if (!addIdentity(
-                    key, settings.removeAtDatabaseClose(), lifetime, settings.useConfirmConstraintWhenAdding())) {
+        if (settings.addAtDatabaseOpen()) {
+            // Add key to agent; ignore errors if we have previously added the key
+            bool known_key = m_addedKeys.contains(key);
+            if (!addIdentity(key, settings) && !known_key) {
                 emit error(m_error);
             }
         }

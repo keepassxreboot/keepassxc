@@ -65,7 +65,7 @@ bool PasswordEditWidget::isPasswordVisible() const
 
 bool PasswordEditWidget::isEmpty() const
 {
-    return m_compUi->enterPasswordEdit->text().isEmpty();
+    return (visiblePage() == Page::Edit) && m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
 QWidget* PasswordEditWidget::componentEditWidget()
@@ -90,6 +90,18 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
     m_compUi->enterPasswordEdit->setFocus();
+}
+
+void PasswordEditWidget::hideEvent(QHideEvent* event)
+{
+    Q_ASSERT(m_compUi->enterPasswordEdit);
+
+    if (!isVisible() && m_compUi->enterPasswordEdit) {
+        m_compUi->enterPasswordEdit->setText("");
+        m_compUi->repeatPasswordEdit->setText("");
+    }
+
+    QWidget::hideEvent(event);
 }
 
 bool PasswordEditWidget::validate(QString& errorMessage) const

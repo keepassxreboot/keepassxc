@@ -50,6 +50,7 @@ int Add::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
 
     QCommandLineOption username(QStringList() << "u"
                                               << "username",
@@ -91,6 +92,7 @@ int Add::execute(const QStringList& arguments)
     const QString& entryPath = args.at(1);
 
     auto db = Utils::unlockDatabase(databasePath,
+                                    !parser.isSet(Command::NoPasswordOption),
                                     parser.value(Command::KeyFileOption),
                                     parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);

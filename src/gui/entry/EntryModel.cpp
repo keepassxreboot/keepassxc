@@ -30,6 +30,9 @@
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#ifdef Q_OS_MACOS
+#include "gui/macutils/MacUtils.h"
+#endif
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
@@ -270,6 +273,11 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     } else if (role == Qt::ForegroundRole) {
         if (entry->hasReferences()) {
             QPalette p;
+#ifdef Q_OS_MACOS
+            if (macUtils()->isDarkMode()) {
+                return QVariant(p.color(QPalette::Inactive, QPalette::Dark));
+            }
+#endif
             return QVariant(p.color(QPalette::Active, QPalette::Mid));
         } else if (entry->foregroundColor().isValid()) {
             return QVariant(entry->foregroundColor());

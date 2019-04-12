@@ -45,7 +45,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     m_ui->messageWidget->setHidden(true);
-    m_ui->checkPassword->setChecked(true);
 
     QFont font = m_ui->labelHeadline->font();
     font.setBold(true);
@@ -159,7 +158,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->editPassword->setText("");
     m_ui->comboKeyFile->clear();
     m_ui->comboKeyFile->setEditText("");
-    m_ui->checkPassword->setChecked(true);
+    m_ui->checkPassword->setChecked(false);
     m_ui->checkKeyFile->setChecked(false);
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->checkTouchID->setChecked(false);
@@ -174,13 +173,8 @@ QSharedPointer<Database> DatabaseOpenWidget::database()
 
 void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 {
-    if (!pw.isEmpty()) {
-        m_ui->editPassword->setText(pw);
-    }
-    if (!keyFile.isEmpty()) {
-        m_ui->comboKeyFile->setEditText(keyFile);
-    }
-
+    m_ui->editPassword->setText(pw);
+    m_ui->comboKeyFile->setEditText(keyFile);
     openDatabase();
 }
 
@@ -191,9 +185,7 @@ void DatabaseOpenWidget::openDatabase()
         return;
     }
 
-    if (!m_ui->editPassword->isPasswordVisible()) {
-        m_ui->editPassword->setShowPassword(false);
-    }
+    m_ui->editPassword->setShowPassword(false);
     QCoreApplication::processEvents();
 
     m_db.reset(new Database());
@@ -202,8 +194,7 @@ void DatabaseOpenWidget::openDatabase()
     bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
     if (!ok) {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error),
-                                         MessageWidget::MessageType::Error);
+        m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
         return;
     }
 
@@ -231,7 +222,7 @@ void DatabaseOpenWidget::openDatabase()
         }
         emit dialogFinished(true);
     } else {
-        m_ui->messageWidget->showMessage(tr("Unable to open the database:\n%1").arg(error), MessageWidget::Error);
+        m_ui->messageWidget->showMessage(error, MessageWidget::Error);
         m_ui->editPassword->setText("");
 
 #ifdef WITH_XC_TOUCHID
@@ -276,7 +267,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         QString keyFilename = m_ui->comboKeyFile->currentText();
         QString errorMsg;
         if (!key->load(keyFilename, &errorMsg)) {
-            m_ui->messageWidget->showMessage(tr("Can't open key file:\n%1").arg(errorMsg), MessageWidget::Error);
+            m_ui->messageWidget->showMessage(tr("Failed to open key file: %1").arg(errorMsg), MessageWidget::Error);
             return {};
         }
         if (key->type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
@@ -339,17 +330,20 @@ void DatabaseOpenWidget::reject()
 
 void DatabaseOpenWidget::activatePassword()
 {
-    m_ui->checkPassword->setChecked(true);
+    bool hasPassword = !m_ui->editPassword->text().isEmpty();
+    m_ui->checkPassword->setChecked(hasPassword);
 }
 
 void DatabaseOpenWidget::activateKeyFile()
 {
-    m_ui->checkKeyFile->setChecked(true);
+    bool hasKeyFile = !m_ui->comboKeyFile->lineEdit()->text().isEmpty();
+    m_ui->checkKeyFile->setChecked(hasKeyFile);
 }
 
 void DatabaseOpenWidget::activateChallengeResponse()
 {
-    m_ui->checkChallengeResponse->setChecked(true);
+    bool hasCR = m_ui->comboChallengeResponse->currentData().toInt() != -1;
+    m_ui->checkChallengeResponse->setChecked(hasCR);
 }
 
 void DatabaseOpenWidget::browseKeyFile()
@@ -372,6 +366,7 @@ void DatabaseOpenWidget::pollYubikey()
     m_ui->checkChallengeResponse->setChecked(false);
     m_ui->comboChallengeResponse->setEnabled(false);
     m_ui->comboChallengeResponse->clear();
+    m_ui->comboChallengeResponse->addItem(tr("Select slot..."), -1);
     m_ui->yubikeyProgress->setVisible(true);
 
     // YubiKey init is slow, detect asynchronously to not block the UI
@@ -388,6 +383,7 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
         QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
         if (lastChallengeResponse.contains(m_filename)) {
             m_ui->checkChallengeResponse->setChecked(true);
+            m_ui->comboChallengeResponse->setCurrentIndex(1);
         }
     }
 }

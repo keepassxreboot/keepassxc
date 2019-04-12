@@ -810,20 +810,20 @@ build() {
         shift
     done
 
-    if [[ ${build_appsign} && ! -f ${build_key} ]]; then
-        exitError "--appsign specified with invalid key file\n"
-    fi
-
     init
 
     OUTPUT_DIR="$(realpath "$OUTPUT_DIR")"
+    # Resolve appsign key to absolute path if under Windows
+    if [[ "${build_key}" && "$(uname -o)" == "Msys" ]]; then
+        build_key="$(realpath "${build_key}")"
+    fi
 
     if ${build_snapshot}; then
         TAG_NAME="HEAD"
         local branch=`git rev-parse --abbrev-ref HEAD`
         logInfo "Using current branch ${branch} to build..."
         RELEASE_NAME="${RELEASE_NAME}-snapshot"
-        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot"
+        CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot -DOVERRIDE_VERSION=${RELEASE_NAME}"
     else
         checkWorkingTreeClean
 
@@ -852,14 +852,13 @@ build() {
 
         git archive --format=tar "$TAG_NAME" --prefix="${prefix}/" --output="${OUTPUT_DIR}/${tarball_name}"
 
-        if ! ${build_snapshot}; then
-            # add .version file to tar
-            mkdir "${prefix}"
-            echo -n ${RELEASE_NAME} > "${prefix}/.version"
-            tar --append --file="${OUTPUT_DIR}/${tarball_name}" "${prefix}/.version"
-            rm "${prefix}/.version"
-            rmdir "${prefix}" 2> /dev/null
-        fi
+        # add .version and .gitrev files to tarball
+        mkdir "${prefix}"
+        echo -n ${RELEASE_NAME} > "${prefix}/.version"
+        echo -n `git rev-parse --short=7 HEAD` > "${prefix}/.gitrev"
+        tar --append --file="${OUTPUT_DIR}/${tarball_name}" "${prefix}/.version" "${prefix}/.gitrev"
+        rm "${prefix}/.version" "${prefix}/.gitrev"
+        rmdir "${prefix}" 2> /dev/null
 
         xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
@@ -885,6 +884,8 @@ build() {
         # linuxdeploy requires /usr as install prefix
         INSTALL_PREFIX="/usr"
     fi
+    # Do not build tests cases
+    CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_TESTS=OFF"
 
     if [ "$COMPILER" == "g++" ]; then
         export CC=gcc
@@ -908,7 +909,7 @@ build() {
             make ${MAKE_OPTIONS} package
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} ]]; then
+            if ${build_appsign}; then
                 logInfo "Signing executable files"
                 appsign "-f" "./${APP_NAME}-${RELEASE_NAME}.dmg" "-k" "${build_key}"
             fi
@@ -917,14 +918,14 @@ build() {
         elif [ "$(uname -o)" == "Msys" ]; then
             # Building on Windows with Msys2
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off -G"MSYS Makefiles" \
+            cmake -DCMAKE_BUILD_TYPE=Release -G"MSYS Makefiles" \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" ${CMAKE_OPTIONS} "$SRC_DIR"
 
             logInfo "Compiling and packaging sources..."
             mingw32-make ${MAKE_OPTIONS} preinstall
 
             # Appsign the executables if desired
-            if [[ ${build_appsign} ]]; then
+            if ${build_appsign} && [ -f "${build_key}" ]; then
                 logInfo "Signing executable files"
                 appsign "-f" $(find src | grep -P '\.exe$|\.dll$') "-k" "${build_key}"
             fi
@@ -949,7 +950,7 @@ build() {
 
             # Building on Linux without Docker container
             logInfo "Configuring build..."
-            cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off ${CMAKE_OPTIONS} \
+            cmake -DCMAKE_BUILD_TYPE=Release ${CMAKE_OPTIONS} \
                 -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" "$SRC_DIR"
 
             logInfo "Compiling sources..."
@@ -981,7 +982,7 @@ build() {
                 -v "$(realpath "$OUTPUT_DIR"):/keepassxc/out:rw" \
                 "$DOCKER_IMAGE" \
                 bash -c "cd /keepassxc/out/build-release && \
-                    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_TESTS=Off ${CMAKE_OPTIONS} \
+                    cmake -DCMAKE_BUILD_TYPE=Release ${CMAKE_OPTIONS} \
                         -DCMAKE_INSTALL_PREFIX=${INSTALL_PREFIX} /keepassxc/src && \
                     make ${MAKE_OPTIONS} && make DESTDIR=/keepassxc/out/KeePassXC.AppDir install/strip"
         fi
@@ -1143,7 +1144,7 @@ appsign() {
                 fi
 
                 logInfo "Signing app using codesign..."
-                codesign --sign "${key}" --verbose --deep --entitlements ${orig_dir}/share/macosx/keepassxc.entitlements ./app/KeePassXC.app
+                codesign --sign "${key}" --verbose --deep --entitlements "${SRC_DIR}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app
 
                 if [ 0 -ne $? ]; then
                     cd "${orig_dir}"

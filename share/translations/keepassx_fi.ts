@@ -611,15 +611,15 @@ Valitse oikea tietokanta tietueen tallentamiseksi</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Snap:in hiekkalaatikon takia sinun täytyy suorittaa komentosarja jotta voit aktivoida selainintegraation.&lt;br /&gt;Voit ladata komentosarjan osoitteesta %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Katso yksityiskohtaisemmat ohjeet selainlaajennuksen käyttöön alta</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Dataa se seuraaville selaimille: %1 ja %2. %3</translation>
     </message>
 </context>
 <context>
@@ -695,19 +695,22 @@ Siirrettiin %2 avainta mukautettuihin tietoihin.</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Luo uusi ryhmä</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Vastaanotettiin pyyntö luoda uusi ryhmä &quot;%1&quot;.
+Haluatko varmasti luoda tämän ryhmän?</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser:in asetukset täytyy siirtää tietokannan asetuksiin.
+Tämä on välttämätöntä, jotta yhteys selainlaajennukseen säilyy muuttumattomana.
+Haluat siirtää asetukset nyt?</translation>
     </message>
 </context>
 <context>
@@ -871,7 +874,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Avainmuunnosta ei voitu suorittaa. Ole hyvä ja ilmoita tästä virheestä sovelluksen kehittäjille.</translation>
     </message>
 </context>
 <context>
@@ -1630,7 +1633,7 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Jaettu ryhmä...</translation>
     </message>
 </context>
 <context>
@@ -2075,15 +2078,15 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Vientisäiliöön %1 on jo viitattu.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Tuontisäiliö %1 on jo tuotu.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Säiliö %1 on tuotu ja viety eri ryhmien perusteella.</translation>
     </message>
 </context>
 <context>
@@ -3154,19 +3157,19 @@ Rivi %2, sarake %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Jako %1 otettu pois käytöstä</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Tuo jaosta %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Vie jaosta %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Synkronoi jaon %1 kanssa</translation>
     </message>
 </context>
 <context>
@@ -4855,7 +4858,7 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Uutta ryhmää ei voitu luoda</translation>
     </message>
 </context>
 <context>
@@ -5131,7 +5134,7 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoittaja:</translation>
     </message>
 </context>
 <context>
@@ -5250,31 +5253,31 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko luottaa kohteeseen %1 sormenjäljellä %2, joka on peräisin kohteesta %3? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Useampi lähde kohteeseen %1 tuonnissa %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Ristiriita viennin %2 kohdepolussa %1</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoitusta ei voitu sisällyttää: Tiedostoa ei voitu avata kirjoitusta varten (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Allekirjoitusta ei voitu sisällyttää: Tiedostoon kirjoitus epäonnistui (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantaa ei voitu sisällyttää: Tiedostoa ei voitu avata kirjoitusta varten (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Tietokantaa ei voitu sisällyttää: Tiedostoon kirjoitus epäonnistui (%1)</translation>
     </message>
 </context>
 <context>

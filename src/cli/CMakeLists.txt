@@ -94,5 +94,4 @@ endif()
 
 if(APPLE OR UNIX)
     install(FILES keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
-    execute_process(COMMAND mandb -q)
 endif()

@@ -41,7 +41,7 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
 #include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
 #include "updatecheck/UpdateChecker.h"
@@ -253,9 +253,9 @@ MainWindow::MainWindow()
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
     // Control database tabs
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
     // Toggle password and username visibility in entry view
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
@@ -372,12 +372,12 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
     connect(UpdateChecker::instance(),
             SIGNAL(updateCheckFinished(bool, QString, bool)),
             SLOT(hasUpdateAvailable(bool, QString, bool)));
-    QTimer::singleShot(3000, this, SLOT(showUpdateCheckStartup()));
+    QTimer::singleShot(500, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
 #endif
@@ -391,8 +391,10 @@ MainWindow::MainWindow()
 
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
 
+#ifndef Q_OS_HAIKU
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
+#endif
 
     updateTrayIcon();
 
@@ -494,28 +496,9 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& filePath, const QString& pw, const QString& keyFile)
+void MainWindow::openDatabase(const QString& filePath, const QString& password, const QString& keyfile)
 {
-    if (pw.isEmpty() && keyFile.isEmpty()) {
-        m_ui->tabWidget->addDatabaseTab(filePath);
-        return;
-    }
-
-    auto db = QSharedPointer<Database>::create();
-    auto key = QSharedPointer<CompositeKey>::create();
-    if (!pw.isEmpty()) {
-        key->addKey(QSharedPointer<PasswordKey>::create(pw));
-    }
-    if (!keyFile.isEmpty()) {
-        auto fileKey = QSharedPointer<FileKey>::create();
-        fileKey->load(keyFile);
-        key->addKey(fileKey);
-    }
-    if (db->open(filePath, key, nullptr, false)) {
-        auto* dbWidget = new DatabaseWidget(db, this);
-        m_ui->tabWidget->addDatabaseTab(dbWidget);
-        dbWidget->switchToMainView(true);
-    }
+    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile);
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
@@ -687,7 +670,7 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::showUpdateCheckStartup()
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
         auto result =
             MessageBox::question(this,
@@ -710,7 +693,7 @@ void MainWindow::showUpdateCheckStartup()
 
 void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested)
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     if (hasUpdate && !isManuallyRequested) {
         auto* updateCheckDialog = new UpdateCheckDialog(this);
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
@@ -725,7 +708,7 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool
 
 void MainWindow::showUpdateCheckDialog()
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef WITH_XC_UPDATECHECK
     updateCheck()->checkForUpdates(true);
     auto* updateCheckDialog = new UpdateCheckDialog(this);
     updateCheckDialog->show();
@@ -920,24 +903,27 @@ void MainWindow::saveWindowInformation()
 
 bool MainWindow::saveLastDatabases()
 {
-    bool accept;
-    m_openDatabases.clear();
-    bool openPreviousDatabasesOnStartup = config()->get("OpenPreviousDatabasesOnStartup").toBool();
+    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+        auto currentDbWidget = m_ui->tabWidget->currentDatabaseWidget();
+        if (currentDbWidget) {
+            config()->set("LastActiveDatabase", currentDbWidget->database()->filePath());
+        } else {
+            config()->set("LastActiveDatabase", {});
+        }
 
-    if (openPreviousDatabasesOnStartup) {
-        connect(
-            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
+        QStringList openDatabases;
+        for (int i=0; i < m_ui->tabWidget->count(); ++i) {
+            auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
+            openDatabases.append(dbWidget->database()->filePath());
+        }
+
+        config()->set("LastOpenedDatabases", openDatabases);
+    } else {
+        config()->set("LastActiveDatabase", {});
+        config()->set("LastOpenedDatabases", {});
     }
 
-    accept = m_ui->tabWidget->closeAllDatabaseTabs();
-
-    if (openPreviousDatabasesOnStartup) {
-        disconnect(
-            m_ui->tabWidget, SIGNAL(databaseClosed(const QString&)), this, SLOT(rememberOpenDatabases(const QString&)));
-        config()->set("LastOpenedDatabases", m_openDatabases);
-    }
-
-    return accept;
+    return m_ui->tabWidget->closeAllDatabaseTabs();
 }
 
 void MainWindow::updateTrayIcon()
@@ -1000,11 +986,6 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
     } else if (fallback != 0) {
         action->setShortcut(QKeySequence(fallback));
     }
-}
-
-void MainWindow::rememberOpenDatabases(const QString& filePath)
-{
-    m_openDatabases.prepend(filePath);
 }
 
 void MainWindow::applySettingsChanges()

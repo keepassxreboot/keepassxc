@@ -611,15 +611,15 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Snap によってサンドボックス化されているため、ブラウザー統合を有効にするにはスクリプトを実行する必要があります。&lt;br /&gt;スクリプトは次の場所から入手できます: %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>ブラウザー拡張機能を使用するための次の手順を参照してください</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>ブラウザー統合の動作には KeePassXC-Browser が必要です。&lt;br /&gt;KeePassXC-Browser は %1 用と %2 用の2種類あります。%3</translation>
     </message>
 </context>
 <context>
@@ -676,11 +676,11 @@ Do you want to overwrite it?</source>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
         <translation>%1 個のエントリーから属性を正常に変換しました。
-%2 個のキーをカスタムデータに移行しました。</translation>
+%2 個のキーをカスタムデータに移動しました。</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>%n 個のキーを正常にカスタムデータに移行しました。</numerusform></translation>
+        <translation><numerusform>%n 個のキーを正常にカスタムデータに移動しました。</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
@@ -696,19 +696,23 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: 新しいグループを作成</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>新しいグループ &quot;%1&quot; の作成要求を受け取りました。
+このグループを作成しますか？
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser の設定をデータベース設定内に移動する必要があります。
+これはブラウザーとの接続を維持するのに必要です。
+既存の設定を移動しますか？</translation>
     </message>
 </context>
 <context>
@@ -872,7 +876,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>キーは変換されません。これはバグなので、開発者への報告をお願いします。</translation>
     </message>
 </context>
 <context>
@@ -1005,7 +1009,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
-        <translation>KeePassHTTP の属性を KeePassXC-Browser のカスタムデータに移行する(&amp;C)</translation>
+        <translation>KeePassHTTP の属性を KeePassXC-Browser のカスタムデータに移動する(&amp;C)</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1631,7 +1635,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>共有グループ...</translation>
     </message>
 </context>
 <context>
@@ -2076,11 +2080,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>エクスポートするコンテナ %1 は既に参照されています。</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>インポートするコンテナ %1 は既にインポートされています。</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
@@ -4856,7 +4860,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>新しいグループを作成できません</translation>
     </message>
 </context>
 <context>
@@ -5132,7 +5136,7 @@ Available commands:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>署名者:</translation>
     </message>
 </context>
 <context>
@@ -5263,19 +5267,19 @@ Available commands:
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>署名を埋め込めませんでした: ファイルを書き込み用に開くことができません (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>署名を埋め込めませんでした: ファイルに書き込むことができません (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>データベースを埋め込めませんでした: ファイルを書き込み用に開くことができません (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>データベースを埋め込めませんでした: ファイルに書き込むことができません (%1)</translation>
     </message>
 </context>
 <context>

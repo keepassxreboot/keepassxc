@@ -98,6 +98,7 @@ namespace Utils
     } // namespace Test
 
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
+                                            const bool isPasswordProtected,
                                             const QString& keyFilename,
                                             FILE* outputDescriptor,
                                             FILE* errorDescriptor)
@@ -106,12 +107,13 @@ namespace Utils
         TextStream out(outputDescriptor);
         TextStream err(errorDescriptor);
 
-        out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
-
-        QString line = Utils::getPassword(outputDescriptor);
-        auto passwordKey = QSharedPointer<PasswordKey>::create();
-        passwordKey->setPassword(line);
-        compositeKey->addKey(passwordKey);
+        if (isPasswordProtected) {
+            out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
+            QString line = Utils::getPassword(outputDescriptor);
+            auto passwordKey = QSharedPointer<PasswordKey>::create();
+            passwordKey->setPassword(line);
+            compositeKey->addKey(passwordKey);
+        }
 
         if (!keyFilename.isEmpty()) {
             auto fileKey = QSharedPointer<FileKey>::create();

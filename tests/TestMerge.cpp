@@ -1127,6 +1127,34 @@ void TestMerge::testMergeCustomIcons()
     QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
 }
 
+/**
+ * No duplicate icons should be created
+ */
+void TestMerge::testMergeDuplicateCustomIcons()
+{
+    QScopedPointer<Database> dbDestination(new Database());
+    QScopedPointer<Database> dbSource(createTestDatabase());
+
+    m_clock->advanceSecond(1);
+
+    QUuid customIconId = QUuid::createUuid();
+    QImage customIcon;
+
+    dbSource->metadata()->addCustomIcon(customIconId, customIcon);
+    dbDestination->metadata()->addCustomIcon(customIconId, customIcon);
+    // Sanity check.
+    QVERIFY(dbSource->metadata()->containsCustomIcon(customIconId));
+    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
+
+    m_clock->advanceSecond(1);
+
+    Merger merger(dbSource.data(), dbDestination.data());
+    merger.merge();
+
+    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
+    QCOMPARE(dbDestination->metadata()->customIcons().count(), 1);
+}
+
 void TestMerge::testMetadata()
 {
     QSKIP("Sophisticated merging for Metadata not implemented");

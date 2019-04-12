@@ -1,3 +1,32 @@
+2.4.1 (2019-04-12)
+=========================
+
+- Fix database deletion when using unsafe saves to a different file system [#2889]
+- Fix opening databases with legacy key files that contain '/' [#2872]
+- Fix opening database files from the command line [#2919]
+- Fix crash when editing master key [#2836]
+- Fix multiple issues with apply button behavior [#2947]
+- Fix issues on application startup (tab order, --pw-stdin, etc.) [#2830]
+- Fix building without WITH_XC_KEESHARE
+- Fix reference entry coloring on macOS dark mode [#2984]
+- Hide window when performing entry auto-type on macOS [#2969]
+- Improve UX of update checker; reduce checks to every 7 days [#2968]
+- KeeShare improvements [#2946, #2978, #2824]
+- Re-enable Ctrl+C to copy password from search box [#2947]
+- Add KeePassXC-Browser integration for Brave browser [#2933]
+- SSH Agent: Re-Add keys on database unlock [#2982]
+- SSH Agent: Only remove keys on app exit if they are removed on lock [#2985]
+- CLI: Add --no-password option [#2708]
+- CLI: Improve database extraction to XML [#2698]
+- CLI: Don't call mandb on build [#2774]
+- CLI: Add debug info [#2714]
+- Improve support for Snap theming [#2832]
+- Add support for building on Haiku OS [#2859]
+- Ctrl+PgDn now goes to the next tab and Ctrl+PgUp to the previous
+- Fix compiling on GCC 5 / Xenial [#2990]
+- Add .gitrev output to tarball for third-party builds [#2970]
+- Add WITH_XC_UPDATECHECK compile flag to toggle the update checker [#2968]
+
 2.4.0 (2019-03-19)
 =========================
 

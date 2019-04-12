@@ -50,33 +50,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
-            <property name="text">
-             <string>Remember last databases</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="rememberLastKeyFilesCheckBox">
-            <property name="text">
-             <string>Remember last key files and security dongles</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="openPreviousDatabasesOnStartupCheckBox">
-            <property name="text">
-             <string>Load previous databases on startup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="systrayMinimizeOnStartup">
             <property name="text">
              <string>Minimize window at application startup</string>
@@ -84,11 +57,123 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkForUpdatesOnStartupCheckBox">
+           <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
             <property name="text">
-             <string>Check for updates at application startup</string>
+             <string>Remember previously used databases</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
             </property>
            </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="rememberDbSubLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <item>
+             <spacer name="toolbarMovableSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="openPreviousDatabasesOnStartupCheckBox">
+              <property name="text">
+               <string>Load previously open databases on startup</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="rememberDbSubLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <item>
+             <spacer name="toolbarMovableSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="rememberLastKeyFilesCheckBox">
+              <property name="text">
+               <string>Remember database key files and security dongles</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkForUpdatesOnStartupCheckBox">
+            <property name="text">
+             <string>Check for updates at application startup once per week</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="checkUpdatesSubLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="checkUpdatesSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkForUpdatesIncludeBetasCheckBox">
+              <property name="text">
+               <string>Include beta releases when checking for updates</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -187,13 +272,6 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <widget class="QCheckBox" name="checkForUpdatesIncludeBetasCheckBox">
-            <property name="text">
-             <string>Include pre-releases when checking for updates</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="toolbarHideCheckBox">
             <property name="text">
              <string>Hide toolbar (icons)</string>
@@ -218,7 +296,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>20</height>
                </size>
               </property>
@@ -245,7 +323,7 @@
           <item>
            <layout class="QHBoxLayout" name="toolButtonStyleLayout">
             <property name="spacing">
-             <number>15</number>
+             <number>0</number>
             </property>
             <item>
              <spacer name="toolButtonStyleSpacer">
@@ -257,7 +335,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>20</height>
                </size>
               </property>
@@ -274,8 +352,11 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 5px</string>
+              </property>
               <property name="text">
-               <string>Button style</string>
+               <string>Button style:</string>
               </property>
              </widget>
             </item>
@@ -326,7 +407,7 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>20</width>
                 <height>20</height>
                </size>
               </property>
@@ -377,7 +458,7 @@
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
+                   <width>20</width>
                    <height>20</height>
                   </size>
                  </property>
@@ -407,18 +488,18 @@
           <item>
            <layout class="QHBoxLayout" name="languageLabelLayout_2">
             <property name="spacing">
-             <number>15</number>
+             <number>8</number>
             </property>
             <item alignment="Qt::AlignRight">
              <widget class="QLabel" name="languageLabel_2">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Language</string>
+               <string>Language:</string>
               </property>
              </widget>
             </item>
@@ -429,6 +510,13 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="languageLabel_3">
+              <property name="text">
+               <string>(restart program to activate)</string>
               </property>
              </widget>
             </item>

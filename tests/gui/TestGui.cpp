@@ -429,13 +429,20 @@ void TestGui::testEditEntry()
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "_test");
 
-    // Apply the edit
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QVERIFY(editEntryWidgetButtonBox);
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    auto* okButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    auto* applyButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Apply);
+    QVERIFY(applyButton);
+
+    // Apply the edit
+    QTRY_VERIFY(applyButton->isEnabled());
+    QTest::mouseClick(applyButton, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
     QCOMPARE(entry->historyItems().size(), ++editCount);
+    QVERIFY(!applyButton->isEnabled());
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);
@@ -451,7 +458,7 @@ void TestGui::testEditEntry()
     colorCheckBox = editEntryWidget->findChild<QCheckBox*>("bgColorCheckBox");
     colorButton->setProperty("color", bgColor);
     colorCheckBox->setChecked(true);
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Apply), Qt::LeftButton);
+    QTest::mouseClick(applyButton, Qt::LeftButton);
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Test protected attributes
@@ -471,7 +478,7 @@ void TestGui::testEditEntry()
     auto* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
     QString originalPassword = passwordEdit->text();
     passwordEdit->setText("newpass");
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
     auto* messageWiget = editEntryWidget->findChild<MessageWidget*>("messageWidget");
     QTRY_VERIFY(messageWiget->isVisible());
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
@@ -479,7 +486,7 @@ void TestGui::testEditEntry()
     passwordEdit->setText(originalPassword);
 
     // Save the edit (press OK)
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
     QApplication::processEvents();
 
     // Confirm edit was made
@@ -496,13 +503,15 @@ void TestGui::testEditEntry()
 
     // Test copy & paste newline sanitization
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    okButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     titleEdit->setText("multiline\ntitle");
     editEntryWidget->findChild<QLineEdit*>("usernameEdit")->setText("multiline\nusername");
     editEntryWidget->findChild<QLineEdit*>("passwordEdit")->setText("multiline\npassword");
     editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit")->setText("multiline\npassword");
     editEntryWidget->findChild<QLineEdit*>("urlEdit")->setText("multiline\nurl");
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
 
     QCOMPARE(entry->title(), QString("multiline title"));
     QCOMPARE(entry->username(), QString("multiline username"));
@@ -849,19 +858,31 @@ void TestGui::testSearch()
     QTRY_VERIFY(searchTextEdit->hasFocus());
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
+    auto* searchedEntry = entryView->currentEntry();
     // Restore focus and search text selection
     QTest::keyClick(m_mainWindow.data(), Qt::Key_F, Qt::ControlModifier);
     QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+
+    searchedEntry->setPassword("password");
+    QClipboard* clipboard = QApplication::clipboard();
+
+    // Attempt password copy with selected test (should fail)
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QVERIFY(clipboard->text() != searchedEntry->password());
+    // Deselect text and confirm password copies
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    QTRY_VERIFY(searchTextEdit->selectedText().isEmpty());
+    QTRY_VERIFY(searchTextEdit->hasFocus());
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QCOMPARE(searchedEntry->password(), clipboard->text());
     // Ensure Down focuses on entry view when search text is selected
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
-    QCOMPARE(entryView->selectionModel()->currentIndex().row(), 0);
-    // Test that password copies (entry has focus)
-    QClipboard* clipboard = QApplication::clipboard();
+    QCOMPARE(entryView->currentEntry(), searchedEntry);
+    // Test that password copies with entry focused
     QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
-    QModelIndex searchedItem = entryView->model()->index(0, 1);
-    Entry* searchedEntry = entryView->entryFromIndex(searchedItem);
-    QTRY_COMPARE(searchedEntry->password(), clipboard->text());
+    QCOMPARE(searchedEntry->password(), clipboard->text());
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());

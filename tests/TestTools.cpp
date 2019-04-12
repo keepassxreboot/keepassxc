@@ -59,6 +59,7 @@ void TestTools::testIsBase64()
     QVERIFY(Tools::isBase64(QByteArray("12==")));
     QVERIFY(Tools::isBase64(QByteArray("abcd9876MN==")));
     QVERIFY(Tools::isBase64(QByteArray("abcd9876DEFGhijkMNO=")));
+    QVERIFY(Tools::isBase64(QByteArray("abcd987/DEFGh+jk/NO=")));
     QVERIFY(not Tools::isBase64(QByteArray("abcd123==")));
     QVERIFY(not Tools::isBase64(QByteArray("abc_")));
     QVERIFY(not Tools::isBase64(QByteArray("123")));

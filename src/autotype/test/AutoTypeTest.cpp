@@ -111,7 +111,7 @@ bool AutoTypePlatformTest::raiseWindow(WId window)
 }
 
 #if defined(Q_OS_MACOS)
-bool AutoTypePlatformTest::raiseLastActiveWindow()
+bool AutoTypePlatformTest::hideOwnWindow()
 {
     return false;
 }

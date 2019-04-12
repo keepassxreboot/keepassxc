@@ -113,18 +113,6 @@
         <translation>Start only a single instance of KeePassXC</translation>
     </message>
     <message>
-        <source>Remember last databases</source>
-        <translation>Remember last databases</translation>
-    </message>
-    <message>
-        <source>Remember last key files and security dongles</source>
-        <translation>Remember last key files and security dongles</translation>
-    </message>
-    <message>
-        <source>Load previous databases on startup</source>
-        <translation>Load previous databases on startup</translation>
-    </message>
-    <message>
         <source>Minimize window at application startup</source>
         <translation>Minimize window at application startup</translation>
     </message>
@@ -197,10 +185,6 @@
         <translation>Hide window to system tray when minimized</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation>Language</translation>
-    </message>
-    <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
     </message>
@@ -234,20 +218,40 @@
         <translation>Auto-Type start delay</translation>
     </message>
     <message>
-        <source>Check for updates at application startup</source>
-        <translation>Check for updates at application startup</translation>
-    </message>
-    <message>
-        <source>Include pre-releases when checking for updates</source>
-        <translation>Include pre-releases when checking for updates</translation>
-    </message>
-    <message>
         <source>Movable toolbar</source>
         <translation>Movable toolbar</translation>
     </message>
     <message>
-        <source>Button style</source>
-        <translation>Button style</translation>
+        <source>Remember previously used databases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load previously open databases on startup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remember database key files and security dongles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates at application startup once per week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include beta releases when checking for updates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Button style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(restart program to activate)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -623,6 +627,10 @@ Please select the correct database for saving credentials.</translation>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Brave</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -891,6 +899,11 @@ Would you like to migrate your existing settings now?</source>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1
+Backup database located at %2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
@@ -960,16 +973,12 @@ Please consider generating a new key file.</translation>
         <translation>TouchID for quick unlock</translation>
     </message>
     <message>
-        <source>Unable to open the database:
-%1</source>
-        <translation>Unable to open the database:
-%1</translation>
+        <source>Failed to open key file: %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Can&apos;t open key file:
-%1</source>
-        <translation>Can&apos;t open key file:
-%1</translation>
+        <source>Select slot...</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1459,10 +1468,6 @@ This is definitely a bug, please report it to the developers.</source>
 This is definitely a bug, please report it to the developers.</translation>
     </message>
     <message>
-        <source>The database file does not exist or is not accessible.</source>
-        <translation>The database file does not exist or is not accessible.</translation>
-    </message>
-    <message>
         <source>Select CSV file</source>
         <translation>Select CSV file</translation>
     </message>
@@ -1484,6 +1489,10 @@ This is definitely a bug, please report it to the developers.</translation>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Read-only]</translation>
+    </message>
+    <message>
+        <source>Failed to open %1. It either does not exist or is not accessible.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1631,12 +1640,6 @@ Disable safe saves and try again?</source>
 Disable safe saves and try again?</translation>
     </message>
     <message>
-        <source>Writing the database failed.
-%1</source>
-        <translation>Writing the database failed.
-%1</translation>
-    </message>
-    <message>
         <source>Passwords</source>
         <translation>Passwords</translation>
     </message>
@@ -1682,6 +1685,10 @@ Disable safe saves and try again?</translation>
     <message>
         <source>Shared group...</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation type="unfinished">Writing the database failed: %1</translation>
     </message>
 </context>
 <context>
@@ -1885,6 +1892,14 @@ Disable safe saves and try again?</translation>
         <source>Use a specific sequence for this association:</source>
         <translation>Use a specific sequence for this association:</translation>
     </message>
+    <message>
+        <source>Open AutoType help webpage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoType help button</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
@@ -2054,6 +2069,10 @@ Disable safe saves and try again?</translation>
         <source>Inherit from parent group (%1)</source>
         <translation>Inherit from parent group (%1)</translation>
     </message>
+    <message>
+        <source>Entry has unsaved changes</source>
+        <translation type="unfinished">Entry has unsaved changes</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
@@ -2082,34 +2101,6 @@ Disable safe saves and try again?</translation>
         <translation>Inactive</translation>
     </message>
     <message>
-        <source>Import from path</source>
-        <translation>Import from path</translation>
-    </message>
-    <message>
-        <source>Export to path</source>
-        <translation>Export to path</translation>
-    </message>
-    <message>
-        <source>Synchronize with path</source>
-        <translation>Synchronize with path</translation>
-    </message>
-    <message>
-        <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation>Your KeePassXC version does not support sharing your container type. Please use %1.</translation>
-    </message>
-    <message>
-        <source>Database sharing is disabled</source>
-        <translation>Database sharing is disabled</translation>
-    </message>
-    <message>
-        <source>Database export is disabled</source>
-        <translation>Database export is disabled</translation>
-    </message>
-    <message>
-        <source>Database import is disabled</source>
-        <translation>Database import is disabled</translation>
-    </message>
-    <message>
         <source>KeeShare unsigned container</source>
         <translation>KeeShare unsigned container</translation>
     </message>
@@ -2134,15 +2125,45 @@ Disable safe saves and try again?</translation>
         <translation type="unfinished">Clear</translation>
     </message>
     <message>
-        <source>The export container %1 is already referenced.</source>
+        <source>Import</source>
+        <translation type="unfinished">Import</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished">Export</translation>
+    </message>
+    <message>
+        <source>Synchronize</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The import container %1 is already imported.</source>
+        <source>Your KeePassXC version does not support sharing this container type.
+Supported extensions are: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The container %1 imported and export by different groups.</source>
+        <source>%1 is already being exported by this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is already being imported by this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is being imported and exported by different groups in this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
+        <comment>KeeShare is a proper noun</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database export is currently disabled by application settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database import is currently disabled by application settings.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2669,10 +2690,6 @@ This may cause the affected plugins to malfunction.</translation>
         <translation>Unable to issue challenge-response.</translation>
     </message>
     <message>
-        <source>Wrong key or database file is corrupt.</source>
-        <translation>Wrong key or database file is corrupt.</translation>
-    </message>
-    <message>
         <source>missing database headers</source>
         <translation>missing database headers</translation>
     </message>
@@ -2691,6 +2708,11 @@ This may cause the affected plugins to malfunction.</translation>
     <message>
         <source>Invalid header data length</source>
         <translation>Invalid header data length</translation>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2721,10 +2743,6 @@ This may cause the affected plugins to malfunction.</translation>
     <message>
         <source>Header SHA256 mismatch</source>
         <translation>Header SHA256 mismatch</translation>
-    </message>
-    <message>
-        <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation>Wrong key or database file is corrupt. (HMAC mismatch)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
@@ -2825,6 +2843,15 @@ This may cause the affected plugins to malfunction.</translation>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
         <translation>Invalid variant map field type size</translation>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(HMAC mismatch)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3112,10 +3139,6 @@ Line %2, column %3</translation>
         <translation>Unable to calculate master key</translation>
     </message>
     <message>
-        <source>Wrong key or database file is corrupt.</source>
-        <translation>Wrong key or database file is corrupt.</translation>
-    </message>
-    <message>
         <source>Key transformation failed</source>
         <translation>Key transformation failed</translation>
     </message>
@@ -3211,39 +3234,56 @@ Line %2, column %3</translation>
         <source>unable to seek to content position</source>
         <translation>unable to seek to content position</translation>
     </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
-        <source>Disabled share</source>
-        <translation>Disabled share</translation>
-    </message>
-    <message>
-        <source>Import from</source>
-        <translation>Import from</translation>
-    </message>
-    <message>
-        <source>Export to</source>
-        <translation>Export to</translation>
-    </message>
-    <message>
-        <source>Synchronize with</source>
-        <translation>Synchronize with</translation>
-    </message>
-    <message>
-        <source>Disabled share %1</source>
+        <source>Invalid sharing reference</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import from share %1</source>
+        <source>Inactive share %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export to share %1</source>
+        <source>Imported from %1</source>
+        <translation type="unfinished">Imported from %1</translation>
+    </message>
+    <message>
+        <source>Exported to %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Synchronize with share %1</source>
+        <source>Synchronized with %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import is disabled in settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export is disabled in settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inactive share</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Imported from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronized with</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4937,6 +4977,84 @@ Available commands:
     </message>
     <message>
         <source>Cannot create new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate password key for the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Displays debugging information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deactivate password key for the database to merge from.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Build Type: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Revision: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debugging mode is disabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debugging mode is enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Operating system: %1
+CPU architecture: %2
+Kernel: %3 %4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished">Auto-Type</translation>
+    </message>
+    <message>
+        <source>KeeShare (signed and unsigned sharing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeeShare (only signed sharing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeeShare (only unsigned sharing)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>YubiKey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TouchID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enabled extensions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cryptographic libraries:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

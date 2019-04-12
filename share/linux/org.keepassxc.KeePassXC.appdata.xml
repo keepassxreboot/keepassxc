@@ -50,6 +50,37 @@
     </screenshots>
 
     <releases>
+        <release version="2.4.1" date="2019-04-12">
+            <description>
+                <ul>
+                    <li>Fix database deletion when using unsafe saves to a different file system [#2889]</li>
+                    <li>Fix opening databases with legacy key files that contain '/' [#2872]</li>
+                    <li>Fix opening database files from the command line [#2919]</li>
+                    <li>Fix crash when editing master key [#2836]</li>
+                    <li>Fix multiple issues with apply button behavior [#2947]</li>
+                    <li>Fix issues on application startup (tab order, --pw-stdin, etc.) [#2830]</li>
+                    <li>Fix building without WITH_XC_KEESHARE</li>
+                    <li>Fix reference entry coloring on macOS dark mode [#2984]</li>
+                    <li>Hide window when performing entry auto-type on macOS [#2969]</li>
+                    <li>Improve UX of update checker; reduce checks to every 7 days [#2968]</li>
+                    <li>KeeShare improvements [#2946, #2978, #2824]</li>
+                    <li>Re-enable Ctrl+C to copy password from search box [#2947]</li>
+                    <li>Add KeePassXC-Browser integration for Brave browser [#2933]</li>
+                    <li>SSH Agent: Re-Add keys on database unlock [#2982]</li>
+                    <li>SSH Agent: Only remove keys on app exit if they are removed on lock [#2985]</li>
+                    <li>CLI: Add --no-password option [#2708]</li>
+                    <li>CLI: Improve database extraction to XML [#2698]</li>
+                    <li>CLI: Don't call mandb on build [#2774]</li>
+                    <li>CLI: Add debug info [#2714]</li>
+                    <li>Improve support for Snap theming [#2832]</li>
+                    <li>Add support for building on Haiku OS [#2859]</li>
+                    <li>Ctrl+PgDn now goes to the next tab and Ctrl+PgUp to the previous</li>
+                    <li>Fix compiling on GCC 5 / Xenial [#2990]</li>
+                    <li>Add .gitrev output to tarball for third-party builds [#2970]</li>
+                    <li>Add WITH_XC_UPDATECHECK compile flag to enable/disable the update checker [#2968]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.4.0" date="2019-03-19">
             <description>
                 <ul>

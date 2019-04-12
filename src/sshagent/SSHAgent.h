@@ -25,6 +25,7 @@
 
 #include "crypto/ssh/OpenSSHKey.h"
 #include "gui/DatabaseWidget.h"
+#include "sshagent/KeeAgentSettings.h"
 
 class SSHAgent : public QObject
 {
@@ -36,7 +37,7 @@ public:
 
     const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, bool removeOnLock, quint32 lifetime, bool confirm);
+    bool addIdentity(OpenSSHKey& key, KeeAgentSettings& settings);
     bool removeIdentity(OpenSSHKey& key);
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 

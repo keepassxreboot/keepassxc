@@ -85,6 +85,22 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QToolButton" name="openHelpButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Open AutoType help webpage</string>
+       </property>
+       <property name="accessibleName">
+        <string>AutoType help button</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -268,6 +284,7 @@
   <tabstop>inheritSequenceButton</tabstop>
   <tabstop>customSequenceButton</tabstop>
   <tabstop>sequenceEdit</tabstop>
+  <tabstop>openHelpButton</tabstop>
   <tabstop>assocView</tabstop>
   <tabstop>windowTitleCombo</tabstop>
   <tabstop>customWindowSequenceButton</tabstop>

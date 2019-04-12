@@ -21,11 +21,11 @@
 
 #include "config-keepassx.h"
 #include "core/FilePath.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "git-info.h"
 
 #include <QClipboard>
-#include <QSysInfo>
+
 
 static const QString aboutMaintainers = R"(
 <p><ul>
@@ -175,67 +175,7 @@ AboutDialog::AboutDialog(QWidget* parent)
 
     m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
 
-    QString commitHash;
-    if (!QString(GIT_HEAD).isEmpty()) {
-        commitHash = GIT_HEAD;
-    }
-
-    QString debugInfo = "KeePassXC - ";
-    debugInfo.append(tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
-#ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-    debugInfo.append(tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
-#endif
-    if (!commitHash.isEmpty()) {
-        debugInfo.append(tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
-    }
-
-#ifdef KEEPASSXC_DIST
-    debugInfo.append(tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
-#endif
-
-    debugInfo.append("\n").append(
-        QString("%1\n- Qt %2\n- %3\n\n")
-            .arg(tr("Libraries:"), QString::fromLocal8Bit(qVersion()), Crypto::backendVersion()));
-
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-    debugInfo.append(tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-                         .arg(QSysInfo::prettyProductName(),
-                              QSysInfo::currentCpuArchitecture(),
-                              QSysInfo::kernelType(),
-                              QSysInfo::kernelVersion()));
-
-    debugInfo.append("\n\n");
-#endif
-
-    QString extensions;
-#ifdef WITH_XC_AUTOTYPE
-    extensions += "\n- " + tr("Auto-Type");
-#endif
-#ifdef WITH_XC_BROWSER
-    extensions += "\n- " + tr("Browser Integration");
-#endif
-#ifdef WITH_XC_SSHAGENT
-    extensions += "\n- " + tr("SSH Agent");
-#endif
-#if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
-    extensions += "\n- " + tr("KeeShare (signed and unsigned sharing)");
-#elif defined(WITH_XC_KEESHARE_SECURE)
-    extensions += "\n- " + tr("KeeShare (only signed sharing)");
-#elif defined(WITH_XC_KEESHARE_INSECURE)
-    extensions += "\n- " + tr("KeeShare (only unsigned sharing)");
-#endif
-#ifdef WITH_XC_YUBIKEY
-    extensions += "\n- " + tr("YubiKey");
-#endif
-#ifdef WITH_XC_TOUCHID
-    extensions += "\n- " + tr("TouchID");
-#endif
-
-    if (extensions.isEmpty())
-        extensions = " " + tr("None");
-
-    debugInfo.append(tr("Enabled extensions:").append(extensions));
-
+    QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
     m_ui->debugInfo->setPlainText(debugInfo);
 
     m_ui->maintainers->setText(aboutMaintainers);

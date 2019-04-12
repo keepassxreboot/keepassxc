@@ -611,15 +611,15 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Z důvodu, že software ze Snap balíčku je provozován v ohraničeném prostředí, je třeba spustit skript, který zapíná napojení na webový prohlížeč. &lt;br /&gt;Tento skript je možné získat z %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Níže si přečtěte konkrétní pokyny pro rozšíření do webového prohlížeče</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>Aby fungovalo napojení na prohlížeč, je třeba KeePassXC. &lt;br /&gt; Stáhnete ho pro %1 a %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,23 @@ Přesunuto %2 klíčů do uživatelsky určených dat.</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: vytvořit novou skupinu</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Byl obdržen požadavek na vytvoření nové skupiny „%1“.
+Chcete tuto skupinu vytvořit?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Vaše nastavení KeePassXC-Browser je třeba přesunout do nastavení databáze.
+Toto je nezbytné pro zachování vašich stávajících spojení prohlížeče.
+Chcete přenést vaše stávající nastavení nyní?</translation>
     </message>
 </context>
 <context>
@@ -872,7 +876,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Klíč nebyl přeměněn.  Toto je chyba, nahlaste to vývojářům.</translation>
     </message>
 </context>
 <context>
@@ -1630,7 +1634,7 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Sdílená skupina…</translation>
     </message>
 </context>
 <context>
@@ -2075,15 +2079,15 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Exportní kontejner %1 už je odkazován.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Importní kontejner %1 už byl naimportován.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Kontejner %1 naimportován a exportován různými skupinami.</translation>
     </message>
 </context>
 <context>
@@ -3156,19 +3160,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Sdílení %1 vypnuto</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importovat ze sdílení %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Exportovat do sdílení %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Synchronizovat se sdílením %1</translation>
     </message>
 </context>
 <context>
@@ -4053,7 +4057,7 @@ Očekávejte chyby a drobné problémy, tato verze není určena pro produkční
     </message>
     <message>
         <source>Regenerate</source>
-        <translation>Regenerovat</translation>
+        <translation>Vytvoř nové</translation>
     </message>
 </context>
 <context>
@@ -4856,7 +4860,7 @@ Příkazy k dispozici:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Novou skupinu se nedaří vytvořit</translation>
     </message>
 </context>
 <context>
@@ -5132,7 +5136,7 @@ Příkazy k dispozici:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Podepsal(a):</translation>
     </message>
 </context>
 <context>
@@ -5255,27 +5259,27 @@ Příkazy k dispozici:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Popis umístění zdroje pro vícero importů do %1 v %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Kolidující popis umístění %1 cíle exportu v %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nedaří se zapouzdřit podpis: Soubor se nedaří otevřít pro zápis (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nedaří se zapouzdřit podpis: Do souboru se nedaří zapsat (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nedaří se zapouzdřit databázi: Soubor se nedaří otevřít pro zápis (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nedaří se zapouzdřit databázi: Do souboru se nedaří zapsat (%1)</translation>
     </message>
 </context>
 <context>

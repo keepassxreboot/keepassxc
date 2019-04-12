@@ -82,16 +82,19 @@ int main(int argc, char** argv)
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
+    QCommandLineOption debugInfoOption(QStringList() << "debug-info",
+                                       QObject::tr("Displays debugging information."));
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(parentWindowOption);
+    parser.addOption(debugInfoOption);
 
     parser.process(app);
 
     // Don't try and do anything with the application if we're only showing the help / version
     if (parser.isSet(versionOption) || parser.isSet(helpOption)) {
-        return 0;
+        return EXIT_SUCCESS;
     }
 
     const QStringList fileNames = parser.positionalArguments();
@@ -101,7 +104,7 @@ int main(int argc, char** argv)
             app.sendFileNamesToRunningInstance(fileNames);
         }
         qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
-        return 0;
+        return EXIT_SUCCESS;
     }
 
     QApplication::setQuitOnLastWindowClosed(false);
@@ -111,7 +114,16 @@ int main(int argc, char** argv)
         error.append("\n");
         error.append(Crypto::errorString());
         MessageBox::critical(nullptr, QObject::tr("KeePassXC - Error"), error);
-        return 1;
+        return EXIT_FAILURE;
+    }
+
+    // Displaying the debugging informations must be done after Crypto::init,
+    // to make sure we know which libgcrypt version is used.
+    if (parser.isSet(debugInfoOption)) {
+        QTextStream out(stdout, QIODevice::WriteOnly);
+        QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
+        out << debugInfo << endl;
+        return EXIT_SUCCESS;
     }
 
     if (parser.isSet(configOption)) {

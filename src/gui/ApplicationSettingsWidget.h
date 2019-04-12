@@ -55,7 +55,9 @@ private slots:
     void reject();
     void autoSaveToggled(bool checked);
     void systrayToggled(bool checked);
-    void enableToolbarSettings(bool checked);
+    void toolbarSettingsToggled(bool checked);
+    void rememberDatabasesToggled(bool checked);
+    void checkUpdatesToggled(bool checked);
 
 private:
     QWidget* const m_secWidget;

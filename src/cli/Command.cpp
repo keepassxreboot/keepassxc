@@ -46,6 +46,10 @@ const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList
                                                                      QObject::tr("Key file of the database."),
                                                                      QObject::tr("path"));
 
+const QCommandLineOption Command::NoPasswordOption =
+    QCommandLineOption(QStringList() << "no-password",
+                       QObject::tr("Deactivate password key for the database."));
+
 QMap<QString, Command*> commands;
 
 Command::~Command()

@@ -31,7 +31,7 @@ public:
     ~UpdateChecker() override;
 
     void checkForUpdates(bool manuallyRequested);
-    static bool compareVersions(const QString& remoteVersion, const QString& localVersion);
+    static bool compareVersions(const QString& localVersion, const QString& remoteVersion);
     static UpdateChecker* instance();
 
 signals:

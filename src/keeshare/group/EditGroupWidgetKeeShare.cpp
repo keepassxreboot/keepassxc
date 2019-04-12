@@ -68,13 +68,13 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
             name = tr("Inactive");
             break;
         case KeeShareSettings::ImportFrom:
-            name = tr("Import from path");
+            name = tr("Import");
             break;
         case KeeShareSettings::ExportTo:
-            name = tr("Export to path");
+            name = tr("Export");
             break;
         case KeeShareSettings::SynchronizeWith:
-            name = tr("Synchronize with path");
+            name = tr("Synchronize");
             break;
         }
         m_ui->typeComboBox->insertItem(type, name, static_cast<int>(type));
@@ -124,10 +124,10 @@ void EditGroupWidgetKeeShare::showSharingState()
             }
         }
         if (!supported) {
-            m_ui->messageWidget->showMessage(
-                tr("Your KeePassXC version does not support sharing your container type. Please use %1.")
-                    .arg(supportedExtensions.join(", ")),
-                MessageWidget::Warning);
+            m_ui->messageWidget->showMessage(tr("Your KeePassXC version does not support sharing this container type.\n"
+                                                "Supported extensions are: %1.")
+                                                 .arg(supportedExtensions.join(", ")),
+                                             MessageWidget::Warning);
             return;
         }
 
@@ -149,18 +149,18 @@ void EditGroupWidgetKeeShare::showSharingState()
                 (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
         }
         if (conflictExport) {
-            m_ui->messageWidget->showMessage(tr("The export container %1 is already referenced.").arg(reference.path),
+            m_ui->messageWidget->showMessage(tr("%1 is already being exported by this database.").arg(reference.path),
                                              MessageWidget::Error);
             return;
         }
         if (multipleImport) {
-            m_ui->messageWidget->showMessage(tr("The import container %1 is already imported.").arg(reference.path),
+            m_ui->messageWidget->showMessage(tr("%1 is already being imported by this database.").arg(reference.path),
                                              MessageWidget::Warning);
             return;
         }
         if (cycleImportExport) {
             m_ui->messageWidget->showMessage(
-                tr("The container %1 imported and export by different groups.").arg(reference.path),
+                tr("%1 is being imported and exported by different groups in this database.").arg(reference.path),
                 MessageWidget::Warning);
             return;
         }
@@ -169,15 +169,20 @@ void EditGroupWidgetKeeShare::showSharingState()
     }
     const auto active = KeeShare::active();
     if (!active.in && !active.out) {
-        m_ui->messageWidget->showMessage(tr("Database sharing is disabled"), MessageWidget::Information);
+        m_ui->messageWidget->showMessage(
+            tr("KeeShare is currently disabled. You can enable import/export in the application settings.",
+               "KeeShare is a proper noun"),
+            MessageWidget::Information);
         return;
     }
     if (active.in && !active.out) {
-        m_ui->messageWidget->showMessage(tr("Database export is disabled"), MessageWidget::Information);
+        m_ui->messageWidget->showMessage(tr("Database export is currently disabled by application settings."),
+                                         MessageWidget::Information);
         return;
     }
     if (!active.in && active.out) {
-        m_ui->messageWidget->showMessage(tr("Database import is disabled"), MessageWidget::Information);
+        m_ui->messageWidget->showMessage(tr("Database import is currently disabled by application settings."),
+                                         MessageWidget::Information);
         return;
     }
 }

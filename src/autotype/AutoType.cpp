@@ -214,7 +214,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     if (hideWindow) {
 #if defined(Q_OS_MACOS)
-        m_plugin->raiseLastActiveWindow();
+        m_plugin->hideOwnWindow();
 #else
         hideWindow->showMinimized();
 #endif

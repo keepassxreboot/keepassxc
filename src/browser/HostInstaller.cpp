@@ -39,12 +39,14 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_FIREFOX("/Library/Application Support/Mozilla/NativeMessagingHosts")
     , TARGET_DIR_VIVALDI("/Library/Application Support/Vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts")
+    , TARGET_DIR_BRAVE("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts")
 #elif defined(Q_OS_LINUX)
     , TARGET_DIR_CHROME("/.config/google-chrome/NativeMessagingHosts")
     , TARGET_DIR_CHROMIUM("/.config/chromium/NativeMessagingHosts")
     , TARGET_DIR_FIREFOX("/.mozilla/native-messaging-hosts")
     , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts")
+    , TARGET_DIR_BRAVE("/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts")
 #elif defined(Q_OS_WIN)
     // clang-format off
     , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
@@ -53,6 +55,7 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_FIREFOX("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
     , TARGET_DIR_VIVALDI(TARGET_DIR_CHROME)
     , TARGET_DIR_TOR_BROWSER(TARGET_DIR_FIREFOX)
+    , TARGET_DIR_BRAVE(TARGET_DIR_CHROME)
 #endif
 {
 }
@@ -140,7 +143,8 @@ void HostInstaller::installBrowser(SupportedBrowsers browser,
  */
 void HostInstaller::updateBinaryPaths(const bool& proxy, const QString& location)
 {
-    for (int i = 0; i < 4; ++i) {
+    // Where 6 is the number of entries in the SupportedBrowsers enum declared in HostInstaller.h
+    for (int i = 0; i < 6; ++i) {
         if (checkIfInstalled(static_cast<SupportedBrowsers>(i))) {
             installBrowser(static_cast<SupportedBrowsers>(i), true, proxy, location);
         }
@@ -166,6 +170,8 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_VIVALDI;
     case SupportedBrowsers::TOR_BROWSER:
         return TARGET_DIR_TOR_BROWSER;
+    case SupportedBrowsers::BRAVE:
+      return TARGET_DIR_BRAVE;
     default:
         return QString();
     }
@@ -188,9 +194,11 @@ QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
     case SupportedBrowsers::FIREFOX:
         return "firefox";
     case SupportedBrowsers::VIVALDI:
-        return "vivaldi";
+      return "vivaldi";
     case SupportedBrowsers::TOR_BROWSER:
         return "tor-browser";
+    case SupportedBrowsers::BRAVE:
+      return "brave";
     default:
         return QString();
     }

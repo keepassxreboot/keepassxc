@@ -611,15 +611,15 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Через заходи безпеки у Snap Вам необхідно виконати сценарій для сполучення з переглядачем. &lt;br /&gt;Ви можете знайти файл сценарію у %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Нижче Ви можете знайти інструкції для використання додатку для браузера</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>Для сполучення з переглядачем необхідний KeePassXC-Browser. &lt;br /&gt;Завантажте його для %1 та %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,23 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Створити нову групу</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Отримано запит для створення нової групи &quot;%1&quot;.
+Ви хочете створити цю групу?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Ваші параметри KeePassXC-Переглядача мають бути переміщені до параметрів сховища.
+Це необхідно для підтримання сполучень з Вашим поточним переглядачем.
+Бажаєте перемістити параметри зараз?</translation>
     </message>
 </context>
 <context>
@@ -872,7 +876,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Ключ не перетворено через ваду в програмі. Будь ласка, повідомте про це розробникам!</translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1635,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Спільна група...</translation>
     </message>
 </context>
 <context>
@@ -2076,15 +2080,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>На експортну оболонку %1 вже існує посилання.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Оболонку %1 вже імпортовано.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Оболонку %1 імпортують та експортують різні групи.</translation>
     </message>
 </context>
 <context>
@@ -3157,19 +3161,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Вимкнутий спільний ресурс %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Імпортувати зі спільного ресурсу %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Експортувати до спільного ресурсу %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Узгодити зі спільним ресурсом %1</translation>
     </message>
 </context>
 <context>
@@ -4858,7 +4862,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо створити нову групу</translation>
     </message>
 </context>
 <context>
@@ -5134,7 +5138,7 @@ Available commands:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Підписувач:</translation>
     </message>
 </context>
 <context>
@@ -5253,31 +5257,31 @@ Available commands:
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation type="unfinished"/>
+        <translation>Довірити %1, що має відбиток %2 з %3? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Шлях до %1 має декілька джерел імпорту в %2.</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Суперечливий шлях для експорту %1 у %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо вкласти підпис: неможливо відкрити файл для запису (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо вкласти підпис: неможливо записати файл (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо вкласти сховище: неможливо відкрити файл для запису (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо вкласти сховище: неможливо записати файл (%1)</translation>
     </message>
 </context>
 <context>

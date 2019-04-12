@@ -51,6 +51,7 @@ int Extract::execute(const QStringList& arguments)
     parser.addPositionalArgument("database", QObject::tr("Path of the database to extract."));
     parser.addOption(Command::QuietOption);
     parser.addOption(Command::KeyFileOption);
+    parser.addOption(Command::NoPasswordOption);
     parser.addHelpOption();
     parser.process(arguments);
 
@@ -59,17 +60,19 @@ int Extract::execute(const QStringList& arguments)
         errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
         return EXIT_FAILURE;
     }
-
-    if (!parser.isSet(Command::QuietOption)) {
-        outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
-    }
-
+    
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 
-    QString line = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
-    auto passwordKey = QSharedPointer<PasswordKey>::create();
-    passwordKey->setPassword(line);
-    compositeKey->addKey(passwordKey);
+    if (!parser.isSet(Command::NoPasswordOption)) {
+        if (!parser.isSet(Command::QuietOption)) {
+            outputTextStream << QObject::tr("Insert password to unlock %1: ").arg(args.at(0)) << flush;
+        }
+
+        QString line = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
+        auto passwordKey = QSharedPointer<PasswordKey>::create();
+        passwordKey->setPassword(line);
+        compositeKey->addKey(passwordKey);
+    }
 
     QString keyFilePath = parser.value(Command::KeyFileOption);
     if (!keyFilePath.isEmpty()) {

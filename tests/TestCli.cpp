@@ -70,11 +70,23 @@ void TestCli::initTestCase()
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
     sourceDbFile.close();
 
-    // Load the NewDatabase.kdbx file into temporary storage
+    // Load the NewDatabase2.kdbx file into temporary storage
     QFile sourceDbFile2(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase2.kdbx"));
     QVERIFY(sourceDbFile2.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFile2, m_dbData2));
     sourceDbFile2.close();
+
+    // Load the KeyFileProtected.kdbx file into temporary storage
+    QFile sourceDbFile3(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtected.kdbx"));
+    QVERIFY(sourceDbFile3.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile3, m_keyFileProtectedDbData));
+    sourceDbFile3.close();
+
+    // Load the KeyFileProtectedNoPassword.kdbx file into temporary storage
+    QFile sourceDbFile4(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.kdbx"));
+    QVERIFY(sourceDbFile4.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile4, m_keyFileProtectedNoPasswordDbData));
+    sourceDbFile4.close();
 }
 
 void TestCli::init()
@@ -88,6 +100,16 @@ void TestCli::init()
     m_dbFile2->open();
     m_dbFile2->write(m_dbData2);
     m_dbFile2->close();
+
+    m_keyFileProtectedDbFile.reset(new TemporaryFile());
+    m_keyFileProtectedDbFile->open();
+    m_keyFileProtectedDbFile->write(m_keyFileProtectedDbData);
+    m_keyFileProtectedDbFile->close();
+
+    m_keyFileProtectedNoPasswordDbFile.reset(new TemporaryFile());
+    m_keyFileProtectedNoPasswordDbFile->open();
+    m_keyFileProtectedNoPasswordDbFile->write(m_keyFileProtectedNoPasswordDbData);
+    m_keyFileProtectedNoPasswordDbFile->close();
 
     m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
@@ -131,7 +153,7 @@ void TestCli::cleanupTestCase()
 QSharedPointer<Database> TestCli::readTestDatabase() const
 {
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), "", m_stdoutHandle));
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", m_stdoutHandle));
     m_stdoutFile->seek(ftell(m_stdoutHandle)); // re-synchronize handles
     return db;
 }
@@ -320,7 +342,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, "", Utils::DEVNULL));
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", Utils::DEVNULL));
     QVERIFY(db);
 
     // Should refuse to create the database if it already exists.
@@ -349,7 +371,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, keyfilePath, Utils::DEVNULL));
+    auto db2 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, true, keyfilePath, Utils::DEVNULL));
     QVERIFY(db2);
 
     // Testing with existing keyfile
@@ -366,7 +388,7 @@ void TestCli::testCreate()
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, keyfilePath, Utils::DEVNULL));
+    auto db3 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, Utils::DEVNULL));
     QVERIFY(db3);
 }
 
@@ -657,6 +679,63 @@ void TestCli::testGenerate()
         QVERIFY2(regex.match(password).hasMatch(),
                  qPrintable("Password " + password + " does not match pattern " + pattern));
     }
+}
+
+void TestCli::testKeyFileOption()
+{
+    List listCmd;
+
+    QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtected.key"));
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-k", keyFilePath, m_keyFileProtectedDbFile->fileName()});
+    m_stdoutFile->reset();
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("entry1\n"
+                                                 "entry2\n"));
+
+    // Should raise an error with no key file.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", m_keyFileProtectedDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
+
+    // Should raise an error if key file path is invalid.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-k", "invalidpath", m_keyFileProtectedDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll().split(':').at(0),
+             QByteArray("Failed to load key file invalidpath"));
+}
+
+void TestCli::testNoPasswordOption()
+{
+    List listCmd;
+
+    QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.key"));
+    listCmd.execute({"ls", "-k", keyFilePath, "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
+    m_stdoutFile->reset();
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("entry1\n"
+                                                 "entry2\n"));
+
+    // Should raise an error with no key file.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    listCmd.execute({"ls", "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QVERIFY(m_stderrFile->readAll().contains("Invalid credentials were provided"));
 }
 
 void TestCli::testList()

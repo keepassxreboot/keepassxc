@@ -192,7 +192,7 @@
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Fenster verstecken wenn minimiert</translation>
+        <translation>Fenster verstecken, wenn minimiert</translation>
     </message>
     <message>
         <source>Language</source>
@@ -293,11 +293,11 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Datenbank nach Auto-Type automatisch wieder sperren.</translation>
+        <translation>Datenbank nach Auto-Type automatisch wieder sperren</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>Keine erneute Passworteingabe verlangen, wenn das Passwort sichtbar ist.</translation>
+        <translation>Keine erneute Passworteingabe verlangen, wenn das Passwort sichtbar ist</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Eintrags-Notizen standardmäßig verstecken</translation>
+        <translation>Eintragsnotizen standardmäßig verstecken</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -443,7 +443,7 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
         <translation>Du hast mehrere Datenbanken geöffnet.
-Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation>
+Bitte wähle die richtige Datenbank zum Speichern der Anmeldedaten.</translation>
     </message>
 </context>
 <context>
@@ -594,7 +594,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation>&lt;b&gt;Achtung&lt;/b&gt;, die keepassxc-proxy Anwendung wurde nicht gefunden!&lt;br /&gt;Bitte überprüfe den KeePassXC-Ordner oder bestätige den benutzerdefinierten Ort in den erweiterten Einstellungen.&lt;br /&gt;Die Browseranbindung wird nicht funktionieren, wenn das Proxyprogramm nicht eingebunden ist.&lt;br /&gt;Vermuteter Pfad:</translation>
+        <translation>&lt;b&gt;Achtung&lt;/b&gt;, die KeePassXC-Proxy Anwendung wurde nicht gefunden!&lt;br /&gt;Bitte überprüfen Sie den KeePassXC-Ordner oder bestätigen Sie den benutzerdefinierten Ort in den erweiterten Einstellungen.&lt;br /&gt;Die Browseranbindung wird nicht funktionieren, wenn das Proxyprogramm nicht eingebunden ist.&lt;br /&gt;Vermuteter Pfad:</translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -607,19 +607,19 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Nicht nach HTTP Basic Auth fragen</translation>
+        <translation>Niemals fragen, bevor für &quot;HTTP Basic Auth&quot; auf Anmeldedaten zugegriffen wird</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Aufgrund von Snap Sandboxing müssen Sie ein Skript ausführen, um die Browser-Integration zu aktivieren.&lt;br /&gt;Sie können dieses Skript erhalten unter %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Bitte beachten Sie die untenstehenden speziellen Anweisungen für die Verwendung der Browser-Erweiterung</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser wird für die Funktion der Browserintegration benötigt. &lt;br /&gt;Laden Sie es für %1 und %2. %3 herunter.</translation>
     </message>
 </context>
 <context>
@@ -670,7 +670,7 @@ Möchten Sie diesen überschreiben?</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeepassXC: KeePassHTTP-Attribute wurden umgewandelt</translation>
+        <translation>KeePassXC: KeePassHTTP-Attribute wurden umgewandelt</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
@@ -696,19 +696,23 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Neue Gruppe erstellen</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Eine Anfrage zur Erstellung einer neuen Gruppe &quot;%1&quot; ist eingegangen.
+Möchten Sie diese Gruppe erstellen?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Ihre KeePassXC-Browser-Einstellungen müssen in die Datenbankeinstellungen verschoben werden.
+Dies ist notwendig, um Ihre aktuellen Browserverbindungen aufrechtzuerhalten.
+Möchten Sie Ihre bestehenden Einstellungen jetzt migrieren?</translation>
     </message>
 </context>
 <context>
@@ -871,7 +875,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Schlüssel nicht umgewandelt. Dies ist ein Fehler, bitte melden Sie ihn den Entwicklern!</translation>
     </message>
 </context>
 <context>
@@ -1630,7 +1634,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Gemeinsame Gruppe...</translation>
     </message>
 </context>
 <context>
@@ -2075,15 +2079,15 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Der Exportcontainer %1 wird bereits referenziert.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Der Importcontainer %1 ist bereits importiert.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Der Container %1 wird von unterschiedlichen Gruppen importiert und exportiert.</translation>
     </message>
 </context>
 <context>
@@ -3154,19 +3158,19 @@ Zeile %2, Spalte %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Freigabe %1 deaktiviert</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Von Freigabe %1 importieren</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Zu Freigabe %1 exportieren</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Mit Freigabe %1 synchronisieren</translation>
     </message>
 </context>
 <context>
@@ -3447,8 +3451,8 @@ Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>WARNUNG: Deine Qt Version könnte KeePassXC mit einer Bildschirmtastatur zu abstürzen bringen!
-Wir empfehlen dir die Verwendung des auf unserer Downloadseite verfügbaren AppImage.</translation>
+        <translation>WARNUNG: Deine Qt-Version könnte KeePassXC mit einer Bildschirmtastatur zu abstürzen bringen!
+Wir empfehlen die Verwendung des verfügbaren App-Images auf unserer Downloadseite.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -3815,7 +3819,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ein Passwort ist die primäre Methode, Ihre Datenbank abzusichern.&lt;/p&gt;&lt;p&gt;Gute Passwörter sind lang und einzigartig. KeepassXC kann eins für Sie generieren.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Ein Passwort ist die primäre Methode, Ihre Datenbank abzusichern.&lt;/p&gt;&lt;p&gt;Gute Passwörter sind lang und einzigartig. KeePassXC kann eins für Sie generieren.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4854,7 +4858,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Neue Gruppe kann nicht erstellt werden</translation>
     </message>
 </context>
 <context>
@@ -5130,7 +5134,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Unterzeichner:</translation>
     </message>
 </context>
 <context>
@@ -5177,7 +5181,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation>Unterzeichnete geteilte Container werden nicht unterstützt. Import verhindert.</translation>
+        <translation>Unterzeichnete geteilte Container werden nicht unterstützt - Import verhindert</translation>
     </message>
     <message>
         <source>File is not readable</source>
@@ -5201,7 +5205,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation>Nicht unterzeichnete geteilte Container werden nicht unterstützt. Import verhindert.</translation>
+        <translation>Nicht unterzeichnete geteilte Container werden nicht unterstützt - Import verhindert</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
@@ -5213,11 +5217,11 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation>Unbekannter geteilter Container-Typ</translation>
+        <translation>Unbekannter geteilter Containertyp</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation>Überschreiben von unterzeichneten geteilten Containern nicht unterstützt. Export verhindert.</translation>
+        <translation>Überschreiben von unterzeichneten geteilten Containern nicht unterstützt - Export verhindert</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
@@ -5225,7 +5229,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation>Überschreiben von nicht unterzeichneten geteilten Containern nicht unterstützt. Export verhindert.</translation>
+        <translation>Überschreiben von nicht unterzeichneten geteilten Containern nicht unterstützt - Export verhindert</translation>
     </message>
     <message>
         <source>Could not write export container</source>
@@ -5253,27 +5257,27 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Multipler Import-Quellpfad zu %1 in %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Konflikt beim Export-Zielpfad %1 in %2 </translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Signatur konnte nicht eingebunden werden: Zum Schreiben konnte die Datei (%1) nicht geöffnet werden </translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Signatur konnte nicht eingebunden werden: Datei konnte nicht geschrieben werden (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Datenbank konnte nicht eingebunden werden: Zum Schreiben konnte die Datei (%1) nicht geöffnet werden </translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Datenbank konnte nicht eingebunden werden: Datei konnte nicht geschrieben werden (%1)</translation>
     </message>
 </context>
 <context>
@@ -5411,7 +5415,7 @@ Verfügbare Kommandos:
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation>Version aktuel</translation>
+        <translation>Version aktuell</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>

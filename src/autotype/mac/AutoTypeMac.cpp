@@ -165,9 +165,9 @@ bool AutoTypePlatformMac::raiseWindow(WId pid)
 //
 // Activate last active window
 //
-bool AutoTypePlatformMac::raiseLastActiveWindow()
+bool AutoTypePlatformMac::hideOwnWindow()
 {
-    return macUtils()->raiseLastActiveWindow();
+    return macUtils()->hideOwnWindow();
 }
 
 //
