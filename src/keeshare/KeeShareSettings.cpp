@@ -28,6 +28,8 @@
 #include <QPainter>
 #include <QPushButton>
 
+#include <functional>
+
 namespace KeeShareSettings
 {
     namespace
