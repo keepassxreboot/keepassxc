@@ -94,6 +94,17 @@ AppKit::~AppKit()
 }
 
 //
+// Get state of macOS Dark Mode color scheme
+//
+- (bool) isDarkMode
+{
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+    id style = [dict objectForKey:@"AppleInterfaceStyle"];
+    return ( style && [style isKindOfClass:[NSString class]]
+             && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+}
+
+//
 // ------------------------- C++ Trampolines -------------------------
 //
 
@@ -129,10 +140,7 @@ bool AppKit::isHidden(pid_t pid)
 
 bool AppKit::isDarkMode()
 {
-    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
-    id style = [dict objectForKey:@"AppleInterfaceStyle"];
-    return ( style && [style isKindOfClass:[NSString class]]
-            && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+    return [static_cast<id>(self) isDarkMode];
 }
 
 @end
