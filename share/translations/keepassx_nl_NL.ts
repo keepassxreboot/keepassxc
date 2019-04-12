@@ -421,7 +421,7 @@
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 vraagt toegang tot jouw wachtwoorden voor het volgende.
+        <translation>%1 vraagt toegang tot jouw wachtwoorden voor de volgende item(s).
 Geef aan of je toegang wilt verlenen of niet.</translation>
     </message>
 </context>
@@ -611,15 +611,15 @@ Selecteer de database voor het opslaan van de inloggegevens.</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Vanwege de Snap sandboxing, moet je een script uitvoeren waarmee browser integratie mogelijk wordt. &lt;br /&gt; Je kunt dit script vinden op %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Raadpleeg onderstaand speciale instructies voor gebruik van browserextensie </translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser is vereist om de integratie van de browser te laten werken.  &lt;br /&gt; download het voor %1 en %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,23 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Een nieuwe groep maken</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Een aanvraag voor het maken van een nieuwe groep &apos;%1&apos; werd ontvangen.
+Wil je deze groep maken?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>De KeePassXC-Browser instellingen moeten worden verplaatst naar de instellingen-database.
+Dit is nodig om de huidige browser verbindingen te behouden.
+Wil je de bestaande instellingen nu migreren?</translation>
     </message>
 </context>
 <context>
@@ -872,7 +876,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Toets niet getransformeerd. Dit is een bug, rapporteer deze alstublieft aan de ontwikkelaars!</translation>
     </message>
 </context>
 <context>
@@ -1069,7 +1073,7 @@ Hierdoor werkt de verbinding met de browser plugin mogelijk niet meer.</translat
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Wilt u echt alle site-specifieke instellingen bij items vergeten? Machtigingen voor toegang zullen worden ingetrokken.</translation>
+        <translation>Wil je echt alle site-specifieke instellingen bij items vergeten? Machtigingen voor toegang zullen worden ingetrokken.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1339,7 +1343,7 @@ Als je dit aantal aanhoudt is het mogelijk heel gemakkelijk om de database te kr
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Je moet minstens één coderingssleutel aan uw database toevoegen om deze te beveiligen!</translation>
+        <translation>Je moet minstens één coderingssleutel aan de database toevoegen om deze te beveiligen!</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -1527,7 +1531,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Wilt u echt %n item(s) voorgoed verwijderen?</numerusform><numerusform>Wilt u echt %n item(s) voorgoed verwijderen?</numerusform></translation>
+        <translation><numerusform>Wilt u echt %n item(s) voorgoed verwijderen?</numerusform><numerusform>Wil je echt %n item(s) voorgoed verwijderen?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
@@ -1605,7 +1609,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Vermelding &quot;%1&quot; heeft %2 reference(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of verwijderen toch?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referentie(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform></translation>
+        <translation><numerusform>Vermelding &quot;%1&quot; heeft %2 reference(s). Wilt u verwijzingen vervangen door waarden, dit bericht overslaan of verwijderen toch?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referentie(s). Wil je de verwijzingen vervangen door waarden, dit bericht overslaan, of toch verwijderen ?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1617,7 +1621,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Wilt u echt de groep &apos;%1&apos; naar de prullenbak verplaatsen?</translation>
+        <translation>Wil je echt de groep &apos;%1&apos; naar de prullenbak verplaatsen?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -1629,7 +1633,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Gedeelde groep...</translation>
     </message>
 </context>
 <context>
@@ -2034,7 +2038,7 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation>Uw KeePassXC-versie biedt geen ondersteuning voor het delen van uw Containertype. Gebruik %1.</translation>
+        <translation>Deze KeePassXC-versie biedt geen ondersteuning voor het delen van jouw container type. Gebruik %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
@@ -2074,15 +2078,15 @@ Veilig opslaan afschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Er wordt al verwezen naar export container %1.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Import container %1 is al geïmporteerd.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>De container %1 is geïmporteerd en geëxporteerd door verschillende groepen.</translation>
     </message>
 </context>
 <context>
@@ -3151,19 +3155,19 @@ Lijn %2, kolom %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Delen uitgeschakeld %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Geïmporteerd van %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Ge-exporteerd naar %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Synchroniseren met %1</translation>
     </message>
 </context>
 <context>
@@ -3423,7 +3427,7 @@ Bericht: %2</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey!</source>
-        <translation>Druk de knop op uw YubiKey!</translation>
+        <translation>Druk op de knop van je YubiKey!</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC!
@@ -3554,7 +3558,7 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>Opmerking: U gebruikt een pre-release versie van KeePassXC!
+        <translation>Opmerking: Je gebruikt een pre-release versie van KeePassXC!
 Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor productiedoeleinden.</translation>
     </message>
     <message>
@@ -3567,7 +3571,7 @@ Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor p
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>U kunt altijd handmatig controleren op updates vanuit het programmamenu.</translation>
+        <translation>Je kunt altijd handmatig controleren of er updates zijn vanuit het programmamenu.</translation>
     </message>
 </context>
 <context>
@@ -4851,7 +4855,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Kon nieuwe groep niet maken</translation>
     </message>
 </context>
 <context>
@@ -5123,11 +5127,11 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>Het geëxporteerde certificaat is niet hetzelfde als die in gebruik is. Wilt u het huidige certificaat exporteren?</translation>
+        <translation>Het geëxporteerde certificaat is niet hetzelfde als die in gebruik is. Wil je het huidige certificaat exporteren?</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Ondertekenaar:</translation>
     </message>
 </context>
 <context>
@@ -5246,31 +5250,31 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>Wilt u %1 met de vingerafdruk van %2 vanaf %3 vertrouwen? {1 ?} {2 ?} </translation>
+        <translation>Wil je %1 met de vingerafdruk van %2 vanaf %3 vertrouwen? {1 ?} {2 ?} </translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Meerdere import bronpaden naar %1 in %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Conflicterende exporteerdoelpad %1 in %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Kon handtekening niet insluiten: Kan bestand niet openen om naar te schrijven (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Kon handtekening niet insluiten: Kan niet schrijven naar bestand (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Kon database niet insluiten: Kan bestand niet openen om naar te schrijven (%1) </translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Kon database niet insluiten: Kan niet schrijven naar bestand (%1)</translation>
     </message>
 </context>
 <context>
@@ -5301,7 +5305,7 @@ Beschikbare opdrachten:
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>Let op: deze TOTP-instellingen zijn op maat en werken mogelijk niet met andere authenticators.</translation>
+        <translation>Let op: deze TOTP-instellingen zijn applicatie specifiek en werken mogelijk niet met andere authenticators.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>

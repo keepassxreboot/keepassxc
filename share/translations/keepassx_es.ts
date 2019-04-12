@@ -50,7 +50,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent (requires restart)</source>
-        <translation>Habilitar el Agente SSH (requiere reinicio)</translation>
+        <translation>Habilitar el Agente de SSH (requiere reinicio)</translation>
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Mostrar icono en la bandeja de del sistema</translation>
+        <translation>Mostrar icono en la bandeja del sistema</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
@@ -204,11 +204,11 @@
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Use título de entrada para acertar ventanas en Auto-Tipeado global.</translation>
+        <translation>Use título de entrada para acertar ventanas en Auto-Escritura global.</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Use URL para acertar ventanas en Auto-Tipedo global</translation>
+        <translation>Use URL para acertar ventanas en Auto-Escritura global</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -340,7 +340,7 @@
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>¡La sintaxis de la declaración de su auto-escritura es incorrecta!</translation>
+        <translation>¡La sintaxis de la declaración de su Auto-Escritura es incorrecta!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
@@ -404,7 +404,7 @@
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC-Browser Confirm Access</source>
-        <translation>KeePassXC-Navegador Confirmar Acceso</translation>
+        <translation>KeePassXC-Browser Confirmar Acceso</translation>
     </message>
     <message>
         <source>Remember this decision</source>
@@ -454,7 +454,7 @@ Por favor, seleccione la base de datos correcta para guardar las credenciales.</
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Esto es necesario para acceder a las bases de datos con KeePassXC-Navegador</translation>
+        <translation>Esto es necesario para acceder a las bases de datos con KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable KeepassXC browser integration</source>
@@ -611,15 +611,15 @@ Por favor, seleccione la base de datos correcta para guardar las credenciales.</
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Debido al modo aislado de Snap, debes ejecutar un código para permitir la integración con el navegador.&lt;br/&gt;Puedes obtener este código desde %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Por favor ve las instrucciones especiales para el uso de extensiones del navegador debajo.</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser es necesario para que la integración con el navegador funcione. &lt;br /&gt;Descárguelo para %1 y %2. %3</translation>
     </message>
 </context>
 <context>
@@ -697,19 +697,23 @@ Movió %2 claves a datos personalizados.</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Crear un grupo nuevo</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Una solicitud para crear un nuevo grupo &quot;%1&quot; se ha recibido.
+¿Quiere crear este grupo?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Sus configuraciones de KeePassXC-Browser necesitan moverse a las configuraciones de base de datos.
+Es necesario para mantener sus conexiones presentes del navegador.
+¿Le gustaría migrar sus configuraciones existentes ahora?</translation>
     </message>
 </context>
 <context>
@@ -873,7 +877,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Llave no está transformada. Esto es un bug, por favor, ¡informe sobre él a los desarrolladores!</translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1010,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
-        <translation>Mueva los atributos de KeePassHTTP a los datos &amp;personalizados de KeePassXC-Browser</translation>
+        <translation>Mover los atributos de KeePassHTTP a los datos &amp;personalizados de KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1631,7 +1635,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Grupo compartido...</translation>
     </message>
 </context>
 <context>
@@ -2076,15 +2080,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>El contenedor de exportación %1 ya es referenciado.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>El contenedor de importación %1 ya es importado.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>El contenedor %1 se importa y se exporta por grupos diferentes.</translation>
     </message>
 </context>
 <context>
@@ -2928,7 +2932,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Falta de secuencia o ventana de Asociación de auto-tipeado</translation>
+        <translation>Falta de secuencia o ventana de asociación de Auto-Escritura</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -3155,19 +3159,19 @@ Linea %2, columna %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Deshabilitada cuota %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importar de cuota %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Exportar a cuota %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Sincronizar con cuota %1</translation>
     </message>
 </context>
 <context>
@@ -3518,7 +3522,7 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Relizar &amp;Auto-Escritura</translation>
+        <translation>Realizar &amp;Auto-Escritura</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -4205,7 +4209,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Camino de la entrada para añadir.</translation>
+        <translation>Ruta de la entrada para añadir.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
@@ -4214,7 +4218,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>Camino de la entrada para copiar.</translation>
+        <translation>Ruta de la entrada para copiar.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
@@ -4234,7 +4238,7 @@ Espere algunos errores y problemas menores, esta versión no está destinada par
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Camino de la entrada para editar.</translation>
+        <translation>Ruta de la entrada para editar.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
@@ -4805,7 +4809,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>Camino de la entrada a quitar.</translation>
+        <translation>Ruta de la entrada a quitar.</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -4857,7 +4861,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>No se puede crear el nuevo grupo</translation>
     </message>
 </context>
 <context>
@@ -5133,7 +5137,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Firmante:</translation>
     </message>
 </context>
 <context>
@@ -5256,27 +5260,27 @@ Comandos disponibles:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Ruta de origen de importación múltiple a %1 en %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Ruta de destino de exportación contradictoria %1 en %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>No se puede incrustar la firma: no se puede abrir el archivo para escribir (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>No se puede incrustar la firma: no se puede escribir el archivo (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>No se puede incrustar la base de datos: no se puede abrir el archivo para escribir (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>No se puede incrustar la base de datos: no se puede escribir el archivo (%1)</translation>
     </message>
 </context>
 <context>

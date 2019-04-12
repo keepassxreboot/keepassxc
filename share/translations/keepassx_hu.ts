@@ -611,15 +611,15 @@ Válassza ki a helyes adatbázist a hitelesítő adatok mentéséhez.</translati
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>A Snap homokozó miatt egy parancsfájlt kell futtatni a böngészőintegráció engedélyezéséhez.&lt;br /&gt;Ezt innen szerezheti be: %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Olvassa el a böngészőkiegészítő használatáról szóló különleges utasításokat alább</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>A böngészőintegráció működéséhez a KeePassXC-böngészőre van szükség. &lt;br /&gt;Letölthető ezen böngészőkre: %1 és %2. %3</translation>
     </message>
 </context>
 <context>
@@ -695,19 +695,22 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Új csoport létrehozása</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Az új „%1” csoport létrehozási kérése fogadva.
+Biztos, hogy létrehozza ezt a csoportot?</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>A KeePassXC-Browser beállításait át kell helyezni az adatbázis-beállításokba.
+Ez szükséges a jelenlegi böngészőkapcsolatok fenntartásához.
+Biztos, hogy migrálja most a meglévő beállításokat?</translation>
     </message>
 </context>
 <context>
@@ -871,7 +874,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>A kulcs nincs átalakítva. Ez egy hiba, jelezze a fejlesztőknek!</translation>
     </message>
 </context>
 <context>
@@ -1531,7 +1534,7 @@ Egyesíti a módosításokat?</translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Törli az bejegyzést?</numerusform><numerusform>Törli az bejegyzéseket?</numerusform></translation>
+        <translation><numerusform>Törli a bejegyzést?</numerusform><numerusform>Törli a bejegyzéseket?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -1601,11 +1604,11 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>Lecserélhető a bejegyzésre való hivatkozás?</translation>
+        <translation>Lecseréli a bejegyzésre mutató hivatkozásokat?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felül lehet írni a hivatkozást az értékekkel, vagy legyen átugorva, ill. legyen mindenképpen törölve?</numerusform><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felül lehet írni a hivatkozásokat az értékekkel, vagy legyenek átugorva, ill. legyenek mindenképpen törölve?</numerusform></translation>
+        <translation><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felülírja a hivatkozásokat az értékekkel, átugorja a bejegyzést, vagy törli mindenképp?</numerusform><numerusform>A(z) „%1” bejegyzésnek van %2 hivatkozása. Felülírja a hivatkozásokat az értékekkel, átugorja a bejegyzést, vagy törli mindenképp?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1613,11 +1616,11 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>Legyen a csoport áthelyezve a kukába?</translation>
+        <translation>Áthelyezi a csoportot a kukába?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Valóban legyen a(z) „%1” csoport áthelyezve a kukába?</translation>
+        <translation>Valóban áthelyezi a(z) „%1” csoportok a kukába?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -1629,7 +1632,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Megosztott csoport…</translation>
     </message>
 </context>
 <context>
@@ -1798,7 +1801,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Az alapértelmezett automatikus beírási sorrend öröklése a cso&amp;porttól</translation>
+        <translation>Az alapértelmezett automatikus beírási sorrend öröklése a &amp;csoporttól</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
@@ -2074,15 +2077,15 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>A(z) %1 exportálása konténerre már van hivatkozás.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>A(z) %1 importálási konténer már be lett importálva.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>A(z) %1 konténer importálva, és exportálás különböző csoportoknak.</translation>
     </message>
 </context>
 <context>
@@ -3153,19 +3156,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 megosztás letiltva</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importálás a(z) %1 megosztásból</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás a(z) %1 megosztásba</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Szinkronizálás a(z) %1 megosztásssal</translation>
     </message>
 </context>
 <context>
@@ -3285,11 +3288,11 @@ Message: %2</source>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>Be&amp;jegyzések</translation>
+        <translation>&amp;Bejegyzések</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>Cso&amp;portok</translation>
+        <translation>&amp;Csoportok</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -4852,7 +4855,7 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Nem hozható létre új csoport</translation>
     </message>
 </context>
 <context>
@@ -5128,7 +5131,7 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Aláíró:</translation>
     </message>
 </context>
 <context>
@@ -5251,27 +5254,27 @@ Elérhető parancsok:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Több importálási forrásútvonal ehhez: %1, itt: %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Ütköző %1 exportálási célútvonal itt: %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Az aláírás nem ágyazható be: A fájl nem nyitható meg írásra (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Az aláírás nem ágyazható be: A fájl nem írható (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázis nem ágyazható be: A fájl nem nyitható meg írásra (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Az adatbázis nem ágyazható be: A fájl nem írható (%1)</translation>
     </message>
 </context>
 <context>

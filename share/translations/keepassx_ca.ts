@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"/>
+        <translation>Inicialització</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
@@ -128,7 +128,7 @@
     </message>
     <message>
         <source>File Management</source>
-        <translation type="unfinished"/>
+        <translation>Gestió de fitxers</translation>
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation type="unfinished"/>
+        <translation>Fes una còpia de seguretat abans de desar</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -156,7 +156,7 @@
     </message>
     <message>
         <source>Entry Management</source>
-        <translation type="unfinished"/>
+        <translation>Gestió d&apos;entrades</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>Hide the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Oculta el panell de previsualització d&apos;entrades</translation>
     </message>
     <message>
         <source>General</source>
@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation type="unfinished"/>
+        <translation>Oculta la barra d&apos;eines (les icones)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -233,11 +233,11 @@
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Comprova si hi ha actualitzacions a l&apos;inici</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Inclou versions provisionals quan es comprovi si hi ha actualitzacions</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
@@ -245,7 +245,7 @@
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Estil de botó</translation>
     </message>
 </context>
 <context>
@@ -433,7 +433,7 @@ Seleccioneu si voleu permetre l&apos;accés.</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>D&apos;acord</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -589,7 +589,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>Navegador &amp;Tor</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
@@ -597,7 +597,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation>Fitxers executables</translation>
     </message>
     <message>
         <source>All Files</source>
@@ -3507,7 +3507,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Comprova si hi ha actualitzacions...</translation>
     </message>
     <message>
         <source>Share entry</source>
@@ -3520,15 +3520,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Voleu comprovar si hi ha actualitzacions a l&apos;inici?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Voleu que KeePassXC comprovi si hi ha actualitzacions a l&apos;inici?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>Sempre pots comprovar si hi ha actualitzacions manualment als menús de l&apos;aplicació.</translation>
     </message>
 </context>
 <context>
@@ -5194,7 +5194,7 @@ Available commands:
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>Exporta a %1</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
@@ -5261,7 +5261,7 @@ Available commands:
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation type="unfinished"/>
+        <translation>Tancant en %1 segons.</translation>
     </message>
 </context>
 <context>
@@ -5288,7 +5288,7 @@ Available commands:
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation type="unfinished"/>
+        <translation>Paràmetres a mida</translation>
     </message>
     <message>
         <source>Time step:</source>
@@ -5309,7 +5309,7 @@ Available commands:
     </message>
     <message>
         <source>7 digits</source>
-        <translation type="unfinished"/>
+        <translation>7 dígits</translation>
     </message>
     <message>
         <source>8 digits</source>
@@ -5320,11 +5320,11 @@ Available commands:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Comprovant si hi ha actualitzacions</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Comprovant si hi ha actualitzacions...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5332,7 +5332,7 @@ Available commands:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Error d&apos;actualització!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
@@ -5340,15 +5340,15 @@ Available commands:
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Si us plau, proveu-ho altre cop més tard.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Actualització de programari</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>Hi ha disponible una nova versió de KeePassXC!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
@@ -5356,11 +5356,11 @@ Available commands:
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Descarregueu-ho a keepassxc.org</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Esteu actualitzats!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
@@ -5395,7 +5395,7 @@ Available commands:
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation type="unfinished"/>
+        <translation>Benvinguts/des al KeePassXC %1</translation>
     </message>
 </context>
 <context>

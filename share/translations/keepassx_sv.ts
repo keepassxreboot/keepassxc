@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Projekt Ansvariga:</translation>
+        <translation>Projekt ansvariga:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Följ stil</translation>
     </message>
 </context>
 <context>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Kom ihåg senaste nyckel-fil och säkerhets-enhet</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation type="unfinished"/>
+        <translation>Spara databasfiler säkert (kan vara inkompatibelt med Dropbox, etc)</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>Hide the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Göm post förhandsvisningspanelen</translation>
     </message>
     <message>
         <source>General</source>
@@ -176,11 +176,11 @@
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation type="unfinished"/>
+        <translation>Göm verktygsfält (ikonerna)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>Minimera istället för att avsluta</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -200,7 +200,7 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autoskriv</translation>
+        <translation>Auto-skriv</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -220,7 +220,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay</source>
-        <translation type="unfinished"/>
+        <translation>Auto-skriv fördröjning</translation>
     </message>
     <message>
         <source> ms</source>
@@ -229,23 +229,23 @@
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation type="unfinished"/>
+        <translation>Auto-skriv start fördröjning</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>Leta efter uppdateringar vid start</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Inkludera förhandsversioner vid sökning efter uppdateringar</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Rörligt verktygsfält</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>Knapp-stil</translation>
     </message>
 </context>
 <context>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
-        <translation type="unfinished"/>
+        <translation>Glöm TouchID efter inaktivitet i</translation>
     </message>
     <message>
         <source>Convenience</source>
@@ -285,7 +285,7 @@
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation>Glöm TouchID när sessionen låses eller locket stängs</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -293,7 +293,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>Lås tidigare låst databas efter att ha utfört Auto-skriv</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -309,7 +309,7 @@
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Göm lösenord i förhandsgranskningsrutan</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -321,7 +321,7 @@
     </message>
     <message>
         <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation type="unfinished"/>
+        <translation>Använd DuckDuckGo som alternativ vid nedladdning av webbplatsikoner</translation>
     </message>
 </context>
 <context>
@@ -429,7 +429,7 @@ Vill du tillåta det?</translation>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser spara post</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -442,7 +442,8 @@ Vill du tillåta det?</translation>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation type="unfinished"/>
+        <translation>Du ha flera databaser öppna.
+Välj databas för att spara uppgifter.</translation>
     </message>
 </context>
 <context>
@@ -539,7 +540,7 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"/>
+        <translation>Sök i alla öppna databaser efter matchande uppgifter</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -547,7 +548,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>Returnera avancerade text-fält som börjar med &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -873,7 +874,7 @@ Would you like to migrate your existing settings now?</source>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Lås upp databas - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -969,7 +970,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Huvud-lösenord</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -1029,7 +1030,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>Koppla från alla webbläsare</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1131,7 +1132,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Decryption Time:</source>
-        <translation type="unfinished"/>
+        <translation>Dektypterings-tid:</translation>
     </message>
     <message>
         <source>?? s</source>
@@ -1512,7 +1513,7 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ta bort post?</numerusform><numerusform>Ta bort poster?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -1606,7 +1607,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Delad grupp...</translation>
     </message>
 </context>
 <context>
@@ -1884,7 +1885,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Public key</source>
-        <translation type="unfinished"/>
+        <translation>Publik nyckel</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
@@ -2097,7 +2098,7 @@ Disable safe saves and try again?</source>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation type="unfinished"/>
+        <translation>Använd standard ikon</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
@@ -3109,15 +3110,15 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importera från</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Exportera till</translation>
     </message>
     <message>
         <source>Synchronize with</source>
-        <translation type="unfinished"/>
+        <translation>Synkronisera med</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
@@ -3187,7 +3188,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Key File</source>
-        <translation type="unfinished"/>
+        <translation>Nyckel-fil</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
@@ -3250,7 +3251,7 @@ Message: %2</source>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation type="unfinished"/>
+        <translation>Poster</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -3441,11 +3442,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;New entry</source>
-        <translation type="unfinished"/>
+        <translation>Ny post</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till ny post</translation>
     </message>
     <message>
         <source>&amp;Edit entry</source>

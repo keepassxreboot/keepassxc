@@ -611,15 +611,15 @@ Por favor, selecione o banco de dados correto para salvar as credenciais.</trans
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Devido ao sandbox do Snap, você deve executar um script para ativar a integração do navegador.&lt;br /&gt;Você pode obter este script de %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Por favor, veja as instruções especiais para o uso da extensão do navegador abaixo</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>O KeePassXC-Browser é necessário para que a integração do navegador funcione. &lt;br /&gt;Faça o download para %1 e %2. %3</translation>
     </message>
 </context>
 <context>
@@ -695,19 +695,23 @@ Movido %2 chaves para dados personalizados.</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Crie um novo grupo</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Um pedido para criar um novo grupo &quot;%1&quot; foi recebido.
+Você quer criar este grupo?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>As configurações do seu navegador KeePassXC precisam ser movidas para as configurações do banco de dados.
+Isso é necessário para manter as conexões atuais do navegador.
+Gostaria de migrar suas configurações existentes agora?</translation>
     </message>
 </context>
 <context>
@@ -813,7 +817,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>[%n mais mensagem(ns) ignoradas]</numerusform><numerusform>[%n mais mensagem(ns) ignoradas]</numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
@@ -871,7 +875,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Chave não transformada. Este é um bug, por favor denuncie para os desenvolvedores!</translation>
     </message>
 </context>
 <context>
@@ -999,11 +1003,11 @@ Por favor, considere-se gerar um novo arquivo de chave.</translation>
     </message>
     <message>
         <source>Forg&amp;et all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>Esq&amp;uecer todas as configurações específicas do site nas entradas</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
-        <translation type="unfinished"/>
+        <translation>Mover os atributos do KeePassHTTP para o KeePassXC-Browser &amp;dados personalizados</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1068,7 +1072,8 @@ Isso pode impedir a conexão com o plugin do navegador.</translation>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente quer esquecer todas as configurações específicas do site em cada entrada?
+Permissões para acessar entradas serão revogadas.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1084,7 +1089,7 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Permissões removidas com sucesso de %n entrada(s).</numerusform><numerusform>Permissões removidas com sucesso de %n entrada(s).</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1101,7 +1106,8 @@ Permissions to access entries will be revoked.</source>
     <message>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation type="unfinished"/>
+        <translation>Você realmente deseja mover todos os dados de integração do navegador herdados para o padrão mais recente?
+Isso é necessário para manter a compatibilidade com o plugin do navegador.</translation>
     </message>
 </context>
 <context>
@@ -1160,7 +1166,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation type="unfinished"/>
+        <translation>Valores mais altos oferecem mais proteção, mas a abertura do banco de dados levará mais tempo.</translation>
     </message>
     <message>
         <source>Database format:</source>
@@ -1313,7 +1319,7 @@ Se você manter este número, seu banco de dados pode ser facilmente crackeado!<
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Último Signatário</translation>
     </message>
     <message>
         <source>Certificates</source>
@@ -1566,7 +1572,8 @@ Salvar alterações?</translation>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível abrir o novo arquivo de banco de dados ao tentar executar o carregamento automático.
+Erro: %1</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
@@ -1581,7 +1588,8 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     <message>
         <source>Writing the database failed.
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Escrevendo o banco de dados falhou.
+%1</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1625,7 +1633,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Grupo compartilhado...</translation>
     </message>
 </context>
 <context>
@@ -2168,7 +2176,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Carregado com sucesso %1 de %n ícone(s)</numerusform><numerusform>Carregado com sucesso %1 de %n ícone(s)</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -3124,7 +3132,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation type="unfinished"/>
+        <translation>incapaz de buscar a posição de conteúdo</translation>
     </message>
 </context>
 <context>
@@ -3147,19 +3155,19 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Desabilitar compartilhamento %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importar do compartilhamento %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Exportar para compartilhamento %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Sincronizar com compartilhamento %1</translation>
     </message>
 </context>
 <context>
@@ -3178,7 +3186,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation type="unfinished"/>
+        <translation>Componente Chave definido, clique para alterar ou remover</translation>
     </message>
     <message>
         <source>Add %1</source>
@@ -3615,11 +3623,11 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation type="unfinished"/>
+        <translation>Objetos excluídos alterados</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation type="unfinished"/>
+        <translation>Adicionando ícone ausente %1</translation>
     </message>
 </context>
 <context>
@@ -3805,7 +3813,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Uma senha é o principal método para proteger seu banco de dados.&lt;/p&gt;&lt;p&gt;Boas senhas são longas e únicas. KeePassXC pode gerar uma para você.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -4447,7 +4455,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Entry&apos;s password copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>Entrada da senha copiada para a área de transferência!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
@@ -4646,11 +4654,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation type="unfinished"/>
+        <translation>Excluir caracteres parecidos</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation type="unfinished"/>
+        <translation>Incluir caracteres de cada grupo selecionado</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
@@ -4741,7 +4749,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation type="unfinished"/>
+        <translation>Criptografia de mensagens falhou.</translation>
     </message>
     <message>
         <source>No groups found</source>
@@ -4753,7 +4761,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Arquivo %1 já existe.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
@@ -4841,7 +4849,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Não é possível criar um novo grupo</translation>
     </message>
 </context>
 <context>
@@ -4906,11 +4914,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Vida útil limitada não é suportado pelo agente (verificar opções).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation type="unfinished"/>
+        <translation>Uma solicitação de confirmação não é suportado pelo agente (verificar opções).</translation>
     </message>
 </context>
 <context>
@@ -4921,7 +4929,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation type="unfinished"/>
+        <translation>Termos de pesquisa são as seguintes: [modifiers][field:][&quot;]term[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
@@ -5024,7 +5032,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Signatário</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5093,11 +5101,11 @@ Comandos disponíveis:
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>key.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>Arquivo chave KeeShare</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5117,7 +5125,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Signatário:</translation>
     </message>
 </context>
 <context>
@@ -5152,11 +5160,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importação de %1 falhou (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Importado de %1 com sucesso (%2)</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -5444,11 +5452,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>YubiKey Challenge-Response</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey Desafio-Resposta</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The YubiKey requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Se você possui uma &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;, você pode usá-la para segurança adicional.&lt;/p&gt;&lt;p&gt;A YubiKey requer que um de seus slots seja programado como &lt;a href=&quot;https://www.yubico.com/products/services-software/personalization-tools/challenge-response/&quot;&gt;HMAC-SHA1 Desafio-Resposta&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
