@@ -615,11 +615,11 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez regarder les instructions spéciales pour l&apos;extension du navigateur utilisé ci-dessous</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser est nécessaire pour que l&apos;intégration au navigateur fonctionne. &lt;br /&gt;Téléchargez-le pour %1 et%2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,13 +696,15 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC : Créer un nouveau groupe</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Une demande de création pour un nouveau groupe &quot;%1&quot; a été reçue.
+Voulez-vous créer ce groupe ?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
@@ -1628,7 +1630,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Groupe partagé ...</translation>
     </message>
 </context>
 <context>
@@ -2033,7 +2035,7 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation type="unfinished"/>
+        <translation>Votre version de KeePassXC ne supporte pas le partage de ce type de conteneur. Veuillez utiliser %1.</translation>
     </message>
     <message>
         <source>Database sharing is disabled</source>
@@ -2073,15 +2075,15 @@ Désactiver les enregistrements sécurisés et ressayer ?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Le conteneur d&apos;export %1 est déjà référencé.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Le conteneur d&apos;import %1 est déjà importé.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Le conteneur %1 est importé et exporté par des groupes différents.</translation>
     </message>
 </context>
 <context>
@@ -3151,19 +3153,19 @@ Ligne %2, colonne %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Partage %1 désactivé</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importer du partage %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Exporter vers le partage %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Synchroniser avec le partage %1</translation>
     </message>
 </context>
 <context>
@@ -4685,7 +4687,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Entrée %1 recyclée avec succès.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
@@ -4783,7 +4785,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation type="unfinished"/>
+        <translation>Introduire le mot de passe pour chiffrer la base de données (Presser retour pour laisser vide) :</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -4851,7 +4853,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de créer de nouveau groupe</translation>
     </message>
 </context>
 <context>
@@ -4943,7 +4945,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation type="unfinished"/>
+        <translation>exclure le terme des résultats</translation>
     </message>
     <message>
         <source>match term exactly</source>
@@ -4951,7 +4953,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>use regex in term</source>
-        <translation type="unfinished"/>
+        <translation>utiliser les expressions régulières dans le terminal</translation>
     </message>
     <message>
         <source>Fields</source>
@@ -5107,7 +5109,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation type="unfinished"/>
+        <translation>fichier-clé KeeShare</translation>
     </message>
     <message>
         <source>All files</source>
@@ -5134,7 +5136,7 @@ Commandes disponibles :
     <name>ShareObserver</name>
     <message>
         <source>Import from container without signature</source>
-        <translation type="unfinished"/>
+        <translation>Importer depuis le conteneur sans signature</translation>
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
@@ -5142,7 +5144,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
+        <translation>Importer depuis le conteneur avec certificat</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5234,15 +5236,15 @@ Commandes disponibles :
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Échec de l&apos;export vers %1 (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation type="unfinished"/>
+        <translation>Réussite de l&apos;export vers %1 (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation type="unfinished"/>
+        <translation>Exporter vers %1</translation>
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>

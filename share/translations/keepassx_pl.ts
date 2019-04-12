@@ -611,15 +611,15 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Ze względu na sandboxing Snap należy uruchomić skrypt, aby umożliwić integrację przeglądarki.&lt;br /&gt;Możesz uzyskać ten skrypt z %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Zobacz poniżej specjalne instrukcje dotyczące używania rozszerzenia przeglądarki</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser jest potrzebny do integracji przeglądarki. &lt;br /&gt;Pobierz go dla %1 i %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,23 @@ Przeniesiono %2 klucze do niestandardowych danych.</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Utwórz nową grupę</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Otrzymano żądanie utworzenia nowej grupy &quot;%1&quot;.
+Czy chcesz stworzyć tę grupę?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Twoje ustawienia KeePassXC-Browser należy przenieść do ustawień bazy danych.
+Jest to konieczne, aby utrzymać bieżące połączenia przeglądarki.
+Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
 </context>
 <context>
@@ -872,7 +876,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Klucz nie został przekształcony. To jest błąd, zgłoś go deweloperom!</translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1635,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Grupa współdzielona...</translation>
     </message>
 </context>
 <context>
@@ -2076,15 +2080,15 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>Odwołanie do kontenera eksportu %1 już istnieje.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Kontener importu %1 jest już zaimportowany.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Kontener %1 importowany i eksportowany przez różne grupy.</translation>
     </message>
 </context>
 <context>
@@ -3157,19 +3161,19 @@ Wiersz %2, kolumna %3</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Wyłączony udział %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Importuj z udziału %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Eksportuj do udziału %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Synchronizuj z udziałem %1</translation>
     </message>
 </context>
 <context>
@@ -4858,7 +4862,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Nie można utworzyć nowej grupy</translation>
     </message>
 </context>
 <context>
@@ -5134,7 +5138,7 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Podpisujący:</translation>
     </message>
 </context>
 <context>
@@ -5257,27 +5261,27 @@ Dostępne polecenia:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Wiele ścieżek źródłowych importu do %1 w %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Sprzeczna ścieżka docelowa eksportu %1 w %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nie można osadzić podpisu: Nie można otworzyć pliku do zapisu (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nie można osadzić podpisu: Nie można zapisać pliku (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nie można osadzić bazy danych: Nie można otworzyć pliku do zapisu (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Nie można osadzić bazy danych: nie można zapisać pliku (%1)</translation>
     </message>
 </context>
 <context>

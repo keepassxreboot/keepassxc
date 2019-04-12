@@ -180,7 +180,7 @@
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>sembunyikan jendela ke baki sistem</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -614,7 +614,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Lihat instruksi untuk penggunaan browser extension</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>

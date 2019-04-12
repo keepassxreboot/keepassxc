@@ -592,7 +592,8 @@ Database* ShareObserver::exportIntoContainer(const KeeShareSettings::Reference& 
 {
     const auto* sourceDb = sourceRoot->database();
     auto* targetDb = new Database();
-    targetDb->metadata()->setRecycleBinEnabled(false);
+    auto* targetMetadata = targetDb->metadata();
+    targetMetadata->setRecycleBinEnabled(false);
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
 
@@ -610,8 +611,8 @@ Database* ShareObserver::exportIntoContainer(const KeeShareSettings::Reference& 
         targetEntry->setGroup(targetRoot);
         targetEntry->setUpdateTimeinfo(updateTimeinfo);
         const auto iconUuid = targetEntry->iconUuid();
-        if (!iconUuid.isNull()) {
-            targetDb->metadata()->addCustomIcon(iconUuid, sourceEntry->icon());
+        if (!iconUuid.isNull() && !targetMetadata->containsCustomIcon(iconUuid)) {
+            targetMetadata->addCustomIcon(iconUuid, sourceEntry->icon());
         }
     }
 

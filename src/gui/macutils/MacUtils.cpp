@@ -70,3 +70,8 @@ bool MacUtils::isHidden()
 {
     return m_appkit->isHidden(m_appkit->ownProcessId());
 }
+
+bool MacUtils::isDarkMode()
+{
+    return m_appkit->isDarkMode();
+}

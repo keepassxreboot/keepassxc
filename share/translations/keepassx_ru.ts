@@ -176,7 +176,7 @@
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation>Скрыть панель инструментов (иконки)</translation>
+        <translation>Скрывать панель инструментов (значки)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
@@ -611,15 +611,15 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>Из-за того, что Snap - это песочница, Вы должны запустить скрипт, чтобы разрешить браузерную интеграцию.&lt;br /&gt;Вы можете получить этот скрипт с %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>Пожалуйста, смотрите особые инструкции по использованию расширения браузера ниже</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser необходим для работы интеграции браузера. &lt;br /&gt;Скачайте его для %1 и %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,23 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Создать новую группу</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>Был получен запрос для создания новой группы &quot;%1&quot;.
+Вы хотите создать эту группу?
+</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Нужно переместить Ваши настройки KeePassXC-Browser в настройки базы данных.
+Это необходимо, чтобы поддерживать Ваши текущие соединения браузера.
+Желаете ли Вы мигрировать Ваши существующие настройки сейчас?</translation>
     </message>
 </context>
 <context>
@@ -871,7 +875,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>Ключ не преобразован. Это ошибка, пожалуйста, сообщите о нём разработчикам!</translation>
     </message>
 </context>
 <context>
@@ -1629,7 +1633,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>Общая группа...</translation>
     </message>
 </context>
 <context>
@@ -2074,15 +2078,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>На контейнер экспорта %1 уже есть ссылка.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>Контейнер импорта %1 уже импортирован.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>Контейнер %1 импортируется и экспортируется разными группами.</translation>
     </message>
 </context>
 <context>
@@ -2160,7 +2164,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Custom icon successfully downloaded</source>
-        <translation>Пользовательская иконка успешно загружена</translation>
+        <translation>Пользовательский значок успешно загружен</translation>
     </message>
     <message>
         <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -2172,7 +2176,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Успешно загружено %1 из %n иконки</numerusform><numerusform>Успешно загружено %1 из %n иконок</numerusform><numerusform>Успешно загружено %1 из %n иконок</numerusform><numerusform>Успешно загружено %1 из %n иконки(ок)</numerusform></translation>
+        <translation><numerusform>Успешно загружен %1 из %n значка</numerusform><numerusform>Успешно загружены %1 из %n значков</numerusform><numerusform>Успешно загружены %1 из %n значков</numerusform><numerusform>Успешно загружены %1 из %n значков</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2180,15 +2184,15 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n иконка уже существует в базе данных</numerusform><numerusform>%n иконки уже существуют в базе данных</numerusform><numerusform>%n иконок уже существуют в базе данных</numerusform><numerusform>%n иконка(ок) уже существует(ют) в базе данных</numerusform></translation>
+        <translation><numerusform>%n значок уже существует в базе данных</numerusform><numerusform>%n значка уже существуют в базе данных</numerusform><numerusform>%n значков уже существуют в базе данных</numerusform><numerusform>%n значков уже существуют в базе данных</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>Следующие иконки не удалось:</numerusform><numerusform>Следующие иконки не удалось:</numerusform><numerusform>Следующие иконки не удалось:</numerusform><numerusform>Следующие иконки не удалось:</numerusform></translation>
+        <translation><numerusform>Следующий значок потерпел неудачу:</numerusform><numerusform>Следующие значки потерпели неудачу:</numerusform><numerusform>Следующие значки потерпели неудачу:</numerusform><numerusform>Следующие значки потерпели неудачу:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Эта иконка используется %n записью и будет замещена иконкой по умолчанию. Вы уверены, что хотите удалить её?</numerusform><numerusform>Эта иконка используется %n записями и будет замещена иконкой по умолчанию. Вы уверены, что хотите удалить её?</numerusform><numerusform>Эта иконка используется %n записями и будет замещена иконкой по умолчанию. Вы уверены, что хотите удалить её?</numerusform><numerusform>Эта иконка используется %n записью(ями) и будет замещена иконкой по умолчанию. Вы уверены, что хотите удалить её?</numerusform></translation>
+        <translation><numerusform>Этот значок используется %n записью и будет замещён значком по умолчанию. Вы уверены, что хотите удалить его?</numerusform><numerusform>Этот значок используется %n записями и будет замещён значком по умолчанию. Вы уверены, что хотите удалить его?</numerusform><numerusform>Этот значок используется %n записями и будет замещён значком по умолчанию. Вы уверены, что хотите удалить его?</numerusform><numerusform>Этот значок используется %n записями и будет замещён значком по умолчанию. Вы уверены, что хотите удалить его?</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3154,19 +3158,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Отключённая часть %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать из части %1</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>Экспортировать в часть %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>Синхронизировать с частью %1</translation>
     </message>
 </context>
 <context>
@@ -3629,7 +3633,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>Добавление отсутствующей иконки %1</translation>
+        <translation>Добавление отсутствующего значка %1</translation>
     </message>
 </context>
 <context>
@@ -4855,7 +4859,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>Не удаётся создать новую группу</translation>
     </message>
 </context>
 <context>
@@ -5131,7 +5135,7 @@ Available commands:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Подписавшийся:</translation>
     </message>
 </context>
 <context>
@@ -5254,27 +5258,27 @@ Available commands:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Множественный путь источника импорта к %1 в %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Конфликтный путь цели экспорта %1 в %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось встроить подпись: Не удалось открыть файл для записи (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось встроить подпись: Не удалось записать файл (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось встроить базу данных: Не удалось открыть файл для записи (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось встроить базу данных: Не удалось записать файл (%1)</translation>
     </message>
 </context>
 <context>

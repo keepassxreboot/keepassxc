@@ -30,5 +30,6 @@
 - (bool) activateProcess:(pid_t) pid;
 - (bool) hideProcess:(pid_t) pid;
 - (bool) isHidden:(pid_t) pid;
+- (bool) isDarkMode;
 
 @end

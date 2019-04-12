@@ -611,15 +611,15 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>由于快照沙盒，必须运行脚本才能启用浏览器集成。&lt;br /&gt;您可以从 %1 获取此脚本</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"/>
+        <translation>请参阅下面的浏览器扩展使用的特殊说明</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>浏览器集成需要KeePassXC-Browser才能工作。&lt;br /&gt;下载%1 和 %2. %3</translation>
     </message>
 </context>
 <context>
@@ -696,19 +696,22 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>keepassxc: 创建新群组</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"/>
+        <translation>已收到创建新群组 &quot;%1&quot; 的请求。
+是否要创建此群组？</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>您的keepassxc浏览器设置需要移动到数据库设置中。
+这是保持当前浏览器连接所必需的。
+是否要立即迁移现有设置？</translation>
     </message>
 </context>
 <context>
@@ -872,7 +875,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>密钥未转换。这是一个bug，请报告给开发者！</translation>
     </message>
 </context>
 <context>
@@ -1630,7 +1633,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Shared group...</source>
-        <translation type="unfinished"/>
+        <translation>共享群组...</translation>
     </message>
 </context>
 <context>
@@ -2075,15 +2078,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>导出容器 %1 已被引用。</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>导入容器 %1 已导入。</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>容器 %1 由不同的群组导入和导出。</translation>
     </message>
 </context>
 <context>
@@ -3151,19 +3154,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>已禁用共享 %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>从共享 %1 导入</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>导出到共享 %1</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>与共享 %1 同步</translation>
     </message>
 </context>
 <context>
@@ -4853,7 +4856,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>无法创建新群组</translation>
     </message>
 </context>
 <context>
@@ -5129,7 +5132,7 @@ Available commands:
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>签名:</translation>
     </message>
 </context>
 <context>
@@ -5252,27 +5255,27 @@ Available commands:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>多个导入源路径到 %1 in %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>冲突的导出目标路径 %1 in %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>无法嵌入签名:无法打开要写入的文件 (%1)</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>无法嵌入签名:无法写入文件 (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>无法嵌入数据库:无法打开要写入的文件 (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>无法嵌入数据库:无法写入文件 (%1)</translation>
     </message>
 </context>
 <context>

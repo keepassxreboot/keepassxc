@@ -693,7 +693,7 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Lag en ny gruppe</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
@@ -803,7 +803,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>column %1</source>
-        <translation type="unfinished"/>
+        <translation>kolonne %1</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
@@ -852,7 +852,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke åpne filen %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
@@ -860,7 +860,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Could not save, database has no file name.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke lagre, databasen har ingen filnavn.</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
@@ -959,7 +959,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Avanserte Innstillinger</translation>
     </message>
     <message>
         <source>General</source>
@@ -1056,7 +1056,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>Glem alle side-spesifikke innstillinger og oppføringer</translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1294,7 +1294,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Brødsmule</translation>
     </message>
     <message>
         <source>Type</source>
@@ -1306,11 +1306,11 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Siste Signatur</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation>Sertifikat</translation>
+        <translation>Sertifikater</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -1355,11 +1355,11 @@ Are you sure you want to continue without a password?</source>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>Databasenavn:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivelse:</translation>
     </message>
 </context>
 <context>
@@ -2043,11 +2043,11 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation type="unfinished"/>
+        <translation>Velg kilde for importering</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation type="unfinished"/>
+        <translation>Velg eksporteringsmål</translation>
     </message>
     <message>
         <source>Select import/export file</source>
@@ -2153,7 +2153,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation type="unfinished"/>
+        <translation>Velg Bilde(-r)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
@@ -2382,7 +2382,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Oppretta</translation>
+        <translation>Opprettet</translation>
     </message>
     <message>
         <source>Modified</source>
@@ -2494,7 +2494,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished"/>
+        <translation>Del</translation>
     </message>
 </context>
 <context>
@@ -3122,19 +3122,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import from</source>
-        <translation type="unfinished"/>
+        <translation>Importer fra</translation>
     </message>
     <message>
         <source>Export to</source>
-        <translation type="unfinished"/>
+        <translation>Eksporter til</translation>
     </message>
     <message>
         <source>Synchronize with</source>
-        <translation type="unfinished"/>
+        <translation>Synkroniser med</translation>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>Deaktiver deling %1</translation>
     </message>
     <message>
         <source>Import from share %1</source>
@@ -3153,7 +3153,7 @@ Line %2, column %3</source>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation type="unfinished"/>
+        <translation>Nøkkelkomponent</translation>
     </message>
     <message>
         <source>Key Component Description</source>
@@ -3170,7 +3170,7 @@ Line %2, column %3</source>
     <message>
         <source>Add %1</source>
         <comment>Add a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Legg til %1</translation>
     </message>
     <message>
         <source>Change %1</source>
@@ -3200,7 +3200,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Key File</source>
-        <translation type="unfinished"/>
+        <translation>Nøkkelfil</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
@@ -3477,7 +3477,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssiden.
     </message>
     <message>
         <source>Add a new group</source>
-        <translation type="unfinished"/>
+        <translation>Legg til ny gruppe</translation>
     </message>
     <message>
         <source>Change master &amp;key...</source>
@@ -3636,7 +3636,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Avanserte Innstillinger</translation>
     </message>
     <message>
         <source>Simple Settings</source>
@@ -4351,7 +4351,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Created</source>
-        <translation>Oppretta</translation>
+        <translation>Opprettet</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -4586,7 +4586,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke åpne filen %1.</translation>
     </message>
     <message>
         <source>Error while reading the database:
@@ -4998,7 +4998,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Egne sertifikat</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
@@ -5006,7 +5006,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Sertifikat</translation>
     </message>
     <message>
         <source>Signer</source>
@@ -5030,7 +5030,7 @@ Tilgjengelige kommandoer:
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation>Importerte sertikikat</translation>
+        <translation>Importerte sertifikater</translation>
     </message>
     <message>
         <source>Trust</source>

@@ -382,10 +382,12 @@ void Metadata::addCustomIcon(const QUuid& uuid, const QImage& icon)
     Q_ASSERT(!uuid.isNull());
     Q_ASSERT(!m_customIcons.contains(uuid));
 
-    m_customIcons.insert(uuid, icon);
+    m_customIcons[uuid] = icon;
     // reset cache in case there is also an icon with that uuid
     m_customIconCacheKeys[uuid] = QPixmapCache::Key();
     m_customIconScaledCacheKeys[uuid] = QPixmapCache::Key();
+    // remove all uuids to prevent duplicates in release mode
+    m_customIconsOrder.removeAll(uuid);
     m_customIconsOrder.append(uuid);
     // Associate image hash to uuid
     QByteArray hash = hashImage(icon);

@@ -235,9 +235,7 @@ private:
     QPointer<EntryPreviewWidget> m_previewView;
     QPointer<QSplitter> m_previewSplitter;
     QPointer<QLabel> m_searchingLabel;
-#ifdef WITH_XC_KEESHARE
     QPointer<QLabel> m_shareLabel;
-#endif
     QPointer<CsvImportWizard> m_csvImportWizard;
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;

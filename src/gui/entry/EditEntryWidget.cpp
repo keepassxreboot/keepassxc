@@ -597,15 +597,14 @@ void EditEntryWidget::addKeyToAgent()
     m_sshAgentUi->commentTextLabel->setText(key.comment());
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
 
-    int lifetime = 0;
-    bool confirm = m_sshAgentUi->requireUserConfirmationCheckBox->isChecked();
+    KeeAgentSettings settings;
 
-    if (m_sshAgentUi->lifetimeCheckBox->isChecked()) {
-        lifetime = m_sshAgentUi->lifetimeSpinBox->value();
-    }
+    settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
+    settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
+    settings.setUseLifetimeConstraintWhenAdding(m_sshAgentUi->lifetimeCheckBox->isChecked());
+    settings.setLifetimeConstraintDuration(m_sshAgentUi->lifetimeSpinBox->value());
 
-    if (!SSHAgent::instance()->addIdentity(
-            key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked(), static_cast<quint32>(lifetime), confirm)) {
+    if (!SSHAgent::instance()->addIdentity(key, settings)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
         return;
     }
