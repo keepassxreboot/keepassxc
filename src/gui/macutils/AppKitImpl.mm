@@ -127,4 +127,12 @@ bool AppKit::isHidden(pid_t pid)
     return [static_cast<id>(self) isHidden:pid];
 }
 
+bool AppKit::isDarkMode()
+{
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+    id style = [dict objectForKey:@"AppleInterfaceStyle"];
+    return ( style && [style isKindOfClass:[NSString class]]
+            && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+}
+
 @end

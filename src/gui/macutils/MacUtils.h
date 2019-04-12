@@ -37,6 +37,7 @@ public:
     bool raiseOwnWindow();
     bool hideOwnWindow();
     bool isHidden();
+    bool isDarkMode();
 
 private:
     explicit MacUtils(QObject* parent = nullptr);
