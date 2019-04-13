@@ -219,6 +219,7 @@ void ApplicationSettingsWidget::loadSettings()
     }
 
     setCurrentPage(0);
+    enableApplyButton(true); 
 }
 
 void ApplicationSettingsWidget::saveSettings()
