@@ -107,6 +107,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         m_secUi->touchIDResetSpinBox->setVisible(false);
         m_secUi->touchIDResetOnScreenLockCheckBox->setVisible(false);
     }
+    enableApplyButton(true);
 }
 
 ApplicationSettingsWidget::~ApplicationSettingsWidget()
