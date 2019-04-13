@@ -223,16 +223,16 @@ void EditWidgetIcons::downloadFavicon()
         QUrl fallbackUrl = QUrl("https://icons.duckduckgo.com");
         fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
 
-        m_urlsToTry.append(fallbackUrl);
-
         if (!hostIsIp) {
             QString secondLevelDomain = getSecondLevelDomain(m_url);
 
             if (fullyQualifiedDomain != secondLevelDomain) {
                 fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(secondLevelDomain) + ".ico");
-                m_urlsToTry.append(fallbackUrl);
+                m_urlsToTry.prepend(fallbackUrl);
             }
         }
+
+        m_urlsToTry.prepend(fallbackUrl);
     }
 
     startFetchFavicon(m_urlsToTry.takeFirst());

@@ -212,7 +212,7 @@
       <item>
        <widget class="QCheckBox" name="fallbackToSearch">
         <property name="text">
-         <string>Use DuckDuckGo as fallback for downloading website icons</string>
+         <string>Use DuckDuckGo to download website icons</string>
         </property>
        </widget>
       </item>
