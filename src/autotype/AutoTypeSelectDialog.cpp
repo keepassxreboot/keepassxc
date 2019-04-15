@@ -28,6 +28,8 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QLineEdit>
+#include <QSortFilterProxyModel>
 
 #include "autotype/AutoTypeSelectView.h"
 #include "core/AutoTypeMatch.h"
@@ -38,6 +40,7 @@
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     : QDialog(parent)
     , m_view(new AutoTypeSelectView(this))
+    , m_filterLineEdit(new AutoTypeFilterLineEdit(this))
     , m_matchActivatedEmitted(false)
     , m_rejected(false)
 {
@@ -74,11 +77,28 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
     // clang-format on
 
+    QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
+    if (proxy) {
+        proxy->setFilterKeyColumn(-1);
+        proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    }
+
     layout->addWidget(m_view);
+
+    connect(m_filterLineEdit, SIGNAL(textChanged(QString)), SLOT(filterList(QString)));
+    connect(m_filterLineEdit, SIGNAL(returnPressed()), SLOT(activateCurrentIndex()));
+    connect(m_filterLineEdit, SIGNAL(keyUpPressed()), SLOT(moveSelectionUp()));
+    connect(m_filterLineEdit, SIGNAL(keyDownPressed()), SLOT(moveSelectionDown()));
+    connect(m_filterLineEdit, SIGNAL(escapeReleased()), SLOT(reject()));
+
+    m_filterLineEdit->setPlaceholderText(tr("Search..."));
+    layout->addWidget(m_filterLineEdit);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, Qt::Horizontal, this);
     connect(buttonBox, SIGNAL(rejected()), SLOT(reject()));
     layout->addWidget(buttonBox);
+
+    m_filterLineEdit->setFocus();
 }
 
 void AutoTypeSelectDialog::setMatchList(const QList<AutoTypeMatch>& matchList)
@@ -121,7 +141,44 @@ void AutoTypeSelectDialog::matchRemoved()
         return;
     }
 
-    if (m_view->model()->rowCount() == 0) {
+    if (m_view->model()->rowCount() == 0 && m_filterLineEdit->text().isEmpty()) {
         reject();
     }
+}
+
+
+void AutoTypeSelectDialog::filterList(QString filterString)
+{
+    QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
+    if (proxy) {
+        proxy->setFilterWildcard(filterString);
+        if (!m_view->currentIndex().isValid()) {
+            m_view->setCurrentIndex(m_view->model()->index(0, 0));
+        }
+    }
+}
+
+void AutoTypeSelectDialog::moveSelectionUp()
+{
+    auto current = m_view->currentIndex();
+    auto previous = current.sibling(current.row() - 1, 0);
+
+    if (previous.isValid()) {
+        m_view->setCurrentIndex(previous);
+    }
+}
+
+void AutoTypeSelectDialog::moveSelectionDown()
+{
+    auto current = m_view->currentIndex();
+    auto next = current.sibling(current.row() + 1, 0);
+
+    if (next.isValid()) {
+        m_view->setCurrentIndex(next);
+    }
+}
+
+void AutoTypeSelectDialog::activateCurrentIndex()
+{
+    emitMatchActivated(m_view->currentIndex());
 }

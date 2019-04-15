@@ -22,6 +22,7 @@
 #include <QDialog>
 #include <QHash>
 
+#include "autotype/AutoTypeFilterLineEdit.h"
 #include "core/AutoTypeMatch.h"
 
 class AutoTypeSelectView;
@@ -44,9 +45,14 @@ public slots:
 private slots:
     void emitMatchActivated(const QModelIndex& index);
     void matchRemoved();
+    void filterList(QString filterString);
+    void moveSelectionUp();
+    void moveSelectionDown();
+    void activateCurrentIndex();
 
 private:
     AutoTypeSelectView* const m_view;
+    AutoTypeFilterLineEdit* const m_filterLineEdit;
     bool m_matchActivatedEmitted;
     bool m_rejected;
 };
