@@ -227,6 +227,9 @@ void EditGroupWidget::cancel()
                                            tr("Entry has unsaved changes"),
                                            MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
                                            MessageBox::Cancel);
+        if (result == MessageBox::Cancel) {
+            return;
+        }
         if (result == MessageBox::Save) {
             apply();
             setModified(false);
