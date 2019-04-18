@@ -79,12 +79,20 @@ private:
     static void resolveReferenceAttributes(Entry* targetEntry, const Database* sourceDb);
 
     static Database* exportIntoContainer(const KeeShareSettings::Reference& reference, const Group* sourceRoot);
-    static Result exportIntoReferenceUnsignedContainer(const KeeShareSettings::Reference& reference,
+    static Result exportIntoReferenceUnsignedContainer(const QString& realPath,
+                                                       const KeeShareSettings::Reference& reference,
                                                        Database* targetDb);
-    static Result exportIntoReferenceSignedContainer(const KeeShareSettings::Reference& reference, Database* targetDb);
-    static Result importSingedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
-    static Result importUnsignedContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
-    static Result importContainerInto(const KeeShareSettings::Reference& reference, Group* targetGroup);
+    static Result exportIntoReferenceSignedContainer(const QString& realPath,
+                                                     const KeeShareSettings::Reference& reference,
+                                                     Database* targetDb);
+    static Result importSignedContainerInto(const QString& realPath,
+                                            const KeeShareSettings::Reference& reference,
+                                            Group* targetGroup);
+    static Result importUnsignedContainerInto(const QString& realPath,
+                                              const KeeShareSettings::Reference& reference,
+                                              Group* targetGroup);
+    static Result
+    importContainerInto(const QString& realPath, const KeeShareSettings::Reference& reference, Group* targetGroup);
     static Result importDatabaseInto();
 
     Result importFromReferenceContainer(const QString& path);
