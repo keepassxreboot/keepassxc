@@ -20,17 +20,13 @@
 
 #include <QMap>
 #include <QObject>
-#include <QSet>
 #include <QStringList>
-#include <QTimer>
 
 #include "gui/MessageWidget.h"
 #include "keeshare/KeeShareSettings.h"
 
 class BulkFileWatcher;
-class Entry;
 class Group;
-class CustomData;
 class Database;
 
 class ShareObserver : public QObject
@@ -43,17 +39,6 @@ public:
 
     QSharedPointer<Database> database();
 
-signals:
-    void sharingMessage(QString, MessageWidget::MessageType);
-
-private slots:
-    void handleDatabaseChanged();
-    void handleDatabaseSaved();
-    void handleFileCreated(const QString& path);
-    void handleFileUpdated(const QString& path);
-    void handleFileDeleted(const QString& path);
-
-private:
     struct Result
     {
         enum Type
@@ -76,27 +61,19 @@ private:
         bool isInfo() const;
     };
 
-    static void resolveReferenceAttributes(Entry* targetEntry, const Database* sourceDb);
+signals:
+    void sharingMessage(QString, MessageWidget::MessageType);
 
-    static Database* exportIntoContainer(const KeeShareSettings::Reference& reference, const Group* sourceRoot);
-    static Result exportIntoReferenceUnsignedContainer(const QString& realPath,
-                                                       const KeeShareSettings::Reference& reference,
-                                                       Database* targetDb);
-    static Result exportIntoReferenceSignedContainer(const QString& realPath,
-                                                     const KeeShareSettings::Reference& reference,
-                                                     Database* targetDb);
-    static Result importSignedContainerInto(const QString& realPath,
-                                            const KeeShareSettings::Reference& reference,
-                                            Group* targetGroup);
-    static Result importUnsignedContainerInto(const QString& realPath,
-                                              const KeeShareSettings::Reference& reference,
-                                              Group* targetGroup);
-    static Result
-    importContainerInto(const QString& realPath, const KeeShareSettings::Reference& reference, Group* targetGroup);
-    static Result importDatabaseInto();
+private slots:
+    void handleDatabaseChanged();
+    void handleDatabaseSaved();
+    void handleFileCreated(const QString& path);
+    void handleFileUpdated(const QString& path);
+    void handleFileDeleted(const QString& path);
 
-    Result importFromReferenceContainer(const QString& path);
-    QList<Result> exportIntoReferenceContainers();
+private:
+    Result importShare(const QString& path);
+    QList<Result> exportShares();
 
     void deinitialize();
     void reinitialize();
