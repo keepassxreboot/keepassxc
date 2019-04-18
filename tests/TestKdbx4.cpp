@@ -346,20 +346,21 @@ void TestKdbx4::testCustomData()
     const QString customDataKey2 = "CD2";
     const QString customData1 = "abcäöü";
     const QString customData2 = "Hello World";
-    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
-                         + customData2.toUtf8().size();
 
     // test custom database data
     db.metadata()->customData()->set(customDataKey1, customData1);
     db.metadata()->customData()->set(customDataKey2, customData2);
-    QCOMPARE(db.metadata()->customData()->size(), 2);
+    auto lastModified = db.metadata()->customData()->value(CustomData::LastModified);
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
+                         + customData2.toUtf8().size() + lastModified.toUtf8().size() + CustomData::LastModified.toUtf8().size();
+    QCOMPARE(db.metadata()->customData()->size(), 3);
     QCOMPARE(db.metadata()->customData()->dataSize(), dataSize);
 
     // test custom root group data
     Group* root = db.rootGroup();
     root->customData()->set(customDataKey1, customData1);
     root->customData()->set(customDataKey2, customData2);
-    QCOMPARE(root->customData()->size(), 2);
+    QCOMPARE(root->customData()->size(), 3);
     QCOMPARE(root->customData()->dataSize(), dataSize);
 
     // test copied custom group data

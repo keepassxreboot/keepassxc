@@ -176,6 +176,5 @@ void CustomData::updateLastModified()
         return;
     }
 
-    // Add/Update LastModified
     m_data.insert(LastModified, Clock::currentDateTimeUtc().toString());
 }
