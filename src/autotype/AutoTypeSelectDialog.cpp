@@ -75,6 +75,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_view, SIGNAL(clicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     connect(m_view->model(), SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(matchRemoved()));
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
+    connect(m_view, SIGNAL(matchTextCopied()), SLOT(reject()));
     // clang-format on
 
     QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
