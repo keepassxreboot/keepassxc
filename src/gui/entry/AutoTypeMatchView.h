@@ -42,12 +42,15 @@ public:
 signals:
     void matchActivated(AutoTypeMatch match);
     void matchSelectionChanged();
+    void matchTextCopied();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private slots:
     void emitMatchActivated(const QModelIndex& index);
+    void userNameCopied();
+    void passwordCopied();
 
 private:
     AutoTypeMatchModel* const m_model;
