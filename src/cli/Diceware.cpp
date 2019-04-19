@@ -58,7 +58,7 @@ int Diceware::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
+        errorTextStream << parser.helpText().replace("[options]", "diceware [options]");
         return EXIT_FAILURE;
     }
 
@@ -78,7 +78,7 @@ int Diceware::execute(const QStringList& arguments)
     }
 
     if (!dicewareGenerator.isValid()) {
-        outputTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli diceware");
+        outputTextStream << parser.helpText().replace("[options]", "diceware [options]");
         return EXIT_FAILURE;
     }
 

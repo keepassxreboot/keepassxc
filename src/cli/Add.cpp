@@ -84,7 +84,7 @@ int Add::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli add");
+        errorTextStream << parser.helpText().replace("[options]", "add [options]");
         return EXIT_FAILURE;
     }
 

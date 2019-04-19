@@ -56,7 +56,7 @@ int Locate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli locate");
+        errorTextStream << parser.helpText().replace("[options]", "locate [options]");
         return EXIT_FAILURE;
     }
 

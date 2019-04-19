@@ -84,7 +84,7 @@ int Generate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (!args.isEmpty()) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        errorTextStream << parser.helpText().replace("[options]", "generate [options]");
         return EXIT_FAILURE;
     }
 
@@ -128,7 +128,7 @@ int Generate::execute(const QStringList& arguments)
     passwordGenerator.setExcludedChars(parser.value(exclude));
 
     if (!passwordGenerator.isValid()) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli generate");
+        errorTextStream << parser.helpText().replace("[options]", "generate [options]");
         return EXIT_FAILURE;
     }
 

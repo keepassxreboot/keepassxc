@@ -59,7 +59,7 @@ int List::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1 && args.size() != 2) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli ls");
+        errorTextStream << parser.helpText().replace("[options]", "ls [options]");
         return EXIT_FAILURE;
     }
 
