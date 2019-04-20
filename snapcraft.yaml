@@ -18,7 +18,7 @@ plugs:
 apps:
   keepassxc:
     command: desktop-launch keepassxc
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy, desktop]
     desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
     environment:
       DISABLE_WAYLAND: 1
@@ -82,7 +82,7 @@ parts:
     stage:
       - -opt
     after: [desktop-qt5]
-    
+
   desktop-qt5:
       source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
       source-subdir: qt
