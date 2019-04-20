@@ -410,25 +410,19 @@ if(MINGW)
 
     install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
 
-    include(DeployQt4)
-    install_qt4_executable(${PROGNAME}.exe)
+    # Deploy all 3rd party library dependencies first
+    install(CODE "include(BundleUtilities)
+                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\" \"\" \"\")"
+            COMPONENT Runtime)
 
-    # install Qt5 plugins
-    set(PLUGINS_DIR ${Qt5_PREFIX}/share/qt5/plugins)
-    install(FILES
-            ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/platforms/qdirect2d$<$<CONFIG:Debug>:d>.dll
-            DESTINATION "platforms")
-    install(FILES ${PLUGINS_DIR}/styles/qwindowsvistastyle$<$<CONFIG:Debug>:d>.dll DESTINATION "styles")
-    install(FILES ${PLUGINS_DIR}/platforminputcontexts/qtvirtualkeyboardplugin$<$<CONFIG:Debug>:d>.dll DESTINATION "platforminputcontexts")
-    install(FILES ${PLUGINS_DIR}/iconengines/qsvgicon$<$<CONFIG:Debug>:d>.dll DESTINATION "iconengines")
-    install(FILES
-            ${PLUGINS_DIR}/imageformats/qgif$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qicns$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qico$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qjpeg$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
-            DESTINATION "imageformats")
+    # Use windeployqt.exe to setup Qt dependencies
+    set(WINDEPLOYQT_MODE "--release")
+    if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+        set(WINDEPLOYQT_MODE "--debug")
+    endif()
+
+    install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
+            COMPONENT Runtime)
 
     # install CA cert chains
     install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
