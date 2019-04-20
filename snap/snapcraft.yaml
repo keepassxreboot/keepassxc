@@ -30,7 +30,7 @@ apps:
     command-chain:
       - bin/desktop-launch
       - bin/gtk3-env-launch
-    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy]
+    plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy, desktop]
     desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
     environment:
       DISABLE_WAYLAND: 1
