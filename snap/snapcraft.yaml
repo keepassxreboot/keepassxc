@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.5.0
+version: 2.4.2
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -102,7 +102,7 @@ parts:
       '*': bin/
     stage:
       - -bin/README.*
-    
+
   desktop-qt5:
       source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
       source-subdir: qt

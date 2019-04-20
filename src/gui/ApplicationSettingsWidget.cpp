@@ -64,6 +64,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     , m_globalAutoTypeModifiers(Qt::NoModifier)
 {
     setHeadline(tr("Application Settings"));
+    showApplyButton(false);
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
@@ -75,7 +76,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     }
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
-    connect(this, SIGNAL(apply()), SLOT(saveSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
     // clang-format off
