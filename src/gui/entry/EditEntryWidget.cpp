@@ -152,11 +152,6 @@ void EditEntryWidget::setupMain()
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
 
-    QAction* action = new QAction(this);
-    action->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(action, SIGNAL(triggered()), this, SLOT(commitEntry()));
-    this->addAction(action);
-
     m_mainUi->passwordGenerator->hide();
     m_mainUi->passwordGenerator->reset();
 }
