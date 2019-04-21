@@ -22,14 +22,15 @@
 #include <QDateTime>
 #include <QImage>
 #include <QXmlStreamWriter>
+#include <QSharedPointer>
 
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/TimeInfo.h"
 
-class KeePass2RandomStream;
 class Metadata;
+class RandomStream;
 
 class KdbxXmlWriter
 {
@@ -37,8 +38,8 @@ public:
     explicit KdbxXmlWriter(quint32 version);
 
     void writeDatabase(QIODevice* device,
-                       const Database* db,
-                       KeePass2RandomStream* randomStream = nullptr,
+                       Database* db,
+                       QSharedPointer<RandomStream> randomStream = {},
                        const QByteArray& headerHash = QByteArray());
     void writeDatabase(const QString& filename, Database* db);
     void disableInnerStreamProtection(bool disable);
@@ -86,9 +87,9 @@ private:
     bool m_innerStreamProtectionDisabled = false;
 
     QXmlStreamWriter m_xml;
-    QPointer<const Database> m_db;
-    QPointer<const Metadata> m_meta;
-    KeePass2RandomStream* m_randomStream = nullptr;
+    QPointer<Database> m_db;
+    QPointer<Metadata> m_meta;
+    QSharedPointer<RandomStream> m_randomStream;
     QHash<QByteArray, int> m_idMap;
     QByteArray m_headerHash;
 

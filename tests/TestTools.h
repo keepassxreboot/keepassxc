@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTTOOLS_H
 #define KEEPASSX_TESTTOOLS_H
 
-#include "core/Tools.h"
+#include <QObject>
 
 class TestTools : public QObject
 {

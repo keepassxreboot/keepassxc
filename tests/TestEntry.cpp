@@ -561,3 +561,18 @@ void TestEntry::testResolveClonedEntry()
     QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->username()), original->username());
     QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->password()), original->password());
 }
+
+void TestEntry::testProtectedAttributes()
+{
+    QScopedPointer<Entry> entry(new Entry());
+    QVERIFY(!entry->attributes()->contains("Title"));
+    QVERIFY(!entry->attributes()->isProtected("Title"));
+    QVERIFY(!entry->attributes()->contains("UserName"));
+    QVERIFY(!entry->attributes()->isProtected("UserName"));
+    QVERIFY(!entry->attributes()->contains("Password"));
+    QVERIFY(!entry->attributes()->isProtected("Password"));
+    QVERIFY(!entry->attributes()->contains("URL"));
+    QVERIFY(!entry->attributes()->isProtected("URL"));
+    QVERIFY(!entry->attributes()->contains("Notes"));
+    QVERIFY(!entry->attributes()->isProtected("Notes"));
+}

@@ -21,6 +21,7 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "core/TimeInfo.h"
+#include "crypto/RandomStream.h"
 
 #include <QCoreApplication>
 #include <QPair>
@@ -30,7 +31,6 @@
 class QIODevice;
 class Group;
 class Entry;
-class KeePass2RandomStream;
 
 /**
  * KDBX XML payload reader.
@@ -46,7 +46,8 @@ public:
 
     virtual QSharedPointer<Database> readDatabase(const QString& filename);
     virtual QSharedPointer<Database> readDatabase(QIODevice* device);
-    virtual void readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream = nullptr);
+    virtual void readDatabase(QIODevice* device, Database* db);
+    virtual void readDatabase(QIODevice* device, Database* db, QSharedPointer<RandomStream> randomStream);
 
     bool hasError() const;
     QString errorString() const;
@@ -103,7 +104,6 @@ protected:
 
     QPointer<Database> m_db;
     QPointer<Metadata> m_meta;
-    KeePass2RandomStream* m_randomStream = nullptr;
     QXmlStreamReader m_xml;
 
     QScopedPointer<Group> m_tmpParent;
@@ -113,6 +113,7 @@ protected:
     QHash<QString, QByteArray> m_binaryPool;
     QHash<QString, QPair<Entry*, QString>> m_binaryMap;
     QByteArray m_headerHash;
+    QSharedPointer<RandomStream> m_randomStream;
 
     bool m_error = false;
     QString m_errorStr = "";

@@ -459,12 +459,12 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
 
     QCOMPARE(attrRead->value("PlainInvalid"), QString());
     QCOMPARE(attrRead->value("PlainValid"), strPlainValid);
-    QCOMPARE(attrRead->value("SingleHighSurrogate1"), QString());
-    QCOMPARE(attrRead->value("SingleHighSurrogate2"), QString("12"));
-    QCOMPARE(attrRead->value("HighHighSurrogate"), QString());
-    QCOMPARE(attrRead->value("SingleLowSurrogate1"), QString());
-    QCOMPARE(attrRead->value("SingleLowSurrogate2"), QString("12"));
-    QCOMPARE(attrRead->value("LowLowSurrogate"), QString());
+    QCOMPARE(attrRead->value("SingleHighSurrogate1"), QString("?"));
+    QCOMPARE(attrRead->value("SingleHighSurrogate2"), QString("1?2"));
+    QCOMPARE(attrRead->value("HighHighSurrogate"), QString("??"));
+    QCOMPARE(attrRead->value("SingleLowSurrogate1"), QString("?"));
+    QCOMPARE(attrRead->value("SingleLowSurrogate2"), QString("1?2"));
+    QCOMPARE(attrRead->value("LowLowSurrogate"), QString("??"));
     QCOMPARE(attrRead->value("SurrogateValid1"), strSurrogateValid1);
     QCOMPARE(attrRead->value("SurrogateValid2"), strSurrogateValid2);
 }

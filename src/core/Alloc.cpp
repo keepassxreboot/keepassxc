@@ -15,9 +15,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "core/Tools.h"
 #include <QtGlobal>
 #include <cstdint>
-#include <sodium.h>
 #ifdef Q_OS_MACOS
 #include <malloc/malloc.h>
 #else
@@ -38,7 +38,7 @@ void operator delete(void* ptr, std::size_t size) noexcept
         return;
     }
 
-    sodium_memzero(ptr, size);
+    Tools::wipeBuffer(static_cast<char*>(ptr), size);
     std::free(ptr);
 }
 

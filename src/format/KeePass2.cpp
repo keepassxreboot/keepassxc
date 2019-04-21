@@ -116,16 +116,16 @@ QSharedPointer<Kdf> KeePass2::uuidToKdf(const QUuid& uuid)
     return {};
 }
 
-KeePass2::ProtectedStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
+KeePass2::RandomStreamAlgo KeePass2::idToProtectedStreamAlgo(quint32 id)
 {
     switch (id) {
-    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::ArcFourVariant):
-        return KeePass2::ProtectedStreamAlgo::ArcFourVariant;
-    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::Salsa20):
-        return KeePass2::ProtectedStreamAlgo::Salsa20;
-    case static_cast<quint32>(KeePass2::ProtectedStreamAlgo::ChaCha20):
-        return KeePass2::ProtectedStreamAlgo::ChaCha20;
+    case static_cast<quint32>(KeePass2::RandomStreamAlgo::ArcFourVariant):
+        return KeePass2::RandomStreamAlgo::ArcFourVariant;
+    case static_cast<quint32>(KeePass2::RandomStreamAlgo::Salsa20):
+        return KeePass2::RandomStreamAlgo::Salsa20;
+    case static_cast<quint32>(KeePass2::RandomStreamAlgo::ChaCha20):
+        return KeePass2::RandomStreamAlgo::ChaCha20;
     default:
-        return KeePass2::ProtectedStreamAlgo::InvalidProtectedStreamAlgo;
+        return KeePass2::RandomStreamAlgo::InvalidRandomStreamAlgo;
     }
 }

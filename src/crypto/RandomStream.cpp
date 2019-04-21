@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,25 +16,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "KeePass2RandomStream.h"
+#include "RandomStream.h"
 
 #include "crypto/CryptoHash.h"
+#include "core/Tools.h"
 #include "format/KeePass2.h"
 
-KeePass2RandomStream::KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo)
+RandomStream::RandomStream(KeePass2::RandomStreamAlgo algo)
     : m_cipher(mapAlgo(algo), SymmetricCipher::Stream, SymmetricCipher::Encrypt)
     , m_offset(0)
 {
 }
 
-bool KeePass2RandomStream::init(const QByteArray& key)
+bool RandomStream::init(const QByteArray& key)
 {
     switch (m_cipher.algorithm()) {
     case SymmetricCipher::Salsa20:
         return m_cipher.init(CryptoHash::hash(key, CryptoHash::Sha256), KeePass2::INNER_STREAM_SALSA20_IV);
     case SymmetricCipher::ChaCha20: {
         QByteArray keyIv = CryptoHash::hash(key, CryptoHash::Sha512);
-        return m_cipher.init(keyIv.left(32), keyIv.mid(32, 12));
+        bool ok = m_cipher.init(keyIv.left(32), keyIv.mid(32, 12));
+        sodium_memzero(keyIv.data(), keyIv.capacity());
+        return ok;
     }
     default:
         qWarning("Invalid stream algorithm (%d)", m_cipher.algorithm());
@@ -42,7 +46,7 @@ bool KeePass2RandomStream::init(const QByteArray& key)
     return false;
 }
 
-QByteArray KeePass2RandomStream::randomBytes(int size, bool* ok)
+QByteArray RandomStream::randomBytes(int size, bool* ok)
 {
     QByteArray result;
 
@@ -62,11 +66,13 @@ QByteArray KeePass2RandomStream::randomBytes(int size, bool* ok)
         bytesRemaining -= bytesToCopy;
     }
 
+    Tools::wipeBuffer(m_buffer);
+
     *ok = true;
     return result;
 }
 
-QByteArray KeePass2RandomStream::process(const QByteArray& data, bool* ok)
+QByteArray RandomStream::process(const QByteArray& data, bool* ok)
 {
     bool randomBytesOk;
 
@@ -87,7 +93,7 @@ QByteArray KeePass2RandomStream::process(const QByteArray& data, bool* ok)
     return result;
 }
 
-bool KeePass2RandomStream::processInPlace(QByteArray& data)
+bool RandomStream::processInPlace(QByteArray& data)
 {
     bool ok;
     QByteArray randomData = randomBytes(data.size(), &ok);
@@ -102,12 +108,12 @@ bool KeePass2RandomStream::processInPlace(QByteArray& data)
     return true;
 }
 
-QString KeePass2RandomStream::errorString() const
+QString RandomStream::errorString() const
 {
     return m_cipher.errorString();
 }
 
-bool KeePass2RandomStream::loadBlock()
+bool RandomStream::loadBlock()
 {
     Q_ASSERT(m_offset == m_buffer.size());
 
@@ -120,12 +126,12 @@ bool KeePass2RandomStream::loadBlock()
     return true;
 }
 
-SymmetricCipher::Algorithm KeePass2RandomStream::mapAlgo(KeePass2::ProtectedStreamAlgo algo)
+SymmetricCipher::Algorithm RandomStream::mapAlgo(KeePass2::RandomStreamAlgo algo)
 {
     switch (algo) {
-    case KeePass2::ProtectedStreamAlgo::ChaCha20:
+    case KeePass2::RandomStreamAlgo::ChaCha20:
         return SymmetricCipher::ChaCha20;
-    case KeePass2::ProtectedStreamAlgo::Salsa20:
+    case KeePass2::RandomStreamAlgo::Salsa20:
         return SymmetricCipher::Salsa20;
     default:
         return SymmetricCipher::InvalidAlgorithm;

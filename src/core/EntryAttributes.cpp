@@ -18,21 +18,23 @@
 
 #include "EntryAttributes.h"
 
-#include "core/Global.h"
+#include "core/Tools.h"
+#include "crypto/Crypto.h"
 
 const QString EntryAttributes::TitleKey = "Title";
 const QString EntryAttributes::UserNameKey = "UserName";
 const QString EntryAttributes::PasswordKey = "Password";
 const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
-const QStringList EntryAttributes::DefaultAttributes(QStringList()
-                                                     << TitleKey << UserNameKey << PasswordKey << URLKey << NotesKey);
+const QStringList EntryAttributes::DefaultAttributes(
+    QStringList() << TitleKey << UserNameKey << PasswordKey << URLKey << NotesKey);
 
 const QString EntryAttributes::WantedFieldGroupName = "WantedField";
 const QString EntryAttributes::SearchInGroupName = "SearchIn";
 const QString EntryAttributes::SearchTextGroupName = "SearchText";
 
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
+
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : QObject(parent)
@@ -62,16 +64,39 @@ QList<QString> EntryAttributes::customKeys() const
     return customKeys;
 }
 
-QString EntryAttributes::value(const QString& key) const
+/**
+ * Return attribute value.
+ *
+ * @param key attribute key
+ * @param unprotect decrypt if value is protected
+ * @return value or null string if value is protected and unprotect is false
+ */
+QString EntryAttributes::value(const QString& key, bool unprotect) const
 {
-    return m_attributes.value(key);
+    if (isProtected(key)) {
+        if (unprotect) {
+            bool ok;
+            return QString::fromUtf8(Crypto::memDecryptValue(m_attributes.value(key), &ok));
+        }
+        return {};
+    }
+    return QString::fromUtf8(m_attributes.value(key));
 }
 
-QList<QString> EntryAttributes::values(const QList<QString>& keys) const
+/**
+ * Return values of all given as a list.
+ *
+ * @param keys list of keys to retrieve
+ * @param unprotect also return protected fields (will be omitted if set to false)
+ * @return list of values
+ */
+QList<QString> EntryAttributes::values(const QList<QString>& keys, bool unprotect) const
 {
     QList<QString> values;
     for (const QString& key : keys) {
-        values.append(m_attributes.value(key));
+        if (!isProtected(key) || unprotect) {
+            values.append(value(key));
+        }
     }
     return values;
 }
@@ -81,9 +106,16 @@ bool EntryAttributes::contains(const QString& key) const
     return m_attributes.contains(key);
 }
 
-bool EntryAttributes::containsValue(const QString& value) const
+/**
+ * Check if attributes contain an entry with the given value.
+ *
+ * @param value value to search for
+ * @param unprotect whether to decrypt and search protected fields as well
+ * @return true if value was found
+ */
+bool EntryAttributes::containsValue(const QString& value, bool unprotect) const
 {
-    return asConst(m_attributes).values().contains(value);
+    return values(keys(), unprotect).contains(value.toUtf8());
 }
 
 bool EntryAttributes::isProtected(const QString& key) const
@@ -102,29 +134,48 @@ bool EntryAttributes::isReference(const QString& key) const
     return matchReference(data).hasMatch();
 }
 
-void EntryAttributes::set(const QString& key, const QString& value, bool protect)
+/**
+ * Set an entry attribute.
+ *
+ * @param key attribute key
+ * @param value attribute value
+ * @param protect protect value in memory
+ */
+void EntryAttributes::set(const QString& key, QString value, bool protect)
 {
     bool emitModified = false;
 
     bool addAttribute = !m_attributes.contains(key);
-    bool changeValue = !addAttribute && (m_attributes.value(key) != value);
     bool defaultAttribute = isDefaultAttribute(key);
+
+    QByteArray oldValue;
+    bool oldProtected = !addAttribute && isProtected(key);
+
+    bool ok;
+    if (!addAttribute) {
+        oldValue = m_attributes.value(key);
+        if (oldProtected) {
+            oldValue = Crypto::memDecryptValue(oldValue, &ok);
+        }
+    }
+
+    QByteArray byteValue = value.toUtf8();
+    bool changeValue = byteValue != oldValue || protect != oldProtected;
+    Tools::wipeBuffer(oldValue);
+    oldValue.clear();
 
     if (addAttribute && !defaultAttribute) {
         emit aboutToBeAdded(key);
     }
 
     if (addAttribute || changeValue) {
-        m_attributes.insert(key, value);
-        emitModified = true;
-    }
-
-    if (protect) {
-        if (!m_protectedAttributes.contains(key)) {
-            emitModified = true;
+        if (protect) {
+            byteValue = Crypto::memEncryptValue(byteValue, &ok);
+            m_protectedAttributes.insert(key);
+        } else {
+            m_protectedAttributes.remove(key);
         }
-        m_protectedAttributes.insert(key);
-    } else if (m_protectedAttributes.remove(key)) {
+        m_attributes.insert(key, byteValue);
         emitModified = true;
     }
 
@@ -173,17 +224,14 @@ void EntryAttributes::rename(const QString& oldKey, const QString& newKey)
         return;
     }
 
-    QString data = value(oldKey);
-    bool protect = isProtected(oldKey);
+    QString data = value(oldKey, false);
 
     emit aboutToRename(oldKey, newKey);
 
-    m_attributes.remove(oldKey);
-    m_attributes.insert(newKey, data);
-    if (protect) {
-        m_protectedAttributes.remove(oldKey);
+    if (isProtected(oldKey)) {
         m_protectedAttributes.insert(newKey);
     }
+    m_attributes.insert(newKey, data.toUtf8());
 
     emit entryAttributesModified();
     emit renamed(oldKey, newKey);
@@ -209,7 +257,7 @@ void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
     const QList<QString> otherKeyList = other->keys();
     for (const QString& key : otherKeyList) {
         if (!isDefaultAttribute(key)) {
-            m_attributes.insert(key, other->value(key));
+            m_attributes.insert(key, other->m_attributes.value(key));
             if (other->isProtected(key)) {
                 m_protectedAttributes.insert(key);
             }
@@ -274,12 +322,12 @@ QUuid EntryAttributes::referenceUuid(const QString& key) const
 
 bool EntryAttributes::operator==(const EntryAttributes& other) const
 {
-    return (m_attributes == other.m_attributes && m_protectedAttributes == other.m_protectedAttributes);
+    return m_attributes == other.m_attributes && m_protectedAttributes == other.m_protectedAttributes;
 }
 
 bool EntryAttributes::operator!=(const EntryAttributes& other) const
 {
-    return (m_attributes != other.m_attributes || m_protectedAttributes != other.m_protectedAttributes);
+    return !operator==(other);
 }
 
 QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
@@ -309,8 +357,8 @@ void EntryAttributes::clear()
 int EntryAttributes::attributesSize() const
 {
     int size = 0;
-    for (auto it = m_attributes.constBegin(); it != m_attributes.constEnd(); ++it) {
-        size += it.key().toUtf8().size() + it.value().toUtf8().size();
+    for (auto it = m_attributes.cbegin(); it != m_attributes.cend(); ++it) {
+        size += it.key().toUtf8().size() + value(it.key(), true).size();
     }
     return size;
 }

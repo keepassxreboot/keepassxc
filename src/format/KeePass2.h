@@ -96,12 +96,12 @@ namespace KeePass2
         Binary = 3
     };
 
-    enum class ProtectedStreamAlgo
+    enum class RandomStreamAlgo
     {
         ArcFourVariant = 1,
         Salsa20 = 2,
         ChaCha20 = 3,
-        InvalidProtectedStreamAlgo = -1
+        InvalidRandomStreamAlgo = -1
     };
 
     enum class VariantMapFieldType : quint8
@@ -130,7 +130,7 @@ namespace KeePass2
     QSharedPointer<Kdf> kdfFromParameters(const QVariantMap& p);
     QVariantMap kdfToParameters(const QSharedPointer<Kdf>& kdf);
     QSharedPointer<Kdf> uuidToKdf(const QUuid& uuid);
-    ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
+    RandomStreamAlgo idToProtectedStreamAlgo(quint32 id);
 
 } // namespace KeePass2
 

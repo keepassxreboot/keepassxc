@@ -327,12 +327,16 @@ void TestModified::testEntrySets()
     entry->setOverrideUrl(entry->overrideUrl());
     QTRY_COMPARE(spyModified.count(), spyCount);
 
-    entry->attributes()->set("test key", "test value", false);
+    // test protection and unprotection
+    entry->attributes()->set("test key", "test value");
     ++spyCount;
     QTRY_COMPARE(spyModified.count(), spyCount);
-    entry->attributes()->set("test key", entry->attributes()->value("test key"), false);
+    entry->attributes()->set("test key", entry->attributes()->value("test key"));
     QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key", entry->attributes()->value("test key"), true);
+    ++spyCount;
+    QTRY_COMPARE(spyModified.count(), spyCount);
+    entry->attributes()->set("test key", entry->attributes()->value("test key"));
     ++spyCount;
     QTRY_COMPARE(spyModified.count(), spyCount);
     entry->attributes()->set("test key", "new test value", true);

@@ -19,13 +19,14 @@
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Translator.h"
-#include "gui/MessageBox.h"
 
 #ifdef Q_OS_WIN
 #include <aclapi.h> // for createWindowsDACL()
 #include <windows.h> // for Sleep(), SetDllDirectoryA(), SetSearchPathMode(), ...
 #undef MessageBox
 #endif
+
+#include "gui/MessageBox.h"
 
 #if defined(HAVE_RLIMIT_CORE)
 #include <sys/resource.h>

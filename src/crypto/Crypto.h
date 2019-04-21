@@ -29,6 +29,9 @@ public:
     static QString errorString();
     static QString debugInfo();
 
+    static QByteArray memEncryptValue(const QByteArray& value, bool* ok, QString* errorString = nullptr);
+    static QByteArray memDecryptValue(const QByteArray& value, bool* ok, QString* errorString = nullptr);
+
 private:
     Crypto();
     static bool checkAlgorithms();

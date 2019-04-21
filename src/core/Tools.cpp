@@ -22,6 +22,7 @@
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Translator.h"
+#include "crypto/Crypto.h"
 
 #include "git-info.h"
 #include <QCoreApplication>
@@ -33,6 +34,7 @@
 #include <QStringList>
 #include <QSysInfo>
 #include <QUuid>
+
 #include <cctype>
 
 #ifdef Q_OS_WIN
@@ -45,277 +47,279 @@
 
 namespace Tools
 {
-    QString debugInfo()
-    {
-        QString debugInfo = "KeePassXC - ";
-        debugInfo.append(QObject::tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
+QString debugInfo()
+{
+    QString debugInfo = "KeePassXC - ";
+    debugInfo.append(QObject::tr("Version %1").arg(KEEPASSXC_VERSION).append("\n"));
 #ifndef KEEPASSXC_BUILD_TYPE_RELEASE
-        debugInfo.append(QObject::tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
+    debugInfo.append(QObject::tr("Build Type: %1").arg(KEEPASSXC_BUILD_TYPE).append("\n"));
 #endif
 
-        QString commitHash;
-        if (!QString(GIT_HEAD).isEmpty()) {
-            commitHash = GIT_HEAD;
-        }
-        if (!commitHash.isEmpty()) {
-            debugInfo.append(QObject::tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
-        }
+    QString commitHash;
+    if (!QString(GIT_HEAD).isEmpty()) {
+        commitHash = GIT_HEAD;
+    }
+    if (!commitHash.isEmpty()) {
+        debugInfo.append(QObject::tr("Revision: %1").arg(commitHash.left(7)).append("\n"));
+    }
 
 #ifdef KEEPASSXC_DIST
-        debugInfo.append(QObject::tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
+    debugInfo.append(QObject::tr("Distribution: %1").arg(KEEPASSXC_DIST_TYPE).append("\n"));
 #endif
 
-        // Qt related debugging information.
-        debugInfo.append("\n");
-        debugInfo.append("Qt ").append(QString::fromLocal8Bit(qVersion())).append("\n");
+    // Qt related debugging information.
+    debugInfo.append("\n");
+    debugInfo.append("Qt ").append(QString::fromLocal8Bit(qVersion())).append("\n");
 #ifdef QT_NO_DEBUG
-        debugInfo.append(QObject::tr("Debugging mode is disabled.").append("\n"));
+    debugInfo.append(QObject::tr("Debugging mode is disabled.").append("\n"));
 #else
-        debugInfo.append(QObject::tr("Debugging mode is enabled.").append("\n"));
+    debugInfo.append(QObject::tr("Debugging mode is enabled.").append("\n"));
 #endif
-        debugInfo.append("\n");
+    debugInfo.append("\n");
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
-        debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
-                             .arg(QSysInfo::prettyProductName(),
-                                  QSysInfo::currentCpuArchitecture(),
-                                  QSysInfo::kernelType(),
-                                  QSysInfo::kernelVersion()));
+    debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
+                         .arg(QSysInfo::prettyProductName(),
+                              QSysInfo::currentCpuArchitecture(),
+                              QSysInfo::kernelType(),
+                              QSysInfo::kernelVersion()));
 
-        debugInfo.append("\n\n");
+    debugInfo.append("\n\n");
 #endif
 
-        QString extensions;
+    QString extensions;
 #ifdef WITH_XC_AUTOTYPE
-        extensions += "\n- " + QObject::tr("Auto-Type");
+    extensions += "\n- " + QObject::tr("Auto-Type");
 #endif
 #ifdef WITH_XC_BROWSER
-        extensions += "\n- " + QObject::tr("Browser Integration");
+    extensions += "\n- " + QObject::tr("Browser Integration");
 #endif
 #ifdef WITH_XC_SSHAGENT
-        extensions += "\n- " + QObject::tr("SSH Agent");
+    extensions += "\n- " + QObject::tr("SSH Agent");
 #endif
 #if defined(WITH_XC_KEESHARE_SECURE) && defined(WITH_XC_KEESHARE_INSECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (signed and unsigned sharing)");
+    extensions += "\n- " + QObject::tr("KeeShare (signed and unsigned sharing)");
 #elif defined(WITH_XC_KEESHARE_SECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (only signed sharing)");
+    extensions += "\n- " + QObject::tr("KeeShare (only signed sharing)");
 #elif defined(WITH_XC_KEESHARE_INSECURE)
-        extensions += "\n- " + QObject::tr("KeeShare (only unsigned sharing)");
+    extensions += "\n- " + QObject::tr("KeeShare (only unsigned sharing)");
 #endif
 #ifdef WITH_XC_YUBIKEY
-        extensions += "\n- " + QObject::tr("YubiKey");
+    extensions += "\n- " + QObject::tr("YubiKey");
 #endif
 #ifdef WITH_XC_TOUCHID
-        extensions += "\n- " + QObject::tr("TouchID");
+    extensions += "\n- " + QObject::tr("TouchID");
 #endif
 
-        if (extensions.isEmpty())
-            extensions = " " + QObject::tr("None");
-
-        debugInfo.append(QObject::tr("Enabled extensions:").append(extensions).append("\n"));
-        return debugInfo;
+    if (extensions.isEmpty()) {
+        extensions = " " + QObject::tr("None");
     }
 
-    QString humanReadableFileSize(qint64 bytes, quint32 precision)
-    {
-        constexpr auto kibibyte = 1024;
-        double size = bytes;
+    debugInfo.append(QObject::tr("Enabled extensions:").append(extensions).append("\n"));
+    return debugInfo;
+}
 
-        QStringList units = QStringList() << "B"
-                                          << "KiB"
-                                          << "MiB"
-                                          << "GiB";
-        int i = 0;
-        int maxI = units.size() - 1;
+QString humanReadableFileSize(qint64 bytes, quint32 precision)
+{
+    constexpr auto kibibyte = 1024;
+    double size = bytes;
 
-        while ((size >= kibibyte) && (i < maxI)) {
-            size /= kibibyte;
-            i++;
-        }
+    QStringList units = QStringList() << "B"
+                                      << "KiB"
+                                      << "MiB"
+                                      << "GiB";
+    int i = 0;
+    int maxI = units.size() - 1;
 
-        return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
+    while ((size >= kibibyte) && (i < maxI)) {
+        size /= kibibyte;
+        i++;
     }
 
-    bool readFromDevice(QIODevice* device, QByteArray& data, int size)
-    {
-        QByteArray buffer;
-        buffer.resize(size);
+    return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
+}
 
-        qint64 readResult = device->read(buffer.data(), size);
-        if (readResult == -1) {
-            return false;
-        } else {
-            buffer.resize(readResult);
-            data = buffer;
-            return true;
-        }
-    }
+bool readFromDevice(QIODevice* device, QByteArray& data, int size)
+{
+    QByteArray buffer;
+    buffer.resize(size);
 
-    bool readAllFromDevice(QIODevice* device, QByteArray& data)
-    {
-        QByteArray result;
-        qint64 readBytes = 0;
-        qint64 readResult;
-        do {
-            result.resize(result.size() + 16384);
-            readResult = device->read(result.data() + readBytes, result.size() - readBytes);
-            if (readResult > 0) {
-                readBytes += readResult;
-            }
-        } while (readResult > 0);
-
-        if (readResult == -1) {
-            return false;
-        } else {
-            result.resize(static_cast<int>(readBytes));
-            data = result;
-            return true;
-        }
-    }
-
-    QString imageReaderFilter()
-    {
-        const QList<QByteArray> formats = QImageReader::supportedImageFormats();
-        QStringList formatsStringList;
-
-        for (const QByteArray& format : formats) {
-            for (char codePoint : format) {
-                if (!QChar(codePoint).isLetterOrNumber()) {
-                    continue;
-                }
-            }
-
-            formatsStringList.append("*." + QString::fromLatin1(format).toLower());
-        }
-
-        return formatsStringList.join(" ");
-    }
-
-    bool isHex(const QByteArray& ba)
-    {
-        for (const unsigned char c : ba) {
-            if (!std::isxdigit(c)) {
-                return false;
-            }
-        }
-
+    qint64 readResult = device->read(buffer.data(), size);
+    if (readResult == -1) {
+        return false;
+    } else {
+        buffer.resize(readResult);
+        data = buffer;
         return true;
     }
+}
 
-    bool isBase64(const QByteArray& ba)
-    {
-        constexpr auto pattern = R"(^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$)";
-        QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
+bool readAllFromDevice(QIODevice* device, QByteArray& data)
+{
+    QByteArray result;
+    qint64 readBytes = 0;
+    qint64 readResult;
+    do {
+        result.resize(result.size() + 16384);
+        readResult = device->read(result.data() + readBytes, result.size() - readBytes);
+        if (readResult > 0) {
+            readBytes += readResult;
+        }
+    }
+    while (readResult > 0);
 
-        QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+    if (readResult == -1) {
+        return false;
+    } else {
+        result.resize(static_cast<int>(readBytes));
+        data = result;
+        return true;
+    }
+}
 
-        return regexp.exactMatch(base64);
+QString imageReaderFilter()
+{
+    const QList<QByteArray> formats = QImageReader::supportedImageFormats();
+    QStringList formatsStringList;
+
+    for (const QByteArray& format : formats) {
+        for (char codePoint : format) {
+            if (!QChar(codePoint).isLetterOrNumber()) {
+                continue;
+            }
+        }
+
+        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
     }
 
-    void sleep(int ms)
-    {
-        Q_ASSERT(ms >= 0);
+    return formatsStringList.join(" ");
+}
 
-        if (ms == 0) {
-            return;
+bool isHex(const QByteArray& ba)
+{
+    for (const unsigned char c : ba) {
+        if (!std::isxdigit(c)) {
+            return false;
         }
+    }
+
+    return true;
+}
+
+bool isBase64(const QByteArray& ba)
+{
+    constexpr auto pattern = R"(^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$)";
+    QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
+
+    QString base64 = QString::fromLatin1(ba.constData(), ba.size());
+
+    return regexp.exactMatch(base64);
+}
+
+void sleep(int ms)
+{
+    Q_ASSERT(ms >= 0);
+
+    if (ms == 0) {
+        return;
+    }
 
 #ifdef Q_OS_WIN
-        Sleep(uint(ms));
+    Sleep(uint(ms));
 #else
-        timespec ts;
-        ts.tv_sec = ms / 1000;
-        ts.tv_nsec = (ms % 1000) * 1000 * 1000;
-        nanosleep(&ts, nullptr);
+    timespec ts;
+    ts.tv_sec = ms / 1000;
+    ts.tv_nsec = (ms % 1000) * 1000 * 1000;
+    nanosleep(&ts, nullptr);
 #endif
+}
+
+void wait(int ms)
+{
+    Q_ASSERT(ms >= 0);
+
+    if (ms == 0) {
+        return;
     }
 
-    void wait(int ms)
-    {
-        Q_ASSERT(ms >= 0);
+    QElapsedTimer timer;
+    timer.start();
 
-        if (ms == 0) {
-            return;
+    if (ms <= 50) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
+        sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
+    } else {
+        int timeLeft;
+        do {
+            timeLeft = ms - timer.elapsed();
+            if (timeLeft > 0) {
+                QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
+                sleep(10);
+            }
         }
+        while (!timer.hasExpired(ms));
+    }
+}
 
-        QElapsedTimer timer;
-        timer.start();
+// Escape common regex symbols except for *, ?, and |
+auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
 
-        if (ms <= 50) {
-            QCoreApplication::processEvents(QEventLoop::AllEvents, ms);
-            sleep(qMax(ms - static_cast<int>(timer.elapsed()), 0));
-        } else {
-            int timeLeft;
-            do {
-                timeLeft = ms - timer.elapsed();
-                if (timeLeft > 0) {
-                    QCoreApplication::processEvents(QEventLoop::AllEvents, timeLeft);
-                    sleep(10);
-                }
-            } while (!timer.hasExpired(ms));
-        }
+QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
+{
+    QString pattern = string;
+
+    // Wildcard support (*, ?, |)
+    if (useWildcards) {
+        pattern.replace(regexEscape, "\\\\1");
+        pattern.replace("*", ".*");
+        pattern.replace("?", ".");
     }
 
-    // Escape common regex symbols except for *, ?, and |
-    auto regexEscape = QRegularExpression(R"re(([-[\]{}()+.,\\\/^$#]))re");
-
-    QRegularExpression convertToRegex(const QString& string, bool useWildcards, bool exactMatch, bool caseSensitive)
-    {
-        QString pattern = string;
-
-        // Wildcard support (*, ?, |)
-        if (useWildcards) {
-            pattern.replace(regexEscape, "\\\\1");
-            pattern.replace("*", ".*");
-            pattern.replace("?", ".");
-        }
-
-        // Exact modifier
-        if (exactMatch) {
-            pattern = "^" + pattern + "$";
-        }
-
-        auto regex = QRegularExpression(pattern);
-        if (!caseSensitive) {
-            regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-        }
-
-        return regex;
+    // Exact modifier
+    if (exactMatch) {
+        pattern = "^" + pattern + "$";
     }
 
-    QString uuidToHex(const QUuid& uuid)
-    {
-        return QString::fromLatin1(uuid.toRfc4122().toHex());
+    auto regex = QRegularExpression(pattern);
+    if (!caseSensitive) {
+        regex.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
     }
 
-    QUuid hexToUuid(const QString& uuid)
-    {
-        return QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1()));
-    }
+    return regex;
+}
 
-    Buffer::Buffer()
-        : raw(nullptr)
-        , size(0)
-    {
-    }
+QString uuidToHex(const QUuid& uuid)
+{
+    return QString::fromLatin1(uuid.toRfc4122().toHex());
+}
 
-    Buffer::~Buffer()
-    {
-        clear();
-    }
+QUuid hexToUuid(const QString& uuid)
+{
+    return QUuid::fromRfc4122(QByteArray::fromHex(uuid.toLatin1()));
+}
 
-    void Buffer::clear()
-    {
-        if (size > 0) {
-            free(raw);
-        }
-        raw = nullptr;
-        size = 0;
-    }
+Buffer::Buffer()
+    : raw(nullptr), size(0)
+{
+}
 
-    QByteArray Buffer::content() const
-    {
-        return QByteArray(reinterpret_cast<char*>(raw), size);
+Buffer::~Buffer()
+{
+    clear();
+}
+
+void Buffer::clear()
+{
+    if (size > 0) {
+        free(raw);
     }
+    raw = nullptr;
+    size = 0;
+}
+
+QByteArray Buffer::content() const
+{
+    return QByteArray(reinterpret_cast<char*>(raw), size);
+}
 
 } // namespace Tools

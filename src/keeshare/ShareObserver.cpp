@@ -579,7 +579,7 @@ void ShareObserver::resolveReferenceAttributes(Entry* targetEntry, const Databas
             continue;
         }
         // We could do more sophisticated **** trying to point the reference to the next in-scope reference
-        // but those cases with high propability constructed examples and very rare in real usage
+        // but those cases with high probability constructed examples and very rare in real usage
         const auto* sourceReference = sourceDb->rootGroup()->findEntryByUuid(targetEntry->uuid());
         const auto resolvedValue = sourceReference->resolveMultiplePlaceholders(standardValue);
         targetEntry->setUpdateTimeinfo(false);

@@ -33,6 +33,7 @@ class Random
 {
 public:
     void randomize(QByteArray& ba);
+    void randomize(char* data, int size);
     QByteArray randomArray(int len);
 
     /**

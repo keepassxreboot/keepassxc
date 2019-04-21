@@ -23,10 +23,11 @@
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlWriter.h"
-#include "format/KeePass2RandomStream.h"
+#include "crypto/RandomStream.h"
 #include "streams/HmacBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
@@ -49,8 +50,14 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
 
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(ivSize);
-    QByteArray protectedStreamKey = randomGen()->randomArray(64);
+    QByteArray randomStreamKey = randomGen()->randomArray(64);
     QByteArray endOfHeader = "\r\n\r\n";
+
+    auto randomStream = QSharedPointer<RandomStream>::create(KeePass2::RandomStreamAlgo::ChaCha20);
+    if (!randomStream->init(randomStreamKey)) {
+        raiseError(randomStream->errorString());
+        return false;
+    }
 
     if (!db->setKey(db->key(), false, true)) {
         raiseError(tr("Unable to calculate master key"));
@@ -156,29 +163,27 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     CHECK_RETURN_FALSE(writeInnerHeaderField(
         outputDevice,
         KeePass2::InnerHeaderFieldID::InnerRandomStreamID,
-        Endian::sizedIntToBytes(static_cast<int>(KeePass2::ProtectedStreamAlgo::ChaCha20), KeePass2::BYTEORDER)));
+        Endian::sizedIntToBytes(static_cast<int>(KeePass2::RandomStreamAlgo::ChaCha20), KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(
-        writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamKey, protectedStreamKey));
+        writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::InnerRandomStreamKey, randomStreamKey));
 
     // Write attachments to the inner header
     writeAttachments(outputDevice, db);
 
     CHECK_RETURN_FALSE(writeInnerHeaderField(outputDevice, KeePass2::InnerHeaderFieldID::End, QByteArray()));
 
-    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::ChaCha20);
-    if (!randomStream.init(protectedStreamKey)) {
-        raiseError(randomStream.errorString());
-        return false;
-    }
-
     KdbxXmlWriter xmlWriter(formatVersion());
-    xmlWriter.writeDatabase(outputDevice, db, &randomStream, headerHash);
+    xmlWriter.writeDatabase(outputDevice, db, randomStream, headerHash);
 
     // Explicitly close/reset streams so they are flushed and we can detect
     // errors. QIODevice::close() resets errorString() etc.
     if (ioCompressor) {
         ioCompressor->close();
     }
+
+    Tools::wipeBuffer(randomStreamKey);
+    randomStreamKey.clear();
+
     if (!cipherStream->reset()) {
         raiseError(cipherStream->errorString());
         return false;

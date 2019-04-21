@@ -87,7 +87,7 @@ private slots:
     void removeCurrentAttribute();
     void updateCurrentAttribute();
     void protectCurrentAttribute(bool state);
-    void revealCurrentAttribute();
+    void toggleRevealCurrentAttribute();
     void updateAutoTypeEnabled();
     void openAutotypeHelp();
     void insertAutoTypeAssoc();
@@ -139,7 +139,7 @@ private:
     void saveSSHAgentConfig();
 #endif
 
-    void displayAttribute(QModelIndex index, bool showProtected);
+    void displayAttribute(QModelIndex index, bool showProtected, bool temporary = false);
 
     QPointer<Entry> m_entry;
     QSharedPointer<Database> m_db;

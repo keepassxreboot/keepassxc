@@ -35,6 +35,11 @@ void Random::randomize(QByteArray& ba)
     m_backend->randomize(ba.data(), ba.size());
 }
 
+void Random::randomize(char* data, int size)
+{
+    m_backend->randomize(data, size);
+}
+
 QByteArray Random::randomArray(int len)
 {
     QByteArray ba;

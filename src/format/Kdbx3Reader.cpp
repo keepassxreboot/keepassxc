@@ -22,7 +22,6 @@
 #include "core/Group.h"
 #include "crypto/CryptoHash.h"
 #include "format/KdbxXmlReader.h"
-#include "format/KeePass2RandomStream.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
@@ -42,7 +41,7 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
 
     // check if all required headers were present
     if (m_masterSeed.isEmpty() || m_encryptionIV.isEmpty() || m_streamStartBytes.isEmpty()
-        || m_protectedStreamKey.isEmpty() || db->cipher().isNull()) {
+        || !m_randomStreamKey || db->cipher().isNull()) {
         raiseError(tr("missing database headers"));
         return false;
     }
@@ -104,16 +103,16 @@ bool Kdbx3Reader::readDatabaseImpl(QIODevice* device,
         xmlDevice = ioCompressor.data();
     }
 
-    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
-    if (!randomStream.init(m_protectedStreamKey)) {
-        raiseError(randomStream.errorString());
+    auto randomStream = QSharedPointer<RandomStream>::create(KeePass2::RandomStreamAlgo::Salsa20);
+    if (!randomStream->init(QByteArray::fromRawData(m_randomStreamKey, static_cast<int>(m_randomStreamKeySize)))) {
+        raiseError(randomStream->errorString());
         return false;
     }
 
     Q_ASSERT(xmlDevice);
 
     KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_3_1);
-    xmlReader.readDatabase(xmlDevice, db, &randomStream);
+    xmlReader.readDatabase(xmlDevice, db, randomStream);
 
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
@@ -191,7 +190,7 @@ bool Kdbx3Reader::readHeaderField(StoreDataStream& headerStream, Database* db)
         break;
 
     case KeePass2::HeaderFieldID::ProtectedStreamKey:
-        setProtectedStreamKey(fieldData);
+        setRandomStreamKey(fieldData);
         break;
 
     case KeePass2::HeaderFieldID::StreamStartBytes:

@@ -21,7 +21,7 @@
 #include "crypto/Crypto.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
-#include "format/KeePass2RandomStream.h"
+#include "crypto/RandomStream.h"
 
 QTEST_GUILESS_MAIN(TestKeePass2RandomStream)
 
@@ -54,7 +54,7 @@ void TestKeePass2RandomStream::test()
         cipherData[i] = data[i] ^ cipherPad[i];
     }
 
-    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
+    RandomStream randomStream(KeePass2::RandomStreamAlgo::Salsa20);
     bool ok;
     QVERIFY(randomStream.init(key));
     QByteArray randomStreamData;

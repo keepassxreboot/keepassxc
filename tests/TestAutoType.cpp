@@ -94,10 +94,10 @@ void TestAutoType::init()
     m_entry4 = new Entry();
     m_entry4->setGroup(m_group);
     m_entry4->setPassword("custom_attr");
-    m_entry4->attributes()->set("CUSTOM", "Attribute", false);
-    m_entry4->attributes()->set("CustomAttrFirst", "AttrValueFirst", false);
-    m_entry4->attributes()->set("CustomAttrSecond", "AttrValueSecond", false);
-    m_entry4->attributes()->set("CustomAttrThird", "AttrValueThird", false);
+    m_entry4->attributes()->set("CUSTOM", "Attribute");
+    m_entry4->attributes()->set("CustomAttrFirst", "AttrValueFirst");
+    m_entry4->attributes()->set("CustomAttrSecond", "AttrValueSecond");
+    m_entry4->attributes()->set("CustomAttrThird", "AttrValueThird");
     association.window = "//^CustomAttr1$//";
     association.sequence = "{PASSWORD}:{S:CUSTOM}";
     m_entry4->autoTypeAssociations()->add(association);

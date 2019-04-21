@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,18 +16,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2RANDOMSTREAM_H
-#define KEEPASSX_KEEPASS2RANDOMSTREAM_H
+#ifndef KEEPASSXC_CRYPTO_RANDOMSTREAM_H
+#define KEEPASSXC_CRYPTO_RANDOMSTREAM_H
+
+#include "format/KeePass2.h"
+#include "crypto/SymmetricCipher.h"
 
 #include <QByteArray>
 
-#include "KeePass2.h"
-#include "crypto/SymmetricCipher.h"
-
-class KeePass2RandomStream
+class RandomStream
 {
 public:
-    KeePass2RandomStream(KeePass2::ProtectedStreamAlgo algo);
+    RandomStream(KeePass2::RandomStreamAlgo algo);
 
     bool init(const QByteArray& key);
     QByteArray randomBytes(int size, bool* ok);
@@ -41,7 +42,7 @@ private:
     QByteArray m_buffer;
     int m_offset;
 
-    static SymmetricCipher::Algorithm mapAlgo(KeePass2::ProtectedStreamAlgo algo);
+    static SymmetricCipher::Algorithm mapAlgo(KeePass2::RandomStreamAlgo algo);
 };
 
-#endif // KEEPASSX_KEEPASS2RANDOMSTREAM_H
+#endif // KEEPASSXC_CRYPTO_RANDOMSTREAM_H

@@ -16,7 +16,6 @@
  */
 
 #include "KdbxXmlReader.h"
-#include "KeePass2RandomStream.h"
 #include "core/Clock.h"
 #include "core/DatabaseIcons.h"
 #include "core/Endian.h"
@@ -77,13 +76,24 @@ QSharedPointer<Database> KdbxXmlReader::readDatabase(QIODevice* device)
 }
 
 /**
- * Read XML contents from a device into a given database using a \link KeePass2RandomStream.
+ * Read XML contents from a device into a given database.
  *
  * @param device input device
  * @param db database to read into
- * @param randomStream random stream to use for decryption
  */
-void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2RandomStream* randomStream)
+void KdbxXmlReader::readDatabase(QIODevice* device, Database* db)
+{
+    readDatabase(device, db, {});
+}
+
+/**
+ * Read XML contents from a device into a given database.
+ *
+ * @param device input device
+ * @param protectedStream initialized random stream for inner stream decryption
+ * @param db database to read into
+ */
+void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, QSharedPointer<RandomStream> randomStream)
 {
     m_error = false;
     m_errorStr.clear();
@@ -95,8 +105,8 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
     m_meta = m_db->metadata();
     m_meta->setUpdateDatetime(false);
 
-    m_randomStream = randomStream;
     m_headerHash.clear();
+    m_randomStream = std::move(randomStream);
 
     m_tmpParent.reset(new Group());
 
@@ -803,7 +813,7 @@ void KdbxXmlReader::parseEntryString(Entry* entry)
 
     QString key;
     QString value;
-    bool protect = false;
+    bool protectInMemory = false;
     bool keySet = false;
     bool valueSet = false;
 
@@ -811,15 +821,26 @@ void KdbxXmlReader::parseEntryString(Entry* entry)
         if (m_xml.name() == "Key") {
             key = readString();
             keySet = true;
+
+            // clang-format off
+            protectInMemory |=((key == "Title" && m_meta->protectTitle())
+                || (key == "UserName" && m_meta->protectUsername())
+                || (key == "Password" && m_meta->protectPassword())
+                || (key == "URL" && m_meta->protectUrl())
+                || (key == "Notes" && m_meta->protectNotes())
+                || entry->attributes()->isProtected(key));
+            // clang-format on
+
             continue;
         }
 
         if (m_xml.name() == "Value") {
             QXmlStreamAttributes attr = m_xml.attributes();
-            bool isProtected;
-            bool protectInMemory;
-            value = readString(isProtected, protectInMemory);
-            protect = isProtected || protectInMemory;
+
+            bool isProtected = false;
+            bool shouldBeProtected = false;
+            value = readString(isProtected, shouldBeProtected);
+            protectInMemory = isProtected || shouldBeProtected;
             valueSet = true;
             continue;
         }
@@ -833,7 +854,8 @@ void KdbxXmlReader::parseEntryString(Entry* entry)
             raiseError(tr("Duplicate custom attribute found"));
             return;
         }
-        entry->attributes()->set(key, value, protect);
+
+        entry->attributes()->set(key, value, protectInMemory);
         return;
     }
 
@@ -998,6 +1020,7 @@ QString KdbxXmlReader::readString(bool& isProtected, bool& protectInMemory)
         bool ok;
         QByteArray plaintext = m_randomStream->process(ciphertext, &ok);
         if (!ok) {
+            Tools::wipeBuffer(value);
             value.clear();
             raiseError(m_randomStream->errorString());
             return value;

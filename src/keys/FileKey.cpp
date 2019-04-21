@@ -24,6 +24,7 @@
 
 #include <QFile>
 
+#include <gcrypt.h>
 #include <algorithm>
 #include <cstring>
 #include <gcrypt.h>
@@ -248,7 +249,7 @@ bool FileKey::loadXml(QIODevice* device)
         ok = true;
     }
 
-    sodium_memzero(data.data(), static_cast<std::size_t>(data.capacity()));
+    Tools::wipeBuffer(data);
 
     return ok;
 }
@@ -344,7 +345,7 @@ bool FileKey::loadHex(QIODevice* device)
     }
 
     QByteArray key = QByteArray::fromHex(data);
-    sodium_memzero(data.data(), static_cast<std::size_t>(data.capacity()));
+    Tools::wipeBuffer(data);
 
     if (key.size() != 32) {
         return false;
@@ -376,7 +377,7 @@ bool FileKey::loadHashed(QIODevice* device)
 
     auto result = cryptoHash.result();
     std::memcpy(m_key, result.data(), std::min(SHA256_SIZE, result.size()));
-    sodium_memzero(result.data(), static_cast<std::size_t>(result.capacity()));
+    Tools::wipeBuffer(result);
 
     return true;
 }

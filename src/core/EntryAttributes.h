@@ -25,6 +25,8 @@
 #include <QSet>
 #include <QStringList>
 #include <QUuid>
+#include <QSharedPointer>
+
 
 class EntryAttributes : public QObject
 {
@@ -35,13 +37,13 @@ public:
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     QList<QString> customKeys() const;
-    QString value(const QString& key) const;
-    QList<QString> values(const QList<QString>& keys) const;
+    QString value(const QString& key, bool unprotect = true) const;
+    QList<QString> values(const QList<QString>& keys, bool unprotect = true) const;
     bool contains(const QString& key) const;
-    bool containsValue(const QString& value) const;
+    bool containsValue(const QString& value, bool unprotect = true) const;
     bool isProtected(const QString& key) const;
     bool isReference(const QString& key) const;
-    void set(const QString& key, const QString& value, bool protect = false);
+    void set(const QString& key, QString value, bool protect = false);
     void remove(const QString& key);
     void rename(const QString& oldKey, const QString& newKey);
     void copyCustomKeysFrom(const EntryAttributes* other);
@@ -61,6 +63,7 @@ public:
     static const QString URLKey;
     static const QString NotesKey;
     static const QStringList DefaultAttributes;
+    static const QList<bool> DefaultProtectedAttributes;
     static const QString RememberCmdExecAttr;
     static bool isDefaultAttribute(const QString& key);
 
@@ -82,7 +85,7 @@ signals:
     void reset();
 
 private:
-    QMap<QString, QString> m_attributes;
+    QMap<QString, QByteArray> m_attributes;
     QSet<QString> m_protectedAttributes;
 };
 

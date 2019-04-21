@@ -23,6 +23,7 @@
 #include <QHash>
 #include <QObject>
 #include <QPointer>
+#include <QSharedPointer>
 
 #include "config-keepassx.h"
 #include "crypto/kdf/AesKdf.h"
@@ -167,6 +168,8 @@ private:
         {
             kdf->randomizeSeed();
         }
+        Q_DISABLE_COPY(DatabaseData);
+        ~DatabaseData() = default;
     };
 
     void createRecycleBin();

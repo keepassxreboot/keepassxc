@@ -177,7 +177,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
-    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
+    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleRevealCurrentAttribute()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
@@ -1103,7 +1103,7 @@ void EditEntryWidget::updateCurrentAttribute()
     m_currentAttribute = newIndex;
 }
 
-void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
+void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected, bool temporary)
 {
     // Block signals to prevent modified being set
     m_advancedUi->protectAttributeButton->blockSignals(true);
@@ -1113,14 +1113,21 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
             m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
-            m_advancedUi->attributesEdit->setEnabled(false);
-            m_advancedUi->revealAttributeButton->setEnabled(true);
-            m_advancedUi->protectAttributeButton->setChecked(true);
         } else {
             m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-            m_advancedUi->attributesEdit->setEnabled(true);
-            m_advancedUi->revealAttributeButton->setEnabled(false);
-            m_advancedUi->protectAttributeButton->setChecked(false);
+        }
+
+        m_advancedUi->attributesEdit->setEnabled(!showProtected);
+
+        if (!temporary) {
+            m_advancedUi->revealAttributeButton->setEnabled(showProtected);
+            m_advancedUi->protectAttributeButton->setChecked(showProtected);
+        }
+
+        if (temporary && !showProtected) {
+            m_advancedUi->revealAttributeButton->setText(tr("Unreveal"));
+        } else {
+            m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
         }
 
         // Don't allow editing in history view
@@ -1130,6 +1137,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     } else {
         m_advancedUi->attributesEdit->setPlainText("");
         m_advancedUi->attributesEdit->setEnabled(false);
+        m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
         m_advancedUi->revealAttributeButton->setEnabled(false);
         m_advancedUi->protectAttributeButton->setChecked(false);
         m_advancedUi->protectAttributeButton->setEnabled(false);
@@ -1151,7 +1159,7 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
             m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), true);
         } else {
             // Unprotect the current attribute value (don't save text as it is obscured)
-            m_entryAttributes->set(key, m_entryAttributes->value(key), false);
+            m_entryAttributes->set(key, m_entryAttributes->value(key, true), false);
         }
 
         // Display the attribute
@@ -1159,17 +1167,11 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
     }
 }
 
-void EditEntryWidget::revealCurrentAttribute()
+void EditEntryWidget::toggleRevealCurrentAttribute()
 {
-    if (!m_advancedUi->attributesEdit->isEnabled()) {
-        QModelIndex index = m_advancedUi->attributesView->currentIndex();
-        if (index.isValid()) {
-            bool oldBlockSignals = m_advancedUi->attributesEdit->blockSignals(true);
-            QString key = m_attributesModel->keyByIndex(index);
-            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-            m_advancedUi->attributesEdit->setEnabled(true);
-            m_advancedUi->attributesEdit->blockSignals(oldBlockSignals);
-        }
+    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    if (index.isValid()) {
+        displayAttribute(index, m_advancedUi->attributesEdit->isEnabled(), true);
     }
 }
 

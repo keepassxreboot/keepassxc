@@ -19,15 +19,49 @@
 
 #include <QMutex>
 
-#include <gcrypt.h>
-
 #include "config-keepassx.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
+#include "crypto/Random.h"
+
+#include <QScopedPointer>
+#include <sodium.h>
+#include <gcrypt.h>
 
 bool Crypto::m_initialized(false);
 QString Crypto::m_errorStr;
 QString Crypto::m_backendVersion;
+
+struct MemProtectData
+{
+    MemProtectData()
+        : memProtectKey(static_cast<char*>(gcry_malloc_secure(MEM_PROTECT_KEY_SIZE)))
+        , memProtectNonce(static_cast<char*>(gcry_malloc_secure(MEM_PROTECT_IV_SIZE)))
+    {
+        randomGen()->randomize(memProtectKey, MEM_PROTECT_KEY_SIZE);
+        randomGen()->randomize(memProtectNonce, MEM_PROTECT_IV_SIZE);
+    }
+
+    ~MemProtectData()
+    {
+        gcry_free(memProtectKey);
+        gcry_free(memProtectNonce);
+    }
+
+    static constexpr SymmetricCipher::Algorithm MEM_PROTECT_ALGO = SymmetricCipher::Algorithm::ChaCha20;
+    static constexpr std::size_t MEM_PROTECT_KEY_SIZE = 32;
+    static const int MEM_PROTECT_IV_SIZE;
+    static const SymmetricCipher::Mode MEM_PROTECT_MODE;
+
+    static QScopedPointer<MemProtectData> instance;
+    char* const memProtectKey;
+    char* const memProtectNonce;
+};
+
+const int MemProtectData::MEM_PROTECT_IV_SIZE = SymmetricCipher::algorithmIvSize(MemProtectData::MEM_PROTECT_ALGO);
+const SymmetricCipher::Mode MemProtectData::MEM_PROTECT_MODE = SymmetricCipher::algorithmMode(MemProtectData::MEM_PROTECT_ALGO);
+QScopedPointer<MemProtectData> MemProtectData::instance;
+
 
 Crypto::Crypto()
 {
@@ -75,6 +109,91 @@ QString Crypto::debugInfo()
     QString debugInfo = QObject::tr("Cryptographic libraries:").append("\n");
     debugInfo.append(" libgcrypt ").append(m_backendVersion).append("\n");
     return debugInfo;
+}
+
+/**
+ * Encrypt a value in memory with a temporary key.
+ * The key is stored in a secure memory area and is lost when the application exists.
+ * Therefore, encrypted values must be decrypted again before they are persisted somewhere.
+ * Use \link memDecryptValue for decryption.
+ *
+ * @param value value to encrypt
+ * @param ok true on success
+ * @param errorString error description in case of failure
+ * @return encrypted value
+ */
+QByteArray Crypto::memEncryptValue(const QByteArray& value, bool* ok, QString* errorString)
+{
+    Q_ASSERT(initialized());
+
+    if (!MemProtectData::instance) {
+        MemProtectData::instance.reset(new MemProtectData());
+    }
+
+    sodium_increment(reinterpret_cast<unsigned char*>(MemProtectData::instance->memProtectNonce), MemProtectData::MEM_PROTECT_IV_SIZE);
+    auto nonce = QByteArray::fromRawData(MemProtectData::instance->memProtectNonce, MemProtectData::MEM_PROTECT_IV_SIZE);
+
+    SymmetricCipher cipher(MemProtectData::MEM_PROTECT_ALGO, MemProtectData::MEM_PROTECT_MODE, SymmetricCipher::Direction::Encrypt);
+    *ok = cipher.init(QByteArray::fromRawData(MemProtectData::instance->memProtectKey, MemProtectData::MEM_PROTECT_KEY_SIZE), nonce);
+    if (!*ok) {
+        return value;
+    }
+
+    auto cipherText = nonce;
+    cipherText.append(cipher.process(value, ok));
+
+    if (!*ok) {
+        if (errorString) {
+            *errorString = cipher.errorString();
+        }
+        return value;
+    }
+
+    return cipherText;
+}
+
+/**
+ * Decrypt a value previously encrypted with \link memDecryptValue.
+ *
+ * @param value value to decrypt
+ * @param ok true on success
+ * @param errorString error description in case of failure
+ * @return decrypted value
+ */
+QByteArray Crypto::memDecryptValue(const QByteArray& value, bool* ok, QString* errorString)
+{
+    Q_ASSERT(initialized());
+
+    Q_ASSERT(MemProtectData::instance && MemProtectData::instance->memProtectKey && MemProtectData::instance->memProtectNonce);
+    if (!MemProtectData::instance || !MemProtectData::instance->memProtectKey || !MemProtectData::instance->memProtectNonce) {
+        *ok = false;
+        return value;
+    }
+
+    Q_ASSERT(value.size() >= MemProtectData::MEM_PROTECT_IV_SIZE);
+    if (value.size() < MemProtectData::MEM_PROTECT_IV_SIZE) {
+        *ok = false;
+        return value;
+    }
+
+    SymmetricCipher cipher(MemProtectData::MEM_PROTECT_ALGO, MemProtectData::MEM_PROTECT_MODE, SymmetricCipher::Direction::Decrypt);
+    auto nonce = value.left(MemProtectData::MEM_PROTECT_IV_SIZE);
+    auto cipherText = value.mid(MemProtectData::MEM_PROTECT_IV_SIZE);
+
+    *ok = cipher.init(QByteArray::fromRawData(MemProtectData::instance->memProtectKey, MemProtectData::MEM_PROTECT_KEY_SIZE), nonce);
+    if (!*ok) {
+        return value;
+    }
+    auto plainText = cipher.process(cipherText, ok);
+
+    if (!*ok) {
+        if (errorString) {
+            *errorString = cipher.errorString();
+        }
+        return value;
+    }
+
+    return plainText;
 }
 
 bool Crypto::backendSelfTest()

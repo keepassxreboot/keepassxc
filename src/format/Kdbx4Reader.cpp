@@ -23,7 +23,6 @@
 #include "core/Group.h"
 #include "crypto/CryptoHash.h"
 #include "format/KdbxXmlReader.h"
-#include "format/KeePass2RandomStream.h"
 #include "streams/HmacBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
@@ -119,16 +118,16 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    KeePass2RandomStream randomStream(m_irsAlgo);
-    if (!randomStream.init(m_protectedStreamKey)) {
-        raiseError(randomStream.errorString());
+    auto randomStream = QSharedPointer<RandomStream>::create(m_randomStreamAlgo);
+    if (!randomStream->init(QByteArray::fromRawData(m_randomStreamKey, static_cast<int>(m_randomStreamKeySize)))) {
+        raiseError(randomStream->errorString());
         return false;
     }
 
     Q_ASSERT(xmlDevice);
 
     KdbxXmlReader xmlReader(KeePass2::FILE_VERSION_4, binaryPool());
-    xmlReader.readDatabase(xmlDevice, db, &randomStream);
+    xmlReader.readDatabase(xmlDevice, db, randomStream);
 
     if (xmlReader.hasError()) {
         raiseError(xmlReader.errorString());
@@ -264,7 +263,7 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
         break;
 
     case KeePass2::InnerHeaderFieldID::InnerRandomStreamKey:
-        setProtectedStreamKey(fieldData);
+        setRandomStreamKey(fieldData);
         break;
 
     case KeePass2::InnerHeaderFieldID::Binary: {

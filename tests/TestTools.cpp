@@ -16,6 +16,7 @@
  */
 
 #include "TestTools.h"
+#include "core/Tools.h"
 
 #include <QLocale>
 #include <QTest>

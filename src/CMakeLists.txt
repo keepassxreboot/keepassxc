@@ -68,7 +68,7 @@ set(keepassx_SOURCES
         format/CsvExporter.cpp
         format/KeePass1Reader.cpp
         format/KeePass2.cpp
-        format/KeePass2RandomStream.cpp
+        crypto/RandomStream.cpp
         format/KdbxReader.cpp
         format/KdbxWriter.cpp
         format/KdbxXmlReader.cpp

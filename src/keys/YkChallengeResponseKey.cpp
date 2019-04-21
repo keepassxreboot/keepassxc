@@ -34,6 +34,7 @@
 
 #include <cstring>
 #include <gcrypt.h>
+#include <cstring>
 #include <sodium.h>
 
 QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
@@ -95,7 +96,7 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int
             m_keySize = static_cast<std::size_t>(key.size());
             m_key = static_cast<char*>(gcry_malloc_secure(m_keySize));
             std::memcpy(m_key, key.data(), m_keySize);
-            sodium_memzero(key.data(), static_cast<std::size_t>(key.capacity()));
+            Tools::wipeBuffer(key);
             return true;
         }
     } while (retries > 0);

@@ -18,6 +18,7 @@
 #include "EntryAttachments.h"
 
 #include "core/Global.h"
+#include "crypto/Crypto.h"
 
 #include <QSet>
 #include <QStringList>
@@ -39,12 +40,21 @@ bool EntryAttachments::hasKey(const QString& key) const
 
 QSet<QByteArray> EntryAttachments::values() const
 {
-    return asConst(m_attachments).values().toSet();
+    QSet<QByteArray> values;
+    for (auto i = m_attachments.cbegin(); i != m_attachments.cend(); ++i) {
+        values.insert(i.value());
+    }
+    return values;
 }
 
 QByteArray EntryAttachments::value(const QString& key) const
 {
-    return m_attachments.value(key);
+    if (!m_attachments.contains(key)) {
+        return {};
+    }
+
+    bool ok;
+    return Crypto::memDecryptValue(m_attachments.value(key), &ok);
 }
 
 void EntryAttachments::set(const QString& key, const QByteArray& value)
@@ -56,8 +66,13 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
         emit aboutToBeAdded(key);
     }
 
-    if (addAttachment || m_attachments.value(key) != value) {
-        m_attachments.insert(key, value);
+    bool ok;
+    QByteArray previousValue;
+    if (m_attachments.contains(key)) {
+        previousValue = Crypto::memDecryptValue(m_attachments.value(key), &ok);
+    }
+    if (addAttachment || previousValue != value) {
+        m_attachments.insert(key, Crypto::memEncryptValue(value, &ok));
         emitModified = true;
     }
 
@@ -150,14 +165,15 @@ bool EntryAttachments::operator==(const EntryAttachments& other) const
 
 bool EntryAttachments::operator!=(const EntryAttachments& other) const
 {
-    return m_attachments != other.m_attachments;
+    return !operator==(other);
 }
 
 int EntryAttachments::attachmentsSize() const
 {
+    bool ok;
     int size = 0;
-    for (auto it = m_attachments.constBegin(); it != m_attachments.constEnd(); ++it) {
-        size += it.key().toUtf8().size() + it.value().size();
+    for (auto it = m_attachments.cbegin(); it != m_attachments.cend(); ++it) {
+        size += it.key().toUtf8().size() + Crypto::memDecryptValue(it.value(), &ok).size();
     }
     return size;
 }

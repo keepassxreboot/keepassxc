@@ -18,7 +18,7 @@
 
 #include "NativeMessagingHost.h"
 #include "BrowserSettings.h"
-#include "sodium.h"
+#include "core/Tools.h"
 #include <QMutexLocker>
 #include <QtNetwork>
 #include <iostream>

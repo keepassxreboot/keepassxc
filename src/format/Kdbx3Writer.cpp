@@ -21,14 +21,16 @@
 #include <QBuffer>
 
 #include "core/Database.h"
+#include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KdbxXmlWriter.h"
 #include "format/KeePass2.h"
-#include "format/KeePass2RandomStream.h"
+#include "crypto/RandomStream.h"
 #include "streams/HashedBlockStream.h"
 #include "streams/QtIOCompressor"
 #include "streams/SymmetricCipherStream.h"
+
 
 bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 {
@@ -37,9 +39,15 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     QByteArray masterSeed = randomGen()->randomArray(32);
     QByteArray encryptionIV = randomGen()->randomArray(16);
-    QByteArray protectedStreamKey = randomGen()->randomArray(32);
+    QByteArray randomStreamKey = randomGen()->randomArray(32);
     QByteArray startBytes = randomGen()->randomArray(32);
     QByteArray endOfHeader = "\r\n\r\n";
+
+    auto randomStream = QSharedPointer<RandomStream>::create(KeePass2::RandomStreamAlgo::Salsa20);
+    if (!randomStream->init(randomStreamKey)) {
+        raiseError(randomStream->errorString());
+        return false;
+    }
 
     if (!db->challengeMasterSeed(masterSeed)) {
         raiseError(tr("Unable to issue challenge-response."));
@@ -78,12 +86,12 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
                                                  Endian::sizedIntToBytes<qint64>(kdf->rounds(), KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::EncryptionIV, encryptionIV));
     CHECK_RETURN_FALSE(
-        writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::ProtectedStreamKey, protectedStreamKey));
+        writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::ProtectedStreamKey, randomStreamKey));
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::StreamStartBytes, startBytes));
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(
         &header,
         KeePass2::HeaderFieldID::InnerRandomStreamID,
-        Endian::sizedIntToBytes<qint32>(static_cast<qint32>(KeePass2::ProtectedStreamAlgo::Salsa20),
+        Endian::sizedIntToBytes<qint32>(static_cast<qint32>(KeePass2::RandomStreamAlgo::Salsa20),
                                         KeePass2::BYTEORDER)));
     CHECK_RETURN_FALSE(writeHeaderField<quint16>(&header, KeePass2::HeaderFieldID::EndOfHeader, endOfHeader));
     header.close();
@@ -127,20 +135,18 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
 
     Q_ASSERT(outputDevice);
 
-    KeePass2RandomStream randomStream(KeePass2::ProtectedStreamAlgo::Salsa20);
-    if (!randomStream.init(protectedStreamKey)) {
-        raiseError(randomStream.errorString());
-        return false;
-    }
-
     KdbxXmlWriter xmlWriter(formatVersion());
-    xmlWriter.writeDatabase(outputDevice, db, &randomStream, headerHash);
+    xmlWriter.writeDatabase(outputDevice, db, randomStream, headerHash);
 
     // Explicitly close/reset streams so they are flushed and we can detect
     // errors. QIODevice::close() resets errorString() etc.
     if (ioCompressor) {
         ioCompressor->close();
     }
+
+    Tools::wipeBuffer(randomStreamKey);
+    randomStreamKey.clear();
+
     if (!hashedStream.reset()) {
         raiseError(hashedStream.errorString());
         return false;

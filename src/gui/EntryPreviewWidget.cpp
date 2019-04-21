@@ -235,7 +235,7 @@ void EntryPreviewWidget::updateEntryAttributesTab()
     if (haveAttributes) {
         QString attributesText;
         for (const QString& key : customAttributes) {
-            QString value = m_currentEntry->attributes()->value(key);
+            QString value =  m_currentEntry->attributes()->value(key, false);;
             if (m_currentEntry->attributes()->isProtected(key)) {
                 value = "<i>" + tr("[PROTECTED]") + "</i>";
             }

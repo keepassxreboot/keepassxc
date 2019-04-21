@@ -22,7 +22,8 @@
 
 #include "core/Endian.h"
 #include "core/Metadata.h"
-#include "format/KeePass2RandomStream.h"
+#include "core/Tools.h"
+#include "crypto/RandomStream.h"
 #include "streams/QtIOCompressor"
 
 /**
@@ -34,13 +35,13 @@ KdbxXmlWriter::KdbxXmlWriter(quint32 version)
 }
 
 void KdbxXmlWriter::writeDatabase(QIODevice* device,
-                                  const Database* db,
-                                  KeePass2RandomStream* randomStream,
+                                  Database* db,
+                                  QSharedPointer<RandomStream> randomStream,
                                   const QByteArray& headerHash)
 {
     m_db = db;
     m_meta = db->metadata();
-    m_randomStream = randomStream;
+    m_randomStream = std::move(randomStream);
     m_headerHash = headerHash;
 
     m_xml.setAutoFormatting(true);
@@ -357,41 +358,40 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         m_xml.writeStartElement("String");
 
         // clang-format off
-        bool protect =
-            (((key == "Title") && m_meta->protectTitle()) || ((key == "UserName") && m_meta->protectUsername())
-            || ((key == "Password") && m_meta->protectPassword())
-            || ((key == "URL") && m_meta->protectUrl())
-            || ((key == "Notes") && m_meta->protectNotes())
+        bool protect = ((key == "Title" && m_meta->protectTitle())
+            || (key == "UserName" && m_meta->protectUsername())
+            || (key == "Password" && m_meta->protectPassword())
+            || (key == "URL" && m_meta->protectUrl())
+            || (key == "Notes" && m_meta->protectNotes())
             || entry->attributes()->isProtected(key));
         // clang-format on
 
         writeString("Key", key);
 
         m_xml.writeStartElement("Value");
-        QString value;
+        QString value = entry->attributes()->value(key, true);
 
         if (protect) {
             if (!m_innerStreamProtectionDisabled && m_randomStream) {
                 m_xml.writeAttribute("Protected", "True");
                 bool ok;
-                QByteArray rawData = m_randomStream->process(entry->attributes()->value(key).toUtf8(), &ok);
+                QByteArray protectedValue = m_randomStream->process(value.toUtf8(), &ok);
                 if (!ok) {
                     raiseError(m_randomStream->errorString());
                 }
-                value = QString::fromLatin1(rawData.toBase64());
+                value = QString::fromLatin1(protectedValue.toBase64());
             } else {
                 m_xml.writeAttribute("ProtectInMemory", "True");
-                value = entry->attributes()->value(key);
             }
-        } else {
-            value = entry->attributes()->value(key);
         }
 
         if (!value.isEmpty()) {
             m_xml.writeCharacters(stripInvalidXml10Chars(value));
         }
-        m_xml.writeEndElement();
+        Tools::wipeBuffer(value);
+        value.clear();
 
+        m_xml.writeEndElement();
         m_xml.writeEndElement();
     }
 
