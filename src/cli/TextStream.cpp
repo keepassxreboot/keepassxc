@@ -19,6 +19,9 @@
 
 #include <QProcessEnvironment>
 #include <QTextCodec>
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
 
 TextStream::TextStream()
 {
@@ -59,12 +62,26 @@ void TextStream::detectCodec()
 {
     QString codecName = "UTF-8";
     auto env = QProcessEnvironment::systemEnvironment();
+
 #ifdef Q_OS_WIN
-    if (!env.contains("SHELL")) {
-        // native shell (no Msys or cygwin)
+    WINBOOL success = false;
+#ifdef CP_UTF8
+    success = SetConsoleOutputCP(CP_UTF8);
+#endif
+    if (!success && !env.contains("SHELL")) {
+        // Fall back to cp850 if this is Windows without CP_UTF8 and we
+        // are running in a native shell (i.e., no Msys or Cygwin).
         codecName = "Windows-850";
     }
+#else
+    if (env.contains("LANG") && !env.value("LANG").isEmpty() && env.value("LANG") != "C") {
+        // Only override codec if LANG is set, otherwise Qt will assume
+        // US-ASCII, which is almost always wrong and results in
+        // Unicode passwords being displayed as question marks.
+        codecName = QTextCodec::codecForLocale()->name();
+    }
 #endif
+
     codecName = env.value("ENCODING_OVERRIDE", codecName);
     auto* codec = QTextCodec::codecForName(codecName.toLatin1());
     if (codec) {
