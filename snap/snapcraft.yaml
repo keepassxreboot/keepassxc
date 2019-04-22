@@ -9,15 +9,27 @@ description: |
 confinement: strict
 base: core18
 
-plugs:
-  icon-themes: # fix mouse cursor theme
+plugs: # plugs for theming, font settings, cursor and to use gtk3 file chooser
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes:gtk-3-themes
+  icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
+    default-provider: gtk-common-themes:icon-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes:sounds-themes
 
 apps:
   keepassxc:
-    command: desktop-launch keepassxc
+    adapter: full
+    command: usr/bin/keepassxc -style fusion
+    command-chain:
+      - bin/desktop-launch
+      - bin/gtk3-env-launch
     plugs: [unity7, x11, opengl, gsettings, home, network, network-bind, removable-media, raw-usb, wayland, desktop-legacy, desktop]
     desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
     environment:
@@ -73,7 +85,10 @@ parts:
       - libquazip5-1
       - libusb-1.0-0
       - qtwayland5
-      - qt5-style-plugins # for mouse cursor theme fix
+      - qt5-gtk-platformtheme # for theming, font settings, cursor and to use gtk3 file chooser
+    override-pull: |
+      snapcraftctl pull
+      git apply snap/local/patches/snap-fallback-theme.patch
     override-build: |
       snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
@@ -82,6 +97,14 @@ parts:
     stage:
       - -opt
     after: [desktop-qt5]
+
+  launchers: # custom launcher to set QT_QPA_PLATFORMTHEME=gtk3 correctly
+    source: snap/local/launchers
+    plugin: dump
+    organize:
+      '*': bin/
+    stage:
+      - -bin/README.*
 
   desktop-qt5:
       source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
