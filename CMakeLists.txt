@@ -44,19 +44,18 @@ option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 set(WITH_XC_ALL OFF CACHE BOOL "Build in all available plugins")
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
-option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
+option(WITH_XC_NETWORKING "Include networking code (e.g. for downloading website icons)." OFF)
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-option(WITH_XC_KEESHARE "Sharing integration with KeeShare" OFF)
-option(WITH_XC_KEESHARE_SECURE "Sharing integration with secured KeeShare containers" OFF)
+option(WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)" OFF)
 option(WITH_XC_UPDATECHECK "Include automatic update checks; disable for controlled distributions" ON)
 if(APPLE)
     option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
 endif()
 
 if(WITH_XC_ALL)
-    # Enable all options
+    # Enable all options (except update check)
     set(WITH_XC_AUTOTYPE ON)
     set(WITH_XC_NETWORKING ON)
     set(WITH_XC_BROWSER ON)
@@ -68,18 +67,16 @@ if(WITH_XC_ALL)
     endif()
 endif()
 
-if(WITH_XC_KEESHARE_SECURE)
-    set(WITH_XC_KEESHARE ON)
-endif()
-
 if(WITH_XC_SSHAGENT OR WITH_XC_KEESHARE)
   set(WITH_XC_CRYPTO_SSH ON)
 else()
   set(WITH_XC_CRYPTO_SSH OFF)
 endif()
 
-if(WITH_XC_UPDATECHECK)
-    set(WITH_XC_NETWORKING ON)
+# Prefer WITH_XC_NETWORKING setting over WITH_XC_UPDATECHECK
+if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)
+    message(STATUS "Disabling WITH_XC_UPDATECHECK because WITH_XC_NETWORKING is disabled")
+    set(WITH_XC_UPDATECHECK OFF)
 endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
@@ -405,19 +402,6 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
 endif()
 
 include_directories(SYSTEM ${ARGON2_INCLUDE_DIR} ${sodium_INCLUDE_DIR})
-
-# Optional
-if(WITH_XC_KEESHARE)
-    set(WITH_XC_KEESHARE_INSECURE ON)
-    if(WITH_XC_KEESHARE_SECURE)
-        # ZLIB is needed and already required
-        find_package(QuaZip REQUIRED)
-        include_directories(SYSTEM ${QUAZIP_INCLUDE_DIR})
-    endif()
-else()
-    set(WITH_XC_KEESHARE_INSECURE OFF)
-    set(WITH_XC_KEESHARE_SECURE OFF)
-endif()
 
 # Optional
 if(WITH_XC_YUBIKEY)
