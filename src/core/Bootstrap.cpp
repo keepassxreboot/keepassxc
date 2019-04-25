@@ -85,6 +85,12 @@ namespace Bootstrap
         bootstrap();
         MessageBox::initializeButtonDefs();
 
+#ifdef KEEPASSXC_DIST_SNAP
+        // snap: force fallback theme to avoid using system theme (gtk integration)
+        // with missing actions just like on Windows and macOS
+        QIcon::setThemeSearchPaths(QStringList() << ":/icons");
+#endif
+
 #ifdef Q_OS_MACOS
         // Don't show menu icons on OSX
         QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
