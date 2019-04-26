@@ -379,9 +379,9 @@ void TestKdbx4::testCustomData()
 
     // test custom data deletion
     entry->customData()->set("additional item", "foobar");
-    QCOMPARE(entry->customData()->size(), 3);
+    QCOMPARE(entry->customData()->size(), 4);
     entry->customData()->remove("additional item");
-    QCOMPARE(entry->customData()->size(), 2);
+    QCOMPARE(entry->customData()->size(), 3);
     QCOMPARE(entry->customData()->dataSize(), dataSize);
 
     // test custom data on cloned groups
