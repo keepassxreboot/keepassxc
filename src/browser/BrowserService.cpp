@@ -296,6 +296,7 @@ QString BrowserService::storeKey(const QString& key)
 
     do {
         QInputDialog keyDialog;
+        connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the above key.\n\n"
                                   "If you would like to allow it access to your KeePassXC database,\n"
@@ -310,7 +311,7 @@ QString BrowserService::storeKey(const QString& key)
 
         id = keyDialog.textValue();
 
-        if (ok != QDialog::Accepted || id.isEmpty()) {
+        if (ok != QDialog::Accepted || id.isEmpty() || !isDatabaseOpened()) {
             hideWindow();
             return {};
         }
@@ -403,6 +404,11 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     }
 
     if (pwEntries.isEmpty()) {
+        return QJsonArray();
+    }
+
+    // Ensure that database is not locked when the popup was visible
+    if (!isDatabaseOpened()) {
         return QJsonArray();
     }
 
@@ -760,6 +766,7 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 
     m_dialogActive = true;
     BrowserAccessControlDialog accessControlDialog;
+    connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &accessControlDialog, SLOT(reject()));
     accessControlDialog.setUrl(url);
     accessControlDialog.setItems(pwEntriesToConfirm);
 
