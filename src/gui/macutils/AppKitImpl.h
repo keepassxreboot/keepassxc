@@ -22,6 +22,10 @@
 #import <AppKit/NSRunningApplication.h>
 
 @interface AppKitImpl : NSObject
+{
+    AppKit *m_appkit;
+}
+- (id) initWithObject:(AppKit *)appkit;
 
 @property (strong) NSRunningApplication *lastActiveApplication;
 
@@ -31,5 +35,6 @@
 - (bool) hideProcess:(pid_t) pid;
 - (bool) isHidden:(pid_t) pid;
 - (bool) isDarkMode;
+- (void) userSwitchHandler:(NSNotification*) notification;
 
 @end

@@ -24,7 +24,7 @@ MacUtils* MacUtils::m_instance = nullptr;
 MacUtils::MacUtils(QObject* parent) : QObject(parent)
     , m_appkit(new AppKit())
 {
-    
+    connect(m_appkit.data(), SIGNAL(lockDatabases()), SIGNAL(lockDatabases()));
 }
 
 MacUtils::~MacUtils()
