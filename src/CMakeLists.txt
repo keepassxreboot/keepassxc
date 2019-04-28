@@ -168,7 +168,8 @@ if(APPLE)
             core/ScreenLockListenerMac.cpp
             core/MacPasteboard.cpp
             gui/macutils/MacUtils.cpp
-            gui/macutils/AppKitImpl.mm)
+            gui/macutils/AppKitImpl.mm
+            gui/macutils/AppKit.h)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
