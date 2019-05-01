@@ -512,18 +512,23 @@ PasswordGenerator::GeneratorFlags BrowserSettings::passwordGeneratorFlags()
     return flags;
 }
 
-QString BrowserSettings::generatePassword()
+QJsonObject BrowserSettings::generatePassword()
 {
+    QJsonObject password;
     if (generatorType() == 0) {
         m_passwordGenerator.setLength(passwordLength());
         m_passwordGenerator.setCharClasses(passwordCharClasses());
         m_passwordGenerator.setFlags(passwordGeneratorFlags());
-        return m_passwordGenerator.generatePassword();
+        const QString pw = m_passwordGenerator.generatePassword();
+        password["entropy"] = m_passwordGenerator.estimateEntropy(pw);
+        password["password"] = pw;
     } else {
         m_passPhraseGenerator.setWordCount(passPhraseWordCount());
         m_passPhraseGenerator.setWordSeparator(passPhraseWordSeparator());
-        return m_passPhraseGenerator.generatePassphrase();
+        password["entropy"] = m_passPhraseGenerator.getCurrentEntropy();
+        password["password"] = m_passPhraseGenerator.generatePassphrase();
     }
+    return password;
 }
 
 void BrowserSettings::updateBinaryPaths(const QString& customProxyLocation)

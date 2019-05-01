@@ -18,6 +18,10 @@
 
 #include "PasswordGenerator.h"
 
+#include <algorithm>
+#include <cmath>
+#include <numeric>
+
 #include "crypto/Random.h"
 #include <zxcvbn.h>
 
@@ -31,7 +35,63 @@ PasswordGenerator::PasswordGenerator()
 {
 }
 
-double PasswordGenerator::calculateEntropy(const QString& password)
+double PasswordGenerator::getCurrentEntropy()
+{
+    Q_ASSERT(isValid());
+
+    const QVector<PasswordGroup> groups = passwordGroups();
+
+    int totalSize = 0;
+    for (const PasswordGroup& group : groups) {
+        // Note: Character groups must be non-overlapping
+        totalSize += group.size();
+    }
+    if (!(m_flags & CharFromEveryGroup)) {
+        return std::log2(totalSize) * m_length;
+    }
+
+    // CharFromEveryGroup means all groups are required
+    QVector<int> requiredGroups(groups.size());
+    std::iota(requiredGroups.begin(), requiredGroups.end(), 0);
+
+    // Get all subsets of the set of required groups
+    // From https://stackoverflow.com/a/16310898 by Ronald Rey (https://stackoverflow.com/users/2175684/ronald-rey)
+    QVector<QVector<int>> subsets;
+    QVector<int> empty;
+    subsets.push_back(empty);
+    for (int i = 0; i < requiredGroups.size(); ++i) {
+        QVector<QVector<int>> subsetTemp = subsets;
+        for (int j = 0; j < subsetTemp.size(); ++j) {
+            subsetTemp[j].push_back(requiredGroups[i]);
+        }
+        for (int j = 0; j < subsetTemp.size(); ++j) {
+            subsets.push_back(subsetTemp[j]);
+        }
+    }
+
+    // Sort subsets by size ascending
+    std::sort(subsets.begin(), subsets.end(), [](const QVector<int>& a, const QVector<int>& b) -> bool {
+        return a.size() < b.size();
+    });
+
+    // Inclusion-exclusion
+    // Note: This depends on character groups being non-overlapping
+    double passwordSpace = 0;
+    int includeExclude = 1;
+    QVector<QVector<int>>::iterator subset = subsets.begin();
+    for (int i = 0; i < requiredGroups.size(); ++i, includeExclude *= -1) {
+        do {
+            int totalSubsetSize = 0;
+            for (int groupIndex : *subset) {
+                totalSubsetSize += groups[groupIndex].size();
+            }
+            passwordSpace += includeExclude * pow((totalSize - totalSubsetSize), m_length);
+        } while ((++subset)->size() == i);
+    }
+    return std::log2(passwordSpace);
+}
+
+double PasswordGenerator::estimateEntropy(const QString& password)
 {
     return ZxcvbnMatch(password.toLatin1(), nullptr, nullptr);
 }

@@ -254,9 +254,10 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = 0.0;
     if (m_ui->tabWidget->currentIndex() == Password) {
-        entropy = m_passwordGenerator->calculateEntropy(password);
+        entropy = m_passwordGenerator->estimateEntropy(password);
     } else {
-        entropy = m_dicewareGenerator->calculateEntropy(password);
+        // TODO see issue #867
+        entropy = m_dicewareGenerator->getCurrentEntropy();
     }
 
     m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));

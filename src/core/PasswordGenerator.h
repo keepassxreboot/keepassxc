@@ -57,7 +57,8 @@ public:
 public:
     PasswordGenerator();
 
-    double calculateEntropy(const QString& password);
+    double getCurrentEntropy();
+    double estimateEntropy(const QString& password);
     void setLength(int length);
     void setCharClasses(const CharClasses& classes);
     void setFlags(const GeneratorFlags& flags);

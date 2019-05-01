@@ -35,10 +35,8 @@ PassphraseGenerator::PassphraseGenerator()
     setDefaultWordList();
 }
 
-double PassphraseGenerator::calculateEntropy(const QString& passphrase)
+double PassphraseGenerator::getCurrentEntropy()
 {
-    Q_UNUSED(passphrase);
-
     if (m_wordlist.isEmpty()) {
         return 0.0;
     }
