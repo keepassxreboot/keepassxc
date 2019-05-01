@@ -609,9 +609,6 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     // TODO HNH: missing handling of recycle bin, names, templates for groups and entries,
     //           public data (entries of newer dict override keys of older dict - ignoring
     //           their own age - it is enough if one entry of the whole dict is newer) => possible lost update
-    // TODO HNH: CustomData is merged with entries of the new customData overwrite entries
-    //           of the older CustomData - the dict with the newest entry is considered
-    //           newer regardless of the age of the other entries => possible lost update
     ChangeList changes;
     auto* sourceMetadata = context.m_sourceDb->metadata();
     auto* targetMetadata = context.m_targetDb->metadata();
@@ -624,5 +621,32 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
             changes << tr("Adding missing icon %1").arg(QString::fromLatin1(customIconId.toRfc4122().toHex()));
         }
     }
+
+    // Merge Custom Data if source is newer
+    const auto targetCustomDataModificationTime = sourceMetadata->customData()->getLastModified();
+    const auto sourceCustomDataModificationTime = targetMetadata->customData()->getLastModified();
+    if (!targetMetadata->customData()->contains(CustomData::LastModified) ||
+        (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid() && 
+         targetCustomDataModificationTime > sourceCustomDataModificationTime)) {
+        const auto sourceCustomDataKeys = sourceMetadata->customData()->keys();
+        const auto targetCustomDataKeys = targetMetadata->customData()->keys();
+
+        // Check missing keys from source. Remove those from target
+        for (const auto& key : targetCustomDataKeys) {
+            if (!sourceMetadata->customData()->contains(key)) {
+                auto value = targetMetadata->customData()->value(key);
+                targetMetadata->customData()->remove(key);
+                changes << tr("Removed custom data %1 [%2]").arg(key, value);
+            }
+        }
+
+        // Transfer new/existing keys
+        for (const auto& key : sourceCustomDataKeys) {
+            auto value = sourceMetadata->customData()->value(key);
+            targetMetadata->customData()->set(key, value);
+            changes << tr("Adding custom data %1 [%2]").arg(key, value);
+        }
+    }
+
     return changes;
 }

@@ -42,8 +42,11 @@ public:
     int size() const;
     int dataSize() const;
     void copyDataFrom(const CustomData* other);
+    QDateTime getLastModified() const;
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
+
+    static const QString LastModified;
 
 signals:
     void customDataModified();
@@ -55,6 +58,10 @@ signals:
     void renamed(const QString& oldKey, const QString& newKey);
     void aboutToBeReset();
     void reset();
+    void lastModified();
+
+private slots:
+    void updateLastModified();
 
 private:
     QHash<QString, QString> m_data;
