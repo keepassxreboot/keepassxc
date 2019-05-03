@@ -1286,11 +1286,11 @@ void TestGui::testTrayRestoreHide()
         QSKIP("QSystemTrayIcon::isSystemTrayAvailable() = false, skipping tray restore/hide test...");
     }
 
+    m_mainWindow->hideWindow();
+    QVERIFY(!m_mainWindow->isVisible());
+
     auto* trayIcon = m_mainWindow->findChild<QSystemTrayIcon*>();
-    QVERIFY(m_mainWindow->isVisible());
-
-    trayIcon->activated(QSystemTrayIcon::Trigger);
-    QTRY_VERIFY(!m_mainWindow->isVisible());
+    QVERIFY(trayIcon);
 
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(m_mainWindow->isVisible());
@@ -1298,8 +1298,17 @@ void TestGui::testTrayRestoreHide()
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
-    trayIcon->activated(QSystemTrayIcon::Trigger);
+    trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::MiddleClick);
+    QTRY_VERIFY(!m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::DoubleClick);
+    QTRY_VERIFY(m_mainWindow->isVisible());
+
+    trayIcon->activated(QSystemTrayIcon::DoubleClick);
+    QTRY_VERIFY(!m_mainWindow->isVisible());
 }
 
 int TestGui::addCannedEntries()

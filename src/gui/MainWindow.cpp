@@ -139,6 +139,7 @@ MainWindow::MainWindow()
     , m_trayIcon(nullptr)
     , m_appExitCalled(false)
     , m_appExiting(false)
+    , m_lastFocusOutTime(0)
 {
     g_MainWindow = this;
 
@@ -402,6 +403,12 @@ MainWindow::MainWindow()
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
 #endif
+
+    // Tray Icon setup
+    connect(Application::instance(), SIGNAL(focusWindowChanged(QWindow*)), SLOT(focusWindowChanged(QWindow*)));
+    m_trayIconTriggerReason = QSystemTrayIcon::Unknown;
+    m_trayIconTriggerTimer.setSingleShot(true);
+    connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
 
     updateTrayIcon();
 
@@ -919,7 +926,7 @@ bool MainWindow::saveLastDatabases()
         }
 
         QStringList openDatabases;
-        for (int i=0; i < m_ui->tabWidget->count(); ++i) {
+        for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
             auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
             openDatabases.append(dbWidget->database()->filePath());
         }
@@ -1038,10 +1045,38 @@ void MainWindow::applySettingsChanges()
     updateTrayIcon();
 }
 
+void MainWindow::focusWindowChanged(QWindow* focusWindow)
+{
+    if (focusWindow != windowHandle()) {
+        m_lastFocusOutTime = Clock::currentSecondsSinceEpoch();
+    }
+}
+
 void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::MiddleClick) {
+    if (!m_trayIconTriggerTimer.isActive()) {
+        m_trayIconTriggerTimer.start(150);
+    }
+    // Overcome Qt bug https://bugreports.qt.io/browse/QTBUG-69698
+    // Store last issued tray icon activation reason to properly
+    // capture doubleclick events
+    m_trayIconTriggerReason = reason;
+}
+
+void MainWindow::processTrayIconTrigger()
+{
+    if (m_trayIconTriggerReason == QSystemTrayIcon::DoubleClick) {
+        // Always toggle window on double click
         toggleWindow();
+    } else if (m_trayIconTriggerReason == QSystemTrayIcon::Trigger
+               || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
+        // On single/middle click focus the window if it is not hidden
+        // and did not have focus less than a second ago, otherwise toggle
+        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+            toggleWindow();
+        } else {
+            bringToFront();
+        }
     }
 }
 

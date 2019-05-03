@@ -85,6 +85,7 @@ private slots:
     void showAboutDialog();
     void showUpdateCheckStartup();
     void showUpdateCheckDialog();
+    void focusWindowChanged(QWindow* focusWindow);
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
@@ -107,6 +108,7 @@ private slots:
     void showGroupContextMenu(const QPoint& globalPos);
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
+    void processTrayIconTrigger();
     void lockDatabasesAfterInactivity();
     void forgetTouchIDAfterInactivity();
     void handleScreenLock();
@@ -146,6 +148,9 @@ private:
 
     bool m_appExitCalled;
     bool m_appExiting;
+    uint m_lastFocusOutTime;
+    QTimer m_trayIconTriggerTimer;
+    QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
 };
 
 /**
