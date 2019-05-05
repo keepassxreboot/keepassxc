@@ -171,7 +171,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
         } else if (key->uuid() == FileKey::UUID) {
             oldFileKey = key;
         } else if (key->uuid() == OpenPGPKey::UUID) {
-            odlOpenPGPKey = key;
+            oldOpenPGPKey = key;
         }
     }
 
@@ -196,7 +196,7 @@ bool DatabaseSettingsWidgetMasterKey::save()
 #endif
 
 #ifdef WITH_XC_OPENPGP
-    if (!addToCompositeKey(m_openPGPEditWidget, newKey, fileKey)) {
+    if (!addToCompositeKey(m_openPGPEditWidget, newKey, oldOpenPGPKey)) {
         return false;
     }
 #endif
