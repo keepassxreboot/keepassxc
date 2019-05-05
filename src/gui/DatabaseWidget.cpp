@@ -62,6 +62,10 @@
 #include "keeshare/KeeShare.h"
 #include "touchid/TouchID.h"
 
+#ifdef WITH_XC_NETWORKING
+#include "gui/IconDownloaderDialog.h"
+#endif
+
 #ifdef Q_OS_LINUX
 #include <sys/vfs.h>
 #endif
@@ -91,6 +95,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
     , m_fileWatcher(new DelayingFileWatcher(this))
+    , m_iconDownloaderState(IconDownloaderState::Idle)
 {
     m_messageWidget->setHidden(true);
 
@@ -648,6 +653,55 @@ void DatabaseWidget::openUrl()
     if (currentEntry) {
         openUrlForEntry(currentEntry);
     }
+}
+
+void DatabaseWidget::downloadSelectedFavicons()
+{
+#ifdef WITH_XC_NETWORKING
+    const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
+    if (selected.isEmpty()) {
+        return;
+    }
+
+    QList<Entry*> selectedEntries;
+    for (const QModelIndex& index : selected) {
+        selectedEntries.append(m_entryView->entryFromIndex(index));
+    }
+
+    if (selectedEntries.isEmpty()) {
+        return;
+    }
+
+    if (m_iconDownloaderState == IconDownloaderState::Downloading) {
+        return;
+    }
+    m_iconDownloaderState = IconDownloaderState::Downloading;
+
+    auto* iconDownloader = new IconDownloaderDialog(this);
+    iconDownloader->downloadFavicons(m_db, selectedEntries);
+    m_iconDownloaderState = IconDownloaderState::Idle;
+#endif
+}
+
+void DatabaseWidget::downloadAllFavicons()
+{
+#ifdef WITH_XC_NETWORKING
+    if (m_iconDownloaderState == IconDownloaderState::Downloading) {
+        return;
+    }
+    m_iconDownloaderState = IconDownloaderState::Downloading;
+
+    auto* iconDownloader = new IconDownloaderDialog(this);
+
+    Group* currentGroup = m_groupView->currentGroup();
+    Q_ASSERT(currentGroup);
+    if (currentGroup) {
+        auto entries = currentGroup->entries();
+        iconDownloader->downloadFavicons(m_db, entries);
+    }
+
+    m_iconDownloaderState = IconDownloaderState::Idle;
+#endif
 }
 
 void DatabaseWidget::openUrlForEntry(Entry* entry)

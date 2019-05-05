@@ -28,7 +28,6 @@
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
-
 #include "config-keepassx.h"
 
 class DatabaseOpenWidget;
@@ -169,6 +168,8 @@ public slots:
     void setupTotp();
     void performAutoType();
     void openUrl();
+    void downloadSelectedFavicons();
+    void downloadAllFavicons();
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
@@ -229,6 +230,12 @@ private slots:
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
 
 private:
+    enum IconDownloaderState
+    {
+        Idle,
+        Downloading
+    };
+
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
@@ -271,6 +278,8 @@ private:
     // Autoreload
     QPointer<DelayingFileWatcher> m_fileWatcher;
     bool m_blockAutoSave;
+
+    IconDownloaderState m_iconDownloaderState;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

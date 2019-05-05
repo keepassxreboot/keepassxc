@@ -246,6 +246,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryDelete->setShortcut(Qt::Key_Delete);
     m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+    m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
@@ -261,6 +262,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryDelete->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryClone->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryDownloadIcon->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
@@ -376,6 +378,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryCopyNotes, SIGNAL(triggered()), SLOT(copyNotes()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoType, SIGNAL(triggered()), SLOT(performAutoType()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
+    m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
 
     m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()), SLOT(createGroup()));
     m_actionMultiplexer.connect(m_ui->actionGroupEdit, SIGNAL(triggered()), SLOT(switchToGroupEdit()));
@@ -383,6 +386,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()), SLOT(emptyRecycleBin()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortAsc, SIGNAL(triggered()), SLOT(sortGroupsAsc()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortDesc, SIGNAL(triggered()), SLOT(sortGroupsDesc()));
+    m_actionMultiplexer.connect(m_ui->actionDownloadAllFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
@@ -596,6 +600,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryTotpQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
+            m_ui->actionEntryDownloadIcon->setEnabled((entriesSelected  && !singleEntrySelected) ||
+                (singleEntrySelected && dbWidget->currentEntryHasUrl()));
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
@@ -603,6 +609,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
+            m_ui->actionDownloadAllFavicons->setEnabled(groupSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
