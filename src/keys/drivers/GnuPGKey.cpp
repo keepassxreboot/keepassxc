@@ -22,33 +22,30 @@
  * secret key is available or if the secret key is on a smart card.
  */
 void GnuPGKey::listPublicKeys() {
-gpgme_ctx_t ctx;
-gpgme_key_t key;
-gpgme_error_t err = gpgme_new (&ctx);
+    gpgme_ctx_t ctx;
+    gpgme_key_t key;
+    gpgme_error_t err = gpgme_new (&ctx);
 
-if (!err)
-  {
-    err = gpgme_op_keylist_start (ctx, "g10code", 0);
-    while (!err)
-      {
-        err = gpgme_op_keylist_next (ctx, &key);
-        if (err)
-          break;
-        printf ("%s:", key->subkeys->keyid);
-        if (key->uids && key->uids->name)
-          printf (" %s", key->uids->name);
-        if (key->uids && key->uids->email)
-          printf (" <%s>", key->uids->email);
-        putchar ('\n');
-        gpgme_key_release (key);
-      }
-    gpgme_release (ctx);
-  }
-if (gpg_err_code (err) != GPG_ERR_EOF)
-  {
-    fprintf (stderr, "can not list keys: %s\n", gpgme_strerror (err));
-    exit (1);
-  }
+    if (!err) {
+        err = gpgme_op_keylist_start (ctx, "g10code", 0);
+        while (!err) {
+            err = gpgme_op_keylist_next (ctx, &key);
+            if (err)
+                break;
+            printf ("%s:", key->subkeys->keyid);
+            if (key->uids && key->uids->name)
+                printf (" %s", key->uids->name);
+            if (key->uids && key->uids->email)
+                printf (" <%s>", key->uids->email);
+            putchar ('\n');
+            gpgme_key_release (key);
+        }
+        gpgme_release (ctx);
+    }
+    if (gpg_err_code (err) != GPG_ERR_EOF) {
+        fprintf (stderr, "can not list keys: %s\n", gpgme_strerror (err));
+        exit (1);
+    }
 }
 
 /*
