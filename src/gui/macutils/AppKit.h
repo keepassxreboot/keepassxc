@@ -19,14 +19,15 @@
 #ifndef KEEPASSX_APPKIT_H
 #define KEEPASSX_APPKIT_H
 
+#include <QObject>
 #include <unistd.h>
 
-extern "C" {
-
-class AppKit
+class AppKit : public QObject
 {
+    Q_OBJECT
+
 public:
-    AppKit();
+    AppKit(QObject* parent = nullptr);
     ~AppKit();
 
     pid_t lastActiveProcessId();
@@ -37,10 +38,11 @@ public:
     bool isHidden(pid_t pid);
     bool isDarkMode();
 
+signals:
+    void lockDatabases();
+
 private:
     void *self;
 };
-
-}  // extern "C"
 
 #endif  // KEEPASSX_APPKIT_H

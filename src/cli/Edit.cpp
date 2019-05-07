@@ -88,7 +88,7 @@ int Edit::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli edit");
+        errorTextStream << parser.helpText().replace("[options]", "edit [options]");
         return EXIT_FAILURE;
     }
 

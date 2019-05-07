@@ -18,17 +18,33 @@
 
 #include "FileKey.h"
 
-#include <QFile>
-
 #include "core/Tools.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 
+#include <QFile>
+
+#include <sodium.h>
+#include <gcrypt.h>
+#include <algorithm>
+#include <cstring>
+
 QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
+
+constexpr int FileKey::SHA256_SIZE;
 
 FileKey::FileKey()
     : Key(UUID)
+    , m_key(static_cast<char*>(gcry_malloc_secure(SHA256_SIZE)))
 {
+}
+
+FileKey::~FileKey()
+{
+    if (m_key) {
+        gcry_free(m_key);
+        m_key = nullptr;
+    }
 }
 
 /**
@@ -148,7 +164,10 @@ bool FileKey::load(const QString& fileName, QString* errorMsg)
  */
 QByteArray FileKey::rawKey() const
 {
-    return m_key;
+    if (!m_key) {
+        return {};
+    }
+    return QByteArray::fromRawData(m_key, SHA256_SIZE);
 }
 
 /**
@@ -223,12 +242,15 @@ bool FileKey::loadXml(QIODevice* device)
         }
     }
 
+    bool ok = false;
     if (!xmlReader.error() && correctMeta && !data.isEmpty()) {
-        m_key = data;
-        return true;
+        std::memcpy(m_key, data.data(), std::min(SHA256_SIZE, data.size()));
+        ok = true;
     }
 
-    return false;
+    sodium_memzero(data.data(), static_cast<std::size_t>(data.capacity()));
+
+    return ok;
 }
 
 /**
@@ -293,7 +315,8 @@ bool FileKey::loadBinary(QIODevice* device)
     if (!Tools::readAllFromDevice(device, data) || data.size() != 32) {
         return false;
     } else {
-        m_key = data;
+        std::memcpy(m_key, data.data(), std::min(SHA256_SIZE, data.size()));
+        sodium_memzero(data.data(), static_cast<std::size_t>(data.capacity()));
         return true;
     }
 }
@@ -321,12 +344,15 @@ bool FileKey::loadHex(QIODevice* device)
     }
 
     QByteArray key = QByteArray::fromHex(data);
+    sodium_memzero(data.data(), static_cast<std::size_t>(data.capacity()));
 
     if (key.size() != 32) {
         return false;
     }
 
-    m_key = key;
+    std::memcpy(m_key, key.data(), std::min(SHA256_SIZE, key.size()));
+    sodium_memzero(key.data(), static_cast<std::size_t>(key.capacity()));
+
     return true;
 }
 
@@ -348,7 +374,9 @@ bool FileKey::loadHashed(QIODevice* device)
         cryptoHash.addData(buffer);
     } while (!buffer.isEmpty());
 
-    m_key = cryptoHash.result();
+    auto result = cryptoHash.result();
+    std::memcpy(m_key, result.data(), std::min(SHA256_SIZE, result.size()));
+    sodium_memzero(result.data(), static_cast<std::size_t>(result.capacity()));
 
     return true;
 }

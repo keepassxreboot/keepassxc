@@ -186,8 +186,10 @@ void TestKdbx4::testFormat400Upgrade()
 
     QCOMPARE(reader.version(), expectedVersion);
     QCOMPARE(targetDb->cipher(), cipherUuid);
-    QCOMPARE(*targetDb->metadata()->customData(), *sourceDb->metadata()->customData());
-    QCOMPARE(*targetDb->rootGroup()->customData(), *sourceDb->rootGroup()->customData());
+    QCOMPARE(targetDb->metadata()->customData()->value("CustomPublicData"),
+             sourceDb->metadata()->customData()->value("CustomPublicData"));
+    QCOMPARE(targetDb->rootGroup()->customData()->value("CustomGroupData"),
+             sourceDb->rootGroup()->customData()->value("CustomGroupData"));
 }
 
 // clang-format off
@@ -346,20 +348,22 @@ void TestKdbx4::testCustomData()
     const QString customDataKey2 = "CD2";
     const QString customData1 = "abcäöü";
     const QString customData2 = "Hello World";
-    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
-                         + customData2.toUtf8().size();
 
     // test custom database data
     db.metadata()->customData()->set(customDataKey1, customData1);
     db.metadata()->customData()->set(customDataKey2, customData2);
-    QCOMPARE(db.metadata()->customData()->size(), 2);
+    auto lastModified = db.metadata()->customData()->value(CustomData::LastModified);
+    const int dataSize = customDataKey1.toUtf8().size() + customDataKey1.toUtf8().size() + customData1.toUtf8().size()
+                         + customData2.toUtf8().size() + lastModified.toUtf8().size()
+                         + CustomData::LastModified.toUtf8().size();
+    QCOMPARE(db.metadata()->customData()->size(), 3);
     QCOMPARE(db.metadata()->customData()->dataSize(), dataSize);
 
     // test custom root group data
     Group* root = db.rootGroup();
     root->customData()->set(customDataKey1, customData1);
     root->customData()->set(customDataKey2, customData2);
-    QCOMPARE(root->customData()->size(), 2);
+    QCOMPARE(root->customData()->size(), 3);
     QCOMPARE(root->customData()->dataSize(), dataSize);
 
     // test copied custom group data
@@ -378,9 +382,9 @@ void TestKdbx4::testCustomData()
 
     // test custom data deletion
     entry->customData()->set("additional item", "foobar");
-    QCOMPARE(entry->customData()->size(), 3);
+    QCOMPARE(entry->customData()->size(), 4);
     entry->customData()->remove("additional item");
-    QCOMPARE(entry->customData()->size(), 2);
+    QCOMPARE(entry->customData()->size(), 3);
     QCOMPARE(entry->customData()->dataSize(), dataSize);
 
     // test custom data on cloned groups

@@ -1158,9 +1158,10 @@ void DatabaseWidget::onDatabaseModified()
 {
     if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool()) {
         save();
+    } else {
+        // Only block once, then reset
+        m_blockAutoSave = false;
     }
-
-    m_blockAutoSave = false;
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1258,11 +1259,13 @@ bool DatabaseWidget::lock()
     }
 
     if (m_db->isModified()) {
+        bool saved = false;
+        // Attempt to save on exit, but don't block locking if it fails
         if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!save()) {
-                return false;
-            }
-        } else {
+            saved = save();
+        }
+
+        if (!saved) {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
@@ -1521,11 +1524,14 @@ bool DatabaseWidget::save()
         return true;
     }
 
+    // Read-only and new databases ask for filename
     if (m_db->isReadOnly() || m_db->filePath().isEmpty()) {
         return saveAs();
     }
 
+    // Prevent recursions and infinite save loops
     blockAutoReload(true);
+    m_blockAutoSave = true;
     ++m_saveAttempts;
 
     // TODO: Make this async, but lock out the database widget to prevent re-entrance
@@ -1536,6 +1542,7 @@ bool DatabaseWidget::save()
 
     if (ok) {
         m_saveAttempts = 0;
+        m_blockAutoSave = false;
         return true;
     }
 

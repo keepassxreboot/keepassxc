@@ -63,7 +63,7 @@ int Clip::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2 && args.size() != 3) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli clip");
+        errorTextStream << parser.helpText().replace("[options]", "clip [options]");
         return EXIT_FAILURE;
     }
 

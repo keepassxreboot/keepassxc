@@ -20,9 +20,10 @@ project(KeePassXC)
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING
-            "Choose the type of build, options are: None Debug Release RelWithDebInfo Debug DebugFull Profile MinSizeRel."
+            "Choose the type of build, options are: Debug Release RelWithDebInfo Profile"
             FORCE)
 endif()
+string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
@@ -40,22 +41,21 @@ option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
 
-set(WITH_XC_ALL OFF CACHE BOOLEAN "Build in all available plugins")
+set(WITH_XC_ALL OFF CACHE BOOL "Build in all available plugins")
 
 option(WITH_XC_AUTOTYPE "Include Auto-Type." ON)
-option(WITH_XC_NETWORKING "Include networking code (e.g. for downlading website icons)." OFF)
+option(WITH_XC_NETWORKING "Include networking code (e.g. for downloading website icons)." OFF)
 option(WITH_XC_BROWSER "Include browser integration with keepassxc-browser." OFF)
 option(WITH_XC_YUBIKEY "Include YubiKey support." OFF)
 option(WITH_XC_SSHAGENT "Include SSH agent support." OFF)
-option(WITH_XC_KEESHARE "Sharing integration with KeeShare" OFF)
-option(WITH_XC_KEESHARE_SECURE "Sharing integration with secured KeeShare containers" OFF)
+option(WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)" OFF)
 option(WITH_XC_UPDATECHECK "Include automatic update checks; disable for controlled distributions" ON)
 if(APPLE)
     option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
 endif()
 
 if(WITH_XC_ALL)
-    # Enable all options
+    # Enable all options (except update check)
     set(WITH_XC_AUTOTYPE ON)
     set(WITH_XC_NETWORKING ON)
     set(WITH_XC_BROWSER ON)
@@ -67,18 +67,16 @@ if(WITH_XC_ALL)
     endif()
 endif()
 
-if(WITH_XC_KEESHARE_SECURE)
-    set(WITH_XC_KEESHARE ON)
-endif()
-
 if(WITH_XC_SSHAGENT OR WITH_XC_KEESHARE)
   set(WITH_XC_CRYPTO_SSH ON)
 else()
   set(WITH_XC_CRYPTO_SSH OFF)
 endif()
 
-if(WITH_XC_UPDATECHECK)
-    set(WITH_XC_NETWORKING ON)
+# Prefer WITH_XC_NETWORKING setting over WITH_XC_UPDATECHECK
+if(NOT WITH_XC_NETWORKING AND WITH_XC_UPDATECHECK)
+    message(STATUS "Disabling WITH_XC_UPDATECHECK because WITH_XC_NETWORKING is disabled")
+    set(WITH_XC_UPDATECHECK OFF)
 endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
@@ -162,11 +160,15 @@ if("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
     set(IS_32BIT TRUE)
 endif()
 
-if("${CMAKE_C_COMPILER}" MATCHES "clang$" OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_C_COMPILER}" MATCHES "clang$"
+        OR "${CMAKE_EXTRA_GENERATOR_C_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
+        OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_COMPILER_IS_CLANG 1)
 endif()
 
-if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$"
+        OR "${CMAKE_EXTRA_GENERATOR_CXX_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
+        OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_COMPILER_IS_CLANGXX 1)
 endif()
 
@@ -199,7 +201,7 @@ add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     add_gcc_compiler_flags("-Werror")
 endif()
 
@@ -230,7 +232,6 @@ if(WITH_ASAN)
 
 endif()
 
-string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 if(CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
     add_gcc_compiler_flags("-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
 endif()
@@ -264,6 +265,11 @@ endif()
 add_gcc_compiler_cflags("-std=c99")
 add_gcc_compiler_cxxflags("-std=c++11")
 
+if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9.99) OR
+    (CMAKE_COMPILER_IS_CLANGXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 3.6.99))
+    add_gcc_compiler_cxxflags("-fsized-deallocation")
+endif()
+
 if(APPLE)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
 endif()
@@ -276,7 +282,7 @@ if(MINGW)
     set(CMAKE_RC_COMPILER_INIT windres)
     enable_language(RC)
     set(CMAKE_RC_COMPILE_OBJECT "<CMAKE_RC_COMPILER> <FLAGS> -O coff <DEFINES> -i <SOURCE> -o <OBJECT>")
-    if(NOT (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+    if(NOT (CMAKE_BUILD_TYPE_LOWER STREQUAL "debug" OR CMAKE_BUILD_TYPE_LOWER STREQUAL "relwithdebinfo"))
         # Enable DEP and ASLR
         set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
         set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase")
@@ -365,9 +371,16 @@ if(APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
     find_program(MACDEPLOYQT_EXE macdeployqt HINTS ${Qt5_PREFIX}/bin ENV PATH)
     if(NOT MACDEPLOYQT_EXE)
-        message(FATAL_ERROR "macdeployqt is required to build in macOS")
+        message(FATAL_ERROR "macdeployqt is required to build on macOS")
     else()
         message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
+    endif()
+elseif(MINGW)
+    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt5_PREFIX}/bin ENV PATH)
+    if(NOT WINDEPLOYQT_EXE)
+        message(FATAL_ERROR "windeployqt is required to build on Windows")
+    else()
+        message(STATUS "Using windeployqt: ${WINDEPLOYQT_EXE}")
     endif()
 endif()
 
@@ -380,6 +393,7 @@ find_package(Gcrypt 1.7.0 REQUIRED)
 find_package(Argon2 REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(QREncode REQUIRED)
+find_package(sodium 1.0.12 REQUIRED)
 
 set(CMAKE_REQUIRED_INCLUDES ${ZLIB_INCLUDE_DIR})
 
@@ -387,20 +401,7 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
     message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
 endif()
 
-include_directories(SYSTEM ${ARGON2_INCLUDE_DIR})
-
-# Optional
-if(WITH_XC_KEESHARE)
-    set(WITH_XC_KEESHARE_INSECURE ON)
-    if(WITH_XC_KEESHARE_SECURE)
-        # ZLIB is needed and already required
-        find_package(QuaZip REQUIRED)
-        include_directories(SYSTEM ${QUAZIP_INCLUDE_DIR})
-    endif()
-else()
-    set(WITH_XC_KEESHARE_INSECURE OFF)
-    set(WITH_XC_KEESHARE_SECURE OFF)
-endif()
+include_directories(SYSTEM ${ARGON2_INCLUDE_DIR} ${sodium_INCLUDE_DIR})
 
 # Optional
 if(WITH_XC_YUBIKEY)

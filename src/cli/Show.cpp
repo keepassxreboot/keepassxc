@@ -69,7 +69,7 @@ int Show::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli show");
+        errorTextStream << parser.helpText().replace("[options]", "show [options]");
         return EXIT_FAILURE;
     }
 

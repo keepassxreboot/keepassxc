@@ -112,7 +112,7 @@ mark_as_advanced(
     CMAKE_EXE_LINKER_FLAGS_COVERAGE
     CMAKE_SHARED_LINKER_FLAGS_COVERAGE )
 
-if(NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
+if(NOT CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     message(WARNING "Code coverage results with an optimised (non-Debug) build may be misleading")
 endif() # NOT CMAKE_BUILD_TYPE STREQUAL "Debug"
 

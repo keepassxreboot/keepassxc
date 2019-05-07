@@ -22,19 +22,22 @@
 
 @implementation AppKitImpl
 
-AppKit::AppKit()
+- (id) initWithObject:(AppKit *)appkit
 {
-    self = [[AppKitImpl alloc] init];
-    [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:static_cast<id>(self)
+    self = [super init];
+    if (self) {
+        m_appkit = appkit;
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:static_cast<id>(self)
                                                            selector:@selector(didDeactivateApplicationObserver:)
                                                                name:NSWorkspaceDidDeactivateApplicationNotification
                                                              object:nil];
-}
-
-AppKit::~AppKit()
-{
-    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:static_cast<id>(self)];
-    [static_cast<id>(self) dealloc];
+    
+        [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:static_cast<id>(self)
+                                                            selector:@selector(userSwitchHandler:)
+                                                                name:NSWorkspaceSessionDidResignActiveNotification
+                                                                object:nil];
+    }
+    return self;
 }
 
 //
@@ -105,8 +108,32 @@ AppKit::~AppKit()
 }
 
 //
+// Notification for user switch
+//
+- (void) userSwitchHandler:(NSNotification*) notification
+{
+    if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit)
+    {
+        emit m_appkit->lockDatabases();
+    }
+}
+
+@end
+
+//
 // ------------------------- C++ Trampolines -------------------------
 //
+
+AppKit::AppKit(QObject* parent) : QObject(parent)
+{
+    self = [[AppKitImpl alloc] initWithObject:this];
+}
+
+AppKit::~AppKit()
+{
+    [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:static_cast<id>(self)];
+    [static_cast<id>(self) dealloc];
+}
 
 pid_t AppKit::lastActiveProcessId()
 {
@@ -142,5 +169,3 @@ bool AppKit::isDarkMode()
 {
     return [static_cast<id>(self) isDarkMode];
 }
-
-@end

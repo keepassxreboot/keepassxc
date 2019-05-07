@@ -171,7 +171,7 @@ int Estimate::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() > 1) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli estimate");
+        errorTextStream << parser.helpText().replace("[options]", "estimate [options]");
         return EXIT_FAILURE;
     }
 

@@ -197,8 +197,6 @@ void EditWidgetIcons::downloadFavicon()
 
     QString fullyQualifiedDomain = m_url.host();
 
-    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
-
     // Determine if host portion of URL is an IP address by resolving it and
     // searching for a match with the returned address(es).
     bool hostIsIp = false;
@@ -209,32 +207,35 @@ void EditWidgetIcons::downloadFavicon()
         }
     }
 
+    // Determine the second-level domain, if available
+    QString secondLevelDomain;
     if (!hostIsIp) {
-        QString secondLevelDomain = getSecondLevelDomain(m_url);
-
-        // Attempt to simply load the favicon.ico file
-        if (fullyQualifiedDomain != secondLevelDomain) {
-            m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
-        }
+        secondLevelDomain = getSecondLevelDomain(m_url);
     }
 
-    // Try to use alternative fallback URL, if enabled
+    // Start with the "fallback" url (if enabled) to try to get the best favicon
     if (config()->get("security/IconDownloadFallback", false).toBool()) {
         QUrl fallbackUrl = QUrl("https://icons.duckduckgo.com");
         fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
-
         m_urlsToTry.append(fallbackUrl);
 
-        if (!hostIsIp) {
-            QString secondLevelDomain = getSecondLevelDomain(m_url);
-
-            if (fullyQualifiedDomain != secondLevelDomain) {
-                fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(secondLevelDomain) + ".ico");
-                m_urlsToTry.append(fallbackUrl);
-            }
+        // Also try a direct pull of the second-level domain (if possible)
+        if (!hostIsIp && fullyQualifiedDomain != secondLevelDomain) {
+            fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(secondLevelDomain) + ".ico");
+            m_urlsToTry.append(fallbackUrl);
         }
     }
 
+    // Add a direct pull of the website's own favicon.ico file
+    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+
+    // Also try a direct pull of the second-level domain (if possible)
+    if (!hostIsIp && fullyQualifiedDomain != secondLevelDomain) {
+        m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+    }
+
+    // Use the first URL to start the download process
+    // If a favicon is not found, the next URL will be tried
     startFetchFavicon(m_urlsToTry.takeFirst());
 #endif
 }
@@ -277,7 +278,7 @@ void EditWidgetIcons::fetchFinished()
     if (!image.isNull()) {
         if (!addCustomIcon(image)) {
             emit messageEditEntry(tr("Custom icon already exists"), MessageWidget::Information);
-        } else if (!this->isVisible()) {
+        } else if (!isVisible()) {
             // Show confirmation message if triggered from Entry tab download button
             emit messageEditEntry(tr("Custom icon successfully downloaded"), MessageWidget::Positive);
         }
@@ -289,7 +290,7 @@ void EditWidgetIcons::fetchFinished()
         if (!fallbackEnabled) {
             emit messageEditEntry(
                 tr("Unable to fetch favicon.") + "\n"
-                    + tr("Hint: You can enable DuckDuckGo as a fallback under Tools>Settings>Security"),
+                    + tr("You can enable the DuckDuckGo website icon service under Tools -> Settings -> Security"),
                 MessageWidget::Error);
         } else {
             emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);

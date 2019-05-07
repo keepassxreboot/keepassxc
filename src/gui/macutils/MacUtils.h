@@ -39,14 +39,16 @@ public:
     bool isHidden();
     bool isDarkMode();
 
+signals:
+    void lockDatabases();
+
 private:
     explicit MacUtils(QObject* parent = nullptr);
     ~MacUtils();
 
 private:
-    std::unique_ptr<AppKit> m_appkit;
+    QScopedPointer<AppKit> m_appkit;
     static MacUtils* m_instance;
-    void* self;
 
     Q_DISABLE_COPY(MacUtils)
 };

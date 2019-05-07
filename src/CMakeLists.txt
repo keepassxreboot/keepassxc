@@ -16,9 +16,6 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
-configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
-
 find_library(ZXCVBN_LIBRARIES zxcvbn)
 if(NOT ZXCVBN_LIBRARIES)
     add_library(zxcvbn STATIC zxcvbn/zxcvbn.c)
@@ -27,6 +24,7 @@ if(NOT ZXCVBN_LIBRARIES)
 endif(NOT ZXCVBN_LIBRARIES)
 
 set(keepassx_SOURCES
+        core/Alloc.cpp
         core/AutoTypeAssociations.cpp
         core/AutoTypeMatch.cpp
         core/Compare.cpp
@@ -167,7 +165,8 @@ if(APPLE)
             core/ScreenLockListenerMac.cpp
             core/MacPasteboard.cpp
             gui/macutils/MacUtils.cpp
-            gui/macutils/AppKitImpl.mm)
+            gui/macutils/AppKitImpl.mm
+            gui/macutils/AppKit.h)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
@@ -192,8 +191,7 @@ add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
-add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
-add_feature_info(KeeShare-Secure WITH_XC_KEESHARE_SECURE "Sharing integration with KeeShare with secure sources")
+add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
 if(APPLE)
@@ -255,7 +253,12 @@ endif()
 
 if(WITH_XC_TOUCHID)
     list(APPEND keepassx_SOURCES touchid/TouchID.mm)
+    # TODO: Remove -Wno-error once deprecation warnings have been resolved.
+    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast -Wno-error")
 endif()
+
+configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
+configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
 add_library(autotype STATIC ${autotype_SOURCES})
 target_link_libraries(autotype Qt5::Core Qt5::Widgets)
@@ -271,6 +274,7 @@ target_link_libraries(keepassx_core
         Qt5::Concurrent
         Qt5::Network
         Qt5::Widgets
+        ${sodium_LIBRARY_RELEASE}
         ${YUBIKEY_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ARGON2_LIBRARIES}
@@ -411,25 +415,19 @@ if(MINGW)
 
     install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
 
-    include(DeployQt4)
-    install_qt4_executable(${PROGNAME}.exe)
+    # Deploy all 3rd party library dependencies first
+    install(CODE "include(BundleUtilities)
+                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\" \"\" \"\")"
+            COMPONENT Runtime)
 
-    # install Qt5 plugins
-    set(PLUGINS_DIR ${Qt5_PREFIX}/share/qt5/plugins)
-    install(FILES
-            ${PLUGINS_DIR}/platforms/qwindows$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/platforms/qdirect2d$<$<CONFIG:Debug>:d>.dll
-            DESTINATION "platforms")
-    install(FILES ${PLUGINS_DIR}/styles/qwindowsvistastyle$<$<CONFIG:Debug>:d>.dll DESTINATION "styles")
-    install(FILES ${PLUGINS_DIR}/platforminputcontexts/qtvirtualkeyboardplugin$<$<CONFIG:Debug>:d>.dll DESTINATION "platforminputcontexts")
-    install(FILES ${PLUGINS_DIR}/iconengines/qsvgicon$<$<CONFIG:Debug>:d>.dll DESTINATION "iconengines")
-    install(FILES
-            ${PLUGINS_DIR}/imageformats/qgif$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qicns$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qico$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qjpeg$<$<CONFIG:Debug>:d>.dll
-            ${PLUGINS_DIR}/imageformats/qwebp$<$<CONFIG:Debug>:d>.dll
-            DESTINATION "imageformats")
+    # Use windeployqt.exe to setup Qt dependencies
+    set(WINDEPLOYQT_MODE "--release")
+    if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+        set(WINDEPLOYQT_MODE "--debug")
+    endif()
+
+    install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
+            COMPONENT Runtime)
 
     # install CA cert chains
     install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")

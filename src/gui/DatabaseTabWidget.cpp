@@ -63,6 +63,10 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
     // clang-format on
+
+#ifdef Q_OS_MACOS
+    connect(macUtils(), SIGNAL(lockDatabases()), SLOT(lockDatabases()));
+#endif
 }
 
 DatabaseTabWidget::~DatabaseTabWidget()

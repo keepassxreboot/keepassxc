@@ -53,7 +53,7 @@ int Extract::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() != 1) {
-        errorTextStream << parser.helpText().replace("keepassxc-cli", "keepassxc-cli extract");
+        errorTextStream << parser.helpText().replace("[options]", "extract [options]");
         return EXIT_FAILURE;
     }
     

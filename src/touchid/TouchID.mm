@@ -15,6 +15,7 @@
 
 inline void debug(const char* message, ...)
 {
+    Q_UNUSED(message);
     // qWarning(...);
 }
 
@@ -258,6 +259,7 @@ bool TouchID::authenticate(const QString& message) const
         NSString* authMessage = msg.toNSString(); // autoreleased
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                 localizedReason:authMessage reply:^(BOOL success, NSError* error) {
+                Q_UNUSED(error);
                 result = success ? kTouchIDResultAllowed : kTouchIDResultFailed;
                 CFRunLoopWakeUp(CFRunLoopGetCurrent());
             }];

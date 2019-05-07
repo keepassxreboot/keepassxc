@@ -70,7 +70,7 @@ int Create::execute(const QStringList& arguments)
 
     const QStringList args = parser.positionalArguments();
     if (args.size() < 1) {
-        out << parser.helpText().replace("keepassxc-cli", "keepassxc-cli create");
+        out << parser.helpText().replace("[options]", "create [options]");
         return EXIT_FAILURE;
     }
 
