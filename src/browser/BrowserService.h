@@ -114,7 +114,7 @@ private:
                         const QString& realm);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
-    Group* findCreateAddEntryGroup(const QSharedPointer<Database>& selectedDb = {});
+    Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);

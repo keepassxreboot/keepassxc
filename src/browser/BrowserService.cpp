@@ -453,11 +453,6 @@ void BrowserService::addEntry(const QString& id,
         return;
     }
 
-    auto* addEntryGroup = findCreateAddEntryGroup(db);
-    if (!addEntryGroup) {
-        return;
-    }
-
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
     entry->setTitle(QUrl(url).host());
@@ -465,16 +460,19 @@ void BrowserService::addEntry(const QString& id,
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
     entry->setUsername(login);
     entry->setPassword(password);
-    entry->setGroup(addEntryGroup);
 
     // Select a group for the entry
     if (!group.isEmpty()) {
         if (db->rootGroup()) {
             auto selectedGroup = db->rootGroup()->findGroupByUuid(Tools::hexToUuid(groupUuid));
-            if (selectedGroup && selectedGroup->name() == group) {
+            if (selectedGroup) {
                 entry->setGroup(selectedGroup);
+            } else {
+                entry->setGroup(getDefaultEntryGroup(db));
             }
         }
+    } else {
+        entry->setGroup(getDefaultEntryGroup(db));
     }
 
     const QString host = QUrl(url).host();
@@ -859,7 +857,7 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
     return Unknown;
 }
 
-Group* BrowserService::findCreateAddEntryGroup(const QSharedPointer<Database>& selectedDb)
+Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb)
 {
     auto db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
@@ -872,7 +870,7 @@ Group* BrowserService::findCreateAddEntryGroup(const QSharedPointer<Database>& s
     }
 
     const QString groupName =
-        QLatin1String(KEEPASSXCBROWSER_GROUP_NAME); // TODO: setting to decide where new keys are created
+        QLatin1String(KEEPASSXCBROWSER_GROUP_NAME);
 
     for (auto* g : rootGroup->groupsRecursive(true)) {
         if (g->name() == groupName && !g->isRecycled()) {
