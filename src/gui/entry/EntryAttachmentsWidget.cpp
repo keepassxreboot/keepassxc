@@ -7,9 +7,11 @@
 #include <QFile>
 #include <QFileInfo>
 #include <QMimeData>
+#include <QProcessEnvironment>
 #include <QTemporaryFile>
 
 #include "EntryAttachmentsModel.h"
+#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
@@ -324,7 +326,12 @@ bool EntryAttachmentsWidget::openAttachment(const QModelIndex& index, QString& e
     const QByteArray attachmentData = m_entryAttachments->value(filename);
 
     // tmp file will be removed once the database (or the application) has been closed
+#ifdef KEEPASSXC_DIST_SNAP
+    const QString tmpFileTemplate =
+        QString("%1/XXXXXX.%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), filename);
+#else
     const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QString("XXXXXX.").append(filename));
+#endif
 
     QScopedPointer<QTemporaryFile> tmpFile(new QTemporaryFile(tmpFileTemplate, this));
 
