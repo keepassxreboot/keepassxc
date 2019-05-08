@@ -35,7 +35,7 @@
       <string>This is required for accessing your databases with KeePassXC-Browser</string>
      </property>
      <property name="text">
-      <string>Enable KeepassXC browser integration</string>
+      <string>Enable browser integration</string>
      </property>
     </widget>
    </item>
