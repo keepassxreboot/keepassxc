@@ -818,6 +818,10 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
         res["totp"] = entry->totp();
     }
 
+    if (entry->isExpired()) {
+        res["expired"] = "true";
+    }
+
     if (browserSettings()->supportKphFields()) {
         const EntryAttributes* attr = entry->attributes();
         QJsonArray stringFields;
@@ -841,7 +845,7 @@ BrowserService::checkAccess(const Entry* entry, const QString& host, const QStri
         return Unknown;
     }
     if (entry->isExpired()) {
-        return Denied;
+        return browserSettings()->allowExpiredCredentials() ? Allowed : Denied;
     }
     if ((config.isAllowed(host)) && (submitHost.isEmpty() || config.isAllowed(submitHost))) {
         return Allowed;

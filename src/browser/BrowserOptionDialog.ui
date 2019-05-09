@@ -220,6 +220,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="allowExpiredCredentials">
+         <property name="toolTip">
+          <string>Returns expired credentials. String [expired] is added to the title.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Allow returning expired credentials.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QRadioButton" name="sortByTitle">
          <property name="text">
           <string extracomment="Credentials mean login data requested via browser extension">Sort &amp;matching credentials by title</string>
