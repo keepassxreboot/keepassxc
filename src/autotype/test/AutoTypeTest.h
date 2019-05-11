@@ -48,6 +48,7 @@ public:
     bool raiseOwnWindow() override;
 #endif
 
+    void triggerGlobalAutoType() override;
     void setActiveWindowTitle(const QString& title) override;
 
     QString actionChars() override;
