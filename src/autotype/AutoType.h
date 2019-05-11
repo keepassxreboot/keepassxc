@@ -62,18 +62,19 @@ public slots:
     void raiseWindow();
 
 signals:
-    void globalShortcutTriggered();
+    void globalAutoTypeTriggered();
     void autotypePerformed();
     void autotypeRejected();
 
 private slots:
+    void startGlobalAutoType();
     void performAutoTypeFromGlobal(AutoTypeMatch match);
     void autoTypeRejectedFromGlobal();
     void unloadPlugin();
 
 private:
     explicit AutoType(QObject* parent = nullptr, bool test = false);
-    ~AutoType();
+    ~AutoType() override;
     void loadPlugin(const QString& pluginPath);
     void executeAutoTypeActions(const Entry* entry,
                                 QWidget* hideWindow = nullptr,
@@ -94,8 +95,10 @@ private:
     QPluginLoader* m_pluginLoader;
     AutoTypePlatformInterface* m_plugin;
     AutoTypeExecutor* m_executor;
-    WId m_windowFromGlobal;
     static AutoType* m_instance;
+
+    QString m_windowTitleForGlobal;
+    WId m_windowForGlobal;
 
     Q_DISABLE_COPY(AutoType)
 };
