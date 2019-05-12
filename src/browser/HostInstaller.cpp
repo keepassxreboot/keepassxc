@@ -171,7 +171,7 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
     case SupportedBrowsers::TOR_BROWSER:
         return TARGET_DIR_TOR_BROWSER;
     case SupportedBrowsers::BRAVE:
-      return TARGET_DIR_BRAVE;
+        return TARGET_DIR_BRAVE;
     default:
         return QString();
     }
@@ -194,11 +194,11 @@ QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
     case SupportedBrowsers::FIREFOX:
         return "firefox";
     case SupportedBrowsers::VIVALDI:
-      return "vivaldi";
+        return "vivaldi";
     case SupportedBrowsers::TOR_BROWSER:
         return "tor-browser";
     case SupportedBrowsers::BRAVE:
-      return "brave";
+        return "brave";
     default:
         return QString();
     }

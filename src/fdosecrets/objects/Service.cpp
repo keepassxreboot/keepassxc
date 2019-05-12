@@ -66,8 +66,10 @@ namespace FdoSecrets
 
         // Connect to service unregistered signal
         m_serviceWatcher.reset(new QDBusServiceWatcher());
-        connect(
-            m_serviceWatcher.data(), &QDBusServiceWatcher::serviceUnregistered, this, &Service::dbusServiceUnregistered);
+        connect(m_serviceWatcher.data(),
+                &QDBusServiceWatcher::serviceUnregistered,
+                this,
+                &Service::dbusServiceUnregistered);
 
         m_serviceWatcher->setConnection(QDBusConnection::sessionBus());
 

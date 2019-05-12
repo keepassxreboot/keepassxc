@@ -354,12 +354,12 @@ namespace FdoSecrets
         return pathComponents.join('/');
     }
 
-    QString Item::encodeAttributeKey(const QString &key)
+    QString Item::encodeAttributeKey(const QString& key)
     {
         return QUrl::toPercentEncoding(key, "", "_:").replace('%', '_');
     }
 
-    QString Item::decodeAttributeKey(const QString &key)
+    QString Item::decodeAttributeKey(const QString& key)
     {
         return QString::fromUtf8(QByteArray::fromPercentEncoding(key.toLatin1(), '_'));
     }

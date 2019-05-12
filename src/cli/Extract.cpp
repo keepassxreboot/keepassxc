@@ -56,7 +56,7 @@ int Extract::execute(const QStringList& arguments)
         errorTextStream << parser.helpText().replace("[options]", "extract [options]");
         return EXIT_FAILURE;
     }
-    
+
     auto compositeKey = QSharedPointer<CompositeKey>::create();
 
     auto db = Utils::unlockDatabase(args.at(0),

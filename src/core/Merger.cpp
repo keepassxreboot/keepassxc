@@ -625,9 +625,9 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     // Merge Custom Data if source is newer
     const auto targetCustomDataModificationTime = sourceMetadata->customData()->getLastModified();
     const auto sourceCustomDataModificationTime = targetMetadata->customData()->getLastModified();
-    if (!targetMetadata->customData()->contains(CustomData::LastModified) ||
-        (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid() && 
-         targetCustomDataModificationTime > sourceCustomDataModificationTime)) {
+    if (!targetMetadata->customData()->contains(CustomData::LastModified)
+        || (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid()
+            && targetCustomDataModificationTime > sourceCustomDataModificationTime)) {
         const auto sourceCustomDataKeys = sourceMetadata->customData()->keys();
         const auto targetCustomDataKeys = targetMetadata->customData()->keys();
 

@@ -32,9 +32,9 @@
 #include <QXmlStreamReader>
 #include <QtConcurrent>
 
+#include <cstring>
 #include <gcrypt.h>
 #include <sodium.h>
-#include <cstring>
 
 QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
 

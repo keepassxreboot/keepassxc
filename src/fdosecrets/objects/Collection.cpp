@@ -157,8 +157,8 @@ namespace FdoSecrets
         if (ret.isError()) {
             return ret;
         }
-        return static_cast<qulonglong>(
-            m_backend->database()->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000);
+        return static_cast<qulonglong>(m_backend->database()->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch()
+                                       / 1000);
     }
 
     DBusReturn<qulonglong> Collection::modified() const

@@ -78,7 +78,7 @@ void operator delete[](void* ptr) noexcept
  * Custom insecure delete operator that does not zero out memory before
  * freeing a buffer. Can be used for better performance.
  */
-void operator delete(void* ptr, bool) noexcept
+void operator delete(void* ptr, bool)noexcept
 {
     std::free(ptr);
 }

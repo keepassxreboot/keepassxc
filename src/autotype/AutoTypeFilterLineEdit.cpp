@@ -18,7 +18,7 @@
 #include "AutoTypeFilterLineEdit.h"
 #include <QKeyEvent>
 
-void AutoTypeFilterLineEdit::keyPressEvent(QKeyEvent *event)
+void AutoTypeFilterLineEdit::keyPressEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Up) {
         emit keyUpPressed();
@@ -29,7 +29,7 @@ void AutoTypeFilterLineEdit::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void AutoTypeFilterLineEdit::keyReleaseEvent(QKeyEvent *event)
+void AutoTypeFilterLineEdit::keyReleaseEvent(QKeyEvent* event)
 {
     if (event->key() == Qt::Key_Escape) {
         emit escapeReleased();

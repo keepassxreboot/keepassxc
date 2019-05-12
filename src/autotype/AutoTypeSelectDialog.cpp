@@ -27,9 +27,9 @@
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QLabel>
-#include <QVBoxLayout>
 #include <QLineEdit>
 #include <QSortFilterProxyModel>
+#include <QVBoxLayout>
 
 #include "autotype/AutoTypeSelectView.h"
 #include "core/AutoTypeMatch.h"
@@ -77,7 +77,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_view, SIGNAL(rejected()), SLOT(reject()));
     // clang-format on
 
-    QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
+    QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
     if (proxy) {
         proxy->setFilterKeyColumn(-1);
         proxy->setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -146,10 +146,9 @@ void AutoTypeSelectDialog::matchRemoved()
     }
 }
 
-
 void AutoTypeSelectDialog::filterList(QString filterString)
 {
-    QSortFilterProxyModel *proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
+    QSortFilterProxyModel* proxy = qobject_cast<QSortFilterProxyModel*>(m_view->model());
     if (proxy) {
         proxy->setFilterWildcard(filterString);
         if (!m_view->currentIndex().isValid()) {
