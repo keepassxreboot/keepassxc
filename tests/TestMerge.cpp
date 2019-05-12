@@ -1172,7 +1172,7 @@ void TestMerge::testCustomdata()
     QScopedPointer<Database> dbSource2(createTestDatabase());
 
     m_clock->advanceSecond(1);
-    
+
     dbDestination->metadata()->customData()->set("toBeDeleted", "value");
     dbDestination->metadata()->customData()->set("key3", "oldValue");
 
@@ -1212,7 +1212,8 @@ void TestMerge::testCustomdata()
     QCOMPARE(dbDestination->metadata()->customData()->value("key1"), QString("value1"));
     QCOMPARE(dbDestination->metadata()->customData()->value("key2"), QString("value2"));
     QCOMPARE(dbDestination->metadata()->customData()->value("Browser"), QString("n'8=3W@L^6d->d.]St_>]"));
-    QCOMPARE(dbDestination->metadata()->customData()->value("key3"), QString("newValue")); // Old value should be replaced
+    QCOMPARE(dbDestination->metadata()->customData()->value("key3"),
+             QString("newValue")); // Old value should be replaced
 
     // Target is newer, no data is merged
     QVERIFY(!dbDestination2->metadata()->customData()->isEmpty());
@@ -1220,7 +1221,8 @@ void TestMerge::testCustomdata()
     QVERIFY(!dbDestination2->metadata()->customData()->contains("key2"));
     QVERIFY(!dbDestination2->metadata()->customData()->contains("Browser"));
     QVERIFY(dbDestination2->metadata()->customData()->contains("notToBeDeleted"));
-    QCOMPARE(dbDestination2->metadata()->customData()->value("key3"), QString("oldValue")); // Old value should not be replaced
+    QCOMPARE(dbDestination2->metadata()->customData()->value("key3"),
+             QString("oldValue")); // Old value should not be replaced
 }
 
 void TestMerge::testDeletedEntry()

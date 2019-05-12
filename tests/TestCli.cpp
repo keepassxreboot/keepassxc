@@ -690,8 +690,9 @@ void TestCli::testKeyFileOption()
     listCmd.execute({"ls", "-k", keyFilePath, m_keyFileProtectedDbFile->fileName()});
     m_stdoutFile->reset();
     m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("entry1\n"
-                                                 "entry2\n"));
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("entry1\n"
+                        "entry2\n"));
 
     // Should raise an error with no key file.
     qint64 pos = m_stdoutFile->pos();
@@ -713,8 +714,7 @@ void TestCli::testKeyFileOption()
     m_stdoutFile->readLine(); // skip password prompt
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(m_stderrFile->readAll().split(':').at(0),
-             QByteArray("Failed to load key file invalidpath"));
+    QCOMPARE(m_stderrFile->readAll().split(':').at(0), QByteArray("Failed to load key file invalidpath"));
 }
 
 void TestCli::testNoPasswordOption()
@@ -724,8 +724,9 @@ void TestCli::testNoPasswordOption()
     QString keyFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/KeyFileProtectedNoPassword.key"));
     listCmd.execute({"ls", "-k", keyFilePath, "--no-password", m_keyFileProtectedNoPasswordDbFile->fileName()});
     m_stdoutFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("entry1\n"
-                                                 "entry2\n"));
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("entry1\n"
+                        "entry2\n"));
 
     // Should raise an error with no key file.
     qint64 pos = m_stdoutFile->pos();

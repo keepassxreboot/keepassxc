@@ -61,8 +61,7 @@ int main(int argc, char** argv)
 
     parser.addPositionalArgument("command", QObject::tr("Name of the command to execute."));
 
-    QCommandLineOption debugInfoOption(QStringList() << "debug-info",
-                                       QObject::tr("Displays debugging information."));
+    QCommandLineOption debugInfoOption(QStringList() << "debug-info", QObject::tr("Displays debugging information."));
     parser.addOption(debugInfoOption);
     parser.addHelpOption();
     parser.addVersionOption();

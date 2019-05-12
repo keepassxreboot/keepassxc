@@ -82,8 +82,7 @@ int main(int argc, char** argv)
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
-    QCommandLineOption debugInfoOption(QStringList() << "debug-info",
-                                       QObject::tr("Displays debugging information."));
+    QCommandLineOption debugInfoOption(QStringList() << "debug-info", QObject::tr("Displays debugging information."));
     parser.addOption(configOption);
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);

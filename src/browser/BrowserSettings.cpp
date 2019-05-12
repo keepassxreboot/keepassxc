@@ -240,13 +240,13 @@ void BrowserSettings::setVivaldiSupport(bool enabled)
 
 bool BrowserSettings::braveSupport()
 {
-  return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::BRAVE);
+    return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::BRAVE);
 }
 
 void BrowserSettings::setBraveSupport(bool enabled)
 {
-  m_hostInstaller.installBrowser(
-                                 HostInstaller::SupportedBrowsers::BRAVE, enabled, supportBrowserProxy(), customProxyLocation());
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::BRAVE, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
 bool BrowserSettings::torBrowserSupport()

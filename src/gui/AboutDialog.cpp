@@ -26,7 +26,6 @@
 
 #include <QClipboard>
 
-
 static const QString aboutMaintainers = R"(
 <p><ul>
     <li>Jonathan White (<a href="https://github.com/droidmonkey">droidmonkey</a>)</li>

@@ -97,7 +97,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 #else
     m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setVisible(false);
-    m_generalUi->checkUpdatesSpacer->changeSize(0,0, QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_generalUi->checkUpdatesSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 #endif
 
 #ifndef WITH_XC_NETWORKING

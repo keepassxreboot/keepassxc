@@ -739,7 +739,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
                        || ((QString::localeAwareCompare(left->attributes()->value(field),
                                                         right->attributes()->value(field))
                             == 0)
-                        && (QString::localeAwareCompare(left->attributes()->value("UserName"),
+                           && (QString::localeAwareCompare(left->attributes()->value("UserName"),
                                                            right->attributes()->value("UserName"))
                                < 0));
             });

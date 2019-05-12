@@ -23,6 +23,7 @@
 #include "core/Config.h"
 #include "core/Translator.h"
 
+#include "git-info.h"
 #include <QCoreApplication>
 #include <QElapsedTimer>
 #include <QIODevice>
@@ -33,7 +34,6 @@
 #include <QSysInfo>
 #include <QUuid>
 #include <cctype>
-#include "git-info.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h> // for Sleep()
@@ -74,7 +74,6 @@ namespace Tools
         debugInfo.append(QObject::tr("Debugging mode is enabled.").append("\n"));
 #endif
         debugInfo.append("\n");
-
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
         debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")

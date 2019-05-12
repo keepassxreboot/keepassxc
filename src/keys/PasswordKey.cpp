@@ -19,9 +19,9 @@
 #include "core/Tools.h"
 
 #include "crypto/CryptoHash.h"
-#include <gcrypt.h>
 #include <algorithm>
 #include <cstring>
+#include <gcrypt.h>
 
 QUuid PasswordKey::UUID("77e90411-303a-43f2-b773-853b05635ead");
 

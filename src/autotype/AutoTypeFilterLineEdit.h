@@ -25,10 +25,14 @@ class AutoTypeFilterLineEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    AutoTypeFilterLineEdit(QWidget* widget) : QLineEdit(widget) {}
+    AutoTypeFilterLineEdit(QWidget* widget)
+        : QLineEdit(widget)
+    {
+    }
+
 protected:
-    virtual void keyPressEvent(QKeyEvent *event);
-    virtual void keyReleaseEvent(QKeyEvent *event);
+    virtual void keyPressEvent(QKeyEvent* event);
+    virtual void keyReleaseEvent(QKeyEvent* event);
 signals:
     void keyUpPressed();
     void keyDownPressed();
