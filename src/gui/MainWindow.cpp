@@ -887,7 +887,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
     }
 
     if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
-        event->ignore();
+        event->accept();
         hideWindow();
         return;
     }
