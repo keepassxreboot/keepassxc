@@ -30,13 +30,22 @@ const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
 PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(0)
     , m_separator(PassphraseGenerator::DefaultSeparator)
+    , m_separatorGenerator(new PasswordGenerator())
+    , m_enhancementGenerator(new PasswordGenerator())
 {
+    m_separatorGenerator->setLength(1);
+    m_enhancementGenerator->setLength(1);
 }
 
-double PassphraseGenerator::calculateEntropy(const QString& passphrase)
+double PassphraseGenerator::calculateEntropy(const QString& passphrase) const
 {
     Q_UNUSED(passphrase);
 
+    return m_lastEntropy;
+}
+
+double PassphraseGenerator::calculateRawEntropy() const
+{
     if (m_wordlist.isEmpty()) {
         return 0.0;
     }
@@ -84,9 +93,17 @@ void PassphraseGenerator::setDefaultWordList()
 void PassphraseGenerator::setWordSeparator(const QString& separator)
 {
     m_separator = separator;
+    m_useSeparator = true;
 }
 
-QString PassphraseGenerator::generatePassphrase() const
+void PassphraseGenerator::setWordSeparator(const PasswordGenerator::CharClasses& classes, const QString& exclude)
+{
+    m_separatorGenerator->setCharClasses(classes);
+    m_separatorGenerator->setExcludedChars(exclude);
+    m_useSeparator = false;
+}
+
+QString PassphraseGenerator::generatePassphrase()
 {
     Q_ASSERT(isValid());
 
@@ -99,9 +116,24 @@ QString PassphraseGenerator::generatePassphrase() const
     for (int i = 0; i < m_wordCount; ++i) {
         int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
         words.append(m_wordlist.at(wordIndex));
+
+        if (i + 1 < m_wordCount) {
+            words.append(m_useSeparator ? m_separator : m_separatorGenerator->generatePassword());
+        }
+    }
+    QString passphrase = words.join("");
+
+    double additionalEntropy = 0;
+    for (int i = 0; i < m_enhancementCount; ++i) {
+        QString insertion = m_enhancementGenerator->generatePassword();
+        int insertionIndex = randomGen()->randomUInt(static_cast<quint32>(passphrase.size() + 1));
+        passphrase.insert(insertionIndex, insertion.data()[0]);
+        additionalEntropy += std::log2(passphrase.size()) + m_enhancementGenerator->calculateEntropy(insertion);
     }
 
-    return words.join(m_separator);
+    m_lastEntropy = calculateRawEntropy() + additionalEntropy;
+
+    return passphrase;
 }
 
 bool PassphraseGenerator::isValid() const
@@ -111,4 +143,15 @@ bool PassphraseGenerator::isValid() const
     }
 
     return m_wordlist.size() >= 1000;
+}
+
+void PassphraseGenerator::setEnhancementChars(const PasswordGenerator::CharClasses& classes, const QString& exclude)
+{
+    m_enhancementGenerator->setCharClasses(classes);
+    m_enhancementGenerator->setExcludedChars(exclude);
+}
+
+void PassphraseGenerator::setEnhancementCount(const int count)
+{
+    m_enhancementCount = count;
 }

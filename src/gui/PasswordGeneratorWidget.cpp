@@ -34,6 +34,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     , m_passwordGenerator(new PasswordGenerator())
     , m_dicewareGenerator(new PassphraseGenerator())
     , m_ui(new Ui::PasswordGeneratorWidget())
+    , m_passphraseRadioButtons(new QButtonGroup())
 {
     m_ui->setupUi(this);
 
@@ -56,7 +57,24 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
 
-    connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
+    // word separator
+    // TODO save/load these settings
+    m_passphraseRadioButtons.addButton(m_ui->radioButtonWordSeparator, 0);
+    m_passphraseRadioButtons.addButton(m_ui->radioButtonRandomSeparator, 1);
+    connect(&m_passphraseRadioButtons, SIGNAL(buttonClicked(int)), SLOT(updateWordSeparator()));
+    connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateWordSeparator()));
+    connect(m_ui->buttonNumbers, SIGNAL(clicked()), SLOT(updateWordSeparator()));
+    connect(m_ui->buttonSpecial, SIGNAL(clicked()), SLOT(updateWordSeparator()));
+    connect(m_ui->editRandomSeparatorExclude, SIGNAL(textChanged(QString)), SLOT(updateWordSeparator()));
+
+    // enhancements
+    // TODO save/load these settings
+    connect(m_ui->sliderEnhancementCount, SIGNAL(valueChanged(int)), SLOT(enhancementSliderMoved()));
+    connect(m_ui->spinBoxEnhancementCount, SIGNAL(valueChanged(int)), SLOT(enhancementSpinBoxChanged()));
+    connect(m_ui->buttonEnhancementNumbers, SIGNAL(clicked()), SLOT(updateEnhancement()));
+    connect(m_ui->buttonEnhancementSpecial, SIGNAL(clicked()), SLOT(updateEnhancement()));
+    connect(m_ui->editEnhancementExclude, SIGNAL(textChanged(QString)), SLOT(updateEnhancement()));
+
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
@@ -564,7 +582,6 @@ void PasswordGeneratorWidget::updateGenerator()
             QString path = filePath()->wordlistPath(m_ui->comboBoxWordList->currentText());
             m_dicewareGenerator->setWordList(path);
         }
-        m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
         if (m_dicewareGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);
@@ -574,4 +591,46 @@ void PasswordGeneratorWidget::updateGenerator()
     }
 
     regeneratePassword();
+}
+
+void PasswordGeneratorWidget::updateWordSeparator() {
+    if (m_ui->radioButtonWordSeparator->isChecked()) {
+        m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
+    } else {
+        PasswordGenerator::CharClasses classes;
+        if (m_ui->buttonNumbers->isChecked()) {
+            classes |= PasswordGenerator::CharClass::Numbers;
+        }
+        if (m_ui->buttonSpecial->isChecked()) {
+            classes |= PasswordGenerator::CharClass::SpecialCharacters;
+        }
+        m_dicewareGenerator->setWordSeparator(classes, m_ui->editRandomSeparatorExclude->text());
+    }
+
+    updateGenerator();
+}
+
+void PasswordGeneratorWidget::updateEnhancement() {
+    m_dicewareGenerator->setEnhancementCount(m_ui->sliderEnhancementCount->value());
+
+    PasswordGenerator::CharClasses classes;
+    if (m_ui->buttonEnhancementNumbers->isChecked()) {
+        classes |= PasswordGenerator::CharClass::Numbers;
+    }
+    if (m_ui->buttonEnhancementSpecial->isChecked()) {
+        classes |= PasswordGenerator::CharClass::SpecialCharacters;
+    }
+    m_dicewareGenerator->setEnhancementChars(classes, m_ui->editEnhancementExclude->text());
+
+    updateGenerator();
+}
+
+void PasswordGeneratorWidget::enhancementSliderMoved() {
+    m_ui->spinBoxEnhancementCount->setValue(m_ui->sliderEnhancementCount->value());
+    updateEnhancement();
+}
+
+void PasswordGeneratorWidget::enhancementSpinBoxChanged() {
+    m_ui->sliderEnhancementCount->setValue(m_ui->spinBoxEnhancementCount->value());
+    updateEnhancement();
 }

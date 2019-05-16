@@ -21,6 +21,8 @@
 #include <QFlags>
 #include <QString>
 #include <QVector>
+#include <QtCore/QScopedPointer>
+#include "PasswordGenerator.h"
 
 class PassphraseGenerator
 {
@@ -28,23 +30,36 @@ public:
     PassphraseGenerator();
     Q_DISABLE_COPY(PassphraseGenerator)
 
-    double calculateEntropy(const QString& passphrase);
+    double calculateEntropy(const QString& passphrase) const;
     void setWordCount(int wordCount);
     void setWordList(const QString& path);
     void setDefaultWordList();
     void setWordSeparator(const QString& separator);
+    void setWordSeparator(const PasswordGenerator::CharClasses& classes, const QString& exclude);
+    void setEnhancementChars(const PasswordGenerator::CharClasses& classes, const QString& exclude);
+    void setEnhancementCount(const int count);
     bool isValid() const;
 
-    QString generatePassphrase() const;
+    QString generatePassphrase();
 
     static constexpr int DefaultWordCount = 7;
     static const char* DefaultSeparator;
     static const char* DefaultWordList;
 
 private:
+    double calculateRawEntropy() const;
+
     int m_wordCount;
-    QString m_separator;
     QVector<QString> m_wordlist;
+
+    bool m_useSeparator = true;
+    QString m_separator;
+    const QScopedPointer<PasswordGenerator> m_separatorGenerator;
+
+    int m_enhancementCount = 0;
+    const QScopedPointer<PasswordGenerator> m_enhancementGenerator;
+
+    double m_lastEntropy = 0;
 };
 
 #endif // KEEPASSX_PASSPHRASEGENERATOR_H

@@ -22,6 +22,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QWidget>
+#include <QtWidgets/QButtonGroup>
 
 #include "core/PassphraseGenerator.h"
 #include "core/PasswordGenerator.h"
@@ -72,8 +73,13 @@ private slots:
 
     void passwordSliderMoved();
     void passwordSpinBoxChanged();
+
+    void updateWordSeparator();
+    void updateEnhancement();
     void dicewareSliderMoved();
+    void enhancementSliderMoved();
     void dicewareSpinBoxChanged();
+    void enhancementSpinBoxChanged();
     void colorStrengthIndicator(double entropy);
 
     void updateGenerator();
@@ -88,6 +94,8 @@ private:
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
+
+    QButtonGroup m_passphraseRadioButtons;
 
 protected:
     void keyPressEvent(QKeyEvent* e) override;
