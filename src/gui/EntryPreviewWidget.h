@@ -43,6 +43,7 @@ public slots:
 
 signals:
     void errorOccurred(const QString& error);
+    void entryUrlActivated(Entry* entry);
 
 private slots:
     void updateEntryHeaderLine();
@@ -63,6 +64,7 @@ private slots:
 
     void updateTotpLabel();
     void updateTabIndexes();
+    void openEntryUrl();
 
 private:
     void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
