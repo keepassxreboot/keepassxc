@@ -97,6 +97,7 @@ private slots:
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
+    void switchToOpVaultDatabase();
     void switchToCsvImport();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget* dbWidget);

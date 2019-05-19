@@ -50,6 +50,7 @@
 #include "gui/FileDialog.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MessageBox.h"
+#include "gui/OpVaultOpenWidget.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/TotpSetupDialog.h"
@@ -86,6 +87,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_databaseSettingDialog(new DatabaseSettingsDialog(this))
     , m_databaseOpenWidget(new DatabaseOpenWidget(this))
     , m_keepass1OpenWidget(new KeePass1OpenWidget(this))
+    , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
     , m_fileWatcher(new DelayingFileWatcher(this))
@@ -160,6 +162,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_databaseSettingDialog->setObjectName("databaseSettingsDialog");
     m_databaseOpenWidget->setObjectName("databaseOpenWidget");
     m_keepass1OpenWidget->setObjectName("keepass1OpenWidget");
+    m_opVaultOpenWidget->setObjectName("opVaultOpenWidget");
 
     addChildWidget(m_mainWidget);
     addChildWidget(m_editEntryWidget);
@@ -169,6 +172,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     addChildWidget(m_databaseOpenWidget);
     addChildWidget(m_csvImportWizard);
     addChildWidget(m_keepass1OpenWidget);
+    addChildWidget(m_opVaultOpenWidget);
 
     // clang-format off
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
@@ -188,6 +192,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_keepass1OpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
+    connect(m_opVaultOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_fileWatcher.data(), SIGNAL(fileChanged()), this, SLOT(reloadDatabaseFile()));
     connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
@@ -1029,6 +1034,13 @@ void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
     updateFilePath(filePath);
     m_keepass1OpenWidget->load(filePath);
     setCurrentWidget(m_keepass1OpenWidget);
+}
+
+void DatabaseWidget::switchToImportOpVault(const QString& fileName)
+{
+    updateFilePath(fileName);
+    m_opVaultOpenWidget->load(fileName);
+    setCurrentWidget(m_opVaultOpenWidget);
 }
 
 void DatabaseWidget::switchToEntryEdit()

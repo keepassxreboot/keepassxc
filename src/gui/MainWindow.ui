@@ -200,6 +200,7 @@
       <string>&amp;Import</string>
      </property>
      <addaction name="actionImportKeePass1"/>
+     <addaction name="actionImportOpVault"/>
      <addaction name="actionImportCsv"/>
     </widget>
     <addaction name="actionDatabaseNew"/>
@@ -601,6 +602,14 @@
    </property>
    <property name="toolTip">
     <string>Import a KeePass 1 database</string>
+   </property>
+  </action>
+  <action name="actionImportOpVault">
+   <property name="text">
+    <string>1Password Vault...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a 1Password Vault</string>
    </property>
   </action>
   <action name="actionImportCsv">

@@ -347,6 +347,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
+    connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionLockDatabases, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockDatabases()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(appExit()));
@@ -382,6 +383,7 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
     connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
+    connect(m_ui->welcomeWidget, SIGNAL(importOpVaultDatabase()), SLOT(switchToOpVaultDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToCsvImport()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
@@ -812,6 +814,12 @@ void MainWindow::switchToDatabaseFile(const QString& file)
 void MainWindow::switchToKeePass1Database()
 {
     m_ui->tabWidget->importKeePass1Database();
+    switchToDatabases();
+}
+
+void MainWindow::switchToOpVaultDatabase()
+{
+    m_ui->tabWidget->importOpVaultDatabase();
     switchToDatabases();
 }
 
