@@ -166,15 +166,16 @@ if("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
     set(IS_32BIT TRUE)
 endif()
 
+set(CLANG_COMPILER_ID_REGEX "^(Apple)?[Cc]lang$")
 if("${CMAKE_C_COMPILER}" MATCHES "clang$"
         OR "${CMAKE_EXTRA_GENERATOR_C_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
-        OR "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
+        OR "${CMAKE_C_COMPILER_ID}" MATCHES ${CLANG_COMPILER_ID_REGEX})
     set(CMAKE_COMPILER_IS_CLANG 1)
 endif()
 
 if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$"
         OR "${CMAKE_EXTRA_GENERATOR_CXX_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
-        OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        OR "${CMAKE_CXX_COMPILER_ID}" MATCHES ${CLANG_COMPILER_ID_REGEX})
     set(CMAKE_COMPILER_IS_CLANGXX 1)
 endif()
 
@@ -253,6 +254,15 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wcast-align")
 endif()
 
+if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-instr-generate -fcoverage-mapping")
+  # then:
+  # $ llvm-profdata merge -sparse default.profraw -o default.profdata
+  # $ llvm-cov show ./tests/${the_test_binary} \
+  #      -format=html -instr-profile=default.profdata -output-dir=./coverages \
+  #      `find src -iname '*.h' -or -iname '*.cpp'`
+endif()
+
 if(CMAKE_COMPILER_IS_GNUCC)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wcast-align")
 endif()
@@ -276,7 +286,7 @@ if((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 4.9.
     add_gcc_compiler_cxxflags("-fsized-deallocation")
 endif()
 
-if(APPLE)
+if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
     add_gcc_compiler_cxxflags("-stdlib=libc++")
 endif()
 

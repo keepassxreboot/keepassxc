@@ -102,7 +102,7 @@ void NativeMessagingBase::readNativeMessages()
 {
 #ifdef Q_OS_WIN
     quint32 length = 0;
-    while (m_running.load() && !std::cin.eof()) {
+    while (m_running.load() != 0 && !std::cin.eof()) {
         length = 0;
         std::cin.read(reinterpret_cast<char*>(&length), 4);
         readStdIn(length);
