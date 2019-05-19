@@ -79,6 +79,11 @@ set(keepassx_SOURCES
         format/Kdbx4Reader.cpp
         format/Kdbx4Writer.cpp
         format/KdbxXmlWriter.cpp
+        format/OpData01.cpp
+        format/OpVaultReader.cpp
+        format/OpVaultReaderAttachments.cpp
+        format/OpVaultReaderBandEntry.cpp
+        format/OpVaultReaderSections.cpp
         gui/AboutDialog.cpp
         gui/Application.cpp
         gui/CategoryListWidget.cpp
@@ -103,6 +108,7 @@ set(keepassx_SOURCES
         gui/MainWindow.cpp
         gui/MessageBox.cpp
         gui/MessageWidget.cpp
+        gui/OpVaultOpenWidget.cpp
         gui/PasswordEdit.cpp
         gui/PasswordGeneratorWidget.cpp
         gui/ApplicationSettingsWidget.cpp

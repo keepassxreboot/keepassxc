@@ -65,6 +65,7 @@ public slots:
     void mergeDatabase();
     void importCsv();
     void importKeePass1Database();
+    void importOpVaultDatabase();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     void exportToCsv();

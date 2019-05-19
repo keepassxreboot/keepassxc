@@ -262,6 +262,20 @@ void DatabaseTabWidget::importKeePass1Database()
     dbWidget->switchToImportKeepass1(fileName);
 }
 
+void DatabaseTabWidget::importOpVaultDatabase()
+{
+    QString fileName = fileDialog()->getExistingDirectory(this, "Open .opvault database");
+
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    auto db = QSharedPointer<Database>::create();
+    auto* dbWidget = new DatabaseWidget(db, this);
+    addDatabaseTab(dbWidget);
+    dbWidget->switchToImportOpVault(fileName);
+}
+
 /**
  * Attempt to close the current database and remove its tab afterwards.
  *

@@ -41,6 +41,7 @@ signals:
     void openDatabase();
     void openDatabaseFile(QString);
     void importKeePass1Database();
+    void importOpVaultDatabase();
     void importCsv();
 
 protected:

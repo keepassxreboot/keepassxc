@@ -33,6 +33,7 @@
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
+class OpVaultOpenWidget;
 class DatabaseSettingsDialog;
 class Database;
 class DelayingFileWatcher;
@@ -183,6 +184,7 @@ public slots:
     void performUnlockDatabase(const QString& password, const QString& keyfile = {});
     void csvImportFinished(bool accepted);
     void switchToImportKeepass1(const QString& filePath);
+    void switchToImportOpVault(const QString& fileName);
     void emptyRecycleBin();
 
     // Search related slots
@@ -246,6 +248,7 @@ private:
     QPointer<DatabaseSettingsDialog> m_databaseSettingDialog;
     QPointer<DatabaseOpenWidget> m_databaseOpenWidget;
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
+    QPointer<OpVaultOpenWidget> m_opVaultOpenWidget;
     QPointer<GroupView> m_groupView;
     QPointer<EntryView> m_entryView;
 

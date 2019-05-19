@@ -127,6 +127,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="buttonImportOpVault">
+       <property name="text">
+        <string>Import from 1Password</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="buttonImportCSV">
        <property name="text">
         <string>Import from CSV</string>
