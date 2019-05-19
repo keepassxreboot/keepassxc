@@ -299,9 +299,9 @@ QJsonObject HostInstaller::constructFile(SupportedBrowsers browser, const bool& 
 
     QJsonObject script;
     script["name"] = HOST_NAME;
-    script["description"] = "KeePassXC integration with native messaging support";
+    script["description"] = QString("KeePassXC integration with native messaging support");
     script["path"] = path;
-    script["type"] = "stdio";
+    script["type"] = QString("stdio");
 
     QJsonArray arr;
     if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER) {

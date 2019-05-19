@@ -35,9 +35,9 @@ NativeMessagingHost::NativeMessagingHost(DatabaseTabWidget* parent, const bool e
 {
     m_localServer.reset(new QLocalServer(this));
     m_localServer->setSocketOptions(QLocalServer::UserAccessOption);
-    m_running.store(false);
+    m_running.store(0);
 
-    if (browserSettings()->isEnabled() && !m_running) {
+    if (browserSettings()->isEnabled() && m_running.load() == 0) {
         run();
     }
 
@@ -59,7 +59,7 @@ int NativeMessagingHost::init()
 void NativeMessagingHost::run()
 {
     QMutexLocker locker(&m_mutex);
-    if (!m_running.load() && init() == -1) {
+    if (m_running.load() == 0 && init() == -1) {
         return;
     }
 
@@ -69,7 +69,7 @@ void NativeMessagingHost::run()
             browserSettings()->useCustomProxy() ? browserSettings()->customProxyLocation() : "");
     }
 
-    m_running.store(true);
+    m_running.store(1);
 #ifdef Q_OS_WIN
     m_future =
         QtConcurrent::run(this, static_cast<void (NativeMessagingHost::*)()>(&NativeMessagingHost::readNativeMessages));
@@ -100,7 +100,7 @@ void NativeMessagingHost::stop()
     databaseLocked();
     QMutexLocker locker(&m_mutex);
     m_socketList.clear();
-    m_running.testAndSetOrdered(true, false);
+    m_running.testAndSetOrdered(1, 0);
     m_future.waitForFinished();
     m_localServer->close();
 }
@@ -210,13 +210,13 @@ void NativeMessagingHost::disconnectSocket()
 void NativeMessagingHost::databaseLocked()
 {
     QJsonObject response;
-    response["action"] = "database-locked";
+    response["action"] = QString("database-locked");
     sendReplyToAllClients(response);
 }
 
 void NativeMessagingHost::databaseUnlocked()
 {
     QJsonObject response;
-    response["action"] = "database-unlocked";
+    response["action"] = QString("database-unlocked");
     sendReplyToAllClients(response);
 }

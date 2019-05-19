@@ -340,7 +340,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     QJsonObject message = buildMessage(newNonce);
     message["count"] = QJsonValue::Null;
     message["entries"] = QJsonValue::Null;
-    message["error"] = "";
+    message["error"] = QString("");
     message["hash"] = hash;
 
     return buildResponse(action, message, newNonce);

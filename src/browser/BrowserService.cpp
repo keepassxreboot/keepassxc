@@ -417,7 +417,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
 
     // Fill the list
     for (Entry* entry : pwEntries) {
-        result << prepareEntry(entry);
+        result.append(prepareEntry(entry));
     }
 
     return result;
@@ -739,7 +739,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
                        || ((QString::localeAwareCompare(left->attributes()->value(field),
                                                         right->attributes()->value(field))
                             == 0)
-                           && (QString::localeAwareCompare(left->attributes()->value("UserName"),
+                        && (QString::localeAwareCompare(left->attributes()->value("UserName"),
                                                            right->attributes()->value("UserName"))
                                < 0));
             });
@@ -825,7 +825,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
             if (key.startsWith(QLatin1String("KPH: "))) {
                 QJsonObject sField;
                 sField[key] = entry->resolveMultiplePlaceholders(attr->value(key));
-                stringFields << sField;
+                stringFields.append(sField);
             }
         }
         res["stringFields"] = stringFields;

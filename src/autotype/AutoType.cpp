@@ -619,9 +619,9 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
         return (regExp.indexIn(windowTitle) != -1);
-    } else {
+    } 
         return WildcardMatcher(windowTitle).match(windowPattern);
-    }
+    
 }
 
 /**

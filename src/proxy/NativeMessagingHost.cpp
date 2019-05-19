@@ -35,7 +35,7 @@ NativeMessagingHost::NativeMessagingHost()
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 #ifdef Q_OS_WIN
-    m_running.store(true);
+    m_running.store(1);
     m_future = QtConcurrent::run(this, &NativeMessagingHost::readNativeMessages);
 #endif
     connect(m_localSocket, SIGNAL(readyRead()), this, SLOT(newLocalMessage()));
@@ -56,7 +56,7 @@ void NativeMessagingHost::readNativeMessages()
 {
 #ifdef Q_OS_WIN
     quint32 length = 0;
-    while (m_running.load() && !std::cin.eof()) {
+    while (m_running.load() == 1 && !std::cin.eof()) {
         length = 0;
         std::cin.read(reinterpret_cast<char*>(&length), 4);
         if (!readStdIn(length)) {
@@ -128,6 +128,6 @@ void NativeMessagingHost::deleteSocket()
 void NativeMessagingHost::socketStateChanged(QLocalSocket::LocalSocketState socketState)
 {
     if (socketState == QLocalSocket::UnconnectedState || socketState == QLocalSocket::ClosingState) {
-        m_running.testAndSetOrdered(true, false);
+        m_running.testAndSetOrdered(1, 0);
     }
 }
