@@ -54,6 +54,16 @@ void PassphraseGenerator::setWordCount(int wordCount)
     }
 }
 
+void PassphraseGenerator::setWordCase(int wordCase)
+{
+    if (wordCase >= 0 && wordCase <= 2) {
+        m_wordCase = wordCase;
+    } else {
+        // safe default (lowercase) if something goes wrong
+        m_wordCase = 0;
+    }
+}
+
 void PassphraseGenerator::setWordList(const QString& path)
 {
     m_wordlist.clear();
@@ -88,6 +98,7 @@ void PassphraseGenerator::setWordSeparator(const QString& separator)
 
 QString PassphraseGenerator::generatePassphrase() const
 {
+    QString tmpWord;
     Q_ASSERT(isValid());
 
     // In case there was an error loading the wordlist
@@ -98,7 +109,23 @@ QString PassphraseGenerator::generatePassphrase() const
     QStringList words;
     for (int i = 0; i < m_wordCount; ++i) {
         int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
-        words.append(m_wordlist.at(wordIndex));
+        tmpWord = m_wordlist.at(wordIndex);
+
+        //convert case
+        switch (m_wordCase) {
+        case 0 : // lower case
+            tmpWord = tmpWord.toLower();
+            break;
+        case 1 : // UPPER CASE
+            tmpWord = tmpWord.toUpper();
+            break;
+        case 2 : // Title Case
+            tmpWord = tmpWord.replace(0,1,tmpWord.left(1).toUpper());
+            break;
+        default :
+            break;
+        }
+        words.append(tmpWord);
     }
 
     return words.join(m_separator);

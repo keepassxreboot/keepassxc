@@ -60,6 +60,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
+    connect(m_ui->wordCaseButtonGroup, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
 
     // set font size of password quality and entropy labels dynamically to 80% of
     // the default font size, but make it no smaller than 8pt
@@ -73,6 +74,14 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     // set default separator to Space
     m_ui->editWordSeparator->setText(PassphraseGenerator::DefaultSeparator);
+
+    // set the ids of the radiobuttons
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseLowerRadioButton, 0);
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseUpperRadioButton, 1);
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseTitleRadioButton, 2);
+
+    // set word case to lowercase (default)
+    m_ui->wordCaseButtonGroup->button(0)->isChecked();
 
     QDir path(filePath()->wordlistPath(""));
     QStringList files = path.entryList(QDir::Files);
@@ -139,6 +148,8 @@ void PasswordGeneratorWidget::loadSettings()
         config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
     m_ui->comboBoxWordList->setCurrentText(
         config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
+    m_ui->wordCaseButtonGroup->button(
+        config()->get("generator/WordCase", PassphraseGenerator::DefaultWordCase).toInt())->isChecked();
 
     // Password or diceware?
     m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
@@ -174,6 +185,7 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/WordCount", m_ui->spinBoxWordCount->value());
     config()->set("generator/WordSeparator", m_ui->editWordSeparator->text());
     config()->set("generator/WordList", m_ui->comboBoxWordList->currentText());
+    config()->set("generator/WordCase", m_ui->wordCaseButtonGroup->checkedId());
 
     // Password or diceware?
     config()->set("generator/Type", m_ui->tabWidget->currentIndex());
@@ -555,6 +567,8 @@ void PasswordGeneratorWidget::updateGenerator()
             m_ui->sliderWordCount->setValue(minWordCount);
             m_updatingSpinBox = false;
         }
+
+        m_dicewareGenerator->setWordCase(m_ui->wordCaseButtonGroup->checkedId());
 
         m_ui->spinBoxWordCount->setMinimum(minWordCount);
         m_ui->sliderWordCount->setMinimum(minWordCount);

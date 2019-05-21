@@ -31,6 +31,7 @@ public:
     double calculateEntropy(const QString& passphrase);
     void setWordCount(int wordCount);
     void setWordList(const QString& path);
+    void setWordCase(int wordCase);
     void setDefaultWordList();
     void setWordSeparator(const QString& separator);
     bool isValid() const;
@@ -38,11 +39,13 @@ public:
     QString generatePassphrase() const;
 
     static constexpr int DefaultWordCount = 7;
+    static constexpr int DefaultWordCase = 0; // 0 = lower
     static const char* DefaultSeparator;
     static const char* DefaultWordList;
 
 private:
     int m_wordCount;
+    int m_wordCase; // 0 = lower, 1 = upper, 2 = title
     QString m_separator;
     QVector<QString> m_wordlist;
 };
