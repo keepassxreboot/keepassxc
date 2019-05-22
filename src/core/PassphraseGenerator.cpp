@@ -56,7 +56,7 @@ void PassphraseGenerator::setWordCount(int wordCount)
 
 void PassphraseGenerator::setWordCase(int wordCase)
 {
-    if (wordCase >= 0 && wordCase <= 2) {
+    if (wordCase >= PassphraseGenerator::MIN_VALUE && wordCase <= PassphraseGenerator::MAX_VALUE ) {
         m_wordCase = wordCase;
     } else {
         // safe default (lowercase) if something goes wrong
@@ -113,16 +113,15 @@ QString PassphraseGenerator::generatePassphrase() const
 
         //convert case
         switch (m_wordCase) {
-        case 0 : // lower case
-            tmpWord = tmpWord.toLower();
-            break;
-        case 1 : // UPPER CASE
+        case PassphraseGenerator::UPPERCASE :
             tmpWord = tmpWord.toUpper();
             break;
-        case 2 : // Title Case
+        case PassphraseGenerator::TITLECASE :
             tmpWord = tmpWord.replace(0,1,tmpWord.left(1).toUpper());
             break;
+        case PassphraseGenerator::LOWERCASE :
         default :
+            tmpWord = tmpWord.toLower();
             break;
         }
         words.append(tmpWord);

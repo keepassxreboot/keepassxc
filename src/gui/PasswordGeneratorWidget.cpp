@@ -76,12 +76,12 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     m_ui->editWordSeparator->setText(PassphraseGenerator::DefaultSeparator);
 
     // set the ids of the radiobuttons
-    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseLowerRadioButton, 0);
-    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseUpperRadioButton, 1);
-    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseTitleRadioButton, 2);
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseLowerRadioButton, PassphraseGenerator::LOWERCASE);
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseUpperRadioButton, PassphraseGenerator::UPPERCASE);
+    m_ui->wordCaseButtonGroup->setId(m_ui->wordCaseTitleRadioButton, PassphraseGenerator::TITLECASE);
 
     // set word case to lowercase (default)
-    m_ui->wordCaseButtonGroup->button(0)->isChecked();
+    m_ui->wordCaseButtonGroup->button(PassphraseGenerator::LOWERCASE)->isChecked();
 
     QDir path(filePath()->wordlistPath(""));
     QStringList files = path.entryList(QDir::Files);

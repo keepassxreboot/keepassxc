@@ -38,14 +38,17 @@ public:
 
     QString generatePassphrase() const;
 
+    enum PassphraseWordCase { LOWERCASE = 0, UPPERCASE = 1, TITLECASE = 2, MIN_VALUE = LOWERCASE, MAX_VALUE = TITLECASE };
+    Q_DECLARE_FLAGS(PassphraseWordCases, PassphraseWordCase)
+
     static constexpr int DefaultWordCount = 7;
-    static constexpr int DefaultWordCase = 0; // 0 = lower
+    static constexpr int DefaultWordCase = PassphraseGenerator::LOWERCASE;
     static const char* DefaultSeparator;
     static const char* DefaultWordList;
 
 private:
     int m_wordCount;
-    int m_wordCase; // 0 = lower, 1 = upper, 2 = title
+    int m_wordCase;
     QString m_separator;
     QVector<QString> m_wordlist;
 };
