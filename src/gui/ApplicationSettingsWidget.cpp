@@ -28,6 +28,7 @@
 #include "core/Global.h"
 #include "core/Translator.h"
 
+#include "MessageBox.h"
 #include "touchid/TouchID.h"
 
 class ApplicationSettingsWidget::ExtraPage
@@ -84,6 +85,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
     connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), SLOT(toolbarSettingsToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
+    connect(m_generalUi->resetSettingsButton, SIGNAL(clicked()), SLOT(resetSettings()));
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
@@ -246,7 +248,6 @@ void ApplicationSettingsWidget::loadSettings()
 
 void ApplicationSettingsWidget::saveSettings()
 {
-
     if (config()->hasAccessError()) {
         showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
         // We prevent closing the settings page if we could not write to
@@ -330,6 +331,7 @@ void ApplicationSettingsWidget::saveSettings()
         config()->set("LastDatabases", {});
         config()->set("OpenPreviousDatabasesOnStartup", {});
         config()->set("LastActiveDatabase", {});
+        config()->set("LastAttachmentDir", {});
     }
 
     if (!config()->get("RememberLastKeyFiles").toBool()) {
@@ -340,6 +342,48 @@ void ApplicationSettingsWidget::saveSettings()
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.saveSettings();
     }
+}
+
+void ApplicationSettingsWidget::resetSettings()
+{
+    // Confirm reset
+    auto ans = MessageBox::question(this,
+                                    tr("Reset Settings?"),
+                                    tr("Are you sure you want to reset all general and security settings to default?"),
+                                    MessageBox::Reset | MessageBox::Cancel,
+                                    MessageBox::Reset);
+    if (ans == MessageBox::Cancel) {
+        return;
+    }
+
+    if (config()->hasAccessError()) {
+        showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
+        // We prevent closing the settings page if we could not write to
+        // the config file.
+        return;
+    }
+
+    // Reset general and security settings to default
+    config()->resetToDefaults();
+
+    // Clear recently used data
+    config()->set("LastDatabases", {});
+    config()->set("OpenPreviousDatabasesOnStartup", {});
+    config()->set("LastActiveDatabase", {});
+    config()->set("LastAttachmentDir", {});
+    config()->set("LastKeyFiles", {});
+    config()->set("LastDir", "");
+
+    // Save the Extra Pages (these are NOT reset)
+    for (const ExtraPage& page : asConst(m_extraPages)) {
+        page.saveSettings();
+    }
+
+    config()->sync();
+
+    // Refresh the settings widget and notify listeners
+    loadSettings();
+    emit settingsReset();
 }
 
 void ApplicationSettingsWidget::reject()
