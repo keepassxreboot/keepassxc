@@ -28,9 +28,11 @@ const char* PassphraseGenerator::DefaultSeparator = " ";
 const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
 
 PassphraseGenerator::PassphraseGenerator()
-    : m_wordCount(0)
-    , m_separator(PassphraseGenerator::DefaultSeparator)
+    : m_wordCount(DefaultWordCount)
+    , m_wordCase(LOWERCASE)
+    , m_separator(DefaultSeparator)
 {
+    setDefaultWordList();
 }
 
 double PassphraseGenerator::calculateEntropy(const QString& passphrase)
@@ -46,12 +48,12 @@ double PassphraseGenerator::calculateEntropy(const QString& passphrase)
 
 void PassphraseGenerator::setWordCount(int wordCount)
 {
-    if (wordCount > 0) {
-        m_wordCount = wordCount;
-    } else {
-        // safe default if something goes wrong
-        m_wordCount = DefaultWordCount;
-    }
+    m_wordCount = qMax(1, wordCount);
+}
+
+void PassphraseGenerator::setWordCase(PassphraseWordCase wordCase)
+{
+    m_wordCase = wordCase;
 }
 
 void PassphraseGenerator::setWordList(const QString& path)
@@ -88,6 +90,7 @@ void PassphraseGenerator::setWordSeparator(const QString& separator)
 
 QString PassphraseGenerator::generatePassphrase() const
 {
+    QString tmpWord;
     Q_ASSERT(isValid());
 
     // In case there was an error loading the wordlist
@@ -98,7 +101,22 @@ QString PassphraseGenerator::generatePassphrase() const
     QStringList words;
     for (int i = 0; i < m_wordCount; ++i) {
         int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
-        words.append(m_wordlist.at(wordIndex));
+        tmpWord = m_wordlist.at(wordIndex);
+
+        // convert case
+        switch (m_wordCase) {
+        case UPPERCASE:
+            tmpWord = tmpWord.toUpper();
+            break;
+        case TITLECASE:
+            tmpWord = tmpWord.replace(0, 1, tmpWord.left(1).toUpper());
+            break;
+        case LOWERCASE:
+        default:
+            tmpWord = tmpWord.toLower();
+            break;
+        }
+        words.append(tmpWord);
     }
 
     return words.join(m_separator);

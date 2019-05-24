@@ -28,9 +28,17 @@ public:
     PassphraseGenerator();
     Q_DISABLE_COPY(PassphraseGenerator)
 
+    enum PassphraseWordCase
+    {
+        LOWERCASE,
+        UPPERCASE,
+        TITLECASE
+    };
+
     double calculateEntropy(const QString& passphrase);
     void setWordCount(int wordCount);
     void setWordList(const QString& path);
+    void setWordCase(PassphraseWordCase wordCase);
     void setDefaultWordList();
     void setWordSeparator(const QString& separator);
     bool isValid() const;
@@ -43,6 +51,7 @@ public:
 
 private:
     int m_wordCount;
+    PassphraseWordCase m_wordCase;
     QString m_separator;
     QVector<QString> m_wordlist;
 };
