@@ -73,8 +73,6 @@ int Diceware::execute(const QStringList& arguments)
 
     if (!parser.value(wordlistFile).isEmpty()) {
         dicewareGenerator.setWordList(parser.value(wordlistFile));
-    } else {
-        dicewareGenerator.setDefaultWordList();
     }
 
     if (!dicewareGenerator.isValid()) {

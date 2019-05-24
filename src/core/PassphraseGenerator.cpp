@@ -28,9 +28,11 @@ const char* PassphraseGenerator::DefaultSeparator = " ";
 const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
 
 PassphraseGenerator::PassphraseGenerator()
-    : m_wordCount(0)
-    , m_separator(PassphraseGenerator::DefaultSeparator)
+    : m_wordCount(DefaultWordCount)
+    , m_wordCase(LOWERCASE)
+    , m_separator(DefaultSeparator)
 {
+    setDefaultWordList();
 }
 
 double PassphraseGenerator::calculateEntropy(const QString& passphrase)
@@ -46,22 +48,12 @@ double PassphraseGenerator::calculateEntropy(const QString& passphrase)
 
 void PassphraseGenerator::setWordCount(int wordCount)
 {
-    if (wordCount > 0) {
-        m_wordCount = wordCount;
-    } else {
-        // safe default if something goes wrong
-        m_wordCount = DefaultWordCount;
-    }
+    m_wordCount = qMax(1, wordCount);
 }
 
-void PassphraseGenerator::setWordCase(int wordCase)
+void PassphraseGenerator::setWordCase(PassphraseWordCase wordCase)
 {
-    if (wordCase >= PassphraseGenerator::MIN_VALUE && wordCase <= PassphraseGenerator::MAX_VALUE ) {
-        m_wordCase = wordCase;
-    } else {
-        // safe default (lowercase) if something goes wrong
-        m_wordCase = 0;
-    }
+    m_wordCase = wordCase;
 }
 
 void PassphraseGenerator::setWordList(const QString& path)
@@ -111,16 +103,16 @@ QString PassphraseGenerator::generatePassphrase() const
         int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
         tmpWord = m_wordlist.at(wordIndex);
 
-        //convert case
+        // convert case
         switch (m_wordCase) {
-        case PassphraseGenerator::UPPERCASE :
+        case UPPERCASE:
             tmpWord = tmpWord.toUpper();
             break;
-        case PassphraseGenerator::TITLECASE :
-            tmpWord = tmpWord.replace(0,1,tmpWord.left(1).toUpper());
+        case TITLECASE:
+            tmpWord = tmpWord.replace(0, 1, tmpWord.left(1).toUpper());
             break;
-        case PassphraseGenerator::LOWERCASE :
-        default :
+        case LOWERCASE:
+        default:
             tmpWord = tmpWord.toLower();
             break;
         }

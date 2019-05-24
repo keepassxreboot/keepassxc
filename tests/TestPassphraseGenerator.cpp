@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018-2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,35 +32,23 @@ void TestPassphraseGenerator::initTestCase()
 void TestPassphraseGenerator::testWordCase()
 {
     PassphraseGenerator generator;
-
-    generator.setWordCount(1);
-    generator.setWordCase(-3); // invalid - should default to lowercase
+    generator.setWordSeparator(" ");
     QVERIFY(generator.isValid());
-    QString password = generator.generatePassword();
-    QVERIFY(password.isLower());
 
-    generator.setWordCount(1);
-    generator.setWordCase(99); // invalid - should default to lowercase
-    QVERIFY(generator.isValid());
-    QString password = generator.generatePassword();
-    QVERIFY(password.isLower());
+    QString passphrase;
+    passphrase = generator.generatePassphrase();
+    QCOMPARE(passphrase, passphrase.toLower());
 
-    generator.setWordCount(1);
     generator.setWordCase(PassphraseGenerator::LOWERCASE);
-    QVERIFY(generator.isValid());
-    QString password = generator.generatePassword();
-    QVERIFY(password.isLower());
+    passphrase = generator.generatePassphrase();
+    QCOMPARE(passphrase, passphrase.toLower());
 
-    generator.setWordCount(1);
     generator.setWordCase(PassphraseGenerator::UPPERCASE);
-    QVERIFY(generator.isValid());
-    QString password = generator.generatePassword();
-    QVERIFY(password.isUpper());
+    passphrase = generator.generatePassphrase();
+    QCOMPARE(passphrase, passphrase.toUpper());
 
-    generator.setWordCount(1);
     generator.setWordCase(PassphraseGenerator::TITLECASE);
-    QVERIFY(generator.isValid());
-    QString password = generator.generatePassword();
-    QRegularExpression regex("^[A-Z][a-z]*+$");
-    QVERIFY(regex.match(password).hasMatch());
+    passphrase = generator.generatePassphrase();
+    QRegularExpression regex("^([A-Z][a-z]* ?)+$");
+    QVERIFY(regex.match(passphrase).hasMatch());
 }
