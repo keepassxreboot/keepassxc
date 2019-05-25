@@ -35,7 +35,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
 {
     Q_ASSERT(m_kdbxVersion == KeePass2::FILE_VERSION_4);
 
-    m_binaryPoolInverse.clear();
+    m_binaryPool.clear();
 
     if (hasError()) {
         return false;
@@ -273,11 +273,7 @@ bool Kdbx4Reader::readInnerHeaderField(QIODevice* device)
             return false;
         }
         auto data = fieldData.mid(1);
-        if (m_binaryPoolInverse.contains(data)) {
-            qWarning("Skipping duplicate binary record");
-            break;
-        }
-        m_binaryPoolInverse.insert(data, QString::number(m_binaryPoolInverse.size()));
+        m_binaryPool.insert(QString::number(m_binaryPool.size()), data);
         break;
     }
     }
@@ -422,17 +418,5 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
  */
 QHash<QString, QByteArray> Kdbx4Reader::binaryPool() const
 {
-    QHash<QString, QByteArray> binaryPool;
-    for (auto it = m_binaryPoolInverse.cbegin(); it != m_binaryPoolInverse.cend(); ++it) {
-        binaryPool.insert(it.value(), it.key());
-    }
-    return binaryPool;
-}
-
-/**
- * @return mapping from binary data to attachment keys
- */
-QHash<QByteArray, QString> Kdbx4Reader::binaryPoolInverse() const
-{
-    return m_binaryPoolInverse;
+    return m_binaryPool;
 }
