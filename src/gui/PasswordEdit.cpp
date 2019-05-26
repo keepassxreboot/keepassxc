@@ -19,6 +19,7 @@
 #include "PasswordEdit.h"
 
 #include "core/Config.h"
+#include "core/FilePath.h"
 #include "gui/Font.h"
 
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
@@ -28,6 +29,16 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
     , m_basePasswordEdit(nullptr)
 {
+    const QIcon errorIcon = filePath()->icon("status", "dialog-error");
+    m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
+    m_errorAction->setVisible(false);
+    m_errorAction->setToolTip(tr("Passwords do not match"));
+
+    const QIcon correctIcon = filePath()->icon("actions", "dialog-ok");
+    m_correctAction = addAction(correctIcon, QLineEdit::TrailingPosition);
+    m_correctAction->setVisible(false);
+    m_correctAction->setToolTip(tr("Passwords match so far"));
+
     setEchoMode(QLineEdit::Password);
     updateStylesheet();
 
@@ -83,19 +94,23 @@ bool PasswordEdit::passwordsEqual() const
 
 void PasswordEdit::updateStylesheet()
 {
-    QString stylesheet("QLineEdit { ");
+    QString stylesheet("QLineEdit { background: %1; }");
 
     if (m_basePasswordEdit && !passwordsEqual()) {
-        stylesheet.append("background: %1; ");
-
+        bool isCorrect = true;
         if (m_basePasswordEdit->text().startsWith(text())) {
             stylesheet = stylesheet.arg(CorrectSoFarColor.name());
         } else {
             stylesheet = stylesheet.arg(ErrorColor.name());
+            isCorrect = false;
         }
+        m_correctAction->setVisible(isCorrect);
+        m_errorAction->setVisible(!isCorrect);
+    } else {
+        m_correctAction->setVisible(false);
+        m_errorAction->setVisible(false);
     }
 
-    stylesheet.append("}");
     setStyleSheet(stylesheet);
 }
 
