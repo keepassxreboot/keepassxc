@@ -22,6 +22,7 @@
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
+#include <QShortcut>
 
 #include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
@@ -56,6 +57,8 @@ EntryView::EntryView(QWidget* parent)
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
     // clang-format on
+
+    new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
@@ -127,6 +130,14 @@ EntryView::EntryView(QWidget* parent)
     m_defaultListViewState = header()->saveState();
 
     m_model->setPaperClipPixmap(filePath()->icon("actions", "paperclip").pixmap(16));
+}
+
+void EntryView::contextMenuShortcutPressed()
+{
+    auto index = currentIndex();
+    if (hasFocus() && index.isValid()) {
+        emit customContextMenuRequested(visualRect(index).bottomLeft());
+    }
 }
 
 void EntryView::keyPressEvent(QKeyEvent* event)

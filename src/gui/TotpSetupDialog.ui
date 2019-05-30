@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>249</width>
-    <height>248</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -181,6 +181,16 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>seedEdit</tabstop>
+  <tabstop>radioDefault</tabstop>
+  <tabstop>radioSteam</tabstop>
+  <tabstop>radioCustom</tabstop>
+  <tabstop>stepSpinBox</tabstop>
+  <tabstop>radio6Digits</tabstop>
+  <tabstop>radio7Digits</tabstop>
+  <tabstop>radio8Digits</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <buttongroups>

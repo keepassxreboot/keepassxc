@@ -45,6 +45,7 @@ private slots:
     void emitGroupChanged();
     void syncExpandedState(const QModelIndex& parent, int start, int end);
     void modelReset();
+    void contextMenuShortcutPressed();
 
 protected:
     void dragMoveEvent(QDragMoveEvent* event) override;

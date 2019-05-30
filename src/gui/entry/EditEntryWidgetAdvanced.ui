@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>532</width>
-    <height>364</height>
+    <height>374</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -264,6 +264,12 @@
   <tabstop>addAttributeButton</tabstop>
   <tabstop>removeAttributeButton</tabstop>
   <tabstop>editAttributeButton</tabstop>
+  <tabstop>protectAttributeButton</tabstop>
+  <tabstop>revealAttributeButton</tabstop>
+  <tabstop>fgColorCheckBox</tabstop>
+  <tabstop>fgColorButton</tabstop>
+  <tabstop>bgColorCheckBox</tabstop>
+  <tabstop>bgColorButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>EditEntryWidgetMain</class>
  <widget class="QWidget" name="EditEntryWidgetMain">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>329</width>
+    <height>381</height>
+   </rect>
+  </property>
   <layout class="QGridLayout" name="gridLayout_3">
    <property name="topMargin">
     <number>0</number>
@@ -25,8 +33,7 @@
       <widget class="QLineEdit" name="urlEdit"/>
      </item>
      <item>
-      <widget class="QToolButton" name="fetchFaviconButton">
-      </widget>
+      <widget class="QToolButton" name="fetchFaviconButton"/>
      </item>
     </layout>
    </item>
@@ -193,12 +200,15 @@
   <tabstop>titleEdit</tabstop>
   <tabstop>usernameComboBox</tabstop>
   <tabstop>passwordEdit</tabstop>
-  <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
+  <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordGeneratorButton</tabstop>
   <tabstop>urlEdit</tabstop>
+  <tabstop>fetchFaviconButton</tabstop>
+  <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>expirePresets</tabstop>
+  <tabstop>notesEnabled</tabstop>
   <tabstop>notesEdit</tabstop>
  </tabstops>
  <resources/>

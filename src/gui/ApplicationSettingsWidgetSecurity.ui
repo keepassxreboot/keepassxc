@@ -272,6 +272,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>clearClipboardCheckBox</tabstop>
+  <tabstop>clearClipboardSpinBox</tabstop>
+  <tabstop>lockDatabaseIdleCheckBox</tabstop>
+  <tabstop>lockDatabaseIdleSpinBox</tabstop>
+  <tabstop>touchIDResetCheckBox</tabstop>
+  <tabstop>touchIDResetSpinBox</tabstop>
+  <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
+  <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>
+  <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
+  <tabstop>relockDatabaseAutoTypeCheckBox</tabstop>
+  <tabstop>passwordRepeatCheckBox</tabstop>
+  <tabstop>passwordCleartextCheckBox</tabstop>
+  <tabstop>passwordShowDotsCheckBox</tabstop>
+  <tabstop>passwordPreviewCleartextCheckBox</tabstop>
+  <tabstop>hideNotesCheckBox</tabstop>
+  <tabstop>fallbackToSearch</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

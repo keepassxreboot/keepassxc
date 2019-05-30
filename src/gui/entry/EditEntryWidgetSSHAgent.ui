@@ -181,7 +181,11 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="externalFileEdit"/>
+       <widget class="QLineEdit" name="externalFileEdit">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
        <layout class="QHBoxLayout" name="agentActionsLayout" stretch="0,0">
@@ -270,6 +274,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>addKeyToAgentCheckBox</tabstop>
+  <tabstop>removeKeyFromAgentCheckBox</tabstop>
+  <tabstop>requireUserConfirmationCheckBox</tabstop>
+  <tabstop>lifetimeCheckBox</tabstop>
+  <tabstop>lifetimeSpinBox</tabstop>
+  <tabstop>attachmentRadioButton</tabstop>
+  <tabstop>attachmentComboBox</tabstop>
+  <tabstop>externalFileRadioButton</tabstop>
+  <tabstop>browseButton</tabstop>
+  <tabstop>addToAgentButton</tabstop>
+  <tabstop>removeFromAgentButton</tabstop>
+  <tabstop>decryptButton</tabstop>
+  <tabstop>publicKeyEdit</tabstop>
+  <tabstop>copyToClipboardButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
