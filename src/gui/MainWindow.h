@@ -117,6 +117,7 @@ private slots:
     void selectPreviousDatabaseTab();
     void togglePasswordsHidden();
     void toggleUsernamesHidden();
+    void releaseContextFocusLock();
 
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
@@ -148,6 +149,7 @@ private:
 
     bool m_appExitCalled;
     bool m_appExiting;
+    bool m_contextMenuFocusLock;
     uint m_lastFocusOutTime;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
