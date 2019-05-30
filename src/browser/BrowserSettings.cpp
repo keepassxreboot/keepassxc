@@ -194,6 +194,16 @@ void BrowserSettings::setUpdateBinaryPath(bool enabled)
     config()->set("Browser/UpdateBinaryPath", enabled);
 }
 
+bool BrowserSettings::allowExpiredCredentials()
+{
+    return config()->get("Browser/AllowExpiredCredentials", false).toBool();
+}
+
+void BrowserSettings::setAllowExpiredCredentials(bool enabled)
+{
+    config()->set("Browser/AllowExpiredCredentials", enabled);
+}
+
 bool BrowserSettings::chromeSupport()
 {
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::CHROME);

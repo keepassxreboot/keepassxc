@@ -80,7 +80,7 @@ parts:
       - libxtst6
       - libqt5x11extras5
       - libqt5svg5
-      - libqrencode3
+      - try: [libqrencode3, libqrencode4]
       - libqt5concurrent5
       - libquazip5-1
       - libusb-1.0-0

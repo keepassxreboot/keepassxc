@@ -178,7 +178,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
+    connect(m_previewView, SIGNAL(errorOccurred(QString)), SLOT(showErrorMessage(QString)));
+    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SIGNAL(groupChanged()));
@@ -195,7 +196,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_opVaultOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_fileWatcher.data(), SIGNAL(fileChanged()), this, SLOT(reloadDatabaseFile()));
-    connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+    connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     // clang-format on
 
     connectDatabaseSignals();
@@ -648,6 +649,10 @@ void DatabaseWidget::openUrl()
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
     Q_ASSERT(entry);
+    if (!entry) {
+        return;
+    }
+
     QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
     if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
@@ -691,9 +696,9 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
         }
     } else {
-        QString urlString = entry->webUrl();
-        if (!urlString.isEmpty()) {
-            QDesktopServices::openUrl(urlString);
+        QUrl url = QUrl(entry->url());
+        if (!url.isEmpty()) {
+            QDesktopServices::openUrl(url);
         }
     }
 }

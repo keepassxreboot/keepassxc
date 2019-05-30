@@ -54,11 +54,13 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
 
+    connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
+
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
-    connect(&m_totpTimer, SIGNAL(timeout()), this, SLOT(updateTotpLabel()));
+    connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
     // Group
     m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
@@ -197,11 +199,12 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     }
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
-    const QString url = m_currentEntry->webUrl();
+    const QString url = m_currentEntry->url();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
         m_ui->entryUrlLabel->setUrl(url);
         m_ui->entryUrlLabel->setCursor(Qt::PointingHandCursor);
+        m_ui->entryUrlLabel->setOpenExternalLinks(false);
     } else {
         m_ui->entryUrlLabel->setUrl({});
         m_ui->entryUrlLabel->setCursor(Qt::ArrowCursor);
@@ -325,6 +328,13 @@ void EntryPreviewWidget::updateTabIndexes()
 {
     m_selectedTabEntry = m_ui->entryTabWidget->currentIndex();
     m_selectedTabGroup = m_ui->groupTabWidget->currentIndex();
+}
+
+void EntryPreviewWidget::openEntryUrl()
+{
+    if (m_currentEntry) {
+        emit entryUrlActivated(m_currentEntry);
+    }
 }
 
 void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)

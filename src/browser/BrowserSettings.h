@@ -64,6 +64,8 @@ public:
     void setCustomProxyLocation(const QString& location);
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
+    bool allowExpiredCredentials();
+    void setAllowExpiredCredentials(bool enabled);
     bool chromeSupport();
     void setChromeSupport(bool enabled);
     bool chromiumSupport();
