@@ -874,7 +874,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
         return;
     }
 
-    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
+    // Don't ignore close event when the app is hidden to tray.
+    // This can occur when the OS issues close events on shutdown.
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !isHidden() && !m_appExitCalled) {
         event->ignore();
         hideWindow();
         return;
