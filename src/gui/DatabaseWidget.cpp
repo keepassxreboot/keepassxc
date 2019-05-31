@@ -787,6 +787,9 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
         }
 
         m_newParent = nullptr;
+    } else {
+        // Workaround: ensure entries are focused so search doesn't reset
+        m_entryView->setFocus();
     }
 
     setCurrentWidget(m_mainWidget);

@@ -72,6 +72,12 @@ void GroupView::dragMoveEvent(QDragMoveEvent* event)
     }
 }
 
+void GroupView::focusInEvent(QFocusEvent* event)
+{
+    emitGroupChanged();
+    QTreeView::focusInEvent(event);
+}
+
 Group* GroupView::currentGroup()
 {
     if (currentIndex() == QModelIndex()) {
