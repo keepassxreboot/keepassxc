@@ -326,8 +326,8 @@
         <translation>Privacy</translation>
     </message>
     <message>
-        <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation>Use DuckDuckGo as fallback for downloading website icons</translation>
+        <source>Use DuckDuckGo service to download website icons</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -629,6 +629,14 @@ Please select the correct database for saving credentials.</translation>
     </message>
     <message>
         <source>&amp;Brave</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Returns expired credentials. String [expired] is added to the title.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Allow returning expired credentials.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2245,10 +2253,6 @@ Supported extensions are: %1.</source>
         <translation>Custom icon successfully downloaded</translation>
     </message>
     <message>
-        <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</translation>
-    </message>
-    <message>
         <source>Select Image(s)</source>
         <translation>Select Image(s)</translation>
     </message>
@@ -2283,6 +2287,10 @@ Supported extensions are: %1.</source>
             <numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform>
             <numerusform>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3749,6 +3757,14 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Adding missing icon %1</source>
         <translation>Adding missing icon %1</translation>
+    </message>
+    <message>
+        <source>Removed custom data %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adding custom data %1 [%2]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -38,79 +38,11 @@
         <translation>Kopiatu arbelera</translation>
     </message>
     <message>
-        <source>Revision: %1</source>
-        <translation>Berrikuspena: %1</translation>
-    </message>
-    <message>
-        <source>Distribution: %1</source>
-        <translation>Banaketa: %1</translation>
-    </message>
-    <message>
-        <source>Libraries:</source>
-        <translation>Liburutegiak:</translation>
-    </message>
-    <message>
-        <source>Operating system: %1
-CPU architecture: %2
-Kernel: %3 %4</source>
-        <translation>Sistema eragilea: %1
-CPU arkitektura: %2
-Kernel: %3 %4</translation>
-    </message>
-    <message>
-        <source>Enabled extensions:</source>
-        <translation>Gaitutako hedapenak:</translation>
-    </message>
-    <message>
         <source>Project Maintainers:</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Version %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Build Type: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Browser Integration</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>SSH Agent</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>YubiKey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>TouchID</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeeShare (only unsigned sharing)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -145,23 +77,23 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>Ikonoa bakarrik</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>Testua bakarrik</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>Testua ikonoaren ondoan</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>Testua ikonoaren azpian</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>Eutsi estiloari</translation>
     </message>
 </context>
 <context>
@@ -655,14 +587,6 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>We&apos;re sorry, but KeePassXC-Browser is not supported for Snap releases at the moment.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Tor Browser</source>
         <translation type="unfinished"/>
     </message>
@@ -681,6 +605,18 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please see special instructions for browser extension use below</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -752,9 +688,19 @@ Moved %2 keys to custom data.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Legacy browser integration settings have been detected.
-Do you want to upgrade the settings to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
+        <source>KeePassXC: Create a new group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A request for creating a new group &quot;%1&quot; has been received.
+Do you want to create this group?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
+This is necessary to maintain your current browser connections.
+Would you like to migrate your existing settings now?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -878,15 +824,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>%1, %2, %3</source>
         <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"/>
+        <translation>%1, %2, %3</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>byte %n</numerusform><numerusform>%n byte</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>lerro %n</numerusform><numerusform>%n lerro</numerusform></translation>
     </message>
 </context>
 <context>
@@ -894,34 +840,38 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Root</source>
         <comment>Root group name</comment>
-        <translation type="unfinished"/>
+        <translation>Erroa</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>%1 fitxategia ez da existitzen.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da %1 fitxategia ireki.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation type="unfinished"/>
+        <translation>Errorea gertatu da datu-basea irakurtzean: %1</translation>
     </message>
     <message>
         <source>Could not save, database has no file name.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin da gorde, datu-baseak ez dauka izenik.</translation>
     </message>
     <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin da fitxategian idatzi, irakurtzeko moduan ireki baita.</translation>
+    </message>
+    <message>
+        <source>Key not transformed. This is a bug, please report it to the developers!</source>
+        <translation>Eraldatu gabeko gakoa. Hau akats bat da, mesedez jakinarazi garatzaileei!</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Desblokeatu datu-basea - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1003,7 +953,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Aukera aurreratuak</translation>
     </message>
     <message>
         <source>General</source>
@@ -1015,15 +965,15 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Gako nagusia</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Zifraketa ezarpenak</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>Integrazioa nabigatzaileekin</translation>
     </message>
 </context>
 <context>
@@ -1046,7 +996,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation type="unfinished"/>
+        <translation>Gordetako gakoak</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1054,7 +1004,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation type="unfinished"/>
+        <translation>Ezabatu aukeratutako gakoa?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
@@ -1063,11 +1013,11 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Gakoa</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Balioa</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -1283,7 +1233,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen meta-datuak</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -1299,15 +1249,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>History Settings</source>
-        <translation type="unfinished"/>
+        <translation>Historiaren ezarpenak</translation>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation type="unfinished"/>
+        <translation>Historiaren gehienezko sarrerak:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation type="unfinished"/>
+        <translation>Historiaren gehienezko tamaina:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -1315,30 +1265,30 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Erabili zakarrontzia</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen ezarpen gehigarriak</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>Erabili &amp;konpresioa (gomendatua)</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>Partekatu</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Laguntza</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>Mota</translation>
     </message>
     <message>
         <source>Path</source>
@@ -1346,60 +1296,62 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation type="unfinished"/>
+        <translation>Azken sinatzailea</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>Ziurtagiriak</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMasterKey</name>
     <message>
         <source>Add additional protection...</source>
-        <translation type="unfinished"/>
+        <translation>Gehitu babes gehigarria...</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation type="unfinished"/>
+        <translation>Ez da zifraketa gakorik gehitu</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation type="unfinished"/>
+        <translation>Gutxienez zifraketa gako bat gehitu behar duzu datu-basea babesteko!</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation type="unfinished"/>
+        <translation>Pasahitza ezarri gabe</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation type="unfinished"/>
+        <translation>KONTUZ! Ez duzu pasahitzik ezarri. Pasahitzik gabeko datu-basea erabiltzea ez da batere gomendagarria!
+
+Ziur zaude pasahitzik gabe jarraitu nahi duzula?</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Errore ezezaguna</translation>
     </message>
     <message>
         <source>Failed to change master key</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da gako nagusia aldatu</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen izena:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"/>
+        <translation>Deskribapena:</translation>
     </message>
 </context>
 <context>
@@ -1438,11 +1390,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da CSV fitxategia idatzi.</translation>
     </message>
     <message>
         <source>Database creation error</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da datu-basea sortu</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
@@ -1451,30 +1403,30 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>The database file does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basea ez da existitzen edo ez dago eskuragarri</translation>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Aukeratu CSV fitxategia</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation type="unfinished"/>
+        <translation>Datu-base berria</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Datu-base berria]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Blokeatuta]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Irakurtzeko soilik]</translation>
     </message>
 </context>
 <context>
@@ -1485,11 +1437,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude &quot;%1&quot; sarrera betirako ezabatu nahi duzula?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude &quot;%1&quot; sarrera zaborrontzira mugitu nahi duzula?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
@@ -1501,19 +1453,19 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude ondorengo agindua exekutatu nahi duzula?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation type="unfinished"/>
+        <translation>Gogoratu nire aukera</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude &quot;%1&quot; taldea betirako ezabatu nahi duzula?</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation type="unfinished"/>
+        <translation>Une honetan ez dago datu-baserik.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
@@ -1529,62 +1481,65 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation type="unfinished"/>
+        <translation>Fitxategia aldatu da</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basea aldatu da. Aldaketak kargatu nahi dituzu?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation type="unfinished"/>
+        <translation>Bateratze eskaera</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen fitxategia aldatu da, eta gorde gabeko aldaketak dituzu.
+Aldaketak bateratu nahi dituzu?</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Zakarrontzia hustu nahi duzu?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude zakarrontzia betiko hustu nahi duzula?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ziur zaude %n sarrera betiko ezabatu nahi dituzula?</numerusform><numerusform>Ziur zaude %n sarrera betiko ezabatu nahi dituzula?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sarrera ezabatu nahi duzu?</numerusform><numerusform>Sarrerak ezabatu nahi dituzu?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Mugitu nahi dituzu sarrerak zakarrontzira?</numerusform><numerusform>Mugitu nahi dituzu sarrerak zakarrontzira?</numerusform></translation>
     </message>
     <message>
         <source>File opened in read only mode.</source>
-        <translation type="unfinished"/>
+        <translation>Fitxategia irakurtzeko bakarrik ireki da.</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation type="unfinished"/>
+        <translation>Blokeatu nahi duzu datu-basea?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation type="unfinished"/>
+        <translation>Sarrera bat editatzen ari zara. Aldaketak baztertu, eta datu-basea blokeatu nahi duzu?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; aldatu da.
+Aldaketak gorde nahi dituzu?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basea aldatu da.
+Aldaketak gorde nahi dituzu?</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -1607,7 +1562,7 @@ Disable safe saves and try again?</source>
     <message>
         <source>Writing the database failed.
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da datu-basean idatzi. %1</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1631,15 +1586,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Delete group</source>
-        <translation type="unfinished"/>
+        <translation>Ezabatu taldea</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Mugitu taldea zakarrontzira?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude &quot;%1&quot; taldea zakarrontzira mugitu nahi duzula?</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -1647,6 +1602,10 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shared group...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1690,15 +1649,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select private key</source>
-        <translation type="unfinished"/>
+        <translation>Aukeratu gako pribatua</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation type="unfinished"/>
+        <translation>Fitxategia handiegia da gako pribatua izateko</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da gako pribatua ireki</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1722,7 +1681,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude ezaugarri hau ezabatu nahi duzula?</translation>
     </message>
     <message>
         <source>Tomorrow</source>
@@ -1738,19 +1697,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Apply generated password?</source>
-        <translation type="unfinished"/>
+        <translation>Sortutako pasahitza erabili nahi duzu?</translation>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Sortutako pasahitza sarrera honetan erabili nahi duzu?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation type="unfinished"/>
+        <translation>Sarrera behar bezala eguneratu da.</translation>
     </message>
     <message>
         <source>Entry has unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>Sarrerak gorde gabeko aldaketak ditu</translation>
     </message>
     <message>
         <source>New attribute %1</source>
@@ -1762,18 +1721,18 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n urte</numerusform><numerusform>%n urte</numerusform></translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation type="unfinished"/>
+        <translation>Berretsi ezabatzea</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation type="unfinished"/>
+        <translation>Ezaugarri gehigarriak</translation>
     </message>
     <message>
         <source>Add</source>
@@ -1797,15 +1756,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"/>
+        <translation>Eranskinak</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation type="unfinished"/>
+        <translation>Lehen planoaren kolorea:</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation type="unfinished"/>
+        <translation>Atzeko planoaren kolorea:</translation>
     </message>
 </context>
 <context>
@@ -1917,7 +1876,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Hatz-marka</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
@@ -2020,7 +1979,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"/>
+        <translation>Mota:</translation>
     </message>
     <message>
         <source>Path:</source>
@@ -2086,6 +2045,22 @@ Disable safe saves and try again?</source>
         <source>Select import/export file</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation>Garbitu</translation>
+    </message>
+    <message>
+        <source>The export container %1 is already referenced.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The import container %1 is already imported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The container %1 imported and export by different groups.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
@@ -2122,11 +2097,11 @@ Disable safe saves and try again?</source>
     <name>EditWidgetIcons</name>
     <message>
         <source>&amp;Use default icon</source>
-        <translation type="unfinished"/>
+        <translation>%Erabili lehenetsitako ikonoa</translation>
     </message>
     <message>
         <source>Use custo&amp;m icon</source>
-        <translation type="unfinished"/>
+        <translation>Erabili ikono pertsonalizatua</translation>
     </message>
     <message>
         <source>Add custom icon</source>
@@ -2154,7 +2129,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Custom icon already exists</source>
-        <translation type="unfinished"/>
+        <translation>Dagoeneko badago pertsonalizatutako ikonoa</translation>
     </message>
     <message>
         <source>Confirm Delete</source>
@@ -2162,7 +2137,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Custom icon successfully downloaded</source>
-        <translation type="unfinished"/>
+        <translation>Pertsonalizatutako ikonoa behar bezala deskargatu da</translation>
     </message>
     <message>
         <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
@@ -2170,7 +2145,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation type="unfinished"/>
+        <translation>Aukeratu irudia(k)</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
@@ -2178,15 +2153,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>No icons were loaded</source>
-        <translation type="unfinished"/>
+        <translation>Ez da ikonorik kargatu</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ikonoa(k) dagoeneko badago/badaude datu-basean</numerusform><numerusform>%n ikonoa(k) dagoeneko badago/badaude datu-basean</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ikono hauek huts egin dute:</numerusform><numerusform>Ikono hauek huts egin dute:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
@@ -2213,7 +2188,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation type="unfinished"/>
+        <translation>Gehigarrien datuak</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2221,27 +2196,28 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation type="unfinished"/>
+        <translation>Ezabatu gehigarrien datuak?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation type="unfinished"/>
+        <translation>Ziur zaude aukeratutako gehigarriaren datuak ezabatu nahi dituzula?
+Honek gehigarriek behar bezala ez funtzionatzea eragin dezake.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation type="unfinished"/>
+        <translation>Gakoa</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"/>
+        <translation>Balioa</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation type="unfinished"/>
+        <translation>%1 - Klonatu</translation>
     </message>
 </context>
 <context>
@@ -2292,7 +2268,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da honako direktorioa sortu: %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
@@ -2300,31 +2276,31 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Berretsi gainidaztea</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan dira eranskin hauek gorde: %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan dira eranskin hauek ireki: %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan dira eranskin hauek ireki: %1</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation type="unfinished"/>
+        <translation>Berretsi ezabatzea</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ezin izan dira fitxategi hauek ireki: %1</numerusform><numerusform>Ezin izan dira fitxategi hauek ireki: %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2406,7 +2382,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"/>
+        <translation>Eranskinak</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -2449,11 +2425,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"/>
+        <translation>Ezaugarriak</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation type="unfinished"/>
+        <translation>Eranskinak</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -2513,31 +2489,31 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryView</name>
     <message>
         <source>Customize View</source>
-        <translation type="unfinished"/>
+        <translation>Pertsonalizatu bista</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Ezkutatu erabiltzaile-izenak</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Ezkutatu pasahitzak</translation>
     </message>
     <message>
         <source>Fit to window</source>
-        <translation type="unfinished"/>
+        <translation>Egokitu leihora</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation type="unfinished"/>
+        <translation>Egokitu edukira</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation type="unfinished"/>
+        <translation>Berrezarri lehenetsitako ezarpenak</translation>
     </message>
     <message>
         <source>Attachments (icon)</source>
-        <translation type="unfinished"/>
+        <translation>Eranskinak (ikonoa)</translation>
     </message>
 </context>
 <context>
@@ -2549,22 +2525,14 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>GroupModel</name>
-    <message>
-        <source>%1</source>
-        <comment>Template for name without annotation</comment>
-        <translation type="unfinished"/>
+        <translation>[hutsik]</translation>
     </message>
 </context>
 <context>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ezin izan da fitxategia gorde!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
@@ -3024,7 +2992,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Root</source>
-        <translation type="unfinished"/>
+        <translation>Erroa</translation>
     </message>
     <message>
         <source>Unable to calculate master key</source>
@@ -3149,6 +3117,22 @@ Line %2, column %3</source>
         <source>Synchronize with</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Disabled share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import from share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to share %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronize with share %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
@@ -3256,7 +3240,7 @@ Message: %2</source>
     </message>
     <message>
         <source>&amp;Recent databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Azken datu-baseak</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -3284,7 +3268,7 @@ Message: %2</source>
     </message>
     <message>
         <source>&amp;Open database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ireki datu-basea...</translation>
     </message>
     <message>
         <source>&amp;Save database</source>
@@ -3308,7 +3292,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Sa&amp;ve database as...</source>
-        <translation type="unfinished"/>
+        <translation>Go&amp;rde datu-basea honela...</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -3340,7 +3324,7 @@ Message: %2</source>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Blokeatu datu-baseak</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3348,7 +3332,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu izenburua arbelera</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -3356,7 +3340,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu URL-a arbelera</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -3364,11 +3348,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu oharrak arbelera</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Esportatu CSV fitxategira...</translation>
     </message>
     <message>
         <source>Set up TOTP...</source>
@@ -3427,11 +3411,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Inportatu</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute...</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu eza&amp;ugarria...</translation>
     </message>
     <message>
         <source>TOTP...</source>
@@ -3439,11 +3423,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;New database...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Datu-base berria...</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation type="unfinished"/>
+        <translation>Sortu datu-base berria</translation>
     </message>
     <message>
         <source>&amp;Merge from database...</source>
@@ -3455,39 +3439,39 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;New entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sarrera berria</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation type="unfinished"/>
+        <translation>Gehitu sarrera berria</translation>
     </message>
     <message>
         <source>&amp;Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Editatu sarrera</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation type="unfinished"/>
+        <translation>Ikusi edo editatu sarrera</translation>
     </message>
     <message>
         <source>&amp;New group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Talde berria</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation type="unfinished"/>
+        <translation>Gehitu talde berria</translation>
     </message>
     <message>
         <source>Change master &amp;key...</source>
-        <translation type="unfinished"/>
+        <translation>Aldatu &amp;gako nagusia...</translation>
     </message>
     <message>
         <source>&amp;Database settings...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Datu-basearen ezarpenak...</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation type="unfinished"/>
+        <translation>Kopiatu &amp;pasahitza</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -3495,23 +3479,23 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>Ireki &amp;URLa</translation>
     </message>
     <message>
         <source>KeePass 1 database...</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 datu-basea...</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu KeePass 1 datu-basea</translation>
     </message>
     <message>
         <source>CSV file...</source>
-        <translation type="unfinished"/>
+        <translation>CSV fitxategia...</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation type="unfinished"/>
+        <translation>Inportatu CSV fittxategia</translation>
     </message>
     <message>
         <source>Show TOTP...</source>
@@ -3523,11 +3507,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Egiaztatu eguneraketarik dagoen</translation>
     </message>
     <message>
         <source>Share entry</source>
-        <translation type="unfinished"/>
+        <translation>Partekatu sarrera</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
@@ -3610,12 +3594,12 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database...</source>
-        <translation type="unfinished"/>
+        <translation>Sortu KeePassXC datu-basea...</translation>
     </message>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation type="unfinished"/>
+        <translation>Erroa</translation>
     </message>
 </context>
 <context>
@@ -3626,52 +3610,52 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>En&amp;cryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Zi&amp;fraketa ezarpenak</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Hemen datu-basearen zifraketa ezarpenak aldatu ditzakezu. Ez kezkatu, geroago ere aldatu ditzakezu datu-basearen ezarpenetan.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation type="unfinished"/>
+        <translation>Ezarpen aurreratuak</translation>
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation type="unfinished"/>
+        <translation>Oinarrizko ezarpenak</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>Zifraketa ezarpenak</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Hemen datu-basearen zifraketa ezarpenak aldatu ditzakezu. Ez kezkatu, ondoren ere aldatu ditzakezu datu-basearen ezarpenetan.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMasterKey</name>
     <message>
         <source>Database Master Key</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen gako nagusia</translation>
     </message>
     <message>
         <source>A master key known only to you protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>Zuk bakarrik ezagutzen duzun gako nagusiak zure datu-basea babesten du.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation type="unfinished"/>
+        <translation>Datu-basearen informazio orokorra</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation type="unfinished"/>
+        <translation>Mesedez jarri izena eta deskribapena (aukeran) datu-base berrirako:</translation>
     </message>
 </context>
 <context>
@@ -3781,7 +3765,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Confirm password:</source>
-        <translation type="unfinished"/>
+        <translation>Berretsi pasahitza:</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3789,19 +3773,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Password cannot be empty.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Pasahitza da datu-basea babesteko metodo nagusia.&lt;/p&gt;&lt;p&gt;Pasahitz onak luzeak eta bakarrak dira. KeePassXC-ek bat sor dezake zuretzat.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
-        <translation type="unfinished"/>
+        <translation>Pasahitzak ez datoz bat.</translation>
     </message>
     <message>
         <source>Generate master password</source>
-        <translation type="unfinished"/>
+        <translation>Sortu pasahitz nagusia</translation>
     </message>
 </context>
 <context>
@@ -4043,14 +4023,14 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Aukeratu</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Gainditzi</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4058,11 +4038,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Mugitu</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Hutsik</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4078,14 +4058,14 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Bateratu</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation type="unfinished"/>
+        <translation>Datubasea ez dago irekita</translation>
     </message>
     <message>
         <source>Database hash not available</source>
@@ -4129,7 +4109,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unknown error</source>
-        <translation type="unfinished"/>
+        <translation>Errore ezezaguna</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -4352,7 +4332,7 @@ Available commands:
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation type="unfinished"/>
+        <translation>Integrazioa nabigatzaileekin</translation>
     </message>
     <message>
         <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
@@ -4578,11 +4558,11 @@ Available commands:
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>%1 fitxategia ez da existitzen.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation type="unfinished"/>
+        <translation>Ezin izan da %1 fitxategia ireki.</translation>
     </message>
     <message>
         <source>Error while reading the database:
@@ -4821,6 +4801,10 @@ Available commands:
         <source>Database password: </source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Cannot create new group</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -4978,31 +4962,31 @@ Available commands:
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Martxan</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation type="unfinished"/>
+        <translation>Baimendu esportatzea</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation type="unfinished"/>
+        <translation>Baimendu inportatzea</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Ziurtagari propioa</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>Hatz-marka:</translation>
     </message>
     <message>
         <source>Certificate:</source>
-        <translation type="unfinished"/>
+        <translation>Ziurtagiria:</translation>
     </message>
     <message>
         <source>Signer</source>
-        <translation type="unfinished"/>
+        <translation>Sinatzailea</translation>
     </message>
     <message>
         <source>Key:</source>
@@ -5018,23 +5002,23 @@ Available commands:
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"/>
+        <translation>Esportatu</translation>
     </message>
     <message>
         <source>Imported certificates</source>
-        <translation type="unfinished"/>
+        <translation>Inportatutako ziurtagariak</translation>
     </message>
     <message>
         <source>Trust</source>
-        <translation type="unfinished"/>
+        <translation>Fidatu</translation>
     </message>
     <message>
         <source>Ask</source>
-        <translation type="unfinished"/>
+        <translation>Galdetu</translation>
     </message>
     <message>
         <source>Untrust</source>
-        <translation type="unfinished"/>
+        <translation>Mesfidatu</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5046,27 +5030,27 @@ Available commands:
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"/>
+        <translation>Egoera</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation type="unfinished"/>
+        <translation>Hatz-marka</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"/>
+        <translation>Ziurtagiria</translation>
     </message>
     <message>
         <source>Trusted</source>
-        <translation type="unfinished"/>
+        <translation>Fidagarria</translation>
     </message>
     <message>
         <source>Untrusted</source>
-        <translation type="unfinished"/>
+        <translation>Ez-fidagarria</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"/>
+        <translation>Ezezaguna</translation>
     </message>
     <message>
         <source>key.share</source>
@@ -5087,16 +5071,15 @@ Available commands:
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Aldatutako ziurtagiria esportatzen</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>%1.%2</source>
-        <comment>Template for KeeShare key file</comment>
-        <translation type="unfinished"/>
+        <source>Signer:</source>
+        <translation>Sinatzailea:</translation>
     </message>
 </context>
 <context>
@@ -5111,10 +5094,6 @@ Available commands:
     </message>
     <message>
         <source>Import from container with certificate</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -5194,14 +5173,6 @@ Available commands:
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not embed signature (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not embed database (%1)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
         <translation type="unfinished"/>
     </message>
@@ -5223,6 +5194,34 @@ Available commands:
     </message>
     <message>
         <source>Export to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Multiple import source path to %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Conflicting export target path %1 in %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5321,11 +5320,11 @@ Available commands:
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Eguneraketak bilatzen</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
-        <translation type="unfinished"/>
+        <translation>Eguneraketak bilatzen...</translation>
     </message>
     <message>
         <source>Close</source>
@@ -5333,39 +5332,39 @@ Available commands:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation type="unfinished"/>
+        <translation>Eguneraketa errorea!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
-        <translation type="unfinished"/>
+        <translation>Errore bat gertatu da eguneraketa informazioa eskuratzean.</translation>
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>Mesedez, saiatu berriro geroago.</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>Software eguneraketa</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-ren bertsio berri bat dago eskuragarri!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 eskuragarri dago — orain %2 daukazu.</translation>
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>Deskargatu keepassxc.org webgunetik</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation type="unfinished"/>
+        <translation>Egunean zaude!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC %1 eskuragarri dagoen azken bertsioa da</translation>
     </message>
 </context>
 <context>
@@ -5380,7 +5379,7 @@ Available commands:
     </message>
     <message>
         <source>Open existing database</source>
-        <translation type="unfinished"/>
+        <translation>Ireki datu-basea</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
@@ -5392,11 +5391,11 @@ Available commands:
     </message>
     <message>
         <source>Recent databases</source>
-        <translation type="unfinished"/>
+        <translation>Azken datu-baseak</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation type="unfinished"/>
+        <translation>Ongi etorri KeePassXC %1 -era</translation>
     </message>
 </context>
 <context>

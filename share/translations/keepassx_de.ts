@@ -1531,7 +1531,7 @@ Möchten Sie Ihre Änderungen zusammenführen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Sollen tatsächlich %1 Einträge gelöscht werden?</numerusform><numerusform>Sollen tatsächlich %1 Einträge gelöscht werden?</numerusform></translation>
+        <translation><numerusform>Sollen tatsächlich %n Einträge gelöscht werden?</numerusform><numerusform>Sollen tatsächlich %n Einträge gelöscht werden?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>

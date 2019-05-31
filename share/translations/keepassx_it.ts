@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>Usa OpenSSH per Windows al posto di Pageant</translation>
     </message>
 </context>
 <context>
@@ -442,7 +442,8 @@ Seleziona se vuoi consentire l&apos;accesso.</translation>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation type="unfinished"/>
+        <translation>C&apos;è più di un database aperto
+Selezionare il database corretto dove salvare le credenziali</translation>
     </message>
 </context>
 <context>
@@ -1341,7 +1342,9 @@ Se continui con questo numero, il tuo database potrebbe essere decifrato molto f
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation type="unfinished"/>
+        <translation>ATTENZIONE! Non è stata impostata una password. Utilizzare un database senza password è fortemente sconsigliato!
+
+Siete sicuri di voler continuare senza password?</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1547,7 +1550,8 @@ Vuoi salvare le modifiche?</translation>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation type="unfinished"/>
+        <translation>Il database è stato modificato.
+Salvare le modifiche?</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -3532,7 +3536,7 @@ Si consiglia di utilizzare l&apos;AppImage disponibile sulla nostra pagina di do
     </message>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Controllo aggiornamenti...</translation>
     </message>
     <message>
         <source>Share entry</source>
@@ -3545,15 +3549,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Controllare gli aggiornamenti all&apos;avvio?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation type="unfinished"/>
+        <translation>Volete che KeePassXC controlli eventuali aggiornamenti all&apos;avvio?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation type="unfinished"/>
+        <translation>È sempre possibile controllare gli aggiornamenti manualmente tramite i menu dell&apos;applicazione.</translation>
     </message>
 </context>
 <context>
@@ -3619,7 +3623,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database...</source>
-        <translation type="unfinished"/>
+        <translation>Creazione di un nuovo database KeePassXC...</translation>
     </message>
     <message>
         <source>Root</source>
@@ -3639,7 +3643,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -3658,7 +3662,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
     </message>
 </context>
 <context>
@@ -3669,7 +3673,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>A master key known only to you protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>Una password principale segreta protegge il vostro database.</translation>
     </message>
 </context>
 <context>
@@ -3798,7 +3802,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Una password è il metodo principale per mantenere sicuro il vostro database.&lt;/p&gt;&lt;p&gt;Una buona password dev&apos;essere lunga ed unica. KeePassXC può generarne una per voi.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -3958,7 +3962,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>{[(</source>
-        <translation type="unfinished"/>
+        <translation>{[(</translation>
     </message>
     <message>
         <source>Punctuation</source>
@@ -3966,7 +3970,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>.,:;</source>
-        <translation type="unfinished"/>
+        <translation>.,:;</translation>
     </message>
     <message>
         <source>Quotes</source>
@@ -3974,7 +3978,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&quot; &apos;</source>
-        <translation type="unfinished"/>
+        <translation>&quot; &apos;</translation>
     </message>
     <message>
         <source>Math</source>
@@ -3982,7 +3986,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;*+!?=</source>
-        <translation type="unfinished"/>
+        <translation>&lt;*+!?=</translation>
     </message>
     <message>
         <source>Dashes</source>
@@ -3990,7 +3994,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>\_|-/</source>
-        <translation type="unfinished"/>
+        <translation>\_|-/</translation>
     </message>
     <message>
         <source>Logograms</source>
@@ -3998,7 +4002,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>#$%&amp;&amp;@^`~</source>
-        <translation type="unfinished"/>
+        <translation>#$%&amp;&amp;@^`~</translation>
     </message>
     <message>
         <source>Switch to simple mode</source>
@@ -4041,21 +4045,21 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QApplication</name>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare</translation>
     </message>
 </context>
 <context>
     <name>QFileDialog</name>
     <message>
         <source>Select</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Sovrascrivi</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -4063,11 +4067,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Sposta</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Vuoto</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -4075,7 +4079,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished"/>
+        <translation>Salta</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -4083,7 +4087,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation type="unfinished"/>
+        <translation>Incorpora</translation>
     </message>
 </context>
 <context>
@@ -4743,19 +4747,19 @@ Comandi disponibili:
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation type="unfinished"/>
+        <translation>Crea un nuovo database.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation type="unfinished"/>
+        <translation>Il file %1 esiste già.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation type="unfinished"/>
+        <translation>Caricamento del key-file fallito.</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation type="unfinished"/>
+        <translation>Chiave non impostata. Annullamento creazione database.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
@@ -4763,7 +4767,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation type="unfinished"/>
+        <translation>Nuovo database creato con successo.</translation>
     </message>
     <message>
         <source>Insert password to encrypt database (Press enter to leave blank): </source>

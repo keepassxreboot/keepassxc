@@ -268,6 +268,9 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
 #endif
 
+    connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+
     // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
@@ -560,8 +563,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -894,7 +897,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
         return;
     }
 
-    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
+    // Don't ignore close event when the app is hidden to tray.
+    // This can occur when the OS issues close events on shutdown.
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !isHidden() && !m_appExitCalled) {
         event->ignore();
         hideWindow();
         return;
@@ -1008,13 +1013,20 @@ void MainWindow::updateTrayIcon()
     }
 }
 
+void MainWindow::releaseContextFocusLock()
+{
+    m_contextMenuFocusLock = false;
+}
+
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
+    m_contextMenuFocusLock = true;
     m_ui->menuEntries->popup(globalPos);
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
+    m_contextMenuFocusLock = true;
     m_ui->menuGroups->popup(globalPos);
 }
 

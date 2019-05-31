@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Use OpenSSH for Windows instead of Pageant</source>
-        <translation type="unfinished"/>
+        <translation>使用 OpenSSH for Windows 而不是 Pageant</translation>
     </message>
 </context>
 <context>
@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>遵照系統樣式</translation>
     </message>
 </context>
 <context>
@@ -132,11 +132,11 @@
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation type="unfinished"/>
+        <translation>安全儲存資料庫檔案 (可能與 Dropbox 等服務不相容)</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation type="unfinished"/>
+        <translation>儲存資料庫檔案前先備份</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>Hide the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>隱藏預覽項目區域</translation>
     </message>
     <message>
         <source>General</source>
@@ -176,11 +176,11 @@
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation type="unfinished"/>
+        <translation>隱藏工具列 (圖示)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation>以最小化取代關閉程式</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -220,7 +220,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay</source>
-        <translation type="unfinished"/>
+        <translation>自動輸入按鍵延遲</translation>
     </message>
     <message>
         <source> ms</source>
@@ -229,23 +229,23 @@
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation type="unfinished"/>
+        <translation>自動輸入啟動延遲</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
-        <translation type="unfinished"/>
+        <translation>程式啟動時檢查更新</translation>
     </message>
     <message>
         <source>Include pre-releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>檢查更新時包括預先發行版本</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation>可移動的工具列</translation>
     </message>
     <message>
         <source>Button style</source>
-        <translation type="unfinished"/>
+        <translation>按鈕樣式</translation>
     </message>
 </context>
 <context>
@@ -269,11 +269,11 @@
     </message>
     <message>
         <source> min</source>
-        <translation type="unfinished"/>
+        <translation>分鐘</translation>
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
-        <translation type="unfinished"/>
+        <translation>遺忘 TouchID 當閒置</translation>
     </message>
     <message>
         <source>Convenience</source>
@@ -285,7 +285,7 @@
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation>當工作階段鎖定或蓋上螢幕時遺忘 TouchID</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -293,7 +293,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>自動輸入後，將原本鎖定的資料庫重新鎖定</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -301,15 +301,15 @@
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation>編輯時不隱藏密碼</translation>
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation>不於空白密碼欄位處填入替代字符</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>在項目預覽區內隱藏密碼</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -429,11 +429,11 @@ Please select whether you want to allow access.</source>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser 瀏覽器擴充功能儲存項目</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>確定</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -442,7 +442,8 @@ Please select whether you want to allow access.</source>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation type="unfinished"/>
+        <translation>您開啟了多個資料庫。
+請選擇您想要儲存憑證的資料庫。</translation>
     </message>
 </context>
 <context>
@@ -589,11 +590,11 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tor 瀏覽器</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;警告&lt;/b&gt;，找不到 keepassxc-proxy 應用程式！&lt;br /&gt;請檢查 KeePassXC 安裝目錄，或在進階選項中確認自定路徑。&lt;br /&gt;缺少此應用程式瀏覽器整合將無法運作。&lt;br /&gt;預期的路徑： </translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -606,7 +607,7 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation>不確認 HTTP 權限</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
@@ -618,7 +619,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"/>
+        <translation>需要 KeePassXC-Browser 瀏覽器擴充功能才能使用瀏覽器整合。為 %1 及 %2 下載。%3</translation>
     </message>
 </context>
 <context>
@@ -883,7 +884,7 @@ Would you like to migrate your existing settings now?</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Enter master key</source>
-        <translation>輸入主金鑰</translation>
+        <translation>輸入主密碼</translation>
     </message>
     <message>
         <source>Key File:</source>
@@ -972,7 +973,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Master Key</source>
-        <translation type="unfinished"/>
+        <translation>主密碼</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -987,7 +988,7 @@ Please consider generating a new key file.</source>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC-Browser 瀏覽器擴充功能設定</translation>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
@@ -995,7 +996,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Forg&amp;et all site-specific settings on entries</source>
-        <translation type="unfinished"/>
+        <translation>遺忘目前項目中所有站台相關的設定 (&amp;e)</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</source>
@@ -1032,7 +1033,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation type="unfinished"/>
+        <translation>與所有瀏覽器中斷連線</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1291,7 +1292,7 @@ If you keep this number, your database may be too easy to crack!</source>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation type="unfinished"/>
+        <translation>分享</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
@@ -1299,11 +1300,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"/>
+        <translation>種類</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>路徑</translation>
     </message>
     <message>
         <source>Last Signer</source>
@@ -1311,12 +1312,12 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Certificates</source>
-        <translation type="unfinished"/>
+        <translation>憑證</translation>
     </message>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation type="unfinished"/>
+        <translation>&gt;</translation>
     </message>
 </context>
 <context>
@@ -1335,13 +1336,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>No password set</source>
-        <translation type="unfinished"/>
+        <translation>沒有設定密碼</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation type="unfinished"/>
+        <translation>警告！您尚未設定密碼。誠心建議不要使用不含密碼的資料庫檔案！
+
+您確定還是要在無密碼的情形下繼續？</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1349,7 +1352,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Failed to change master key</source>
-        <translation type="unfinished"/>
+        <translation>更改主密碼失敗</translation>
     </message>
 </context>
 <context>
@@ -1403,7 +1406,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database creation error</source>
-        <translation type="unfinished"/>
+        <translation>資料庫建立錯誤</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
@@ -1425,17 +1428,17 @@ This is definitely a bug, please report it to the developers.</source>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [新的資料庫]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [已鎖定]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [唯讀]</translation>
     </message>
 </context>
 <context>
@@ -1532,7 +1535,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation type="unfinished"/>
+        <translation>鎖定資料庫？</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -1547,7 +1550,8 @@ Save changes?</source>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation type="unfinished"/>
+        <translation>資料庫已修改。
+儲存變更？</translation>
     </message>
     <message>
         <source>Save changes?</source>
@@ -1560,7 +1564,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>關閉安全存檔?</translation>
+        <translation>關閉安全存檔？</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
@@ -2565,7 +2569,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx3Reader</name>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>無法計算主金鑰</translation>
+        <translation>無法計算主密碼</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
@@ -2604,7 +2608,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>無法計算主金鑰</translation>
+        <translation>無法計算主密碼</translation>
     </message>
 </context>
 <context>
@@ -2615,7 +2619,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>無法計算主金鑰</translation>
+        <translation>無法計算主密碼</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -2743,7 +2747,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>無法計算主金鑰</translation>
+        <translation>無法計算主密碼</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
@@ -3010,7 +3014,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>無法計算主金鑰</translation>
+        <translation>無法計算主密碼</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
@@ -3174,17 +3178,17 @@ Line %2, column %3</source>
     <message>
         <source>Change %1</source>
         <comment>Change a key component</comment>
-        <translation type="unfinished"/>
+        <translation>更改%1</translation>
     </message>
     <message>
         <source>Remove %1</source>
         <comment>Remove a key component</comment>
-        <translation type="unfinished"/>
+        <translation>移除%1</translation>
     </message>
     <message>
         <source>%1 set, click to change or remove</source>
         <comment>Change or remove a key component</comment>
-        <translation type="unfinished"/>
+        <translation>%1已設定，點選以更改或移除</translation>
     </message>
 </context>
 <context>
@@ -3214,7 +3218,9 @@ Line %2, column %3</source>
 unsupported in the future.
 
 Please go to the master key settings and generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>你正在使用未來將不再支援的舊式金鑰檔案格式。
+
+請至主密碼設定產生新的金鑰。</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -3414,11 +3420,11 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"/>
+        <translation>捐贈 (&amp;D)</translation>
     </message>
     <message>
         <source>Report a &amp;bug</source>
-        <translation type="unfinished"/>
+        <translation>回報錯誤 (&amp;b)</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
@@ -3427,75 +3433,75 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation type="unfinished"/>
+        <translation>匯入 (&amp;I)</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute...</source>
-        <translation type="unfinished"/>
+        <translation>複製屬性 (&amp;r)…</translation>
     </message>
     <message>
         <source>TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>基於時間的一次性密碼算法…</translation>
     </message>
     <message>
         <source>&amp;New database...</source>
-        <translation type="unfinished"/>
+        <translation>新增資料庫(&amp;N)…</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation type="unfinished"/>
+        <translation>建立新資料庫</translation>
     </message>
     <message>
         <source>&amp;Merge from database...</source>
-        <translation type="unfinished"/>
+        <translation>與資料庫合併(&amp;M)…</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation type="unfinished"/>
+        <translation>與其他 KDBX 資料庫合併</translation>
     </message>
     <message>
         <source>&amp;New entry</source>
-        <translation type="unfinished"/>
+        <translation>新增項目(&amp;N)</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation type="unfinished"/>
+        <translation>添加新項目</translation>
     </message>
     <message>
         <source>&amp;Edit entry</source>
-        <translation type="unfinished"/>
+        <translation>編輯項目(&amp;E)</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation type="unfinished"/>
+        <translation>檢視或編輯項目</translation>
     </message>
     <message>
         <source>&amp;New group</source>
-        <translation type="unfinished"/>
+        <translation>新增群組 (&amp;N)</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation type="unfinished"/>
+        <translation>添加新群組</translation>
     </message>
     <message>
         <source>Change master &amp;key...</source>
-        <translation type="unfinished"/>
+        <translation>更改主密碼(&amp;k)…</translation>
     </message>
     <message>
         <source>&amp;Database settings...</source>
-        <translation type="unfinished"/>
+        <translation>資料庫設定(&amp;D)…</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation type="unfinished"/>
+        <translation>複製密碼(&amp;p)</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation type="unfinished"/>
+        <translation>進行自動輸入 (&amp;A)</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>開啟網址(&amp;U)</translation>
     </message>
     <message>
         <source>KeePass 1 database...</source>
@@ -3515,7 +3521,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Show TOTP...</source>
-        <translation type="unfinished"/>
+        <translation>顯示 TOTP…</translation>
     </message>
     <message>
         <source>Show TOTP QR Code...</source>
@@ -3626,11 +3632,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>En&amp;cryption Settings</source>
-        <translation type="unfinished"/>
+        <translation>加密設定 (&amp;c)</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>你可以在這裡調整資料庫加密設定。別擔心，你之後還能在資料庫設定中變更。</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
@@ -3649,18 +3655,18 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation type="unfinished"/>
+        <translation>你可以在這裡調整資料庫加密設定。別擔心，你之後還能在資料庫設定中變更。</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMasterKey</name>
     <message>
         <source>Database Master Key</source>
-        <translation type="unfinished"/>
+        <translation>資料庫主密碼</translation>
     </message>
     <message>
         <source>A master key known only to you protects your database.</source>
-        <translation type="unfinished"/>
+        <translation>只有你知道的密碼才能保護你的資料庫。</translation>
     </message>
 </context>
 <context>
@@ -5047,7 +5053,7 @@ Available commands:
     </message>
     <message>
         <source>Path</source>
-        <translation type="unfinished"/>
+        <translation>路徑</translation>
     </message>
     <message>
         <source>Status</source>
@@ -5361,11 +5367,11 @@ Available commands:
     </message>
     <message>
         <source>Please try again later.</source>
-        <translation type="unfinished"/>
+        <translation>請稍後再試。</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation type="unfinished"/>
+        <translation>軟體更新</translation>
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
@@ -5377,7 +5383,7 @@ Available commands:
     </message>
     <message>
         <source>Download it at keepassxc.org</source>
-        <translation type="unfinished"/>
+        <translation>在 keepassxc.org 下載</translation>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>

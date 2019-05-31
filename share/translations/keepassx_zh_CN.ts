@@ -4672,7 +4672,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation>找不到组%1。</translation>
+        <translation>找不到群组%1。</translation>
     </message>
     <message>
         <source>Error reading merge file:
@@ -4760,7 +4760,7 @@ Available commands:
     </message>
     <message>
         <source>No groups found</source>
-        <translation>未找到组</translation>
+        <translation>未找到群组</translation>
     </message>
     <message>
         <source>Create a new database.</source>

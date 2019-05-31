@@ -962,6 +962,7 @@ void EditEntryWidget::cancel()
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
+    bool accepted = false;
     if (isModified()) {
         auto result = MessageBox::question(this,
                                            QString(),
@@ -969,18 +970,17 @@ void EditEntryWidget::cancel()
                                            MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
                                            MessageBox::Cancel);
         if (result == MessageBox::Cancel) {
-            m_mainUi->passwordGenerator->reset();
             return;
-        }
-        if (result == MessageBox::Save) {
-            commitEntry();
-            setModified(false);
+        } else if (result == MessageBox::Save) {
+            accepted = true;
+            if (!commitEntry()) {
+                return;
+            }
         }
     }
 
     clear();
-
-    emit editFinished(!isModified());
+    emit editFinished(accepted);
 }
 
 void EditEntryWidget::clear()
