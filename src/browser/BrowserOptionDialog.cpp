@@ -120,6 +120,7 @@ void BrowserOptionDialog::loadSettings()
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->customProxyLocation());
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
+    m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
     m_ui->chromeSupport->setChecked(settings->chromeSupport());
     m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
     m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
@@ -176,6 +177,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setCustomProxyLocation(m_ui->customProxyLocation->text());
 
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
+    settings->setAllowExpiredCredentials(m_ui->allowExpiredCredentials->isChecked());
     settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
     settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());

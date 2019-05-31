@@ -195,7 +195,7 @@ QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid) const
     QPixmapCache::Key& cacheKey = m_customIconScaledCacheKeys[uuid];
 
     if (!QPixmapCache::find(cacheKey, &pixmap)) {
-        QImage image = m_customIcons.value(uuid).scaled(16, 16, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QImage image = m_customIcons.value(uuid).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         pixmap = QPixmap::fromImage(image);
         cacheKey = QPixmapCache::insert(pixmap);
     }

@@ -491,7 +491,7 @@ Por favor, selecione o banco de dados correto para salvar as credenciais.</trans
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation>Pe&amp;dir para desbloquear a base de dados se estiver bloqueada</translation>
+        <translation>Pe&amp;dir para desbloquear a banco de dados se estiver bloqueado</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
@@ -1063,7 +1063,7 @@ Isso pode impedir a conexão com o plugin do navegador.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Removido com sucesso% n chave (s) criptográficas das configurações do KeePassXC.</numerusform><numerusform>Removido com sucesso% n chave (s) criptográficas das configurações do KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
@@ -1097,7 +1097,7 @@ Permissões para acessar entradas serão revogadas.</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>A base de dados ativa não contém uma entrada com permissões.</translation>
+        <translation>O banco de dados ativo não contém uma entrada com permissões.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1239,7 +1239,7 @@ Se você manter este número, seu banco de dados pode ser facilmente crackeado!<
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>processo(s)</numerusform><numerusform>processo(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
@@ -1489,11 +1489,11 @@ Este é definitivamente um bug, por favor denuncie para os desenvolvedores.</tra
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Nenhuma base de dados atual.</translation>
+        <translation>Nenhuma banco de dados atual.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Nenhuma base de dados de origem, nada a fazer.</translation>
+        <translation>Nenhuma banco de dados de origem, nada a fazer.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
@@ -1509,7 +1509,7 @@ Este é definitivamente um bug, por favor denuncie para os desenvolvedores.</tra
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>A base de dados foi alterada. Deseja carregar as alterações?</translation>
+        <translation>O banco de dados foi alterado. Deseja carregar as alterações?</translation>
     </message>
     <message>
         <source>Merge Request</source>
@@ -1531,7 +1531,7 @@ Você deseja combinar suas alterações?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Você realmente quer apagar %n entrada(s) para o bem?</numerusform><numerusform>Você realmente quer apagar %n entrada(s) para o bem?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
@@ -1609,7 +1609,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>A entrada &quot;%1&quot; tem %2 referência(s). Deseja substituir referências por valores, ignorar essa entrada ou excluir mesmo assim?</numerusform><numerusform>A entrada &quot;%1&quot; tem %2 referência(s). Deseja substituir referências por valores, ignorar essa entrada ou excluir mesmo assim?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2078,15 +2078,15 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>The export container %1 is already referenced.</source>
-        <translation type="unfinished"/>
+        <translation>O contêiner de exportado %1 já é referenciado.</translation>
     </message>
     <message>
         <source>The import container %1 is already imported.</source>
-        <translation type="unfinished"/>
+        <translation>O contêiner de importado %1 já foi importado.</translation>
     </message>
     <message>
         <source>The container %1 imported and export by different groups.</source>
-        <translation type="unfinished"/>
+        <translation>O contêiner %1 importado e exportado por diferentes grupos.</translation>
     </message>
 </context>
 <context>
@@ -2168,7 +2168,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message>
         <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation type="unfinished"/>
+        <translation>Dica: você pode habilitar o DuckDuckGo como um reserva em Ferramentas&gt; Configurações&gt; Segurança</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2184,7 +2184,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n ícone(s) já existe no banco de dados</numerusform><numerusform>%n ícone(s) já existe no banco de dados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
@@ -2192,7 +2192,7 @@ Deseja desabilitar salvamento seguro e tentar novamente?</translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Este ícone é usado por %n entrada(s) e será substituído pelo ícone padrão. Tem certeza de que deseja excluí-lo?</numerusform><numerusform>Este ícone é usado por %n entrada(s) e será substituído pelo ícone padrão. Tem certeza de que deseja excluí-lo?</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2593,7 +2593,7 @@ Isto pode causar mal funcionamento dos plugins afetados.</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Chave errada ou base de dados corrompida.</translation>
+        <translation>Chave errada ou banco de dados corrompido.</translation>
     </message>
     <message>
         <source>missing database headers</source>
@@ -2601,7 +2601,7 @@ Isto pode causar mal funcionamento dos plugins afetados.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation type="unfinished"/>
+        <translation>Cabeçalho não corresponde ao hash</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
@@ -2833,7 +2833,7 @@ Isto é uma migração de caminho único. Você não poderá abrir o banco de da
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation type="unfinished"/>
+        <translation>Não é possível analisar o UUID: %1</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
@@ -3036,7 +3036,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Wrong key or database file is corrupt.</source>
-        <translation>Chave errada ou base de dados corrompida.</translation>
+        <translation>Chave errada ou banco de dados corrompido.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -3225,7 +3225,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Você pode adicionar um arquivo de chave contendo bytes aleatórios para segurança adicional.&lt;/p&gt;&lt;p&gt;Você deve mantê-lo em segredo e nunca perdê-lo ou você será bloqueado!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
@@ -3236,12 +3236,16 @@ Linha %2, coluna %3</translation>
 unsupported in the future.
 
 Please go to the master key settings and generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Você está usando um formato de arquivo de chave antigo que pode ficar
+sem suporte no futuro.
+
+Por favor, vá para as configurações da chave mestra e gere um novo arquivo de chave.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao carregar o arquivo de chave &apos;%1&apos;
+Mensagem: %2</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -3261,7 +3265,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível criar arquivo de chave: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
@@ -3308,11 +3312,11 @@ Message: %2</source>
     </message>
     <message>
         <source>&amp;Save database</source>
-        <translation>&amp;Salvar base de dados</translation>
+        <translation>&amp;Salvar banco de dados</translation>
     </message>
     <message>
         <source>&amp;Close database</source>
-        <translation>&amp;Fechar base de dados</translation>
+        <translation>&amp;Fechar banco de dados</translation>
     </message>
     <message>
         <source>&amp;Delete entry</source>
@@ -3360,7 +3364,7 @@ Message: %2</source>
     </message>
     <message>
         <source>&amp;Lock databases</source>
-        <translation>&amp;Trancar base de dados</translation>
+        <translation>&amp;Trancar banco de dados</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -3591,11 +3595,11 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Adicionando backup para o alvo mais antigo %1 [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Adicionando backup para fonte mais antiga %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
@@ -3607,7 +3611,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Sincronizando de uma fonte mais nova %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
@@ -3619,7 +3623,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Excluindo órfã %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
@@ -3937,7 +3941,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>ExtendedASCII</source>
-        <translation type="unfinished"/>
+        <translation>ASCIIEstendido</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
@@ -3957,7 +3961,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Lower Case Letters A to F</source>
-        <translation type="unfinished"/>
+        <translation>Letras minúsculas de A a F</translation>
     </message>
     <message>
         <source>a-z</source>
@@ -4033,7 +4037,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation type="unfinished"/>
+        <translation>Adicionar letras não hexadecimais à lista &quot;não incluir&quot;</translation>
     </message>
     <message>
         <source>Hex</source>
@@ -4041,7 +4045,7 @@ Espere alguns bugs e problemas menores, esta versão não é para uso em produç
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation type="unfinished"/>
+        <translation>Caracteres excluídos: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
     </message>
     <message>
         <source>Word Co&amp;unt:</source>
@@ -4415,11 +4419,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Invalid value for password length %1.</source>
-        <translation type="unfinished"/>
+        <translation>Valor inválido para o tamanho da senha %1.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível criar uma entrada com o caminho %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
@@ -4427,15 +4431,15 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation type="unfinished"/>
+        <translation>Gravação do banco de dados falhou %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation type="unfinished"/>
+        <translation>Entrada adicionada com sucesso %1.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>Copie o TOTP atual para a área de transferência.</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -4516,11 +4520,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Força Bruta</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Dicionário</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
@@ -4540,15 +4544,15 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Sequência</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Espacial</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation type="unfinished"/>
+        <translation>Tipo: Data</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
@@ -4596,11 +4600,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation type="unfinished"/>
+        <translation>*** Comprimento da senha (%1) != soma do comprimento das partes (%2) ***</translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Falha ao carregar o arquivo de chave %1: %2</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
@@ -4613,16 +4617,18 @@ Comandos disponíveis:
     <message>
         <source>Error while reading the database:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao ler o banco de dados:
+%1</translation>
     </message>
     <message>
         <source>Error while parsing the database:
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao analisar o banco de dados:
+%1</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation type="unfinished"/>
+        <translation>Comprimento da senha gerada</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
@@ -4646,11 +4652,11 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation type="unfinished"/>
+        <translation>Excluir conjunto de caracteres</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation type="unfinished"/>
+        <translation>caracteres</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
@@ -4666,7 +4672,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível encontrar o grupo %1.</translation>
     </message>
     <message>
         <source>Error reading merge file:
@@ -4691,19 +4697,19 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"/>
+        <translation>Mostrar o TOTP atual da entrada.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
+        <translation>ERRO: atributo desconhecido %1.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation type="unfinished"/>
+        <translation>Nenhum programa definido para manipulação da área de transferência</translation>
     </message>
     <message>
         <source>Unable to start program %1</source>
-        <translation type="unfinished"/>
+        <translation>Não é possível iniciar o programa %1</translation>
     </message>
     <message>
         <source>file empty</source>
@@ -5268,7 +5274,7 @@ Comandos disponíveis:
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Não foi possível incorporar o banco de dados: não foi possível gravar o arquivo (%1)</translation>
     </message>
 </context>
 <context>

@@ -38,6 +38,7 @@ target_link_libraries(keepassxc-cli
         keepassx_core
         Qt5::Core
         ${GCRYPT_LIBRARIES}
+        ${sodium_LIBRARY_RELEASE}
         ${ARGON2_LIBRARIES}
         ${GPGERROR_LIBRARIES}
         ${ZLIB_LIBRARIES}

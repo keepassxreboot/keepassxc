@@ -174,7 +174,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_mainSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(mainSplitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(previewSplitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_previewView, SIGNAL(errorOccurred(QString)), this, SLOT(showErrorMessage(QString)));
+    connect(m_previewView, SIGNAL(errorOccurred(QString)), SLOT(showErrorMessage(QString)));
+    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SLOT(onGroupChanged(Group*)));
     connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SIGNAL(groupChanged()));
@@ -190,7 +191,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_keepass1OpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
     connect(m_fileWatcher.data(), SIGNAL(fileChanged()), this, SLOT(reloadDatabaseFile()));
-    connect(this, SIGNAL(currentChanged(int)), this, SLOT(emitCurrentModeChanged()));
+    connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     // clang-format on
 
     connectDatabaseSignals();
@@ -652,6 +653,10 @@ void DatabaseWidget::openUrl()
 void DatabaseWidget::openUrlForEntry(Entry* entry)
 {
     Q_ASSERT(entry);
+    if (!entry) {
+        return;
+    }
+
     QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
     if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
@@ -695,9 +700,9 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
         }
     } else {
-        QString urlString = entry->webUrl();
-        if (!urlString.isEmpty()) {
-            QDesktopServices::openUrl(urlString);
+        QUrl url = QUrl(entry->url());
+        if (!url.isEmpty()) {
+            QDesktopServices::openUrl(url);
         }
     }
 }
@@ -782,6 +787,9 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
         }
 
         m_newParent = nullptr;
+    } else {
+        // Workaround: ensure entries are focused so search doesn't reset
+        m_entryView->setFocus();
     }
 
     setCurrentWidget(m_mainWidget);
@@ -1158,9 +1166,10 @@ void DatabaseWidget::onDatabaseModified()
 {
     if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool()) {
         save();
+    } else {
+        // Only block once, then reset
+        m_blockAutoSave = false;
     }
-
-    m_blockAutoSave = false;
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1258,11 +1267,13 @@ bool DatabaseWidget::lock()
     }
 
     if (m_db->isModified()) {
+        bool saved = false;
+        // Attempt to save on exit, but don't block locking if it fails
         if (config()->get("AutoSaveOnExit").toBool()) {
-            if (!save()) {
-                return false;
-            }
-        } else {
+            saved = save();
+        }
+
+        if (!saved) {
             QString msg;
             if (!m_db->metadata()->name().toHtmlEscaped().isEmpty()) {
                 msg = tr("\"%1\" was modified.\nSave changes?").arg(m_db->metadata()->name().toHtmlEscaped());
@@ -1521,11 +1532,14 @@ bool DatabaseWidget::save()
         return true;
     }
 
+    // Read-only and new databases ask for filename
     if (m_db->isReadOnly() || m_db->filePath().isEmpty()) {
         return saveAs();
     }
 
+    // Prevent recursions and infinite save loops
     blockAutoReload(true);
+    m_blockAutoSave = true;
     ++m_saveAttempts;
 
     // TODO: Make this async, but lock out the database widget to prevent re-entrance
@@ -1536,6 +1550,7 @@ bool DatabaseWidget::save()
 
     if (ok) {
         m_saveAttempts = 0;
+        m_blockAutoSave = false;
         return true;
     }
 

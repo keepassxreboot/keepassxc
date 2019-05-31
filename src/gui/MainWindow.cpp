@@ -41,6 +41,10 @@
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 
+#ifdef Q_OS_MACOS
+#include "macutils/MacUtils.h"
+#endif
+
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/MessageBox.h"
 #include "gui/UpdateCheckDialog.h"
@@ -135,6 +139,7 @@ MainWindow::MainWindow()
     , m_trayIcon(nullptr)
     , m_appExitCalled(false)
     , m_appExiting(false)
+    , m_lastFocusOutTime(0)
 {
     g_MainWindow = this;
 
@@ -247,6 +252,9 @@ MainWindow::MainWindow()
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
 #endif
+
+    connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
     // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
@@ -370,6 +378,9 @@ MainWindow::MainWindow()
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
+    if (macUtils()->isDarkMode()) {
+        setStyleSheet("QToolButton {color:white;}");
+    }
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
@@ -395,6 +406,12 @@ MainWindow::MainWindow()
     m_screenLockListener = new ScreenLockListener(this);
     connect(m_screenLockListener, SIGNAL(screenLocked()), SLOT(handleScreenLock()));
 #endif
+
+    // Tray Icon setup
+    connect(Application::instance(), SIGNAL(focusWindowChanged(QWindow*)), SLOT(focusWindowChanged(QWindow*)));
+    m_trayIconTriggerReason = QSystemTrayIcon::Unknown;
+    m_trayIconTriggerTimer.setSingleShot(true);
+    connect(&m_trayIconTriggerTimer, SIGNAL(timeout()), SLOT(processTrayIconTrigger()));
 
     updateTrayIcon();
 
@@ -529,8 +546,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
             // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && dbWidget->currentEntryHasFocus();
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && dbWidget->currentEntryHasFocus();
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -857,7 +874,9 @@ void MainWindow::closeEvent(QCloseEvent* event)
         return;
     }
 
-    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled) {
+    // Don't ignore close event when the app is hidden to tray.
+    // This can occur when the OS issues close events on shutdown.
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !isHidden() && !m_appExitCalled) {
         event->ignore();
         hideWindow();
         return;
@@ -912,7 +931,7 @@ bool MainWindow::saveLastDatabases()
         }
 
         QStringList openDatabases;
-        for (int i=0; i < m_ui->tabWidget->count(); ++i) {
+        for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
             auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
             openDatabases.append(dbWidget->database()->filePath());
         }
@@ -935,6 +954,8 @@ void MainWindow::updateTrayIcon()
 
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
+
+            menu->addAction(m_ui->actionLockDatabases);
 
 #ifdef Q_OS_MACOS
             QAction* actionQuit = new QAction(tr("Quit KeePassXC"), menu);
@@ -969,13 +990,20 @@ void MainWindow::updateTrayIcon()
     }
 }
 
+void MainWindow::releaseContextFocusLock()
+{
+    m_contextMenuFocusLock = false;
+}
+
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
+    m_contextMenuFocusLock = true;
     m_ui->menuEntries->popup(globalPos);
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
+    m_contextMenuFocusLock = true;
     m_ui->menuGroups->popup(globalPos);
 }
 
@@ -1029,10 +1057,38 @@ void MainWindow::applySettingsChanges()
     updateTrayIcon();
 }
 
+void MainWindow::focusWindowChanged(QWindow* focusWindow)
+{
+    if (focusWindow != windowHandle()) {
+        m_lastFocusOutTime = Clock::currentSecondsSinceEpoch();
+    }
+}
+
 void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 {
-    if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::MiddleClick) {
+    if (!m_trayIconTriggerTimer.isActive()) {
+        m_trayIconTriggerTimer.start(150);
+    }
+    // Overcome Qt bug https://bugreports.qt.io/browse/QTBUG-69698
+    // Store last issued tray icon activation reason to properly
+    // capture doubleclick events
+    m_trayIconTriggerReason = reason;
+}
+
+void MainWindow::processTrayIconTrigger()
+{
+    if (m_trayIconTriggerReason == QSystemTrayIcon::DoubleClick) {
+        // Always toggle window on double click
         toggleWindow();
+    } else if (m_trayIconTriggerReason == QSystemTrayIcon::Trigger
+               || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
+        // On single/middle click focus the window if it is not hidden
+        // and did not have focus less than a second ago, otherwise toggle
+        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+            toggleWindow();
+        } else {
+            bringToFront();
+        }
     }
 }
 

@@ -47,7 +47,7 @@ AutoType::AutoType(QObject* parent, bool test)
     , m_pluginLoader(new QPluginLoader(this))
     , m_plugin(nullptr)
     , m_executor(nullptr)
-    , m_windowFromGlobal(0)
+    , m_windowForGlobal(0)
 {
     // prevent crash when the plugin has unresolved symbols
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
@@ -90,7 +90,7 @@ void AutoType::loadPlugin(const QString& pluginPath)
         if (m_plugin) {
             if (m_plugin->isAvailable()) {
                 m_executor = m_plugin->createExecutor();
-                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SIGNAL(globalShortcutTriggered()));
+                connect(pluginInstance, SIGNAL(globalShortcutTriggered()), SLOT(startGlobalAutoType()));
             } else {
                 unloadPlugin();
             }
@@ -222,6 +222,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     Tools::wait(qMax(100, config()->get("AutoTypeStartDelay", 500).toInt()));
 
+    // Used only for selected entry auto-type
     if (!window) {
         window = m_plugin->activeWindow();
     }
@@ -239,6 +240,9 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
         action->accept(m_executor);
         QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
     }
+
+    m_windowForGlobal = 0;
+    m_windowTitleForGlobal.clear();
 
     // emit signal only if autotype performed correctly
     emit autotypePerformed();
@@ -264,6 +268,13 @@ void AutoType::performAutoType(const Entry* entry, QWidget* hideWindow)
     executeAutoTypeActions(entry, hideWindow, sequences.first());
 }
 
+void AutoType::startGlobalAutoType()
+{
+    m_windowForGlobal = m_plugin->activeWindow();
+    m_windowTitleForGlobal = m_plugin->activeWindowTitle();
+    emit globalAutoTypeTriggered();
+}
+
 /**
  * Global Autotype entry-point function
  * Perform global Auto-Type on the active window
@@ -278,9 +289,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         return;
     }
 
-    QString windowTitle = m_plugin->activeWindowTitle();
-
-    if (windowTitle.isEmpty()) {
+    if (m_windowTitleForGlobal.isEmpty()) {
         m_inGlobalAutoTypeDialog.unlock();
         return;
     }
@@ -290,7 +299,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
     for (const auto& db : dbList) {
         const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
         for (Entry* entry : dbEntries) {
-            const QSet<QString> sequences = autoTypeSequences(entry, windowTitle).toSet();
+            const QSet<QString> sequences = autoTypeSequences(entry, m_windowTitleForGlobal).toSet();
             for (const QString& sequence : sequences) {
                 if (!sequence.isEmpty()) {
                     matchList << AutoTypeMatch(entry, sequence);
@@ -304,8 +313,9 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
             auto* msgBox = new QMessageBox();
             msgBox->setAttribute(Qt::WA_DeleteOnClose);
             msgBox->setWindowTitle(tr("Auto-Type - KeePassXC"));
-            msgBox->setText(
-                tr("Couldn't find an entry that matches the window title:").append("\n\n").append(windowTitle));
+            msgBox->setText(tr("Couldn't find an entry that matches the window title:")
+                                .append("\n\n")
+                                .append(m_windowTitleForGlobal));
             msgBox->setIcon(QMessageBox::Information);
             msgBox->setStandardButtons(QMessageBox::Ok);
             msgBox->show();
@@ -316,10 +326,9 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         m_inGlobalAutoTypeDialog.unlock();
         emit autotypeRejected();
     } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
-        executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence);
+        executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence, m_windowForGlobal);
         m_inGlobalAutoTypeDialog.unlock();
     } else {
-        m_windowFromGlobal = m_plugin->activeWindow();
         auto* selectDialog = new AutoTypeSelectDialog();
 
         // connect slots, both of which must unlock the m_inGlobalAutoTypeDialog mutex
@@ -327,11 +336,12 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         connect(selectDialog, SIGNAL(rejected()), SLOT(autoTypeRejectedFromGlobal()));
 
         selectDialog->setMatchList(matchList);
-#if defined(Q_OS_MACOS)
+#ifdef Q_OS_MACOS
         m_plugin->raiseOwnWindow();
-        Tools::wait(500);
+        Tools::wait(200);
 #endif
         selectDialog->show();
+        selectDialog->raise();
         // necessary when the main window is minimized
         selectDialog->activateWindow();
     }
@@ -339,8 +349,8 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
 
 void AutoType::performAutoTypeFromGlobal(AutoTypeMatch match)
 {
-    m_plugin->raiseWindow(m_windowFromGlobal);
-    executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowFromGlobal);
+    m_plugin->raiseWindow(m_windowForGlobal);
+    executeAutoTypeActions(match.entry, nullptr, match.sequence, m_windowForGlobal);
 
     // make sure the mutex is definitely locked before we unlock it
     Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
@@ -353,6 +363,8 @@ void AutoType::autoTypeRejectedFromGlobal()
     // so make sure the mutex is locked before we try unlocking it
     Q_UNUSED(m_inGlobalAutoTypeDialog.tryLock());
     m_inGlobalAutoTypeDialog.unlock();
+    m_windowForGlobal = 0;
+    m_windowTitleForGlobal.clear();
 
     emit autotypeRejected();
 }

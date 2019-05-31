@@ -152,11 +152,6 @@ void EditEntryWidget::setupMain()
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
 
-    QAction* action = new QAction(this);
-    action->setShortcut(Qt::CTRL | Qt::Key_Return);
-    connect(action, SIGNAL(triggered()), this, SLOT(commitEntry()));
-    this->addAction(action);
-
     m_mainUi->passwordGenerator->hide();
     m_mainUi->passwordGenerator->reset();
 }
@@ -285,7 +280,6 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_mainUi->notesEnabled, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), this, SLOT(setModified()));
     connect(m_mainUi->notesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
 
@@ -968,6 +962,7 @@ void EditEntryWidget::cancel()
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 
+    bool accepted = false;
     if (isModified()) {
         auto result = MessageBox::question(this,
                                            QString(),
@@ -975,18 +970,17 @@ void EditEntryWidget::cancel()
                                            MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
                                            MessageBox::Cancel);
         if (result == MessageBox::Cancel) {
-            m_mainUi->passwordGenerator->reset();
             return;
-        }
-        if (result == MessageBox::Save) {
-            commitEntry();
-            setModified(false);
+        } else if (result == MessageBox::Save) {
+            accepted = true;
+            if (!commitEntry()) {
+                return;
+            }
         }
     }
 
     clear();
-
-    emit editFinished(!isModified());
+    emit editFinished(accepted);
 }
 
 void EditEntryWidget::clear()
@@ -1111,8 +1105,9 @@ void EditEntryWidget::updateCurrentAttribute()
 
 void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
 {
-    // Block signals to prevent extra calls
+    // Block signals to prevent modified being set
     m_advancedUi->protectAttributeButton->blockSignals(true);
+    m_advancedUi->attributesEdit->blockSignals(true);
 
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
@@ -1143,6 +1138,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     }
 
     m_advancedUi->protectAttributeButton->blockSignals(false);
+    m_advancedUi->attributesEdit->blockSignals(false);
 }
 
 void EditEntryWidget::protectCurrentAttribute(bool state)

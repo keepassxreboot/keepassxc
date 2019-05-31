@@ -611,7 +611,7 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"/>
+        <translation>À cause du mécanisme de sandboxing Snap, vous devez lancer un script pour activer l&apos;intégration du navigateur.&lt;br /&gt;Vous pouvez obtenir ce script depuis %1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -710,7 +710,7 @@ Voulez-vous créer ce groupe ?
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation type="unfinished"/>
+        <translation>Vos réglages pour KeePassXC-Browser doivent être intégrés dans les réglages de la base de données. Ceci est nécessaire pour maintenir vos connexions actuelles avec le navigateur ouvertes. Souhaitez-vous effectuer la migration de vos réglages maintenant ?</translation>
     </message>
 </context>
 <context>
@@ -874,7 +874,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
-        <translation type="unfinished"/>
+        <translation>La clé n&apos;a pas été transformée. Ceci est un bogue, pouvez-vous s&apos;il vous plaît le signaler aux développeurs ?</translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1071,7 @@ Cela peut empêcher la connexion avec l&apos;extension de navigateur.</translati
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation type="unfinished"/>
+        <translation>Êtes-vous sûr de vouloir effacer les préférences de site pour toutes les entrées ? Les permissions d&apos;accès aux entrées seront révoquées.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1099,12 +1099,13 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
-        <translation type="unfinished"/>
+        <translation>Déplacer les attributs KeePassHTTP vers les données personnalisées</translation>
     </message>
     <message>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous convertir toutes les anciennes données d&apos;intégration au navigateur en version plus récente ?
+Ceci est nécessaire pour assurer la compatibilité de l&apos;extension.</translation>
     </message>
 </context>
 <context>
@@ -1528,7 +1529,7 @@ Voulez-vous fusionner vos changements ?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Voulez-vous vraiment supprimer définitivement %1 entrée ?</numerusform><numerusform>Voulez-vous vraiment supprimer définitivement %1 entrées ?</numerusform></translation>
+        <translation><numerusform>Voulez-vous vraiment supprimer définitivement %n entrée ?</numerusform><numerusform>Voulez-vous vraiment supprimer définitivement %n entrées ?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
@@ -3463,7 +3464,7 @@ Nous recommandons l&apos;utilisation de l&apos;AppImage disponible sur notre pag
     </message>
     <message>
         <source>&amp;New database...</source>
-        <translation>&amp;Ńouvelle base de données...</translation>
+        <translation>&amp;Nouvelle base de données...</translation>
     </message>
     <message>
         <source>Create a new database</source>
@@ -4513,7 +4514,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation type="unfinished"/>
+        <translation>Octets additionnels mots multiples %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
@@ -4561,7 +4562,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Type : Dictionnaire + Leet (rep)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
@@ -4569,7 +4570,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation type="unfinished"/>
+        <translation>Type : Utilisateur + Leet (rep)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
@@ -4597,7 +4598,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation type="unfinished"/>
+        <translation>*** Longueur du mot de passe (%1) != longueurs additionnées des morceaux (%2) ***</translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
@@ -4933,11 +4934,11 @@ Commandes disponibles :
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation type="unfinished"/>
+        <translation>Les termes de recherche sont construits comme suit : [modificateurs][champ:][&quot;]terme[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation type="unfinished"/>
+        <translation>Tous les termes doivent correspondre (ET logique)</translation>
     </message>
     <message>
         <source>Modifiers</source>
@@ -4961,15 +4962,15 @@ Commandes disponibles :
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation type="unfinished"/>
+        <translation>Caractères spéciaux</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation type="unfinished"/>
+        <translation>correspond à n&apos;importe quel caractère</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation type="unfinished"/>
+        <translation>correspond à un seul caractère</translation>
     </message>
     <message>
         <source>logical OR</source>
@@ -5105,7 +5106,7 @@ Commandes disponibles :
     <message>
         <source>key.share</source>
         <comment>Filetype for KeeShare key</comment>
-        <translation type="unfinished"/>
+        <translation>cle.share</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
@@ -5121,15 +5122,15 @@ Commandes disponibles :
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation type="unfinished"/>
+        <translation>Exportation des certificats modifiés</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation type="unfinished"/>
+        <translation>Le certificat exporté est différent de celui en cours d&apos;utilisation. Voulez-vous exporter le certificat actuel ?</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>Signataire :</translation>
     </message>
 </context>
 <context>
@@ -5140,7 +5141,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>We cannot verify the source of the shared container because it is not signed. Do you really want to import from %1?</source>
-        <translation type="unfinished"/>
+        <translation>Nous ne pouvons vérifier la source du conteneur partagé car celui-ci n&apos;est pas signé. Êtes-vous sûr de vouloir importer depuis %1 ?</translation>
     </message>
     <message>
         <source>Import from container with certificate</source>
@@ -5176,7 +5177,7 @@ Commandes disponibles :
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Conteneur de partage signé non pris en charge - importation annulée</translation>
     </message>
     <message>
         <source>File is not readable</source>
@@ -5184,15 +5185,15 @@ Commandes disponibles :
     </message>
     <message>
         <source>Invalid sharing container</source>
-        <translation type="unfinished"/>
+        <translation>Conteneur de partage invalide</translation>
     </message>
     <message>
         <source>Untrusted import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Importation non sécurisée annulée</translation>
     </message>
     <message>
         <source>Successful signed import</source>
-        <translation type="unfinished"/>
+        <translation>Importation signée réussie</translation>
     </message>
     <message>
         <source>Unexpected error</source>
@@ -5200,11 +5201,11 @@ Commandes disponibles :
     </message>
     <message>
         <source>Unsigned share container are not supported - import prevented</source>
-        <translation type="unfinished"/>
+        <translation>Conteneur de partage non signé non pris en charge - importation annulée</translation>
     </message>
     <message>
         <source>Successful unsigned import</source>
-        <translation type="unfinished"/>
+        <translation>Importation non signée réussie</translation>
     </message>
     <message>
         <source>File does not exist</source>
@@ -5212,27 +5213,27 @@ Commandes disponibles :
     </message>
     <message>
         <source>Unknown share container type</source>
-        <translation type="unfinished"/>
+        <translation>Type de conteneur de partage non reconnu</translation>
     </message>
     <message>
         <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Remplacement de conteneur de partage signé non pris en charge - exportation annulée</translation>
     </message>
     <message>
         <source>Could not write export container (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;exporter le conteneur (%1)</translation>
     </message>
     <message>
         <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation type="unfinished"/>
+        <translation>Remplacement de conteneur non signé non pris en charge - exportation annulée</translation>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;exporter le conteneur</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
-        <translation type="unfinished"/>
+        <translation>Une erreur inattendue est survenue lors de l&apos;exportation</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
@@ -5248,31 +5249,31 @@ Commandes disponibles :
     </message>
     <message>
         <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous autoriser %1 avec l&apos;empreinte de %2 à %3 ? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Chemin source d&apos;importation multiple de %1 dans %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>Conflit du chemin cible d&apos;exportation %1 dans %2</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;intégrer la signature : le fichier (%1) n&apos;a pas pu être ouvert en écriture</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;intégrer la signature : problème d&apos;écriture dans le fichier (%1)</translation>
     </message>
     <message>
         <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;intégrer la base de données : le fichier (%1) n&apos;a pas pu être ouvert en écriture</translation>
     </message>
     <message>
         <source>Could not embed database: Could not write file (%1)</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;intégrer la base de données : problème d&apos;écriture dans le fichier (%1)</translation>
     </message>
 </context>
 <context>

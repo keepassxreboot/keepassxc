@@ -59,6 +59,7 @@ private slots:
     void testMergeCustomIcons();
     void testMergeDuplicateCustomIcons();
     void testMetadata();
+    void testCustomdata();
     void testDeletedEntry();
     void testDeletedGroup();
     void testDeletedRevertedEntry();

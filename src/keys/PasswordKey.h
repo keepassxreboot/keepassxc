@@ -30,13 +30,16 @@ public:
 
     PasswordKey();
     explicit PasswordKey(const QString& password);
+    ~PasswordKey() override;
     QByteArray rawKey() const override;
     void setPassword(const QString& password);
 
     static QSharedPointer<PasswordKey> fromRawKey(const QByteArray& rawKey);
 
 private:
-    QByteArray m_key;
+    static constexpr int SHA256_SIZE = 32;
+
+    char* m_key = nullptr;
 };
 
 #endif // KEEPASSX_PASSWORDKEY_H

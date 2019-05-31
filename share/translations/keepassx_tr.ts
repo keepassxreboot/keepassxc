@@ -73,7 +73,7 @@
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>%1 yapılandırma dosyası için erişim hatası</translation>
+        <translation>Yapılandırma dosyası erişim hatası %1</translation>
     </message>
     <message>
         <source>Icon only</source>

@@ -94,6 +94,8 @@ private:
     QString m_publicKey;
     QString m_secretKey;
     bool m_associated;
+
+    friend class TestBrowser;
 };
 
 #endif // BROWSERACTION_H

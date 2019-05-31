@@ -68,6 +68,11 @@ AutoTypeExecutor* AutoTypePlatformTest::createExecutor()
     return new AutoTypeExecutorTest(this);
 }
 
+void AutoTypePlatformTest::triggerGlobalAutoType()
+{
+    emit globalShortcutTriggered();
+}
+
 void AutoTypePlatformTest::setActiveWindowTitle(const QString& title)
 {
     m_activeWindowTitle = title;

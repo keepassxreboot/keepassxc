@@ -19,6 +19,8 @@
 #include "NativeMessagingBase.h"
 #include <QStandardPaths>
 
+#include "config-keepassx.h"
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_LINUX)
 #include <sys/event.h>
 #include <sys/time.h>
@@ -138,7 +140,7 @@ QString NativeMessagingBase::getLocalServerPath() const
 {
     const QString serverPath = "/kpxc_server";
 #if defined(KEEPASSXC_DIST_SNAP)
-    return QProcessEnvironment::systemEnvironment().value("SNAP_COMMON") + serverPath;
+    return QProcessEnvironment::systemEnvironment().value("SNAP_USER_COMMON") + serverPath;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
     // Use XDG_RUNTIME_DIR instead of /tmp if it's available
     QString path = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);

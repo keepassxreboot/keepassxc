@@ -40,6 +40,7 @@ public:
     };
 
     FileKey();
+    ~FileKey() override;
     bool load(QIODevice* device);
     bool load(const QString& fileName, QString* errorMsg = nullptr);
     QByteArray rawKey() const override;
@@ -48,6 +49,8 @@ public:
     static bool create(const QString& fileName, QString* errorMsg = nullptr, int size = 128);
 
 private:
+    static constexpr int SHA256_SIZE = 32;
+
     bool loadXml(QIODevice* device);
     bool loadXmlMeta(QXmlStreamReader& xmlReader);
     QByteArray loadXmlKey(QXmlStreamReader& xmlReader);
@@ -55,7 +58,7 @@ private:
     bool loadHex(QIODevice* device);
     bool loadHashed(QIODevice* device);
 
-    QByteArray m_key;
+    char* m_key = nullptr;
     Type m_type = None;
 };
 

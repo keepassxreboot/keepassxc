@@ -35,7 +35,8 @@ void DialogyWidget::keyPressEvent(QKeyEvent* e)
         }
     } else
 #endif
-        if (!e->modifiers() || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
+        if (!e->modifiers() || e->modifiers() == Qt::ControlModifier
+            || (e->modifiers() & Qt::KeypadModifier && e->key() == Qt::Key_Enter)) {
         switch (e->key()) {
         case Qt::Key_Enter:
         case Qt::Key_Return:

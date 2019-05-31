@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Projekt ansvariga:</translation>
+        <translation>Projektansvariga:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -220,7 +220,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay</source>
-        <translation>Auto-skriv fördröjning</translation>
+        <translation>Fördröjning för auto-skriv</translation>
     </message>
     <message>
         <source> ms</source>
@@ -765,7 +765,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Number of headers line to discard</source>
-        <translation>Antal av rubrik rader att kasta bort</translation>
+        <translation>Antal rubrikrader att kasta bort</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
@@ -1258,7 +1258,7 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>Maxantal historik poster:</translation>
+        <translation>Maxantal historikposter:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
@@ -3856,7 +3856,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Ord separerare:</translation>
+        <translation>Ordseparerare:</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -4008,11 +4008,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Word Co&amp;unt:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Antal ord:</translation>
     </message>
     <message>
         <source>Regenerate</source>
-        <translation type="unfinished"/>
+        <translation>Regenerera</translation>
     </message>
 </context>
 <context>
