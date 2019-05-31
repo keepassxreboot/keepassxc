@@ -47,6 +47,7 @@ private slots:
 
 protected:
     void dragMoveEvent(QDragMoveEvent* event) override;
+    void focusInEvent(QFocusEvent* event) override;
 
 private:
     void recInitExpanded(Group* group);
