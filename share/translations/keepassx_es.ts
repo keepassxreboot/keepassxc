@@ -200,27 +200,27 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Use título de entrada para acertar ventanas en Auto-Escritura global.</translation>
+        <translation>Usar título de la entrada para emparejar ventanas en autoescritura global</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Use URL para acertar ventanas en Auto-Escritura global</translation>
+        <translation>Usar URL de la entrada para emparejar ventanas en autoescritura global</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Siempre preguntar antes de hacer Auto-Escritura</translation>
+        <translation>Siempre preguntar antes de hacer autoescritura</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>Atajo global de Auto-Escritura</translation>
+        <translation>Atajo global de autoescritura</translation>
     </message>
     <message>
         <source>Auto-Type typing delay</source>
-        <translation>Escribiendo retardo de la Auto-Escritura</translation>
+        <translation>Escribiendo retardo de la autoescritura</translation>
     </message>
     <message>
         <source> ms</source>
@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Auto-Type start delay</source>
-        <translation>Iniciar retardo de Auto-Escritura</translation>
+        <translation>Iniciar retardo de autoescritura</translation>
     </message>
     <message>
         <source>Check for updates at application startup</source>
@@ -293,7 +293,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Volver a bloquear la base de datos tras realizar una Auto-Escritura </translation>
+        <translation>Volver a bloquear la base de datos tras realizar una autoescritura</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -332,27 +332,27 @@
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Escritura - KeePassXC</translation>
+        <translation>Autoescritura - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>¡La sintaxis de la declaración de su Auto-Escritura es incorrecta!</translation>
+        <translation>¡La sintaxis de la declaración de su autoescritura es incorrecta!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene un retraso muy largo. ¿Realmente desea continuar?</translation>
+        <translation>Este comando de autoescritura contiene un retraso muy largo. ¿Realmente desea continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene pulsaciones de teclas muy lentas. ¿Realmente desea continuar?</translation>
+        <translation>Este comando de autoescritura contiene pulsaciones de teclas muy lentas. ¿Realmente desea continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Este comando de Auto-Escritura contiene argumentos que se repiten muy a menudo. ¿Realmente desea continuar?</translation>
+        <translation>Este comando de autoescritura contiene argumentos que se repiten muy a menudo. ¿Realmente desea continuar?</translation>
     </message>
 </context>
 <context>
@@ -393,11 +393,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Escritura - KeePassXC</translation>
+        <translation>Autoescritura - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Seleccionar entrada para Auto-Escritura:</translation>
+        <translation>Seleccionar entrada para autoescritura:</translation>
     </message>
 </context>
 <context>
@@ -884,7 +884,7 @@ Es necesario para mantener sus conexiones presentes del navegador.
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Desbloquear Base de Datos - KeePassXC</translation>
+        <translation>Desbloquear base de datos - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1259,7 +1259,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>Metadatos de la Base de Datos</translation>
+        <translation>Metadatos de la base de datos</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -1295,7 +1295,7 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Configuraciones Adicionales de la Base de Datos</translation>
+        <translation>Configuraciones adicionales de la base de datos</translation>
     </message>
     <message>
         <source>Enable &amp;compression (recommended)</source>
@@ -1438,12 +1438,12 @@ Esto es definitivamente un error, por favor repórtelo a los desarrolladores.</t
     </message>
     <message>
         <source>New Database</source>
-        <translation>Nueva Base de datos</translation>
+        <translation>Nueva base de datos</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [Nueva Base de Datos]</translation>
+        <translation>%1 [Nueva base de datos]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
@@ -1549,7 +1549,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>¿Bloquear la Base de datos?</translation>
+        <translation>¿Bloquear la base de datos?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -1654,7 +1654,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -1800,15 +1800,15 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Activar Auto-Escritura para esta entrada</translation>
+        <translation>Activar autoescritura para esta entrada</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Heredar la secuencia de Auto-Escritura por defecto del &amp;grupo</translation>
+        <translation>Heredar la secuencia de autoescritura por defecto del &amp;grupo</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>&amp;Usar secuencia de Auto-Escritura personalizada:</translation>
+        <translation>&amp;Usar secuencia de autoescritura personalizada:</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2111,15 +2111,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Escritura</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>&amp;Usar por defecto la secuencia de Auto-Escritura del grupo padre</translation>
+        <translation>&amp;Usar por defecto la secuencia de autoescritura del grupo padre</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Seleccionar se&amp;cuencia de Auto-Escritura por defecto</translation>
+        <translation>Seleccionar se&amp;cuencia de autoescritura por defecto</translation>
     </message>
 </context>
 <context>
@@ -2932,7 +2932,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Falta de secuencia o ventana de asociación de Auto-Escritura</translation>
+        <translation>Falta de secuencia o ventana de asociación de autoescritura</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -3522,7 +3522,7 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Realizar &amp;Auto-Escritura</translation>
+        <translation>Realizar &amp;autoescritura</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -4857,7 +4857,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Database password: </source>
-        <translation>Contraseña de la Base de Datos:</translation>
+        <translation>Contraseña de la base de datos:</translation>
     </message>
     <message>
         <source>Cannot create new group</source>

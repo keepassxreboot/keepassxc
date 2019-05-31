@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Інформація щодо зневадження</translation>
+        <translation>Зневаджувальна інформація</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Коли Ви повідомляєте про ваду, завжди долучайте таку інформацію:</translation>
+        <translation>Повідомляючи про проблему, завжди долучайте наступну інформацію:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -61,7 +61,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Налаштування застосунку</translation>
+        <translation>Налаштування програми</translation>
     </message>
     <message>
         <source>General</source>
@@ -100,7 +100,7 @@
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Базове налаштування</translation>
+        <translation>Основні налаштування</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Remember last key files and security dongles</source>
-        <translation>Пам&apos;ятати останні файли ключів і механізми захисту</translation>
+        <translation>Пам&apos;ятати останні файли ключів та апаратні ключі</translation>
     </message>
     <message>
         <source>Load previous databases on startup</source>
@@ -172,7 +172,7 @@
     </message>
     <message>
         <source>General</source>
-        <translation>Загальне</translation>
+        <translation>Загальні</translation>
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
@@ -1425,7 +1425,7 @@ Are you sure you want to continue without a password?</source>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
         <translation>Створене сховище не має ані ключа, ані ФОК, і тому не може бути збереженим.
-Це напевно вада у програмі. Будь ласка, повідомте про це розробникам.</translation>
+Це певно є вадою програми, будь ласка, повідомте про це розробникам.</translation>
     </message>
     <message>
         <source>The database file does not exist or is not accessible.</source>
@@ -3564,8 +3564,8 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>&lt;b&gt;Примітка&lt;/b&gt;: Ви використовуєте попередню версію KeePassXC!
-Зважайте на можливість деяких вади та незначних проблем, ця версія не призначена для повсякденного користування.</translation>
+        <translation>&lt;b&gt;Примітка&lt;/b&gt;: Ви використовуєте попередній випуск KeePassXC!
+Зважайте на ймовірні помилки та незначні проблеми, ця версія не призначена для повсякденного користування.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
