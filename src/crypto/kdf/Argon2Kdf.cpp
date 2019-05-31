@@ -35,7 +35,7 @@ Argon2Kdf::Argon2Kdf()
     , m_memory(1 << 16)
     , m_parallelism(static_cast<quint32>(QThread::idealThreadCount()))
 {
-    m_rounds = 1;
+    m_rounds = 10;
 }
 
 quint32 Argon2Kdf::version() const
