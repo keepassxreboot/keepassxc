@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 
 #include "Locate.h"
 
-#include <QCommandLineParser>
 #include <QStringList>
 
 #include "cli/TextStream.h"
@@ -34,46 +33,18 @@ Locate::Locate()
 {
     name = QString("locate");
     description = QObject::tr("Find entries quickly.");
+    positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
 }
 
 Locate::~Locate()
 {
 }
 
-int Locate::execute(const QStringList& arguments)
+int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addPositionalArgument("term", QObject::tr("Search term."));
-    parser.addOption(Command::QuietOption);
-    parser.addOption(Command::KeyFileOption);
-    parser.addOption(Command::NoPasswordOption);
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("[options]", "locate [options]");
-        return EXIT_FAILURE;
-    }
-
-    auto db = Utils::unlockDatabase(args.at(0),
-                                    !parser.isSet(Command::NoPasswordOption),
-                                    parser.value(Command::KeyFileOption),
-                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                    Utils::STDERR);
-    if (!db) {
-        return EXIT_FAILURE;
-    }
-
-    return locateEntry(db.data(), args.at(1));
-}
-
-int Locate::locateEntry(Database* database, const QString& searchTerm)
-{
+    const QStringList args = parser->positionalArguments();
+    QString searchTerm = args.at(1);
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,18 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REMOVE_H
-#define KEEPASSXC_REMOVE_H
+#ifndef KEEPASSXC_DATABASECOMMAND_H
+#define KEEPASSXC_DATABASECOMMAND_H
 
-#include "DatabaseCommand.h"
+#include <QCommandLineOption>
 
-class Remove : public DatabaseCommand
+#include "Command.h"
+#include "Utils.h"
+#include "core/Database.h"
+
+class DatabaseCommand : public Command
 {
 public:
-    Remove();
-    ~Remove();
-
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    DatabaseCommand();
+    int execute(const QStringList& arguments) override;
+    virtual int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) = 0;
 };
 
-#endif // KEEPASSXC_REMOVE_H
+#endif // KEEPASSXC_DATABASECOMMAND_H

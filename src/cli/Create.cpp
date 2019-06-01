@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include <QCommandLineParser>
 #include <QFileInfo>
 #include <QString>
 #include <QTextStream>
@@ -35,6 +34,8 @@ Create::Create()
 {
     name = QString("create");
     description = QObject::tr("Create a new database.");
+    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
+    options.append(Command::KeyFileOption);
 }
 
 Create::~Create()
@@ -59,20 +60,12 @@ int Create::execute(const QStringList& arguments)
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    QCommandLineParser parser;
-
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::KeyFileOption);
-
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() < 1) {
-        out << parser.helpText().replace("[options]", "create [options]");
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
+    if (parser.isNull()) {
         return EXIT_FAILURE;
     }
+
+    const QStringList args = parser->positionalArguments();
 
     const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
@@ -88,8 +81,8 @@ int Create::execute(const QStringList& arguments)
     }
 
     QSharedPointer<FileKey> fileKey;
-    if (parser.isSet(Command::KeyFileOption)) {
-        if (!loadFileKey(parser.value(Command::KeyFileOption), fileKey)) {
+    if (parser->isSet(Command::KeyFileOption)) {
+        if (!loadFileKey(parser->value(Command::KeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;
         }

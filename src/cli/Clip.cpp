@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,80 +22,52 @@
 
 #include "Clip.h"
 
-#include <QCommandLineParser>
-
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 
+const QCommandLineOption Clip::TotpOption = QCommandLineOption(QStringList() << "t"
+                                                                             << "totp",
+                                                               QObject::tr("Copy the current TOTP to the clipboard."));
+
 Clip::Clip()
 {
     name = QString("clip");
     description = QObject::tr("Copy an entry's password to the clipboard.");
+    options.append(Clip::TotpOption);
+    positionalArguments.append(
+        {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
+    optionalArguments.append(
+        {QString("timeout"), QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]")});
 }
 
 Clip::~Clip()
 {
 }
 
-int Clip::execute(const QStringList& arguments)
+int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::QuietOption);
-    parser.addOption(Command::KeyFileOption);
-    parser.addOption(Command::NoPasswordOption);
-
-    QCommandLineOption totp(QStringList() << "t"
-                                          << "totp",
-                            QObject::tr("Copy the current TOTP to the clipboard."));
-    parser.addOption(totp);
-    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"));
-    parser.addPositionalArgument(
-        "timeout", QObject::tr("Timeout in seconds before clearing the clipboard."), "[timeout]");
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() != 2 && args.size() != 3) {
-        errorTextStream << parser.helpText().replace("[options]", "clip [options]");
-        return EXIT_FAILURE;
+    const QStringList args = parser->positionalArguments();
+    QString entryPath = args.at(1);
+    QString timeout;
+    if (args.size() == 3) {
+        timeout = args.at(2);
     }
-
-    auto db = Utils::unlockDatabase(args.at(0),
-                                    !parser.isSet(Command::NoPasswordOption),
-                                    parser.value(Command::KeyFileOption),
-                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                    Utils::STDERR);
-    if (!db) {
-        return EXIT_FAILURE;
-    }
-
-    return clipEntry(db, args.at(1), args.value(2), parser.isSet(totp), parser.isSet(Command::QuietOption));
-}
-
-int Clip::clipEntry(const QSharedPointer<Database>& database,
-                    const QString& entryPath,
-                    const QString& timeout,
-                    bool clipTotp,
-                    bool silent)
-{
+    bool clipTotp = parser->isSet(Clip::TotpOption);
     TextStream errorTextStream(Utils::STDERR);
 
     int timeoutSeconds = 0;
-    if (!timeout.isEmpty() && !timeout.toInt()) {
+    if (!timeout.isEmpty() && timeout.toInt() <= 0) {
         errorTextStream << QObject::tr("Invalid timeout value %1.").arg(timeout) << endl;
         return EXIT_FAILURE;
     } else if (!timeout.isEmpty()) {
         timeoutSeconds = timeout.toInt();
     }
 
-    TextStream outputTextStream(silent ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                QIODevice::WriteOnly);
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         errorTextStream << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;

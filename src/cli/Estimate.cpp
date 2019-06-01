@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,6 @@
 #include "Estimate.h"
 #include "cli/Utils.h"
 
-#include <QCommandLineParser>
-
 #include "cli/TextStream.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,9 +31,17 @@
 #endif
 #endif
 
+const QCommandLineOption Estimate::AdvancedOption =
+    QCommandLineOption(QStringList() << "a"
+                                     << "advanced",
+                       QObject::tr("Perform advanced analysis on the password."));
+
 Estimate::Estimate()
 {
     name = QString("estimate");
+    optionalArguments.append(
+        {QString("password"), QObject::tr("Password for which to estimate the entropy."), QString("[password]")});
+    options.append(Estimate::AdvancedOption);
     description = QObject::tr("Estimate the entropy of a password.");
 }
 
@@ -156,24 +162,13 @@ static void estimate(const char* pwd, bool advanced)
 
 int Estimate::execute(const QStringList& arguments)
 {
-    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("password", QObject::tr("Password for which to estimate the entropy."), "[password]");
-    QCommandLineOption advancedOption(QStringList() << "a"
-                                                    << "advanced",
-                                      QObject::tr("Perform advanced analysis on the password."));
-    parser.addOption(advancedOption);
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() > 1) {
-        errorTextStream << parser.helpText().replace("[options]", "estimate [options]");
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
+    if (parser.isNull()) {
         return EXIT_FAILURE;
     }
+
+    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
+    const QStringList args = parser->positionalArguments();
 
     QString password;
     if (args.size() == 1) {
@@ -182,6 +177,6 @@ int Estimate::execute(const QStringList& arguments)
         password = inputTextStream.readLine();
     }
 
-    estimate(password.toLatin1(), parser.isSet(advancedOption));
+    estimate(password.toLatin1(), parser->isSet(Estimate::AdvancedOption));
     return EXIT_SUCCESS;
 }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,16 @@ public:
     Generate();
     ~Generate();
     int execute(const QStringList& arguments) override;
+
+    static const QCommandLineOption PasswordLengthOption;
+    static const QCommandLineOption LowerCaseOption;
+    static const QCommandLineOption UpperCaseOption;
+    static const QCommandLineOption NumbersOption;
+    static const QCommandLineOption SpecialCharsOption;
+    static const QCommandLineOption ExtendedAsciiOption;
+    static const QCommandLineOption ExcludeCharsOption;
+    static const QCommandLineOption ExcludeSimilarCharsOption;
+    static const QCommandLineOption IncludeEveryGroupOption;
 };
 
 #endif // KEEPASSXC_GENERATE_H

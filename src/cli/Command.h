@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #define KEEPASSXC_COMMAND_H
 
 #include <QCommandLineOption>
+#include <QCommandLineParser>
 #include <QList>
 #include <QObject>
 #include <QString>
@@ -26,14 +27,28 @@
 
 #include "core/Database.h"
 
+// At the moment, there's no QT class for the positional arguments
+// like there is for the options (QCommandLineOption).
+struct CommandLineArgument
+{
+    QString name;
+    QString description;
+    QString syntax;
+};
+
 class Command
 {
 public:
+    Command();
     virtual ~Command();
     virtual int execute(const QStringList& arguments) = 0;
     QString name;
     QString description;
+    QList<CommandLineArgument> positionalArguments;
+    QList<CommandLineArgument> optionalArguments;
+    QList<QCommandLineOption> options;
     QString getDescriptionLine();
+    QSharedPointer<QCommandLineParser> getCommandLineParser(const QStringList& arguments);
 
     static QList<Command*> getCommands();
     static Command* getCommand(const QString& commandName);

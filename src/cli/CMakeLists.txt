@@ -1,4 +1,4 @@
-#  Copyright (C) 2017 KeePassXC Team
+#  Copyright (C) 2019 KeePassXC Team
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@ set(cli_SOURCES
         Clip.cpp
         Create.cpp
         Command.cpp
+        DatabaseCommand.cpp
         Diceware.cpp
         Edit.cpp
         Estimate.cpp

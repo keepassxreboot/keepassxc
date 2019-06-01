@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,16 +20,28 @@
 
 #include "Diceware.h"
 
-#include <QCommandLineParser>
-
 #include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/PassphraseGenerator.h"
+
+const QCommandLineOption Diceware::WordCountOption =
+    QCommandLineOption(QStringList() << "W"
+                                     << "words",
+                       QObject::tr("Word count for the diceware passphrase."),
+                       QObject::tr("count", "CLI parameter"));
+
+const QCommandLineOption Diceware::WordListOption =
+    QCommandLineOption(QStringList() << "w"
+                                     << "word-list",
+                       QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
+                       QObject::tr("path"));
 
 Diceware::Diceware()
 {
     name = QString("diceware");
     description = QObject::tr("Generate a new random diceware passphrase.");
+    options.append(Diceware::WordCountOption);
+    options.append(Diceware::WordListOption);
 }
 
 Diceware::~Diceware()
@@ -38,45 +50,35 @@ Diceware::~Diceware()
 
 int Diceware::execute(const QStringList& arguments)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    QCommandLineOption words(QStringList() << "W"
-                                           << "words",
-                             QObject::tr("Word count for the diceware passphrase."),
-                             QObject::tr("count", "CLI parameter"));
-    parser.addOption(words);
-    QCommandLineOption wordlistFile(QStringList() << "w"
-                                                  << "word-list",
-                                    QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
-                                    QObject::tr("path"));
-    parser.addOption(wordlistFile);
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (!args.isEmpty()) {
-        errorTextStream << parser.helpText().replace("[options]", "diceware [options]");
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
+    if (parser.isNull()) {
         return EXIT_FAILURE;
     }
 
+    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+
     PassphraseGenerator dicewareGenerator;
 
-    if (parser.value(words).isEmpty()) {
+    QString wordCount = parser->value(Diceware::WordCountOption);
+    if (wordCount.isEmpty()) {
         dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
+    } else if (wordCount.toInt() <= 0) {
+        errorTextStream << QObject::tr("Invalid word count %1").arg(wordCount) << endl;
+        return EXIT_FAILURE;
     } else {
-        int wordcount = parser.value(words).toInt();
-        dicewareGenerator.setWordCount(wordcount);
+        dicewareGenerator.setWordCount(wordCount.toInt());
     }
 
-    if (!parser.value(wordlistFile).isEmpty()) {
-        dicewareGenerator.setWordList(parser.value(wordlistFile));
+    QString wordListFile = parser->value(Diceware::WordListOption);
+    if (!wordListFile.isEmpty()) {
+        dicewareGenerator.setWordList(wordListFile);
     }
 
     if (!dicewareGenerator.isValid()) {
-        outputTextStream << parser.helpText().replace("[options]", "diceware [options]");
+        // We already validated the word count input so if the generator is invalid, it
+        // must be because the word list is too small.
+        errorTextStream << QObject::tr("The word list is too small (< 1000 items)") << endl;
         return EXIT_FAILURE;
     }
 
