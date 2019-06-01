@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,8 @@
 #include "Merge.h"
 #include "Remove.h"
 #include "Show.h"
+#include "TextStream.h"
+#include "Utils.h"
 
 const QCommandLineOption Command::QuietOption =
     QCommandLineOption(QStringList() << "q"
@@ -51,13 +53,17 @@ const QCommandLineOption Command::NoPasswordOption =
 
 QMap<QString, Command*> commands;
 
+Command::Command()
+{
+    options.append(Command::QuietOption);
+}
+
 Command::~Command()
 {
 }
 
 QString Command::getDescriptionLine()
 {
-
     QString response = name;
     QString space(" ");
     QString spaces = space.repeated(15 - name.length());
@@ -65,6 +71,36 @@ QString Command::getDescriptionLine()
     response = response.append(description);
     response = response.append("\n");
     return response;
+}
+
+QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringList& arguments)
+{
+    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+
+    QSharedPointer<QCommandLineParser> parser = QSharedPointer<QCommandLineParser>(new QCommandLineParser());
+    parser->setApplicationDescription(description);
+    for (CommandLineArgument positionalArgument : positionalArguments) {
+        parser->addPositionalArgument(
+            positionalArgument.name, positionalArgument.description, positionalArgument.syntax);
+    }
+    for (CommandLineArgument optionalArgument : optionalArguments) {
+        parser->addPositionalArgument(optionalArgument.name, optionalArgument.description, optionalArgument.syntax);
+    }
+    for (QCommandLineOption option : options) {
+        parser->addOption(option);
+    }
+    parser->addHelpOption();
+    parser->process(arguments);
+
+    if (parser->positionalArguments().size() < positionalArguments.size()) {
+        errorTextStream << parser->helpText().replace("[options]", name.append(" [options]"));
+        return QSharedPointer<QCommandLineParser>(nullptr);
+    }
+    if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
+        errorTextStream << parser->helpText().replace("[options]", name.append(" [options]"));
+        return QSharedPointer<QCommandLineParser>(nullptr);
+    }
+    return parser;
 }
 
 void populateCommands()

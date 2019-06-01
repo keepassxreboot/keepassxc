@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,19 +18,17 @@
 #ifndef KEEPASSXC_CLIP_H
 #define KEEPASSXC_CLIP_H
 
-#include "Command.h"
+#include "DatabaseCommand.h"
 
-class Clip : public Command
+class Clip : public DatabaseCommand
 {
 public:
     Clip();
     ~Clip();
-    int execute(const QStringList& arguments) override;
-    int clipEntry(const QSharedPointer<Database>& database,
-                  const QString& entryPath,
-                  const QString& timeout,
-                  bool clipTotp,
-                  bool silent);
+
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+
+    static const QCommandLineOption TotpOption;
 };
 
 #endif // KEEPASSXC_CLIP_H

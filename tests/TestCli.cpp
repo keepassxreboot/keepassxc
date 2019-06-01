@@ -197,6 +197,7 @@ void TestCli::testAdd()
     m_stderrFile->reset();
     m_stdoutFile->reset();
     m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry.\n"));
 
     auto db = readTestDatabase();
@@ -296,7 +297,9 @@ void TestCli::testClip()
     // Password with timeout
     Utils::Test::setNextPassword("a");
     // clang-format off
-    QFuture<void> future = QtConcurrent::run(&clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
+    QFuture<void> future = QtConcurrent::run(&clipCmd,
+                                             static_cast<int(Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
+                                             QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
 
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
@@ -306,8 +309,9 @@ void TestCli::testClip()
 
     // TOTP with timeout
     Utils::Test::setNextPassword("a");
-    future = QtConcurrent::run(
-        &clipCmd, &Clip::execute, QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
+    future = QtConcurrent::run(&clipCmd,
+                               static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
+                               QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
     QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
@@ -315,6 +319,18 @@ void TestCli::testClip()
     future.waitForFinished();
 
     qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "0"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Invalid timeout value 0.\n"));
+
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "--totp", "/Sample Entry", "bleuh"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Invalid timeout value bleuh.\n"));
+
+    posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stderrFile->seek(posErr);
@@ -414,6 +430,18 @@ void TestCli::testDiceware()
     passphrase = m_stdoutFile->readLine();
     QCOMPARE(passphrase.split(" ").size(), 10);
 
+    // Testing with invalid word count
+    auto posErr = m_stderrFile->pos();
+    dicewareCmd.execute({"diceware", "-W", "-10"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid word count -10\n"));
+
+    // Testing with invalid word count format
+    posErr = m_stderrFile->pos();
+    dicewareCmd.execute({"diceware", "-W", "bleuh"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid word count bleuh\n"));
+
     TemporaryFile wordFile;
     wordFile.open();
     for (int i = 0; i < 4500; ++i) {
@@ -431,6 +459,18 @@ void TestCli::testDiceware()
     for (const auto& word : words) {
         QVERIFY2(regex.match(word).hasMatch(), qPrintable("Word " + word + " was not on the word list"));
     }
+
+    TemporaryFile smallWordFile;
+    smallWordFile.open();
+    for (int i = 0; i < 50; ++i) {
+        smallWordFile.write(QString("word" + QString::number(i) + "\n").toLatin1());
+    }
+    smallWordFile.close();
+
+    posErr = m_stderrFile->pos();
+    dicewareCmd.execute({"diceware", "-W", "11", "-w", smallWordFile.fileName()});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("The word list is too small (< 1000 items)\n"));
 }
 
 void TestCli::testEdit()
@@ -679,6 +719,23 @@ void TestCli::testGenerate()
         QVERIFY2(regex.match(password).hasMatch(),
                  qPrintable("Password " + password + " does not match pattern " + pattern));
     }
+
+    // Testing with invalid password length
+    auto posErr = m_stderrFile->pos();
+    generateCmd.execute({"generate", "-L", "-10"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length -10\n"));
+
+    posErr = m_stderrFile->pos();
+    generateCmd.execute({"generate", "-L", "0"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length 0\n"));
+
+    // Testing with invalid word count format
+    posErr = m_stderrFile->pos();
+    generateCmd.execute({"generate", "-L", "bleuh"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length bleuh\n"));
 }
 
 void TestCli::testKeyFileOption()

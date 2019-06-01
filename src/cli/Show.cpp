@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include <QCommandLineParser>
-
 #include "Utils.h"
 #include "cli/TextStream.h"
 #include "core/Database.h"
@@ -29,66 +27,41 @@
 #include "core/Global.h"
 #include "core/Group.h"
 
+const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
+                                                                             << "totp",
+                                                               QObject::tr("Show the entry's current TOTP."));
+
+const QCommandLineOption Show::AttributesOption = QCommandLineOption(
+    QStringList() << "a"
+                  << "attributes",
+    QObject::tr(
+        "Names of the attributes to show. "
+        "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
+        "If no attributes are specified, a summary of the default attributes is given."),
+    QObject::tr("attribute"));
+
 Show::Show()
 {
     name = QString("show");
     description = QObject::tr("Show an entry's information.");
+    options.append(Show::TotpOption);
+    options.append(Show::AttributesOption);
+    positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
 Show::~Show()
 {
 }
 
-int Show::execute(const QStringList& arguments)
-{
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
-
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::QuietOption);
-    parser.addOption(Command::KeyFileOption);
-    parser.addOption(Command::NoPasswordOption);
-
-    QCommandLineOption totp(QStringList() << "t"
-                                          << "totp",
-                            QObject::tr("Show the entry's current TOTP."));
-    parser.addOption(totp);
-    QCommandLineOption attributes(
-        QStringList() << "a"
-                      << "attributes",
-        QObject::tr(
-            "Names of the attributes to show. "
-            "This option can be specified more than once, with each attribute shown one-per-line in the given order. "
-            "If no attributes are specified, a summary of the default attributes is given."),
-        QObject::tr("attribute"));
-    parser.addOption(attributes);
-    parser.addPositionalArgument("entry", QObject::tr("Name of the entry to show."));
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("[options]", "show [options]");
-        return EXIT_FAILURE;
-    }
-
-    auto db = Utils::unlockDatabase(args.at(0),
-                                    !parser.isSet(Command::NoPasswordOption),
-                                    parser.value(Command::KeyFileOption),
-                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                    Utils::STDERR);
-    if (!db) {
-        return EXIT_FAILURE;
-    }
-
-    return showEntry(db.data(), parser.values(attributes), parser.isSet(totp), args.at(1));
-}
-
-int Show::showEntry(Database* database, QStringList attributes, bool showTotp, const QString& entryPath)
+int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+
+    const QStringList args = parser->positionalArguments();
+    const QString& entryPath = args.at(1);
+    bool showTotp = parser->isSet(Show::TotpOption);
+    QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {

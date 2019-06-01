@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +20,6 @@
 
 #include "Remove.h"
 
-#include <QCommandLineParser>
-#include <QCoreApplication>
-#include <QStringList>
-
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
@@ -36,46 +32,19 @@ Remove::Remove()
 {
     name = QString("rm");
     description = QString("Remove an entry from the database.");
+    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to remove."), QString("")});
 }
 
 Remove::~Remove()
 {
 }
 
-int Remove::execute(const QStringList& arguments)
+int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    bool quiet = parser->isSet(Command::QuietOption);
+    QString databasePath = parser->positionalArguments().at(0);
+    QString entryPath = parser->positionalArguments().at(1);
 
-    QCommandLineParser parser;
-    parser.setApplicationDescription(QObject::tr("Remove an entry from the database."));
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::QuietOption);
-    parser.addOption(Command::KeyFileOption);
-    parser.addOption(Command::NoPasswordOption);
-    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to remove."));
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("[options]", "rm [options]");
-        return EXIT_FAILURE;
-    }
-
-    auto db = Utils::unlockDatabase(args.at(0),
-                                    !parser.isSet(Command::NoPasswordOption),
-                                    parser.value(Command::KeyFileOption),
-                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                    Utils::STDERR);
-    if (!db) {
-        return EXIT_FAILURE;
-    }
-
-    return removeEntry(db.data(), args.at(0), args.at(1), parser.isSet(Command::QuietOption));
-}
-
-int Remove::removeEntry(Database* database, const QString& databasePath, const QString& entryPath, bool quiet)
-{
     TextStream outputTextStream(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 

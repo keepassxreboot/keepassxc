@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,7 @@
 
 #include "Edit.h"
 
-#include <QCommandLineParser>
-
+#include "cli/Add.h"
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
@@ -29,120 +28,80 @@
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
 
+const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() << "t"
+                                                                              << "title",
+                                                                QObject::tr("Title for the entry."),
+                                                                QObject::tr("title"));
+
 Edit::Edit()
 {
     name = QString("edit");
     description = QObject::tr("Edit an entry.");
+    // Using some of the options from the Add command since they are the same.
+    options.append(Add::UsernameOption);
+    options.append(Add::UrlOption);
+    options.append(Add::PasswordPromptOption);
+    options.append(Add::GenerateOption);
+    options.append(Add::PasswordLengthOption);
+    options.append(Edit::TitleOption);
+    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
 }
 
 Edit::~Edit()
 {
 }
 
-int Edit::execute(const QStringList& arguments)
+int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
+    TextStream outputTextStream(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
+                                QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
-    QCommandLineParser parser;
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::QuietOption);
-    parser.addOption(Command::KeyFileOption);
-    parser.addOption(Command::NoPasswordOption);
-
-    QCommandLineOption username(QStringList() << "u"
-                                              << "username",
-                                QObject::tr("Username for the entry."),
-                                QObject::tr("username"));
-    parser.addOption(username);
-
-    QCommandLineOption url(QStringList() << "url", QObject::tr("URL for the entry."), QObject::tr("URL"));
-    parser.addOption(url);
-
-    QCommandLineOption title(QStringList() << "t"
-                                           << "title",
-                             QObject::tr("Title for the entry."),
-                             QObject::tr("title"));
-    parser.addOption(title);
-
-    QCommandLineOption prompt(QStringList() << "p"
-                                            << "password-prompt",
-                              QObject::tr("Prompt for the entry's password."));
-    parser.addOption(prompt);
-
-    QCommandLineOption generate(QStringList() << "g"
-                                              << "generate",
-                                QObject::tr("Generate a password for the entry."));
-    parser.addOption(generate);
-
-    QCommandLineOption length(QStringList() << "l"
-                                            << "password-length",
-                              QObject::tr("Length for the generated password."),
-                              QObject::tr("length"));
-    parser.addOption(length);
-
-    parser.addPositionalArgument("entry", QObject::tr("Path of the entry to edit."));
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() != 2) {
-        errorTextStream << parser.helpText().replace("[options]", "edit [options]");
-        return EXIT_FAILURE;
-    }
-
+    const QStringList args = parser->positionalArguments();
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    auto db = Utils::unlockDatabase(databasePath,
-                                    !parser.isSet(Command::NoPasswordOption),
-                                    parser.value(Command::KeyFileOption),
-                                    parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
-                                    Utils::STDERR);
-    if (!db) {
-        return EXIT_FAILURE;
-    }
-
-    QString passwordLength = parser.value(length);
+    QString passwordLength = parser->value(Add::PasswordLengthOption);
     if (!passwordLength.isEmpty() && !passwordLength.toInt()) {
         errorTextStream << QObject::tr("Invalid value for password length: %1").arg(passwordLength) << endl;
         return EXIT_FAILURE;
     }
 
-    Entry* entry = db->rootGroup()->findEntryByPath(entryPath);
+    Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         errorTextStream << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
-    if (parser.value("username").isEmpty() && parser.value("url").isEmpty() && parser.value("title").isEmpty()
-        && !parser.isSet(prompt) && !parser.isSet(generate)) {
+    QString username = parser->value(Add::UsernameOption);
+    QString url = parser->value(Add::UrlOption);
+    QString title = parser->value(Edit::TitleOption);
+    bool generate = parser->isSet(Add::GenerateOption);
+    bool prompt = parser->isSet(Add::PasswordPromptOption);
+    if (username.isEmpty() && url.isEmpty() && title.isEmpty() && !prompt && !generate) {
         errorTextStream << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     entry->beginUpdate();
 
-    if (!parser.value("title").isEmpty()) {
-        entry->setTitle(parser.value("title"));
+    if (!title.isEmpty()) {
+        entry->setTitle(title);
     }
 
-    if (!parser.value("username").isEmpty()) {
-        entry->setUsername(parser.value("username"));
+    if (!username.isEmpty()) {
+        entry->setUsername(username);
     }
 
-    if (!parser.value("url").isEmpty()) {
-        entry->setUrl(parser.value("url"));
+    if (!url.isEmpty()) {
+        entry->setUrl(url);
     }
 
-    if (parser.isSet(prompt)) {
-        if (!parser.isSet(Command::QuietOption)) {
-            outputTextStream << QObject::tr("Enter new password for entry: ") << flush;
-        }
-        QString password = Utils::getPassword(parser.isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
+    if (prompt) {
+        outputTextStream << QObject::tr("Enter new password for entry: ") << flush;
+        QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
         entry->setPassword(password);
-    } else if (parser.isSet(generate)) {
+    } else if (generate) {
         PasswordGenerator passwordGenerator;
 
         if (passwordLength.isEmpty()) {
@@ -160,13 +119,11 @@ int Edit::execute(const QStringList& arguments)
     entry->endUpdate();
 
     QString errorMessage;
-    if (!db->save(databasePath, &errorMessage, true, false)) {
+    if (!database->save(databasePath, &errorMessage, true, false)) {
         errorTextStream << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
-    if (!parser.isSet(Command::QuietOption)) {
-        outputTextStream << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
-    }
+    outputTextStream << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
     return EXIT_SUCCESS;
 }

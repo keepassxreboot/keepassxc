@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,21 @@
 #ifndef KEEPASSXC_ADD_H
 #define KEEPASSXC_ADD_H
 
-#include "Command.h"
+#include "DatabaseCommand.h"
 
-class Add : public Command
+class Add : public DatabaseCommand
 {
 public:
     Add();
     ~Add();
-    int execute(const QStringList& arguments) override;
+
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+
+    static const QCommandLineOption UsernameOption;
+    static const QCommandLineOption UrlOption;
+    static const QCommandLineOption PasswordPromptOption;
+    static const QCommandLineOption GenerateOption;
+    static const QCommandLineOption PasswordLengthOption;
 };
 
 #endif // KEEPASSXC_ADD_H

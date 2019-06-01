@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,19 @@
 #ifndef KEEPASSXC_MERGE_H
 #define KEEPASSXC_MERGE_H
 
-#include "Command.h"
+#include "DatabaseCommand.h"
 
-class Merge : public Command
+class Merge : public DatabaseCommand
 {
 public:
     Merge();
     ~Merge();
-    int execute(const QStringList& arguments) override;
+
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+
+    static const QCommandLineOption SameCredentialsOption;
+    static const QCommandLineOption KeyFileFromOption;
+    static const QCommandLineOption NoPasswordFromOption;
 };
 
 #endif // KEEPASSXC_MERGE_H
