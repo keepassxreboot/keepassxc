@@ -22,10 +22,10 @@ Open Url                   | Ctrl + Shift - U
 Copy Url                   | Ctrl + U
 Show Minimized             | Ctrl + M
 Hide Window                | Ctrl + Shift - M
-Select Next Database Tab   | Ctrl + Tab OR Ctrl + PGDN
-Select Previous Datase Tab | Ctrl + Shift + Tab OR Ctrl + PGUP
-Toggle Passwords Hidden    | Ctrl + Shift + c
-Toggle Usernames Hidden    | Ctrl + Shift + b
+Select Next Database Tab   | Ctrl + Tab *OR* Ctrl + PGDN
+Select Previous Datase Tab | Ctrl + Shift + Tab *OR* Ctrl + PGUP
+Toggle Passwords Hidden    | Ctrl + Shift + C
+Toggle Usernames Hidden    | Ctrl + Shift + B
 Focus Search               | Ctrl + F
 Clear Search               | ESC
 
