@@ -2,31 +2,31 @@
 
 Actions                    | Keyboard Shortcuts
 ---------------------------|----------------------------
-New Database               | Ctrl-Shift-N
-Open Database              | Ctrl-o
-Save Database              | Ctrl-s
-Save Database As           | Ctrl-Shift-s
-Close Database             | Ctrl-w
-Lock Databases             | Ctrl-l
-Quit                       | Ctrl-q
-New Entry                  | Ctrl-n
-Edit Entry                 | Ctrl-e
-Delete Entry               | Ctrl-d
-Clone Entry                | Ctrl-k
-Show TOTP                  | Ctrl-Shift-t
-Copy TOTP                  | Ctrl-t
-Copy Username              | Ctrl-b
-Copy Password              | Ctrl-c
-Trigger AutoType           | Ctrl-Shift-v
-Open Url                   | Ctrl-Shift-u
-Copy Url                   | Ctrl-u
-Show Minimized             | Ctrl-m
-Hide Window                | Ctrl-Shift-m
-Select Next Database Tab   | Ctrl+Tab OR Ctrl-PGDN
-Select Previous Datase Tab | Ctrl+Shift+Tab OR Ctrl-PGUP
-Toggle Passwords Hidden    | Ctrl-Shift-c
-Toggle Usernames Hidden    | Ctrl-Shift-b
-Focus Search               | Ctrl+F
+New Database               | Ctrl + Shift + N
+Open Database              | Ctrl + O
+Save Database              | Ctrl + S
+Save Database As           | Ctrl + Shift + S
+Close Database             | Ctrl + W
+Lock Databases             | Ctrl + L
+Quit                       | Ctrl + Q
+New Entry                  | Ctrl + N
+Edit Entry                 | Ctrl + E
+Delete Entry               | Ctrl + D
+Clone Entry                | Ctrl + K
+Show TOTP                  | Ctrl + Shift + T
+Copy TOTP                  | Ctrl + T
+Copy Username              | Ctrl + B
+Copy Password              | Ctrl + C
+Trigger AutoType           | Ctrl + Shift - V
+Open Url                   | Ctrl + Shift - U
+Copy Url                   | Ctrl + U
+Show Minimized             | Ctrl + M
+Hide Window                | Ctrl + Shift - M
+Select Next Database Tab   | Ctrl + Tab OR Ctrl + PGDN
+Select Previous Datase Tab | Ctrl + Shift + Tab OR Ctrl + PGUP
+Toggle Passwords Hidden    | Ctrl + Shift + c
+Toggle Usernames Hidden    | Ctrl + Shift + b
+Focus Search               | Ctrl + F
 Clear Search               | ESC
 
 
