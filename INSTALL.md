@@ -141,10 +141,7 @@ DESTDIR=X
 Packaging
 =========
 
-You can create a package to redistribute KeePassXC (zip, deb, rpm, dmg, etc..)
-```
-make package
-```
+You can create a package to redistribute KeePassXC (zip, deb, rpm, dmg, etc..). Refer to [keepassxc-packaging](https://github.com/keepassxreboot/keepassxc-packaging)
 
 
 Testing
