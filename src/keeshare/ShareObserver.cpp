@@ -261,18 +261,22 @@ void ShareObserver::reinitialize()
 
 void ShareObserver::notifyAbout(const QStringList& success, const QStringList& warning, const QStringList& error)
 {
-    if (error.isEmpty() && warning.isEmpty() && success.isEmpty()) {
-        return;
-    }
-
+    QStringList messages;
     MessageWidget::MessageType type = MessageWidget::Positive;
+    if (!(success.isEmpty() || config()->get("GUI/QuietKeeShareSuccess").toBool())) {
+        messages += success;
+    }
     if (!warning.isEmpty()) {
         type = MessageWidget::Warning;
+        messages += warning;
     }
     if (!error.isEmpty()) {
         type = MessageWidget::Error;
+        messages += error;
     }
-    emit sharingMessage((success + warning + error).join("\n"), type);
+    if (!messages.isEmpty()) {
+        emit sharingMessage(messages.join("\n"), type);
+    }
 }
 
 void ShareObserver::handleDatabaseChanged()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>881</height>
+    <height>1030</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -379,6 +379,13 @@
            <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
             <property name="text">
              <string>Minimize instead of app exit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="quietKeeShareSuccess">
+            <property name="text">
+             <string>Do not show success notifications for KeeShare, only warnings and errors</string>
             </property>
            </widget>
           </item>
