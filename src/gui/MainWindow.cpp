@@ -290,7 +290,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseClose->setIcon(filePath()->icon("actions", "document-close"));
     m_ui->actionChangeDatabaseSettings->setIcon(filePath()->icon("actions", "document-edit"));
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key"));
-    m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "document-encrypt"));
+    m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "database-lock"));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new"));
