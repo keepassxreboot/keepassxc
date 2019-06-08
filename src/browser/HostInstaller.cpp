@@ -40,6 +40,7 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI("/Library/Application Support/Vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts")
     , TARGET_DIR_BRAVE("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts")
+    , TARGET_DIR_DISSENTER("/Library/Application Support/GabAI/Dissenter/NativeMessagingHosts")
 #elif defined(Q_OS_WIN)
     // clang-format off
     , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
@@ -49,6 +50,7 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI(TARGET_DIR_CHROME)
     , TARGET_DIR_TOR_BROWSER(TARGET_DIR_FIREFOX)
     , TARGET_DIR_BRAVE(TARGET_DIR_CHROME)
+    , TARGET_DIR_DISSENTER(TARGET_DIR_CHROME)
 #else
     , TARGET_DIR_CHROME("/.config/google-chrome/NativeMessagingHosts")
     , TARGET_DIR_CHROMIUM("/.config/chromium/NativeMessagingHosts")
@@ -56,6 +58,7 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts")
     , TARGET_DIR_BRAVE("/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts")
+    , TARGET_DIR_DISSENTER("/.config/GabAI/Dissenter/NativeMessagingHosts")
 #endif
 {
 }
@@ -172,6 +175,8 @@ QString HostInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_TOR_BROWSER;
     case SupportedBrowsers::BRAVE:
         return TARGET_DIR_BRAVE;
+    case SupportedBrowsers::DISSENTER:
+        return TARGET_DIR_DISSENTER;
     default:
         return QString();
     }
@@ -199,6 +204,8 @@ QString HostInstaller::getBrowserName(SupportedBrowsers browser) const
         return "tor-browser";
     case SupportedBrowsers::BRAVE:
         return "brave";
+    case SupportedBrowsers::DISSENTER:
+        return "dissenter";
     default:
         return QString();
     }

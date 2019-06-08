@@ -259,6 +259,17 @@ void BrowserSettings::setBraveSupport(bool enabled)
         HostInstaller::SupportedBrowsers::BRAVE, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
+bool BrowserSettings::dissenterSupport()
+{
+    return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::DISSENTER);
+}
+
+void BrowserSettings::setDissenterSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::DISSENTER, enabled, supportBrowserProxy(), customProxyLocation());
+}
+
 bool BrowserSettings::torBrowserSupport()
 {
     return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::TOR_BROWSER);

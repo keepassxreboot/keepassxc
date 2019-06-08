@@ -76,6 +76,8 @@ public:
     void setVivaldiSupport(bool enabled);
     bool braveSupport();
     void setBraveSupport(bool enabled);
+    bool dissenterSupport();
+    void setDissenterSupport(bool enabled);
     bool torBrowserSupport();
     void setTorBrowserSupport(bool enabled);
 

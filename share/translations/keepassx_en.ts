@@ -632,6 +632,10 @@ Please select the correct database for saving credentials.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&amp;Dissenter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
         <translation type="unfinished"></translation>
     </message>

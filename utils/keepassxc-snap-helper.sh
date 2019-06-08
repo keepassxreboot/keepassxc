@@ -97,6 +97,11 @@ setupBrave() {
     INSTALL_DIR="${BASE_DIR}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts"
 }
 
+setupDissenter() {
+    buildJson
+    INSTALL_DIR="${BASE_DIR}/.config/GabAI/Dissenter/NativeMessagingHosts"
+}
+
 setupTorBrowser() {
     buildJson "firefox"
     INSTALL_DIR="${BASE_DIR}/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts"
@@ -115,7 +120,8 @@ BROWSER=$(whiptail \
             "3" "Chromium" \
             "4" "Vivaldi" \
             "5" "Brave" \
-            "6" "Tor Browser" \
+            "6" "Dissenter" \
+            "7" "Tor Browser" \
             3>&1 1>&2 2>&3)
 
 clear
@@ -129,7 +135,8 @@ if [ $exitstatus = 0 ]; then
         3) setupChromium ;;
         4) setupVivaldi ;;
         5) setupBrave ;;
-        6) setupTorBrowser ;;
+        6) setupDissenter ;;
+        7) setupTorBrowser ;;
     esac
 
     # Install the JSON file
