@@ -625,8 +625,12 @@ void DatabaseWidget::showTotpKeyQrCode()
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 {
     clipboard()->setText(text);
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
+    if (config()->get("HideWindowOnCopy").toBool()) {
+        if (config()->get("MinimizeOnCopy").toBool()) {
+            window()->showMinimized();
+        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+            window()->lower();
+        }
     }
 }
 
