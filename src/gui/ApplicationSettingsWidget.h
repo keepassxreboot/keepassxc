@@ -54,6 +54,7 @@ private slots:
     void saveSettings();
     void reject();
     void autoSaveToggled(bool checked);
+    void hideWindowOnCopyCheckBoxToggled(bool checked);
     void systrayToggled(bool checked);
     void toolbarSettingsToggled(bool checked);
     void rememberDatabasesToggled(bool checked);

@@ -59,8 +59,13 @@ TotpDialog::~TotpDialog()
 void TotpDialog::copyToClipboard()
 {
     clipboard()->setText(m_entry->totp());
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        qobject_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+    if (config()->get("HideWindowOnCopy").toBool()) {
+        if (config()->get("MinimizeOnCopy").toBool()) {
+            qobject_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+            qobject_cast<DatabaseWidget*>(parent())->window()->lower();
+            window()->lower();
+        }
     }
 }
 
