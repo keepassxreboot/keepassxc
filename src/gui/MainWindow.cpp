@@ -253,7 +253,9 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
 #endif
 
+    connect(m_ui->menuEntries, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_ui->menuGroups, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
     // Control window state
@@ -545,9 +547,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
-            // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
+            bool hasFocus = m_contextMenuFocusLock || menuBar()->hasFocus() || dbWidget->currentEntryHasFocus();
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && hasFocus;
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -990,6 +992,11 @@ void MainWindow::updateTrayIcon()
     }
 }
 
+void MainWindow::obtainContextFocusLock()
+{
+    m_contextMenuFocusLock = true;
+}
+
 void MainWindow::releaseContextFocusLock()
 {
     m_contextMenuFocusLock = false;
@@ -997,13 +1004,11 @@ void MainWindow::releaseContextFocusLock()
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
-    m_contextMenuFocusLock = true;
     m_ui->menuEntries->popup(globalPos);
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
-    m_contextMenuFocusLock = true;
     m_ui->menuGroups->popup(globalPos);
 }
 

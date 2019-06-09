@@ -117,6 +117,7 @@ private slots:
     void selectPreviousDatabaseTab();
     void togglePasswordsHidden();
     void toggleUsernamesHidden();
+    void obtainContextFocusLock();
     void releaseContextFocusLock();
 
 private:
