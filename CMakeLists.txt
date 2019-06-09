@@ -27,6 +27,13 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+# Use the Compiler Cache (ccache) if it is installed
+# (install with: sudo apt get ccache)
+find_program (CCACHE_FOUND ccache)
+if (CCACHE_FOUND)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+endif (CCACHE_FOUND)
+
 # Support Visual Studio Code
 include(CMakeToolsHelpers OPTIONAL)
 
