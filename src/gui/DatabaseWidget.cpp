@@ -368,7 +368,9 @@ void DatabaseWidget::createEntry()
     m_newEntry->setUuid(QUuid::createUuid());
     m_newEntry->setUsername(m_db->metadata()->defaultUserName());
     m_newParent = m_groupView->currentGroup();
-    m_newParent->applyGroupIconTo(m_newEntry.data());
+    if (config()->get("UseGroupIconOnEntryCreation").toBool()) {
+        m_newParent->applyGroupIconTo(m_newEntry.data());
+    }
     switchToEntryEdit(m_newEntry.data(), true);
 }
 

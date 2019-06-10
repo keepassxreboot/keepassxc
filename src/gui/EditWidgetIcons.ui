@@ -88,7 +88,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="customIconButtonsHorizontalLayout">
      <item>
       <widget class="QPushButton" name="addButton">
        <property name="text">
@@ -112,6 +112,24 @@
      </item>
     </layout>
    </item>
+   <item>
+   <layout class="QHBoxLayout" name="applyRecursivelyHorizontalLayout">
+    <item>
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="applyRecursivelyCheckBox">
+      <property name="text">
+       <string>Apply &amp;recursively</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -121,6 +139,7 @@
   <tabstop>customIconsView</tabstop>
   <tabstop>addButton</tabstop>
   <tabstop>deleteButton</tabstop>
+  <tabstop>applyRecursivelyCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -65,6 +65,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
+    connect(m_ui->applyRecursivelyCheckBox, SIGNAL(toggled(bool)), SLOT(confirmApplyIconRecursively(bool)));
 
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
@@ -102,6 +103,11 @@ IconStruct EditWidgetIcons::state()
             iconStruct.number = -1;
         }
     }
+
+    iconStruct.applyRecursively = false;
+    if (m_ui->applyRecursivelyCheckBox->isChecked()) {
+        iconStruct.applyRecursively = true;
+    };
 
     return iconStruct;
 }
@@ -142,6 +148,8 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
             m_ui->defaultIconsRadio->setChecked(true);
         }
     }
+
+    m_ui->applyRecursivelyCheckBox->setChecked(false);
 }
 
 void EditWidgetIcons::setUrl(const QString& url)
@@ -527,4 +535,24 @@ void EditWidgetIcons::updateRadioButtonDefaultIcons()
 void EditWidgetIcons::updateRadioButtonCustomIcons()
 {
     m_ui->customIconsRadio->setChecked(true);
+}
+
+void EditWidgetIcons::confirmApplyIconRecursively(bool checked)
+{
+    // Only show message box if checked
+    if (!checked) {
+        return;
+    }
+
+    auto result = MessageBox::question(this,
+                                       tr("Confirm Apply Icon Recursively"),
+                                       tr("This will overwrite the icon of every subgroup and "
+                                          "subentry. Are you sure you want to overwrite these?"),
+                                       MessageBox::Yes | MessageBox::No,
+                                       MessageBox::No);
+
+    if (result == MessageBox::No) {
+        // Uncheck the check box if not confirmed
+        this->m_ui->applyRecursivelyCheckBox->setChecked(false);
+    }
 }

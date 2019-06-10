@@ -46,6 +46,7 @@ struct IconStruct
 
     QUuid uuid;
     int number;
+    bool applyRecursively;
 };
 
 class EditWidgetIcons : public QWidget
@@ -84,6 +85,7 @@ private slots:
     void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();
     void updateRadioButtonCustomIcons();
+    void confirmApplyIconRecursively(bool checked);
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;

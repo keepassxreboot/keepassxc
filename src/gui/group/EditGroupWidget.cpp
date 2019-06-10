@@ -212,6 +212,11 @@ void EditGroupWidget::apply()
     // Icons add/remove are applied globally outside the transaction!
     m_group->copyDataFrom(m_temporaryGroup.data());
 
+    // Assign the icon recursively if selected
+    if (iconStruct.applyRecursively) {
+        m_group->applyGroupIconRecursively();
+    }
+
     setModified(false);
 }
 

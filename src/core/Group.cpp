@@ -1082,18 +1082,34 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
 
 void Group::applyGroupIconTo(Entry* entry)
 {
-    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
-        return;
-    }
-
-    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
-        return;
-    }
+    Q_ASSERT(entry);
 
     if (iconUuid().isNull()) {
         entry->setIcon(iconNumber());
     } else {
         entry->setIcon(iconUuid());
+    }
+}
+
+void Group::applyGroupIconTo(Group* other)
+{
+    Q_ASSERT(other);
+
+    if (this->iconUuid().isNull()) {
+        other->setIcon(this->iconNumber());
+    } else {
+        other->setIcon(this->iconUuid());
+    }
+}
+
+void Group::applyGroupIconRecursively()
+{
+    for (Group* recursiveChild : this->groupsRecursive(false)) {
+        this->applyGroupIconTo(recursiveChild);
+    }
+
+    for (Entry* recursiveEntry : this->entriesRecursive(false)) {
+        this->applyGroupIconTo(recursiveEntry);
     }
 }
 

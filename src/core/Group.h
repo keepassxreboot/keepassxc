@@ -169,6 +169,8 @@ public:
     void removeEntry(Entry* entry);
 
     void applyGroupIconTo(Entry* entry);
+    void applyGroupIconTo(Group* other);
+    void applyGroupIconRecursively();
 
     void sortChildrenRecursively(bool reverse = false);
 
