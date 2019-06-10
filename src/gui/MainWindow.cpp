@@ -155,9 +155,9 @@ MainWindow::MainWindow()
     setAcceptDrops(true);
 
     // Setup the search widget in the toolbar
-    auto* search = new SearchWidget();
-    search->connectSignals(m_actionMultiplexer);
-    m_searchWidgetAction = m_ui->toolBar->addWidget(search);
+    m_searchWidget = new SearchWidget();
+    m_searchWidget->connectSignals(m_actionMultiplexer);
+    m_searchWidgetAction = m_ui->toolBar->addWidget(m_searchWidget);
     m_searchWidgetAction->setEnabled(false);
 
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
@@ -310,9 +310,9 @@ MainWindow::MainWindow()
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
             SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
-            search,
+            m_searchWidget,
             SLOT(databaseChanged(DatabaseWidget*)));
-    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), search, SLOT(databaseChanged()));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), m_searchWidget, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
@@ -547,7 +547,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
-            bool hasFocus = m_contextMenuFocusLock || menuBar()->hasFocus() || dbWidget->currentEntryHasFocus();
+            bool hasFocus = m_contextMenuFocusLock || menuBar()->hasFocus() || m_searchWidget->hasFocus()
+                            || dbWidget->currentEntryHasFocus();
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && hasFocus;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
             bool groupSelected = dbWidget->isGroupSelected();

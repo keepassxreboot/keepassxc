@@ -34,6 +34,7 @@ namespace Ui
 }
 
 class InactivityTimer;
+class SearchWidget;
 
 class MainWindow : public QMainWindow
 {
@@ -145,6 +146,7 @@ private:
     int m_countDefaultAttributes;
     QSystemTrayIcon* m_trayIcon;
     ScreenLockListener* m_screenLockListener;
+    QPointer<SearchWidget> m_searchWidget;
 
     Q_DISABLE_COPY(MainWindow)
 
