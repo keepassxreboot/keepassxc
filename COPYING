@@ -160,11 +160,11 @@ Comment: based on Nuvola icon theme
 Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
+       share/icons/application/*/actions/database-lock.png
        share/icons/application/*/actions/dialog-close.png
        share/icons/application/*/actions/dialog-ok.png
        share/icons/application/*/actions/document-close.png
        share/icons/application/*/actions/document-edit.png
-       share/icons/application/*/actions/document-encrypt.png
        share/icons/application/*/actions/document-new.png
        share/icons/application/*/actions/document-open.png
        share/icons/application/*/actions/document-properties.png
