@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
+#include <QWindow>
 
 #include "config-keepassx.h"
 
@@ -1088,9 +1089,16 @@ void MainWindow::processTrayIconTrigger()
         toggleWindow();
     } else if (m_trayIconTriggerReason == QSystemTrayIcon::Trigger
                || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
-        // On single/middle click focus the window if it is not hidden
-        // and did not have focus less than a second ago, otherwise toggle
-        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+        // Toggle window if hidden
+        // If on windows, check if focus switched within the last second because
+        // clicking the tray icon removes focus from main window
+        // If on Linux or macOS, check if the window is active
+        if (isHidden()
+#ifdef Q_OS_WIN
+            || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+#else
+            || windowHandle()->isActive()) {
+#endif
             toggleWindow();
         } else {
             bringToFront();
