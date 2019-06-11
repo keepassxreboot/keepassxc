@@ -35,6 +35,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     , m_clearSearchTimer(new QTimer(this))
 {
     m_ui->setupUi(this);
+    setFocusProxy(m_ui->searchEdit);
 
     m_helpWidget = new PopupHelpWidget(m_ui->searchEdit);
     m_helpWidget->setOffset(QPoint(0, 1));
