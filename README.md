@@ -1,5 +1,5 @@
 # <img src="https://keepassxc.org/logo.png" width="40" height="40"/> KeePassXC
-[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:(project:KeepassXC)/statusIcon](https://ci.keepassxc.org/?guest=1) [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
+[![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1) [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
 
 ## About KeePassXC
 [KeePassXC](https://keepassxc.org) is a cross-platform community fork of
