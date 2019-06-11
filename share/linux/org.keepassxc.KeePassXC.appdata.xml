@@ -50,6 +50,16 @@
     </screenshots>
 
     <releases>
+        <release version="2.4.3" date="2019-06-12">
+            <description>
+                <ul>
+                    <li>Fix library loading issues in the Snap and macOS releases [#3247]</li>
+                    <li>Fix various keyboard navigation issues [#3248]</li>
+                    <li>Fix main window toggling regression when clicking the tray icon on KDE [#3258]</li>
+                    <li>Add documentation for keyboard shortcuts to source code distribution [#3215]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.4.2" date="2019-05-31">
             <description>
                 <ul>
