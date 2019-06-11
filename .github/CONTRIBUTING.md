@@ -221,6 +221,6 @@ Example: `<widget class="QCheckBox" name="rememberCheckBox">`
 
 
 
-[beginner]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3Abeginner+label%3A%22help+wanted%22+sort%3Acomments-desc
+[beginner]:https://github.com/keepassxreboot/keepassxc/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+sort%3Acomments-desc+
 [help-wanted]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Acomments-desc
 [issues-section]:https://github.com/keepassxreboot/keepassxc/issues
