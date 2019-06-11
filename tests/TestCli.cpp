@@ -1010,7 +1010,8 @@ void TestCli::testMerge()
     QList<QByteArray> outLines1 = m_stdoutFile->readAll().split('\n');
     QCOMPARE(outLines1.at(0).split('[').at(0), QByteArray("\tOverwriting Internet "));
     QCOMPARE(outLines1.at(1).split('[').at(0), QByteArray("\tCreating missing Some Website "));
-    QCOMPARE(outLines1.at(2), QByteArray("Successfully merged the database files."));
+    QCOMPARE(outLines1.at(2),
+             QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
 
     QFile readBack(targetFile1.fileName());
     readBack.open(QIODevice::ReadOnly);
@@ -1071,7 +1072,8 @@ void TestCli::testMerge()
     m_stdoutFile->readLine();
     m_stdoutFile->readLine();
     QList<QByteArray> outLines3 = m_stdoutFile->readAll().split('\n');
-    QCOMPARE(outLines3.at(2), QByteArray("Successfully merged the database files."));
+    QCOMPARE(outLines3.at(2),
+             QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
 
     readBack.setFileName(targetFile3.fileName());
     readBack.open(QIODevice::ReadOnly);
