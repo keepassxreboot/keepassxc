@@ -1,5 +1,5 @@
 name: keepassxc
-version: 2.4.2
+version: 2.4.3
 grade: stable
 summary: Community-driven port of the Windows application “KeePass Password Safe”
 description: |
@@ -86,6 +86,7 @@ parts:
       - libusb-1.0-0
       - qtwayland5
       - qt5-gtk-platformtheme # for theming, font settings, cursor and to use gtk3 file chooser
+      - libqrencode3
     override-build: |
       snapcraftctl build
       sed -i 's|Icon=keepassxc|Icon=${SNAP}/usr/share/icons/hicolor/256x256/apps/keepassxc.png|g' $SNAPCRAFT_PART_INSTALL/usr/share/applications/org.keepassxc.KeePassXC.desktop
@@ -121,6 +122,7 @@ parts:
         - shared-mime-info
         - libqt5gui5
         - libgdk-pixbuf2.0-0
+        - libgtk2.0-0
         - libqt5svg5 # for loading icon themes which are svg
         - try: [appmenu-qt5] # not available on core18
         - locales-all

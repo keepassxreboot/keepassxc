@@ -44,6 +44,8 @@ if(WITH_XC_BROWSER)
                                     "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
                                 -change /usr/local/opt/qt/lib/QtNetwork.framework/Versions/5/QtNetwork
                                     "@executable_path/../Frameworks/QtNetwork.framework/Versions/5/QtNetwork"
+                                -change /usr/local/opt/libsodium/lib/libsodium.23.dylib
+                                    "@executable_path/../Frameworks/libsodium.23.dylib"
                            keepassxc-proxy
                            COMMENT "Changing linking of keepassxc-proxy")
 

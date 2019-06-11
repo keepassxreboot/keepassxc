@@ -25,6 +25,7 @@
 #include <QMimeData>
 #include <QShortcut>
 #include <QTimer>
+#include <QWindow>
 
 #include "config-keepassx.h"
 
@@ -155,9 +156,9 @@ MainWindow::MainWindow()
     setAcceptDrops(true);
 
     // Setup the search widget in the toolbar
-    auto* search = new SearchWidget();
-    search->connectSignals(m_actionMultiplexer);
-    m_searchWidgetAction = m_ui->toolBar->addWidget(search);
+    m_searchWidget = new SearchWidget();
+    m_searchWidget->connectSignals(m_actionMultiplexer);
+    m_searchWidgetAction = m_ui->toolBar->addWidget(m_searchWidget);
     m_searchWidgetAction->setEnabled(false);
 
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
@@ -253,7 +254,9 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
 #endif
 
+    connect(m_ui->menuEntries, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_ui->menuGroups, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
     // Control window state
@@ -308,9 +311,9 @@ MainWindow::MainWindow()
     // Notify search when the active database changes or gets locked
     connect(m_ui->tabWidget,
             SIGNAL(activateDatabaseChanged(DatabaseWidget*)),
-            search,
+            m_searchWidget,
             SLOT(databaseChanged(DatabaseWidget*)));
-    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), search, SLOT(databaseChanged()));
+    connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), m_searchWidget, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
@@ -545,9 +548,10 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
-            // bool inSearch = dbWidget->isInSearchMode();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && (m_contextMenuFocusLock || dbWidget->currentEntryHasFocus());
+            bool hasFocus = m_contextMenuFocusLock || menuBar()->hasFocus() || m_searchWidget->hasFocus()
+                            || dbWidget->currentEntryHasFocus();
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && hasFocus;
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
             bool groupSelected = dbWidget->isGroupSelected();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
@@ -990,6 +994,11 @@ void MainWindow::updateTrayIcon()
     }
 }
 
+void MainWindow::obtainContextFocusLock()
+{
+    m_contextMenuFocusLock = true;
+}
+
 void MainWindow::releaseContextFocusLock()
 {
     m_contextMenuFocusLock = false;
@@ -997,13 +1006,11 @@ void MainWindow::releaseContextFocusLock()
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
-    m_contextMenuFocusLock = true;
     m_ui->menuEntries->popup(globalPos);
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 {
-    m_contextMenuFocusLock = true;
     m_ui->menuGroups->popup(globalPos);
 }
 
@@ -1082,9 +1089,16 @@ void MainWindow::processTrayIconTrigger()
         toggleWindow();
     } else if (m_trayIconTriggerReason == QSystemTrayIcon::Trigger
                || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
-        // On single/middle click focus the window if it is not hidden
-        // and did not have focus less than a second ago, otherwise toggle
-        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+        // Toggle window if hidden
+        // If on windows, check if focus switched within the last second because
+        // clicking the tray icon removes focus from main window
+        // If on Linux or macOS, check if the window is active
+        if (isHidden()
+#ifdef Q_OS_WIN
+            || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+#else
+            || windowHandle()->isActive()) {
+#endif
             toggleWindow();
         } else {
             bringToFront();

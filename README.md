@@ -34,6 +34,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - Many bug fixes
 
 For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
+For a full list of keyboard shortcuts, see [KEYBINDS](./docs/KEYBINDS.md)
 
 ## Building KeePassXC
 
