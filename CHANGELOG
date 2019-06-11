@@ -1,3 +1,11 @@
+2.4.3 (2019-06-12)
+=========================
+
+- Fix library loading issues in the Snap and macOS releases [#3247]
+- Fix various keyboard navigation issues [#3248]
+- Fix main window toggling regression when clicking the tray icon on KDE [#3258]
+- Add documentation for keyboard shortcuts to source code distribution [#3215]
+
 2.4.2 (2019-05-31)
 =========================
 
