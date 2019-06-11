@@ -3158,19 +3158,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Disabled share %1</source>
-        <translation type="unfinished"/>
+        <translation>共有 %1 を無効にする</translation>
     </message>
     <message>
         <source>Import from share %1</source>
-        <translation type="unfinished"/>
+        <translation>共有 %1 からインポートする</translation>
     </message>
     <message>
         <source>Export to share %1</source>
-        <translation type="unfinished"/>
+        <translation>共有 %1 にエクスポートする</translation>
     </message>
     <message>
         <source>Synchronize with share %1</source>
-        <translation type="unfinished"/>
+        <translation>共有 %1 と同期</translation>
     </message>
 </context>
 <context>
@@ -5259,11 +5259,11 @@ Available commands:
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>%2 の %1 への複数のインポートソースパス</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation type="unfinished"/>
+        <translation>%2 のエクスポートターゲットパス %1 が競合しています</translation>
     </message>
     <message>
         <source>Could not embed signature: Could not open file to write (%1)</source>
