@@ -450,7 +450,7 @@ void BrowserService::addEntry(const QString& id,
 
     auto db = selectedDb ? selectedDb : selectedDatabase();
     if (!db) {
-        return;
+       return;
     }
 
     auto* entry = new Entry();
@@ -489,17 +489,20 @@ void BrowserService::addEntry(const QString& id,
     config.save(entry);
 }
 
-void BrowserService::updateEntry(const QString& id,
-                                 const QString& uuid,
-                                 const QString& login,
-                                 const QString& password,
-                                 const QString& url,
-                                 const QString& submitUrl)
+BrowserService::ReturnValue
+BrowserService::updateEntry(const QString& id,
+                            const QString& uuid,
+                            const QString& login,
+                            const QString& password,
+                            const QString& url,
+                            const QString& submitUrl)
 {
+    ReturnValue result = ReturnValue::Error;
     if (thread() != QThread::currentThread()) {
         QMetaObject::invokeMethod(this,
                                   "updateEntry",
                                   Qt::BlockingQueuedConnection,
+                                  Q_RETURN_ARG(ReturnValue, result),
                                   Q_ARG(QString, id),
                                   Q_ARG(QString, uuid),
                                   Q_ARG(QString, login),
@@ -510,14 +513,14 @@ void BrowserService::updateEntry(const QString& id,
 
     auto db = selectedDatabase();
     if (!db) {
-        return;
+        return ReturnValue::Error;
     }
 
     Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
         addEntry(id, login, password, url, submitUrl, "", "", "", db);
-        return;
+        return ReturnValue::Success;
     }
 
     // Check if the entry password is a reference. If so, update the original entry instead
@@ -526,14 +529,14 @@ void BrowserService::updateEntry(const QString& id,
         if (!referenceUuid.isNull()) {
             entry = db->rootGroup()->findEntryByUuid(referenceUuid);
             if (!entry) {
-                return;
+                return ReturnValue::Error;
             }
         }
     }
 
     QString username = entry->username();
     if (username.isEmpty()) {
-        return;
+        return ReturnValue::Error;
     }
 
     if (username.compare(login, Qt::CaseSensitive) != 0
@@ -557,10 +560,15 @@ void BrowserService::updateEntry(const QString& id,
             }
             entry->setPassword(password);
             entry->endUpdate();
+            result = ReturnValue::Success;
+        } else {
+            result = ReturnValue::Canceled;
         }
 
         hideWindow();
     }
+
+    return result;
 }
 
 QList<Entry*>
