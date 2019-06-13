@@ -329,10 +329,11 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const QString groupUuid = decrypted.value("groupUuid").toString();
     const QString realm;
 
+    BrowserService::ReturnValue result = BrowserService::ReturnValue::Success;
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm, group, groupUuid);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
+        result = m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -340,7 +341,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     QJsonObject message = buildMessage(newNonce);
     message["count"] = QJsonValue::Null;
     message["entries"] = QJsonValue::Null;
-    message["error"] = QString("");
+    message["error"] = getReturnValue(result);
     message["hash"] = hash;
 
     return buildResponse(action, message, newNonce);
@@ -511,6 +512,19 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
     default:
         return QObject::tr("Unknown error");
     }
+}
+
+QString BrowserAction::getReturnValue(const BrowserService::ReturnValue returnValue) const
+{
+    switch(returnValue) {
+        case BrowserService::ReturnValue::Success:
+            return QString("success");
+        case BrowserService::ReturnValue::Error:
+            return QString("error");
+        case BrowserService::ReturnValue::Canceled:
+            return QString("canceled");
+    }
+    return QString("error");
 }
 
 QString BrowserAction::getDatabaseHash()

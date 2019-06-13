@@ -38,6 +38,13 @@ class BrowserService : public QObject
     Q_OBJECT
 
 public:
+    enum ReturnValue
+    {
+        Success,
+        Error,
+        Canceled
+    };
+
     explicit BrowserService(DatabaseTabWidget* parent);
 
     bool isDatabaseOpened() const;
@@ -74,12 +81,12 @@ public slots:
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
     QString storeKey(const QString& key);
-    void updateEntry(const QString& id,
-                     const QString& uuid,
-                     const QString& login,
-                     const QString& password,
-                     const QString& url,
-                     const QString& submitUrl);
+    ReturnValue updateEntry(const QString& id,
+                            const QString& uuid,
+                            const QString& login,
+                            const QString& password,
+                            const QString& url,
+                            const QString& submitUrl);
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
