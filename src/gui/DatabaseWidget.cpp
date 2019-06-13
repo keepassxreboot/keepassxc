@@ -696,7 +696,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             }
         }
     } else {
-        QUrl url = QUrl(entry->url());
+        QUrl url = QUrl::fromUserInput(entry->url());
         if (!url.isEmpty()) {
             QDesktopServices::openUrl(url);
         }
