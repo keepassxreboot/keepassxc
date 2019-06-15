@@ -802,7 +802,7 @@ void MainWindow::openYubikeyUrl()
 
 void MainWindow::openGeneralFAQUrl()
 {
-    customOpenUrl("https://keepassxc.org/docs/#faq");
+    customOpenUrl("https://keepassxc.org/docs/#faTextLabelq");
 }
 void MainWindow::switchToDatabases()
 {
