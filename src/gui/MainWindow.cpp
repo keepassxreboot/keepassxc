@@ -395,6 +395,13 @@ MainWindow::MainWindow()
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
     connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
+    connect(m_ui->actionQuickstart, SIGNAL(triggered()), SLOT(openQuickStartUrl()));
+    connect(m_ui->actionWiki, SIGNAL(triggered()), SLOT(openWikiUrl()));
+    connect(m_ui->actionBrowserIntegration, SIGNAL(triggered()), SLOT(openBrowserIntegrationUrl()));
+    connect(m_ui->actionSSHAgent, SIGNAL(triggered()), SLOT(openSSHAgentUrl()));
+    connect(m_ui->actionYubikey, SIGNAL(triggered()), SLOT(openYubikeyUrl()));
+    connect(m_ui->actionGeneralFAQ, SIGNAL(triggered()), SLOT(openGeneralFAQUrl()));
+
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
@@ -753,16 +760,50 @@ void MainWindow::showUpdateCheckDialog()
 #endif
 }
 
+void MainWindow::customOpenUrl(QString url)
+{
+    QDesktopServices::openUrl(QUrl(url));
+}
+
 void MainWindow::openDonateUrl()
 {
-    QDesktopServices::openUrl(QUrl("https://keepassxc.org/donate"));
+    customOpenUrl("https://keepassxc.org/donate");
 }
 
 void MainWindow::openBugReportUrl()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/keepassxreboot/keepassxc/issues"));
+    customOpenUrl("https://github.com/keepassxreboot/keepassxc/issues");
 }
 
+void MainWindow::openQuickStartUrl()
+{
+    customOpenUrl("https://keepassxc.org/quickstart/");
+}
+
+void MainWindow::openWikiUrl()
+{
+    customOpenUrl("https://github.com/keepassxreboot/keepassxc/wiki");
+}
+
+void MainWindow::openBrowserIntegrationUrl()
+{
+    customOpenUrl("https://keepassxc.org/docs/keepassxc-browser-migration/");
+}
+
+void MainWindow::openSSHAgentUrl()
+{
+    customOpenUrl("https://keepassxc.org/docs/#faq-ssh-agent-how");
+}
+
+void MainWindow::openYubikeyUrl()
+{
+    customOpenUrl("https://keepassxc.org/docs/#faq-yubikey-2fa");
+}
+
+void MainWindow::openGeneralFAQUrl()
+{
+    customOpenUrl("https://keepassxc.org/docs/#faq");
+}
 void MainWindow::switchToDatabases()
 {
     if (m_ui->tabWidget->currentIndex() == -1) {

@@ -91,6 +91,12 @@ private slots:
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
+    void openQuickStartUrl();
+    void openWikiUrl();
+    void openBrowserIntegrationUrl();
+    void openSSHAgentUrl();
+    void openYubikeyUrl();
+    void openGeneralFAQUrl();
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
@@ -132,6 +138,7 @@ private:
     bool saveLastDatabases();
     void updateTrayIcon();
     bool isTrayIconEnabled() const;
+    void customOpenUrl(QString url);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
     void dragEnterEvent(QDragEnterEvent* event) override;

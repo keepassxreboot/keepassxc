@@ -223,9 +223,23 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
+    <widget class="QMenu" name="menuFeatures">
+     <property name="title">
+      <string>Features</string>
+     </property>
+     <addaction name="actionBrowserIntegration"/>
+     <addaction name="actionSSHAgent"/>
+     <addaction name="actionYubikey"/>
+    </widget>
     <addaction name="actionAbout"/>
-    <addaction name="actionCheckForUpdates"/>
     <addaction name="actionDonate"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuickstart"/>
+    <addaction name="menuFeatures"/>
+    <addaction name="actionWiki"/>
+    <addaction name="actionGeneralFAQ"/>
+    <addaction name="separator"/>
+    <addaction name="actionCheckForUpdates"/>
     <addaction name="actionBugReport"/>
    </widget>
    <widget class="QMenu" name="menuEntries">
@@ -661,6 +675,51 @@
   <action name="actionShare_entry">
    <property name="text">
     <string>Share entry</string>
+   </property>
+  </action>
+  <action name="actionQuickstart">
+   <property name="text">
+    <string>Quickstart</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Quickstart Guide in browser</string>
+   </property>
+  </action>
+  <action name="actionWiki">
+   <property name="text">
+    <string>Wiki</string>
+   </property>
+   <property name="toolTip">
+    <string>Wiki on Github</string>
+   </property>
+  </action>
+  <action name="actionBrowserIntegration">
+   <property name="text">
+    <string>Browser Integration</string>
+   </property>
+   <property name="toolTip">
+    <string>Set up Browser Integration</string>
+   </property>
+  </action>
+  <action name="actionSSHAgent">
+   <property name="text">
+    <string>SSH Agent</string>
+   </property>
+   <property name="toolTip">
+    <string>SSH-Agent Feature</string>
+   </property>
+  </action>
+  <action name="actionYubikey">
+   <property name="text">
+    <string>Yubikey</string>
+   </property>
+   <property name="toolTip">
+    <string>Setting up a Yubikey</string>
+   </property>
+  </action>
+  <action name="actionGeneralFAQ">
+   <property name="text">
+    <string>General FAQ</string>
    </property>
   </action>
  </widget>
