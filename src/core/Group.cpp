@@ -1080,6 +1080,21 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
     return entry;
 }
 
+void Group::applyGroupIconOnCreateTo(Entry* entry)
+{
+    Q_ASSERT(entry);
+
+    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+        return;
+    }
+
+    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
+        return;
+    }
+
+    applyGroupIconTo(entry);
+}
+
 void Group::applyGroupIconTo(Entry* entry)
 {
     Q_ASSERT(entry);
@@ -1095,21 +1110,24 @@ void Group::applyGroupIconTo(Group* other)
 {
     Q_ASSERT(other);
 
-    if (this->iconUuid().isNull()) {
-        other->setIcon(this->iconNumber());
+    if (iconUuid().isNull()) {
+        other->setIcon(iconNumber());
     } else {
-        other->setIcon(this->iconUuid());
+        other->setIcon(iconUuid());
     }
 }
 
-void Group::applyGroupIconRecursively()
+void Group::applyGroupIconToChildGroups()
 {
-    for (Group* recursiveChild : this->groupsRecursive(false)) {
-        this->applyGroupIconTo(recursiveChild);
+    for (Group* recursiveChild : groupsRecursive(false)) {
+        applyGroupIconTo(recursiveChild);
     }
+}
 
-    for (Entry* recursiveEntry : this->entriesRecursive(false)) {
-        this->applyGroupIconTo(recursiveEntry);
+void Group::applyGroupIconToChildEntries()
+{
+    for (Entry* recursiveEntry : entriesRecursive(false)) {
+        applyGroupIconTo(recursiveEntry);
     }
 }
 

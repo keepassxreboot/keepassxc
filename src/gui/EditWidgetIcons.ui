@@ -113,7 +113,7 @@
     </layout>
    </item>
    <item>
-   <layout class="QHBoxLayout" name="applyRecursivelyHorizontalLayout">
+   <layout class="QHBoxLayout" name="applyToChildrenHorizontalLayout">
     <item>
      <spacer name="horizontalSpacer">
       <property name="orientation">
@@ -122,9 +122,9 @@
      </spacer>
     </item>
     <item>
-     <widget class="QCheckBox" name="applyRecursivelyCheckBox">
+     <widget class="QPushButton" name="applyIconToPushButton">
       <property name="text">
-       <string>Apply &amp;recursively</string>
+       <string>Apply icon &amp;to ...</string>
       </property>
      </widget>
     </item>
@@ -139,7 +139,7 @@
   <tabstop>customIconsView</tabstop>
   <tabstop>addButton</tabstop>
   <tabstop>deleteButton</tabstop>
-  <tabstop>applyRecursivelyCheckBox</tabstop>
+  <tabstop>applyIconToPushButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

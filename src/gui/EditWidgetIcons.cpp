@@ -45,6 +45,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
     , m_db(nullptr)
+    , m_applyIconTo(ApplyIconToOptions::THIS_ONLY)
 #ifdef WITH_XC_NETWORKING
     , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
@@ -57,6 +58,8 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     m_ui->defaultIconsView->setModel(m_defaultIconModel);
     m_ui->customIconsView->setModel(m_customIconModel);
 
+    m_ui->applyIconToPushButton->setMenu(createApplyIconToMenu());
+
     // clang-format off
     connect(m_ui->defaultIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonDefaultIcons()));
     connect(m_ui->customIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonCustomIcons()));
@@ -65,7 +68,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
-    connect(m_ui->applyRecursivelyCheckBox, SIGNAL(toggled(bool)), SLOT(confirmApplyIconRecursively(bool)));
+    connect(m_ui->applyIconToPushButton->menu(), SIGNAL(triggered(QAction*)), SLOT(confirmApplyIconTo(QAction*)));
 
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
@@ -104,10 +107,7 @@ IconStruct EditWidgetIcons::state()
         }
     }
 
-    iconStruct.applyRecursively = false;
-    if (m_ui->applyRecursivelyCheckBox->isChecked()) {
-        iconStruct.applyRecursively = true;
-    };
+    iconStruct.applyTo = m_applyIconTo;
 
     return iconStruct;
 }
@@ -149,7 +149,24 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
         }
     }
 
-    m_ui->applyRecursivelyCheckBox->setChecked(false);
+    m_applyIconTo = ApplyIconToOptions::THIS_ONLY;
+    m_ui->applyIconToPushButton->menu()->defaultAction()->activate(QAction::Trigger);
+}
+
+QMenu* EditWidgetIcons::createApplyIconToMenu()
+{
+    auto* applyIconToMenu = new QMenu(this);
+    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only", nullptr, 0));
+    defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
+    applyIconToMenu->setDefaultAction(defaultAction);
+    applyIconToMenu->addSeparator();
+    applyIconToMenu->addAction(tr("Apply to child groups", nullptr, 1))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_GROUPS));
+    applyIconToMenu->addAction(tr("Apply to child entries", nullptr, 2))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_ENTRIES));
+    applyIconToMenu->addAction(tr("Apply to all children", nullptr, 3))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::ALL_CHILDREN));
+    return applyIconToMenu;
 }
 
 void EditWidgetIcons::setUrl(const QString& url)
@@ -537,22 +554,30 @@ void EditWidgetIcons::updateRadioButtonCustomIcons()
     m_ui->customIconsRadio->setChecked(true);
 }
 
-void EditWidgetIcons::confirmApplyIconRecursively(bool checked)
+void EditWidgetIcons::confirmApplyIconTo(QAction* action)
 {
-    // Only show message box if checked
-    if (!checked) {
-        return;
+    ApplyIconToOptions selectedOption = action->data().value<ApplyIconToOptions>();
+    QAction* actualAction = action;
+
+    // If no other icons are to be overwritten, no popup is shown
+    if (selectedOption != ApplyIconToOptions::THIS_ONLY) {
+        auto result = MessageBox::question(this,
+                                           tr("Confirm Apply Icon to Children"),
+                                           tr("This will overwrite the icon of "
+                                              "every subgroup and subentry. "
+                                              "Are you sure you want to "
+                                              "overwrite these?"),
+                                           MessageBox::Yes | MessageBox::Abort,
+                                           MessageBox::Abort);
+
+        // If the user aborts, fall back to the default action which writes
+        // the icon only for the current element
+        if (result == MessageBox::Abort) {
+            selectedOption = ApplyIconToOptions::THIS_ONLY;
+            actualAction = m_ui->applyIconToPushButton->menu()->defaultAction();
+        }
     }
 
-    auto result = MessageBox::question(this,
-                                       tr("Confirm Apply Icon Recursively"),
-                                       tr("This will overwrite the icon of every subgroup and "
-                                          "subentry. Are you sure you want to overwrite these?"),
-                                       MessageBox::Yes | MessageBox::No,
-                                       MessageBox::No);
-
-    if (result == MessageBox::No) {
-        // Uncheck the check box if not confirmed
-        this->m_ui->applyRecursivelyCheckBox->setChecked(false);
-    }
+    m_applyIconTo = selectedOption;
+    m_ui->applyIconToPushButton->setText(actualAction->text());
 }

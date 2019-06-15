@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
+#include <QMenu>
 #include <QUrl>
 #include <QUuid>
 #include <QWidget>
@@ -40,13 +41,23 @@ namespace Ui
     class EditWidgetIcons;
 }
 
+enum ApplyIconToOptions
+{
+    THIS_ONLY = 0b00,
+    CHILD_GROUPS = 0b10,
+    CHILD_ENTRIES = 0b01,
+    ALL_CHILDREN = 0b11
+};
+
+Q_DECLARE_METATYPE(ApplyIconToOptions)
+
 struct IconStruct
 {
     IconStruct();
 
     QUuid uuid;
     int number;
-    bool applyRecursively;
+    ApplyIconToOptions applyTo;
 };
 
 class EditWidgetIcons : public QWidget
@@ -63,6 +74,8 @@ public:
               const QSharedPointer<Database>& database,
               const IconStruct& iconStruct,
               const QString& url = "");
+
+    QMenu* createApplyIconToMenu();
 
 public slots:
     void setUrl(const QString& url);
@@ -85,12 +98,13 @@ private slots:
     void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();
     void updateRadioButtonCustomIcons();
-    void confirmApplyIconRecursively(bool checked);
+    void confirmApplyIconTo(QAction* action);
 
 private:
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
+    ApplyIconToOptions m_applyIconTo;
 #ifdef WITH_XC_NETWORKING
     QUrl m_url;
     QUrl m_fetchUrl;
