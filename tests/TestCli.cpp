@@ -847,7 +847,38 @@ void TestCli::testList()
                         "eMail/\n"
                         "  [empty]\n"
                         "Homebanking/\n"
-                        "  [empty]\n"));
+                        "  Subgroup/\n"
+                        "    Subgroup Entry\n"));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-R", "-f", m_dbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "General/\n"
+                        "General/[empty]\n"
+                        "Windows/\n"
+                        "Windows/[empty]\n"
+                        "Network/\n"
+                        "Network/[empty]\n"
+                        "Internet/\n"
+                        "Internet/[empty]\n"
+                        "eMail/\n"
+                        "eMail/[empty]\n"
+                        "Homebanking/\n"
+                        "Homebanking/Subgroup/\n"
+                        "Homebanking/Subgroup/Subgroup Entry\n"));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    listCmd.execute({"ls", "-R", "-f", m_dbFile->fileName(), "/Homebanking"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Subgroup/\n"
+                        "Subgroup/Subgroup Entry\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
@@ -921,7 +952,7 @@ void TestCli::testLocate()
     locateCmd.execute({"locate", tmpFile.fileName(), "Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n/General/New Entry\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
 }
 
 void TestCli::testMerge()
