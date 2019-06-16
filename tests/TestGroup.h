@@ -46,6 +46,7 @@ private slots:
     void testCopyDataFrom();
     void testEquals();
     void sortChildrenRecursively();
+    void testHierarchy();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

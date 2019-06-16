@@ -1049,3 +1049,34 @@ void TestGroup::sortChildrenRecursively()
     QCOMPARE(children[8]->name(), QString("sub_000"));
     delete parent;
 }
+
+void TestGroup::testHierarchy() {
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group3 = new Group();
+    group3->setName("group3");
+    group3->setParent(group2);
+
+    QStringList hierarchy = group3->hierarchy();
+    QVERIFY(hierarchy.size() == 3);
+    QVERIFY(hierarchy.contains("group1"));
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(0);
+    QVERIFY(hierarchy.size() == 0);
+
+    hierarchy = group3->hierarchy(1);
+    QVERIFY(hierarchy.size() == 1);
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(2);
+    QVERIFY(hierarchy.size() == 2);
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
+}
