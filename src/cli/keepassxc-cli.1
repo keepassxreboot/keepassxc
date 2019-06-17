@@ -36,8 +36,8 @@ The same password generation options as documented for the generate command can 
 .IP "estimate [options] [password]"
 Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
 
-.IP "extract [options] <database>"
-Extracts and prints the contents of a database to standard output in XML format.
+.IP "export [options] <database>"
+Exports the content of a database to standard output in the specified format (defaults to XML).
 
 .IP "generate [options]"
 Generate a random password.
@@ -162,6 +162,12 @@ Desired number of words for the generated passphrase. [Default: 7]
 Path of the wordlist for the diceware generator. The wordlist must have > 1000 words,
 otherwise the program will fail. If the wordlist has < 4000 words a warning will
 be printed to STDERR.
+
+
+.SS "Export options"
+
+.IP "-f, --format"
+Format to use when exporting. Available choices are xml or csv. Defaults to xml.
 
 
 .SS "List options"
