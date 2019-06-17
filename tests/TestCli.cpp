@@ -39,7 +39,7 @@
 #include "cli/Diceware.h"
 #include "cli/Edit.h"
 #include "cli/Estimate.h"
-#include "cli/Extract.h"
+#include "cli/Export.h"
 #include "cli/Generate.h"
 #include "cli/List.h"
 #include "cli/Locate.h"
@@ -170,7 +170,7 @@ void TestCli::testCommand()
     QVERIFY(Command::getCommand("diceware"));
     QVERIFY(Command::getCommand("edit"));
     QVERIFY(Command::getCommand("estimate"));
-    QVERIFY(Command::getCommand("extract"));
+    QVERIFY(Command::getCommand("export"));
     QVERIFY(Command::getCommand("generate"));
     QVERIFY(Command::getCommand("locate"));
     QVERIFY(Command::getCommand("ls"));
@@ -742,14 +742,14 @@ void TestCli::testEstimate()
     }
 }
 
-void TestCli::testExtract()
+void TestCli::testExport()
 {
-    Extract extractCmd;
-    QVERIFY(!extractCmd.name.isEmpty());
-    QVERIFY(extractCmd.getDescriptionLine().contains(extractCmd.name));
+    Export exportCmd;
+    QVERIFY(!exportCmd.name.isEmpty());
+    QVERIFY(exportCmd.getDescriptionLine().contains(exportCmd.name));
 
     Utils::Test::setNextPassword("a");
-    extractCmd.execute({"extract", m_dbFile->fileName()});
+    exportCmd.execute({"export", m_dbFile->fileName()});
 
     m_stdoutFile->seek(0);
     m_stdoutFile->readLine(); // skip prompt line
@@ -768,12 +768,41 @@ void TestCli::testExtract()
     // Quiet option
     QScopedPointer<Database> dbQuiet(new Database());
     qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    extractCmd.execute({"extract", "-q", m_dbFile->fileName()});
+    exportCmd.execute({"export", "-f", "xml", "-q", m_dbFile->fileName()});
     m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
     reader.readDatabase(m_stdoutFile.data(), dbQuiet.data());
     QVERIFY(!reader.hasError());
     QVERIFY(db.data());
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+
+    // CSV exporting
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    exportCmd.execute({"export", "-f", "csv", m_dbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip prompt line
+    m_stderrFile->seek(posErr);
+    QByteArray csvHeader = m_stdoutFile->readLine();
+    QCOMPARE(csvHeader, QByteArray("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\"\n"));
+    QByteArray csvData = m_stdoutFile->readAll();
+    QVERIFY(csvData.contains(QByteArray(
+        "\"NewDatabase\",\"Sample Entry\",\"User Name\",\"Password\",\"http://www.somesite.com/\",\"Notes\"\n")));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+
+    // test invalid format
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    exportCmd.execute({"export", "-f", "yaml", m_dbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip prompt line
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Unsupported format yaml\n"));
 }
 
 void TestCli::testGenerate_data()

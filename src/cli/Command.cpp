@@ -29,7 +29,7 @@
 #include "Diceware.h"
 #include "Edit.h"
 #include "Estimate.h"
-#include "Extract.h"
+#include "Export.h"
 #include "Generate.h"
 #include "List.h"
 #include "Locate.h"
@@ -114,7 +114,7 @@ void populateCommands()
         commands.insert(QString("diceware"), new Diceware());
         commands.insert(QString("edit"), new Edit());
         commands.insert(QString("estimate"), new Estimate());
-        commands.insert(QString("extract"), new Extract());
+        commands.insert(QString("export"), new Export());
         commands.insert(QString("generate"), new Generate());
         commands.insert(QString("locate"), new Locate());
         commands.insert(QString("ls"), new List());

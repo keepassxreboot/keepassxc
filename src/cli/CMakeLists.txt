@@ -23,7 +23,7 @@ set(cli_SOURCES
         Diceware.cpp
         Edit.cpp
         Estimate.cpp
-        Extract.cpp
+        Export.cpp
         Generate.cpp
         List.cpp
         Locate.cpp

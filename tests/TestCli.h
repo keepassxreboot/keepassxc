@@ -52,7 +52,7 @@ private slots:
     void testEdit();
     void testEstimate_data();
     void testEstimate();
-    void testExtract();
+    void testExport();
     void testGenerate_data();
     void testGenerate();
     void testKeyFileOption();

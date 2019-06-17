@@ -7,13 +7,15 @@
 - Group sorting feature [#3282](https://github.com/keepassxreboot/keepassxc/issues/3282)
 - CLI: Add 'flatten' option to the 'ls' command [#3276](https://github.com/keepassxreboot/keepassxc/issues/3276)
 - CLI: Add password generation options to `Add` and `Edit` commands [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
+- CLI: Add CSV export to the 'export' command [#3277]
 - Add 'Monospaced font' option to the Notes field [#3321](https://github.com/keepassxreboot/keepassxc/issues/3321)
 
 ### Changed
 
-- 💥💥 CLI: The password length option `-l` for the CLI commands
+- CLI: The password length option `-l` for the CLI commands
   `Add` and `Edit` is now `-L` [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
-- 💥💥 CLI: the `-u` shorthand for the `--upper` password generation option has been renamed `-U` [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
+- CLI: the `-u` shorthand for the `--upper` password generation option has been renamed `-U` [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
+- CLI: Renamed command `extract` -> `export`. [#3277]
 - Rework the Entry Preview panel [#3306](https://github.com/keepassxreboot/keepassxc/issues/3306)
 - Move notes to General tab on Group Preview Panel [#3336](https://github.com/keepassxreboot/keepassxc/issues/3336)
 - Drop to background when copy feature [#3253](https://github.com/keepassxreboot/keepassxc/issues/3253)
