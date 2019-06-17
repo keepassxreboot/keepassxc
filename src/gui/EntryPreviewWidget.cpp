@@ -202,7 +202,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     const QString url = m_currentEntry->url();
     if (!url.isEmpty()) {
         // URL is well formed and can be opened in a browser
-        m_ui->entryUrlLabel->setUrl(url);
+        m_ui->entryUrlLabel->setUrl(m_currentEntry->resolveMultiplePlaceholders(url));
         m_ui->entryUrlLabel->setCursor(Qt::PointingHandCursor);
         m_ui->entryUrlLabel->setOpenExternalLinks(false);
     } else {
