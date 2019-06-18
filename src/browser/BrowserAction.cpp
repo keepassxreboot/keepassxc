@@ -516,13 +516,13 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
 
 QString BrowserAction::getReturnValue(const BrowserService::ReturnValue returnValue) const
 {
-    switch(returnValue) {
-        case BrowserService::ReturnValue::Success:
-            return QString("success");
-        case BrowserService::ReturnValue::Error:
-            return QString("error");
-        case BrowserService::ReturnValue::Canceled:
-            return QString("canceled");
+    switch (returnValue) {
+    case BrowserService::ReturnValue::Success:
+        return QString("success");
+    case BrowserService::ReturnValue::Error:
+        return QString("error");
+    case BrowserService::ReturnValue::Canceled:
+        return QString("canceled");
     }
     return QString("error");
 }
