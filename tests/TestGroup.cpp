@@ -870,7 +870,7 @@ void TestGroup::testEquals()
     QVERIFY(group->equals(group.data(), CompareItemDefault));
 }
 
-void TestGroup::sortChildrenRecursively()
+void TestGroup::testChildrenSort()
 {
     auto createTestGroupWithUnorderedChildren = []() -> Group* {
         Group* parent = new Group();
@@ -1050,7 +1050,8 @@ void TestGroup::sortChildrenRecursively()
     delete parent;
 }
 
-void TestGroup::testHierarchy() {
+void TestGroup::testHierarchy()
+{
     Group* group1 = new Group();
     group1->setName("group1");
 

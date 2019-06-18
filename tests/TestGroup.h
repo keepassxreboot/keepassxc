@@ -45,7 +45,7 @@ private slots:
     void testIsRecycled();
     void testCopyDataFrom();
     void testEquals();
-    void sortChildrenRecursively();
+    void testChildrenSort();
     void testHierarchy();
 };
 

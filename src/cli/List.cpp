@@ -31,10 +31,9 @@ const QCommandLineOption List::RecursiveOption =
                                      << "recursive",
                        QObject::tr("Recursively list the elements of the group."));
 
-const QCommandLineOption List::FlattenOption =
-    QCommandLineOption(QStringList() << "f"
-                                     << "flatten",
-                       QObject::tr("Flattens the output to single lines."));
+const QCommandLineOption List::FlattenOption = QCommandLineOption(QStringList() << "f"
+                                                                                << "flatten",
+                                                                  QObject::tr("Flattens the output to single lines."));
 
 List::List()
 {

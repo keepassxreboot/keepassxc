@@ -952,7 +952,8 @@ void TestCli::testLocate()
     locateCmd.execute({"locate", tmpFile.fileName(), "Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("/Sample Entry\n/General/New Entry\n/Homebanking/Subgroup/Subgroup Entry\n"));
 }
 
 void TestCli::testMerge()
