@@ -1073,6 +1073,16 @@ void DatabaseWidget::switchToGroupEdit()
     switchToGroupEdit(group, false);
 }
 
+void DatabaseWidget::sortGroupsAsc()
+{
+    m_groupView->sortGroups();
+}
+
+void DatabaseWidget::sortGroupsDesc()
+{
+    m_groupView->sortGroups(true);
+}
+
 void DatabaseWidget::switchToMasterKeyChange()
 {
     switchToDatabaseSettings();

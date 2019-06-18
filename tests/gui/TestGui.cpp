@@ -1280,6 +1280,94 @@ void TestGui::testDragAndDropKdbxFiles()
     QTRY_COMPARE(m_tabWidget->count(), openedDatabasesCount);
 }
 
+void TestGui::testSortGroups()
+{
+    auto* editGroupWidget = m_dbWidget->findChild<EditGroupWidget*>("editGroupWidget");
+    auto* nameEdit = editGroupWidget->findChild<QLineEdit*>("editName");
+    auto* editGroupWidgetButtonBox = editGroupWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Create some sub-groups
+    Group* rootGroup = m_db->rootGroup();
+    Group* internetGroup = rootGroup->findGroupByPath("Internet");
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Google");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "eBay");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Amazon");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, "Facebook");
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(rootGroup);
+
+    triggerAction("actionGroupSortAsc");
+    QList<Group*> children = rootGroup->children();
+    QCOMPARE(children[0]->name(), QString("eMail"));
+    QCOMPARE(children[1]->name(), QString("General"));
+    QCOMPARE(children[2]->name(), QString("Homebanking"));
+    QCOMPARE(children[3]->name(), QString("Internet"));
+    QCOMPARE(children[4]->name(), QString("Network"));
+    QCOMPARE(children[5]->name(), QString("Windows"));
+    QList<Group*> subChildren = internetGroup->children();
+    QCOMPARE(subChildren[0]->name(), QString("Amazon"));
+    QCOMPARE(subChildren[1]->name(), QString("eBay"));
+    QCOMPARE(subChildren[2]->name(), QString("Facebook"));
+    QCOMPARE(subChildren[3]->name(), QString("Google"));
+
+    triggerAction("actionGroupSortDesc");
+    children = rootGroup->children();
+    QCOMPARE(children[0]->name(), QString("Windows"));
+    QCOMPARE(children[1]->name(), QString("Network"));
+    QCOMPARE(children[2]->name(), QString("Internet"));
+    QCOMPARE(children[3]->name(), QString("Homebanking"));
+    QCOMPARE(children[4]->name(), QString("General"));
+    QCOMPARE(children[5]->name(), QString("eMail"));
+    subChildren = internetGroup->children();
+    QCOMPARE(subChildren[0]->name(), QString("Google"));
+    QCOMPARE(subChildren[1]->name(), QString("Facebook"));
+    QCOMPARE(subChildren[2]->name(), QString("eBay"));
+    QCOMPARE(subChildren[3]->name(), QString("Amazon"));
+
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    triggerAction("actionGroupSortAsc");
+    children = rootGroup->children();
+    QCOMPARE(children[0]->name(), QString("Windows"));
+    QCOMPARE(children[1]->name(), QString("Network"));
+    QCOMPARE(children[2]->name(), QString("Internet"));
+    QCOMPARE(children[3]->name(), QString("Homebanking"));
+    QCOMPARE(children[4]->name(), QString("General"));
+    QCOMPARE(children[5]->name(), QString("eMail"));
+    subChildren = internetGroup->children();
+    QCOMPARE(subChildren[0]->name(), QString("Amazon"));
+    QCOMPARE(subChildren[1]->name(), QString("eBay"));
+    QCOMPARE(subChildren[2]->name(), QString("Facebook"));
+    QCOMPARE(subChildren[3]->name(), QString("Google"));
+
+    m_dbWidget->groupView()->setCurrentGroup(rootGroup);
+    triggerAction("actionGroupSortAsc");
+    m_dbWidget->groupView()->setCurrentGroup(internetGroup);
+    triggerAction("actionGroupSortDesc");
+    children = rootGroup->children();
+    QCOMPARE(children[0]->name(), QString("eMail"));
+    QCOMPARE(children[1]->name(), QString("General"));
+    QCOMPARE(children[2]->name(), QString("Homebanking"));
+    QCOMPARE(children[3]->name(), QString("Internet"));
+    QCOMPARE(children[4]->name(), QString("Network"));
+    QCOMPARE(children[5]->name(), QString("Windows"));
+    subChildren = internetGroup->children();
+    QCOMPARE(subChildren[0]->name(), QString("Google"));
+    QCOMPARE(subChildren[1]->name(), QString("Facebook"));
+    QCOMPARE(subChildren[2]->name(), QString("eBay"));
+    QCOMPARE(subChildren[3]->name(), QString("Amazon"));
+}
+
 void TestGui::testTrayRestoreHide()
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {

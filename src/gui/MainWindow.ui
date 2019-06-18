@@ -281,6 +281,9 @@
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
+    <addaction name="separator"/>
+    <addaction name="actionGroupSortAsc"/>
+    <addaction name="actionGroupSortDesc"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -450,6 +453,22 @@
    </property>
    <property name="text">
     <string>&amp;Delete group</string>
+   </property>
+  </action>
+  <action name="actionGroupSortAsc">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sort &amp;A-Z</string>
+   </property>
+  </action>
+  <action name="actionGroupSortDesc">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sort &amp;Z-A</string>
    </property>
   </action>
   <action name="actionDatabaseSaveAs">

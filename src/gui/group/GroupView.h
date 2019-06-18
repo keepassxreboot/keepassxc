@@ -35,6 +35,7 @@ public:
     Group* currentGroup();
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);
+    void sortGroups(bool reverse = false);
 
 signals:
     void groupSelectionChanged(Group* group);
