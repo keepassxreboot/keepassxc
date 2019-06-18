@@ -450,7 +450,7 @@ void BrowserService::addEntry(const QString& id,
 
     auto db = selectedDb ? selectedDb : selectedDatabase();
     if (!db) {
-       return;
+        return;
     }
 
     auto* entry = new Entry();
@@ -489,13 +489,12 @@ void BrowserService::addEntry(const QString& id,
     config.save(entry);
 }
 
-BrowserService::ReturnValue
-BrowserService::updateEntry(const QString& id,
-                            const QString& uuid,
-                            const QString& login,
-                            const QString& password,
-                            const QString& url,
-                            const QString& submitUrl)
+BrowserService::ReturnValue BrowserService::updateEntry(const QString& id,
+                                                        const QString& uuid,
+                                                        const QString& login,
+                                                        const QString& password,
+                                                        const QString& url,
+                                                        const QString& submitUrl)
 {
     ReturnValue result = ReturnValue::Error;
     if (thread() != QThread::currentThread()) {
@@ -877,8 +876,7 @@ Group* BrowserService::getDefaultEntryGroup(const QSharedPointer<Database>& sele
         return nullptr;
     }
 
-    const QString groupName =
-        QLatin1String(KEEPASSXCBROWSER_GROUP_NAME);
+    const QString groupName = QLatin1String(KEEPASSXCBROWSER_GROUP_NAME);
 
     for (auto* g : rootGroup->groupsRecursive(true)) {
         if (g->name() == groupName && !g->isRecycled()) {
