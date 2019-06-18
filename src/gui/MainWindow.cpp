@@ -395,12 +395,9 @@ MainWindow::MainWindow()
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
     connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
-    connect(m_ui->actionQuickstart, SIGNAL(triggered()), SLOT(openQuickStartUrl()));
-    connect(m_ui->actionWiki, SIGNAL(triggered()), SLOT(openWikiUrl()));
-    connect(m_ui->actionBrowserIntegration, SIGNAL(triggered()), SLOT(openBrowserIntegrationUrl()));
-    connect(m_ui->actionSSHAgent, SIGNAL(triggered()), SLOT(openSSHAgentUrl()));
-    connect(m_ui->actionYubikey, SIGNAL(triggered()), SLOT(openYubikeyUrl()));
-    connect(m_ui->actionGeneralFAQ, SIGNAL(triggered()), SLOT(openGeneralFAQUrl()));
+    connect(m_ui->actionGettingStarted, SIGNAL(triggered()), SLOT(openGettingStartedGuide()));
+    connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
+    connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
 
 
 #ifdef Q_OS_MACOS
@@ -775,34 +772,19 @@ void MainWindow::openBugReportUrl()
     customOpenUrl("https://github.com/keepassxreboot/keepassxc/issues");
 }
 
-void MainWindow::openQuickStartUrl()
+void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl("https://keepassxc.org/quickstart/");
+    customOpenUrl(filePath()->dataPath("docs/KeePassXC_GettingStarted.pdf"));
 }
 
-void MainWindow::openWikiUrl()
+void MainWindow::openUserGuide()
 {
-    customOpenUrl("https://github.com/keepassxreboot/keepassxc/wiki");
+    customOpenUrl(filePath()->dataPath("docs/KeePassXC_UserGuide.pdf"));
 }
 
-void MainWindow::openBrowserIntegrationUrl()
+void MainWindow::openOnlineHelp()
 {
-    customOpenUrl("https://keepassxc.org/docs/keepassxc-browser-migration/");
-}
-
-void MainWindow::openSSHAgentUrl()
-{
-    customOpenUrl("https://keepassxc.org/docs/#faq-ssh-agent-how");
-}
-
-void MainWindow::openYubikeyUrl()
-{
-    customOpenUrl("https://keepassxc.org/docs/#faq-yubikey-2fa");
-}
-
-void MainWindow::openGeneralFAQUrl()
-{
-    customOpenUrl("https://keepassxc.org/docs/#faTextLabelq");
+    customOpenUrl("https://keepassxc.org/docs/");
 }
 void MainWindow::switchToDatabases()
 {

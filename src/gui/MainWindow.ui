@@ -223,23 +223,14 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <widget class="QMenu" name="menuFeatures">
-     <property name="title">
-      <string>Features</string>
-     </property>
-     <addaction name="actionBrowserIntegration"/>
-     <addaction name="actionSSHAgent"/>
-     <addaction name="actionYubikey"/>
-    </widget>
     <addaction name="actionAbout"/>
-    <addaction name="actionDonate"/>
     <addaction name="separator"/>
-    <addaction name="actionQuickstart"/>
-    <addaction name="menuFeatures"/>
-    <addaction name="actionWiki"/>
-    <addaction name="actionGeneralFAQ"/>
+    <addaction name="actionGettingStarted"/>
+    <addaction name="actionUserGuide"/>
+    <addaction name="actionOnlineHelp"/>
     <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
+    <addaction name="actionDonate"/>
     <addaction name="actionBugReport"/>
    </widget>
    <widget class="QMenu" name="menuEntries">
@@ -366,7 +357,7 @@
   </action>
   <action name="actionCheckForUpdates">
    <property name="text">
-    <string>Check for Updates...</string>
+    <string>&amp;Check for Updates...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
@@ -542,7 +533,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Password Generator</string>
+    <string>&amp;Password Generator</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -672,54 +663,28 @@
     <string>Report a &amp;bug</string>
    </property>
   </action>
-  <action name="actionShare_entry">
+  <action name="actionGettingStarted">
    <property name="text">
-    <string>Share entry</string>
-   </property>
-  </action>
-  <action name="actionQuickstart">
-   <property name="text">
-    <string>Quickstart</string>
+    <string>&amp;Getting Started</string>
    </property>
    <property name="toolTip">
-    <string>Open Quickstart Guide in browser</string>
+    <string>Open Getting Started Guide PDF</string>
    </property>
   </action>
-  <action name="actionWiki">
+  <action name="actionOnlineHelp">
    <property name="text">
-    <string>Wiki</string>
+    <string>&amp;Online Help...</string>
    </property>
    <property name="toolTip">
-    <string>Wiki on Github</string>
+    <string>Go to online documentation (opens browser)</string>
    </property>
   </action>
-  <action name="actionBrowserIntegration">
+  <action name="actionUserGuide">
    <property name="text">
-    <string>Browser Integration</string>
+    <string>&amp;User Guide</string>
    </property>
    <property name="toolTip">
-    <string>Set up Browser Integration</string>
-   </property>
-  </action>
-  <action name="actionSSHAgent">
-   <property name="text">
-    <string>SSH Agent</string>
-   </property>
-   <property name="toolTip">
-    <string>SSH-Agent Feature</string>
-   </property>
-  </action>
-  <action name="actionYubikey">
-   <property name="text">
-    <string>Yubikey</string>
-   </property>
-   <property name="toolTip">
-    <string>Setting up a Yubikey</string>
-   </property>
-  </action>
-  <action name="actionGeneralFAQ">
-   <property name="text">
-    <string>General FAQ</string>
+    <string>Open User Guide PDF</string>
    </property>
   </action>
  </widget>

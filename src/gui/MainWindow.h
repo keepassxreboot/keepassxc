@@ -91,12 +91,9 @@ private slots:
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
-    void openQuickStartUrl();
-    void openWikiUrl();
-    void openBrowserIntegrationUrl();
-    void openSSHAgentUrl();
-    void openYubikeyUrl();
-    void openGeneralFAQUrl();
+    void openGettingStartedGuide();
+    void openUserGuide();
+    void openOnlineHelp();
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
