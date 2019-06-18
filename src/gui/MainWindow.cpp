@@ -380,6 +380,8 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupEdit, SIGNAL(triggered()), SLOT(switchToGroupEdit()));
     m_actionMultiplexer.connect(m_ui->actionGroupDelete, SIGNAL(triggered()), SLOT(deleteGroup()));
     m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()), SLOT(emptyRecycleBin()));
+    m_actionMultiplexer.connect(m_ui->actionGroupSortAsc, SIGNAL(triggered()), SLOT(sortGroupsAsc()));
+    m_actionMultiplexer.connect(m_ui->actionGroupSortDesc, SIGNAL(triggered()), SLOT(sortGroupsDesc()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
@@ -570,6 +572,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && hasFocus;
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
             bool groupSelected = dbWidget->isGroupSelected();
+            bool currentGroupHasChildren = dbWidget->currentGroup()->hasChildren();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
             m_ui->actionEntryNew->setEnabled(true);
@@ -592,6 +595,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
+            m_ui->actionGroupSortAsc->setEnabled(groupSelected && currentGroupHasChildren);
+            m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);

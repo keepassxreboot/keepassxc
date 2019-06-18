@@ -115,6 +115,14 @@ void GroupView::expandGroup(Group* group, bool expand)
     setExpanded(index, expand);
 }
 
+void GroupView::sortGroups(bool reverse)
+{
+    Group* group = currentGroup();
+    if (group) {
+        m_model->sortChildren(group, reverse);
+    }
+}
+
 void GroupView::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);

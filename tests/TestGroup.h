@@ -45,6 +45,7 @@ private slots:
     void testIsRecycled();
     void testCopyDataFrom();
     void testEquals();
+    void sortChildrenRecursively();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

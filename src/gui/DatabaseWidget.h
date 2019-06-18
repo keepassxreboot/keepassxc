@@ -175,6 +175,8 @@ public slots:
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
+    void sortGroupsAsc();
+    void sortGroupsDesc();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
     void switchToOpenDatabase();

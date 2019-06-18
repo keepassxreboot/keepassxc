@@ -144,6 +144,7 @@ public:
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
     QStringList hierarchy() const;
+    bool hasChildren() const;
 
     Database* database();
     const Database* database() const;
@@ -168,6 +169,8 @@ public:
     void removeEntry(Entry* entry);
 
     void applyGroupIconTo(Entry* entry);
+
+    void sortChildrenRecursively(bool reverse = false);
 
 signals:
     void groupDataChanged(Group* group);

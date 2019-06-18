@@ -521,6 +521,11 @@ QStringList Group::hierarchy() const
     return hierarchy;
 }
 
+bool Group::hasChildren() const
+{
+    return !children().isEmpty();
+}
+
 Database* Group::database()
 {
     return m_db;
@@ -1072,6 +1077,23 @@ void Group::applyGroupIconTo(Entry* entry)
     } else {
         entry->setIcon(iconUuid());
     }
+}
+
+void Group::sortChildrenRecursively(bool reverse)
+{
+    std::sort(
+        m_children.begin(), m_children.end(), [reverse](const Group* childGroup1, const Group* childGroup2) -> bool {
+            QString name1 = childGroup1->name();
+            QString name2 = childGroup2->name();
+            return reverse ? name1.compare(name2, Qt::CaseInsensitive) > 0
+                           : name1.compare(name2, Qt::CaseInsensitive) < 0;
+        });
+
+    for (auto child : m_children) {
+        child->sortChildrenRecursively(reverse);
+    }
+
+    emit groupModified();
 }
 
 bool Group::GroupData::operator==(const Group::GroupData& other) const

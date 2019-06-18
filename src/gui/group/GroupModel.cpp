@@ -410,3 +410,30 @@ void GroupModel::groupMoved()
 {
     endMoveRows();
 }
+
+void GroupModel::sortChildren(Group* rootGroup, bool reverse)
+{
+    emit layoutAboutToBeChanged();
+
+    QList<QModelIndex> oldIndexes;
+    collectIndexesRecursively(oldIndexes, rootGroup->children());
+
+    rootGroup->sortChildrenRecursively(reverse);
+
+    QList<QModelIndex> newIndexes;
+    collectIndexesRecursively(newIndexes, rootGroup->children());
+
+    for (int i = 0; i < oldIndexes.count(); i++) {
+        changePersistentIndex(oldIndexes[i], newIndexes[i]);
+    }
+
+    emit layoutChanged();
+}
+
+void GroupModel::collectIndexesRecursively(QList<QModelIndex>& indexes, QList<Group*> groups)
+{
+    for (auto group : groups) {
+        indexes.append(index(group));
+        collectIndexesRecursively(indexes, group->children());
+    }
+}
