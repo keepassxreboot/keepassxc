@@ -143,7 +143,7 @@ public:
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
-    QStringList hierarchy() const;
+    QStringList hierarchy(int height = -1) const;
     bool hasChildren() const;
 
     Database* database();
@@ -163,7 +163,7 @@ public:
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
     void copyDataFrom(const Group* other);
-    QString print(bool recursive = false, int depth = 0);
+    QString print(bool recursive = false, bool flatten = false, int depth = 0);
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);

@@ -504,16 +504,25 @@ void Group::setParent(Database* db)
     QObject::setParent(db);
 }
 
-QStringList Group::hierarchy() const
+QStringList Group::hierarchy(int height) const
 {
     QStringList hierarchy;
     const Group* group = this;
     const Group* parent = m_parent;
+
+    if (height == 0) {
+        return hierarchy;
+    }
+
     hierarchy.prepend(group->name());
 
-    while (parent) {
+    int level = 1;
+    bool heightReached = level == height;
+
+    while (parent && !heightReached) {
         group = group->parentGroup();
         parent = group->parentGroup();
+        heightReached = ++level == height;
 
         hierarchy.prepend(group->name());
     }
@@ -720,25 +729,34 @@ Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& 
     return nullptr;
 }
 
-QString Group::print(bool recursive, int depth)
+QString Group::print(bool recursive, bool flatten, int depth)
 {
-
     QString response;
-    QString indentation = QString("  ").repeated(depth);
+    QString prefix;
+
+    if (flatten) {
+        const QString separator("/");
+        prefix = hierarchy(depth).join(separator);
+        if (!prefix.isEmpty()) {
+            prefix += separator;
+        }
+    } else {
+        prefix = QString("  ").repeated(depth);
+    }
 
     if (entries().isEmpty() && children().isEmpty()) {
-        response += indentation + tr("[empty]", "group has no children") + "\n";
+        response += prefix + tr("[empty]", "group has no children") + "\n";
         return response;
     }
 
     for (Entry* entry : entries()) {
-        response += indentation + entry->title() + "\n";
+        response += prefix + entry->title() + "\n";
     }
 
     for (Group* innerGroup : children()) {
-        response += indentation + innerGroup->name() + "/\n";
+        response += prefix + innerGroup->name() + "/\n";
         if (recursive) {
-            response += innerGroup->print(recursive, depth + 1);
+            response += innerGroup->print(recursive, flatten, depth + 1);
         }
     }
 

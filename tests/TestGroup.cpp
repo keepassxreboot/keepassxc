@@ -635,28 +635,57 @@ void TestGroup::testPrint()
 
     Group* group1 = new Group();
     group1->setName("group1");
+    group1->setParent(db->rootGroup());
 
     Entry* entry2 = new Entry();
-
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
     entry2->setUuid(QUuid::createUuid());
 
-    group1->setParent(db->rootGroup());
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(db->rootGroup());
+
+    Group* subGroup = new Group();
+    subGroup->setName("subgroup");
+    subGroup->setParent(group2);
+
+    Entry* entry3 = new Entry();
+    entry3->setTitle(QString("entry3"));
+    entry3->setGroup(subGroup);
+    entry3->setUuid(QUuid::createUuid());
 
     output = db->rootGroup()->print();
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
     QVERIFY(!output.contains(QString("  entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(!output.contains(QString("  subgroup\n")));
 
     output = db->rootGroup()->print(true);
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
     QVERIFY(output.contains(QString("  entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("  subgroup/\n")));
+    QVERIFY(output.contains(QString("    entry3\n")));
+
+    output = db->rootGroup()->print(true, true);
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("group1/entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("group2/subgroup/\n")));
+    QVERIFY(output.contains(QString("group2/subgroup/entry3\n")));
 
     output = group1->print();
     QVERIFY(!output.contains(QString("group1/\n")));
     QVERIFY(output.contains(QString("entry2\n")));
+
+    output = group2->print(true, true);
+    QVERIFY(!output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("subgroup/\n")));
+    QVERIFY(output.contains(QString("subgroup/entry3\n")));
 }
 
 void TestGroup::testLocate()
@@ -841,7 +870,7 @@ void TestGroup::testEquals()
     QVERIFY(group->equals(group.data(), CompareItemDefault));
 }
 
-void TestGroup::sortChildrenRecursively()
+void TestGroup::testChildrenSort()
 {
     auto createTestGroupWithUnorderedChildren = []() -> Group* {
         Group* parent = new Group();
@@ -1019,4 +1048,36 @@ void TestGroup::sortChildrenRecursively()
     QCOMPARE(children[7]->name(), QString("sub_010"));
     QCOMPARE(children[8]->name(), QString("sub_000"));
     delete parent;
+}
+
+void TestGroup::testHierarchy()
+{
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group3 = new Group();
+    group3->setName("group3");
+    group3->setParent(group2);
+
+    QStringList hierarchy = group3->hierarchy();
+    QVERIFY(hierarchy.size() == 3);
+    QVERIFY(hierarchy.contains("group1"));
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(0);
+    QVERIFY(hierarchy.size() == 0);
+
+    hierarchy = group3->hierarchy(1);
+    QVERIFY(hierarchy.size() == 1);
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(2);
+    QVERIFY(hierarchy.size() == 2);
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
 }

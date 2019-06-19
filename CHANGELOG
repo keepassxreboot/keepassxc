@@ -1,6 +1,7 @@
 2.5.0-Beta1 (2019-07-05)
 =========================
 - Group sorting feature [#3282]
+- CLI: Add 'flatten' option to the 'ls' command [#3276]
 
 2.4.3 (2019-06-12)
 =========================

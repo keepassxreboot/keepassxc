@@ -31,11 +31,16 @@ const QCommandLineOption List::RecursiveOption =
                                      << "recursive",
                        QObject::tr("Recursively list the elements of the group."));
 
+const QCommandLineOption List::FlattenOption = QCommandLineOption(QStringList() << "f"
+                                                                                << "flatten",
+                                                                  QObject::tr("Flattens the output to single lines."));
+
 List::List()
 {
     name = QString("ls");
     description = QObject::tr("List database entries.");
     options.append(List::RecursiveOption);
+    options.append(List::FlattenOption);
     optionalArguments.append(
         {QString("group"), QObject::tr("Path of the group to list. Default is /"), QString("[group]")});
 }
@@ -51,10 +56,11 @@ int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     const QStringList args = parser->positionalArguments();
     bool recursive = parser->isSet(List::RecursiveOption);
+    bool flatten = parser->isSet(List::FlattenOption);
 
     // No group provided, defaulting to root group.
     if (args.size() == 1) {
-        outputTextStream << database->rootGroup()->print(recursive) << flush;
+        outputTextStream << database->rootGroup()->print(recursive, flatten) << flush;
         return EXIT_SUCCESS;
     }
 
@@ -65,6 +71,6 @@ int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
-    outputTextStream << group->print(recursive) << flush;
+    outputTextStream << group->print(recursive, flatten) << flush;
     return EXIT_SUCCESS;
 }

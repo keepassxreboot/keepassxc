@@ -29,6 +29,7 @@ public:
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 
     static const QCommandLineOption RecursiveOption;
+    static const QCommandLineOption FlattenOption;
 };
 
 #endif // KEEPASSXC_LIST_H
