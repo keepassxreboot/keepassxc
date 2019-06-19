@@ -212,6 +212,17 @@ void EditGroupWidget::apply()
     // Icons add/remove are applied globally outside the transaction!
     m_group->copyDataFrom(m_temporaryGroup.data());
 
+    // Assign the icon to children if selected
+    if (iconStruct.applyTo == ApplyIconToOptions::CHILD_GROUPS
+        || iconStruct.applyTo == ApplyIconToOptions::ALL_CHILDREN) {
+        m_group->applyGroupIconToChildGroups();
+    }
+
+    if (iconStruct.applyTo == ApplyIconToOptions::CHILD_ENTRIES
+        || iconStruct.applyTo == ApplyIconToOptions::ALL_CHILDREN) {
+        m_group->applyGroupIconToChildEntries();
+    }
+
     setModified(false);
 }
 

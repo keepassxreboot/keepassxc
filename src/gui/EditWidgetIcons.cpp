@@ -45,6 +45,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::EditWidgetIcons())
     , m_db(nullptr)
+    , m_applyIconTo(ApplyIconToOptions::THIS_ONLY)
 #ifdef WITH_XC_NETWORKING
     , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
@@ -57,6 +58,8 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     m_ui->defaultIconsView->setModel(m_defaultIconModel);
     m_ui->customIconsView->setModel(m_customIconModel);
 
+    m_ui->applyIconToPushButton->setMenu(createApplyIconToMenu());
+
     // clang-format off
     connect(m_ui->defaultIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonDefaultIcons()));
     connect(m_ui->customIconsView, SIGNAL(clicked(QModelIndex)), this, SLOT(updateRadioButtonCustomIcons()));
@@ -65,6 +68,7 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
     connect(m_ui->addButton, SIGNAL(clicked()), SLOT(addCustomIconFromFile()));
     connect(m_ui->deleteButton, SIGNAL(clicked()), SLOT(removeCustomIcon()));
     connect(m_ui->faviconButton, SIGNAL(clicked()), SLOT(downloadFavicon()));
+    connect(m_ui->applyIconToPushButton->menu(), SIGNAL(triggered(QAction*)), SLOT(confirmApplyIconTo(QAction*)));
 
     connect(m_ui->defaultIconsRadio, SIGNAL(toggled(bool)), this, SIGNAL(widgetUpdated()));
     connect(m_ui->defaultIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
@@ -102,6 +106,8 @@ IconStruct EditWidgetIcons::state()
             iconStruct.number = -1;
         }
     }
+
+    iconStruct.applyTo = m_applyIconTo;
 
     return iconStruct;
 }
@@ -142,6 +148,30 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
             m_ui->defaultIconsRadio->setChecked(true);
         }
     }
+
+    m_applyIconTo = ApplyIconToOptions::THIS_ONLY;
+    m_ui->applyIconToPushButton->menu()->defaultAction()->activate(QAction::Trigger);
+}
+
+void EditWidgetIcons::setShowApplyIconToButton(bool state)
+{
+    m_ui->applyIconToPushButton->setVisible(state);
+}
+
+QMenu* EditWidgetIcons::createApplyIconToMenu()
+{
+    auto* applyIconToMenu = new QMenu(this);
+    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only"));
+    defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
+    applyIconToMenu->setDefaultAction(defaultAction);
+    applyIconToMenu->addSeparator();
+    applyIconToMenu->addAction(tr("Also apply to child groups"))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_GROUPS));
+    applyIconToMenu->addAction(tr("Also apply to child entries"))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_ENTRIES));
+    applyIconToMenu->addAction(tr("Also apply to all children"))
+        ->setData(QVariant::fromValue(ApplyIconToOptions::ALL_CHILDREN));
+    return applyIconToMenu;
 }
 
 void EditWidgetIcons::setUrl(const QString& url)
@@ -527,4 +557,10 @@ void EditWidgetIcons::updateRadioButtonDefaultIcons()
 void EditWidgetIcons::updateRadioButtonCustomIcons()
 {
     m_ui->customIconsRadio->setChecked(true);
+}
+
+void EditWidgetIcons::confirmApplyIconTo(QAction* action)
+{
+    m_applyIconTo = action->data().value<ApplyIconToOptions>();
+    m_ui->applyIconToPushButton->setText(action->text());
 }

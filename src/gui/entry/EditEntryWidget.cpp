@@ -188,6 +188,7 @@ void EditEntryWidget::setupAdvanced()
 
 void EditEntryWidget::setupIcon()
 {
+    m_iconsWidget->setShowApplyIconToButton(false);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_iconsWidget);
     connect(this, SIGNAL(accepted()), m_iconsWidget, SLOT(abortRequests()));
     connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));

@@ -1081,3 +1081,103 @@ void TestGroup::testHierarchy()
     QVERIFY(hierarchy.contains("group2"));
     QVERIFY(hierarchy.contains("group3"));
 }
+
+void TestGroup::testApplyGroupIconRecursively()
+{
+    // Create a database with two nested groups with one entry each
+    Database* database = new Database();
+
+    Group* subgroup = new Group();
+    subgroup->setName("Subgroup");
+    subgroup->setParent(database->rootGroup());
+    QVERIFY(subgroup);
+
+    Group* subsubgroup = new Group();
+    subsubgroup->setName("Subsubgroup");
+    subsubgroup->setParent(subgroup);
+    QVERIFY(subsubgroup);
+
+    Entry* subgroupEntry = subgroup->addEntryWithPath("Subgroup entry");
+    QVERIFY(subgroupEntry);
+    subgroup->setIcon(1);
+
+    Entry* subsubgroupEntry = subsubgroup->addEntryWithPath("Subsubgroup entry");
+    QVERIFY(subsubgroupEntry);
+    subsubgroup->setIcon(2);
+
+    // Set an icon per number to the root group and apply recursively
+    // -> all groups and entries have the same icon
+    const int rootIconNumber = 42;
+    database->rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Set an icon per number to the subsubgroup and apply recursively
+    // -> only the subsubgroup related groups and entries have updated icons
+    const int subsubgroupIconNumber = 24;
+    subsubgroup->setIcon(subsubgroupIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
+    subsubgroup->applyGroupIconToChildGroups();
+    subsubgroup->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == subsubgroupIconNumber);
+
+    // Set an icon per UUID to the subgroup and apply recursively
+    // -> all groups and entries except the root group have the same icon
+    const QUuid subgroupIconUuid = QUuid::createUuid();
+    QImage subgroupIcon(16, 16, QImage::Format_RGB32);
+    subgroupIcon.setPixel(0, 0, qRgb(255, 0, 0));
+    database->metadata()->addCustomIcon(subgroupIconUuid, subgroupIcon);
+    subgroup->setIcon(subgroupIconUuid);
+    subgroup->applyGroupIconToChildGroups();
+    subgroup->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QCOMPARE(subgroup->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subgroup->icon(), subgroupIcon);
+    QCOMPARE(subgroupEntry->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subgroupEntry->icon(), subgroupIcon);
+    QCOMPARE(subsubgroup->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subsubgroup->icon(), subgroupIcon);
+    QCOMPARE(subsubgroupEntry->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subsubgroupEntry->icon(), subgroupIcon);
+
+    // Reset all icons to root icon
+    database->rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Apply only for child groups
+    const int iconForGroups = 10;
+    database->rootGroup()->setIcon(iconForGroups);
+    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
+    QVERIFY(subgroup->iconNumber() == iconForGroups);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == iconForGroups);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Apply only for child entries
+    const int iconForEntries = 20;
+    database->rootGroup()->setIcon(iconForEntries);
+    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
+    QVERIFY(subgroup->iconNumber() == iconForGroups);
+    QVERIFY(subgroupEntry->iconNumber() == iconForEntries);
+    QVERIFY(subsubgroup->iconNumber() == iconForGroups);
+    QVERIFY(subsubgroupEntry->iconNumber() == iconForEntries);
+}

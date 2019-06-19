@@ -308,7 +308,7 @@ namespace FdoSecrets
             entry->setUuid(QUuid::createUuid());
             entry->setTitle(itemName);
             entry->setUsername(m_backend->database()->metadata()->defaultUserName());
-            group->applyGroupIconTo(entry);
+            group->applyGroupIconOnCreateTo(entry);
 
             entry->setGroup(group);
 
