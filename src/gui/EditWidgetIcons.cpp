@@ -160,11 +160,11 @@ QMenu* EditWidgetIcons::createApplyIconToMenu()
     defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
     applyIconToMenu->setDefaultAction(defaultAction);
     applyIconToMenu->addSeparator();
-    applyIconToMenu->addAction(tr("Apply to child groups", nullptr, 1))
+    applyIconToMenu->addAction(tr("Also apply to child groups", nullptr, 1))
         ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_GROUPS));
-    applyIconToMenu->addAction(tr("Apply to child entries", nullptr, 2))
+    applyIconToMenu->addAction(tr("Also apply to child entries", nullptr, 2))
         ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_ENTRIES));
-    applyIconToMenu->addAction(tr("Apply to all children", nullptr, 3))
+    applyIconToMenu->addAction(tr("Also apply to all children", nullptr, 3))
         ->setData(QVariant::fromValue(ApplyIconToOptions::ALL_CHILDREN));
     return applyIconToMenu;
 }
@@ -556,28 +556,6 @@ void EditWidgetIcons::updateRadioButtonCustomIcons()
 
 void EditWidgetIcons::confirmApplyIconTo(QAction* action)
 {
-    ApplyIconToOptions selectedOption = action->data().value<ApplyIconToOptions>();
-    QAction* actualAction = action;
-
-    // If no other icons are to be overwritten, no popup is shown
-    if (selectedOption != ApplyIconToOptions::THIS_ONLY) {
-        auto result = MessageBox::question(this,
-                                           tr("Confirm Apply Icon to Children"),
-                                           tr("This will overwrite the icon of "
-                                              "every subgroup and subentry. "
-                                              "Are you sure you want to "
-                                              "overwrite these?"),
-                                           MessageBox::Yes | MessageBox::Abort,
-                                           MessageBox::Abort);
-
-        // If the user aborts, fall back to the default action which writes
-        // the icon only for the current element
-        if (result == MessageBox::Abort) {
-            selectedOption = ApplyIconToOptions::THIS_ONLY;
-            actualAction = m_ui->applyIconToPushButton->menu()->defaultAction();
-        }
-    }
-
-    m_applyIconTo = selectedOption;
-    m_ui->applyIconToPushButton->setText(actualAction->text());
+    m_applyIconTo = action->data().value<ApplyIconToOptions>();
+    m_ui->applyIconToPushButton->setText(action->text());
 }
