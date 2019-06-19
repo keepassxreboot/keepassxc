@@ -153,18 +153,23 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
     m_ui->applyIconToPushButton->menu()->defaultAction()->activate(QAction::Trigger);
 }
 
+void EditWidgetIcons::setShowApplyIconToButton(bool state)
+{
+    m_ui->applyIconToPushButton->setVisible(state);
+}
+
 QMenu* EditWidgetIcons::createApplyIconToMenu()
 {
     auto* applyIconToMenu = new QMenu(this);
-    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only", nullptr, 0));
+    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only"));
     defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
     applyIconToMenu->setDefaultAction(defaultAction);
     applyIconToMenu->addSeparator();
-    applyIconToMenu->addAction(tr("Also apply to child groups", nullptr, 1))
+    applyIconToMenu->addAction(tr("Also apply to child groups"))
         ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_GROUPS));
-    applyIconToMenu->addAction(tr("Also apply to child entries", nullptr, 2))
+    applyIconToMenu->addAction(tr("Also apply to child entries"))
         ->setData(QVariant::fromValue(ApplyIconToOptions::CHILD_ENTRIES));
-    applyIconToMenu->addAction(tr("Also apply to all children", nullptr, 3))
+    applyIconToMenu->addAction(tr("Also apply to all children"))
         ->setData(QVariant::fromValue(ApplyIconToOptions::ALL_CHILDREN));
     return applyIconToMenu;
 }

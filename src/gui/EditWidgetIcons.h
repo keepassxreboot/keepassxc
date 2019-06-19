@@ -74,8 +74,7 @@ public:
               const QSharedPointer<Database>& database,
               const IconStruct& iconStruct,
               const QString& url = "");
-
-    QMenu* createApplyIconToMenu();
+    void setShowApplyIconToButton(bool state);
 
 public slots:
     void setUrl(const QString& url);
@@ -101,6 +100,8 @@ private slots:
     void confirmApplyIconTo(QAction* action);
 
 private:
+    QMenu* createApplyIconToMenu();
+
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
