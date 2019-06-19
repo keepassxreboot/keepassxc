@@ -397,6 +397,10 @@ MainWindow::MainWindow()
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
     connect(m_ui->actionBugReport, SIGNAL(triggered()), SLOT(openBugReportUrl()));
+    connect(m_ui->actionGettingStarted, SIGNAL(triggered()), SLOT(openGettingStartedGuide()));
+    connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
+    connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
+
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
@@ -758,16 +762,35 @@ void MainWindow::showUpdateCheckDialog()
 #endif
 }
 
+void MainWindow::customOpenUrl(QString url)
+{
+    QDesktopServices::openUrl(QUrl(url));
+}
+
 void MainWindow::openDonateUrl()
 {
-    QDesktopServices::openUrl(QUrl("https://keepassxc.org/donate"));
+    customOpenUrl("https://keepassxc.org/donate");
 }
 
 void MainWindow::openBugReportUrl()
 {
-    QDesktopServices::openUrl(QUrl("https://github.com/keepassxreboot/keepassxc/issues"));
+    customOpenUrl("https://github.com/keepassxreboot/keepassxc/issues");
 }
 
+void MainWindow::openGettingStartedGuide()
+{
+    customOpenUrl(filePath()->dataPath("docs/KeePassXC_GettingStarted.pdf"));
+}
+
+void MainWindow::openUserGuide()
+{
+    customOpenUrl(filePath()->dataPath("docs/KeePassXC_UserGuide.pdf"));
+}
+
+void MainWindow::openOnlineHelp()
+{
+    customOpenUrl("https://keepassxc.org/docs/");
+}
 void MainWindow::switchToDatabases()
 {
     if (m_ui->tabWidget->currentIndex() == -1) {

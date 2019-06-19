@@ -224,6 +224,11 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionGettingStarted"/>
+    <addaction name="actionUserGuide"/>
+    <addaction name="actionOnlineHelp"/>
+    <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
     <addaction name="actionDonate"/>
     <addaction name="actionBugReport"/>
@@ -355,7 +360,7 @@
   </action>
   <action name="actionCheckForUpdates">
    <property name="text">
-    <string>Check for Updates...</string>
+    <string>&amp;Check for Updates...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
@@ -547,7 +552,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Password Generator</string>
+    <string>&amp;Password Generator</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -677,9 +682,28 @@
     <string>Report a &amp;bug</string>
    </property>
   </action>
-  <action name="actionShare_entry">
+  <action name="actionGettingStarted">
    <property name="text">
-    <string>Share entry</string>
+    <string>&amp;Getting Started</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Getting Started Guide PDF</string>
+   </property>
+  </action>
+  <action name="actionOnlineHelp">
+   <property name="text">
+    <string>&amp;Online Help...</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to online documentation (opens browser)</string>
+   </property>
+  </action>
+  <action name="actionUserGuide">
+   <property name="text">
+    <string>&amp;User Guide</string>
+   </property>
+   <property name="toolTip">
+    <string>Open User Guide PDF</string>
    </property>
   </action>
  </widget>
