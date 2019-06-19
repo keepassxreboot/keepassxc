@@ -278,18 +278,18 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
 QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QJsonObject password = browserSettings()->generatePassword();
+    auto nonce = json.value("nonce").toString();
+    auto password = browserSettings()->generatePassword();
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
     }
 
+    // For backwards compatibility
+    password["login"] = password["entropy"];
+
     QJsonArray arr;
-    QJsonObject passwd = password;
-    // For backwards compatibility, "login" doesn't really make sense here
-    passwd["login"] = passwd["entropy"];
-    arr.append(passwd);
+    arr.append(password);
 
     const QString newNonce = incrementNonce(nonce);
 

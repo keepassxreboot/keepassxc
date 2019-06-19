@@ -525,7 +525,7 @@ QJsonObject BrowserSettings::generatePassword()
     } else {
         m_passPhraseGenerator.setWordCount(passPhraseWordCount());
         m_passPhraseGenerator.setWordSeparator(passPhraseWordSeparator());
-        password["entropy"] = m_passPhraseGenerator.getCurrentEntropy();
+        password["entropy"] = m_passPhraseGenerator.estimateEntropy();
         password["password"] = m_passPhraseGenerator.generatePassphrase();
     }
     return password;
