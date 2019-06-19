@@ -965,23 +965,27 @@ void TestCli::testMerge()
     Kdbx4Writer writer;
     Kdbx4Reader reader;
 
-    // load test database and save a copy
+    // load test database and save copies
     auto db = readTestDatabase();
     QVERIFY(db);
     TemporaryFile targetFile1;
     targetFile1.open();
     writer.writeDatabase(&targetFile1, db.data());
     targetFile1.close();
-
-    // save another copy with a different password
     TemporaryFile targetFile2;
     targetFile2.open();
+    writer.writeDatabase(&targetFile2, db.data());
+    targetFile2.close();
+
+    // save another copy with a different password
+    TemporaryFile targetFile3;
+    targetFile3.open();
     auto oldKey = db->key();
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("b"));
     db->setKey(key);
-    writer.writeDatabase(&targetFile2, db.data());
-    targetFile2.close();
+    writer.writeDatabase(&targetFile3, db.data());
+    targetFile3.close();
     db->setKey(oldKey);
 
     // then add a new entry to the in-memory database and save another copy
@@ -1003,7 +1007,11 @@ void TestCli::testMerge()
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
     m_stderrFile->reset();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully merged the database files.\n"));
+    QList<QByteArray> outLines1 = m_stdoutFile->readAll().split('\n');
+    QCOMPARE(outLines1.at(0).split('[').at(0), QByteArray("\tOverwriting Internet "));
+    QCOMPARE(outLines1.at(1).split('[').at(0), QByteArray("\tCreating missing Some Website "));
+    QCOMPARE(outLines1.at(2),
+             QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
 
     QFile readBack(targetFile1.fileName());
     readBack.open(QIODevice::ReadOnly);
@@ -1016,17 +1024,58 @@ void TestCli::testMerge()
     QCOMPARE(entry1->title(), QString("Some Website"));
     QCOMPARE(entry1->password(), QString("secretsecretsecret"));
 
+    // the dry run option should not modify the target database.
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge", "--dry-run", "-s", targetFile2.fileName(), sourceFile.fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();
+    m_stderrFile->reset();
+    QList<QByteArray> outLines2 = m_stdoutFile->readAll().split('\n');
+    QCOMPARE(outLines2.at(0).split('[').at(0), QByteArray("\tOverwriting Internet "));
+    QCOMPARE(outLines2.at(1).split('[').at(0), QByteArray("\tCreating missing Some Website "));
+    QCOMPARE(outLines2.at(2), QByteArray("Database was not modified by merge operation."));
+
+    QFile readBack2(targetFile2.fileName());
+    readBack2.open(QIODevice::ReadOnly);
+    mergedDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack2, oldKey, mergedDb.data());
+    readBack2.close();
+    QVERIFY(mergedDb);
+    entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
+    QVERIFY(!entry1);
+
+    // the dry run option can be used with the quiet option
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge", "--dry-run", "-s", "-q", targetFile2.fileName(), sourceFile.fileName()});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine();
+    m_stderrFile->reset();
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+
+    readBack2.setFileName(targetFile2.fileName());
+    readBack2.open(QIODevice::ReadOnly);
+    mergedDb = QSharedPointer<Database>::create();
+    reader.readDatabase(&readBack2, oldKey, mergedDb.data());
+    readBack2.close();
+    QVERIFY(mergedDb);
+    entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
+    QVERIFY(!entry1);
+
     // try again with different passwords for both files
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("b");
     Utils::Test::setNextPassword("a");
-    mergeCmd.execute({"merge", targetFile2.fileName(), sourceFile.fileName()});
+    mergeCmd.execute({"merge", targetFile3.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine();
     m_stdoutFile->readLine();
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully merged the database files.\n"));
+    QList<QByteArray> outLines3 = m_stdoutFile->readAll().split('\n');
+    QCOMPARE(outLines3.at(2),
+             QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
 
-    readBack.setFileName(targetFile2.fileName());
+    readBack.setFileName(targetFile3.fileName());
     readBack.open(QIODevice::ReadOnly);
     mergedDb = QSharedPointer<Database>::create();
     reader.readDatabase(&readBack, key, mergedDb.data());

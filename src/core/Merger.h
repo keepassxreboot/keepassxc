@@ -33,7 +33,7 @@ public:
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
     void resetForcedMergeMode();
-    bool merge();
+    QStringList merge();
 
 private:
     typedef QString Change;

@@ -401,7 +401,6 @@ MainWindow::MainWindow()
     connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
 
-
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
     if (macUtils()->isDarkMode()) {
