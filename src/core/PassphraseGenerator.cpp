@@ -35,15 +35,16 @@ PassphraseGenerator::PassphraseGenerator()
     setDefaultWordList();
 }
 
-double PassphraseGenerator::calculateEntropy(const QString& passphrase)
+double PassphraseGenerator::estimateEntropy(int wordCount)
 {
-    Q_UNUSED(passphrase);
-
     if (m_wordlist.isEmpty()) {
         return 0.0;
     }
+    if (wordCount < 1) {
+        wordCount = m_wordCount;
+    }
 
-    return std::log2(m_wordlist.size()) * m_wordCount;
+    return std::log2(m_wordlist.size()) * wordCount;
 }
 
 void PassphraseGenerator::setWordCount(int wordCount)

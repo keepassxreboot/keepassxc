@@ -35,7 +35,7 @@ public:
         TITLECASE
     };
 
-    double calculateEntropy(const QString& passphrase);
+    double estimateEntropy(int wordCount = 0);
     void setWordCount(int wordCount);
     void setWordList(const QString& path);
     void setWordCase(PassphraseWordCase wordCase);
