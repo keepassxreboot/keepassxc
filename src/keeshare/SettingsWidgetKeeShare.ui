@@ -29,6 +29,13 @@
       <string>Active</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
+      <item row="2" column="0">
+       <widget class="QCheckBox" name="enableImportCheckBox">
+        <property name="text">
+         <string>Allow import</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="0">
        <widget class="QCheckBox" name="enableExportCheckBox">
         <property name="text">
@@ -36,10 +43,13 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QCheckBox" name="enableImportCheckBox">
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="quietSuccessCheckBox">
         <property name="text">
-         <string>Allow import</string>
+         <string>Only show warnings and errors</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

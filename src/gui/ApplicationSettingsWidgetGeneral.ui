@@ -383,13 +383,6 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="quietKeeShareSuccess">
-            <property name="text">
-             <string>Do not show success notifications for KeeShare, only warnings and errors</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="systrayShowCheckBox">
             <property name="text">
              <string>Show a system tray icon</string>
