@@ -119,6 +119,8 @@ void SettingsWidgetKeeShare::saveSettings()
     KeeShare::setOwn(m_own);
     KeeShare::setForeign(m_foreign);
     KeeShare::setActive(active);
+
+    config()->set("KeeShare/QuietSuccess", m_ui->quietSuccessCheckBox->isChecked());
 }
 
 void SettingsWidgetKeeShare::setVerificationExporter(const QString& signer)

@@ -100,10 +100,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->checkUpdatesSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 #endif
 
-#ifndef WITH_XC_KEESHARE
-    m_generalUi->quietKeeShareSuccess->setVisible(false);
-#endif
-
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
 #endif
@@ -186,7 +182,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get("GUI/DarkTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
-    m_generalUi->quietKeeShareSuccess->setChecked(config()->get("GUI/QuietKeeShareSuccess").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
     m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get("GUI/CheckForUpdates").toBool());
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setChecked(
@@ -272,7 +267,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->minimizeOnCloseCheckBox->isChecked());
-    config()->set("GUI/QuietKeeShareSuccess", m_generalUi->quietKeeShareSuccess->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
     config()->set("GUI/CheckForUpdates", m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
     config()->set("GUI/CheckForUpdatesIncludeBetas", m_generalUi->checkForUpdatesIncludeBetasCheckBox->isChecked());

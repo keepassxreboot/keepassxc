@@ -77,7 +77,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
     m_ui->categoryList->addCategory(tr("General"), FilePath::instance()->icon("categories", "preferences-other"));
-    m_ui->categoryList->addCategory(tr("Security"), FilePath::instance()->icon("actions", "security-high"));
+    m_ui->categoryList->addCategory(tr("Security"), FilePath::instance()->icon("status", "security-high"));
     m_ui->stackedWidget->addWidget(m_generalWidget);
 
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
