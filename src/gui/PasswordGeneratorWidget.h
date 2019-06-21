@@ -53,6 +53,9 @@ public:
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 public slots:
     void regeneratePassword();
     void applyPassword();

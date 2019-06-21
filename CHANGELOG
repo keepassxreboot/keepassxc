@@ -6,6 +6,7 @@
 - Move notes to General tab on Group Preview Panel [#3336]
 - Add 'Monospaced font' option to the Notes field [#3321]
 - Drop to background when copy feature [#3253]
+- Fix password generator issues with special characters [#3303]
 
 2.4.3 (2019-06-12)
 =========================
