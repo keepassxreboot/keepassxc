@@ -28,7 +28,7 @@
 OpVaultOpenWidget::OpVaultOpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
 {
-    m_ui->labelHeadline->setText("Import 1Password database");
+    m_ui->labelHeadline->setText("Import 1Password Database");
 }
 
 void OpVaultOpenWidget::openDatabase()
@@ -36,9 +36,7 @@ void OpVaultOpenWidget::openDatabase()
     OpVaultReader reader;
 
     QString password;
-    if (m_ui->checkPassword->isChecked()) {
-        password = m_ui->editPassword->text();
-    }
+    password = m_ui->editPassword->text();
 
     QDir opVaultDir(m_filename);
 
