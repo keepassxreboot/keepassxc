@@ -305,7 +305,7 @@ if(WITH_XC_KEESHARE)
 endif()
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit")
+    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassx_core Qt5::MacExtras)
     endif()

@@ -53,6 +53,9 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
+    if (hasFocus()) {
+        mac_secure_keyboard(!show);
+    }
     // if I have a parent, I'm the child
     if (m_basePasswordEdit) {
         if (config()->get("security/passwordsrepeat").toBool()) {
@@ -104,4 +107,23 @@ void PasswordEdit::autocompletePassword(const QString& password)
     if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);
     }
+}
+
+void PasswordEdit::mac_secure_keyboard(bool b)
+{
+    static bool secure = false;
+    if (b != secure){
+        b ? EnableSecureEventInput() : DisableSecureEventInput();
+        secure = b;
+    }
+}
+
+void PasswordEdit::focusInEvent(QFocusEvent* e) {
+    mac_secure_keyboard(echoMode() == QLineEdit::Password);
+    QLineEdit::focusInEvent(e);
+}
+
+void PasswordEdit::focusOutEvent(QFocusEvent* e) {
+    mac_secure_keyboard(false);
+    QLineEdit::focusOutEvent(e);
 }

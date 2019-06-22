@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_PASSWORDEDIT_H
 #define KEEPASSX_PASSWORDEDIT_H
 
+#include <Carbon/Carbon.h>
 #include <QLineEdit>
 #include <QPointer>
 
@@ -45,9 +46,15 @@ private slots:
     void autocompletePassword(const QString& password);
 
 private:
+    void mac_secure_keyboard(bool b);
     bool passwordsEqual() const;
 
+    bool secure;
     QPointer<PasswordEdit> m_basePasswordEdit;
+
+protected:
+    void focusInEvent(QFocusEvent* e);
+    void focusOutEvent(QFocusEvent* e);
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H
