@@ -256,6 +256,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="minimizeOnOpenUrlCheckBox">
+            <property name="text">
+             <string>Minimize when opening a URL</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="previewHideCheckBox">
             <property name="text">
              <string>Hide the entry preview panel</string>
