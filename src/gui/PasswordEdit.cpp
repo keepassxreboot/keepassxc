@@ -111,11 +111,13 @@ void PasswordEdit::autocompletePassword(const QString& password)
 
 void PasswordEdit::secureInputEntry(bool b)
 {
+#ifdef Q_OS_MACOS
     static bool secure = false;
     if (b != secure){
         b ? EnableSecureEventInput() : DisableSecureEventInput();
         secure = b;
     }
+#endif
 }
 
 void PasswordEdit::focusInEvent(QFocusEvent* e) {
