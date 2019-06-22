@@ -40,13 +40,6 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI("/Library/Application Support/Vivaldi/NativeMessagingHosts")
     , TARGET_DIR_TOR_BROWSER("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts")
     , TARGET_DIR_BRAVE("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts")
-#elif defined(Q_OS_LINUX)
-    , TARGET_DIR_CHROME("/.config/google-chrome/NativeMessagingHosts")
-    , TARGET_DIR_CHROMIUM("/.config/chromium/NativeMessagingHosts")
-    , TARGET_DIR_FIREFOX("/.mozilla/native-messaging-hosts")
-    , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
-    , TARGET_DIR_TOR_BROWSER("/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts")
-    , TARGET_DIR_BRAVE("/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts")
 #elif defined(Q_OS_WIN)
     // clang-format off
     , TARGET_DIR_CHROME("HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser")
@@ -56,6 +49,13 @@ HostInstaller::HostInstaller()
     , TARGET_DIR_VIVALDI(TARGET_DIR_CHROME)
     , TARGET_DIR_TOR_BROWSER(TARGET_DIR_FIREFOX)
     , TARGET_DIR_BRAVE(TARGET_DIR_CHROME)
+#else
+    , TARGET_DIR_CHROME("/.config/google-chrome/NativeMessagingHosts")
+    , TARGET_DIR_CHROMIUM("/.config/chromium/NativeMessagingHosts")
+    , TARGET_DIR_FIREFOX("/.mozilla/native-messaging-hosts")
+    , TARGET_DIR_VIVALDI("/.config/vivaldi/NativeMessagingHosts")
+    , TARGET_DIR_TOR_BROWSER("/.tor-browser/app/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts")
+    , TARGET_DIR_BRAVE("/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts")
 #endif
 {
 }
