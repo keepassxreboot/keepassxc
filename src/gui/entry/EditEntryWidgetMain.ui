@@ -164,7 +164,7 @@
     <widget class="QLineEdit" name="titleEdit"/>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="usernameEdit"/>
+    <widget class="QComboBox" name="usernameComboBox"/>
    </item>
    <item row="7" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
@@ -191,7 +191,7 @@
  </customwidgets>
  <tabstops>
   <tabstop>titleEdit</tabstop>
-  <tabstop>usernameEdit</tabstop>
+  <tabstop>usernameComboBox</tabstop>
   <tabstop>passwordEdit</tabstop>
   <tabstop>passwordRepeatEdit</tabstop>
   <tabstop>togglePasswordButton</tabstop>
