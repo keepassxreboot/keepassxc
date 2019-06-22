@@ -46,7 +46,7 @@ private slots:
     void autocompletePassword(const QString& password);
 
 private:
-    void mac_secure_keyboard(bool b);
+    void secureInputEntry(bool b);
     bool passwordsEqual() const;
 
     QPointer<PasswordEdit> m_basePasswordEdit;

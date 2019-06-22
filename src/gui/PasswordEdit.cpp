@@ -54,7 +54,7 @@ void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     if (hasFocus()) {
-        mac_secure_keyboard(!show);
+        secureInputEntry(!show);
     }
     // if I have a parent, I'm the child
     if (m_basePasswordEdit) {
@@ -109,7 +109,7 @@ void PasswordEdit::autocompletePassword(const QString& password)
     }
 }
 
-void PasswordEdit::mac_secure_keyboard(bool b)
+void PasswordEdit::secureInputEntry(bool b)
 {
     static bool secure = false;
     if (b != secure){
@@ -119,11 +119,11 @@ void PasswordEdit::mac_secure_keyboard(bool b)
 }
 
 void PasswordEdit::focusInEvent(QFocusEvent* e) {
-    mac_secure_keyboard(echoMode() == QLineEdit::Password);
+    secureInputEntry(echoMode() == QLineEdit::Password);
     QLineEdit::focusInEvent(e);
 }
 
 void PasswordEdit::focusOutEvent(QFocusEvent* e) {
-    mac_secure_keyboard(false);
+    secureInputEntry(false);
     QLineEdit::focusOutEvent(e);
 }
