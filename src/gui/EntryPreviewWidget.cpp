@@ -184,7 +184,6 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
 void EntryPreviewWidget::setNotesVisible(bool state)
 {
     const QString notes = m_currentEntry->notes();
-    m_ui->entryNotesLabel->setText(notes);
 
     auto flags = m_ui->entryNotesLabel->textInteractionFlags();
     if (state) {
