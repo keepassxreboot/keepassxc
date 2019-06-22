@@ -49,7 +49,6 @@ private:
     void mac_secure_keyboard(bool b);
     bool passwordsEqual() const;
 
-    bool secure;
     QPointer<PasswordEdit> m_basePasswordEdit;
 
 protected:
