@@ -181,7 +181,7 @@
                                         <layout class="QVBoxLayout" name="verticalLayout_5">
                                             <item>
                                                 <widget class="QWidget" name="entryGeneralWidget" native="true">
-                                                    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0" columnstretch="0,0,0,0,0,0">
+                                                    <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0" columnstretch="0,0,0,2,0,0,3">
                                                         <property name="leftMargin">
                                                             <number>0</number>
                                                         </property>
@@ -235,7 +235,7 @@
                                                                 </property>
                                                             </widget>
                                                         </item>
-                                                        <item row="0" column="4">
+                                                        <item row="0" column="3">
                                                             <widget class="QLabel" name="entryUsernameLabel">
                                                                 <property name="sizePolicy">
                                                                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -257,64 +257,45 @@
                                                                 </property>
                                                             </widget>
                                                         </item>
-                                                        <item row="1" column="1">
-                                                            <widget class="QLabel" name="entryPasswordTitleLabel">
-                                                                <property name="sizePolicy">
-                                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                                        <horstretch>0</horstretch>
-                                                                        <verstretch>0</verstretch>
-                                                                    </sizepolicy>
-                                                                </property>
-                                                                <property name="font">
-                                                                    <font>
-                                                                        <weight>75</weight>
-                                                                        <bold>true</bold>
-                                                                    </font>
-                                                                </property>
-                                                                <property name="text">
-                                                                    <string>Password</string>
-                                                                </property>
-                                                                <property name="alignment">
-                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                                                                </property>
-                                                            </widget>
-                                                        </item>
-                                                        <item row="3" column="1">
-                                                            <widget class="QLabel" name="entryExpirationTitleLabel">
-                                                                <property name="sizePolicy">
-                                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                                                        <horstretch>0</horstretch>
-                                                                        <verstretch>0</verstretch>
-                                                                    </sizepolicy>
-                                                                </property>
-                                                                <property name="font">
-                                                                    <font>
-                                                                        <weight>75</weight>
-                                                                        <bold>true</bold>
-                                                                    </font>
-                                                                </property>
-                                                                <property name="text">
-                                                                    <string>Expiration</string>
-                                                                </property>
-                                                                <property name="alignment">
-                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                                                                </property>
-                                                            </widget>
-                                                        </item>
-                                                        <item row="4" column="4">
-                                                            <spacer name="verticalSpacer">
+                                                        <item row="0" column="4">
+                                                            <spacer name="entryMiddleHorizontalSpacer">
                                                                 <property name="orientation">
-                                                                    <enum>Qt::Vertical</enum>
+                                                                    <enum>Qt::Horizontal</enum>
+                                                                </property>
+                                                                <property name="sizeType">
+                                                                    <enum>QSizePolicy::Fixed</enum>
                                                                 </property>
                                                                 <property name="sizeHint" stdset="0">
                                                                     <size>
-                                                                        <width>0</width>
-                                                                        <height>0</height>
+                                                                        <width>10</width>
+                                                                        <height>20</height>
                                                                     </size>
                                                                 </property>
                                                             </spacer>
                                                         </item>
-                                                        <item row="2" column="4">
+                                                        <item row="0" column="5">
+                                                            <widget class="QLabel" name="entryUrlTitleLabel">
+                                                                <property name="sizePolicy">
+                                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                                                        <horstretch>0</horstretch>
+                                                                        <verstretch>0</verstretch>
+                                                                    </sizepolicy>
+                                                                </property>
+                                                                <property name="font">
+                                                                    <font>
+                                                                        <weight>75</weight>
+                                                                        <bold>true</bold>
+                                                                    </font>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>URL</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                                                </property>
+                                                            </widget>
+                                                        </item>
+                                                        <item row="0" column="6">
                                                             <widget class="ElidedLabel" name="entryUrlLabel">
                                                                 <property name="sizePolicy">
                                                                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -339,21 +320,24 @@
                                                                 </property>
                                                             </widget>
                                                         </item>
-                                                        <item row="3" column="4">
-                                                            <widget class="QLabel" name="entryExpirationLabel">
-                                                                <property name="sizePolicy">
-                                                                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                                                                        <horstretch>0</horstretch>
-                                                                        <verstretch>0</verstretch>
-                                                                    </sizepolicy>
+                                                        <item row="1" column="0">
+                                                            <spacer name="entryLeftHorizontalSpacer_2">
+                                                                <property name="orientation">
+                                                                    <enum>Qt::Horizontal</enum>
                                                                 </property>
-                                                                <property name="text">
-                                                                    <string notr="true">expired</string>
+                                                                <property name="sizeType">
+                                                                    <enum>QSizePolicy::Fixed</enum>
                                                                 </property>
-                                                            </widget>
+                                                                <property name="sizeHint" stdset="0">
+                                                                    <size>
+                                                                        <width>20</width>
+                                                                        <height>30</height>
+                                                                    </size>
+                                                                </property>
+                                                            </spacer>
                                                         </item>
-                                                        <item row="2" column="1">
-                                                            <widget class="QLabel" name="entryUrlTitleLabel">
+                                                        <item row="1" column="1">
+                                                            <widget class="QLabel" name="entryPasswordTitleLabel">
                                                                 <property name="sizePolicy">
                                                                     <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
                                                                         <horstretch>0</horstretch>
@@ -367,14 +351,14 @@
                                                                     </font>
                                                                 </property>
                                                                 <property name="text">
-                                                                    <string>URL</string>
+                                                                    <string>Password</string>
                                                                 </property>
                                                                 <property name="alignment">
                                                                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                                                                 </property>
                                                             </widget>
                                                         </item>
-                                                        <item row="1" column="3" colspan="2">
+                                                        <item row="1" column="2" colspan="2">
                                                             <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
                                                                 <property name="spacing">
                                                                     <number>6</number>
@@ -413,8 +397,8 @@
                                                                 </item>
                                                             </layout>
                                                         </item>
-                                                        <item row="1" column="0">
-                                                            <spacer name="entryLeftHorizontalSpacer_2">
+                                                        <item row="1" column="4">
+                                                            <spacer name="entryMiddleHorizontalSpacer_3">
                                                                 <property name="orientation">
                                                                     <enum>Qt::Horizontal</enum>
                                                                 </property>
@@ -423,14 +407,49 @@
                                                                 </property>
                                                                 <property name="sizeHint" stdset="0">
                                                                     <size>
-                                                                        <width>20</width>
+                                                                        <width>10</width>
                                                                         <height>20</height>
                                                                     </size>
                                                                 </property>
                                                             </spacer>
                                                         </item>
+                                                        <item row="1" column="5">
+                                                            <widget class="QLabel" name="entryExpirationTitleLabel">
+                                                                <property name="sizePolicy">
+                                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                                                        <horstretch>0</horstretch>
+                                                                        <verstretch>0</verstretch>
+                                                                    </sizepolicy>
+                                                                </property>
+                                                                <property name="font">
+                                                                    <font>
+                                                                        <weight>75</weight>
+                                                                        <bold>true</bold>
+                                                                    </font>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string>Expiration</string>
+                                                                </property>
+                                                                <property name="alignment">
+                                                                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                                                </property>
+                                                            </widget>
+                                                        </item>
+                                                        <item row="1" column="6">
+                                                            <widget class="QLabel" name="entryExpirationLabel">
+                                                                <property name="sizePolicy">
+                                                                    <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                                                                        <horstretch>0</horstretch>
+                                                                        <verstretch>0</verstretch>
+                                                                    </sizepolicy>
+                                                                </property>
+                                                                <property name="text">
+                                                                    <string notr="true">expired</string>
+                                                                </property>
+                                                            </widget>
+                                                        </item> 
                                                         <item row="2" column="0">
-                                                            <spacer name="entryLeftHorizontalSpacer_3">
+                                                            <spacer name="entryLeftHorizontalSpacer_5">
                                                                 <property name="orientation">
                                                                     <enum>Qt::Horizontal</enum>
                                                                 </property>
@@ -445,33 +464,198 @@
                                                                 </property>
                                                             </spacer>
                                                         </item>
-                                                        <item row="3" column="0">
-                                                            <spacer name="entryLeftHorizontalSpacer_4">
-                                                                <property name="orientation">
-                                                                    <enum>Qt::Horizontal</enum>
+                                                        <item row="2" column="1">
+                                                            <widget class="QLabel" name="entryNotesTitleLabel">
+                                                                <property name="sizePolicy">
+                                                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                                                        <horstretch>0</horstretch>
+                                                                        <verstretch>0</verstretch>
+                                                                    </sizepolicy>
                                                                 </property>
-                                                                <property name="sizeType">
-                                                                    <enum>QSizePolicy::Fixed</enum>
+                                                                <property name="font">
+                                                                    <font>
+                                                                        <weight>75</weight>
+                                                                        <bold>true</bold>
+                                                                    </font>
                                                                 </property>
-                                                                <property name="sizeHint" stdset="0">
-                                                                    <size>
-                                                                        <width>20</width>
-                                                                        <height>20</height>
-                                                                    </size>
+                                                                <property name="text">
+                                                                    <string>Notes</string>
                                                                 </property>
-                                                            </spacer>
+                                                                <property name="alignment">
+                                                                    <set>Qt::AlignRight|Qt::AlignTrailing</set>
+                                                                </property>
+                                                            </widget>
+                                                        </item>
+                                                        <item row="2" column="2" colspan="5">
+                                                            <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
+                                                                <property name="spacing">
+                                                                    <number>6</number>
+                                                                </property>
+                                                                <property name="leftMargin">
+                                                                    <number>4</number>
+                                                                </property>
+                                                                <item alignment="Qt::AlignTop">
+                                                                    <widget class="QToolButton" name="toggleNotesButton">
+                                                                        <property name="text">
+                                                                            <string/>
+                                                                        </property>
+                                                                        <property name="checkable">
+                                                                            <bool>true</bool>
+                                                                        </property>
+                                                                    </widget>
+                                                                </item>
+                                                                <item>
+                                                                    <widget class="QLabel" name="entryNotesLabel">
+                                                                        <property name="sizePolicy">
+                                                                            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                                                                                <horstretch>0</horstretch>
+                                                                                <verstretch>0</verstretch>
+                                                                            </sizepolicy>
+                                                                        </property>
+                                                                        <property name="minimumSize">
+                                                                            <size>
+                                                                                <width>100</width>
+                                                                                <height>100</height>
+                                                                            </size>
+                                                                        </property>
+                                                                        <property name="text">
+                                                                            <string notr="true">notes</string>
+                                                                        </property>
+                                                                        <property name="alignment">
+                                                                            <set>Qt::AlignTop</set>
+                                                                        </property>
+                                                                        <property name="wordWrap">
+                                                                            <set>true</set>
+                                                                        </property>
+                                                                    </widget>
+                                                                </item>
+                                                            </layout>
                                                         </item>
                                                     </layout>
                                                 </widget>
                                             </item>
                                         </layout>
                                     </widget>
-                                    <widget class="QWidget" name="entryAttributesTab">
+                                    <widget class="QWidget" name="entryAdvancedTab">
                                         <attribute name="title">
-                                            <string>Attributes</string>
+                                            <string>Advanced</string>
                                         </attribute>
-                                        <layout class="QVBoxLayout" name="verticalLayout">
-                                            <item>
+                                        <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="0,1,0,2">
+                                            <property name="leftMargin">
+                                                <number>0</number>
+                                            </property>
+                                            <property name="topMargin">
+                                                <number>5</number>
+                                            </property>
+                                            <property name="rightMargin">
+                                                <number>0</number>
+                                            </property>
+                                            <property name="bottomMargin">
+                                                <number>5</number>
+                                            </property>
+                                            <item row="0" column="0">
+                                                <spacer name="entryAdvancedLeftHorizontalSpacer">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                            </item>
+                                            <item row="0" column="1">
+                                                <widget class="QLabel" name="attributesTitleLabel">
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                    <property name="font">
+                                                        <font>
+                                                            <weight>75</weight>
+                                                            <bold>true</bold>
+                                                        </font>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>Attributes</string>
+                                                    </property>
+                                                </widget>
+                                            </item>
+                                            <item row="0" column="2">
+                                                <spacer name="entryAdvancedMiddleHorizontalSpacer">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                            </item>
+                                            <item row="0" column="3">
+                                                <widget class="QLabel" name="attachmentsTitleLabel">
+                                                    <property name="sizePolicy">
+                                                        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                                            <horstretch>0</horstretch>
+                                                            <verstretch>0</verstretch>
+                                                        </sizepolicy>
+                                                    </property>
+                                                    <property name="font">
+                                                        <font>
+                                                            <weight>75</weight>
+                                                            <bold>true</bold>
+                                                        </font>
+                                                    </property>
+                                                    <property name="text">
+                                                        <string>Attachments</string>
+                                                    </property>
+                                                </widget>
+                                            </item>
+                                            <item row="0" column="4">
+                                                <spacer name="entryAdvancedRightHorizontalSpacer">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                            </item>
+                                            <item row="1" column="0">
+                                                <spacer name="entryAdvancedLeftHorizontalSpacer_2">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                            </item>
+                                            <item row="1" column="1">
                                                 <widget class="QTextEdit" name="entryAttributesEdit">
                                                     <property name="focusPolicy">
                                                         <enum>Qt::ClickFocus</enum>
@@ -481,32 +665,40 @@
                                                     </property>
                                                 </widget>
                                             </item>
-                                        </layout>
-                                    </widget>
-                                    <widget class="QWidget" name="entryAttachmentsTab">
-                                        <attribute name="title">
-                                            <string>Attachments</string>
-                                        </attribute>
-                                        <layout class="QVBoxLayout" name="verticalLayout_6">
-                                            <item>
+                                            <item row="1" column="2">
+                                                <spacer name="entryAdvancedMiddleHorizontalSpacer_2">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
+                                                    </property>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
+                                                    </property>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
+                                            </item>
+                                            <item row="1" column="3">
                                                 <widget class="EntryAttachmentsWidget" name="entryAttachmentsWidget" native="true"/>
                                             </item>
-                                        </layout>
-                                    </widget>
-                                    <widget class="QWidget" name="entryNotesTab">
-                                        <attribute name="title">
-                                            <string>Notes</string>
-                                        </attribute>
-                                        <layout class="QVBoxLayout" name="verticalLayout_2">
-                                            <item>
-                                                <widget class="QTextEdit" name="entryNotesEdit">
-                                                    <property name="focusPolicy">
-                                                        <enum>Qt::ClickFocus</enum>
+                                            <item row="1" column="4">
+                                                <spacer name="entryAdvancedRightHorizontalSpacer_2">
+                                                    <property name="orientation">
+                                                        <enum>Qt::Horizontal</enum>
                                                     </property>
-                                                    <property name="readOnly">
-                                                        <bool>true</bool>
+                                                    <property name="sizeType">
+                                                        <enum>QSizePolicy::Fixed</enum>
                                                     </property>
-                                                </widget>
+                                                    <property name="sizeHint" stdset="0">
+                                                        <size>
+                                                            <width>5</width>
+                                                            <height>20</height>
+                                                        </size>
+                                                    </property>
+                                                </spacer>
                                             </item>
                                         </layout>
                                     </widget>
