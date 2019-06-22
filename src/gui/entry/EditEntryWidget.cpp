@@ -85,6 +85,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
     , m_autoTypeDefaultSequenceGroup(new QButtonGroup(this))
     , m_autoTypeWindowSequenceGroup(new QButtonGroup(this))
+    , m_usernameCompleter(new QCompleter(this))
+    , m_usernameCompleterModel(new QStringListModel(this))
 {
     setupMain();
     setupAdvanced();
@@ -128,6 +130,12 @@ void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
     addPage(tr("Entry"), FilePath::instance()->icon("actions", "document-edit"), m_mainWidget);
+
+    m_mainUi->usernameComboBox->setEditable(true);
+    m_usernameCompleter->setCompletionMode(QCompleter::InlineCompletion);
+    m_usernameCompleter->setCaseSensitivity(Qt::CaseSensitive);
+    m_usernameCompleter->setModel(m_usernameCompleterModel);
+    m_mainUi->usernameComboBox->setCompleter(m_usernameCompleter);
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
@@ -273,7 +281,7 @@ void EditEntryWidget::setupEntryUpdate()
 {
     // Entry tab
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
-    connect(m_mainUi->usernameEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
+    connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
@@ -707,7 +715,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_customData->copyDataFrom(entry->customData());
 
     m_mainUi->titleEdit->setReadOnly(m_history);
-    m_mainUi->usernameEdit->setReadOnly(m_history);
+    m_mainUi->usernameComboBox->lineEdit()->setReadOnly(m_history);
     m_mainUi->urlEdit->setReadOnly(m_history);
     m_mainUi->passwordEdit->setReadOnly(m_history);
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
@@ -742,7 +750,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_historyWidget->setEnabled(!m_history);
 
     m_mainUi->titleEdit->setText(entry->title());
-    m_mainUi->usernameEdit->setText(entry->username());
+    m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordRepeatEdit->setText(entry->password());
@@ -750,6 +758,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
     m_mainUi->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
+
+    QList<QString> commonUsernames = m_db->commonUsernames();
+    m_usernameCompleterModel->setStringList(commonUsernames);
+    QString usernameToRestore = m_mainUi->usernameComboBox->lineEdit()->text();
+    m_mainUi->usernameComboBox->clear();
+    m_mainUi->usernameComboBox->addItems(commonUsernames);
+    m_mainUi->usernameComboBox->lineEdit()->setText(usernameToRestore);
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
@@ -910,7 +925,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
     entry->customData()->copyDataFrom(m_customData.data());
     entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
-    entry->setUsername(m_mainUi->usernameEdit->text().replace(newLineRegex, " "));
+    entry->setUsername(m_mainUi->usernameComboBox->lineEdit()->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());

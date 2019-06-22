@@ -507,7 +507,7 @@ void TestGui::testEditEntry()
     QVERIFY(okButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     titleEdit->setText("multiline\ntitle");
-    editEntryWidget->findChild<QLineEdit*>("usernameEdit")->setText("multiline\nusername");
+    editEntryWidget->findChild<QComboBox*>("usernameComboBox")->lineEdit()->setText("multiline\nusername");
     editEntryWidget->findChild<QLineEdit*>("passwordEdit")->setText("multiline\npassword");
     editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit")->setText("multiline\npassword");
     editEntryWidget->findChild<QLineEdit*>("urlEdit")->setText("multiline\nurl");
@@ -594,6 +594,10 @@ void TestGui::testAddEntry()
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "test");
+    auto* usernameComboBox = editEntryWidget->findChild<QComboBox*>("usernameComboBox");
+    QVERIFY(usernameComboBox);
+    QTest::mouseClick(usernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(usernameComboBox, "AutocompletionUsername");
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
@@ -602,16 +606,30 @@ void TestGui::testAddEntry()
     Entry* entry = entryView->entryFromIndex(item);
 
     QCOMPARE(entry->title(), QString("test"));
+    QCOMPARE(entry->username(), QString("AutocompletionUsername"));
     QCOMPARE(entry->historyItems().size(), 0);
+
+    m_db->updateCommonUsernames();
 
     // Add entry "something 2"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
+    QTest::mouseClick(usernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(usernameComboBox, "Auto");
+    QTest::keyPress(usernameComboBox, Qt::Key_Right);
     auto* passwordEdit = editEntryWidget->findChild<QLineEdit*>("passwordEdit");
     auto* passwordRepeatEdit = editEntryWidget->findChild<QLineEdit*>("passwordRepeatEdit");
     QTest::keyClicks(passwordEdit, "something 2");
     QTest::keyClicks(passwordRepeatEdit, "something 2");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    item = entryView->model()->index(1, 1);
+    entry = entryView->entryFromIndex(item);
+
+    QCOMPARE(entry->title(), QString("something 2"));
+    QCOMPARE(entry->username(), QString("AutocompletionUsername"));
+    QCOMPARE(entry->historyItems().size(), 0);
 
     // Add entry "something 5" but click cancel button (does NOT add entry)
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
@@ -1063,8 +1081,8 @@ void TestGui::testEntryPlaceholders()
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "test");
-    QLineEdit* usernameEdit = editEntryWidget->findChild<QLineEdit*>("usernameEdit");
-    QTest::keyClicks(usernameEdit, "john");
+    QComboBox* usernameComboBox = editEntryWidget->findChild<QComboBox*>("usernameComboBox");
+    QTest::keyClicks(usernameComboBox, "john");
     QLineEdit* urlEdit = editEntryWidget->findChild<QLineEdit*>("urlEdit");
     QTest::keyClicks(urlEdit, "{TITLE}.{USERNAME}");
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");

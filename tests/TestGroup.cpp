@@ -1181,3 +1181,29 @@ void TestGroup::testApplyGroupIconRecursively()
     QVERIFY(subsubgroup->iconNumber() == iconForGroups);
     QVERIFY(subsubgroupEntry->iconNumber() == iconForEntries);
 }
+
+void TestGroup::testUsernamesRecursive()
+{
+    Database* database = new Database();
+
+    // Create a subgroup
+    Group* subgroup = new Group();
+    subgroup->setName("Subgroup");
+    subgroup->setParent(database->rootGroup());
+
+    // Generate entries in the root group and the subgroup
+    Entry* rootGroupEntry = database->rootGroup()->addEntryWithPath("Root group entry");
+    rootGroupEntry->setUsername("Name1");
+
+    Entry* subgroupEntry = subgroup->addEntryWithPath("Subgroup entry");
+    subgroupEntry->setUsername("Name2");
+
+    Entry* subgroupEntryReusingUsername = subgroup->addEntryWithPath("Another subgroup entry");
+    subgroupEntryReusingUsername->setUsername("Name2");
+
+    QList<QString> usernames = database->rootGroup()->usernamesRecursive();
+    QCOMPARE(usernames.size(), 2);
+    QVERIFY(usernames.contains("Name1"));
+    QVERIFY(usernames.contains("Name2"));
+    QVERIFY(usernames.indexOf("Name2") < usernames.indexOf("Name1"));
+}
