@@ -18,8 +18,10 @@
 #include <QtGlobal>
 #include <cstdint>
 #include <sodium.h>
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS)
 #include <malloc/malloc.h>
+#elif defined(Q_OS_FREEBSD)
+#include <malloc_np.h>
 #else
 #include <malloc.h>
 #endif
