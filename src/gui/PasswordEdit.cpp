@@ -125,30 +125,30 @@ void PasswordEdit::autocompletePassword(const QString& password)
  * See the Apple Technical Note 2150:
  * https://developer.apple.com/library/archive/technotes/tn2150/_index.html
  *
- * @param b Status to set secure input entry to
+ * @param enabled Status to set secure input entry to
  */
-void PasswordEdit::secureInputEntry(bool b)
+void PasswordEdit::secureInputEntry(bool enabled)
 {
 #ifdef Q_OS_MACOS
     // are we currently in secure input entry mode?
     static bool secure = false;
-    if (b != secure) {
-        b ? EnableSecureEventInput() : DisableSecureEventInput();
-        secure = b;
+    if (enabled != secure) {
+        enabled ? EnableSecureEventInput() : DisableSecureEventInput();
+        secure = enabled;
     }
 #else
     // mark the boolean as unused to avoid -Wunused-parameter warning
-    Q_UNUSED(b);
+    Q_UNUSED(enabled);
 #endif
 }
 
-void PasswordEdit::focusInEvent(QFocusEvent* e) {
+void PasswordEdit::focusInEvent(QFocusEvent* event) {
     // if the password is supposed to be hidden, hide it from event taps as well
     secureInputEntry(echoMode() == QLineEdit::Password);
-    QLineEdit::focusInEvent(e);
+    QLineEdit::focusInEvent(event);
 }
 
-void PasswordEdit::focusOutEvent(QFocusEvent* e) {
+void PasswordEdit::focusOutEvent(QFocusEvent* event) {
     secureInputEntry(false);
-    QLineEdit::focusOutEvent(e);
+    QLineEdit::focusOutEvent(event);
 }

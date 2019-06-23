@@ -45,14 +45,14 @@ private slots:
     void autocompletePassword(const QString& password);
 
 private:
-    void secureInputEntry(bool b);
+    void secureInputEntry(bool enabled);
     bool passwordsEqual() const;
 
     QPointer<PasswordEdit> m_basePasswordEdit;
 
 protected:
-    void focusInEvent(QFocusEvent* e);
-    void focusOutEvent(QFocusEvent* e);
+    void focusInEvent(QFocusEvent* event);
+    void focusOutEvent(QFocusEvent* event);
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H
