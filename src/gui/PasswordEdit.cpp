@@ -125,6 +125,10 @@ void PasswordEdit::autocompletePassword(const QString& password)
  * See the Apple Technical Note 2150:
  * https://developer.apple.com/library/archive/technotes/tn2150/_index.html
  *
+ * This functionality was adapted from the following Qt 4.8 source files:
+ *     src/gui/kernel/qkeymapper_mac.cpp
+ *     src/gui/widgets/qlineedit.cpp
+ *
  * @param enabled Status to set secure input entry to
  */
 void PasswordEdit::secureInputEntry(bool enabled)
