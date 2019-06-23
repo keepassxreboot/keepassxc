@@ -117,6 +117,8 @@ void PasswordEdit::secureInputEntry(bool b)
         b ? EnableSecureEventInput() : DisableSecureEventInput();
         secure = b;
     }
+#else
+    Q_UNUSED(b);
 #endif
 }
 
