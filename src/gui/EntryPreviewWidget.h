@@ -49,11 +49,10 @@ private slots:
     void updateEntryHeaderLine();
     void updateEntryTotp();
     void updateEntryGeneralTab();
-    void updateEntryNotesTab();
-    void updateEntryAttributesTab();
-    void updateEntryAttachmentsTab();
+    void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
     void setPasswordVisible(bool state);
+    void setNotesVisible(bool state);
 
     void updateGroupHeaderLine();
     void updateGroupGeneralTab();
