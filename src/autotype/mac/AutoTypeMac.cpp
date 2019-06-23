@@ -17,23 +17,15 @@
  */
 
 #include "AutoTypeMac.h"
+#include "AutoTypeMacKeyCodes.h"
 #include "gui/macutils/MacUtils.h"
 
-#include <ApplicationServices/ApplicationServices.h>
-
-#define HOTKEY_ID 1
 #define MAX_WINDOW_TITLE_LENGTH 1024
 #define INVALID_KEYCODE 0xFFFF
 
 AutoTypePlatformMac::AutoTypePlatformMac()
-    : m_hotkeyRef(nullptr)
-    , m_hotkeyId({ 'kpx2', HOTKEY_ID })
+    : m_globalMonitor(nullptr)
 {
-    EventTypeSpec eventSpec;
-    eventSpec.eventClass = kEventClassKeyboard;
-    eventSpec.eventKind = kEventHotKeyPressed;
-
-    ::InstallApplicationEventHandler(AutoTypePlatformMac::hotkeyHandler, 1, &eventSpec, this, nullptr);
 }
 
 //
@@ -41,7 +33,7 @@ AutoTypePlatformMac::AutoTypePlatformMac()
 //
 bool AutoTypePlatformMac::isAvailable()
 {
-    return true;
+    return macUtils()->enableAccessibility();
 }
 
 //
@@ -116,18 +108,23 @@ QString AutoTypePlatformMac::activeWindowTitle()
 //
 bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
-    uint16 nativeKeyCode = qtToNativeKeyCode(key);
+    CGKeyCode nativeKeyCode = qtToNativeKeyCode(key);
     if (nativeKeyCode == INVALID_KEYCODE) {
         qWarning("Invalid key code");
         return false;
     }
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, false);
-    if (::RegisterEventHotKey(nativeKeyCode, nativeModifiers, m_hotkeyId, GetApplicationEventTarget(), 0, &m_hotkeyRef) != noErr) {
-        qWarning("Register hotkey failed");
-        return false;
-    }
-
+    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers);
+    m_globalMonitor = macUtils()->addGlobalMonitor(nativeKeyCode, nativeModifiers, this, AutoTypePlatformMac::hotkeyHandler);
     return true;
+}
+
+//
+// Hotkey Handler
+//
+void AutoTypePlatformMac::hotkeyHandler(void *userData)
+{
+    AutoTypePlatformMac *self = static_cast<AutoTypePlatformMac *>(userData);
+    emit self->globalShortcutTriggered();
 }
 
 //
@@ -137,8 +134,7 @@ void AutoTypePlatformMac::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
 {
     Q_UNUSED(key);
     Q_UNUSED(modifiers);
-
-    ::UnregisterEventHotKey(m_hotkeyRef);
+    macUtils()->removeGlobalMonitor(m_globalMonitor);
 }
 
 int AutoTypePlatformMac::platformEventFilter(void* event)
@@ -199,13 +195,13 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 //
 void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0)
 {
-    uint16 keyCode = qtToNativeKeyCode(key);
+    CGKeyCode keyCode = qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
 
     CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, true);
+    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers);
     if (keyEvent != nullptr) {
         ::CGEventSetFlags(keyEvent, nativeModifiers);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
@@ -217,7 +213,7 @@ void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModif
 // Translate qt key code to mac os key code
 // see: HIToolbox/Events.h
 //
-uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
+CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 {
     switch (key) {
         case Qt::Key_A:
@@ -397,34 +393,21 @@ uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 // Translate qt key modifiers to mac os modifiers
 // see: https://doc.qt.io/qt-5/osx-issues.html#special-keys
 //
-CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native)
+CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
 {
     CGEventFlags nativeModifiers = CGEventFlags(0);
 
-    CGEventFlags shiftMod = CGEventFlags(shiftKey);
-    CGEventFlags cmdMod = CGEventFlags(cmdKey);
-    CGEventFlags optionMod = CGEventFlags(optionKey);
-    CGEventFlags controlMod = CGEventFlags(controlKey);
-
-    if (native) {
-        shiftMod = kCGEventFlagMaskShift;
-        cmdMod = kCGEventFlagMaskCommand;
-        optionMod = kCGEventFlagMaskAlternate;
-        controlMod = kCGEventFlagMaskControl;
-    }
-
-
     if (modifiers & Qt::ShiftModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | shiftMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskShift);
     }
     if (modifiers & Qt::ControlModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | cmdMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskCommand);
     }
     if (modifiers & Qt::AltModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | optionMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskAlternate);
     }
     if (modifiers & Qt::MetaModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | controlMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskControl);
     }
 
     return nativeModifiers;
@@ -461,24 +444,6 @@ QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
     }
 
     return title;
-}
-
-//
-// Carbon hotkey handler
-//
-OSStatus AutoTypePlatformMac::hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData)
-{
-    Q_UNUSED(nextHandler);
-
-    AutoTypePlatformMac *self = static_cast<AutoTypePlatformMac *>(userData);
-    EventHotKeyID hotkeyId;
-
-    if (::GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, nullptr, sizeof(hotkeyId), nullptr, &hotkeyId) == noErr
-            && hotkeyId.id == HOTKEY_ID) {
-        emit self->globalShortcutTriggered();
-    }
-
-    return noErr;
 }
 
 //

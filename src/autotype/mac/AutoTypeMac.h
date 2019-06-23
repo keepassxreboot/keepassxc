@@ -19,9 +19,9 @@
 #ifndef KEEPASSX_AUTOTYPEMAC_H
 #define KEEPASSX_AUTOTYPEMAC_H
 
-#include <Carbon/Carbon.h>
 #include <QtPlugin>
 #include <memory>
+#include <ApplicationServices/ApplicationServices.h>
 
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
@@ -54,14 +54,13 @@ signals:
     void globalShortcutTriggered();
 
 private:
-    EventHotKeyRef m_hotkeyRef;
-    EventHotKeyID m_hotkeyId;
-
-    static uint16 qtToNativeKeyCode(Qt::Key key);
-    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native);
+    static void hotkeyHandler(void *userData);
+    static CGKeyCode qtToNativeKeyCode(Qt::Key key);
+    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
     static int windowLayer(CFDictionaryRef window);
     static QString windowTitle(CFDictionaryRef window);
-    static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData);
+
+    void* m_globalMonitor;
 };
 
 class AutoTypeExecutorMac : public AutoTypeExecutor
