@@ -57,7 +57,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 
     connect(m_ui->entryUrlLabel, SIGNAL(linkActivated(QString)), SLOT(openEntryUrl()));
 
-    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpWidget, SLOT(setVisible(bool)));
+    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
     connect(m_ui->toggleNotesButton, SIGNAL(clicked(bool)), SLOT(setNotesVisible(bool)));
@@ -150,7 +150,7 @@ void EntryPreviewWidget::updateEntryTotp()
     Q_ASSERT(m_currentEntry);
     const bool hasTotp = m_currentEntry->hasTotp();
     m_ui->entryTotpButton->setVisible(hasTotp);
-    m_ui->entryTotpWidget->hide();
+    m_ui->entryTotpLabel->hide();
     m_ui->entryTotpButton->setChecked(false);
 
     if (hasTotp) {
