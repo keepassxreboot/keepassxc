@@ -60,7 +60,7 @@ void PasswordEdit::setShowPassword(bool show)
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     // if the password is supposed to be hidden, hide it from event taps as well
     if (hasFocus()) {
-        secureInputEntry(!show);
+        setSecureEventInput(!show);
     }
     // if I have a parent, I'm the child
     if (m_basePasswordEdit) {
@@ -129,30 +129,30 @@ void PasswordEdit::autocompletePassword(const QString& password)
  *     src/gui/kernel/qkeymapper_mac.cpp
  *     src/gui/widgets/qlineedit.cpp
  *
- * @param enabled Status to set secure input entry to
+ * @param state Status to set secure input entry to
  */
-void PasswordEdit::secureInputEntry(bool enabled)
+void PasswordEdit::setSecureEventInput(bool state)
 {
 #ifdef Q_OS_MACOS
     // are we currently in secure input entry mode?
     static bool secure = false;
-    if (enabled != secure) {
-        enabled ? EnableSecureEventInput() : DisableSecureEventInput();
-        secure = enabled;
+    if (state != secure) {
+        state ? EnableSecureEventInput() : DisableSecureEventInput();
+        secure = state;
     }
 #else
     // mark the boolean as unused to avoid -Wunused-parameter warning
-    Q_UNUSED(enabled);
+    Q_UNUSED(state);
 #endif
 }
 
 void PasswordEdit::focusInEvent(QFocusEvent* event) {
     // if the password is supposed to be hidden, hide it from event taps as well
-    secureInputEntry(echoMode() == QLineEdit::Password);
+    setSecureEventInput(echoMode() == QLineEdit::Password);
     QLineEdit::focusInEvent(event);
 }
 
 void PasswordEdit::focusOutEvent(QFocusEvent* event) {
-    secureInputEntry(false);
+    setSecureEventInput(false);
     QLineEdit::focusOutEvent(event);
 }
