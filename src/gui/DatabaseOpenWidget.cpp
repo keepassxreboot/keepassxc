@@ -196,6 +196,7 @@ void DatabaseOpenWidget::openDatabase()
     }
 
     m_ui->editPassword->setShowPassword(false);
+    m_ui->buttonTogglePassword->setChecked(false);
     QCoreApplication::processEvents();
 
     m_db.reset(new Database());
