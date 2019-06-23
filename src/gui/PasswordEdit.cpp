@@ -21,6 +21,11 @@
 #include "core/Config.h"
 #include "gui/Font.h"
 
+#ifdef Q_OS_MACOS
+// for EnableSecureEventInput and DisableSecureEventInput
+#include <Carbon/Carbon.h>
+#endif
+
 const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
 const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
 
@@ -53,6 +58,7 @@ void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
+    // if the password is supposed to be hidden, hide it from event taps as well
     if (hasFocus()) {
         secureInputEntry(!show);
     }
@@ -109,20 +115,35 @@ void PasswordEdit::autocompletePassword(const QString& password)
     }
 }
 
+/**
+ * Set the status of secure input entry on macOS. This stops keyboard intercept
+ * processes (e.g. keyloggers, accessibility services) from reading keypresses.
+ *
+ * It's important to turn off this off when not needed to avoid interfering with
+ * accessibility functionality and other legitimate uses of keyboard event taps.
+ *
+ * See the Apple Technical Note 2150:
+ * https://developer.apple.com/library/archive/technotes/tn2150/_index.html
+ *
+ * @param b Status to set secure input entry to
+ */
 void PasswordEdit::secureInputEntry(bool b)
 {
 #ifdef Q_OS_MACOS
+    // are we currently in secure input entry mode?
     static bool secure = false;
-    if (b != secure){
+    if (b != secure) {
         b ? EnableSecureEventInput() : DisableSecureEventInput();
         secure = b;
     }
 #else
+    // mark the boolean as unused to avoid -Wunused-parameter warning
     Q_UNUSED(b);
 #endif
 }
 
 void PasswordEdit::focusInEvent(QFocusEvent* e) {
+    // if the password is supposed to be hidden, hide it from event taps as well
     secureInputEntry(echoMode() == QLineEdit::Password);
     QLineEdit::focusInEvent(e);
 }

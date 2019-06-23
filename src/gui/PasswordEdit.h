@@ -19,9 +19,6 @@
 #ifndef KEEPASSX_PASSWORDEDIT_H
 #define KEEPASSX_PASSWORDEDIT_H
 
-#ifdef Q_OS_MACOS
-#include <Carbon/Carbon.h>
-#endif
 #include <QLineEdit>
 #include <QPointer>
 
