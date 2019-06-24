@@ -111,6 +111,7 @@ public:
 
     bool hasTotp() const;
     bool isExpired() const;
+    bool isRecycled() const;
     bool isAttributeReference(const QString& key) const;
     bool isAttributeReferenceOf(const QString& key, const QUuid& uuid) const;
     void replaceReferencesWithValues(const Entry* other);

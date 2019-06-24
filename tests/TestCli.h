@@ -21,11 +21,14 @@
 #include "core/Database.h"
 #include "util/TemporaryFile.h"
 
+#include <QByteArray>
 #include <QFile>
 #include <QScopedPointer>
+#include <QSharedPointer>
 #include <QTemporaryFile>
 #include <QTest>
-#include <QTextStream>
+
+#include <stdio.h>
 
 class TestCli : public QObject
 {
@@ -42,6 +45,7 @@ private slots:
 
     void testCommand();
     void testAdd();
+    void testAnalyze();
     void testClip();
     void testCreate();
     void testDiceware();
