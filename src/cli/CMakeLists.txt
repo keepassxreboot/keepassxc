@@ -15,6 +15,7 @@
 
 set(cli_SOURCES
         Add.cpp
+        Analyze.cpp
         Clip.cpp
         Create.cpp
         Command.cpp

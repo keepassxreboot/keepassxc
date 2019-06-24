@@ -341,6 +341,16 @@ bool Entry::isExpired() const
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
 }
 
+bool Entry::isRecycled() const
+{
+    const Database* db = database();
+    if (!db) {
+        return false;
+    }
+
+    return m_group == db->metadata()->recycleBin() || m_group->isRecycled();
+}
+
 bool Entry::isAttributeReference(const QString& key) const
 {
     return m_attributes->isReference(key);

@@ -32,6 +32,7 @@
 #include "format/KeePass2.h"
 
 #include "cli/Add.h"
+#include "cli/Analyze.h"
 #include "cli/Clip.h"
 #include "cli/Command.h"
 #include "cli/Create.h"
@@ -51,6 +52,7 @@
 #include <QFile>
 #include <QFuture>
 #include <QSet>
+#include <QTextStream>
 #include <QtConcurrent>
 
 #include <cstdio>
@@ -160,8 +162,9 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 13);
+    QCOMPARE(Command::getCommands().size(), 14);
     QVERIFY(Command::getCommand("add"));
+    QVERIFY(Command::getCommand("analyze"));
     QVERIFY(Command::getCommand("clip"));
     QVERIFY(Command::getCommand("create"));
     QVERIFY(Command::getCommand("diceware"));
@@ -237,6 +240,22 @@ void TestCli::testAdd()
     QCOMPARE(entry->username(), QString("newuser2"));
     QCOMPARE(entry->url(), QString("https://example.net/"));
     QCOMPARE(entry->password(), QString("newpassword"));
+}
+
+void TestCli::testAnalyze()
+{
+    Analyze analyzeCmd;
+    QVERIFY(!analyzeCmd.name.isEmpty());
+    QVERIFY(analyzeCmd.getDescriptionLine().contains(analyzeCmd.name));
+
+    const QString hibpPath = QString(KEEPASSX_TEST_DATA_DIR).append("/hibp.txt");
+
+    Utils::Test::setNextPassword("a");
+    analyzeCmd.execute({"analyze", "--hibp", hibpPath, m_dbFile->fileName()});
+    m_stdoutFile->reset();
+    m_stdoutFile->readLine(); // skip password prompt
+    auto output = m_stdoutFile->readAll();
+    QVERIFY(output.contains("Sample Entry") && output.contains("123"));
 }
 
 bool isTOTP(const QString& value)

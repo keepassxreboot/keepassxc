@@ -41,6 +41,7 @@ set(keepassx_SOURCES
         core/FileWatcher.cpp
         core/Bootstrap.cpp
         core/Group.cpp
+        core/HibpOffline.cpp
         core/InactivityTimer.cpp
         core/Merger.cpp
         core/Metadata.cpp

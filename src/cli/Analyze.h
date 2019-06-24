@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,29 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRY_H
-#define KEEPASSX_TESTENTRY_H
+#ifndef KEEPASSXC_ANALYZE_H
+#define KEEPASSXC_ANALYZE_H
 
-#include <QObject>
+#include "DatabaseCommand.h"
 
-class Entry;
-
-class TestEntry : public QObject
+class Analyze : public DatabaseCommand
 {
-    Q_OBJECT
+public:
+    Analyze();
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
-private slots:
-    void initTestCase();
-    void testHistoryItemDeletion();
-    void testCopyDataFrom();
-    void testClone();
-    void testResolveUrl();
-    void testResolveUrlPlaceholders();
-    void testResolveRecursivePlaceholders();
-    void testResolveReferencePlaceholders();
-    void testResolveNonIdPlaceholdersToUuid();
-    void testResolveClonedEntry();
-    void testIsRecycled();
+    static const QCommandLineOption HIBPDatabaseOption;
+
+private:
+    void printHibpFinding(const Entry* entry, int count, QTextStream& out);
 };
 
-#endif // KEEPASSX_TESTENTRY_H
+#endif // KEEPASSXC_HIBP_H

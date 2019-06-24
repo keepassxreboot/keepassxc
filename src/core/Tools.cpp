@@ -193,7 +193,7 @@ namespace Tools
 
     bool isHex(const QByteArray& ba)
     {
-        for (const unsigned char c : ba) {
+        for (const uchar c : ba) {
             if (!std::isxdigit(c)) {
                 return false;
             }
