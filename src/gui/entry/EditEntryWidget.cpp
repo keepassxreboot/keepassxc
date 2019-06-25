@@ -32,6 +32,7 @@
 #include <QSortFilterProxyModel>
 #include <QStackedLayout>
 #include <QStandardPaths>
+#include <QStringListModel>
 #include <QTemporaryFile>
 
 #include "autotype/AutoType.h"
