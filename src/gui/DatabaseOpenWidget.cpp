@@ -34,10 +34,10 @@
 
 #include "config-keepassx.h"
 
-#include <QSharedPointer>
-#include <QtConcurrentRun>
 #include <QDesktopServices>
 #include <QFont>
+#include <QSharedPointer>
+#include <QtConcurrentRun>
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
@@ -311,8 +311,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             legacyWarning.setDefaultButton(QMessageBox::Ok);
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
-            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state)
-            {
+            connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state) {
                 config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
             });
 

@@ -41,6 +41,7 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
+class QStringListModel;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
