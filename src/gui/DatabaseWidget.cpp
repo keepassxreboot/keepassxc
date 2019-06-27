@@ -95,7 +95,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
     , m_fileWatcher(new DelayingFileWatcher(this))
-    , m_iconDownloaderState(IconDownloaderState::Idle)
 {
     m_messageWidget->setHidden(true);
 
@@ -658,49 +657,35 @@ void DatabaseWidget::openUrl()
 void DatabaseWidget::downloadSelectedFavicons()
 {
 #ifdef WITH_XC_NETWORKING
-    const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
-    if (selected.isEmpty()) {
-        return;
-    }
-
     QList<Entry*> selectedEntries;
-    for (const QModelIndex& index : selected) {
+    for (const auto& index : m_entryView->selectionModel()->selectedRows()) {
         selectedEntries.append(m_entryView->entryFromIndex(index));
     }
 
-    if (selectedEntries.isEmpty()) {
-        return;
-    }
-
-    if (m_iconDownloaderState == IconDownloaderState::Downloading) {
-        return;
-    }
-    m_iconDownloaderState = IconDownloaderState::Downloading;
-
-    auto* iconDownloader = new IconDownloaderDialog(this);
-    iconDownloader->downloadFavicons(m_db, selectedEntries);
-    m_iconDownloaderState = IconDownloaderState::Idle;
+    // Force download even if icon already exists
+    performIconDownloads(selectedEntries, true);
 #endif
 }
 
 void DatabaseWidget::downloadAllFavicons()
 {
 #ifdef WITH_XC_NETWORKING
-    if (m_iconDownloaderState == IconDownloaderState::Downloading) {
-        return;
-    }
-    m_iconDownloaderState = IconDownloaderState::Downloading;
-
-    auto* iconDownloader = new IconDownloaderDialog(this);
-
-    Group* currentGroup = m_groupView->currentGroup();
-    Q_ASSERT(currentGroup);
+    auto currentGroup = m_groupView->currentGroup();
     if (currentGroup) {
-        auto entries = currentGroup->entries();
-        iconDownloader->downloadFavicons(m_db, entries);
+        performIconDownloads(currentGroup->entries());
     }
+#endif
+}
 
-    m_iconDownloaderState = IconDownloaderState::Idle;
+void DatabaseWidget::performIconDownloads(const QList<Entry*>& entries, bool force)
+{
+#ifdef WITH_XC_NETWORKING
+    auto* iconDownloaderDialog = new IconDownloaderDialog(this);
+    connect(this, SIGNAL(databaseLockRequested()), iconDownloaderDialog, SLOT(close()));
+    iconDownloaderDialog->downloadFavicons(m_db, entries, force);
+#else
+    Q_UNUSED(entries);
+    Q_UNUSED(force);
 #endif
 }
 
@@ -1328,6 +1313,8 @@ bool DatabaseWidget::lock()
     if (isLocked()) {
         return true;
     }
+
+    emit databaseLockRequested();
 
     clipboard()->clearCopiedText();
 

@@ -17,27 +17,27 @@
 
 #include "IconDownloader.h"
 #include "core/Config.h"
+#include "core/NetworkManager.h"
 
-#ifdef WITH_XC_NETWORKING
 #include <QHostInfo>
-#include <QNetworkAccessManager>
 #include <QtNetwork>
-#endif
+
+#define MAX_REDIRECTS 5
 
 IconDownloader::IconDownloader(QObject* parent)
     : QObject(parent)
-#ifdef WITH_XC_NETWORKING
-    , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
-#endif
+    , m_redirects(0)
 {
+    m_timeout.setSingleShot(true);
+    connect(&m_timeout, SIGNAL(timeout()), SLOT(abortDownload()));
 }
 
 IconDownloader::~IconDownloader()
 {
+    abortDownload();
 }
 
-#ifdef WITH_XC_NETWORKING
 namespace
 {
     // Try to get the 2nd level domain of the host part of a QUrl. For example,
@@ -55,8 +55,9 @@ namespace
     QUrl convertVariantToUrl(const QVariant& var)
     {
         QUrl url;
-        if (var.canConvert<QUrl>())
+        if (var.canConvert<QUrl>()) {
             url = var.toUrl();
+        }
         return url;
     }
 
@@ -67,21 +68,23 @@ namespace
         return url;
     }
 } // namespace
-#endif
 
-void IconDownloader::downloadFavicon(Entry* entry)
+void IconDownloader::setUrl(const QString& entryUrl)
 {
-#ifdef WITH_XC_NETWORKING
-    m_entry = entry;
-    m_url = entry->url();
+    m_url = entryUrl;
+    QUrl url(m_url);
+    if (!url.isValid()) {
+        return;
+    }
+
     m_redirects = 0;
     m_urlsToTry.clear();
 
-    if (m_url.scheme().isEmpty()) {
-        m_url.setUrl(QString("https://%1").arg(m_url.toString()));
+    if (url.scheme().isEmpty()) {
+        url.setUrl(QString("https://%1").arg(url.toString()));
     }
 
-    QString fullyQualifiedDomain = m_url.host();
+    QString fullyQualifiedDomain = url.host();
 
     // Determine if host portion of URL is an IP address by resolving it and
     // searching for a match with the returned address(es).
@@ -113,38 +116,56 @@ void IconDownloader::downloadFavicon(Entry* entry)
     }
 
     // Add a direct pull of the website's own favicon.ico file
-    m_urlsToTry.append(QUrl(m_url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
+    m_urlsToTry.append(QUrl(url.scheme() + "://" + fullyQualifiedDomain + "/favicon.ico"));
 
     // Also try a direct pull of the second-level domain (if possible)
     if (!hostIsIp && fullyQualifiedDomain != secondLevelDomain) {
-        m_urlsToTry.append(QUrl(m_url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
+        m_urlsToTry.append(QUrl(url.scheme() + "://" + secondLevelDomain + "/favicon.ico"));
     }
+}
 
-    // Use the first URL to start the download process
-    // If a favicon is not found, the next URL will be tried
-    startFetchFavicon(m_urlsToTry.takeFirst());
-#else
-    Q_UNUSED(entry);
-#endif
+void IconDownloader::download()
+{
+    if (!m_timeout.isActive()) {
+        int timeout = config()->get("FaviconDownloadTimeout", 10).toInt();
+        m_timeout.start(timeout * 1000);
+
+        // Use the first URL to start the download process
+        // If a favicon is not found, the next URL will be tried
+        fetchFavicon(m_urlsToTry.takeFirst());
+    }
+}
+
+void IconDownloader::abortDownload()
+{
+    if (m_reply) {
+        m_reply->abort();
+    }
+}
+
+void IconDownloader::fetchFavicon(const QUrl& url)
+{
+    m_bytesReceived.clear();
+    m_fetchUrl = url;
+
+    QNetworkRequest request(url);
+    m_reply = getNetMgr()->get(request);
+
+    connect(m_reply, &QNetworkReply::finished, this, &IconDownloader::fetchFinished);
+    connect(m_reply, &QIODevice::readyRead, this, &IconDownloader::fetchReadyRead);
 }
 
 void IconDownloader::fetchReadyRead()
 {
-#ifdef WITH_XC_NETWORKING
     m_bytesReceived += m_reply->readAll();
-#endif
 }
 
 void IconDownloader::fetchFinished()
 {
-#ifdef WITH_XC_NETWORKING
     QImage image;
-    bool fallbackEnabled = config()->get("security/IconDownloadFallback", false).toBool();
+    QString url = m_url;
+
     bool error = (m_reply->error() != QNetworkReply::NoError);
-    if (m_reply->error() == QNetworkReply::HostNotFoundError || m_reply->error() == QNetworkReply::TimeoutError) {
-        emit iconReceived(image, m_entry);
-        return;
-    }
     QUrl redirectTarget = getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
@@ -154,12 +175,12 @@ void IconDownloader::fetchFinished()
         if (redirectTarget.isValid()) {
             // Redirected, we need to follow it, or fall through if we have
             // done too many redirects already.
-            if (m_redirects < 5) {
+            if (m_redirects < MAX_REDIRECTS) {
                 m_redirects++;
-                if (redirectTarget.isRelative())
+                if (redirectTarget.isRelative()) {
                     redirectTarget = m_fetchUrl.resolved(redirectTarget);
-                startFetchFavicon(redirectTarget);
-                return;
+                }
+                m_urlsToTry.prepend(redirectTarget);
             }
         } else {
             // No redirect, and we theoretically have some icon data now.
@@ -168,44 +189,16 @@ void IconDownloader::fetchFinished()
     }
 
     if (!image.isNull()) {
-        emit iconReceived(image, m_entry);
-        return;
+        // Valid icon received
+        m_timeout.stop();
+        emit finished(url, image);
     } else if (!m_urlsToTry.empty()) {
+        // Try the next url
         m_redirects = 0;
-        startFetchFavicon(m_urlsToTry.takeFirst());
-        return;
+        fetchFavicon(m_urlsToTry.takeFirst());
     } else {
-        if (!fallbackEnabled) {
-            emit fallbackNotEnabled();
-        } else {
-            emit iconError(m_entry);
-        }
+        // No icon found
+        m_timeout.stop();
+        emit finished(url, image);
     }
-    emit iconReceived(image, m_entry);
-#endif
-}
-
-void IconDownloader::abortRequest()
-{
-#ifdef WITH_XC_NETWORKING
-    if (m_reply) {
-        m_reply->abort();
-    }
-#endif
-}
-
-void IconDownloader::startFetchFavicon(const QUrl& url)
-{
-#ifdef WITH_XC_NETWORKING
-    m_bytesReceived.clear();
-    m_fetchUrl = url;
-
-    QNetworkRequest request(url);
-    m_reply = m_netMgr->get(request);
-
-    connect(m_reply, &QNetworkReply::finished, this, &IconDownloader::fetchFinished);
-    connect(m_reply, &QIODevice::readyRead, this, &IconDownloader::fetchReadyRead);
-#else
-    Q_UNUSED(url);
-#endif
 }

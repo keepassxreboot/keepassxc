@@ -25,10 +25,10 @@
 #include <QTimer>
 
 #include "DatabaseOpenDialog.h"
+#include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
-#include "config-keepassx.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -123,6 +123,7 @@ signals:
     void databaseModified();
     void databaseSaved();
     void databaseUnlocked();
+    void databaseLockRequested();
     void databaseLocked();
 
     // Emitted in replaceDatabase, may be caused by lock, reload, unlock, load.
@@ -230,16 +231,11 @@ private slots:
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
 
 private:
-    enum IconDownloaderState
-    {
-        Idle,
-        Downloading
-    };
-
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
+    void performIconDownloads(const QList<Entry*>& entries, bool force = false);
 
     QSharedPointer<Database> m_db;
 
@@ -278,8 +274,6 @@ private:
     // Autoreload
     QPointer<DelayingFileWatcher> m_fileWatcher;
     bool m_blockAutoSave;
-
-    IconDownloaderState m_iconDownloaderState;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

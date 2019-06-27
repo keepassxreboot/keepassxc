@@ -25,16 +25,16 @@
 #include <QWidget>
 
 #include "config-keepassx.h"
-#include "core/Global.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "gui/MessageWidget.h"
-#ifdef WITH_XC_NETWORKING
-#include "gui/IconDownloader.h"
-#endif
 
 class Database;
 class DefaultIconModel;
 class CustomIconModel;
+#ifdef WITH_XC_NETWORKING
+class IconDownloader;
+#endif
 
 namespace Ui
 {
@@ -87,7 +87,7 @@ signals:
 
 private slots:
     void downloadFavicon();
-    void iconReceived(const QImage& icon, Entry* entry);
+    void iconReceived(const QString& url, const QImage& icon);
     void addCustomIconFromFile();
     bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
@@ -108,7 +108,7 @@ private:
     CustomIconModel* const m_customIconModel;
 #ifdef WITH_XC_NETWORKING
     QScopedPointer<IconDownloader> m_downloader;
-    QUrl m_url;
+    QString m_url;
 #endif
 
     Q_DISABLE_COPY(EditWidgetIcons)

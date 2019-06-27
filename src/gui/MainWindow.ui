@@ -296,7 +296,7 @@
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
     <addaction name="separator"/>
-    <addaction name="actionDownloadAllFavicons"/>
+    <addaction name="actionGroupDownloadFavicons"/>
     <addaction name="separator"/>
     <addaction name="actionGroupSortAsc"/>
     <addaction name="actionGroupSortDesc"/>
@@ -471,7 +471,7 @@
     <string>&amp;Delete group</string>
    </property>
   </action>
-  <action name="actionDownloadAllFavicons">
+  <action name="actionGroupDownloadFavicons">
    <property name="enabled">
     <bool>false</bool>
    </property>

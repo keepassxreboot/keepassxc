@@ -15,21 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ICONDOWNLOADER_H
-#define KEEPASSX_ICONDOWNLOADER_H
+#ifndef KEEPASSXC_ICONDOWNLOADER_H
+#define KEEPASSXC_ICONDOWNLOADER_H
 
-#include <QObject>
-#include <QUrl>
 #include <QImage>
+#include <QObject>
+#include <QTimer>
+#include <QUrl>
 
-#include "config-keepassx.h"
-#include "core/Entry.h"
 #include "core/Global.h"
 
-#ifdef WITH_XC_NETWORKING
-class QNetworkAccessManager;
 class QNetworkReply;
-#endif
 
 class IconDownloader : public QObject
 {
@@ -37,34 +33,31 @@ class IconDownloader : public QObject
 
 public:
     explicit IconDownloader(QObject* parent = nullptr);
-    ~IconDownloader();
+    ~IconDownloader() override;
 
-    void downloadFavicon(Entry* entry);
-    
-public slots:
-    void startFetchFavicon(const QUrl& url);
-    void abortRequest();
+    void setUrl(const QString& entryUrl);
+    void download();
 
 signals:
-    void iconReceived(const QImage&, Entry*);
-    void iconError(Entry*);
-    void fallbackNotEnabled();
+    void finished(const QString& entryUrl, const QImage& image);
+
+public slots:
+    void abortDownload();
 
 private slots:
     void fetchFinished();
     void fetchReadyRead();
 
 private:
-#ifdef WITH_XC_NETWORKING
-    QUrl m_url;
-    Entry* m_entry;
+    void fetchFavicon(const QUrl& url);
+
+    QString m_url;
     QUrl m_fetchUrl;
     QList<QUrl> m_urlsToTry;
     QByteArray m_bytesReceived;
-    QNetworkAccessManager* m_netMgr;
     QNetworkReply* m_reply;
+    QTimer m_timeout;
     int m_redirects;
-#endif
 };
 
-#endif // KEEPASSX_ICONDOWNLOADER_H
+#endif // KEEPASSXC_ICONDOWNLOADER_H

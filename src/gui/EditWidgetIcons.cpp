@@ -26,9 +26,11 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
-#include "gui/IconDownloader.h"
 #include "gui/IconModels.h"
 #include "gui/MessageBox.h"
+#ifdef WITH_XC_NETWORKING
+#include "core/IconDownloader.h"
+#endif
 
 IconStruct::IconStruct()
     : uuid(QUuid())
@@ -69,6 +71,11 @@ EditWidgetIcons::EditWidgetIcons(QWidget* parent)
             this, SIGNAL(widgetUpdated()));
     connect(m_ui->customIconsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             this, SIGNAL(widgetUpdated()));
+#ifdef WITH_XC_NETWORKING
+    connect(m_downloader.data(),
+            SIGNAL(finished(const QString&, const QImage&)),
+            SLOT(iconReceived(const QString&, const QImage&)));
+#endif
     // clang-format on
 
     m_ui->faviconButton->setVisible(false);
@@ -171,7 +178,7 @@ QMenu* EditWidgetIcons::createApplyIconToMenu()
 void EditWidgetIcons::setUrl(const QString& url)
 {
 #ifdef WITH_XC_NETWORKING
-    m_url = QUrl(url);
+    m_url = url;
     m_ui->faviconButton->setVisible(!url.isEmpty());
 #else
     Q_UNUSED(url);
@@ -182,29 +189,33 @@ void EditWidgetIcons::setUrl(const QString& url)
 void EditWidgetIcons::downloadFavicon()
 {
 #ifdef WITH_XC_NETWORKING
-    connect(m_downloader.data(), SIGNAL(iconReceived(const QImage&, Entry*)), this, SLOT(iconReceived(const QImage&, Entry*)));
-    Entry* entry = m_db->rootGroup()->findEntryByUuid(m_currentUuid);
-    if (entry) {
-        m_downloader->downloadFavicon(entry);
+    if (!m_url.isEmpty()) {
+        m_downloader->setUrl(m_url);
+        m_downloader->download();
     }
 #endif
 }
 
-void EditWidgetIcons::iconReceived(const QImage& icon, Entry* entry)
+void EditWidgetIcons::iconReceived(const QString& url, const QImage& icon)
 {
 #ifdef WITH_XC_NETWORKING
-    Q_UNUSED(entry);
+    Q_UNUSED(url);
     if (icon.isNull()) {
-        emit messageEditEntry(tr("Unable to fetch favicon."), MessageWidget::Error);
+        QString message(tr("Unable to fetch favicon."));
+        if (!config()->get("security/IconDownloadFallback", false).toBool()) {
+            message.append("\n").append(
+                tr("You can enable the DuckDuckGo website icon service under Tools -> Settings -> Security"));
+        }
+        emit messageEditEntry(message, MessageWidget::Error);
         return;
     }
 
     if (!addCustomIcon(icon)) {
-        emit messageEditEntry(tr("Custom icon already exists"), MessageWidget::Information);
+        emit messageEditEntry(tr("Existing icon selected."), MessageWidget::Information);
     }
 #else
+    Q_UNUSED(url);
     Q_UNUSED(icon);
-    Q_UNUSED(entry);
 #endif
 }
 
@@ -212,56 +223,58 @@ void EditWidgetIcons::abortRequests()
 {
 #ifdef WITH_XC_NETWORKING
     if (m_downloader) {
-        m_downloader->abortRequest();
+        m_downloader->abortDownload();
     }
 #endif
 }
 
 void EditWidgetIcons::addCustomIconFromFile()
 {
-    if (m_db) {
-        QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
+    if (!m_db) {
+        return;
+    }
 
-        auto filenames = QFileDialog::getOpenFileNames(this, tr("Select Image(s)"), "", filter);
-        if (!filenames.empty()) {
-            QStringList errornames;
-            int numexisting = 0;
-            for (const auto& filename : filenames) {
-                if (!filename.isEmpty()) {
-                    auto icon = QImage(filename);
-                    if (icon.isNull()) {
-                        errornames << filename;
-                    } else if (!addCustomIcon(icon)) {
-                        // Icon already exists in database
-                        ++numexisting;
-                    }
+    QString filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Tools::imageReaderFilter(), tr("All files"));
+
+    auto filenames = QFileDialog::getOpenFileNames(this, tr("Select Image(s)"), "", filter);
+    if (!filenames.empty()) {
+        QStringList errornames;
+        int numexisting = 0;
+        for (const auto& filename : filenames) {
+            if (!filename.isEmpty()) {
+                auto icon = QImage(filename);
+                if (icon.isNull()) {
+                    errornames << filename;
+                } else if (!addCustomIcon(icon)) {
+                    // Icon already exists in database
+                    ++numexisting;
                 }
             }
+        }
 
-            int numloaded = filenames.size() - errornames.size() - numexisting;
-            QString msg;
+        int numloaded = filenames.size() - errornames.size() - numexisting;
+        QString msg;
 
-            if (numloaded > 0) {
-                msg = tr("Successfully loaded %1 of %n icon(s)", "", filenames.size()).arg(numloaded);
-            } else {
-                msg = tr("No icons were loaded");
-            }
+        if (numloaded > 0) {
+            msg = tr("Successfully loaded %1 of %n icon(s)", "", filenames.size()).arg(numloaded);
+        } else {
+            msg = tr("No icons were loaded");
+        }
 
-            if (numexisting > 0) {
-                msg += "\n" + tr("%n icon(s) already exist in the database", "", numexisting);
-            }
+        if (numexisting > 0) {
+            msg += "\n" + tr("%n icon(s) already exist in the database", "", numexisting);
+        }
 
-            if (!errornames.empty()) {
-                // Show the first 8 icons that failed to load
-                errornames = errornames.mid(0, 8);
-                emit messageEditEntry(msg + "\n" + tr("The following icon(s) failed:", "", errornames.size()) + "\n"
-                                          + errornames.join("\n"),
-                                      MessageWidget::Error);
-            } else if (numloaded > 0) {
-                emit messageEditEntry(msg, MessageWidget::Positive);
-            } else {
-                emit messageEditEntry(msg, MessageWidget::Information);
-            }
+        if (!errornames.empty()) {
+            // Show the first 8 icons that failed to load
+            errornames = errornames.mid(0, 8);
+            emit messageEditEntry(msg + "\n" + tr("The following icon(s) failed:", "", errornames.size()) + "\n"
+                                      + errornames.join("\n"),
+                                  MessageWidget::Error);
+        } else if (numloaded > 0) {
+            emit messageEditEntry(msg, MessageWidget::Positive);
+        } else {
+            emit messageEditEntry(msg, MessageWidget::Information);
         }
     }
 }

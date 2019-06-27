@@ -306,11 +306,13 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyUsername->setIcon(filePath()->icon("actions", "username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(filePath()->icon("actions", "password-copy"));
     m_ui->actionEntryCopyURL->setIcon(filePath()->icon("actions", "url-copy"));
+    m_ui->actionEntryDownloadIcon->setIcon(filePath()->icon("actions", "favicon-download"));
 
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new"));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit"));
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete"));
     m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash"));
+    m_ui->actionGroupDownloadFavicons->setIcon(filePath()->icon("actions", "favicon-download"));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator"));
@@ -386,7 +388,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupEmptyRecycleBin, SIGNAL(triggered()), SLOT(emptyRecycleBin()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortAsc, SIGNAL(triggered()), SLOT(sortGroupsAsc()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortDesc, SIGNAL(triggered()), SLOT(sortGroupsDesc()));
-    m_actionMultiplexer.connect(m_ui->actionDownloadAllFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
+    m_actionMultiplexer.connect(m_ui->actionGroupDownloadFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(switchToPasswordGen(bool)));
@@ -421,6 +423,11 @@ MainWindow::MainWindow()
     QTimer::singleShot(500, this, SLOT(showUpdateCheckStartup()));
 #else
     m_ui->actionCheckForUpdates->setVisible(false);
+#endif
+
+#ifndef WITH_XC_NETWORKING
+    m_ui->actionGroupDownloadFavicons->setVisible(false);
+    m_ui->actionEntryDownloadIcon->setVisible(false);
 #endif
 
     // clang-format off
@@ -581,6 +588,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
             bool groupSelected = dbWidget->isGroupSelected();
             bool currentGroupHasChildren = dbWidget->currentGroup()->hasChildren();
+            bool currentGroupHasEntries = !dbWidget->currentGroup()->entries().isEmpty();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
 
             m_ui->actionEntryNew->setEnabled(true);
@@ -600,8 +608,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntrySetupTotp->setEnabled(singleEntrySelected);
             m_ui->actionEntryTotpQRCode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
-            m_ui->actionEntryDownloadIcon->setEnabled((entriesSelected  && !singleEntrySelected) ||
-                (singleEntrySelected && dbWidget->currentEntryHasUrl()));
+            m_ui->actionEntryDownloadIcon->setEnabled((entriesSelected && !singleEntrySelected)
+                                                      || (singleEntrySelected && dbWidget->currentEntryHasUrl()));
             m_ui->actionGroupNew->setEnabled(groupSelected);
             m_ui->actionGroupEdit->setEnabled(groupSelected);
             m_ui->actionGroupDelete->setEnabled(groupSelected && dbWidget->canDeleteCurrentGroup());
@@ -609,7 +617,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
-            m_ui->actionDownloadAllFavicons->setEnabled(groupSelected);
+            m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
+            m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
+                                                          && !recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());

@@ -19,25 +19,15 @@
 #define KEEPASSX_ICONDOWNLOADERDIALOG_H
 
 #include <QDialog>
-#include <QUrl>
-#include <QUuid>
-#include <QScopedPointer>
-#include <QStandardItemModel>
-#include <QCloseEvent>
-#include <QFutureSynchronizer>
-#include <QProgressDialog>
 #include <QMutex>
+#include <QStandardItemModel>
 
-#include "config-keepassx.h"
-#include "core/Entry.h"
-#include "core/Global.h"
 #include "gui/MessageWidget.h"
-#ifdef WITH_XC_NETWORKING
-#include "gui/IconDownloader.h"
-#endif
 
 class Database;
+class Entry;
 class CustomIconModel;
+class IconDownloader;
 
 namespace Ui
 {
@@ -52,33 +42,25 @@ public:
     explicit IconDownloaderDialog(QWidget* parent = nullptr);
     ~IconDownloaderDialog() override;
 
-    void raiseWindow();
-    void downloadFavicon(const QSharedPointer<Database>& database, Entry* entry);
-    void downloadFavicons(const QSharedPointer<Database>& database, const QList<Entry*>& entries);
-
-signals:
-    void messageEditEntry(QString, MessageWidget::MessageType);
-    void entryUpdated();
+    void downloadFavicons(const QSharedPointer<Database>& database, const QList<Entry*>& entries, bool force = false);
 
 private slots:
-    void iconReceived(const QImage& icon, Entry* entry);
-    bool addCustomIcon(const QImage& icon, Entry* entry);
-    void fallbackNotEnabled();
-    void iconError(Entry* entry);
-
-protected:
-    bool downloadAllFavicons(const QSharedPointer<Database>& database, const QList<Entry*>& entries);
-    void updateTable(Entry* entry, const QString& message);
-    void closeEvent(QCloseEvent* event) override;
+    void downloadFinished(const QString& url, const QImage& icon);
+    void abortDownloads();
 
 private:
+    IconDownloader* createDownloader(const QString& url);
+
+    void showFallbackMessage(bool state);
+    void updateTable(const QString& url, const QString& message);
+    void updateProgressBar();
+    void updateCancelButton();
+
     QScopedPointer<Ui::IconDownloaderDialog> m_ui;
     QStandardItemModel* m_dataModel;
     QSharedPointer<Database> m_db;
-    QUuid m_currentUuid;
-    CustomIconModel* const m_customIconModel;
-    QWidget* m_parent;
-    QFutureSynchronizer<void> m_futureList;
+    QMultiMap<QString, Entry*> m_urlToEntries;
+    QList<IconDownloader*> m_activeDownloaders;
     QMutex m_mutex;
 
     Q_DISABLE_COPY(IconDownloaderDialog)
