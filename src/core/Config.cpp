@@ -211,6 +211,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("GUI/HideUsernames", false);
     m_defaults.insert("GUI/HidePasswords", true);
     m_defaults.insert("GUI/AdvancedSettings", false);
+    m_defaults.insert("GUI/MonospaceNotes", false);
 }
 
 Config* Config::instance()

@@ -383,6 +383,13 @@
            </layout>
           </item>
           <item>
+           <widget class="QCheckBox" name="monospaceNotesCheckBox">
+            <property name="text">
+             <string>Use monospaced font for Notes</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
             <property name="text">
              <string>Minimize instead of app exit</string>
