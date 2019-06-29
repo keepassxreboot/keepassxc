@@ -37,29 +37,56 @@
         <?ifdef CPACK_WIX_UI_DIALOG?>
         <WixVariable Id="WixUIDialogBmp" Value="$(var.CPACK_WIX_UI_DIALOG)"/>
         <?endif?>
+        
+        <FeatureRef Id="ProductFeature">
+            <ComponentRef Id="ApplicationShortcut" />
+        </FeatureRef>
 
-        <FeatureRef Id="ProductFeature"/>
-
-        <UIRef Id="$(var.CPACK_WIX_UI_REF)" />
+        <UI>
+            <UIRef Id="$(var.CPACK_WIX_UI_REF)" />
+            <Publish Dialog="ExitDialog" 
+                     Control="Finish" 
+                     Event="DoAction" 
+                     Value="LaunchApplication">WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed</Publish>
+        </UI>
 
         <?include "properties.wxi"?>
         <?include "product_fragment.wxi"?>
 
         <DirectoryRef Id="TARGETDIR">
-            <Directory Id="ProgramMenuFolder" />
+            <Directory Id="ProgramMenuFolder">
+                <Directory Id="ApplicationProgramsFolder" Name="KeePassXC"/>
+            </Directory>
         </DirectoryRef>
 
-        <Property Id="WixSilentExecCmdLine" Value='"Taskkill" /IM KeePassXC.exe'/>
-        <CustomAction Id="KillKeePassXCInstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore"/>
-        <CustomAction Id="KillKeePassXCUninstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore"/>
+        <DirectoryRef Id="ApplicationProgramsFolder">
+            <Component Id="ApplicationShortcut" Guid="*">
+                <Shortcut Id="ApplicationStartMenuShortcut" 
+                    Name="KeePassXC"
+                    Target="[#CM_FP_KeePassXC.exe]"
+                    Icon="ProductIcon.ico"
+                    WorkingDirectory="INSTALL_ROOT"/>
+                <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+                <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+           </Component>
+        </DirectoryRef>
 
-        <Property Id="WixQuietExecCmdLine" Value='"Taskkill" /IM keepassxc-proxy.exe /F'/>
-        <CustomAction Id="KillProxyInstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore"/>
-        <CustomAction Id="KillProxyUninstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore"/>
+        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+        <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.CPACK_PACKAGE_NAME)" />
+        <Property Id="WixShellExecTarget" Value="[#CM_FP_KeePassXC.exe]" />
+        <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
+
+        <Property Id="WixSilentExecCmdLine" Value='"Taskkill" /IM KeePassXC.exe' />
+        <CustomAction Id="KillKeePassXCInstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
+        <CustomAction Id="KillKeePassXCUninstall" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
+
+        <Property Id="WixQuietExecCmdLine" Value='"Taskkill" /IM keepassxc-proxy.exe /F' />
+        <CustomAction Id="KillProxyInstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
+        <CustomAction Id="KillProxyUninstall" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
 
         <InstallExecuteSequence>
-            <Custom Action="KillKeePassXCInstall" After="InstallInitialize"/>
-            <Custom Action="KillProxyInstall" After="InstallInitialize"/>
+            <Custom Action="KillKeePassXCInstall" After="InstallInitialize" />
+            <Custom Action="KillProxyInstall" After="InstallInitialize" />
             <Custom Action="KillKeePassXCUninstall" Before="InstallValidate">Installed</Custom>
             <Custom Action="KillProxyUninstall" Before="InstallValidate">Installed</Custom>
         </InstallExecuteSequence>
