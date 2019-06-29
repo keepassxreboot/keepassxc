@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,21 +15,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FONT_H
-#define KEEPASSX_FONT_H
+#ifndef KEEPASSXC_TESTHIBP_H
+#define KEEPASSXC_TESTHIBP_H
 
-#include <QFont>
+#include <QObject>
+#include <QSharedPointer>
 
-class Font
+class Database;
+
+class TestHibp : public QObject
 {
-public:
-    static QFont defaultFont();
-    static QFont fixedFont();
+    Q_OBJECT
+
+private slots:
+    void initTestCase();
+    void init();
+    void testBadHibpFormat();
+    void testEmpty();
+    void testIoError();
+    void testPwned();
 
 private:
-    Font()
-    {
-    }
+    QSharedPointer<Database> m_db;
 };
 
-#endif // KEEPASSX_FONT_H
+#endif // KEEPASSXC_TESTHIBP_H

@@ -158,6 +158,7 @@ public:
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<QUuid> customIconsRecursive() const;
+    QList<QString> usernamesRecursive(int topN = -1) const;
 
     Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
                  CloneFlags groupFlags = DefaultCloneFlags) const;

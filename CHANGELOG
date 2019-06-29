@@ -2,6 +2,10 @@
 =========================
 - Group sorting feature [#3282]
 - CLI: Add 'flatten' option to the 'ls' command [#3276]
+- Rework the Entry Preview panel [#3306]
+- Move notes to General tab on Group Preview Panel [#3336]
+- Add 'Monospaced font' option to the Notes field [#3321]
+- Drop to background when copy feature [#3253]
 
 2.4.3 (2019-06-12)
 =========================

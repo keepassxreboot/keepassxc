@@ -49,15 +49,15 @@ private slots:
     void updateEntryHeaderLine();
     void updateEntryTotp();
     void updateEntryGeneralTab();
-    void updateEntryNotesTab();
-    void updateEntryAttributesTab();
-    void updateEntryAttachmentsTab();
+    void updateEntryAdvancedTab();
     void updateEntryAutotypeTab();
     void setPasswordVisible(bool state);
+    void setEntryNotesVisible(bool state);
+    void setGroupNotesVisible(bool state);
+    void setNotesVisible(QLabel* notesLabel, const QString notes, bool state);
 
     void updateGroupHeaderLine();
     void updateGroupGeneralTab();
-    void updateGroupNotesTab();
 #if defined(WITH_XC_KEESHARE)
     void updateGroupSharingTab();
 #endif

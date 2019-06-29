@@ -20,6 +20,7 @@
 #define KEEPASSX_EDITENTRYWIDGET_H
 
 #include <QButtonGroup>
+#include <QCompleter>
 #include <QModelIndex>
 #include <QPointer>
 #include <QScopedPointer>
@@ -40,6 +41,7 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
+class QStringListModel;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
@@ -175,6 +177,8 @@ private:
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;
     QButtonGroup* const m_autoTypeDefaultSequenceGroup;
     QButtonGroup* const m_autoTypeWindowSequenceGroup;
+    QCompleter* const m_usernameCompleter;
+    QStringListModel* const m_usernameCompleterModel;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

@@ -813,6 +813,42 @@ QSet<QUuid> Group::customIconsRecursive() const
     return result;
 }
 
+QList<QString> Group::usernamesRecursive(int topN) const
+{
+    // Collect all usernames and sort for easy counting
+    QHash<QString, int> countedUsernames;
+    for (const auto* entry : entriesRecursive()) {
+        const auto username = entry->username();
+        if (!username.isEmpty() && !entry->isAttributeReference(EntryAttributes::UserNameKey)) {
+            countedUsernames.insert(username, ++countedUsernames[username]);
+        }
+    }
+
+    // Sort username/frequency pairs by frequency and name
+    QList<QPair<QString, int>> sortedUsernames;
+    for (const auto& key : countedUsernames.keys()) {
+        sortedUsernames.append({key, countedUsernames[key]});
+    }
+
+    auto comparator = [](const QPair<QString, int>& arg1, const QPair<QString, int>& arg2) {
+        if (arg1.second == arg2.second) {
+            return arg1.first < arg2.first;
+        }
+        return arg1.second > arg2.second;
+    };
+
+    std::sort(sortedUsernames.begin(), sortedUsernames.end(), comparator);
+
+    // Take first topN usernames if set
+    QList<QString> usernames;
+    int actualUsernames = topN < 0 ? sortedUsernames.size() : std::min(topN, sortedUsernames.size());
+    for (int i = 0; i < actualUsernames; i++) {
+        usernames.append(sortedUsernames[i].first);
+    }
+
+    return usernames;
+}
+
 Group* Group::findGroupByUuid(const QUuid& uuid)
 {
     if (uuid.isNull()) {

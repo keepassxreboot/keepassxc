@@ -148,7 +148,7 @@ void ShareObserver::notifyAbout(const QStringList& success, const QStringList& w
 {
     QStringList messages;
     MessageWidget::MessageType type = MessageWidget::Positive;
-    if (!(success.isEmpty() || config()->get("GUI/QuietKeeShareSuccess").toBool())) {
+    if (!(success.isEmpty() || config()->get("KeeShare/QuietSuccess", true).toBool())) {
         messages += success;
     }
     if (!warning.isEmpty()) {
@@ -219,8 +219,7 @@ ShareObserver::Result ShareObserver::importShare(const QString& path)
     const auto changePath = resolvePath(path, m_db);
     auto shareGroup = m_shareToGroup.value(changePath);
     if (!shareGroup) {
-        qWarning("Source for %s does not exist", qPrintable(path));
-        Q_ASSERT(shareGroup);
+        qWarning("Group for %s does not exist", qPrintable(path));
         return {};
     }
     const auto reference = KeeShare::referenceOf(shareGroup);

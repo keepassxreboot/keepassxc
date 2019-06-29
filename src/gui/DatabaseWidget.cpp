@@ -625,8 +625,12 @@ void DatabaseWidget::showTotpKeyQrCode()
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 {
     clipboard()->setText(text);
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        window()->showMinimized();
+    if (config()->get("HideWindowOnCopy").toBool()) {
+        if (config()->get("MinimizeOnCopy").toBool()) {
+            window()->showMinimized();
+        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+            window()->lower();
+        }
     }
 }
 
@@ -656,15 +660,10 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     QString cmdString = entry->resolveMultiplePlaceholders(entry->url());
     if (cmdString.startsWith("cmd://")) {
         // check if decision to execute command was stored
-        if (entry->attributes()->hasKey(EntryAttributes::RememberCmdExecAttr)) {
-            if (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1") {
-                QProcess::startDetached(cmdString.mid(6));
-            }
-            return;
-        }
+        bool launch = (entry->attributes()->value(EntryAttributes::RememberCmdExecAttr) == "1");
 
         // otherwise ask user
-        if (cmdString.length() > 6) {
+        if (!launch && cmdString.length() > 6) {
             QString cmdTruncated = cmdString.mid(6);
             if (cmdTruncated.length() > 400) {
                 cmdTruncated = cmdTruncated.left(400) + " […]";
@@ -687,18 +686,28 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             });
 
             int result = msgbox.exec();
-            if (result == QMessageBox::Yes) {
-                QProcess::startDetached(cmdString.mid(6));
-            }
+            launch = (result == QMessageBox::Yes);
 
             if (remember) {
                 entry->attributes()->set(EntryAttributes::RememberCmdExecAttr, result == QMessageBox::Yes ? "1" : "0");
+            }
+        }
+
+        if (launch) {
+            QProcess::startDetached(cmdString.mid(6));
+
+            if (config()->get("MinimizeOnOpenUrl").toBool()) {
+                window()->showMinimized();
             }
         }
     } else {
         QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
         if (!url.isEmpty()) {
             QDesktopServices::openUrl(url);
+
+            if (config()->get("MinimizeOnOpenUrl").toBool()) {
+                window()->showMinimized();
+            }
         }
     }
 }

@@ -80,6 +80,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     // clang-format off
     connect(m_generalUi->autoSaveAfterEveryChangeCheckBox, SIGNAL(toggled(bool)), SLOT(autoSaveToggled(bool)));
+    connect(m_generalUi->hideWindowOnCopyCheckBox, SIGNAL(toggled(bool)), SLOT(hideWindowOnCopyCheckBoxToggled(bool)));
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
     connect(m_generalUi->toolbarHideCheckBox, SIGNAL(toggled(bool)), SLOT(toolbarSettingsToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
@@ -98,10 +99,6 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setVisible(false);
     m_generalUi->checkUpdatesSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
-#endif
-
-#ifndef WITH_XC_KEESHARE
-    m_generalUi->quietKeeShareSuccess->setVisible(false);
 #endif
 
 #ifndef WITH_XC_NETWORKING
@@ -151,11 +148,18 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get("BackupBeforeSave").toBool());
     m_generalUi->useAtomicSavesCheckBox->setChecked(config()->get("UseAtomicSaves").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
-    m_generalUi->minimizeOnCopyCheckBox->setChecked(config()->get("MinimizeOnCopy").toBool());
+    m_generalUi->minimizeOnOpenUrlCheckBox->setChecked(config()->get("MinimizeOnOpenUrl").toBool());
+    m_generalUi->hideWindowOnCopyCheckBox->setChecked(config()->get("HideWindowOnCopy").toBool());
+    m_generalUi->minimizeOnCopyRadioButton->setChecked(config()->get("MinimizeOnCopy").toBool());
+    m_generalUi->dropToBackgroundOnCopyRadioButton->setChecked(config()->get("DropToBackgroundOnCopy").toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get("AutoTypeEntryURLMatch").toBool());
     m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
+
+    if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
+        hideWindowOnCopyCheckBoxToggled(false);
+    }
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString>> languages = Translator::availableLanguages();
@@ -170,6 +174,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->previewHideCheckBox->setChecked(config()->get("GUI/HidePreviewPanel").toBool());
     m_generalUi->toolbarHideCheckBox->setChecked(config()->get("GUI/HideToolbar").toBool());
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get("GUI/MovableToolbar").toBool());
+    m_generalUi->monospaceNotesCheckBox->setChecked(config()->get("GUI/MonospaceNotes").toBool());
 
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
@@ -186,7 +191,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get("GUI/DarkTrayIcon").toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get("GUI/MinimizeToTray").toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get("GUI/MinimizeOnClose").toBool());
-    m_generalUi->quietKeeShareSuccess->setChecked(config()->get("GUI/QuietKeeShareSuccess").toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get("GUI/MinimizeOnStartup").toBool());
     m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get("GUI/CheckForUpdates").toBool());
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setChecked(
@@ -251,7 +255,10 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("BackupBeforeSave", m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set("UseAtomicSaves", m_generalUi->useAtomicSavesCheckBox->isChecked());
     config()->set("AutoReloadOnChange", m_generalUi->autoReloadOnChangeCheckBox->isChecked());
-    config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyCheckBox->isChecked());
+    config()->set("MinimizeOnOpenUrl", m_generalUi->minimizeOnOpenUrlCheckBox->isChecked());
+    config()->set("HideWindowOnCopy", m_generalUi->hideWindowOnCopyCheckBox->isChecked());
+    config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyRadioButton->isChecked());
+    config()->set("DropToBackgroundOnCopy", m_generalUi->dropToBackgroundOnCopyRadioButton->isChecked());
     config()->set("UseGroupIconOnEntryCreation", m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
     config()->set("IgnoreGroupExpansion", m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
     config()->set("AutoTypeEntryTitleMatch", m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
@@ -263,6 +270,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/HidePreviewPanel", m_generalUi->previewHideCheckBox->isChecked());
     config()->set("GUI/HideToolbar", m_generalUi->toolbarHideCheckBox->isChecked());
     config()->set("GUI/MovableToolbar", m_generalUi->toolbarMovableCheckBox->isChecked());
+    config()->set("GUI/MonospaceNotes", m_generalUi->monospaceNotesCheckBox->isChecked());
 
     int currentToolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->currentIndex();
     config()->set("GUI/ToolButtonStyle",
@@ -272,7 +280,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());
     config()->set("GUI/MinimizeToTray", m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set("GUI/MinimizeOnClose", m_generalUi->minimizeOnCloseCheckBox->isChecked());
-    config()->set("GUI/QuietKeeShareSuccess", m_generalUi->quietKeeShareSuccess->isChecked());
     config()->set("GUI/MinimizeOnStartup", m_generalUi->systrayMinimizeOnStartup->isChecked());
     config()->set("GUI/CheckForUpdates", m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
     config()->set("GUI/CheckForUpdatesIncludeBetas", m_generalUi->checkForUpdatesIncludeBetasCheckBox->isChecked());
@@ -338,6 +345,12 @@ void ApplicationSettingsWidget::autoSaveToggled(bool checked)
         m_generalUi->autoSaveOnExitCheckBox->setChecked(true);
     }
     m_generalUi->autoSaveOnExitCheckBox->setEnabled(!checked);
+}
+
+void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
+{
+    m_generalUi->minimizeOnCopyRadioButton->setEnabled(checked);
+    m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)

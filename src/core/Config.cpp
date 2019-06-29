@@ -106,6 +106,12 @@ void Config::upgrade()
     if (m_settings->value("AutoSaveAfterEveryChange").toBool()) {
         m_settings->setValue("AutoSaveOnExit", true);
     }
+
+    // Setting defaults for 'hide window on copy' behavior, keeping the user's original setting
+    if (m_settings->value("HideWindowOnCopy").isNull()) {
+        m_settings->setValue("HideWindowOnCopy", m_settings->value("MinimizeOnCopy").toBool());
+        m_settings->setValue("MinimizeOnCopy", true);
+    }
 }
 
 Config::Config(const QString& fileName, QObject* parent)
@@ -177,7 +183,10 @@ void Config::init(const QString& fileName)
     m_defaults.insert("BackupBeforeSave", false);
     m_defaults.insert("UseAtomicSaves", true);
     m_defaults.insert("SearchLimitGroup", false);
-    m_defaults.insert("MinimizeOnCopy", false);
+    m_defaults.insert("MinimizeOnOpenUrl", false);
+    m_defaults.insert("HideWindowOnCopy", false);
+    m_defaults.insert("MinimizeOnCopy", true);
+    m_defaults.insert("DropToBackgroundOnCopy", false);
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
     m_defaults.insert("AutoTypeEntryURLMatch", true);
@@ -211,6 +220,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("GUI/HideUsernames", false);
     m_defaults.insert("GUI/HidePasswords", true);
     m_defaults.insert("GUI/AdvancedSettings", false);
+    m_defaults.insert("GUI/MonospaceNotes", false);
 }
 
 Config* Config::instance()

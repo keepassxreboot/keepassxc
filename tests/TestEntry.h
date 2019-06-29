@@ -37,6 +37,7 @@ private slots:
     void testResolveReferencePlaceholders();
     void testResolveNonIdPlaceholdersToUuid();
     void testResolveClonedEntry();
+    void testIsRecycled();
 };
 
 #endif // KEEPASSX_TESTENTRY_H

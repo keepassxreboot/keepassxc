@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,21 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FONT_H
-#define KEEPASSX_FONT_H
+#ifndef KEEPASSXC_HIBPOFFLINE_H
+#define KEEPASSXC_HIBPOFFLINE_H
 
-#include <QFont>
+#include <QIODevice>
+#include <QList>
+#include <QPair>
 
-class Font
+class Database;
+class Entry;
+
+namespace HibpOffline
 {
-public:
-    static QFont defaultFont();
-    static QFont fixedFont();
+    bool report(QSharedPointer<Database> db,
+                QIODevice& hibpInput,
+                QList<QPair<const Entry*, int>>& findings,
+                QString* error);
+}
 
-private:
-    Font()
-    {
-    }
-};
-
-#endif // KEEPASSX_FONT_H
+#endif // KEEPASSXC_HIBPOFFLINE_H

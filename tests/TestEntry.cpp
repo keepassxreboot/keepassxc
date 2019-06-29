@@ -21,6 +21,7 @@
 #include "TestEntry.h"
 #include "TestGlobal.h"
 #include "core/Clock.h"
+#include "core/Metadata.h"
 #include "crypto/Crypto.h"
 
 QTEST_GUILESS_MAIN(TestEntry)
@@ -560,4 +561,29 @@ void TestEntry::testResolveClonedEntry()
     QCOMPARE(cclone3->resolveMultiplePlaceholders(cclone3->password()), original->password());
     QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->username()), original->username());
     QCOMPARE(cclone4->resolveMultiplePlaceholders(cclone4->password()), original->password());
+}
+
+void TestEntry::testIsRecycled()
+{
+    Entry* entry = new Entry();
+    QVERIFY(!entry->isRecycled());
+
+    Database db;
+    Group* root = db.rootGroup();
+    QVERIFY(root);
+    entry->setGroup(root);
+    QVERIFY(!entry->isRecycled());
+
+    QVERIFY(db.metadata()->recycleBinEnabled());
+    db.recycleEntry(entry);
+    QVERIFY(entry->isRecycled());
+
+    Group* group1 = new Group();
+    group1->setParent(root);
+
+    Entry* entry1 = new Entry();
+    entry1->setGroup(group1);
+    QVERIFY(!entry1->isRecycled());
+    db.recycleGroup(group1);
+    QVERIFY(entry1->isRecycled());
 }

@@ -16,6 +16,9 @@ keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager
 .IP "add [options] <database> <entry>"
 Adds a new entry to a database. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 
+.IP "analyze [options] <database>"
+Analyze passwords in a database for weaknesses.
+
 .IP "clip [options] <database> <entry> [timeout]"
 Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
@@ -118,6 +121,16 @@ Specify the title of the entry.
 
 .IP "-a, --advanced"
 Perform advanced analysis on the password.
+
+
+.SS "Analyze options"
+
+.IP "-H, --hibp <filename>"
+Check if any passwords have been publicly leaked, by comparing against the given
+list of password SHA-1 hashes, which must be in "Have I Been Pwned" format. Such
+files are available from https://haveibeenpwned.com/Passwords; note that they
+are large, and so this operation typically takes some time (minutes up to an
+hour or so).
 
 
 .SS "Clip options"

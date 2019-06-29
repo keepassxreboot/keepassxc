@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,21 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FONT_H
-#define KEEPASSX_FONT_H
+#ifndef KEEPASSXC_ANALYZE_H
+#define KEEPASSXC_ANALYZE_H
 
-#include <QFont>
+#include "DatabaseCommand.h"
 
-class Font
+class Analyze : public DatabaseCommand
 {
 public:
-    static QFont defaultFont();
-    static QFont fixedFont();
+    Analyze();
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+
+    static const QCommandLineOption HIBPDatabaseOption;
 
 private:
-    Font()
-    {
-    }
+    void printHibpFinding(const Entry* entry, int count, QTextStream& out);
 };
 
-#endif // KEEPASSX_FONT_H
+#endif // KEEPASSXC_HIBP_H

@@ -106,6 +106,8 @@ public:
     bool containsDeletedObject(const DeletedObject& uuid) const;
     void setDeletedObjects(const QList<DeletedObject>& delObjs);
 
+    QList<QString> commonUsernames();
+
     bool hasKey() const;
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
@@ -131,6 +133,7 @@ public:
 public slots:
     void markAsModified();
     void markAsClean();
+    void updateCommonUsernames(int topN = 10);
 
 signals:
     void filePathChanged(const QString& oldPath, const QString& newPath);
@@ -183,6 +186,8 @@ private:
     bool m_initialized = false;
     bool m_modified = false;
     bool m_emitModified;
+
+    QList<QString> m_commonUsernames;
 
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;

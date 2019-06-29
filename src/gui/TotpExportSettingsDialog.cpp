@@ -99,8 +99,13 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 void TotpExportSettingsDialog::copyToClipboard()
 {
     clipboard()->setText(m_totpUri);
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        static_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+    if (config()->get("HideWindowOnCopy").toBool()) {
+        if (config()->get("MinimizeOnCopy").toBool()) {
+            static_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+            static_cast<DatabaseWidget*>(parent())->window()->lower();
+            window()->lower();
+        }
     }
 }
 

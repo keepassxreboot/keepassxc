@@ -54,6 +54,7 @@ Database::Database()
 
     connect(m_metadata, SIGNAL(metadataModified()), this, SLOT(markAsModified()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(databaseModified()));
+    connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
 
     m_modified = false;
     m_emitModified = true;
@@ -148,6 +149,8 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     setReadOnly(readOnly);
     setFilePath(filePath);
     dbFile.close();
+
+    updateCommonUsernames();
 
     setInitialized(ok);
     markAsClean();
@@ -523,6 +526,17 @@ void Database::addDeletedObject(const QUuid& uuid)
     delObj.uuid = uuid;
 
     addDeletedObject(delObj);
+}
+
+QList<QString> Database::commonUsernames()
+{
+    return m_commonUsernames;
+}
+
+void Database::updateCommonUsernames(int topN)
+{
+    m_commonUsernames.clear();
+    m_commonUsernames.append(rootGroup()->usernamesRecursive(topN));
 }
 
 const QUuid& Database::cipher() const

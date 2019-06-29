@@ -249,18 +249,85 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="minimizeOnCopyCheckBox">
-            <property name="text">
-             <string>Minimize when copying to clipboard</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="previewHideCheckBox">
             <property name="text">
              <string>Hide the entry preview panel</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="minimizeOnOpenUrlCheckBox">
+            <property name="text">
+             <string>Minimize when opening a URL</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="hideWindowOnCopyCheckBox">
+            <property name="text">
+             <string>Hide window when copying to clipboard</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="hideWindowLayout_1">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="hideWindowSpacer_1">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="minimizeOnCopyRadioButton">
+              <property name="text">
+               <string>Minimize</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="hideWindowLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="hideWindowSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="dropToBackgroundOnCopyRadioButton">
+              <property name="text">
+               <string>Drop to background</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -376,16 +443,16 @@
            </layout>
           </item>
           <item>
-           <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
+           <widget class="QCheckBox" name="monospaceNotesCheckBox">
             <property name="text">
-             <string>Minimize instead of app exit</string>
+             <string>Use monospaced font for Notes</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="quietKeeShareSuccess">
+           <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
             <property name="text">
-             <string>Do not show success notifications for KeeShare, only warnings and errors</string>
+             <string>Minimize instead of app exit</string>
             </property>
            </widget>
           </item>
