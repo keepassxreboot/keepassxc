@@ -50,7 +50,8 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
     QString hibpDatabase = parser->value(Analyze::HIBPDatabaseOption);
     QFile hibpFile(hibpDatabase);
     if (!hibpFile.open(QFile::ReadOnly)) {
-        errorTextStream << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
+        errorTextStream << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString())
+                        << endl;
         return EXIT_FAILURE;
     }
 

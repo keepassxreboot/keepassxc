@@ -50,7 +50,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_ui->toggleNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_ui->toggleEntryNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_ui->toggleGroupNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
@@ -60,7 +61,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
-    connect(m_ui->toggleNotesButton, SIGNAL(clicked(bool)), SLOT(setNotesVisible(bool)));
+    connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
+    connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
@@ -107,7 +109,6 @@ void EntryPreviewWidget::setGroup(Group* selectedGroup)
     m_currentGroup = selectedGroup;
     updateGroupHeaderLine();
     updateGroupGeneralTab();
-    updateGroupNotesTab();
 
 #if defined(WITH_XC_KEESHARE)
     updateGroupSharingTab();
@@ -181,23 +182,31 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     }
 }
 
-void EntryPreviewWidget::setNotesVisible(bool state)
+void EntryPreviewWidget::setEntryNotesVisible(bool state)
 {
-    const QString notes = m_currentEntry->notes();
+    setNotesVisible(m_ui->entryNotesLabel, m_currentEntry->notes(), state);
+}
 
-    auto flags = m_ui->entryNotesLabel->textInteractionFlags();
+void EntryPreviewWidget::setGroupNotesVisible(bool state)
+{
+    setNotesVisible(m_ui->groupNotesLabel, m_currentGroup->notes(), state);
+}
+
+void EntryPreviewWidget::setNotesVisible(QLabel* notesLabel, const QString notes, bool state)
+{
+    auto flags = notesLabel->textInteractionFlags();
     if (state) {
-        m_ui->entryNotesLabel->setText(notes);
-        m_ui->entryNotesLabel->setToolTip(notes);
-        m_ui->entryNotesLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
+        notesLabel->setText(notes);
+        notesLabel->setToolTip(notes);
+        notesLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
     } else {
         if (notes.isEmpty()) {
-            m_ui->entryNotesLabel->setText("");
+            notesLabel->setText("");
         } else {
-            m_ui->entryNotesLabel->setText(QString("\u25cf").repeated(6));
+            notesLabel->setText(QString("\u25cf").repeated(6));
         }
-        m_ui->entryNotesLabel->setToolTip({});
-        m_ui->entryNotesLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
+        notesLabel->setToolTip({});
+        notesLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
     }
 }
 
@@ -219,12 +228,12 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     }
 
     if (config()->get("security/hidenotes").toBool()) {
-        setNotesVisible(false);
-        m_ui->toggleNotesButton->setVisible(!m_ui->entryNotesLabel->text().isEmpty());
-        m_ui->toggleNotesButton->setChecked(false);
+        setEntryNotesVisible(false);
+        m_ui->toggleEntryNotesButton->setVisible(!m_ui->entryNotesLabel->text().isEmpty());
+        m_ui->toggleEntryNotesButton->setChecked(false);
     } else {
-        setNotesVisible(true);
-        m_ui->toggleNotesButton->setVisible(false);
+        setEntryNotesVisible(true);
+        m_ui->toggleEntryNotesButton->setVisible(false);
     }
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
@@ -307,14 +316,18 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     const QString expiresText =
         groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
-}
 
-void EntryPreviewWidget::updateGroupNotesTab()
-{
-    Q_ASSERT(m_currentGroup);
     const QString notes = m_currentGroup->notes();
-    setTabEnabled(m_ui->groupTabWidget, m_ui->groupNotesTab, !notes.isEmpty());
-    m_ui->groupNotesEdit->setText(notes);
+    m_ui->groupNotesLabel->setText(notes);
+
+    if (config()->get("security/hidenotes").toBool()) {
+        setGroupNotesVisible(false);
+        m_ui->toggleGroupNotesButton->setVisible(!m_ui->groupNotesLabel->text().isEmpty());
+        m_ui->toggleGroupNotesButton->setChecked(false);
+    } else {
+        setGroupNotesVisible(true);
+        m_ui->toggleGroupNotesButton->setVisible(false);
+    }
 }
 
 #if defined(WITH_XC_KEESHARE)
