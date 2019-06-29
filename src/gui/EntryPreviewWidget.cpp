@@ -17,6 +17,7 @@
  */
 
 #include "EntryPreviewWidget.h"
+#include "Font.h"
 #include "ui_EntryPreviewWidget.h"
 
 #include <QDesktopServices>
@@ -236,6 +237,12 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         m_ui->toggleEntryNotesButton->setVisible(false);
     }
 
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_ui->entryNotesLabel->setFont(Font::fixedFont());
+    } else {
+        m_ui->entryNotesLabel->setFont(Font::defaultFont());
+    }
+
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl());
     const QString url = m_currentEntry->url();
     if (!url.isEmpty()) {
@@ -317,9 +324,6 @@ void EntryPreviewWidget::updateGroupGeneralTab()
         groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 
-    const QString notes = m_currentGroup->notes();
-    m_ui->groupNotesLabel->setText(notes);
-
     if (config()->get("security/hidenotes").toBool()) {
         setGroupNotesVisible(false);
         m_ui->toggleGroupNotesButton->setVisible(!m_ui->groupNotesLabel->text().isEmpty());
@@ -327,6 +331,12 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     } else {
         setGroupNotesVisible(true);
         m_ui->toggleGroupNotesButton->setVisible(false);
+    }
+
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_ui->groupNotesLabel->setFont(Font::fixedFont());
+    } else {
+        m_ui->groupNotesLabel->setFont(Font::defaultFont());
     }
 }
 

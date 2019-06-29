@@ -167,6 +167,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->previewHideCheckBox->setChecked(config()->get("GUI/HidePreviewPanel").toBool());
     m_generalUi->toolbarHideCheckBox->setChecked(config()->get("GUI/HideToolbar").toBool());
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get("GUI/MovableToolbar").toBool());
+    m_generalUi->monospaceNotesCheckBox->setChecked(config()->get("GUI/MonospaceNotes").toBool());
 
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
@@ -260,6 +261,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("GUI/HidePreviewPanel", m_generalUi->previewHideCheckBox->isChecked());
     config()->set("GUI/HideToolbar", m_generalUi->toolbarHideCheckBox->isChecked());
     config()->set("GUI/MovableToolbar", m_generalUi->toolbarMovableCheckBox->isChecked());
+    config()->set("GUI/MonospaceNotes", m_generalUi->monospaceNotesCheckBox->isChecked());
 
     int currentToolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->currentIndex();
     config()->set("GUI/ToolButtonStyle",

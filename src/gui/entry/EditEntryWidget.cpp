@@ -726,6 +726,11 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get("security/hidenotes").toBool());
     m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_mainUi->notesEdit->setFont(Font::fixedFont());
+    } else {
+        m_mainUi->notesEdit->setFont(Font::defaultFont());
+    }
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset(entry->password().length());

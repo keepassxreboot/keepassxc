@@ -16,8 +16,10 @@
  */
 
 #include "EditGroupWidget.h"
+#include "gui/Font.h"
 #include "ui_EditGroupWidgetMain.h"
 
+#include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
@@ -150,6 +152,12 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
         m_mainUi->autoTypeSequenceCustomRadio->setChecked(true);
     }
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
+
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_mainUi->editNotes->setFont(Font::fixedFont());
+    } else {
+        m_mainUi->editNotes->setFont(Font::defaultFont());
+    }
 
     IconStruct iconStruct;
     iconStruct.uuid = m_temporaryGroup->iconUuid();
