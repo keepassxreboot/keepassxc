@@ -1070,6 +1070,10 @@ int BrowserService::moveKeysToCustomData(Entry* entry, const QSharedPointer<Data
 
 bool BrowserService::checkLegacySettings()
 {
+    if (!browserSettings()->isEnabled()) {
+        return false;
+    }
+
     auto db = getDatabase();
     if (!db) {
         return false;
