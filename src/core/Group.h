@@ -102,7 +102,7 @@ public:
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
-    bool isRecycled();
+    bool isRecycled() const;
     CustomData* customData();
     const CustomData* customData() const;
 

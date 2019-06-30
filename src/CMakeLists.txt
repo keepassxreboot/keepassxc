@@ -67,6 +67,7 @@ set(keepassx_SOURCES
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
         format/CsvExporter.cpp
+        format/HtmlExporter.cpp
         format/KeePass1Reader.cpp
         format/KeePass2.cpp
         format/KeePass2RandomStream.cpp
