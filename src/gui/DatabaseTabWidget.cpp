@@ -30,6 +30,7 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
+#include "format/HtmlExporter.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
@@ -398,6 +399,32 @@ void DatabaseTabWidget::exportToCsv()
     CsvExporter csvExporter;
     if (!csvExporter.exportDatabase(fileName, db)) {
         emit messageGlobal(tr("Writing the CSV file failed.").append("\n").append(csvExporter.errorString()),
+                           MessageWidget::Error);
+    }
+}
+
+void DatabaseTabWidget::exportToHtml()
+{
+    auto db = databaseWidgetFromIndex(currentIndex())->database();
+    if (!db) {
+        Q_ASSERT(false);
+        return;
+    }
+
+    QString fileName = fileDialog()->getSaveFileName(this,
+                                                     tr("Export database to HTML file"),
+                                                     QString(),
+                                                     tr("HTML file").append(" (*.html)"),
+                                                     nullptr,
+                                                     nullptr,
+                                                     "html");
+    if (fileName.isEmpty()) {
+        return;
+    }
+
+    HtmlExporter htmlExporter;
+    if (!htmlExporter.exportDatabase(fileName, db)) {
+        emit messageGlobal(tr("Writing the HTML file failed.").append("\n").append(htmlExporter.errorString()),
                            MessageWidget::Error);
     }
 }

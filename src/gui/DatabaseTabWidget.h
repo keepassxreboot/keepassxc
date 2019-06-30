@@ -69,6 +69,7 @@ public slots:
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     void exportToCsv();
+    void exportToHtml();
 
     void lockDatabases();
     void closeDatabaseFromSender();

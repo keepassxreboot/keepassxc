@@ -257,9 +257,9 @@ Entry* Group::lastTopVisibleEntry() const
     return m_lastTopVisibleEntry;
 }
 
-bool Group::isRecycled()
+bool Group::isRecycled() const
 {
-    Group* group = this;
+    auto group = this;
     if (!group->database()) {
         return false;
     }

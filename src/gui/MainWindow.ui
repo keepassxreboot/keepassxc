@@ -203,6 +203,13 @@
      <addaction name="actionImportOpVault"/>
      <addaction name="actionImportCsv"/>
     </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>&amp;Export</string>
+     </property>
+     <addaction name="actionExportCsv"/>
+     <addaction name="actionExportHtml"/>
+    </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
     <addaction name="menuRecentDatabases"/>
@@ -215,7 +222,7 @@
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
-    <addaction name="actionExportCsv"/>
+    <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -618,6 +625,14 @@
    </property>
    <property name="text">
     <string>&amp;Export to CSV file...</string>
+   </property>
+  </action>
+  <action name="actionExportHtml">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Export to HTML file...</string>
    </property>
   </action>
   <action name="actionImportKeePass1">

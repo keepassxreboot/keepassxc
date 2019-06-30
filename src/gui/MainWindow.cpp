@@ -355,6 +355,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
+    connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
     connect(m_ui->actionLockDatabases, SIGNAL(triggered()), m_ui->tabWidget, SLOT(lockDatabases()));
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(appExit()));
 
@@ -606,7 +607,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
+            m_ui->menuExport->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
+            m_ui->actionExportHtml->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
 
             m_searchWidgetAction->setEnabled(true);
@@ -630,7 +633,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
             m_ui->actionDatabaseSaveAs->setEnabled(false);
+            m_ui->menuExport->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
+            m_ui->actionExportHtml->setEnabled(false);
             m_ui->actionDatabaseMerge->setEnabled(false);
 
             m_searchWidgetAction->setEnabled(false);
@@ -656,7 +661,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionDatabaseSave->setEnabled(false);
         m_ui->actionDatabaseSaveAs->setEnabled(false);
         m_ui->actionDatabaseClose->setEnabled(false);
+        m_ui->menuExport->setEnabled(false);
         m_ui->actionExportCsv->setEnabled(false);
+        m_ui->actionExportHtml->setEnabled(false);
         m_ui->actionDatabaseMerge->setEnabled(false);
 
         m_searchWidgetAction->setEnabled(false);
