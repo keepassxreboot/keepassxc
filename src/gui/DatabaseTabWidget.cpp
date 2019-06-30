@@ -390,6 +390,10 @@ void DatabaseTabWidget::exportToCsv()
         return;
     }
 
+    if (!warnOnExport()) {
+        return;
+    }
+
     QString fileName = fileDialog()->getSaveFileName(
         this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr, "csv");
     if (fileName.isEmpty()) {
@@ -411,6 +415,10 @@ void DatabaseTabWidget::exportToHtml()
         return;
     }
 
+    if (!warnOnExport()) {
+        return;
+    }
+
     QString fileName = fileDialog()->getSaveFileName(this,
                                                      tr("Export database to HTML file"),
                                                      QString(),
@@ -427,6 +435,18 @@ void DatabaseTabWidget::exportToHtml()
         emit messageGlobal(tr("Writing the HTML file failed.").append("\n").append(htmlExporter.errorString()),
                            MessageWidget::Error);
     }
+}
+
+bool DatabaseTabWidget::warnOnExport()
+{
+    auto ans =
+        MessageBox::question(this,
+                             tr("Export Confirmation"),
+                             tr("You are about to export your database to an unencrypted file. This will leave your "
+                                "passwords and sensitive information vulnerable! Are you sure you want to continue?"),
+                             MessageBox::Yes | MessageBox::No,
+                             MessageBox::No);
+    return ans == MessageBox::Yes;
 }
 
 void DatabaseTabWidget::changeMasterKey()

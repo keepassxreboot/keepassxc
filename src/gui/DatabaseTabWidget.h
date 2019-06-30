@@ -99,6 +99,7 @@ private slots:
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
+    bool warnOnExport();
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;
