@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 #ifdef Q_OS_LINUX
-    if (qgetenv("XDG_SESSION_TYPE") == QByteArrayLiteral("wayland")) {
+    if (qgetenv("XDG_SESSION_TYPE") == QByteArrayLiteral("wayland") && qgetenv("QT_QPA_PLATFORM").isEmpty()) {
         qWarning() << "Warning: disregarding XDG_SESSION_TYPE=wayland";
         qWarning() << "To use wayland anyway, please set QT_QPA_PLATFORM=wayland";
         qunsetenv("XDG_SESSION_TYPE");
