@@ -28,15 +28,21 @@ AutoTypePlatformMac::AutoTypePlatformMac()
 {
 }
 
+/**
+ * Request accessibility permissions required for keyboard control
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::isAvailable()
 {
     return macUtils()->enableAccessibility();
 }
 
-//
-// Get list of visible window titles
-// see: Quartz Window Services
-//
+/**
+ * Get a list of the currently open window titles
+ *
+ * @return list of window titles
+ */
 QStringList AutoTypePlatformMac::windowTitles()
 {
     QStringList list;
@@ -64,18 +70,21 @@ QStringList AutoTypePlatformMac::windowTitles()
     return list;
 }
 
-//
-// Get active window process id
-//
+/**
+ * Get active window ID
+ *
+ * @return window ID
+ */
 WId AutoTypePlatformMac::activeWindow()
 {
     return macUtils()->activeWindow();
 }
 
-//
-// Get active window title
-// see: Quartz Window Services
-//
+/**
+ * Get active window title
+ *
+ * @return window title
+ */
 QString AutoTypePlatformMac::activeWindowTitle()
 {
     QString title;
@@ -102,9 +111,15 @@ QString AutoTypePlatformMac::activeWindowTitle()
     return title;
 }
 
-//
-// Register global hotkey
-//
+/**
+ * Register global hotkey using NS global event monitor.
+ * Note that this hotkey is not trapped and may trigger
+ * actions in the local application where it is issued.
+ *
+ * @param key key used for hotkey
+ * @param modifiers modifiers required in addition to key
+ * @return true on success
+ */
 bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
     auto nativeKeyCode = qtToNativeKeyCode(key);
@@ -118,18 +133,23 @@ bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifi
     return true;
 }
 
-//
-// Hotkey Handler
-//
+/**
+ * Handle global hotkey presses by emitting the trigger signal
+ *
+ * @param userData pointer to AutoTypePlatform
+ */
 void AutoTypePlatformMac::hotkeyHandler(void* userData)
 {
     auto* self = static_cast<AutoTypePlatformMac*>(userData);
     emit self->globalShortcutTriggered();
 }
 
-//
-// Unregister global hotkey
-//
+/**
+ * Unregister a previously registered global hotkey
+ *
+ * @param key unused
+ * @param modifiers unused
+ */
 void AutoTypePlatformMac::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
     Q_UNUSED(key);
@@ -140,11 +160,13 @@ void AutoTypePlatformMac::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
     }
 }
 
+/**
+ * Unused
+ */
 int AutoTypePlatformMac::platformEventFilter(void* event)
 {
     Q_UNUSED(event);
     Q_ASSERT(false);
-
     return -1;
 }
 
@@ -153,17 +175,21 @@ AutoTypeExecutor* AutoTypePlatformMac::createExecutor()
     return new AutoTypeExecutorMac(this);
 }
 
-//
-// Activate window by process id
-//
+/**
+ * Raise the given window ID
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::raiseWindow(WId pid)
 {
     return macUtils()->raiseWindow(pid);
 }
 
-//
-// Activate last active window
-//
+/**
+ * Hide the KeePassXC window
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::hideOwnWindow()
 {
     return macUtils()->hideOwnWindow();
@@ -177,10 +203,12 @@ bool AutoTypePlatformMac::raiseOwnWindow()
     return macUtils()->raiseOwnWindow();
 }
 
-//
-// Send unicode character to active window
-// see: Quartz Event Services
-//
+/**
+ * Send provided character as key event to the active window
+ *
+ * @param ch unicode character
+ * @param isKeyDown whether the key is pressed
+ */
 void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 {
     auto keyEvent = ::CGEventCreateKeyboardEvent(nullptr, 0, isKeyDown);
@@ -192,10 +220,13 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
     }
 }
 
-//
-// Send key code to active window
-// see: Quartz Event Services
-//
+/**
+ * Send provided Qt key as key event to the active window
+ *
+ * @param key Qt key code
+ * @param isKeyDown whether the key is pressed
+ * @param modifiers any modifiers to apply to key
+ */
 void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers)
 {
     auto keyCode = qtToNativeKeyCode(key);
@@ -212,10 +243,14 @@ void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModif
     }
 }
 
-//
-// Translate qt key code to mac os key code
-// see: HIToolbox/Events.h
-//
+/**
+ * Translate Qt key to macOS key code provided by
+ * AutoTypeMacKeyCodes.h which are derived from
+ * legacy Carbon "HIToolbox/Events.h"
+ *
+ * @param key key to translate
+ * @returns macOS key code
+ */
 CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 {
     switch (key) {
@@ -391,10 +426,13 @@ CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
     }
 }
 
-//
-// Translate qt key modifiers to mac os modifiers
-// see: https://doc.qt.io/qt-5/osx-issues.html#special-keys
-//
+/**
+ * Translate Qt key modifiers to macOS key modifiers
+ * provided by the Core Graphics component
+ *
+ * @param modifiers Qt keyboard modifier(s)
+ * @returns macOS key modifier(s)
+ */
 CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
 {
     auto nativeModifiers = CGEventFlags(0);
@@ -415,9 +453,12 @@ CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modi
     return nativeModifiers;
 }
 
-//
-// Get window layer/level
-//
+/**
+ * Get window layer / level
+ *
+ * @param window macOS window ref
+ * @returns layer number or -1 if window not found
+ */
 int AutoTypePlatformMac::windowLayer(CFDictionaryRef window)
 {
     int layer;
@@ -430,9 +471,12 @@ int AutoTypePlatformMac::windowLayer(CFDictionaryRef window)
     return -1;
 }
 
-//
-// Get window title
-//
+/**
+ * Get window title for macOS window ref
+ *
+ * @param window macOS window ref
+ * @returns window title if found
+ */
 QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
 {
     char buffer[MAX_WINDOW_TITLE_LENGTH];
