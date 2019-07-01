@@ -24,9 +24,9 @@
 
 @interface AppKitImpl : NSObject
 {
-    AppKit *m_appkit;
+    AppKit* m_appkit;
 }
-- (id) initWithObject:(AppKit *)appkit;
+- (id) initWithObject:(AppKit*)appkit;
 
 @property (strong) NSRunningApplication *lastActiveApplication;
 
@@ -37,7 +37,7 @@
 - (bool) isHidden:(pid_t) pid;
 - (bool) isDarkMode;
 - (void) userSwitchHandler:(NSNotification*) notification;
-- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent *)) handler;
+- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent*)) handler;
 - (void) removeGlobalMonitor:(id) monitor;
 - (bool) enableAccessibility;
 

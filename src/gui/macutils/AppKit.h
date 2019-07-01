@@ -37,8 +37,8 @@ public:
     bool hideProcess(pid_t pid);
     bool isHidden(pid_t pid);
     bool isDarkMode();
-    void* addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void *userData, void (*handler)(void *));
-    void removeGlobalMonitor(void *monitor);
+    void* addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*));
+    void removeGlobalMonitor(void* monitor);
     bool enableAccessibility();
 
 signals:

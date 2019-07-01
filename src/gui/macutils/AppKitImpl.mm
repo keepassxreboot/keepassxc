@@ -22,7 +22,7 @@
 
 @implementation AppKitImpl
 
-- (id) initWithObject:(AppKit *)appkit
+- (id) initWithObject:(AppKit*)appkit
 {
     self = [super init];
     if (self) {
@@ -43,10 +43,10 @@
 //
 // Update last active application property
 //
-- (void) didDeactivateApplicationObserver:(NSNotification *) notification
+- (void) didDeactivateApplicationObserver:(NSNotification*) notification
 {
-    NSDictionary *userInfo = notification.userInfo;
-    NSRunningApplication *app = userInfo[NSWorkspaceApplicationKey];
+    NSDictionary* userInfo = notification.userInfo;
+    NSRunningApplication* app = userInfo[NSWorkspaceApplicationKey];
 
     if (app.processIdentifier != [self ownProcessId]) {
         self.lastActiveApplication = app;
@@ -74,7 +74,7 @@
 //
 - (bool) activateProcess:(pid_t) pid
 {
-    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
 }
 
@@ -83,7 +83,7 @@
 //
 - (bool) hideProcess:(pid_t) pid
 {
-    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app hide];
 }
 
@@ -92,7 +92,7 @@
 //
 - (bool) isHidden:(pid_t) pid
 {
-    NSRunningApplication *app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
+    NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app isHidden];
 }
 
@@ -101,7 +101,7 @@
 //
 - (bool) isDarkMode
 {
-    NSDictionary *dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+    NSDictionary* dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
     id style = [dict objectForKey:@"AppleInterfaceStyle"];
     return ( style && [style isKindOfClass:[NSString class]]
              && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
@@ -121,7 +121,7 @@
 //
 // Add global event monitor
 //
-- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent *)) handler
+- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent*)) handler
 {
     return [NSEvent addGlobalMonitorForEventsMatchingMask:mask handler:handler];
 }
@@ -139,7 +139,7 @@
 //
 - (bool) enableAccessibility
 {
-    NSDictionary *opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
+    NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
 }
 
@@ -195,16 +195,16 @@ bool AppKit::isDarkMode()
     return [static_cast<id>(self) isDarkMode];
 }
 
-void* AppKit::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void *userData, void (*handler)(void *))
+void* AppKit::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*))
 {
-    return [static_cast<id>(self) addGlobalMonitor:NSEventMaskKeyDown handler:^(NSEvent *event) {
+    return [static_cast<id>(self) addGlobalMonitor:NSEventMaskKeyDown handler:^(NSEvent* event) {
         if (event.keyCode == keycode && (event.modifierFlags & modifier) == modifier) {
             handler(userData);
         }
     }];
 }
 
-void AppKit::removeGlobalMonitor(void *monitor)
+void AppKit::removeGlobalMonitor(void* monitor)
 {
     [static_cast<id>(self) removeGlobalMonitor:static_cast<id>(monitor)];
 }

@@ -38,8 +38,8 @@ public:
     bool hideOwnWindow();
     bool isHidden();
     bool isDarkMode();
-    void* addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void *userData, void (*handler)(void *));
-    void removeGlobalMonitor(void *monitor);
+    void* addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*));
+    void removeGlobalMonitor(void* monitor);
     bool enableAccessibility();
 
 signals:

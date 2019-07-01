@@ -28,9 +28,6 @@ AutoTypePlatformMac::AutoTypePlatformMac()
 {
 }
 
-//
-// Keepassx requires mac os 10.7
-//
 bool AutoTypePlatformMac::isAvailable()
 {
     return macUtils()->enableAccessibility();
@@ -44,13 +41,13 @@ QStringList AutoTypePlatformMac::windowTitles()
 {
     QStringList list;
 
-    CFArrayRef windowList = ::CGWindowListCopyWindowInfo(
+    auto windowList = ::CGWindowListCopyWindowInfo(
         kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
-    if (windowList != nullptr) {
-        CFIndex count = ::CFArrayGetCount(windowList);
+    if (windowList) {
+        auto count = ::CFArrayGetCount(windowList);
 
         for (CFIndex i = 0; i < count; i++) {
-            CFDictionaryRef window = static_cast<CFDictionaryRef>(::CFArrayGetValueAtIndex(windowList, i));
+            auto window = static_cast<CFDictionaryRef>(::CFArrayGetValueAtIndex(windowList, i));
             if (windowLayer(window) != 0) {
                 continue;
             }
@@ -85,7 +82,7 @@ QString AutoTypePlatformMac::activeWindowTitle()
 
     CFArrayRef windowList = ::CGWindowListCopyWindowInfo(
         kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
-    if (windowList != nullptr) {
+    if (windowList) {
         CFIndex count = ::CFArrayGetCount(windowList);
 
         for (CFIndex i = 0; i < count; i++) {
@@ -110,12 +107,12 @@ QString AutoTypePlatformMac::activeWindowTitle()
 //
 bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
-    CGKeyCode nativeKeyCode = qtToNativeKeyCode(key);
+    auto nativeKeyCode = qtToNativeKeyCode(key);
     if (nativeKeyCode == INVALID_KEYCODE) {
         qWarning("Invalid key code");
         return false;
     }
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers);
+    auto nativeModifiers = qtToNativeModifiers(modifiers);
     m_globalMonitor =
         macUtils()->addGlobalMonitor(nativeKeyCode, nativeModifiers, this, AutoTypePlatformMac::hotkeyHandler);
     return true;
@@ -126,7 +123,7 @@ bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifi
 //
 void AutoTypePlatformMac::hotkeyHandler(void* userData)
 {
-    AutoTypePlatformMac* self = static_cast<AutoTypePlatformMac*>(userData);
+    auto* self = static_cast<AutoTypePlatformMac*>(userData);
     emit self->globalShortcutTriggered();
 }
 
@@ -137,7 +134,10 @@ void AutoTypePlatformMac::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModi
 {
     Q_UNUSED(key);
     Q_UNUSED(modifiers);
-    macUtils()->removeGlobalMonitor(m_globalMonitor);
+    if (m_globalMonitor) {
+        macUtils()->removeGlobalMonitor(m_globalMonitor);
+        m_globalMonitor = nullptr;
+    }
 }
 
 int AutoTypePlatformMac::platformEventFilter(void* event)
@@ -183,9 +183,9 @@ bool AutoTypePlatformMac::raiseOwnWindow()
 //
 void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 {
-    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, 0, isKeyDown);
-    if (keyEvent != nullptr) {
-        UniChar unicode = ch.unicode();
+    auto keyEvent = ::CGEventCreateKeyboardEvent(nullptr, 0, isKeyDown);
+    if (keyEvent) {
+        auto unicode = ch.unicode();
         ::CGEventKeyboardSetUnicodeString(keyEvent, 1, &unicode);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
@@ -196,16 +196,16 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 // Send key code to active window
 // see: Quartz Event Services
 //
-void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0)
+void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers)
 {
-    CGKeyCode keyCode = qtToNativeKeyCode(key);
+    auto keyCode = qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
 
-    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers);
-    if (keyEvent != nullptr) {
+    auto keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    auto nativeModifiers = qtToNativeModifiers(modifiers);
+    if (keyEvent) {
         ::CGEventSetFlags(keyEvent, nativeModifiers);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
@@ -387,7 +387,6 @@ CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
         return kVK_F16;
 
     default:
-        Q_ASSERT(false);
         return INVALID_KEYCODE;
     }
 }
@@ -398,7 +397,7 @@ CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 //
 CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
 {
-    CGEventFlags nativeModifiers = CGEventFlags(0);
+    auto nativeModifiers = CGEventFlags(0);
 
     if (modifiers & Qt::ShiftModifier) {
         nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskShift);
@@ -423,8 +422,8 @@ int AutoTypePlatformMac::windowLayer(CFDictionaryRef window)
 {
     int layer;
 
-    CFNumberRef layerRef = static_cast<CFNumberRef>(::CFDictionaryGetValue(window, kCGWindowLayer));
-    if (layerRef != nullptr && ::CFNumberGetValue(layerRef, kCFNumberIntType, &layer)) {
+    auto layerRef = static_cast<CFNumberRef>(::CFDictionaryGetValue(window, kCGWindowLayer));
+    if (layerRef && ::CFNumberGetValue(layerRef, kCFNumberIntType, &layer)) {
         return layer;
     }
 
@@ -439,8 +438,8 @@ QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
     char buffer[MAX_WINDOW_TITLE_LENGTH];
     QString title;
 
-    CFStringRef titleRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, kCGWindowName));
-    if (titleRef != nullptr && ::CFStringGetCString(titleRef, buffer, MAX_WINDOW_TITLE_LENGTH, kCFStringEncodingUTF8)) {
+    auto titleRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, kCGWindowName));
+    if (titleRef && ::CFStringGetCString(titleRef, buffer, MAX_WINDOW_TITLE_LENGTH, kCFStringEncodingUTF8)) {
         title = QString::fromUtf8(buffer);
     }
 
@@ -468,7 +467,7 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
     m_platform->sendKey(action->key, false);
 }
 
-void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
+void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action)
 {
     Q_UNUSED(action);
 

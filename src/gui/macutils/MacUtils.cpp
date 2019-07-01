@@ -76,12 +76,12 @@ bool MacUtils::isDarkMode()
     return m_appkit->isDarkMode();
 }
 
-void* MacUtils::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void *userData, void (*handler)(void *))
+void* MacUtils::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*))
 {
     return m_appkit->addGlobalMonitor(keycode, modifier, userData, handler);
 }
 
-void MacUtils::removeGlobalMonitor(void *monitor)
+void MacUtils::removeGlobalMonitor(void* monitor)
 {
     m_appkit->removeGlobalMonitor(monitor);
 }
