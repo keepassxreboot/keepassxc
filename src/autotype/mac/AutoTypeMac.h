@@ -19,12 +19,12 @@
 #ifndef KEEPASSX_AUTOTYPEMAC_H
 #define KEEPASSX_AUTOTYPEMAC_H
 
+#include <ApplicationServices/ApplicationServices.h>
 #include <QtPlugin>
 #include <memory>
-#include <ApplicationServices/ApplicationServices.h>
 
-#include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeAction.h"
+#include "autotype/AutoTypePlatformPlugin.h"
 
 class AutoTypePlatformMac : public QObject, public AutoTypePlatformInterface
 {
@@ -54,7 +54,7 @@ signals:
     void globalShortcutTriggered();
 
 private:
-    static void hotkeyHandler(void *userData);
+    static void hotkeyHandler(void* userData);
     static CGKeyCode qtToNativeKeyCode(Qt::Key key);
     static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
     static int windowLayer(CFDictionaryRef window);
@@ -76,4 +76,4 @@ private:
     AutoTypePlatformMac* const m_platform;
 };
 
-#endif  // KEEPASSX_AUTOTYPEMAC_H
+#endif // KEEPASSX_AUTOTYPEMAC_H

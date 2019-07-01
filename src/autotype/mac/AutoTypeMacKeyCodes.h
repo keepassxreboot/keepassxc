@@ -21,6 +21,7 @@
 #ifndef KEEPASSXC_AUTOTYPEMAC_KEYCODES_H
 #define KEEPASSXC_AUTOTYPEMAC_KEYCODES_H
 
+// clang-format off
 enum {
     kVK_ANSI_A                    = 0x00,
     kVK_ANSI_S                    = 0x01,
@@ -154,5 +155,6 @@ enum {
     kVK_JIS_Eisu                  = 0x66,
     kVK_JIS_Kana                  = 0x68
 };
+// clang-format on
 
 #endif
