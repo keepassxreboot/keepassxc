@@ -106,12 +106,14 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int
 QString YkChallengeResponseKey::getName() const
 {
     unsigned int serial;
-    QString fmt(QObject::tr("YubiKey[%1] Challenge Response - Slot %2 - %3"));
+    QString fmt(QObject::tr("%1[%2] Challenge Response - Slot %3 - %4"));
 
     YubiKey::instance()->getSerial(serial);
 
-    return fmt.arg(
-        QString::number(serial), QString::number(m_slot), (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
+    return fmt.arg(YubiKey::instance()->getVendorName(),
+                   QString::number(serial),
+                   QString::number(m_slot),
+                   (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
 }
 
 bool YkChallengeResponseKey::isBlocking() const
