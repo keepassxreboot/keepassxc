@@ -80,6 +80,12 @@ public:
     bool getSerial(unsigned int& serial);
 
     /**
+     * @brief YubiKey::getVendorName - vendor name of token
+     * @return vendor name
+     */
+    QString getVendorName();
+
+    /**
      * @brief YubiKey::detect - probe for attached YubiKeys
      */
     void detect();
@@ -110,6 +116,7 @@ private:
     // Create void ptr here to avoid ifdef header include mess
     void* m_yk_void;
     void* m_ykds_void;
+    bool m_onlyKey;
 
     QMutex m_mutex;
 

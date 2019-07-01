@@ -20,6 +20,7 @@
 
 #include <ykcore.h>
 #include <ykdef.h>
+#include <ykpers-version.h>
 #include <ykstatus.h>
 #include <yubikey.h>
 
@@ -37,6 +38,7 @@
 YubiKey::YubiKey()
     : m_yk_void(nullptr)
     , m_ykds_void(nullptr)
+    , m_onlyKey(false)
     , m_mutex(QMutex::Recursive)
 {
 }
@@ -75,7 +77,17 @@ bool YubiKey::init()
     }
 
     // TODO: handle multiple attached hardware devices
+    m_onlyKey = false;
     m_yk_void = static_cast<void*>(yk_open_first_key());
+#if YKPERS_VERSION_NUMBER >= 0x011400
+    // New fuction available in yubikey-personalization version >= 1.20.0 that allows
+    // selecting device VID/PID (yk_open_key_vid_pid)
+    if (m_yk == nullptr) {
+        static const int device_pids[] = {0x60fc}; // OnlyKey PID
+        m_yk_void = static_cast<void*>(yk_open_key_vid_pid(0x1d50, device_pids, 1, 0));
+        m_onlyKey = true;
+    }
+#endif
     if (m_yk == nullptr) {
         yk_release();
         m_mutex.unlock();
@@ -161,6 +173,11 @@ bool YubiKey::getSerial(unsigned int& serial)
     }
 
     return true;
+}
+
+QString YubiKey::getVendorName()
+{
+    return m_onlyKey ? "OnlyKey" : "YubiKey";
 }
 
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
