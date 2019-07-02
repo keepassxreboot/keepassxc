@@ -322,6 +322,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="noMigrationPrompt">
+         <property name="toolTip">
+          <string>Don't display the popup suggesting migration of legacy KeePassHTTP settings.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Do not prompt for KeePassHTTP settings migration.</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="updateBinaryPath">
          <property name="toolTip">
           <string>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</string>

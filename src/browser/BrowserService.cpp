@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QUuid>
+#include <QCheckBox>
 
 #include "BrowserAccessControlDialog.h"
 #include "BrowserEntryConfig.h"
@@ -1070,7 +1071,7 @@ int BrowserService::moveKeysToCustomData(Entry* entry, const QSharedPointer<Data
 
 bool BrowserService::checkLegacySettings()
 {
-    if (!browserSettings()->isEnabled()) {
+    if (!browserSettings()->isEnabled() || browserSettings()->noMigrationPrompt()) {
         return false;
     }
 
@@ -1093,13 +1094,21 @@ bool BrowserService::checkLegacySettings()
         return false;
     }
 
+    auto* checkbox = new QCheckBox(tr("Don't show this warning again"));
+    QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+        browserSettings()->setNoMigrationPrompt(static_cast<Qt::CheckState>(state) == Qt::CheckState::Checked);
+    });
+
     auto dialogResult =
         MessageBox::warning(nullptr,
                             tr("KeePassXC: Legacy browser integration settings detected"),
                             tr("Your KeePassXC-Browser settings need to be moved into the database settings.\n"
                                "This is necessary to maintain your current browser connections.\n"
                                "Would you like to migrate your existing settings now?"),
-                            MessageBox::Yes | MessageBox::No);
+                            MessageBox::Yes | MessageBox::No,
+                            MessageBox::NoButton,
+                            MessageBox::Raise,
+                            checkbox);
 
     return dialogResult == MessageBox::Yes;
 }

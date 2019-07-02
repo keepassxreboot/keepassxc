@@ -55,6 +55,8 @@ public:
     void setHttpAuthPermission(bool httpAuthPermission);
     bool supportKphFields();
     void setSupportKphFields(bool supportKphFields);
+    bool noMigrationPrompt();
+    void setNoMigrationPrompt(bool prompt);
 
     bool supportBrowserProxy();
     void setSupportBrowserProxy(bool enabled);

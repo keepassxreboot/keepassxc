@@ -151,6 +151,16 @@ void BrowserSettings::setSupportKphFields(bool supportKphFields)
     config()->set("Browser/SupportKphFields", supportKphFields);
 }
 
+bool BrowserSettings::noMigrationPrompt()
+{
+    return config()->get("Browser/NoMigrationPrompt", false).toBool();
+}
+
+void BrowserSettings::setNoMigrationPrompt(bool prompt)
+{
+    config()->set("Browser/NoMigrationPrompt", prompt);
+}
+
 bool BrowserSettings::supportBrowserProxy()
 {
     return config()->get("Browser/SupportBrowserProxy", true).toBool();
