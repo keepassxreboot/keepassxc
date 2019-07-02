@@ -116,6 +116,7 @@ void BrowserOptionDialog::loadSettings()
     m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
+    m_ui->noMigrationPrompt->setChecked(settings->noMigrationPrompt());
     m_ui->supportBrowserProxy->setChecked(settings->supportBrowserProxy());
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->customProxyLocation());
@@ -183,6 +184,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
+    settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
 
     settings->setChromeSupport(m_ui->chromeSupport->isChecked());
     settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());

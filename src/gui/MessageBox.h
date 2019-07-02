@@ -81,25 +81,29 @@ public:
                            const QString& text,
                            Buttons buttons = MessageBox::Ok,
                            Button defaultButton = MessageBox::NoButton,
-                           Action action = MessageBox::None);
+                           Action action = MessageBox::None,
+                           QCheckBox* checkbox = nullptr);
     static Button information(QWidget* parent,
                               const QString& title,
                               const QString& text,
                               Buttons buttons = MessageBox::Ok,
                               Button defaultButton = MessageBox::NoButton,
-                              Action action = MessageBox::None);
+                              Action action = MessageBox::None,
+                              QCheckBox* checkbox = nullptr);
     static Button question(QWidget* parent,
                            const QString& title,
                            const QString& text,
                            Buttons buttons = MessageBox::Ok,
                            Button defaultButton = MessageBox::NoButton,
-                           Action action = MessageBox::None);
+                           Action action = MessageBox::None,
+                           QCheckBox* checkbox = nullptr);
     static Button warning(QWidget* parent,
                           const QString& title,
                           const QString& text,
                           Buttons buttons = MessageBox::Ok,
                           Button defaultButton = MessageBox::NoButton,
-                          Action action = MessageBox::None);
+                          Action action = MessageBox::None,
+                          QCheckBox* checkbox = nullptr);
 
     class OverrideParent
     {
@@ -123,7 +127,8 @@ private:
                              const QString& text,
                              Buttons buttons = MessageBox::Ok,
                              Button defaultButton = MessageBox::NoButton,
-                             Action action = MessageBox::None);
+                             Action action = MessageBox::None,
+                             QCheckBox* checkbox = nullptr);
 
     static QString stdButtonText(QMessageBox::StandardButton button);
 };

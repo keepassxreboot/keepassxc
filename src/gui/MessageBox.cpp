@@ -19,6 +19,7 @@
 #include "MessageBox.h"
 
 #include <QWindow>
+#include <QCheckBox>
 
 QWindow* MessageBox::m_overrideParent(nullptr);
 
@@ -77,7 +78,8 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
                                           const QString& text,
                                           MessageBox::Buttons buttons,
                                           MessageBox::Button defaultButton,
-                                          MessageBox::Action action)
+                                          MessageBox::Action action,
+                                          QCheckBox* checkbox)
 {
     if (m_nextAnswer == MessageBox::NoButton) {
         QMessageBox msgBox(parent);
@@ -110,6 +112,11 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
             }
         }
 
+        if (checkbox) {
+            checkbox->setParent(&msgBox);
+            msgBox.setCheckBox(checkbox);
+        }
+
         if (action == MessageBox::Raise) {
             msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
             msgBox.activateWindow();
@@ -133,9 +140,10 @@ MessageBox::Button MessageBox::critical(QWidget* parent,
                                         const QString& text,
                                         MessageBox::Buttons buttons,
                                         MessageBox::Button defaultButton,
-                                        MessageBox::Action action)
+                                        MessageBox::Action action,
+                                        QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action, checkbox);
 }
 
 MessageBox::Button MessageBox::information(QWidget* parent,
@@ -143,9 +151,10 @@ MessageBox::Button MessageBox::information(QWidget* parent,
                                            const QString& text,
                                            MessageBox::Buttons buttons,
                                            MessageBox::Button defaultButton,
-                                           MessageBox::Action action)
+                                           MessageBox::Action action,
+                                           QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton, action, checkbox);
 }
 
 MessageBox::Button MessageBox::question(QWidget* parent,
@@ -153,9 +162,10 @@ MessageBox::Button MessageBox::question(QWidget* parent,
                                         const QString& text,
                                         MessageBox::Buttons buttons,
                                         MessageBox::Button defaultButton,
-                                        MessageBox::Action action)
+                                        MessageBox::Action action,
+                                        QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action, checkbox);
 }
 
 MessageBox::Button MessageBox::warning(QWidget* parent,
@@ -163,9 +173,10 @@ MessageBox::Button MessageBox::warning(QWidget* parent,
                                        const QString& text,
                                        MessageBox::Buttons buttons,
                                        MessageBox::Button defaultButton,
-                                       MessageBox::Action action)
+                                       MessageBox::Action action,
+                                       QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action, checkbox);
 }
 
 void MessageBox::setNextAnswer(MessageBox::Button button)
