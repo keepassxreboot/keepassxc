@@ -17,47 +17,43 @@
  */
 
 #include "AutoTypeMac.h"
+#include "AutoTypeMacKeyCodes.h"
 #include "gui/macutils/MacUtils.h"
 
-#include <ApplicationServices/ApplicationServices.h>
-
-#define HOTKEY_ID 1
 #define MAX_WINDOW_TITLE_LENGTH 1024
 #define INVALID_KEYCODE 0xFFFF
 
 AutoTypePlatformMac::AutoTypePlatformMac()
-    : m_hotkeyRef(nullptr)
-    , m_hotkeyId({ 'kpx2', HOTKEY_ID })
+    : m_globalMonitor(nullptr)
 {
-    EventTypeSpec eventSpec;
-    eventSpec.eventClass = kEventClassKeyboard;
-    eventSpec.eventKind = kEventHotKeyPressed;
-
-    ::InstallApplicationEventHandler(AutoTypePlatformMac::hotkeyHandler, 1, &eventSpec, this, nullptr);
 }
 
-//
-// Keepassx requires mac os 10.7
-//
+/**
+ * Request accessibility permissions required for keyboard control
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::isAvailable()
 {
-    return true;
+    return macUtils()->enableAccessibility();
 }
 
-//
-// Get list of visible window titles
-// see: Quartz Window Services
-//
+/**
+ * Get a list of the currently open window titles
+ *
+ * @return list of window titles
+ */
 QStringList AutoTypePlatformMac::windowTitles()
 {
     QStringList list;
 
-    CFArrayRef windowList = ::CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
-    if (windowList != nullptr) {
-        CFIndex count = ::CFArrayGetCount(windowList);
+    auto windowList = ::CGWindowListCopyWindowInfo(
+        kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
+    if (windowList) {
+        auto count = ::CFArrayGetCount(windowList);
 
         for (CFIndex i = 0; i < count; i++) {
-            CFDictionaryRef window = static_cast<CFDictionaryRef>(::CFArrayGetValueAtIndex(windowList, i));
+            auto window = static_cast<CFDictionaryRef>(::CFArrayGetValueAtIndex(windowList, i));
             if (windowLayer(window) != 0) {
                 continue;
             }
@@ -74,24 +70,28 @@ QStringList AutoTypePlatformMac::windowTitles()
     return list;
 }
 
-//
-// Get active window process id
-//
+/**
+ * Get active window ID
+ *
+ * @return window ID
+ */
 WId AutoTypePlatformMac::activeWindow()
 {
     return macUtils()->activeWindow();
 }
 
-//
-// Get active window title
-// see: Quartz Window Services
-//
+/**
+ * Get active window title
+ *
+ * @return window title
+ */
 QString AutoTypePlatformMac::activeWindowTitle()
 {
     QString title;
 
-    CFArrayRef windowList = ::CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
-    if (windowList != nullptr) {
+    CFArrayRef windowList = ::CGWindowListCopyWindowInfo(
+        kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
+    if (windowList) {
         CFIndex count = ::CFArrayGetCount(windowList);
 
         for (CFIndex i = 0; i < count; i++) {
@@ -111,41 +111,62 @@ QString AutoTypePlatformMac::activeWindowTitle()
     return title;
 }
 
-//
-// Register global hotkey
-//
+/**
+ * Register global hotkey using NS global event monitor.
+ * Note that this hotkey is not trapped and may trigger
+ * actions in the local application where it is issued.
+ *
+ * @param key key used for hotkey
+ * @param modifiers modifiers required in addition to key
+ * @return true on success
+ */
 bool AutoTypePlatformMac::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
-    uint16 nativeKeyCode = qtToNativeKeyCode(key);
+    auto nativeKeyCode = qtToNativeKeyCode(key);
     if (nativeKeyCode == INVALID_KEYCODE) {
         qWarning("Invalid key code");
         return false;
     }
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, false);
-    if (::RegisterEventHotKey(nativeKeyCode, nativeModifiers, m_hotkeyId, GetApplicationEventTarget(), 0, &m_hotkeyRef) != noErr) {
-        qWarning("Register hotkey failed");
-        return false;
-    }
-
+    auto nativeModifiers = qtToNativeModifiers(modifiers);
+    m_globalMonitor =
+        macUtils()->addGlobalMonitor(nativeKeyCode, nativeModifiers, this, AutoTypePlatformMac::hotkeyHandler);
     return true;
 }
 
-//
-// Unregister global hotkey
-//
+/**
+ * Handle global hotkey presses by emitting the trigger signal
+ *
+ * @param userData pointer to AutoTypePlatform
+ */
+void AutoTypePlatformMac::hotkeyHandler(void* userData)
+{
+    auto* self = static_cast<AutoTypePlatformMac*>(userData);
+    emit self->globalShortcutTriggered();
+}
+
+/**
+ * Unregister a previously registered global hotkey
+ *
+ * @param key unused
+ * @param modifiers unused
+ */
 void AutoTypePlatformMac::unregisterGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
     Q_UNUSED(key);
     Q_UNUSED(modifiers);
-
-    ::UnregisterEventHotKey(m_hotkeyRef);
+    if (m_globalMonitor) {
+        macUtils()->removeGlobalMonitor(m_globalMonitor);
+        m_globalMonitor = nullptr;
+    }
 }
 
+/**
+ * Unused
+ */
 int AutoTypePlatformMac::platformEventFilter(void* event)
 {
     Q_UNUSED(event);
     Q_ASSERT(false);
-
     return -1;
 }
 
@@ -154,17 +175,21 @@ AutoTypeExecutor* AutoTypePlatformMac::createExecutor()
     return new AutoTypeExecutorMac(this);
 }
 
-//
-// Activate window by process id
-//
+/**
+ * Raise the given window ID
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::raiseWindow(WId pid)
 {
     return macUtils()->raiseWindow(pid);
 }
 
-//
-// Activate last active window
-//
+/**
+ * Hide the KeePassXC window
+ *
+ * @return true on success
+ */
 bool AutoTypePlatformMac::hideOwnWindow()
 {
     return macUtils()->hideOwnWindow();
@@ -178,307 +203,291 @@ bool AutoTypePlatformMac::raiseOwnWindow()
     return macUtils()->raiseOwnWindow();
 }
 
-//
-// Send unicode character to active window
-// see: Quartz Event Services
-//
+/**
+ * Send provided character as key event to the active window
+ *
+ * @param ch unicode character
+ * @param isKeyDown whether the key is pressed
+ */
 void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 {
-    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, 0, isKeyDown);
-    if (keyEvent != nullptr) {
-        UniChar unicode = ch.unicode();
+    auto keyEvent = ::CGEventCreateKeyboardEvent(nullptr, 0, isKeyDown);
+    if (keyEvent) {
+        auto unicode = ch.unicode();
         ::CGEventKeyboardSetUnicodeString(keyEvent, 1, &unicode);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
     }
 }
 
-//
-// Send key code to active window
-// see: Quartz Event Services
-//
-void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0)
+/**
+ * Send provided Qt key as key event to the active window
+ *
+ * @param key Qt key code
+ * @param isKeyDown whether the key is pressed
+ * @param modifiers any modifiers to apply to key
+ */
+void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers)
 {
-    uint16 keyCode = qtToNativeKeyCode(key);
+    auto keyCode = qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
 
-    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
-    CGEventFlags nativeModifiers = qtToNativeModifiers(modifiers, true);
-    if (keyEvent != nullptr) {
+    auto keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    auto nativeModifiers = qtToNativeModifiers(modifiers);
+    if (keyEvent) {
         ::CGEventSetFlags(keyEvent, nativeModifiers);
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
     }
 }
 
-//
-// Translate qt key code to mac os key code
-// see: HIToolbox/Events.h
-//
-uint16 AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
+/**
+ * Translate Qt key to macOS key code provided by
+ * AutoTypeMacKeyCodes.h which are derived from
+ * legacy Carbon "HIToolbox/Events.h"
+ *
+ * @param key key to translate
+ * @returns macOS key code
+ */
+CGKeyCode AutoTypePlatformMac::qtToNativeKeyCode(Qt::Key key)
 {
     switch (key) {
-        case Qt::Key_A:
-            return kVK_ANSI_A;
-        case Qt::Key_B:
-            return kVK_ANSI_B;
-        case Qt::Key_C:
-            return kVK_ANSI_C;
-        case Qt::Key_D:
-            return kVK_ANSI_D;
-        case Qt::Key_E:
-            return kVK_ANSI_E;
-        case Qt::Key_F:
-            return kVK_ANSI_F;
-        case Qt::Key_G:
-            return kVK_ANSI_G;
-        case Qt::Key_H:
-            return kVK_ANSI_H;
-        case Qt::Key_I:
-            return kVK_ANSI_I;
-        case Qt::Key_J:
-            return kVK_ANSI_J;
-        case Qt::Key_K:
-            return kVK_ANSI_K;
-        case Qt::Key_L:
-            return kVK_ANSI_L;
-        case Qt::Key_M:
-            return kVK_ANSI_M;
-        case Qt::Key_N:
-            return kVK_ANSI_N;
-        case Qt::Key_O:
-            return kVK_ANSI_O;
-        case Qt::Key_P:
-            return kVK_ANSI_P;
-        case Qt::Key_Q:
-            return kVK_ANSI_Q;
-        case Qt::Key_R:
-            return kVK_ANSI_R;
-        case Qt::Key_S:
-            return kVK_ANSI_S;
-        case Qt::Key_T:
-            return kVK_ANSI_T;
-        case Qt::Key_U:
-            return kVK_ANSI_U;
-        case Qt::Key_V:
-            return kVK_ANSI_V;
-        case Qt::Key_W:
-            return kVK_ANSI_W;
-        case Qt::Key_X:
-            return kVK_ANSI_X;
-        case Qt::Key_Y:
-            return kVK_ANSI_Y;
-        case Qt::Key_Z:
-            return kVK_ANSI_Z;
+    case Qt::Key_A:
+        return kVK_ANSI_A;
+    case Qt::Key_B:
+        return kVK_ANSI_B;
+    case Qt::Key_C:
+        return kVK_ANSI_C;
+    case Qt::Key_D:
+        return kVK_ANSI_D;
+    case Qt::Key_E:
+        return kVK_ANSI_E;
+    case Qt::Key_F:
+        return kVK_ANSI_F;
+    case Qt::Key_G:
+        return kVK_ANSI_G;
+    case Qt::Key_H:
+        return kVK_ANSI_H;
+    case Qt::Key_I:
+        return kVK_ANSI_I;
+    case Qt::Key_J:
+        return kVK_ANSI_J;
+    case Qt::Key_K:
+        return kVK_ANSI_K;
+    case Qt::Key_L:
+        return kVK_ANSI_L;
+    case Qt::Key_M:
+        return kVK_ANSI_M;
+    case Qt::Key_N:
+        return kVK_ANSI_N;
+    case Qt::Key_O:
+        return kVK_ANSI_O;
+    case Qt::Key_P:
+        return kVK_ANSI_P;
+    case Qt::Key_Q:
+        return kVK_ANSI_Q;
+    case Qt::Key_R:
+        return kVK_ANSI_R;
+    case Qt::Key_S:
+        return kVK_ANSI_S;
+    case Qt::Key_T:
+        return kVK_ANSI_T;
+    case Qt::Key_U:
+        return kVK_ANSI_U;
+    case Qt::Key_V:
+        return kVK_ANSI_V;
+    case Qt::Key_W:
+        return kVK_ANSI_W;
+    case Qt::Key_X:
+        return kVK_ANSI_X;
+    case Qt::Key_Y:
+        return kVK_ANSI_Y;
+    case Qt::Key_Z:
+        return kVK_ANSI_Z;
 
-        case Qt::Key_0:
-            return kVK_ANSI_0;
-        case Qt::Key_1:
-            return kVK_ANSI_1;
-        case Qt::Key_2:
-            return kVK_ANSI_2;
-        case Qt::Key_3:
-            return kVK_ANSI_3;
-        case Qt::Key_4:
-            return kVK_ANSI_4;
-        case Qt::Key_5:
-            return kVK_ANSI_5;
-        case Qt::Key_6:
-            return kVK_ANSI_6;
-        case Qt::Key_7:
-            return kVK_ANSI_7;
-        case Qt::Key_8:
-            return kVK_ANSI_8;
-        case Qt::Key_9:
-            return kVK_ANSI_9;
+    case Qt::Key_0:
+        return kVK_ANSI_0;
+    case Qt::Key_1:
+        return kVK_ANSI_1;
+    case Qt::Key_2:
+        return kVK_ANSI_2;
+    case Qt::Key_3:
+        return kVK_ANSI_3;
+    case Qt::Key_4:
+        return kVK_ANSI_4;
+    case Qt::Key_5:
+        return kVK_ANSI_5;
+    case Qt::Key_6:
+        return kVK_ANSI_6;
+    case Qt::Key_7:
+        return kVK_ANSI_7;
+    case Qt::Key_8:
+        return kVK_ANSI_8;
+    case Qt::Key_9:
+        return kVK_ANSI_9;
 
-        case Qt::Key_Equal:
-            return kVK_ANSI_Equal;
-        case Qt::Key_Minus:
-            return kVK_ANSI_Minus;
-        case Qt::Key_BracketRight:
-            return kVK_ANSI_RightBracket;
-        case Qt::Key_BracketLeft:
-            return kVK_ANSI_LeftBracket;
-        case Qt::Key_QuoteDbl:
-            return kVK_ANSI_Quote;
-        case Qt::Key_Semicolon:
-            return kVK_ANSI_Semicolon;
-        case Qt::Key_Backslash:
-            return kVK_ANSI_Backslash;
-        case Qt::Key_Comma:
-            return kVK_ANSI_Comma;
-        case Qt::Key_Slash:
-            return kVK_ANSI_Slash;
-        case Qt::Key_Period:
-            return kVK_ANSI_Period;
+    case Qt::Key_Equal:
+        return kVK_ANSI_Equal;
+    case Qt::Key_Minus:
+        return kVK_ANSI_Minus;
+    case Qt::Key_BracketRight:
+        return kVK_ANSI_RightBracket;
+    case Qt::Key_BracketLeft:
+        return kVK_ANSI_LeftBracket;
+    case Qt::Key_QuoteDbl:
+        return kVK_ANSI_Quote;
+    case Qt::Key_Semicolon:
+        return kVK_ANSI_Semicolon;
+    case Qt::Key_Backslash:
+        return kVK_ANSI_Backslash;
+    case Qt::Key_Comma:
+        return kVK_ANSI_Comma;
+    case Qt::Key_Slash:
+        return kVK_ANSI_Slash;
+    case Qt::Key_Period:
+        return kVK_ANSI_Period;
 
-        case Qt::Key_Shift:
-            return kVK_Shift;
-        case Qt::Key_Control:
-            return kVK_Command;
-        case Qt::Key_Backspace:
-            return kVK_Delete;
-        case Qt::Key_Tab:
-        case Qt::Key_Backtab:
-            return kVK_Tab;
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            return kVK_Return;
-        case Qt::Key_CapsLock:
-            return kVK_CapsLock;
-        case Qt::Key_Escape:
-            return kVK_Escape;
-        case Qt::Key_Space:
-            return kVK_Space;
-        case Qt::Key_PageUp:
-            return kVK_PageUp;
-        case Qt::Key_PageDown:
-            return kVK_PageDown;
-        case Qt::Key_End:
-            return kVK_End;
-        case Qt::Key_Home:
-            return kVK_Home;
-        case Qt::Key_Left:
-            return kVK_LeftArrow;
-        case Qt::Key_Up:
-            return kVK_UpArrow;
-        case Qt::Key_Right:
-            return kVK_RightArrow;
-        case Qt::Key_Down:
-            return kVK_DownArrow;
-        case Qt::Key_Delete:
-            return kVK_ForwardDelete;
-        case Qt::Key_Help:
-            return kVK_Help;
+    case Qt::Key_Shift:
+        return kVK_Shift;
+    case Qt::Key_Control:
+        return kVK_Command;
+    case Qt::Key_Backspace:
+        return kVK_Delete;
+    case Qt::Key_Tab:
+    case Qt::Key_Backtab:
+        return kVK_Tab;
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        return kVK_Return;
+    case Qt::Key_CapsLock:
+        return kVK_CapsLock;
+    case Qt::Key_Escape:
+        return kVK_Escape;
+    case Qt::Key_Space:
+        return kVK_Space;
+    case Qt::Key_PageUp:
+        return kVK_PageUp;
+    case Qt::Key_PageDown:
+        return kVK_PageDown;
+    case Qt::Key_End:
+        return kVK_End;
+    case Qt::Key_Home:
+        return kVK_Home;
+    case Qt::Key_Left:
+        return kVK_LeftArrow;
+    case Qt::Key_Up:
+        return kVK_UpArrow;
+    case Qt::Key_Right:
+        return kVK_RightArrow;
+    case Qt::Key_Down:
+        return kVK_DownArrow;
+    case Qt::Key_Delete:
+        return kVK_ForwardDelete;
+    case Qt::Key_Help:
+        return kVK_Help;
 
-        case Qt::Key_F1:
-            return kVK_F1;
-        case Qt::Key_F2:
-            return kVK_F2;
-        case Qt::Key_F3:
-            return kVK_F3;
-        case Qt::Key_F4:
-            return kVK_F4;
-        case Qt::Key_F5:
-            return kVK_F5;
-        case Qt::Key_F6:
-            return kVK_F6;
-        case Qt::Key_F7:
-            return kVK_F7;
-        case Qt::Key_F8:
-            return kVK_F8;
-        case Qt::Key_F9:
-            return kVK_F9;
-        case Qt::Key_F10:
-            return kVK_F10;
-        case Qt::Key_F11:
-            return kVK_F11;
-        case Qt::Key_F12:
-            return kVK_F12;
-        case Qt::Key_F13:
-            return kVK_F13;
-        case Qt::Key_F14:
-            return kVK_F14;
-        case Qt::Key_F15:
-            return kVK_F15;
-        case Qt::Key_F16:
-            return kVK_F16;
+    case Qt::Key_F1:
+        return kVK_F1;
+    case Qt::Key_F2:
+        return kVK_F2;
+    case Qt::Key_F3:
+        return kVK_F3;
+    case Qt::Key_F4:
+        return kVK_F4;
+    case Qt::Key_F5:
+        return kVK_F5;
+    case Qt::Key_F6:
+        return kVK_F6;
+    case Qt::Key_F7:
+        return kVK_F7;
+    case Qt::Key_F8:
+        return kVK_F8;
+    case Qt::Key_F9:
+        return kVK_F9;
+    case Qt::Key_F10:
+        return kVK_F10;
+    case Qt::Key_F11:
+        return kVK_F11;
+    case Qt::Key_F12:
+        return kVK_F12;
+    case Qt::Key_F13:
+        return kVK_F13;
+    case Qt::Key_F14:
+        return kVK_F14;
+    case Qt::Key_F15:
+        return kVK_F15;
+    case Qt::Key_F16:
+        return kVK_F16;
 
-        default:
-            Q_ASSERT(false);
-            return INVALID_KEYCODE;
+    default:
+        return INVALID_KEYCODE;
     }
 }
 
-//
-// Translate qt key modifiers to mac os modifiers
-// see: https://doc.qt.io/qt-5/osx-issues.html#special-keys
-//
-CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native)
+/**
+ * Translate Qt key modifiers to macOS key modifiers
+ * provided by the Core Graphics component
+ *
+ * @param modifiers Qt keyboard modifier(s)
+ * @returns macOS key modifier(s)
+ */
+CGEventFlags AutoTypePlatformMac::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
 {
-    CGEventFlags nativeModifiers = CGEventFlags(0);
-
-    CGEventFlags shiftMod = CGEventFlags(shiftKey);
-    CGEventFlags cmdMod = CGEventFlags(cmdKey);
-    CGEventFlags optionMod = CGEventFlags(optionKey);
-    CGEventFlags controlMod = CGEventFlags(controlKey);
-
-    if (native) {
-        shiftMod = kCGEventFlagMaskShift;
-        cmdMod = kCGEventFlagMaskCommand;
-        optionMod = kCGEventFlagMaskAlternate;
-        controlMod = kCGEventFlagMaskControl;
-    }
-
+    auto nativeModifiers = CGEventFlags(0);
 
     if (modifiers & Qt::ShiftModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | shiftMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskShift);
     }
     if (modifiers & Qt::ControlModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | cmdMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskCommand);
     }
     if (modifiers & Qt::AltModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | optionMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskAlternate);
     }
     if (modifiers & Qt::MetaModifier) {
-        nativeModifiers = CGEventFlags(nativeModifiers | controlMod);
+        nativeModifiers = CGEventFlags(nativeModifiers | kCGEventFlagMaskControl);
     }
 
     return nativeModifiers;
 }
 
-//
-// Get window layer/level
-//
+/**
+ * Get window layer / level
+ *
+ * @param window macOS window ref
+ * @returns layer number or -1 if window not found
+ */
 int AutoTypePlatformMac::windowLayer(CFDictionaryRef window)
 {
     int layer;
 
-    CFNumberRef layerRef = static_cast<CFNumberRef>(::CFDictionaryGetValue(window, kCGWindowLayer));
-    if (layerRef != nullptr
-            && ::CFNumberGetValue(layerRef, kCFNumberIntType, &layer)) {
+    auto layerRef = static_cast<CFNumberRef>(::CFDictionaryGetValue(window, kCGWindowLayer));
+    if (layerRef && ::CFNumberGetValue(layerRef, kCFNumberIntType, &layer)) {
         return layer;
     }
 
     return -1;
 }
 
-//
-// Get window title
-//
+/**
+ * Get window title for macOS window ref
+ *
+ * @param window macOS window ref
+ * @returns window title if found
+ */
 QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
 {
     char buffer[MAX_WINDOW_TITLE_LENGTH];
     QString title;
 
-    CFStringRef titleRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, kCGWindowName));
-    if (titleRef != nullptr
-            && ::CFStringGetCString(titleRef, buffer, MAX_WINDOW_TITLE_LENGTH, kCFStringEncodingUTF8)) {
+    auto titleRef = static_cast<CFStringRef>(::CFDictionaryGetValue(window, kCGWindowName));
+    if (titleRef && ::CFStringGetCString(titleRef, buffer, MAX_WINDOW_TITLE_LENGTH, kCFStringEncodingUTF8)) {
         title = QString::fromUtf8(buffer);
     }
 
     return title;
-}
-
-//
-// Carbon hotkey handler
-//
-OSStatus AutoTypePlatformMac::hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void *userData)
-{
-    Q_UNUSED(nextHandler);
-
-    AutoTypePlatformMac *self = static_cast<AutoTypePlatformMac *>(userData);
-    EventHotKeyID hotkeyId;
-
-    if (::GetEventParameter(theEvent, kEventParamDirectObject, typeEventHotKeyID, nullptr, sizeof(hotkeyId), nullptr, &hotkeyId) == noErr
-            && hotkeyId.id == HOTKEY_ID) {
-        emit self->globalShortcutTriggered();
-    }
-
-    return noErr;
 }
 
 //
@@ -502,7 +511,7 @@ void AutoTypeExecutorMac::execKey(AutoTypeKey* action)
     m_platform->sendKey(action->key, false);
 }
 
-void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action = nullptr)
+void AutoTypeExecutorMac::execClearField(AutoTypeClearField* action)
 {
     Q_UNUSED(action);
 

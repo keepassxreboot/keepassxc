@@ -19,13 +19,14 @@
 #import "AppKit.h"
 
 #import <Foundation/Foundation.h>
+#import <AppKit/NSEvent.h>
 #import <AppKit/NSRunningApplication.h>
 
 @interface AppKitImpl : NSObject
 {
-    AppKit *m_appkit;
+    AppKit* m_appkit;
 }
-- (id) initWithObject:(AppKit *)appkit;
+- (id) initWithObject:(AppKit*)appkit;
 
 @property (strong) NSRunningApplication *lastActiveApplication;
 
@@ -36,5 +37,8 @@
 - (bool) isHidden:(pid_t) pid;
 - (bool) isDarkMode;
 - (void) userSwitchHandler:(NSNotification*) notification;
+- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent*)) handler;
+- (void) removeGlobalMonitor:(id) monitor;
+- (bool) enableAccessibility;
 
 @end
