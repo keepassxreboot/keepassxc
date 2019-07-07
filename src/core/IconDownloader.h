@@ -15,44 +15,49 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_UPDATECHECK_H
-#define KEEPASSXC_UPDATECHECK_H
+#ifndef KEEPASSXC_ICONDOWNLOADER_H
+#define KEEPASSXC_ICONDOWNLOADER_H
+
+#include <QImage>
 #include <QObject>
-#include <QString>
+#include <QTimer>
+#include <QUrl>
+
+#include "core/Global.h"
 
 class QNetworkReply;
 
-class UpdateChecker : public QObject
+class IconDownloader : public QObject
 {
     Q_OBJECT
-public:
-    UpdateChecker(QObject* parent = nullptr);
-    ~UpdateChecker() override;
 
-    void checkForUpdates(bool manuallyRequested);
-    static bool compareVersions(const QString& localVersion, const QString& remoteVersion);
-    static UpdateChecker* instance();
+public:
+    explicit IconDownloader(QObject* parent = nullptr);
+    ~IconDownloader() override;
+
+    void setUrl(const QString& entryUrl);
+    void download();
 
 signals:
-    void updateCheckFinished(bool hasNewVersion, QString version, bool isManuallyRequested);
+    void finished(const QString& entryUrl, const QImage& image);
+
+public slots:
+    void abortDownload();
 
 private slots:
     void fetchFinished();
     void fetchReadyRead();
 
 private:
-    QNetworkReply* m_reply;
+    void fetchFavicon(const QUrl& url);
+
+    QString m_url;
+    QUrl m_fetchUrl;
+    QList<QUrl> m_urlsToTry;
     QByteArray m_bytesReceived;
-    bool m_isManuallyRequested;
-
-    static UpdateChecker* m_instance;
-
-    Q_DISABLE_COPY(UpdateChecker)
+    QNetworkReply* m_reply;
+    QTimer m_timeout;
+    int m_redirects;
 };
 
-inline UpdateChecker* updateCheck()
-{
-    return UpdateChecker::instance();
-}
-
-#endif // KEEPASSXC_UPDATECHECK_H
+#endif // KEEPASSXC_ICONDOWNLOADER_H

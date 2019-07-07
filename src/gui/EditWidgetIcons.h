@@ -25,6 +25,7 @@
 #include <QWidget>
 
 #include "config-keepassx.h"
+#include "core/Entry.h"
 #include "core/Global.h"
 #include "gui/MessageWidget.h"
 
@@ -32,8 +33,7 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 #ifdef WITH_XC_NETWORKING
-class QNetworkAccessManager;
-class QNetworkReply;
+class IconDownloader;
 #endif
 
 namespace Ui
@@ -87,9 +87,7 @@ signals:
 
 private slots:
     void downloadFavicon();
-    void startFetchFavicon(const QUrl& url);
-    void fetchFinished();
-    void fetchReadyRead();
+    void iconReceived(const QString& url, const QImage& icon);
     void addCustomIconFromFile();
     bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
@@ -106,17 +104,12 @@ private:
     QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
     ApplyIconToOptions m_applyIconTo;
-#ifdef WITH_XC_NETWORKING
-    QUrl m_url;
-    QUrl m_fetchUrl;
-    QList<QUrl> m_urlsToTry;
-    QByteArray m_bytesReceived;
-    QNetworkAccessManager* m_netMgr;
-    QNetworkReply* m_reply;
-    int m_redirects;
-#endif
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
+#ifdef WITH_XC_NETWORKING
+    QScopedPointer<IconDownloader> m_downloader;
+    QString m_url;
+#endif
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };

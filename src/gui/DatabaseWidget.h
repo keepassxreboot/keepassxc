@@ -25,11 +25,10 @@
 #include <QTimer>
 
 #include "DatabaseOpenDialog.h"
+#include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
-
-#include "config-keepassx.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -124,6 +123,7 @@ signals:
     void databaseModified();
     void databaseSaved();
     void databaseUnlocked();
+    void databaseLockRequested();
     void databaseLocked();
 
     // Emitted in replaceDatabase, may be caused by lock, reload, unlock, load.
@@ -169,6 +169,8 @@ public slots:
     void setupTotp();
     void performAutoType();
     void openUrl();
+    void downloadSelectedFavicons();
+    void downloadAllFavicons();
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
@@ -233,6 +235,7 @@ private:
     void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
+    void performIconDownloads(const QList<Entry*>& entries, bool force = false);
 
     QSharedPointer<Database> m_db;
 

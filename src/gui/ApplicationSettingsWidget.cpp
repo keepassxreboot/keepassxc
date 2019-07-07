@@ -103,6 +103,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
 #ifndef WITH_XC_NETWORKING
     m_secUi->privacy->setVisible(false);
+    m_generalUi->faviconTimeoutLabel->setVisible(false);
+    m_generalUi->faviconTimeoutSpinBox->setVisible(false);
 #endif
 
 #ifndef WITH_XC_TOUCHID
@@ -156,6 +158,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get("AutoTypeEntryURLMatch").toBool());
     m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
+    m_generalUi->faviconTimeoutSpinBox->setValue(config()->get("FaviconDownloadTimeout").toInt());
 
     if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
         hideWindowOnCopyCheckBoxToggled(false);
@@ -264,6 +267,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("AutoTypeEntryTitleMatch", m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set("AutoTypeEntryURLMatch", m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
+    config()->set("FaviconDownloadTimeout", m_generalUi->faviconTimeoutSpinBox->value());
 
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 

@@ -283,6 +283,8 @@
     <addaction name="menuEntryTotp"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryAutoType"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryDownloadIcon"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -293,6 +295,8 @@
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
+    <addaction name="separator"/>
+    <addaction name="actionGroupDownloadFavicons"/>
     <addaction name="separator"/>
     <addaction name="actionGroupSortAsc"/>
     <addaction name="actionGroupSortDesc"/>
@@ -467,6 +471,14 @@
     <string>&amp;Delete group</string>
    </property>
   </action>
+  <action name="actionGroupDownloadFavicons">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Downlo&amp;ad all favicons</string>
+   </property>
+  </action>
   <action name="actionGroupSortAsc">
    <property name="enabled">
     <bool>false</bool>
@@ -568,6 +580,11 @@
    </property>
    <property name="text">
     <string>Perform &amp;Auto-Type</string>
+   </property>
+  </action>
+  <action name="actionEntryDownloadIcon">
+   <property name="text">
+    <string>Download favicon</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
