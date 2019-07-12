@@ -59,3 +59,8 @@ void BrowserAccessControlDialog::setRemember(bool r)
 {
     m_ui->rememberDecisionCheckBox->setChecked(r);
 }
+
+void BrowserAccessControlDialog::setHTTPAuth(bool httpAuth)
+{
+    m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
+}

@@ -118,7 +118,8 @@ private:
                         const QString& url,
                         const QString& host,
                         const QString& submitHost,
-                        const QString& realm);
+                        const QString& realm,
+                        const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});

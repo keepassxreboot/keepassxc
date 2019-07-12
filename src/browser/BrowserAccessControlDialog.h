@@ -41,6 +41,7 @@ public:
     void setItems(const QList<Entry*>& items);
     bool remember() const;
     void setRemember(bool r);
+    void setHTTPAuth(bool httpAuth);
 
 private:
     QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
