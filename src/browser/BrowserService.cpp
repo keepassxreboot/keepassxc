@@ -400,7 +400,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     }
 
     // Confirm entries
-    if (confirmEntries(pwEntriesToConfirm, url, host, submitHost, realm)) {
+    if (confirmEntries(pwEntriesToConfirm, url, host, submitHost, realm, httpAuth)) {
         pwEntries.append(pwEntriesToConfirm);
     }
 
@@ -764,7 +764,8 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                                     const QString& url,
                                     const QString& host,
                                     const QString& submitHost,
-                                    const QString& realm)
+                                    const QString& realm,
+                                    const bool httpAuth)
 {
     if (pwEntriesToConfirm.isEmpty() || m_dialogActive) {
         return false;
@@ -775,6 +776,7 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &accessControlDialog, SLOT(reject()));
     accessControlDialog.setUrl(url);
     accessControlDialog.setItems(pwEntriesToConfirm);
+    accessControlDialog.setHTTPAuth(httpAuth);
 
     raiseWindow();
     accessControlDialog.show();
