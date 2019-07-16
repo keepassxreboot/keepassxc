@@ -149,6 +149,16 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
         QJsonObject message = buildMessage(newNonce);
         message["hash"] = hash;
+
+        // Update a legacy database hash if found
+        const QJsonArray hashes = decrypted.value("connectedKeys").toArray();
+        if (!hashes.isEmpty()) {
+            const QString legacyHash = getLegacyDatabaseHash();
+            if (hashes.contains(legacyHash)) {
+                message["oldHash"] = legacyHash;
+            }
+        }
+
         return buildResponse(action, message, newNonce);
     }
 
@@ -528,6 +538,17 @@ QString BrowserAction::getReturnValue(const BrowserService::ReturnValue returnVa
 }
 
 QString BrowserAction::getDatabaseHash()
+{
+    QMutexLocker locker(&m_mutex);
+    QByteArray hash =
+        QCryptographicHash::hash(
+            m_browserService.getDatabaseRootUuid().toUtf8(),
+            QCryptographicHash::Sha256)
+            .toHex();
+    return QString(hash);
+}
+
+QString BrowserAction::getLegacyDatabaseHash()
 {
     QMutexLocker locker(&m_mutex);
     QByteArray hash =
