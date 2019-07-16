@@ -34,15 +34,20 @@
  */
 void Translator::installTranslators()
 {
-    QLocale locale;
-    QString language = config()->get("GUI/Language").toString();
-    if (!language.isEmpty() && language != "system") {
-        // use actual English translation instead of the English locale source language
-        if (language == "en") {
-            language = "en_US";
-        }
-        locale = QLocale(language);
+    QStringList languages;
+    QString languageSetting = config()->get("GUI/Language").toString();
+    if (languageSetting.isEmpty() || languageSetting == "system") {
+        // NOTE: this is a workaround for the terrible way Qt loads languages
+        // using the QLocale::uiLanguages() approach. Instead, we search each
+        // language and all country variants in order before moving to the next.
+        QLocale locale;
+        languages = locale.uiLanguages();
+    } else {
+        languages << languageSetting;
     }
+
+    // Always try to load english last
+    languages << "en_US";
 
     const QStringList paths = {
 #ifdef QT_DEBUG
@@ -52,9 +57,10 @@ void Translator::installTranslators()
 
     bool translationsLoaded = false;
     for (const QString& path : paths) {
-        translationsLoaded |= installTranslator(locale, path) || installTranslator(QLocale("en_US"), path);
-        if (!installQtTranslator(language, path)) {
-            installQtTranslator(QLocale("en"), path);
+        installQtTranslator(languages, path);
+        if (installTranslator(languages, path)) {
+            translationsLoaded = true;
+            break;
         }
     }
 
@@ -62,6 +68,48 @@ void Translator::installTranslators()
         // couldn't load configured language or fallback
         qWarning("Couldn't load translations.");
     }
+}
+
+/**
+ * Install KeePassXC translator.
+ *
+ * @param languages priority ordered list of languages
+ * @param path absolute search path
+ * @return true on success
+ */
+bool Translator::installTranslator(const QStringList& languages, const QString& path)
+{
+    for (const auto& language : languages) {
+        QLocale locale(language);
+        QScopedPointer<QTranslator> translator(new QTranslator(qApp));
+        if (translator->load(locale, "keepassx_", "", path)) {
+            return QCoreApplication::installTranslator(translator.take());
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Install Qt5 base translator from the specified local search path or the default system path
+ * if no qtbase_* translations were found at the local path.
+ *
+ * @param languages priority ordered list of languages
+ * @param path absolute search path
+ * @return true on success
+ */
+bool Translator::installQtTranslator(const QStringList& languages, const QString& path)
+{
+    for (const auto& language : languages) {
+        QLocale locale(language);
+        QScopedPointer<QTranslator> qtTranslator(new QTranslator(qApp));
+        if (qtTranslator->load(locale, "qtbase_", "", path)) {
+            return QCoreApplication::installTranslator(qtTranslator.take());
+        } else if (qtTranslator->load(locale, "qtbase_", "", QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+            return QCoreApplication::installTranslator(qtTranslator.take());
+        }
+    }
+    return false;
 }
 
 /**
@@ -107,39 +155,4 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
     }
 
     return languages;
-}
-
-/**
- * Install KeePassXC translator.
- *
- * @param language translator language
- * @param path local search path
- * @return true on success
- */
-bool Translator::installTranslator(const QLocale& locale, const QString& path)
-{
-    QScopedPointer<QTranslator> translator(new QTranslator(qApp));
-    if (translator->load(locale, "keepassx_", "", path)) {
-        return QCoreApplication::installTranslator(translator.take());
-    }
-    return false;
-}
-
-/**
- * Install Qt5 base translator from the specified local search path or the default system path
- * if no qtbase_* translations were found at the local path.
- *
- * @param language translator language
- * @param path local search path
- * @return true on success
- */
-bool Translator::installQtTranslator(const QLocale& locale, const QString& path)
-{
-    QScopedPointer<QTranslator> qtTranslator(new QTranslator(qApp));
-    if (qtTranslator->load(locale, "qtbase_", "", path)) {
-        return QCoreApplication::installTranslator(qtTranslator.take());
-    } else if (qtTranslator->load(locale, "qtbase_", "", QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-        return QCoreApplication::installTranslator(qtTranslator.take());
-    }
-    return false;
 }

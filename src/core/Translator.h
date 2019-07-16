@@ -29,8 +29,8 @@ public:
     static QList<QPair<QString, QString>> availableLanguages();
 
 private:
-    static bool installTranslator(const QLocale& locale, const QString& path);
-    static bool installQtTranslator(const QLocale& locale, const QString& path);
+    static bool installTranslator(const QStringList& languages, const QString& path);
+    static bool installQtTranslator(const QStringList& languages, const QString& path);
 };
 
 #endif // KEEPASSX_TRANSLATOR_H
