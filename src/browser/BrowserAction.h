@@ -75,6 +75,7 @@ private:
     QString getErrorMessage(const int errorCode) const;
     QString getReturnValue(const BrowserService::ReturnValue returnValue) const;
     QString getDatabaseHash();
+    QString getLegacyDatabaseHash();
 
     QString encryptMessage(const QJsonObject& message, const QString& nonce);
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
