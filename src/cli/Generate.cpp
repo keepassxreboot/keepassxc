@@ -33,7 +33,8 @@ const QCommandLineOption Generate::LowerCaseOption = QCommandLineOption(QStringL
                                                                                       << "lower",
                                                                         QObject::tr("Use lowercase characters"));
 
-const QCommandLineOption Generate::UpperCaseOption = QCommandLineOption(QStringList() << "upper",
+const QCommandLineOption Generate::UpperCaseOption = QCommandLineOption(QStringList() << "U"
+                                                                                      << "upper",
                                                                         QObject::tr("Use uppercase characters"));
 
 const QCommandLineOption Generate::NumbersOption = QCommandLineOption(QStringList() << "n"

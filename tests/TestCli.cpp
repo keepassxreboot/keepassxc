@@ -280,7 +280,7 @@ void TestCli::testAdd()
                     "--every-group",
                     "-s",
                     "-n",
-                    "--upper",
+                    "-U",
                     "-l",
                     m_dbFile->fileName(),
                     "/newuser-entry4"});
@@ -795,9 +795,9 @@ void TestCli::testGenerate_data()
     QTest::newRow("numbers + lowercase + uppercase")
         << QStringList{"generate", "-L", "16", "-n", "--upper", "-l"} << "^[0-9a-zA-Z]{16}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude)")
-        << QStringList{"generate", "-L", "500", "-n", "--upper", "-l", "-x", "abcdefg0123@"} << "^[^abcdefg0123@]{500}$";
+        << QStringList{"generate", "-L", "500", "-n", "-U", "-l", "-x", "abcdefg0123@"} << "^[^abcdefg0123@]{500}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude similar)")
-        << QStringList{"generate", "-L", "200", "-n", "--upper", "-l", "--exclude-similar"} << "^[^l1IO0]{200}$";
+        << QStringList{"generate", "-L", "200", "-n", "-U", "-l", "--exclude-similar"} << "^[^l1IO0]{200}$";
     QTest::newRow("uppercase + lowercase (every)")
         << QStringList{"generate", "-L", "2", "--upper", "-l", "--every-group"} << "^[a-z][A-Z]|[A-Z][a-z]$";
     QTest::newRow("numbers + lowercase (every)")
