@@ -63,6 +63,7 @@ void MessageBox::initializeButtonDefs()
         {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
         {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
         {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
+        {Continue, {QMessageBox::tr("Continue"), QMessageBox::ButtonRole::AcceptRole}},
     };
 }
 
@@ -146,6 +147,17 @@ MessageBox::Button MessageBox::critical(QWidget* parent,
     return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action, checkbox);
 }
 
+MessageBox::Button MessageBox::warning(QWidget* parent,
+                                       const QString& title,
+                                       const QString& text,
+                                       MessageBox::Buttons buttons,
+                                       MessageBox::Button defaultButton,
+                                       MessageBox::Action action,
+                                       QCheckBox* checkbox)
+{
+    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action, checkbox);
+}
+
 MessageBox::Button MessageBox::information(QWidget* parent,
                                            const QString& title,
                                            const QString& text,
@@ -166,17 +178,6 @@ MessageBox::Button MessageBox::question(QWidget* parent,
                                         QCheckBox* checkbox)
 {
     return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action, checkbox);
-}
-
-MessageBox::Button MessageBox::warning(QWidget* parent,
-                                       const QString& title,
-                                       const QString& text,
-                                       MessageBox::Buttons buttons,
-                                       MessageBox::Button defaultButton,
-                                       MessageBox::Action action,
-                                       QCheckBox* checkbox)
-{
-    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action, checkbox);
 }
 
 void MessageBox::setNextAnswer(MessageBox::Button button)

@@ -802,12 +802,12 @@ void MainWindow::openBugReportUrl()
 
 void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl(filePath()->dataPath("docs/KeePassXC_GettingStarted.pdf"));
+    customOpenUrl(QString("file:///%1").arg(filePath()->dataPath("docs/KeePassXC_GettingStarted.pdf")));
 }
 
 void MainWindow::openUserGuide()
 {
-    customOpenUrl(filePath()->dataPath("docs/KeePassXC_UserGuide.pdf"));
+    customOpenUrl(QString("file:///%1").arg(filePath()->dataPath("docs/KeePassXC_UserGuide.pdf")));
 }
 
 void MainWindow::openOnlineHelp()
