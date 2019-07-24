@@ -21,6 +21,7 @@
 #include <QFlags>
 #include <QString>
 #include <QVector>
+#include <QMetaType>
 
 class PassphraseGenerator
 {
@@ -28,11 +29,19 @@ public:
     PassphraseGenerator();
     Q_DISABLE_COPY(PassphraseGenerator)
 
+    enum WordCaseOption
+    {
+        Lower,
+        Upper,
+        Capital
+    };
+
     double calculateEntropy(const QString& passphrase);
     void setWordCount(int wordCount);
     void setWordList(const QString& path);
     void setDefaultWordList();
     void setWordSeparator(const QString& separator);
+    void setWordCase(const WordCaseOption wordCase);
     bool isValid() const;
 
     QString generatePassphrase() const;
@@ -40,11 +49,16 @@ public:
     static constexpr int DefaultWordCount = 7;
     static const char* DefaultSeparator;
     static const char* DefaultWordList;
+    static const WordCaseOption DefaultCase;
 
 private:
     int m_wordCount;
     QString m_separator;
+    WordCaseOption m_wordcase;
     QVector<QString> m_wordlist;
 };
+
+// Declare as metatype so we can store it in the combo box item data
+Q_DECLARE_METATYPE(PassphraseGenerator::WordCaseOption)
 
 #endif // KEEPASSX_PASSPHRASEGENERATOR_H

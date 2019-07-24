@@ -26,10 +26,12 @@
 
 const char* PassphraseGenerator::DefaultSeparator = " ";
 const char* PassphraseGenerator::DefaultWordList = "eff_large.wordlist";
+const PassphraseGenerator::WordCaseOption PassphraseGenerator::DefaultCase = WordCaseOption::Lower;
 
 PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(0)
     , m_separator(PassphraseGenerator::DefaultSeparator)
+    , m_wordcase(PassphraseGenerator::DefaultCase)
 {
 }
 
@@ -86,6 +88,11 @@ void PassphraseGenerator::setWordSeparator(const QString& separator)
     m_separator = separator;
 }
 
+void PassphraseGenerator::setWordCase(const WordCaseOption wordCase)
+{
+    m_wordcase = wordCase;
+}
+
 QString PassphraseGenerator::generatePassphrase() const
 {
     Q_ASSERT(isValid());
@@ -98,7 +105,18 @@ QString PassphraseGenerator::generatePassphrase() const
     QStringList words;
     for (int i = 0; i < m_wordCount; ++i) {
         int wordIndex = randomGen()->randomUInt(static_cast<quint32>(m_wordlist.length()));
-        words.append(m_wordlist.at(wordIndex));
+
+        QString currentWord = m_wordlist.at(wordIndex);
+
+        // Update case of word based on selected WordCaseOption
+        if (m_wordcase == WordCaseOption::Upper) {
+            currentWord = currentWord.toUpper();
+        } else if (m_wordcase == WordCaseOption::Capital) {
+            currentWord =  currentWord.replace(0,1,currentWord[0].toUpper());
+        }
+        // Nothing to do for lowercase
+
+        words.append(currentWord);
     }
 
     return words.join(m_separator);

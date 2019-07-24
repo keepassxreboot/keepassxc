@@ -57,6 +57,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
 
     connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
+    connect(m_ui->comboBoxWordCase, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
@@ -139,6 +140,10 @@ void PasswordGeneratorWidget::loadSettings()
         config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
     m_ui->comboBoxWordList->setCurrentText(
         config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
+    m_ui->comboBoxWordCase->clear();
+    m_ui->comboBoxWordCase->addItem(tr("Lowercase"),QVariant::fromValue(PassphraseGenerator::WordCaseOption::Lower));
+    m_ui->comboBoxWordCase->addItem(tr("Uppercase"),QVariant::fromValue(PassphraseGenerator::WordCaseOption::Upper));
+    m_ui->comboBoxWordCase->addItem(tr("Capital case"),QVariant::fromValue(PassphraseGenerator::WordCaseOption::Capital));
 
     // Password or diceware?
     m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
@@ -565,6 +570,11 @@ void PasswordGeneratorWidget::updateGenerator()
             m_dicewareGenerator->setWordList(path);
         }
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
+
+	// Determine selected option for word case
+	int wordCaseSelectedIndex = m_ui->comboBoxWordCase->currentIndex();
+	QVariant selectedOption = m_ui->comboBoxWordCase->itemData(wordCaseSelectedIndex);
+	m_dicewareGenerator->setWordCase(selectedOption.value<PassphraseGenerator::WordCaseOption>());
 
         if (m_dicewareGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);
