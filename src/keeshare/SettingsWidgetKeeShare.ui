@@ -31,6 +31,12 @@
      <layout class="QGridLayout" name="gridLayout">
       <item row="2" column="0">
        <widget class="QCheckBox" name="enableImportCheckBox">
+        <property name="toolTip">
+         <string>Allow KeeShare imports</string>
+        </property>
+        <property name="accessibleName">
+         <string>Allow KeeShare imports</string>
+        </property>
         <property name="text">
          <string>Allow import</string>
         </property>
@@ -38,6 +44,12 @@
       </item>
       <item row="3" column="0">
        <widget class="QCheckBox" name="enableExportCheckBox">
+        <property name="toolTip">
+         <string>Allow KeeShare exports</string>
+        </property>
+        <property name="accessibleName">
+         <string>Allow KeeShare exports</string>
+        </property>
         <property name="text">
          <string>Allow export</string>
         </property>
@@ -77,6 +89,9 @@
       </item>
       <item row="3" column="1" colspan="2">
        <widget class="QLineEdit" name="ownCertificatePrivateKeyEdit">
+        <property name="accessibleName">
+         <string>Key</string>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
@@ -105,16 +120,26 @@
       </item>
       <item row="4" column="1" colspan="2">
        <widget class="QLineEdit" name="ownCertificatePublicKeyEdit">
+        <property name="accessibleName">
+         <string>Certificate</string>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
        </widget>
       </item>
       <item row="2" column="1" colspan="2">
-       <widget class="QLineEdit" name="ownCertificateSignerEdit"/>
+       <widget class="QLineEdit" name="ownCertificateSignerEdit">
+        <property name="accessibleName">
+         <string>Signer name field</string>
+        </property>
+       </widget>
       </item>
       <item row="5" column="1" colspan="2">
        <widget class="QLineEdit" name="ownCertificateFingerprintEdit">
+        <property name="accessibleName">
+         <string>Fingerprint</string>
+        </property>
         <property name="readOnly">
          <bool>true</bool>
         </property>
@@ -137,6 +162,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="generateOwnCerticateButton">
+          <property name="accessibleName">
+           <string>Generate new certificate</string>
+          </property>
           <property name="text">
            <string>Generate</string>
           </property>
@@ -144,6 +172,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="importOwnCertificateButton">
+          <property name="accessibleName">
+           <string>Import existing certificate</string>
+          </property>
           <property name="text">
            <string>Import</string>
           </property>
@@ -151,6 +182,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="exportOwnCertificateButton">
+          <property name="accessibleName">
+           <string>Export own certificate</string>
+          </property>
           <property name="text">
            <string>Export</string>
           </property>
@@ -169,6 +203,9 @@
      <layout class="QGridLayout" name="gridLayout_3">
       <item row="1" column="0" rowspan="2">
        <widget class="QTableView" name="importedCertificateTableView">
+        <property name="accessibleName">
+         <string>Known shares</string>
+        </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
@@ -215,6 +252,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="trustImportedCertificateButton">
+          <property name="accessibleName">
+           <string>Trust selected certificate</string>
+          </property>
           <property name="text">
            <string>Trust</string>
           </property>
@@ -222,6 +262,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="askImportedCertificateButton">
+          <property name="accessibleName">
+           <string>Ask trust for selected certificate</string>
+          </property>
           <property name="text">
            <string>Ask</string>
           </property>
@@ -229,6 +272,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="untrustImportedCertificateButton">
+          <property name="accessibleName">
+           <string>Untrust selected certificate</string>
+          </property>
           <property name="text">
            <string>Untrust</string>
           </property>
@@ -236,6 +282,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="removeImportedCertificateButton">
+          <property name="accessibleName">
+           <string>Remove selected certificate</string>
+          </property>
           <property name="text">
            <string>Remove</string>
           </property>

@@ -48,6 +48,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="allowButton">
+       <property name="accessibleName">
+        <string>Allow access</string>
+       </property>
        <property name="text">
         <string>Allow</string>
        </property>
@@ -55,6 +58,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="denyButton">
+       <property name="accessibleName">
+        <string>Deny access</string>
+       </property>
        <property name="text">
         <string>Deny</string>
        </property>

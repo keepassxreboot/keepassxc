@@ -47,6 +47,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="accessibleName">
+         <string>Clipboard clear seconds</string>
+        </property>
         <property name="suffix">
          <string comment="Seconds"> sec</string>
         </property>
@@ -120,6 +123,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="accessibleName">
+         <string>Database lock timeout seconds</string>
+        </property>
         <property name="suffix">
          <string comment="Seconds"> sec</string>
         </property>
@@ -151,6 +157,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Touch ID inactivity reset</string>
         </property>
         <property name="suffix">
          <string> min</string>

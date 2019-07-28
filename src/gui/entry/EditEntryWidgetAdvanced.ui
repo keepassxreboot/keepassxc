@@ -32,6 +32,9 @@
            <height>0</height>
           </size>
          </property>
+         <property name="accessibleName">
+          <string>Attribute selection</string>
+         </property>
          <property name="sizeAdjustPolicy">
           <enum>QAbstractScrollArea::AdjustToContents</enum>
          </property>
@@ -55,6 +58,9 @@
            <height>0</height>
           </size>
          </property>
+         <property name="accessibleName">
+          <string>Attribute value</string>
+         </property>
         </widget>
        </widget>
       </item>
@@ -62,6 +68,9 @@
        <layout class="QVBoxLayout" name="attributesButtonLayout">
         <item>
          <widget class="QPushButton" name="addAttributeButton">
+          <property name="accessibleName">
+           <string>Add a new attribute</string>
+          </property>
           <property name="text">
            <string>Add</string>
           </property>
@@ -72,6 +81,9 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
+          <property name="accessibleName">
+           <string>Remove selected attribute</string>
+          </property>
           <property name="text">
            <string>Remove</string>
           </property>
@@ -81,6 +93,9 @@
          <widget class="QPushButton" name="editAttributeButton">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="accessibleName">
+           <string>Edit attribute name</string>
           </property>
           <property name="text">
            <string>Edit Name</string>
@@ -105,6 +120,9 @@
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="accessibleName">
+           <string>Toggle attribute protection</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">margin-left:50%;margin-right:50%</string>
           </property>
@@ -120,6 +138,9 @@
          <widget class="QPushButton" name="revealAttributeButton">
           <property name="enabled">
            <bool>false</bool>
+          </property>
+          <property name="accessibleName">
+           <string>Show a protected attribute</string>
           </property>
           <property name="text">
            <string>Reveal</string>
@@ -177,6 +198,9 @@
           <height>25</height>
          </size>
         </property>
+        <property name="accessibleName">
+         <string>Foreground color selection</string>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -218,6 +242,9 @@
           <width>25</width>
           <height>25</height>
          </size>
+        </property>
+        <property name="accessibleName">
+         <string>Background color selection</string>
         </property>
         <property name="text">
          <string/>

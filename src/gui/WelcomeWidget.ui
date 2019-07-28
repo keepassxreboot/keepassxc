@@ -185,6 +185,9 @@
        <height>110</height>
       </size>
      </property>
+     <property name="accessibleName">
+      <string>Open a recent database</string>
+     </property>
     </widget>
    </item>
   </layout>

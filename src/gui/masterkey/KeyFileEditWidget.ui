@@ -31,6 +31,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="accessibleName">
+      <string>Key file selection</string>
+     </property>
      <property name="editable">
       <bool>true</bool>
      </property>
@@ -38,13 +41,19 @@
    </item>
    <item row="0" column="1">
     <widget class="QPushButton" name="browseKeyFileButton">
+     <property name="accessibleName">
+      <string>Browse for key file</string>
+     </property>
      <property name="text">
-      <string>Browse</string>
+      <string>Browse...</string>
      </property>
     </widget>
    </item>
    <item row="1" column="1">
     <widget class="QPushButton" name="createKeyFileButton">
+     <property name="accessibleName">
+      <string>Generate a new key file</string>
+     </property>
      <property name="text">
       <string>Generate</string>
      </property>

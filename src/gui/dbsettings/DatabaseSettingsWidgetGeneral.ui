@@ -49,7 +49,11 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLineEdit" name="dbNameEdit"/>
+       <widget class="QLineEdit" name="dbNameEdit">
+        <property name="accessibleName">
+         <string>Database name field</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="dbDescriptionLabel">
@@ -59,7 +63,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="dbDescriptionEdit"/>
+       <widget class="QLineEdit" name="dbDescriptionEdit">
+        <property name="accessibleName">
+         <string>Database description field</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0">
        <widget class="QLabel" name="defaultUsernameLabel">
@@ -72,6 +80,9 @@
        <widget class="QLineEdit" name="defaultUsernameEdit">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Default username field</string>
         </property>
        </widget>
       </item>
@@ -88,6 +99,9 @@
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="0">
          <widget class="QCheckBox" name="historyMaxItemsCheckBox">
+          <property name="toolTip">
+           <string>Maximum number of history items per entry</string>
+          </property>
           <property name="text">
            <string>Max. history items:</string>
           </property>
@@ -95,6 +109,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QCheckBox" name="historyMaxSizeCheckBox">
+          <property name="toolTip">
+           <string>Maximum size of history per entry</string>
+          </property>
           <property name="text">
            <string>Max. history size:</string>
           </property>
@@ -102,6 +119,12 @@
         </item>
         <item row="1" column="1">
          <widget class="QSpinBox" name="historyMaxSizeSpinBox">
+          <property name="toolTip">
+           <string>Maximum size of history per entry</string>
+          </property>
+          <property name="accessibleName">
+           <string>Maximum size of history per entry</string>
+          </property>
           <property name="suffix">
            <string> MiB</string>
           </property>
@@ -115,6 +138,12 @@
         </item>
         <item row="0" column="1">
          <widget class="QSpinBox" name="historyMaxItemsSpinBox">
+          <property name="toolTip">
+           <string>Maximum number of history items per entry</string>
+          </property>
+          <property name="accessibleName">
+           <string>Maximum number of history items per entry</string>
+          </property>
           <property name="maximum">
            <number>2000000000</number>
           </property>

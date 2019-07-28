@@ -30,7 +30,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="seedEdit"/>
+      <widget class="QLineEdit" name="seedEdit">
+       <property name="toolTip">
+        <string>Secret key in Base32 format</string>
+       </property>
+       <property name="accessibleName">
+        <string>Secret key field</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -121,6 +128,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QSpinBox" name="stepSpinBox">
+        <property name="accessibleName">
+         <string>Time step field</string>
+        </property>
         <property name="suffix">
          <string comment="Seconds"> sec</string>
         </property>

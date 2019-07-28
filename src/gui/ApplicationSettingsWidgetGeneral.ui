@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>860</height>
+    <height>951</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -349,6 +349,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="accessibleName">
+               <string>Favorite icon download timeout seconds</string>
+              </property>
               <property name="suffix">
                <string comment="Seconds"> sec</string>
               </property>
@@ -486,6 +489,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="accessibleName">
+               <string>Toolbar button style</string>
               </property>
              </widget>
             </item>
@@ -647,6 +653,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="accessibleName">
+               <string>Language selection</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -790,6 +799,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="accessibleName">
+            <string>Global auto-type shortcut</string>
+           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -806,6 +818,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type character typing delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>
@@ -835,6 +850,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type start delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>

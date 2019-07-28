@@ -143,6 +143,9 @@
           <bold>false</bold>
          </font>
         </property>
+        <property name="accessibleName">
+         <string>Codec</string>
+        </property>
         <property name="editable">
          <bool>false</bool>
         </property>
@@ -183,6 +186,9 @@
           <weight>50</weight>
           <bold>false</bold>
          </font>
+        </property>
+        <property name="accessibleName">
+         <string>Text qualification</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -225,6 +231,9 @@
           <bold>false</bold>
          </font>
         </property>
+        <property name="accessibleName">
+         <string>Field seperation</string>
+        </property>
         <property name="editable">
          <bool>false</bool>
         </property>
@@ -265,6 +274,9 @@
           <weight>50</weight>
           <bold>false</bold>
          </font>
+        </property>
+        <property name="accessibleName">
+         <string>Comments start with</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -308,7 +320,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Number of headers line to discard</string>
+           <string>Number of header lines to discard</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -322,6 +334,9 @@
             <weight>50</weight>
             <bold>false</bold>
            </font>
+          </property>
+          <property name="accessibleName">
+           <string>Number of header lines to discard</string>
           </property>
          </widget>
         </item>
@@ -416,6 +431,9 @@
           <weight>50</weight>
           <bold>false</bold>
          </font>
+        </property>
+        <property name="accessibleName">
+         <string>CSV import preview</string>
         </property>
         <attribute name="horizontalHeaderVisible">
          <bool>true</bool>

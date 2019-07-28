@@ -83,6 +83,9 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="accessibleName">
+        <string>Custom auto-type sequence</string>
+       </property>
       </widget>
      </item>
      <item>
@@ -91,10 +94,10 @@
         <bool>false</bool>
        </property>
        <property name="toolTip">
-        <string>Open AutoType help webpage</string>
+        <string>Open Auto-Type help webpage</string>
        </property>
        <property name="accessibleName">
-        <string>AutoType help button</string>
+        <string>Open auto-type help webpage</string>
        </property>
        <property name="text">
         <string/>
@@ -113,6 +116,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
          <widget class="QTreeView" name="assocView">
+          <property name="accessibleName">
+           <string>Existing window associations</string>
+          </property>
           <property name="rootIsDecorated">
            <bool>false</bool>
           </property>
@@ -159,6 +165,12 @@
               <height>25</height>
              </size>
             </property>
+            <property name="toolTip">
+             <string>Add new window association</string>
+            </property>
+            <property name="accessibleName">
+             <string>Add new window association</string>
+            </property>
             <property name="text">
              <string>+</string>
             </property>
@@ -181,6 +193,12 @@
               <height>25</height>
              </size>
             </property>
+            <property name="toolTip">
+             <string>Remove selected window association</string>
+            </property>
+            <property name="accessibleName">
+             <string>Remove selected window association</string>
+            </property>
             <property name="text">
              <string>-</string>
             </property>
@@ -200,7 +218,17 @@
          </widget>
         </item>
         <item>
-         <widget class="WindowSelectComboBox" name="windowTitleCombo"/>
+         <widget class="WindowSelectComboBox" name="windowTitleCombo">
+          <property name="toolTip">
+           <string>You can use wildcard characters to expand the search space</string>
+          </property>
+          <property name="accessibleName">
+           <string>Set the window association title</string>
+          </property>
+          <property name="accessibleDescription">
+           <string>You can use wildcard characters to expand the search space</string>
+          </property>
+         </widget>
         </item>
         <item>
          <spacer name="verticalSpacer_3">
@@ -247,6 +275,9 @@
            <widget class="QLineEdit" name="windowSequenceEdit">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="accessibleName">
+             <string>Custom auto-type sequence for this window</string>
             </property>
            </widget>
           </item>

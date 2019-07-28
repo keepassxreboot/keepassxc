@@ -30,10 +30,21 @@
    <item row="5" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QLineEdit" name="urlEdit"/>
+      <widget class="QLineEdit" name="urlEdit">
+       <property name="accessibleName">
+        <string>Url field</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QToolButton" name="fetchFaviconButton"/>
+      <widget class="QToolButton" name="fetchFaviconButton">
+       <property name="toolTip">
+        <string>Download favicon for URL</string>
+       </property>
+       <property name="accessibleName">
+        <string>Download favicon for URL</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -51,6 +62,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
       <widget class="PasswordEdit" name="passwordRepeatEdit">
+       <property name="accessibleName">
+        <string>Repeat password field</string>
+       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -58,6 +72,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordGeneratorButton">
+       <property name="accessibleName">
+        <string>Toggle password generator</string>
+       </property>
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -69,6 +86,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="PasswordEdit" name="passwordEdit">
+       <property name="accessibleName">
+        <string>Password field</string>
+       </property>
        <property name="echoMode">
         <enum>QLineEdit::Password</enum>
        </property>
@@ -76,6 +96,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordButton">
+       <property name="accessibleName">
+        <string>Toggle password visibility</string>
+       </property>
        <property name="checkable">
         <bool>true</bool>
        </property>
@@ -99,6 +122,9 @@
    </item>
    <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
     <widget class="QCheckBox" name="notesEnabled">
+     <property name="accessibleName">
+      <string>Toggle notes visible</string>
+     </property>
      <property name="text">
       <string>Notes</string>
      </property>
@@ -110,6 +136,9 @@
       <widget class="QDateTimeEdit" name="expireDatePicker">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="accessibleName">
+        <string>Expiration field</string>
        </property>
        <property name="calendarPopup">
         <bool>true</bool>
@@ -123,6 +152,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="accessibleName">
+        <string>Expiration presets</string>
        </property>
        <property name="text">
         <string>Presets</string>
@@ -144,6 +176,9 @@
        <width>0</width>
        <height>100</height>
       </size>
+     </property>
+     <property name="accessibleName">
+      <string>Notes field</string>
      </property>
     </widget>
    </item>
@@ -168,13 +203,24 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="titleEdit"/>
+    <widget class="QLineEdit" name="titleEdit">
+     <property name="accessibleName">
+      <string>Title field</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="usernameComboBox"/>
+    <widget class="QComboBox" name="usernameComboBox">
+     <property name="accessibleName">
+      <string>Username field</string>
+     </property>
+    </widget>
    </item>
    <item row="7" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
+     <property name="accessibleName">
+      <string>Toggle expiration</string>
+     </property>
      <property name="text">
       <string>Expires</string>
      </property>
