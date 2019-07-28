@@ -202,8 +202,12 @@ bool Database::save(QString* error, bool atomic, bool backup)
  */
 bool Database::save(const QString& filePath, QString* error, bool atomic, bool backup)
 {
-    Q_ASSERT(!m_data.isReadOnly);
-    if (m_data.isReadOnly) {
+    // Disallow saving to the same file if read-only
+    if (m_data.isReadOnly && filePath == m_data.filePath) {
+        Q_ASSERT(false);
+        if (error) {
+            *error = tr("Could not save, database file is read-only.");
+        }
         return false;
     }
 
@@ -741,10 +745,6 @@ bool Database::isModified() const
 
 void Database::markAsModified()
 {
-    if (isReadOnly()) {
-        return;
-    }
-
     m_modified = true;
     if (m_emitModified) {
         startModifiedTimer();
@@ -780,8 +780,6 @@ Database* Database::databaseByFilePath(const QString& filePath)
 
 void Database::startModifiedTimer()
 {
-    Q_ASSERT(!m_data.isReadOnly);
-
     if (!m_emitModified) {
         return;
     }

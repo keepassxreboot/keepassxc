@@ -984,7 +984,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
     replaceDatabase(db);
     if (db->isReadOnly()) {
-        showMessage(tr("File opened in read only mode."), MessageWidget::Warning, false, -1);
+        showMessage(tr("This database is opened in read only mode. Auto-save has been disabled."),
+                    MessageWidget::Warning,
+                    false,
+                    -1);
     }
 
     restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
@@ -1225,7 +1228,7 @@ void DatabaseWidget::onGroupChanged(Group* group)
 
 void DatabaseWidget::onDatabaseModified()
 {
-    if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool()) {
+    if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool() && !m_db->isReadOnly()) {
         save();
     } else {
         // Only block once, then reset
