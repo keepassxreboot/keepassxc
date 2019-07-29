@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>595</width>
-    <height>510</height>
+    <height>541</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -80,16 +80,16 @@
          </sizepolicy>
         </property>
         <property name="suffix">
-         <string comment="Seconds"> sec</string>
+         <string comment="Minutes"> min</string>
         </property>
         <property name="minimum">
          <number>1</number>
         </property>
         <property name="maximum">
-         <number>999</number>
+         <number>1440</number>
         </property>
         <property name="value">
-         <number>300</number>
+         <number>5</number>
         </property>
         <property name="displayIntegerBase">
          <number>10</number>

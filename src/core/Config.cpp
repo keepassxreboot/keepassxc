@@ -198,7 +198,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
     m_defaults.insert("security/clearsearch", true);
-    m_defaults.insert("security/clearsearchtimeout", 300);
+    m_defaults.insert("security/clearsearchtimeout", 5);
     m_defaults.insert("security/lockdatabaseidle", false);
     m_defaults.insert("security/lockdatabaseidlesec", 240);
     m_defaults.insert("security/lockdatabaseminimize", false);
