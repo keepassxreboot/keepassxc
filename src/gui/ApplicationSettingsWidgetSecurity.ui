@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>595</width>
-    <height>478</height>
+    <height>541</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -61,6 +61,41 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="clearSearchCheckBox">
+        <property name="text">
+         <string>Clear search query after</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QSpinBox" name="clearSearchSpinBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="suffix">
+         <string comment="Minutes"> min</string>
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>1440</number>
+        </property>
+        <property name="value">
+         <number>5</number>
+        </property>
+        <property name="displayIntegerBase">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
         <property name="sizePolicy">
@@ -99,6 +134,13 @@
         </property>
        </widget>
       </item>
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="touchIDResetCheckBox">
+        <property name="text">
+         <string>Forget TouchID after inactivity of</string>
+        </property>
+       </widget>
+      </item>
       <item row="3" column="1">
        <widget class="QSpinBox" name="touchIDResetSpinBox">
         <property name="enabled">
@@ -118,13 +160,6 @@
         </property>
         <property name="value">
          <number>30</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="touchIDResetCheckBox">
-        <property name="text">
-         <string>Forget TouchID after inactivity of</string>
         </property>
        </widget>
       </item>

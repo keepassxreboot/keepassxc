@@ -116,8 +116,13 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
             }
         }
     } else if (event->type() == QEvent::FocusOut) {
-        // Auto-clear search after 5 minutes
-        m_clearSearchTimer->start(300000);
+        if (config()->get("security/clearsearch").toBool()) {
+            int timeout = config()->get("security/clearsearchtimeout").toInt();
+            if (timeout > 0) {
+                // Auto-clear search after set timeout (5 minutes by default)
+                m_clearSearchTimer->start(timeout * 60000); // 60 sec * 1000 ms
+            }
+        }
     } else if (event->type() == QEvent::FocusIn) {
         m_clearSearchTimer->stop();
     }

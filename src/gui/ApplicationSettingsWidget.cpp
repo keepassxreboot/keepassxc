@@ -87,6 +87,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     connect(m_secUi->clearClipboardCheckBox, SIGNAL(toggled(bool)),
             m_secUi->clearClipboardSpinBox, SLOT(setEnabled(bool)));
+    connect(m_secUi->clearSearchCheckBox, SIGNAL(toggled(bool)),
+            m_secUi->clearSearchSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->touchIDResetCheckBox, SIGNAL(toggled(bool)),
@@ -215,6 +217,9 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->clearClipboardCheckBox->setChecked(config()->get("security/clearclipboard").toBool());
     m_secUi->clearClipboardSpinBox->setValue(config()->get("security/clearclipboardtimeout").toInt());
 
+    m_secUi->clearSearchCheckBox->setChecked(config()->get("security/clearsearch").toBool());
+    m_secUi->clearSearchSpinBox->setValue(config()->get("security/clearsearchtimeout").toInt());
+
     m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get("security/lockdatabaseidle").toBool());
     m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get("security/lockdatabaseidlesec").toInt());
     m_secUi->lockDatabaseMinimizeCheckBox->setChecked(config()->get("security/lockdatabaseminimize").toBool());
@@ -298,6 +303,9 @@ void ApplicationSettingsWidget::saveSettings()
     }
     config()->set("security/clearclipboard", m_secUi->clearClipboardCheckBox->isChecked());
     config()->set("security/clearclipboardtimeout", m_secUi->clearClipboardSpinBox->value());
+
+    config()->set("security/clearsearch", m_secUi->clearSearchCheckBox->isChecked());
+    config()->set("security/clearsearchtimeout", m_secUi->clearSearchSpinBox->value());
 
     config()->set("security/lockdatabaseidle", m_secUi->lockDatabaseIdleCheckBox->isChecked());
     config()->set("security/lockdatabaseidlesec", m_secUi->lockDatabaseIdleSpinBox->value());
