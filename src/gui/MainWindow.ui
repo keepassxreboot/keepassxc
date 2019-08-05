@@ -180,7 +180,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -234,6 +234,7 @@
     <addaction name="separator"/>
     <addaction name="actionGettingStarted"/>
     <addaction name="actionUserGuide"/>
+    <addaction name="actionKbdShortcuts"/>
     <addaction name="actionOnlineHelp"/>
     <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
@@ -736,6 +737,14 @@
    </property>
    <property name="toolTip">
     <string>Open User Guide PDF</string>
+   </property>
+  </action>
+  <action name="actionKbdShortcuts">
+   <property name="text">
+    <string>&amp;Keyboard Shortcuts</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+/</string>
    </property>
   </action>
  </widget>
