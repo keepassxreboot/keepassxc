@@ -50,6 +50,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Entry
     m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
     m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->entryPasswordLabel->setFont(Font::fixedFont());
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_ui->toggleEntryNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_ui->toggleGroupNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
