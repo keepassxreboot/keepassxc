@@ -24,8 +24,7 @@ class Edit : public DatabaseCommand
 {
 public:
     Edit();
-    ~Edit();
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
     static const QCommandLineOption TitleOption;
 };

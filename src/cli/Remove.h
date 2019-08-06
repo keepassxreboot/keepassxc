@@ -24,7 +24,6 @@ class Remove : public DatabaseCommand
 {
 public:
     Remove();
-    ~Remove();
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 };

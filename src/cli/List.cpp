@@ -45,10 +45,6 @@ List::List()
         {QString("group"), QObject::tr("Path of the group to list. Default is /"), QString("[group]")});
 }
 
-List::~List()
-{
-}
-
 int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);

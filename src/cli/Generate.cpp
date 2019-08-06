@@ -75,10 +75,6 @@ Generate::Generate()
     options.append(Generate::IncludeEveryGroupOption);
 }
 
-Generate::~Generate()
-{
-}
-
 int Generate::execute(const QStringList& arguments)
 {
     QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);

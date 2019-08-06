@@ -24,9 +24,8 @@ class Extract : public DatabaseCommand
 {
 public:
     Extract();
-    ~Extract();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
 
 #endif // KEEPASSXC_EXTRACT_H

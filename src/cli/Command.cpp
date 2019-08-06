@@ -80,14 +80,14 @@ QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringLi
 
     QSharedPointer<QCommandLineParser> parser = QSharedPointer<QCommandLineParser>(new QCommandLineParser());
     parser->setApplicationDescription(description);
-    for (CommandLineArgument positionalArgument : positionalArguments) {
+    for (const CommandLineArgument& positionalArgument : positionalArguments) {
         parser->addPositionalArgument(
             positionalArgument.name, positionalArgument.description, positionalArgument.syntax);
     }
-    for (CommandLineArgument optionalArgument : optionalArguments) {
+    for (const CommandLineArgument& optionalArgument : optionalArguments) {
         parser->addPositionalArgument(optionalArgument.name, optionalArgument.description, optionalArgument.syntax);
     }
-    for (QCommandLineOption option : options) {
+    for (const QCommandLineOption& option : options) {
         parser->addOption(option);
     }
     parser->addHelpOption();

@@ -36,10 +36,6 @@ Locate::Locate()
     positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
 }
 
-Locate::~Locate()
-{
-}
-
 int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
 

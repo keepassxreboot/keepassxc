@@ -24,9 +24,8 @@ class Diceware : public Command
 {
 public:
     Diceware();
-    ~Diceware();
 
-    int execute(const QStringList& arguments);
+    int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption WordCountOption;
     static const QCommandLineOption WordListOption;

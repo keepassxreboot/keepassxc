@@ -24,7 +24,6 @@ class Estimate : public Command
 {
 public:
     Estimate();
-    ~Estimate();
     int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption AdvancedOption;

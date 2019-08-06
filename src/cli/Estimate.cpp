@@ -45,10 +45,6 @@ Estimate::Estimate()
     description = QObject::tr("Estimate the entropy of a password.");
 }
 
-Estimate::~Estimate()
-{
-}
-
 static void estimate(const char* pwd, bool advanced)
 {
     TextStream out(Utils::STDOUT, QIODevice::WriteOnly);

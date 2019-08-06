@@ -62,10 +62,6 @@ Add::Add()
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to add."), QString("")});
 }
 
-Add::~Add()
-{
-}
-
 int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
