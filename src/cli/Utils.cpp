@@ -25,6 +25,7 @@
 #endif
 
 #include <QProcess>
+#include <QScopedPointer>
 
 namespace Utils
 {
@@ -205,7 +206,7 @@ namespace Utils
             return EXIT_FAILURE;
         }
 
-        auto* clipProcess = new QProcess(nullptr);
+        QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
         clipProcess->start(programName, arguments);
         clipProcess->waitForStarted();
 
