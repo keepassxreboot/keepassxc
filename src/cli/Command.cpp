@@ -94,11 +94,11 @@ QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringLi
     parser->process(arguments);
 
     if (parser->positionalArguments().size() < positionalArguments.size()) {
-        errorTextStream << parser->helpText().replace("[options]", name.append(" [options]"));
+        errorTextStream << parser->helpText().replace("[options]", name + " [options]");
         return QSharedPointer<QCommandLineParser>(nullptr);
     }
     if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
-        errorTextStream << parser->helpText().replace("[options]", name.append(" [options]"));
+        errorTextStream << parser->helpText().replace("[options]", name + " [options]");
         return QSharedPointer<QCommandLineParser>(nullptr);
     }
     return parser;
