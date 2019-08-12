@@ -183,6 +183,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get("BackupBeforeSave").toBool());
     m_generalUi->useAtomicSavesCheckBox->setChecked(config()->get("UseAtomicSaves").toBool());
     m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get("AutoReloadOnChange").toBool());
+    m_generalUi->minimizeAfterUnlockCheckBox->setChecked(config()->get("MinimizeAfterUnlock").toBool());
     m_generalUi->minimizeOnOpenUrlCheckBox->setChecked(config()->get("MinimizeOnOpenUrl").toBool());
     m_generalUi->hideWindowOnCopyCheckBox->setChecked(config()->get("HideWindowOnCopy").toBool());
     m_generalUi->minimizeOnCopyRadioButton->setChecked(config()->get("MinimizeOnCopy").toBool());
@@ -293,6 +294,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("BackupBeforeSave", m_generalUi->backupBeforeSaveCheckBox->isChecked());
     config()->set("UseAtomicSaves", m_generalUi->useAtomicSavesCheckBox->isChecked());
     config()->set("AutoReloadOnChange", m_generalUi->autoReloadOnChangeCheckBox->isChecked());
+    config()->set("MinimizeAfterUnlock", m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
     config()->set("MinimizeOnOpenUrl", m_generalUi->minimizeOnOpenUrlCheckBox->isChecked());
     config()->set("HideWindowOnCopy", m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyRadioButton->isChecked());

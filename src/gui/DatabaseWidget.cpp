@@ -911,6 +911,9 @@ void DatabaseWidget::loadDatabase(bool accepted)
         m_fileWatcher->restart();
         m_saveAttempts = 0;
         emit databaseUnlocked();
+        if (config()->get("MinimizeAfterUnlock").toBool()) {
+            window()->showMinimized();
+        }
     } else {
         m_fileWatcher->stop();
         if (m_databaseOpenWidget->database()) {
