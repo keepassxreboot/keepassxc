@@ -96,7 +96,7 @@ void TestEntrySearcher::testSearch()
     e3->setGroup(group3);
 
     Entry* e3b = new Entry();
-    e3b->setTitle("test search test");
+    e3b->setTitle("test search test 123");
     e3b->setUsername("test@email.com");
     e3b->setPassword("realpass");
     e3b->setGroup(group3);
@@ -108,14 +108,29 @@ void TestEntrySearcher::testSearch()
     m_searchResult = m_entrySearcher.search("search term", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 3);
 
+    m_searchResult = m_entrySearcher.search("123", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
     m_searchResult = m_entrySearcher.search("search term", group211);
     QCOMPARE(m_searchResult.count(), 1);
 
     // Test advanced search terms
+    m_searchResult = m_entrySearcher.search("title:123", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("t:123", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
     m_searchResult = m_entrySearcher.search("password:testpass", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 
+    m_searchResult = m_entrySearcher.search("pw:testpass", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
     m_searchResult = m_entrySearcher.search("!user:email.com", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 5);
+
+    m_searchResult = m_entrySearcher.search("!u:email.com", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 5);
 
     m_searchResult = m_entrySearcher.search("*user:\".*@.*\\.com\"", m_rootGroup);
