@@ -57,6 +57,13 @@
            </widget>
           </item>
           <item>
+            <widget class="QCheckBox" name="minimizeAfterUnlockCheckBox">
+              <property name="text">
+                <string>Minimize window after unlocking database</string>
+              </property>
+            </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
             <property name="text">
              <string>Remember previously used databases</string>

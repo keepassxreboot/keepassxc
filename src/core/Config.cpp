@@ -193,6 +193,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("MinimizeOnOpenUrl", false);
     m_defaults.insert("HideWindowOnCopy", false);
     m_defaults.insert("MinimizeOnCopy", true);
+    m_defaults.insert("MinimizeAfterUnlock", false);
     m_defaults.insert("DropToBackgroundOnCopy", false);
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
