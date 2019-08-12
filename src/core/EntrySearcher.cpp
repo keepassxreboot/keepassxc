@@ -173,6 +173,17 @@ bool EntrySearcher::searchEntryImpl(Entry* entry)
 
 void EntrySearcher::parseSearchTerms(const QString& searchString)
 {
+    static const QList<QPair<QString, Field>> fieldnames{
+        {QStringLiteral("attachment"), Field::Attachment},
+        {QStringLiteral("attribute"), Field::AttributeKey},
+        {QStringLiteral("notes"), Field::Notes},
+        {QStringLiteral("pw"), Field::Password},
+        {QStringLiteral("password"), Field::Password},
+        {QStringLiteral("title"), Field::Title},
+        {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
+        {QStringLiteral("url"), Field::Url},
+        {QStringLiteral("username"), Field::Username}};
+
     m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);
     while (results.hasNext()) {
@@ -201,32 +212,24 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         term->exclude = mods.contains("-") || mods.contains("!");
 
         // Determine the field to search
+        term->field = Field::Undefined;
+
         QString field = result.captured(2);
         if (!field.isEmpty()) {
-            auto cs = Qt::CaseInsensitive;
-            if (field.compare("title", cs) == 0) {
-                term->field = Field::Title;
-            } else if (field.startsWith("user", cs)) {
-                term->field = Field::Username;
-            } else if (field.startsWith("pass", cs)) {
-                term->field = Field::Password;
-            } else if (field.compare("url", cs) == 0) {
-                term->field = Field::Url;
-            } else if (field.compare("notes", cs) == 0) {
-                term->field = Field::Notes;
-            } else if (field.startsWith("attr", cs)) {
-                term->field = Field::AttributeKey;
-            } else if (field.startsWith("attach", cs)) {
-                term->field = Field::Attachment;
-            } else if (field.startsWith("_", cs)) {
+            if (field.startsWith("_", Qt::CaseInsensitive)) {
                 term->field = Field::AttributeValue;
                 // searching a custom attribute
                 // in this case term->word is the attribute key (removing the leading "_")
                 // and term->regex is used to match attribute value
                 term->word = field.mid(1);
+            } else {
+                for (const auto& pair : fieldnames) {
+                    if (pair.first.startsWith(field, Qt::CaseInsensitive)) {
+                        term->field = pair.second;
+                        break;
+                    }
+                }
             }
-        } else {
-            term->field = Field::Undefined;
         }
 
         m_searchTerms.append(term);
