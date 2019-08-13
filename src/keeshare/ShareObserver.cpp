@@ -113,10 +113,12 @@ void ShareObserver::reinitialize()
         }
         if (update.newReference.isExporting()) {
             exported[update.newReference.path] << update.group->name();
+            // export is only on save
         }
 
         if (update.newReference.isImporting()) {
             imported[update.newReference.path] << update.group->name();
+            // import has to occur immediately
             const auto result = this->importShare(update.newReference.path);
             if (!result.isValid()) {
                 // tolerable result - blocked import or missing source
