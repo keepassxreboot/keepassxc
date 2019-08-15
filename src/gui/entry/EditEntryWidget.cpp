@@ -19,6 +19,7 @@
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
+#include "ui_EditEntryWidgetBrowser.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetSSHAgent.h"
@@ -49,6 +50,9 @@
 #include "sshagent/KeeAgentSettings.h"
 #include "sshagent/SSHAgent.h"
 #endif
+#ifdef WITH_XC_BROWSER
+#include "browser/BrowserService.h"
+#endif
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
@@ -68,6 +72,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
+    , m_browserUi(new Ui::EditEntryWidgetBrowser())
     , m_customData(new CustomData())
     , m_mainWidget(new QWidget())
     , m_advancedWidget(new QWidget())
@@ -75,6 +80,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeWidget(new QWidget())
 #ifdef WITH_XC_SSHAGENT
     , m_sshAgentWidget(new QWidget())
+#endif
+#ifdef WITH_XC_BROWSER
+    , m_browserWidget(new QWidget())
 #endif
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
@@ -101,6 +109,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     } else {
         m_sshAgentEnabled = false;
     }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    setupBrowser();
 #endif
 
     setupProperties();
@@ -246,6 +258,27 @@ void EditEntryWidget::setupAutoType()
     // clang-format on
 }
 
+#ifdef WITH_XC_BROWSER
+void EditEntryWidget::setupBrowser()
+{
+    m_browserUi->setupUi(m_browserWidget);
+
+    if (config()->get("Browser/Enabled", false).toBool()) {
+        addPage(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"), m_browserWidget);
+        connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowser()));
+        connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowser()));
+    }
+}
+
+void EditEntryWidget::updateBrowser()
+{
+    auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
+    auto hide = m_browserUi->hideEntryCheckbox->isChecked();
+    m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? QString("true") : QString("false")));
+    m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? QString("true") : QString("false")));
+}
+#endif
+
 void EditEntryWidget::setupProperties()
 {
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
@@ -328,6 +361,13 @@ void EditEntryWidget::setupEntryUpdate()
         connect(m_sshAgentUi->requireUserConfirmationCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
         connect(m_sshAgentUi->lifetimeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
         connect(m_sshAgentUi->lifetimeSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setModified()));
+    }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    if (config()->get("Browser/Enabled", false).toBool()) {
+        connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), this, SLOT(setModified()));
+        connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), this, SLOT(setModified()));
     }
 #endif
 }
@@ -817,6 +857,20 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #ifdef WITH_XC_SSHAGENT
     if (m_sshAgentEnabled) {
         updateSSHAgent();
+    }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == "true");
+    } else {
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
+    }
+
+    if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
+        m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY) == "true");
+    } else {
+        m_browserUi->hideEntryCheckbox->setChecked(false);
     }
 #endif
 

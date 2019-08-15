@@ -51,6 +51,7 @@ namespace Ui
 {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetAutoType;
+    class EditEntryWidgetBrowser;
     class EditEntryWidgetSSHAgent;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
@@ -118,12 +119,18 @@ private slots:
     void decryptPrivateKey();
     void copyPublicKey();
 #endif
+#ifdef WITH_XC_BROWSER
+    void updateBrowser();
+#endif
 
 private:
     void setupMain();
     void setupAdvanced();
     void setupIcon();
     void setupAutoType();
+#ifdef WITH_XC_BROWSER
+    void setupBrowser();
+#endif
 #ifdef WITH_XC_SSHAGENT
     void setupSSHAgent();
 #endif
@@ -157,6 +164,7 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
+    const QScopedPointer<Ui::EditEntryWidgetBrowser> m_browserUi;
     const QScopedPointer<CustomData> m_customData;
 
     QWidget* const m_mainWidget;
@@ -165,6 +173,9 @@ private:
     QWidget* const m_autoTypeWidget;
 #ifdef WITH_XC_SSHAGENT
     QWidget* const m_sshAgentWidget;
+#endif
+#ifdef WITH_XC_BROWSER
+    QWidget* const m_browserWidget;
 #endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
