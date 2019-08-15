@@ -549,8 +549,7 @@ void TestCli::testCreate()
     m_stderrFile->reset();
     m_stdoutFile->reset();
 
-    QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -578,8 +577,7 @@ void TestCli::testCreate()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
-    QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -596,8 +594,7 @@ void TestCli::testCreate()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
-    QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -1041,8 +1038,7 @@ void TestCli::testImport()
     importCmd.execute({"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
     m_stdoutFile->seek(pos);
 
-    QCOMPARE(m_stdoutFile->readAll(),
-             QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Enter password to encrypt database (optional): \n"));
 
     Utils::Test::setNextPassword("a");
     auto dbQuiet = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilenameQuiet, true, "", "", Utils::DEVNULL));
