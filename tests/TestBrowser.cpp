@@ -245,6 +245,40 @@ void TestBrowser::testSearchEntriesWithPort()
     QCOMPARE(result[0]->url(), QString("http://127.0.0.1:443"));
 }
 
+void TestBrowser::testSearchEntriesWithAdditionalURLs()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    QList<Entry*> entries;
+    QList<QString> urls;
+    urls.push_back("https://github.com/");
+    urls.push_back("https://www.example.com");
+    urls.push_back("http://domain.com");
+
+    for (int i = 0; i < urls.length(); ++i) {
+        auto entry = new Entry();
+        entry->setGroup(root);
+        entry->beginUpdate();
+        entry->setUrl(urls[i]);
+        entry->setUsername(QString("User %1").arg(i));
+        entry->endUpdate();
+        entries.push_back(entry);
+    }
+
+    // Add an additional URL to the first entry
+    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://keepassxc.org");
+
+    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+
+    // Search the additional URL. It should return the same entry
+    auto additionalResult = m_browserService->searchEntries(db, "keepassxc.org", "https://keepassxc.org");
+    QCOMPARE(additionalResult.length(), 1);
+    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
+}
+
 void TestBrowser::testSortEntries()
 {
     auto db = QSharedPointer<Database>::create();

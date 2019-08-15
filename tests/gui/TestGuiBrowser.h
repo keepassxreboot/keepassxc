@@ -44,6 +44,7 @@ private slots:
     void cleanupTestCase();
 
     void testEntrySettings();
+    void testAdditionalURLs();
 
 private:
     void triggerAction(const QString& name);

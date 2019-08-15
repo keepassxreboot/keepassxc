@@ -46,6 +46,9 @@ class QStringListModel;
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
 #endif
+#ifdef WITH_XC_BROWSER
+class EntryURLModel;
+#endif
 
 namespace Ui
 {
@@ -120,7 +123,12 @@ private slots:
     void copyPublicKey();
 #endif
 #ifdef WITH_XC_BROWSER
+    void updateBrowserModified();
     void updateBrowser();
+    void insertURL();
+    void removeCurrentURL();
+    void editCurrentURL();
+    void updateCurrentURL();
 #endif
 
 private:
@@ -175,7 +183,9 @@ private:
     QWidget* const m_sshAgentWidget;
 #endif
 #ifdef WITH_XC_BROWSER
+    bool m_browserSettingsChanged;
     QWidget* const m_browserWidget;
+    EntryURLModel* const m_additionalURLsDataModel;
 #endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;

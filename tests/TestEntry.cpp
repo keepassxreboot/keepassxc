@@ -124,7 +124,7 @@ void TestEntry::testClone()
     QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
 
     // Date back history of original entry
-    Entry * firstHistoryItem = entryOrg->historyItems()[0];
+    Entry* firstHistoryItem = entryOrg->historyItems()[0];
     TimeInfo entryOrgHistoryTimeInfo = firstHistoryItem->timeInfo();
     QDateTime datedBackEntryOrgModificationTime = entryOrgHistoryTimeInfo.lastModificationTime().addMSecs(-10);
     entryOrgHistoryTimeInfo.setLastModificationTime(datedBackEntryOrgModificationTime);
@@ -140,9 +140,8 @@ void TestEntry::testClone()
     // Timeinfo of history items should not be modified
     QList<Entry*> entryOrgHistory = entryOrg->historyItems(), clonedHistory = entryCloneHistory->historyItems();
     auto entryOrgHistoryItem = entryOrgHistory.constBegin();
-    for(auto entryCloneHistoryItem = clonedHistory.constBegin()
-            ;entryCloneHistoryItem != clonedHistory.constEnd()
-            ;++entryCloneHistoryItem, ++entryOrgHistoryItem) {
+    for (auto entryCloneHistoryItem = clonedHistory.constBegin(); entryCloneHistoryItem != clonedHistory.constEnd();
+         ++entryCloneHistoryItem, ++entryOrgHistoryItem) {
         QCOMPARE((*entryOrgHistoryItem)->timeInfo(), (*entryCloneHistoryItem)->timeInfo());
     }
 

@@ -53,12 +53,6 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
 
     m_ui->scriptWarningWidget->setVisible(false);
     m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
-    m_ui->scriptWarningWidget->showMessage(
-        tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
-           "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
-           "<br />Browser integration WILL NOT WORK without the proxy application."
-           "<br />Expected Path: "),
-        MessageWidget::Warning);
 
     m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
                                      MessageWidget::Warning);
@@ -154,9 +148,13 @@ void BrowserOptionDialog::loadSettings()
     // Check for native messaging host location errors
     QString path;
     if (!settings->checkIfProxyExists(path)) {
-        QString text = m_ui->scriptWarningWidget->text();
-        text.append(path);
-        m_ui->scriptWarningWidget->setText(text);
+        auto text =
+            tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
+               "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
+               "<br />Browser integration WILL NOT WORK without the proxy application."
+               "<br />Expected Path: %1")
+                .arg(path);
+        m_ui->scriptWarningWidget->showMessage(text, MessageWidget::Warning);
         m_ui->scriptWarningWidget->setVisible(true);
     } else {
         m_ui->scriptWarningWidget->setVisible(false);

@@ -25,6 +25,8 @@
 #include <QDebug>
 #include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QListView>
+#include <QPlainTextEdit>
 #include <QPushButton>
 #include <QTableView>
 #include <QToolBar>
@@ -128,6 +130,9 @@ void TestGuiBrowser::cleanupTestCase()
 
 void TestGuiBrowser::testEntrySettings()
 {
+    // Enable the Browser Integration
+    config()->set("Browser/Enabled", true);
+
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
@@ -146,7 +151,7 @@ void TestGuiBrowser::testEntrySettings()
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
 
     // Switch to Properties page and select all rows from the custom data table
-    editEntryWidget->setCurrentPage(4);
+    editEntryWidget->setCurrentPage(5);
     auto customDataTableView = editEntryWidget->findChild<QTableView*>("customDataTable");
     QVERIFY(customDataTableView);
     QTest::mouseClick(customDataTableView, Qt::LeftButton);
@@ -169,6 +174,56 @@ void TestGuiBrowser::testEntrySettings()
     QApplication::processEvents();
 
     QCOMPARE(entry->customData()->size(), 0);
+}
+
+void TestGuiBrowser::testAdditionalURLs()
+{
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    entryView->setFocus();
+    QVERIFY(entryView->hasFocus());
+
+    // Select the first entry in the database
+    QModelIndex entryItem = entryView->model()->index(0, 1);
+    clickIndex(entryItem, entryView, Qt::LeftButton);
+
+    auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+
+    // Switch to Browser Integration page and add three URL's
+    editEntryWidget->setCurrentPage(4);
+    auto* addURLButton = editEntryWidget->findChild<QPushButton*>("addURLButton");
+    QVERIFY(addURLButton);
+
+    auto* urlList = editEntryWidget->findChild<QListView*>("additionalURLsView");
+    QVERIFY(urlList);
+
+    QStringList testURLs = {"https://example1.com", "https://example2.com", "https://example3.com"};
+
+    for (const auto& url : testURLs) {
+        QTest::mouseClick(addURLButton, Qt::LeftButton);
+        QApplication::processEvents();
+        QTest::keyClicks(urlList->focusWidget(), url);
+        QTest::keyClick(urlList->focusWidget(), Qt::Key_Enter);
+    }
+
+    // Check the values from attributesEdit
+    editEntryWidget->setCurrentPage(1);
+    auto* attributesView = editEntryWidget->findChild<QListView*>("attributesView");
+    auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
+
+    // Go top of the list
+    attributesView->setFocus();
+    QTest::keyClick(attributesView->focusWidget(), Qt::Key_PageUp);
+
+    for (const auto& url : testURLs) {
+        QCOMPARE(attrTextEdit->toPlainText(), url);
+        QTest::keyClick(attributesView->focusWidget(), Qt::Key_Down);
+    }
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

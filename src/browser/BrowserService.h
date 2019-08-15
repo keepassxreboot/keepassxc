@@ -68,12 +68,13 @@ public:
     void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
 
 public:
-    static const char KEEPASSXCBROWSER_NAME[];
-    static const char KEEPASSXCBROWSER_OLD_NAME[];
-    static const char ASSOCIATE_KEY_PREFIX[];
-    static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
-    static const char OPTION_SKIP_AUTO_SUBMIT[];
-    static const char OPTION_HIDE_ENTRY[];
+    static const QString KEEPASSXCBROWSER_NAME;
+    static const QString KEEPASSXCBROWSER_OLD_NAME;
+    static const QString ASSOCIATE_KEY_PREFIX;
+    static const QString LEGACY_ASSOCIATE_KEY_PREFIX;
+    static const QString OPTION_SKIP_AUTO_SUBMIT;
+    static const QString OPTION_HIDE_ENTRY;
+    static const QString ADDITIONAL_URL;
 
 public slots:
     QJsonArray findMatchingEntries(const QString& id,
@@ -129,6 +130,7 @@ private:
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
     bool removeFirstDomain(QString& hostname);
+    bool handleURL(const QString& entryUrl, const QString& hostname, const QString& url);
     QString baseDomain(const QString& url) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();

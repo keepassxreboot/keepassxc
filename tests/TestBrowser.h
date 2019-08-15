@@ -42,6 +42,7 @@ private slots:
     void testSortPriority();
     void testSearchEntries();
     void testSearchEntriesWithPort();
+    void testSearchEntriesWithAdditionalURLs();
     void testSortEntries();
     void testGetDatabaseGroups();
 
