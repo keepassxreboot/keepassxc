@@ -72,6 +72,8 @@ public:
     static const char KEEPASSXCBROWSER_OLD_NAME[];
     static const char ASSOCIATE_KEY_PREFIX[];
     static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
+    static const char OPTION_SKIP_AUTO_SUBMIT[];
+    static const char OPTION_HIDE_ENTRY[];
 
 public slots:
     QJsonArray findMatchingEntries(const QString& id,

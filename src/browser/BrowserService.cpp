@@ -50,6 +50,9 @@ static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 const char BrowserService::LEGACY_ASSOCIATE_KEY_PREFIX[] = "Public Key: ";
 static const char KEEPASSHTTP_NAME[] = "KeePassHttp Settings";
 static const char KEEPASSHTTP_GROUP_NAME[] = "KeePassHttp Passwords";
+// Extra entry related options saved in custom data
+const char BrowserService::OPTION_SKIP_AUTO_SUBMIT[] = "BrowserSkipAutoSubmit";
+const char BrowserService::OPTION_HIDE_ENTRY[] = "BrowserHideEntry";
 
 BrowserService::BrowserService(DatabaseTabWidget* parent)
     : m_dbTabWidget(parent)
@@ -375,6 +378,11 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
     for (Entry* entry : searchEntries(url, keyList)) {
+        if (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY) &&
+            entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == "true") {
+            continue;
+        }
+
         // HTTP Basic Auth always needs a confirmation
         if (!ignoreHttpAuth && httpAuth) {
             pwEntriesToConfirm.append(entry);
@@ -826,6 +834,10 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 
     if (entry->isExpired()) {
         res["expired"] = "true";
+    }
+
+    if (entry->customData()->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
+        res["skipAutoSubmit"] = entry->customData()->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
     }
 
     if (browserSettings()->supportKphFields()) {
