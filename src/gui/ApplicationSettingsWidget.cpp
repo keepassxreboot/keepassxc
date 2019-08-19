@@ -55,6 +55,24 @@ private:
     QWidget* widget;
 };
 
+class MouseWheelEventFilter : public QObject
+{
+public:
+    explicit MouseWheelEventFilter(QObject* parent)
+        : QObject(parent){};
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override
+    {
+        const auto* widget = qobject_cast<QWidget*>(obj);
+        if (event->type() == QEvent::Wheel && widget && !widget->hasFocus()) {
+            event->ignore();
+            return true;
+        }
+        return QObject::eventFilter(obj, event);
+    }
+};
+
 ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     : EditWidget(parent)
     , m_secWidget(new QWidget())
@@ -96,6 +114,12 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_secUi->touchIDResetCheckBox, SIGNAL(toggled(bool)),
             m_secUi->touchIDResetSpinBox, SLOT(setEnabled(bool)));
     // clang-format on
+
+    // Disable mouse wheel grab when scrolling
+    auto mouseWheelFilter = new MouseWheelEventFilter(this);
+    m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
 
 #ifdef WITH_XC_UPDATECHECK
     connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));

@@ -349,6 +349,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
               <property name="accessibleName">
                <string>Favorite icon download timeout seconds</string>
               </property>
@@ -440,7 +443,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="toolButtonStyleLayout">
+           <layout class="QHBoxLayout" name="toolButtonStyleLayout" stretch="0,0,0,1">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -490,8 +493,14 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
               <property name="accessibleName">
                <string>Toolbar button style</string>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
               </property>
              </widget>
             </item>
@@ -628,7 +637,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="languageLabelLayout_2">
+           <layout class="QHBoxLayout" name="languageLabelLayout_2" stretch="0,0,0,1">
             <property name="spacing">
              <number>8</number>
             </property>
@@ -652,6 +661,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
               </property>
               <property name="accessibleName">
                <string>Language selection</string>
