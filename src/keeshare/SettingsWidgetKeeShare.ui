@@ -263,7 +263,7 @@
         <item>
          <widget class="QPushButton" name="askImportedCertificateButton">
           <property name="accessibleName">
-           <string>Ask trust for selected certificate</string>
+           <string>Ask whether to trust the selected certificate every time</string>
           </property>
           <property name="text">
            <string>Ask</string>

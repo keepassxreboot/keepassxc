@@ -521,7 +521,7 @@
           <attribute name="title">
            <string>Advanced</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout" rowstretch="0,0" columnstretch="0,1,0,2,0">
+          <layout class="QGridLayout" name="gridLayout_1" rowstretch="0,0" columnstretch="0,1,0,2,0">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -976,7 +976,7 @@
                </widget>
               </item>
               <item row="3" column="2" colspan="2">
-               <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
                 <property name="spacing">
                  <number>6</number>
                 </property>

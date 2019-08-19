@@ -353,7 +353,7 @@
                <enum>Qt::StrongFocus</enum>
               </property>
               <property name="accessibleName">
-               <string>Favorite icon download timeout seconds</string>
+               <string>Website icon download timeout in seconds</string>
               </property>
               <property name="suffix">
                <string comment="Seconds"> sec</string>
@@ -505,7 +505,7 @@
              </widget>
             </item>
             <item>
-             <spacer name="horizontalSpacer_2">
+             <spacer name="horizontalSpacer_3">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -549,7 +549,7 @@
              <enum>QLayout::SetMaximumSize</enum>
             </property>
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>

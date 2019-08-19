@@ -38,7 +38,7 @@
      <item>
       <widget class="QSpinBox" name="lifetimeSpinBox">
        <property name="accessibleName">
-        <string>Remove key from agent seconds</string>
+        <string>Remove key from agent after specified seconds</string>
        </property>
        <property name="suffix">
         <string> seconds</string>

@@ -18,8 +18,8 @@
 
 #include "MessageBox.h"
 
-#include <QWindow>
 #include <QCheckBox>
+#include <QWindow>
 
 QWindow* MessageBox::m_overrideParent(nullptr);
 

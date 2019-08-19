@@ -152,22 +152,22 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 
     int last = m_model->rowCount() - 1;
     if (last > 0) {
-        QAccessibleEvent acEvent(this, QAccessible::PageChanged);
+        QAccessibleEvent accessibleEvent(this, QAccessible::PageChanged);
         if (event->key() == Qt::Key_Up && currentIndex().row() == 0) {
             QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(last, 0));
             setCurrentEntry(m_model->entryFromIndex(index));
-            QAccessible::updateAccessibility(&acEvent);
+            QAccessible::updateAccessibility(&accessibleEvent);
             return;
         }
-    
+
         if (event->key() == Qt::Key_Down && currentIndex().row() == last) {
             QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
             setCurrentEntry(m_model->entryFromIndex(index));
-            QAccessible::updateAccessibility(&acEvent);
+            QAccessible::updateAccessibility(&accessibleEvent);
             return;
         }
     }
-        
+
     QTreeView::keyPressEvent(event);
 }
 

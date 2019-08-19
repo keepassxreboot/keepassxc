@@ -84,7 +84,7 @@
         <bool>false</bool>
        </property>
        <property name="accessibleName">
-        <string>Custom auto-type sequence</string>
+        <string>Custom Auto-Type sequence</string>
        </property>
       </widget>
      </item>
@@ -97,7 +97,7 @@
         <string>Open Auto-Type help webpage</string>
        </property>
        <property name="accessibleName">
-        <string>Open auto-type help webpage</string>
+        <string>Open Auto-Type help webpage</string>
        </property>
        <property name="text">
         <string/>
@@ -220,13 +220,13 @@
         <item>
          <widget class="WindowSelectComboBox" name="windowTitleCombo">
           <property name="toolTip">
-           <string>You can use wildcard characters to expand the search space</string>
+           <string>You can use an asterisk (*) to match everything</string>
           </property>
           <property name="accessibleName">
            <string>Set the window association title</string>
           </property>
           <property name="accessibleDescription">
-           <string>You can use wildcard characters to expand the search space</string>
+           <string>You can use an asterisk to match everything</string>
           </property>
          </widget>
         </item>
@@ -277,7 +277,7 @@
              <bool>false</bool>
             </property>
             <property name="accessibleName">
-             <string>Custom auto-type sequence for this window</string>
+             <string>Custom Auto-Type sequence for this window</string>
             </property>
            </widget>
           </item>

@@ -73,7 +73,7 @@ void Translator::installTranslators()
 /**
  * Install KeePassXC translator.
  *
- * @param languages priority ordered list of languages
+ * @param languages priority-ordered list of languages
  * @param path absolute search path
  * @return true on success
  */
@@ -94,7 +94,7 @@ bool Translator::installTranslator(const QStringList& languages, const QString& 
  * Install Qt5 base translator from the specified local search path or the default system path
  * if no qtbase_* translations were found at the local path.
  *
- * @param languages priority ordered list of languages
+ * @param languages priority-ordered list of languages
  * @param path absolute search path
  * @return true on success
  */

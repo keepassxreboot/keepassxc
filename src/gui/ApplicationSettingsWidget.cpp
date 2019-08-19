@@ -55,6 +55,10 @@ private:
     QWidget* widget;
 };
 
+/**
+ * Helper class to ignore mouse wheel events on non-focused widgets
+ * NOTE: The widget must NOT have a focus policy of "WHEEL"
+ */
 class MouseWheelEventFilter : public QObject
 {
 public:
@@ -116,6 +120,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // clang-format on
 
     // Disable mouse wheel grab when scrolling
+    // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
     m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
     m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
@@ -375,7 +380,7 @@ void ApplicationSettingsWidget::resetSettings()
                                     tr("Reset Settings?"),
                                     tr("Are you sure you want to reset all general and security settings to default?"),
                                     MessageBox::Reset | MessageBox::Cancel,
-                                    MessageBox::Reset);
+                                    MessageBox::Cancel);
     if (ans == MessageBox::Cancel) {
         return;
     }
