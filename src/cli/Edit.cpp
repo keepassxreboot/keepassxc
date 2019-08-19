@@ -47,10 +47,6 @@ Edit::Edit()
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
 }
 
-Edit::~Edit()
-{
-}
-
 int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream outputTextStream(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,

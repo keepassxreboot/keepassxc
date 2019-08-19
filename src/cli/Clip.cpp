@@ -43,10 +43,6 @@ Clip::Clip()
         {QString("timeout"), QObject::tr("Timeout in seconds before clearing the clipboard."), QString("[timeout]")});
 }
 
-Clip::~Clip()
-{
-}
-
 int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     const QStringList args = parser->positionalArguments();

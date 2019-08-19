@@ -35,10 +35,6 @@ Remove::Remove()
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to remove."), QString("")});
 }
 
-Remove::~Remove()
-{
-}
-
 int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     bool quiet = parser->isSet(Command::QuietOption);

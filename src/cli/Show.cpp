@@ -49,10 +49,6 @@ Show::Show()
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
-Show::~Show()
-{
-}
-
 int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);

@@ -24,7 +24,6 @@ class Show : public DatabaseCommand
 {
 public:
     Show();
-    ~Show();
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 

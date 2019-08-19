@@ -38,10 +38,6 @@ Create::Create()
     options.append(Command::KeyFileOption);
 }
 
-Create::~Create()
-{
-}
-
 /**
  * Create a database file using the command line. A key file and/or
  * password can be specified to encrypt the password. If none is

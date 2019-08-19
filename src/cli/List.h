@@ -24,9 +24,8 @@ class List : public DatabaseCommand
 {
 public:
     List();
-    ~List();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
     static const QCommandLineOption RecursiveOption;
     static const QCommandLineOption FlattenOption;

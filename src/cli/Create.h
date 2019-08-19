@@ -27,12 +27,10 @@ class Create : public Command
 {
 public:
     Create();
-    ~Create();
-    int execute(const QStringList& arguments);
+    int execute(const QStringList& arguments) override;
 
 private:
     QSharedPointer<PasswordKey> getPasswordFromStdin();
-    QSharedPointer<FileKey> getFileKeyFromStdin();
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
 

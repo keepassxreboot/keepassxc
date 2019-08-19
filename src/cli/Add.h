@@ -24,9 +24,8 @@ class Add : public DatabaseCommand
 {
 public:
     Add();
-    ~Add();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
     static const QCommandLineOption UsernameOption;
     static const QCommandLineOption UrlOption;

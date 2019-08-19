@@ -24,7 +24,6 @@ class Generate : public Command
 {
 public:
     Generate();
-    ~Generate();
     int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption PasswordLengthOption;

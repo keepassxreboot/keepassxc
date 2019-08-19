@@ -30,10 +30,6 @@ Extract::Extract()
     description = QObject::tr("Extract and print the content of a database.");
 }
 
-Extract::~Extract()
-{
-}
-
 int Extract::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser>)
 {
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);

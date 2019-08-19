@@ -44,10 +44,6 @@ Diceware::Diceware()
     options.append(Diceware::WordListOption);
 }
 
-Diceware::~Diceware()
-{
-}
-
 int Diceware::execute(const QStringList& arguments)
 {
     QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
