@@ -204,7 +204,7 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
 {
     // Disallow saving to the same file if read-only
     if (m_data.isReadOnly && filePath == m_data.filePath) {
-        Q_ASSERT(false);
+        Q_ASSERT_X(false, "Database::save", "Could not save, database file is read-only.");
         if (error) {
             *error = tr("Could not save, database file is read-only.");
         }

@@ -984,7 +984,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     }
     replaceDatabase(db);
     if (db->isReadOnly()) {
-        showMessage(tr("This database is opened in read only mode. Auto-save has been disabled."),
+        showMessage(tr("This database is opened in read-only mode. Autosave is disabled."),
                     MessageWidget::Warning,
                     false,
                     -1);
