@@ -234,7 +234,7 @@
     <addaction name="separator"/>
     <addaction name="actionGettingStarted"/>
     <addaction name="actionUserGuide"/>
-    <addaction name="actionKbdShortcuts"/>
+    <addaction name="actionKeyboardShortcuts"/>
     <addaction name="actionOnlineHelp"/>
     <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
@@ -739,7 +739,7 @@
     <string>Open User Guide PDF</string>
    </property>
   </action>
-  <action name="actionKbdShortcuts">
+  <action name="actionKeyboardShortcuts">
    <property name="text">
     <string>&amp;Keyboard Shortcuts</string>
    </property>

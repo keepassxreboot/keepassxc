@@ -94,7 +94,7 @@ private slots:
     void openGettingStartedGuide();
     void openUserGuide();
     void openOnlineHelp();
-    void openKbdShortcuts();
+    void openKeyboardShortcuts();
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
