@@ -211,6 +211,8 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
         return false;
     }
 
+    auto& canonicalFilePath = QFileInfo::exists(filePath) ? QFileInfo(filePath).canonicalFilePath() : filePath;
+
     if (atomic) {
         QSaveFile saveFile(filePath);
         if (saveFile.open(QIODevice::WriteOnly)) {
@@ -220,7 +222,7 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
             }
 
             if (backup) {
-                backupDatabase(filePath);
+                backupDatabase(canonicalFilePath);
             }
 
             if (saveFile.commit()) {
@@ -244,21 +246,21 @@ bool Database::save(const QString& filePath, QString* error, bool atomic, bool b
             tempFile.close(); // flush to disk
 
             if (backup) {
-                backupDatabase(filePath);
+                backupDatabase(canonicalFilePath);
             }
 
             // Delete the original db and move the temp file in place
-            QFile::remove(filePath);
+            QFile::remove(canonicalFilePath);
 
             // Note: call into the QFile rename instead of QTemporaryFile
             // due to an undocumented difference in how the function handles
             // errors. This prevents errors when saving across file systems.
-            if (tempFile.QFile::rename(filePath)) {
+            if (tempFile.QFile::rename(canonicalFilePath)) {
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
                 setFilePath(filePath);
                 return true;
-            } else if (!backup || !restoreDatabase(filePath)) {
+            } else if (!backup || !restoreDatabase(canonicalFilePath)) {
                 // Failed to copy new database in place, and
                 // failed to restore from backup or backups disabled
                 tempFile.setAutoRemove(false);
