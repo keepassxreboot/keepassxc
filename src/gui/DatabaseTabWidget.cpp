@@ -394,8 +394,8 @@ void DatabaseTabWidget::exportToCsv()
         return;
     }
 
-    QString fileName = fileDialog()->getSaveFileName(
-        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr, "csv");
+    const QString fileName = fileDialog()->getSaveFileName(
+        this, tr("Export database to CSV file"), QString(), tr("CSV file").append(" (*.csv)"), nullptr, nullptr);
     if (fileName.isEmpty()) {
         return;
     }
@@ -419,13 +419,8 @@ void DatabaseTabWidget::exportToHtml()
         return;
     }
 
-    QString fileName = fileDialog()->getSaveFileName(this,
-                                                     tr("Export database to HTML file"),
-                                                     QString(),
-                                                     tr("HTML file").append(" (*.html)"),
-                                                     nullptr,
-                                                     nullptr,
-                                                     "html");
+    const QString fileName = fileDialog()->getSaveFileName(
+        this, tr("Export database to HTML file"), QString(), tr("HTML file").append(" (*.html)"), nullptr, nullptr);
     if (fileName.isEmpty()) {
         return;
     }

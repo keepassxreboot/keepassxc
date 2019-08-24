@@ -284,35 +284,17 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     }
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
-        filename = fileDialog()->getFileName(this,
-                                             tr("Select import source"),
-                                             defaultDirPath,
-                                             filters,
-                                             nullptr,
-                                             QFileDialog::DontConfirmOverwrite,
-                                             defaultFiletype,
-                                             filename);
+        filename = fileDialog()->getFileName(
+            this, tr("Select import source"), defaultDirPath, filters, nullptr, QFileDialog::DontConfirmOverwrite);
         break;
     case KeeShareSettings::ExportTo:
-        filename = fileDialog()->getFileName(this,
-                                             tr("Select export target"),
-                                             defaultDirPath,
-                                             filters,
-                                             nullptr,
-                                             QFileDialog::Option(0),
-                                             defaultFiletype,
-                                             filename);
+        filename = fileDialog()->getFileName(
+            this, tr("Select export target"), defaultDirPath, filters, nullptr, QFileDialog::Option(0));
         break;
     case KeeShareSettings::SynchronizeWith:
     case KeeShareSettings::Inactive:
-        filename = fileDialog()->getFileName(this,
-                                             tr("Select import/export file"),
-                                             defaultDirPath,
-                                             filters,
-                                             nullptr,
-                                             QFileDialog::Option(0),
-                                             defaultFiletype,
-                                             filename);
+        filename = fileDialog()->getFileName(
+            this, tr("Select import/export file"), defaultDirPath, filters, nullptr, QFileDialog::Option(0));
         break;
     }
 
