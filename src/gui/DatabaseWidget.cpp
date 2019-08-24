@@ -1656,13 +1656,8 @@ bool DatabaseWidget::saveAs()
             oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString() + "/"
                                                    + tr("Passwords").append(".kdbx"));
         }
-        QString newFilePath = fileDialog()->getSaveFileName(this,
-                                                            tr("Save database as"),
-                                                            oldFilePath,
-                                                            tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                            nullptr,
-                                                            nullptr,
-                                                            "kdbx");
+        const QString newFilePath = fileDialog()->getSaveFileName(
+            this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function
