@@ -1159,12 +1159,12 @@ void TestMerge::testMetadata()
 {
     QSKIP("Sophisticated merging for Metadata not implemented");
     // TODO HNH: I think a merge of recycle bins would be nice since duplicating them
-    //           is not realy a good solution - the one to use as final recycle bin
+    //           is not really a good solution - the one to use as final recycle bin
     //           is determined by the merge method - if only one has a bin, this one
     //           will be used - exception is the target has no recycle bin activated
 }
 
-void TestMerge::testCustomdata()
+void TestMerge::testCustomData()
 {
     QScopedPointer<Database> dbDestination(new Database());
     QScopedPointer<Database> dbSource(createTestDatabase());
@@ -1198,10 +1198,9 @@ void TestMerge::testCustomdata()
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
-    merger.merge();
+    QStringList changes = merger.merge();
 
-    Merger merger2(dbSource2.data(), dbDestination2.data());
-    merger2.merge();
+    QVERIFY(!changes.isEmpty());
 
     // Source is newer, data should be merged
     QVERIFY(!dbDestination->metadata()->customData()->isEmpty());
@@ -1214,6 +1213,19 @@ void TestMerge::testCustomdata()
     QCOMPARE(dbDestination->metadata()->customData()->value("Browser"), QString("n'8=3W@L^6d->d.]St_>]"));
     QCOMPARE(dbDestination->metadata()->customData()->value("key3"),
              QString("newValue")); // Old value should be replaced
+
+
+    // Merging again should not do anything if the values are the same.
+    m_clock->advanceSecond(1);
+    dbSource->metadata()->customData()->set("key3", "oldValue");
+    dbSource->metadata()->customData()->set("key3", "newValue");
+    Merger merger2(dbSource.data(), dbDestination.data());
+    QStringList changes2 = merger2.merge();
+    QVERIFY(changes2.isEmpty());
+
+
+    Merger merger3(dbSource2.data(), dbDestination2.data());
+    merger3.merge();
 
     // Target is newer, no data is merged
     QVERIFY(!dbDestination2->metadata()->customData()->isEmpty());
