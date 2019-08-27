@@ -605,6 +605,18 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
 
 QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPairList& keyList)
 {
+    // Check if database is connected with KeePassXC-Browser
+    auto databaseConnected = [&](const QSharedPointer<Database>& db) {
+        for (const StringPair& keyPair : keyList) {
+            QString key =
+                db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
+            if (!key.isEmpty() && keyPair.second == key) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     // Get the list of databases to search
     QList<QSharedPointer<Database>> databases;
     if (browserSettings()->searchInAllDatabases()) {
@@ -612,19 +624,16 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
         for (int i = 0; i < count; ++i) {
             if (auto* dbWidget = qobject_cast<DatabaseWidget*>(m_dbTabWidget->widget(i))) {
                 if (const auto& db = dbWidget->database()) {
-                    // Check if database is connected with KeePassXC-Browser
-                    for (const StringPair& keyPair : keyList) {
-                        QString key =
-                            db->metadata()->customData()->value(QLatin1String(ASSOCIATE_KEY_PREFIX) + keyPair.first);
-                        if (!key.isEmpty() && keyPair.second == key) {
-                            databases << db;
-                        }
+                    if (databaseConnected(db)) {
+                        databases << db;
                     }
                 }
             }
         }
     } else if (const auto& db = getDatabase()) {
-        databases << db;
+        if (databaseConnected(db)) {
+            databases << db;
+        }
     }
 
     // Search entries matching the hostname
