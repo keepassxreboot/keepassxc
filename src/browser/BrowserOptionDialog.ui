@@ -304,7 +304,7 @@
        <item>
         <widget class="QCheckBox" name="searchInAllDatabases">
          <property name="toolTip">
-          <string>Only the selected database has to be connected with a client.</string>
+          <string>All databases connected to the extension will return matching credentials.</string>
          </property>
          <property name="text">
           <string extracomment="Credentials mean login data requested via browser extension">Searc&amp;h in all opened databases for matching credentials</string>
