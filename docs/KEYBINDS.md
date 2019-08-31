@@ -28,6 +28,7 @@ Toggle Passwords Hidden    | Ctrl + Shift + C
 Toggle Usernames Hidden    | Ctrl + Shift + B
 Focus Search               | Ctrl + F
 Clear Search               | ESC
+Show Keyboard Shortcuts    | Ctrl + /
 
 
 
