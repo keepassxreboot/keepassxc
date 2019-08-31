@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_PASSWORDEDIT_H
 #define KEEPASSX_PASSWORDEDIT_H
 
+#include <QAction>
 #include <QLineEdit>
 #include <QPointer>
 
@@ -47,6 +48,8 @@ private slots:
 private:
     bool passwordsEqual() const;
 
+    QPointer<QAction> m_errorAction;
+    QPointer<QAction> m_correctAction;
     QPointer<PasswordEdit> m_basePasswordEdit;
 };
 

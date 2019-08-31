@@ -185,10 +185,21 @@
        <height>110</height>
       </size>
      </property>
+     <property name="accessibleName">
+      <string>Open a recent database</string>
+     </property>
     </widget>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>buttonNewDatabase</tabstop>
+  <tabstop>buttonOpenDatabase</tabstop>
+  <tabstop>buttonImportKeePass1</tabstop>
+  <tabstop>buttonImportOpVault</tabstop>
+  <tabstop>buttonImportCSV</tabstop>
+  <tabstop>recentListWidget</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

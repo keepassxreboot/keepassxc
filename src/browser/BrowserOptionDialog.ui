@@ -365,6 +365,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLineEdit" name="customProxyLocation">
+           <property name="accessibleName">
+            <string>Custom proxy location field</string>
+           </property>
            <property name="maxLength">
             <number>999</number>
            </property>
@@ -375,6 +378,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="customProxyLocationBrowseButton">
+           <property name="accessibleName">
+            <string>Browser for custom proxy file</string>
+           </property>
            <property name="text">
             <string extracomment="Button for opening file dialog">Browse...</string>
            </property>

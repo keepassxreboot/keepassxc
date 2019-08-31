@@ -89,6 +89,13 @@ void Config::sync()
     m_settings->sync();
 }
 
+void Config::resetToDefaults()
+{
+    for (const auto& setting : m_defaults.keys()) {
+        m_settings->setValue(setting, m_defaults.value(setting));
+    }
+}
+
 void Config::upgrade()
 {
     const auto keys = deprecationMap.keys();

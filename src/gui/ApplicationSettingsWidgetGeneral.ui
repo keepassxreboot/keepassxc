@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>860</height>
+    <height>951</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -349,6 +349,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Website icon download timeout in seconds</string>
+              </property>
               <property name="suffix">
                <string comment="Seconds"> sec</string>
               </property>
@@ -437,7 +443,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="toolButtonStyleLayout">
+           <layout class="QHBoxLayout" name="toolButtonStyleLayout" stretch="0,0,0,1">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -487,7 +493,29 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Toolbar button style</string>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
+              </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -521,7 +549,7 @@
              <enum>QLayout::SetMaximumSize</enum>
             </property>
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -609,7 +637,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="languageLabelLayout_2">
+           <layout class="QHBoxLayout" name="languageLabelLayout_2" stretch="0,0,0,1">
             <property name="spacing">
              <number>8</number>
             </property>
@@ -634,6 +662,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Language selection</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -642,6 +676,68 @@
                <string>(restart program to activate)</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="spacer3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>15</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="resetSettingsSubLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <item>
+             <widget class="QPushButton" name="resetSettingsButton">
+              <property name="text">
+               <string>Reset Settings to Default</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacer4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>50</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -715,6 +811,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="accessibleName">
+            <string>Global auto-type shortcut</string>
+           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -731,6 +830,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type character typing delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>
@@ -760,6 +862,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type start delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>

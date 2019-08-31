@@ -18,9 +18,11 @@
 
 #include "EntryView.h"
 
+#include <QAccessible>
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
+#include <QShortcut>
 
 #include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
@@ -55,6 +57,8 @@ EntryView::EntryView(QWidget* parent)
     connect(m_model, SIGNAL(usernamesHiddenChanged()), SIGNAL(viewStateChanged()));
     connect(m_model, SIGNAL(passwordsHiddenChanged()), SIGNAL(viewStateChanged()));
     // clang-format on
+
+    new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
 
     m_headerMenu = new QMenu(this);
     m_headerMenu->setTitle(tr("Customize View"));
@@ -128,6 +132,14 @@ EntryView::EntryView(QWidget* parent)
     m_model->setPaperClipPixmap(filePath()->icon("actions", "paperclip").pixmap(16));
 }
 
+void EntryView::contextMenuShortcutPressed()
+{
+    auto index = currentIndex();
+    if (hasFocus() && index.isValid()) {
+        emit customContextMenuRequested(visualRect(index).bottomLeft());
+    }
+}
+
 void EntryView::keyPressEvent(QKeyEvent* event)
 {
     if ((event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) && currentIndex().isValid()) {
@@ -140,15 +152,18 @@ void EntryView::keyPressEvent(QKeyEvent* event)
 
     int last = m_model->rowCount() - 1;
     if (last > 0) {
+        QAccessibleEvent accessibleEvent(this, QAccessible::PageChanged);
         if (event->key() == Qt::Key_Up && currentIndex().row() == 0) {
             QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(last, 0));
             setCurrentEntry(m_model->entryFromIndex(index));
+            QAccessible::updateAccessibility(&accessibleEvent);
             return;
         }
 
         if (event->key() == Qt::Key_Down && currentIndex().row() == last) {
             QModelIndex index = m_sortModel->mapToSource(m_sortModel->index(0, 0));
             setCurrentEntry(m_model->entryFromIndex(index));
+            QAccessible::updateAccessibility(&accessibleEvent);
             return;
         }
     }

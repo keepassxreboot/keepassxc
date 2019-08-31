@@ -46,6 +46,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="accessibleName">
+        <string>Datetime created</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -66,6 +69,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
+       <property name="accessibleName">
+        <string>Datetime modified</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -80,6 +86,9 @@
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="accessedEdit">
+       <property name="accessibleName">
+        <string>Datetime accessed</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -94,6 +103,9 @@
      </item>
      <item row="4" column="1">
       <widget class="QLineEdit" name="uuidEdit">
+       <property name="accessibleName">
+        <string>Unique ID</string>
+       </property>
        <property name="readOnly">
         <bool>true</bool>
        </property>
@@ -109,6 +121,9 @@
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
        <widget class="QTableView" name="customDataTable">
+        <property name="accessibleName">
+         <string>Plugin data</string>
+        </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
@@ -130,6 +145,9 @@
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
          <widget class="QPushButton" name="removeCustomDataButton">
+          <property name="accessibleName">
+           <string>Remove selected plugin data</string>
+          </property>
           <property name="text">
            <string>Remove</string>
           </property>

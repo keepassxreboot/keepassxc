@@ -28,14 +28,7 @@
      <property name="title">
       <string>Timeouts</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QCheckBox" name="clearClipboardCheckBox">
-        <property name="text">
-         <string>Clear clipboard after</string>
-        </property>
-       </widget>
-      </item>
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1">
       <item row="0" column="1">
        <widget class="QSpinBox" name="clearClipboardSpinBox">
         <property name="enabled">
@@ -46,6 +39,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Clipboard clear seconds</string>
         </property>
         <property name="suffix">
          <string comment="Seconds"> sec</string>
@@ -61,14 +57,93 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QCheckBox" name="clearSearchCheckBox">
+      <item row="3" column="0">
+       <widget class="QCheckBox" name="touchIDResetCheckBox">
         <property name="text">
-         <string>Clear search query after</string>
+         <string>Forget TouchID after inactivity of</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="touchIDResetSpinBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Touch ID inactivity reset</string>
+        </property>
+        <property name="suffix">
+         <string> min</string>
+        </property>
+        <property name="maximum">
+         <number>1440</number>
+        </property>
+        <property name="value">
+         <number>30</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Lock databases after inactivity of</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
+       <widget class="QSpinBox" name="lockDatabaseIdleSpinBox">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Database lock timeout seconds</string>
+        </property>
+        <property name="suffix">
+         <string comment="Seconds"> sec</string>
+        </property>
+        <property name="minimum">
+         <number>10</number>
+        </property>
+        <property name="maximum">
+         <number>43200</number>
+        </property>
+        <property name="value">
+         <number>240</number>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
        <widget class="QSpinBox" name="clearSearchSpinBox">
         <property name="enabled">
          <bool>false</bool>
@@ -96,70 +171,17 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="clearClipboardCheckBox">
+        <property name="text">
+         <string>Clear clipboard after</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
-       <widget class="QCheckBox" name="lockDatabaseIdleCheckBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QCheckBox" name="clearSearchCheckBox">
         <property name="text">
-         <string>Lock databases after inactivity of</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QSpinBox" name="lockDatabaseIdleSpinBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="suffix">
-         <string comment="Seconds"> sec</string>
-        </property>
-        <property name="minimum">
-         <number>10</number>
-        </property>
-        <property name="maximum">
-         <number>43200</number>
-        </property>
-        <property name="value">
-         <number>240</number>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QCheckBox" name="touchIDResetCheckBox">
-        <property name="text">
-         <string>Forget TouchID after inactivity of</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QSpinBox" name="touchIDResetSpinBox">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="suffix">
-         <string> min</string>
-        </property>
-        <property name="maximum">
-         <number>1440</number>
-        </property>
-        <property name="value">
-         <number>30</number>
+         <string>Clear search query after</string>
         </property>
        </widget>
       </item>
@@ -272,6 +294,21 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>clearClipboardCheckBox</tabstop>
+  <tabstop>clearClipboardSpinBox</tabstop>
+  <tabstop>touchIDResetSpinBox</tabstop>
+  <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
+  <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>
+  <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
+  <tabstop>relockDatabaseAutoTypeCheckBox</tabstop>
+  <tabstop>passwordRepeatCheckBox</tabstop>
+  <tabstop>passwordCleartextCheckBox</tabstop>
+  <tabstop>passwordShowDotsCheckBox</tabstop>
+  <tabstop>passwordPreviewCleartextCheckBox</tabstop>
+  <tabstop>hideNotesCheckBox</tabstop>
+  <tabstop>fallbackToSearch</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -20,6 +20,7 @@
 #include <QDragMoveEvent>
 #include <QMetaObject>
 #include <QMimeData>
+#include <QShortcut>
 
 #include "core/Database.h"
 #include "core/Group.h"
@@ -42,12 +43,22 @@ GroupView::GroupView(Database* db, QWidget* parent)
     connect(selectionModel(), SIGNAL(currentChanged(QModelIndex,QModelIndex)), SLOT(emitGroupChanged()));
     // clang-format on
 
+    new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
+
     modelReset();
 
     setDragEnabled(true);
     viewport()->setAcceptDrops(true);
     setDropIndicatorShown(true);
     setDefaultDropAction(Qt::MoveAction);
+}
+
+void GroupView::contextMenuShortcutPressed()
+{
+    auto index = currentIndex();
+    if (hasFocus() && index.isValid()) {
+        emit customContextMenuRequested(visualRect(index).bottomLeft());
+    }
 }
 
 void GroupView::changeDatabase(const QSharedPointer<Database>& newDb)

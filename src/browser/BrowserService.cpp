@@ -17,12 +17,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QCheckBox>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QUuid>
-#include <QCheckBox>
 
 #include "BrowserAccessControlDialog.h"
 #include "BrowserEntryConfig.h"

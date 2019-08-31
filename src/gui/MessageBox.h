@@ -59,10 +59,11 @@ public:
         Skip = 1 << 24,
         Disable = 1 << 25,
         Merge = 1 << 26,
+        Continue = 1 << 27,
 
         // Internal loop markers. Update Last when new KeePassXC button is added
         First = Ok,
-        Last = Merge,
+        Last = Continue,
     };
 
     enum Action
@@ -80,30 +81,30 @@ public:
                            const QString& title,
                            const QString& text,
                            Buttons buttons = MessageBox::Ok,
-                           Button defaultButton = MessageBox::NoButton,
-                           Action action = MessageBox::None,
-                           QCheckBox* checkbox = nullptr);
-    static Button information(QWidget* parent,
-                              const QString& title,
-                              const QString& text,
-                              Buttons buttons = MessageBox::Ok,
-                              Button defaultButton = MessageBox::NoButton,
-                              Action action = MessageBox::None,
-                              QCheckBox* checkbox = nullptr);
-    static Button question(QWidget* parent,
-                           const QString& title,
-                           const QString& text,
-                           Buttons buttons = MessageBox::Ok,
-                           Button defaultButton = MessageBox::NoButton,
+                           Button defaultButton = MessageBox::Ok,
                            Action action = MessageBox::None,
                            QCheckBox* checkbox = nullptr);
     static Button warning(QWidget* parent,
                           const QString& title,
                           const QString& text,
                           Buttons buttons = MessageBox::Ok,
-                          Button defaultButton = MessageBox::NoButton,
+                          Button defaultButton = MessageBox::Ok,
                           Action action = MessageBox::None,
                           QCheckBox* checkbox = nullptr);
+    static Button information(QWidget* parent,
+                              const QString& title,
+                              const QString& text,
+                              Buttons buttons = MessageBox::Ok,
+                              Button defaultButton = MessageBox::Ok,
+                              Action action = MessageBox::None,
+                              QCheckBox* checkbox = nullptr);
+    static Button question(QWidget* parent,
+                           const QString& title,
+                           const QString& text,
+                           Buttons buttons = MessageBox::Yes | MessageBox::Cancel,
+                           Button defaultButton = MessageBox::Cancel,
+                           Action action = MessageBox::None,
+                           QCheckBox* checkbox = nullptr);
 
     class OverrideParent
     {
