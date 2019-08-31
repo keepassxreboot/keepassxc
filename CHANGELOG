@@ -2,6 +2,11 @@
 =========================
 - Group sorting feature [#3282]
 - CLI: Add 'flatten' option to the 'ls' command [#3276]
+- 💥💥 CLI: The password length option `-l` for the CLI commands
+  `Add` and `Edit` is now `-L` [#3275]
+- 💥💥 CLI: the `-u` shorthand for the `--upper` password generation option
+  has been renamed `-U` [#3275]
+- CLI: Add password generation options to `Add` and `Edit` commands [#3275]
 - Rework the Entry Preview panel [#3306]
 - Move notes to General tab on Group Preview Panel [#3336]
 - Add 'Monospaced font' option to the Notes field [#3321]

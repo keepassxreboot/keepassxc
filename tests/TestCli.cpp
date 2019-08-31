@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -193,7 +193,7 @@ void TestCli::testAdd()
                     "--url",
                     "https://example.com/",
                     "-g",
-                    "-l",
+                    "-L",
                     "20",
                     m_dbFile->fileName(),
                     "/newuser-entry"});
@@ -212,13 +212,17 @@ void TestCli::testAdd()
 
     // Quiet option
     qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    addCmd.execute({"add", "-q", "-u", "newuser", "-g", "-l", "20", m_dbFile->fileName(), "/newentry-quiet"});
+    addCmd.execute({"add", "-q", "-u", "newuser", "-g", "-L", "20", m_dbFile->fileName(), "/newentry-quiet"});
     m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newentry-quiet");
     QVERIFY(entry);
+    QCOMPARE(entry->password().size(), 20);
 
     Utils::Test::setNextPassword("a");
     Utils::Test::setNextPassword("newpassword");
@@ -227,9 +231,6 @@ void TestCli::testAdd()
                     "newuser2",
                     "--url",
                     "https://example.net/",
-                    "-g",
-                    "-l",
-                    "20",
                     "-p",
                     m_dbFile->fileName(),
                     "/newuser-entry2"});
@@ -240,6 +241,61 @@ void TestCli::testAdd()
     QCOMPARE(entry->username(), QString("newuser2"));
     QCOMPARE(entry->url(), QString("https://example.net/"));
     QCOMPARE(entry->password(), QString("newpassword"));
+
+    // Password generation options
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addCmd.execute({"add",
+                    "-u",
+                    "newuser3",
+                    "-g",
+                    "-L",
+                    "34",
+                    m_dbFile->fileName(),
+                    "/newuser-entry3"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry3.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+
+    db = readTestDatabase();
+    entry = db->rootGroup()->findEntryByPath("/newuser-entry3");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QString("newuser3"));
+    QCOMPARE(entry->password().size(), 34);
+    QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
+    QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
+
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addCmd.execute({"add",
+                    "-u",
+                    "newuser4",
+                    "-g",
+                    "-L",
+                    "20",
+                    "--every-group",
+                    "-s",
+                    "-n",
+                    "-U",
+                    "-l",
+                    m_dbFile->fileName(),
+                    "/newuser-entry4"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry4.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+
+    db = readTestDatabase();
+    entry = db->rootGroup()->findEntryByPath("/newuser-entry4");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QString("newuser4"));
+    QCOMPARE(entry->password().size(), 20);
+    QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 }
 
 void TestCli::testAnalyze()
@@ -515,15 +571,18 @@ void TestCli::testEdit()
 
     // Quiet option
     qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", m_dbFile->fileName(), "-q", "-t", "newtitle", "/Sample Entry"});
+    editCmd.execute({"edit", m_dbFile->fileName(), "-q", "-t", "newertitle", "/newtitle"});
     m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
 
     Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", "-g", m_dbFile->fileName(), "/newtitle"});
+    editCmd.execute({"edit", "-g", m_dbFile->fileName(), "/newertitle"});
     db = readTestDatabase();
-    entry = db->rootGroup()->findEntryByPath("/newtitle");
+    entry = db->rootGroup()->findEntryByPath("/newertitle");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
     QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
@@ -531,20 +590,48 @@ void TestCli::testEdit()
     QVERIFY(entry->password() != QString("Password"));
 
     Utils::Test::setNextPassword("a");
-    editCmd.execute({"edit", "-g", "-l", "34", "-t", "yet another title", m_dbFile->fileName(), "/newtitle"});
+    editCmd.execute({"edit", "-g", "-L", "34", "-t", "evennewertitle", m_dbFile->fileName(), "/newertitle"});
     db = readTestDatabase();
-    entry = db->rootGroup()->findEntryByPath("/yet another title");
+    entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->username(), QString("newuser"));
     QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
     QVERIFY(entry->password() != QString("Password"));
     QCOMPARE(entry->password().size(), 34);
+    QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
+    QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
+
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    editCmd.execute({"edit",
+                     "-g",
+                     "-L",
+                     "20",
+                     "--every-group",
+                     "-s",
+                     "-n",
+                     "--upper",
+                     "-l",
+                     m_dbFile->fileName(),
+                     "/evennewertitle"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully edited entry evennewertitle.\n"));
+
+    db = readTestDatabase();
+    entry = db->rootGroup()->findEntryByPath("/evennewertitle");
+    QVERIFY(entry);
+    QCOMPARE(entry->password().size(), 20);
+    QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
     Utils::Test::setNextPassword("a");
     Utils::Test::setNextPassword("newpassword");
-    editCmd.execute({"edit", "-p", m_dbFile->fileName(), "/yet another title"});
+    editCmd.execute({"edit", "-p", m_dbFile->fileName(), "/evennewertitle"});
     db = readTestDatabase();
-    entry = db->rootGroup()->findEntryByPath("/yet another title");
+    entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
     QCOMPARE(entry->password(), QString("newpassword"));
 }
@@ -697,7 +784,7 @@ void TestCli::testGenerate_data()
     QTest::newRow("default") << QStringList{"generate"} << "^[^\r\n]+$";
     QTest::newRow("length") << QStringList{"generate", "-L", "13"} << "^.{13}$";
     QTest::newRow("lowercase") << QStringList{"generate", "-L", "14", "-l"} << "^[a-z]{14}$";
-    QTest::newRow("uppercase") << QStringList{"generate", "-L", "15", "-u"} << "^[A-Z]{15}$";
+    QTest::newRow("uppercase") << QStringList{"generate", "-L", "15", "--upper"} << "^[A-Z]{15}$";
     QTest::newRow("numbers") << QStringList{"generate", "-L", "16", "-n"} << "^[0-9]{16}$";
     QTest::newRow("special") << QStringList{"generate", "-L", "200", "-s"}
                              << R"(^[\(\)\[\]\{\}\.\-*|\\,:;"'\/\_!+-<=>?#$%&^`@~]{200}$)";
@@ -706,13 +793,13 @@ void TestCli::testGenerate_data()
     QTest::newRow("extended") << QStringList{"generate", "-L", "50", "-e"}
                               << R"(^[^a-zA-Z0-9\(\)\[\]\{\}\.\-\*\|\\,:;"'\/\_!+-<=>?#$%&^`@~]{50}$)";
     QTest::newRow("numbers + lowercase + uppercase")
-        << QStringList{"generate", "-L", "16", "-n", "-u", "-l"} << "^[0-9a-zA-Z]{16}$";
+        << QStringList{"generate", "-L", "16", "-n", "--upper", "-l"} << "^[0-9a-zA-Z]{16}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude)")
-        << QStringList{"generate", "-L", "500", "-n", "-u", "-l", "-x", "abcdefg0123@"} << "^[^abcdefg0123@]{500}$";
+        << QStringList{"generate", "-L", "500", "-n", "-U", "-l", "-x", "abcdefg0123@"} << "^[^abcdefg0123@]{500}$";
     QTest::newRow("numbers + lowercase + uppercase (exclude similar)")
-        << QStringList{"generate", "-L", "200", "-n", "-u", "-l", "--exclude-similar"} << "^[^l1IO0]{200}$";
+        << QStringList{"generate", "-L", "200", "-n", "-U", "-l", "--exclude-similar"} << "^[^l1IO0]{200}$";
     QTest::newRow("uppercase + lowercase (every)")
-        << QStringList{"generate", "-L", "2", "-u", "-l", "--every-group"} << "^[a-z][A-Z]|[A-Z][a-z]$";
+        << QStringList{"generate", "-L", "2", "--upper", "-l", "--every-group"} << "^[a-z][A-Z]|[A-Z][a-z]$";
     QTest::newRow("numbers + lowercase (every)")
         << QStringList{"generate", "-L", "2", "-n", "-l", "--every-group"} << "^[a-z][0-9]|[0-9][a-z]$";
 }

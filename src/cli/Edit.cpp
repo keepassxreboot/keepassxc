@@ -21,6 +21,7 @@
 #include "Edit.h"
 
 #include "cli/Add.h"
+#include "cli/Generate.h"
 #include "cli/TextStream.h"
 #include "cli/Utils.h"
 #include "core/Database.h"
@@ -41,10 +42,20 @@ Edit::Edit()
     options.append(Add::UsernameOption);
     options.append(Add::UrlOption);
     options.append(Add::PasswordPromptOption);
-    options.append(Add::GenerateOption);
-    options.append(Add::PasswordLengthOption);
     options.append(Edit::TitleOption);
     positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
+
+    // Password generation options.
+    options.append(Add::GenerateOption);
+    options.append(Generate::PasswordLengthOption);
+    options.append(Generate::LowerCaseOption);
+    options.append(Generate::UpperCaseOption);
+    options.append(Generate::NumbersOption);
+    options.append(Generate::SpecialCharsOption);
+    options.append(Generate::ExtendedAsciiOption);
+    options.append(Generate::ExcludeCharsOption);
+    options.append(Generate::ExcludeSimilarCharsOption);
+    options.append(Generate::IncludeEveryGroupOption);
 }
 
 int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
@@ -57,10 +68,21 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
 
-    QString passwordLength = parser->value(Add::PasswordLengthOption);
-    if (!passwordLength.isEmpty() && !passwordLength.toInt()) {
-        errorTextStream << QObject::tr("Invalid value for password length: %1").arg(passwordLength) << endl;
+    // Cannot use those 2 options at the same time!
+    if (parser->isSet(Add::GenerateOption) && parser->isSet(Add::PasswordPromptOption)) {
+        errorTextStream << QObject::tr("Cannot generate a password and prompt at the same time!") << endl;
         return EXIT_FAILURE;
+    }
+
+    // Validating the password generator here, before we actually start
+    // the update.
+    QSharedPointer<PasswordGenerator> passwordGenerator;
+    bool generate = parser->isSet(Add::GenerateOption);
+    if (generate) {
+        passwordGenerator = Generate::createGenerator(parser);
+        if (passwordGenerator.isNull()) {
+            return EXIT_FAILURE;
+        }
     }
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -72,7 +94,6 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     QString username = parser->value(Add::UsernameOption);
     QString url = parser->value(Add::UrlOption);
     QString title = parser->value(Edit::TitleOption);
-    bool generate = parser->isSet(Add::GenerateOption);
     bool prompt = parser->isSet(Add::PasswordPromptOption);
     if (username.isEmpty() && url.isEmpty() && title.isEmpty() && !prompt && !generate) {
         errorTextStream << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
@@ -98,17 +119,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
         entry->setPassword(password);
     } else if (generate) {
-        PasswordGenerator passwordGenerator;
-
-        if (passwordLength.isEmpty()) {
-            passwordGenerator.setLength(PasswordGenerator::DefaultLength);
-        } else {
-            passwordGenerator.setLength(static_cast<size_t>(passwordLength.toInt()));
-        }
-
-        passwordGenerator.setCharClasses(PasswordGenerator::DefaultCharset);
-        passwordGenerator.setFlags(PasswordGenerator::DefaultFlags);
-        QString password = passwordGenerator.generatePassword();
+        QString password = passwordGenerator->generatePassword();
         entry->setPassword(password);
     }
 

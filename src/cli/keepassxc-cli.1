@@ -1,4 +1,4 @@
-.TH KEEPASSXC-CLI 1 "Nov 04, 2018"
+.TH KEEPASSXC-CLI 1 "June 15, 2019"
 
 .SH NAME
 keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager.
@@ -15,6 +15,7 @@ keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager
 
 .IP "add [options] <database> <entry>"
 Adds a new entry to a database. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
+The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
 
 .IP "analyze [options] <database>"
 Analyze passwords in a database for weaknesses.
@@ -30,6 +31,7 @@ Generate a random diceware passphrase.
 
 .IP "edit [options] <database> <entry>"
 Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
+The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
 
 .IP "estimate [options] [password]"
 Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
@@ -94,6 +96,8 @@ Use the same credentials for unlocking both database.
 
 
 .SS "Add and edit options"
+The same password generation options as documented for the generate command can be used
+with those 2 commands when the -g option is set.
 
 .IP "-u, --username <username>"
 Specify the username of the entry.
@@ -106,9 +110,6 @@ Use a password prompt for the entry's password.
 
 .IP "-g, --generate"
 Generate a new password for the entry.
-
-.IP "-l, --password-length"
-Specify the length of the password to generate.
 
 
 .SS "Edit options"
@@ -176,21 +177,29 @@ Flattens the output to single lines. When this option is enabled, subgroups and 
 .IP "-L, --length <length>"
 Desired length for the generated password. [Default: 16]
 
-.IP "-l"
+.IP "-l --lower"
 Use lowercase characters for the generated password. [Default: Enabled]
 
-.IP "-u"
+.IP "-U --upper"
 Use uppercase characters for the generated password. [Default: Enabled]
 
-.IP "-n"
+.IP "-n --numeric"
 Use numbers characters for the generated password. [Default: Enabled]
 
-.IP "-s"
+.IP "-s --special"
 Use special characters for the generated password. [Default: Disabled]
 
-.IP "-e"
+.IP "-e --extended"
 Use extended ASCII characters for the generated password. [Default: Disabled]
 
+.IP "-x --exclude <chars>"
+Comma-separated list of characters to exclude from the generated password. None is excluded by default.
+
+.IP "--exclude-similar"
+Exclude similar looking characters. [Default: Disabled]
+
+.IP "--every-group"
+Include characters from every selected group. [Default: Disabled]
 
 
 .SH REPORTING BUGS
