@@ -1469,7 +1469,7 @@ Das ist definitiv ein Fehler, teile das bitte den Entwicklern mit.</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Möchten Sie wirklich %n Eintrag aus dem Papierkorb löschen?</numerusform><numerusform>Möchten Sie wirklich %n Einträge aus dem Papierkorb löschen?</numerusform></translation>
+        <translation><numerusform>Möchten Sie wirklich %n Eintrag in den Papierkorb verschieben?</numerusform><numerusform>Möchten Sie wirklich %n Einträge in den Papierkorb verschieben?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
