@@ -201,8 +201,9 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     }
 
     connect(dbWidget, SIGNAL(databaseFilePathChanged(QString, QString)), SLOT(updateTabName()));
-    connect(
-        dbWidget, SIGNAL(requestOpenDatabase(QString, bool, QString)), SLOT(addDatabaseTab(QString, bool, QString)));
+    connect(dbWidget,
+            SIGNAL(requestOpenDatabase(QString, bool, QString, QString)),
+            SLOT(addDatabaseTab(QString, bool, QString, QString)));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget, SIGNAL(databaseModified()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseSaved()), SLOT(updateTabName()));
