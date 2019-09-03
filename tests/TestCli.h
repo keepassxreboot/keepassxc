@@ -63,6 +63,7 @@ private slots:
     void testRemove();
     void testRemoveQuiet();
     void testShow();
+    void testInvalidDbFiles();
 
 private:
     QByteArray m_dbData;
