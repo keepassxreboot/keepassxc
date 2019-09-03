@@ -133,7 +133,8 @@ signals:
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
-    void requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password);
+    void
+    requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
