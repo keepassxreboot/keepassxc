@@ -24,6 +24,7 @@
 #include <unistd.h>
 #endif
 
+#include <QFileInfo>
 #include <QProcess>
 #include <QScopedPointer>
 
@@ -107,6 +108,22 @@ namespace Utils
         auto compositeKey = QSharedPointer<CompositeKey>::create();
         TextStream out(outputDescriptor);
         TextStream err(errorDescriptor);
+
+        QFileInfo dbFileInfo(databaseFilename);
+        if (dbFileInfo.canonicalFilePath().isEmpty()) {
+            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isFile()) {
+            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isReadable()) {
+            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << endl;
+            return {};
+        }
 
         if (isPasswordProtected) {
             out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;

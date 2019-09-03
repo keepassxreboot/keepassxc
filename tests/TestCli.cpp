@@ -1409,3 +1409,38 @@ void TestCli::testShow()
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
 }
+
+void TestCli::testInvalidDbFiles()
+{
+    Show showCmd;
+    QString nonExistentDbPath("/foo/bar/baz");
+    QString directoryName("/");
+
+    qint64 pos = m_stderrFile->pos();
+    showCmd.execute({"show", nonExistentDbPath, "-q", "/Sample Entry"});
+    m_stderrFile->seek(pos);
+    QCOMPARE(QString(m_stderrFile->readAll()),
+             QObject::tr("Failed to open database file %1: not found").arg(nonExistentDbPath) + "\n");
+
+    pos = m_stderrFile->pos();
+    showCmd.execute({"show", directoryName, "-q", "whatever"});
+    m_stderrFile->seek(pos);
+    QCOMPARE(QString(m_stderrFile->readAll()),
+             QObject::tr("Failed to open database file %1: not a plain file").arg(directoryName) + "\n");
+
+    // Create a write-only file and try to open it.
+    // QFileInfo.isReadable returns 'true' on Windows, even after the call to
+    // setPermissions(WriteOwner) and with NTFS permissions enabled, so this
+    // check doesn't work.
+#if !defined(Q_OS_WIN)
+    QTemporaryFile tempFile;
+    QVERIFY(tempFile.open());
+    QString path = QFileInfo(tempFile).absoluteFilePath();
+    QVERIFY(tempFile.setPermissions(QFileDevice::WriteOwner));
+    pos = m_stderrFile->pos();
+    showCmd.execute({"show", path, "some entry"});
+    m_stderrFile->seek(pos);
+    QCOMPARE(QString(m_stderrFile->readAll()),
+             QObject::tr("Failed to open database file %1: not readable").arg(path) + "\n");
+#endif  // Q_OS_WIN
+}
