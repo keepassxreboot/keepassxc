@@ -71,6 +71,11 @@ void EditWidgetProperties::setCustomData(CustomData* customData)
 
 void EditWidgetProperties::removeSelectedPluginData()
 {
+    QModelIndexList indexes = m_ui->customDataTable->selectionModel()->selectedRows(0);
+    if (indexes.isEmpty()) {
+        return;
+    }
+
     auto result = MessageBox::question(this,
                                        tr("Delete plugin data?"),
                                        tr("Do you really want to delete the selected plugin data?\n"
@@ -82,14 +87,18 @@ void EditWidgetProperties::removeSelectedPluginData()
         return;
     }
 
-    const QItemSelectionModel* itemSelectionModel = m_ui->customDataTable->selectionModel();
-    if (itemSelectionModel) {
-        for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
-            const QString key = index.data().toString();
-            m_customData->remove(key);
-        }
-        update();
+    QStringList selectedData;
+    for (const auto& index : indexes) {
+        const QString key = index.data().toString();
+        selectedData.append(key);
     }
+
+    std::sort(selectedData.begin(), selectedData.end());
+    for (const auto& key : selectedData) {
+        m_customData->remove(key);
+    }
+
+    update();
 }
 
 void EditWidgetProperties::toggleRemoveButton(const QItemSelection& selected)
