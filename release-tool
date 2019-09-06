@@ -231,7 +231,7 @@ checkOutputDirDoesNotExist() {
 }
 
 checkGitRepository() {
-    if [ ! -d .git ] || [ ! -f CHANGELOG ]; then
+    if [ ! -d .git ] || [ ! -f CHANGELOG.md ]; then
         exitError "Source directory is not a valid Git repository!"
     fi
 }
@@ -287,13 +287,13 @@ checkVersionInCMake() {
 }
 
 checkChangeLog() {
-    if [ ! -f CHANGELOG ]; then
+    if [ ! -f CHANGELOG.md ]; then
         exitError "No CHANGELOG file found!"
     fi
 
-    grep -qPzo "${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n=+\n" CHANGELOG
+    grep -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md
     if [ $? -ne 0 ]; then
-        exitError "'CHANGELOG' has not been updated to the '${RELEASE_NAME}' release!"
+        exitError "'CHANGELOG.md' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 }
 
@@ -498,8 +498,8 @@ merge() {
         fi
     fi
 
-    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n)=+\n\n?(?:.|\n)+?\n(?=\n)" \
-        CHANGELOG | grep -Pzo '(?<=\n\n)(.|\n)+' | tr -d \\0)
+    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n\n)\n?(?:.|\n)+?\n(?=## )" CHANGELOG.md \
+                  | sed 's/^### //' | tr -d \\0)
     COMMIT_MSG="Release ${RELEASE_NAME}"
 
     logInfo "Checking out target branch '${TARGET_BRANCH}'..."
