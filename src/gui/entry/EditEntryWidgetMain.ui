@@ -72,6 +72,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordGeneratorButton">
+       <property name="toolTip">
+        <string>Toggle password generator</string>
+       </property>
        <property name="accessibleName">
         <string>Toggle password generator</string>
        </property>
@@ -96,6 +99,9 @@
      </item>
      <item>
       <widget class="QToolButton" name="togglePasswordButton">
+       <property name="toolTip">
+        <string>Toggle password visibility</string>
+       </property>
        <property name="accessibleName">
         <string>Toggle password visibility</string>
        </property>
@@ -122,6 +128,9 @@
    </item>
    <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
     <widget class="QCheckBox" name="notesEnabled">
+     <property name="toolTip">
+      <string>Toggle notes visibile</string>
+     </property>
      <property name="accessibleName">
       <string>Toggle notes visible</string>
      </property>
@@ -152,6 +161,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Expiration Presets</string>
        </property>
        <property name="accessibleName">
         <string>Expiration presets</string>
@@ -218,6 +230,9 @@
    </item>
    <item row="7" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
+     <property name="toolTip">
+      <string>Toggle expiration</string>
+     </property>
      <property name="accessibleName">
       <string>Toggle expiration</string>
      </property>
