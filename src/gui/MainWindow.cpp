@@ -598,7 +598,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
             m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTitle());
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
-            m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected && dbWidget->currentEntryHasPassword());
+            // NOTE: Copy password is enabled even if the selected entry's password is blank to prevent Ctrl+C
+            // from copying information from the currently selected cell in the entry view table.
+            m_ui->actionEntryCopyPassword->setEnabled(singleEntrySelected);
             m_ui->actionEntryCopyURL->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryCopyNotes->setEnabled(singleEntrySelected && dbWidget->currentEntryHasNotes());
             m_ui->menuEntryCopyAttribute->setEnabled(singleEntrySelected);
