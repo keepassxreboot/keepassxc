@@ -178,6 +178,9 @@
                 </item>
                 <item>
                  <widget class="QToolButton" name="buttonTogglePassword">
+                  <property name="toolTip">
+                   <string>Toggle password visibility</string>
+                  </property>
                   <property name="accessibleName">
                    <string>Toggle password visibility</string>
                   </property>
@@ -316,6 +319,9 @@
                   </item>
                   <item row="0" column="4">
                    <widget class="QPushButton" name="buttonBrowseFile">
+                    <property name="toolTip">
+                     <string>Browse for key file</string>
+                    </property>
                     <property name="accessibleName">
                      <string>Browse for key file</string>
                     </property>
@@ -328,6 +334,9 @@
                    <widget class="QPushButton" name="buttonRedetectYubikey">
                     <property name="enabled">
                      <bool>true</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>Refresh hardware tokens</string>
                     </property>
                     <property name="accessibleName">
                      <string>Refresh hardware tokens</string>

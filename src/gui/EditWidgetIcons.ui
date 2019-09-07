@@ -105,6 +105,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="faviconButton">
+       <property name="toolTip">
+        <string>Download favicon for URL</string>
+       </property>
+       <property name="accessibleName">
+        <string>Download favicon for URL</string>
+       </property>
        <property name="text">
         <string>Download favicon</string>
        </property>
@@ -134,6 +140,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Apply selected icon to subgroups and entries</string>
+       </property>
+       <property name="accessibleName">
+        <string>Apply selected icon to subgroups and entries</string>
        </property>
        <property name="styleSheet">
         <string notr="true">padding: 4px 10px</string>
