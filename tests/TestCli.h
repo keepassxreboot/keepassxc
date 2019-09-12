@@ -45,6 +45,7 @@ private slots:
 
     void testCommand();
     void testAdd();
+    void testAddGroup();
     void testAnalyze();
     void testClip();
     void testCreate();
@@ -60,7 +61,9 @@ private slots:
     void testList();
     void testLocate();
     void testMerge();
+    void testMove();
     void testRemove();
+    void testRemoveGroup();
     void testRemoveQuiet();
     void testShow();
     void testInvalidDbFiles();

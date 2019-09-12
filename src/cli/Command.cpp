@@ -23,6 +23,7 @@
 #include "Command.h"
 
 #include "Add.h"
+#include "AddGroup.h"
 #include "Analyze.h"
 #include "Clip.h"
 #include "Create.h"
@@ -34,7 +35,9 @@
 #include "List.h"
 #include "Locate.h"
 #include "Merge.h"
+#include "Move.h"
 #include "Remove.h"
+#include "RemoveGroup.h"
 #include "Show.h"
 #include "TextStream.h"
 #include "Utils.h"
@@ -125,7 +128,10 @@ void populateCommands()
         commands.insert(QString("locate"), new Locate());
         commands.insert(QString("ls"), new List());
         commands.insert(QString("merge"), new Merge());
+        commands.insert(QString("mkdir"), new AddGroup());
+        commands.insert(QString("mv"), new Move());
         commands.insert(QString("rm"), new Remove());
+        commands.insert(QString("rmdir"), new RemoveGroup());
         commands.insert(QString("show"), new Show());
     }
 }

@@ -51,8 +51,17 @@ Lists the contents of a group in a database. If no group is specified, it will d
 .IP "merge [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
 
+.IP "mkdir [options] <database> <group>"
+Adds a new group to a database.
+
+.IP "mv [options] <database> <entry> <group>"
+Moves an entry to a new group.
+
 .IP "rm [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
+
+.IP "rmdir [options] <database> <group>"
+Removes a group from a database. If the database has a recycle bin, the group will be moved there. If the group is already in the recycle bin, it will be removed permanently.
 
 .IP "show [options] <database> <entry>"
 Shows the title, username, password, URL and notes of a database entry. Can also show the current TOTP. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
