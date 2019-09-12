@@ -32,6 +32,7 @@
 #include "format/KeePass2.h"
 
 #include "cli/Add.h"
+#include "cli/AddGroup.h"
 #include "cli/Analyze.h"
 #include "cli/Clip.h"
 #include "cli/Command.h"
@@ -44,7 +45,9 @@
 #include "cli/List.h"
 #include "cli/Locate.h"
 #include "cli/Merge.h"
+#include "cli/Move.h"
 #include "cli/Remove.h"
+#include "cli/RemoveGroup.h"
 #include "cli/Show.h"
 #include "cli/Utils.h"
 
@@ -172,7 +175,7 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
 
 void TestCli::testCommand()
 {
-    QCOMPARE(Command::getCommands().size(), 14);
+    QCOMPARE(Command::getCommands().size(), 17);
     QVERIFY(Command::getCommand("add"));
     QVERIFY(Command::getCommand("analyze"));
     QVERIFY(Command::getCommand("clip"));
@@ -295,20 +298,73 @@ void TestCli::testAdd()
     QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 }
 
-void TestCli::testAnalyze()
+void TestCli::testAddGroup()
 {
-    Analyze analyzeCmd;
-    QVERIFY(!analyzeCmd.name.isEmpty());
-    QVERIFY(analyzeCmd.getDescriptionLine().contains(analyzeCmd.name));
-
-    const QString hibpPath = QString(KEEPASSX_TEST_DATA_DIR).append("/hibp.txt");
+    AddGroup addGroupCmd;
+    QVERIFY(!addGroupCmd.name.isEmpty());
+    QVERIFY(addGroupCmd.getDescriptionLine().contains(addGroupCmd.name));
 
     Utils::Test::setNextPassword("a");
-    analyzeCmd.execute({"analyze", "--hibp", hibpPath, m_dbFile->fileName()});
+    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group"});
+    m_stderrFile->reset();
     m_stdoutFile->reset();
     m_stdoutFile->readLine(); // skip password prompt
-    auto output = m_stdoutFile->readAll();
-    QVERIFY(output.contains("Sample Entry") && output.contains("123"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added group new_group.\n"));
+
+    auto db = readTestDatabase();
+    auto* group = db->rootGroup()->findGroupByPath("new_group");
+    QVERIFY(group);
+    QCOMPARE(group->name(), QString("new_group"));
+
+    // Trying to add the same group should fail.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group /new_group already exists!\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+
+    // Should be able to add groups down the tree.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/new_group/newer_group"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added group newer_group.\n"));
+
+    db = readTestDatabase();
+    group = db->rootGroup()->findGroupByPath("new_group/newer_group");
+    QVERIFY(group);
+    QCOMPARE(group->name(), QString("newer_group"));
+
+    // Should fail if the path is invalid.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/invalid_group/newer_group"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group /invalid_group not found.\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+
+    // Should fail to add the root group.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    addGroupCmd.execute({"mkdir", m_dbFile->fileName(), "/"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group / already exists!\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
 }
 
 bool isTOTP(const QString& value)
@@ -323,6 +379,22 @@ bool isTOTP(const QString& value)
         }
     }
     return true;
+}
+
+void TestCli::testAnalyze()
+{
+    Analyze analyzeCmd;
+    QVERIFY(!analyzeCmd.name.isEmpty());
+    QVERIFY(analyzeCmd.getDescriptionLine().contains(analyzeCmd.name));
+
+    const QString hibpPath = QString(KEEPASSX_TEST_DATA_DIR).append("/hibp.txt");
+
+    Utils::Test::setNextPassword("a");
+    analyzeCmd.execute({"analyze", "--hibp", hibpPath, m_dbFile->fileName()});
+    m_stdoutFile->reset();
+    m_stdoutFile->readLine(); // skip password prompt
+    auto output = m_stdoutFile->readAll();
+    QVERIFY(output.contains("Sample Entry") && output.contains("123"));
 }
 
 void TestCli::testClip()
@@ -1245,6 +1317,63 @@ void TestCli::testMerge()
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
 }
 
+void TestCli::testMove()
+{
+    Move moveCmd;
+    QVERIFY(!moveCmd.name.isEmpty());
+    QVERIFY(moveCmd.getDescriptionLine().contains(moveCmd.name));
+
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    moveCmd.execute({"mv", m_dbFile->fileName(), "invalid_entry_path", "invalid_group_path"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip prompt line
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Could not find entry with path invalid_entry_path.\n"));
+
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    moveCmd.execute({"mv", m_dbFile->fileName(), "Sample Entry", "invalid_group_path"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip prompt line
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Could not find group with path invalid_group_path.\n"));
+
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    moveCmd.execute({"mv", m_dbFile->fileName(), "Sample Entry", "General/"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip prompt line
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully moved entry Sample Entry to group General/.\n"));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray(""));
+
+    auto db = readTestDatabase();
+    auto* entry = db->rootGroup()->findEntryByPath("General/Sample Entry");
+    QVERIFY(entry);
+
+    // Test that not modified if the same group is destination.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    moveCmd.execute({"mv", m_dbFile->fileName(), "General/Sample Entry", "General/"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip prompt line
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Entry is already in group General/.\n"));
+
+    // sanity check
+    db = readTestDatabase();
+    entry = db->rootGroup()->findEntryByPath("General/Sample Entry");
+    QVERIFY(entry);
+}
+
 void TestCli::testRemove()
 {
     Remove removeCmd;
@@ -1264,6 +1393,7 @@ void TestCli::testRemove()
     fileCopy.close();
 
     qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
 
     // delete entry and verify
     Utils::Test::setNextPassword("a");
@@ -1271,6 +1401,7 @@ void TestCli::testRemove()
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully recycled entry Sample Entry.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
 
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
@@ -1283,6 +1414,7 @@ void TestCli::testRemove()
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
     QVERIFY(readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
+    pos = m_stdoutFile->pos();
     pos = m_stdoutFile->pos();
 
     // try again, this time without recycle bin
@@ -1301,16 +1433,89 @@ void TestCli::testRemove()
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
-    pos = m_stdoutFile->pos();
-
     // finally, try deleting a non-existent entry
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
     removeCmd.execute({"rm", fileCopy.fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine(); // skip password prompt
-    m_stderrFile->reset();
+    m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry /Sample Entry not found.\n"));
+
+    // try deleting a directory, should fail
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    removeCmd.execute({"rm", fileCopy.fileName(), "/General"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry /General not found.\n"));
+}
+
+void TestCli::testRemoveGroup()
+{
+    RemoveGroup removeGroupCmd;
+    QVERIFY(!removeGroupCmd.name.isEmpty());
+    QVERIFY(removeGroupCmd.getDescriptionLine().contains(removeGroupCmd.name));
+
+    Kdbx3Reader reader;
+    Kdbx3Writer writer;
+
+    // try deleting a directory, should recycle it first.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "/General"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully recycled group /General.\n"));
+
+    auto db = readTestDatabase();
+    auto* group = db->rootGroup()->findGroupByPath("General");
+    QVERIFY(!group);
+
+    // try deleting a directory again, should delete it permanently.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "Recycle Bin/General"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully deleted group Recycle Bin/General.\n"));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+
+    db = readTestDatabase();
+    group = db->rootGroup()->findGroupByPath("Recycle Bin/General");
+    QVERIFY(!group);
+
+    // try deleting an invalid group, should fail.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "invalid"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Group invalid not found.\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+
+    // Should fail to remove the root group.
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    removeGroupCmd.execute({"rmdir", m_dbFile->fileName(), "/"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Cannot remove root group from database.\n"));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
 }
 
 void TestCli::testRemoveQuiet()

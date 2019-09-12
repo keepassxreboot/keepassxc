@@ -10,6 +10,7 @@
 - CLI: Add CSV export to the 'export' command [#3277]
 - CLI: Add `-y --yubikey` option for YubiKey [#3416](https://github.com/keepassxreboot/keepassxc/issues/3416)
 - Add 'Monospaced font' option to the Notes field [#3321](https://github.com/keepassxreboot/keepassxc/issues/3321)
+- CLI: Add group commands (mv, mkdir and rmdir) [#3313].
 
 ### Changed
 
