@@ -541,10 +541,7 @@ QString BrowserAction::getDatabaseHash()
 {
     QMutexLocker locker(&m_mutex);
     QByteArray hash =
-        QCryptographicHash::hash(
-            m_browserService.getDatabaseRootUuid().toUtf8(),
-            QCryptographicHash::Sha256)
-            .toHex();
+        QCryptographicHash::hash(m_browserService.getDatabaseRootUuid().toUtf8(), QCryptographicHash::Sha256).toHex();
     return QString(hash);
 }
 

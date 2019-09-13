@@ -32,10 +32,7 @@ class YkChallengeResponseKeyCLI : public QObject, public ChallengeResponseKey
 public:
     static QUuid UUID;
 
-    explicit YkChallengeResponseKeyCLI(int slot,
-                                       bool blocking,
-                                       QString messageInteraction,
-                                       FILE* outputDescriptor);
+    explicit YkChallengeResponseKeyCLI(int slot, bool blocking, QString messageInteraction, FILE* outputDescriptor);
 
     QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;

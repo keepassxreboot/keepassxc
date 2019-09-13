@@ -43,11 +43,13 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
-    void testCommand();
+    void testBatchCommands();
     void testAdd();
     void testAddGroup();
     void testAnalyze();
     void testClip();
+    void testCommandParsing_data();
+    void testCommandParsing();
     void testCreate();
     void testDiceware();
     void testEdit();
@@ -58,10 +60,13 @@ private slots:
     void testGenerate();
     void testKeyFileOption();
     void testNoPasswordOption();
+    void testHelp();
+    void testInteractiveCommands();
     void testList();
     void testLocate();
     void testMerge();
     void testMove();
+    void testOpen();
     void testRemove();
     void testRemoveGroup();
     void testRemoveQuiet();

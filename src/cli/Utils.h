@@ -48,6 +48,8 @@ namespace Utils
                                             FILE* outputDescriptor = STDOUT,
                                             FILE* errorDescriptor = STDERR);
 
+    QStringList splitCommandString(const QString& command);
+
     namespace Test
     {
         void setNextPassword(const QString& password);

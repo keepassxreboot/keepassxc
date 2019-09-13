@@ -45,7 +45,6 @@ const QCommandLineOption Add::GenerateOption = QCommandLineOption(QStringList() 
                                                                                 << "generate",
                                                                   QObject::tr("Generate a password for the entry."));
 
-
 Add::Add()
 {
     name = QString("add");

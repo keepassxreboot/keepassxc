@@ -93,16 +93,17 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    Database db;
-    db.setKey(key);
+    QSharedPointer<Database> db(new Database);
+    db->setKey(key);
 
     QString errorMessage;
-    if (!db.save(databaseFilename, &errorMessage, true, false)) {
+    if (!db->save(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
+    currentDatabase = db;
     return EXIT_SUCCESS;
 }
 

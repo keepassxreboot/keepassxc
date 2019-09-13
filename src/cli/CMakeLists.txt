@@ -18,24 +18,35 @@ set(cli_SOURCES
         AddGroup.cpp
         Analyze.cpp
         Clip.cpp
+        Close.cpp
         Create.cpp
         Command.cpp
         DatabaseCommand.cpp
         Diceware.cpp
         Edit.cpp
         Estimate.cpp
+        Exit.cpp
         Export.cpp
         Generate.cpp
+        Help.cpp
         List.cpp
         Locate.cpp
         Merge.cpp
         Move.cpp
+        Open.cpp
         Remove.cpp
         RemoveGroup.cpp
         Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)
+
+find_package(Readline)
+
+if (READLINE_FOUND)
+    target_compile_definitions(cli PUBLIC USE_READLINE)
+    target_link_libraries(cli readline)
+endif()
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
@@ -52,6 +63,12 @@ target_link_libraries(keepassxc-cli
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
+
+if(MINGW)
+    install(CODE "include(BundleUtilities)
+                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
+            COMPONENT Runtime)
+endif()
 
 if(APPLE AND WITH_APP_BUNDLE)
     add_custom_command(TARGET keepassxc-cli

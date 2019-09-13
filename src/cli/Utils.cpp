@@ -269,4 +269,42 @@ namespace Utils
         return clipProcess->exitCode();
     }
 
+    /**
+     * Splits the given QString into a QString list. For example:
+     *
+     * "hello world" -> ["hello", "world"]
+     * "hello    world" -> ["hello", "world"]
+     * "hello\\ world" -> ["hello world"] (i.e. backslash is an escape character
+     * "\"hello world\"" -> ["hello world"]
+     */
+    QStringList splitCommandString(const QString& command)
+    {
+        QStringList result;
+
+        bool insideQuotes = false;
+        QString cur;
+        for (int i = 0; i < command.size(); ++i) {
+            QChar c = command[i];
+            if (c == '\\' && i < command.size() - 1) {
+                cur.append(command[i + 1]);
+                ++i;
+            } else if (!insideQuotes && (c == ' ' || c == '\t')) {
+                if (!cur.isEmpty()) {
+                    result.append(cur);
+                    cur.clear();
+                }
+            } else if (c == '"' && (insideQuotes || i == 0 || command[i - 1].isSpace())) {
+                insideQuotes = !insideQuotes;
+            } else {
+                cur.append(c);
+            }
+        }
+
+        if (!cur.isEmpty()) {
+            result.append(cur);
+        }
+
+        return result;
+    }
+
 } // namespace Utils

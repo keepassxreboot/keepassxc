@@ -1214,7 +1214,6 @@ void TestMerge::testCustomData()
     QCOMPARE(dbDestination->metadata()->customData()->value("key3"),
              QString("newValue")); // Old value should be replaced
 
-
     // Merging again should not do anything if the values are the same.
     m_clock->advanceSecond(1);
     dbSource->metadata()->customData()->set("key3", "oldValue");
@@ -1222,7 +1221,6 @@ void TestMerge::testCustomData()
     Merger merger2(dbSource.data(), dbDestination.data());
     QStringList changes2 = merger2.merge();
     QVERIFY(changes2.isEmpty());
-
 
     Merger merger3(dbSource2.data(), dbDestination2.data());
     merger3.merge();

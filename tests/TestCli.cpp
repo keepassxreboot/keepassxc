@@ -42,10 +42,12 @@
 #include "cli/Estimate.h"
 #include "cli/Export.h"
 #include "cli/Generate.h"
+#include "cli/Help.h"
 #include "cli/List.h"
 #include "cli/Locate.h"
 #include "cli/Merge.h"
 #include "cli/Move.h"
+#include "cli/Open.h"
 #include "cli/Remove.h"
 #include "cli/RemoveGroup.h"
 #include "cli/Show.h"
@@ -61,6 +63,8 @@
 #include <cstdio>
 
 QTEST_MAIN(TestCli)
+
+QSharedPointer<Database> globalCurrentDatabase;
 
 void TestCli::initTestCase()
 {
@@ -173,24 +177,59 @@ QSharedPointer<Database> TestCli::readTestDatabase() const
     return db;
 }
 
-void TestCli::testCommand()
+void TestCli::testBatchCommands()
 {
-    QCOMPARE(Command::getCommands().size(), 17);
-    QVERIFY(Command::getCommand("add"));
-    QVERIFY(Command::getCommand("analyze"));
-    QVERIFY(Command::getCommand("clip"));
-    QVERIFY(Command::getCommand("create"));
-    QVERIFY(Command::getCommand("diceware"));
-    QVERIFY(Command::getCommand("edit"));
-    QVERIFY(Command::getCommand("estimate"));
-    QVERIFY(Command::getCommand("export"));
-    QVERIFY(Command::getCommand("generate"));
-    QVERIFY(Command::getCommand("locate"));
-    QVERIFY(Command::getCommand("ls"));
-    QVERIFY(Command::getCommand("merge"));
-    QVERIFY(Command::getCommand("rm"));
-    QVERIFY(Command::getCommand("show"));
-    QVERIFY(!Command::getCommand("doesnotexist"));
+    Commands::setupCommands(false);
+    QVERIFY(Commands::getCommand("add"));
+    QVERIFY(Commands::getCommand("analyze"));
+    QVERIFY(Commands::getCommand("clip"));
+    QVERIFY(Commands::getCommand("close"));
+    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("diceware"));
+    QVERIFY(Commands::getCommand("edit"));
+    QVERIFY(Commands::getCommand("estimate"));
+    QVERIFY(Commands::getCommand("export"));
+    QVERIFY(Commands::getCommand("generate"));
+    QVERIFY(Commands::getCommand("help"));
+    QVERIFY(Commands::getCommand("locate"));
+    QVERIFY(Commands::getCommand("ls"));
+    QVERIFY(Commands::getCommand("merge"));
+    QVERIFY(Commands::getCommand("mkdir"));
+    QVERIFY(Commands::getCommand("mv"));
+    QVERIFY(Commands::getCommand("open"));
+    QVERIFY(Commands::getCommand("rm"));
+    QVERIFY(Commands::getCommand("rmdir"));
+    QVERIFY(Commands::getCommand("show"));
+    QVERIFY(!Commands::getCommand("doesnotexist"));
+    QCOMPARE(Commands::getCommands().size(), 20);
+}
+
+void TestCli::testInteractiveCommands()
+{
+    Commands::setupCommands(true);
+    QVERIFY(Commands::getCommand("add"));
+    QVERIFY(Commands::getCommand("analyze"));
+    QVERIFY(Commands::getCommand("clip"));
+    QVERIFY(Commands::getCommand("close"));
+    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("diceware"));
+    QVERIFY(Commands::getCommand("edit"));
+    QVERIFY(Commands::getCommand("estimate"));
+    QVERIFY(Commands::getCommand("exit"));
+    QVERIFY(Commands::getCommand("generate"));
+    QVERIFY(Commands::getCommand("help"));
+    QVERIFY(Commands::getCommand("locate"));
+    QVERIFY(Commands::getCommand("ls"));
+    QVERIFY(Commands::getCommand("merge"));
+    QVERIFY(Commands::getCommand("mkdir"));
+    QVERIFY(Commands::getCommand("mv"));
+    QVERIFY(Commands::getCommand("open"));
+    QVERIFY(Commands::getCommand("quit"));
+    QVERIFY(Commands::getCommand("rm"));
+    QVERIFY(Commands::getCommand("rmdir"));
+    QVERIFY(Commands::getCommand("show"));
+    QVERIFY(!Commands::getCommand("doesnotexist"));
+    QCOMPARE(Commands::getCommands().size(), 21);
 }
 
 void TestCli::testAdd()
@@ -1749,4 +1788,89 @@ void TestCli::testYubiKeyOption()
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll().split(':').at(0), QByteArray("Invalid YubiKey slot 3\n"));
+}
+
+namespace
+{
+
+    void expectParseResult(const QString& input, const QStringList& expectedOutput)
+    {
+        QStringList result = Utils::splitCommandString(input);
+        QCOMPARE(result.size(), expectedOutput.size());
+        for (int i = 0; i < expectedOutput.size(); ++i) {
+            QCOMPARE(result[i], expectedOutput[i]);
+        }
+    }
+
+} // namespace
+
+void TestCli::testCommandParsing_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<QStringList>("expectedOutput");
+
+    QTest::newRow("basic") << "hello world" << QStringList({"hello", "world"});
+    QTest::newRow("basic escaping") << "hello\\ world" << QStringList({"hello world"});
+    QTest::newRow("quoted string") << "\"hello world\"" << QStringList({"hello world"});
+    QTest::newRow("multiple params") << "show Passwords/Internet" << QStringList({"show", "Passwords/Internet"});
+    QTest::newRow("quoted string inside param")
+        << R"(ls foo\ bar\ baz"quoted")" << QStringList({"ls", "foo bar baz\"quoted\""});
+    QTest::newRow("multiple whitespace") << "hello    world" << QStringList({"hello", "world"});
+    QTest::newRow("single slash char") << "\\" << QStringList({"\\"});
+    QTest::newRow("double backslash entry name") << "show foo\\\\\\\\bar" << QStringList({"show", "foo\\\\bar"});
+}
+
+void TestCli::testCommandParsing()
+{
+    QFETCH(QString, input);
+    QFETCH(QStringList, expectedOutput);
+
+    expectParseResult(input, expectedOutput);
+}
+
+void TestCli::testOpen()
+{
+    Open o;
+
+    Utils::Test::setNextPassword("a");
+    o.execute({"open", m_dbFile->fileName()});
+    m_stdoutFile->reset();
+    QVERIFY(o.currentDatabase);
+
+    List l;
+    // Set a current database, simulating interactive mode.
+    l.currentDatabase = o.currentDatabase;
+    l.execute({"ls"});
+    m_stdoutFile->reset();
+    QByteArray expectedOutput("Sample Entry\n"
+                              "General/\n"
+                              "Windows/\n"
+                              "Network/\n"
+                              "Internet/\n"
+                              "eMail/\n"
+                              "Homebanking/\n");
+    QByteArray actualOutput = m_stdoutFile->readAll();
+    actualOutput.truncate(expectedOutput.length());
+    QCOMPARE(actualOutput, expectedOutput);
+}
+
+void TestCli::testHelp()
+{
+    Help h;
+    Commands::setupCommands(false);
+
+    {
+        h.execute({"help"});
+        m_stderrFile->reset();
+        QString output(m_stderrFile->readAll());
+        QVERIFY(output.contains(QObject::tr("Available commands")));
+    }
+
+    {
+        List l;
+        h.execute({"help", "ls"});
+        m_stderrFile->reset();
+        QString output(m_stderrFile->readAll());
+        QVERIFY(output.contains(l.description));
+    }
 }

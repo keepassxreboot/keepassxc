@@ -44,19 +44,27 @@ public:
     virtual int execute(const QStringList& arguments) = 0;
     QString name;
     QString description;
+    QSharedPointer<Database> currentDatabase;
     QList<CommandLineArgument> positionalArguments;
     QList<CommandLineArgument> optionalArguments;
     QList<QCommandLineOption> options;
+
     QString getDescriptionLine();
     QSharedPointer<QCommandLineParser> getCommandLineParser(const QStringList& arguments);
+    QString getHelpText();
 
-    static QList<Command*> getCommands();
-    static Command* getCommand(const QString& commandName);
-
+    static const QCommandLineOption HelpOption;
     static const QCommandLineOption QuietOption;
     static const QCommandLineOption KeyFileOption;
     static const QCommandLineOption NoPasswordOption;
     static const QCommandLineOption YubiKeyOption;
 };
+
+namespace Commands
+{
+    void setupCommands(bool interactive);
+    QList<QSharedPointer<Command>> getCommands();
+    QSharedPointer<Command> getCommand(const QString& commandName);
+} // namespace Commands
 
 #endif // KEEPASSXC_COMMAND_H
