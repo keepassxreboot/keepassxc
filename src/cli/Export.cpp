@@ -38,7 +38,6 @@ Export::Export()
     description = QObject::tr("Exports the content of a database to standard output in the specified format.");
 }
 
-
 int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);

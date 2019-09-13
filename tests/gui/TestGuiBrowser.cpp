@@ -26,8 +26,8 @@
 #include <QDialogButtonBox>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QToolBar>
 #include <QTableView>
+#include <QToolBar>
 
 #include "config-keepassx-tests.h"
 #include "core/Bootstrap.h"
@@ -144,7 +144,7 @@ void TestGuiBrowser::testEntrySettings()
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    
+
     // Switch to Properties page and select all rows from the custom data table
     editEntryWidget->setCurrentPage(4);
     auto customDataTableView = editEntryWidget->findChild<QTableView*>("customDataTable");
@@ -181,9 +181,9 @@ void TestGuiBrowser::triggerAction(const QString& name)
 }
 
 void TestGuiBrowser::clickIndex(const QModelIndex& index,
-                         QAbstractItemView* view,
-                         Qt::MouseButton button,
-                         Qt::KeyboardModifiers stateKey)
+                                QAbstractItemView* view,
+                                Qt::MouseButton button,
+                                Qt::KeyboardModifiers stateKey)
 {
     QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
 }
