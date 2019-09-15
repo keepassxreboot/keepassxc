@@ -48,7 +48,8 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->clearIcon, SIGNAL(triggered(bool)), m_ui->searchEdit, SLOT(clear()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
-    connect(m_searchTimer, SIGNAL(timeout()), this, SLOT(startSearch()));
+    connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
+    connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), m_ui->searchEdit, SLOT(clear()));
     connect(this, SIGNAL(escapePressed()), m_ui->searchEdit, SLOT(clear()));
 
@@ -59,18 +60,17 @@ SearchWidget::SearchWidget(QWidget* parent)
                                              .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
     m_ui->searchEdit->installEventFilter(this);
 
-    QMenu* searchMenu = new QMenu();
-    m_actionCaseSensitive = searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
+    m_searchMenu = new QMenu();
+    m_actionCaseSensitive = m_searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
 
-    m_actionLimitGroup = searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
+    m_actionLimitGroup = m_searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
     m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
     m_actionLimitGroup->setCheckable(true);
     m_actionLimitGroup->setChecked(config()->get("SearchLimitGroup", false).toBool());
 
     m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
-    m_ui->searchIcon->setMenu(searchMenu);
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
     m_ui->helpIcon->setIcon(filePath()->icon("actions", "system-help"));
@@ -213,4 +213,9 @@ void SearchWidget::toggleHelp()
     } else {
         m_helpWidget->show();
     }
+}
+
+void SearchWidget::showSearchMenu()
+{
+    m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(m_ui->searchEdit->rect().bottomLeft()));
 }

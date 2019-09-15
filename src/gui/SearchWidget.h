@@ -69,6 +69,7 @@ private slots:
     void updateLimitGroup();
     void searchFocus();
     void toggleHelp();
+    void showSearchMenu();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
@@ -77,6 +78,7 @@ private:
     QTimer* m_clearSearchTimer;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
+    QMenu* m_searchMenu;
 };
 
 #endif // SEARCHWIDGET_H
