@@ -1,11 +1,13 @@
 [Desktop Entry]
 Name=KeePassXC
 GenericName=Password Manager
+GenericName[da]=Adgangskodehåndtering
 GenericName[de]=Passwortverwaltung
 GenericName[es]=Gestor de contraseñas
 GenericName[fr]=Gestionnaire de mot de passe
 GenericName[ru]=менеджер паролей
 Comment=Community-driven port of the Windows application “KeePass Password Safe”
+Comment[da]=Fællesskabsdrevet port af Windows-programmet “KeePass Password Safe”
 Exec=keepassxc %f
 TryExec=keepassxc
 Icon=keepassxc
