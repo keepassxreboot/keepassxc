@@ -130,7 +130,7 @@ QSharedPointer<Command> Command::getCommand(const QString& commandName)
     if (commands.contains(commandName)) {
         return commands[commandName];
     }
-    return nullptr;
+    return {};
 }
 
 QList<QSharedPointer<Command>> Command::getCommands()
