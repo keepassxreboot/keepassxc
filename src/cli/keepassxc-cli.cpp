@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 
     QString description("KeePassXC command line interface.");
     description = description.append(QObject::tr("\n\nAvailable commands:\n"));
-    for (Command* command : Command::getCommands()) {
+    for (QSharedPointer<Command> command : Command::getCommands()) {
         description = description.append(command->getDescriptionLine());
     }
     parser.setApplicationDescription(description);
@@ -84,7 +84,7 @@ int main(int argc, char** argv)
     }
 
     QString commandName = parser.positionalArguments().at(0);
-    Command* command = Command::getCommand(commandName);
+    QSharedPointer<Command> command = Command::getCommand(commandName);
 
     if (command == nullptr) {
         qCritical("Invalid command %s.", qPrintable(commandName));

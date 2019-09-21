@@ -50,8 +50,8 @@ public:
     QString getDescriptionLine();
     QSharedPointer<QCommandLineParser> getCommandLineParser(const QStringList& arguments);
 
-    static QList<Command*> getCommands();
-    static Command* getCommand(const QString& commandName);
+    static QList<QSharedPointer<Command>> getCommands();
+    static QSharedPointer<Command> getCommand(const QString& commandName);
 
     static const QCommandLineOption QuietOption;
     static const QCommandLineOption KeyFileOption;

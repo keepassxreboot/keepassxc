@@ -52,7 +52,7 @@ const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList
 const QCommandLineOption Command::NoPasswordOption =
     QCommandLineOption(QStringList() << "no-password", QObject::tr("Deactivate password key for the database."));
 
-QMap<QString, Command*> commands;
+QMap<QString, QSharedPointer<Command>> commands;
 
 Command::Command()
 {
@@ -107,24 +107,24 @@ QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringLi
 void populateCommands()
 {
     if (commands.isEmpty()) {
-        commands.insert(QString("add"), new Add());
-        commands.insert(QString("analyze"), new Analyze());
-        commands.insert(QString("clip"), new Clip());
-        commands.insert(QString("create"), new Create());
-        commands.insert(QString("diceware"), new Diceware());
-        commands.insert(QString("edit"), new Edit());
-        commands.insert(QString("estimate"), new Estimate());
-        commands.insert(QString("extract"), new Extract());
-        commands.insert(QString("generate"), new Generate());
-        commands.insert(QString("locate"), new Locate());
-        commands.insert(QString("ls"), new List());
-        commands.insert(QString("merge"), new Merge());
-        commands.insert(QString("rm"), new Remove());
-        commands.insert(QString("show"), new Show());
+        commands.insert(QString("add"), QSharedPointer<Command>(new Add()));
+        commands.insert(QString("analyze"), QSharedPointer<Command>(new Analyze()));
+        commands.insert(QString("clip"), QSharedPointer<Command>(new Clip()));
+        commands.insert(QString("create"), QSharedPointer<Command>(new Create()));
+        commands.insert(QString("diceware"), QSharedPointer<Command>(new Diceware()));
+        commands.insert(QString("edit"), QSharedPointer<Command>(new Edit()));
+        commands.insert(QString("estimate"), QSharedPointer<Command>(new Estimate()));
+        commands.insert(QString("extract"), QSharedPointer<Command>(new Extract()));
+        commands.insert(QString("generate"), QSharedPointer<Command>(new Generate()));
+        commands.insert(QString("locate"), QSharedPointer<Command>(new Locate()));
+        commands.insert(QString("ls"), QSharedPointer<Command>(new List()));
+        commands.insert(QString("merge"), QSharedPointer<Command>(new Merge()));
+        commands.insert(QString("rm"), QSharedPointer<Command>(new Remove()));
+        commands.insert(QString("show"), QSharedPointer<Command>(new Show()));
     }
 }
 
-Command* Command::getCommand(const QString& commandName)
+QSharedPointer<Command> Command::getCommand(const QString& commandName)
 {
     populateCommands();
     if (commands.contains(commandName)) {
@@ -133,7 +133,7 @@ Command* Command::getCommand(const QString& commandName)
     return nullptr;
 }
 
-QList<Command*> Command::getCommands()
+QList<QSharedPointer<Command>> Command::getCommands()
 {
     populateCommands();
     return commands.values();
