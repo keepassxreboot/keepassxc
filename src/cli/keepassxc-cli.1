@@ -70,6 +70,9 @@ Specifies a path to a key file for unlocking the database. In a merge operation 
 .IP "--no-password"
 Deactivate password key for the database.
 
+.IP "-y, --yubikey <slot>"
+Specifies a yubikey slot for unlocking the database. In a merge operation this option is used to specify the yubikey slot for the first database.
+
 .IP "-q, --quiet <path>"
 Silence password prompt and other secondary outputs.
 
@@ -90,6 +93,9 @@ Path of the key file for the second database.
 
 .IP "--no-password-from"
 Deactivate password key for the database to merge from.
+
+.IP "--yubikey-from <slot>"
+Yubikey slot for the second database.
 
 .IP "-s, --same-credentials"
 Use the same credentials for unlocking both database.

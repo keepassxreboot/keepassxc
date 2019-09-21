@@ -74,7 +74,7 @@ void TestYubiKeyChalResp::keyIssueChallenge()
     /* TODO Determine if it's reasonable to provide a fixed secret key for
      *      verification testing.  Obviously simple technically, but annoying
      *      if devs need to re-program their yubikeys or have a spare test key
-     *      for unit tests to past.
+     *      for unit tests to pass.
      *
      *      Might be worth it for integrity verification though.
      */
