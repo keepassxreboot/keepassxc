@@ -102,6 +102,7 @@ namespace Utils
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
+                                            const QString& yubiKeySlot,
                                             FILE* outputDescriptor,
                                             FILE* errorDescriptor)
     {
@@ -152,6 +153,31 @@ namespace Utils
 
             compositeKey->addKey(fileKey);
         }
+
+#ifdef WITH_XC_YUBIKEY
+        if (!yubiKeySlot.isEmpty()) {
+            bool ok = false;
+            int slot = yubiKeySlot.toInt(&ok, 10);
+            if (!ok || (slot != 1 && slot != 2)) {
+                err << QObject::tr("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+                return {};
+            }
+
+            QString errorMessage;
+            bool blocking = YubiKey::instance()->checkSlotIsBlocking(slot, errorMessage);
+            if (!errorMessage.isEmpty()) {
+                err << errorMessage << endl;
+                return {};
+            }
+
+            auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
+                slot,
+                blocking,
+                QObject::tr("Please touch the button on your YubiKey to unlock %1").arg(databaseFilename),
+                outputDescriptor));
+            compositeKey->addChallengeResponseKey(key);
+        }
+#endif
 
         auto db = QSharedPointer<Database>::create();
         QString error;

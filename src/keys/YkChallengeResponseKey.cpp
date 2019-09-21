@@ -66,9 +66,9 @@ QByteArray YkChallengeResponseKey::rawKey() const
 /**
  * Assumes yubikey()->init() was called
  */
-bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
+bool YkChallengeResponseKey::challenge(const QByteArray& c)
 {
-    return this->challenge(challenge, 2);
+    return challenge(c, 2);
 }
 
 bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int retries)
