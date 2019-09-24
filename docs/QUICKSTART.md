@@ -62,7 +62,7 @@ To make sure that your data is valid when imported by another client, please _ge
 
 ### Sharing Credentials
 
-If you checked _Allow export_ in the Sharing settings you now are good to go to share some passwords with others. Sharing always is defined on a group. If you enable sharing on a group, every entry under this group or it's children is shared. If you enable sharing on the root node, **every password** inside your database gets shared!
+If you checked _Allow export_ in the Sharing settings you now are good to go to share some passwords with others. Sharing always is defined on a group. If you enable sharing on a group, every entry under this group or its children is shared. If you enable sharing on the root node, **every password** inside your database gets shared!
 
 1. Open the edit sheet on a group you want to share.
 1. Select the sharing section.
