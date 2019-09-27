@@ -8,6 +8,7 @@
 - CLI: Add 'flatten' option to the 'ls' command [#3276](https://github.com/keepassxreboot/keepassxc/issues/3276)
 - CLI: Add password generation options to `Add` and `Edit` commands [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
 - Add 'Monospaced font' option to the Notes field [#3321](https://github.com/keepassxreboot/keepassxc/issues/3321)
+- Add "Paper Backup" aka "Export to HTML file" to the "Database" menu [#3277](https://github.com/keepassxreboot/keepassxc/pull/3277)
 
 ### Changed
 
