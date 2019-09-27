@@ -24,6 +24,7 @@
 #include <unistd.h>
 #endif
 
+#include <QFileInfo>
 #include <QProcess>
 #include <QScopedPointer>
 
@@ -101,12 +102,29 @@ namespace Utils
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
+                                            const QString& yubiKeySlot,
                                             FILE* outputDescriptor,
                                             FILE* errorDescriptor)
     {
         auto compositeKey = QSharedPointer<CompositeKey>::create();
         TextStream out(outputDescriptor);
         TextStream err(errorDescriptor);
+
+        QFileInfo dbFileInfo(databaseFilename);
+        if (dbFileInfo.canonicalFilePath().isEmpty()) {
+            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isFile()) {
+            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isReadable()) {
+            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << endl;
+            return {};
+        }
 
         if (isPasswordProtected) {
             out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
@@ -135,6 +153,31 @@ namespace Utils
 
             compositeKey->addKey(fileKey);
         }
+
+#ifdef WITH_XC_YUBIKEY
+        if (!yubiKeySlot.isEmpty()) {
+            bool ok = false;
+            int slot = yubiKeySlot.toInt(&ok, 10);
+            if (!ok || (slot != 1 && slot != 2)) {
+                err << QObject::tr("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+                return {};
+            }
+
+            QString errorMessage;
+            bool blocking = YubiKey::instance()->checkSlotIsBlocking(slot, errorMessage);
+            if (!errorMessage.isEmpty()) {
+                err << errorMessage << endl;
+                return {};
+            }
+
+            auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
+                slot,
+                blocking,
+                QObject::tr("Please touch the button on your YubiKey to unlock %1").arg(databaseFilename),
+                outputDescriptor));
+            compositeKey->addChallengeResponseKey(key);
+        }
+#endif
 
         auto db = QSharedPointer<Database>::create();
         QString error;

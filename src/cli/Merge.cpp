@@ -43,6 +43,9 @@ const QCommandLineOption Merge::DryRunOption =
     QCommandLineOption(QStringList() << "dry-run",
                        QObject::tr("Only print the changes detected by the merge operation."));
 
+const QCommandLineOption Merge::YubiKeyFromOption(QStringList() << "yubikey-from",
+                                                  QObject::tr("Yubikey slot for the second database."),
+                                                  QObject::tr("slot"));
 Merge::Merge()
 {
     name = QString("merge");
@@ -51,6 +54,9 @@ Merge::Merge()
     options.append(Merge::KeyFileFromOption);
     options.append(Merge::NoPasswordFromOption);
     options.append(Merge::DryRunOption);
+#ifdef WITH_XC_YUBIKEY
+    options.append(Merge::YubiKeyFromOption);
+#endif
     positionalArguments.append({QString("database2"), QObject::tr("Path of the database to merge from."), QString("")});
 }
 
@@ -70,6 +76,7 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
         db2 = Utils::unlockDatabase(fromDatabasePath,
                                     !parser->isSet(Merge::NoPasswordFromOption),
                                     parser->value(Merge::KeyFileFromOption),
+                                    parser->value(Merge::YubiKeyFromOption),
                                     parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                     Utils::STDERR);
         if (!db2) {

@@ -15,23 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MERGE_H
-#define KEEPASSXC_MERGE_H
+#ifndef KEEPASSXC_ADDGROUP_H
+#define KEEPASSXC_ADDGROUP_H
 
 #include "DatabaseCommand.h"
 
-class Merge : public DatabaseCommand
+class AddGroup : public DatabaseCommand
 {
 public:
-    Merge();
+    AddGroup();
+    ~AddGroup();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
-
-    static const QCommandLineOption SameCredentialsOption;
-    static const QCommandLineOption KeyFileFromOption;
-    static const QCommandLineOption NoPasswordFromOption;
-    static const QCommandLineOption YubiKeyFromOption;
-    static const QCommandLineOption DryRunOption;
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 };
 
-#endif // KEEPASSXC_MERGE_H
+#endif // KEEPASSXC_ADDGROUP_H

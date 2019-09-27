@@ -56,6 +56,7 @@ public:
     static const QCommandLineOption QuietOption;
     static const QCommandLineOption KeyFileOption;
     static const QCommandLineOption NoPasswordOption;
+    static const QCommandLineOption YubiKeyOption;
 };
 
 #endif // KEEPASSXC_COMMAND_H

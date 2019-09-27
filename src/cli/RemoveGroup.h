@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,17 +15,18 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EXTRACT_H
-#define KEEPASSXC_EXTRACT_H
+#ifndef KEEPASSXC_REMOVEGROUP_H
+#define KEEPASSXC_REMOVEGROUP_H
 
 #include "DatabaseCommand.h"
 
-class Extract : public DatabaseCommand
+class RemoveGroup : public DatabaseCommand
 {
 public:
-    Extract();
+    RemoveGroup();
+    ~RemoveGroup();
 
-    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
+    int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser);
 };
 
-#endif // KEEPASSXC_EXTRACT_H
+#endif // KEEPASSXC_REMOVEGROUP_H

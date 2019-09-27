@@ -36,8 +36,8 @@ The same password generation options as documented for the generate command can 
 .IP "estimate [options] [password]"
 Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
 
-.IP "extract [options] <database>"
-Extracts and prints the contents of a database to standard output in XML format.
+.IP "export [options] <database>"
+Exports the content of a database to standard output in the specified format (defaults to XML).
 
 .IP "generate [options]"
 Generate a random password.
@@ -51,8 +51,17 @@ Lists the contents of a group in a database. If no group is specified, it will d
 .IP "merge [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
 
+.IP "mkdir [options] <database> <group>"
+Adds a new group to a database.
+
+.IP "mv [options] <database> <entry> <group>"
+Moves an entry to a new group.
+
 .IP "rm [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
+
+.IP "rmdir [options] <database> <group>"
+Removes a group from a database. If the database has a recycle bin, the group will be moved there. If the group is already in the recycle bin, it will be removed permanently.
 
 .IP "show [options] <database> <entry>"
 Shows the title, username, password, URL and notes of a database entry. Can also show the current TOTP. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
@@ -69,6 +78,9 @@ Specifies a path to a key file for unlocking the database. In a merge operation 
 
 .IP "--no-password"
 Deactivate password key for the database.
+
+.IP "-y, --yubikey <slot>"
+Specifies a yubikey slot for unlocking the database. In a merge operation this option is used to specify the yubikey slot for the first database.
 
 .IP "-q, --quiet <path>"
 Silence password prompt and other secondary outputs.
@@ -90,6 +102,9 @@ Path of the key file for the second database.
 
 .IP "--no-password-from"
 Deactivate password key for the database to merge from.
+
+.IP "--yubikey-from <slot>"
+Yubikey slot for the second database.
 
 .IP "-s, --same-credentials"
 Use the same credentials for unlocking both database.
@@ -162,6 +177,12 @@ Desired number of words for the generated passphrase. [Default: 7]
 Path of the wordlist for the diceware generator. The wordlist must have > 1000 words,
 otherwise the program will fail. If the wordlist has < 4000 words a warning will
 be printed to STDERR.
+
+
+.SS "Export options"
+
+.IP "-f, --format"
+Format to use when exporting. Available choices are xml or csv. Defaults to xml.
 
 
 .SS "List options"
