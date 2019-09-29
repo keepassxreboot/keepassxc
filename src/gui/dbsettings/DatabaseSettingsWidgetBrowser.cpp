@@ -242,12 +242,12 @@ void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
 {
     if (MessageBox::Yes
         != MessageBox::question(
-            this,
-            tr("Move KeePassHTTP attributes to custom data"),
-            tr("Do you really want to move all legacy browser integration data to the latest standard?\n"
-               "This is necessary to maintain compatibility with the browser plugin."),
-            MessageBox::Yes | MessageBox::Cancel,
-            MessageBox::Cancel)) {
+               this,
+               tr("Move KeePassHTTP attributes to custom data"),
+               tr("Do you really want to move all legacy browser integration data to the latest standard?\n"
+                  "This is necessary to maintain compatibility with the browser plugin."),
+               MessageBox::Yes | MessageBox::Cancel,
+               MessageBox::Cancel)) {
         return;
     }
 
