@@ -1051,10 +1051,10 @@ void MainWindow::updateTrayIcon()
 #else
             menu->addAction(m_ui->actionQuit);
 
+#endif
             connect(m_trayIcon,
                     SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
-#endif
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
 
             m_trayIcon->setContextMenu(menu);
