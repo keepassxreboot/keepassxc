@@ -168,13 +168,12 @@ void EntryPreviewWidget::updateEntryTotp()
 void EntryPreviewWidget::setPasswordVisible(bool state)
 {
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
-    auto flags = m_ui->entryPasswordLabel->textInteractionFlags();
     if (state) {
         m_ui->entryPasswordLabel->setRawText(password);
         m_ui->entryPasswordLabel->setToolTip(password);
-        m_ui->entryPasswordLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
+        m_ui->entryPasswordLabel->setTextInteractionFlags(Qt::TextSelectableByMouse);
     } else {
-        m_ui->entryPasswordLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
+        m_ui->entryPasswordLabel->setTextInteractionFlags(Qt::NoTextInteraction);
         m_ui->entryPasswordLabel->setToolTip({});
         if (password.isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
             m_ui->entryPasswordLabel->setRawText("");
@@ -194,21 +193,20 @@ void EntryPreviewWidget::setGroupNotesVisible(bool state)
     setNotesVisible(m_ui->groupNotesLabel, m_currentGroup->notes(), state);
 }
 
-void EntryPreviewWidget::setNotesVisible(QLabel* notesLabel, const QString notes, bool state)
+void EntryPreviewWidget::setNotesVisible(QLabel* notesLabel, const QString& notes, bool state)
 {
-    auto flags = notesLabel->textInteractionFlags();
     if (state) {
-        notesLabel->setText(notes);
-        notesLabel->setToolTip(notes);
-        notesLabel->setTextInteractionFlags(flags | Qt::TextSelectableByMouse);
+        // Add html hyperlinks to notes that start with XXXX://
+        QString hyperlinkNotes = notes;
+        notesLabel->setText(hyperlinkNotes.replace(QRegExp("(\\w+:\\/\\/\\S+)"), "<a href=\"\\1\">\\1</a>"));
+        notesLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     } else {
         if (notes.isEmpty()) {
             notesLabel->setText("");
         } else {
             notesLabel->setText(QString("\u25cf").repeated(6));
         }
-        notesLabel->setToolTip({});
-        notesLabel->setTextInteractionFlags(flags & ~Qt::TextSelectableByMouse);
+        notesLabel->setTextInteractionFlags(Qt::NoTextInteraction);
     }
 }
 
