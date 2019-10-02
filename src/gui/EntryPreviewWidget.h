@@ -54,7 +54,7 @@ private slots:
     void setPasswordVisible(bool state);
     void setEntryNotesVisible(bool state);
     void setGroupNotesVisible(bool state);
-    void setNotesVisible(QLabel* notesLabel, const QString notes, bool state);
+    void setNotesVisible(QLabel* notesLabel, const QString& notes, bool state);
 
     void updateGroupHeaderLine();
     void updateGroupGeneralTab();

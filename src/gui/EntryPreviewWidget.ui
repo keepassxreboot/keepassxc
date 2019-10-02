@@ -463,7 +463,7 @@
                  <string>Notes</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignTop|Qt::AlignRight</set>
+                 <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
                 </property>
                </widget>
               </item>
@@ -502,11 +502,20 @@
                   <property name="text">
                    <string notr="true">notes</string>
                   </property>
+                  <property name="textFormat">
+                   <enum>Qt::RichText</enum>
+                  </property>
                   <property name="alignment">
                    <set>Qt::AlignTop</set>
                   </property>
                   <property name="wordWrap">
                    <bool>true</bool>
+                  </property>
+                  <property name="openExternalLinks">
+                   <bool>true</bool>
+                  </property>
+                  <property name="textInteractionFlags">
+                   <set>Qt::NoTextInteraction</set>
                   </property>
                  </widget>
                 </item>
@@ -828,7 +837,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
             <widget class="QWidget" name="groupGeneralWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0">
+             <layout class="QGridLayout" name="gridLayout_2" columnstretch="0,0,0,0">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -971,7 +980,7 @@
                  <string>Notes</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignTop|Qt::AlignRight</set>
+                 <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
                 </property>
                </widget>
               </item>
