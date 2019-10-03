@@ -193,7 +193,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get("AutoTypeEntryURLMatch").toBool());
     m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get("FaviconDownloadTimeout").toInt());
-    m_generalUi->searchTimerSpinBox->setValue(config()->get("SearchTimer", 100).toInt());
 
     if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
         hideWindowOnCopyCheckBoxToggled(false);
@@ -306,7 +305,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("AutoTypeEntryURLMatch", m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
     config()->set("FaviconDownloadTimeout", m_generalUi->faviconTimeoutSpinBox->value());
-    config()->set("SearchTimer", m_generalUi->searchTimerSpinBox->value());
 
     config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
 
