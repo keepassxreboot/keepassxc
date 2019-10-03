@@ -107,6 +107,16 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneNewUuid->historyItems().size(), 0);
     QCOMPARE(entryCloneNewUuid->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 
+    // Reset modification time
+    entryOrgTime.setLastModificationTime(Clock::datetimeUtc(60));
+    entryOrg->setTimeInfo(entryOrgTime);
+
+    QScopedPointer<Entry> entryCloneRename(entryOrg->clone(Entry::CloneRenameTitle));
+    QCOMPARE(entryCloneRename->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneRename->title(), QString("New Title - Clone"));
+    // Cloning should not modify time info unless explicity requested
+    QCOMPARE(entryCloneRename->timeInfo(), entryOrg->timeInfo());
+
     QScopedPointer<Entry> entryCloneResetTime(entryOrg->clone(Entry::CloneResetTimeInfo));
     QCOMPARE(entryCloneResetTime->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
