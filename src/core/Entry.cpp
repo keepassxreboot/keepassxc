@@ -769,7 +769,6 @@ Entry* Entry::clone(CloneFlags flags) const
             entry->addHistoryItem(historyItemClone);
         }
     }
-    entry->setUpdateTimeinfo(true);
 
     if (flags & CloneResetTimeInfo) {
         QDateTime now = Clock::currentDateTimeUtc();
@@ -781,6 +780,8 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneRenameTitle)
         entry->setTitle(tr("%1 - Clone").arg(entry->title()));
+
+    entry->setUpdateTimeinfo(true);
 
     return entry;
 }
