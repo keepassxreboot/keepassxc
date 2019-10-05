@@ -762,14 +762,13 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
-            Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
+            Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid & ~CloneResetTimeInfo);
             historyItemClone->setUpdateTimeinfo(false);
             historyItemClone->setUuid(entry->uuid());
             historyItemClone->setUpdateTimeinfo(true);
             entry->addHistoryItem(historyItemClone);
         }
     }
-    entry->setUpdateTimeinfo(true);
 
     if (flags & CloneResetTimeInfo) {
         QDateTime now = Clock::currentDateTimeUtc();
@@ -781,6 +780,8 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneRenameTitle)
         entry->setTitle(tr("%1 - Clone").arg(entry->title()));
+
+    entry->setUpdateTimeinfo(true);
 
     return entry;
 }

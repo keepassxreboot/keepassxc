@@ -107,18 +107,44 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneNewUuid->historyItems().size(), 0);
     QCOMPARE(entryCloneNewUuid->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 
+    // Reset modification time
+    entryOrgTime.setLastModificationTime(Clock::datetimeUtc(60));
+    entryOrg->setTimeInfo(entryOrgTime);
+
+    QScopedPointer<Entry> entryCloneRename(entryOrg->clone(Entry::CloneRenameTitle));
+    QCOMPARE(entryCloneRename->uuid(), entryOrg->uuid());
+    QCOMPARE(entryCloneRename->title(), QString("New Title - Clone"));
+    // Cloning should not modify time info unless explicity requested
+    QCOMPARE(entryCloneRename->timeInfo(), entryOrg->timeInfo());
+
     QScopedPointer<Entry> entryCloneResetTime(entryOrg->clone(Entry::CloneResetTimeInfo));
     QCOMPARE(entryCloneResetTime->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
     QCOMPARE(entryCloneResetTime->historyItems().size(), 0);
     QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
 
-    QScopedPointer<Entry> entryCloneHistory(entryOrg->clone(Entry::CloneIncludeHistory));
+    // Date back history of original entry
+    Entry * firstHistoryItem = entryOrg->historyItems()[0];
+    TimeInfo entryOrgHistoryTimeInfo = firstHistoryItem->timeInfo();
+    QDateTime datedBackEntryOrgModificationTime = entryOrgHistoryTimeInfo.lastModificationTime().addMSecs(-10);
+    entryOrgHistoryTimeInfo.setLastModificationTime(datedBackEntryOrgModificationTime);
+    entryOrgHistoryTimeInfo.setCreationTime(datedBackEntryOrgModificationTime);
+    firstHistoryItem->setTimeInfo(entryOrgHistoryTimeInfo);
+
+    QScopedPointer<Entry> entryCloneHistory(entryOrg->clone(Entry::CloneIncludeHistory | Entry::CloneResetTimeInfo));
     QCOMPARE(entryCloneHistory->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneHistory->title(), QString("New Title"));
-    QCOMPARE(entryCloneHistory->historyItems().size(), 1);
+    QCOMPARE(entryCloneHistory->historyItems().size(), entryOrg->historyItems().size());
     QCOMPARE(entryCloneHistory->historyItems().at(0)->title(), QString("Original Title"));
-    QCOMPARE(entryCloneHistory->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
+    QVERIFY(entryCloneHistory->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
+    // Timeinfo of history items should not be modified
+    QList<Entry*> entryOrgHistory = entryOrg->historyItems(), clonedHistory = entryCloneHistory->historyItems();
+    auto entryOrgHistoryItem = entryOrgHistory.constBegin();
+    for(auto entryCloneHistoryItem = clonedHistory.constBegin()
+            ;entryCloneHistoryItem != clonedHistory.constEnd()
+            ;++entryCloneHistoryItem, ++entryOrgHistoryItem) {
+        QCOMPARE((*entryOrgHistoryItem)->timeInfo(), (*entryCloneHistoryItem)->timeInfo());
+    }
 
     Database db;
     auto* entryOrgClone = entryOrg->clone(Entry::CloneNoFlags);
