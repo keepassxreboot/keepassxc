@@ -162,7 +162,7 @@ void SearchWidget::startSearchTimer()
     if (!m_searchTimer->isActive()) {
         m_searchTimer->stop();
     }
-    m_searchTimer->start(300);
+    m_searchTimer->start(100);
 }
 
 void SearchWidget::startSearch()
