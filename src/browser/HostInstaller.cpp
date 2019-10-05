@@ -109,9 +109,7 @@ void HostInstaller::installBrowser(SupportedBrowsers browser,
 #ifdef Q_OS_WIN
         // Create a registry key
         QSettings settings(getTargetPath(browser), QSettings::NativeFormat);
-        if (!registryEntryFound(settings)) {
-            settings.setValue("Default", getPath(browser));
-        }
+        settings.setValue("Default", getPath(browser));
 #endif
         // Always create the script file
         QJsonObject script = constructFile(browser, proxy, location);
@@ -128,9 +126,7 @@ void HostInstaller::installBrowser(SupportedBrowsers browser,
 #ifdef Q_OS_WIN
         // Remove the registry entry
         QSettings settings(getTargetPath(browser), QSettings::NativeFormat);
-        if (registryEntryFound(settings)) {
-            settings.remove("Default");
-        }
+        settings.remove("Default");
 #endif
     }
 }
