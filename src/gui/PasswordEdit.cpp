@@ -94,14 +94,14 @@ bool PasswordEdit::passwordsEqual() const
 
 void PasswordEdit::updateStylesheet()
 {
-    QString stylesheet("QLineEdit { background: %1; }");
+    const QString stylesheetTemplate("QLineEdit { background: %1; }");
 
     if (m_basePasswordEdit && !passwordsEqual()) {
         bool isCorrect = true;
         if (m_basePasswordEdit->text().startsWith(text())) {
-            stylesheet = stylesheet.arg(CorrectSoFarColor.name());
+            setStyleSheet(stylesheetTemplate.arg(CorrectSoFarColor.name()));
         } else {
-            stylesheet = stylesheet.arg(ErrorColor.name());
+            setStyleSheet(stylesheetTemplate.arg(ErrorColor.name()));
             isCorrect = false;
         }
         m_correctAction->setVisible(isCorrect);
@@ -109,9 +109,8 @@ void PasswordEdit::updateStylesheet()
     } else {
         m_correctAction->setVisible(false);
         m_errorAction->setVisible(false);
+        setStyleSheet("");
     }
-
-    setStyleSheet(stylesheet);
 }
 
 void PasswordEdit::autocompletePassword(const QString& password)
