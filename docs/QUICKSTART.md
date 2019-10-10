@@ -49,7 +49,7 @@ Sharing allows you to share a subset of your credentials with others and vice ve
 
 ### Enable Sharing
 
-To use sharing, you need to enable for the application.
+To use sharing, you need to enable it for the application.
 
 1. Go to Tools &rarr; Settings.
 1. Select the category KeeShare.
