@@ -799,7 +799,7 @@ void TestGroup::testAddEntryWithPath()
 void TestGroup::testIsRecycled()
 {
     Database* db = new Database();
-    db->rootGroup()->createRecycleBin();
+    db->metadata()->setRecycleBinEnabled(true);
 
     Group* group1 = new Group();
     group1->setName("group1");
