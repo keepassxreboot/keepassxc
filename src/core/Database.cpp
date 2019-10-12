@@ -702,8 +702,15 @@ void Database::setPublicCustomData(const QVariantMap& customData)
 void Database::createRecycleBin()
 {
     Q_ASSERT(!m_data.isReadOnly);
-    Group* recycleBin = Group::createRecycleBin();
+
+    auto recycleBin = new Group();
+    recycleBin->setUuid(QUuid::createUuid());
     recycleBin->setParent(rootGroup());
+    recycleBin->setName(tr("Recycle Bin"));
+    recycleBin->setIcon(Group::RecycleBinIconNumber);
+    recycleBin->setSearchingEnabled(Group::Disable);
+    recycleBin->setAutoTypeEnabled(Group::Disable);
+
     m_metadata->setRecycleBin(recycleBin);
 }
 

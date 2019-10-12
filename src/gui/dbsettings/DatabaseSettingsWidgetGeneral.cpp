@@ -23,6 +23,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "gui/MessageBox.h"
 
 DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     : DatabaseSettingsWidget(parent)
@@ -77,9 +78,31 @@ void DatabaseSettingsWidgetGeneral::showEvent(QShowEvent* event)
 
 bool DatabaseSettingsWidgetGeneral::save()
 {
+    auto* meta = m_db->metadata();
+
+    if (!m_ui->recycleBinEnabledCheckBox->isChecked() && meta->recycleBinEnabled()) {
+        auto recycleBin = meta->recycleBin();
+        if (recycleBin && !recycleBin->isEmpty()) {
+            auto result = MessageBox::question(this,
+                                               tr("Delete Recycle Bin"),
+                                               tr("Do you want to delete the current recycle bin and all its "
+                                                  "contents?\nThis action is not reversible."),
+                                               MessageBox::Delete | MessageBox::No,
+                                               MessageBox::No);
+
+            if (result == MessageBox::Delete) {
+                recycleBin->deleteLater();
+            } else {
+                recycleBin->setName(recycleBin->name().append(tr(" (old)")));
+                recycleBin->setIcon(Group::DefaultIconNumber);
+            }
+        }
+
+        meta->setRecycleBin(nullptr);
+    }
+
     m_db->setCompressionAlgorithm(m_ui->compressionCheckbox->isChecked() ? Database::CompressionGZip
                                                                          : Database::CompressionNone);
-    Metadata* meta = m_db->metadata();
 
     meta->setName(m_ui->dbNameEdit->text());
     meta->setDescription(m_ui->dbDescriptionEdit->text());

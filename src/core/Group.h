@@ -80,8 +80,6 @@ public:
     Group();
     ~Group();
 
-    static Group* createRecycleBin();
-
     const QUuid& uuid() const;
     const QString uuidToHex() const;
     QString name() const;
@@ -103,6 +101,7 @@ public:
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
     bool isRecycled() const;
+    bool isEmpty() const;
     CustomData* customData();
     const CustomData* customData() const;
 
