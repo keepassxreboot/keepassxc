@@ -279,6 +279,7 @@ MainWindow::MainWindow()
     // Control window state
     new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    new QShortcut(Qt::CTRL + Qt::Key_W, this, SLOT(closeDatabaseTabOrHideWindow()));
     // Control database tabs
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
@@ -1187,6 +1188,15 @@ void MainWindow::processTrayIconTrigger()
         } else {
             bringToFront();
         }
+    }
+}
+
+void MainWindow::closeDatabaseTabOrHideWindow() {
+    int tabCount = m_ui->tabWidget->count();
+    if (tabCount > 1) {
+        m_ui->tabWidget->closeCurrentDatabaseTab();
+    } else {
+        hideWindow();
     }
 }
 

@@ -70,6 +70,7 @@ public slots:
     void hideGlobalMessage();
     void showYubiKeyPopup();
     void hideYubiKeyPopup();
+    void closeDatabaseTabOrHideWindow();
     void hideWindow();
     void toggleWindow();
     void bringToFront();
