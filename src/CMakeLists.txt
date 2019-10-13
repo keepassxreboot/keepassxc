@@ -148,6 +148,8 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+        gui/dbsettings/DatabaseSettingsWidgetStatistics.cpp
+        gui/dbsettings/DatabaseSettingsPageStatistics.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/PopupHelpWidget.cpp

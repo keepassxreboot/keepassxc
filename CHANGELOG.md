@@ -13,6 +13,7 @@
 - CLI: Add group commands (mv, mkdir and rmdir) [#3313].
 - CLI: Add interactive shell mode command `open` [#3224](https://github.com/keepassxreboot/keepassxc/issues/3224)
 - Add "Paper Backup" aka "Export to HTML file" to the "Database" menu [#3277](https://github.com/keepassxreboot/keepassxc/pull/3277)
+- Add statistics panel with information about the database (number of entries, number of unique passwords, etc.) to the Database Settings dialog [#2034](https://github.com/keepassxreboot/keepassxc/issues/2034)
 
 ### Changed
 
