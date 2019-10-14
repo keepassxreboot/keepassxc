@@ -20,19 +20,74 @@
 #include "TestGlobal.h"
 
 #include <QSignalSpy>
-#include <QTemporaryFile>
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
+#include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
 
 void TestDatabase::initTestCase()
 {
     QVERIFY(Crypto::init());
+}
+
+void TestDatabase::testOpen()
+{
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(!db->isInitialized());
+    QVERIFY(!db->isModified());
+
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    bool ok = db->open(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"), key);
+    QVERIFY(ok);
+
+    QVERIFY(db->isInitialized());
+    QVERIFY(!db->isModified());
+
+    db->metadata()->setName("test");
+    QVERIFY(db->isModified());
+}
+
+void TestDatabase::testSave()
+{
+    QByteArray data;
+    QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, data));
+    sourceDbFile.close();
+
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.open());
+    QCOMPARE(tempFile.write(data), static_cast<qint64>((data.size())));
+    tempFile.close();
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QString error;
+    bool ok = db->open(tempFile.fileName(), key, &error);
+    QVERIFY(ok);
+
+    // Test safe saves
+    db->metadata()->setName("test");
+    QVERIFY(db->isModified());
+
+    // Test unsafe saves
+    QVERIFY2(db->save(&error, false, false), error.toLatin1());
+
+    QVERIFY2(db->save(&error), error.toLatin1());
+    QVERIFY(!db->isModified());
+
+    // Test save backups
+    QVERIFY2(db->save(&error, true, true), error.toLatin1());
 }
 
 void TestDatabase::testEmptyRecycleBinOnDisabled()

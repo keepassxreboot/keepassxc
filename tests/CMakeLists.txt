@@ -224,7 +224,7 @@ if(WITH_XC_KEESHARE)
 endif()
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
-        LIBS ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS ${TEST_LIBRARIES})

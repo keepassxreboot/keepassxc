@@ -94,7 +94,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_opVaultOpenWidget(new OpVaultOpenWidget(this))
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
-    , m_fileWatcher(new DelayingFileWatcher(this))
 {
     m_messageWidget->setHidden(true);
 
@@ -199,7 +198,6 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_keepass1OpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_opVaultOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(m_csvImportWizard, SIGNAL(importFinished(bool)), SLOT(csvImportFinished(bool)));
-    connect(m_fileWatcher.data(), SIGNAL(fileChanged()), this, SLOT(reloadDatabaseFile()));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     // clang-format on
 
@@ -895,6 +893,7 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), SIGNAL(databaseModified()), SIGNAL(databaseModified()));
     connect(m_db.data(), SIGNAL(databaseModified()), SLOT(onDatabaseModified()));
     connect(m_db.data(), SIGNAL(databaseSaved()), SIGNAL(databaseSaved()));
+    connect(m_db.data(), SIGNAL(databaseFileChanged()), this, SLOT(reloadDatabaseFile()));
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -908,14 +907,12 @@ void DatabaseWidget::loadDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(openWidget->database());
         switchToMainView();
-        m_fileWatcher->restart();
         m_saveAttempts = 0;
         emit databaseUnlocked();
         if (config()->get("MinimizeAfterUnlock").toBool()) {
             window()->showMinimized();
         }
     } else {
-        m_fileWatcher->stop();
         if (m_databaseOpenWidget->database()) {
             m_databaseOpenWidget->database().reset();
         }
@@ -1063,7 +1060,6 @@ void DatabaseWidget::switchToOpenDatabase()
 
 void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
 {
-    updateFilePath(filePath);
     m_databaseOpenWidget->load(filePath);
     setCurrentWidget(m_databaseOpenWidget);
 }
@@ -1091,14 +1087,12 @@ void DatabaseWidget::csvImportFinished(bool accepted)
 
 void DatabaseWidget::switchToImportKeepass1(const QString& filePath)
 {
-    updateFilePath(filePath);
     m_keepass1OpenWidget->load(filePath);
     setCurrentWidget(m_keepass1OpenWidget);
 }
 
 void DatabaseWidget::switchToImportOpVault(const QString& fileName)
 {
-    updateFilePath(fileName);
     m_opVaultOpenWidget->load(fileName);
     setCurrentWidget(m_opVaultOpenWidget);
 }
@@ -1384,21 +1378,6 @@ bool DatabaseWidget::lock()
     return true;
 }
 
-void DatabaseWidget::updateFilePath(const QString& filePath)
-{
-    m_fileWatcher->start(filePath);
-    m_db->setFilePath(filePath);
-}
-
-void DatabaseWidget::blockAutoReload(bool block)
-{
-    if (block) {
-        m_fileWatcher->ignoreFileChanges();
-    } else {
-        m_fileWatcher->observeFileChanges(true);
-    }
-}
-
 void DatabaseWidget::reloadDatabaseFile()
 {
     if (!m_db || isLocked()) {
@@ -1417,22 +1396,20 @@ void DatabaseWidget::reloadDatabaseFile()
         if (result == MessageBox::No) {
             // Notify everyone the database does not match the file
             m_db->markAsModified();
-            // Rewatch the database file
-            m_fileWatcher->restart();
             return;
         }
     }
 
     QString error;
     auto db = QSharedPointer<Database>::create(m_db->filePath());
-    if (db->open(database()->key(), &error, true)) {
+    if (db->open(database()->key(), &error)) {
         if (m_db->isModified()) {
             // Ask if we want to merge changes into new database
             auto result = MessageBox::question(
                 this,
                 tr("Merge Request"),
                 tr("The database file has changed and you have unsaved changes.\nDo you want to merge your changes?"),
-                MessageBox::Merge | MessageBox::Cancel,
+                MessageBox::Merge | MessageBox::Discard,
                 MessageBox::Merge);
 
             if (result == MessageBox::Merge) {
@@ -1442,11 +1419,9 @@ void DatabaseWidget::reloadDatabaseFile()
             }
         }
 
-        QUuid groupBeforeReload;
+        QUuid groupBeforeReload = m_db->rootGroup()->uuid();
         if (m_groupView && m_groupView->currentGroup()) {
             groupBeforeReload = m_groupView->currentGroup()->uuid();
-        } else {
-            groupBeforeReload = m_db->rootGroup()->uuid();
         }
 
         QUuid entryBeforeReload;
@@ -1454,19 +1429,15 @@ void DatabaseWidget::reloadDatabaseFile()
             entryBeforeReload = m_entryView->currentEntry()->uuid();
         }
 
-        bool isReadOnly = m_db->isReadOnly();
         replaceDatabase(db);
-        m_db->setReadOnly(isReadOnly);
         restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
+        m_blockAutoSave = false;
     } else {
         showMessage(tr("Could not open the new database file while attempting to autoreload.\nError: %1").arg(error),
                     MessageWidget::Error);
         // Mark db as modified since existing data may differ from file or file was deleted
         m_db->markAsModified();
     }
-
-    // Rewatch the database file
-    m_fileWatcher->restart();
 }
 
 int DatabaseWidget::numberOfSelectedEntries() const
@@ -1604,7 +1575,6 @@ bool DatabaseWidget::save()
     }
 
     // Prevent recursions and infinite save loops
-    blockAutoReload(true);
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
@@ -1612,7 +1582,6 @@ bool DatabaseWidget::save()
     bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
     QString errorMessage;
     bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
-    blockAutoReload(false);
 
     if (ok) {
         m_saveAttempts = 0;

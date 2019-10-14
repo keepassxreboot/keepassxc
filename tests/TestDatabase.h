@@ -27,6 +27,8 @@ class TestDatabase : public QObject
 
 private slots:
     void initTestCase();
+    void testOpen();
+    void testSave();
     void testEmptyRecycleBinOnDisabled();
     void testEmptyRecycleBinOnNotCreated();
     void testEmptyRecycleBinOnEmpty();
