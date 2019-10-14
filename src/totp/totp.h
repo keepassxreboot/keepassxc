@@ -28,7 +28,6 @@ class QUrl;
 
 namespace Totp
 {
-
     struct Encoder
     {
         QString name;
@@ -39,20 +38,26 @@ namespace Totp
         bool reverse;
     };
 
-    enum HashType
+    enum Algorithm
     {
         Sha1,
         Sha256,
         Sha512,
     };
 
+    enum StorageFormat
+    {
+        OTPURL,
+        KEEOTP,
+        LEGACY,
+    };
+
     struct Settings
     {
+        Totp::StorageFormat format;
         Totp::Encoder encoder;
-        Totp::HashType hashType;
+        Totp::Algorithm algorithm;
         QString key;
-        bool otpUrl;
-        bool keeOtp;
         bool custom;
         uint digits;
         uint step;
@@ -61,7 +66,8 @@ namespace Totp
     constexpr uint DEFAULT_STEP = 30u;
     constexpr uint DEFAULT_DIGITS = 6u;
     constexpr uint STEAM_DIGITS = 5u;
-    constexpr Totp::HashType DEFAULT_HASHTYPE = Sha1;
+    constexpr Totp::Algorithm DEFAULT_ALGORITHM = Sha1;
+    constexpr Totp::StorageFormat DEFAULT_FORMAT = OTPURL;
     static const QString STEAM_SHORTNAME = "S";
 
     static const QString ATTRIBUTE_OTP = "otp";
@@ -72,15 +78,18 @@ namespace Totp
     QSharedPointer<Totp::Settings> createSettings(const QString& key,
                                                   const uint digits,
                                                   const uint step,
+                                                  const Totp::StorageFormat format = DEFAULT_FORMAT,
                                                   const QString& encoderShortName = {},
-                                                  const Totp::HashType hashType = DEFAULT_HASHTYPE,
-                                                  QSharedPointer<Totp::Settings> prevSettings = {});
+                                                  const Totp::Algorithm algorithm = DEFAULT_ALGORITHM);
     QString writeSettings(const QSharedPointer<Totp::Settings>& settings,
                           const QString& title = {},
                           const QString& username = {},
                           bool forceOtp = false);
 
     QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
+
+    QList<QPair<QString, QString>> supportedEncoders();
+    QList<QPair<QString, Algorithm>> supportedAlgorithms();
 
     Encoder& defaultEncoder();
     Encoder& steamEncoder();
