@@ -40,6 +40,7 @@ namespace Utils
 
     void setStdinEcho(bool enable);
     QString getPassword(FILE* outputDescriptor = STDOUT);
+    QSharedPointer<PasswordKey> getPasswordFromStdin();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected = true,

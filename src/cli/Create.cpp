@@ -71,7 +71,7 @@ int Create::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    auto password = getPasswordFromStdin();
+    auto password = Utils::getPasswordFromStdin();
     if (!password.isNull()) {
         key->addKey(password);
     }
@@ -105,28 +105,6 @@ int Create::execute(const QStringList& arguments)
     out << QObject::tr("Successfully created new database.") << endl;
     currentDatabase = db;
     return EXIT_SUCCESS;
-}
-
-/**
- * Read optional password from stdin.
- *
- * @return Pointer to the PasswordKey or null if passwordkey is skipped
- *         by user
- */
-QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
-{
-    QSharedPointer<PasswordKey> passwordKey;
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-
-    out << QObject::tr("Insert password to encrypt database (Press enter to leave blank): ");
-    out.flush();
-    QString password = Utils::getPassword();
-
-    if (!password.isEmpty()) {
-        passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
-    }
-
-    return passwordKey;
 }
 
 /**

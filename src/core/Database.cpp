@@ -22,6 +22,7 @@
 #include "core/Group.h"
 #include "core/Merger.h"
 #include "core/Metadata.h"
+#include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
 #include "keys/FileKey.h"
@@ -325,6 +326,24 @@ bool Database::extract(QByteArray& xmlOutput, QString* error)
     if (writer.hasError()) {
         if (error) {
             *error = writer.errorString();
+        }
+        return false;
+    }
+
+    return true;
+}
+
+bool Database::import(const QString& xmlExportPath, QString* error)
+{
+    KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
+    QFile file(xmlExportPath);
+    file.open(QIODevice::ReadOnly);
+
+    reader.readDatabase(&file, this);
+
+    if (reader.hasError()) {
+        if (error) {
+            *error = reader.errorString();
         }
         return false;
     }
