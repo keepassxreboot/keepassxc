@@ -23,34 +23,39 @@
 #include <QTimer>
 #include <QVariant>
 
-class DelayingFileWatcher : public QObject
+class FileWatcher : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit DelayingFileWatcher(QObject* parent = nullptr);
+    explicit FileWatcher(QObject* parent = nullptr);
 
-    void blockAutoReload(bool block);
-    void start(const QString& path);
-
-    void restart();
+    void start(const QString& path, int checksumInterval = 1000);
     void stop();
-    void ignoreFileChanges();
+
+    bool hasSameFileChecksum();
 
 signals:
     void fileChanged();
 
 public slots:
-    void observeFileChanges(bool delayed = false);
+    void pause();
+    void resume();
 
 private slots:
     void onWatchedFileChanged();
+    void checkFileChecksum();
 
 private:
+    QByteArray calculateChecksum();
+    bool shouldIgnoreChanges();
+
     QString m_filePath;
     QFileSystemWatcher m_fileWatcher;
+    QByteArray m_fileChecksum;
     QTimer m_fileChangeDelayTimer;
-    QTimer m_fileUnblockTimer;
+    QTimer m_fileIgnoreDelayTimer;
+    QTimer m_fileChecksumTimer;
     bool m_ignoreFileChange;
 };
 

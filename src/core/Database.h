@@ -32,6 +32,7 @@
 
 class Entry;
 enum class EntryReferenceType;
+class FileWatcher;
 class Group;
 class Metadata;
 class QTimer;
@@ -144,9 +145,11 @@ signals:
     void groupRemoved();
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
+    void databaseOpened();
     void databaseModified();
     void databaseSaved();
     void databaseDiscarded();
+    void databaseFileChanged();
 
 private slots:
     void startModifiedTimer();
@@ -177,12 +180,14 @@ private:
     bool writeDatabase(QIODevice* device, QString* error = nullptr);
     bool backupDatabase(const QString& filePath);
     bool restoreDatabase(const QString& filePath);
+    bool performSave(const QString& filePath, QString* error, bool atomic, bool backup);
 
     Metadata* const m_metadata;
     DatabaseData m_data;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QPointer<QTimer> m_timer;
+    QPointer<FileWatcher> m_fileWatcher;
     bool m_initialized = false;
     bool m_modified = false;
     bool m_emitModified;
