@@ -43,6 +43,7 @@
 #include "cli/Export.h"
 #include "cli/Generate.h"
 #include "cli/Help.h"
+#include "cli/Import.h"
 #include "cli/List.h"
 #include "cli/Locate.h"
 #include "cli/Merge.h"
@@ -101,6 +102,12 @@ void TestCli::initTestCase()
     QVERIFY(sourceDbFileYubiKeyProtected.open(QIODevice::ReadOnly));
     QVERIFY(Tools::readAllFromDevice(&sourceDbFileYubiKeyProtected, m_yubiKeyProtectedDbData));
     sourceDbFileYubiKeyProtected.close();
+
+    // Load the NewDatabase.xml file into temporary storage
+    QFile sourceXmlFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"));
+    QVERIFY(sourceXmlFile.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceXmlFile, m_xmlData));
+    sourceXmlFile.close();
 }
 
 void TestCli::init()
@@ -114,6 +121,11 @@ void TestCli::init()
     m_dbFile2->open();
     m_dbFile2->write(m_dbData2);
     m_dbFile2->close();
+
+    m_xmlFile.reset(new TemporaryFile());
+    m_xmlFile->open();
+    m_xmlFile->write(m_xmlData);
+    m_xmlFile->close();
 
     m_keyFileProtectedDbFile.reset(new TemporaryFile());
     m_keyFileProtectedDbFile->open();
@@ -191,6 +203,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("export"));
     QVERIFY(Commands::getCommand("generate"));
     QVERIFY(Commands::getCommand("help"));
+    QVERIFY(Commands::getCommand("import"));
     QVERIFY(Commands::getCommand("locate"));
     QVERIFY(Commands::getCommand("ls"));
     QVERIFY(Commands::getCommand("merge"));
@@ -201,7 +214,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 20);
+    QCOMPARE(Commands::getCommands().size(), 21);
 }
 
 void TestCli::testInteractiveCommands()
@@ -537,7 +550,7 @@ void TestCli::testCreate()
     m_stdoutFile->reset();
 
     QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+             QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -566,7 +579,7 @@ void TestCli::testCreate()
     m_stderrFile->seek(errPos);
 
     QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+             QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -584,7 +597,7 @@ void TestCli::testCreate()
     m_stderrFile->seek(errPos);
 
     QCOMPARE(m_stdoutFile->readLine(),
-             QByteArray("Insert password to encrypt database (Press enter to leave blank): \n"));
+             QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -981,6 +994,59 @@ void TestCli::testGenerate()
     generateCmd.execute({"generate", "-L", "bleuh"});
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stderrFile->readLine(), QByteArray("Invalid password length bleuh\n"));
+}
+
+void TestCli::testImport()
+{
+    Import importCmd;
+    QVERIFY(!importCmd.name.isEmpty());
+    QVERIFY(importCmd.getDescriptionLine().contains(importCmd.name));
+
+    QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+    QString databaseFilename = testDir->path() + "testImport1.kdbx";
+
+    Utils::Test::setNextPassword("a");
+    importCmd.execute({"import", m_xmlFile->fileName(), databaseFilename});
+
+    m_stderrFile->reset();
+    m_stdoutFile->reset();
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully imported database.\n"));
+
+    Utils::Test::setNextPassword("a");
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", "", Utils::DEVNULL));
+    QVERIFY(db);
+    auto* entry = db->rootGroup()->findEntryByPath("/Sample Entry 1");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QString("User Name"));
+
+    // Should refuse to create the database if it already exists.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 errPos = m_stderrFile->pos();
+    importCmd.execute({"import", m_xmlFile->fileName(), databaseFilename});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+    // Output should be empty when there is an error.
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
+    QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
+
+    // Quiet option
+    QScopedPointer<QTemporaryDir> testDirQuiet(new QTemporaryDir());
+    QString databaseFilenameQuiet = testDirQuiet->path() + "testImport2.kdbx";
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    importCmd.execute({"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
+    m_stdoutFile->seek(pos);
+
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Enter password to encrypt database (optional): \n"));
+
+    Utils::Test::setNextPassword("a");
+    auto dbQuiet = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilenameQuiet, true, "", "", Utils::DEVNULL));
+    QVERIFY(dbQuiet);
 }
 
 void TestCli::testKeyFileOption()

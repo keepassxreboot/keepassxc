@@ -127,7 +127,7 @@ namespace Utils
         }
 
         if (isPasswordProtected) {
-            out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
+            out << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
             QString line = Utils::getPassword(outputDescriptor);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
@@ -215,6 +215,28 @@ namespace Utils
         out << endl;
 
         return line;
+    }
+
+    /**
+     * Read optional password from stdin.
+     *
+     * @return Pointer to the PasswordKey or null if passwordkey is skipped
+     *         by user
+     */
+    QSharedPointer<PasswordKey> getPasswordFromStdin()
+    {
+        QSharedPointer<PasswordKey> passwordKey;
+        QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+
+        out << QObject::tr("Enter password to encrypt database (optional): ");
+        out.flush();
+        QString password = Utils::getPassword();
+
+        if (!password.isEmpty()) {
+            passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
+        }
+
+        return passwordKey;
     }
 
     /**

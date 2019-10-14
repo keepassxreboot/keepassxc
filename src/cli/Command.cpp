@@ -36,6 +36,7 @@
 #include "Export.h"
 #include "Generate.h"
 #include "Help.h"
+#include "Import.h"
 #include "List.h"
 #include "Locate.h"
 #include "Merge.h"
@@ -180,6 +181,7 @@ namespace Commands
             s_commands.insert(QStringLiteral("quit"), QSharedPointer<Command>(new Exit("quit")));
         } else {
             s_commands.insert(QStringLiteral("export"), QSharedPointer<Command>(new Export()));
+            s_commands.insert(QStringLiteral("import"), QSharedPointer<Command>(new Import()));
         }
     }
 

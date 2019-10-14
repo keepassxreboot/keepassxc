@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,21 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CREATE_H
-#define KEEPASSXC_CREATE_H
+#ifndef KEEPASSXC_IMPORT_H
+#define KEEPASSXC_IMPORT_H
 
 #include "Command.h"
 
-#include "keys/FileKey.h"
-
-class Create : public Command
+class Import : public Command
 {
 public:
-    Create();
+    Import();
     int execute(const QStringList& arguments) override;
-
-private:
-    bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };
 
-#endif // KEEPASSXC_CREATE_H
+#endif // KEEPASSXC_IMPORT_H

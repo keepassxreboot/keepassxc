@@ -29,6 +29,7 @@ set(cli_SOURCES
         Export.cpp
         Generate.cpp
         Help.cpp
+        Import.cpp
         List.cpp
         Locate.cpp
         Merge.cpp
