@@ -19,6 +19,8 @@
 #include "TotpSetupDialog.h"
 #include "ui_TotpSetupDialog.h"
 
+#include "core/Base32.h"
+#include "gui/MessageBox.h"
 #include "totp/totp.h"
 
 TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
@@ -43,38 +45,73 @@ TotpSetupDialog::~TotpSetupDialog()
 
 void TotpSetupDialog::saveSettings()
 {
+    // Secret key sanity check
+    auto key = m_ui->seedEdit->text().toLatin1();
+    auto sanitizedKey = Base32::sanitizeInput(key);
+    if (sanitizedKey != key) {
+        MessageBox::information(this,
+                                tr("Invalid TOTP Secret"),
+                                tr("You have entered an invalid secret key. The key must be in Base32 format.\n"
+                                   "Example: JBSWY3DPEHPK3PXP"));
+        return;
+    }
+
     QString encShortName;
     uint digits = Totp::DEFAULT_DIGITS;
     uint step = Totp::DEFAULT_STEP;
+    Totp::Algorithm algorithm = Totp::DEFAULT_ALGORITHM;
+    Totp::StorageFormat format = Totp::DEFAULT_FORMAT;
 
     if (m_ui->radioSteam->isChecked()) {
         digits = Totp::STEAM_DIGITS;
         encShortName = Totp::STEAM_SHORTNAME;
     } else if (m_ui->radioCustom->isChecked()) {
+        algorithm = static_cast<Totp::Algorithm>(m_ui->algorithmComboBox->currentData().toInt());
         step = m_ui->stepSpinBox->value();
-        if (m_ui->radio8Digits->isChecked()) {
-            digits = 8;
-        } else if (m_ui->radio7Digits->isChecked()) {
-            digits = 7;
+        digits = m_ui->digitsSpinBox->value();
+    }
+
+    auto settings = m_entry->totpSettings();
+    if (settings) {
+        if (key.isEmpty()) {
+            auto answer = MessageBox::question(this,
+                                               tr("Confirm Remove TOTP Settings"),
+                                               tr("Are you sure you want to delete TOTP settings for this entry?"),
+                                               MessageBox::Delete | MessageBox::Cancel);
+            if (answer != MessageBox::Delete) {
+                return;
+            }
+        }
+
+        format = settings->format;
+        if (format == Totp::StorageFormat::LEGACY && m_ui->radioCustom->isChecked()) {
+            // Implicitly upgrade to the OTPURL format to allow for custom settings
+            format = Totp::DEFAULT_FORMAT;
         }
     }
 
-    auto settings = Totp::createSettings(
-        m_ui->seedEdit->text(), digits, step, encShortName, Totp::HashType::Sha1, m_entry->totpSettings());
-    m_entry->setTotp(settings);
+    m_entry->setTotp(Totp::createSettings(key, digits, step, format, encShortName, algorithm));
     emit totpUpdated();
     close();
 }
 
 void TotpSetupDialog::toggleCustom(bool status)
 {
-    m_ui->customGroup->setEnabled(status);
+    m_ui->customSettingsGroup->setEnabled(status);
 }
 
 void TotpSetupDialog::init()
 {
+    // Add algorithm choices
+    auto algorithms = Totp::supportedAlgorithms();
+    for (const auto& item : algorithms) {
+        m_ui->algorithmComboBox->addItem(item.first, item.second);
+    }
+    m_ui->algorithmComboBox->setCurrentIndex(0);
+
+    // Read entry totp settings
     auto settings = m_entry->totpSettings();
-    if (!settings.isNull()) {
+    if (settings) {
         m_ui->seedEdit->setText(settings->key);
         m_ui->stepSpinBox->setValue(settings->step);
 
@@ -82,12 +119,10 @@ void TotpSetupDialog::init()
             m_ui->radioSteam->setChecked(true);
         } else if (settings->custom) {
             m_ui->radioCustom->setChecked(true);
-            if (settings->digits == 8) {
-                m_ui->radio8Digits->setChecked(true);
-            } else if (settings->digits == 7) {
-                m_ui->radio7Digits->setChecked(true);
-            } else {
-                m_ui->radio6Digits->setChecked(true);
+            m_ui->digitsSpinBox->setValue(settings->digits);
+            int index = m_ui->algorithmComboBox->findData(settings->algorithm);
+            if (index != -1) {
+                m_ui->algorithmComboBox->setCurrentIndex(index);
             }
         }
     }

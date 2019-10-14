@@ -962,8 +962,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 
 #ifdef WITH_XC_BROWSER
     if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
-        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT)
-                                                        == "true");
+        // clang-format off
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == "true");
+        // clang-format on
     } else {
         m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
     }

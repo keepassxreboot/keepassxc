@@ -16,10 +16,12 @@
  */
 
 #include "TotpExportSettingsDialog.h"
+
 #include "core/Config.h"
 #include "core/Entry.h"
 #include "gui/Clipboard.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/MainWindow.h"
 #include "gui/SquareSvgWidget.h"
 #include "qrcode/QrCode.h"
 #include "totp/totp.h"
@@ -29,6 +31,7 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QShortcut>
 #include <QSizePolicy>
 #include <QVBoxLayout>
 
@@ -55,10 +58,13 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
 
     connect(m_buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_buttonBox, SIGNAL(accepted()), SLOT(copyToClipboard()));
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(autoClose()));
-    connect(parent, SIGNAL(lockedDatabase()), this, SLOT(close()));
+    connect(m_timer, SIGNAL(timeout()), SLOT(autoClose()));
+    connect(parent, SIGNAL(lockedDatabase()), SLOT(close()));
+
+    new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(copyToClipboard()));
 
     m_buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
+    m_buttonBox->setFocus();
     m_countDown->setAlignment(Qt::AlignCenter);
 
     m_secTillClose = 45;
@@ -92,8 +98,6 @@ TotpExportSettingsDialog::TotpExportSettingsDialog(DatabaseWidget* parent, Entry
         errorBox->exec();
         close();
     }
-
-    show();
 }
 
 void TotpExportSettingsDialog::copyToClipboard()
@@ -101,9 +105,9 @@ void TotpExportSettingsDialog::copyToClipboard()
     clipboard()->setText(m_totpUri);
     if (config()->get("HideWindowOnCopy").toBool()) {
         if (config()->get("MinimizeOnCopy").toBool()) {
-            static_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+            getMainWindow()->showMinimized();
         } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
-            static_cast<DatabaseWidget*>(parent())->window()->lower();
+            getMainWindow()->lower();
             window()->lower();
         }
     }
