@@ -144,6 +144,17 @@ static const NSEventMask NSEventMaskKeyDown = NSKeyDownMask;
 //
 - (bool) enableAccessibility
 {
+    // Request a 1 pixel screenshot to trigger the permissions
+    // required for screen reader access. These are necessary
+    // for Auto-Type to find the window titles in macOS 10.15+
+    CGImageRef screenshot = CGWindowListCreateImage(
+            CGRectMake(0, 0, 1, 1),
+            kCGWindowListOptionOnScreenOnly,
+            kCGNullWindowID,
+            kCGWindowImageDefault);
+    CFRelease(screenshot);
+
+    // Request accessibility permissions for Auto-Type type on behalf of the user
     NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
 }
