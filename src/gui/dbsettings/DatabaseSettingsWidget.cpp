@@ -43,3 +43,9 @@ void DatabaseSettingsWidget::load(QSharedPointer<Database> db)
     m_db = std::move(db);
     initialize();
 }
+
+const QSharedPointer<Database> DatabaseSettingsWidget::getDatabase() const
+{
+    return m_db;
+}
+
