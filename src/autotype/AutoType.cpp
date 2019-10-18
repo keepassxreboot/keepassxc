@@ -37,6 +37,10 @@
 #include "core/Tools.h"
 #include "gui/MessageBox.h"
 
+#ifdef Q_OS_MAC
+#include "gui/macutils/MacUtils.h"
+#endif
+
 AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
@@ -214,6 +218,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     if (hideWindow) {
 #if defined(Q_OS_MACOS)
+        macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else
         hideWindow->showMinimized();
