@@ -120,7 +120,7 @@ private:
     bool confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                         const QString& url,
                         const QString& host,
-                        const QString& submitHost,
+                        const QString& submitUrl,
                         const QString& realm,
                         const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);

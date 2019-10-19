@@ -410,7 +410,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     }
 
     // Confirm entries
-    if (confirmEntries(pwEntriesToConfirm, url, host, submitHost, realm, httpAuth)) {
+    if (confirmEntries(pwEntriesToConfirm, url, host, submitUrl, realm, httpAuth)) {
         pwEntries.append(pwEntriesToConfirm);
     }
 
@@ -786,7 +786,7 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
 bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                                     const QString& url,
                                     const QString& host,
-                                    const QString& submitHost,
+                                    const QString& submitUrl,
                                     const QString& realm,
                                     const bool httpAuth)
 {
@@ -797,7 +797,7 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     m_dialogActive = true;
     BrowserAccessControlDialog accessControlDialog;
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &accessControlDialog, SLOT(reject()));
-    accessControlDialog.setUrl(url);
+    accessControlDialog.setUrl(!submitUrl.isEmpty() ? submitUrl : url);
     accessControlDialog.setItems(pwEntriesToConfirm);
     accessControlDialog.setHTTPAuth(httpAuth);
 
@@ -806,6 +806,7 @@ bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     accessControlDialog.activateWindow();
     accessControlDialog.raise();
 
+    const QString submitHost = QUrl(submitUrl).host();
     int res = accessControlDialog.exec();
     if (accessControlDialog.remember()) {
         for (auto* entry : pwEntriesToConfirm) {
