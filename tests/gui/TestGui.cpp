@@ -399,6 +399,61 @@ void TestGui::testTabs()
     QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
 }
 
+void TestGui::testCloseDatabaseTabOrHideWindow()
+{
+    QByteArray dbData2;
+    QScopedPointer<TemporaryFile> dbFile2;
+    QString dbFileName2;
+    QString dbFilePath2;
+
+    // Open new database tab
+    // Load the NewDatabase2.kdbx file into temporary storage
+    QFile sourceDbFile2(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase2.kdbx"));
+    QVERIFY(sourceDbFile2.open(QIODevice::ReadOnly));
+    QVERIFY(Tools::readAllFromDevice(&sourceDbFile2, dbData2));
+    sourceDbFile2.close();
+
+    dbFile2.reset(new TemporaryFile());
+    // Write the temp storage to a temp database file for use in our tests
+    QVERIFY(dbFile2->open());
+    QCOMPARE(dbFile2->write(m_dbData), static_cast<qint64>((m_dbData.size())));
+    dbFileName2 = QFileInfo(dbFile2->fileName()).fileName();
+    dbFilePath2 = dbFile2->fileName();
+    dbFile2->close();
+
+    fileDialog()->setNextFileName(dbFilePath2);
+    triggerAction("actionDatabaseOpen");
+
+    auto* databaseOpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("databaseOpenWidget");
+    QVERIFY(databaseOpenWidget);
+    auto* editPassword = databaseOpenWidget->findChild<QLineEdit*>("editPassword");
+    QVERIFY(editPassword);
+    editPassword->setFocus();
+
+    QTest::keyClicks(editPassword, "a");
+    QTest::keyClick(editPassword, Qt::Key_Enter);
+
+    QCOMPARE(m_tabWidget->count(), 2);
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), dbFileName2);
+
+    // Verify behavior
+    QTest::keyClicks(m_mainWindow->focusWidget(), "w", Qt::ControlModifier);
+
+    QCOMPARE(m_tabWidget->count(), 1);
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
+    QVERIFY(!m_mainWindow->isHidden());
+
+    QTest::keyClicks(m_mainWindow->focusWidget(), "w", Qt::ControlModifier);
+
+    QCOMPARE(m_tabWidget->count(), 1);
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
+    QVERIFY(m_mainWindow->isHidden());
+
+    // Cleanup
+    dbFile2->remove();
+    m_mainWindow->bringToFront();
+}
+
 void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
