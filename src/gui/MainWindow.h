@@ -146,6 +146,7 @@ private:
     SignalMultiplexer m_actionMultiplexer;
     QAction* m_clearHistoryAction;
     QAction* m_searchWidgetAction;
+    QMenu* m_entryContextMenu;
     QActionGroup* m_lastDatabasesActions;
     QActionGroup* m_copyAdditionalAttributeActions;
     InactivityTimer* m_inactivityTimer;
