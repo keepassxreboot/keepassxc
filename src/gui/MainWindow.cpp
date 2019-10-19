@@ -168,6 +168,21 @@ MainWindow::MainWindow()
 
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
+    m_entryContextMenu = new QMenu(this);
+    m_entryContextMenu->addAction(m_ui->actionEntryCopyUsername);
+    m_entryContextMenu->addAction(m_ui->actionEntryCopyPassword);
+    m_entryContextMenu->addAction(m_ui->menuEntryCopyAttribute->menuAction());
+    m_entryContextMenu->addAction(m_ui->menuEntryTotp->menuAction());
+    m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
+    m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryEdit);
+    m_entryContextMenu->addAction(m_ui->actionEntryClone);
+    m_entryContextMenu->addAction(m_ui->actionEntryDelete);
+    m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
+    m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
+
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
     restoreState(config()->get("GUI/MainWindowState").toByteArray());
 #ifdef WITH_XC_BROWSER
@@ -639,6 +654,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::Mode::EditMode:
         case DatabaseWidget::Mode::ImportMode:
         case DatabaseWidget::Mode::LockedMode: {
+            // Enable select actions when editing an entry
             bool editEntryActive = dbWidget->isEntryEditActive();
             const auto editEntryActionsMask = QList<QAction*>({m_ui->actionEntryCopyUsername,
                                                                m_ui->actionEntryCopyPassword,
@@ -656,7 +672,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             entryActions << m_ui->menuEntryCopyAttribute->actions();
             entryActions << m_ui->menuEntryTotp->actions();
             for (auto action : entryActions) {
-                // Enable select actions when editing an entry
                 bool enabled = editEntryActive && editEntryActionsMask.contains(action);
                 if (action->menu()) {
                     action->menu()->setEnabled(enabled);
@@ -1110,7 +1125,7 @@ void MainWindow::releaseContextFocusLock()
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
-    m_ui->menuEntries->popup(globalPos);
+    m_entryContextMenu->popup(globalPos);
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)

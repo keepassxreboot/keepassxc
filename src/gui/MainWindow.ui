@@ -195,7 +195,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -298,11 +298,11 @@
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
-    <addaction name="separator"/>
     <addaction name="menuEntryTotp"/>
-    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="separator"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="separator"/>
+    <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
