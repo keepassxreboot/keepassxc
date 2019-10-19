@@ -304,9 +304,9 @@ QString BrowserService::storeKey(const QString& key)
         QInputDialog keyDialog;
         connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
-        keyDialog.setLabelText(tr("You have received an association request for the above key.\n\n"
-                                  "If you would like to allow it access to your KeePassXC database,\n"
-                                  "give it a unique name to identify and accept it."));
+        keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
+                                  "Give the connection a unique name or ID, for example:\nchrome-laptop.")
+                                   .arg(db->metadata()->name().toHtmlEscaped()));
         keyDialog.setOkButtonText(tr("Save and allow access"));
         keyDialog.setWindowFlags(keyDialog.windowFlags() | Qt::WindowStaysOnTopHint);
         raiseWindow();
