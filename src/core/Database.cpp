@@ -54,7 +54,7 @@ Database::Database()
 
     s_uuidMap.insert(m_uuid, this);
 
-    connect(m_metadata, SIGNAL(metadataModified()), this, SLOT(markAsModified()));
+    connect(m_metadata, SIGNAL(metadataModified()), SLOT(markAsModified()));
     connect(m_timer, SIGNAL(timeout()), SIGNAL(databaseModified()));
     connect(this, SIGNAL(databaseOpened()), SLOT(updateCommonUsernames()));
     connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
@@ -189,7 +189,7 @@ bool Database::save(QString* error, bool atomic, bool backup)
 /**
  * Save the database to a specific file.
  *
- * If atmoic is false, this function uses QTemporaryFile instead of QSaveFile
+ * If atomic is false, this function uses QTemporaryFile instead of QSaveFile
  * due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may
  * prevent the QSaveFile from renaming itself when using Dropbox, Google Drive,
  * or OneDrive.

@@ -17,7 +17,7 @@
 
 #include "TemporaryFile.h"
 
-#ifdef Q_OS_WIN
+#include <QTextStream>
 
 TemporaryFile::TemporaryFile()
     : TemporaryFile(nullptr)
@@ -47,9 +47,35 @@ TemporaryFile::TemporaryFile(const QString& templateName, QObject* parent)
     tmp.close();
 }
 
+TemporaryFile::~TemporaryFile()
+{
+    remove();
+}
+
 bool TemporaryFile::open()
 {
     return QFile::open(QIODevice::ReadWrite);
 }
 
-#endif
+bool TemporaryFile::copyFromFile(const QString& otherFileName)
+{
+    close();
+    if (!open(QFile::WriteOnly | QFile::Truncate)) {
+        return false;
+    }
+
+    QFile otherFile(otherFileName);
+    if (!otherFile.open(QFile::ReadOnly)) {
+        close();
+        return false;
+    }
+
+    QByteArray data;
+    while(!(data = otherFile.read(1024)).isEmpty()) {
+        write(data);
+    }
+
+    otherFile.close();
+    close();
+    return true;
+}
