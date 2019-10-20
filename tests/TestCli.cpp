@@ -144,36 +144,32 @@ void TestCli::init()
 
     m_stdinFile.reset(new TemporaryFile());
     m_stdinFile->open();
-    m_stdinHandle = fdopen(m_stdinFile->handle(), "r+");
-    Utils::STDIN = m_stdinHandle;
+    Utils::STDIN = fdopen(m_stdinFile->handle(), "r+");
 
     m_stdoutFile.reset(new TemporaryFile());
     m_stdoutFile->open();
-    m_stdoutHandle = fdopen(m_stdoutFile->handle(), "r+");
-    Utils::STDOUT = m_stdoutHandle;
+    Utils::STDOUT = fdopen(m_stdoutFile->handle(), "r+");
 
     m_stderrFile.reset(new TemporaryFile());
     m_stderrFile->open();
-    m_stderrHandle = fdopen(m_stderrFile->handle(), "r+");
-    Utils::STDERR = m_stderrHandle;
+    Utils::STDERR = fdopen(m_stderrFile->handle(), "r+");
 }
 
 void TestCli::cleanup()
 {
     m_dbFile.reset();
-
     m_dbFile2.reset();
+    m_keyFileProtectedDbFile.reset();
+    m_keyFileProtectedNoPasswordDbFile.reset();
+    m_yubiKeyProtectedDbFile.reset();
 
     m_stdinFile.reset();
-    m_stdinHandle = stdin;
     Utils::STDIN = stdin;
 
     m_stdoutFile.reset();
     Utils::STDOUT = stdout;
-    m_stdoutHandle = stdout;
 
     m_stderrFile.reset();
-    m_stderrHandle = stderr;
     Utils::STDERR = stderr;
 }
 
@@ -184,8 +180,8 @@ void TestCli::cleanupTestCase()
 QSharedPointer<Database> TestCli::readTestDatabase() const
 {
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", "", m_stdoutHandle));
-    m_stdoutFile->seek(ftell(m_stdoutHandle)); // re-synchronize handles
+    auto db = QSharedPointer<Database>(Utils::unlockDatabase(m_dbFile->fileName(), true, "", "", Utils::STDOUT));
+    m_stdoutFile->seek(ftell(Utils::STDOUT)); // re-synchronize handles
     return db;
 }
 
@@ -282,17 +278,25 @@ void TestCli::testAdd()
     addCmd.execute({"add", "-q", "-u", "newuser", "-g", "-L", "20", m_dbFile->fileName(), "/newentry-quiet"});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(posErr);
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newentry-quiet");
     QVERIFY(entry);
     QCOMPARE(entry->password().size(), 20);
 
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
     Utils::Test::setNextPassword("newpassword");
     addCmd.execute(
         {"add", "-u", "newuser2", "--url", "https://example.net/", "-p", m_dbFile->fileName(), "/newuser-entry2"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(posErr);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stdoutFile->readLine(); // skip password input
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry2.\n"));
 
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry2");
@@ -309,8 +313,8 @@ void TestCli::testAdd()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(posErr);
     m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry3.\n"));
     QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry3.\n"));
 
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry3");
@@ -339,8 +343,8 @@ void TestCli::testAdd()
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(posErr);
     m_stdoutFile->readLine(); // skip password prompt
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry4.\n"));
     QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Successfully added entry newuser-entry4.\n"));
 
     db = readTestDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry4");
@@ -541,7 +545,7 @@ void TestCli::testCreate()
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
 
-    QString databaseFilename = testDir->path() + "testCreate1.kdbx";
+    QString databaseFilename = testDir->path() + "/testCreate1.kdbx";
     // Password
     Utils::Test::setNextPassword("a");
     createCmd.execute({"create", databaseFilename});
@@ -568,8 +572,8 @@ void TestCli::testCreate()
     QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
 
     // Testing with keyfile creation
-    QString databaseFilename2 = testDir->path() + "testCreate2.kdbx";
-    QString keyfilePath = testDir->path() + "keyfile.txt";
+    QString databaseFilename2 = testDir->path() + "/testCreate2.kdbx";
+    QString keyfilePath = testDir->path() + "/keyfile.txt";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
@@ -586,7 +590,7 @@ void TestCli::testCreate()
     QVERIFY(db2);
 
     // Testing with existing keyfile
-    QString databaseFilename3 = testDir->path() + "testCreate3.kdbx";
+    QString databaseFilename3 = testDir->path() + "/testCreate3.kdbx";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");

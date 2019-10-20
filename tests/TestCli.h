@@ -91,9 +91,6 @@ private:
     QScopedPointer<TemporaryFile> m_stdoutFile;
     QScopedPointer<TemporaryFile> m_stderrFile;
     QScopedPointer<TemporaryFile> m_stdinFile;
-    FILE* m_stdoutHandle = stdout;
-    FILE* m_stderrHandle = stderr;
-    FILE* m_stdinHandle = stdin;
 };
 
 #endif // KEEPASSXC_TESTCLI_H

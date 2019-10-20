@@ -75,6 +75,8 @@
 
 QTEST_MAIN(TestGui)
 
+static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx");
+
 void TestGui::initTestCase()
 {
     QVERIFY(Crypto::init());
@@ -91,26 +93,19 @@ void TestGui::initTestCase()
 
     m_mainWindow.reset(new MainWindow());
     Bootstrap::restoreMainWindowState(*m_mainWindow);
+    Bootstrap::bootstrapApplication();
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
-
-    // Load the NewDatabase.kdbx file into temporary storage
-    QFile sourceDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
-    QVERIFY(sourceDbFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&sourceDbFile, m_dbData));
-    sourceDbFile.close();
 }
 
 // Every test starts with opening the temp database
 void TestGui::init()
 {
-    m_dbFile.reset(new TemporaryFile());
-    // Write the temp storage to a temp database file for use in our tests
-    QVERIFY(m_dbFile->open());
-    QCOMPARE(m_dbFile->write(m_dbData), static_cast<qint64>((m_dbData.size())));
-    m_dbFileName = QFileInfo(m_dbFile->fileName()).fileName();
-    m_dbFilePath = m_dbFile->fileName();
-    m_dbFile->close();
+    // Copy the test database file to the temporary file
+    QVERIFY(m_dbFile.copyFromFile(dbFileName));
+
+    m_dbFileName = QFileInfo(m_dbFile.fileName()).fileName();
+    m_dbFilePath = m_dbFile.fileName();
 
     // make sure window is activated or focus tests may fail
     m_mainWindow->activateWindow();
@@ -145,13 +140,11 @@ void TestGui::cleanup()
     if (m_dbWidget) {
         delete m_dbWidget;
     }
-
-    m_dbFile->remove();
 }
 
 void TestGui::cleanupTestCase()
 {
-    m_dbFile->remove();
+    m_dbFile.remove();
 }
 
 void TestGui::testSettingsDefaultTabOrder()
@@ -333,19 +326,10 @@ void TestGui::testAutoreloadDatabase()
 {
     config()->set("AutoReloadOnChange", false);
 
-    // Load the MergeDatabase.kdbx file into temporary storage
-    QByteArray unmodifiedMergeDatabase;
-    QFile mergeDbFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
-    QVERIFY(mergeDbFile.open(QIODevice::ReadOnly));
-    QVERIFY(Tools::readAllFromDevice(&mergeDbFile, unmodifiedMergeDatabase));
-    mergeDbFile.close();
-
     // Test accepting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::Yes);
     // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile->open());
-    QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
-    m_dbFile->close();
+    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
@@ -360,10 +344,8 @@ void TestGui::testAutoreloadDatabase()
 
     // Test rejecting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::No);
-    // Overwrite the current temp database with a new file
-    QVERIFY(m_dbFile->open());
-    QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
-    m_dbFile->close();
+    // Overwrite the current database with the temp data
+    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     // Ensure the merge did not take place
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
@@ -382,9 +364,7 @@ void TestGui::testAutoreloadDatabase()
     // This is saying yes to merging the entries
     MessageBox::setNextAnswer(MessageBox::Merge);
     // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile->open());
-    QVERIFY(m_dbFile->write(unmodifiedMergeDatabase, static_cast<qint64>(unmodifiedMergeDatabase.size())));
-    m_dbFile->close();
+    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
@@ -1279,9 +1259,8 @@ void TestGui::testDragAndDropKdbxFiles()
 
     QCOMPARE(m_tabWidget->count(), openedDatabasesCount);
 
-    const QString goodDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
     QMimeData goodMimeData;
-    goodMimeData.setUrls({QUrl::fromLocalFile(goodDatabaseFilePath)});
+    goodMimeData.setUrls({QUrl::fromLocalFile(dbFileName)});
     QDragEnterEvent goodDragEvent(QPoint(1, 1), Qt::LinkAction, &goodMimeData, Qt::LeftButton, Qt::NoModifier);
     qApp->notify(m_mainWindow.data(), &goodDragEvent);
     QCOMPARE(goodDragEvent.isAccepted(), true);
