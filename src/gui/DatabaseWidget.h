@@ -80,6 +80,7 @@ public:
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
     bool isSearchActive() const;
+    bool isEntryEditActive() const;
 
     QString getCurrentSearch();
     void refreshSearch();
@@ -234,6 +235,7 @@ private:
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false);
+    Entry* currentSelectedEntry();
 
     QSharedPointer<Database> m_db;
 

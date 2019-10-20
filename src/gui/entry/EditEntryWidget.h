@@ -72,7 +72,7 @@ public:
     void
     loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database);
 
-    QString entryTitle() const;
+    Entry* currentEntry() const;
     void clear();
 
 signals:

@@ -639,13 +639,33 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::Mode::EditMode:
         case DatabaseWidget::Mode::ImportMode:
         case DatabaseWidget::Mode::LockedMode: {
-            const QList<QAction*> entryActions = m_ui->menuEntries->actions();
-            for (QAction* action : entryActions) {
-                action->setEnabled(false);
+            bool editEntryActive = dbWidget->isEntryEditActive();
+            const auto editEntryActionsMask = QList<QAction*>({m_ui->actionEntryCopyUsername,
+                                                               m_ui->actionEntryCopyPassword,
+                                                               m_ui->actionEntryCopyURL,
+                                                               m_ui->actionEntryOpenUrl,
+                                                               m_ui->actionEntryAutoType,
+                                                               m_ui->actionEntryDownloadIcon,
+                                                               m_ui->actionEntryCopyNotes,
+                                                               m_ui->actionEntryCopyTitle,
+                                                               m_ui->menuEntryCopyAttribute->menuAction(),
+                                                               m_ui->menuEntryTotp->menuAction(),
+                                                               m_ui->actionEntrySetupTotp});
+
+            auto entryActions = m_ui->menuEntries->actions();
+            entryActions << m_ui->menuEntryCopyAttribute->actions();
+            entryActions << m_ui->menuEntryTotp->actions();
+            for (auto action : entryActions) {
+                // Enable select actions when editing an entry
+                bool enabled = editEntryActive && editEntryActionsMask.contains(action);
+                if (action->menu()) {
+                    action->menu()->setEnabled(enabled);
+                }
+                action->setEnabled(enabled);
             }
 
-            const QList<QAction*> groupActions = m_ui->menuGroups->actions();
-            for (QAction* action : groupActions) {
+            const auto groupActions = m_ui->menuGroups->actions();
+            for (auto action : groupActions) {
                 action->setEnabled(false);
             }
 
@@ -666,13 +686,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
         m_ui->actionDatabaseClose->setEnabled(true);
     } else {
-        const QList<QAction*> entryActions = m_ui->menuEntries->actions();
-        for (QAction* action : entryActions) {
+        const auto entryActions = m_ui->menuEntries->actions();
+        for (auto action : entryActions) {
             action->setEnabled(false);
         }
 
-        const QList<QAction*> groupActions = m_ui->menuGroups->actions();
-        for (QAction* action : groupActions) {
+        const auto groupActions = m_ui->menuGroups->actions();
+        for (auto action : groupActions) {
             action->setEnabled(false);
         }
 
