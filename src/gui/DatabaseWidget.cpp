@@ -264,6 +264,11 @@ bool DatabaseWidget::isSearchActive() const
     return m_entryView->inSearchMode();
 }
 
+bool DatabaseWidget::isEntryEditActive() const
+{
+    return currentWidget() == m_editEntryWidget;
+}
+
 bool DatabaseWidget::isEditWidgetModified() const
 {
     if (currentWidget() == m_editEntryWidget) {
@@ -397,7 +402,7 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 
 void DatabaseWidget::cloneEntry()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return;
@@ -409,7 +414,7 @@ void DatabaseWidget::cloneEntry()
 
 void DatabaseWidget::showTotp()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return;
@@ -421,7 +426,7 @@ void DatabaseWidget::showTotp()
 
 void DatabaseWidget::copyTotp()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return;
@@ -431,7 +436,7 @@ void DatabaseWidget::copyTotp()
 
 void DatabaseWidget::setupTotp()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return;
@@ -568,7 +573,7 @@ void DatabaseWidget::setFocus()
 
 void DatabaseWidget::copyTitle()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->title()));
     }
@@ -576,7 +581,7 @@ void DatabaseWidget::copyTitle()
 
 void DatabaseWidget::copyUsername()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->username()));
     }
@@ -584,7 +589,7 @@ void DatabaseWidget::copyUsername()
 
 void DatabaseWidget::copyPassword()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
     }
@@ -592,7 +597,7 @@ void DatabaseWidget::copyPassword()
 
 void DatabaseWidget::copyURL()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->url()));
     }
@@ -600,7 +605,7 @@ void DatabaseWidget::copyURL()
 
 void DatabaseWidget::copyNotes()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->notes()));
     }
@@ -608,7 +613,7 @@ void DatabaseWidget::copyNotes()
 
 void DatabaseWidget::copyAttribute(QAction* action)
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(
             currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
@@ -617,7 +622,7 @@ void DatabaseWidget::copyAttribute(QAction* action)
 
 void DatabaseWidget::showTotpKeyQrCode()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         auto totpDisplayDialog = new TotpExportSettingsDialog(this, currentEntry);
         totpDisplayDialog->open();
@@ -638,7 +643,7 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 
 void DatabaseWidget::performAutoType()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         autoType()->performAutoType(currentEntry, window());
     }
@@ -646,7 +651,7 @@ void DatabaseWidget::performAutoType()
 
 void DatabaseWidget::openUrl()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         openUrlForEntry(currentEntry);
     }
@@ -749,6 +754,15 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 }
 
+Entry* DatabaseWidget::currentSelectedEntry()
+{
+    if (currentWidget() == m_editEntryWidget) {
+        return m_editEntryWidget->currentEntry();
+    }
+
+    return m_entryView->currentEntry();
+}
+
 void DatabaseWidget::createGroup()
 {
     Q_ASSERT(m_groupView->currentGroup());
@@ -845,7 +859,8 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 
 void DatabaseWidget::switchToHistoryView(Entry* entry)
 {
-    m_historyEditEntryWidget->loadEntry(entry, false, true, m_editEntryWidget->entryTitle(), m_db);
+    auto entryTitle = m_editEntryWidget->currentEntry() ? m_editEntryWidget->currentEntry()->title() : "";
+    m_historyEditEntryWidget->loadEntry(entry, false, true, entryTitle, m_db);
     setCurrentWidget(m_historyEditEntryWidget);
 }
 
@@ -869,10 +884,13 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
         group = currentGroup();
     } else {
         group = entry->group();
+        // Ensure we have only this entry selected
+        m_entryView->setCurrentEntry(entry);
     }
 
     Q_ASSERT(group);
 
+    // Setup the entry edit widget and display
     m_editEntryWidget->loadEntry(entry, create, false, group->name(), m_db);
     setCurrentWidget(m_editEntryWidget);
 }
@@ -1099,8 +1117,7 @@ void DatabaseWidget::switchToImportOpVault(const QString& fileName)
 
 void DatabaseWidget::switchToEntryEdit()
 {
-    Entry* entry = m_entryView->currentEntry();
-
+    auto entry = m_entryView->currentEntry();
     if (!entry) {
         return;
     }
@@ -1110,8 +1127,7 @@ void DatabaseWidget::switchToEntryEdit()
 
 void DatabaseWidget::switchToGroupEdit()
 {
-    Group* group = m_groupView->currentGroup();
-
+    auto group = m_groupView->currentGroup();
     if (!group) {
         return;
     }
@@ -1362,8 +1378,9 @@ bool DatabaseWidget::lock()
         m_groupBeforeLock = m_db->rootGroup()->uuid();
     }
 
-    if (m_entryView->currentEntry()) {
-        m_entryBeforeLock = m_entryView->currentEntry()->uuid();
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        m_entryBeforeLock = currentEntry->uuid();
     }
 
     endSearch();
@@ -1482,7 +1499,7 @@ bool DatabaseWidget::currentEntryHasFocus()
 
 bool DatabaseWidget::currentEntryHasTitle()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;
@@ -1492,7 +1509,7 @@ bool DatabaseWidget::currentEntryHasTitle()
 
 bool DatabaseWidget::currentEntryHasUsername()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;
@@ -1502,7 +1519,7 @@ bool DatabaseWidget::currentEntryHasUsername()
 
 bool DatabaseWidget::currentEntryHasPassword()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;
@@ -1512,7 +1529,7 @@ bool DatabaseWidget::currentEntryHasPassword()
 
 bool DatabaseWidget::currentEntryHasUrl()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;
@@ -1522,7 +1539,7 @@ bool DatabaseWidget::currentEntryHasUrl()
 
 bool DatabaseWidget::currentEntryHasTotp()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;
@@ -1532,7 +1549,7 @@ bool DatabaseWidget::currentEntryHasTotp()
 
 bool DatabaseWidget::currentEntryHasNotes()
 {
-    Entry* currentEntry = m_entryView->currentEntry();
+    auto currentEntry = currentSelectedEntry();
     Q_ASSERT(currentEntry);
     if (!currentEntry) {
         return false;

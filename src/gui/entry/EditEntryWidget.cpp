@@ -809,13 +809,9 @@ void EditEntryWidget::toggleHideNotes(bool visible)
     m_mainUi->notesHint->setVisible(!visible);
 }
 
-QString EditEntryWidget::entryTitle() const
+Entry* EditEntryWidget::currentEntry() const
 {
-    if (m_entry) {
-        return m_entry->title();
-    } else {
-        return QString();
-    }
+    return m_entry;
 }
 
 void EditEntryWidget::loadEntry(Entry* entry,
