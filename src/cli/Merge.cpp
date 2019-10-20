@@ -68,8 +68,8 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
 
     const QStringList args = parser->positionalArguments();
 
-    QString toDatabasePath = args.at(0);
-    QString fromDatabasePath = args.at(1);
+    auto& toDatabasePath = args.at(0);
+    auto& fromDatabasePath = args.at(1);
 
     QSharedPointer<Database> db2;
     if (!parser->isSet(Merge::SameCredentialsOption)) {
@@ -94,13 +94,13 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
     Merger merger(db2.data(), database.data());
     QStringList changeList = merger.merge();
 
-    for (QString mergeChange : changeList) {
+    for (auto& mergeChange : changeList) {
         outputTextStream << "\t" << mergeChange << endl;
     }
 
     if (!changeList.isEmpty() && !parser->isSet(Merge::DryRunOption)) {
         QString errorMessage;
-        if (!database->save(toDatabasePath, &errorMessage, true, false)) {
+        if (!database->save(&errorMessage, true, false)) {
             errorTextStream << QObject::tr("Unable to save database to file : %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
