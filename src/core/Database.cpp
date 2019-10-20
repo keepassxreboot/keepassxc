@@ -36,7 +36,6 @@
 #include <QXmlStreamReader>
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
-QHash<QString, QPointer<Database>> Database::s_filePathMap;
 
 Database::Database()
     : m_metadata(new Metadata(this))
@@ -161,10 +160,8 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
 }
 
 /**
- * Save the database back to the file is has been opened from.
- * This method behaves the same as its overloads.
- *
- * @see Database::save(const QString&, bool, bool, QString*)
+ * Save the database to the current file path. It is an error to call this function
+ * if no file path has been defined.
  *
  * @param atomic Use atomic file transactions
  * @param backup Backup the existing database file, if exists
@@ -176,20 +173,21 @@ bool Database::save(QString* error, bool atomic, bool backup)
     Q_ASSERT(!m_data.filePath.isEmpty());
     if (m_data.filePath.isEmpty()) {
         if (error) {
-            *error = tr("Could not save, database has no file name.");
+            *error = tr("Could not save, database does not point to a valid file.");
         }
         return false;
     }
 
-    return save(m_data.filePath, error, atomic, backup);
+    return saveAs(m_data.filePath, error, atomic, backup);
 }
 
 /**
- * Save the database to a file.
+ * Save the database to a specific file.
  *
- * This function uses QTemporaryFile instead of QSaveFile due to a bug
- * in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may prevent
- * the QSaveFile from renaming itself when using Dropbox, Drive, or OneDrive.
+ * If atmoic is false, this function uses QTemporaryFile instead of QSaveFile
+ * due to a bug in Qt (https://bugreports.qt.io/browse/QTBUG-57299) that may
+ * prevent the QSaveFile from renaming itself when using Dropbox, Google Drive,
+ * or OneDrive.
  *
  * The risk in using QTemporaryFile is that the rename function is not atomic
  * and may result in loss of data if there is a crash or power loss at the
@@ -201,16 +199,19 @@ bool Database::save(QString* error, bool atomic, bool backup)
  * @param error error message in case of failure
  * @return true on success
  */
-bool Database::save(const QString& filePath, QString* error, bool atomic, bool backup)
+bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool backup)
 {
     // Disallow saving to the same file if read-only
     if (m_data.isReadOnly && filePath == m_data.filePath) {
-        Q_ASSERT_X(false, "Database::save", "Could not save, database file is read-only.");
+        Q_ASSERT_X(false, "Database::saveAs", "Could not save, database file is read-only.");
         if (error) {
             *error = tr("Could not save, database file is read-only.");
         }
         return false;
     }
+
+    // Clear read-only flag
+    setReadOnly(false);
 
     auto& canonicalFilePath = QFileInfo::exists(filePath) ? QFileInfo(filePath).canonicalFilePath() : filePath;
 
@@ -486,18 +487,11 @@ QString Database::canonicalFilePath() const
 
 void Database::setFilePath(const QString& filePath)
 {
-    if (filePath == m_data.filePath) {
-        return;
+    if (filePath != m_data.filePath) {
+        QString oldPath = m_data.filePath;
+        m_data.filePath = filePath;
+        emit filePathChanged(oldPath, filePath);
     }
-
-    if (s_filePathMap.contains(m_data.filePath)) {
-        s_filePathMap.remove(m_data.filePath);
-    }
-    QString oldPath = m_data.filePath;
-    m_data.filePath = filePath;
-    s_filePathMap.insert(m_data.filePath, this);
-
-    emit filePathChanged(oldPath, filePath);
 }
 
 QList<DeletedObject> Database::deletedObjects()
@@ -795,15 +789,6 @@ void Database::markAsClean()
 Database* Database::databaseByUuid(const QUuid& uuid)
 {
     return s_uuidMap.value(uuid, nullptr);
-}
-
-/**
- * @param filePath file path of the database
- * @return pointer to the database or nullptr if the database has not been opened
- */
-Database* Database::databaseByFilePath(const QString& filePath)
-{
-    return s_filePathMap.value(filePath, nullptr);
 }
 
 void Database::startModifiedTimer()

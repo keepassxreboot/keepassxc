@@ -38,8 +38,7 @@ Remove::Remove()
 int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     bool quiet = parser->isSet(Command::QuietOption);
-    QString databasePath = parser->positionalArguments().at(0);
-    QString entryPath = parser->positionalArguments().at(1);
+    auto& entryPath = parser->positionalArguments().at(1);
 
     TextStream outputTextStream(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
@@ -61,7 +60,7 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     };
 
     QString errorMessage;
-    if (!database->save(databasePath, &errorMessage, true, false)) {
+    if (!database->save(&errorMessage, true, false)) {
         errorTextStream << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

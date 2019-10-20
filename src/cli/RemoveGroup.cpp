@@ -42,7 +42,6 @@ RemoveGroup::~RemoveGroup()
 int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     bool quiet = parser->isSet(Command::QuietOption);
-    QString databasePath = parser->positionalArguments().at(0);
     QString groupPath = parser->positionalArguments().at(1);
 
     TextStream outputTextStream(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
@@ -70,7 +69,7 @@ int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedP
     };
 
     QString errorMessage;
-    if (!database->save(databasePath, &errorMessage, true, false)) {
+    if (!database->save(&errorMessage, true, false)) {
         errorTextStream << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

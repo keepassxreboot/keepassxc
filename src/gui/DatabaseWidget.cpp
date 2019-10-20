@@ -1586,7 +1586,6 @@ EntryView* DatabaseWidget::entryView()
  * ask to disable safe saves if it is unable to save after the third attempt.
  * Set `attempt` to -1 to disable this behavior.
  *
- * @param attempt current save attempt or -1 to disable attempts
  * @return true on success
  */
 bool DatabaseWidget::save()

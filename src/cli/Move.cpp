@@ -44,7 +44,6 @@ int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     const QStringList args = parser->positionalArguments();
-    const QString& databasePath = args.at(0);
     const QString& entryPath = args.at(1);
     const QString& destinationPath = args.at(2);
 
@@ -70,7 +69,7 @@ int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     entry->endUpdate();
 
     QString errorMessage;
-    if (!database->save(databasePath, &errorMessage, true, false)) {
+    if (!database->save(&errorMessage, true, false)) {
         errorTextStream << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }

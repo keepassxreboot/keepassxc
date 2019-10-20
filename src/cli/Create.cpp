@@ -97,7 +97,7 @@ int Create::execute(const QStringList& arguments)
     db->setKey(key);
 
     QString errorMessage;
-    if (!db->save(databaseFilename, &errorMessage, true, false)) {
+    if (!db->saveAs(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
