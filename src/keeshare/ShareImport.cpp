@@ -247,7 +247,7 @@ namespace
         Q_UNUSED(resolvedPath);
         return {reference.path,
                 ShareObserver::Result::Warning,
-                tr("Unsigned share container are not supported - import prevented")};
+                ShareImport::tr("Unsigned share container are not supported - import prevented")};
 #else
         QFile file(resolvedPath);
         if (!file.open(QIODevice::ReadOnly)) {

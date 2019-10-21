@@ -27,6 +27,8 @@
  */
 class OpData01 : public QObject
 {
+    Q_OBJECT
+
 public:
     explicit OpData01(QObject* parent = nullptr);
     ~OpData01() override;
