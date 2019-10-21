@@ -126,7 +126,7 @@ QSharedPointer<PasswordGenerator> Generate::createGenerator(QSharedPointer<QComm
     passwordGenerator->setExcludedChars(parser->value(Generate::ExcludeCharsOption));
 
     if (!passwordGenerator->isValid()) {
-        errorTextStream << QObject::tr("invalid password generator after applying all options") << endl;
+        errorTextStream << QObject::tr("Invalid password generator after applying all options") << endl;
         return QSharedPointer<PasswordGenerator>(nullptr);
     }
 

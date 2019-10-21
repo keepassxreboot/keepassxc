@@ -78,5 +78,5 @@ void Analyze::printHibpFinding(const Entry* entry, int count, QTextStream& out)
         path.prepend("/").prepend(g->name());
     }
 
-    out << QObject::tr("Password for '%1' has been leaked %2 times!").arg(path).arg(count) << endl;
+    out << QObject::tr("Password for '%1' has been leaked %2 time(s)!", "", count).arg(path).arg(count) << endl;
 }

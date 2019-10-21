@@ -100,7 +100,7 @@
             </font>
            </property>
            <property name="text">
-            <string>1234567</string>
+            <string notr="true">1234567</string>
            </property>
           </widget>
          </item>

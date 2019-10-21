@@ -765,7 +765,7 @@
     <string>&amp;Keyboard Shortcuts</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+/</string>
+    <string notr="true">Ctrl+/</string>
    </property>
   </action>
  </widget>
