@@ -232,7 +232,7 @@
          </font>
         </property>
         <property name="accessibleName">
-         <string>Field seperation</string>
+         <string>Field separation</string>
         </property>
         <property name="editable">
          <bool>false</bool>

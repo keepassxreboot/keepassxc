@@ -29,11 +29,11 @@ const QCommandLineOption Export::FormatOption =
     QCommandLineOption(QStringList() << "f"
                                      << "format",
                        QObject::tr("Format to use when exporting. Available choices are xml or csv. Defaults to xml."),
-                       QObject::tr("xml|csv"));
+                       QStringLiteral("xml|csv"));
 
 Export::Export()
 {
-    name = QString("export");
+    name = QStringLiteral("export");
     options.append(Export::FormatOption);
     description = QObject::tr("Exports the content of a database to standard output in the specified format.");
 }
@@ -44,7 +44,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QString format = parser->value(Export::FormatOption);
-    if (format.isEmpty() || format == QString("xml")) {
+    if (format.isEmpty() || format == QStringLiteral("xml")) {
         QByteArray xmlData;
         QString errorMessage;
         if (!database->extract(xmlData, &errorMessage)) {
@@ -52,7 +52,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
             return EXIT_FAILURE;
         }
         outputTextStream << xmlData.constData() << endl;
-    } else if (format == QString("csv")) {
+    } else if (format == QStringLiteral("csv")) {
         CsvExporter csvExporter;
         outputTextStream << csvExporter.exportDatabase(database);
     } else {

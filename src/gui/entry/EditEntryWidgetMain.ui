@@ -129,7 +129,7 @@
    <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
     <widget class="QCheckBox" name="notesEnabled">
      <property name="toolTip">
-      <string>Toggle notes visibile</string>
+      <string>Toggle notes visible</string>
      </property>
      <property name="accessibleName">
       <string>Toggle notes visible</string>

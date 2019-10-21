@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="accessibleName">
-   <string>Unlock KePassXC Database</string>
+   <string>Unlock KeePassXC Database</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,2">
    <item>
@@ -86,7 +86,7 @@
         <item>
          <widget class="ElidedLabel" name="fileNameLabel">
           <property name="text">
-           <string>filename.kdbx</string>
+           <string notr="true">filename.kdbx</string>
           </property>
          </widget>
         </item>
@@ -380,7 +380,7 @@
                            }</string>
                       </property>
                       <property name="text">
-                       <string>?</string>
+                       <string notr="true">?</string>
                       </property>
                       <property name="iconSize">
                        <size>
