@@ -177,7 +177,9 @@ namespace Utils
                 outputDescriptor));
             compositeKey->addChallengeResponseKey(key);
         }
-#endif
+#else
+        Q_UNUSED(yubiKeySlot);
+#endif // WITH_XC_YUBIKEY
 
         auto db = QSharedPointer<Database>::create();
         QString error;
