@@ -19,6 +19,9 @@
 #include "MacUtils.h"
 #include <QApplication>
 
+#include <CoreGraphics/CGEventSource.h>
+
+
 QPointer<MacUtils> MacUtils::m_instance = nullptr;
 
 MacUtils::MacUtils(QObject* parent)
@@ -84,4 +87,9 @@ bool MacUtils::enableAccessibility()
 bool MacUtils::enableScreenRecording()
 {
     return m_appkit->enableScreenRecording();
+}
+
+bool MacUtils::isCapslockEnabled()
+{
+    return (CGEventSourceFlagsState(kCGEventSourceStateHIDSystemState) & kCGEventFlagMaskAlphaShift) != 0;
 }

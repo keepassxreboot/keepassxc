@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_RESOURCES_H
 #define KEEPASSX_RESOURCES_H
 
+#include <QColor>
 #include <QHash>
 #include <QIcon>
 #include <QString>
@@ -33,7 +34,7 @@ public:
     QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
-    QIcon icon(const QString& name, bool recolor = true);
+    QIcon icon(const QString& name, bool recolor = true, const QColor& overrideColor = QColor::Invalid);
     QIcon onOffIcon(const QString& name, bool recolor = true);
 
     static Resources* instance();
