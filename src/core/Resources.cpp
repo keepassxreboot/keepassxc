@@ -115,11 +115,11 @@ QIcon Resources::trayIconUnlocked()
     return useDarkIcon() ? icon("keepassxc-dark", false) : icon("keepassxc-unlocked", false);
 }
 
-QIcon Resources::icon(const QString& name, bool recolor)
+QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideColor)
 {
     QIcon icon = m_iconCache.value(name);
 
-    if (!icon.isNull()) {
+    if (!icon.isNull() && !overrideColor.isValid()) {
         return icon;
     }
 
@@ -128,28 +128,36 @@ QIcon Resources::icon(const QString& name, bool recolor)
         QImage img = icon.pixmap(128, 128).toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
         icon = {};
 
-        QPalette palette = getMainWindow()->palette();
         QPainter painter(&img);
         painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
 
-        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Normal, QPalette::WindowText));
-        icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
+        if (!overrideColor.isValid()) {
+            QPalette palette = getMainWindow()->palette();
+            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Normal, QPalette::WindowText));
+            icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
 
-        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::ButtonText));
-        icon.addPixmap(QPixmap::fromImage(img), QIcon::Active);
+            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::ButtonText));
+            icon.addPixmap(QPixmap::fromImage(img), QIcon::Active);
 
-        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::HighlightedText));
-        icon.addPixmap(QPixmap::fromImage(img), QIcon::Selected);
+            painter.fillRect(
+                0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::HighlightedText));
+            icon.addPixmap(QPixmap::fromImage(img), QIcon::Selected);
 
-        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Disabled, QPalette::WindowText));
-        icon.addPixmap(QPixmap::fromImage(img), QIcon::Disabled);
+            painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Disabled, QPalette::WindowText));
+            icon.addPixmap(QPixmap::fromImage(img), QIcon::Disabled);
+        } else {
+            painter.fillRect(0, 0, img.width(), img.height(), overrideColor);
+            icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
+        }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
 #endif
     }
 
-    m_iconCache.insert(name, icon);
+    if (!overrideColor.isValid()) {
+        m_iconCache.insert(name, icon);
+    }
 
     return icon;
 }

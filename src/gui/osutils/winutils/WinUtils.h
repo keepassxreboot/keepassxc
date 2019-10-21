@@ -33,6 +33,7 @@ public:
     static void registerEventFilters();
 
     bool isDarkMode() override;
+    bool isCapslockEnabled() override;
 
 protected:
     explicit WinUtils(QObject* parent = nullptr);

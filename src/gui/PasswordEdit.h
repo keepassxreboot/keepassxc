@@ -39,20 +39,27 @@ public slots:
     void setShowPassword(bool show);
     void updateRepeatStatus();
 
+protected:
+    bool event(QEvent* event) override;
+
+signals:
+    void capslockToggled(bool capslockOn);
+
 private slots:
     void autocompletePassword(const QString& password);
     void popupPasswordGenerator();
     void setParentPasswordEdit(PasswordEdit* parent);
+    void checkCapslockState();
 
 private:
     QPointer<QAction> m_errorAction;
     QPointer<QAction> m_correctAction;
     QPointer<QAction> m_toggleVisibleAction;
     QPointer<QAction> m_passwordGeneratorAction;
+    QPointer<QAction> m_capslockAction;
     QPointer<PasswordEdit> m_repeatPasswordEdit;
     QPointer<PasswordEdit> m_parentPasswordEdit;
-    bool m_sendGeneratorSignal = false;
-    bool m_isRepeatPartner = false;
+    bool m_capslockState = false;
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H
