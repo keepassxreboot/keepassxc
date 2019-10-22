@@ -67,6 +67,7 @@ private slots:
     void openEntryUrl();
 
 private:
+    void removeTab(QTabWidget* tabWidget, QWidget* widget);
     void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
 
     static QPixmap preparePixmap(const QPixmap& pixmap, int size);

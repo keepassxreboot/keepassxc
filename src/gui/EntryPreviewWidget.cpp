@@ -72,6 +72,10 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
+
+#if !defined(WITH_XC_KEESHARE)
+    removeTab(m_ui->groupTabWidget, m_ui->groupShareTab);
+#endif
 }
 
 EntryPreviewWidget::~EntryPreviewWidget()
@@ -374,6 +378,13 @@ void EntryPreviewWidget::openEntryUrl()
     if (m_currentEntry) {
         emit entryUrlActivated(m_currentEntry);
     }
+}
+
+void EntryPreviewWidget::removeTab(QTabWidget* tabWidget, QWidget* widget)
+{
+    const int tabIndex = tabWidget->indexOf(widget);
+    Q_ASSERT(tabIndex != -1);
+    tabWidget->removeTab(tabIndex);
 }
 
 void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)
