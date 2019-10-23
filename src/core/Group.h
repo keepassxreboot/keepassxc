@@ -114,7 +114,7 @@ public:
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
-    Entry* findEntryByUuid(const QUuid& uuid) const;
+    Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
     Entry* findEntryByPath(const QString& entryPath);
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
