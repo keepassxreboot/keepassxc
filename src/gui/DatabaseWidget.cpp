@@ -381,6 +381,12 @@ void DatabaseWidget::createEntry()
 
 void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
 {
+    // Save off new parent UUID which will be valid when creating a new entry
+    QUuid newParentUuid;
+    if (m_newParent) {
+        newParentUuid = m_newParent->uuid();
+    }
+
     // TODO: instead of increasing the ref count temporarily, there should be a clean
     // break from the old database. Without this crashes occur due to the change
     // signals triggering dangling pointers.
@@ -389,6 +395,15 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     processAutoOpen();
+
+    // Restore the new parent group pointer, if not found default to the root group
+    // this prevents data loss when merging a database while creating a new entry
+    if (!newParentUuid.isNull()) {
+        m_newParent = m_db->rootGroup()->findGroupByUuid(newParentUuid);
+        if (!m_newParent) {
+            m_newParent = m_db->rootGroup();
+        }
+    }
 
     emit databaseReplaced(oldDb, m_db);
 
@@ -1480,7 +1495,7 @@ void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid&
     auto group = m_db->rootGroup()->findGroupByUuid(groupUuid);
     if (group) {
         m_groupView->setCurrentGroup(group);
-        auto entry = group->findEntryByUuid(entryUuid);
+        auto entry = group->findEntryByUuid(entryUuid, false);
         if (entry) {
             m_entryView->setCurrentEntry(entry);
         }

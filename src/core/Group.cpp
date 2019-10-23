@@ -585,13 +585,18 @@ QList<Entry*> Group::referencesRecursive(const Entry* entry) const
                                           [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
 }
 
-Entry* Group::findEntryByUuid(const QUuid& uuid) const
+Entry* Group::findEntryByUuid(const QUuid& uuid, bool recursive) const
 {
     if (uuid.isNull()) {
         return nullptr;
     }
 
-    for (Entry* entry : entriesRecursive(false)) {
+    auto entries = m_entries;
+    if (recursive) {
+        entries = entriesRecursive(false);
+    }
+
+    for (auto entry : entries) {
         if (entry->uuid() == uuid) {
             return entry;
         }
