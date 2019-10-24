@@ -17,6 +17,7 @@
 
 #include <QtGlobal>
 #include <cstdint>
+#include <cstdlib>
 #include <sodium.h>
 #if defined(Q_OS_MACOS)
 #include <malloc/malloc.h>

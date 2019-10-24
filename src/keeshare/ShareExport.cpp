@@ -149,8 +149,7 @@ namespace
             KeeShareSettings::Sign sign;
             auto sshKey = own.key.sshKey();
             sshKey.openKey(QString());
-            const Signature signer;
-            sign.signature = signer.create(bytes, sshKey);
+            sign.signature = Signature::create(bytes, sshKey);
             sign.certificate = own.certificate;
             stream << KeeShareSettings::Sign::serialize(sign);
             stream.flush();
