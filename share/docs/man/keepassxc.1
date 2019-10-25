@@ -1,0 +1,39 @@
+.TH KEEPASSXC 1 "Oct 25, 2019"
+.SH NAME
+keepassxc \- password manager
+
+.SH SYNOPSIS
+.B keepassxc
+.B [
+.I options
+.B ] [
+.I filename(s)
+.B ]
+
+.SH DESCRIPTION
+\fBKeePassXC\fP is a free/open-source password manager or safe which helps you to manage your passwords in a secure way. The complete database is always encrypted with the industry-standard AES (alias Rijndael) encryption algorithm using a 256 bit key. KeePassXC uses a database format that is compatible with KeePass Password Safe. Your wallet works offline and requires no Internet connection.
+
+.SH OPTIONS
+.IP "-h, --help"
+Displays this help.
+
+.IP "-v, --version"
+Displays version information.
+
+.IP "--config <config>"
+Path to a custom config file
+
+.IP "--keyfile <keyfile>"
+Key file of the database
+
+.IP "--pw-stdin"
+Read password of the database from stdin
+
+.IP "--pw, --parent-window <handle>"
+Parent window handle
+
+.IP "--debug-info"
+Displays debugging information.
+
+.SH AUTHOR
+This manual page is maintained by the KeePassXC Team <team@keepassxc.org>.
