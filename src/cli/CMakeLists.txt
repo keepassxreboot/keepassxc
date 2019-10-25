@@ -119,5 +119,5 @@ if(APPLE AND WITH_APP_BUNDLE)
 endif()
 
 if(APPLE OR UNIX)
-    install(FILES keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
+    install(FILES ../../share/docs/man/keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 endif()
