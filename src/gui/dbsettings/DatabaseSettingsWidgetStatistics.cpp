@@ -22,7 +22,7 @@
 #include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "zxcvbn/zxcvbn.h"
+#include "zxcvbn.h"
 
 #include <QFileInfo>
 #include <QHash>

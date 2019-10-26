@@ -288,7 +288,7 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
         const auto& reference = it.value().first();
         const QString resolvedPath = resolvePath(reference.config.path, m_db);
         m_fileWatcher->ignoreFileChanges(resolvedPath);
-        ShareExport::intoContainer(resolvedPath, reference.config, reference.group);
+        results << ShareExport::intoContainer(resolvedPath, reference.config, reference.group);
         m_fileWatcher->observeFileChanges(true);
     }
     return results;

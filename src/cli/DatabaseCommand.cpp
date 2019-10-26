@@ -52,7 +52,11 @@ int DatabaseCommand::execute(const QStringList& arguments)
         db = Utils::unlockDatabase(args.at(0),
                                    !parser->isSet(Command::NoPasswordOption),
                                    parser->value(Command::KeyFileOption),
+#ifdef WITH_XC_YUBIKEY
                                    parser->value(Command::YubiKeyOption),
+#else
+                                   "",
+#endif
                                    parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT,
                                    Utils::STDERR);
         if (!db) {

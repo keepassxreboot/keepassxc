@@ -80,6 +80,8 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     connect(m_ui->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
 #else
+    m_ui->hardwareKeyLabel->setVisible(false);
+    m_ui->hardwareKeyLabelHelp->setVisible(false);
     m_ui->buttonRedetectYubikey->setVisible(false);
     m_ui->comboChallengeResponse->setVisible(false);
     m_ui->yubikeyProgress->setVisible(false);

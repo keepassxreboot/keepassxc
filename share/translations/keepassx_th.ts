@@ -11,11 +11,12 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>รายงานจุดบกพร่องที่ &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>รายงานข้อผิดพลาดที่: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC เผยแพร่ภายใต้เงื่อนไขของสัญญาอนุญาตสาธารณะทั่วไปของกนู (GNU GPL) รุ่น 2 หรือรุ่น 3 (คุณสามารถเลือกได้)</translation>
+        <translation>KeePassXC เผยแพร่ภายใต้เงื่อนไขของสัญญาอนุญาตสาธารณะทั่วไปของกนู (GNU GPL) 
+รุ่น 2 หรือรุ่น 3  (คุณสามารถเลือกได้)</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -27,19 +28,19 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>ข้อมูลการแก้จุดบกพร่อง</translation>
+        <translation>ข้อมูลดีบัก</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>ใส่ข้อมูลดังต่อไปนี้ทุกครั้งที่คุณรายงานจุดบกพร่องของซอฟต์แวร์</translation>
+        <translation>ใส่ข้อมูลดังต่อไปนี้ทุกครั้งที่คุณรายงานข้อผิดปกติของซอฟต์แวร์:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>คัดลอกไปยังคลิปบอร์ด</translation>
+        <translation>คัดลอกไปยังคลิปบอร์ด:</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>ผู้ดูแลโครงการ</translation>
+        <translation>ผู้บำรุงรักษาโครงการ:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -61,7 +62,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>การตั้งค่าโปรแกรม</translation>
+        <translation>การตั้งค่าแอป</translation>
     </message>
     <message>
         <source>General</source>
@@ -69,7 +70,7 @@
     </message>
     <message>
         <source>Security</source>
-        <translation>ความปลอดภัย</translation>
+        <translation>ความมั่นคง</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -95,6 +96,14 @@
         <source>Follow style</source>
         <translation>ปฏิบัติตามสไตล์</translation>
     </message>
+    <message>
+        <source>Reset Settings?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all general and security settings to default?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -111,20 +120,8 @@
         <translation>เริ่มต้นอินสแตนซ์เดี่ยวของ KeePassXC เท่านั้น</translation>
     </message>
     <message>
-        <source>Remember last databases</source>
-        <translation>จดจำฐานข้อมูลล่าสุด</translation>
-    </message>
-    <message>
-        <source>Remember last key files and security dongles</source>
-        <translation>จดจำไฟล์สำคัญล่าสุดและความปลอดภัยของดองเกิล</translation>
-    </message>
-    <message>
-        <source>Load previous databases on startup</source>
-        <translation>โหลดฐานข้อมูลก่อนหน้าเมื่อเริ่มต้นระบบ</translation>
-    </message>
-    <message>
         <source>Minimize window at application startup</source>
-        <translation>ย่อหน้าต่างลงเล็กสุดตอนเริ่มโปรแกรม</translation>
+        <translation>ย่อหน้าต่างลงเล็กสุดตอนเริ่มแอป</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -132,7 +129,7 @@
     </message>
     <message>
         <source>Safely save database files (may be incompatible with Dropbox, etc)</source>
-        <translation>บันทึกไฟล์ฐานข้อมูลอย่างปลอดภัย ( อาจจะไม่ตรงกับ Dropbox และอื่น ๆ )</translation>
+        <translation>บันทึกไฟล์ฐานข้อมูลอย่างปลอดภัย (อาจจะไม่ตรงกับ Dropbox ฯลฯ)</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
@@ -163,10 +160,6 @@
         <translation>ใช้ไอคอนกลุ่มบนการสร้างรายการ</translation>
     </message>
     <message>
-        <source>Minimize when copying to clipboard</source>
-        <translation>ย่อหน้าต่างขณะที่คัดลอกไปยังคลิปบอร์ด</translation>
-    </message>
-    <message>
         <source>Hide the entry preview panel</source>
         <translation>ซ่อนแผงตัวอย่างแสดงรายการ</translation>
     </message>
@@ -184,7 +177,7 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>แสดงไอคอนของซิสเต็มเทรย์</translation>
+        <translation>แสดงไอคอนสำหรับ system tray</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
@@ -195,28 +188,24 @@
         <translation>ซ่อนหน้าต่างในซิสเต็มเทรย์เมื่อถูกย่อ</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation>ภาษา</translation>
-    </message>
-    <message>
         <source>Auto-Type</source>
         <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>ใช้หัวข้อของรายการในการจับคู่หน้าต่างกับ Auto-Type สากล</translation>
+        <translation>ใช้หัวข้อเรื่องในการจับคู่หน้าต่างกับ Auto-Type ระดับโลก</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>ใช้ URL ของรายการในการจับคู่หน้าต่างกับ Auto-Type สากล</translation>
+        <translation>ใช้ URL ของรายการในการจับคู่หน้าต่างกับ Auto-Type ระดับโลก</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>ถามก่อนเสมอเมื่อจะทำการ Auto-Type</translation>
+        <translation>ถามเสมอก่อนจะทำการ Auto-Type</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
-        <translation>ทางลัดสำหรับ Auto-Type สากล</translation>
+        <translation>ทางลัดสำหรับ Auto-Type ระดับโลก</translation>
     </message>
     <message>
         <source>Auto-Type typing delay</source>
@@ -225,34 +214,115 @@
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>มิลลิวินาที</translation>
+        <translation>มิลลิวิ</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
         <translation>การเริ่ม Auto-Type ล่าช้า</translation>
     </message>
     <message>
-        <source>Check for updates at application startup</source>
-        <translation>ตรวจสอบการอัปเดตตอนเริ่มแอปพลิเคชัน</translation>
-    </message>
-    <message>
-        <source>Include pre-releases when checking for updates</source>
-        <translation>รวมเวอร์ชันที่ยังไม่เผยแพร่ในการตรวจสอบการอัปเดต</translation>
-    </message>
-    <message>
         <source>Movable toolbar</source>
         <translation>แถบเครื่องมือที่เคลื่อนย้ายได้</translation>
     </message>
     <message>
-        <source>Button style</source>
-        <translation>สไตล์ปุ่ม</translation>
+        <source>Remember previously used databases</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Load previously open databases on startup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remember database key files and security dongles</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for updates at application startup once per week</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Include beta releases when checking for updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Button style:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(restart program to activate)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize window after unlocking database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize when opening a URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide window when copying to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Drop to background</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Favicon download timeout:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Website icon download timeout in seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> sec</source>
+        <comment>Seconds</comment>
+        <translation>วินาที</translation>
+    </message>
+    <message>
+        <source>Toolbar button style</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use monospaced font for Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Language selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Settings to Default</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Global auto-type shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-type character typing delay milliseconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-type start delay milliseconds</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>หมดเวลา</translation>
+        <translation>การหยุดชั่วคราว</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -261,11 +331,11 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>วินาที</translation>
+        <translation>วิ</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>ล็อคฐานข้อมูลหลังไม่มีการใช้งาน</translation>
+        <translation>ล็อกฐานข้อมูลหลังไม่มีการใช้งาน</translation>
     </message>
     <message>
         <source> min</source>
@@ -273,7 +343,7 @@
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
-        <translation>ไม่จำ TouchID หลังไม่มีการใช้งาน</translation>
+        <translation>ลืม TouchID หลังไม่มีการใช้งาน</translation>
     </message>
     <message>
         <source>Convenience</source>
@@ -281,23 +351,23 @@
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>ล็อคฐานข้อมูลเมื่อเซสชันถูกล็อคหรือฝาถูกปิด</translation>
+        <translation>ล็อคฐานข้อมูลเมื่อเซสชันถูกล็อคหรือฝาครอบถูกผิด</translation>
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation>ไม่จำ TouchID เมื่อเซสชันถูกล็อคหรือฝาถูกปิด</translation>
+        <translation>ลืม TouchID เมื่อเซสชันถูกล็อคหรือฝาครอบถูกผิด</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>ล็อคฐานข้อมูลหลังย่อหน้าต่างลง</translation>
+        <translation>ล็อกฐานข้อมูลหลังย่อหน้าต่างลงเล็กสุด</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>ล็อคฐานข้อมูลก่อนหน้าอีกครั้งหลังทำการ Auto-Type</translation>
+        <translation>ล็อคฐานข้อมูลที่เคยถูกล็อคมาก่อนอีกครั้งหลังทำการ Auto-Type</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>ไม่ต้องถามรหัสผ่านซ้ำถ้ามองเห็นรหัสผ่านอยู่แล้ว</translation>
+        <translation>ไม่ต้องถามรหัสผ่านซ้ำถ้ามองเห็นรหัสผ่านอยู่</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
@@ -305,7 +375,7 @@
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation>ไม่ต้องแสดงข้อความตัวอย่างในช่องกรอกรหัสผ่าน</translation>
+        <translation>ไม่ต้องแสดงข้อความตัวอย่างในช่องรหัสผ่านที่ว่างเปล่า</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -320,8 +390,29 @@
         <translation>ความเป็นส่วนตัว</translation>
     </message>
     <message>
-        <source>Use DuckDuckGo as fallback for downloading website icons</source>
-        <translation>ใช้ DuckDuckGo เป็นตัวแทนสำหรับดาวน์โหลดไอคอนเว็บไซต์</translation>
+        <source>Use DuckDuckGo service to download website icons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clipboard clear seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Touch ID inactivity reset</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database lock timeout seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> min</source>
+        <comment>Minutes</comment>
+        <translation>นาที</translation>
+    </message>
+    <message>
+        <source>Clear search query after</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -348,7 +439,7 @@
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>คำสั่ง Auto-Type นี้กดแป้นพิมพ์ช้า ต้องการดำเนินการต่อหรือไม่</translation>
+        <translation>คำสั่ง Auto-Type นี้กดปุ่มช้า ต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
@@ -390,6 +481,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypeMatchView</name>
+    <message>
+        <source>Copy &amp;username</source>
+        <translation>คัดลอกชื่อผู้ใช้ (&amp;U)</translation>
+    </message>
+    <message>
+        <source>Copy &amp;password</source>
+        <translation>คัดลอกรหัสผ่าน</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -398,6 +500,10 @@
     <message>
         <source>Select entry to Auto-Type:</source>
         <translation>เลือกรายการเพื่อ Auto-Type</translation>
+    </message>
+    <message>
+        <source>Search...</source>
+        <translation>ค้นหา...</translation>
     </message>
 </context>
 <context>
@@ -421,8 +527,16 @@
     <message>
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
-        <translation>%1 ต้องการเข้าถึงรหัสผ่านของไอเทมต่อไปนี้ 
-กรุณาเลือกว่าคุณจะอนุญาตหรือไม่</translation>
+        <translation>%1 ต้องการเข้าถึงรหัสผ่านของไอเทมต่อไปนี้
+กรุณาเลือกว่าคุณจะอนุญาติหรือไม่</translation>
+    </message>
+    <message>
+        <source>Allow access</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deny access</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -442,22 +556,18 @@ Please select whether you want to allow access.</source>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>คุณเปิดหลายฐานข้อมูล กรุณาเลือกฐานข้อมูลที่ถูกต้องเพื่อบันทึกข้อมูลของคุณ</translation>
+        <translation>คุณเปิดหลายฐานข้อมูล กรุณาเลือกฐานข้อมูลที่ถูกต้องเพื่อบันทึกข้อมูลประจำตัวเพื่ิอเข้าระบบ</translation>
     </message>
 </context>
 <context>
     <name>BrowserOptionDialog</name>
     <message>
         <source>Dialog</source>
-        <translation>หน้าต่าง</translation>
+        <translation>กล่องโต้ตอบ</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>สิ่งนี้จำเป็นเพื่อการเข้าถึงฐานข้อมูลผ่านเบราว์เซอร์ KeePassXC</translation>
-    </message>
-    <message>
-        <source>Enable KeepassXC browser integration</source>
-        <translation>เปิดใช้ KeepassXC ร่วมกับเบราว์เซอร์</translation>
+        <translation>การเข้าถึงฐานข้อมูลของคุณจำเป็นต้องเข้าผ่านเบราว์เซอร์ KeePassXC</translation>
     </message>
     <message>
         <source>General</source>
@@ -465,7 +575,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>เปิดการใช้เบราว์เซอร์เหล่านี้ร่วมกับ</translation>
+        <translation>เปิดใช้การผสานกับเบราว์เซอร์เหล่านี้:</translation>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
@@ -494,7 +604,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>ข้อมูลรูปแบบเดียวกันเท่านั้น (http://, https://, ...) จะถูกส่งคืน</translation>
+        <translation>ข้อมูลรูปแบบเดียวกัันเท่านั้น (http://, https://, ...) จะถูกส่งคืน</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
@@ -502,7 +612,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>ส่งคืนรายการเฉพาะที่ตรงกับ URL มากที่สุด แทนที่จะส่งคืนรายการทั้งหมดของทั้งโดเมน</translation>
+        <translation>ย้อนกลับเฉพาะเมื่อ URL นั้น ๆ ตรงกันมากที่สุด ไม่ใช่เมืื่อมีข้อมูลทั้งหมดสำหรับโดเมน</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
@@ -525,16 +635,12 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Never &amp;ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>ไม่เคยและถามก่อนการเข้าถึงเอกสารที่ผ่านการรับรอง</translation>
+        <translation>ไม่เคย &amp; ถามก่อนการเข้าถึงเอกสารรับรอง</translation>
     </message>
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>อย่าถามก่อนและระหว่างการอัปโหลดเอกสารที่ผ่านการรับรอง</translation>
-    </message>
-    <message>
-        <source>Only the selected database has to be connected with a client.</source>
-        <translation>ฐานข้อมูลที่ถูกเลือกเท่านั้นที่เชื่อมกับผู้รับบริการ</translation>
+        <translation>ไม่เคย &amp; ถามก่อนการอัปโหลดเอกสารรับรอง</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
@@ -551,11 +657,11 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>ปรับปรุงข้อมูล KeePassXC หรือเส้นทางของไบนารี keepassxc-proxy โดยอัตโนมัติไปยังการส่งข้อความฉบับดั้งเดิมเมื่อเริ่มต้น</translation>
+        <translation>ปรับปรุงข้อมูล KeePassXC หรือคู่ keepassxc-proxy ให้ทันสมัยโดยอัตโนมัติไปยังการส่งข้อความฉบับดั้งเดิมเมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation>ปรับปรุงข้อมูลไฟล์รายการให้ทันสมัยเมื่อเริ่มต้น</translation>
+        <translation>ปรับปรุงข้อมูลให้ทันสมัยและ ข้อความฉบับดั้งเดิมให้ปรากฏเมื่อเริ่มต้น</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -567,7 +673,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>ใช้พร็อกซีแบบกำหนดเอง ในกรณีที่คุณติดตั้งพร็อกซีด้วยตนเอง</translation>
+        <translation>ใช้สนับสนุน proxy application หากคุณติดตั้งพรอกซีด้วยตนเอง</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
@@ -577,11 +683,11 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>ดู</translation>
+        <translation>ดู...</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt; คำเตือน &lt;/b&gt; ตัวเลือกต่อไปนี้อาจจะอันตราย</translation>
+        <translation>&lt;b&gt;คำเตือน:&lt;/b&gt; ตัวเลือกดังต่อไปนี้อาจจะอันตราย!</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
@@ -590,10 +696,6 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>&amp;Tor Browser</source>
         <translation>&amp;Tor Browser</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: </source>
-        <translation>&lt;b&gt;คำเตือน&lt;/b&gt; ไม่พบ keepassxc-proxy application &lt;br /&gt;กรุณาตรวจสอบการลงข้อมูลไดเรคทอรี KeePassXC  หรือยืนยันตัวเลือกขั้นสูงที่คุณกำหนดเอง &lt;br /&gt;การรวมเบราว์เซอร์จะไม่ทำงานถ้าไม่มีพร๊อกซี application &lt;br /&gt;เส้นทางที่คาดหวัง</translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -606,11 +708,11 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>ไ่ม่ถามเพื่อขออนุญาติสำหรับ HTTP และ Basic Auth</translation>
+        <translation>ไ่ม่ถามเพื่อขออนุญาติสำหรับ HTTP และBasic Auth</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>เนื่องจาก Snap sandbox คุณต้องเรียกใช้สคริปต์เพื่อเปิดใช้งานการรวมเบราว์เซอร์ &lt;br /&gt; คุณสามารถรับสคริปต์นี้จาก %1</translation>
+        <translation>เนื่องจาก Snap sandbox คุณต้องเรียกใช้สคริปต์เพื่อเปิดใช้งานการรวมเบราว์เซอ.&lt;br /&gt;คุณสามารถรับสคริปต์นี้จาก% 1</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
@@ -618,14 +720,58 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation>KeePassXC-Browser เป็นสิ่งจำเป็นสำหรับการทำงานร่วมกับเบราว์เซอร์ &lt;br /&gt; Download มันสำหรับ %1 และ %2. %3    </translation>
+        <translation>KeePassXC-Browser เป็นสิ่งจำเป็นสำหรับการทำงานร่วมกับเบราว์เซอร์ &lt;br /&gt;Download มันสำหรับ %1 และ %2. %3    </translation>
+    </message>
+    <message>
+        <source>&amp;Brave</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Returns expired credentials. String [expired] is added to the title.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Allow returning expired credentials.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enable browser integration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browsers installed as snaps are currently not supported.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All databases connected to the extension will return matching credentials.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom proxy location field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browser for custom proxy file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC คำขอกุญแจที่เชื่อมโยงใหม่</translation>
+        <translation>KeePassXC: คำขอกุญแจที่เชื่อมโยงใหม่</translation>
     </message>
     <message>
         <source>You have received an association request for the above key.
@@ -634,8 +780,8 @@ If you would like to allow it access to your KeePassXC database,
 give it a unique name to identify and accept it.</source>
         <translation>คุณได้รับคำร้องขอที่เกี่ยวข้องสำหรับกุญแจด้านบน
 
-ถ้าคุณต้องการอนุญาตมันให้เข้าถึงฐานข้อมูล KeePassXC database
-โปรดให้ชื่อเฉพาะเพื่อยืนยันตัวตนและตอบรับมัน</translation>
+ถ้าคุณต้องการอนุญาติมันให้เข้าถึงฐานข้อมูล KeePassXC database,
+โปรดให้ชื่อเฉพาะเพื่อยืนยันตัวตนและตอบรับมัน.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -643,21 +789,21 @@ give it a unique name to identify and accept it.</source>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC เขียนทับกุญแจที่มีอยู่เดิม</translation>
+        <translation>KeePassXC: เขียนทับกุญแจที่มีอยู่เดิม?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>กุญแจถอดรหัสลับที่ถูกแบ่งปันด้วยชื่อ &quot;%1&quot; มีอยู่ก่อนแล้ว
-คุณต้องการจะเขียนทับมันหรือไม่</translation>
+        <translation>กุญแจถอดรหัสลับที่ถูกแบ่งปันด้วยชื่อ &quot;%1&quot; already exists.
+เธอต้องการจะเขียนทับมันหรือไม่?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC ปรับปรุงรายการ</translation>
+        <translation>KeePassXC: ปรับปรุงรายการ</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>เธอต้องการจะปรับปรุงข้อมูลให้ทันสมัยใน %1 - %2 หรือไม่</translation>
+        <translation>เธอต้องการจะปรับปรุงข้อมูลให้ทันสมัยใน %1 - %2 หรือไม่?</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -674,16 +820,16 @@ Do you want to overwrite it?</source>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>แปลงคุณสมบัติจากรายการ %1 สำเร็จ
-ย้าย %2 กุญแจไปยังข้อมูลที่กำหนดเอง</translation>
+        <translation>แปลงคุณลักษณะจากรายการ% 1 สำเร็จ
+ย้าย % 2 กุญแจไปยังข้อมูลที่กำหนดเอง</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>ย้ายกุญแจ %n ไปยังข้อมูลที่กำหนดเองได้สำเร็จ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC ไม่พบรายการที่มีคุณสมบัติ KeePassHTTP</translation>
+        <translation>KeePassXC: ไม่พบรายการที่มีคุณสมบัติ KeePassHTTP!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
@@ -691,11 +837,11 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC ตรวจพบการตั้งค่าการรวมเบราว์เซอร์ดั้งเดิม</translation>
+        <translation>KeePassXC: ตรวจพบการตั้งค่าการรวมเบราว์เซอร์ดั้งเดิม</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC สร้างกลุ่มใหม่</translation>
+        <translation>KeePassXC: สร้างกลุ่มใหม่</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
@@ -711,6 +857,10 @@ This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
         <translation>การตั้งค่าเบราว์เซอร์ KeePassXC ของคุณต้องถูกย้ายไปสู่การตั้งค่าฐานข้อมูล นี่จำเป็นต่อการรักษาการเชื่อมต่อเบราว์เซอร์ปัจจุบันของคุณ คุณต้องการย้ายการตั้งค่าที่มีอยู่แล้วตอนนี้หรือไม่</translation>
     </message>
+    <message>
+        <source>Don&apos;t show this warning again</source>
+        <translation>ไม่ต้องแสดงคำเตือนนี้อีก</translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
@@ -720,11 +870,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>เติม &apos;- Clone&apos; ต่อท้ายชื่อ</translation>
+        <translation>เติม &apos;- โคลน&apos; ต่อท้ายชื่อ</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>แทนที่ชื่อผู้ใช้และรหัสผ่านด้วยข้อมูลอ้างอิง</translation>
+        <translation>แทนที่ชื่อผู้ใช้และรหัสผ่านด้วยการอ้างอิง</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -739,7 +889,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>filename</source>
-        <translation>ชื่อไฟล์</translation>
+        <translation>ชื่อแฟ้ม</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
@@ -770,10 +920,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>เรคคอร์ดแรกมีชื่อฟิลด์</translation>
     </message>
     <message>
-        <source>Number of headers line to discard</source>
-        <translation>จำนวนบรรทัดส่วนหัวที่จะไม่สนใจ</translation>
-    </message>
-    <message>
         <source>Consider &apos;\&apos; an escape character</source>
         <translation>ให้นับ &apos;\&apos; เป็น escape character</translation>
     </message>
@@ -783,7 +929,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Column layout</source>
-        <translation>เค้าโครงหลัก</translation>
+        <translation>เค้าโครงคอลัมน์</translation>
     </message>
     <message>
         <source>Not present in CSV file</source>
@@ -791,11 +937,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>นำเข้าจากไฟล์ CSV แล้ว</translation>
+        <translation>นำเข้าจากแฟ้ม CSV แล้ว</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>ข้อมูลต้นฉบับ</translation>
+        <translation>ข้อมูลต้นฉบับ:</translation>
     </message>
     <message>
         <source>Error</source>
@@ -807,7 +953,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>column %1</source>
-        <translation>หลัก %1</translation>
+        <translation>คอลัมน์ %1</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
@@ -815,19 +961,35 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n ข้ามข้อความอื่นๆ]</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation>นำเข้า CSV ผู้เขียนมีข้อผิดพลาด %1</translation>
+        <translation>นำเข้า CSV: ผู้เขียนมีข้อผิดพลาด: %1</translation>
+    </message>
+    <message>
+        <source>Text qualification</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Field separation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of header lines to discard</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>CSV import preview</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n คอลัมน์</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
@@ -836,11 +998,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n ไบท์</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>%n แถว</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -863,16 +1025,33 @@ Would you like to migrate your existing settings now?</source>
         <translation>เกิดข้อผิดพลาดระหว่างอ่านฐานข้อมูล %1</translation>
     </message>
     <message>
-        <source>Could not save, database has no file name.</source>
-        <translation>ฐานข้อมูลไม่มีชื่อไฟล์ ไม่สามารถบันทึกได้</translation>
-    </message>
-    <message>
         <source>File cannot be written as it is opened in read-only mode.</source>
         <translation>ไม่สามารถเขียนไฟล์ได้เนื่องจากถูกเปิดอยู่ในโหมดอ่านเท่านั้น</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers!</source>
         <translation>กุญแจไม่ถูกเปลี่ยนแปลง นี่คือจุดบกพร่อง กรุณารายงานไปที่นักพัฒนา</translation>
+    </message>
+    <message>
+        <source>%1
+Backup database located at %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save, database does not point to a valid file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not save, database file is read-only.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database file has unmerged changes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recycle Bin</source>
+        <translation>ถังขยะ</translation>
     </message>
 </context>
 <context>
@@ -885,32 +1064,16 @@ Would you like to migrate your existing settings now?</source>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
-        <source>Enter master key</source>
-        <translation>ใส่กุญแจมาสเตอร์</translation>
-    </message>
-    <message>
         <source>Key File:</source>
-        <translation>ไฟล์กุญแจคือ</translation>
-    </message>
-    <message>
-        <source>Password:</source>
-        <translation>รหัสผ่านคือ</translation>
-    </message>
-    <message>
-        <source>Browse</source>
-        <translation>เรียกดู</translation>
+        <translation>แฟ้มกุญแจ:</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>รีเฟรช</translation>
-    </message>
-    <message>
-        <source>Challenge Response:</source>
-        <translation>การตอบกลับของการตรวจสอบ คือ </translation>
+        <translation>เรียกใหม่</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>รูปแบบไฟล์กุญแจแบบดั้งเดิม</translation>
+        <translation>นามสกุลไฟล์แบบดั้งเดิมของแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
@@ -927,31 +1090,107 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกไฟล์</translation>
+        <translation>ทุกแฟ้ม</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>ไฟล์กุญแจ</translation>
+        <translation>แฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>เลือกไฟล์กุญแจ</translation>
+        <translation>เลือกแฟ้มกุญแจ</translation>
     </message>
     <message>
-        <source>TouchID for quick unlock</source>
-        <translation>TouchID สำหรับการปลดล็อคแบบเร็ว</translation>
+        <source>Failed to open key file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unable to open the database:
-%1</source>
-        <translation>ไม่สามารถเปิดฐานข้อมูลได้
-%1</translation>
+        <source>Select slot...</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Can't open key file:
-%1</source>
-        <translation>ไม่สามารถเปิดไฟล์กุญแจได้
-%1</translation>
+        <source>Unlock KeePassXC Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter Additional Credentials:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key slot selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>เรียกดู...</translation>
+    </message>
+    <message>
+        <source>Refresh hardware tokens</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware Key:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TouchID for Quick Unlock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>ล้าง</translation>
+    </message>
+    <message>
+        <source>Clear Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unlock failed and no password given</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unlocking the database failed and you did not enter a password.
+Do you want to retry with an &quot;empty&quot; password instead?
+
+To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Retry with empty password</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -973,7 +1212,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Security</source>
-        <translation>การรักษาความปลอดภัย</translation>
+        <translation>ความมั่นคง</translation>
     </message>
     <message>
         <source>Master Key</source>
@@ -981,7 +1220,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>การตั้งค่าการเข้ารหัสลับ</translation>
+        <translation>การตั้งค่าการเข้ารหัส</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -996,7 +1235,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>&amp;Disconnect all browsers</source>
-        <translation>&amp;หยุดการเชื่อมต่อกับทุกเบราว์เซอร์</translation>
+        <translation>หยุดการเชื่อมต่อกับทุกเบราว์เซอร์ (&amp;D)</translation>
     </message>
     <message>
         <source>Forg&amp;et all site-specific settings on entries</source>
@@ -1012,7 +1251,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation>ลบ</translation>
+        <translation>นำออก</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
@@ -1034,11 +1273,11 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>เปิดการใช้ Browser Integration เพื่อเข้าถึงการตั้งค่านี้</translation>
+        <translation>เปิด Browser Integration เพื่อเข้าถึงการตั้งค่านี้</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>หยุดการเชื่อมต่อกับทุกเบราว์เซอร์</translation>
+        <translation>ตัดการเชื่อมต่อกับทุกเบราว์เซอร์</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1060,11 +1299,11 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>ลบ %n กุญแจเข้ารหัสลับจากการตั้งค่า KeePassXC สำเร็จ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>ไม่จำการตั้งค่าเฉพาะสำหรับทุกไซต์บนรายการ</translation>
+        <translation>ไม่จำการตั้งค่าเฉพาะไซต์บนรายการ</translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1074,23 +1313,23 @@ Permissions to access entries will be revoked.</source>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>กำลังลบการอนุญาตที่บันทึกออก</translation>
+        <translation>ลบการอนุญาติที่เก็บไว้ออก</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation> ยกเลิกการทำงาน</translation>
+        <translation>หยุด</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: การอนุญาตถูกลบออก</translation>
+        <translation>KeePassXC: การอนุญาตถูกนำออก</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>ลบการอนุญาตจากรายการ %n</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: ไม่มีรายการที่ได้รับอนุญาต</translation>
+        <translation>KeePassXC: ไม่มีรายการที่ได้รับอนุญาติ</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1103,7 +1342,15 @@ Permissions to access entries will be revoked.</source>
     <message>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>คุณต้องการที่จะย้ายข้อมูลผสานในเบราว์เซอร์แบบเดิมไปยังมาตรฐานล่าสุดจริงหรือ นี่เป็นสิ่งที่จำเป็นในการรักษาความเข้ากับโปรแกรเสริมของเบราว์เซอร์</translation>
+        <translation>คุณต้องการทีีจะย้ายข้อมูลผสานในเบราว์เซอร์แบบตั้งเดิมไปยังมาตรฐานล่าสุดจริง ๆ หรอ นี่เป็นสิ่งจำเป็นในการรักษาความเข้ากับโปรแกรเสริมของเบราว์เซอร์</translation>
+    </message>
+    <message>
+        <source>Stored browser keys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected key</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1114,7 +1361,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES:  256 บิต   (ค่าเริ่มต้น)</translation>
+        <translation>AES:  256 บิต   (ค่าปริยาย)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
@@ -1126,7 +1373,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>รอบเปลี่ยนรูป</translation>
+        <translation>รอบเปลี่ยนรูป:</translation>
     </message>
     <message>
         <source>Benchmark 1-second delay</source>
@@ -1134,7 +1381,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>การใช้หน่วยความจำ</translation>
+        <translation>ปริมาณความจำที่ใช้</translation>
     </message>
     <message>
         <source>Parallelism:</source>
@@ -1174,11 +1421,13 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>KDBX 4.0 (recommended)</source>
-        <translation>KDBX 4.0 (แนะนำ)</translation>
+        <translation>KDBX 4.0 (แนะนำ)
+</translation>
     </message>
     <message>
         <source>KDBX 3.1</source>
-        <translation>KDBX 3.1</translation>
+        <translation>KDBX 3.1
+</translation>
     </message>
     <message>
         <source>unchanged</source>
@@ -1188,7 +1437,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>จำนวนรอบยาวเกินไป</translation>
+        <translation>จำนวนรอบมากเกินไป</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
@@ -1215,7 +1464,7 @@ If you keep this number, your database may take hours or days (or even longer) t
 
 If you keep this number, your database may be too easy to crack!</source>
         <translation>คุณกำลังใช้จำนวนของรอบการแปลงกุญแจกับ AES-KDF ต่ำ
-ถ้าคุณใช้จำนวนนี้ ฐานข้อมูลของคุณอาจจะถูกถอดได้อย่างง่าย</translation>
+ถ้าคุณใช้จำนวนนี้ ฐานข้อมูลของคุณอาจจะถูกถอดได้ง่าย</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -1228,12 +1477,12 @@ If you keep this number, your database may be too easy to crack!</source>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform></translation>
+        <translation><numerusform>MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>thread(s)</numerusform></translation>
+        <translation><numerusform>thread</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
@@ -1245,6 +1494,57 @@ If you keep this number, your database may be too easy to crack!</source>
         <comment>seconds</comment>
         <translation><numerusform>%1 วินาที</numerusform></translation>
     </message>
+    <message>
+        <source>Change existing decryption time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Decryption time in seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database format</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Encryption algorithm</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key derivation function</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Transform rounds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Memory usage</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Parallelism</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>DatabaseSettingsWidgetFdoSecrets</name>
+    <message>
+        <source>Exposed Entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Don&apos;t e&amp;xpose this database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expose entries &amp;under this group:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enable fd.o Secret Service to access these settings.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
@@ -1254,15 +1554,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>ชื่อฐานข้อมูล</translation>
+        <translation>ชื่อฐานข้อมูล:</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>รายละเอียดฐานข้อมูล</translation>
+        <translation>รายละเอียดฐานข้อมูล:</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>ค่าเริ่มต้นของชื่อผู้ใช้</translation>
+        <translation>ชื่อผู้ใช้มาตรฐาน:</translation>
     </message>
     <message>
         <source>History Settings</source>
@@ -1270,15 +1570,15 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>จำนวนมากสุดของรายการประวัติ</translation>
+        <translation>จำนวนมากสุดของรายการประวัติ:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>ขนาดมากสุดของรายการประวัติ</translation>
+        <translation>ขนาดมากสุดของรายการประวัติ:</translation>
     </message>
     <message>
         <source> MiB</source>
-        <translation>MiB</translation>
+        <translation> MiB</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -1291,6 +1591,39 @@ If you keep this number, your database may be too easy to crack!</source>
     <message>
         <source>Enable &amp;compression (recommended)</source>
         <translation>การเปิดใช้งานและการบีบอัด (แนะนำ)</translation>
+    </message>
+    <message>
+        <source>Database name field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database description field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default username field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Maximum number of history items per entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Maximum size of history per entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete Recycle Bin</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to delete the current recycle bin and all its contents?
+This action is not reversible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (old)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1359,16 +1692,143 @@ Are you sure you want to continue without a password?</source>
         <source>Failed to change master key</source>
         <translation>การเปลี่ยนแปลงกุญแจหลักล้มเหลว</translation>
     </message>
+    <message>
+        <source>Continue without password</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>ชื่อฐานข้อมูล</translation>
+        <translation>ชื่อฐานข้อมูล:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>รายละเอียด</translation>
+        <translation>รายละเอียด:</translation>
+    </message>
+    <message>
+        <source>Database name field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database description field</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>DatabaseSettingsWidgetStatistics</name>
+    <message>
+        <source>Statistics</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hover over lines with error icons for further information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>ชื่อ</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>ค่า</translation>
+    </message>
+    <message>
+        <source>Database name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The database was modified, but the changes have not yet been saved to disk.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The database contains entries that have expired.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recommended minimum password length is at least 8 characters.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1379,7 +1839,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกไฟล์</translation>
+        <translation>ทุกแฟ้ม</translation>
     </message>
     <message>
         <source>Open database</source>
@@ -1387,7 +1847,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>ไฟล์ CSV</translation>
+        <translation>แฟ้ม CSV</translation>
     </message>
     <message>
         <source>Merge database</source>
@@ -1403,11 +1863,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>ส่งออกฐานข้อมูลเป็นไฟล์ CSV</translation>
+        <translation>ส่งออกฐานข้อมูลเป็นแฟ้ม CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>การเขียนไฟล์ CSV ล้มเหลว</translation>
+        <translation>การเขียนแฟ้ม CSV ล้มเหลว</translation>
     </message>
     <message>
         <source>Database creation error</source>
@@ -1420,10 +1880,6 @@ This is definitely a bug, please report it to the developers.</source>
 สิ่งนี้มีจุดบกพร่องแน่นอนโปรดรายงานต่อนักพัฒนาเวป</translation>
     </message>
     <message>
-        <source>The database file does not exist or is not accessible.</source>
-        <translation>ไม่พบไฟล์ฐานข้อมูล หรือไม่สามารถเข้าถึงได้</translation>
-    </message>
-    <message>
         <source>Select CSV file</source>
         <translation>เลือกไฟล์ CSV</translation>
     </message>
@@ -1434,28 +1890,52 @@ This is definitely a bug, please report it to the developers.</source>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [ฐานข้อมูลใหม่]</translation>
+        <translation>%1 [New Database]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [ถูกล็อก]</translation>
+        <translation>%1 [Locked]</translation>
     </message>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [อ่านอย่างเดียว]</translation>
+        <translation>%1 [Read-only]</translation>
+    </message>
+    <message>
+        <source>Failed to open %1. It either does not exist or is not accessible.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export database to HTML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>HTML file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the HTML file failed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching...</source>
-        <translation>กำลังค้นหา</translation>
+        <translation>ค้นหา...</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>คุณต้องการจะลบรายการ &quot;%1&quot; ให้หายไปอย่างถาวรจริงหรือไม่</translation>
+        <translation>คุณต้องการจะลบรายการ &quot;%1&quot; ให้หายไปตลอดกาลจริงๆ?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -1463,7 +1943,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>คุณต้องการจะลบ %n รายการไปยังถังขยะจริงหรือไม่</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -1475,23 +1955,23 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>จำสิ่งที่ฉันเลือก</translation>
+        <translation>จำที่ฉันเลือก</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>คุณต้องการจะลบกลุ่ม &quot;%1&quot; ให้หายไปอย่างถาวรจริงหรือไม่</translation>
+        <translation>คุณต้องการจะลบกลุ่ม &quot;%1&quot; ไปตลอดกาลจริงหรือ?</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>ไม่มีฐานข้อมูลปัจจุบัน</translation>
+        <translation>ไม่มีฐานข้อมูลขณะนี้</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>ไม่มีฐานข้อมูลต้นทาง ไม่ต้องทำอะไร</translation>
+        <translation>ไม่มีฐานข้อมูลต้นทาง ไม่มีงานให้ทำ</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>ผลการค้นหา (%1)</translation>
+        <translation>ผลลัพธ์การค้นหา (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
@@ -1499,7 +1979,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>ไฟล์เปลี่ยนไปแล้ว</translation>
+        <translation>ไฟล์เปลี่ยนแปลงไปแล้ว</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
@@ -1507,7 +1987,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>คำร้องเพื่อผสาน</translation>
+        <translation>ผสานคำร้อง</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
@@ -1517,7 +1997,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>ล้างถังขยะหรือไม่</translation>
+        <translation>ล้างถังขยะ</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
@@ -1525,19 +2005,15 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>คุณต้องการจะลบ %n รายการอย่างถาวรหรือไม่</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>ลบรายการหรือไม่</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>ย้ายรายการไปยังถังขยะหรือไม่</numerusform></translation>
-    </message>
-    <message>
-        <source>File opened in read only mode.</source>
-        <translation>ไฟล์เปิดแล้วอยู่ในโหมดอ่านอย่างเดียว</translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -1545,13 +2021,13 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>กำลังอยู่ในระหว่างแก้ไขรายการ คุณต้องการจะยกเลิกการแก้ไขและล็อคตอนนี้จริงหรือไม่</translation>
+        <translation>กำลังอยู่ในระหว่างแก้ไขรายการ คุณต้องการจะยกเลิกและล็อคตอนนี้จริงหรือไม่</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; ถูกแก้ไขแล้ว
-บันทึกการเปลี่ยนแปลงหรือไม่</translation>
+        <translation>&quot;%1&quot; ถูกแก้ไข
+บันทึกการเปลี่ยนแปลง?</translation>
     </message>
     <message>
         <source>Database was modified.
@@ -1561,7 +2037,7 @@ Save changes?</source>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>บันทึกการเปลี่ยนแปลง?</translation>
+        <translation>บันทึกความเปลี่ยนแปลง?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
@@ -1576,14 +2052,8 @@ Error: %1</source>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC ไม่สามารถบันทึกฐานข้อมูลแล้วหลายครั้ง สิ่งนี้อาจทำให้บริการเชื่อมโยงไฟล์ล็อคไฟล์ที่ถูกบันทึกไว้แล้ว
+        <translation>KeePassXC ไม่สามารถบันทึกฐานข้อมูลแล้วหลายครั้ง สิ่งนี้อาจทำให้บริการเชื่อมโยงไฟล์ล็อคไฟล์ที่ถูกบัยทึกไว้แล้ว
 ปิดการบันทึกแบบปลอดภัยและลองอีกครั้งหรือไม่</translation>
-    </message>
-    <message>
-        <source>Writing the database failed.
-%1</source>
-        <translation>การเขียนฐานข้อมูลล้มเหลว
-%1</translation>
     </message>
     <message>
         <source>Passwords</source>
@@ -1599,11 +2069,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>เปลี่ยนแหล่งอ้างอิงของรายการหรือไม่</translation>
+        <translation>แทนที่การอ้างอิงของรายการหรือไม่</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>รายการ &quot;%1&quot; มี %2 แหล่งอ้างอิง คุณต้องการจะเขียนทับแหล่งอ้างอิงด้วยค่า หรือข้ามรายการนี้ หรือต้องการลบหรือไม่</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -1615,7 +2085,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>คุณต้องการย้ายกลุ่ม &quot;%1&quot; ไปถังขยะจริงหรือไม่</translation>
+        <translation>คุณต้องการย้ายกลุ่ม &quot;%1&quot;  ไปถังขยะจริงหรือไม่</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
@@ -1628,6 +2098,14 @@ Disable safe saves and try again?</source>
     <message>
         <source>Shared group...</source>
         <translation>กลุ่มที่ใช้ร่วมกัน</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>เขียนฐานข้อมูลล้มเหลว %1</translation>
+    </message>
+    <message>
+        <source>This database is opened in read-only mode. Autosave is disabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1662,7 +2140,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n/a</translation>
+        <translation>ไม่มีข้อมูล</translation>
     </message>
     <message>
         <source>(encrypted)</source>
@@ -1674,11 +2152,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>ไฟล์ใหญ่เกินกว่าจะเป็นกุญแจส่วนตัว</translation>
+        <translation>แฟ้มใหญ่เกินกว่าจะเป็นกุญแจส่วนตัว</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>ล้มเหลวระหว่างการเปิดกุญแจส่วนตัว</translation>
+        <translation>ผิดพลาดระหว่างการเปิดกุญแจส่วนตัว</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -1710,11 +2188,11 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n สัปดาห์</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n เดือน</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Apply generated password?</source>
@@ -1742,11 +2220,23 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n ปี</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Confirm Removal</source>
         <translation>ยืนยันการนำออก</translation>
+    </message>
+    <message>
+        <source>Browser Integration</source>
+        <translation>การทำงานร่วมกับเบราว์เซอร์</translation>
+    </message>
+    <message>
+        <source>&lt;empty URL&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure you want to remove this URL?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1787,6 +2277,42 @@ Disable safe saves and try again?</source>
         <source>Background Color:</source>
         <translation>สีพื้นหลัง</translation>
     </message>
+    <message>
+        <source>Attribute selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attribute value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add a new attribute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected attribute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit attribute name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle attribute protection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show a protected attribute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Foreground color selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Background color selection</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
@@ -1816,11 +2342,82 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>หัวเรื่องของหน้าต่าง</translation>
+        <translation>หัวเรื่องของหน้าต่าง:</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
         <translation>ใช้ลำดับเฉพาะในการเชื่อมโยง</translation>
+    </message>
+    <message>
+        <source>Custom Auto-Type sequence</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Auto-Type help webpage</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing window associations</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add new window association</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected window association</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use an asterisk (*) to match everything</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set the window association title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use an asterisk to match everything</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Auto-Type sequence for this window</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EditEntryWidgetBrowser</name>
+    <message>
+        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>ทั่วไป</translation>
+    </message>
+    <message>
+        <source>Skip Auto-Submit for this entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hide this entry from the browser extension</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URL&apos;s</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>เพิ่ม</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>ลบ</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1841,6 +2438,26 @@ Disable safe saves and try again?</source>
         <source>Delete all</source>
         <translation>ลบทั้งหมด</translation>
     </message>
+    <message>
+        <source>Entry history selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show entry at selected history state</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore entry to selected history state</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete selected history state</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Delete all history</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
@@ -1850,15 +2467,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <source>Repeat:</source>
-        <translation>ทำซ้ำ</translation>
+        <translation>ทำซ้ำ:</translation>
     </message>
     <message>
         <source>Title:</source>
-        <translation>หัวเรื่อง</translation>
+        <translation>หัวเรื่อง:</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1874,11 +2491,67 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Username:</source>
-        <translation>ชื่อผู้ใช้งาน</translation>
+        <translation>ชื่อผู้ใช้:</translation>
     </message>
     <message>
         <source>Expires</source>
         <translation>หมดอายุ</translation>
+    </message>
+    <message>
+        <source>Url field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download favicon for URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Repeat password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visible</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration Presets</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration presets</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle expiration</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1889,7 +2562,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>ลบกุญแจออกจากตัวแทน</translation>
+        <translation>ลบกุญแจออกหลังจาก agent</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -1901,7 +2574,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>ลบกุญแจออกจากตัวแทน เมือฐานข้อมูลถูกปิดหรือล๊อค</translation>
+        <translation>ลบกุญแจออกจาก agent เมือฐานข้อมูลถูกปิดหรือล๊อค</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -1909,11 +2582,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>เพิ่มกุญแจไปยังตัวยแทน เมื่อฐานข้อมูลถูกเปิดออกหรือถูกปลดล๊อด</translation>
+        <translation>เพิ่มกุญแจไปยังAgent เมื่อฐานข้อมูลถูกเปิดออกหรือถูกปลดล๊อด</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>ข้อคิดเห็น</translation>
+        <translation>ความเห็น</translation>
     </message>
     <message>
         <source>Decrypt</source>
@@ -1925,7 +2598,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>คัดลอกไปยังคลิปบอร์ด</translation>
+        <translation>คัดลอกไปยังคลิปบอร์ด:</translation>
     </message>
     <message>
         <source>Private key</source>
@@ -1938,7 +2611,7 @@ Disable safe saves and try again?</source>
     <message>
         <source>Browse...</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>เรียกดู...</translation>
+        <translation>ดู...</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -1955,6 +2628,22 @@ Disable safe saves and try again?</source>
     <message>
         <source>Require user confirmation when this key is used</source>
         <translation>จำเป็นต้องยืนยันผู้ใช้เมื่อมีการใช้กุญแจ</translation>
+    </message>
+    <message>
+        <source>Remove key from agent after specified seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>External key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select attachment file</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1989,7 +2678,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>รับช่วงจากกลุ่มหลัก (%1)</translation>
+        <translation>รับช่วงจากกลุ่มหลัก</translation>
+    </message>
+    <message>
+        <source>Entry has unsaved changes</source>
+        <translation>รายการมีการเปลี่ยนแปลงที่ไม่ถูกบันทึก</translation>
     </message>
 </context>
 <context>
@@ -2012,43 +2705,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Password:</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <source>Inactive</source>
         <translation>ไม่มีการใช้งาน</translation>
     </message>
     <message>
-        <source>Import from path</source>
-        <translation>นำเข้าจากพาท</translation>
-    </message>
-    <message>
-        <source>Export to path</source>
-        <translation>นำออกจากพาท</translation>
-    </message>
-    <message>
-        <source>Synchronize with path</source>
-        <translation>เชื่อมต่อกับพาท</translation>
-    </message>
-    <message>
-        <source>Your KeePassXC version does not support sharing your container type. Please use %1.</source>
-        <translation>รุ่น KeePassXC ของคุณไม่รับรองประเภทของตัวจัดเก็บที่แบ่งปันไว้ กรุณาใช้ %1</translation>
-    </message>
-    <message>
-        <source>Database sharing is disabled</source>
-        <translation>ปิดการใช้งานการแบ่งปันฐานข้อมูล</translation>
-    </message>
-    <message>
-        <source>Database export is disabled</source>
-        <translation>ปิดการใช้งานการนำฐานข้อมูลออก</translation>
-    </message>
-    <message>
-        <source>Database import is disabled</source>
-        <translation>ปิดการใช้งานการนำฐานข้อมูลเข้า</translation>
-    </message>
-    <message>
         <source>KeeShare unsigned container</source>
-        <translation>ที่จัดเก็บที่ไม่ได้เซ็นไว้ของKeeShare</translation>
+        <translation>ที่จัดเก็บที่ไม่ได้เซ็นไว้KeeShare</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
@@ -2056,7 +2721,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>เลือกนำฐานข้อมูลที่นำเข้า</translation>
+        <translation>เลือกนำเข้าฐานข้อมูล</translation>
     </message>
     <message>
         <source>Select export target</source>
@@ -2071,16 +2736,74 @@ Disable safe saves and try again?</source>
         <translation>ล้าง</translation>
     </message>
     <message>
-        <source>The export container %1 is already referenced.</source>
-        <translation>อ้างอิงการส่งออกที่จัดเก็บ %1แล้ว</translation>
+        <source>Import</source>
+        <translation>นำเข้า</translation>
     </message>
     <message>
-        <source>The import container %1 is already imported.</source>
-        <translation>นำเข้าที่จัดเก็บ %1 แล้ว</translation>
+        <source>Export</source>
+        <translation>นำออก</translation>
     </message>
     <message>
-        <source>The container %1 imported and export by different groups.</source>
-        <translation>นำเข้าและนำออกที่จัดเก็บ %1 จากกลุ่มต่างๆ</translation>
+        <source>Synchronize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your KeePassXC version does not support sharing this container type.
+Supported extensions are: %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is already being exported by this database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is already being imported by this database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 is being imported and exported by different groups in this database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
+        <comment>KeeShare is a proper noun</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database export is currently disabled by application settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database import is currently disabled by application settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sharing mode field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path to share file field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browser for share file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clear fields</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2113,6 +2836,34 @@ Disable safe saves and try again?</source>
         <source>Set default Auto-Type se&amp;quence</source>
         <translation>ตั้งค่าลำดับ Auto-Type เริ่มต้น</translation>
     </message>
+    <message>
+        <source>Name field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle expiration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search toggle for this and sub groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default auto-type sequence field</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -2138,7 +2889,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>ไม่สามารถดึงข้อมูล favicon ได้</translation>
+        <translation>ไม่สามารถดึง favicon ได้</translation>
     </message>
     <message>
         <source>Images</source>
@@ -2149,20 +2900,8 @@ Disable safe saves and try again?</source>
         <translation>ทุกแฟ้ม</translation>
     </message>
     <message>
-        <source>Custom icon already exists</source>
-        <translation>มีไอคอนที่กำหนดเองอยู่แล้ว</translation>
-    </message>
-    <message>
         <source>Confirm Delete</source>
         <translation>ยืนยันการลบ</translation>
-    </message>
-    <message>
-        <source>Custom icon successfully downloaded</source>
-        <translation>ดาวน์โหลดไอคอนที่กำหนดเองสำเร็จ</translation>
-    </message>
-    <message>
-        <source>Hint: You can enable DuckDuckGo as a fallback under Tools&gt;Settings&gt;Security</source>
-        <translation>คำแนะนำ: คุณสามารถใช้ DuckDuckGo แสดงแทนได้ที่ เครื่องมือ&gt;การตั้งค่า&gt;ความปลอดภัย </translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -2170,7 +2909,7 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>การโหลดไอคอน %1  ของ %1 ประสบความสำเร็จ</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -2178,34 +2917,70 @@ Disable safe saves and try again?</source>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n ไอคอนมีอยู่แล้วในฐานข้อมูล</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>ไอคอนต่อไปนี้ล้มเหลว</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>ไอคอนนี้ถูกใช้โดย %n เอ็นทรี และจะถูกแทนที่ด้วยไอคอนตั้งต้น คุณแน่ใจหรือไม่ว่าคุณต้องการลบไอคอน</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download favicon for URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply selected icon to subgroups and entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply icon &amp;to ...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Apply to this only</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to child groups</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to child entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Also apply to all children</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing icon selected.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>สร้าง</translation>
+        <translation>สร้าง:</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>แก้ไข</translation>
+        <translation>แก้ไข:</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>เข้าถึง</translation>
+        <translation>เข้าถึง:</translation>
     </message>
     <message>
         <source>Uuid:</source>
-        <translation>Uuid</translation>
+        <translation>Uuid:</translation>
     </message>
     <message>
         <source>Plugin Data</source>
@@ -2223,7 +2998,7 @@ Disable safe saves and try again?</source>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
         <translation>คุณต้องการลบข้อมูลโปรแกรมเสริมที่เลือกไว้หรือไม่ 
-การกระทำนี้อาจจะกระทบโปรแกรมเสริมให้ทำงานผิดพลาด</translation>
+การกระทำนี้อาจจะกระทบโปรแกรมเสริมให้ไม่ทำงาน</translation>
     </message>
     <message>
         <source>Key</source>
@@ -2233,12 +3008,36 @@ This may cause the affected plugins to malfunction.</source>
         <source>Value</source>
         <translation>ค่า</translation>
     </message>
+    <message>
+        <source>Datetime created</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Datetime modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Datetime accessed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unique ID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Plugin data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected plugin data</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 -ลอกแบบ</translation>
+        <translation>ลอกแบบ</translation>
     </message>
 </context>
 <context>
@@ -2256,7 +3055,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>รูปแบบ</translation>
+        <translation>จาก</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2280,7 +3079,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>คุณแน่ใจหรือไม่ว่าคุณต้องการลบไฟล์แนบ</numerusform></translation>
+        <translation><numerusform>คุณแน่ใจหรือว่าคุณต้องการลบแฟ้มแนบ %n </numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -2325,7 +3124,28 @@ This may cause the affected plugins to malfunction.</source>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>ไม่สามารถเปิดไฟล์</numerusform></translation>
+        <translation><numerusform>ไม่สามารถเปิดแฟ้ม
+%1</numerusform></translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>แฟ้มแนบ</translation>
+    </message>
+    <message>
+        <source>Add new attachment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected attachment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open selected attachment</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save selected attachment to disk</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2359,7 +3179,7 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Ref: </source>
         <comment>Reference abbreviation</comment>
-        <translation>อ้างอิง</translation>
+        <translation>อ้างอิง:</translation>
     </message>
     <message>
         <source>Group</source>
@@ -2395,11 +3215,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>สร้าง</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>แก้ไข</translation>
+        <translation>แก้ไข้</translation>
     </message>
     <message>
         <source>Accessed</source>
@@ -2420,10 +3240,6 @@ This may cause the affected plugins to malfunction.</source>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
-    <message>
-        <source>Generate TOTP Token</source>
-        <translation>สร้างโทเคน TOTP</translation>
-    </message>
     <message>
         <source>Close</source>
         <translation>ปิด</translation>
@@ -2509,6 +3325,14 @@ This may cause the affected plugins to malfunction.</source>
         <source>Share</source>
         <translation>แบ่งปัน</translation>
     </message>
+    <message>
+        <source>Display current TOTP value</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>ขั้นสูง</translation>
+    </message>
 </context>
 <context>
     <name>EntryView</name>
@@ -2542,26 +3366,100 @@ This may cause the affected plugins to malfunction.</source>
     </message>
 </context>
 <context>
-    <name>Group</name>
+    <name>FdoSecrets::Item</name>
     <message>
-        <source>Recycle Bin</source>
-        <translation>ถังขยะ</translation>
+        <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
+        <translation type="unfinished"/>
     </message>
+</context>
+<context>
+    <name>FdoSecrets::Service</name>
+    <message>
+        <source>Failed to register DBus service at %1: another secret service is running.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%n Entry(s) was used by %1</source>
+        <comment>%1 is the name of an application</comment>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+</context>
+<context>
+    <name>FdoSecretsPlugin</name>
+    <message>
+        <source>Fdo Secret Service: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Group</name>
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>(ที่ว่าง)</translation>
+        <translation>(ที่วาง)</translation>
     </message>
 </context>
 <context>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation>KeePassXC: ไม่สามารถบันทึกแฟ้ม</translation>
+        <translation>KeePassXC: ไม่สามารถบันทึกแฟ้ม!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
         <translation>ไม่สามารถบันทึกไฟล์สคริปการส่งข้อความดั้งเดิม</translation>
+    </message>
+</context>
+<context>
+    <name>IconDownloaderDialog</name>
+    <message>
+        <source>Download Favicons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Having trouble downloading icons?
+You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>ปิด</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>สถานะ</translation>
+    </message>
+    <message>
+        <source>Please wait, processing entry list...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>โอเค</translation>
+    </message>
+    <message>
+        <source>Already Exists</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading favicons (%1/%2)...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2579,15 +3477,11 @@ This may cause the affected plugins to malfunction.</source>
     <name>Kdbx3Reader</name>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>ไม่สามารถคำนวญกุญแจมาสเตอร์ได้</translation>
+        <translation>ไม่สามารถคำนวญกุญแมาสเตอร์ได้</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response.</source>
         <translation>ไม่สามารถส่งออก รหัสสอบถาม-รหัสตอบกลับ</translation>
-    </message>
-    <message>
-        <source>Wrong key or database file is corrupt.</source>
-        <translation>รหัสผิดหรือแฟ้มฐานข้อมูลเสียหาย</translation>
     </message>
     <message>
         <source>missing database headers</source>
@@ -2599,15 +3493,20 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>ขนาดบัญชีส่วนหัวไม่ถูกต้อง</translation>
+        <translation>ขนาด ID ส่วนหัวไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>ความยาวของฟิลด์ส่วนหัวไม่ถูกต้อง</translation>
+        <translation>ความยาวฟิลด์ส่วนหัวไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
-        <translation>ความยาวของข้อมูลส่วนหัวไม่ถูกต้อง</translation>
+        <translation>ความยาวข้อมูลส่วนหัวไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2629,7 +3528,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>ไม่สามารถคำนวญกุญแจมาสเตอร์ได้</translation>
+        <translation>ไม่สามารถคำนวญกุญแมาสเตอร์ได้</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
@@ -2638,10 +3537,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Header SHA256 mismatch</source>
         <translation>หัวข้อ  SHA256 ไม่ตรงกัน</translation>
-    </message>
-    <message>
-        <source>Wrong key or database file is corrupt. (HMAC mismatch)</source>
-        <translation>กุญแจผิดหรือไฟล์ฐานข้อมูลเสียหาย (HMAC ไม่ตรงกัน)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
@@ -2661,7 +3556,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>ไม่สามารถเปิดบัฟเฟอร์สำหรับพารามิเตอร์ KDF ในส่วนต้น</translation>
+        <translation>การเปิดบัพเพอร์สำหรับพารามิเตอร์ในส่วนหัวล้มเหลว</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -2686,27 +3581,27 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ไม่รองรับ KeePass รุ่น variant map</translation>
+        <translation>ไม่สนับKeePass รุ่นแผนที่ที่แตกต่าง </translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวชื่อรายการ  variant map ไม่ถูกต้อง</translation>
+        <translation>ความยาวชื่อรายการ variant map ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation> ข้อมูลชื่อรายการ variant map ไม่ถูกต้อง</translation>
+        <translation>ชื่อข้อมูล variant map ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>ความยาวรายการ variant map ไม่ถูกต้อง</translation>
+        <translation>ใส่ความยาวรายการ variant map ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>ข้อมูลรายการเริ่มต้น variant map ไม่ถูกต้อง</translation>
+        <translation>ข้อมูลรายการ variant map ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
@@ -2743,6 +3638,15 @@ This may cause the affected plugins to malfunction.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
         <translation>ขนาดชนิดของเขตข้อมูล variant map ไม่ถูกต้อง</translation>
     </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>(HMAC mismatch)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
@@ -2762,7 +3666,8 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>ล้มเหลวในการลำดับแผนที่แปรผันพารามิเตอร์ KDF   </translation>
+        <translation>ล้มเหลวในการลำดับแผนที่แปรผันพารามิเตอร์ KDF  
+ </translation>
     </message>
 </context>
 <context>
@@ -2793,11 +3698,11 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>ขนาดของไบต์เริ่มต้นไม่ถูกต้อง</translation>
+        <translation>ขนาดเริ่มต้นไบต์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>ขนาด ID สตรีมแบบสุ่มไม่ถูกต้อง</translation>
+        <translation>ขนาด ID สตรีมแบบสุ่มไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
@@ -2846,7 +3751,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>ไอคอน uuid หรือ ข้อมูล หายไป</translation>
+        <translation>ไอคอน uuid หรือ ไอคอนข้อมูล หายไป</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
@@ -2902,11 +3807,11 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>ประวัติของส่วนประกอบที่ uuid ต่างกัน</translation>
+        <translation>ประวัติขององค์ประกอบที่ uuid ต่างกัน</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>ค้นพบคัดลอกคุณสมบัติที่กำหนดเอง</translation>
+        <translation>พบสำเนาคุณสมบัติที่กำหนดเอง</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
@@ -2967,12 +3872,12 @@ Line %2, column %3</source>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
-        <source>Import KeePass1 database</source>
-        <translation>นำเข้าฐานข้อมูล KeePass1</translation>
-    </message>
-    <message>
         <source>Unable to open the database.</source>
         <translation>ไม่สามารถเปิดฐานข้อมูลดังกล่าว</translation>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3016,7 +3921,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>การแปลงจำนวนรอบของการเปลี่ยนแปลงไม่ถูกต้อง</translation>
+        <translation>จำนวนรอบของการเปลี่ยนแปลงไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
@@ -3028,11 +3933,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Unable to calculate master key</source>
-        <translation>ไม่สามารถคำนวญกุญแจมาสเตอร์ได้</translation>
-    </message>
-    <message>
-        <source>Wrong key or database file is corrupt.</source>
-        <translation>รหัสผิดหรือแฟ้มฐานข้อมูลเสียหาย</translation>
+        <translation>ไม่สามารถคำนวญกุญแมาสเตอร์ได้</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -3040,31 +3941,31 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>กรุ๊ปตัวเลขฟิลด์ไทป์ไม่ถูกต้อง</translation>
+        <translation>กลุ่มฟิลด์ประเภทตัวเลขไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>ขนาดกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>กลุ่มฟิลด์ขนาดไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>ข้อมูลการอ่านกรุ๊ปฟิลด์ฟิลด์จับคู่ไม่ได้ขนาด</translation>
+        <translation>กลุ่มการอ่านข้อมูลฟิลด์จับคู่ไม่ได้ขนาด</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>ขนาดกรุ๊ปไอดีฟิลด์ไม่ถูกต้อง</translation>
+        <translation>ขนาดกลุ่มตัวเลขขนาดไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>เวลาการสร้างกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>ขนาดเวลาการสร้างกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>การแก้ไขเวลากรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>ขนาดการแก้ไขเวลากรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>เวลาการเข้าถึงกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>ขนาดเวลาการเข้าถึงกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
@@ -3076,7 +3977,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>ขนาดเลเวลกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
+        <translation>ขนาดของระดับกรุ๊ปฟิลด์ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
@@ -3088,7 +3989,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>ตัวเลขเอ็นทรีฟิลด์ไทป์หายไป</translation>
+        <translation>ตัวเลขนำเข้าฟิลด์ไทป์หายไป</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
@@ -3096,7 +3997,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>ขนาดการอ่านข้อมูลเอ็นทรีฟิลด์ไม่เหมาะสมกับขนาด</translation>
+        <translation>ขนาดการอ่านข้อมูลเอ็นทรีฟิล์ดไม่เหมาะสมกับขนาด</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
@@ -3130,40 +4031,57 @@ Line %2, column %3</source>
         <source>unable to seek to content position</source>
         <translation>ไม่สามารถที่จะหาตำแหน่งเนื้อหาได้</translation>
     </message>
+    <message>
+        <source>Invalid credentials were provided, please try again.
+If this reoccurs, then your database file may be corrupt.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
-        <source>Disabled share</source>
-        <translation>ไม่สามารถแบ่งปันได้</translation>
+        <source>Invalid sharing reference</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Import from</source>
-        <translation>นำเข้ามาจาก</translation>
+        <source>Inactive share %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export to</source>
-        <translation>นำออกไปที่</translation>
+        <source>Imported from %1</source>
+        <translation>นำเข้า จาก 1%</translation>
     </message>
     <message>
-        <source>Synchronize with</source>
-        <translation>เชื่อมต่อกับ</translation>
+        <source>Exported to %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Disabled share %1</source>
-        <translation>ไม่สามารถแบ่งปัน %1</translation>
+        <source>Synchronized with %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Import from share %1</source>
-        <translation>นำเข้ามาจากส่วนแบ่ง %1</translation>
+        <source>Import is disabled in settings</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export to share %1</source>
-        <translation>นำออกไปที่ส่วนแบ่ง %1</translation>
+        <source>Export is disabled in settings</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Synchronize with share %1</source>
-        <translation>เชื่อมต่อกับส่วนแบ่ง %1</translation>
+        <source>Inactive share</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Imported from</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exported to</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Synchronized with</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3202,15 +4120,11 @@ Line %2, column %3</source>
     <message>
         <source>%1 set, click to change or remove</source>
         <comment>Change or remove a key component</comment>
-        <translation>ตั้งค่า %1 คลิกเพื่อเปลี่ยนแปลงหรือยกเลิก</translation>
+        <translation>ตั้งค่า %1 คลิกเพื่อเปลี่ยนแปลงหรือยลบออก</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
-    <message>
-        <source>Browse</source>
-        <translation>ดู</translation>
-    </message>
     <message>
         <source>Generate</source>
         <translation>สร้าง</translation>
@@ -3225,15 +4139,16 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>นามสกุลไฟล์ของแฟ้มกุญแจ</translation>
+        <translation>นามสกุลไฟล์แบบดั้งเดิมของแฟ้มกุญแจ</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please go to the master key settings and generate a new key file.</source>
-        <translation>คุณกำลังใช้งานนามสกุลไฟล์ของแฟ้มกุญแจที่
-อาจไม่รับรองในอนาคต
+        <translation>คุณกำลังใช้งานนามสกุลไฟล์แบบดั้งเดิมของแฟ้มกุญแจที่
+อาจ
+ไม่รองรับในอนาคต
 กรุณาไปที่การตั้งค่ากุญแจมาสเตอร์และสร้างแฟ้มกุญแจใหม่</translation>
     </message>
     <message>
@@ -3260,11 +4175,48 @@ Message: %2</source>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>ไม่สามารถสร้างแฟ้มกุญแจ %1</translation>
+        <translation>รายการ (&amp;E)</translation>
     </message>
     <message>
         <source>Select a key file</source>
         <translation>เลือกแฟ้มกุญแจ</translation>
+    </message>
+    <message>
+        <source>Key file selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse for key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>เรียกดู...</translation>
+    </message>
+    <message>
+        <source>Generate a new key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Suspicious Key File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
+Are you sure you want to continue with this file?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3354,10 +4306,6 @@ Message: %2</source>
         <translation>การตั้งค่า (&amp;S)</translation>
     </message>
     <message>
-        <source>Password Generator</source>
-        <translation>ตัวสร้างรหัสผ่าน</translation>
-    </message>
-    <message>
         <source>&amp;Lock databases</source>
         <translation>ล็อกฐานข้อมูล (&amp;L)</translation>
     </message>
@@ -3367,7 +4315,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>คัดลอกหัวข้อไปยังคลิปบอร์ด</translation>
+        <translation>คัดหัวข้อไปยังคลิปบอร์ด</translation>
     </message>
     <message>
         <source>&amp;URL</source>
@@ -3399,7 +4347,7 @@ Message: %2</source>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>ล้างถังรีไซเคิล</translation>
+        <translation>เทถังรีไซเคิลทิ้ง (&amp;M)</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -3435,7 +4383,7 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>บริจาค</translation>
+        <translation>ึ&amp;บริจาค</translation>
     </message>
     <message>
         <source>Report a &amp;bug</source>
@@ -3461,19 +4409,19 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;New database...</source>
-        <translation>ฐานข้อมูลใหม่</translation>
+        <translation>ข้อมูลใหม่</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>สร้างฐานข้อมูลใหม่</translation>
+        <translation>สร้าง{ฐานข้อมูลใหม่</translation>
     </message>
     <message>
         <source>&amp;Merge from database...</source>
-        <translation>รวมฐานข้อมูล</translation>
+        <translation>ผสานจากฐานข้อมูล</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>รวมฐานข้อมูลKDBXอีกชุด</translation>
+        <translation>ผสานจากฐานข้อมูลKDBXอีกอัน</translation>
     </message>
     <message>
         <source>&amp;New entry</source>
@@ -3485,11 +4433,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;Edit entry</source>
-        <translation>แก้ไขรายการ</translation>
+        <translation>แก้ไข้รายการ</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>ดู หรือ แก้ไขรายการ</translation>
+        <translation>ดูหรือแก้ไข้รายการ</translation>
     </message>
     <message>
         <source>&amp;New group</source>
@@ -3501,7 +4449,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Change master &amp;key...</source>
-        <translation>เปลี่ยนแปลงกุญแจมาสเตอร์</translation>
+        <translation>เปลี่ยนกุญแจมาสเตอร์</translation>
     </message>
     <message>
         <source>&amp;Database settings...</source>
@@ -3521,11 +4469,12 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>KeePass 1 database...</source>
-        <translation>ฐานข้อมูล KeePass1</translation>
+        <translation>ฐานข้อมูล KeePass1 
+</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>นำเข้า ฐานข้อมูล KeePass1...</translation>
+        <translation>นำเข้าฐานข้อมูล KeePass 1</translation>
     </message>
     <message>
         <source>CSV file...</source>
@@ -3537,43 +4486,104 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Show TOTP...</source>
-        <translation>แสดง TOTP</translation>
+        <translation>โชว์ TOTP</translation>
     </message>
     <message>
         <source>Show TOTP QR Code...</source>
         <translation>แสดง TOTP QR Code</translation>
     </message>
     <message>
-        <source>Check for Updates...</source>
-        <translation>คลิ๊กเพื่ออัพเดต</translation>
-    </message>
-    <message>
-        <source>Share entry</source>
-        <translation>แบ่งปัน รายการ</translation>
-    </message>
-    <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>หมายเหตุ คุณกำลังใช้งาน KeePassXC รุ่นก่อนวางจำหน่าย คาดว่าข้อบกพร่องบางอย่างและปัญหาเล็กน้อย รุ่นนี้ไม่ได้มีไว้สำหรับการใช้งานจริง</translation>
+        <translation>หมายเหตุ: คุณกำลังใช้งาน KeePassXC รุ่นก่อนวางจำหน่าย! คาดว่าข้อบกพร่องบางอย่างและปัญหาเล็กน้อย รุ่นนี้ไม่ได้มีไว้สำหรับการใช้งานจริง</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>ตรวจสอบการอัปเดทเมื่อเริ่มโปรแกรม</translation>
+        <translation>คลิ๊กเพื่ออัพเดตบน Startup</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>คุณต้องการให้ KeePassXC ตรวจสอบเพื่ออัปเดตคลิกที่ปุ่มเปิด</translation>
+        <translation>คุณต้องการให้ KeePassXC ตรวจสอบการอัปเดตเมื่อเริ่มต้นหรือไม่?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>คุณสามารถตรวจสอบการอัปเดตได้ด้วยตนเองจากเมนูแอปพลิเคชัน</translation>
+        <translation>คุณสามารถตรวจสอบการอัปเดตได้ด้วยตนเองจากเมนูแอปพลิเคชัน
+</translation>
+    </message>
+    <message>
+        <source>&amp;Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downlo&amp;ad all favicons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort &amp;A-Z</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort &amp;Z-A</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download favicon</source>
+        <translation>ดาวน์โหลด favicon</translation>
+    </message>
+    <message>
+        <source>&amp;Export to HTML file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import a 1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Getting Started</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Getting Started Guide PDF</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Online Help...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Go to online documentation (opens browser)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;User Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open User Guide PDF</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Keyboard Shortcuts</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation>กำลังสร้างส่วนที่หายไป %1 [%2]</translation>
+        <translation>กำลังสร้างส่วนที่หายไป  %1 [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
@@ -3585,7 +4595,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>รวมข้อมูลที่เก่ากว่าเข้ากับฐานข้อมูล &quot;% 1&quot;</translation>
+        <translation>รายการที่เก่ากว่าผสานจากฐานข้อมูล &quot;% 1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -3601,7 +4611,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>การนำรายการแหล่งข้อมูลเก่ามาใช้ใหม่ที่ด้านบนของเป้าหมายใหม่กว่า% 1 [% 2]</translation>
+        <translation>Reapplying older source entry on top of newer target %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
@@ -3609,15 +4619,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation>เชื่อมต่อจากฐานข้อมูลเดิม %1 [%2]</translation>
+        <translation>เชื่อมต่อจากฐานข้อมูลเก่า %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>ลบข้อมูลลูก %1 [%2]</translation>
+        <translation>ลบส่วนเด็ก %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>ลบข้อมูลกำพร้า  %1 [%2]</translation>
+        <translation>ลบส่วนกำพร้า  %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
@@ -3625,7 +4635,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>เพิ่มไอคอนขาดหายไป % 1</translation>
+        <translation>กำลังเพิ่มไอคอนขาดหายไป % 1</translation>
+    </message>
+    <message>
+        <source>Removed custom data %1 [%2]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adding custom data %1 [%2]</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3671,7 +4689,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>ที่นี่คุณสามารถปรับการตั้งค่าการเข้ารหัสฐานข้อมูล ไม่ต้องกังวลคุณสามารถเปลี่ยนได้ในภายหลังในการตั้งค่าฐานข้อมูล</translation>
+        <translation>ที่นี่คุณสามารถปรับการตั้งค่าการเข้ารหัสฐานข้อมูล ไม่ต้องกังวลคุณสามารถเปลี่ยนได้ในภายหลังในการตั้งค่า ฐานข้อมูล</translation>
     </message>
 </context>
 <context>
@@ -3682,7 +4700,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>A master key known only to you protects your database.</source>
-        <translation>กุญแจมาสเตอร์ ที่คุณรู้จักเท่านั้นที่คุณจะปกป้อง ฐานข้อมูล </translation>
+        <translation>กุญแจหลักที่คุณรู้จักเท่านั้นที่คุณจะปกป้อง ฐานข้อมูล </translation>
     </message>
 </context>
 <context>
@@ -3693,14 +4711,80 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>กรุณากรอกชื่อที่แสดง และคำอธิบายเพิ่มเติมสำหรับ ฐานข้อมูล ใหม่ของคุณ</translation>
+        <translation>กรุณากรอกชื่อที่แสดง และคำอธิบายเพิ่มเติมสำหรับ ฐานข้อมูล ใหม่ของคุณ:</translation>
+    </message>
+</context>
+<context>
+    <name>OpData01</name>
+    <message>
+        <source>Invalid OpData01, does not contain header</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to read all IV bytes, wanted 16 but got %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to init cipher for opdata01: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to read all HMAC signature bytes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Malformed OpData01 due to a failed HMAC</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to process clearText in place</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expected %1 bytes of clear-text, found %2</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>OpVaultOpenWidget</name>
+    <message>
+        <source>Read Database did not produce an instance
+%1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>OpVaultReader</name>
+    <message>
+        <source>Directory .opvault must exist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Directory .opvault must be readable</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Directory .opvault/default must exist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Directory .opvault/default must be readable</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to decode masterKey: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to derive master key: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>แฟ้มกุญแจ ไม่ถูกต้อง คาดว่าจะมี กุญแจ OpenSSH</translation>
+        <translation>แฟ้มกุญแจไม่ถูกต้อง คาดว่าจะมี กุญแจ OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -3712,15 +4796,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>แฟ้มกุญแจ มีขนาดเล็กมาก</translation>
+        <translation>แฟ้มกุญแจมีขนาดเล็กมาก</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>รหัสหัวไฟล์กุญแจเมจิกไม่ถูกต้อง</translation>
+        <translation>รหัสหัวแฟ้มกุญแจเมจิกไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>ไมพบกุญแจ</translation>
+        <translation>พบกุญแจศูนย์</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
@@ -3740,23 +4824,23 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>จำเป็นต้องใช้วลีรหัสผ่านเพื่อถอดรหัสผ่านกุญแจนี้</translation>
+        <translation>จำเป็นต้องใช้วลีรหัสผ่านเพืื่อถอดรหัสผ่านกุญแจนี้</translation>
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>การสร้างกุญแจล้มเหลว ไฟล์กุญแจมีปัญหาหรือไม่</translation>
+        <translation>การสร้างกุญแจล้มเหลว ไฟล์กุญแจมีปัญหาหรือป่าว</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>การถอดรหัสลับล้มเหลว ใส่วลีรหัสผ่านผิดหรือไม่</translation>
+        <translation>การถอดรหัสลับล้มเหลว ใส่วลีรหัสผ่านผิดหรือป่าว</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะอ่านกุญแจสาธารณะ</translation>
+        <translation>เกิด EOF  อย่างไม่คาดคิดขณะอ่านกุญแจสาธารณะ</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะอ่านกุญแจส่วนตัว</translation>
+        <translation>เกิด EOF อย่างไม่คาดคิดขณะอ่านกุญแจส่วนตัว</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -3764,7 +4848,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะเขียนกุญแจสาธารณะ</translation>
+        <translation>เกิด EOF อย่างไม่คาดคิดขณะเขียนกุญแจสาธารณะ</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
@@ -3772,7 +4856,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>เกิด EOF ที่ไม่คาดคิดขณะเขียนกุญแจส่วนตัว</translation>
+        <translation>เกิด EOF อย่างไม่คาดคิดขณะเขียนกุญแจส่วนตัว</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -3780,7 +4864,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>การเข้ารหัสที่ไม่รู้จัก: %1</translation>
+        <translation>การเข้ารหัสไม่รู้จัก: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
@@ -3792,14 +4876,25 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>ประเภทกุญแจที่ไม่รู้จัก: %1</translation>
+        <translation>KDF ที่ไม่รู้จัก: %1</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordEdit</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>กรอกรหัสผ่าน</translation>
+        <translation>ป้อนรหัสผ่าน:</translation>
     </message>
     <message>
         <source>Confirm password:</source>
@@ -3811,7 +4906,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;รหัสผ่านเป็นวิธีพื้นฐานในการปกป้องฐานข้อมูลของคุณ&lt;/p&gt;&lt;p&gt;รหัสผ่านที่ดีควรยาวและมีเอกลักษณ์ KeePassXC สร้างรหัสผ่านให้คุณได้&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;รหัสผ่านเป็นวิธีพื้นฐานในการปกป้องฐานข้อมูลของคุณ&lt;/p&gt;&lt;p&gt;รหัสผ่านที่ดีควรยาวและแตกต่าง KeePassXC สร้างรหัสผ่านให้คุณได้&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -3820,6 +4915,22 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Generate master password</source>
         <translation>สร้างรหัสผ่านหลัก</translation>
+    </message>
+    <message>
+        <source>Password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Repeat password field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password generator</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3830,7 +4941,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password:</source>
-        <translation>รหัสผ่าน</translation>
+        <translation>รหัสผ่าน:</translation>
     </message>
     <message>
         <source>strength</source>
@@ -3850,20 +4961,8 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>ชนิดอักขระ</translation>
     </message>
     <message>
-        <source>Upper Case Letters</source>
-        <translation>อักษรตัวพิมพ์ใหญ่</translation>
-    </message>
-    <message>
-        <source>Lower Case Letters</source>
-        <translation>อักษรตัวพิมพ์เล็ก</translation>
-    </message>
-    <message>
         <source>Numbers</source>
         <translation>ตัวเลข</translation>
-    </message>
-    <message>
-        <source>Special Characters</source>
-        <translation>อักขระพิเศษ</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
@@ -3880,7 +4979,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>ความยาว (&amp;L)</translation>
+        <translation>ความยาว (&amp;L):</translation>
     </message>
     <message>
         <source>Passphrase</source>
@@ -3888,11 +4987,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>รายการคำ</translation>
+        <translation>รายการคำ:</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>ตัวแบ่งคำ</translation>
+        <translation>ตัวแบ่งคำ:</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -3936,27 +5035,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>ExtendedASCII</source>
-        <translation>ExtendedASCII</translation>
+        <translation>ASCII เพิ่มเติม</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>เปลี่ยนเป็นโหมดใช้งานขั้นสูง</translation>
+        <translation>เปลี่ยนเป็นโหมดขั้นสูง</translation>
     </message>
     <message>
         <source>Advanced</source>
         <translation>ขั้นสูง</translation>
     </message>
     <message>
-        <source>Upper Case Letters A to F</source>
-        <translation>ตัวอักษรตัวพิมพ์ใหญ่ A ถึง F</translation>
-    </message>
-    <message>
         <source>A-Z</source>
         <translation>A-Z</translation>
-    </message>
-    <message>
-        <source>Lower Case Letters A to F</source>
-        <translation>ตัวอักษรตัวพิมพ์เล็ก A ถึง F</translation>
     </message>
     <message>
         <source>a-z</source>
@@ -3991,16 +5082,8 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>&quot; &apos;</translation>
     </message>
     <message>
-        <source>Math</source>
-        <translation>คณิตศาสตร์</translation>
-    </message>
-    <message>
         <source>&lt;*+!?=</source>
         <translation>&lt;*+!?=</translation>
-    </message>
-    <message>
-        <source>Dashes</source>
-        <translation>ขีดคั่นตรงกลาง</translation>
     </message>
     <message>
         <source>\_|-/</source>
@@ -4016,7 +5099,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Switch to simple mode</source>
-        <translation>สลับเป็นโหมดง่าย</translation>
+        <translation>สลับเป็นโหมดง่าย ๆ</translation>
     </message>
     <message>
         <source>Simple</source>
@@ -4028,15 +5111,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Do not include:</source>
-        <translation>ไม่รวม</translation>
+        <translation>ไม่รวม:</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>เพิ่มตัวอักขระที่ไม่ใช่เลขฐานสิบหกในรายการ &quot;ห้ามรวม&quot;</translation>
+        <translation>เพิ่มตัวอักษรที่ไม่ใช่ฐานหกเหลี่ยมในรายการ &quot;ห้ามรวม&quot;</translation>
     </message>
     <message>
         <source>Hex</source>
-        <translation>เลขฐานสิบหก</translation>
+        <translation>เครื่องหมายหกเหลี่ยม</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
@@ -4044,11 +5127,79 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Word Co&amp;unt:</source>
-        <translation>คำ Co&amp;unt คือ</translation>
+        <translation>คำ Co&amp;unt:</translation>
     </message>
     <message>
         <source>Regenerate</source>
         <translation>สร้างใหม่</translation>
+    </message>
+    <message>
+        <source>Generated password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upper-case letters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lower-case letters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Special characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Math Symbols</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Dashes and Slashes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Excluded characters</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hex Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Word Case:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Regenerate password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Accept password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>lower case</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UPPER CASE</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title Case</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle password visibility</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4057,12 +5208,9 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>KeeShare</source>
         <translation>KeeShare</translation>
     </message>
-</context>
-<context>
-    <name>QFileDialog</name>
     <message>
-        <source>Select</source>
-        <translation>เลือก</translation>
+        <source>Statistics</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4099,6 +5247,10 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <source>Merge</source>
         <translation>ผสาน</translation>
     </message>
+    <message>
+        <source>Continue</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -4108,11 +5260,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>ฐานข้อมูล hash ไม่พร้อมใช้งาน</translation>
+        <translation>ฐานข้อมูลhash ไม่พร้อมใช้งาน</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>ไม่ได้รับกุญแจสาธารณะของผู้รับบริการ</translation>
+        <translation>Client public key not receivedไม่ได้รับกุญแจสาธารณะของผู้รับบริการ</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
@@ -4124,7 +5276,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>การเชื่อมโยง KeePassXC ล้มเหลว ลองอีกครั้ง</translation>
+        <translation>การเชื่อมโยง KeePassXC ล้มเหลว, ลองอีกครั้ง</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
@@ -4132,7 +5284,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>การดำเนินการที่ไม่ถูกต้อง</translation>
+        <translation>การกระทำที่ไม่ถูกต้อง</translation>
     </message>
     <message>
         <source>Empty message received</source>
@@ -4140,7 +5292,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>ไม่ได้ระบุ URL</translation>
+        <translation>ไม่มี URL ให้มา</translation>
     </message>
     <message>
         <source>No logins found</source>
@@ -4148,7 +5300,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>ความผิดพลาดที่ไม่อาจระบุได้</translation>
+        <translation>ความผิดพลาดที่ไม่รู้จัก</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
@@ -4191,10 +5343,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
         <translation>สร้างรหัสผ่านสำหรับรายการ</translation>
     </message>
     <message>
-        <source>Length for the generated password.</source>
-        <translation>ความยาวสำหรับรหัสผ่านที่สร้างขึ้น</translation>
-    </message>
-    <message>
         <source>length</source>
         <translation>ความยาว</translation>
     </message>
@@ -4213,7 +5361,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
-        <translation>ใกล้หมดเวลาก่อนที่จะล้างคลิปบอร์ด</translation>
+        <translation>หมดเวลานับเป็นวินาทีก่อนที่จะล้างคลิปบอร์ด</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
@@ -4225,11 +5373,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>title</source>
-        <translation>หัวข้อ</translation>
+        <translation>หัวเรื่อง</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>เส้นทางของรายการที่จะแก้ไข</translation>
+        <translation>เส้นทางของรายการเพื่อไปแก้ไข</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
@@ -4242,18 +5390,6 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Perform advanced analysis on the password.</source>
         <translation>วิเคราะห์รหัสผ่านชั้นสูง</translation>
-    </message>
-    <message>
-        <source>Extract and print the content of a database.</source>
-        <translation>แตกไฟล์และพิมพ์เนื้อหาของฐานข้อมูล</translation>
-    </message>
-    <message>
-        <source>Path of the database to extract.</source>
-        <translation>เส้นทางของฐานข้อมูลที่จะสกัดเนื้อหา</translation>
-    </message>
-    <message>
-        <source>Insert password to unlock %1: </source>
-        <translation>กรอกรหัสผ่านเพื่อปลดล็อค %1</translation>
     </message>
     <message>
         <source>WARNING: You are using a legacy key file format which may become
@@ -4281,7 +5417,7 @@ Available commands:
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>แสดงรายการฐานข้อมูล</translation>
+        <translation>แจงรายการฐานข้อมูล</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
@@ -4293,15 +5429,11 @@ Available commands:
     </message>
     <message>
         <source>Search term.</source>
-        <translation>คำที่ใช้ค้นหา</translation>
+        <translation>คำค้น</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>ผสานสองฐานข้อมูลเข้าด้วยกัน</translation>
-    </message>
-    <message>
-        <source>Path of the database to merge into.</source>
-        <translation>เส้นทางของฐานข้อมูลที่จะผสานเข้าไป</translation>
+        <translation>ผสานสองฐานข้อมูล</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
@@ -4309,7 +5441,7 @@ Available commands:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>ใช้ข้อมูลประจำตัวชุดเดียวกันเพื่อเข้าระบบสำหรับไฟล์ฐานข้อมูลทั้งคู่</translation>
+        <translation>ใช้ข้อมูลประจำตัวเพื่อเข้าระบบเดียวกันสำหรับไฟล์ฐานข้อมูลทั้งคู่</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -4321,7 +5453,7 @@ Available commands:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>ชื่อของคุณสมบัติที่จะแสดง ตัวเลือกนี้สามารถถูกระบุได้มากกว่าหนึ่งครั้ง โดยคุณสมบัติถูกแสดงบรรทัดอันหนึ่งอันตามลำดับ ถ้าไม่มีคุณสมบัติใดถูกระบุ คุณสมบัติเริ่มต้นจะถูกเลือกแทน</translation>
+        <translation>ชื่อของคุณสมบัติที่จะแสดง ตัวเลือกนี้สามารถถูกระบุได้มากกว่าหนึ่งครั้ง โดยคุณสมบัติถูกแสดงบรรทัดอะหนึ่งอันตามลำดับ ถ้าไม่มีคุณสมบัติใดถูกระบุ คุณสมบัติเริ่มต้นจะถูกเลือกแทน</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -4345,7 +5477,7 @@ Available commands:
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>เครื่องหมายปิดคำพูดหายไป</translation>
+        <translation>ไม่มีเครื่องหมายคำพูดปิด</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4353,7 +5485,7 @@ Available commands:
     </message>
     <message>
         <source>Title</source>
-        <translation>หัวข้อ</translation>
+        <translation>หัวเรื่อง</translation>
     </message>
     <message>
         <source>Username</source>
@@ -4369,19 +5501,15 @@ Available commands:
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>ถูกแก้ไขล่าสุด</translation>
+        <translation>แก้ไขล่าสุด</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>ถูกสร้าง</translation>
+        <translation>สร้าง</translation>
     </message>
     <message>
         <source>Browser Integration</source>
         <translation>การทำงานร่วมกับเบราว์เซอร์</translation>
-    </message>
-    <message>
-        <source>YubiKey[%1] Challenge Response - Slot %2 - %3</source>
-        <translation>YubiKey[%1] การตอบกลับของการตรวจสอบ - Slot %2 - %3</translation>
     </message>
     <message>
         <source>Press</source>
@@ -4407,15 +5535,11 @@ Available commands:
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
         <translation>รายการคำสำหรับการสร้าง diceware
-[ค่าเริ่มต้น: EFF ภาษาอังกฤษ]</translation>
+[ค่าเริ่มต้น: EFF English]</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
         <translation>สร้างรหัสผ่านใหม่แบบสุ่ม</translation>
-    </message>
-    <message>
-        <source>Invalid value for password length %1.</source>
-        <translation>ค่าไม่ถูกต้องสำหรับความยาวของรหัสผ่าน %1</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
@@ -4423,11 +5547,11 @@ Available commands:
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>ใส่รหัสผ่านสำหรับรายการใหม่</translation>
+        <translation>ใส่รหัสผ่านสำหรับรายการใหม่:</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>การเขียนฐานข้อมูลล้มเหลว %1</translation>
+        <translation>การเขียนฐานข้อมูลล้มเหลว %1 </translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
@@ -4439,7 +5563,7 @@ Available commands:
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation>ค่าหมดเวลาไม่ถูกต้อง %1</translation>
+        <translation>ค่า timeout ไม่ถูกต้อง %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
@@ -4459,7 +5583,7 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>ล้างข้อมูลคลิปบอร์ดใน %1 วินาที</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -4475,10 +5599,6 @@ Available commands:
         <translation>การนับจำนวน</translation>
     </message>
     <message>
-        <source>Invalid value for password length: %1</source>
-        <translation>ค่าความยาวรหัสผ่านไม่ถูกต้อง %1</translation>
-    </message>
-    <message>
         <source>Could not find entry with path %1.</source>
         <translation>ไม่สามารถหารายการสำหรับเส้นทาง %1</translation>
     </message>
@@ -4488,11 +5608,11 @@ Available commands:
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>ใส่รหัสผ่านใหม่สำหรับรายการ</translation>
+        <translation>ใส่รหัสผ่านใหม่สำหรับรายการ:</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>เขียนฐานข้อมูลล้มเหลว %1</translation>
+        <translation>เขียนฐานข้อมูลล้มเหลว: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -4516,11 +5636,11 @@ Available commands:
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>ชนิด บรู๊ทฟอร์ส</translation>
+        <translation>ชนิด: บรู๊ทฟอร์ส</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>ชนิด ไดเรคทอรี</translation>
+        <translation>ชนิด: พจนานุกรม</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
@@ -4528,7 +5648,7 @@ Available commands:
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation>ชนิด: User Words</translation>
+        <translation>พิมพ์: User Words</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
@@ -4603,24 +5723,6 @@ Available commands:
         <translation>การโหลดไฟล์กุญแจล้มเหลว %1: %2</translation>
     </message>
     <message>
-        <source>File %1 does not exist.</source>
-        <translation>ไม่มีไฟล์ %1 </translation>
-    </message>
-    <message>
-        <source>Unable to open file %1.</source>
-        <translation>ไม่สามารถเปิดไฟล์ %1</translation>
-    </message>
-    <message>
-        <source>Error while reading the database:
-%1</source>
-        <translation>เกิดความล้มเหลวขณะอ่านฐานข้อมูล: %1</translation>
-    </message>
-    <message>
-        <source>Error while parsing the database:
-%1</source>
-        <translation>เกิดความล้มเหลวขณะแจงส่วนฐานข้อมูล: %1</translation>
-    </message>
-    <message>
         <source>Length of the generated password</source>
         <translation>ความยาวของรหัสผ่านที่สร้างแล้ว</translation>
     </message>
@@ -4631,10 +5733,6 @@ Available commands:
     <message>
         <source>Use uppercase characters</source>
         <translation>ใช้ตัวพิมพ์ใหญ่</translation>
-    </message>
-    <message>
-        <source>Use numbers.</source>
-        <translation>ใช้ตัวเลข</translation>
     </message>
     <message>
         <source>Use special characters</source>
@@ -4671,15 +5769,15 @@ Available commands:
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation>การอ่านไฟล์ที่รวมกันล้มเหลวคือ %1</translation>
+        <translation>การอ่านไฟล์ที่รวมกันล้มเหลว: %1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังไฟล์คือ %1</translation>
+        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังไฟล์ : %1</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังไฟล์คือ %1</translation>
+        <translation>ไม่สามารถบันทึกฐานข้อมูลไปยังไฟล์ : %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
@@ -4699,7 +5797,7 @@ Available commands:
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation>ไม่มีโปรแกรมกำหนดสำหรับการจัดการคลิปบอร์ด</translation>
+        <translation>ไม่มีโปรแกรมกำหนดการดำเนินการคลิปบอร์ด</translation>
     </message>
     <message>
         <source>Unable to start program %1</source>
@@ -4769,19 +5867,15 @@ Available commands:
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>ไม่มีการตั้งค่ากุญแจ ยกเลิกการสร้างฐานข้อมูล</translation>
+        <translation>ไม่มีการตั้งค่ากุญแจ การยกเลิกการสร้างฐานข้อมูล</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>การบันทึกฐานข้อมูลล้มเหลว % 1</translation>
+        <translation>การบันทึกฐานข้อมูลล้มเหลว:% 1</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
         <translation>การสร้างฐานข้อมูลใหม่ประสบความสำเร็จ</translation>
-    </message>
-    <message>
-        <source>Insert password to encrypt database (Press enter to leave blank): </source>
-        <translation>ใส่รหัสผ่านเพื่อเข้ารหัสลับฐานข้อมูล (กด Enter เพื่อเว้นว่างไว้)</translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
@@ -4789,11 +5883,7 @@ Available commands:
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>การโหลดกุญแจไฟล์ % 1 ล้มเหลว:% 2</translation>
-    </message>
-    <message>
-        <source>Remove an entry from the database.</source>
-        <translation>ลบรายการออกจากฐานข้อมูล</translation>
+        <translation>การโหลด KeyFile% 1 ล้มเหลว:% 2</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
@@ -4801,11 +5891,11 @@ Available commands:
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>ไฟล์ single-instance lock ที่มีอยู่ไม่ถูกต้อง เปิด instance ใหม่</translation>
+        <translation>Existing single-instance lock file ที่มีอยู่ไม่ถูกต้อง. เปิด instance ใหม่</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>ไม่สามารถสร้าง lock file ได้ โหมด Single-instance ถูกปิดใช้งาน</translation>
+        <translation>ไม่สามารถสร้าง lock file ได้. โหมด Single-instance ถูกปิดใช้งาน.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
@@ -4825,15 +5915,15 @@ Available commands:
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>อ่านรหัสผ่านของฐานข้อมูลจาก stdin</translation>
+        <translation>อ่านรหัสผ่านของฐานข้อมูลจาก  stdin</translation>
     </message>
     <message>
         <source>Parent window handle</source>
-        <translation>จัดการหน้าต่างหลัก</translation>
+        <translation>หมายเลขอ้างอิงหน้าต่างหลัก</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>อีกอินสแตนซ์ของ KeePassXC กำลังทำงานอยู่</translation>
+        <translation>อีกตัวอย่างหนึ่งของ KeePassXC กำลังทำงานอยู่</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
@@ -4845,45 +5935,369 @@ Available commands:
     </message>
     <message>
         <source>Database password: </source>
-        <translation>รหัสผ่านฐานข้อมูล</translation>
+        <translation>รหัสผ่านฐานข้อมูล:</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
         <translation>ไม่สามารถสร้างกลุ่มใหม่ได้</translation>
+    </message>
+    <message>
+        <source>Deactivate password key for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Displays debugging information.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deactivate password key for the database to merge from.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Build Type: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Revision: %1</source>
+        <translation>การปรับปรุง: %1</translation>
+    </message>
+    <message>
+        <source>Distribution: %1</source>
+        <translation>การจัดจำหน่าย: %1</translation>
+    </message>
+    <message>
+        <source>Debugging mode is disabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Debugging mode is enabled.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Operating system: %1
+CPU architecture: %2
+Kernel: %3 %4</source>
+        <translation>ระบบปฏิบัติการ: %1
+สถาปัตยกรรม CPU: %2
+เคอร์เนล: %3 %4</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Auto-Type</translation>
+    </message>
+    <message>
+        <source>KeeShare (signed and unsigned sharing)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeeShare (only signed sharing)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeeShare (only unsigned sharing)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>YubiKey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TouchID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enabled extensions:</source>
+        <translation>ส่วนขยายที่เปิดใช้:</translation>
+    </message>
+    <message>
+        <source>Cryptographic libraries:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot generate a password and prompt at the same time!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adds a new group to a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the group to add.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group %1 already exists!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group %1 not found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully added group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>FILENAME</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Analyze passwords for weaknesses and problems.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open HIBP file %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Evaluating database entries against HIBP file, this will take a while...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Close the currently opened database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Display this help.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yubikey slot used to encrypt the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>slot</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid word count %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The word list is too small (&lt; 1000 items)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exit interactive mode.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exports the content of a database to standard output in the specified format.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to export database to XML: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported format %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use numbers</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid password length %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Display command help.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Available commands:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the contents of an XML database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the XML database export.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the new database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unable to import XML database export %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully imported database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown command %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Flattens the output to single lines.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only print the changes detected by the merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Yubikey slot for the second database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully merged %1 into %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified by merge operation.</source>
+        <translation>ฐานข้อมูลไม่ถูกเปลี่ยนแปลงโดยการดำเนินการผสาน</translation>
+    </message>
+    <message>
+        <source>Moves an entry to a new group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the entry to move.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the destination group.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not find group with path %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry is already in group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully moved entry %1 to group %2.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Path of the group to remove.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove root group from database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully recycled group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully deleted group %1.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open database file %1: not found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open database file %1: not a plain file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to open database file %1: not readable</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter password to unlock %1: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid YubiKey slot %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please touch the button on your YubiKey to unlock %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter password to encrypt database (optional): </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>HIBP file, line %1: parse error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Secret Service Integration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>User name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1[%2] Challenge Response - Slot %3 - %4</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Invalid password generator after applying all options</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>เกิดข้อผิดพลาด zlib ภายในในระหว่างการบีบอัด</translation>
+        <translation>เกิดข้อผิดพลาด zlib ภายในในระหว่างการบีบอัด:</translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการเขียนไปยังอุปกรณ์ที่รองรับ</translation>
+        <translation>เกิดข้อผิดพลาดในการเขียนไปยังอุปกรณ์ที่รองรับ:</translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการเปิดอุปกรณ์อ้างอิง</translation>
+        <translation>เกิดข้อผิดพลาดในการเปิดอุปกรณ์อ้างอิง:</translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>เกิดข้อผิดพลาดในการอ่านอุปกรณ์อ้างอิง</translation>
+        <translation>เกิดข้อผิดพลาดในการอ่านอุปกรณ์อ้างอิง:</translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>ข้อผิดพลาด zlib ภายในเมื่อคลายการบีบอัด</translation>
+        <translation>ข้อผิดพลาด zlib ภายในเมื่อคลายการบีบอัด:</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>รูปแบบ gzip ไม่รองรับ zlib เวอร์ชั่นนี้</translation>
+        <translation>รูปแบบ gzip ไม่รองรับ zlib รุ่นนี้</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>ความผิดพลาดภายในของ zlib</translation>
+        <translation>ความผิดพลาดภายในของ zlib: </translation>
     </message>
 </context>
 <context>
@@ -4906,7 +6320,7 @@ Available commands:
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>ตัวแทนปฏิเสธตัวตนนี้ เหตุผลที่เป็นไปได้คือ</translation>
+        <translation>ตัวแทนปฏิเสธตัวตนนี้ เหตุผลที่เป็นไปได้ได้แก่</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
@@ -4945,7 +6359,7 @@ Available commands:
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>การจับคู่คำสอดคล้องกัน</translation>
+        <translation>การจับคู่คำสอดคล้อง</translation>
     </message>
     <message>
         <source>use regex in term</source>
@@ -4988,7 +6402,7 @@ Available commands:
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>จำกัดการค้นไว้สำหรับเฉพาะกลุ่มที่เลือก</translation>
+        <translation>จำกัดการค้นไว้เฉพาะในกลุ่มที่เลือก</translation>
     </message>
     <message>
         <source>Search Help</source>
@@ -5002,6 +6416,93 @@ Available commands:
     <message>
         <source>Case sensitive</source>
         <translation>คำนึงถึงอักษรทั้งตัวใหญ่และเล็ก</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWidgetFdoSecrets</name>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>ทั่วไป</translation>
+    </message>
+    <message>
+        <source>Show notification when credentials are requested</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Don&apos;t confirm when entries are deleted by clients.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Exposed database groups:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>กลุ่ม</translation>
+    </message>
+    <message>
+        <source>Manage</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authorization</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>These applications are currently connected:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Disconnect</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database settings</source>
+        <translation>การตั้งค่าฐานข้อมูล</translation>
+    </message>
+    <message>
+        <source>Edit database settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unlock database</source>
+        <translation>ปลดล็อกฐานข้อมูล</translation>
+    </message>
+    <message>
+        <source>Unlock database to show more information</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Lock database</source>
+        <translation>ล็อกฐานข้อมูล</translation>
+    </message>
+    <message>
+        <source>Unlock to show</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5036,7 +6537,7 @@ Available commands:
     </message>
     <message>
         <source>Key:</source>
-        <translation>กุญแจ</translation>
+        <translation>กุญแจ:</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -5109,7 +6610,7 @@ Available commands:
     </message>
     <message>
         <source>All files</source>
-        <translation>ทุกไฟล์</translation>
+        <translation>ทุกแฟ้ม</translation>
     </message>
     <message>
         <source>Select path</source>
@@ -5117,7 +6618,7 @@ Available commands:
     </message>
     <message>
         <source>Exporting changed certificate</source>
-        <translation>นำออกใบรับรองที่เปลี่ยนแปลงแล้ว</translation>
+        <translation>นำใบรับรองที่เปลี่ยนแปลงแล้วออก</translation>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
@@ -5127,9 +6628,100 @@ Available commands:
         <source>Signer:</source>
         <translation>ผู้ลงชื่อ</translation>
     </message>
+    <message>
+        <source>Allow KeeShare imports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow KeeShare exports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only show warnings and errors</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key</source>
+        <translation>กุญแจ</translation>
+    </message>
+    <message>
+        <source>Signer name field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Generate new certificate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import existing certificate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export own certificate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Known shares</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trust selected certificate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Ask whether to trust the selected certificate every time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Untrust selected certificate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove selected certificate</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
-    <name>ShareObserver</name>
+    <name>ShareExport</name>
+    <message>
+        <source>Overwriting signed share container is not supported - export prevented</source>
+        <translation>ไม่สามารถเขียนทับที่จัดเก็บ ที่แบ่งปันไว้ และเซ็นแล้ว- ไม่อนุญาตการนำออก</translation>
+    </message>
+    <message>
+        <source>Could not write export container (%1)</source>
+        <translation>ไม่สามารถเขียนที่จัดเก็บที่ส่งออกได้ (%1)</translation>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not open file to write (%1)</source>
+        <translation>ไม่สามารถฝังลายเซ็น ไม่สามารถเปิดไฟล์เพือเขียน (%1) </translation>
+    </message>
+    <message>
+        <source>Could not embed signature: Could not write file (%1)</source>
+        <translation>ไม่สามารถฝังลายเซ็น ไม่สามารถเขียนไฟล์ (%1) </translation>
+    </message>
+    <message>
+        <source>Could not embed database: Could not open file to write (%1)</source>
+        <translation>ไม่สามารถฝังฐานข้อมูล ไม่สามารถเปิดไฟล์เพื่อทำการเขียน (%1)</translation>
+    </message>
+    <message>
+        <source>Could not embed database: Could not write file (%1)</source>
+        <translation>ไม่สามารถฝังฐานข้อมูล ไม่สามารถเขียนไฟล์ได้ (%1)</translation>
+    </message>
+    <message>
+        <source>Overwriting unsigned share container is not supported - export prevented</source>
+        <translation>ไม่รองรับการเขียนทับการแชร์ที่จัดเก็บที่ไม่ได้ลงชื่อ - ป้องกันการส่งออก</translation>
+    </message>
+    <message>
+        <source>Could not write export container</source>
+        <translation>ไม่สามารถนำออกที่จัดเก็บได้</translation>
+    </message>
+    <message>
+        <source>Unexpected export error occurred</source>
+        <translation>เกิดข้อผิดพลาดในการส่งออกที่ไม่คาดคิด</translation>
+    </message>
+</context>
+<context>
+    <name>ShareImport</name>
     <message>
         <source>Import from container without signature</source>
         <translation>นำเข้าจากที่จัดเก็บโดยไม่มีลายเซ็น</translation>
@@ -5141,6 +6733,10 @@ Available commands:
     <message>
         <source>Import from container with certificate</source>
         <translation>นำเข้าที่จัดเก็บด้วยใบรับรอง</translation>
+    </message>
+    <message>
+        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
+        <translation>คุณเชื่อถือ %1 การพิมพ์ลายนิ้วมือ %2 จาก%3? {1 ?} {2 ?}</translation>
     </message>
     <message>
         <source>Not this time</source>
@@ -5157,18 +6753,6 @@ Available commands:
     <message>
         <source>Just this time</source>
         <translation>เวลานี้</translation>
-    </message>
-    <message>
-        <source>Import from %1 failed (%2)</source>
-        <translation>นำเข้า 1% ล้มเหลว 2%</translation>
-    </message>
-    <message>
-        <source>Import from %1 successful (%2)</source>
-        <translation>นำเข้าจาก 1% สำเร็จ 2%</translation>
-    </message>
-    <message>
-        <source>Imported from %1</source>
-        <translation>นำเข้า จาก 1%</translation>
     </message>
     <message>
         <source>Signed share container are not supported - import prevented</source>
@@ -5210,25 +6794,20 @@ Available commands:
         <source>Unknown share container type</source>
         <translation>การแบ่งปันที่จัดเก็บจากแหล่งที่ไม่รู้จัก</translation>
     </message>
+</context>
+<context>
+    <name>ShareObserver</name>
     <message>
-        <source>Overwriting signed share container is not supported - export prevented</source>
-        <translation>ไม่สามารถเขียนทับที่จัดเก็บ ที่แบ่งปันไว้ และเซ็นแล้ว- ไม่อนุญาตการนำออก</translation>
+        <source>Import from %1 failed (%2)</source>
+        <translation>นำเข้า 1% ล้มเหลว 2%</translation>
     </message>
     <message>
-        <source>Could not write export container (%1)</source>
-        <translation>ไม่สามารถเขียนที่จัดเก็บที่ส่งออกได้ (%1)</translation>
+        <source>Import from %1 successful (%2)</source>
+        <translation>นำเข้าจาก 1% สำเร็จ 2%</translation>
     </message>
     <message>
-        <source>Overwriting unsigned share container is not supported - export prevented</source>
-        <translation>ไม่รองรับการเขียนทับการแชร์ที่จัดเก็บที่ไม่ได้ลงชื่อ - ป้องกันการส่งออก</translation>
-    </message>
-    <message>
-        <source>Could not write export container</source>
-        <translation>ไม่สามารถนำออกที่จัดเก็บได้</translation>
-    </message>
-    <message>
-        <source>Unexpected export error occurred</source>
-        <translation>เกิดข้อผิดพลาดในการส่งออกที่ไม่คาดคิด</translation>
+        <source>Imported from %1</source>
+        <translation>นำเข้า จาก 1%</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
@@ -5243,32 +6822,12 @@ Available commands:
         <translation>นำออก  %1</translation>
     </message>
     <message>
-        <source>Do you want to trust %1 with the fingerprint of %2 from %3?</source>
-        <translation>คุณเชื่อถือ %1 การพิมพ์ลายนิ้วมือ %2 จาก%3? {1 ?} {2 ?}</translation>
-    </message>
-    <message>
         <source>Multiple import source path to %1 in %2</source>
         <translation>นำเข้าจากแหล่งพาทหลายแห่งไปยัง %1 ใน %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
         <translation>การนำเป้าหมายพาทออกขัดแย้งกัน %1 ใน %2</translation>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not open file to write (%1)</source>
-        <translation>ไม่สามารถฝังลายเซ็น ไม่สามารถเปิดไฟล์เพือเขียน (%1) </translation>
-    </message>
-    <message>
-        <source>Could not embed signature: Could not write file (%1)</source>
-        <translation>ไม่สามารถฝังลายเซ็น ไม่สามารถเขียนไฟล์ (%1) </translation>
-    </message>
-    <message>
-        <source>Could not embed database: Could not open file to write (%1)</source>
-        <translation>ไม่สามารถฝังฐานข้อมูล ไม่สามารถเปิดไฟล์เพื่อทำการเขียน (%1)</translation>
-    </message>
-    <message>
-        <source>Could not embed database: Could not write file (%1)</source>
-        <translation>ไม่สามารถฝังฐานข้อมูล ไม่สามารถเขียนไฟล์ได้ (%1)</translation>
     </message>
 </context>
 <context>
@@ -5287,7 +6846,7 @@ Available commands:
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>หมดอายุภายใน &lt;b&gt;%n&lt;/b&gt; วินาที</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -5307,7 +6866,7 @@ Available commands:
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>กำลังปิดภายใน %1 วินาที</translation>
+        <translation>ปิดใน %1 วินาที</translation>
     </message>
 </context>
 <context>
@@ -5315,10 +6874,6 @@ Available commands:
     <message>
         <source>Setup TOTP</source>
         <translation>ติดตั้ง TOTP</translation>
-    </message>
-    <message>
-        <source>Key:</source>
-        <translation>กุญแจ</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
@@ -5338,28 +6893,57 @@ Available commands:
     </message>
     <message>
         <source>Time step:</source>
-        <translation>ขั้นเวลา</translation>
+        <translation>ขั้นเวลา:</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>วินาที</translation>
+        <translation>วิ</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>ขนาดรหัส</translation>
+        <translation>ขนาดรหัส:</translation>
     </message>
     <message>
-        <source>6 digits</source>
-        <translation>6 หลัก</translation>
+        <source>Secret Key:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>7 digits</source>
-        <translation>เจ็ดหลัก</translation>
+        <source>Secret key must be in Base32 format</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>8 digits</source>
-        <translation>8 หลัก</translation>
+        <source>Secret key field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Algorithm:</source>
+        <translation>อัลกอริทึม:</translation>
+    </message>
+    <message>
+        <source>Time step field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> digits</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid TOTP Secret</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have entered an invalid secret key. The key must be in Base32 format.
+Example: JBSWY3DPEHPK3PXP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove TOTP Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Are you sure you want to delete TOTP settings for this entry?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5378,7 +6962,7 @@ Available commands:
     </message>
     <message>
         <source>Update Error!</source>
-        <translation>การอัปเดทผิดพลาด</translation>
+        <translation>อัปเดทข้อผิดพลาด!</translation>
     </message>
     <message>
         <source>An error occurred in retrieving update information.</source>
@@ -5394,7 +6978,7 @@ Available commands:
     </message>
     <message>
         <source>A new version of KeePassXC is available!</source>
-        <translation>KeePassXC เวอร์ชั่นใหม่พร้อมใช้แล้ว</translation>
+        <translation>KeePassXC รุ่นใหม่มีให้ใช้แล้ว!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is now available — you have %2.</source>
@@ -5406,11 +6990,11 @@ Available commands:
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation> คุณอัปเดตแล้ว</translation>
+        <translation> คุณอัปเดตแล้ว!</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>
-        <translation>KeePassXC %1 เป็นรุ่นใหม่ล่าสุดที่พร้อมใช้งานแล้ว</translation>
+        <translation>KeePassXC %1 เป็นรุ่นใหม่ล่าสุดที่มีให้ใช้</translation>
     </message>
 </context>
 <context>
@@ -5441,7 +7025,15 @@ Available commands:
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>ยินดีต้อนรับสู่ KeePassXC %1</translation>
+        <translation>ยินดีต้อนรับสู่ KeePassXC</translation>
+    </message>
+    <message>
+        <source>Import from 1Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open a recent database</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5460,11 +7052,19 @@ Available commands:
     </message>
     <message>
         <source>No YubiKey detected, please ensure it&apos;s plugged in.</source>
-        <translation>ไม่พบ YubiKey โปรดตรวจสอบว่าได้ทำการเสียบเรียบร้อย</translation>
+        <translation>ตรวจสอบ YubiKey ไม่เจอ โปรดทำให้แน่ใจว่ามีโปรแกรมเสริม</translation>
     </message>
     <message>
         <source>No YubiKey inserted.</source>
-        <translation>ไม่ได้เสียบ  YubiKey </translation>
+        <translation>ไม่มีการแทรก  YubiKey </translation>
+    </message>
+    <message>
+        <source>Refresh hardware tokens</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Hardware key slot selection</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
