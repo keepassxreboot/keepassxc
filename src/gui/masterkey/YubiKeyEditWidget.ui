@@ -30,6 +30,9 @@
      </property>
      <item row="0" column="1">
       <widget class="QPushButton" name="buttonRedetectYubikey">
+       <property name="accessibleName">
+        <string>Refresh hardware tokens</string>
+       </property>
        <property name="text">
         <string>Refresh</string>
        </property>
@@ -42,6 +45,9 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="accessibleName">
+        <string>Hardware key slot selection</string>
        </property>
       </widget>
      </item>

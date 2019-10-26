@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 #include <cstdlib>
 #include <stdio.h>
 
-#include <QCommandLineParser>
 #include <QFileInfo>
 #include <QString>
 #include <QTextStream>
@@ -35,10 +34,8 @@ Create::Create()
 {
     name = QString("create");
     description = QObject::tr("Create a new database.");
-}
-
-Create::~Create()
-{
+    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
+    options.append(Command::KeyFileOption);
 }
 
 /**
@@ -59,20 +56,12 @@ int Create::execute(const QStringList& arguments)
     QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
     QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-    QCommandLineParser parser;
-
-    parser.setApplicationDescription(description);
-    parser.addPositionalArgument("database", QObject::tr("Path of the database."));
-    parser.addOption(Command::KeyFileOption);
-
-    parser.addHelpOption();
-    parser.process(arguments);
-
-    const QStringList args = parser.positionalArguments();
-    if (args.size() < 1) {
-        out << parser.helpText().replace("[options]", "create [options]");
+    QSharedPointer<QCommandLineParser> parser = getCommandLineParser(arguments);
+    if (parser.isNull()) {
         return EXIT_FAILURE;
     }
+
+    const QStringList args = parser->positionalArguments();
 
     const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
@@ -82,14 +71,14 @@ int Create::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    auto password = getPasswordFromStdin();
+    auto password = Utils::getPasswordFromStdin();
     if (!password.isNull()) {
         key->addKey(password);
     }
 
     QSharedPointer<FileKey> fileKey;
-    if (parser.isSet(Command::KeyFileOption)) {
-        if (!loadFileKey(parser.value(Command::KeyFileOption), fileKey)) {
+    if (parser->isSet(Command::KeyFileOption)) {
+        if (!loadFileKey(parser->value(Command::KeyFileOption), fileKey)) {
             err << QObject::tr("Loading the key file failed") << endl;
             return EXIT_FAILURE;
         }
@@ -104,39 +93,18 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    Database db;
-    db.setKey(key);
+    QSharedPointer<Database> db(new Database);
+    db->setKey(key);
 
     QString errorMessage;
-    if (!db.save(databaseFilename, &errorMessage, true, false)) {
+    if (!db->saveAs(databaseFilename, &errorMessage, true, false)) {
         err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 
     out << QObject::tr("Successfully created new database.") << endl;
+    currentDatabase = db;
     return EXIT_SUCCESS;
-}
-
-/**
- * Read optional password from stdin.
- *
- * @return Pointer to the PasswordKey or null if passwordkey is skipped
- *         by user
- */
-QSharedPointer<PasswordKey> Create::getPasswordFromStdin()
-{
-    QSharedPointer<PasswordKey> passwordKey;
-    QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
-
-    out << QObject::tr("Insert password to encrypt database (Press enter to leave blank): ");
-    out.flush();
-    QString password = Utils::getPassword();
-
-    if (!password.isEmpty()) {
-        passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
-    }
-
-    return passwordKey;
 }
 
 /**

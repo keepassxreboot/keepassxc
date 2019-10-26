@@ -72,6 +72,7 @@ private slots:
     void fitColumnsToWindow();
     void fitColumnsToContents();
     void resetViewToDefaults();
+    void contextMenuShortcutPressed();
 
 private:
     void fillRemainingWidth(bool lastColumnOnly);

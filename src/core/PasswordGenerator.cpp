@@ -31,7 +31,7 @@ PasswordGenerator::PasswordGenerator()
 {
 }
 
-double PasswordGenerator::calculateEntropy(const QString& password)
+double PasswordGenerator::estimateEntropy(const QString& password)
 {
     return ZxcvbnMatch(password.toLatin1(), nullptr, nullptr);
 }

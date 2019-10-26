@@ -20,31 +20,20 @@
 
 #include <QTemporaryFile>
 
-#ifdef Q_OS_WIN
-/**
- * QTemporaryFile does not actually close a file when close() is
- * called, which causes the file to be locked on Windows.
- * This class extends a QFile with the extra functionality
- * of a QTemporaryFile to circumvent this problem.
- */
 class TemporaryFile : public QFile
-#else
-class TemporaryFile : public QTemporaryFile
-#endif
 {
     Q_OBJECT
 
-#ifdef Q_OS_WIN
 public:
     TemporaryFile();
     explicit TemporaryFile(const QString& templateName);
     explicit TemporaryFile(QObject* parent);
     TemporaryFile(const QString& templateName, QObject* parent);
-    ~TemporaryFile() override = default;
+    ~TemporaryFile() override;
 
     using QFile::open;
     bool open();
-#endif
+    bool copyFromFile(const QString& otherFileName);
 };
 
 #endif // KEEPASSXC_TEMPORARYFILE_H

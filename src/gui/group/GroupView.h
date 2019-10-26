@@ -35,6 +35,7 @@ public:
     Group* currentGroup();
     void setCurrentGroup(Group* group);
     void expandGroup(Group* group, bool expand = true);
+    void sortGroups(bool reverse = false);
 
 signals:
     void groupSelectionChanged(Group* group);
@@ -44,6 +45,7 @@ private slots:
     void emitGroupChanged();
     void syncExpandedState(const QModelIndex& parent, int start, int end);
     void modelReset();
+    void contextMenuShortcutPressed();
 
 protected:
     void dragMoveEvent(QDragMoveEvent* event) override;

@@ -19,11 +19,13 @@
 #ifndef KEEPASSX_EDITWIDGETICONS_H
 #define KEEPASSX_EDITWIDGETICONS_H
 
+#include <QMenu>
 #include <QUrl>
 #include <QUuid>
 #include <QWidget>
 
 #include "config-keepassx.h"
+#include "core/Entry.h"
 #include "core/Global.h"
 #include "gui/MessageWidget.h"
 
@@ -31,8 +33,7 @@ class Database;
 class DefaultIconModel;
 class CustomIconModel;
 #ifdef WITH_XC_NETWORKING
-class QNetworkAccessManager;
-class QNetworkReply;
+class IconDownloader;
 #endif
 
 namespace Ui
@@ -40,12 +41,23 @@ namespace Ui
     class EditWidgetIcons;
 }
 
+enum ApplyIconToOptions
+{
+    THIS_ONLY = 0b00,
+    CHILD_GROUPS = 0b10,
+    CHILD_ENTRIES = 0b01,
+    ALL_CHILDREN = 0b11
+};
+
+Q_DECLARE_METATYPE(ApplyIconToOptions)
+
 struct IconStruct
 {
     IconStruct();
 
     QUuid uuid;
     int number;
+    ApplyIconToOptions applyTo;
 };
 
 class EditWidgetIcons : public QWidget
@@ -62,6 +74,7 @@ public:
               const QSharedPointer<Database>& database,
               const IconStruct& iconStruct,
               const QString& url = "");
+    void setShowApplyIconToButton(bool state);
 
 public slots:
     void setUrl(const QString& url);
@@ -74,9 +87,7 @@ signals:
 
 private slots:
     void downloadFavicon();
-    void startFetchFavicon(const QUrl& url);
-    void fetchFinished();
-    void fetchReadyRead();
+    void iconReceived(const QString& url, const QImage& icon);
     void addCustomIconFromFile();
     bool addCustomIcon(const QImage& icon);
     void removeCustomIcon();
@@ -84,22 +95,21 @@ private slots:
     void updateWidgetsCustomIcons(bool checked);
     void updateRadioButtonDefaultIcons();
     void updateRadioButtonCustomIcons();
+    void confirmApplyIconTo(QAction* action);
 
 private:
+    QMenu* createApplyIconToMenu();
+
     const QScopedPointer<Ui::EditWidgetIcons> m_ui;
     QSharedPointer<Database> m_db;
     QUuid m_currentUuid;
-#ifdef WITH_XC_NETWORKING
-    QUrl m_url;
-    QUrl m_fetchUrl;
-    QList<QUrl> m_urlsToTry;
-    QByteArray m_bytesReceived;
-    QNetworkAccessManager* m_netMgr;
-    QNetworkReply* m_reply;
-    int m_redirects;
-#endif
+    ApplyIconToOptions m_applyIconTo;
     DefaultIconModel* const m_defaultIconModel;
     CustomIconModel* const m_customIconModel;
+#ifdef WITH_XC_NETWORKING
+    QScopedPointer<IconDownloader> m_downloader;
+    QString m_url;
+#endif
 
     Q_DISABLE_COPY(EditWidgetIcons)
 };

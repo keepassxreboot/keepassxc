@@ -60,14 +60,16 @@ public slots:
     bool closeDatabaseTabFromSender();
     void updateTabName(int index = -1);
 
-    void newDatabase();
+    DatabaseWidget* newDatabase();
     void openDatabase();
     void mergeDatabase();
     void importCsv();
     void importKeePass1Database();
+    void importOpVaultDatabase();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     void exportToCsv();
+    void exportToHtml();
 
     void lockDatabases();
     void closeDatabaseFromSender();
@@ -80,6 +82,7 @@ public slots:
     void performGlobalAutoType();
 
 signals:
+    void databaseOpened(DatabaseWidget* dbWidget);
     void databaseClosed(const QString& filePath);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
@@ -96,6 +99,7 @@ private slots:
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
     void updateLastDatabases(const QString& filename);
+    bool warnOnExport();
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;

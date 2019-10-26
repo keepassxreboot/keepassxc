@@ -35,6 +35,7 @@ private slots:
     void testSearch();
     void testAllAttributesAreSearched();
     void testSearchTermParser();
+    void testCustomAttributesAreSearched();
 
 private:
     Group* m_rootGroup;

@@ -77,6 +77,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="activateChangeDecryptionTimeButton">
+           <property name="accessibleName">
+            <string>Change existing decryption time</string>
+           </property>
            <property name="text">
             <string>Change</string>
            </property>
@@ -89,6 +92,9 @@
          <layout class="QVBoxLayout" name="decryptionTimeSliderLayout">
           <item>
            <widget class="QSlider" name="decryptionTimeSlider">
+            <property name="accessibleName">
+             <string>Decryption time in seconds</string>
+            </property>
             <property name="minimum">
              <number>1</number>
             </property>
@@ -198,6 +204,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="accessibleName">
+            <string>Database format</string>
+           </property>
           </widget>
          </item>
         </layout>
@@ -240,6 +249,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="accessibleName">
+          <string>Encryption algorithm</string>
+         </property>
          <item>
           <property name="text">
            <string>AES:  256 Bit   (default)</string>
@@ -267,6 +279,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="accessibleName">
+          <string>Key derivation function</string>
+         </property>
         </widget>
        </item>
        <item row="2" column="0">
@@ -291,6 +306,9 @@
              <width>150</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="accessibleName">
+            <string>Transform rounds</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -349,6 +367,9 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="accessibleName">
+          <string>Memory usage</string>
+         </property>
          <property name="minimum">
           <number>1</number>
          </property>
@@ -377,6 +398,9 @@
            <width>150</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="accessibleName">
+          <string>Parallelism</string>
          </property>
          <property name="minimum">
           <number>1</number>

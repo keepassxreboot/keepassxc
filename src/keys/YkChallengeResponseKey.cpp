@@ -32,9 +32,9 @@
 #include <QXmlStreamReader>
 #include <QtConcurrent>
 
+#include <cstring>
 #include <gcrypt.h>
 #include <sodium.h>
-#include <cstring>
 
 QUuid YkChallengeResponseKey::UUID("e092495c-e77d-498b-84a1-05ae0d955508");
 
@@ -66,9 +66,9 @@ QByteArray YkChallengeResponseKey::rawKey() const
 /**
  * Assumes yubikey()->init() was called
  */
-bool YkChallengeResponseKey::challenge(const QByteArray& challenge)
+bool YkChallengeResponseKey::challenge(const QByteArray& c)
 {
-    return this->challenge(challenge, 2);
+    return challenge(c, 2);
 }
 
 bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int retries)
@@ -106,12 +106,14 @@ bool YkChallengeResponseKey::challenge(const QByteArray& challenge, unsigned int
 QString YkChallengeResponseKey::getName() const
 {
     unsigned int serial;
-    QString fmt(QObject::tr("YubiKey[%1] Challenge Response - Slot %2 - %3"));
+    QString fmt(QObject::tr("%1[%2] Challenge Response - Slot %3 - %4"));
 
     YubiKey::instance()->getSerial(serial);
 
-    return fmt.arg(
-        QString::number(serial), QString::number(m_slot), (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
+    return fmt.arg(YubiKey::instance()->getVendorName(),
+                   QString::number(serial),
+                   QString::number(m_slot),
+                   (m_blocking) ? QObject::tr("Press") : QObject::tr("Passive"));
 }
 
 bool YkChallengeResponseKey::isBlocking() const

@@ -45,7 +45,7 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
         tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2. %3")
-            .arg("<a href=\"https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser/\">Firefox</a>",
+            .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",
                  snapInstructions));
@@ -53,12 +53,6 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
 
     m_ui->scriptWarningWidget->setVisible(false);
     m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
-    m_ui->scriptWarningWidget->showMessage(
-        tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
-           "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
-           "<br />Browser integration WILL NOT WORK without the proxy application."
-           "<br />Expected Path: "),
-        MessageWidget::Warning);
 
     m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
                                      MessageWidget::Warning);
@@ -116,6 +110,7 @@ void BrowserOptionDialog::loadSettings()
     m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
+    m_ui->noMigrationPrompt->setChecked(settings->noMigrationPrompt());
     m_ui->supportBrowserProxy->setChecked(settings->supportBrowserProxy());
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->customProxyLocation());
@@ -153,9 +148,13 @@ void BrowserOptionDialog::loadSettings()
     // Check for native messaging host location errors
     QString path;
     if (!settings->checkIfProxyExists(path)) {
-        QString text = m_ui->scriptWarningWidget->text();
-        text.append(path);
-        m_ui->scriptWarningWidget->setText(text);
+        auto text =
+            tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
+               "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
+               "<br />Browser integration WILL NOT WORK without the proxy application."
+               "<br />Expected Path: %1")
+                .arg(path);
+        m_ui->scriptWarningWidget->showMessage(text, MessageWidget::Warning);
         m_ui->scriptWarningWidget->setVisible(true);
     } else {
         m_ui->scriptWarningWidget->setVisible(false);
@@ -183,6 +182,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
+    settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
 
     settings->setChromeSupport(m_ui->chromeSupport->isChecked());
     settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());

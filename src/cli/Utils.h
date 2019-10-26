@@ -25,6 +25,12 @@
 #include "keys/PasswordKey.h"
 #include <QtCore/qglobal.h>
 
+#ifdef WITH_XC_YUBIKEY
+#include "keys/YkChallengeResponseKey.h"
+#include "keys/YkChallengeResponseKeyCLI.h"
+#include "keys/drivers/YubiKey.h"
+#endif
+
 namespace Utils
 {
     extern FILE* STDOUT;
@@ -34,12 +40,16 @@ namespace Utils
 
     void setStdinEcho(bool enable);
     QString getPassword(FILE* outputDescriptor = STDOUT);
+    QSharedPointer<PasswordKey> getPasswordFromStdin();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected = true,
                                             const QString& keyFilename = {},
+                                            const QString& yubiKeySlot = {},
                                             FILE* outputDescriptor = STDOUT,
                                             FILE* errorDescriptor = STDERR);
+
+    QStringList splitCommandString(const QString& command);
 
     namespace Test
     {

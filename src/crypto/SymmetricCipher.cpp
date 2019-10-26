@@ -126,6 +126,8 @@ int SymmetricCipher::algorithmIvSize(Algorithm algo)
     switch (algo) {
     case ChaCha20:
         return 12;
+    case Aes128:
+        return 16;
     case Aes256:
         return 16;
     case Twofish:

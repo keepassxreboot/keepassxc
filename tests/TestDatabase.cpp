@@ -20,19 +20,115 @@
 #include "TestGlobal.h"
 
 #include <QSignalSpy>
-#include <QTemporaryFile>
 
 #include "config-keepassx-tests.h"
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KeePass2Writer.h"
 #include "keys/PasswordKey.h"
+#include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestDatabase)
+
+static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx");
 
 void TestDatabase::initTestCase()
 {
     QVERIFY(Crypto::init());
+}
+
+void TestDatabase::testOpen()
+{
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(!db->isInitialized());
+    QVERIFY(!db->isModified());
+
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    bool ok = db->open(dbFileName, key);
+    QVERIFY(ok);
+
+    QVERIFY(db->isInitialized());
+    QVERIFY(!db->isModified());
+
+    db->metadata()->setName("test");
+    QVERIFY(db->isModified());
+}
+
+void TestDatabase::testSave()
+{
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QString error;
+    bool ok = db->open(tempFile.fileName(), key, &error);
+    QVERIFY(ok);
+
+    // Test safe saves
+    db->metadata()->setName("test");
+    QVERIFY(db->isModified());
+    QVERIFY2(db->save(&error), error.toLatin1());
+    QVERIFY(!db->isModified());
+
+    // Test unsafe saves
+    db->metadata()->setName("test2");
+    QVERIFY2(db->save(&error, false, false), error.toLatin1());
+    QVERIFY(!db->isModified());
+
+    // Test save backups
+    db->metadata()->setName("test3");
+    QVERIFY2(db->save(&error, true, true), error.toLatin1());
+    QVERIFY(!db->isModified());
+
+    // Confirm backup exists and then delete it
+    auto re = QRegularExpression("(\\.[^.]+)$");
+    auto match = re.match(tempFile.fileName());
+    auto backupFilePath = tempFile.fileName();
+    backupFilePath = backupFilePath.replace(re, "") + ".old" + match.captured(1);
+    QVERIFY(QFile::exists(backupFilePath));
+    QFile::remove(backupFilePath);
+    QVERIFY(!QFile::exists(backupFilePath));
+}
+
+void TestDatabase::testSignals()
+{
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+
+    auto db = QSharedPointer<Database>::create();
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+
+    QSignalSpy spyFilePathChanged(db.data(), SIGNAL(filePathChanged(const QString&, const QString&)));
+    QString error;
+    bool ok = db->open(tempFile.fileName(), key, &error);
+    QVERIFY(ok);
+    QCOMPARE(spyFilePathChanged.count(), 1);
+
+    QSignalSpy spyModified(db.data(), SIGNAL(databaseModified()));
+    db->metadata()->setName("test1");
+    QTRY_COMPARE(spyModified.count(), 1);
+
+    QSignalSpy spySaved(db.data(), SIGNAL(databaseSaved()));
+    QVERIFY(db->save(&error));
+    QCOMPARE(spySaved.count(), 1);
+
+    QSignalSpy spyFileChanged(db.data(), SIGNAL(databaseFileChanged()));
+    QVERIFY(tempFile.copyFromFile(dbFileName));
+    QTRY_COMPARE(spyFileChanged.count(), 1);
+    QTRY_VERIFY(!db->isModified());
+
+    db->metadata()->setName("test2");
+    QTRY_VERIFY(db->isModified());
+
+    QSignalSpy spyDiscarded(db.data(), SIGNAL(databaseDiscarded()));
+    QVERIFY(db->open(tempFile.fileName(), key, &error));
+    QCOMPARE(spyDiscarded.count(), 1);
 }
 
 void TestDatabase::testEmptyRecycleBinOnDisabled()

@@ -89,7 +89,7 @@ endmacro(add_unit_test)
 
 set(TEST_LIBRARIES
         keepassx_core
-        ${keepasshttp_LIB}
+        ${keepassxcbrowser_LIB}
         ${autotype_LIB}
         Qt5::Core
         Qt5::Concurrent
@@ -159,6 +159,9 @@ add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
 add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testopvaultreader SOURCES TestOpVaultReader.cpp
+              LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testwildcardmatcher SOURCES TestWildcardMatcher.cpp
         LIBS ${TEST_LIBRARIES})
 
@@ -185,6 +188,12 @@ add_unit_test(NAME testmerge SOURCES TestMerge.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testpasswordgenerator SOURCES TestPasswordGenerator.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testpassphrasegenerator SOURCES TestPassphraseGenerator.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testhibp SOURCES TestHibp.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testtotp SOURCES TestTotp.cpp
@@ -215,13 +224,18 @@ if(WITH_XC_KEESHARE)
 endif()
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
-        LIBS ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS ${TEST_LIBRARIES})
 
+if(WITH_XC_FDOSECRETS)
+    add_unit_test(NAME testfdosecrets SOURCES TestFdoSecrets.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+endif()
+
 if(WITH_XC_BROWSER)
-add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
+    add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
         LIBS ${TEST_LIBRARIES})
 endif()
 

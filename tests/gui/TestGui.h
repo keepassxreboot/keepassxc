@@ -69,6 +69,7 @@ private slots:
     void testKeePass1Import();
     void testDatabaseLocking();
     void testDragAndDropKdbxFiles();
+    void testSortGroups();
     void testTrayRestoreHide();
 
 private:
@@ -90,8 +91,7 @@ private:
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
     QSharedPointer<Database> m_db;
-    QByteArray m_dbData;
-    QScopedPointer<TemporaryFile> m_dbFile;
+    TemporaryFile m_dbFile;
     QString m_dbFileName;
     QString m_dbFilePath;
 };

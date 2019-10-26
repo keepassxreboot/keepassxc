@@ -89,6 +89,13 @@ void Config::sync()
     m_settings->sync();
 }
 
+void Config::resetToDefaults()
+{
+    for (const auto& setting : m_defaults.keys()) {
+        m_settings->setValue(setting, m_defaults.value(setting));
+    }
+}
+
 void Config::upgrade()
 {
     const auto keys = deprecationMap.keys();
@@ -105,6 +112,12 @@ void Config::upgrade()
     // > 2.3.4
     if (m_settings->value("AutoSaveAfterEveryChange").toBool()) {
         m_settings->setValue("AutoSaveOnExit", true);
+    }
+
+    // Setting defaults for 'hide window on copy' behavior, keeping the user's original setting
+    if (m_settings->value("HideWindowOnCopy").isNull()) {
+        m_settings->setValue("HideWindowOnCopy", m_settings->value("MinimizeOnCopy").toBool());
+        m_settings->setValue("MinimizeOnCopy", true);
     }
 }
 
@@ -177,7 +190,11 @@ void Config::init(const QString& fileName)
     m_defaults.insert("BackupBeforeSave", false);
     m_defaults.insert("UseAtomicSaves", true);
     m_defaults.insert("SearchLimitGroup", false);
-    m_defaults.insert("MinimizeOnCopy", false);
+    m_defaults.insert("MinimizeOnOpenUrl", false);
+    m_defaults.insert("HideWindowOnCopy", false);
+    m_defaults.insert("MinimizeOnCopy", true);
+    m_defaults.insert("MinimizeAfterUnlock", false);
+    m_defaults.insert("DropToBackgroundOnCopy", false);
     m_defaults.insert("UseGroupIconOnEntryCreation", false);
     m_defaults.insert("AutoTypeEntryTitleMatch", true);
     m_defaults.insert("AutoTypeEntryURLMatch", true);
@@ -185,8 +202,11 @@ void Config::init(const QString& fileName)
     m_defaults.insert("AutoTypeStartDelay", 500);
     m_defaults.insert("UseGroupIconOnEntryCreation", true);
     m_defaults.insert("IgnoreGroupExpansion", true);
+    m_defaults.insert("FaviconDownloadTimeout", 10);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
+    m_defaults.insert("security/clearsearch", true);
+    m_defaults.insert("security/clearsearchtimeout", 5);
     m_defaults.insert("security/lockdatabaseidle", false);
     m_defaults.insert("security/lockdatabaseidlesec", 240);
     m_defaults.insert("security/lockdatabaseminimize", false);
@@ -211,6 +231,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("GUI/HideUsernames", false);
     m_defaults.insert("GUI/HidePasswords", true);
     m_defaults.insert("GUI/AdvancedSettings", false);
+    m_defaults.insert("GUI/MonospaceNotes", false);
 }
 
 Config* Config::instance()

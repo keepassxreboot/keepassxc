@@ -19,6 +19,7 @@
 #include "EditEntryWidget.h"
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
+#include "ui_EditEntryWidgetBrowser.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetSSHAgent.h"
@@ -32,6 +33,7 @@
 #include <QSortFilterProxyModel>
 #include <QStackedLayout>
 #include <QStandardPaths>
+#include <QStringListModel>
 #include <QTemporaryFile>
 
 #include "autotype/AutoType.h"
@@ -47,6 +49,10 @@
 #include "crypto/ssh/OpenSSHKey.h"
 #include "sshagent/KeeAgentSettings.h"
 #include "sshagent/SSHAgent.h"
+#endif
+#ifdef WITH_XC_BROWSER
+#include "EntryURLModel.h"
+#include "browser/BrowserService.h"
 #endif
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
@@ -67,6 +73,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
+    , m_browserUi(new Ui::EditEntryWidgetBrowser())
     , m_customData(new CustomData())
     , m_mainWidget(new QWidget())
     , m_advancedWidget(new QWidget())
@@ -74,6 +81,11 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeWidget(new QWidget())
 #ifdef WITH_XC_SSHAGENT
     , m_sshAgentWidget(new QWidget())
+#endif
+#ifdef WITH_XC_BROWSER
+    , m_browserSettingsChanged(false)
+    , m_browserWidget(new QWidget())
+    , m_additionalURLsDataModel(new EntryURLModel(this))
 #endif
     , m_editWidgetProperties(new EditWidgetProperties())
     , m_historyWidget(new QWidget())
@@ -85,6 +97,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_autoTypeAssocModel(new AutoTypeAssociationsModel(this))
     , m_autoTypeDefaultSequenceGroup(new QButtonGroup(this))
     , m_autoTypeWindowSequenceGroup(new QButtonGroup(this))
+    , m_usernameCompleter(new QCompleter(this))
+    , m_usernameCompleterModel(new QStringListModel(this))
 {
     setupMain();
     setupAdvanced();
@@ -98,6 +112,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     } else {
         m_sshAgentEnabled = false;
     }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    setupBrowser();
 #endif
 
     setupProperties();
@@ -128,6 +146,12 @@ void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
     addPage(tr("Entry"), FilePath::instance()->icon("actions", "document-edit"), m_mainWidget);
+
+    m_mainUi->usernameComboBox->setEditable(true);
+    m_usernameCompleter->setCompletionMode(QCompleter::InlineCompletion);
+    m_usernameCompleter->setCaseSensitivity(Qt::CaseSensitive);
+    m_usernameCompleter->setModel(m_usernameCompleterModel);
+    m_mainUi->usernameComboBox->setCompleter(m_usernameCompleter);
 
     m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
     m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
@@ -188,6 +212,7 @@ void EditEntryWidget::setupAdvanced()
 
 void EditEntryWidget::setupIcon()
 {
+    m_iconsWidget->setShowApplyIconToButton(false);
     addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_iconsWidget);
     connect(this, SIGNAL(accepted()), m_iconsWidget, SLOT(abortRequests()));
     connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));
@@ -236,6 +261,121 @@ void EditEntryWidget::setupAutoType()
     // clang-format on
 }
 
+#ifdef WITH_XC_BROWSER
+void EditEntryWidget::setupBrowser()
+{
+    m_browserUi->setupUi(m_browserWidget);
+
+    if (config()->get("Browser/Enabled", false).toBool()) {
+        addPage(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"), m_browserWidget);
+        m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
+        m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
+
+        // clang-format off
+        connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
+        connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
+        connect(m_browserUi->addURLButton, SIGNAL(clicked()), SLOT(insertURL()));
+        connect(m_browserUi->removeURLButton, SIGNAL(clicked()), SLOT(removeCurrentURL()));
+        connect(m_browserUi->editURLButton, SIGNAL(clicked()), SLOT(editCurrentURL()));
+        connect(m_browserUi->additionalURLsView->selectionModel(),
+            SIGNAL(currentChanged(QModelIndex,QModelIndex)),
+            SLOT(updateCurrentURL()));
+        connect(m_additionalURLsDataModel,
+            SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)),
+            SLOT(updateCurrentAttribute()));
+        // clang-format on
+    }
+}
+
+void EditEntryWidget::updateBrowserModified()
+{
+    m_browserSettingsChanged = true;
+}
+
+void EditEntryWidget::updateBrowser()
+{
+    if (!m_browserSettingsChanged) {
+        return;
+    }
+
+    auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
+    auto hide = m_browserUi->hideEntryCheckbox->isChecked();
+    m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? QString("true") : QString("false")));
+    m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? QString("true") : QString("false")));
+}
+
+void EditEntryWidget::insertURL()
+{
+    Q_ASSERT(!m_history);
+
+    QString name("KP2A_URL");
+    int i = 1;
+
+    while (m_entryAttributes->keys().contains(name)) {
+        name = QString("KP2A_URL_%1").arg(i);
+        i++;
+    }
+
+    m_entryAttributes->set(name, tr("<empty URL>"));
+    QModelIndex index = m_additionalURLsDataModel->indexByKey(name);
+
+    m_browserUi->additionalURLsView->setCurrentIndex(index);
+    m_browserUi->additionalURLsView->edit(index);
+
+    setModified(true);
+}
+
+void EditEntryWidget::removeCurrentURL()
+{
+    Q_ASSERT(!m_history);
+
+    QModelIndex index = m_browserUi->additionalURLsView->currentIndex();
+
+    if (index.isValid()) {
+        auto result = MessageBox::question(this,
+                                           tr("Confirm Removal"),
+                                           tr("Are you sure you want to remove this URL?"),
+                                           MessageBox::Remove | MessageBox::Cancel,
+                                           MessageBox::Cancel);
+
+        if (result == MessageBox::Remove) {
+            m_entryAttributes->remove(m_additionalURLsDataModel->keyByIndex(index));
+            if (m_additionalURLsDataModel->rowCount() == 0) {
+                m_browserUi->editURLButton->setEnabled(false);
+                m_browserUi->removeURLButton->setEnabled(false);
+            }
+            setModified(true);
+        }
+    }
+}
+
+void EditEntryWidget::editCurrentURL()
+{
+    Q_ASSERT(!m_history);
+
+    QModelIndex index = m_browserUi->additionalURLsView->currentIndex();
+
+    if (index.isValid()) {
+        m_browserUi->additionalURLsView->edit(index);
+        setModified(true);
+    }
+}
+
+void EditEntryWidget::updateCurrentURL()
+{
+    QModelIndex index = m_browserUi->additionalURLsView->currentIndex();
+
+    if (index.isValid()) {
+        // Don't allow editing in history view
+        m_browserUi->editURLButton->setEnabled(!m_history);
+        m_browserUi->removeURLButton->setEnabled(!m_history);
+    } else {
+        m_browserUi->editURLButton->setEnabled(false);
+        m_browserUi->removeURLButton->setEnabled(false);
+    }
+}
+#endif
+
 void EditEntryWidget::setupProperties()
 {
     addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
@@ -272,7 +412,7 @@ void EditEntryWidget::setupEntryUpdate()
 {
     // Entry tab
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
-    connect(m_mainUi->usernameEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
+    connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordRepeatEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
@@ -318,6 +458,16 @@ void EditEntryWidget::setupEntryUpdate()
         connect(m_sshAgentUi->requireUserConfirmationCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
         connect(m_sshAgentUi->lifetimeCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
         connect(m_sshAgentUi->lifetimeSpinBox, SIGNAL(valueChanged(int)), this, SLOT(setModified()));
+    }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    if (config()->get("Browser/Enabled", false).toBool()) {
+        connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->addURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->removeURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->editURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
     }
 #endif
 }
@@ -659,13 +809,9 @@ void EditEntryWidget::toggleHideNotes(bool visible)
     m_mainUi->notesHint->setVisible(!visible);
 }
 
-QString EditEntryWidget::entryTitle() const
+Entry* EditEntryWidget::currentEntry() const
 {
-    if (m_entry) {
-        return m_entry->title();
-    } else {
-        return QString();
-    }
+    return m_entry;
 }
 
 void EditEntryWidget::loadEntry(Entry* entry,
@@ -706,7 +852,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_customData->copyDataFrom(entry->customData());
 
     m_mainUi->titleEdit->setReadOnly(m_history);
-    m_mainUi->usernameEdit->setReadOnly(m_history);
+    m_mainUi->usernameComboBox->lineEdit()->setReadOnly(m_history);
     m_mainUi->urlEdit->setReadOnly(m_history);
     m_mainUi->passwordEdit->setReadOnly(m_history);
     m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
@@ -716,6 +862,11 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get("security/hidenotes").toBool());
     m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_mainUi->notesEdit->setFont(Font::fixedFont());
+    } else {
+        m_mainUi->notesEdit->setFont(Font::defaultFont());
+    }
     m_mainUi->togglePasswordGeneratorButton->setChecked(false);
     m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
     m_mainUi->passwordGenerator->reset(entry->password().length());
@@ -741,7 +892,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_historyWidget->setEnabled(!m_history);
 
     m_mainUi->titleEdit->setText(entry->title());
-    m_mainUi->usernameEdit->setText(entry->username());
+    m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordRepeatEdit->setText(entry->password());
@@ -749,6 +900,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
     m_mainUi->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
+
+    QList<QString> commonUsernames = m_db->commonUsernames();
+    m_usernameCompleterModel->setStringList(commonUsernames);
+    QString usernameToRestore = m_mainUi->usernameComboBox->lineEdit()->text();
+    m_mainUi->usernameComboBox->clear();
+    m_mainUi->usernameComboBox->addItems(commonUsernames);
+    m_mainUi->usernameComboBox->lineEdit()->setText(usernameToRestore);
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
@@ -795,6 +953,31 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #ifdef WITH_XC_SSHAGENT
     if (m_sshAgentEnabled) {
         updateSSHAgent();
+    }
+#endif
+
+#ifdef WITH_XC_BROWSER
+    if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
+        // clang-format off
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == "true");
+        // clang-format on
+    } else {
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
+    }
+
+    if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
+        m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY) == "true");
+    } else {
+        m_browserUi->hideEntryCheckbox->setChecked(false);
+    }
+
+    m_browserUi->addURLButton->setEnabled(!m_history);
+    m_browserUi->removeURLButton->setEnabled(false);
+    m_browserUi->editURLButton->setEnabled(false);
+    m_browserUi->additionalURLsView->setEditTriggers(editTriggers);
+
+    if (m_additionalURLsDataModel->rowCount() != 0) {
+        m_browserUi->additionalURLsView->setCurrentIndex(m_additionalURLsDataModel->index(0, 0));
     }
 #endif
 
@@ -870,6 +1053,12 @@ bool EditEntryWidget::commitEntry()
     }
 #endif
 
+#ifdef WITH_XC_BROWSER
+    if (config()->get("Browser/Enabled", false).toBool()) {
+        updateBrowser();
+    }
+#endif
+
     if (!m_create) {
         m_entry->beginUpdate();
     }
@@ -909,7 +1098,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->attachments()->copyDataFrom(m_advancedUi->attachmentsWidget->entryAttachments());
     entry->customData()->copyDataFrom(m_customData.data());
     entry->setTitle(m_mainUi->titleEdit->text().replace(newLineRegex, " "));
-    entry->setUsername(m_mainUi->usernameEdit->text().replace(newLineRegex, " "));
+    entry->setUsername(m_mainUi->usernameComboBox->lineEdit()->text().replace(newLineRegex, " "));
     entry->setUrl(m_mainUi->urlEdit->text().replace(newLineRegex, " "));
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());

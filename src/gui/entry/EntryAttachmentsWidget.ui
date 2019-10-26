@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>EntryAttachmentsWidget</class>
  <widget class="QWidget" name="EntryAttachmentsWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>337</width>
+    <height>289</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
@@ -19,7 +27,11 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QTableView" name="attachmentsView"/>
+    <widget class="QTableView" name="attachmentsView">
+     <property name="accessibleName">
+      <string>Attachments</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QWidget" name="actionsWidget" native="true">
@@ -41,6 +53,9 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="accessibleName">
+         <string>Add new attachment</string>
+        </property>
         <property name="text">
          <string>Add</string>
         </property>
@@ -50,6 +65,9 @@
        <widget class="QPushButton" name="removeAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Remove selected attachment</string>
         </property>
         <property name="text">
          <string>Remove</string>
@@ -61,6 +79,9 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="accessibleName">
+         <string>Open selected attachment</string>
+        </property>
         <property name="text">
          <string>Open</string>
         </property>
@@ -70,6 +91,9 @@
        <widget class="QPushButton" name="saveAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Save selected attachment to disk</string>
         </property>
         <property name="text">
          <string>Save</string>

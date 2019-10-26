@@ -22,7 +22,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - YubiKey challenge-response support
 - TOTP generation
 - CSV import
-- Command line interface
+- A [Command Line Interface (keepassxc-cli)](./share/docs/man/keepassxc-cli.1)
 - DEP and ASLR hardening
 - Stand-alone password and passphrase generator
 - Password strength meter
@@ -33,7 +33,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - Synchronize passwords using KeeShare. See [Using Sharing](./docs/QUICKSTART.md#using-sharing) for more details.
 - Many bug fixes
 
-For a full list of features and changes, read the [CHANGELOG](CHANGELOG) document.
+For a full list of features and changes, read the [CHANGELOG](CHANGELOG.md) document.
 For a full list of keyboard shortcuts, see [KEYBINDS](./docs/KEYBINDS.md)
 
 ## Building KeePassXC

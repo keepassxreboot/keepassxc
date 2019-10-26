@@ -60,7 +60,7 @@ void Merger::resetForcedMergeMode()
     m_mode = Group::Default;
 }
 
-bool Merger::merge()
+QStringList Merger::merge()
 {
     // Order of merge steps is important - it is possible that we
     // create some items before deleting them afterwards
@@ -74,9 +74,8 @@ bool Merger::merge()
     // At this point we have a list of changes we may want to show the user
     if (!changes.isEmpty()) {
         m_context.m_targetDb->markAsModified();
-        return true;
     }
-    return false;
+    return changes;
 }
 
 Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
@@ -623,11 +622,11 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     }
 
     // Merge Custom Data if source is newer
-    const auto targetCustomDataModificationTime = sourceMetadata->customData()->getLastModified();
-    const auto sourceCustomDataModificationTime = targetMetadata->customData()->getLastModified();
-    if (!targetMetadata->customData()->contains(CustomData::LastModified) ||
-        (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid() && 
-         targetCustomDataModificationTime > sourceCustomDataModificationTime)) {
+    const auto targetCustomDataModificationTime = targetMetadata->customData()->getLastModified();
+    const auto sourceCustomDataModificationTime = sourceMetadata->customData()->getLastModified();
+    if (!targetMetadata->customData()->contains(CustomData::LastModified)
+        || (targetCustomDataModificationTime.isValid() && sourceCustomDataModificationTime.isValid()
+            && targetCustomDataModificationTime < sourceCustomDataModificationTime)) {
         const auto sourceCustomDataKeys = sourceMetadata->customData()->keys();
         const auto targetCustomDataKeys = targetMetadata->customData()->keys();
 
@@ -642,9 +641,18 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
 
         // Transfer new/existing keys
         for (const auto& key : sourceCustomDataKeys) {
-            auto value = sourceMetadata->customData()->value(key);
-            targetMetadata->customData()->set(key, value);
-            changes << tr("Adding custom data %1 [%2]").arg(key, value);
+            // Don't merge this meta field, it is updated automatically.
+            if (key == CustomData::LastModified) {
+                continue;
+            }
+
+            auto sourceValue = sourceMetadata->customData()->value(key);
+            auto targetValue = targetMetadata->customData()->value(key);
+            // Merge only if the values are not the same.
+            if (sourceValue != targetValue) {
+                targetMetadata->customData()->set(key, sourceValue);
+                changes << tr("Adding custom data %1 [%2]").arg(key, sourceValue);
+            }
         }
     }
 

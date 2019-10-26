@@ -25,6 +25,9 @@
    </property>
    <item>
     <widget class="QTreeView" name="historyView">
+     <property name="accessibleName">
+      <string>Entry history selection</string>
+     </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
      </property>
@@ -43,6 +46,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Show entry at selected history state</string>
+       </property>
+       <property name="accessibleName">
+        <string>Show entry at selected history state</string>
+       </property>
        <property name="text">
         <string>Show</string>
        </property>
@@ -52,6 +61,12 @@
       <widget class="QPushButton" name="restoreButton">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Restore entry to selected history state</string>
+       </property>
+       <property name="accessibleName">
+        <string>Restore entry to selected history state</string>
        </property>
        <property name="text">
         <string>Restore</string>
@@ -63,6 +78,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="toolTip">
+        <string>Delete selected history state</string>
+       </property>
+       <property name="accessibleName">
+        <string>Delete selected history state</string>
+       </property>
        <property name="text">
         <string>Delete</string>
        </property>
@@ -72,6 +93,12 @@
       <widget class="QPushButton" name="deleteAllButton">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Delete all history</string>
+       </property>
+       <property name="accessibleName">
+        <string>Delete all history</string>
        </property>
        <property name="text">
         <string>Delete all</string>

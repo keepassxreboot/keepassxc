@@ -140,11 +140,19 @@ bool EntrySearcher::searchEntryImpl(Entry* entry)
         case Field::Notes:
             found = term->regex.match(entry->notes()).hasMatch();
             break;
-        case Field::Attribute:
+        case Field::AttributeKey:
             found = !attributes.filter(term->regex).empty();
             break;
         case Field::Attachment:
             found = !attachments.filter(term->regex).empty();
+            break;
+        case Field::AttributeValue:
+            // skip protected attributes
+            if (entry->attributes()->isProtected(term->word)) {
+                continue;
+            }
+            found = entry->attributes()->contains(term->word)
+                    && term->regex.match(entry->attributes()->value(term->word)).hasMatch();
             break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
@@ -165,6 +173,17 @@ bool EntrySearcher::searchEntryImpl(Entry* entry)
 
 void EntrySearcher::parseSearchTerms(const QString& searchString)
 {
+    static const QList<QPair<QString, Field>> fieldnames{
+        {QStringLiteral("attachment"), Field::Attachment},
+        {QStringLiteral("attribute"), Field::AttributeKey},
+        {QStringLiteral("notes"), Field::Notes},
+        {QStringLiteral("pw"), Field::Password},
+        {QStringLiteral("password"), Field::Password},
+        {QStringLiteral("title"), Field::Title},
+        {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
+        {QStringLiteral("url"), Field::Url},
+        {QStringLiteral("username"), Field::Username}};
+
     m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);
     while (results.hasNext()) {
@@ -193,25 +212,23 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         term->exclude = mods.contains("-") || mods.contains("!");
 
         // Determine the field to search
+        term->field = Field::Undefined;
+
         QString field = result.captured(2);
         if (!field.isEmpty()) {
-            auto cs = Qt::CaseInsensitive;
-            if (field.compare("title", cs) == 0) {
-                term->field = Field::Title;
-            } else if (field.startsWith("user", cs)) {
-                term->field = Field::Username;
-            } else if (field.startsWith("pass", cs)) {
-                term->field = Field::Password;
-            } else if (field.compare("url", cs) == 0) {
-                term->field = Field::Url;
-            } else if (field.compare("notes", cs) == 0) {
-                term->field = Field::Notes;
-            } else if (field.startsWith("attr", cs)) {
-                term->field = Field::Attribute;
-            } else if (field.startsWith("attach", cs)) {
-                term->field = Field::Attachment;
+            if (field.startsWith("_", Qt::CaseInsensitive)) {
+                term->field = Field::AttributeValue;
+                // searching a custom attribute
+                // in this case term->word is the attribute key (removing the leading "_")
+                // and term->regex is used to match attribute value
+                term->word = field.mid(1);
             } else {
-                term->field = Field::Undefined;
+                for (const auto& pair : fieldnames) {
+                    if (pair.first.startsWith(field, Qt::CaseInsensitive)) {
+                        term->field = pair.second;
+                        break;
+                    }
+                }
             }
         }
 

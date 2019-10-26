@@ -1,5 +1,5 @@
 KeePassXC - http://www.keepassxc.org/
-Copyright (C) 2016-2017 KeePassXC Team <team@keepassxc.org>
+Copyright (C) 2016-2019 KeePassXC Team <team@keepassxc.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ Copyright: 2010-2012, Felix Geyer <debfx@fobos.de>
            2000-2008, Tom Sato <VEF00200@nifty.ne.jp>
            2013, Laszlo Papp <lpapp@kde.org>
            2013, David Faure <faure@kde.org>
-           2016-2018, KeePassXC Team <team@keepassxc.org>
+           2016-2019, KeePassXC Team <team@keepassxc.org>
 License: GPL-2 or GPL-3
 
 Comment: The "KeePassXC Team" in every copyright notice is formed by the following people:
@@ -160,11 +160,11 @@ Comment: based on Nuvola icon theme
 Files: share/icons/application/*/actions/application-exit.png
        share/icons/application/*/actions/chronometer.png
        share/icons/application/*/actions/configure.png
+       share/icons/application/*/actions/database-lock.png
        share/icons/application/*/actions/dialog-close.png
        share/icons/application/*/actions/dialog-ok.png
        share/icons/application/*/actions/document-close.png
        share/icons/application/*/actions/document-edit.png
-       share/icons/application/*/actions/document-encrypt.png
        share/icons/application/*/actions/document-new.png
        share/icons/application/*/actions/document-open.png
        share/icons/application/*/actions/document-properties.png
@@ -241,3 +241,10 @@ License: LGPL-2.1
 Files: share/macosx/dmg-background.tiff
 Copyright: 2008-2014, Andrey Tarantsov
 License: MIT
+
+Files: share/icons/application/scalable/apps/freedesktop.svg
+Copyright: GPL-2+
+Comment: from Freedesktop.org website
+
+Files: share/icons/application/32x32/actions/statistics.png
+Copyright: Icon made by Freepik from https://www.flaticon.com/free-icon/bars-chart_265733

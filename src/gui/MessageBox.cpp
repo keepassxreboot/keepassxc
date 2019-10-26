@@ -18,6 +18,11 @@
 
 #include "MessageBox.h"
 
+#include <QCheckBox>
+#include <QWindow>
+
+QWindow* MessageBox::m_overrideParent(nullptr);
+
 MessageBox::Button MessageBox::m_nextAnswer(MessageBox::NoButton);
 
 QHash<QAbstractButton*, MessageBox::Button> MessageBox::m_addedButtonLookup =
@@ -58,6 +63,7 @@ void MessageBox::initializeButtonDefs()
         {Skip, {QMessageBox::tr("Skip"), QMessageBox::ButtonRole::AcceptRole}},
         {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
         {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
+        {Continue, {QMessageBox::tr("Continue"), QMessageBox::ButtonRole::AcceptRole}},
     };
 }
 
@@ -73,13 +79,22 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
                                           const QString& text,
                                           MessageBox::Buttons buttons,
                                           MessageBox::Button defaultButton,
-                                          MessageBox::Action action)
+                                          MessageBox::Action action,
+                                          QCheckBox* checkbox)
 {
     if (m_nextAnswer == MessageBox::NoButton) {
         QMessageBox msgBox(parent);
         msgBox.setIcon(icon);
         msgBox.setWindowTitle(title);
         msgBox.setText(text);
+
+        if (m_overrideParent) {
+            // Force the creation of the QWindow, without this windowHandle() will return nullptr
+            msgBox.winId();
+            auto msgBoxWindow = msgBox.windowHandle();
+            Q_ASSERT(msgBoxWindow);
+            msgBoxWindow->setTransientParent(m_overrideParent);
+        }
 
         for (uint64_t b = First; b <= Last; b <<= 1) {
             if (b & buttons) {
@@ -96,6 +111,11 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
             if (defPtrList.count() > 0) {
                 msgBox.setDefaultButton(static_cast<QPushButton*>(defPtrList[0]));
             }
+        }
+
+        if (checkbox) {
+            checkbox->setParent(&msgBox);
+            msgBox.setCheckBox(checkbox);
         }
 
         if (action == MessageBox::Raise) {
@@ -121,29 +141,10 @@ MessageBox::Button MessageBox::critical(QWidget* parent,
                                         const QString& text,
                                         MessageBox::Buttons buttons,
                                         MessageBox::Button defaultButton,
-                                        MessageBox::Action action)
+                                        MessageBox::Action action,
+                                        QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action);
-}
-
-MessageBox::Button MessageBox::information(QWidget* parent,
-                                           const QString& title,
-                                           const QString& text,
-                                           MessageBox::Buttons buttons,
-                                           MessageBox::Button defaultButton,
-                                           MessageBox::Action action)
-{
-    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton, action);
-}
-
-MessageBox::Button MessageBox::question(QWidget* parent,
-                                        const QString& title,
-                                        const QString& text,
-                                        MessageBox::Buttons buttons,
-                                        MessageBox::Button defaultButton,
-                                        MessageBox::Action action)
-{
-    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Critical, title, text, buttons, defaultButton, action, checkbox);
 }
 
 MessageBox::Button MessageBox::warning(QWidget* parent,
@@ -151,12 +152,46 @@ MessageBox::Button MessageBox::warning(QWidget* parent,
                                        const QString& text,
                                        MessageBox::Buttons buttons,
                                        MessageBox::Button defaultButton,
-                                       MessageBox::Action action)
+                                       MessageBox::Action action,
+                                       QCheckBox* checkbox)
 {
-    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action);
+    return messageBox(parent, QMessageBox::Warning, title, text, buttons, defaultButton, action, checkbox);
+}
+
+MessageBox::Button MessageBox::information(QWidget* parent,
+                                           const QString& title,
+                                           const QString& text,
+                                           MessageBox::Buttons buttons,
+                                           MessageBox::Button defaultButton,
+                                           MessageBox::Action action,
+                                           QCheckBox* checkbox)
+{
+    return messageBox(parent, QMessageBox::Information, title, text, buttons, defaultButton, action, checkbox);
+}
+
+MessageBox::Button MessageBox::question(QWidget* parent,
+                                        const QString& title,
+                                        const QString& text,
+                                        MessageBox::Buttons buttons,
+                                        MessageBox::Button defaultButton,
+                                        MessageBox::Action action,
+                                        QCheckBox* checkbox)
+{
+    return messageBox(parent, QMessageBox::Question, title, text, buttons, defaultButton, action, checkbox);
 }
 
 void MessageBox::setNextAnswer(MessageBox::Button button)
 {
     m_nextAnswer = button;
+}
+
+MessageBox::OverrideParent::OverrideParent(QWindow* newParent)
+    : m_oldParent(MessageBox::m_overrideParent)
+{
+    MessageBox::m_overrideParent = newParent;
+}
+
+MessageBox::OverrideParent::~OverrideParent()
+{
+    MessageBox::m_overrideParent = m_oldParent;
 }

@@ -121,11 +121,11 @@ For names made of only one word, the first letter should be lowercase.
 For names made of multiple concatenated words, the first letter of the whole is lowercase, and the first letter of each subsequent word is capitalized.
 
 #### Indention
-For **C++ files** (*.cpp .h*): 4 spaces  
+For **C++ files** (*.cpp .h*): 4 spaces
 For **Qt-UI files** (*.ui*): 2 spaces
 
 #### Includes
-```c
+```cpp
 // Class includes
 #include "MyWidget.h"
 #include "ui_MyWidget.h"
@@ -140,7 +140,7 @@ For **Qt-UI files** (*.ui*): 2 spaces
 ```
 
 #### Classes
-```c
+```cpp
 // Note: order is important, stay organized!
 class MyWidget : public QWidget
 {
@@ -174,13 +174,13 @@ MyWidget::MyWidget(QWidget* parent)
 ```
 
 #### Pointers / References
-```c
+```cpp
 int* count;
 const QString& string;
 ```
 
 #### Braces
-```c
+```cpp
 if (condition) {
     doSomething();
 } else {
@@ -194,7 +194,7 @@ void ExampleClass::exampleFunction()
 ```
 
 #### Switch statement
-```c
+```cpp
 // Note: avoid declaring variables in a switch statement
 switch (a) {
 case 1:
@@ -221,6 +221,6 @@ Example: `<widget class="QCheckBox" name="rememberCheckBox">`
 
 
 
-[beginner]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3Abeginner+label%3A%22help+wanted%22+sort%3Acomments-desc
+[beginner]:https://github.com/keepassxreboot/keepassxc/issues?utf8=%E2%9C%93&q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22+sort%3Acomments-desc+
 [help-wanted]:https://github.com/keepassxreboot/keepassx/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+sort%3Acomments-desc
 [issues-section]:https://github.com/keepassxreboot/keepassxc/issues

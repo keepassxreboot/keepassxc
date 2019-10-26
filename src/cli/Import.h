@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,17 +15,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EXTRACT_H
-#define KEEPASSXC_EXTRACT_H
+#ifndef KEEPASSXC_IMPORT_H
+#define KEEPASSXC_IMPORT_H
 
 #include "Command.h"
 
-class Extract : public Command
+class Import : public Command
 {
 public:
-    Extract();
-    ~Extract();
+    Import();
     int execute(const QStringList& arguments) override;
 };
 
-#endif // KEEPASSXC_EXTRACT_H
+#endif // KEEPASSXC_IMPORT_H

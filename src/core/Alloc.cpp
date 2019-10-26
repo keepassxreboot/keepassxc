@@ -17,9 +17,12 @@
 
 #include <QtGlobal>
 #include <cstdint>
+#include <cstdlib>
 #include <sodium.h>
-#ifdef Q_OS_MACOS
+#if defined(Q_OS_MACOS)
 #include <malloc/malloc.h>
+#elif defined(Q_OS_FREEBSD)
+#include <malloc_np.h>
 #else
 #include <malloc.h>
 #endif
@@ -78,7 +81,7 @@ void operator delete[](void* ptr) noexcept
  * Custom insecure delete operator that does not zero out memory before
  * freeing a buffer. Can be used for better performance.
  */
-void operator delete(void* ptr, bool) noexcept
+void operator delete(void* ptr, bool)noexcept
 {
     std::free(ptr);
 }

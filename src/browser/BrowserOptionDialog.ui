@@ -35,7 +35,7 @@
       <string>This is required for accessing your databases with KeePassXC-Browser</string>
      </property>
      <property name="text">
-      <string>Enable KeepassXC browser integration</string>
+      <string>Enable browser integration</string>
      </property>
     </widget>
    </item>
@@ -56,6 +56,13 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Browsers installed as snaps are currently not supported.</string>
          </property>
         </widget>
        </item>
@@ -297,7 +304,7 @@
        <item>
         <widget class="QCheckBox" name="searchInAllDatabases">
          <property name="toolTip">
-          <string>Only the selected database has to be connected with a client.</string>
+          <string>All databases connected to the extension will return matching credentials.</string>
          </property>
          <property name="text">
           <string extracomment="Credentials mean login data requested via browser extension">Searc&amp;h in all opened databases for matching credentials</string>
@@ -311,6 +318,16 @@
          </property>
          <property name="text">
           <string>&amp;Return advanced string fields which start with &quot;KPH: &quot;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="noMigrationPrompt">
+         <property name="toolTip">
+          <string>Don't display the popup suggesting migration of legacy KeePassHTTP settings.</string>
+         </property>
+         <property name="text">
+          <string>&amp;Do not prompt for KeePassHTTP settings migration.</string>
          </property>
         </widget>
        </item>
@@ -348,6 +365,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
           <widget class="QLineEdit" name="customProxyLocation">
+           <property name="accessibleName">
+            <string>Custom proxy location field</string>
+           </property>
            <property name="maxLength">
             <number>999</number>
            </property>
@@ -358,6 +378,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="customProxyLocationBrowseButton">
+           <property name="accessibleName">
+            <string>Browser for custom proxy file</string>
+           </property>
            <property name="text">
             <string extracomment="Button for opening file dialog">Browse...</string>
            </property>

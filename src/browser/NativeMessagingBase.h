@@ -19,7 +19,7 @@
 #ifndef NATIVEMESSAGINGBASE_H
 #define NATIVEMESSAGINGBASE_H
 
-#include <QAtomicInteger>
+#include <QAtomicInt>
 #include <QFuture>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -60,7 +60,7 @@ protected:
     QString getLocalServerPath() const;
 
 protected:
-    QAtomicInteger<quint8> m_running;
+    QAtomicInt m_running;
     QSharedPointer<QSocketNotifier> m_notifier;
     QFuture<void> m_future;
 };

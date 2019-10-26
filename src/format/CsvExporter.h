@@ -31,10 +31,12 @@ class CsvExporter
 public:
     bool exportDatabase(const QString& filename, const QSharedPointer<const Database>& db);
     bool exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db);
+    QString exportDatabase(const QSharedPointer<const Database>& db);
     QString errorString() const;
 
 private:
-    bool writeGroup(QIODevice* device, const Group* group, QString groupPath = QString());
+    QString exportGroup(const Group* group, QString groupPath = QString());
+    QString exportHeader();
     void addColumn(QString& str, const QString& column);
 
     QString m_error;

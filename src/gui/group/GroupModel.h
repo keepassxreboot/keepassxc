@@ -45,9 +45,11 @@ public:
     dropMimeData(const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) override;
     QStringList mimeTypes() const override;
     QMimeData* mimeData(const QModelIndexList& indexes) const override;
+    void sortChildren(Group* rootGroup, bool reverse = false);
 
 private:
     QModelIndex parent(Group* group) const;
+    void collectIndexesRecursively(QList<QModelIndex>& indexes, QList<Group*> groups);
 
 private slots:
     void groupDataChanged(Group* group);

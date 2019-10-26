@@ -50,10 +50,15 @@ public:
     void addSettingsPage(ISettingsPage* page);
     void loadSettings();
 
+signals:
+    void settingsReset();
+
 private slots:
     void saveSettings();
+    void resetSettings();
     void reject();
     void autoSaveToggled(bool checked);
+    void hideWindowOnCopyCheckBoxToggled(bool checked);
     void systrayToggled(bool checked);
     void toolbarSettingsToggled(bool checked);
     void rememberDatabasesToggled(bool checked);

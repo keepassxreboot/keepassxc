@@ -1,0 +1,251 @@
+.TH KEEPASSXC-CLI 1 "June 15, 2019"
+
+.SH NAME
+keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager.
+
+.SH SYNOPSIS
+.B keepassxc-cli
+.I command
+.B [
+-I options
+.B ]
+
+.SH DESCRIPTION
+\fBkeepassxc-cli\fP is the command line interface for the \fBKeePassXC\fP password manager. It provides the ability to query and modify the entries of a KeePass database, directly from the command line.
+
+.SH COMMANDS
+
+.IP "add [options] <database> <entry>"
+Adds a new entry to a database. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
+The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
+
+.IP "analyze [options] <database>"
+Analyzes passwords in a database for weaknesses.
+
+.IP "clip [options] <database> <entry> [timeout]"
+Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
+
+.IP "close"
+In interactive mode, closes the currently opened database (see \fIopen\fP).
+
+.IP "create [options] <database>"
+Creates a new database with a key file and/or password. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
+
+.IP "diceware [options]"
+Generates a random diceware passphrase.
+
+.IP "edit [options] <database> <entry>"
+Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
+The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
+
+.IP "estimate [options] [password]"
+Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
+
+.IP "exit"
+Exits interactive mode. Synonymous with \fIquit\fP.
+
+.IP "export [options] <database>"
+Exports the content of a database to standard output in the specified format (defaults to XML).
+
+.IP "generate [options]"
+Generates a random password.
+
+.IP "help [command]"
+Displays a list of available commands, or detailed information about the specified command.
+
+.IP "import [options] <xml> <database>"
+Imports the contents of an XML database to the target database.
+
+.IP "locate [options] <database> <term>"
+Locates all the entries that match a specific search term in a database.
+
+.IP "ls [options] <database> [group]"
+Lists the contents of a group in a database. If no group is specified, it will default to the root group.
+
+.IP "merge [options] <database1> <database2>"
+Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
+
+.IP "mkdir [options] <database> <group>"
+Adds a new group to a database.
+
+.IP "mv [options] <database> <entry> <group>"
+Moves an entry to a new group.
+
+.IP "open [options] <database>"
+Opens the given database in a shell-style interactive mode. This is useful for performing multiple operations on a single database (e.g. \fIls\fP followed by \fIshow\fP).
+
+.IP "quit"
+Exits interactive mode. Synonymous with \fIexit\fP.
+
+.IP "rm [options] <database> <entry>"
+Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
+
+.IP "rmdir [options] <database> <group>"
+Removes a group from a database. If the database has a recycle bin, the group will be moved there. If the group is already in the recycle bin, it will be removed permanently.
+
+.IP "show [options] <database> <entry>"
+Shows the title, username, password, URL and notes of a database entry. Can also show the current TOTP. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
+
+.SH OPTIONS
+
+.SS "General options"
+
+.IP "--debug-info"
+Displays debugging information.
+
+.IP "-k, --key-file <path>"
+Specifies a path to a key file for unlocking the database. In a merge operation this option, is used to specify the key file path for the first database.
+
+.IP "--no-password"
+Deactivates the password key for the database.
+
+.IP "-y, --yubikey <slot>"
+Specifies a yubikey slot for unlocking the database. In a merge operation this option is used to specify the yubikey slot for the first database.
+
+.IP "-q, --quiet <path>"
+Silences password prompt and other secondary outputs.
+
+.IP "-h, --help"
+Displays help information.
+
+.IP "-v, --version"
+Displays the program version.
+
+
+.SS "Merge options"
+
+.IP "-d, --dry-run <path>"
+Prints the changes detected by the merge operation without making any changes to the database.
+
+.IP "-f, --key-file-from <path>"
+Sets the path of the key file for the second database.
+
+.IP "--no-password-from"
+Deactivates password key for the database to merge from.
+
+.IP "--yubikey-from <slot>"
+Yubikey slot for the second database.
+
+.IP "-s, --same-credentials"
+Uses the same credentials for unlocking both databases.
+
+
+.SS "Add and edit options"
+The same password generation options as documented for the generate command can be used
+with those 2 commands when the -g option is set.
+
+.IP "-u, --username <username>"
+Specifies the username of the entry.
+
+.IP "--url <url>"
+Specifies the URL of the entry.
+
+.IP "-p, --password-prompt"
+Uses a password prompt for the entry's password.
+
+.IP "-g, --generate"
+Generates a new password for the entry.
+
+
+.SS "Edit options"
+
+.IP "-t, --title <title>"
+Specifies the title of the entry.
+
+
+.SS "Estimate options"
+
+.IP "-a, --advanced"
+Performs advanced analysis on the password.
+
+
+.SS "Analyze options"
+
+.IP "-H, --hibp <filename>"
+Checks if any passwords have been publicly leaked, by comparing against the given
+list of password SHA-1 hashes, which must be in "Have I Been Pwned" format. Such
+files are available from https://haveibeenpwned.com/Passwords; note that they
+are large, and so this operation typically takes some time (minutes up to an
+hour or so).
+
+
+.SS "Clip options"
+
+.IP "-t, --totp"
+Copies the current TOTP instead of current password to clipboard. Will report
+an error if no TOTP is configured for the entry.
+
+
+.SS "Show options"
+
+.IP "-a, --attributes <attribute>..."
+Shows the named attributes. This option can be specified more than once,
+with each attribute shown one-per-line in the given order. If no attributes are
+specified and \fI-t\fP is not specified, a summary of the default attributes is given.
+
+.IP "-t, --totp"
+Also shows the current TOTP, reporting an error if no TOTP is configured for
+the entry.
+
+
+.SS "Diceware options"
+
+.IP "-W, --words <count>"
+Sets the desired number of words for the generated passphrase. [Default: 7]
+
+.IP "-w, --word-list <path>"
+Sets the Path of the wordlist for the diceware generator. The wordlist must
+have > 1000 words, otherwise the program will fail. If the wordlist has < 4000
+words a warning will be printed to STDERR.
+
+
+.SS "Export options"
+
+.IP "-f, --format"
+Format to use when exporting. Available choices are xml or csv. Defaults to xml.
+
+
+.SS "List options"
+
+.IP "-R, --recursive"
+Recursively lists the elements of the group.
+
+.IP "-f, --flatten"
+Flattens the output to single lines. When this option is enabled, subgroups and subentries will be displayed with a relative group path instead of indentation.
+
+.SS "Generate options"
+
+.IP "-L, --length <length>"
+Sets the desired length for the generated password. [Default: 16]
+
+.IP "-l --lower"
+Uses lowercase characters for the generated password. [Default: Enabled]
+
+.IP "-U --upper"
+Uses uppercase characters for the generated password. [Default: Enabled]
+
+.IP "-n --numeric"
+Uses numbers characters for the generated password. [Default: Enabled]
+
+.IP "-s --special"
+Uses special characters for the generated password. [Default: Disabled]
+
+.IP "-e --extended"
+Uses extended ASCII characters for the generated password. [Default: Disabled]
+
+.IP "-x --exclude <chars>"
+Comma-separated list of characters to exclude from the generated password. None is excluded by default.
+
+.IP "--exclude-similar"
+Exclude similar looking characters. [Default: Disabled]
+
+.IP "--every-group"
+Include characters from every selected group. [Default: Disabled]
+
+
+.SH REPORTING BUGS
+Bugs and feature requests can be reported on GitHub at https://github.com/keepassxreboot/keepassxc/issues.
+
+.SH AUTHOR
+This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>,
+and is maintained by the KeePassXC Team <team@keepassxc.org>.

@@ -16,8 +16,10 @@
  */
 
 #include "EditGroupWidget.h"
+#include "gui/Font.h"
 #include "ui_EditGroupWidgetMain.h"
 
+#include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/Metadata.h"
 #include "gui/EditWidgetIcons.h"
@@ -151,6 +153,12 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     }
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
 
+    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+        m_mainUi->editNotes->setFont(Font::fixedFont());
+    } else {
+        m_mainUi->editNotes->setFont(Font::defaultFont());
+    }
+
     IconStruct iconStruct;
     iconStruct.uuid = m_temporaryGroup->iconUuid();
     iconStruct.number = m_temporaryGroup->iconNumber();
@@ -211,6 +219,17 @@ void EditGroupWidget::apply()
 
     // Icons add/remove are applied globally outside the transaction!
     m_group->copyDataFrom(m_temporaryGroup.data());
+
+    // Assign the icon to children if selected
+    if (iconStruct.applyTo == ApplyIconToOptions::CHILD_GROUPS
+        || iconStruct.applyTo == ApplyIconToOptions::ALL_CHILDREN) {
+        m_group->applyGroupIconToChildGroups();
+    }
+
+    if (iconStruct.applyTo == ApplyIconToOptions::CHILD_ENTRIES
+        || iconStruct.applyTo == ApplyIconToOptions::ALL_CHILDREN) {
+        m_group->applyGroupIconToChildEntries();
+    }
 
     setModified(false);
 }

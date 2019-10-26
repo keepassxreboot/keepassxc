@@ -75,6 +75,7 @@ public slots:
     void bringToFront();
     void closeAllDatabases();
     void lockAllDatabases();
+    void displayDesktopNotification(const QString& msg, QString title = "", int msTimeoutHint = 10000);
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -90,6 +91,10 @@ private slots:
     void hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested);
     void openDonateUrl();
     void openBugReportUrl();
+    void openGettingStartedGuide();
+    void openUserGuide();
+    void openOnlineHelp();
+    void openKeyboardShortcuts();
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
@@ -97,6 +102,7 @@ private slots:
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
     void switchToKeePass1Database();
+    void switchToOpVaultDatabase();
     void switchToCsvImport();
     void closePasswordGen();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
@@ -130,6 +136,7 @@ private:
     bool saveLastDatabases();
     void updateTrayIcon();
     bool isTrayIconEnabled() const;
+    void customOpenUrl(QString url);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
     void dragEnterEvent(QDragEnterEvent* event) override;
@@ -137,23 +144,25 @@ private:
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
-    QAction* m_clearHistoryAction;
-    QAction* m_searchWidgetAction;
-    QActionGroup* m_lastDatabasesActions;
-    QActionGroup* m_copyAdditionalAttributeActions;
-    InactivityTimer* m_inactivityTimer;
-    InactivityTimer* m_touchIDinactivityTimer;
+    QPointer<QAction> m_clearHistoryAction;
+    QPointer<QAction> m_searchWidgetAction;
+    QPointer<QMenu> m_entryContextMenu;
+    QPointer<QMenu> m_entryNewContextMenu;
+    QPointer<QActionGroup> m_lastDatabasesActions;
+    QPointer<QActionGroup> m_copyAdditionalAttributeActions;
+    QPointer<InactivityTimer> m_inactivityTimer;
+    QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
-    QSystemTrayIcon* m_trayIcon;
-    ScreenLockListener* m_screenLockListener;
+    QPointer<QSystemTrayIcon> m_trayIcon;
+    QPointer<ScreenLockListener> m_screenLockListener;
     QPointer<SearchWidget> m_searchWidget;
 
     Q_DISABLE_COPY(MainWindow)
 
-    bool m_appExitCalled;
-    bool m_appExiting;
-    bool m_contextMenuFocusLock;
-    uint m_lastFocusOutTime;
+    bool m_appExitCalled = false;
+    bool m_appExiting = false;
+    bool m_contextMenuFocusLock = false;
+    uint m_lastFocusOutTime = 0;
     QTimer m_trayIconTriggerTimer;
     QSystemTrayIcon::ActivationReason m_trayIconTriggerReason;
 };

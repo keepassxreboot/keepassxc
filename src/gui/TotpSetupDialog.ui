@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>249</width>
-    <height>248</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,12 +25,31 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>Key:</string>
+        <string>Secret Key:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="seedEdit"/>
+      <widget class="QLineEdit" name="seedEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Secret key must be in Base32 format</string>
+       </property>
+       <property name="accessibleName">
+        <string>Secret key field</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -86,12 +105,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="customGroup">
+    <widget class="QGroupBox" name="customSettingsGroup">
      <property name="enabled">
       <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
      </property>
      <property name="title">
       <string>Custom Settings</string>
@@ -106,21 +122,40 @@
       <property name="labelAlignment">
        <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
       </property>
+      <property name="horizontalSpacing">
+       <number>7</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>7</number>
+      </property>
       <property name="leftMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>5</number>
+       <number>20</number>
       </property>
       <item row="1" column="0">
+       <widget class="QLabel" name="algorithmLabel">
+        <property name="text">
+         <string>Algorithm:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="algorithmComboBox"/>
+      </item>
+      <item row="2" column="0">
        <widget class="QLabel" name="stepLabel">
         <property name="text">
          <string>Time step:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="QSpinBox" name="stepSpinBox">
+        <property name="accessibleName">
+         <string>Time step field</string>
+        </property>
         <property name="suffix">
          <string comment="Seconds"> sec</string>
         </property>
@@ -135,34 +170,26 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="digitsLabel">
         <property name="text">
          <string>Code size:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
-       <widget class="QRadioButton" name="radio6Digits">
-        <property name="text">
-         <string>6 digits</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="1">
-       <widget class="QRadioButton" name="radio7Digits">
-        <property name="text">
-         <string>7 digits</string>
+       <widget class="QSpinBox" name="digitsSpinBox">
+        <property name="suffix">
+         <string> digits</string>
         </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QRadioButton" name="radio8Digits">
-        <property name="text">
-         <string>8 digits</string>
+        <property name="minimum">
+         <number>6</number>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+        <property name="singleStep">
+         <number>1</number>
         </property>
        </widget>
       </item>
@@ -180,7 +207,17 @@
     </widget>
    </item>
   </layout>
+  <zorder>customSettingsGroup</zorder>
+  <zorder>buttonBox</zorder>
+  <zorder>groupBox</zorder>
  </widget>
+ <tabstops>
+  <tabstop>seedEdit</tabstop>
+  <tabstop>radioDefault</tabstop>
+  <tabstop>radioSteam</tabstop>
+  <tabstop>radioCustom</tabstop>
+  <tabstop>stepSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <buttongroups>

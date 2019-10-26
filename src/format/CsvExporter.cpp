@@ -35,21 +35,22 @@ bool CsvExporter::exportDatabase(const QString& filename, const QSharedPointer<c
 
 bool CsvExporter::exportDatabase(QIODevice* device, const QSharedPointer<const Database>& db)
 {
-    QString header;
-    addColumn(header, "Group");
-    addColumn(header, "Title");
-    addColumn(header, "Username");
-    addColumn(header, "Password");
-    addColumn(header, "URL");
-    addColumn(header, "Notes");
-    header.append("\n");
-
-    if (device->write(header.toUtf8()) == -1) {
+    if (device->write(exportHeader().toUtf8()) == -1) {
         m_error = device->errorString();
         return false;
     }
 
-    return writeGroup(device, db->rootGroup());
+    if (device->write(exportGroup(db->rootGroup()).toUtf8()) == -1) {
+        m_error = device->errorString();
+        return false;
+    }
+
+    return true;
+}
+
+QString CsvExporter::exportDatabase(const QSharedPointer<const Database>& db)
+{
+    return exportHeader() + exportGroup(db->rootGroup());
 }
 
 QString CsvExporter::errorString() const
@@ -57,8 +58,21 @@ QString CsvExporter::errorString() const
     return m_error;
 }
 
-bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString groupPath)
+QString CsvExporter::exportHeader()
 {
+    QString header;
+    addColumn(header, "Group");
+    addColumn(header, "Title");
+    addColumn(header, "Username");
+    addColumn(header, "Password");
+    addColumn(header, "URL");
+    addColumn(header, "Notes");
+    return header + QString("\n");
+}
+
+QString CsvExporter::exportGroup(const Group* group, QString groupPath)
+{
+    QString response;
     if (!groupPath.isEmpty()) {
         groupPath.append("/");
     }
@@ -76,21 +90,15 @@ bool CsvExporter::writeGroup(QIODevice* device, const Group* group, QString grou
         addColumn(line, entry->notes());
 
         line.append("\n");
-
-        if (device->write(line.toUtf8()) == -1) {
-            m_error = device->errorString();
-            return false;
-        }
+        response.append(line);
     }
 
     const QList<Group*>& children = group->children();
     for (const Group* child : children) {
-        if (!writeGroup(device, child, groupPath)) {
-            return false;
-        }
+        response.append(exportGroup(child, groupPath));
     }
 
-    return true;
+    return response;
 }
 
 void CsvExporter::addColumn(QString& str, const QString& column)

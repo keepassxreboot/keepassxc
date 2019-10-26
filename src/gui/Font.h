@@ -23,6 +23,7 @@
 class Font
 {
 public:
+    static QFont defaultFont();
     static QFont fixedFont();
 
 private:

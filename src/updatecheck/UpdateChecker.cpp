@@ -16,18 +16,21 @@
  */
 
 #include "UpdateChecker.h"
+
 #include "config-keepassx.h"
 #include "core/Clock.h"
 #include "core/Config.h"
+#include "core/NetworkManager.h"
+
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
-#include <QNetworkAccessManager>
-#include <QtNetwork>
+#include <QRegularExpression>
 
 UpdateChecker* UpdateChecker::m_instance(nullptr);
 
 UpdateChecker::UpdateChecker(QObject* parent)
     : QObject(parent)
-    , m_netMgr(new QNetworkAccessManager(this))
     , m_reply(nullptr)
     , m_isManuallyRequested(false)
 {
@@ -56,7 +59,7 @@ void UpdateChecker::checkForUpdates(bool manuallyRequested)
         QNetworkRequest request(apiUrl);
         request.setRawHeader("Accept", "application/json");
 
-        m_reply = m_netMgr->get(request);
+        m_reply = getNetMgr()->get(request);
 
         connect(m_reply, &QNetworkReply::finished, this, &UpdateChecker::fetchFinished);
         connect(m_reply, &QIODevice::readyRead, this, &UpdateChecker::fetchReadyRead);

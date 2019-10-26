@@ -17,6 +17,7 @@
 
 #include "KeyFileEditWidget.h"
 #include "ui_KeyFileEditWidget.h"
+#include <gui/dbsettings/DatabaseSettingsWidget.h>
 
 #include "gui/FileDialog.h"
 #include "gui/MainWindow.h"
@@ -24,9 +25,10 @@
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
 
-KeyFileEditWidget::KeyFileEditWidget(QWidget* parent)
+KeyFileEditWidget::KeyFileEditWidget(DatabaseSettingsWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::KeyFileEditWidget())
+    , m_parent(parent)
 {
     setComponentName(tr("Key File"));
     setComponentDescription(tr("<p>You can add a key file containing random bytes for additional security.</p>"
@@ -119,6 +121,26 @@ void KeyFileEditWidget::browseKeyFile()
     }
     QString filters = QString("%1 (*.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(), filters);
+
+    if (QFileInfo(fileName).canonicalFilePath() == m_parent->getDatabase()->canonicalFilePath()) {
+        MessageBox::critical(getMainWindow(),
+                             tr("Invalid Key File"),
+                             tr("You cannot use the current database as its own keyfile. Please choose a different "
+                                "file or generate a new key file."));
+        return;
+    } else if (fileName.endsWith(".kdbx", Qt::CaseInsensitive)) {
+        auto response =
+            MessageBox::warning(getMainWindow(),
+                                tr("Suspicious Key File"),
+                                tr("The chosen key file looks like a password database file. A key file must be a "
+                                   "static file that never changes or you will lose access to your database "
+                                   "forever.\nAre you sure you want to continue with this file?"),
+                                MessageBox::Continue | MessageBox::Cancel,
+                                MessageBox::Cancel);
+        if (response != MessageBox::Continue) {
+            return;
+        }
+    }
 
     if (!fileName.isEmpty()) {
         m_compUi->keyFileCombo->setEditText(fileName);

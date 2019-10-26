@@ -155,7 +155,21 @@ bool DatabaseSettingsWidgetMasterKey::save()
         }
     }
 
-    if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
+    if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::AddNew || m_passwordEditWidget->isEmpty()) {
+        QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setWindowTitle(tr("No password set"));
+        msgBox->setText(tr("WARNING! You have not set a password. Using a database without "
+                           "a password is strongly discouraged!\n\n"
+                           "Are you sure you want to continue without a password?"));
+        auto btn = msgBox->addButton(tr("Continue without password"), QMessageBox::ButtonRole::AcceptRole);
+        msgBox->addButton(QMessageBox::Cancel);
+        msgBox->setDefaultButton(QMessageBox::Cancel);
+        msgBox->exec();
+        if (msgBox->clickedButton() != btn) {
+            return false;
+        }
+    } else if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
         return false;
     }
 
@@ -176,19 +190,6 @@ bool DatabaseSettingsWidgetMasterKey::save()
                              MessageBox::Ok,
                              MessageBox::Ok);
         return false;
-    }
-
-    if (m_passwordEditWidget->isEmpty()) {
-        auto answer = MessageBox::warning(this,
-                                          tr("No password set"),
-                                          tr("WARNING! You have not set a password. Using a database without "
-                                             "a password is strongly discouraged!\n\n"
-                                             "Are you sure you want to continue without a password?"),
-                                          MessageBox::Yes | MessageBox::Cancel,
-                                          MessageBox::Cancel);
-        if (answer != MessageBox::Yes) {
-            return false;
-        }
     }
 
     m_db->setKey(newKey, true, false, false);

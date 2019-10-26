@@ -149,6 +149,16 @@ QJsonObject BrowserAction::handleGetDatabaseHash(const QJsonObject& json, const 
 
         QJsonObject message = buildMessage(newNonce);
         message["hash"] = hash;
+
+        // Update a legacy database hash if found
+        const QJsonArray hashes = decrypted.value("connectedKeys").toArray();
+        if (!hashes.isEmpty()) {
+            const QString legacyHash = getLegacyDatabaseHash();
+            if (hashes.contains(legacyHash)) {
+                message["oldHash"] = legacyHash;
+            }
+        }
+
         return buildResponse(action, message, newNonce);
     }
 
@@ -278,18 +288,18 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
 
 QJsonObject BrowserAction::handleGeneratePassword(const QJsonObject& json, const QString& action)
 {
-    const QString nonce = json.value("nonce").toString();
-    const QString password = browserSettings()->generatePassword();
+    auto nonce = json.value("nonce").toString();
+    auto password = browserSettings()->generatePassword();
 
     if (nonce.isEmpty() || password.isEmpty()) {
         return QJsonObject();
     }
 
+    // For backwards compatibility
+    password["login"] = password["entropy"];
+
     QJsonArray arr;
-    QJsonObject passwd;
-    passwd["login"] = QString::number(password.length() * 8); // bits;
-    passwd["password"] = password;
-    arr.append(passwd);
+    arr.append(password);
 
     const QString newNonce = incrementNonce(nonce);
 
@@ -329,10 +339,11 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const QString groupUuid = decrypted.value("groupUuid").toString();
     const QString realm;
 
+    BrowserService::ReturnValue result = BrowserService::ReturnValue::Success;
     if (uuid.isEmpty()) {
         m_browserService.addEntry(id, login, password, url, submitUrl, realm, group, groupUuid);
     } else {
-        m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
+        result = m_browserService.updateEntry(id, uuid, login, password, url, submitUrl);
     }
 
     const QString newNonce = incrementNonce(nonce);
@@ -340,7 +351,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     QJsonObject message = buildMessage(newNonce);
     message["count"] = QJsonValue::Null;
     message["entries"] = QJsonValue::Null;
-    message["error"] = "";
+    message["error"] = getReturnValue(result);
     message["hash"] = hash;
 
     return buildResponse(action, message, newNonce);
@@ -513,7 +524,28 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
     }
 }
 
+QString BrowserAction::getReturnValue(const BrowserService::ReturnValue returnValue) const
+{
+    switch (returnValue) {
+    case BrowserService::ReturnValue::Success:
+        return QString("success");
+    case BrowserService::ReturnValue::Error:
+        return QString("error");
+    case BrowserService::ReturnValue::Canceled:
+        return QString("canceled");
+    }
+    return QString("error");
+}
+
 QString BrowserAction::getDatabaseHash()
+{
+    QMutexLocker locker(&m_mutex);
+    QByteArray hash =
+        QCryptographicHash::hash(m_browserService.getDatabaseRootUuid().toUtf8(), QCryptographicHash::Sha256).toHex();
+    return QString(hash);
+}
+
+QString BrowserAction::getLegacyDatabaseHash()
 {
     QMutexLocker locker(&m_mutex);
     QByteArray hash =

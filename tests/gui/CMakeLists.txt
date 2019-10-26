@@ -16,5 +16,5 @@
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 add_unit_test(NAME testgui SOURCES TestGui.cpp ../util/TemporaryFile.cpp LIBS ${TEST_LIBRARIES})
-
+add_unit_test(NAME testguibrowser SOURCES TestGuiBrowser.cpp ../util/TemporaryFile.cpp LIBS ${TEST_LIBRARIES})
 add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})

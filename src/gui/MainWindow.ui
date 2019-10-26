@@ -69,6 +69,9 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::TabFocus</enum>
+      </property>
       <property name="currentIndex">
        <number>2</number>
       </property>
@@ -116,7 +119,11 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true"/>
+         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true">
+          <property name="focusPolicy">
+           <enum>Qt::TabFocus</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -141,7 +148,11 @@
            </spacer>
           </item>
           <item>
-           <widget class="WelcomeWidget" name="welcomeWidget" native="true"/>
+           <widget class="WelcomeWidget" name="welcomeWidget" native="true">
+            <property name="focusPolicy">
+             <enum>Qt::TabFocus</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_2">
@@ -166,7 +177,11 @@
       <widget class="QWidget" name="pagePasswordGenerator">
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="PasswordGeneratorWidget" name="passwordGeneratorWidget" native="true"/>
+         <widget class="PasswordGeneratorWidget" name="passwordGeneratorWidget" native="true">
+          <property name="focusPolicy">
+           <enum>Qt::TabFocus</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -182,6 +197,9 @@
      <width>800</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::PreventContextMenu</enum>
@@ -200,7 +218,15 @@
       <string>&amp;Import</string>
      </property>
      <addaction name="actionImportKeePass1"/>
+     <addaction name="actionImportOpVault"/>
      <addaction name="actionImportCsv"/>
+    </widget>
+    <widget class="QMenu" name="menuExport">
+     <property name="title">
+      <string>&amp;Export</string>
+     </property>
+     <addaction name="actionExportCsv"/>
+     <addaction name="actionExportHtml"/>
     </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
@@ -214,7 +240,7 @@
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
     <addaction name="menuImport"/>
-    <addaction name="actionExportCsv"/>
+    <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -223,6 +249,12 @@
      <string>&amp;Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="separator"/>
+    <addaction name="actionGettingStarted"/>
+    <addaction name="actionUserGuide"/>
+    <addaction name="actionKeyboardShortcuts"/>
+    <addaction name="actionOnlineHelp"/>
+    <addaction name="separator"/>
     <addaction name="actionCheckForUpdates"/>
     <addaction name="actionDonate"/>
     <addaction name="actionBugReport"/>
@@ -266,10 +298,12 @@
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
-    <addaction name="separator"/>
     <addaction name="menuEntryTotp"/>
-    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="separator"/>
     <addaction name="actionEntryAutoType"/>
+    <addaction name="separator"/>
+    <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryDownloadIcon"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -280,6 +314,11 @@
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
+    <addaction name="separator"/>
+    <addaction name="actionGroupDownloadFavicons"/>
+    <addaction name="separator"/>
+    <addaction name="actionGroupSortAsc"/>
+    <addaction name="actionGroupSortDesc"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -296,6 +335,9 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="contextMenuPolicy">
     <enum>Qt::PreventContextMenu</enum>
    </property>
@@ -351,7 +393,7 @@
   </action>
   <action name="actionCheckForUpdates">
    <property name="text">
-    <string>Check for Updates...</string>
+    <string>&amp;Check for Updates...</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
@@ -451,6 +493,30 @@
     <string>&amp;Delete group</string>
    </property>
   </action>
+  <action name="actionGroupDownloadFavicons">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Downlo&amp;ad all favicons</string>
+   </property>
+  </action>
+  <action name="actionGroupSortAsc">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sort &amp;A-Z</string>
+   </property>
+  </action>
+  <action name="actionGroupSortDesc">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sort &amp;Z-A</string>
+   </property>
+  </action>
   <action name="actionDatabaseSaveAs">
    <property name="enabled">
     <bool>false</bool>
@@ -527,7 +593,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Password Generator</string>
+    <string>&amp;Password Generator</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -536,6 +602,11 @@
    </property>
    <property name="text">
     <string>Perform &amp;Auto-Type</string>
+   </property>
+  </action>
+  <action name="actionEntryDownloadIcon">
+   <property name="text">
+    <string>Download favicon</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
@@ -595,12 +666,28 @@
     <string>&amp;Export to CSV file...</string>
    </property>
   </action>
+  <action name="actionExportHtml">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Export to HTML file...</string>
+   </property>
+  </action>
   <action name="actionImportKeePass1">
    <property name="text">
     <string>KeePass 1 database...</string>
    </property>
    <property name="toolTip">
     <string>Import a KeePass 1 database</string>
+   </property>
+  </action>
+  <action name="actionImportOpVault">
+   <property name="text">
+    <string>1Password Vault...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a 1Password Vault</string>
    </property>
   </action>
   <action name="actionImportCsv">
@@ -649,9 +736,36 @@
     <string>Report a &amp;bug</string>
    </property>
   </action>
-  <action name="actionShare_entry">
+  <action name="actionGettingStarted">
    <property name="text">
-    <string>Share entry</string>
+    <string>&amp;Getting Started</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Getting Started Guide PDF</string>
+   </property>
+  </action>
+  <action name="actionOnlineHelp">
+   <property name="text">
+    <string>&amp;Online Help...</string>
+   </property>
+   <property name="toolTip">
+    <string>Go to online documentation (opens browser)</string>
+   </property>
+  </action>
+  <action name="actionUserGuide">
+   <property name="text">
+    <string>&amp;User Guide</string>
+   </property>
+   <property name="toolTip">
+    <string>Open User Guide PDF</string>
+   </property>
+  </action>
+  <action name="actionKeyboardShortcuts">
+   <property name="text">
+    <string>&amp;Keyboard Shortcuts</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+/</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,11 @@ class Diceware : public Command
 {
 public:
     Diceware();
-    ~Diceware();
+
     int execute(const QStringList& arguments) override;
+
+    static const QCommandLineOption WordCountOption;
+    static const QCommandLineOption WordListOption;
 };
 
 #endif // KEEPASSXC_DICEWARE_H

@@ -60,6 +60,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
     connect(m_ui->optionButtons, SIGNAL(buttonClicked(int)), SLOT(updateGenerator()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateGenerator()));
+    connect(m_ui->wordCaseComboBox, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
 
     // set font size of password quality and entropy labels dynamically to 80% of
     // the default font size, but make it no smaller than 8pt
@@ -74,6 +75,11 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     // set default separator to Space
     m_ui->editWordSeparator->setText(PassphraseGenerator::DefaultSeparator);
 
+    // add passphrase generator case options
+    m_ui->wordCaseComboBox->addItem(tr("lower case"), PassphraseGenerator::LOWERCASE);
+    m_ui->wordCaseComboBox->addItem(tr("UPPER CASE"), PassphraseGenerator::UPPERCASE);
+    m_ui->wordCaseComboBox->addItem(tr("Title Case"), PassphraseGenerator::TITLECASE);
+
     QDir path(filePath()->wordlistPath(""));
     QStringList files = path.entryList(QDir::Files);
     m_ui->comboBoxWordList->addItems(files);
@@ -85,13 +91,17 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->labelWordList->setVisible(false);
     }
 
-    m_dicewareGenerator->setDefaultWordList();
     loadSettings();
-    reset();
 }
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
+}
+
+void PasswordGeneratorWidget::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    reset();
 }
 
 void PasswordGeneratorWidget::loadSettings()
@@ -102,6 +112,8 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxUpper->setChecked(config()->get("generator/UpperCase", PasswordGenerator::DefaultUpper).toBool());
     m_ui->checkBoxUpperAdv->setChecked(config()->get("generator/UpperCase", PasswordGenerator::DefaultUpper).toBool());
     m_ui->checkBoxNumbers->setChecked(config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
+    m_ui->checkBoxSpecialChars->setChecked(
+        config()->get("generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
     m_ui->checkBoxNumbersAdv->setChecked(
         config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
     m_ui->advancedBar->setVisible(
@@ -114,6 +126,7 @@ void PasswordGeneratorWidget::loadSettings()
         config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
     m_ui->editExcludedChars->setText(
         config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString());
+
     m_ui->simpleBar->setVisible(
         !(config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool()));
     m_ui->checkBoxBraces->setChecked(config()->get("generator/Braces", PasswordGenerator::DefaultBraces).toBool());
@@ -139,6 +152,7 @@ void PasswordGeneratorWidget::loadSettings()
         config()->get("generator/WordSeparator", PassphraseGenerator::DefaultSeparator).toString());
     m_ui->comboBoxWordList->setCurrentText(
         config()->get("generator/WordList", PassphraseGenerator::DefaultWordList).toString());
+    m_ui->wordCaseComboBox->setCurrentIndex(config()->get("generator/WordCase", 0).toInt());
 
     // Password or diceware?
     m_ui->tabWidget->setCurrentIndex(config()->get("generator/Type", 0).toInt());
@@ -158,6 +172,7 @@ void PasswordGeneratorWidget::saveSettings()
         config()->set("generator/Numbers", m_ui->checkBoxNumbersAdv->isChecked());
         config()->set("generator/EASCII", m_ui->checkBoxExtASCIIAdv->isChecked());
     }
+    config()->set("generator/AdvancedMode", m_ui->advancedBar->isVisible());
     config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
     config()->set("generator/Braces", m_ui->checkBoxBraces->isChecked());
     config()->set("generator/Punctuation", m_ui->checkBoxPunctuation->isChecked());
@@ -174,6 +189,7 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set("generator/WordCount", m_ui->spinBoxWordCount->value());
     config()->set("generator/WordSeparator", m_ui->editWordSeparator->text());
     config()->set("generator/WordList", m_ui->comboBoxWordList->currentText());
+    config()->set("generator/WordCase", m_ui->wordCaseComboBox->currentIndex());
 
     // Password or diceware?
     config()->set("generator/Type", m_ui->tabWidget->currentIndex());
@@ -247,9 +263,9 @@ void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
     double entropy = 0.0;
     if (m_ui->tabWidget->currentIndex() == Password) {
-        entropy = m_passwordGenerator->calculateEntropy(password);
+        entropy = m_passwordGenerator->estimateEntropy(password);
     } else {
-        entropy = m_dicewareGenerator->calculateEntropy(password);
+        entropy = m_dicewareGenerator->estimateEntropy();
     }
 
     m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));
@@ -399,7 +415,6 @@ PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
     PasswordGenerator::CharClasses classes;
 
     if (m_ui->simpleBar->isVisible()) {
-
         if (m_ui->checkBoxLower->isChecked()) {
             classes |= PasswordGenerator::LowerLetters;
         }
@@ -419,9 +434,7 @@ PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
         if (m_ui->checkBoxExtASCII->isChecked()) {
             classes |= PasswordGenerator::EASCII;
         }
-
     } else {
-
         if (m_ui->checkBoxLowerAdv->isChecked()) {
             classes |= PasswordGenerator::LowerLetters;
         }
@@ -555,6 +568,9 @@ void PasswordGeneratorWidget::updateGenerator()
             m_ui->sliderWordCount->setValue(minWordCount);
             m_updatingSpinBox = false;
         }
+
+        m_dicewareGenerator->setWordCase(
+            static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()));
 
         m_ui->spinBoxWordCount->setMinimum(minWordCount);
         m_ui->sliderWordCount->setMinimum(minWordCount);

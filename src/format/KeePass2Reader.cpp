@@ -96,7 +96,6 @@ bool KeePass2Reader::readDatabase(QIODevice* device, QSharedPointer<const Compos
         m_reader.reset(new Kdbx4Reader());
     }
 
-    m_reader->setSaveXml(m_saveXml);
     return m_reader->readDatabase(device, std::move(key), db);
 }
 
@@ -108,16 +107,6 @@ bool KeePass2Reader::hasError() const
 QString KeePass2Reader::errorString() const
 {
     return !m_reader.isNull() ? m_reader->errorString() : m_errorStr;
-}
-
-bool KeePass2Reader::saveXml() const
-{
-    return m_saveXml;
-}
-
-void KeePass2Reader::setSaveXml(bool save)
-{
-    m_saveXml = save;
 }
 
 /**

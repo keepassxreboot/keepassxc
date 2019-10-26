@@ -84,7 +84,6 @@ bool KeePass2Writer::implicitUpgradeNeeded(Database const* db) const
  * @param db source database
  * @return true on success
  */
-
 bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
 {
     m_error = false;
@@ -107,6 +106,22 @@ bool KeePass2Writer::writeDatabase(QIODevice* device, Database* db)
     }
 
     return m_writer->writeDatabase(device, db);
+}
+
+void KeePass2Writer::extractDatabase(Database* db, QByteArray& xmlOutput)
+{
+    m_error = false;
+    m_errorStr.clear();
+
+    if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
+        m_version = KeePass2::FILE_VERSION_3_1;
+        m_writer.reset(new Kdbx3Writer());
+    } else {
+        m_version = KeePass2::FILE_VERSION_4;
+        m_writer.reset(new Kdbx4Writer());
+    }
+
+    m_writer->extractDatabase(xmlOutput, db);
 }
 
 bool KeePass2Writer::hasError() const

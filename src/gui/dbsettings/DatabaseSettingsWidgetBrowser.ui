@@ -112,6 +112,9 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QTableView" name="customDataTable">
+           <property name="accessibleName">
+            <string>Stored browser keys</string>
+           </property>
            <property name="editTriggers">
             <set>QAbstractItemView::NoEditTriggers</set>
            </property>
@@ -133,6 +136,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QPushButton" name="removeCustomDataButton">
+             <property name="accessibleName">
+              <string>Remove selected key</string>
+             </property>
              <property name="text">
               <string>Remove</string>
              </property>

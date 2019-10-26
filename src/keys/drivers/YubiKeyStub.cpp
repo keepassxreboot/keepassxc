@@ -61,6 +61,11 @@ bool YubiKey::getSerial(unsigned int& serial)
     return false;
 }
 
+QString YubiKey::getVendorName()
+{
+    return "YubiKeyStub";
+}
+
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& chal, QByteArray& resp)
 {
     Q_UNUSED(slot);

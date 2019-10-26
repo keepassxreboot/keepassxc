@@ -24,7 +24,9 @@
 #include <unistd.h>
 #endif
 
+#include <QFileInfo>
 #include <QProcess>
+#include <QScopedPointer>
 
 namespace Utils
 {
@@ -100,6 +102,7 @@ namespace Utils
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected,
                                             const QString& keyFilename,
+                                            const QString& yubiKeySlot,
                                             FILE* outputDescriptor,
                                             FILE* errorDescriptor)
     {
@@ -107,8 +110,24 @@ namespace Utils
         TextStream out(outputDescriptor);
         TextStream err(errorDescriptor);
 
+        QFileInfo dbFileInfo(databaseFilename);
+        if (dbFileInfo.canonicalFilePath().isEmpty()) {
+            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isFile()) {
+            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << endl;
+            return {};
+        }
+
+        if (!dbFileInfo.isReadable()) {
+            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << endl;
+            return {};
+        }
+
         if (isPasswordProtected) {
-            out << QObject::tr("Insert password to unlock %1: ").arg(databaseFilename) << flush;
+            out << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
             QString line = Utils::getPassword(outputDescriptor);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
@@ -134,6 +153,33 @@ namespace Utils
 
             compositeKey->addKey(fileKey);
         }
+
+#ifdef WITH_XC_YUBIKEY
+        if (!yubiKeySlot.isEmpty()) {
+            bool ok = false;
+            int slot = yubiKeySlot.toInt(&ok, 10);
+            if (!ok || (slot != 1 && slot != 2)) {
+                err << QObject::tr("Invalid YubiKey slot %1").arg(yubiKeySlot) << endl;
+                return {};
+            }
+
+            QString errorMessage;
+            bool blocking = YubiKey::instance()->checkSlotIsBlocking(slot, errorMessage);
+            if (!errorMessage.isEmpty()) {
+                err << errorMessage << endl;
+                return {};
+            }
+
+            auto key = QSharedPointer<YkChallengeResponseKeyCLI>(new YkChallengeResponseKeyCLI(
+                slot,
+                blocking,
+                QObject::tr("Please touch the button on your YubiKey to unlock %1").arg(databaseFilename),
+                outputDescriptor));
+            compositeKey->addChallengeResponseKey(key);
+        }
+#else
+        Q_UNUSED(yubiKeySlot);
+#endif // WITH_XC_YUBIKEY
 
         auto db = QSharedPointer<Database>::create();
         QString error;
@@ -163,7 +209,7 @@ namespace Utils
             return password;
         }
 
-        TextStream in(STDIN, QIODevice::ReadOnly);
+        static TextStream in(STDIN, QIODevice::ReadOnly);
 
         setStdinEcho(false);
         QString line = in.readLine();
@@ -171,6 +217,28 @@ namespace Utils
         out << endl;
 
         return line;
+    }
+
+    /**
+     * Read optional password from stdin.
+     *
+     * @return Pointer to the PasswordKey or null if passwordkey is skipped
+     *         by user
+     */
+    QSharedPointer<PasswordKey> getPasswordFromStdin()
+    {
+        QSharedPointer<PasswordKey> passwordKey;
+        QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+
+        out << QObject::tr("Enter password to encrypt database (optional): ");
+        out.flush();
+        QString password = Utils::getPassword();
+
+        if (!password.isEmpty()) {
+            passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
+        }
+
+        return passwordKey;
     }
 
     /**
@@ -205,7 +273,7 @@ namespace Utils
             return EXIT_FAILURE;
         }
 
-        auto* clipProcess = new QProcess(nullptr);
+        QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
         clipProcess->start(programName, arguments);
         clipProcess->waitForStarted();
 
@@ -223,6 +291,44 @@ namespace Utils
         clipProcess->waitForFinished();
 
         return clipProcess->exitCode();
+    }
+
+    /**
+     * Splits the given QString into a QString list. For example:
+     *
+     * "hello world" -> ["hello", "world"]
+     * "hello    world" -> ["hello", "world"]
+     * "hello\\ world" -> ["hello world"] (i.e. backslash is an escape character
+     * "\"hello world\"" -> ["hello world"]
+     */
+    QStringList splitCommandString(const QString& command)
+    {
+        QStringList result;
+
+        bool insideQuotes = false;
+        QString cur;
+        for (int i = 0; i < command.size(); ++i) {
+            QChar c = command[i];
+            if (c == '\\' && i < command.size() - 1) {
+                cur.append(command[i + 1]);
+                ++i;
+            } else if (!insideQuotes && (c == ' ' || c == '\t')) {
+                if (!cur.isEmpty()) {
+                    result.append(cur);
+                    cur.clear();
+                }
+            } else if (c == '"' && (insideQuotes || i == 0 || command[i - 1].isSpace())) {
+                insideQuotes = !insideQuotes;
+            } else {
+                cur.append(c);
+            }
+        }
+
+        if (!cur.isEmpty()) {
+            result.append(cur);
+        }
+
+        return result;
     }
 
 } // namespace Utils

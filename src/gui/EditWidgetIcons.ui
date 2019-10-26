@@ -88,7 +88,7 @@
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="customIconButtonsHorizontalLayout">
      <item>
       <widget class="QPushButton" name="addButton">
        <property name="text">
@@ -105,8 +105,53 @@
      </item>
      <item>
       <widget class="QPushButton" name="faviconButton">
+       <property name="toolTip">
+        <string>Download favicon for URL</string>
+       </property>
+       <property name="accessibleName">
+        <string>Download favicon for URL</string>
+       </property>
        <property name="text">
         <string>Download favicon</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="applyToChildrenHorizontalLayout" stretch="0,0">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyIconToPushButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Apply selected icon to subgroups and entries</string>
+       </property>
+       <property name="accessibleName">
+        <string>Apply selected icon to subgroups and entries</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">padding: 4px 10px</string>
+       </property>
+       <property name="text">
+        <string>Apply icon &amp;to ...</string>
        </property>
       </widget>
      </item>
@@ -121,6 +166,7 @@
   <tabstop>customIconsView</tabstop>
   <tabstop>addButton</tabstop>
   <tabstop>deleteButton</tabstop>
+  <tabstop>applyIconToPushButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

@@ -45,6 +45,10 @@ private slots:
     void testIsRecycled();
     void testCopyDataFrom();
     void testEquals();
+    void testChildrenSort();
+    void testHierarchy();
+    void testApplyGroupIconRecursively();
+    void testUsernamesRecursive();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

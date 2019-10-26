@@ -75,17 +75,6 @@ Group::~Group()
     cleanupParent();
 }
 
-Group* Group::createRecycleBin()
-{
-    Group* recycleBin = new Group();
-    recycleBin->setUuid(QUuid::createUuid());
-    recycleBin->setName(tr("Recycle Bin"));
-    recycleBin->setIcon(RecycleBinIconNumber);
-    recycleBin->setSearchingEnabled(Group::Disable);
-    recycleBin->setAutoTypeEnabled(Group::Disable);
-    return recycleBin;
-}
-
 template <class P, class V> inline bool Group::set(P& property, const V& value)
 {
     if (property != value) {
@@ -257,9 +246,9 @@ Entry* Group::lastTopVisibleEntry() const
     return m_lastTopVisibleEntry;
 }
 
-bool Group::isRecycled()
+bool Group::isRecycled() const
 {
-    Group* group = this;
+    auto group = this;
     if (!group->database()) {
         return false;
     }
@@ -279,6 +268,11 @@ bool Group::isRecycled()
 bool Group::isExpired() const
 {
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
+}
+
+bool Group::isEmpty() const
+{
+    return !hasChildren() && m_entries.isEmpty();
 }
 
 CustomData* Group::customData()
@@ -504,21 +498,35 @@ void Group::setParent(Database* db)
     QObject::setParent(db);
 }
 
-QStringList Group::hierarchy() const
+QStringList Group::hierarchy(int height) const
 {
     QStringList hierarchy;
     const Group* group = this;
     const Group* parent = m_parent;
+
+    if (height == 0) {
+        return hierarchy;
+    }
+
     hierarchy.prepend(group->name());
 
-    while (parent) {
+    int level = 1;
+    bool heightReached = level == height;
+
+    while (parent && !heightReached) {
         group = group->parentGroup();
         parent = group->parentGroup();
+        heightReached = ++level == height;
 
         hierarchy.prepend(group->name());
     }
 
     return hierarchy;
+}
+
+bool Group::hasChildren() const
+{
+    return !children().isEmpty();
 }
 
 Database* Group::database()
@@ -577,13 +585,18 @@ QList<Entry*> Group::referencesRecursive(const Entry* entry) const
                                           [entry](const Entry* e) { return e->hasReferencesTo(entry->uuid()); });
 }
 
-Entry* Group::findEntryByUuid(const QUuid& uuid) const
+Entry* Group::findEntryByUuid(const QUuid& uuid, bool recursive) const
 {
     if (uuid.isNull()) {
         return nullptr;
     }
 
-    for (Entry* entry : entriesRecursive(false)) {
+    auto entries = m_entries;
+    if (recursive) {
+        entries = entriesRecursive(false);
+    }
+
+    for (auto entry : entries) {
         if (entry->uuid() == uuid) {
             return entry;
         }
@@ -715,25 +728,34 @@ Group* Group::findGroupByPathRecursive(const QString& groupPath, const QString& 
     return nullptr;
 }
 
-QString Group::print(bool recursive, int depth)
+QString Group::print(bool recursive, bool flatten, int depth)
 {
-
     QString response;
-    QString indentation = QString("  ").repeated(depth);
+    QString prefix;
+
+    if (flatten) {
+        const QString separator("/");
+        prefix = hierarchy(depth).join(separator);
+        if (!prefix.isEmpty()) {
+            prefix += separator;
+        }
+    } else {
+        prefix = QString("  ").repeated(depth);
+    }
 
     if (entries().isEmpty() && children().isEmpty()) {
-        response += indentation + tr("[empty]", "group has no children") + "\n";
+        response += prefix + tr("[empty]", "group has no children") + "\n";
         return response;
     }
 
     for (Entry* entry : entries()) {
-        response += indentation + entry->title() + "\n";
+        response += prefix + entry->title() + "\n";
     }
 
     for (Group* innerGroup : children()) {
-        response += indentation + innerGroup->name() + "/\n";
+        response += prefix + innerGroup->name() + "/\n";
         if (recursive) {
-            response += innerGroup->print(recursive, depth + 1);
+            response += innerGroup->print(recursive, flatten, depth + 1);
         }
     }
 
@@ -788,6 +810,42 @@ QSet<QUuid> Group::customIconsRecursive() const
     }
 
     return result;
+}
+
+QList<QString> Group::usernamesRecursive(int topN) const
+{
+    // Collect all usernames and sort for easy counting
+    QHash<QString, int> countedUsernames;
+    for (const auto* entry : entriesRecursive()) {
+        const auto username = entry->username();
+        if (!username.isEmpty() && !entry->isAttributeReference(EntryAttributes::UserNameKey)) {
+            countedUsernames.insert(username, ++countedUsernames[username]);
+        }
+    }
+
+    // Sort username/frequency pairs by frequency and name
+    QList<QPair<QString, int>> sortedUsernames;
+    for (const auto& key : countedUsernames.keys()) {
+        sortedUsernames.append({key, countedUsernames[key]});
+    }
+
+    auto comparator = [](const QPair<QString, int>& arg1, const QPair<QString, int>& arg2) {
+        if (arg1.second == arg2.second) {
+            return arg1.first < arg2.first;
+        }
+        return arg1.second > arg2.second;
+    };
+
+    std::sort(sortedUsernames.begin(), sortedUsernames.end(), comparator);
+
+    // Take first topN usernames if set
+    QList<QString> usernames;
+    int actualUsernames = topN < 0 ? sortedUsernames.size() : std::min(topN, sortedUsernames.size());
+    for (int i = 0; i < actualUsernames; i++) {
+        usernames.append(sortedUsernames[i].first);
+    }
+
+    return usernames;
 }
 
 Group* Group::findGroupByUuid(const QUuid& uuid)
@@ -1055,6 +1113,74 @@ Entry* Group::addEntryWithPath(const QString& entryPath)
     entry->setGroup(group);
 
     return entry;
+}
+
+void Group::applyGroupIconOnCreateTo(Entry* entry)
+{
+    Q_ASSERT(entry);
+
+    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+        return;
+    }
+
+    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
+        return;
+    }
+
+    applyGroupIconTo(entry);
+}
+
+void Group::applyGroupIconTo(Entry* entry)
+{
+    Q_ASSERT(entry);
+
+    if (iconUuid().isNull()) {
+        entry->setIcon(iconNumber());
+    } else {
+        entry->setIcon(iconUuid());
+    }
+}
+
+void Group::applyGroupIconTo(Group* other)
+{
+    Q_ASSERT(other);
+
+    if (iconUuid().isNull()) {
+        other->setIcon(iconNumber());
+    } else {
+        other->setIcon(iconUuid());
+    }
+}
+
+void Group::applyGroupIconToChildGroups()
+{
+    for (Group* recursiveChild : groupsRecursive(false)) {
+        applyGroupIconTo(recursiveChild);
+    }
+}
+
+void Group::applyGroupIconToChildEntries()
+{
+    for (Entry* recursiveEntry : entriesRecursive(false)) {
+        applyGroupIconTo(recursiveEntry);
+    }
+}
+
+void Group::sortChildrenRecursively(bool reverse)
+{
+    std::sort(
+        m_children.begin(), m_children.end(), [reverse](const Group* childGroup1, const Group* childGroup2) -> bool {
+            QString name1 = childGroup1->name();
+            QString name2 = childGroup2->name();
+            return reverse ? name1.compare(name2, Qt::CaseInsensitive) > 0
+                           : name1.compare(name2, Qt::CaseInsensitive) < 0;
+        });
+
+    for (auto child : m_children) {
+        child->sortChildrenRecursively(reverse);
+    }
+
+    emit groupModified();
 }
 
 bool Group::GroupData::operator==(const Group::GroupData& other) const

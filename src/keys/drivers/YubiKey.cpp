@@ -20,6 +20,7 @@
 
 #include <ykcore.h>
 #include <ykdef.h>
+#include <ykpers-version.h>
 #include <ykstatus.h>
 #include <yubikey.h>
 
@@ -37,6 +38,7 @@
 YubiKey::YubiKey()
     : m_yk_void(nullptr)
     , m_ykds_void(nullptr)
+    , m_onlyKey(false)
     , m_mutex(QMutex::Recursive)
 {
 }
@@ -75,7 +77,17 @@ bool YubiKey::init()
     }
 
     // TODO: handle multiple attached hardware devices
+    m_onlyKey = false;
     m_yk_void = static_cast<void*>(yk_open_first_key());
+#if YKPERS_VERSION_NUMBER >= 0x011400
+    // New fuction available in yubikey-personalization version >= 1.20.0 that allows
+    // selecting device VID/PID (yk_open_key_vid_pid)
+    if (m_yk == nullptr) {
+        static const int device_pids[] = {0x60fc}; // OnlyKey PID
+        m_yk_void = static_cast<void*>(yk_open_key_vid_pid(0x1d50, device_pids, 1, 0));
+        m_onlyKey = true;
+    }
+#endif
     if (m_yk == nullptr) {
         yk_release();
         m_mutex.unlock();
@@ -120,27 +132,17 @@ void YubiKey::detect()
 {
     bool found = false;
 
-    if (init()) {
-        YubiKey::ChallengeResult result;
-        QByteArray rand = randomGen()->randomArray(1);
-        QByteArray resp;
-
-        // Check slot 1 and 2 for Challenge-Response HMAC capability
-        for (int i = 1; i <= 2; ++i) {
-            result = challenge(i, false, rand, resp);
-            if (result == ALREADY_RUNNING) {
-                // Try this slot again after waiting
-                Tools::sleep(300);
-                result = challenge(i, false, rand, resp);
-            }
-
-            if (result != ALREADY_RUNNING && result != ERROR) {
-                emit detected(i, result == WOULDBLOCK);
-                found = true;
-            }
-            // Wait between slots to let the yubikey settle
-            Tools::sleep(150);
+    // Check slot 1 and 2 for Challenge-Response HMAC capability
+    for (int i = 1; i <= 2; ++i) {
+        QString errorMsg;
+        bool isBlocking = checkSlotIsBlocking(i, errorMsg);
+        if (errorMsg.isEmpty()) {
+            found = true;
+            emit detected(i, isBlocking);
         }
+
+        // Wait between slots to let the yubikey settle.
+        Tools::sleep(150);
     }
 
     if (!found) {
@@ -148,6 +150,38 @@ void YubiKey::detect()
     } else {
         emit detectComplete();
     }
+}
+
+bool YubiKey::checkSlotIsBlocking(int slot, QString& errorMessage)
+{
+    if (!init()) {
+        errorMessage = QString("Could not initialize YubiKey.");
+        return false;
+    }
+
+    YubiKey::ChallengeResult result;
+    QByteArray rand = randomGen()->randomArray(1);
+    QByteArray resp;
+
+    result = challenge(slot, false, rand, resp);
+    if (result == ALREADY_RUNNING) {
+        // Try this slot again after waiting
+        Tools::sleep(300);
+        result = challenge(slot, false, rand, resp);
+    }
+
+    if (result == SUCCESS || result == WOULDBLOCK) {
+        return result == WOULDBLOCK;
+    } else if (result == ALREADY_RUNNING) {
+        errorMessage = QString("YubiKey busy");
+        return false;
+    } else if (result == ERROR) {
+        errorMessage = QString("YubiKey error");
+        return false;
+    }
+
+    errorMessage = QString("Error while polling YubiKey");
+    return false;
 }
 
 bool YubiKey::getSerial(unsigned int& serial)
@@ -163,6 +197,11 @@ bool YubiKey::getSerial(unsigned int& serial)
     return true;
 }
 
+QString YubiKey::getVendorName()
+{
+    return m_onlyKey ? "OnlyKey" : "YubiKey";
+}
+
 YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByteArray& challenge, QByteArray& response)
 {
     // ensure that YubiKey::init() succeeded
@@ -173,14 +212,14 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
     int yk_cmd = (slot == 1) ? SLOT_CHAL_HMAC1 : SLOT_CHAL_HMAC2;
     QByteArray paddedChallenge = challenge;
 
-    // yk_challenge_response() insists on 64 byte response buffer */
+    // yk_challenge_response() insists on 64 bytes response buffer */
     response.clear();
     response.resize(64);
 
     /* The challenge sent to the yubikey should always be 64 bytes for
      * compatibility with all configurations.  Follow PKCS7 padding.
      *
-     * There is some question whether or not 64 byte fixed length
+     * There is some question whether or not 64 bytes fixed length
      * configurations even work, some docs say avoid it.
      */
     const int padLen = 64 - paddedChallenge.size();

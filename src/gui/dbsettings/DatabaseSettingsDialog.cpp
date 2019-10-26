@@ -19,6 +19,7 @@
 #include "DatabaseSettingsDialog.h"
 #include "ui_DatabaseSettingsDialog.h"
 
+#include "DatabaseSettingsPageStatistics.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "DatabaseSettingsWidgetMasterKey.h"
@@ -27,6 +28,9 @@
 #endif
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
+#endif
+#if defined(WITH_XC_FDOSECRETS)
+#include "fdosecrets/DatabaseSettingsPageFdoSecrets.h"
 #endif
 
 #include "core/Config.h"
@@ -74,15 +78,21 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
     m_ui->categoryList->addCategory(tr("General"), FilePath::instance()->icon("categories", "preferences-other"));
-    m_ui->categoryList->addCategory(tr("Security"), FilePath::instance()->icon("actions", "document-encrypt"));
+    m_ui->categoryList->addCategory(tr("Security"), FilePath::instance()->icon("status", "security-high"));
     m_ui->stackedWidget->addWidget(m_generalWidget);
 
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
     m_securityTabWidget->addTab(m_masterKeyWidget, tr("Master Key"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
 
+    addSettingsPage(new DatabaseSettingsPageStatistics());
+
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
+#endif
+
+#if defined(WITH_XC_FDOSECRETS)
+    addSettingsPage(new DatabaseSettingsPageFdoSecrets());
 #endif
 
     m_ui->stackedWidget->setCurrentIndex(0);

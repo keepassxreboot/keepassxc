@@ -19,6 +19,11 @@
 
 #include <QFontDatabase>
 
+QFont Font::defaultFont()
+{
+    return QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+}
+
 QFont Font::fixedFont()
 {
     QFont fixedFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);

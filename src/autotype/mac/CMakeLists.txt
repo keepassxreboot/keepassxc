@@ -1,7 +1,7 @@
 set(autotype_mac_SOURCES AutoTypeMac.cpp)
 
 add_library(keepassx-autotype-cocoa MODULE ${autotype_mac_SOURCES})
-set_target_properties(keepassx-autotype-cocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit -framework Carbon")
+set_target_properties(keepassx-autotype-cocoa PROPERTIES LINK_FLAGS "-framework Foundation -framework AppKit")
 target_link_libraries(keepassx-autotype-cocoa ${PROGNAME} Qt5::Core Qt5::Widgets)
 
 if(WITH_APP_BUNDLE)

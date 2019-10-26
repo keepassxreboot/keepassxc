@@ -31,7 +31,11 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="databaseName"/>
+    <widget class="QLineEdit" name="databaseName">
+     <property name="accessibleName">
+      <string>Database name field</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="databaseDescriptionLabel">
@@ -41,7 +45,11 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="databaseDescription"/>
+    <widget class="QLineEdit" name="databaseDescription">
+     <property name="accessibleName">
+      <string>Database description field</string>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

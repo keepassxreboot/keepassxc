@@ -37,6 +37,10 @@
 #include "core/Tools.h"
 #include "gui/MessageBox.h"
 
+#ifdef Q_OS_MAC
+#include "gui/macutils/MacUtils.h"
+#endif
+
 AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
@@ -214,6 +218,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     if (hideWindow) {
 #if defined(Q_OS_MACOS)
+        macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else
         hideWindow->showMinimized();
@@ -631,9 +636,8 @@ bool AutoType::windowMatches(const QString& windowTitle, const QString& windowPa
     if (windowPattern.startsWith("//") && windowPattern.endsWith("//") && windowPattern.size() >= 4) {
         QRegExp regExp(windowPattern.mid(2, windowPattern.size() - 4), Qt::CaseInsensitive, QRegExp::RegExp2);
         return (regExp.indexIn(windowTitle) != -1);
-    } else {
-        return WildcardMatcher(windowTitle).match(windowPattern);
     }
+    return WildcardMatcher(windowTitle).match(windowPattern);
 }
 
 /**

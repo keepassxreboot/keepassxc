@@ -17,9 +17,9 @@
 
 #include "TestBrowser.h"
 #include "TestGlobal.h"
+#include "browser/BrowserSettings.h"
 #include "crypto/Crypto.h"
 #include "sodium/crypto_box.h"
-#include "browser/BrowserSettings.h"
 #include <QString>
 
 QTEST_GUILESS_MAIN(TestBrowser)
@@ -40,7 +40,6 @@ void TestBrowser::initTestCase()
 
 void TestBrowser::cleanupTestCase()
 {
-
 }
 
 /**
@@ -87,7 +86,7 @@ void TestBrowser::testDecryptMessage()
 void TestBrowser::testGetBase64FromKey()
 {
     unsigned char pk[crypto_box_PUBLICKEYBYTES];
-    
+
     for (unsigned int i = 0; i < crypto_box_PUBLICKEYBYTES; ++i) {
         pk[i] = i;
     }
@@ -202,7 +201,7 @@ void TestBrowser::testSearchEntries()
     }
 
     browserSettings()->setMatchUrlScheme(false);
-    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com");    // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
     QCOMPARE(result.length(), 7);
     QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
     QCOMPARE(result[1]->url(), QString("https://github.com/login"));
@@ -210,11 +209,11 @@ void TestBrowser::testSearchEntries()
     QCOMPARE(result[3]->url(), QString("http://github.com"));
     QCOMPARE(result[4]->url(), QString("http://github.com/login"));
     QCOMPARE(result[5]->url(), QString("github.com"));
-    QCOMPARE(result[6]->url(), QString("github.com"))   ;
+    QCOMPARE(result[6]->url(), QString("github.com"));
 
     // With matching there should be only 5 results
     browserSettings()->setMatchUrlScheme(true);
-    result = m_browserService->searchEntries(db, "github.com", "https://github.com");    // db, hostname, url
+    result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
     QCOMPARE(result.length(), 5);
     QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
     QCOMPARE(result[1]->url(), QString("https://github.com/login"));
@@ -241,9 +240,43 @@ void TestBrowser::testSearchEntriesWithPort()
         entry->endUpdate();
     }
 
-    auto result = m_browserService->searchEntries(db, "127.0.0.1", "http://127.0.0.1:443");    // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "127.0.0.1", "http://127.0.0.1:443"); // db, hostname, url
     QCOMPARE(result.length(), 1);
     QCOMPARE(result[0]->url(), QString("http://127.0.0.1:443"));
+}
+
+void TestBrowser::testSearchEntriesWithAdditionalURLs()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    QList<Entry*> entries;
+    QList<QString> urls;
+    urls.push_back("https://github.com/");
+    urls.push_back("https://www.example.com");
+    urls.push_back("http://domain.com");
+
+    for (int i = 0; i < urls.length(); ++i) {
+        auto entry = new Entry();
+        entry->setGroup(root);
+        entry->beginUpdate();
+        entry->setUrl(urls[i]);
+        entry->setUsername(QString("User %1").arg(i));
+        entry->endUpdate();
+        entries.push_back(entry);
+    }
+
+    // Add an additional URL to the first entry
+    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://keepassxc.org");
+
+    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+
+    // Search the additional URL. It should return the same entry
+    auto additionalResult = m_browserService->searchEntries(db, "keepassxc.org", "https://keepassxc.org");
+    QCOMPARE(additionalResult.length(), 1);
+    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
 void TestBrowser::testSortEntries()
@@ -275,7 +308,8 @@ void TestBrowser::testSortEntries()
     }
 
     browserSettings()->setBestMatchOnly(false);
-    auto result = m_browserService->sortEntries(entries, "github.com", "https://github.com/session");    // entries, host, submitUrl
+    auto result =
+        m_browserService->sortEntries(entries, "github.com", "https://github.com/session"); // entries, host, submitUrl
     QCOMPARE(result.size(), 10);
     QCOMPARE(result[0]->username(), QString("User 2"));
     QCOMPARE(result[0]->url(), QString("https://github.com/"));
@@ -318,7 +352,7 @@ void TestBrowser::testGetDatabaseGroups()
 
     auto result = m_browserService->getDatabaseGroups(db);
     QCOMPARE(result.length(), 1);
-    
+
     auto groups = result["groups"].toArray();
     auto first = groups.at(0);
     auto children = first.toObject()["children"].toArray();
@@ -341,4 +375,4 @@ void TestBrowser::testGetDatabaseGroups()
     auto lastChildren = firstOfCOS.toObject()["children"].toArray();
     auto lastChild = lastChildren.at(0);
     QCOMPARE(lastChild.toObject()["name"].toString(), QString("group2_1_1"));
- }
+}

@@ -22,6 +22,9 @@
 #include "core/Clock.h"
 #include "core/Config.h"
 #include "gui/Clipboard.h"
+#include "gui/MainWindow.h"
+
+#include <QShortcut>
 
 TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)
@@ -39,12 +42,15 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     resetCounter();
     updateProgressBar();
 
+    connect(parent, SIGNAL(lockedDatabase()), SLOT(close()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
     m_totpUpdateTimer.start(m_step * 10);
     updateTotp();
 
     setAttribute(Qt::WA_DeleteOnClose);
+
+    new QShortcut(QKeySequence(QKeySequence::Copy), this, SLOT(copyToClipboard()));
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Copy"));
 
@@ -59,8 +65,13 @@ TotpDialog::~TotpDialog()
 void TotpDialog::copyToClipboard()
 {
     clipboard()->setText(m_entry->totp());
-    if (config()->get("MinimizeOnCopy").toBool()) {
-        qobject_cast<DatabaseWidget*>(parent())->window()->showMinimized();
+    if (config()->get("HideWindowOnCopy").toBool()) {
+        if (config()->get("MinimizeOnCopy").toBool()) {
+            getMainWindow()->showMinimized();
+        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+            getMainWindow()->lower();
+            window()->lower();
+        }
     }
 }
 

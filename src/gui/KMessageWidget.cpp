@@ -1,5 +1,5 @@
 /* This file is part of the KDE libraries
- * 
+ *
  * Copyright (c) 2011 Aurélien Gâteau <agateau@kde.org>
  * Copyright (c) 2014 Dominik Haumann <dhaumann@kde.org>
  *
@@ -42,7 +42,7 @@ class KMessageWidgetPrivate
 {
 public:
     void init(KMessageWidget *);
-    
+
     KMessageWidget *q;
     QFrame *content;
     QLabel *iconLabel;
@@ -51,51 +51,51 @@ public:
     QTimeLine *timeLine;
     QIcon icon;
     QPixmap closeButtonPixmap;
-    
+
     KMessageWidget::MessageType messageType;
     bool wordWrap;
     QList<QToolButton *> buttons;
     QPixmap contentSnapShot;
-    
+
     void createLayout();
     void updateSnapShot();
     void updateLayout();
     void slotTimeLineChanged(qreal);
     void slotTimeLineFinished();
-    
+
     int bestContentHeight() const;
 };
 
 void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
 {
     q = q_ptr;
-    
+
     q->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
-    
+
     timeLine = new QTimeLine(500, q);
     QObject::connect(timeLine, SIGNAL(valueChanged(qreal)), q, SLOT(slotTimeLineChanged(qreal)));
     QObject::connect(timeLine, SIGNAL(finished()), q, SLOT(slotTimeLineFinished()));
-    
+
     content = new QFrame(q);
     content->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-    
+
     wordWrap = false;
-    
+
     iconLabel = new QLabel(content);
     iconLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     iconLabel->hide();
-    
+
     textLabel = new QLabel(content);
     textLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     textLabel->setTextInteractionFlags(Qt::TextBrowserInteraction);
     QObject::connect(textLabel, SIGNAL(linkActivated(QString)), q, SIGNAL(linkActivated(QString)));
     QObject::connect(textLabel, SIGNAL(linkHovered(QString)), q, SIGNAL(linkHovered(QString)));
-    
+
     QAction *closeAction = new QAction(q);
     closeAction->setText(KMessageWidget::tr("&Close"));
     closeAction->setToolTip(KMessageWidget::tr("Close message"));
     closeAction->setIcon(FilePath::instance()->icon("actions", "message-close", false));
-    
+
     QObject::connect(closeAction, SIGNAL(triggered(bool)), q, SLOT(animatedHide()));
 
     closeButton = new QToolButton(content);
@@ -108,19 +108,19 @@ void KMessageWidgetPrivate::init(KMessageWidget *q_ptr)
                                "QToolButton::hover, QToolButton::focus {"
                                    "border: 1px solid rgb(90, 200, 250); }");
 #endif
-    
+
     q->setMessageType(KMessageWidget::Information);
 }
 
 void KMessageWidgetPrivate::createLayout()
 {
     delete content->layout();
-    
+
     content->resize(q->size());
-    
+
     qDeleteAll(buttons);
     buttons.clear();
-    
+
     const auto actions = q->actions();
     for (QAction *action: actions) {
         QToolButton *button = new QToolButton(content);
@@ -128,18 +128,18 @@ void KMessageWidgetPrivate::createLayout()
         button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
         buttons.append(button);
     }
-    
+
     // AutoRaise reduces visual clutter, but we don't want to turn it on if
     // there are other buttons, otherwise the close button will look different
     // from the others.
     closeButton->setAutoRaise(buttons.isEmpty());
-    
+
     if (wordWrap) {
         QGridLayout *layout = new QGridLayout(content);
         // Set alignment to make sure icon does not move down if text wraps
         layout->addWidget(iconLabel, 0, 0, 1, 1, Qt::AlignHCenter | Qt::AlignTop);
         layout->addWidget(textLabel, 0, 1);
-        
+
         QHBoxLayout *buttonLayout = new QHBoxLayout;
         buttonLayout->addStretch();
         for (QToolButton* button: asConst(buttons)) {
@@ -155,14 +155,14 @@ void KMessageWidgetPrivate::createLayout()
         QHBoxLayout *layout = new QHBoxLayout(content);
         layout->addWidget(iconLabel);
         layout->addWidget(textLabel);
-        
+
         for (QToolButton* button: asConst(buttons)) {
             layout->addWidget(button);
         }
-        
+
         layout->addWidget(closeButton);
     };
-    
+
     if (q->isVisible()) {
         q->setFixedHeight(content->sizeHint().height());
     }
@@ -201,7 +201,7 @@ void KMessageWidgetPrivate::slotTimeLineFinished()
         // We set the whole geometry here, because it may be wrong if a
         // KMessageWidget is shown right when the toplevel window is created.
         content->setGeometry(0, 0, q->width(), bestContentHeight());
-        
+
         // notify about finished animation
         emit q->showAnimationFinished();
     } else {
@@ -273,7 +273,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
         break;
     case Warning:
         bg1.setRgb(252, 193, 57);
-        fg = palette().foreground().color();
+        fg = palette().windowText().color();
         break;
     case Error:
         bg1.setRgb(198, 69, 21);
@@ -294,7 +294,7 @@ void KMessageWidget::setMessageType(KMessageWidget::MessageType type)
     painter.fillRect(QRect(0, 0, 16, 16), fg);
     painter.end();
     d->closeButton->setIcon(closeButtonPixmap);
-    
+
     d->content->setStyleSheet(
         QString(QLatin1String(".QFrame {"
         "background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
@@ -342,7 +342,7 @@ bool KMessageWidget::event(QEvent *event)
 void KMessageWidget::resizeEvent(QResizeEvent *event)
 {
     QFrame::resizeEvent(event);
-    
+
     if (d->timeLine->state() == QTimeLine::NotRunning) {
         d->content->resize(width(), d->bestContentHeight());
     }
@@ -415,18 +415,18 @@ void KMessageWidget::animatedShow()
         emit showAnimationFinished();
         return;
     }
-    
+
     if (isVisible()) {
         return;
     }
-    
+
     QFrame::show();
     setFixedHeight(0);
     int wantedHeight = d->bestContentHeight();
     d->content->setGeometry(0, -wantedHeight, width(), wantedHeight);
-    
+
     d->updateSnapShot();
-    
+
     d->timeLine->setDirection(QTimeLine::Forward);
     if (d->timeLine->state() == QTimeLine::NotRunning) {
         d->timeLine->start();
@@ -440,15 +440,15 @@ void KMessageWidget::animatedHide()
         emit hideAnimationFinished();
         return;
     }
-    
+
     if (!isVisible()) {
         hide();
         return;
     }
-    
+
     d->content->move(0, -d->content->height());
     d->updateSnapShot();
-    
+
     d->timeLine->setDirection(QTimeLine::Backward);
     if (d->timeLine->state() == QTimeLine::NotRunning) {
         d->timeLine->start();

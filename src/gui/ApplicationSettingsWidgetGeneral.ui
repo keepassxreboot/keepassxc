@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>881</height>
+    <height>951</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -55,6 +55,13 @@
              <string>Minimize window at application startup</string>
             </property>
            </widget>
+          </item>
+          <item>
+            <widget class="QCheckBox" name="minimizeAfterUnlockCheckBox">
+              <property name="text">
+                <string>Minimize window after unlocking database</string>
+              </property>
+            </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
@@ -249,18 +256,140 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="minimizeOnCopyCheckBox">
-            <property name="text">
-             <string>Minimize when copying to clipboard</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QCheckBox" name="previewHideCheckBox">
             <property name="text">
              <string>Hide the entry preview panel</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="minimizeOnOpenUrlCheckBox">
+            <property name="text">
+             <string>Minimize when opening a URL</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="hideWindowOnCopyCheckBox">
+            <property name="text">
+             <string>Hide window when copying to clipboard</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="hideWindowLayout_1">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="hideWindowSpacer_1">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="minimizeOnCopyRadioButton">
+              <property name="text">
+               <string>Minimize</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="hideWindowLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <spacer name="hideWindowSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Fixed</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="dropToBackgroundOnCopyRadioButton">
+              <property name="text">
+               <string>Drop to background</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1">
+            <item>
+             <widget class="QLabel" name="faviconTimeoutLabel">
+              <property name="text">
+               <string>Favicon download timeout:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QSpinBox" name="faviconTimeoutSpinBox">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Website icon download timeout in seconds</string>
+              </property>
+              <property name="suffix">
+               <string comment="Seconds"> sec</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>60</number>
+              </property>
+              <property name="value">
+               <number>10</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -321,7 +450,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="toolButtonStyleLayout">
+           <layout class="QHBoxLayout" name="toolButtonStyleLayout" stretch="0,0,0,1">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -371,9 +500,38 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Toolbar button style</string>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
+              </property>
              </widget>
             </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="monospaceNotesCheckBox">
+            <property name="text">
+             <string>Use monospaced font for Notes</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="minimizeOnCloseCheckBox">
@@ -398,7 +556,7 @@
              <enum>QLayout::SetMaximumSize</enum>
             </property>
             <item>
-             <spacer name="horizontalSpacer_3">
+             <spacer name="horizontalSpacer_4">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
@@ -486,7 +644,7 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="languageLabelLayout_2">
+           <layout class="QHBoxLayout" name="languageLabelLayout_2" stretch="0,0,0,1">
             <property name="spacing">
              <number>8</number>
             </property>
@@ -511,6 +669,12 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Language selection</string>
+              </property>
              </widget>
             </item>
             <item>
@@ -519,6 +683,68 @@
                <string>(restart program to activate)</string>
               </property>
              </widget>
+            </item>
+            <item>
+             <spacer name="spacer3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>15</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="resetSettingsSubLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="sizeConstraint">
+             <enum>QLayout::SetMaximumSize</enum>
+            </property>
+            <item>
+             <widget class="QPushButton" name="resetSettingsButton">
+              <property name="text">
+               <string>Reset Settings to Default</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacer4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>50</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
             </item>
            </layout>
           </item>
@@ -592,6 +818,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="accessibleName">
+            <string>Global auto-type shortcut</string>
+           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -608,6 +837,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type character typing delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>
@@ -637,6 +869,9 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="accessibleName">
+            <string>Auto-type start delay milliseconds</string>
            </property>
            <property name="suffix">
             <string comment="Milliseconds"> ms</string>

@@ -31,7 +31,11 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="editName"/>
+    <widget class="QLineEdit" name="editName">
+     <property name="accessibleName">
+      <string>Name field</string>
+     </property>
+    </widget>
    </item>
    <item row="1" column="0" alignment="Qt::AlignRight|Qt::AlignTop">
     <widget class="QLabel" name="labelNotes">
@@ -54,22 +58,35 @@
        <height>120</height>
       </size>
      </property>
+     <property name="accessibleName">
+      <string>Notes field</string>
+     </property>
     </widget>
    </item>
    <item row="2" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
+     <property name="accessibleName">
+      <string>Toggle expiration</string>
+     </property>
      <property name="text">
       <string>Expires</string>
      </property>
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QComboBox" name="autotypeComboBox"/>
+    <widget class="QComboBox" name="autotypeComboBox">
+     <property name="accessibleName">
+      <string>Auto-Type toggle for this and sub groups</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="1">
     <widget class="QDateTimeEdit" name="expireDatePicker">
      <property name="enabled">
       <bool>false</bool>
+     </property>
+     <property name="accessibleName">
+      <string>Expiration field</string>
      </property>
      <property name="calendarPopup">
       <bool>true</bool>
@@ -84,7 +101,11 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QComboBox" name="searchComboBox"/>
+    <widget class="QComboBox" name="searchComboBox">
+     <property name="accessibleName">
+      <string>Search toggle for this and sub groups</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="autotypeLabel">
@@ -129,6 +150,12 @@
       <widget class="QLineEdit" name="autoTypeSequenceCustomEdit">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="accessibleName">
+        <string>Default auto-type sequence field</string>
+       </property>
+       <property name="accessibleDescription">
+        <string/>
        </property>
       </widget>
      </item>

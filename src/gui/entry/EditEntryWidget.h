@@ -20,6 +20,7 @@
 #define KEEPASSX_EDITENTRYWIDGET_H
 
 #include <QButtonGroup>
+#include <QCompleter>
 #include <QModelIndex>
 #include <QPointer>
 #include <QScopedPointer>
@@ -40,15 +41,20 @@ class EntryHistoryModel;
 class QButtonGroup;
 class QMenu;
 class QSortFilterProxyModel;
+class QStringListModel;
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
+#endif
+#ifdef WITH_XC_BROWSER
+class EntryURLModel;
 #endif
 
 namespace Ui
 {
     class EditEntryWidgetAdvanced;
     class EditEntryWidgetAutoType;
+    class EditEntryWidgetBrowser;
     class EditEntryWidgetSSHAgent;
     class EditEntryWidgetMain;
     class EditEntryWidgetHistory;
@@ -66,7 +72,7 @@ public:
     void
     loadEntry(Entry* entry, bool create, bool history, const QString& parentName, QSharedPointer<Database> database);
 
-    QString entryTitle() const;
+    Entry* currentEntry() const;
     void clear();
 
 signals:
@@ -116,12 +122,23 @@ private slots:
     void decryptPrivateKey();
     void copyPublicKey();
 #endif
+#ifdef WITH_XC_BROWSER
+    void updateBrowserModified();
+    void updateBrowser();
+    void insertURL();
+    void removeCurrentURL();
+    void editCurrentURL();
+    void updateCurrentURL();
+#endif
 
 private:
     void setupMain();
     void setupAdvanced();
     void setupIcon();
     void setupAutoType();
+#ifdef WITH_XC_BROWSER
+    void setupBrowser();
+#endif
 #ifdef WITH_XC_SSHAGENT
     void setupSSHAgent();
 #endif
@@ -155,6 +172,7 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
+    const QScopedPointer<Ui::EditEntryWidgetBrowser> m_browserUi;
     const QScopedPointer<CustomData> m_customData;
 
     QWidget* const m_mainWidget;
@@ -163,6 +181,11 @@ private:
     QWidget* const m_autoTypeWidget;
 #ifdef WITH_XC_SSHAGENT
     QWidget* const m_sshAgentWidget;
+#endif
+#ifdef WITH_XC_BROWSER
+    bool m_browserSettingsChanged;
+    QWidget* const m_browserWidget;
+    EntryURLModel* const m_additionalURLsDataModel;
 #endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
@@ -175,6 +198,8 @@ private:
     AutoTypeAssociationsModel* const m_autoTypeAssocModel;
     QButtonGroup* const m_autoTypeDefaultSequenceGroup;
     QButtonGroup* const m_autoTypeWindowSequenceGroup;
+    QCompleter* const m_usernameCompleter;
+    QStringListModel* const m_usernameCompleterModel;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

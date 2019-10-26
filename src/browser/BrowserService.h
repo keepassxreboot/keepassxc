@@ -38,6 +38,13 @@ class BrowserService : public QObject
     Q_OBJECT
 
 public:
+    enum ReturnValue
+    {
+        Success,
+        Error,
+        Canceled
+    };
+
     explicit BrowserService(DatabaseTabWidget* parent);
 
     bool isDatabaseOpened() const;
@@ -61,10 +68,13 @@ public:
     void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
 
 public:
-    static const char KEEPASSXCBROWSER_NAME[];
-    static const char KEEPASSXCBROWSER_OLD_NAME[];
-    static const char ASSOCIATE_KEY_PREFIX[];
-    static const char LEGACY_ASSOCIATE_KEY_PREFIX[];
+    static const QString KEEPASSXCBROWSER_NAME;
+    static const QString KEEPASSXCBROWSER_OLD_NAME;
+    static const QString ASSOCIATE_KEY_PREFIX;
+    static const QString LEGACY_ASSOCIATE_KEY_PREFIX;
+    static const QString OPTION_SKIP_AUTO_SUBMIT;
+    static const QString OPTION_HIDE_ENTRY;
+    static const QString ADDITIONAL_URL;
 
 public slots:
     QJsonArray findMatchingEntries(const QString& id,
@@ -74,12 +84,12 @@ public slots:
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
     QString storeKey(const QString& key);
-    void updateEntry(const QString& id,
-                     const QString& uuid,
-                     const QString& login,
-                     const QString& password,
-                     const QString& url,
-                     const QString& submitUrl);
+    ReturnValue updateEntry(const QString& id,
+                            const QString& uuid,
+                            const QString& login,
+                            const QString& password,
+                            const QString& url,
+                            const QString& submitUrl);
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
@@ -110,8 +120,9 @@ private:
     bool confirmEntries(QList<Entry*>& pwEntriesToConfirm,
                         const QString& url,
                         const QString& host,
-                        const QString& submitHost,
-                        const QString& realm);
+                        const QString& submitUrl,
+                        const QString& realm,
+                        const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
     Access checkAccess(const Entry* entry, const QString& host, const QString& submitHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
@@ -119,6 +130,7 @@ private:
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool matchUrlScheme(const QString& url);
     bool removeFirstDomain(QString& hostname);
+    bool handleURL(const QString& entryUrl, const QString& hostname, const QString& url);
     QString baseDomain(const QString& url) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();

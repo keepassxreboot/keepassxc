@@ -12,6 +12,8 @@ if(WITH_XC_KEESHARE)
         group/EditGroupPageKeeShare.cpp
         KeeShare.cpp
         KeeShareSettings.cpp
+        ShareImport.cpp
+        ShareExport.cpp
         ShareObserver.cpp
         Signature.cpp
     )

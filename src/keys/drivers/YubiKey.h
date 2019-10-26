@@ -80,10 +80,23 @@ public:
     bool getSerial(unsigned int& serial);
 
     /**
+     * @brief YubiKey::getVendorName - vendor name of token
+     * @return vendor name
+     */
+    QString getVendorName();
+
+    /**
      * @brief YubiKey::detect - probe for attached YubiKeys
      */
     void detect();
 
+    /**
+     * @param slot the yubikey slot.
+     * @param errorMessage populated if an error occured.
+     *
+     * @return whether the key is blocking or not.
+     */
+    bool checkSlotIsBlocking(int slot, QString& errorMessage);
 signals:
     /** Emitted in response to detect() when a device is found
      *
@@ -110,6 +123,7 @@ private:
     // Create void ptr here to avoid ifdef header include mess
     void* m_yk_void;
     void* m_ykds_void;
+    bool m_onlyKey;
 
     QMutex m_mutex;
 

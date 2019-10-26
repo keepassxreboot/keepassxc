@@ -246,16 +246,21 @@ void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Da
     }
 }
 
-const QString& KeeShare::signedContainerFileType()
+const QString KeeShare::signedContainerFileType()
 {
     static const QString filetype("kdbx.share");
     return filetype;
 }
 
-const QString& KeeShare::unsignedContainerFileType()
+const QString KeeShare::unsignedContainerFileType()
 {
     static const QString filetype("kdbx");
     return filetype;
+}
+
+bool KeeShare::isContainerType(const QFileInfo& fileInfo, const QString type)
+{
+    return fileInfo.fileName().endsWith(type, Qt::CaseInsensitive);
 }
 
 void KeeShare::handleSettingsChanged(const QString& key)
@@ -263,4 +268,16 @@ void KeeShare::handleSettingsChanged(const QString& key)
     if (key == KeeShare_Active) {
         emit activeChanged();
     }
+}
+
+const QString KeeShare::signatureFileName()
+{
+    static const QString fileName("container.share.signature");
+    return fileName;
+}
+
+const QString KeeShare::containerFileName()
+{
+    static const QString fileName("container.share.kdbx");
+    return fileName;
 }

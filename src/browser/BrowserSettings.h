@@ -55,6 +55,8 @@ public:
     void setHttpAuthPermission(bool httpAuthPermission);
     bool supportKphFields();
     void setSupportKphFields(bool supportKphFields);
+    bool noMigrationPrompt();
+    void setNoMigrationPrompt(bool prompt);
 
     bool supportBrowserProxy();
     void setSupportBrowserProxy(bool enabled);
@@ -119,7 +121,7 @@ public:
     void setPasswordLength(int length);
     PasswordGenerator::CharClasses passwordCharClasses();
     PasswordGenerator::GeneratorFlags passwordGeneratorFlags();
-    QString generatePassword();
+    QJsonObject generatePassword();
     void updateBinaryPaths(const QString& customProxyLocation = QString());
     bool checkIfProxyExists(QString& path);
 

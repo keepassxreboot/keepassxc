@@ -25,17 +25,17 @@
 #include <QTimer>
 
 #include "DatabaseOpenDialog.h"
+#include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
 
-#include "config-keepassx.h"
-
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
+class OpVaultOpenWidget;
 class DatabaseSettingsDialog;
 class Database;
-class DelayingFileWatcher;
+class FileWatcher;
 class EditEntryWidget;
 class EditGroupWidget;
 class Entry;
@@ -80,6 +80,7 @@ public:
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
     bool isSearchActive() const;
+    bool isEntryEditActive() const;
 
     QString getCurrentSearch();
     void refreshSearch();
@@ -108,8 +109,6 @@ public:
     bool currentEntryHasNotes();
     bool currentEntryHasTotp();
 
-    void blockAutoReload(bool block = true);
-
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
     QList<int> mainSplitterSizes() const;
@@ -123,13 +122,18 @@ signals:
     void databaseModified();
     void databaseSaved();
     void databaseUnlocked();
+    void databaseLockRequested();
     void databaseLocked();
+
+    // Emitted in replaceDatabase, may be caused by lock, reload, unlock, load.
+    void databaseReplaced(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb);
 
     void closeRequest();
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
-    void requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password);
+    void
+    requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
@@ -151,6 +155,7 @@ public slots:
     void createEntry();
     void cloneEntry();
     void deleteSelectedEntries();
+    void deleteEntries(QList<Entry*> entries);
     void setFocus();
     void copyTitle();
     void copyUsername();
@@ -164,12 +169,16 @@ public slots:
     void setupTotp();
     void performAutoType();
     void openUrl();
+    void downloadSelectedFavicons();
+    void downloadAllFavicons();
     void openUrlForEntry(Entry* entry);
     void createGroup();
     void deleteGroup();
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
+    void sortGroupsAsc();
+    void sortGroupsDesc();
     void switchToMasterKeyChange();
     void switchToDatabaseSettings();
     void switchToOpenDatabase();
@@ -179,6 +188,7 @@ public slots:
     void performUnlockDatabase(const QString& password, const QString& keyfile = {});
     void csvImportFinished(bool accepted);
     void switchToImportKeepass1(const QString& filePath);
+    void switchToImportOpVault(const QString& fileName);
     void emptyRecycleBin();
 
     // Search related slots
@@ -199,7 +209,6 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 private slots:
-    void updateFilePath(const QString& filePath);
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
     void switchBackToEntryEdit();
     void switchToHistoryView(Entry* entry);
@@ -223,9 +232,10 @@ private slots:
 private:
     int addChildWidget(QWidget* w);
     void setClipboardTextAndMinimize(const QString& text);
-    void setIconFromParent();
     void processAutoOpen();
     bool confirmDeleteEntries(QList<Entry*> entries, bool permanent);
+    void performIconDownloads(const QList<Entry*>& entries, bool force = false);
+    Entry* currentSelectedEntry();
 
     QSharedPointer<Database> m_db;
 
@@ -243,6 +253,7 @@ private:
     QPointer<DatabaseSettingsDialog> m_databaseSettingDialog;
     QPointer<DatabaseOpenWidget> m_databaseOpenWidget;
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
+    QPointer<OpVaultOpenWidget> m_opVaultOpenWidget;
     QPointer<GroupView> m_groupView;
     QPointer<EntryView> m_entryView;
 
@@ -261,7 +272,6 @@ private:
     bool m_searchLimitGroup;
 
     // Autoreload
-    QPointer<DelayingFileWatcher> m_fileWatcher;
     bool m_blockAutoSave;
 };
 

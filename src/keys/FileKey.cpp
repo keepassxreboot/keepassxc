@@ -24,10 +24,10 @@
 
 #include <QFile>
 
-#include <sodium.h>
-#include <gcrypt.h>
 #include <algorithm>
 #include <cstring>
+#include <gcrypt.h>
+#include <sodium.h>
 
 QUuid FileKey::UUID("a584cbc4-c9b4-437e-81bb-362ca9709273");
 

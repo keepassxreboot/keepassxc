@@ -341,6 +341,21 @@ bool Entry::isExpired() const
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
 }
 
+bool Entry::isRecycled() const
+{
+    const Database* db = database();
+    if (!db) {
+        return false;
+    }
+
+    return m_group == db->metadata()->recycleBin() || m_group->isRecycled();
+}
+
+bool Entry::isAttributeReference(const QString& key) const
+{
+    return m_attributes->isReference(key);
+}
+
 bool Entry::isAttributeReferenceOf(const QString& key, const QUuid& uuid) const
 {
     if (!m_attributes->isReference(key)) {
@@ -427,16 +442,16 @@ QString Entry::totp() const
 void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
 {
     beginUpdate();
+    m_attributes->remove(Totp::ATTRIBUTE_OTP);
+    m_attributes->remove(Totp::ATTRIBUTE_SEED);
+    m_attributes->remove(Totp::ATTRIBUTE_SETTINGS);
+
     if (settings->key.isEmpty()) {
         m_data.totpSettings.reset();
-        m_attributes->remove(Totp::ATTRIBUTE_OTP);
-        m_attributes->remove(Totp::ATTRIBUTE_SEED);
-        m_attributes->remove(Totp::ATTRIBUTE_SETTINGS);
     } else {
         m_data.totpSettings = std::move(settings);
-
         auto text = Totp::writeSettings(m_data.totpSettings, title(), username());
-        if (m_attributes->hasKey(Totp::ATTRIBUTE_OTP)) {
+        if (m_data.totpSettings->format != Totp::StorageFormat::LEGACY) {
             m_attributes->set(Totp::ATTRIBUTE_OTP, text, true);
         } else {
             m_attributes->set(Totp::ATTRIBUTE_SEED, m_data.totpSettings->key, true);
@@ -747,14 +762,14 @@ Entry* Entry::clone(CloneFlags flags) const
     entry->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
     if (flags & CloneIncludeHistory) {
         for (Entry* historyItem : m_history) {
-            Entry* historyItemClone = historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid);
+            Entry* historyItemClone =
+                historyItem->clone(flags & ~CloneIncludeHistory & ~CloneNewUuid & ~CloneResetTimeInfo);
             historyItemClone->setUpdateTimeinfo(false);
             historyItemClone->setUuid(entry->uuid());
             historyItemClone->setUpdateTimeinfo(true);
             entry->addHistoryItem(historyItemClone);
         }
     }
-    entry->setUpdateTimeinfo(true);
 
     if (flags & CloneResetTimeInfo) {
         QDateTime now = Clock::currentDateTimeUtc();
@@ -766,6 +781,8 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneRenameTitle)
         entry->setTitle(tr("%1 - Clone").arg(entry->title()));
+
+    entry->setUpdateTimeinfo(true);
 
     return entry;
 }

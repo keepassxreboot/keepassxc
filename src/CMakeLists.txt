@@ -27,6 +27,9 @@ set(keepassx_SOURCES
         core/Alloc.cpp
         core/AutoTypeAssociations.cpp
         core/AutoTypeMatch.cpp
+        core/Base32.cpp
+        core/Bootstrap.cpp
+        core/Clock.cpp
         core/Compare.cpp
         core/Config.cpp
         core/CsvParser.cpp
@@ -39,8 +42,8 @@ set(keepassx_SOURCES
         core/EntrySearcher.cpp
         core/FilePath.cpp
         core/FileWatcher.cpp
-        core/Bootstrap.cpp
         core/Group.cpp
+        core/HibpOffline.cpp
         core/InactivityTimer.cpp
         core/Merger.cpp
         core/Metadata.cpp
@@ -51,10 +54,8 @@ set(keepassx_SOURCES
         core/ScreenLockListenerPrivate.cpp
         core/TimeDelta.cpp
         core/TimeInfo.cpp
-        core/Clock.cpp
         core/Tools.cpp
         core/Translator.cpp
-        core/Base32.cpp
         cli/Utils.cpp
         cli/TextStream.cpp
         crypto/Crypto.cpp
@@ -66,6 +67,7 @@ set(keepassx_SOURCES
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
         format/CsvExporter.cpp
+        format/HtmlExporter.cpp
         format/KeePass1Reader.cpp
         format/KeePass2.cpp
         format/KeePass2RandomStream.cpp
@@ -79,6 +81,11 @@ set(keepassx_SOURCES
         format/Kdbx4Reader.cpp
         format/Kdbx4Writer.cpp
         format/KdbxXmlWriter.cpp
+        format/OpData01.cpp
+        format/OpVaultReader.cpp
+        format/OpVaultReaderAttachments.cpp
+        format/OpVaultReaderBandEntry.cpp
+        format/OpVaultReaderSections.cpp
         gui/AboutDialog.cpp
         gui/Application.cpp
         gui/CategoryListWidget.cpp
@@ -103,6 +110,7 @@ set(keepassx_SOURCES
         gui/MainWindow.cpp
         gui/MessageBox.cpp
         gui/MessageWidget.cpp
+        gui/OpVaultOpenWidget.cpp
         gui/PasswordEdit.cpp
         gui/PasswordGeneratorWidget.cpp
         gui/ApplicationSettingsWidget.cpp
@@ -140,6 +148,8 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
+        gui/dbsettings/DatabaseSettingsWidgetStatistics.cpp
+        gui/dbsettings/DatabaseSettingsPageStatistics.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/PopupHelpWidget.cpp
@@ -152,6 +162,7 @@ set(keepassx_SOURCES
         keys/FileKey.cpp
         keys/PasswordKey.cpp
         keys/YkChallengeResponseKey.cpp
+        keys/YkChallengeResponseKeyCLI.cpp
         streams/HashedBlockStream.cpp
         streams/HmacBlockStream.cpp
         streams/LayeredStream.cpp
@@ -194,6 +205,9 @@ add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible wit
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare (requires quazip5 for secure containers)")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
 add_feature_info(UpdateCheck WITH_XC_UPDATECHECK "Automatic update checking")
+if(UNIX AND NOT APPLE)
+    add_feature_info(FdoSecrets WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API.")
+endif()
 if(APPLE)
     add_feature_info(TouchID WITH_XC_TOUCHID "TouchID integration")
 endif()
@@ -204,6 +218,7 @@ add_subdirectory(proxy)
 if(WITH_XC_BROWSER)
     set(keepassxcbrowser_LIB keepassxcbrowser)
     set(keepassx_SOURCES ${keepassx_SOURCES} gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp)
+    set(keepassx_SOURCES ${keepassx_SOURCES} gui/entry/EntryURLModel.cpp)
 endif()
 
 add_subdirectory(autotype)
@@ -226,10 +241,16 @@ if(WITH_XC_SSHAGENT)
     set(sshagent_LIB sshagent)
 endif()
 
+add_subdirectory(fdosecrets)
+if(WITH_XC_FDOSECRETS)
+    set(fdosecrets_LIB fdosecrets)
+endif()
+
 set(autotype_SOURCES
         core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
+        autotype/AutoTypeFilterLineEdit.cpp
         autotype/AutoTypeSelectDialog.cpp
         autotype/AutoTypeSelectView.cpp
         autotype/ShortcutWidget.cpp
@@ -247,7 +268,12 @@ else()
 endif()
 
 if(WITH_XC_NETWORKING)
-    list(APPEND keepassx_SOURCES updatecheck/UpdateChecker.cpp gui/UpdateCheckDialog.cpp)
+    list(APPEND keepassx_SOURCES
+            core/IconDownloader.cpp
+            core/NetworkManager.cpp
+            gui/UpdateCheckDialog.cpp
+            gui/IconDownloaderDialog.cpp
+            updatecheck/UpdateChecker.cpp)
 endif()
 
 if(WITH_XC_TOUCHID)
@@ -269,6 +295,7 @@ target_link_libraries(keepassx_core
         autotype
         ${keepassxcbrowser_LIB}
         ${qrcode_LIB}
+        ${fdosecrets_LIB}
         Qt5::Core
         Qt5::Concurrent
         Qt5::Network
@@ -361,6 +388,10 @@ endif()
 install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
+
+if(APPLE OR UNIX)
+    install(FILES ../share/docs/man/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
+endif()
 
 if(MINGW)
     if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")

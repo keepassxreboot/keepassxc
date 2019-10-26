@@ -29,7 +29,7 @@
 KeePass1OpenWidget::KeePass1OpenWidget(QWidget* parent)
     : DatabaseOpenWidget(parent)
 {
-    m_ui->labelHeadline->setText(tr("Import KeePass1 database"));
+    m_ui->labelHeadline->setText(tr("Import KeePass1 Database"));
 }
 
 void KeePass1OpenWidget::openDatabase()
@@ -39,11 +39,11 @@ void KeePass1OpenWidget::openDatabase()
     QString password;
     QString keyFileName;
 
-    if (m_ui->checkPassword->isChecked()) {
+    if (!m_ui->editPassword->text().isEmpty() || m_retryUnlockWithEmptyPassword) {
         password = m_ui->editPassword->text();
     }
 
-    if (m_ui->checkKeyFile->isChecked()) {
+    if (!m_ui->comboKeyFile->currentText().isEmpty() && m_ui->comboKeyFile->currentData() != -1) {
         keyFileName = m_ui->comboKeyFile->currentText();
     }
 

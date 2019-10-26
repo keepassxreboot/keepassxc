@@ -80,8 +80,6 @@ public:
     Group();
     ~Group();
 
-    static Group* createRecycleBin();
-
     const QUuid& uuid() const;
     const QString uuidToHex() const;
     QString name() const;
@@ -102,7 +100,8 @@ public:
     bool resolveAutoTypeEnabled() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
-    bool isRecycled();
+    bool isRecycled() const;
+    bool isEmpty() const;
     CustomData* customData();
     const CustomData* customData() const;
 
@@ -115,7 +114,7 @@ public:
     static const QString RootAutoTypeSequence;
 
     Group* findChildByName(const QString& name);
-    Entry* findEntryByUuid(const QUuid& uuid) const;
+    Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
     Entry* findEntryByPath(const QString& entryPath);
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);
@@ -143,7 +142,8 @@ public:
     Group* parentGroup();
     const Group* parentGroup() const;
     void setParent(Group* parent, int index = -1);
-    QStringList hierarchy() const;
+    QStringList hierarchy(int height = -1) const;
+    bool hasChildren() const;
 
     Database* database();
     const Database* database() const;
@@ -157,15 +157,24 @@ public:
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
     QSet<QUuid> customIconsRecursive() const;
+    QList<QString> usernamesRecursive(int topN = -1) const;
 
     Group* clone(Entry::CloneFlags entryFlags = DefaultEntryCloneFlags,
                  CloneFlags groupFlags = DefaultCloneFlags) const;
 
     void copyDataFrom(const Group* other);
-    QString print(bool recursive = false, int depth = 0);
+    QString print(bool recursive = false, bool flatten = false, int depth = 0);
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+
+    void applyGroupIconOnCreateTo(Entry* entry);
+    void applyGroupIconTo(Entry* entry);
+    void applyGroupIconTo(Group* other);
+    void applyGroupIconToChildGroups();
+    void applyGroupIconToChildEntries();
+
+    void sortChildrenRecursively(bool reverse = false);
 
 signals:
     void groupDataChanged(Group* group);

@@ -37,6 +37,9 @@
      </item>
      <item>
       <widget class="QSpinBox" name="lifetimeSpinBox">
+       <property name="accessibleName">
+        <string>Remove key from agent after specified seconds</string>
+       </property>
        <property name="suffix">
         <string> seconds</string>
        </property>
@@ -165,6 +168,9 @@
       </item>
       <item row="3" column="2">
        <widget class="QPushButton" name="browseButton">
+        <property name="accessibleName">
+         <string>Browser for key file</string>
+        </property>
         <property name="text">
          <string extracomment="Button for opening file dialog">Browse...</string>
         </property>
@@ -181,7 +187,14 @@
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="externalFileEdit"/>
+       <widget class="QLineEdit" name="externalFileEdit">
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+        <property name="accessibleName">
+         <string>External key file</string>
+        </property>
+       </widget>
       </item>
       <item row="4" column="1">
        <layout class="QHBoxLayout" name="agentActionsLayout" stretch="0,0">
@@ -208,6 +221,9 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="accessibleName">
+         <string>Select attachment file</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -270,6 +286,22 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>addKeyToAgentCheckBox</tabstop>
+  <tabstop>removeKeyFromAgentCheckBox</tabstop>
+  <tabstop>requireUserConfirmationCheckBox</tabstop>
+  <tabstop>lifetimeCheckBox</tabstop>
+  <tabstop>lifetimeSpinBox</tabstop>
+  <tabstop>attachmentRadioButton</tabstop>
+  <tabstop>attachmentComboBox</tabstop>
+  <tabstop>externalFileRadioButton</tabstop>
+  <tabstop>browseButton</tabstop>
+  <tabstop>addToAgentButton</tabstop>
+  <tabstop>removeFromAgentButton</tabstop>
+  <tabstop>decryptButton</tabstop>
+  <tabstop>publicKeyEdit</tabstop>
+  <tabstop>copyToClipboardButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

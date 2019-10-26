@@ -20,7 +20,6 @@
 #include <QObject>
 #include <QString>
 
-class QNetworkAccessManager;
 class QNetworkReply;
 
 class UpdateChecker : public QObject
@@ -42,7 +41,6 @@ private slots:
     void fetchReadyRead();
 
 private:
-    QNetworkAccessManager* m_netMgr;
     QNetworkReply* m_reply;
     QByteArray m_bytesReceived;
     bool m_isManuallyRequested;

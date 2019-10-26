@@ -26,12 +26,15 @@ namespace Ui
     class KeyFileEditWidget;
 }
 
+class DatabaseSettingsWidget;
+
 class KeyFileEditWidget : public KeyComponentWidget
 {
     Q_OBJECT
 
+
 public:
-    explicit KeyFileEditWidget(QWidget* parent = nullptr);
+    explicit KeyFileEditWidget(DatabaseSettingsWidget* parent);
     Q_DISABLE_COPY(KeyFileEditWidget);
     ~KeyFileEditWidget() override;
 
@@ -49,6 +52,7 @@ private slots:
 private:
     const QScopedPointer<Ui::KeyFileEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
+    const QPointer<DatabaseSettingsWidget> m_parent;
 };
 
 #endif // KEEPASSXC_KEYFILEEDITWIDGET_H

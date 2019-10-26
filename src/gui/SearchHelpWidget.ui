@@ -237,21 +237,21 @@
         <item row="1" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
-           <string notr="true">username</string>
+           <string notr="true">username (u)</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_11">
           <property name="text">
-           <string notr="true">password</string>
+           <string notr="true">password (p, pw)</string>
           </property>
          </widget>
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
-           <string notr="true">title</string>
+           <string notr="true">title (t)</string>
           </property>
          </widget>
         </item>
@@ -265,21 +265,21 @@
         <item row="0" column="1">
          <widget class="QLabel" name="label_5">
           <property name="text">
-           <string notr="true">notes</string>
+           <string notr="true">notes (n)</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
          <widget class="QLabel" name="label_12">
           <property name="text">
-           <string notr="true">attribute</string>
+           <string notr="true">attribute (attr)</string>
           </property>
          </widget>
         </item>
         <item row="2" column="1">
          <widget class="QLabel" name="label_14">
           <property name="text">
-           <string notr="true">attachment</string>
+           <string notr="true">attachment (attach)</string>
           </property>
          </widget>
         </item>

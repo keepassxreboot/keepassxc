@@ -18,9 +18,9 @@
 #ifndef KEEPASSXC_KEYCOMPONENTWIDGET_H
 #define KEEPASSXC_KEYCOMPONENTWIDGET_H
 
+#include <QPointer>
 #include <QScopedPointer>
 #include <QWidget>
-#include <QPointer>
 
 namespace Ui
 {
@@ -111,7 +111,7 @@ signals:
     void componentRemovalRequested();
 
 protected:
-    void showEvent(QShowEvent* event) override ;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void updateComponentName(const QString& name);

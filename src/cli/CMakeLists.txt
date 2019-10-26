@@ -1,4 +1,4 @@
-#  Copyright (C) 2017 KeePassXC Team
+#  Copyright (C) 2019 KeePassXC Team
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -15,22 +15,39 @@
 
 set(cli_SOURCES
         Add.cpp
+        AddGroup.cpp
+        Analyze.cpp
         Clip.cpp
+        Close.cpp
         Create.cpp
         Command.cpp
+        DatabaseCommand.cpp
         Diceware.cpp
         Edit.cpp
         Estimate.cpp
-        Extract.cpp
+        Exit.cpp
+        Export.cpp
         Generate.cpp
+        Help.cpp
+        Import.cpp
         List.cpp
         Locate.cpp
         Merge.cpp
+        Move.cpp
+        Open.cpp
         Remove.cpp
+        RemoveGroup.cpp
         Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli Qt5::Core Qt5::Widgets)
+
+find_package(Readline)
+
+if (READLINE_FOUND)
+    target_compile_definitions(cli PUBLIC USE_READLINE)
+    target_link_libraries(cli readline)
+endif()
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
@@ -47,6 +64,12 @@ target_link_libraries(keepassxc-cli
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
+
+if(MINGW)
+    install(CODE "include(BundleUtilities)
+                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
+            COMPONENT Runtime)
+endif()
 
 if(APPLE AND WITH_APP_BUNDLE)
     add_custom_command(TARGET keepassxc-cli
@@ -82,6 +105,8 @@ if(APPLE AND WITH_APP_BUNDLE)
                                 "@executable_path/../Frameworks/libyubikey.0.dylib"
                             -change /usr/local/opt/ykpers/lib/libykpers-1.1.dylib
                                 "@executable_path/../Frameworks/libykpers-1.1.dylib"
+                            -change /usr/local/opt/quazip/lib/libquazip.1.dylib
+                                "@executable_path/../Frameworks/libquazip.1.dylib"
                        keepassxc-cli
                        COMMENT "Changing linking of keepassxc-cli")
 
@@ -94,5 +119,5 @@ if(APPLE AND WITH_APP_BUNDLE)
 endif()
 
 if(APPLE OR UNIX)
-    install(FILES keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
+    install(FILES ../../share/docs/man/keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 endif()

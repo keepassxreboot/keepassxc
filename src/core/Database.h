@@ -32,6 +32,7 @@
 
 class Entry;
 enum class EntryReferenceType;
+class FileWatcher;
 class Group;
 class Metadata;
 class QTimer;
@@ -71,7 +72,9 @@ public:
               QString* error = nullptr,
               bool readOnly = false);
     bool save(QString* error = nullptr, bool atomic = true, bool backup = false);
-    bool save(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
+    bool saveAs(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
+    bool extract(QByteArray&, QString* error = nullptr);
+    bool import(const QString& xmlExportPath, QString* error = nullptr);
 
     bool isInitialized() const;
     void setInitialized(bool initialized);
@@ -105,6 +108,8 @@ public:
     bool containsDeletedObject(const DeletedObject& uuid) const;
     void setDeletedObjects(const QList<DeletedObject>& delObjs);
 
+    QList<QString> commonUsernames();
+
     bool hasKey() const;
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
@@ -125,11 +130,11 @@ public:
     QByteArray transformedMasterKey() const;
 
     static Database* databaseByUuid(const QUuid& uuid);
-    static Database* databaseByFilePath(const QString& filePath);
 
 public slots:
     void markAsModified();
     void markAsClean();
+    void updateCommonUsernames(int topN = 10);
 
 signals:
     void filePathChanged(const QString& oldPath, const QString& newPath);
@@ -140,9 +145,11 @@ signals:
     void groupRemoved();
     void groupAboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
+    void databaseOpened();
     void databaseModified();
     void databaseSaved();
     void databaseDiscarded();
+    void databaseFileChanged();
 
 private slots:
     void startModifiedTimer();
@@ -173,19 +180,22 @@ private:
     bool writeDatabase(QIODevice* device, QString* error = nullptr);
     bool backupDatabase(const QString& filePath);
     bool restoreDatabase(const QString& filePath);
+    bool performSave(const QString& filePath, QString* error, bool atomic, bool backup);
 
     Metadata* const m_metadata;
     DatabaseData m_data;
     Group* m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QPointer<QTimer> m_timer;
+    QPointer<FileWatcher> m_fileWatcher;
     bool m_initialized = false;
     bool m_modified = false;
     bool m_emitModified;
 
+    QList<QString> m_commonUsernames;
+
     QUuid m_uuid;
     static QHash<QUuid, QPointer<Database>> s_uuidMap;
-    static QHash<QString, QPointer<Database>> s_filePathMap;
 };
 
 #endif // KEEPASSX_DATABASE_H

@@ -18,8 +18,11 @@
 
 #include "AutoTypeMatchView.h"
 
+#include "core/Entry.h"
+#include "gui/Clipboard.h"
 #include "gui/SortFilterHideProxyModel.h"
 
+#include <QAction>
 #include <QHeaderView>
 #include <QKeyEvent>
 
@@ -42,11 +45,33 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
     setSelectionMode(QAbstractItemView::SingleSelection);
     header()->setDefaultSectionSize(150);
 
+    setContextMenuPolicy(Qt::ActionsContextMenu);
+    auto* copyUserNameAction = new QAction(tr("Copy &username"), this);
+    auto* copyPasswordAction = new QAction(tr("Copy &password"), this);
+    addAction(copyUserNameAction);
+    addAction(copyPasswordAction);
+
+    connect(copyUserNameAction, SIGNAL(triggered()), this, SLOT(userNameCopied()));
+    connect(copyPasswordAction, SIGNAL(triggered()), this, SLOT(passwordCopied()));
+
     connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitMatchActivated(QModelIndex)));
     // clang-format off
-    connect(
-        selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), SIGNAL(matchSelectionChanged()));
+    connect(selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            SIGNAL(matchSelectionChanged()));
     // clang-format on
+}
+
+void AutoTypeMatchView::userNameCopied()
+{
+    clipboard()->setText(currentMatch().entry->username());
+    emit matchTextCopied();
+}
+
+void AutoTypeMatchView::passwordCopied()
+{
+    clipboard()->setText(currentMatch().entry->password());
+    emit matchTextCopied();
 }
 
 void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)

@@ -635,28 +635,57 @@ void TestGroup::testPrint()
 
     Group* group1 = new Group();
     group1->setName("group1");
+    group1->setParent(db->rootGroup());
 
     Entry* entry2 = new Entry();
-
     entry2->setTitle(QString("entry2"));
     entry2->setGroup(group1);
     entry2->setUuid(QUuid::createUuid());
 
-    group1->setParent(db->rootGroup());
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(db->rootGroup());
+
+    Group* subGroup = new Group();
+    subGroup->setName("subgroup");
+    subGroup->setParent(group2);
+
+    Entry* entry3 = new Entry();
+    entry3->setTitle(QString("entry3"));
+    entry3->setGroup(subGroup);
+    entry3->setUuid(QUuid::createUuid());
 
     output = db->rootGroup()->print();
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
     QVERIFY(!output.contains(QString("  entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(!output.contains(QString("  subgroup\n")));
 
     output = db->rootGroup()->print(true);
     QVERIFY(output.contains(QString("entry1\n")));
     QVERIFY(output.contains(QString("group1/\n")));
     QVERIFY(output.contains(QString("  entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("  subgroup/\n")));
+    QVERIFY(output.contains(QString("    entry3\n")));
+
+    output = db->rootGroup()->print(true, true);
+    QVERIFY(output.contains(QString("entry1\n")));
+    QVERIFY(output.contains(QString("group1/\n")));
+    QVERIFY(output.contains(QString("group1/entry2\n")));
+    QVERIFY(output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("group2/subgroup/\n")));
+    QVERIFY(output.contains(QString("group2/subgroup/entry3\n")));
 
     output = group1->print();
     QVERIFY(!output.contains(QString("group1/\n")));
     QVERIFY(output.contains(QString("entry2\n")));
+
+    output = group2->print(true, true);
+    QVERIFY(!output.contains(QString("group2/\n")));
+    QVERIFY(output.contains(QString("subgroup/\n")));
+    QVERIFY(output.contains(QString("subgroup/entry3\n")));
 }
 
 void TestGroup::testLocate()
@@ -770,7 +799,7 @@ void TestGroup::testAddEntryWithPath()
 void TestGroup::testIsRecycled()
 {
     Database* db = new Database();
-    db->rootGroup()->createRecycleBin();
+    db->metadata()->setRecycleBinEnabled(true);
 
     Group* group1 = new Group();
     group1->setName("group1");
@@ -839,4 +868,342 @@ void TestGroup::testEquals()
     group->setName("TestGroup");
 
     QVERIFY(group->equals(group.data(), CompareItemDefault));
+}
+
+void TestGroup::testChildrenSort()
+{
+    auto createTestGroupWithUnorderedChildren = []() -> Group* {
+        Group* parent = new Group();
+
+        Group* group1 = new Group();
+        group1->setName("B");
+        group1->setParent(parent);
+        Group* group2 = new Group();
+        group2->setName("e");
+        group2->setParent(parent);
+        Group* group3 = new Group();
+        group3->setName("Test999");
+        group3->setParent(parent);
+        Group* group4 = new Group();
+        group4->setName("A");
+        group4->setParent(parent);
+        Group* group5 = new Group();
+        group5->setName("z");
+        group5->setParent(parent);
+        Group* group6 = new Group();
+        group6->setName("045");
+        group6->setParent(parent);
+        Group* group7 = new Group();
+        group7->setName("60");
+        group7->setParent(parent);
+        Group* group8 = new Group();
+        group8->setName("04test");
+        group8->setParent(parent);
+        Group* group9 = new Group();
+        group9->setName("Test12");
+        group9->setParent(parent);
+        Group* group10 = new Group();
+        group10->setName("i");
+        group10->setParent(parent);
+
+        Group* subGroup1 = new Group();
+        subGroup1->setName("sub_xte");
+        subGroup1->setParent(group10);
+        Group* subGroup2 = new Group();
+        subGroup2->setName("sub_010");
+        subGroup2->setParent(group10);
+        Group* subGroup3 = new Group();
+        subGroup3->setName("sub_000");
+        subGroup3->setParent(group10);
+        Group* subGroup4 = new Group();
+        subGroup4->setName("sub_M");
+        subGroup4->setParent(group10);
+        Group* subGroup5 = new Group();
+        subGroup5->setName("sub_p");
+        subGroup5->setParent(group10);
+        Group* subGroup6 = new Group();
+        subGroup6->setName("sub_45p");
+        subGroup6->setParent(group10);
+        Group* subGroup7 = new Group();
+        subGroup7->setName("sub_6p");
+        subGroup7->setParent(group10);
+        Group* subGroup8 = new Group();
+        subGroup8->setName("sub_tt");
+        subGroup8->setParent(group10);
+        Group* subGroup9 = new Group();
+        subGroup9->setName("sub_t0");
+        subGroup9->setParent(group10);
+
+        return parent;
+    };
+
+    Group* parent = createTestGroupWithUnorderedChildren();
+    Group* subParent = parent->children().last();
+    parent->sortChildrenRecursively();
+    QList<Group*> children = parent->children();
+    QCOMPARE(children.size(), 10);
+    QCOMPARE(children[0]->name(), QString("045"));
+    QCOMPARE(children[1]->name(), QString("04test"));
+    QCOMPARE(children[2]->name(), QString("60"));
+    QCOMPARE(children[3]->name(), QString("A"));
+    QCOMPARE(children[4]->name(), QString("B"));
+    QCOMPARE(children[5]->name(), QString("e"));
+    QCOMPARE(children[6]->name(), QString("i"));
+    QCOMPARE(children[7]->name(), QString("Test12"));
+    QCOMPARE(children[8]->name(), QString("Test999"));
+    QCOMPARE(children[9]->name(), QString("z"));
+    children = subParent->children();
+    QCOMPARE(children.size(), 9);
+    QCOMPARE(children[0]->name(), QString("sub_000"));
+    QCOMPARE(children[1]->name(), QString("sub_010"));
+    QCOMPARE(children[2]->name(), QString("sub_45p"));
+    QCOMPARE(children[3]->name(), QString("sub_6p"));
+    QCOMPARE(children[4]->name(), QString("sub_M"));
+    QCOMPARE(children[5]->name(), QString("sub_p"));
+    QCOMPARE(children[6]->name(), QString("sub_t0"));
+    QCOMPARE(children[7]->name(), QString("sub_tt"));
+    QCOMPARE(children[8]->name(), QString("sub_xte"));
+    delete parent;
+
+    parent = createTestGroupWithUnorderedChildren();
+    subParent = parent->children().last();
+    parent->sortChildrenRecursively(true);
+    children = parent->children();
+    QCOMPARE(children.size(), 10);
+    QCOMPARE(children[0]->name(), QString("z"));
+    QCOMPARE(children[1]->name(), QString("Test999"));
+    QCOMPARE(children[2]->name(), QString("Test12"));
+    QCOMPARE(children[3]->name(), QString("i"));
+    QCOMPARE(children[4]->name(), QString("e"));
+    QCOMPARE(children[5]->name(), QString("B"));
+    QCOMPARE(children[6]->name(), QString("A"));
+    QCOMPARE(children[7]->name(), QString("60"));
+    QCOMPARE(children[8]->name(), QString("04test"));
+    QCOMPARE(children[9]->name(), QString("045"));
+    children = subParent->children();
+    QCOMPARE(children.size(), 9);
+    QCOMPARE(children[0]->name(), QString("sub_xte"));
+    QCOMPARE(children[1]->name(), QString("sub_tt"));
+    QCOMPARE(children[2]->name(), QString("sub_t0"));
+    QCOMPARE(children[3]->name(), QString("sub_p"));
+    QCOMPARE(children[4]->name(), QString("sub_M"));
+    QCOMPARE(children[5]->name(), QString("sub_6p"));
+    QCOMPARE(children[6]->name(), QString("sub_45p"));
+    QCOMPARE(children[7]->name(), QString("sub_010"));
+    QCOMPARE(children[8]->name(), QString("sub_000"));
+    delete parent;
+
+    parent = createTestGroupWithUnorderedChildren();
+    subParent = parent->children().last();
+    subParent->sortChildrenRecursively();
+    children = parent->children();
+    QCOMPARE(children.size(), 10);
+    QCOMPARE(children[0]->name(), QString("B"));
+    QCOMPARE(children[1]->name(), QString("e"));
+    QCOMPARE(children[2]->name(), QString("Test999"));
+    QCOMPARE(children[3]->name(), QString("A"));
+    QCOMPARE(children[4]->name(), QString("z"));
+    QCOMPARE(children[5]->name(), QString("045"));
+    QCOMPARE(children[6]->name(), QString("60"));
+    QCOMPARE(children[7]->name(), QString("04test"));
+    QCOMPARE(children[8]->name(), QString("Test12"));
+    QCOMPARE(children[9]->name(), QString("i"));
+    children = subParent->children();
+    QCOMPARE(children.size(), 9);
+    QCOMPARE(children[0]->name(), QString("sub_000"));
+    QCOMPARE(children[1]->name(), QString("sub_010"));
+    QCOMPARE(children[2]->name(), QString("sub_45p"));
+    QCOMPARE(children[3]->name(), QString("sub_6p"));
+    QCOMPARE(children[4]->name(), QString("sub_M"));
+    QCOMPARE(children[5]->name(), QString("sub_p"));
+    QCOMPARE(children[6]->name(), QString("sub_t0"));
+    QCOMPARE(children[7]->name(), QString("sub_tt"));
+    QCOMPARE(children[8]->name(), QString("sub_xte"));
+    delete parent;
+
+    parent = createTestGroupWithUnorderedChildren();
+    subParent = parent->children().last();
+    subParent->sortChildrenRecursively(true);
+    children = parent->children();
+    QCOMPARE(children.size(), 10);
+    QCOMPARE(children[0]->name(), QString("B"));
+    QCOMPARE(children[1]->name(), QString("e"));
+    QCOMPARE(children[2]->name(), QString("Test999"));
+    QCOMPARE(children[3]->name(), QString("A"));
+    QCOMPARE(children[4]->name(), QString("z"));
+    QCOMPARE(children[5]->name(), QString("045"));
+    QCOMPARE(children[6]->name(), QString("60"));
+    QCOMPARE(children[7]->name(), QString("04test"));
+    QCOMPARE(children[8]->name(), QString("Test12"));
+    QCOMPARE(children[9]->name(), QString("i"));
+    children = subParent->children();
+    QCOMPARE(children.size(), 9);
+    QCOMPARE(children[0]->name(), QString("sub_xte"));
+    QCOMPARE(children[1]->name(), QString("sub_tt"));
+    QCOMPARE(children[2]->name(), QString("sub_t0"));
+    QCOMPARE(children[3]->name(), QString("sub_p"));
+    QCOMPARE(children[4]->name(), QString("sub_M"));
+    QCOMPARE(children[5]->name(), QString("sub_6p"));
+    QCOMPARE(children[6]->name(), QString("sub_45p"));
+    QCOMPARE(children[7]->name(), QString("sub_010"));
+    QCOMPARE(children[8]->name(), QString("sub_000"));
+    delete parent;
+}
+
+void TestGroup::testHierarchy()
+{
+    Group* group1 = new Group();
+    group1->setName("group1");
+
+    Group* group2 = new Group();
+    group2->setName("group2");
+    group2->setParent(group1);
+
+    Group* group3 = new Group();
+    group3->setName("group3");
+    group3->setParent(group2);
+
+    QStringList hierarchy = group3->hierarchy();
+    QVERIFY(hierarchy.size() == 3);
+    QVERIFY(hierarchy.contains("group1"));
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(0);
+    QVERIFY(hierarchy.size() == 0);
+
+    hierarchy = group3->hierarchy(1);
+    QVERIFY(hierarchy.size() == 1);
+    QVERIFY(hierarchy.contains("group3"));
+
+    hierarchy = group3->hierarchy(2);
+    QVERIFY(hierarchy.size() == 2);
+    QVERIFY(hierarchy.contains("group2"));
+    QVERIFY(hierarchy.contains("group3"));
+}
+
+void TestGroup::testApplyGroupIconRecursively()
+{
+    // Create a database with two nested groups with one entry each
+    Database* database = new Database();
+
+    Group* subgroup = new Group();
+    subgroup->setName("Subgroup");
+    subgroup->setParent(database->rootGroup());
+    QVERIFY(subgroup);
+
+    Group* subsubgroup = new Group();
+    subsubgroup->setName("Subsubgroup");
+    subsubgroup->setParent(subgroup);
+    QVERIFY(subsubgroup);
+
+    Entry* subgroupEntry = subgroup->addEntryWithPath("Subgroup entry");
+    QVERIFY(subgroupEntry);
+    subgroup->setIcon(1);
+
+    Entry* subsubgroupEntry = subsubgroup->addEntryWithPath("Subsubgroup entry");
+    QVERIFY(subsubgroupEntry);
+    subsubgroup->setIcon(2);
+
+    // Set an icon per number to the root group and apply recursively
+    // -> all groups and entries have the same icon
+    const int rootIconNumber = 42;
+    database->rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Set an icon per number to the subsubgroup and apply recursively
+    // -> only the subsubgroup related groups and entries have updated icons
+    const int subsubgroupIconNumber = 24;
+    subsubgroup->setIcon(subsubgroupIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
+    subsubgroup->applyGroupIconToChildGroups();
+    subsubgroup->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == subsubgroupIconNumber);
+
+    // Set an icon per UUID to the subgroup and apply recursively
+    // -> all groups and entries except the root group have the same icon
+    const QUuid subgroupIconUuid = QUuid::createUuid();
+    QImage subgroupIcon(16, 16, QImage::Format_RGB32);
+    subgroupIcon.setPixel(0, 0, qRgb(255, 0, 0));
+    database->metadata()->addCustomIcon(subgroupIconUuid, subgroupIcon);
+    subgroup->setIcon(subgroupIconUuid);
+    subgroup->applyGroupIconToChildGroups();
+    subgroup->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QCOMPARE(subgroup->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subgroup->icon(), subgroupIcon);
+    QCOMPARE(subgroupEntry->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subgroupEntry->icon(), subgroupIcon);
+    QCOMPARE(subsubgroup->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subsubgroup->icon(), subgroupIcon);
+    QCOMPARE(subsubgroupEntry->iconUuid(), subgroupIconUuid);
+    QCOMPARE(subsubgroupEntry->icon(), subgroupIcon);
+
+    // Reset all icons to root icon
+    database->rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(subgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Apply only for child groups
+    const int iconForGroups = 10;
+    database->rootGroup()->setIcon(iconForGroups);
+    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
+    database->rootGroup()->applyGroupIconToChildGroups();
+    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
+    QVERIFY(subgroup->iconNumber() == iconForGroups);
+    QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
+    QVERIFY(subsubgroup->iconNumber() == iconForGroups);
+    QVERIFY(subsubgroupEntry->iconNumber() == rootIconNumber);
+
+    // Apply only for child entries
+    const int iconForEntries = 20;
+    database->rootGroup()->setIcon(iconForEntries);
+    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
+    database->rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
+    QVERIFY(subgroup->iconNumber() == iconForGroups);
+    QVERIFY(subgroupEntry->iconNumber() == iconForEntries);
+    QVERIFY(subsubgroup->iconNumber() == iconForGroups);
+    QVERIFY(subsubgroupEntry->iconNumber() == iconForEntries);
+}
+
+void TestGroup::testUsernamesRecursive()
+{
+    Database* database = new Database();
+
+    // Create a subgroup
+    Group* subgroup = new Group();
+    subgroup->setName("Subgroup");
+    subgroup->setParent(database->rootGroup());
+
+    // Generate entries in the root group and the subgroup
+    Entry* rootGroupEntry = database->rootGroup()->addEntryWithPath("Root group entry");
+    rootGroupEntry->setUsername("Name1");
+
+    Entry* subgroupEntry = subgroup->addEntryWithPath("Subgroup entry");
+    subgroupEntry->setUsername("Name2");
+
+    Entry* subgroupEntryReusingUsername = subgroup->addEntryWithPath("Another subgroup entry");
+    subgroupEntryReusingUsername->setUsername("Name2");
+
+    QList<QString> usernames = database->rootGroup()->usernamesRecursive();
+    QCOMPARE(usernames.size(), 2);
+    QVERIFY(usernames.contains("Name1"));
+    QVERIFY(usernames.contains("Name2"));
+    QVERIFY(usernames.indexOf("Name2") < usernames.indexOf("Name1"));
 }

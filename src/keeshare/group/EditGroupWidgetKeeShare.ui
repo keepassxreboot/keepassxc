@@ -39,7 +39,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="typeComboBox"/>
+      <widget class="QComboBox" name="typeComboBox">
+       <property name="accessibleName">
+        <string>Sharing mode field</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="pathLabel">
@@ -51,10 +55,17 @@
      <item row="3" column="1">
       <layout class="QHBoxLayout" name="pathLayout">
        <item>
-        <widget class="QLineEdit" name="pathEdit"/>
+        <widget class="QLineEdit" name="pathEdit">
+         <property name="accessibleName">
+          <string>Path to share file field</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QToolButton" name="pathSelectionButton">
+         <property name="accessibleName">
+          <string>Browser for share file</string>
+         </property>
          <property name="text">
           <string>...</string>
          </property>
@@ -73,6 +84,9 @@
       <layout class="QHBoxLayout" name="passwordLayout">
        <item>
         <widget class="PasswordEdit" name="passwordEdit">
+         <property name="accessibleName">
+          <string>Password field</string>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
          </property>
@@ -80,6 +94,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="togglePasswordButton">
+         <property name="accessibleName">
+          <string>Toggle password visibility</string>
+         </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
@@ -87,6 +104,9 @@
        </item>
        <item>
         <widget class="QToolButton" name="togglePasswordGeneratorButton">
+         <property name="accessibleName">
+          <string>Toggle password generator</string>
+         </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
@@ -99,6 +119,9 @@
      </item>
      <item row="6" column="1">
       <widget class="QPushButton" name="clearButton">
+       <property name="accessibleName">
+        <string>Clear fields</string>
+       </property>
        <property name="text">
         <string>Clear</string>
        </property>
