@@ -37,16 +37,8 @@ bool OSEventFilter::nativeEventFilter(const QByteArray& eventType, void* message
 #if defined(Q_OS_UNIX)
     if (eventType == QByteArrayLiteral("xcb_generic_event_t")) {
 #elif defined(Q_OS_WIN)
-    auto winmsg = static_cast<MSG*>(message);
-    if (winmsg->message == WM_QUERYENDSESSION) {
-        *result = 1;
-        return true;
-    } else if (winmsg->message == WM_ENDSESSION) {
-        getMainWindow()->appExit();
-        *result = 0;
-        return true;
-    } else if (eventType == QByteArrayLiteral("windows_generic_MSG")
-               || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
+    if (eventType == QByteArrayLiteral("windows_generic_MSG")
+        || eventType == QByteArrayLiteral("windows_dispatcher_MSG")) {
 #endif
         return autoType()->callEventFilter(message) == 1;
     }

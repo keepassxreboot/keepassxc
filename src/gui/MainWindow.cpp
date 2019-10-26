@@ -142,10 +142,6 @@ MainWindow* getMainWindow()
 
 MainWindow::MainWindow()
     : m_ui(new Ui::MainWindow())
-    , m_trayIcon(nullptr)
-    , m_appExitCalled(false)
-    , m_appExiting(false)
-    , m_lastFocusOutTime(0)
 {
     g_MainWindow = this;
 
@@ -990,31 +986,29 @@ void MainWindow::toggleUsernamesHidden()
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    // ignore double close events (happens on macOS when closing from the dock)
     if (m_appExiting) {
         event->accept();
         return;
     }
 
-    // Don't ignore close event when the app is hidden to tray.
-    // This can occur when the OS issues close events on shutdown.
-    if (config()->get("GUI/MinimizeOnClose").toBool() && !isHidden() && !m_appExitCalled) {
+    // Ignore event and hide to tray if this is not an actual close
+    // request by the system's session manager.
+    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled && !isHidden() && !qApp->isSavingSession()) {
         event->ignore();
         hideWindow();
         return;
     }
 
-    bool accept = saveLastDatabases();
-
-    if (accept) {
-        m_appExiting = true;
+    m_appExiting = saveLastDatabases();
+    if (m_appExiting) {
         saveWindowInformation();
-
         event->accept();
         QApplication::quit();
-    } else {
-        event->ignore();
+        return;
     }
+
+    m_appExitCalled = false;
+    event->ignore();
 }
 
 void MainWindow::changeEvent(QEvent* event)
@@ -1208,15 +1202,14 @@ void MainWindow::processTrayIconTrigger()
         toggleWindow();
     } else if (m_trayIconTriggerReason == QSystemTrayIcon::Trigger
                || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
-        // Toggle window if hidden
-        // If on windows, check if focus switched within the last second because
-        // clicking the tray icon removes focus from main window
-        // If on Linux or macOS, check if the window is active
-        if (isHidden()
+        // Toggle window if is not in front.
 #ifdef Q_OS_WIN
-            || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+        // If on Windows, check if focus switched within the last second because
+        // clicking the tray icon removes focus from main window.
+        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
 #else
-            || windowHandle()->isActive()) {
+        // If on Linux or macOS, check if the window has focus.
+        if (hasFocus() || isHidden() || windowHandle()->isActive()) {
 #endif
             toggleWindow();
         } else {
