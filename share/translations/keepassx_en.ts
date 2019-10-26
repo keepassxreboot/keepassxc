@@ -776,16 +776,6 @@ Please select the correct database for saving credentials.</translation>
         <translation>KeePassXC: New key association request</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>Save and allow access</translation>
     </message>
@@ -863,6 +853,14 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation type="unfinished">Don&apos;t show this warning again</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
