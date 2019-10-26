@@ -147,6 +147,7 @@ private:
     QPointer<QAction> m_clearHistoryAction;
     QPointer<QAction> m_searchWidgetAction;
     QPointer<QMenu> m_entryContextMenu;
+    QPointer<QMenu> m_entryNewContextMenu;
     QPointer<QActionGroup> m_lastDatabasesActions;
     QPointer<QActionGroup> m_copyAdditionalAttributeActions;
     QPointer<InactivityTimer> m_inactivityTimer;
