@@ -400,8 +400,10 @@ void DatabaseSettingsWidgetEncryption::updateFormatCompatibility(int index, bool
 
         if (kdf->uuid() == KeePass2::KDF_ARGON2) {
             auto argon2Kdf = kdf.staticCast<Argon2Kdf>();
-            argon2Kdf->setMemory(128 * 1024);
-            argon2Kdf->setParallelism(static_cast<quint32>(QThread::idealThreadCount()));
+            // Default to 64 MiB of memory and 2 threads
+            // these settings are safe for desktop and mobile devices
+            argon2Kdf->setMemory(1 << 16);
+            argon2Kdf->setParallelism(2);
         }
 
         activateChangeDecryptionTime();
