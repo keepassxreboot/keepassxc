@@ -179,6 +179,9 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
     m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
 
+    m_entryNewContextMenu = new QMenu(this);
+    m_entryNewContextMenu->addAction(m_ui->actionEntryNew);
+
     restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
     restoreState(config()->get("GUI/MainWindowState").toByteArray());
 #ifdef WITH_XC_BROWSER
@@ -284,6 +287,10 @@ MainWindow::MainWindow()
 
     connect(m_ui->menuEntries, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_entryContextMenu, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
+    connect(m_entryContextMenu, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
+    connect(m_entryNewContextMenu, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
+    connect(m_entryNewContextMenu, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
     connect(m_ui->menuGroups, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
@@ -1119,7 +1126,17 @@ void MainWindow::releaseContextFocusLock()
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
 {
-    m_entryContextMenu->popup(globalPos);
+    bool entrySelected = false;
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        entrySelected = dbWidget->currentEntryHasFocus();
+    }
+
+    if (entrySelected) {
+        m_entryContextMenu->popup(globalPos);
+    } else {
+        m_entryNewContextMenu->popup(globalPos);
+    }
 }
 
 void MainWindow::showGroupContextMenu(const QPoint& globalPos)
