@@ -23,8 +23,10 @@
 #include <malloc/malloc.h>
 #elif defined(Q_OS_FREEBSD)
 #include <malloc_np.h>
-#else
+#elif defined(HAVE_MALLOC_H)
 #include <malloc.h>
+#else
+#include <stdlib.h>
 #endif
 
 #if defined(NDEBUG) && !defined(__cpp_sized_deallocation)
@@ -64,7 +66,7 @@ void operator delete(void* ptr) noexcept
     ::operator delete(ptr, _msize(ptr));
 #elif defined(Q_OS_MACOS)
     ::operator delete(ptr, malloc_size(ptr));
-#elif defined(Q_OS_UNIX)
+#elif defined(HAVE_MALLOC_USABLE_SIZE)
     ::operator delete(ptr, malloc_usable_size(ptr));
 #else
     // whatever OS this is, give up and simply free stuff
