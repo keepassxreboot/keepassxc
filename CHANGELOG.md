@@ -1,73 +1,130 @@
 # Changelog
 
-## 2.5.0 (2019-07-05)
+## 2.5.0 (2019-10-26)
 
 ### Added
 
-- Group sorting feature [#3282](https://github.com/keepassxreboot/keepassxc/issues/3282)
-- CLI: Add 'flatten' option to the 'ls' command [#3276](https://github.com/keepassxreboot/keepassxc/issues/3276)
-- CLI: Add password generation options to `Add` and `Edit` commands [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
-- CLI: Add CSV export to the 'export' command [#3277]
-- CLI: Add `-y --yubikey` option for YubiKey [#3416](https://github.com/keepassxreboot/keepassxc/issues/3416)
-- Add 'Monospaced font' option to the Notes field [#3321](https://github.com/keepassxreboot/keepassxc/issues/3321)
-- CLI: Add group commands (mv, mkdir and rmdir) [#3313].
-- CLI: Add interactive shell mode command `open` [#3224](https://github.com/keepassxreboot/keepassxc/issues/3224)
-- Add "Paper Backup" aka "Export to HTML file" to the "Database" menu [#3277](https://github.com/keepassxreboot/keepassxc/pull/3277)
-- Add statistics panel with information about the database (number of entries, number of unique passwords, etc.) to the Database Settings dialog [#2034](https://github.com/keepassxreboot/keepassxc/issues/2034)
+- Add 'Paper Backup' aka 'Export to HTML file' to the 'Database' menu [[#3277](https://github.com/keepassxreboot/keepassxc/pull/3277)]
+- Add statistics panel with information about the database (number of entries, number of unique passwords, etc.) to the Database Settings dialog [[#2034](https://github.com/keepassxreboot/keepassxc/issues/2034)]
+- Add support for importing 1Password OpVault files [[#2292](https://github.com/keepassxreboot/keepassxc/issues/2292)]
+- Implement Freedesktop.org secret storage DBus protocol so that KeePassXC can be used as a vault service by libsecret [[#2726](https://github.com/keepassxreboot/keepassxc/issues/2726)]
+- Add support for OnlyKey as an alternative to YubiKeys (requires yubikey-personalization >= 1.20.0) [[#3352](https://github.com/keepassxreboot/keepassxc/issues/3352)]
+- Add group sorting feature [[#3282](https://github.com/keepassxreboot/keepassxc/issues/3282)]
+- Add feature to download favicons for all entries at once [[#3169](https://github.com/keepassxreboot/keepassxc/issues/3169)]
+- Add word case option to passphrase generator [[#3172](https://github.com/keepassxreboot/keepassxc/issues/3172)]
+- Add support for RFC6238-compliant TOTP hashes [[#2972](https://github.com/keepassxreboot/keepassxc/issues/2972)]
+- Add support for offline HIBP checks [[#2707](https://github.com/keepassxreboot/keepassxc/issues/2707)]
+- Add UNIX man page for main program [[#3665](https://github.com/keepassxreboot/keepassxc/issues/3665)]
+- Add 'Monospaced font' option to the notes field [[#3321](https://github.com/keepassxreboot/keepassxc/issues/3321)]
+- Add support for key files in auto open [[#3504](https://github.com/keepassxreboot/keepassxc/issues/3504)]
+- Add search field for filtering entries in Auto-Type dialog [[#2955](https://github.com/keepassxreboot/keepassxc/issues/2955)]
+- Complete usernames based on known usernames from other entries [[#3300](https://github.com/keepassxreboot/keepassxc/issues/3300)]
+- Parse hyperlinks in the notes field of the entry preview pane [[#3596](https://github.com/keepassxreboot/keepassxc/issues/3596)]
+- Allow abbreviation of field names in entry search [[#3440](https://github.com/keepassxreboot/keepassxc/issues/3440)]
+- Allow setting group icons recursively [[#3273](https://github.com/keepassxreboot/keepassxc/issues/3273)]
+- Add copy context menu for username and password in Auto-Type dialog [[#3038](https://github.com/keepassxreboot/keepassxc/issues/3038)]
+- Add 'Lock databases' entry to tray icon menu [[#2896](https://github.com/keepassxreboot/keepassxc/issues/2896)]
+- Add option to minimize window after unlocking [[#3439](https://github.com/keepassxreboot/keepassxc/issues/3439)]
+- Add option to minimize window after copying a password to the clipboard [[#3253](https://github.com/keepassxreboot/keepassxc/issues/3253)]
+- Add option to minimize window after opening a URL [[#3302](https://github.com/keepassxreboot/keepassxc/issues/3302)]
+- Request accessibility permissions for Auto-Type on macOS [[#3624](https://github.com/keepassxreboot/keepassxc/issues/3624)]
+- Browser: Add initial support for multiple URLs [[#3558](https://github.com/keepassxreboot/keepassxc/issues/3558)]
+- Browser: Add entry-specific browser integration settings [[#3444](https://github.com/keepassxreboot/keepassxc/issues/3444)]
+- CLI: Add 'flatten' option to the 'ls' command [[#3276](https://github.com/keepassxreboot/keepassxc/issues/3276)]
+- CLI: Add password generation options to `Add` and `Edit` commands [[#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)]
+- CLI: Add XML import [[#3572](https://github.com/keepassxreboot/keepassxc/issues/3572)]
+- CLI: Add CSV export to the 'export' command [[#3278](https://github.com/keepassxreboot/keepassxc/issues/3278)]
+- CLI: Add `-y --yubikey` option for YubiKey [[#3416](https://github.com/keepassxreboot/keepassxc/issues/3416)]
+- CLI: Add `--dry-run` option for merging databases [[#3254](https://github.com/keepassxreboot/keepassxc/issues/3254)]
+- CLI: Add group commands (mv, mkdir and rmdir) [[#3313](https://github.com/keepassxreboot/keepassxc/issues/3313)].
+- CLI: Add interactive shell mode command `open` [[#3224](https://github.com/keepassxreboot/keepassxc/issues/3224)]
+
 
 ### Changed
 
-- CLI: The password length option `-l` for the CLI commands
-  `Add` and `Edit` is now `-L` [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
-- CLI: the `-u` shorthand for the `--upper` password generation option has been renamed `-U` [#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)
-- CLI: Renamed command `extract` -> `export`. [#3277]
-- Rework the Entry Preview panel [#3306](https://github.com/keepassxreboot/keepassxc/issues/3306)
-- Move notes to General tab on Group Preview Panel [#3336](https://github.com/keepassxreboot/keepassxc/issues/3336)
-- Drop to background when copy feature [#3253](https://github.com/keepassxreboot/keepassxc/issues/3253)
+- Redesign database unlock dialog [ [#3287](https://github.com/keepassxreboot/keepassxc/issues/3287)]
+- Rework the entry preview panel [ [#3306](https://github.com/keepassxreboot/keepassxc/issues/3306)]
+- Move notes to General tab on Group Preview Panel [[#3336](https://github.com/keepassxreboot/keepassxc/issues/3336)]
+- Enable entry actions when editing an entry and cleanup entry context menu  [[#3641](https://github.com/keepassxreboot/keepassxc/issues/3641)]
+- Improve detection of external database changes  [[#2389](https://github.com/keepassxreboot/keepassxc/issues/2389)]
+- Warn if user is trying to use a KDBX file as a key file [[#3625](https://github.com/keepassxreboot/keepassxc/issues/3625)]
+- Add option to disable KeePassHTTP settings migrations prompt [[#3349](https://github.com/keepassxreboot/keepassxc/issues/3349), [#3344](https://github.com/keepassxreboot/keepassxc/issues/3344)]
+- Re-enabled Wayland support (no Auto-Type yet) [[#3520](https://github.com/keepassxreboot/keepassxc/issues/3520), [#3341](https://github.com/keepassxreboot/keepassxc/issues/3341)]
+- Add icon to 'Toggle Window' action in tray icon menu [[3244](https://github.com/keepassxreboot/keepassxc/issues/3244)]
+- Merge custom data between databases only when necessary [[#3475](https://github.com/keepassxreboot/keepassxc/issues/3475)]
+- Improve various file-handling related issues when picking files using the system's file dialog [[#3473](https://github.com/keepassxreboot/keepassxc/issues/3473)]
+- Add 'New Entry' context menu when no entries are selected [[#3671](https://github.com/keepassxreboot/keepassxc/issues/3671)]
+- Reduce default Argon2 settings from 128 MiB and one thread per CPU core to 64 MiB and two threads to account for lower-spec mobile hardware [ [#3672](https://github.com/keepassxreboot/keepassxc/issues/3672)]
+- Browser: Remove unused 'Remember' checkbox for HTTP Basic Auth [[#3371](https://github.com/keepassxreboot/keepassxc/issues/3371)]
+- Browser: Show database name when pairing with a new browser [[#3638](https://github.com/keepassxreboot/keepassxc/issues/3638)]
+- Browser: Show URL in allow access dialog [[#3639](https://github.com/keepassxreboot/keepassxc/issues/3639)]
+- CLI: The password length option `-l` for the CLI commands `Add` and `Edit` is now `-L` [[#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)]
+- CLI: The `-u` shorthand for the `--upper` password generation option has been renamed to `-U` [[#3275](https://github.com/keepassxreboot/keepassxc/issues/3275)]
+- CLI: Rename command `extract` to `export`. [[#3277](https://github.com/keepassxreboot/keepassxc/issues/3277)]
 
 ### Fixed
 
-- Fix password generator issues with special characters [#3303](https://github.com/keepassxreboot/keepassxc/issues/3303)
+- Improve accessibility for assistive technologies [[#3409](https://github.com/keepassxreboot/keepassxc/issues/3409)]
+- Correctly unlock all databases if `--pw-stdin` is provided [[#2916](https://github.com/keepassxreboot/keepassxc/issues/2916)]
+- Fix password generator issues with special characters [[#3303](https://github.com/keepassxreboot/keepassxc/issues/3303)]
+- Fix KeePassXC interrupting shutdown procedure [[#3666](https://github.com/keepassxreboot/keepassxc/issues/3666)]
+- Fix password visibility toggle button state on unlock dialog [[#3312](https://github.com/keepassxreboot/keepassxc/issues/3312)]
+- Fix potential data loss if database is reloaded while user is editing an entry [[#3656](https://github.com/keepassxreboot/keepassxc/issues/3656)]
+- Fix hard-coded background color in search help popup [[#3001](https://github.com/keepassxreboot/keepassxc/issues/3001)]
+- Fix font choice for password preview [[#3425](https://github.com/keepassxreboot/keepassxc/issues/3425)]
+- Fix handling of read-only files when autosave is enabled [[#3408](https://github.com/keepassxreboot/keepassxc/issues/3408)]
+- Handle symlinks correctly when atomic saves are disabled [[#3463](https://github.com/keepassxreboot/keepassxc/issues/3463)]
+- Enable HighDPI icon scaling on Linux [[#3332](https://github.com/keepassxreboot/keepassxc/issues/3332)]
+- Make Auto-Type on macOS more robust and remove old Carbon API calls [[#3634](https://github.com/keepassxreboot/keepassxc/issues/3634), [[#3347](https://github.com/keepassxreboot/keepassxc/issues/3347))]
+- Hide Share tab if KeePassXC is compiled without KeeShare support and other minor KeeShare improvements [[#3654](https://github.com/keepassxreboot/keepassxc/issues/3654), [[#3291](https://github.com/keepassxreboot/keepassxc/issues/3291), [#3029](https://github.com/keepassxreboot/keepassxc/issues/3029), [#3031](https://github.com/keepassxreboot/keepassxc/issues/3031), [#3236](https://github.com/keepassxreboot/keepassxc/issues/3236)]
+- Correctly bring window to the front when clicking tray icon on macOS [[#3576](https://github.com/keepassxreboot/keepassxc/issues/3576)]
+- Correct application shortcut created by MSI Installer on Windows [[#3296](https://github.com/keepassxreboot/keepassxc/issues/3296)]
+- Fix crash when removing custom data [[#3508](https://github.com/keepassxreboot/keepassxc/issues/3508)]
+- Fix placeholder resolution in URLs [[#3281](https://github.com/keepassxreboot/keepassxc/issues/3281)]
+- Fix various inconsistencies and platform-dependent compilation bugs [[#3664](https://github.com/keepassxreboot/keepassxc/issues/3664), [#3662](https://github.com/keepassxreboot/keepassxc/issues/3662), [#3660](https://github.com/keepassxreboot/keepassxc/issues/3660), [#3655](https://github.com/keepassxreboot/keepassxc/issues/3655), [#3649](https://github.com/keepassxreboot/keepassxc/issues/3649), [#3417](https://github.com/keepassxreboot/keepassxc/issues/3417), [#3357](https://github.com/keepassxreboot/keepassxc/issues/3357), [#3319](https://github.com/keepassxreboot/keepassxc/issues/3319), [#3318](https://github.com/keepassxreboot/keepassxc/issues/3318), [#3304](https://github.com/keepassxreboot/keepassxc/issues/3304)]
+- Browser: Fix potential leaking of entries through the browser integration API if multiple databases are opened [[#3480](https://github.com/keepassxreboot/keepassxc/issues/3480)]
+- Browser: Fix password entropy calculation [[#3107](https://github.com/keepassxreboot/keepassxc/issues/3107)]
+- Browser: Fix Windows registry settings for portable installation [[#3603](https://github.com/keepassxreboot/keepassxc/issues/3603)]
 
 ## 2.4.3 (2019-06-12)
 
 ### Added
 
-- Add documentation for keyboard shortcuts to source code distribution [#3215](https://github.com/keepassxreboot/keepassxc/issues/3215)
+- Add documentation for keyboard shortcuts to source code distribution [[#3215](https://github.com/keepassxreboot/keepassxc/issues/3215)]
 
 ### Fixed
 
-- Fix library loading issues in the Snap and macOS releases [#3247](https://github.com/keepassxreboot/keepassxc/issues/3247)
-- Fix various keyboard navigation issues [#3248](https://github.com/keepassxreboot/keepassxc/issues/3248)
-- Fix main window toggling regression when clicking the tray icon on KDE [#3258](https://github.com/keepassxreboot/keepassxc/issues/3258)
+- Fix library loading issues in the Snap and macOS releases [[#3247](https://github.com/keepassxreboot/keepassxc/issues/3247)]
+- Fix various keyboard navigation issues [[#3248](https://github.com/keepassxreboot/keepassxc/issues/3248)]
+- Fix main window toggling regression when clicking the tray icon on KDE [[#3258](https://github.com/keepassxreboot/keepassxc/issues/3258)]
 
 ## 2.4.2 (2019-05-31)
 
-- Improve resilience against memory attacks - overwrite memory before free [#3020](https://github.com/keepassxreboot/keepassxc/issues/3020)
-- Prevent infinite save loop when location is unavailable [#3026](https://github.com/keepassxreboot/keepassxc/issues/3026)
-- Attempt to fix quitting application when shutdown or logout issued [#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)
-- Support merging database custom data [#3002](https://github.com/keepassxreboot/keepassxc/issues/3002)
-- Fix opening URL's with non-http schemes [#3153](https://github.com/keepassxreboot/keepassxc/issues/3153)
-- Fix data loss due to not reading all database attachments if duplicates exist [#3180](https://github.com/keepassxreboot/keepassxc/issues/3180)
-- Fix entry context menu disabling when using keyboard navigation [#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)
-- Fix behaviors when canceling an entry edit [#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)
-- Fix processing of tray icon click and doubleclick [#3112](https://github.com/keepassxreboot/keepassxc/issues/3112)
-- Update group in preview widget when focused [#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)
-- Prefer DuckDuckGo service over direct icon download (increases resolution) [#2996](https://github.com/keepassxreboot/keepassxc/issues/2996)
-- Remove apply button in application settings [#3019](https://github.com/keepassxreboot/keepassxc/issues/3019)
-- Use winqtdeploy on Windows to correct deployment issues [#3025](https://github.com/keepassxreboot/keepassxc/issues/3025)
-- Don't mark entry edit as modified when attribute selection changes [#3041](https://github.com/keepassxreboot/keepassxc/issues/3041)
-- Use console code page CP_UTF8 on Windows if supported [#3050](https://github.com/keepassxreboot/keepassxc/issues/3050)
-- Snap: Fix locking database with session lock [#3046](https://github.com/keepassxreboot/keepassxc/issues/3046)
-- Snap: Fix theming across Linux distributions [#3057](https://github.com/keepassxreboot/keepassxc/issues/3057)
-- Snap: Use SNAP_USER_COMMON and SNAP_USER_DATA directories [#3131](https://github.com/keepassxreboot/keepassxc/issues/3131)
-- KeeShare: Automatically enable WITH_XC_KEESHARE_SECURE if quazip is found [#3088](https://github.com/keepassxreboot/keepassxc/issues/3088)
-- macOS: Fix toolbar text when in dark mode [#2998](https://github.com/keepassxreboot/keepassxc/issues/2998)
-- macOS: Lock database on switching user [#3097](https://github.com/keepassxreboot/keepassxc/issues/3097)
-- macOS: Fix global Auto-Type when the database is locked [#3138](https://github.com/keepassxreboot/keepassxc/issues/3138)
-- Browser: Close popups when database is locked [#3093](https://github.com/keepassxreboot/keepassxc/issues/3093)
-- Browser: Add tests [#3016](https://github.com/keepassxreboot/keepassxc/issues/3016)
-- Browser: Don't create default group if custom group is enabled [#3127](https://github.com/keepassxreboot/keepassxc/issues/3127)
+- Improve resilience against memory attacks - overwrite memory before free [[#3020](https://github.com/keepassxreboot/keepassxc/issues/3020)]
+- Prevent infinite save loop when location is unavailable [[#3026](https://github.com/keepassxreboot/keepassxc/issues/3026)]
+- Attempt to fix quitting application when shutdown or logout issued [[#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)]
+- Support merging database custom data [[#3002](https://github.com/keepassxreboot/keepassxc/issues/3002)]
+- Fix opening URL's with non-http schemes [[#3153](https://github.com/keepassxreboot/keepassxc/issues/3153)]
+- Fix data loss due to not reading all database attachments if duplicates exist [[#3180](https://github.com/keepassxreboot/keepassxc/issues/3180)]
+- Fix entry context menu disabling when using keyboard navigation [[#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)]
+- Fix behaviors when canceling an entry edit [[#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)]
+- Fix processing of tray icon click and doubleclick [[#3112](https://github.com/keepassxreboot/keepassxc/issues/3112)]
+- Update group in preview widget when focused [[#3199](https://github.com/keepassxreboot/keepassxc/issues/3199)]
+- Prefer DuckDuckGo service over direct icon download (increases resolution) [#2996](https://github.com/keepassxreboot/keepassxc/issues/2996)]
+- Remove apply button in application settings [[#3019](https://github.com/keepassxreboot/keepassxc/issues/3019)]
+- Use winqtdeploy on Windows to correct deployment issues [[#3025](https://github.com/keepassxreboot/keepassxc/issues/3025)]
+- Don't mark entry edit as modified when attribute selection changes [[#3041](https://github.com/keepassxreboot/keepassxc/issues/3041)]
+- Use console code page CP_UTF8 on Windows if supported [[#3050](https://github.com/keepassxreboot/keepassxc/issues/3050)]
+- Snap: Fix locking database with session lock [[#3046](https://github.com/keepassxreboot/keepassxc/issues/3046)]
+- Snap: Fix theming across Linux distributions [[#3057](https://github.com/keepassxreboot/keepassxc/issues/3057)]
+- Snap: Use SNAP_USER_COMMON and SNAP_USER_DATA directories [[#3131](https://github.com/keepassxreboot/keepassxc/issues/3131)]
+- KeeShare: Automatically enable WITH_XC_KEESHARE_SECURE if quazip is found [[#3088](https://github.com/keepassxreboot/keepassxc/issues/3088)]
+- macOS: Fix toolbar text when in dark mode [[#2998](https://github.com/keepassxreboot/keepassxc/issues/2998)]
+- macOS: Lock database on switching user [[#3097](https://github.com/keepassxreboot/keepassxc/issues/3097)]
+- macOS: Fix global Auto-Type when the database is locked[ [#3138](https://github.com/keepassxreboot/keepassxc/issues/3138)]
+- Browser: Close popups when database is locked [[#3093](https://github.com/keepassxreboot/keepassxc/issues/3093)]
+- Browser: Add tests [[#3016](https://github.com/keepassxreboot/keepassxc/issues/3016)]
+- Browser: Don't create default group if custom group is enabled [[#3127](https://github.com/keepassxreboot/keepassxc/issues/3127)]
 
 ## 2.4.1 (2019-04-12)
 
