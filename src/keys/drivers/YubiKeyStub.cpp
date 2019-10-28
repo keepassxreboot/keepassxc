@@ -75,3 +75,10 @@ YubiKey::ChallengeResult YubiKey::challenge(int slot, bool mayBlock, const QByte
 
     return ERROR;
 }
+
+bool YubiKey::checkSlotIsBlocking(int slot, QString& errorMessage)
+{
+    Q_UNUSED(slot);
+    Q_UNUSED(errorMessage);
+    return false;
+}
