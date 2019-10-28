@@ -64,7 +64,6 @@ BrowserService::BrowserService()
     : QObject()
     , m_browserHost(new BrowserHost)
     , m_dialogActive(false)
-    , m_bringToFrontRequested(false)
     , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
@@ -110,8 +109,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
     }
 
     if (triggerUnlock) {
-        m_bringToFrontRequested = true;
-        raiseWindow(true);
+        emit requestUnlock();
     }
 
     return false;
@@ -1220,6 +1218,23 @@ void BrowserService::raiseWindow(const bool force)
 #endif
 }
 
+void BrowserService::updateWindowState()
+{
+    m_prevWindowState = WindowState::Normal;
+    if (getMainWindow()->isMinimized()) {
+        m_prevWindowState = WindowState::Minimized;
+    }
+#ifdef Q_OS_MACOS
+    if (macUtils()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
+#else
+    if (getMainWindow()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
+#endif
+}
+
 void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
@@ -1232,11 +1247,6 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
-        if (m_bringToFrontRequested) {
-            hideWindow();
-            m_bringToFrontRequested = false;
-        }
-
         QJsonObject msg;
         msg["action"] = QString("database-unlocked");
         m_browserHost->sendClientMessage(msg);
