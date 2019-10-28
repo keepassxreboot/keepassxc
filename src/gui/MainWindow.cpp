@@ -144,6 +144,8 @@ MainWindow::MainWindow()
             &DatabaseTabWidget::activateDatabaseChanged,
             browserService(),
             &BrowserService::activeDatabaseChanged);
+    connect(
+        browserService(), &BrowserService::requestUnlock, m_ui->tabWidget, &DatabaseTabWidget::performBrowserUnlock);
 #endif
 
 #ifdef WITH_XC_SSHAGENT

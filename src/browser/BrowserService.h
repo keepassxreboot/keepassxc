@@ -91,6 +91,9 @@ public:
     static const QString OPTION_ONLY_HTTP_AUTH;
     static const QString ADDITIONAL_URL;
 
+signals:
+    void requestUnlock();
+
 public slots:
     void databaseLocked(DatabaseWidget* dbWidget);
     void databaseUnlocked(DatabaseWidget* dbWidget);
@@ -142,6 +145,7 @@ private:
 
     void hideWindow() const;
     void raiseWindow(const bool force = false);
+    void updateWindowState();
 
     static bool moveSettingsToCustomData(Entry* entry, const QString& name);
     static int moveKeysToCustomData(Entry* entry, QSharedPointer<Database> db);
@@ -150,7 +154,6 @@ private:
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
 
     bool m_dialogActive;
-    bool m_bringToFrontRequested;
     WindowState m_prevWindowState;
     QUuid m_keepassBrowserUUID;
 
