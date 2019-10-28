@@ -1682,14 +1682,15 @@ void TestCli::testShow()
     QCOMPARE(m_stdoutFile->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
-                        "Password: Password\n"
+                        "Password: PROTECTED\n"
                         "URL: http://www.somesite.com/\n"
                         "Notes: Notes\n"));
 
     qint64 pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
-    showCmd.execute({"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
+    showCmd.execute({"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
@@ -1699,10 +1700,28 @@ void TestCli::testShow()
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Title: Sample Entry\n"
+                        "UserName: User Name\n"
+                        "Password: PROTECTED\n"
+                        "URL: http://www.somesite.com/\n"
+                        "Notes: Notes\n"));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
     m_stdoutFile->seek(pos);
     m_stdoutFile->readLine(); // skip password prompt
     QCOMPARE(m_stdoutFile->readAll(), QByteArray("Sample Entry\n"));
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-a", "Password", m_dbFile->fileName(), "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Password\n"));
 
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");

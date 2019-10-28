@@ -29,6 +29,7 @@ public:
 
     static const QCommandLineOption TotpOption;
     static const QCommandLineOption AttributesOption;
+    static const QCommandLineOption ProtectedAttributesOption;
 };
 
 #endif // KEEPASSXC_SHOW_H

@@ -31,6 +31,11 @@ const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << 
                                                                              << "totp",
                                                                QObject::tr("Show the entry's current TOTP."));
 
+const QCommandLineOption Show::ProtectedAttributesOption =
+    QCommandLineOption(QStringList() << "s"
+                                     << "show-protected",
+                       QObject::tr("Show the protected attributes in clear text."));
+
 const QCommandLineOption Show::AttributesOption = QCommandLineOption(
     QStringList() << "a"
                   << "attributes",
@@ -46,6 +51,7 @@ Show::Show()
     description = QObject::tr("Show an entry's information.");
     options.append(Show::TotpOption);
     options.append(Show::AttributesOption);
+    options.append(Show::ProtectedAttributesOption);
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
@@ -57,6 +63,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     const QStringList args = parser->positionalArguments();
     const QString& entryPath = args.at(1);
     bool showTotp = parser->isSet(Show::TotpOption);
+    bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
     QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -78,16 +85,20 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // Iterate over the attributes and output them line-by-line.
     bool sawUnknownAttribute = false;
-    for (const QString& attribute : asConst(attributes)) {
-        if (!entry->attributes()->contains(attribute)) {
+    for (const QString& attributeName : asConst(attributes)) {
+        if (!entry->attributes()->contains(attributeName)) {
             sawUnknownAttribute = true;
-            errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attribute) << endl;
+            errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
             continue;
         }
         if (showAttributeNames) {
-            outputTextStream << attribute << ": ";
+            outputTextStream << attributeName << ": ";
         }
-        outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attribute)) << endl;
+        if (entry->attributes()->isProtected(attributeName) && showAttributeNames && !showProtectedAttributes) {
+            outputTextStream << "PROTECTED" << endl;
+        } else {
+            outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attributeName)) << endl;
+        }
     }
 
     if (showTotp) {
