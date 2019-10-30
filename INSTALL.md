@@ -35,7 +35,7 @@ Prepare the Building Environment
 
 * [Building Environment on Linux](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Linux)
 * [Building Environment on Windows](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Windows)
-* [Building Environment on MacOS](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-OS-X)
+* [Building Environment on MacOS](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-macOS)
 
 Build Steps
 ===========
