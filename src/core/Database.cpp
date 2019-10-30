@@ -158,7 +158,7 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
 
     m_initialized = true;
     emit databaseOpened();
-    m_fileWatcher->start(canonicalFilePath());
+    m_fileWatcher->start(canonicalFilePath(), 30, 1);
     setEmitModified(true);
 
     return true;
@@ -234,7 +234,7 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     bool ok = performSave(canonicalFilePath, error, atomic, backup);
     if (ok) {
         setFilePath(filePath);
-        m_fileWatcher->start(canonicalFilePath);
+        m_fileWatcher->start(canonicalFilePath, 30, 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
         markAsModified();
