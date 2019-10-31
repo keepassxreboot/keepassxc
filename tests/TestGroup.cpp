@@ -1070,7 +1070,7 @@ void TestGroup::testHierarchy()
     QVERIFY(hierarchy.contains("group3"));
 
     hierarchy = group3->hierarchy(0);
-    QVERIFY(hierarchy.size() == 0);
+    QVERIFY(hierarchy.isEmpty());
 
     hierarchy = group3->hierarchy(1);
     QVERIFY(hierarchy.size() == 1);

@@ -341,6 +341,8 @@ OpVaultReader::decodeB64CompositeKeys(const QString& b64, const QByteArray& encK
         result->errorStr = tr("Unable to decode masterKey: %1").arg(keyKey01.errorString());
         return result;
     }
+    delete result;
+
     const QByteArray keyKey = keyKey01.getClearText();
 
     return decodeCompositeKeys(keyKey);

@@ -60,8 +60,8 @@ int Import::execute(const QStringList& arguments)
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     const QStringList args = parser->positionalArguments();
-    const QString xmlExportPath = args.at(0);
-    const QString dbPath = args.at(1);
+    const QString& xmlExportPath = args.at(0);
+    const QString& dbPath = args.at(1);
 
     if (QFileInfo::exists(dbPath)) {
         errorTextStream << QObject::tr("File %1 already exists.").arg(dbPath) << endl;
