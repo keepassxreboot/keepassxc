@@ -60,7 +60,7 @@ int List::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_SUCCESS;
     }
 
-    QString groupPath = args.at(1);
+    const QString& groupPath = args.at(1);
     Group* group = database->rootGroup()->findGroupByPath(groupPath);
     if (!group) {
         errorTextStream << QObject::tr("Cannot find group %1.").arg(groupPath) << endl;

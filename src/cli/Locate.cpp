@@ -40,7 +40,7 @@ int Locate::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
 {
 
     const QStringList args = parser->positionalArguments();
-    QString searchTerm = args.at(1);
+    const QString& searchTerm = args.at(1);
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
