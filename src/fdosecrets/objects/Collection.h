@@ -21,6 +21,7 @@
 #include "DBusObject.h"
 
 #include "adaptors/CollectionAdaptor.h"
+#include "core/EntrySearcher.h"
 
 #include <QPointer>
 #include <QSet>
@@ -89,6 +90,8 @@ namespace FdoSecrets
         Service* service() const;
         bool inRecycleBin(Group* group) const;
         bool inRecycleBin(Entry* entry) const;
+
+        static EntrySearcher::SearchTerm attributeToTerm(const QString& key, const QString& value);
 
     public slots:
         // expose some methods for Prmopt to use
