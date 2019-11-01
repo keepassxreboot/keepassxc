@@ -19,8 +19,11 @@
 
 #include "TestGlobal.h"
 
+#include "core/EntrySearcher.h"
 #include "fdosecrets/GcryptMPI.h"
 #include "fdosecrets/objects/SessionCipher.h"
+#include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Item.h"
 
 #include "crypto/Crypto.h"
 
@@ -89,4 +92,23 @@ void TestFdoSecrets::testDhIetf1024Sha256Aes128CbcPkcs7()
     QVERIFY(cipher->isValid());
 
     QCOMPARE(cipher->m_aesKey.toHex(), QByteArrayLiteral("6b8f5ee55138eac37118508be21e7834"));
+}
+
+void TestFdoSecrets::testCrazyAttributeKey()
+{
+    using FdoSecrets::Item;
+    using FdoSecrets::Collection;
+
+    const QScopedPointer<Group> root(new Group());
+    const QScopedPointer<Entry> e1(new Entry());
+    e1->setGroup(root.data());
+
+    const QString key = "_a:bc&-+'-e%12df_d";
+    const QString value = "value";
+    e1->attributes()->set(key, value);
+
+    // search for custom entries
+    const auto term = Collection::attributeToTerm(key, value);
+    const auto res = EntrySearcher().search({term}, root.data());
+    QCOMPARE(res.count(), 1);
 }
