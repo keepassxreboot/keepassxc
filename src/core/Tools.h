@@ -22,6 +22,7 @@
 #include "core/Global.h"
 
 #include <QObject>
+#include <QProcessEnvironment>
 #include <QString>
 #include <QUuid>
 
@@ -48,6 +49,8 @@ namespace Tools
                                       bool useWildcards = false,
                                       bool exactMatch = false,
                                       bool caseSensitive = false);
+    QString envSubstitute(const QString& filepath,
+                          QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
 
     template <typename RandomAccessIterator, typename T>
     RandomAccessIterator binaryFind(RandomAccessIterator begin, RandomAccessIterator end, const T& value)

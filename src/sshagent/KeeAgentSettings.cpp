@@ -17,6 +17,7 @@
  */
 
 #include "KeeAgentSettings.h"
+#include "core/Tools.h"
 
 KeeAgentSettings::KeeAgentSettings()
     : m_lifetimeConstraintDuration(600)
@@ -113,6 +114,11 @@ bool KeeAgentSettings::saveAttachmentToTempFile() const
 const QString KeeAgentSettings::fileName() const
 {
     return m_fileName;
+}
+
+const QString KeeAgentSettings::fileNameEnvSubst(QProcessEnvironment environment) const
+{
+    return Tools::envSubstitute(m_fileName, environment);
 }
 
 void KeeAgentSettings::setAllowUseOfSshKey(bool allowUseOfSshKey)
@@ -361,7 +367,7 @@ bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool de
         fileName = m_attachmentName;
         privateKeyData = entry->attachments()->value(fileName);
     } else {
-        QFile localFile(m_fileName);
+        QFile localFile(fileNameEnvSubst());
         QFileInfo localFileInfo(localFile);
         fileName = localFileInfo.fileName();
 
