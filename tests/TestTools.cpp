@@ -64,3 +64,24 @@ void TestTools::testIsBase64()
     QVERIFY(not Tools::isBase64(QByteArray("abc_")));
     QVERIFY(not Tools::isBase64(QByteArray("123")));
 }
+
+void TestTools::testEnvSubstitute()
+{
+    QProcessEnvironment environment;
+
+#if defined(Q_OS_WIN)
+    environment.insert("HOMEDRIVE", "C:");
+    environment.insert("HOMEPATH", "\\Users\\User");
+
+    QCOMPARE(Tools::envSubstitute("%HOMEDRIVE%%HOMEPATH%\\.ssh\\id_rsa", environment),
+             QString("C:\\Users\\User\\.ssh\\id_rsa"));
+    QCOMPARE(Tools::envSubstitute("start%EMPTY%%EMPTY%%%HOMEDRIVE%%end", environment), QString("start%C:%end"));
+#else
+    environment.insert("HOME", QString("/home/user"));
+    environment.insert("USER", QString("user"));
+
+    QCOMPARE(Tools::envSubstitute("~/.ssh/id_rsa", environment), QString("/home/user/.ssh/id_rsa"));
+    QCOMPARE(Tools::envSubstitute("$HOME/.ssh/id_rsa", environment), QString("/home/user/.ssh/id_rsa"));
+    QCOMPARE(Tools::envSubstitute("start/$EMPTY$$EMPTY$HOME/end", environment), QString("start/$/home/user/end"));
+#endif
+}

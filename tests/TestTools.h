@@ -27,6 +27,7 @@ private slots:
     void testHumanReadableFileSize();
     void testIsHex();
     void testIsBase64();
+    void testEnvSubstitute();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

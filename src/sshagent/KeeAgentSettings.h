@@ -54,6 +54,7 @@ public:
     const QString attachmentName() const;
     bool saveAttachmentToTempFile() const;
     const QString fileName() const;
+    const QString fileNameEnvSubst(QProcessEnvironment environment = QProcessEnvironment::systemEnvironment()) const;
 
     void setAllowUseOfSshKey(bool allowUseOfSshKey);
     void setAddAtDatabaseOpen(bool addAtDatabaseOpen);
