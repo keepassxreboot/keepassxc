@@ -39,11 +39,19 @@ public:
     void loadSettings(QSharedPointer<Database> db);
     void saveSettings();
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
+private slots:
+    void calculateStats();
+
 private:
     QScopedPointer<Ui::DatabaseSettingsWidgetStatistics> m_ui;
 
+    bool m_statsCalculated = false;
     QIcon m_errIcon;
     QScopedPointer<QStandardItemModel> m_referencesModel;
+    QSharedPointer<Database> m_db;
 
     void addStatsRow(QString name, QString value, bool bad = false, QString badMsg = "");
 };
