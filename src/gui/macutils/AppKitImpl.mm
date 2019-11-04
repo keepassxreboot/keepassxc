@@ -124,22 +124,6 @@ static const NSEventMask NSEventMaskKeyDown = NSKeyDownMask;
 }
 
 //
-// Add global event monitor
-//
-- (id) addGlobalMonitor:(NSEventMask) mask handler:(void (^)(NSEvent*)) handler
-{
-    return [NSEvent addGlobalMonitorForEventsMatchingMask:mask handler:handler];
-}
-
-//
-// Remove global event monitor
-//
-- (void) removeGlobalMonitor:(id) monitor
-{
-    [NSEvent removeMonitor:monitor];
-}
-
-//
 // Check if accessibility is enabled, may show an popup asking for permissions
 //
 - (bool) enableAccessibility
@@ -209,20 +193,6 @@ bool AppKit::isHidden(pid_t pid)
 bool AppKit::isDarkMode()
 {
     return [static_cast<id>(self) isDarkMode];
-}
-
-void* AppKit::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*))
-{
-    return [static_cast<id>(self) addGlobalMonitor:NSEventMaskKeyDown handler:^(NSEvent* event) {
-        if (event.keyCode == keycode && (event.modifierFlags & modifier) == modifier) {
-            handler(userData);
-        }
-    }];
-}
-
-void AppKit::removeGlobalMonitor(void* monitor)
-{
-    [static_cast<id>(self) removeGlobalMonitor:static_cast<id>(monitor)];
 }
 
 bool AppKit::enableAccessibility()

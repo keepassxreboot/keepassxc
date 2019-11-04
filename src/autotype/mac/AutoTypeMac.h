@@ -19,12 +19,12 @@
 #ifndef KEEPASSX_AUTOTYPEMAC_H
 #define KEEPASSX_AUTOTYPEMAC_H
 
-#include <ApplicationServices/ApplicationServices.h>
+#include <Carbon/Carbon.h>
 #include <QtPlugin>
 #include <memory>
 
-#include "autotype/AutoTypeAction.h"
 #include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypeAction.h"
 
 class AutoTypePlatformMac : public QObject, public AutoTypePlatformInterface
 {
@@ -48,19 +48,20 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = 0);
+    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers);
 
 signals:
     void globalShortcutTriggered();
 
 private:
-    static void hotkeyHandler(void* userData);
-    static CGKeyCode qtToNativeKeyCode(Qt::Key key);
-    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
+    EventHotKeyRef m_hotkeyRef;
+    EventHotKeyID m_hotkeyId;
+
+    static uint16 qtToNativeKeyCode(Qt::Key key);
+    static CGEventFlags qtToNativeModifiers(Qt::KeyboardModifiers modifiers, bool native);
     static int windowLayer(CFDictionaryRef window);
     static QString windowTitle(CFDictionaryRef window);
-
-    void* m_globalMonitor;
+    static OSStatus hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData);
 };
 
 class AutoTypeExecutorMac : public AutoTypeExecutor
@@ -76,4 +77,4 @@ private:
     AutoTypePlatformMac* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPEMAC_H
+#endif  // KEEPASSX_AUTOTYPEMAC_H
