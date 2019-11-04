@@ -18,12 +18,17 @@
 
 #include "AutoTypeMac.h"
 #include "gui/macutils/MacUtils.h"
+#include "gui/MessageBox.h"
 
 #include <ApplicationServices/ApplicationServices.h>
 
 #define HOTKEY_ID 1
 #define MAX_WINDOW_TITLE_LENGTH 1024
 #define INVALID_KEYCODE 0xFFFF
+
+namespace {
+bool accessibilityChecked = false;
+}
 
 AutoTypePlatformMac::AutoTypePlatformMac()
     : m_hotkeyRef(nullptr)
@@ -33,14 +38,18 @@ AutoTypePlatformMac::AutoTypePlatformMac()
     eventSpec.eventClass = kEventClassKeyboard;
     eventSpec.eventKind = kEventHotKeyPressed;
 
+    MessageBox::initializeButtonDefs();
     ::InstallApplicationEventHandler(AutoTypePlatformMac::hotkeyHandler, 1, &eventSpec, this, nullptr);
 }
 
-//
-// Keepassx requires mac os 10.7
-//
+/**
+ * Determine if Auto-Type is available
+ *
+ * @return always return true
+ */
 bool AutoTypePlatformMac::isAvailable()
 {
+    // Accessibility permissions are requested upon first use, instead of on load
     return true;
 }
 
@@ -469,6 +478,21 @@ QString AutoTypePlatformMac::windowTitle(CFDictionaryRef window)
 OSStatus AutoTypePlatformMac::hotkeyHandler(EventHandlerCallRef nextHandler, EventRef theEvent, void* userData)
 {
     Q_UNUSED(nextHandler);
+
+    // Determine if the user has given proper permissions to KeePassXC to perform Auto-Type
+    if (!accessibilityChecked) {
+        if (macUtils()->enableAccessibility() && macUtils()->enableScreenRecording()) {
+            accessibilityChecked = true;
+        } else {
+            // Does not have required permissions to Auto-Type, ignore the keypress
+            MessageBox::information(nullptr,
+                    tr("Permission Required"),
+                    tr("KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global "
+                       "Auto-Type. Screen Recording is necessary to use the window title to find entries. If you "
+                       "already granted permission, you may have to restart KeePassXC."));
+            return noErr;
+        }
+    }
 
     AutoTypePlatformMac* self = static_cast<AutoTypePlatformMac*>(userData);
     EventHotKeyID hotkeyId;

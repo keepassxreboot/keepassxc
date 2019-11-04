@@ -80,3 +80,8 @@ bool MacUtils::enableAccessibility()
 {
     return m_appkit->enableAccessibility();
 }
+
+bool MacUtils::enableScreenRecording()
+{
+    return m_appkit->enableScreenRecording();
+}
