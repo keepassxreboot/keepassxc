@@ -35,7 +35,7 @@ AutoTypeMatchView::AutoTypeMatchView(QWidget* parent)
     m_sortModel->setDynamicSortFilter(true);
     m_sortModel->setSortLocaleAware(true);
     m_sortModel->setSortCaseSensitivity(Qt::CaseInsensitive);
-    QTreeView::setModel(m_sortModel);
+    setModel(m_sortModel);
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
@@ -90,12 +90,26 @@ void AutoTypeMatchView::keyPressEvent(QKeyEvent* event)
 void AutoTypeMatchView::setMatchList(const QList<AutoTypeMatch>& matches)
 {
     m_model->setMatchList(matches);
+
+    bool sameSequences = true;
+    if (matches.count() > 1) {
+        QString sequenceTest = matches[0].sequence;
+        for (const auto& match : matches) {
+            if (match.sequence != sequenceTest) {
+                sameSequences = false;
+                break;
+            }
+        }
+    }
+    setColumnHidden(AutoTypeMatchModel::Sequence, sameSequences);
+
     for (int i = 0; i < m_model->columnCount(); ++i) {
         resizeColumnToContents(i);
         if (columnWidth(i) > 250) {
             setColumnWidth(i, 250);
         }
     }
+
     setFirstMatchActive();
 }
 
