@@ -37,5 +37,6 @@
 - (bool) isDarkMode;
 - (void) userSwitchHandler:(NSNotification*) notification;
 - (bool) enableAccessibility;
+- (bool) enableScreenRecording;
 
 @end

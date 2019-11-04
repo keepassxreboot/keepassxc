@@ -39,6 +39,7 @@ public:
     bool isHidden();
     bool isDarkMode();
     bool enableAccessibility();
+    bool enableScreenRecording();
 
 signals:
     void lockDatabases();

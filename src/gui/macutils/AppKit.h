@@ -38,6 +38,7 @@ public:
     bool isHidden(pid_t pid);
     bool isDarkMode();
     bool enableAccessibility();
+    bool enableScreenRecording();
 
 signals:
     void lockDatabases();

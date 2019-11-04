@@ -19,6 +19,7 @@
 #import "AppKitImpl.h"
 
 #import <AppKit/NSWorkspace.h>
+#import <CoreVideo/CVPixelBuffer.h>
 #import <Availability.h>
 
 #if __MAC_OS_X_VERSION_MAX_ALLOWED < 101200
@@ -128,19 +129,34 @@ static const NSEventMask NSEventMaskKeyDown = NSKeyDownMask;
 //
 - (bool) enableAccessibility
 {
-    // Request a 1 pixel screenshot to trigger the permissions
-    // required for screen reader access. These are necessary
-    // for Auto-Type to find the window titles in macOS 10.15+
-    CGImageRef screenshot = CGWindowListCreateImage(
-            CGRectMake(0, 0, 1, 1),
-            kCGWindowListOptionOnScreenOnly,
-            kCGNullWindowID,
-            kCGWindowImageDefault);
-    CFRelease(screenshot);
-
     // Request accessibility permissions for Auto-Type type on behalf of the user
     NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
+}
+
+//
+// Check if screen recording is enabled, may show an popup asking for permissions
+//
+- (bool) enableScreenRecording
+{
+    if (@available(macOS 10.15, *)) {
+        // Request screen recording permission on macOS 10.15+
+        // This is necessary to get the current window title
+        CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(), 1, 1, kCVPixelFormatType_32BGRA, nil,
+                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime, 
+                                                                  IOSurfaceRef frameSurface, CGDisplayStreamUpdateRef updateRef) {
+                                                              Q_UNUSED(status);
+                                                              Q_UNUSED(displayTime);
+                                                              Q_UNUSED(frameSurface);
+                                                              Q_UNUSED(updateRef);
+                                                          });
+        if (stream) {
+            CFRelease(stream);
+        } else {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 @end
@@ -198,4 +214,9 @@ bool AppKit::isDarkMode()
 bool AppKit::enableAccessibility()
 {
     return [static_cast<id>(self) enableAccessibility];
+}
+
+bool AppKit::enableScreenRecording()
+{
+    return [static_cast<id>(self) enableScreenRecording];
 }
