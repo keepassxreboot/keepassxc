@@ -37,6 +37,7 @@ public:
 
     const QString errorString() const;
     bool isAgentRunning() const;
+    bool testConnection();
     bool addIdentity(OpenSSHKey& key, KeeAgentSettings& settings);
     bool removeIdentity(OpenSSHKey& key);
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
