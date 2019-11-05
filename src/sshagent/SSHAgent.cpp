@@ -35,7 +35,10 @@ SSHAgent::SSHAgent(QObject* parent)
     : QObject(parent)
 {
 #ifndef Q_OS_WIN
-    m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
+    m_socketPath = config()->get("SSHAuthSockOverride", "").toString();
+    if (m_socketPath.isEmpty()) {
+        m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
+    }
 #else
     m_socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
 #endif
@@ -180,6 +183,36 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
     return (res > 0);
 }
 #endif
+
+/**
+ * Test if connection to SSH agent is working.
+ *
+ * @return true on success
+ */
+bool SSHAgent::testConnection()
+{
+    if (!isAgentRunning()) {
+        m_error = tr("No agent running, cannot test connection.");
+        return false;
+    }
+
+    QByteArray requestData;
+    BinaryStream request(&requestData);
+
+    request.write(SSH_AGENTC_REQUEST_IDENTITIES);
+
+    QByteArray responseData;
+    if (!sendMessage(requestData, responseData)) {
+        return false;
+    }
+
+    if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_IDENTITIES_ANSWER) {
+        m_error = tr("Agent protocol error.");
+        return false;
+    }
+
+    return true;
+}
 
 /**
  * Add the identity to the SSH agent.
