@@ -65,6 +65,8 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->hardwareKeyLabelHelp->setIcon(filePath()->icon("actions", "system-help").pixmap(QSize(12, 12)));
     connect(m_ui->hardwareKeyLabelHelp, SIGNAL(clicked(bool)), SLOT(openHardwareKeyHelp()));
+    m_ui->keyFileLabelHelp->setIcon(filePath()->icon("actions", "system-help").pixmap(QSize(12, 12)));
+    connect(m_ui->keyFileLabelHelp, SIGNAL(clicked(bool)), SLOT(openKeyFileHelp()));
 
     connect(m_ui->comboKeyFile->lineEdit(), SIGNAL(textChanged(QString)), SLOT(handleKeyFileComboEdited()));
     connect(m_ui->comboKeyFile, SIGNAL(currentIndexChanged(int)), SLOT(handleKeyFileComboChanged()));
@@ -148,7 +150,7 @@ void DatabaseOpenWidget::load(const QString& filename)
     m_filename = filename;
     m_ui->fileNameLabel->setRawText(m_filename);
 
-    m_ui->comboKeyFile->addItem(tr("Select file..."), -1);
+    m_ui->comboKeyFile->addItem(tr("Select key file..."), -1);
     m_ui->comboKeyFile->setCurrentIndex(0);
     m_ui->keyFileClearIcon->setVisible(false);
     m_keyFileComboEdited = false;
@@ -365,6 +367,13 @@ void DatabaseOpenWidget::browseKeyFile()
     }
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
 
+    if (QFileInfo(filename).canonicalFilePath() == QFileInfo(m_filename).canonicalFilePath()) {
+        MessageBox::warning(this,  tr("Cannot use database file as key file"),
+            tr("You cannot use your database file as a key file.\nIf you do not have a key file, please leave the field empty."),
+            MessageBox::Button::Ok);
+        filename = "";
+    }
+
     if (!filename.isEmpty()) {
         m_ui->comboKeyFile->setCurrentIndex(-1);
         m_ui->comboKeyFile->setEditText(filename);
@@ -433,5 +442,10 @@ void DatabaseOpenWidget::noYubikeyFound()
 
 void DatabaseOpenWidget::openHardwareKeyHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#hwtoken"));
+    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#faq-cat-yubikey"));
+}
+
+void DatabaseOpenWidget::openKeyFileHelp()
+{
+    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#faq-cat-keyfile"));
 }
