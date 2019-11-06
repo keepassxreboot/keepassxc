@@ -33,5 +33,9 @@ endif()
 set(QM_FILES ${QM_FILES} ${QTBASE_TRANSLATIONS})
 
 install(FILES ${QM_FILES} DESTINATION ${DATA_INSTALL_DIR}/translations)
+
+# Add keepassx_en.qm as a fallback for uncommon english locales
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/keepassx_en_US.qm DESTINATION ${DATA_INSTALL_DIR}/translations RENAME keepassx_en.qm)
+
 add_custom_target(translations DEPENDS ${QM_FILES})
 add_dependencies(${PROGNAME} translations)

@@ -55,6 +55,10 @@ int main(int argc, char** argv)
 #endif
 #endif
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    QGuiApplication::setDesktopFileName("org.keepassxc.KeePassXC.desktop");
+#endif
+
     Application app(argc, argv);
     Application::setApplicationName("keepassxc");
     Application::setApplicationVersion(KEEPASSXC_VERSION);

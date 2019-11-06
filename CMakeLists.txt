@@ -438,6 +438,14 @@ if(UNIX)
     int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
             HAVE_PR_SET_DUMPABLE)
 
+    check_cxx_source_compiles("#include <malloc.h>
+    int main() { return 0; }"
+            HAVE_MALLOC_H)
+
+    check_cxx_source_compiles("#include <malloc.h>
+    int main() { malloc_usable_size(NULL, 0); return 0; }"
+            HAVE_MALLOC_USABLE_SIZE)
+
     check_cxx_source_compiles("#include <sys/resource.h>
     int main() {
       struct rlimit limit;
