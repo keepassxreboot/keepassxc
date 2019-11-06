@@ -2,14 +2,6 @@
 <ui version="4.0">
  <class>DatabaseOpenWidget</class>
  <widget class="QWidget" name="DatabaseOpenWidget">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>592</width>
-    <height>462</height>
-   </rect>
-  </property>
   <property name="accessibleName">
    <string>Unlock KeePassXC Database</string>
   </property>
@@ -210,7 +202,7 @@
               <item>
                <widget class="QLabel" name="label_2">
                 <property name="text">
-                 <string>Enter Additional Credentials:</string>
+                 <string>Enter Additional Credentials (if any):</string>
                 </property>
                </widget>
               </item>
@@ -243,32 +235,6 @@
                   <property name="topMargin">
                    <number>3</number>
                   </property>
-                  <item row="0" column="3">
-                   <layout class="QGridLayout" name="gridLayout_2">
-                    <property name="verticalSpacing">
-                     <number>0</number>
-                    </property>
-                    <item row="0" column="1">
-                     <widget class="QComboBox" name="comboKeyFile">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="accessibleName">
-                       <string>Key file selection</string>
-                      </property>
-                      <property name="editable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
                   <item row="1" column="3">
                    <layout class="QGridLayout" name="gridLayout">
                     <property name="spacing">
@@ -330,26 +296,36 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="1" column="4">
-                   <widget class="QPushButton" name="buttonRedetectYubikey">
-                    <property name="enabled">
-                     <bool>true</bool>
+                  <item row="0" column="3">
+                   <layout class="QGridLayout" name="gridLayout_2">
+                    <property name="verticalSpacing">
+                     <number>0</number>
                     </property>
-                    <property name="toolTip">
-                     <string>Refresh hardware tokens</string>
-                    </property>
-                    <property name="accessibleName">
-                     <string>Refresh hardware tokens</string>
-                    </property>
-                    <property name="text">
-                     <string>Refresh</string>
-                    </property>
-                   </widget>
+                    <item row="0" column="1">
+                     <widget class="QComboBox" name="comboKeyFile">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="accessibleName">
+                       <string>Key file selection</string>
+                      </property>
+                      <property name="editable">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
                   <item row="1" column="0">
                    <layout class="QHBoxLayout" name="horizontalLayout_6">
                     <property name="spacing">
-                     <number>0</number>
+                     <number>5</number>
                     </property>
                     <item>
                      <widget class="QLabel" name="hardwareKeyLabel">
@@ -368,16 +344,16 @@
                       </property>
                       <property name="toolTip">
                        <string>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</string>
+&lt;p&gt;Click for more information...&lt;/p&gt;</string>
                       </property>
                       <property name="accessibleName">
                        <string>Hardware key help</string>
                       </property>
                       <property name="styleSheet">
                        <string notr="true">QToolButton {
-                           border: none;
-                           background: none;
-                           }</string>
+	border: none;
+	background: none;
+}</string>
                       </property>
                       <property name="text">
                        <string notr="true">?</string>
@@ -396,12 +372,66 @@
                    </layout>
                   </item>
                   <item row="0" column="0">
-                   <widget class="QLabel" name="keyFileLabel">
-                    <property name="text">
-                     <string>Key File:</string>
+                   <layout class="QHBoxLayout" name="horizontalLayout_4">
+                    <property name="spacing">
+                     <number>5</number>
                     </property>
-                    <property name="buddy">
-                     <cstring>comboKeyFile</cstring>
+                    <item>
+                     <widget class="QLabel" name="keyFileLabel">
+                      <property name="text">
+                       <string>Key File:</string>
+                      </property>
+                      <property name="buddy">
+                       <cstring>comboKeyFile</cstring>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QToolButton" name="keyFileLabelHelp">
+                      <property name="cursor">
+                       <cursorShape>PointingHandCursor</cursorShape>
+                      </property>
+                      <property name="toolTip">
+                       <string>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database's security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</string>
+                      </property>
+                      <property name="accessibleName">
+                       <string>Key file help</string>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">QToolButton {
+	border: none;
+	background: none;
+}</string>
+                      </property>
+                      <property name="text">
+                       <string>?</string>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>12</width>
+                        <height>12</height>
+                       </size>
+                      </property>
+                      <property name="popupMode">
+                       <enum>QToolButton::InstantPopup</enum>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="1" column="4">
+                   <widget class="QPushButton" name="buttonRedetectYubikey">
+                    <property name="enabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="toolTip">
+                     <string>Refresh hardware tokens</string>
+                    </property>
+                    <property name="accessibleName">
+                     <string>Refresh hardware tokens</string>
+                    </property>
+                    <property name="text">
+                     <string>Refresh</string>
                     </property>
                    </widget>
                   </item>
