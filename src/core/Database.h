@@ -23,12 +23,15 @@
 #include <QHash>
 #include <QObject>
 #include <QPointer>
+#include <QScopedPointer>
 
 #include "config-keepassx.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
+#include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
+
 class Entry;
 enum class EntryReferenceType;
 class FileWatcher;
@@ -162,17 +165,38 @@ private:
         bool isReadOnly = false;
         QUuid cipher = KeePass2::CIPHER_AES256;
         CompressionAlgorithm compressionAlgorithm = CompressionGZip;
-        QByteArray transformedMasterKey;
-        QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
-        QSharedPointer<const CompositeKey> key;
+
+        QScopedPointer<PasswordKey> masterSeed;
+        QScopedPointer<PasswordKey> transformedMasterKey;
+        QScopedPointer<PasswordKey> challengeResponseKey;
+
         bool hasKey = false;
-        QByteArray masterSeed;
-        QByteArray challengeResponseKey;
+        QSharedPointer<const CompositeKey> key;
+        QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
+
         QVariantMap publicCustomData;
 
         DatabaseData()
+            : masterSeed(new PasswordKey())
+            , transformedMasterKey(new PasswordKey())
+            , challengeResponseKey(new PasswordKey())
         {
             kdf->randomizeSeed();
+        }
+
+        void clear()
+        {
+            filePath.clear();
+
+            masterSeed.reset();
+            transformedMasterKey.reset();
+            challengeResponseKey.reset();
+
+            hasKey = false;
+            key.reset();
+            kdf.reset();
+
+            publicCustomData.clear();
         }
     };
 
