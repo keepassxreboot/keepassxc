@@ -72,11 +72,7 @@ Database::Database(const QString& filePath)
 
 Database::~Database()
 {
-    s_uuidMap.remove(m_uuid);
-
-    if (m_modified) {
-        emit databaseDiscarded();
-    }
+    releaseData();
 }
 
 QUuid Database::uuid() const
@@ -376,6 +372,42 @@ bool Database::import(const QString& xmlExportPath, QString* error)
     }
 
     return true;
+}
+
+/**
+ * Release all stored group, entry, and meta data of this database.
+ *
+ * Call this method to ensure all data is cleared even if valid
+ * pointers to this Database object are still being held.
+ *
+ * A previously reparented root group will not be freed.
+ */
+void Database::releaseData()
+{
+    s_uuidMap.remove(m_uuid);
+    m_uuid = QUuid();
+
+    if (m_modified) {
+        emit databaseDiscarded();
+    }
+
+    m_data = DatabaseData();
+
+    if (m_rootGroup && m_rootGroup->parent() == this) {
+        delete m_rootGroup;
+    }
+    if (m_metadata) {
+        delete m_metadata;
+    }
+    if (m_fileWatcher) {
+        delete m_fileWatcher;
+    }
+
+    m_deletedObjects.clear();
+    m_commonUsernames.clear();
+
+    m_initialized = false;
+    m_modified = false;
 }
 
 /**

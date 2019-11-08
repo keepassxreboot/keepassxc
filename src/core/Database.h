@@ -29,7 +29,6 @@
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
 #include "keys/CompositeKey.h"
-
 class Entry;
 enum class EntryReferenceType;
 class FileWatcher;
@@ -75,6 +74,8 @@ public:
     bool saveAs(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
+
+    void releaseData();
 
     bool isInitialized() const;
     void setInitialized(bool initialized);
@@ -182,9 +183,9 @@ private:
     bool restoreDatabase(const QString& filePath);
     bool performSave(const QString& filePath, QString* error, bool atomic, bool backup);
 
-    Metadata* const m_metadata;
+    QPointer<Metadata> const m_metadata;
     DatabaseData m_data;
-    Group* m_rootGroup;
+    QPointer<Group> m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QPointer<QTimer> m_timer;
     QPointer<FileWatcher> m_fileWatcher;
