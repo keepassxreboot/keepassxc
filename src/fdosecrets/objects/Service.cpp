@@ -303,7 +303,9 @@ namespace FdoSecrets
                 toUnlock << coll;
             }
         }
-        prompt = new UnlockCollectionsPrompt(this, toUnlock);
+        if (!toUnlock.isEmpty()) {
+            prompt = new UnlockCollectionsPrompt(this, toUnlock);
+        }
         return unlocked;
     }
 
@@ -339,7 +341,9 @@ namespace FdoSecrets
                 toLock << coll;
             }
         }
-        prompt = new LockCollectionsPrompt(this, toLock);
+        if (!toLock.isEmpty()) {
+            prompt = new LockCollectionsPrompt(this, toLock);
+        }
         return locked;
     }
 
