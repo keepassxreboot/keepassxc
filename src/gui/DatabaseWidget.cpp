@@ -418,6 +418,8 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // Keep the instance active till the end of this function
     Q_UNUSED(oldDb);
 #endif
+
+    oldDb->releaseData();
 }
 
 void DatabaseWidget::cloneEntry()
