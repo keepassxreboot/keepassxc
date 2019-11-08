@@ -58,6 +58,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
     connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
+    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setFocus()));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
@@ -165,8 +166,6 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
-
-    m_ui->editPassword->setFocus();
 }
 
 void DatabaseOpenWidget::clearForms()
@@ -230,6 +229,9 @@ void DatabaseOpenWidget::openDatabase()
         }
         m_retryUnlockWithEmptyPassword = false;
         m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
+        // Focus on the password field and select the input for easy retry
+        m_ui->editPassword->selectAll();
+        m_ui->editPassword->setFocus();
         return;
     }
 
