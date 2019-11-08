@@ -48,19 +48,29 @@ PasswordKey::~PasswordKey()
     }
 }
 
-QSharedPointer<PasswordKey> PasswordKey::fromRawKey(const QByteArray& rawKey)
-{
-    auto result = QSharedPointer<PasswordKey>::create();
-    std::memcpy(result->m_key, rawKey.data(), std::min(SHA256_SIZE, rawKey.size()));
-    return result;
-}
-
 QByteArray PasswordKey::rawKey() const
 {
+    if (!m_isInitialized) {
+        return {};
+    }
     return QByteArray::fromRawData(m_key, SHA256_SIZE);
 }
 
 void PasswordKey::setPassword(const QString& password)
 {
-    std::memcpy(m_key, CryptoHash::hash(password.toUtf8(), CryptoHash::Sha256).data(), SHA256_SIZE);
+    setHash(CryptoHash::hash(password.toUtf8(), CryptoHash::Sha256));
+}
+
+void PasswordKey::setHash(const QByteArray& hash)
+{
+    Q_ASSERT(hash.size() == SHA256_SIZE);
+    std::memcpy(m_key, hash.data(), std::min(SHA256_SIZE, hash.size()));
+    m_isInitialized = true;
+}
+
+QSharedPointer<PasswordKey> PasswordKey::fromRawKey(const QByteArray& rawKey)
+{
+    auto result = QSharedPointer<PasswordKey>::create();
+    result->setHash(rawKey);
+    return result;
 }
