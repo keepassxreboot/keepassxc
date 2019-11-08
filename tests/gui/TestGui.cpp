@@ -756,7 +756,8 @@ void TestGui::testTotp()
 
     QApplication::processEvents();
 
-    QString exampleSeed = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
+    QString exampleSeed = "gezd gnbvgY 3tqojqGEZdgnb vgy3tqoJq===";
+    QString expectedFinalSeed = exampleSeed.toUpper().remove(" ").remove("=");
     auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
     seedEdit->setText("");
     QTest::keyClicks(seedEdit, exampleSeed);
@@ -781,7 +782,7 @@ void TestGui::testTotp()
     editEntryWidget->setCurrentPage(1);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
-    QCOMPARE(attrTextEdit->toPlainText(), exampleSeed);
+    QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);
 
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
