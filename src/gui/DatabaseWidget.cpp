@@ -95,6 +95,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
 {
+    Q_ASSERT(m_db);
+
     m_messageWidget->setHidden(true);
 
     auto* mainLayout = new QVBoxLayout();
@@ -221,7 +223,11 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     KeeShare::instance()->connectDatabase(m_db, {});
 #endif
 
-    switchToMainView();
+    if (m_db->isInitialized()) {
+        switchToMainView();
+    } else {
+        switchToOpenDatabase();
+    }
 }
 
 DatabaseWidget::DatabaseWidget(const QString& filePath, QWidget* parent)
