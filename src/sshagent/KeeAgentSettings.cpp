@@ -19,20 +19,12 @@
 #include "KeeAgentSettings.h"
 
 KeeAgentSettings::KeeAgentSettings()
-    : m_allowUseOfSshKey(false)
-    , m_addAtDatabaseOpen(false)
-    , m_removeAtDatabaseClose(false)
-    , m_useConfirmConstraintWhenAdding(false)
-    , m_useLifetimeConstraintWhenAdding(false)
-    , m_lifetimeConstraintDuration(600)
+    : m_lifetimeConstraintDuration(600)
     , m_selectedType(QString("file"))
-    , m_attachmentName(QString())
-    , m_saveAttachmentToTempFile(false)
-    , m_fileName(QString())
 {
 }
 
-bool KeeAgentSettings::operator==(KeeAgentSettings& other)
+bool KeeAgentSettings::operator==(const KeeAgentSettings& other) const
 {
     // clang-format off
     return (m_allowUseOfSshKey == other.m_allowUseOfSshKey && m_addAtDatabaseOpen == other.m_addAtDatabaseOpen
@@ -47,15 +39,30 @@ bool KeeAgentSettings::operator==(KeeAgentSettings& other)
     // clang-format on
 }
 
-bool KeeAgentSettings::operator!=(KeeAgentSettings& other)
+bool KeeAgentSettings::operator!=(const KeeAgentSettings& other) const
 {
     return !(*this == other);
 }
 
-bool KeeAgentSettings::isDefault()
+/**
+ * Test if this instance is at default settings.
+ *
+ * @return true if is at default settings
+ */
+bool KeeAgentSettings::isDefault() const
 {
     KeeAgentSettings defaultSettings;
     return (*this == defaultSettings);
+}
+
+/**
+ * Get last error as a QString.
+ *
+ * @return translated error message
+ */
+const QString KeeAgentSettings::errorString() const
+{
+    return m_error;
 }
 
 bool KeeAgentSettings::allowUseOfSshKey() const
@@ -174,16 +181,26 @@ int KeeAgentSettings::readInt(QXmlStreamReader& reader)
     return ret;
 }
 
+/**
+ * Read settings from an XML document.
+ *
+ * Sets error string on error.
+ *
+ * @param ba XML document
+ * @return success
+ */
 bool KeeAgentSettings::fromXml(const QByteArray& ba)
 {
     QXmlStreamReader reader;
     reader.addData(ba);
 
     if (reader.error() || !reader.readNextStartElement()) {
+        m_error = reader.errorString();
         return false;
     }
 
     if (reader.qualifiedName() != "EntrySettings") {
+        m_error = QCoreApplication::translate("KeeAgentSettings", "Invalid KeeAgent settings file structure.");
         return false;
     }
 
@@ -230,7 +247,12 @@ bool KeeAgentSettings::fromXml(const QByteArray& ba)
     return true;
 }
 
-QByteArray KeeAgentSettings::toXml()
+/**
+ * Write settings to an XML document.
+ *
+ * @return XML document
+ */
+QByteArray KeeAgentSettings::toXml() const
 {
     QByteArray ba;
     QXmlStreamWriter writer(&ba);
@@ -275,4 +297,116 @@ QByteArray KeeAgentSettings::toXml()
     writer.writeEndDocument();
 
     return ba;
+}
+
+/**
+ * Read settings from an entry as an XML attachment.
+ *
+ * Sets error string on error.
+ *
+ * @param entry Entry to read the attachment from
+ * @return true if XML document was loaded
+ */
+bool KeeAgentSettings::fromEntry(const Entry* entry)
+{
+    return fromXml(entry->attachments()->value("KeeAgent.settings"));
+}
+
+/**
+ * Write settings to an entry as an XML attachment.
+ *
+ * @param entry Entry to create the attachment to
+ */
+void KeeAgentSettings::toEntry(Entry* entry) const
+{
+    if (isDefault()) {
+        if (entry->attachments()->hasKey("KeeAgent.settings")) {
+            entry->attachments()->remove("KeeAgent.settings");
+        }
+    } else {
+        entry->attachments()->set("KeeAgent.settings", toXml());
+    }
+}
+
+/**
+ * Test if a SSH key is currently set to be used
+ *
+ * @return true if key is configured
+ */
+bool KeeAgentSettings::keyConfigured() const
+{
+    if (m_selectedType == "attachment") {
+        return !m_attachmentName.isEmpty();
+    } else {
+        return !m_fileName.isEmpty();
+    }
+}
+
+/**
+ * Read a SSH key based on settings from entry to key.
+ *
+ * Sets error string on error.
+ *
+ * @param entry input entry to read attachment and decryption key
+ * @param key output key object
+ * @param decrypt avoid private key decryption if possible (old RSA keys are always decrypted)
+ * @return true if key was properly opened
+ */
+bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt)
+{
+    QString fileName;
+    QByteArray privateKeyData;
+
+    if (m_selectedType == "attachment") {
+        fileName = m_attachmentName;
+        privateKeyData = entry->attachments()->value(fileName);
+    } else {
+        QFile localFile(m_fileName);
+        QFileInfo localFileInfo(localFile);
+        fileName = localFileInfo.fileName();
+
+        if (localFile.fileName().isEmpty()) {
+            m_error = QCoreApplication::translate("KeeAgentSettings", "Private key is empty");
+            return false;
+        }
+
+        if (localFile.size() > 1024 * 1024) {
+            m_error = QCoreApplication::translate("KeeAgentSettings", "File too large to be a private key");
+            return false;
+        }
+
+        if (!localFile.open(QIODevice::ReadOnly)) {
+            m_error = QCoreApplication::translate("KeeAgentSettings", "Failed to open private key");
+            return false;
+        }
+
+        privateKeyData = localFile.readAll();
+    }
+
+    if (privateKeyData.isEmpty()) {
+        m_error = QCoreApplication::translate("KeeAgentSettings", "Private key is empty");
+        return false;
+    }
+
+    if (!key.parsePKCS1PEM(privateKeyData)) {
+        m_error = key.errorString();
+        return false;
+    }
+
+    if (key.encrypted() && (decrypt || key.publicParts().isEmpty())) {
+        if (!key.openKey(entry->password())) {
+            m_error = key.errorString();
+            return false;
+        }
+    }
+
+    if (key.comment().isEmpty()) {
+        key.setComment(entry->username());
+    }
+
+    if (key.comment().isEmpty()) {
+        key.setComment(fileName);
+    }
+
+    return true;
 }

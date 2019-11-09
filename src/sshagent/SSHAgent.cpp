@@ -308,73 +308,31 @@ void SSHAgent::databaseModeChanged()
     }
 
     for (Entry* e : widget->database()->rootGroup()->entriesRecursive()) {
-
         if (widget->database()->metadata()->recycleBinEnabled()
             && e->group() == widget->database()->metadata()->recycleBin()) {
             continue;
         }
 
-        if (!e->attachments()->hasKey("KeeAgent.settings")) {
-            continue;
-        }
-
         KeeAgentSettings settings;
-        settings.fromXml(e->attachments()->value("KeeAgent.settings"));
 
-        if (!settings.allowUseOfSshKey()) {
+        if (!settings.fromEntry(e)) {
             continue;
         }
 
-        QByteArray keyData;
-        QString fileName;
-        if (settings.selectedType() == "attachment") {
-            fileName = settings.attachmentName();
-            keyData = e->attachments()->value(fileName);
-        } else if (!settings.fileName().isEmpty()) {
-            QFile file(settings.fileName());
-            QFileInfo fileInfo(file);
-
-            fileName = fileInfo.fileName();
-
-            if (file.size() > 1024 * 1024) {
-                continue;
-            }
-
-            if (!file.open(QIODevice::ReadOnly)) {
-                continue;
-            }
-
-            keyData = file.readAll();
-        }
-
-        if (keyData.isEmpty()) {
+        if (!settings.allowUseOfSshKey() || !settings.addAtDatabaseOpen()) {
             continue;
         }
 
         OpenSSHKey key;
 
-        if (!key.parsePKCS1PEM(keyData)) {
+        if (!settings.toOpenSSHKey(e, key, true)) {
             continue;
         }
 
-        if (!key.openKey(e->password())) {
-            continue;
-        }
-
-        if (key.comment().isEmpty()) {
-            key.setComment(e->username());
-        }
-
-        if (key.comment().isEmpty()) {
-            key.setComment(fileName);
-        }
-
-        if (settings.addAtDatabaseOpen()) {
-            // Add key to agent; ignore errors if we have previously added the key
-            bool known_key = m_addedKeys.contains(key);
-            if (!addIdentity(key, settings) && !known_key) {
-                emit error(m_error);
-            }
+        // Add key to agent; ignore errors if we have previously added the key
+        bool known_key = m_addedKeys.contains(key);
+        if (!addIdentity(key, settings) && !known_key) {
+            emit error(m_error);
         }
     }
 }
