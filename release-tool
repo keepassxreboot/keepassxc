@@ -42,6 +42,8 @@ BUILD_PLUGINS="all"
 INSTALL_PREFIX="/usr/local"
 ORIG_BRANCH=""
 ORIG_CWD="$(pwd)"
+MACOSX_DEPLOYMENT_TARGET=10.12
+GREP="grep"
 
 # -----------------------------------------------------------------------
 #                          helper functions
@@ -140,7 +142,11 @@ Sign binaries with code signing certificates on Windows and macOS
 
 Options:
   -f, --files        Files to sign (required)
-  -k, --key          Signing Key or Apple Developer ID
+  -k, --key, -i, --identity
+                     Signing Key or Apple Developer ID (required)
+  -u, --username     Apple username for notarization (required on macOS)
+  -c, --keychain     Apple keychain entry name storing the notarization
+                     app password (default: 'AC_PASSWORD')
   -h, --help         Show this help
 EOF
     elif [ "appimage" == "$cmd" ]; then
@@ -167,6 +173,10 @@ EOF
 
 logInfo() {
     printf "\e[1m[ \e[34mINFO\e[39m ]\e[0m $1\n"
+}
+
+logWarn() {
+    printf "\e[1m[ \e[33mWARNING\e[39m ]\e[0m $1\n"
 }
 
 logError() {
@@ -218,6 +228,16 @@ cmdExists() {
     command -v "$1" &> /dev/null
 }
 
+checkGrepCompat() {
+    if ! grep -qPzo test <(echo test) 2> /dev/null; then
+        if [ -e /usr/local/opt/grep/libexec/gnubin/grep ]; then
+            GREP="/usr/local/opt/grep/libexec/gnubin/grep"
+        else
+            exitError "Incompatible grep implementation! If on macOS, please run 'brew install grep'."
+        fi
+    fi
+}
+
 checkSourceDirExists() {
     if [ ! -d "$SRC_DIR" ]; then
         exitError "Source directory '${SRC_DIR}' does not exist!"
@@ -237,7 +257,7 @@ checkGitRepository() {
 }
 
 checkReleaseDoesNotExist() {
-    git tag | grep -q "^$TAG_NAME$"
+    git tag | $GREP -q "^$TAG_NAME$"
     if [ $? -eq 0 ]; then
         exitError "Release '$RELEASE_NAME' (tag: '$TAG_NAME') already exists!"
     fi
@@ -270,17 +290,17 @@ checkVersionInCMake() {
     local minor_num="$(echo ${RELEASE_NAME} | cut -f2 -d.)"
     local patch_num="$(echo ${RELEASE_NAME} | cut -f3 -d. | cut -f1 -d-)"
 
-    grep -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
+    $GREP -q "${app_name_upper}_VERSION_MAJOR \"${major_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
         exitError "${app_name_upper}_VERSION_MAJOR not updated to '${major_num}' in CMakeLists.txt!"
     fi
 
-    grep -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt
+    $GREP -q "${app_name_upper}_VERSION_MINOR \"${minor_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
         exitError "${app_name_upper}_VERSION_MINOR not updated to '${minor_num}' in CMakeLists.txt!"
     fi
 
-    grep -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt
+    $GREP -q "${app_name_upper}_VERSION_PATCH \"${patch_num}\"" CMakeLists.txt
     if [ $? -ne 0 ]; then
         exitError "${app_name_upper}_VERSION_PATCH not updated to '${patch_num}' in CMakeLists.txt!"
     fi
@@ -291,7 +311,7 @@ checkChangeLog() {
         exitError "No CHANGELOG file found!"
     fi
 
-    grep -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md
+    $GREP -qPzo "## ${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n" CHANGELOG.md
     if [ $? -ne 0 ]; then
         exitError "'CHANGELOG.md' has not been updated to the '${RELEASE_NAME}' release!"
     fi
@@ -302,7 +322,7 @@ checkAppStreamInfo() {
         exitError "No AppStream info file found!"
     fi
 
-    grep -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml
+    $GREP -qPzo "<release version=\"${RELEASE_NAME}\" date=\"\d{4}-\d{2}-\d{2}\">" share/linux/org.keepassxc.KeePassXC.appdata.xml
     if [ $? -ne 0 ]; then
         exitError "'share/linux/org.keepassxc.KeePassXC.appdata.xml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
@@ -314,12 +334,12 @@ checkSnapcraft() {
         return
     fi
 
-    grep -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
+    $GREP -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
     if [ $? -ne 0 ]; then
         exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 
-    grep -qPzo "KEEPASSXC_BUILD_TYPE=Release" snapcraft.yaml
+    $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snapcraft.yaml
     if [ $? -ne 0 ]; then
         exitError "'snapcraft.yaml' is not set for a release build!"
     fi
@@ -337,14 +357,23 @@ checkSigntoolCommandExists() {
     fi
 }
 
-checkCodesignCommandExists() {
-    if ! cmdExists codesign; then
-        exitError "codesign command not found on the PATH! Please check that you have correctly installed Xcode."
+checkXcodeSetup() {
+    if ! cmdExists xcrun; then
+        exitError "xcrun command not found on the PATH! Please check that you have correctly installed Xcode."
+    fi
+    if ! xcrun -f codesign > /dev/null 2>&1; then
+        exitError "codesign command not found. You may need to run 'sudo xcode-select -r' to set up Xcode."
+    fi
+    if ! xcrun -f altool > /dev/null 2>&1; then
+        exitError "altool command not found. You may need to run 'sudo xcode-select -r' to set up Xcode."
+    fi
+    if ! xcrun -f stapler > /dev/null 2>&1; then
+        exitError "stapler command not found. You may need to run 'sudo xcode-select -r' to set up Xcode."
     fi
 }
 
 checkQt5LUpdateExists() {
-    if cmdExists lupdate && ! $(lupdate -version | grep -q "lupdate version 5\."); then
+    if cmdExists lupdate && ! $(lupdate -version | $GREP -q "lupdate version 5\."); then
         if ! cmdExists lupdate-qt5; then
             exitError "Qt Linguist tool (lupdate-qt5) is not installed! Please install using 'apt install qttools5-dev-tools'"
         fi
@@ -353,6 +382,8 @@ checkQt5LUpdateExists() {
 
 performChecks() {
     logInfo "Performing basic checks..."
+
+    checkGrepCompat
 
     checkSourceDirExists
 
@@ -498,7 +529,7 @@ merge() {
         fi
     fi
 
-    CHANGELOG=$(grep -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n\n)\n?(?:.|\n)+?\n(?=## )" CHANGELOG.md \
+    CHANGELOG=$($GREP -Pzo "(?<=${RELEASE_NAME} \(\d{4}-\d{2}-\d{2}\)\n\n)\n?(?:.|\n)+?\n(?=## )" CHANGELOG.md \
                   | sed 's/^### //' | tr -d \\0)
     COMMIT_MSG="Release ${RELEASE_NAME}"
 
@@ -664,14 +695,14 @@ EOF
 
     # Find .desktop files, icons, and binaries to deploy
     local desktop_file="$(find "$appdir" -name "org.keepassxc.KeePassXC.desktop" | head -n1)"
-    local icon="$(find "$appdir" -name 'keepassxc.png' | grep -P 'application/256x256/apps/keepassxc.png$' | head -n1)"
-    local executables="$(IFS=$'\n' find "$appdir" | grep -P '/usr/bin/keepassxc[^/]*$' | xargs -i printf " --executable={}")"
+    local icon="$(find "$appdir" -name 'keepassxc.png' | $GREP -P 'application/256x256/apps/keepassxc.png$' | head -n1)"
+    local executables="$(IFS=$'\n' find "$appdir" | $GREP -P '/usr/bin/keepassxc[^/]*$' | xargs -i printf " --executable={}")"
 
     logInfo "Collecting libs and patching binaries..."
     if [ "" == "$DOCKER_IMAGE" ]; then
         "$linuxdeploy" --verbosity=${verbosity} --plugin=qt --appdir="$appdir" --desktop-file="$desktop_file" \
         --custom-apprun="${out_real}/KeePassXC-AppRun" --icon-file="$icon" ${executables} \
-        --library=$(ldconfig -p | grep x86-64 | grep -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)
+        --library=$(ldconfig -p | $GREP x86-64 | $GREP -oP '/[^\s]+/libgpg-error\.so\.\d+$' | head -n1)
     else
         desktop_file="${desktop_file//${appdir}/\/keepassxc\/AppDir}"
         icon="${icon//${appdir}/\/keepassxc\/AppDir}"
@@ -829,9 +860,10 @@ build() {
         RELEASE_NAME="${RELEASE_NAME}-snapshot"
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=Snapshot -DOVERRIDE_VERSION=${RELEASE_NAME}"
     else
+        checkGrepCompat
         checkWorkingTreeClean
 
-        if $(echo "$TAG_NAME" | grep -qP "\-(alpha|beta)\\d+\$"); then
+        if $(echo "$TAG_NAME" | $GREP -qP "\-(alpha|beta)\\d+\$"); then
             CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_BUILD_TYPE=PreRelease"
             logInfo "Checking out pre-release tag '${TAG_NAME}'..."
         else
@@ -864,7 +896,12 @@ build() {
         rm "${prefix}/.version" "${prefix}/.gitrev"
         rmdir "${prefix}" 2> /dev/null
 
-        xz -6 "${OUTPUT_DIR}/${tarball_name}"
+        local xz="xz"
+        if ! cmdExists xz; then
+            logWarn "xz not installed. Falling back to bz2..."
+            xz="bzip2"
+        fi
+        $xz -6 "${OUTPUT_DIR}/${tarball_name}"
     fi
 
     if ! ${build_snapshot} && [ -e "${OUTPUT_DIR}/build-release" ]; then
@@ -883,7 +920,7 @@ build() {
     for p in ${BUILD_PLUGINS}; do
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DWITH_XC_$(echo $p | tr '[:lower:]' '[:upper:]')=On"
     done
-    if [ "$(uname -o)" == "GNU/Linux" ] && ${build_appimage}; then
+    if [ "$(uname -o 2> /dev/null)" == "GNU/Linux" ] && ${build_appimage}; then
         CMAKE_OPTIONS="${CMAKE_OPTIONS} -DKEEPASSXC_DIST_TYPE=AppImage"
         # linuxdeploy requires /usr as install prefix
         INSTALL_PREFIX="/usr"
@@ -901,7 +938,7 @@ build() {
     if [ "" == "$DOCKER_IMAGE" ]; then
         if [ "$(uname -s)" == "Darwin" ]; then
             # Building on macOS
-            export MACOSX_DEPLOYMENT_TARGET=10.10
+            export MACOSX_DEPLOYMENT_TARGET
 
             logInfo "Configuring build..."
             cmake -DCMAKE_BUILD_TYPE=Release \
@@ -931,7 +968,7 @@ build() {
             # Appsign the executables if desired
             if ${build_appsign} && [ -f "${build_key}" ]; then
                 logInfo "Signing executable files"
-                appsign "-f" $(find src | grep -P '\.exe$|\.dll$') "-k" "${build_key}"
+                appsign "-f" $(find src | $GREP -P '\.exe$|\.dll$') "-k" "${build_key}"
             fi
 
             # Call cpack directly instead of calling make package.
@@ -998,7 +1035,7 @@ build() {
         logInfo "Build finished, Docker container terminated."
     fi
 
-    if [ "$(uname -o)" == "GNU/Linux" ] && ${build_appimage}; then
+    if [ "$(uname -o 2> /dev/null)" == "GNU/Linux" ] && ${build_appimage}; then
         local appsign_flag=""
         local appsign_key_flag=""
         local docker_image_flag=""
@@ -1084,6 +1121,8 @@ gpgsign() {
 appsign() {
     local sign_files=()
     local key
+    local ac_username
+    local ac_keychain="AC_PASSWORD"
 
     while [ $# -ge 1 ]; do
         local arg="$1"
@@ -1096,6 +1135,14 @@ appsign() {
 
             -k|--key|-i|--identity)
                 key="$2"
+                shift ;;
+
+            -u|--username)
+                ac_username="$2"
+                shift ;;
+
+            -c|--keychain)
+                ac_keychain="$2"
                 shift ;;
 
             -h|--help)
@@ -1129,9 +1176,15 @@ appsign() {
     done
 
     if [ "$(uname -s)" == "Darwin" ]; then
-        checkCodesignCommandExists
+        if [ "$ac_username" == "" ]; then
+            exitError "Missing arguments, --username is required!"
+        fi
+
+        checkXcodeSetup
+        checkGrepCompat
 
         local orig_dir="$(pwd)"
+        local real_src_dir="$(realpath "${SRC_DIR}")"
         for f in "${sign_files[@]}"; do
             if [[ ${f: -4} == '.dmg' ]]; then
                 logInfo "Unpacking disk image '${f}'..."
@@ -1147,8 +1200,9 @@ appsign() {
                     exitError "Unpacking failed!"
                 fi
 
-                logInfo "Signing app using codesign..."
-                codesign --sign "${key}" --verbose --deep --entitlements "${SRC_DIR}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app
+                logInfo "Signing app..."
+                xcrun codesign --sign "${key}" --verbose --deep --entitlements \
+                    "${real_src_dir}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app
 
                 if [ 0 -ne $? ]; then
                     cd "${orig_dir}"
@@ -1164,11 +1218,55 @@ appsign() {
                     -fsargs "-c c=64,a=16,e=16" \
                     -format UDBZ \
                     "${tmp_dir}/$(basename "${f}")"
+
                 cd "${orig_dir}"
                 cp -f "${tmp_dir}/$(basename "${f}")" "${f}"
                 rm -Rf ${tmp_dir}
+
+                logInfo "Submitting disk image for notarization..."
+                local status="$(xcrun altool --notarize-app \
+                    --primary-bundle-id "org.keepassxc.keepassxc" \
+                    --username "${ac_username}" \
+                    --password "@keychain:${ac_keychain}" \
+                    --file "${f}")"
+
+                if [ 0 -ne $? ]; then
+                    logError "Submission failed!"
+                    exitError "Error message:\n${status}"
+                fi
+
+                local ticket="$(echo "${status}" | $GREP -oP "[a-f0-9-]+$")"
+                logInfo "Submission successful. Ticket ID: ${ticket}."
+
+                logInfo "Waiting for notarization to finish (this may take a while)..."
+                while true; do
+                    echo -n "."
+
+                    status="$(xcrun altool --notarization-info "${ticket}" \
+                        --username "${ac_username}" \
+                        --password "@keychain:${ac_keychain}")"
+
+                    if echo "$status" | $GREP -q "Status Code: 0"; then
+                        logInfo "\nNotarization successful."
+                        break
+                    elif echo "$status" | $GREP -q "Status Code"; then
+                        logError "\nNotarization failed!"
+                        exitError "Error message:\n${status}"
+                    fi
+
+                    sleep 5
+                done
+
+                logInfo "Stapling ticket to disk image..."
+                xcrun stapler staple "${f}"
+
+                if [ 0 -ne $? ]; then
+                    exitError "Stapling failed!"
+                fi
+
+                logInfo "Disk image successfully signed and notarized."
             else
-                logInfo "Skipping non-DMG file '${f}'..."
+                logWarn "Skipping non-DMG file '${f}'..."
             fi
         done
 
