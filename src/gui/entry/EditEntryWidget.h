@@ -112,6 +112,7 @@ private slots:
     void toggleHideNotes(bool visible);
     void pickColor();
 #ifdef WITH_XC_SSHAGENT
+    void toKeeAgentSettings(KeeAgentSettings& settings) const;
     void updateSSHAgent();
     void updateSSHAgentAttachment();
     void updateSSHAgentAttachments();
@@ -153,7 +154,6 @@ private:
     void updateEntryData(Entry* entry) const;
 #ifdef WITH_XC_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
-    void saveSSHAgentConfig();
 #endif
 
     void displayAttribute(QModelIndex index, bool showProtected);
