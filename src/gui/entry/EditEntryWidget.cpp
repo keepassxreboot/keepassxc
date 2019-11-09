@@ -106,12 +106,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupAutoType();
 
 #ifdef WITH_XC_SSHAGENT
-    if (config()->get("SSHAgent", false).toBool()) {
-        setupSSHAgent();
-        m_sshAgentEnabled = true;
-    } else {
-        m_sshAgentEnabled = false;
-    }
+    setupSSHAgent();
+    m_sshAgentEnabled = config()->get("SSHAgent", false).toBool();
 #endif
 
 #ifdef WITH_XC_BROWSER
@@ -544,7 +540,7 @@ void EditEntryWidget::setupSSHAgent()
 void EditEntryWidget::updateSSHAgent()
 {
     KeeAgentSettings settings;
-    settings.fromXml(m_advancedUi->attachmentsWidget->getAttachment("KeeAgent.settings"));
+    settings.fromEntry(m_entry);
 
     m_sshAgentUi->addKeyToAgentCheckBox->setChecked(settings.addAtDatabaseOpen());
     m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(settings.removeAtDatabaseClose());
@@ -557,15 +553,8 @@ void EditEntryWidget::updateSSHAgent()
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
 
     m_sshAgentSettings = settings;
+
     updateSSHAgentAttachments();
-
-    if (settings.selectedType() == "attachment") {
-        m_sshAgentUi->attachmentRadioButton->setChecked(true);
-    } else {
-        m_sshAgentUi->externalFileRadioButton->setChecked(true);
-    }
-
-    updateSSHAgentKeyInfo();
 }
 
 void EditEntryWidget::updateSSHAgentAttachment()
@@ -590,6 +579,14 @@ void EditEntryWidget::updateSSHAgentAttachments()
 
     m_sshAgentUi->attachmentComboBox->setCurrentText(m_sshAgentSettings.attachmentName());
     m_sshAgentUi->externalFileEdit->setText(m_sshAgentSettings.fileName());
+
+    if (m_sshAgentSettings.selectedType() == "attachment") {
+        m_sshAgentUi->attachmentRadioButton->setChecked(true);
+    } else {
+        m_sshAgentUi->externalFileRadioButton->setChecked(true);
+    }
+
+    updateSSHAgentKeyInfo();
 }
 
 void EditEntryWidget::updateSSHAgentKeyInfo()
@@ -639,10 +636,8 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     }
 }
 
-void EditEntryWidget::saveSSHAgentConfig()
+void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
 {
-    KeeAgentSettings settings;
-
     settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
     settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
     settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
@@ -662,14 +657,6 @@ void EditEntryWidget::saveSSHAgentConfig()
 
     // we don't use this either but we don't want it to dirty flag the config
     settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
-
-    if (settings.isDefault()) {
-        m_advancedUi->attachmentsWidget->removeAttachment("KeeAgent.settings");
-    } else if (settings != m_sshAgentSettings) {
-        m_advancedUi->attachmentsWidget->setAttachment("KeeAgent.settings", settings.toXml());
-    }
-
-    m_sshAgentSettings = settings;
 }
 
 void EditEntryWidget::browsePrivateKey()
@@ -684,56 +671,16 @@ void EditEntryWidget::browsePrivateKey()
 
 bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
 {
-    QString fileName;
-    QByteArray privateKeyData;
+    KeeAgentSettings settings;
+    toKeeAgentSettings(settings);
 
-    if (m_sshAgentUi->attachmentRadioButton->isChecked()) {
-        fileName = m_sshAgentUi->attachmentComboBox->currentText();
-        privateKeyData = m_advancedUi->attachmentsWidget->getAttachment(fileName);
-    } else {
-        QFile localFile(m_sshAgentUi->externalFileEdit->text());
-        QFileInfo localFileInfo(localFile);
-        fileName = localFileInfo.fileName();
-
-        if (localFile.fileName().isEmpty()) {
-            return false;
-        }
-
-        if (localFile.size() > 1024 * 1024) {
-            showMessage(tr("File too large to be a private key"), MessageWidget::Error);
-            return false;
-        }
-
-        if (!localFile.open(QIODevice::ReadOnly)) {
-            showMessage(tr("Failed to open private key"), MessageWidget::Error);
-            return false;
-        }
-
-        privateKeyData = localFile.readAll();
-    }
-
-    if (privateKeyData.isEmpty()) {
+    if (!settings.keyConfigured()) {
         return false;
     }
 
-    if (!key.parsePKCS1PEM(privateKeyData)) {
-        showMessage(key.errorString(), MessageWidget::Error);
+    if (!settings.toOpenSSHKey(m_entry, key, decrypt)) {
+        showMessage(settings.errorString(), MessageWidget::Error);
         return false;
-    }
-
-    if (key.encrypted() && (decrypt || key.publicKey().isEmpty())) {
-        if (!key.openKey(m_entry->password())) {
-            showMessage(key.errorString(), MessageWidget::Error);
-            return false;
-        }
-    }
-
-    if (key.comment().isEmpty()) {
-        key.setComment(m_entry->username());
-    }
-
-    if (key.comment().isEmpty()) {
-        key.setComment(fileName);
     }
 
     return true;
@@ -751,11 +698,7 @@ void EditEntryWidget::addKeyToAgent()
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
 
     KeeAgentSettings settings;
-
-    settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
-    settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
-    settings.setUseLifetimeConstraintWhenAdding(m_sshAgentUi->lifetimeCheckBox->isChecked());
-    settings.setLifetimeConstraintDuration(m_sshAgentUi->lifetimeSpinBox->value());
+    toKeeAgentSettings(settings);
 
     if (!SSHAgent::instance()->addIdentity(key, settings)) {
         showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
@@ -1064,9 +1007,7 @@ bool EditEntryWidget::commitEntry()
     m_autoTypeAssoc->removeEmpty();
 
 #ifdef WITH_XC_SSHAGENT
-    if (m_sshAgentEnabled) {
-        saveSSHAgentConfig();
-    }
+    toKeeAgentSettings(m_sshAgentSettings);
 #endif
 
 #ifdef WITH_XC_BROWSER
@@ -1085,13 +1026,8 @@ bool EditEntryWidget::commitEntry()
         m_entry->endUpdate();
     }
 
-#ifdef WITH_XC_SSHAGENT
-    if (m_sshAgentEnabled) {
-        updateSSHAgent();
-    }
-#endif
-
     m_historyModel->setEntries(m_entry->historyItems());
+    m_advancedUi->attachmentsWidget->setEntryAttachments(m_entry->attachments());
 
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     setModified(false);
@@ -1152,6 +1088,12 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     }
 
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
+
+#ifdef WITH_XC_SSHAGENT
+    if (m_sshAgentEnabled) {
+        m_sshAgentSettings.toEntry(entry);
+    }
+#endif
 }
 
 void EditEntryWidget::cancel()
