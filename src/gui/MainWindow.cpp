@@ -37,6 +37,7 @@
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
+#include "gui/KeyboardShortcutsDialog.h"
 #include "gui/SearchWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -425,7 +426,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionGettingStarted, SIGNAL(triggered()), SLOT(openGettingStartedGuide()));
     connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
-    connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(openKeyboardShortcuts()));
+    connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(showKeyboardShortcutsDialog()));
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
@@ -779,6 +780,12 @@ void MainWindow::showAboutDialog()
     aboutDialog->open();
 }
 
+void MainWindow::showKeyboardShortcutsDialog()
+{
+    auto* keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
+    keyboardShortcutsDialog->open();
+}
+
 void MainWindow::showUpdateCheckStartup()
 {
 #ifdef WITH_XC_UPDATECHECK
@@ -854,11 +861,6 @@ void MainWindow::openUserGuide()
 void MainWindow::openOnlineHelp()
 {
     customOpenUrl("https://keepassxc.org/docs/");
-}
-
-void MainWindow::openKeyboardShortcuts()
-{
-    customOpenUrl("https://github.com/keepassxreboot/keepassxc/blob/develop/docs/KEYBINDS.md");
 }
 
 void MainWindow::switchToDatabases()

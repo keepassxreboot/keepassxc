@@ -105,6 +105,7 @@ set(keepassx_SOURCES
         gui/Font.cpp
         gui/IconModels.cpp
         gui/KeePass1OpenWidget.cpp
+        gui/KeyboardShortcutsDialog.cpp
         gui/KMessageWidget.cpp
         gui/LineEdit.cpp
         gui/MainWindow.cpp

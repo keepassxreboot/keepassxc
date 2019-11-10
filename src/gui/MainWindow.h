@@ -85,6 +85,7 @@ private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
+    void showKeyboardShortcutsDialog();
     void showUpdateCheckStartup();
     void showUpdateCheckDialog();
     void focusWindowChanged(QWindow* focusWindow);
@@ -94,7 +95,6 @@ private slots:
     void openGettingStartedGuide();
     void openUserGuide();
     void openOnlineHelp();
-    void openKeyboardShortcuts();
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void switchToPasswordGen(bool enabled);
