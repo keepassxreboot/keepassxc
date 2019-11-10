@@ -49,14 +49,14 @@
    <item>
     <widget class="QRadioButton" name="inheritSequenceButton">
      <property name="text">
-      <string>Inherit default Auto-Type sequence from the &amp;group</string>
+      <string>Inherit default Auto-Type sequence from the group</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QRadioButton" name="customSequenceButton">
      <property name="text">
-      <string>&amp;Use custom Auto-Type sequence:</string>
+      <string>Use custom Auto-Type sequence:</string>
      </property>
     </widget>
    </item>

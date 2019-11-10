@@ -1112,8 +1112,8 @@ void EditEntryWidget::cancel()
     bool accepted = false;
     if (isModified()) {
         auto result = MessageBox::question(this,
-                                           QString(),
-                                           tr("Entry has unsaved changes"),
+                                           tr("Unsaved Changes"),
+                                           tr("Would you like to save changes to this entry?"),
                                            MessageBox::Cancel | MessageBox::Save | MessageBox::Discard,
                                            MessageBox::Cancel);
         if (result == MessageBox::Cancel) {
@@ -1260,7 +1260,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
-            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press reveal to view or edit"));
+            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press Reveal to view or edit"));
             m_advancedUi->attributesEdit->setEnabled(false);
             m_advancedUi->revealAttributeButton->setEnabled(true);
             m_advancedUi->protectAttributeButton->setChecked(true);

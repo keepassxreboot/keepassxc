@@ -25,11 +25,11 @@
 #include "core/Database.h"
 #include "format/CsvExporter.h"
 
-const QCommandLineOption Export::FormatOption =
-    QCommandLineOption(QStringList() << "f"
-                                     << "format",
-                       QObject::tr("Format to use when exporting. Available choices are xml or csv. Defaults to xml."),
-                       QStringLiteral("xml|csv"));
+const QCommandLineOption Export::FormatOption = QCommandLineOption(
+    QStringList() << "f"
+                  << "format",
+    QObject::tr("Format to use when exporting. Available choices are 'xml' or 'csv'. Defaults to 'xml'."),
+    QStringLiteral("xml|csv"));
 
 Export::Export()
 {
@@ -44,7 +44,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
     QString format = parser->value(Export::FormatOption);
-    if (format.isEmpty() || format == QStringLiteral("xml")) {
+    if (format.isEmpty() || format.startsWith(QStringLiteral("xml"), Qt::CaseInsensitive)) {
         QByteArray xmlData;
         QString errorMessage;
         if (!database->extract(xmlData, &errorMessage)) {
@@ -52,7 +52,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
             return EXIT_FAILURE;
         }
         outputTextStream << xmlData.constData() << endl;
-    } else if (format == QStringLiteral("csv")) {
+    } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         outputTextStream << csvExporter.exportDatabase(database);
     } else {

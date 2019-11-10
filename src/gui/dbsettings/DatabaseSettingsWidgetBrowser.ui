@@ -62,7 +62,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>&amp;Disconnect all browsers</string>
+           <string>Disconnect all browsers</string>
           </property>
          </widget>
         </item>
@@ -75,7 +75,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Forg&amp;et all site-specific settings on entries</string>
+           <string>Forget all site-specific settings on entries</string>
           </property>
          </widget>
         </item>
@@ -92,7 +92,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Move KeePassHTTP attributes to KeePassXC-Browser &amp;custom data</string>
+           <string>Move KeePassHTTP attributes to KeePassXC-Browser custom data</string>
           </property>
          </widget>
         </item>

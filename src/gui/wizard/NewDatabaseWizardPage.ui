@@ -12,7 +12,7 @@
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>En&amp;cryption Settings</string>
+   <string>Encryption Settings</string>
   </property>
   <property name="subTitle">
    <string>Here you can adjust the database encryption settings. Don't worry, you can change them later in the database settings.</string>
