@@ -57,11 +57,11 @@
            </widget>
           </item>
           <item>
-            <widget class="QCheckBox" name="minimizeAfterUnlockCheckBox">
-              <property name="text">
-                <string>Minimize window after unlocking database</string>
-              </property>
-            </widget>
+           <widget class="QCheckBox" name="minimizeAfterUnlockCheckBox">
+            <property name="text">
+             <string>Minimize window after unlocking database</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QCheckBox" name="rememberLastDatabasesCheckBox">
@@ -806,7 +806,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="autoTypeShortcutLabel">
            <property name="text">
-            <string>Global Auto-Type shortcut</string>
+            <string>Global Auto-Type shortcut:</string>
            </property>
           </widget>
          </item>
@@ -826,7 +826,7 @@
          <item row="3" column="0">
           <widget class="QLabel" name="autoTypeDelayLabel">
            <property name="text">
-            <string>Auto-Type typing delay</string>
+            <string>Auto-Type typing delay:</string>
            </property>
           </widget>
          </item>
@@ -858,7 +858,7 @@
          <item row="2" column="0">
           <widget class="QLabel" name="autoTypeStartDelayLabel">
            <property name="text">
-            <string>Auto-Type start delay</string>
+            <string>Auto-Type start delay:</string>
            </property>
           </widget>
          </item>

@@ -64,10 +64,10 @@
        <item>
         <widget class="QToolButton" name="pathSelectionButton">
          <property name="accessibleName">
-          <string>Browser for share file</string>
+          <string>Browse for share file</string>
          </property>
          <property name="text">
-          <string>...</string>
+          <string>Browse...</string>
          </property>
         </widget>
        </item>

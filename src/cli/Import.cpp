@@ -86,7 +86,7 @@ int Import::execute(const QStringList& arguments)
     db.setKey(key);
 
     if (!db.import(xmlExportPath, &errorMessage)) {
-        errorTextStream << QObject::tr("Unable to import XML database export %1").arg(errorMessage) << endl;
+        errorTextStream << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
         return EXIT_FAILURE;
     }
 

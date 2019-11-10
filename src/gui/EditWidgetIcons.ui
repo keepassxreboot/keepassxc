@@ -26,7 +26,7 @@
    <item>
     <widget class="QRadioButton" name="defaultIconsRadio">
      <property name="text">
-      <string>&amp;Use default icon</string>
+      <string>Use default icon</string>
      </property>
     </widget>
    </item>
@@ -58,7 +58,7 @@
    <item>
     <widget class="QRadioButton" name="customIconsRadio">
      <property name="text">
-      <string>Use custo&amp;m icon</string>
+      <string>Use custom icon</string>
      </property>
     </widget>
    </item>
@@ -151,7 +151,7 @@
         <string notr="true">padding: 4px 10px</string>
        </property>
        <property name="text">
-        <string>Apply icon &amp;to ...</string>
+        <string>Apply icon to...</string>
        </property>
       </widget>
      </item>
