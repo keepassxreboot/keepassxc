@@ -18,6 +18,7 @@
 #include "Item.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
@@ -27,11 +28,13 @@
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
 #include "core/Tools.h"
+#include "gui/MessageBox.h"
 
 #include <QMimeDatabase>
 #include <QRegularExpression>
 #include <QSet>
 #include <QTextCodec>
+#include <QMessageBox>
 
 namespace FdoSecrets
 {
@@ -238,6 +241,25 @@ namespace FdoSecrets
             service()->plugin()->emitRequestShowNotification(
                 tr(R"(Entry "%1" from database "%2" was used by %3)")
                     .arg(m_backend->title(), collection()->name(), callingPeerName()));
+			
+			if (FdoSecrets::settings()->showNotification()) {
+				QMessageBox msgBox;
+				msgBox.setIcon(QMessageBox::Question);
+				QPushButton *allowButton = msgBox.addButton(tr("Allow access"), QMessageBox::YesRole);
+				QPushButton *denyButton = msgBox.addButton(tr("Deny"), QMessageBox::NoRole);
+				msgBox.setDefaultButton(allowButton);
+				msgBox.setEscapeButton(denyButton);
+				msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
+				msgBox.setWindowTitle(tr("KeePassXC Request"));
+				msgBox.setText(
+						tr("\nKeepassXC Secret Service: new app request\n\nApplication: \n\n%3\n\nRequest entry: \n%1 \n\nFrom database: \n%2\n\n")
+							.arg(m_backend->title(), collection()->name(), callingPeerName()));	
+				msgBox.exec();
+				msgBox.raise();
+
+				if (msgBox.clickedButton() == allowButton) {return secret;}
+				return {};	
+			}
         }
         return secret;
     }

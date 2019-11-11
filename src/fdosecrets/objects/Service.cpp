@@ -30,6 +30,7 @@
 #include <QDBusConnection>
 #include <QDBusServiceWatcher>
 #include <QDebug>
+#include <QMessageBox>
 
 namespace
 {
@@ -362,6 +363,25 @@ namespace FdoSecrets
             plugin()->emitRequestShowNotification(
                 tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", res.size())
                     .arg(callingPeerName()));
+			
+			if (FdoSecrets::settings()->showNotification()) {
+				QMessageBox msgBox;
+				msgBox.setIcon(QMessageBox::Question);
+				QPushButton *allowButton = msgBox.addButton(tr("Allow access"), QMessageBox::YesRole);
+				QPushButton *denyButton = msgBox.addButton(tr("Deny"), QMessageBox::NoRole);
+				msgBox.setDefaultButton(allowButton);
+				msgBox.setEscapeButton(denyButton);
+				msgBox.setWindowFlags(Qt::WindowStaysOnTopHint);
+				msgBox.setWindowTitle(tr("KeePassXC Request"));
+				msgBox.setText(
+					tr("\nKeepassXC Secret Service: new app request\n\nApplication: \n\n%1\n\nRequesting %n entry\n\n","", res.size())
+					  .arg(callingPeerName()));
+				msgBox.exec();
+				msgBox.raise();
+
+				if (msgBox.clickedButton() == allowButton) {return res;}
+				return {};
+			}
         }
         return res;
     }
