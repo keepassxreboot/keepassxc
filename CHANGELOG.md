@@ -1,5 +1,36 @@
 # Changelog
 
+## 2.5.1 (2019-11-11)
+
+### Added
+
+- Add programmatic use of the EntrySearcher [#3760]
+- Explicitly clear database memory upon locking even if the object is not deleted immediately [#3824]
+- macOS: Add ability to perform notarization of built package [#3827]
+
+### Changed
+
+- Reduce file hash checking to every 30 seconds to correct performance issues [#3724]
+- Correct formatting of notes in entry preview widget [#3727]
+- Improve performance and UX of database statistics page [#3780]
+- Improve interface for key file selection to discourage use of the database file [#3807]
+- Hide Auto-Type sequences column when not needed [#3794]
+- macOS: Revert back to using Carbon API for hotkey detection [#3794]
+- CLI: Do not show protected fields by default [#3710]
+
+### Fixed
+
+- Secret Service: Correct issues interfacing with various applications [#3761]
+- Fix building without additional features [#3693]
+- Fix handling TOTP secret keys that require padding [#3764]
+- Fix database unlock dialog password field focus [#3764]
+- Correctly label open databases as locked on launch [#3764]
+- Prevent infinite recursion when two databases AutoOpen each other [#3764]
+- Browser: Fix incorrect matching of invalid URLs [#3759]
+- Properly stylize the application name on Linux [#3775]
+- Show application icon on Plasma Wayland sessions [#3777]
+- macOS: Check for Auto-Type permissions on use instead of at launch [#3794]
+
 ## 2.5.0 (2019-10-26)
 
 ### Added
