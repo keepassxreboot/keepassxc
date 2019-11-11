@@ -21,7 +21,8 @@
 
 MacUtils* MacUtils::m_instance = nullptr;
 
-MacUtils::MacUtils(QObject* parent) : QObject(parent)
+MacUtils::MacUtils(QObject* parent)
+    : QObject(parent)
     , m_appkit(new AppKit())
 {
     connect(m_appkit.data(), SIGNAL(lockDatabases()), SIGNAL(lockDatabases()));
@@ -29,7 +30,6 @@ MacUtils::MacUtils(QObject* parent) : QObject(parent)
 
 MacUtils::~MacUtils()
 {
-    
 }
 
 MacUtils* MacUtils::instance()
@@ -76,17 +76,12 @@ bool MacUtils::isDarkMode()
     return m_appkit->isDarkMode();
 }
 
-void* MacUtils::addGlobalMonitor(CGKeyCode keycode, CGEventFlags modifier, void* userData, void (*handler)(void*))
-{
-    return m_appkit->addGlobalMonitor(keycode, modifier, userData, handler);
-}
-
-void MacUtils::removeGlobalMonitor(void* monitor)
-{
-    m_appkit->removeGlobalMonitor(monitor);
-}
-
 bool MacUtils::enableAccessibility()
 {
     return m_appkit->enableAccessibility();
+}
+
+bool MacUtils::enableScreenRecording()
+{
+    return m_appkit->enableScreenRecording();
 }

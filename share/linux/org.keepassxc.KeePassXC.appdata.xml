@@ -50,6 +50,32 @@
     </screenshots>
 
     <releases>
+        <release version="2.5.1" date="2019-11-11">
+            <description>
+                <ul>
+                    <li>Add programmatic use of the EntrySearcher [#3760]</li>
+                    <li>Explicitly clear database memory upon locking even if the object is not deleted immediately [#3824]</li>
+                    <li>macOS: Add ability to perform notarization of built package [#3827]</li>
+                    <li>Reduce file hash checking to every 30 seconds to correct performance issues [#3724]</li>
+                    <li>Correct formatting of notes in entry preview widget [#3727]</li>
+                    <li>Improve performance and UX of database statistics page [#3780]</li>
+                    <li>Improve interface for key file selection to discourage use of the database file [#3807]</li>
+                    <li>Hide Auto-Type sequences column when not needed [#3794]</li>
+                    <li>macOS: Revert back to using Carbon API for hotkey detection [#3794]</li>
+                    <li>CLI: Do not show protected fields by default [#3710]</li>
+                    <li>Secret Service: Correct issues interfacing with various applications [#3761]</li>
+                    <li>Fix building without additional features [#3693]</li>
+                    <li>Fix handling TOTP secret keys that require padding [#3764]</li>
+                    <li>Fix database unlock dialog password field focus [#3764]</li>
+                    <li>Correctly label open databases as locked on launch [#3764]</li>
+                    <li>Prevent infinite recursion when two databases AutoOpen each other [#3764]</li>
+                    <li>Browser: Fix incorrect matching of invalid URLs [#3759]</li>
+                    <li>Properly stylize the application name on Linux [#3775]</li>
+                    <li>Show application icon on Plasma Wayland sessions [#3777]</li>
+                    <li>macOS: Check for Auto-Type permissions on use instead of at launch [#3794]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.5.0" date="2019-10-26">
             <description>
                 <ul>

@@ -30,7 +30,7 @@ class FileWatcher : public QObject
 public:
     explicit FileWatcher(QObject* parent = nullptr);
 
-    void start(const QString& path, int checksumInterval = 1000);
+    void start(const QString& path, int checksumIntervalSeconds = 0, int checksumSizeKibibytes = -1);
     void stop();
 
     bool hasSameFileChecksum();
@@ -56,6 +56,7 @@ private:
     QTimer m_fileChangeDelayTimer;
     QTimer m_fileIgnoreDelayTimer;
     QTimer m_fileChecksumTimer;
+    int m_fileChecksumSizeBytes;
     bool m_ignoreFileChange;
 };
 

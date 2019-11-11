@@ -35,7 +35,7 @@ namespace FdoSecrets
         virtual SecretStruct encrypt(const SecretStruct& input) = 0;
         virtual SecretStruct decrypt(const SecretStruct& input) = 0;
         virtual bool isValid() const = 0;
-        virtual QVariant negotiationOutput() const;
+        virtual QVariant negotiationOutput() const = 0;
     };
 
     class PlainCipher : public CipherPair
@@ -56,6 +56,11 @@ namespace FdoSecrets
         bool isValid() const override
         {
             return true;
+        }
+
+        QVariant negotiationOutput() const override
+        {
+            return QStringLiteral("");
         }
     };
 

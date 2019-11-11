@@ -182,6 +182,10 @@ an error if no TOTP is configured for the entry.
 Shows the named attributes. This option can be specified more than once,
 with each attribute shown one-per-line in the given order. If no attributes are
 specified and \fI-t\fP is not specified, a summary of the default attributes is given.
+Protected attributes will be displayed in clear text if specified explicitly by this option.
+
+.IP "-s, --show-protected"
+Shows the protected attributes in clear text.
 
 .IP "-t, --totp"
 Also shows the current TOTP, reporting an error if no TOTP is configured for

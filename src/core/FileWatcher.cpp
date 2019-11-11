@@ -18,7 +18,9 @@
 
 #include "FileWatcher.h"
 
+#include "core/AsyncTask.h"
 #include "core/Clock.h"
+
 #include <QCryptographicHash>
 #include <QFileInfo>
 
@@ -42,7 +44,7 @@ FileWatcher::FileWatcher(QObject* parent)
     m_fileIgnoreDelayTimer.setSingleShot(true);
 }
 
-void FileWatcher::start(const QString& filePath, int checksumInterval)
+void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, int checksumSizeKibibytes)
 {
     stop();
 
@@ -63,8 +65,14 @@ void FileWatcher::start(const QString& filePath, int checksumInterval)
 
     m_fileWatcher.addPath(filePath);
     m_filePath = filePath;
+
+    // Handle file checksum
+    m_fileChecksumSizeBytes = checksumSizeKibibytes * 1024;
     m_fileChecksum = calculateChecksum();
-    m_fileChecksumTimer.start(checksumInterval);
+    if (checksumIntervalSeconds > 0) {
+        m_fileChecksumTimer.start(checksumIntervalSeconds * 1000);
+    }
+
     m_ignoreFileChange = false;
 }
 
@@ -128,14 +136,19 @@ void FileWatcher::checkFileChecksum()
 
 QByteArray FileWatcher::calculateChecksum()
 {
-    QFile file(m_filePath);
-    if (file.open(QFile::ReadOnly)) {
-        QCryptographicHash hash(QCryptographicHash::Sha256);
-        if (hash.addData(&file)) {
+    return AsyncTask::runAndWaitForFuture([this]() -> QByteArray {
+        QFile file(m_filePath);
+        if (file.open(QFile::ReadOnly)) {
+            QCryptographicHash hash(QCryptographicHash::Sha256);
+            if (m_fileChecksumSizeBytes > 0) {
+                hash.addData(file.read(m_fileChecksumSizeBytes));
+            } else {
+                hash.addData(&file);
+            }
             return hash.result();
         }
-    }
-    return {};
+        return {};
+    });
 }
 
 BulkFileWatcher::BulkFileWatcher(QObject* parent)

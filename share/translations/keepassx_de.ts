@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Einstellungen zurück setzten?</translation>
+        <translation>Einstellungen zurücksetzen?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Wollen Sie die Einstellungen für Allgemein und Sicherheit auf die Werkseinstellungen zurück stellen?</translation>
+        <translation>Wollen Sie die Einstellungen für Allgemein und Sicherheit auf die Werkseinstellungen zurücksetzen?</translation>
     </message>
 </context>
 <context>
@@ -148,7 +148,7 @@
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Datenbank nach externer Änderung automatisch neu laden.</translation>
+        <translation>Datenbank nach externer Änderung automatisch neu laden</translation>
     </message>
     <message>
         <source>Entry Management</source>
@@ -294,7 +294,7 @@
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation>Nutze Monospace-Schriftart für Notizen</translation>
+        <translation>Monospace-Schriftart für Notizen nutzen</translation>
     </message>
     <message>
         <source>Language selection</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation>Zurück setzen auf Werkseinstellungen</translation>
+        <translation>Zurücksetzen auf Werkseinstellungen</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -366,7 +366,7 @@
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
-        <translation>Keine erneute Passworteingabe verlangen, wenn das Passwort sichtbar ist.</translation>
+        <translation>Keine erneute Passworteingabe verlangen, wenn das Passwort sichtbar ist</translation>
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
@@ -390,7 +390,7 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Nutze DuckDuckGo Service zum Herunterladen der Webseitensymbole</translation>
+        <translation>DuckDuckGo-Service zum Herunterladen der Webseitensymbole nutzen</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>Lösche die Suchabfrage danach</translation>
+        <translation>Suchabfrage löschen nach</translation>
     </message>
 </context>
 <context>
@@ -443,6 +443,14 @@
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Dieses Auto-Type-Kommando enthält Argumente, die sehr häufig wiederholt werden. Möchten Sie wirklich fortfahren?</translation>
+    </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Berechtigung erforderlich</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC benötigt die Berechtigung für Barrierefreiheit um Auto-Type auf Eintragsebene durchzuführen. Falls die Berechtigung bereits erteilt wurde, muss KeePassXC eventuell neu gestartet werden.</translation>
     </message>
 </context>
 <context>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>Passwort kopieren</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Berechtigung erforderlich</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC benötigt die Berechtigung Barrierefreiheit und Bildschirmaufzeichnung, um den globalen Auto-Type durchzuführen. Die Bildschirmaufzeichnung ist notwendig, um über den Fenstertitel Einträge zu finden. Falls die Berechtigung bereits erteilt wurde, muss KeePassXC eventuell neu gestartet werden.</translation>
     </message>
 </context>
 <context>
@@ -640,7 +659,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     <message>
         <source>Never ask before &amp;updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Niemals fragen, bevor Anmeldedaten a&amp;ktualisiert werden.</translation>
+        <translation>Niemals fragen, bevor Anmeldedaten a&amp;ktualisiert werden</translation>
     </message>
     <message>
         <source>Searc&amp;h in all opened databases for matching credentials</source>
@@ -653,7 +672,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Zeige auch erweiterte Attribute, welche mit &quot;KPH: &quot; beginnen</translation>
+        <translation>Auch erweiterte Attribute &amp;zeigen, welche mit &quot;KPH: &quot; beginnen</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -673,12 +692,12 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Verwende benutzerdefinierten Proxy-Pfad, falls Proxy manuell installiert wurde.</translation>
+        <translation>Verwenden Sie einen benutzerdefinierten Proxy-Pfad, falls ein Proxy manuell installiert wurde.</translation>
     </message>
     <message>
         <source>Use a &amp;custom proxy location</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Verwende &amp;benutzerdefinierten Proxy-Pfad</translation>
+        <translation>&amp;Benutzerdefinierten Proxy-Pfad verwenden</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -732,7 +751,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation>&amp;Erlaubt die Rückgabe abgelaufener Anmeldeinformationen</translation>
+        <translation>Rückgabe abgelaufener Anmeldedaten &amp;erlauben.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -748,7 +767,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Zeige kein Popup, das die Migration von älteren KeePassHTTP-Einstellungen vorschlägt.</translation>
+        <translation>Kein Popup zeigen, das die Migration von älteren KeePassHTTP-Einstellungen vorschlägt.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
@@ -756,7 +775,7 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation>Benutzerdefiniertes Proxystandortfeld</translation>
+        <translation>Benutzerdefiniertes Proxy-Pfad-Feld</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
@@ -772,16 +791,6 @@ Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: Neue Schlüsselverbindungsanfrage</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Sie haben eine neue Verbindungsanfrage für den obigen Schlüssel.
-
-Wenn Sie Zugriff auf Ihre KeePassXC-Datenbank zulassen wollen,
-vergeben Sie bitte einen eindeutigen Namen und akzeptieren diese.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -862,6 +871,17 @@ Möchten Sie Ihre bestehenden Einstellungen jetzt migrieren?</translation>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Diese Warnungen nicht mehr anzeigen</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>Verbindungsanfrage erhalten für folgende Datenbank:
+%1
+
+Gebe der Verbindung einen eindeutigen Namen oder ID, zum Beispiel: chrome-laptop</translation>
     </message>
 </context>
 <context>
@@ -1128,10 +1148,6 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
         <translation>Passwort-Sichtbarkeit umschalten</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>Geben Sie zusätzliche Anmeldeinformationen ein:</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>Schlüsseldateiauswahl</translation>
     </message>
@@ -1156,12 +1172,6 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
         <translation>Hardwareschlüssel:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Sie können einen Hardwaresicherheitsschlüssel wie &lt;strong&gt;YubiKey&lt;/strong&gt; oder &lt;strong&gt;OnlyKey&lt;/strong&gt; mit Slots, die für HMAC-SHA1 konfiguriert sind, verwenden.&lt;/p&gt;
-                           &lt;p&gt;Klicken Sie hier, um weitere Informationen zu erhalten...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Hilfe zu Hardwareschlüssel</translation>
     </message>
@@ -1176,10 +1186,6 @@ Bitte denken Sie darüber nach, eine neue Schlüsseldatei zu generieren.</transl
     <message>
         <source>Clear Key File</source>
         <translation>Schlüsseldatei löschen</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>Datei auswählen …</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1198,6 +1204,42 @@ Um zu verhindern, dass dieser Fehler auftritt, müssen Sie zu &quot;Datenbankein
     <message>
         <source>Retry with empty password</source>
         <translation>Wiederholen mit leerem Passwort</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Zusätzliche Anmeldedaten eingeben (falls vorhanden):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Sie können einen Hardwaresicherheitsschlüssel wie &lt;strong&gt;yubiKey&lt;/strong&gt; oder &lt;strong&gt;OnlyKey&lt;/strong&gt; verwenden, dessen Steckplätze für HMAC-SHA1 konfiguriert sind.&lt;/p&gt;
+&lt;p&gt;Klicken Sie hier, um weitere Informationen zu erhalten...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Zusätzlich zu ihrem Masterpasswort können sie eine geheime Datei verwenden um die Sicherheit ihrer Datenbank zu erhöhen. Eine solche Datei kann in den Sicherheitseinstellung ihrer Datenbank generiert werden.&lt;/p&gt; &lt;p&gt;Diese Datei ist jedoch &lt;strong&gt;nicht&lt;/strong&gt; Ihre *.kdbx Datei!&lt;br&gt; Wenn sie keine Schlüsseldatei haben lassen sie das Feld leer.&lt;/p&gt; &lt;p&gt;Klicken sie hier für weitere Informationen...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Schlüsseldatei-Hilfe</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Schlüsseldatei auswählen</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Datenbankdatei kann nicht als Schlüsseldatei verwendet werden.</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>Sie können nicht Ihre Datenbank als Schlüsseldatei verwenden.
+Wenn Sie keine Schlüsseldatei haben, lassen Sie das Feld bitte leer.</translation>
     </message>
 </context>
 <context>
@@ -1614,7 +1656,7 @@ Wenn Sie diese Anzahl beibehalten, könnte Ihre Datenbank zu einfach zu knacken 
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Maximale Anzahl von Chronik-Elementen pro Eintrag</translation>
+        <translation>Maximale Anzahl von Verlaufs-Elementen pro Eintrag</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
@@ -1753,7 +1795,7 @@ Soll tatsächlich ohne Passwort fortgefahren werden?</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Standort</translation>
+        <translation>Speicherort</translation>
     </message>
     <message>
         <source>Last saved</source>
@@ -1793,43 +1835,43 @@ Soll tatsächlich ohne Passwort fortgefahren werden?</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Eindeutige Passwörter</translation>
+        <translation>Einzigartige Passwörter</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Nicht eindeutige Kennwörter</translation>
+        <translation>Nicht einzigartige Passwörter</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Mehr als 10 % der Kennwörter werden wiederverwendet. Verwenden Sie nach Möglichkeit eindeutige Kennwörter.</translation>
+        <translation>Mehr als 10 % der Passwörter werden wiederverwendet. Verwenden Sie nach Möglichkeit einzigartige Passwörter.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Maximale Wiederverwendung des Kennworts</translation>
+        <translation>Maximale Wiederverwendung eines Passworts</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Einige Kennwörter werden mehr als dreimal verwendet. Verwenden Sie nach Möglichkeit eindeutige Kennwörter.</translation>
+        <translation>Einige Passwörter werden mehr als dreimal verwendet. Verwenden Sie nach Möglichkeit einzigartige Passwörter.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Anzahl der kurzen Kennwörter</translation>
+        <translation>Anzahl der kurzen Passwörter</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Empfohlene minimale Kennwortlänge beträgt mindestens 8 Zeichen.</translation>
+        <translation>Empfohlene minimale Passwortlänge beträgt mindestens 8 Zeichen.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Anzahl schwacher Kennwörter</translation>
+        <translation>Anzahl der schwachen Passwörter</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Empfehlen Sie die Verwendung langer, randomisierter Kennwörter mit der Bewertung &quot;gut&quot; oder &quot;hervorragend&quot;.</translation>
+        <translation>Die Verwendung langer, randomisierter Passwörter mit der Bewertung &quot;gut&quot; oder &quot;hervorragend&quot; wird empfohlen.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Durchschnittliche Kennwortlänge</translation>
+        <translation>Durchschnittliche Passwortlänge</translation>
     </message>
     <message>
         <source>%1 characters</source>
@@ -1837,7 +1879,11 @@ Soll tatsächlich ohne Passwort fortgefahren werden?</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Die durchschnittliche Kennwortlänge beträgt weniger als zehn Zeichen. Längere Kennwörter bieten mehr Sicherheit.</translation>
+        <translation>Die durchschnittliche Passwortlänge beträgt weniger als zehn Zeichen. Längere Passwörter bieten mehr Sicherheit.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Bitte warten während die Datenbankstatistiken berechnet werden.</translation>
     </message>
 </context>
 <context>
@@ -2466,7 +2512,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation>Lösche die gesamte Chronik</translation>
+        <translation>Gesamten Verlauf löschen</translation>
     </message>
 </context>
 <context>
@@ -4528,7 +4574,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation>&amp;Suche nach Aktualisierungen...</translation>
+        <translation>Nach Aktualisierungen &amp;suchen...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
@@ -6277,6 +6323,10 @@ Kernel: %3 %4</translation>
         <source>Invalid password generator after applying all options</source>
         <translation>Ungültiger Passwortgenerator nach Anwendung aller Optionen</translation>
     </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Geschützte Eigenschaften im Klartext anzeigen.</translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -6642,11 +6692,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Erlaube KeeShare-Importe</translation>
+        <translation>KeeShare-Importe erlauben</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Erlaube KeeShare-Exporte</translation>
+        <translation>KeeShare-Exporte erlauben</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>

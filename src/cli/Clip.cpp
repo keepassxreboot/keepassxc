@@ -46,7 +46,7 @@ Clip::Clip()
 int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
     const QStringList args = parser->positionalArguments();
-    QString entryPath = args.at(1);
+    const QString& entryPath = args.at(1);
     QString timeout;
     if (args.size() == 3) {
         timeout = args.at(2);

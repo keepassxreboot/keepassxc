@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Tämän automaattisyötön komento sisältää parametreja joita toistetaan usein. Oletko varma, että haluat jatkaa?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Lupa vaaditaan</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC:n täytyy saada lupa Käyttöavun kautta automaattisyötön suorittamiseen. Jos olet jo sallinut asetuksen, KeePassXC täytyy mahdollisesti käynnistää uudelleen.</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>Kopioi &amp;salasana</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Lupa vaaditaan</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC tarvitsee luvan Käyttöavun kautta Näyttötallennukseen, jotta yleinen automaattisyöttö toimisi oikein. Näyttötallennus on pakollinen ikkunan otsikkotiedon saamiseen. Jos olet jo sallinut asetuksen, KeePassXC täytyy mahdollisesti käynnistää uudelleen.</translation>
     </message>
 </context>
 <context>
@@ -720,7 +739,7 @@ Valitse oikea tietokanta tietueen tallentamiseksi</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation>KeePassXC-Browser tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Dataa se seuraaville selaimille: %1 ja %2. %3</translation>
+        <translation>KeePassXC-Browser tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Lataa se seuraaville selaimille: %1 ja %2. %3</translation>
     </message>
     <message>
         <source>&amp;Brave</source>
@@ -772,15 +791,6 @@ Valitse oikea tietokanta tietueen tallentamiseksi</translation>
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: Uusi avaimenliittämispyyntö</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Olet saanut avainlittämispyynnön yllä olevalle avaimelle
-Jos haluat antaa sille pääsyoikeuden KeePassXC-tietokantaasi,
-anna tunnisteelle nimi ja hyväksy.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -860,6 +870,18 @@ Haluat siirtää asetukset nyt?</translation>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Älä näytä tätä varoitusta uudelleen</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>Olet saanut avainliittämispyynnön seuraavalle tietokannalle:
+%1
+
+Anna yhteydelle yksilöllinen nimi tai tunniste, esimerkiksi:
+chrome-läppäri.</translation>
     </message>
 </context>
 <context>
@@ -1128,10 +1150,6 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
         <translation>Vaihda salasanan näkyvyyttä</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>Syötä lisätietueita:</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>Avaintiedoston valinta</translation>
     </message>
@@ -1156,12 +1174,6 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
         <translation>Laiteavain:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;OnlyKey:tä&lt;/strong&gt; HMAC-SHA1 configuroidun paikan kanssa.&lt;/p&gt;
-&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Laiteavaimen apu</translation>
     </message>
@@ -1176,10 +1188,6 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     <message>
         <source>Clear Key File</source>
         <translation>Tyhjennä Avaintiedosto</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>Valitse tiedosto...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1198,6 +1206,42 @@ Jos et halua nähdä tätä virhettä uudestaan, mene &quot;Tietokannan asetukse
     <message>
         <source>Retry with empty password</source>
         <translation>Yritä uudelleen tyhjällä salasanalla</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Syötä lisätietueita (mikäli niitä on):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;Onlykey:tä&lt;/strong&gt; HMAC-SHA1 -asetuksella olevan paikan kanssa.&lt;/p&gt;
+&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Pääsalasanan lisäksi voit käyttää salaista tiedostoa tietokantasi tietoturvan vahvistamiseksi. Tämä tiedosto voidaan tarvittaessa luoda tietokantasi turvallisuusasetuksista.&lt;/p&gt;&lt;p&gt;Tämä salainen tiedosto &lt;strong&gt;ei&lt;/strong&gt; ole *.kdbx -tietokantatiedosto!&lt;br&gt;Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.&lt;/p&gt;&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Avaintiedoston ohje</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Valitse avaintiedosto...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Tietokantaa ei voida käyttää avaintiedostona</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>Et voi käyttää tietokantaasi avaintiedostona.
+Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     </message>
 </context>
 <context>
@@ -1837,6 +1881,10 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Salasanojen keskimääräinen pituus on vähemmän kuin kymmenen merkkiä. Pidemmät salasanat ovat turvallisempia.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Odota hetki, lasketaan tietokannan statistiikkaa...</translation>
     </message>
 </context>
 <context>
@@ -6275,6 +6323,10 @@ Ydin: %3 %4</translation>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation>Virheellinen salasanageneraattori kaikkien aktiivisten asetusten kanssa</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Näytä suojatut attribuutit selkotekstinä.</translation>
     </message>
 </context>
 <context>

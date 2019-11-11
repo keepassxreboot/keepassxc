@@ -18,6 +18,7 @@
  */
 
 #include <QCheckBox>
+#include <QHostAddress>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QMessageBox>
@@ -600,17 +601,20 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
                 continue;
             }
 
+            auto domain = baseDomain(hostname);
+
             // Search for additional URL's starting with KP2A_URL
             if (entry->attributes()->keys().contains(ADDITIONAL_URL)) {
                 for (const auto& key : entry->attributes()->keys()) {
-                    if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), hostname, url)) {
+                    if (key.startsWith(ADDITIONAL_URL)
+                        && handleURL(entry->attributes()->value(key), domain, url)) {
                         entries.append(entry);
                         continue;
                     }
                 }
             }
 
-            if (!handleURL(entry->url(), hostname, url)) {
+            if (!handleURL(entry->url(), domain, url)) {
                 continue;
             }
 
@@ -928,12 +932,15 @@ int BrowserService::sortPriority(const Entry* entry,
 {
     QUrl url(entry->url());
     if (url.scheme().isEmpty()) {
-        url.setScheme("http");
+        url.setScheme("https");
     }
     const QString entryURL = url.toString(QUrl::StripTrailingSlash);
     const QString baseEntryURL =
         url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
 
+    if (!url.host().contains(".") && url.host() != "localhost") {
+        return 0;
+    }
     if (submitUrl == entryURL) {
         return 100;
     }
@@ -970,7 +977,7 @@ int BrowserService::sortPriority(const Entry* entry,
     return 0;
 }
 
-bool BrowserService::matchUrlScheme(const QString& url)
+bool BrowserService::schemeFound(const QString& url)
 {
     QUrl address(url);
     return !address.scheme().isEmpty();
@@ -995,21 +1002,49 @@ bool BrowserService::removeFirstDomain(QString& hostname)
 
 bool BrowserService::handleURL(const QString& entryUrl, const QString& hostname, const QString& url)
 {
-    QUrl entryQUrl(entryUrl);
-    QString entryScheme = entryQUrl.scheme();
-    QUrl qUrl(url);
+    if (entryUrl.isEmpty()) {
+        return false;
+    }
 
-    // Ignore entry if port or scheme defined in the URL doesn't match
-    if ((entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port())
-        || (browserSettings()->matchUrlScheme() && !entryScheme.isEmpty() && entryScheme.compare(qUrl.scheme()) != 0)) {
+    QUrl entryQUrl;
+    if (entryUrl.contains("://")) {
+        entryQUrl = entryUrl;
+    } else {
+        entryQUrl = QUrl::fromUserInput(entryUrl);
+
+        if (browserSettings()->matchUrlScheme()) {
+            entryQUrl.setScheme("https");
+        }
+    }
+
+    // URL host validation fails
+    if (browserSettings()->matchUrlScheme() && entryQUrl.host().isEmpty()) {
+        return false;
+    }
+
+    // Match port, if used
+    QUrl qUrl(url);
+    if (entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) {
+        return false;
+    }
+
+    // Match scheme
+    if (browserSettings()->matchUrlScheme() && !entryQUrl.scheme().isEmpty() && entryQUrl.scheme().compare(qUrl.scheme()) != 0) {
+        return false;
+    }
+
+    // Check for illegal characters
+    QRegularExpression re("[<>\\^`{|}]");
+    auto match = re.match(entryUrl);
+    if (match.hasMatch()) {
         return false;
     }
 
     // Filter to match hostname in URL field
-    if ((!entryUrl.isEmpty() && hostname.contains(entryUrl))
-        || (matchUrlScheme(entryUrl) && hostname.endsWith(entryQUrl.host()))) {
+    if (entryQUrl.host().endsWith(hostname)) {
         return true;
     }
+
     return false;
 };
 
@@ -1018,19 +1053,25 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& hostname,
  *
  * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
  */
-QString BrowserService::baseDomain(const QString& url) const
+QString BrowserService::baseDomain(const QString& hostname) const
 {
-    QUrl qurl = QUrl::fromUserInput(url);
-    QString hostname = qurl.host();
+    QUrl qurl = QUrl::fromUserInput(hostname);
+    QString host = qurl.host();
 
-    if (hostname.isEmpty() || !hostname.contains(qurl.topLevelDomain())) {
+    // If the hostname is an IP address, return it directly
+    QHostAddress hostAddress(hostname);
+    if (!hostAddress.isNull()) {
+        return hostname;
+    }
+
+    if (host.isEmpty() || !host.contains(qurl.topLevelDomain())) {
         return {};
     }
 
     // Remove the top level domain part from the hostname, e.g. https://another.example.co.uk -> https://another.example
-    hostname.chop(qurl.topLevelDomain().length());
+    host.chop(qurl.topLevelDomain().length());
     // Split the URL and select the last part, e.g. https://another.example -> example
-    QString baseDomain = hostname.split('.').last();
+    QString baseDomain = host.split('.').last();
     // Append the top level domain back to the URL, e.g. example -> example.co.uk
     baseDomain.append(qurl.topLevelDomain());
     return baseDomain;
@@ -1070,7 +1111,7 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
         if (res == QDialog::Accepted) {
             const auto selectedDatabase = browserEntrySaveDialog.getSelected();
             if (selectedDatabase.length() > 0) {
-                int index = selectedDatabase[0]->data(Qt::UserRole).toUInt();
+                int index = selectedDatabase[0]->data(Qt::UserRole).toInt();
                 return databaseWidgets[index]->database();
             }
         } else {
@@ -1188,7 +1229,7 @@ void BrowserService::raiseWindow(const bool force)
         m_prevWindowState = WindowState::Minimized;
     }
 #ifdef Q_OS_MACOS
-    Q_UNUSED(force);
+    Q_UNUSED(force)
 
     if (macUtils()->isHidden()) {
         m_prevWindowState = WindowState::Hidden;

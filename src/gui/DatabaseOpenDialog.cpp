@@ -31,6 +31,8 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::ForeignWindow);
 #endif
     connect(m_view, SIGNAL(dialogFinished(bool)), this, SLOT(complete(bool)));
+    setLayout(m_view->layout());
+    setMinimumWidth(700);
 }
 
 void DatabaseOpenDialog::setFilePath(const QString& filePath)

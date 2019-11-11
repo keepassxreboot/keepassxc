@@ -68,6 +68,7 @@ private slots:
     void yubikeyDetectComplete();
     void noYubikeyFound();
     void openHardwareKeyHelp();
+    void openKeyFileHelp();
 
 protected:
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;

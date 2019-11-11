@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>Ayarları Sıfırla?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Tüm genel ayarları ve güvenlik ayarlarını varsayılan ayarlara getirmek istediğinizden emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -225,15 +225,15 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Daha önce kullanılan veritabanlarını hatırla</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Başlangıçta önceden açılmış veritabanlarını yükle</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı anahtar dosyalarını ve güvenlik donanımlarını hatırla</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Bu Oto-Yazım komutu çok sık tekrarlanan argümanlar içerir. Gerçekten devam etmek istiyor musun?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>İzin Gerekli</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -491,6 +499,17 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>İzin Gerekli</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -531,11 +550,11 @@ Lütfen erişime izin vermek isteyip istemediğinizi belirtin.</translation>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>Erişime izin ver</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>Erişimi reddet</translation>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Lütfen kimlik bilgilerini kaydetmek için doğru veritabanını seç.</translat
         <translation>KeePassXC: Yeni anahtar ilişkilendirme isteği</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Yukarıdaki anahtar için bir ilişkilendirme isteği aldınız.
-
-Eğer KeePassXC veritabanınıza erişim izni vermek isterseniz, 
-onu tanımlamak için benzersiz bir isim ver ve kabul et.</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>Kaydet ve erişime izin ver</translation>
     </message>
@@ -862,6 +871,14 @@ Mevcut ayarlarınızı şimdi taşımak ister misiniz?</translation>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Bu uyarıyı bir daha gösterme</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1129,10 +1146,6 @@ Lütfen yeni bir anahtar dosyası oluşturmayı düşünün.</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation type="unfinished"/>
     </message>
@@ -1154,16 +1167,11 @@ Lütfen yeni bir anahtar dosyası oluşturmayı düşünün.</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Donanım Anahtarı:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Donanım anahtarı yardım</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
@@ -1178,10 +1186,6 @@ Lütfen yeni bir anahtar dosyası oluşturmayı düşünün.</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select file...</source>
-        <translation>Dosya seç...</translation>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"/>
     </message>
@@ -1194,6 +1198,40 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Anahtar dosyası yardım</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Anahtar dosyası seç...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1833,6 +1871,10 @@ Parola olmadan devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6265,6 +6307,10 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
         <translation type="unfinished"/>
     </message>
 </context>

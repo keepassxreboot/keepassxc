@@ -55,8 +55,12 @@ int main(int argc, char** argv)
 #endif
 #endif
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
+    QGuiApplication::setDesktopFileName("org.keepassxc.KeePassXC.desktop");
+#endif
+
     Application app(argc, argv);
-    Application::setApplicationName("keepassxc");
+    Application::setApplicationName("KeePassXC");
     Application::setApplicationVersion(KEEPASSXC_VERSION);
     // don't set organizationName as that changes the return value of
     // QStandardPaths::writableLocation(QDesktopServices::DataLocation)

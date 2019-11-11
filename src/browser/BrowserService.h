@@ -128,10 +128,10 @@ private:
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
-    bool matchUrlScheme(const QString& url);
+    bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
     bool handleURL(const QString& entryUrl, const QString& hostname, const QString& url);
-    QString baseDomain(const QString& url) const;
+    QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
     QJsonArray getChildrenFromGroup(Group* group);

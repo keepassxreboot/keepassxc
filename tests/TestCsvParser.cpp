@@ -111,7 +111,7 @@ void TestCsvParser::testEmptySimple()
     out << "";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
-    QVERIFY(t.size() == 0);
+    QVERIFY(t.isEmpty());
 }
 
 void TestCsvParser::testEmptyQuoted()
@@ -120,7 +120,7 @@ void TestCsvParser::testEmptyQuoted()
     out << "\"\"";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
-    QVERIFY(t.size() == 0);
+    QVERIFY(t.isEmpty());
 }
 
 void TestCsvParser::testEmptyNewline()
@@ -129,14 +129,14 @@ void TestCsvParser::testEmptyNewline()
     out << "\"\n\"";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
-    QVERIFY(t.size() == 0);
+    QVERIFY(t.isEmpty());
 }
 
 void TestCsvParser::testEmptyFile()
 {
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
-    QVERIFY(t.size() == 0);
+    QVERIFY(t.isEmpty());
 }
 
 void TestCsvParser::testNewline()
@@ -281,7 +281,7 @@ void TestCsvParser::testEmptyReparsing()
     parser->parse(nullptr);
     QVERIFY(parser->reparse());
     t = parser->getCsvTable();
-    QVERIFY(t.size() == 0);
+    QVERIFY(t.isEmpty());
 }
 
 void TestCsvParser::testReparsing()

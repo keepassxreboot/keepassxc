@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Polecenie autowpisywania zawiera argumenty, które powtarzają się bardzo często. Czy chcesz kontynuować?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Wymagane uprawnienie</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC wymaga uprawnienia Dostępności w celu wykonania autowpisywania na poziomie podstawowym. Jeśli już udzieliłeś uprawnienia, być może będziesz musiał zrestartować KeePassXC.</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>Skopiuj &amp;hasło</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Wymagane uprawnienie</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC wymaga uprawnień Dostępności i Rejestratora ekranu w celu wykonania globalnego autowpisywania. Nagrywanie ekranu jest konieczne, aby użyć tytułu okna do odnajdywania wpisów. Jeśli już udzieliłeś uprawnień, być może będziesz musiał zrestartować KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
         <translation>KeePassXC: Nowe żądanie skojarzenia klucza</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Otrzymałeś żądanie skojarzenia powyższego klucza.
-
-Jeżeli chcesz zezwolić na dostęp do twojej bazy danych KeePassXC,
-nadaj unikatową nazwę do zidentyfikowania i zaakceptuj.</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>Zapisz i zezwól na dostęp</translation>
     </message>
@@ -862,6 +871,18 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Nie wyświetlaj ponownie tego ostrzeżenia</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>Otrzymałeś żądanie skojarzenia następującej bazy danych:
+%1
+
+Nadaj połączeniu unikatową nazwę lub identyfikator, na przykład:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -1130,10 +1151,6 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
         <translation>Przełącz widoczność hasła</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>Wprowadź dodatkowe dane uwierzytelniające:</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>Wybór pliku klucza</translation>
     </message>
@@ -1158,12 +1175,6 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
         <translation>Klucz sprzętowy:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Możesz użyć sprzętowego klucza bezpieczeństwa, takiego jak &lt;strong&gt;YubiKey&lt;/strong&gt; albo &lt;strong&gt;OnlyKey&lt;/strong&gt; ze slotami skonfigurowanymi dla HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Kliknij, aby uzyskać więcej informacji...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Pomoc klucza sprzętowego</translation>
     </message>
@@ -1178,10 +1189,6 @@ Proszę rozważyć wygenerowanie nowego pliku klucza.</translation>
     <message>
         <source>Clear Key File</source>
         <translation>Wyczyść plik klucza</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>Wybierz plik...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1200,6 +1207,42 @@ Aby zapobiec pojawianiu się tego błędu, musisz przejść do &quot;Ustawienia 
     <message>
         <source>Retry with empty password</source>
         <translation>Spróbuj ponownie z pustym hasłem</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Wprowadź dodatkowe dane uwierzytelniające (jeśli istnieją):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Możesz użyć sprzętowego klucza bezpieczeństwa, takiego jak &lt;strong&gt;YubiKey&lt;/strong&gt; albo &lt;strong&gt;OnlyKey&lt;/strong&gt; ze slotami skonfigurowanymi dla HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Kliknij, aby uzyskać więcej informacji...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Oprócz hasła głównego można użyć pliku sekretnego w celu zwiększenia bezpieczeństwa bazy danych. Taki plik można wygenerować w ustawieniach zabezpieczeń bazy danych.&lt;/p&gt;&lt;p&gt;To &lt;strong&gt;nie&lt;/strong&gt; jest plik bazy danych *. kdbx!&lt;br&gt;Jeśli nie masz pliku klucza, pozostaw pole puste.&lt;/p&gt;&lt;p&gt;Kliknij, aby uzyskać więcej informacji...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Pomoc dotycząca pliku klucza</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Wybierz plik klucza...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Nie można użyć pliku bazy danych jako pliku klucza</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>Nie można użyć pliku bazy danych jako pliku klucza.
+Jeśli nie masz pliku klucza, pozostaw puste pole.</translation>
     </message>
 </context>
 <context>
@@ -1840,6 +1883,10 @@ Czy na pewno chcesz kontynuować bez hasła?</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Średnia długość hasła wynosi mniej niż dziesięć znaków. Dłuższe hasła zapewniają większe bezpieczeństwo.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Proszę czekać, statystyki bazy danych są obliczane...</translation>
     </message>
 </context>
 <context>
@@ -6280,6 +6327,10 @@ Jądro: %3 %4</translation>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation>Nieprawidłowy generator haseł po zastosowaniu wszystkich opcji</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Pokaż chronione atrybuty w postaci zwykłego tekstu.</translation>
     </message>
 </context>
 <context>

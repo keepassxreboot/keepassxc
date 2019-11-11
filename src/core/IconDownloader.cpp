@@ -90,7 +90,7 @@ void IconDownloader::setUrl(const QString& entryUrl)
     // searching for a match with the returned address(es).
     bool hostIsIp = false;
     QList<QHostAddress> hostAddressess = QHostInfo::fromName(fullyQualifiedDomain).addresses();
-    for (auto addr : hostAddressess) {
+    for (const auto& addr : hostAddressess) {
         if (addr.toString() == fullyQualifiedDomain) {
             hostIsIp = true;
         }

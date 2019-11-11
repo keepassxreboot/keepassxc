@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Permission Required</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>Copy &amp;password</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Permission Required</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -732,7 +751,7 @@ Please select the correct database for saving credentials.</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation>&amp;Allow returning expired credentials.</translation>
+        <translation>&amp;Allow returning expired credentials</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -772,16 +791,6 @@ Please select the correct database for saving credentials.</translation>
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: New key association request</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -862,6 +871,18 @@ Would you like to migrate your existing settings now?</translation>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Don&apos;t show this warning again</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -1130,10 +1151,6 @@ Please consider generating a new key file.</translation>
         <translation>Toggle password visibility</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>Enter Additional Credentials:</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>Key file selection</translation>
     </message>
@@ -1158,12 +1175,6 @@ Please consider generating a new key file.</translation>
         <translation>Hardware Key:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Hardware key help</translation>
     </message>
@@ -1178,10 +1189,6 @@ Please consider generating a new key file.</translation>
     <message>
         <source>Clear Key File</source>
         <translation>Clear Key File</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>Select file...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1200,6 +1207,42 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>Retry with empty password</source>
         <translation>Retry with empty password</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Enter Additional Credentials (if any):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Key file help</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Select key file...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Cannot use database file as key file</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</translation>
     </message>
 </context>
 <context>
@@ -1840,6 +1883,10 @@ Are you sure you want to continue without a password?</translation>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Average password length is less than ten characters. Longer passwords provide more security.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Please wait, database statistics are being calculated...</translation>
     </message>
 </context>
 <context>
@@ -6279,6 +6326,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation>Invalid password generator after applying all options</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Show the protected attributes in clear text.</translation>
     </message>
 </context>
 <context>
