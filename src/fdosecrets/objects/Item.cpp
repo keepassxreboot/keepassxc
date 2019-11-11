@@ -99,10 +99,7 @@ namespace FdoSecrets
         // add custom attributes
         const auto customKeys = entryAttrs->customKeys();
         for (const auto& attr : customKeys) {
-            // decode attr key
-            auto decoded = decodeAttributeKey(attr);
-
-            attrs[decoded] = entryAttrs->value(attr);
+            attrs[attr] = entryAttrs->value(attr);
         }
 
         // add some informative and readonly attributes
@@ -134,8 +131,7 @@ namespace FdoSecrets
                 continue;
             }
 
-            auto encoded = encodeAttributeKey(it.key());
-            entryAttrs->set(encoded, it.value());
+            entryAttrs->set(it.key(), it.value());
         }
 
         m_backend->endUpdate();
@@ -352,16 +348,6 @@ namespace FdoSecrets
         pathComponents.prepend(QLatin1Literal(""));
 
         return pathComponents.join('/');
-    }
-
-    QString Item::encodeAttributeKey(const QString& key)
-    {
-        return QUrl::toPercentEncoding(key, "", "_:").replace('%', '_');
-    }
-
-    QString Item::decodeAttributeKey(const QString& key)
-    {
-        return QString::fromUtf8(QByteArray::fromPercentEncoding(key.toLatin1(), '_'));
     }
 
     void setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)

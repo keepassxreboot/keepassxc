@@ -18,7 +18,9 @@
 
 #include "FileWatcher.h"
 
+#include "core/AsyncTask.h"
 #include "core/Clock.h"
+
 #include <QCryptographicHash>
 #include <QFileInfo>
 
@@ -134,17 +136,19 @@ void FileWatcher::checkFileChecksum()
 
 QByteArray FileWatcher::calculateChecksum()
 {
-    QFile file(m_filePath);
-    if (file.open(QFile::ReadOnly)) {
-        QCryptographicHash hash(QCryptographicHash::Sha256);
-        if (m_fileChecksumSizeBytes > 0) {
-            hash.addData(file.read(m_fileChecksumSizeBytes));
-        } else {
-            hash.addData(&file);
+    return AsyncTask::runAndWaitForFuture([this]() -> QByteArray {
+        QFile file(m_filePath);
+        if (file.open(QFile::ReadOnly)) {
+            QCryptographicHash hash(QCryptographicHash::Sha256);
+            if (m_fileChecksumSizeBytes > 0) {
+                hash.addData(file.read(m_fileChecksumSizeBytes));
+            } else {
+                hash.addData(&file);
+            }
+            return hash.result();
         }
-        return hash.result();
-    }
-    return {};
+        return {};
+    });
 }
 
 BulkFileWatcher::BulkFileWatcher(QObject* parent)

@@ -18,6 +18,7 @@
 #include "DatabaseSettingsWidgetStatistics.h"
 #include "ui_DatabaseSettingsWidgetStatistics.h"
 
+#include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
 #include "core/Group.h"
@@ -123,7 +124,8 @@ namespace
                             ++nPwdsShort;
                         }
 
-                        if (ZxcvbnMatch(pwd.toLatin1(), nullptr, nullptr) < 65) {
+                        // Speed up Zxcvbn process by excluding very long passwords and most passphrases
+                        if (pwd.size() < 25 && ZxcvbnMatch(pwd.toLatin1(), nullptr, nullptr) < 65) {
                             ++nPwdsWeak;
                         }
 
@@ -142,6 +144,11 @@ DatabaseSettingsWidgetStatistics::DatabaseSettingsWidgetStatistics(QWidget* pare
     , m_errIcon(FilePath::instance()->icon("status", "dialog-error"))
 {
     m_ui->setupUi(this);
+
+    m_referencesModel.reset(new QStandardItemModel());
+    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Name") << tr("Value"));
+    m_ui->statisticsTableView->setModel(m_referencesModel.data());
+    m_ui->statisticsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 DatabaseSettingsWidgetStatistics::~DatabaseSettingsWidgetStatistics()
@@ -165,48 +172,63 @@ void DatabaseSettingsWidgetStatistics::addStatsRow(QString name, QString value, 
 
 void DatabaseSettingsWidgetStatistics::loadSettings(QSharedPointer<Database> db)
 {
-    m_referencesModel.reset(new QStandardItemModel());
-    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Name") << tr("Value"));
+    m_db = std::move(db);
+    m_statsCalculated = false;
+    m_referencesModel->clear();
+    addStatsRow(tr("Please wait, database statistics are being calculated..."), "");
+}
 
-    const auto stats = Stats(db);
-    addStatsRow(tr("Database name"), db->metadata()->name());
-    addStatsRow(tr("Description"), db->metadata()->description());
-    addStatsRow(tr("Location"), db->filePath());
-    addStatsRow(tr("Last saved"), stats.modified.toString(Qt::DefaultLocaleShortDate));
+void DatabaseSettingsWidgetStatistics::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+
+    if (!m_statsCalculated) {
+        // Perform stats calculation on next event loop to allow widget to appear
+        m_statsCalculated = true;
+        QTimer::singleShot(0, this, SLOT(calculateStats()));
+    }
+}
+
+void DatabaseSettingsWidgetStatistics::calculateStats()
+{
+    const auto stats = AsyncTask::runAndWaitForFuture([this] { return new Stats(m_db); });
+
+    m_referencesModel->clear();
+    addStatsRow(tr("Database name"), m_db->metadata()->name());
+    addStatsRow(tr("Description"), m_db->metadata()->description());
+    addStatsRow(tr("Location"), m_db->filePath());
+    addStatsRow(tr("Last saved"), stats->modified.toString(Qt::DefaultLocaleShortDate));
     addStatsRow(tr("Unsaved changes"),
-                db->isModified() ? tr("yes") : tr("no"),
-                db->isModified(),
+                m_db->isModified() ? tr("yes") : tr("no"),
+                m_db->isModified(),
                 tr("The database was modified, but the changes have not yet been saved to disk."));
-    addStatsRow(tr("Number of groups"), QString::number(stats.nGroups));
-    addStatsRow(tr("Number of entries"), QString::number(stats.nEntries));
+    addStatsRow(tr("Number of groups"), QString::number(stats->nGroups));
+    addStatsRow(tr("Number of entries"), QString::number(stats->nEntries));
     addStatsRow(tr("Number of expired entries"),
-                QString::number(stats.nExpired),
-                stats.isAnyExpired(),
+                QString::number(stats->nExpired),
+                stats->isAnyExpired(),
                 tr("The database contains entries that have expired."));
-    addStatsRow(tr("Unique passwords"), QString::number(stats.nPwdsUnique));
+    addStatsRow(tr("Unique passwords"), QString::number(stats->nPwdsUnique));
     addStatsRow(tr("Non-unique passwords"),
-                QString::number(stats.nPwdsReused),
-                stats.areTooManyPwdsReused(),
+                QString::number(stats->nPwdsReused),
+                stats->areTooManyPwdsReused(),
                 tr("More than 10% of passwords are reused. Use unique passwords when possible."));
     addStatsRow(tr("Maximum password reuse"),
-                QString::number(stats.maxPwdReuse()),
-                stats.arePwdsReusedTooOften(),
+                QString::number(stats->maxPwdReuse()),
+                stats->arePwdsReusedTooOften(),
                 tr("Some passwords are used more than three times. Use unique passwords when possible."));
     addStatsRow(tr("Number of short passwords"),
-                QString::number(stats.nPwdsShort),
-                stats.nPwdsShort > 0,
+                QString::number(stats->nPwdsShort),
+                stats->nPwdsShort > 0,
                 tr("Recommended minimum password length is at least 8 characters."));
     addStatsRow(tr("Number of weak passwords"),
-                QString::number(stats.nPwdsWeak),
-                stats.nPwdsWeak > 0,
+                QString::number(stats->nPwdsWeak),
+                stats->nPwdsWeak > 0,
                 tr("Recommend using long, randomized passwords with a rating of 'good' or 'excellent'."));
     addStatsRow(tr("Average password length"),
-                tr("%1 characters").arg(stats.averagePwdLength()),
-                stats.isAvgPwdTooShort(),
+                tr("%1 characters").arg(stats->averagePwdLength()),
+                stats->isAvgPwdTooShort(),
                 tr("Average password length is less than ten characters. Longer passwords provide more security."));
-
-    m_ui->sharedGroupsView->setModel(m_referencesModel.data());
-    m_ui->sharedGroupsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
 void DatabaseSettingsWidgetStatistics::saveSettings()

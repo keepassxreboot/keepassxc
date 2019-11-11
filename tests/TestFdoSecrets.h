@@ -30,6 +30,7 @@ private slots:
 
     void testGcryptMPI();
     void testDhIetf1024Sha256Aes128CbcPkcs7();
+    void testCrazyAttributeKey();
 };
 
 #endif // KEEPASSXC_TESTFDOSECRETS_H

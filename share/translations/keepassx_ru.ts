@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Вы уверены, что вы хотите сбросить по умолчанию все общие настройки и настройки безопасности? </translation>
     </message>
 </context>
 <context>
@@ -144,7 +144,7 @@
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation>Не помечать базу данных изменённой при действиях, не связанных с изменением данных (например при раскрытии групп)</translation>
+        <translation>Не помечать базу данных изменённой при действиях, не связанных с изменением данных (например, при раскрытии групп)</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -225,96 +225,96 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Запоминать ранее использованные базы данных</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Загружать прошлые базы данных при запуске</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Запоминать для баз данных ключевые файлы и ключи безопасности</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>Проверять обновления при запуске раз в неделю</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Включать в проверку обновлений бета-релизы</translation>
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Стиль кнопок:</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Язык:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(перезапустить программу для активации)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>Минимизировать окно после разблокирования базы данных</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>Сворачивать при открытии URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать окно после копирования в буфер обмена:</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Сворачивать</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>Убирать на задний план</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>Тайм-аут загрузки значков:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Тайм-аут получения значков веб-сайтов, задаётся в секундах</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation> с</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>Внешний вид кнопок на панели инструментов</translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation>Использовать для заметок моноширинный шрифт</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор языка</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить значения по умолчанию</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Комбинация клавиш для глобального автоввода:</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Задержка ввода символов, задаётся в миллисекундах</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Задержка начала автоввода, задаётся в милисекундах</translation>
     </message>
 </context>
 <context>
@@ -325,12 +325,12 @@
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Очищать буфер обмена через</translation>
+        <translation>Задержка очистки поискового запроса:</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation> с</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -382,7 +382,7 @@
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Скрыть примечания записи по умолчанию</translation>
+        <translation>Скрывать заметки по умолчанию</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -390,19 +390,19 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>Использовать DuckDuckGo для загрузки значков</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>Очистка буфера обмена в секундах</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Сброс Touch ID при неактивности</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>Задержка блокирования базы (сек):</translation>
     </message>
     <message>
         <source> min</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>Задержка очистки поискового запроса:</translation>
     </message>
 </context>
 <context>
@@ -422,7 +422,7 @@
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Автоввод - KeePassXC</translation>
+        <translation>Автоввод — KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -443,6 +443,14 @@
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Команда автоввода содержит часто повторяющиеся аргументы. Действительно продолжить?</translation>
+    </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Требуется предоставление разрешений</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>Приложению KeePassXC для выполнения автоввода требуется получение разрешений на доступ к специальным возможностям. Если такое разрешение уже предоставлено, требуется повторный запуск KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -491,10 +499,21 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Требуется предоставление разрешений</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>Приложению KeePassXC для выполнения автоввода на уровне системы требуется получение разрешений на доступ к специальным возможностям и записи экрана. Запись экрана необходима для использования заголовков окон для поиска полей ввода. Если такие разрешения уже предоставлены, требуется повторный запуск KeePassXC.</translation>
+    </message>
+</context>
+<context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Автоввод - KeePassXC</translation>
+        <translation>Автоввод — KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
@@ -531,11 +550,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить доступ</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>Запретить доступ</translation>
     </message>
 </context>
 <context>
@@ -608,7 +627,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
-        <translation>&amp;Проверять совпадение схем для URL-адресов (например: https://...)</translation>
+        <translation>&amp;Проверять совпадение протокола для URL-адресов (например: https://...)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
@@ -724,23 +743,23 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Brave</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>Возвращать также записи с завершившимся сроком действия. К названию таких записей будет добавлено «[expired]».</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить возвращать &amp;истёкшие записи</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Включить интеграцию с браузером</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Браузеры, установленные в виде snap-пакетов, в настоящее время не поддерживаются.</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -748,23 +767,23 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать напоминание о переносе устаревших параметров KeePassHTTP.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать напоминание о переносе устаревших параметров KeePassHTTP</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>Поле расположения пользовательского прокси сервера</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>Выбрать файл пользовательского прокси сервера</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Внимание!&lt;/b&gt; Не найдено приложение keepassxc-proxy! &lt;br /&gt; Проверьте папку установки KeePassXC или задайте свой путь в дополнительных настройках. &lt;br /&gt;Интеграция в браузеры не будет работать без прокси-приложения. &lt;br /&gt;Ожидаемый путь: %1</translation>
     </message>
 </context>
 <context>
@@ -772,16 +791,6 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: Запрос на ассоциацию нового ключа</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Получен запрос на ассоциацию вышеуказанного ключа.
-
-Если хотите разрешить доступ к базе данных KeePassXC,
-дайте ему уникальное имя, чтобы распознать и принять ключ.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -862,6 +871,17 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Не показывать это предупреждение</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>Получен запрос на ассоциацию для следующей базы данных:
+%1
+
+Задайте для соединения уникальное имя или идентификатор, например: chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -955,7 +975,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>column %1</source>
-        <translation>колонке %1</translation>
+        <translation>Столбец %1</translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
@@ -972,19 +992,19 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>Разделитель текста</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>Разделитель полей</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>Количество пропускаемых строк заголовка</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation type="unfinished"/>
+        <translation>Предварительный просмотр импорта из CSV</translation>
     </message>
 </context>
 <context>
@@ -1037,19 +1057,20 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+Расположение резервной  копии базы данных: «%2»</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось сохранить, база данных не указывает на верный файл.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно сохранить, файл базы данных доступен только для чтения</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>Файл базы данных имеет несинхронизированные изменения </translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1067,7 +1088,7 @@ Backup database located at %2</source>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Key File:</source>
-        <translation>Ключевой файл:</translation>
+        <translation>Файл-ключ:</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1104,43 +1125,39 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка при открытии файла ключа: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
-        <translation type="unfinished"/>
+        <translation>Выбрать слот...</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Разблокировать базу данных KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Введите пароль:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Поле пароля</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter Additional Credentials:</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать или показывать символы вводимого пароля</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор ключевого файла</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор слота аппаратного ключа</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Открытие диалога выбора файла-ключа</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1148,24 +1165,19 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Перечитать токены</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Аппаратный ключ:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Помощь по аппаратному ключу</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID для Быстрой Разблокировки</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1173,26 +1185,60 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation type="unfinished"/>
+        <translation>Очистить строку выбора файла-ключа </translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Неудачное разблокирование, пароль не указан</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось разблокировать базу данных, пароль не был указан.
+Повторить попытку с пустым паролем?
+
+Чтобы отключить вывод этого сообщения об ошибке, выполните сброс пароля в меню «Параметры базы данных» → «Безопасность».</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Попробовать ещё раз с пустым паролем</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Дополнительные механизмы аутентификации:</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Возможно использовать аппаратные ключи безопасности, такие как &lt;strong&gt;Yubikey&lt;/strong&gt; или &lt;strong&gt;OneKey&lt;/strong&gt; со слотами, настроенными в режиме HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Нажмите здесь для получения дополнительной информации…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Для усиления защиты базы данных, в дополнение к основному паролю, возможно использовать секретный файл. Такой файл может быть создан из раздела «Безопасность» диалога параметров базы данных.&lt;/p&gt;&lt;p&gt;Файл-ключ &lt;strong&gt;не является&lt;/strong&gt; файлом базы данных в формате  *.kdbx!&lt;br&gt;Если файл-ключ не используется, оставьте это поле пустым.&lt;/p&gt;&lt;p&gt;Нажмите для получения дополнительных сведений…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Справка о файле-ключе</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Выберите файл-ключ…</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Файл базы данных не может быть файлом-ключом</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>Файл базы данных не может быть использован в качестве файла-ключа. Если файл-ключ не используется, оставьте это поле пустым.</translation>
     </message>
 </context>
 <context>
@@ -1263,7 +1309,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
         <translation>Вы действительно хотите удалить выбранный ключ?
-Это может воспрепятствовать соединению с плагином браузера.</translation>
+Это может воспрепятствовать соединению с подключаемым модулем браузера.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -1285,7 +1331,7 @@ This may prevent connection to the browser plugin.</source>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
         <translation>Вы действительно хотите отсоединить все браузеры?
-Это может воспрепятствовать соединению с плагином браузера.</translation>
+Это может воспрепятствовать соединению с подключаемым модулем браузера.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -1345,15 +1391,15 @@ Permissions to access entries will be revoked.</source>
         <source>Do you really want to move all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
         <translation>Вы действительно хотите привести все устаревшие данные интеграции браузера к новейшему стандарту?
-Это необходимо для поддержания совместимости с плагином браузера.</translation>
+Это необходимо для поддержания совместимости с подключаемым модулем браузера.</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>Сохранённые ключи браузера</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Удалить выбранный ключ</translation>
     </message>
 </context>
 <context>
@@ -1396,7 +1442,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>?? s</source>
-        <translation>?? сек</translation>
+        <translation>?? с</translation>
     </message>
     <message>
         <source>Change</source>
@@ -1499,35 +1545,35 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Изменить время расшифровывания</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Время расшифровывания в секундах</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>Формат базы данных</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Алгоритм шифрования</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Функция формирования ключа</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Раундов преобразования:</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Использование памяти</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>Параллелизм</translation>
     </message>
 </context>
 <context>
@@ -1597,36 +1643,37 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени базы данных</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Поле описания базы данных</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени пользователя по умолчанию</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>Максимальное количество событий истории для каждой из записей</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>Максимальный размер событий истории для каждой из записей</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Удалить корзину</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>Удалить корзину и всё её содержимое?
+Это необратимое действие.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation> (устар.)</translation>
     </message>
 </context>
 <context>
@@ -1697,7 +1744,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Продолжить без пароля</translation>
     </message>
 </context>
 <context>
@@ -1712,18 +1759,18 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени базы данных</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Поле описания базы данных</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Статистика</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
@@ -1739,99 +1786,103 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>Имя базы данных</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>Расположение</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>Последнее сохранение</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>Несохраненные изменения</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>да</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>нет</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>База данных была изменена, но эти изменения ещё не были сохранены на диск.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Количество групп</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Количество записей</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Количество истёкших записей</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation type="unfinished"/>
+        <translation>База данных содержит записи, срок действия которых истёк.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Уникальные пароли</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Неуникальные пароли</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Для более 10% записей используются повторяющиеся пароли. Используйте уникальные пароли, когда это возможно.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Максимальное количество повторных использований пароля</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Некоторые пароли используются более трёх раз.  Используйте уникальные пароли, когда это возможно.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>Количество коротких паролей</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>Рекомендуемая длина паролей — не менее 8 символов.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Количество ненадёжных паролей</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Рекомендуется использовать длинные пароли, состоящие из случайных символов с уровнями безопасности «хорошо» или «отлично». </translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>Средняя длина пароля</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation type="unfinished"/>
+        <translation>%1 символов</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation type="unfinished"/>
+        <translation>Средняя длина паролей менее десяти символов. Более длинные пароли более безопасны.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Подождите, выполняется сбор статистики…</translation>
     </message>
 </context>
 <context>
@@ -1911,23 +1962,23 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>Экспортировать базу данных в HTML файл</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>HTML файл</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка записи HTML файла.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>Подтверждение экспортирования</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>При продолжении, будет выполнен экспорт базы данных в незашифрованный файл, что делает доступными содержащиеся в нём пароли и другие чувствительные данные. Продолжить экспортирование?</translation>
     </message>
 </context>
 <context>
@@ -1990,7 +2041,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Запрос на слияние</translation>
+        <translation>Запрос на объединение</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
@@ -2108,7 +2159,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>База данных открыта в режиме только для чтения. Автосохраниение отключено.</translation>
     </message>
 </context>
 <context>
@@ -2151,15 +2202,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>Выберите частный ключ</translation>
+        <translation>Выберите закрытый ключ</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Слишком большой файл для частного ключа</translation>
+        <translation>Слишком большой файл для закрытого ключа</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Не удалось открыть частный ключ</translation>
+        <translation>Не удалось открыть закрытый ключ</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -2235,11 +2286,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;Пустой URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>Удалить этот URL?</translation>
     </message>
 </context>
 <context>
@@ -2282,39 +2333,39 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор атрибута</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>Значение атрибута</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation type="unfinished"/>
+        <translation>Добавить новый атрибут</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Удалить выбранный атрибут</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation type="unfinished"/>
+        <translation>Изменить имя атрибута</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation type="unfinished"/>
+        <translation>Включить или отключить защиту атрибута</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Показать защищённый атрибут </translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор основного цвета</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор цвета фона</translation>
     </message>
 </context>
 <context>
@@ -2353,7 +2404,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Своя последовательность автоввода</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
@@ -2361,38 +2412,38 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>Существующие ассоциации с окнами</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>Добавить ассоциацию с окном</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>Удалить выбранную ассоциацию с окном</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Для выбора всех значений используйте звёздочку (*)</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>Задайте заголовок окна для ассоциации</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Для выбора всех значений используйте звёздочку (*)</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>Пользовательская последовательность автоввода для этого окна</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Эти параметры влияют на данные, возвращаемые при запросе из расширения браузера.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2400,15 +2451,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Не использовать автоматическую отправку данных форм для этой записи</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Не показывать эту запись при запросе из расширения браузера</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>Дополнительные URL-адреса</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2443,23 +2494,23 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор истории записи</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Показать запись в состоянии на выбранный момент истории</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Восстановить запись в состоянии на выбранный момент истории</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Удалить выбранное состояние записи</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>Удалить всю историю</translation>
     </message>
 </context>
 <context>
@@ -2482,7 +2533,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Примечания</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Presets</source>
@@ -2490,7 +2541,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Включите для отображения раздела примечаний.</translation>
+        <translation>Включите для отображения заметок.</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -2502,59 +2553,59 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Url field</source>
-        <translation type="unfinished"/>
+        <translation>Поле URL-адреса</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Загрузить значок сайта для URL</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Поле повтора пароля</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть или показать генератор паролей</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать или показывать символы вводимого пароля</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть или показать заметку</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Поле ввода окончания срока действия</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>Список предварительно заданных сроков действия</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>Список предварительно заданных сроков действия</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Поле заметок</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>Поле названия</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени пользователя</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Использовать срок окончания действия</translation>
     </message>
 </context>
 <context>
@@ -2605,7 +2656,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Частный ключ</translation>
+        <translation>Закрытый ключ</translation>
     </message>
     <message>
         <source>External file</source>
@@ -2638,15 +2689,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>Выбор файла ключа</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>Внешний файл ключа</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Выберите файл вложения</translation>
     </message>
 </context>
 <context>
@@ -2748,7 +2799,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>Синхронизировать</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
@@ -2770,15 +2821,15 @@ Supported extensions are: %1.</source>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>Обмен записями KeeShare отключён. Включите возможность импорта и/или экспорта в параметрах приложения.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт базы данных запрещён параметрами приложения.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Импорт в базу данных запрещён параметрами приложения.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
@@ -2794,19 +2845,19 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать или показывать символы вводимого пароля</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть или показать генератор паролей</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation type="unfinished"/>
+        <translation>Очистить поля</translation>
     </message>
 </context>
 <context>
@@ -2817,7 +2868,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Примечания</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -2841,31 +2892,31 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Поле заметок</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Использовать срок окончания действия</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Включение или отключение автоввода для этой и вложенных групп</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Поле ввода окончания срока действия</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Включение или отключение поиска для этой и вложенных групп</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>Поле последовательности автоввода, используемой по умолчанию</translation>
     </message>
 </context>
 <context>
@@ -2932,39 +2983,39 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Возможно использовать службу поиска значков сайта DuckDuckGo в меню «Сервис» → «Параметры» → «Безопасность»</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Загрузить значок сайта для URL-адреса</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>Использовать выбранный значок для вложенных групп и записей</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
-        <translation type="unfinished"/>
+        <translation>Использовать выбранный значок для…</translation>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>Использовать только для выбранного объекта</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>Также применить к дочерним группам</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>Также применить к дочерним записям</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>Также применить ко всем дочерним элементам</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
+        <translation>Выбран существующий значок.</translation>
     </message>
 </context>
 <context>
@@ -2987,7 +3038,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Данные плагинов</translation>
+        <translation>Данные подключаемых модулей</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -2995,13 +3046,13 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Удалить данные плагинов?</translation>
+        <translation>Удалить данные подключаемых модулей?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Вы действительно хотите удалить выбранные данные плагинов?
-Это может привести к сбоям плагинов.</translation>
+        <translation>Действительно удалить выбранные данные подключаемых модулей?
+Это действие может привести к неработоспособности подключаемых модулей.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -3025,7 +3076,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>Уникальный ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
@@ -3212,7 +3263,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Примечания</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Expires</source>
@@ -3279,7 +3330,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Примечания</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Autotype</source>
@@ -3332,7 +3383,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Показать текущее значение TOTP</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3374,19 +3425,19 @@ This may cause the affected plugins to malfunction.</source>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
+        <translation>Запись «%1» из базы данных «%2» использована %3</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось зарегистрировать службу DBus на %1: работает другая служба доступа к паролям.</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%1 запись использована %1</numerusform><numerusform>%1 записи использованы %1</numerusform><numerusform>%1 записей использованы %1</numerusform><numerusform>%1 записи использованы %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3419,7 +3470,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Загрузить значки</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3428,7 +3479,8 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось получить значки сайтов?
+В разделе «Конфиденциальность» вкладки «Безопасность» параметров приложения возможно включить использование службы значков сайта DuckDuckGo.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3444,11 +3496,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>Дождитесь окончания обработки списка записей…</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3456,15 +3508,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>Уже существует</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка загрузки</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>Получение значков (%1 из %2)…</translation>
     </message>
 </context>
 <context>
@@ -4129,33 +4181,33 @@ If this reoccurs, then your database file may be corrupt.</source>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate</source>
-        <translation>Генерировать</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <source>Key File</source>
-        <translation>Ключевой файл</translation>
+        <translation>Файл-ключ</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Для большей надёжности можно добавить ключевой файл, содержащий случайные байты.&lt;/p&gt;&lt;p&gt;Этот файл нужно хранить в секрете и не терять, иначе не удастся получить доступ к данным.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Для большей надёжности можно добавить файл-ключ, содержащий случайные байты.&lt;/p&gt;&lt;p&gt;Этот файл нужно хранить в секрете и не терять, иначе не удастся получить доступ к данным.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Устаревший формат ключевого файла</translation>
+        <translation>Устаревший формат файла-ключа</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please go to the master key settings and generate a new key file.</source>
-        <translation>Вы используете ключевой файл устаревшего формата, поддержка которого в дальнейшем может быть прекращена.
+        <translation>Вы используете файл-ключ устаревшего формата, поддержка которого в дальнейшем может быть прекращена.
 
-Перейдите в настройки мастер-ключа и создайте новый ключевой файл.</translation>
+Перейдите в настройки мастер-ключа и создайте новый файл-ключ.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>Ошибка загрузки ключевого файла &apos;%1&apos;
+        <translation>Ошибка загрузки файла-ключа «%1»
 Сообщение: %2</translation>
     </message>
     <message>
@@ -4184,11 +4236,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор ключевого файла</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Открытие диалога выбора ключевого файла </translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4204,7 +4256,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation type="unfinished"/>
+        <translation>Неверный ключевой файл</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
@@ -4212,7 +4264,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>Подозрительный ключевой файл</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
@@ -4328,11 +4380,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Примечания</translation>
+        <translation>&amp;Заметки</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Скопировать примечания в буфер обмена</translation>
+        <translation>Скопировать заметку в буфер обмена</translation>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
@@ -4364,7 +4416,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Переключить окно</translation>
+        <translation>Скрыть или показать окно</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
@@ -4512,27 +4564,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation> &amp;Экспорт</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Проверить обновления…</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>Загрузить &amp;значки сайтов для всех записей</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Сортировать &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Сортировать &amp;Z-A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Генератор Паролей</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4540,43 +4592,43 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Экспорт в HTML-файл...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище 1Password...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать хранилище 1Password</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Начало работы</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Открыть руководство по началу работы в формате PDF</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Онлайн помощь...</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>Перейти к онлайн документации (открывает браузер)</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Руководство Пользователя</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Открыть инструкцию пользователя в формате PDF</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Комбинации клавиш</translation>
     </message>
 </context>
 <context>
@@ -4773,7 +4825,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось декодировать основной ключ: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
@@ -4812,11 +4864,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Повреждённый ключевой файл, ошибка чтения частного ключа</translation>
+        <translation>Повреждённый ключевой файл, ошибка чтения файла закрытого ключа</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Нет сведений для дешифрования в частном ключе</translation>
+        <translation>В закрытом ключе нет сведений для расшифровывания</translation>
     </message>
     <message>
         <source>Trying to run KDF without cipher</source>
@@ -4840,7 +4892,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>Неожиданный конец файла при чтении частного ключа</translation>
+        <translation>Неожиданный конец файла при чтении закрытого ключа</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -4852,11 +4904,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Невозможно записать частный ключ, так как он пуст</translation>
+        <translation>Невозможно записать закрытый ключ, так как он пуст</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>Неожиданный конец файла при записи частного ключа</translation>
+        <translation>Неожиданный конец файла при записи закрытого ключа</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
@@ -4883,7 +4935,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Пароли не совпадают</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
@@ -4918,19 +4970,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать или показывать символы вводимого пароля</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Поле повтора пароля</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть или показать генератор паролей</translation>
     </message>
 </context>
 <context>
@@ -5038,11 +5090,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>В расширенный режим</translation>
+        <translation>Переключение в расширенный режим</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Дополнительные</translation>
+        <translation>Расширенный режим</translation>
     </message>
     <message>
         <source>A-Z</source>
@@ -5098,11 +5150,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Switch to simple mode</source>
-        <translation>В простой режим</translation>
+        <translation>Переключение в простой режим</translation>
     </message>
     <message>
         <source>Simple</source>
-        <translation>Простой</translation>
+        <translation>Простой режим</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -5114,11 +5166,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Добавить не-шестнадцатеричные буквы к списку исключений</translation>
+        <translation>Добавить не-шестнадцатеричные символы к списку исключений</translation>
     </message>
     <message>
         <source>Hex</source>
-        <translation>16</translation>
+        <translation>Hex</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
@@ -5134,47 +5186,47 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>Сгенерированный пароль</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation type="unfinished"/>
+        <translation>Большие буквы</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation type="unfinished"/>
+        <translation>Маленькие буквы</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation type="unfinished"/>
+        <translation>Специальные символы</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation type="unfinished"/>
+        <translation>Математические символы</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
+        <translation>Тире и слэши </translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation type="unfinished"/>
+        <translation>Исключенные символы</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Hex пароли</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>Длина пароля</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>Регистр слов:</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation type="unfinished"/>
+        <translation>Создать пароль заново</translation>
     </message>
     <message>
         <source>Copy password</source>
@@ -5182,23 +5234,23 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>Принять пароль</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>нижний регистр</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>ВЕРХНИЙ РЕГИСТР</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation type="unfinished"/>
+        <translation>Каждое Слово С Заглавной Буквы</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Скрывать или показывать символы вводимого пароля</translation>
     </message>
 </context>
 <context>
@@ -5209,7 +5261,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Статистика</translation>
     </message>
 </context>
 <context>
@@ -5244,11 +5296,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Merge</source>
-        <translation>Слияние</translation>
+        <translation>Объединить</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Продолжить</translation>
     </message>
 </context>
 <context>
@@ -5496,7 +5548,7 @@ Available commands:
     </message>
     <message>
         <source>Notes</source>
-        <translation>Примечания</translation>
+        <translation>Заметки</translation>
     </message>
     <message>
         <source>Last Modified</source>
@@ -5903,19 +5955,19 @@ Available commands:
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>имена файлов открываемой базы данных паролей (*.kdbx)</translation>
+        <translation>Имена файлов открываемых баз данных паролей (*.kdbx).</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>путь к своему файлу настроек</translation>
+        <translation>Путь к пользовательскому файлу настроек.</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>ключевой файл базы данных</translation>
+        <translation>Ключевой файл базы данных.</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>читать пароли базы данных с stdin</translation>
+        <translation>Прочитать пароль базы данных со стандартного ввода stdin.</translation>
     </message>
     <message>
         <source>Parent window handle</source>
@@ -5943,15 +5995,15 @@ Available commands:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Отключить использования парольного ключа базой данных.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>Выводить отладочную информацию.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Отключить использования парольного ключа для объединяемой базы данных.</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -5971,11 +6023,11 @@ Available commands:
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Режим отладки выключен.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Режим отладки включен.</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -6019,31 +6071,31 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Криптографические библиотеки:</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно одновременно создать пароль и запрос.</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Добавить новую группу в базу данных.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>Путь к добавляемой группе.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
+        <translation>Группа %1 уже существует.</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Группа %1 не найдена.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Группа %1 добавлена.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
@@ -6071,7 +6123,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>Показать эту помощь.</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
@@ -6079,7 +6131,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>слот</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
@@ -6087,11 +6139,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
+        <translation>Словарь слишком маленький (&lt; 1000 слов)</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Покинуть интерактивный режим.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
@@ -6107,23 +6159,23 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>Неподдерживаемый формат %1</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>Использовать цифры</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>Неверная длина пароля %1</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>Показать справку команды.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>Доступные команды:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
@@ -6135,7 +6187,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>Путь до новой базы данных. </translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
@@ -6143,15 +6195,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>База данных успешно импортирована.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>Неизвестная команда %1</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>Формирование вывода в виде отдельных строк.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
@@ -6159,7 +6211,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>Слот Yubikey для второй базы данных.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -6171,67 +6223,67 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Перемещение записи в новую группу.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Путь к перемещаемой записи.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>Путь к группе назначения.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти группу с путём %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Запись уже существует в группе %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>Запись %1 перемещена в группу %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>Открыть базу данных.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Путь к удаляемой группе.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>Невозможно удалить корневую группу базы данных.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Группа %1 перемещена в корзину.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Группа %1 удалена.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть базу данных «%1»: файл не найден</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть базу данных «%1»: файл не является простым</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось открыть базу данных «%1»: файл не может быть прочитан</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Введите пароль для разблокировки %1:</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>Недействительный слот Yubikey %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to unlock %1</source>
@@ -6247,11 +6299,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>Интеграция со службой Secret Service</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>Имя пользователя</translation>
     </message>
     <message>
         <source>%1[%2] Challenge Response - Slot %3 - %4</source>
@@ -6264,6 +6316,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Показать защищённый атрибут в виде простого текста.</translation>
     </message>
 </context>
 <context>
@@ -6422,7 +6478,7 @@ Kernel: %3 %4</source>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Опции</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
@@ -6462,7 +6518,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>Авторизация</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
@@ -6490,7 +6546,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Разблокируйте базу данных для просмотра дополнительных сведений</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6498,7 +6554,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>Разблокируйте для просмотра</translation>
     </message>
     <message>
         <source>None</source>
@@ -6509,7 +6565,7 @@ Kernel: %3 %4</source>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Активный</translation>
+        <translation>Действия</translation>
     </message>
     <message>
         <source>Allow export</source>
@@ -6541,7 +6597,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Генерировать</translation>
+        <translation>Создать</translation>
     </message>
     <message>
         <source>Import</source>
@@ -6622,7 +6678,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>The exported certificate is not the same as the one in use. Do you want to export the current certificate?</source>
-        <translation>Экспортированный сертификат не такой же, как сейчас используемый. Экспортировать текущий сертификат?</translation>
+        <translation>Экспортируемый сертификат отличается от используемого. Экспортировать текущий сертификат?</translation>
     </message>
     <message>
         <source>Signer:</source>
@@ -6630,15 +6686,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить импорт KeeShare</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить экспорт KeeShare</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>Показывать только ошибки и предупреждения</translation>
     </message>
     <message>
         <source>Key</source>
@@ -6646,39 +6702,39 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>Поле имени владельца сертификата</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Создать сертификат</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать существующий сертификат</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Экспортировать собственный сертификат</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>Известные общие ресурсы</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Доверять выбранному сертификату</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>Всегда запрашивать подтверждение доверия к сертификату</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Не доверять выбранному сертификату</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Удалить выбранный сертификат</translation>
     </message>
 </context>
 <context>
@@ -6873,7 +6929,7 @@ Kernel: %3 %4</source>
     <name>TotpSetupDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>Настроить TOTP</translation>
+        <translation>Параметры TOTP</translation>
     </message>
     <message>
         <source>Default RFC 6238 token settings</source>
@@ -6906,15 +6962,15 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>Секретный ключ</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>Секретный ключ должен быть задан в формате Base32</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>Поле секретного ключа</translation>
     </message>
     <message>
         <source>Algorithm:</source>
@@ -6922,28 +6978,28 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Time step field</source>
-        <translation type="unfinished"/>
+        <translation>Поле шага времени</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation> цифр(ы)</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>Недействительный секрет TOTP</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>Введён недействительный секретный ключ. Ключ должен быть задан в формате Base32, например: JBSWY3DPEHPK3PXP.</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>Подтверждение удаления параметров TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Удалить параметры TOTP этой записи?</translation>
     </message>
 </context>
 <context>
@@ -7029,11 +7085,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>Импорт из 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>Открыть недавнюю базу данных</translation>
     </message>
 </context>
 <context>
@@ -7060,11 +7116,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Перечитать токены</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор слота аппаратного ключа</translation>
     </message>
 </context>
 </TS>

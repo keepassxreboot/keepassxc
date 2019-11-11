@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>次の時間が過ぎたらクリップボードを消去する</translation>
+        <translation>指定時間経過後にクリップボードを消去する</translation>
     </message>
     <message>
         <source> sec</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>次の時間が過ぎたら検索クエリを消去する</translation>
+        <translation>指定時間経過後に検索クエリを消去する</translation>
     </message>
 </context>
 <context>
@@ -443,6 +443,14 @@
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>この自動入力コマンドは何度も繰り返されている引数が含まれています。本当に続行しますか？</translation>
+    </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>許可が必要です</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC がエントリーの自動入力を行うにはアクセス許可が必要です。既に許可してある場合は KeePassXC を再起動する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>パスワードをコピー(&amp;P)</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>許可が必要です</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC がグローバル自動入力を行うにはアクセス許可と画面記録許可が必要です。ウィンドウタイトルを使用してエントリーを検索するには画面記録許可が必要です。既に許可してある場合は KeePassXC を再起動する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Please select the correct database for saving credentials.</source>
         <translation>KeePassXC: 新しいキーのアソシエーション要求</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>他のアプリケーションからのアソシエーション要求を受け取りました。
-
-KeePassXC のデータベースへのアクセスを許可したい場合は、
-要求元を識別して受け入れるためのユニークな名前を付けてください。</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>アクセスを許可して保存</translation>
     </message>
@@ -862,6 +871,18 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>今後この警告を表示しない</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>次のデータベースのアソシエーション要求を受け取りました:
+%1
+
+次のような、接続用の一意な名前または ID を付けてください:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -1130,10 +1151,6 @@ Please consider generating a new key file.</source>
         <translation>パスワードの表示/非表示を切り替え</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>追加の資格情報を入力してください:</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>キーファイルを選択</translation>
     </message>
@@ -1158,12 +1175,6 @@ Please consider generating a new key file.</source>
         <translation>ハードウェアキー:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;スロットを HMAC-SHA1 用に設定した &lt;strong&gt;YubiKey&lt;/strong&gt; や &lt;strong&gt;OnlyKey&lt;/strong&gt; をハードウェアセキュリティキーとして使用できます。&lt;/p&gt;
-                           &lt;p&gt;詳しくはクリックしてください...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>ハードウェアキーのヘルプ</translation>
     </message>
@@ -1178,10 +1189,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Clear Key File</source>
         <translation>キーファイルを消去</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>ファイルを選択...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1199,6 +1206,42 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>Retry with empty password</source>
         <translation>空のパスワードで再試行</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>追加の資格情報を入力してください (ある場合のみ):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;スロットを HMAC-SHA1 用に設定した &lt;strong&gt;YubiKey&lt;/strong&gt; や &lt;strong&gt;OnlyKey&lt;/strong&gt; をハードウェアセキュリティキーとして使用できます。&lt;/p&gt;
+&lt;p&gt;詳しくはクリックしてください...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;マスターパスワードだけでなく、シークレットファイルを使用することでデータベースのセキュリティを強固にすることができます。ファイルはデータベースのセキュリティ設定で生成できます。&lt;/p&gt;&lt;p&gt;このファイルは *.kdbx データベースファイル&lt;strong&gt;ではない&lt;/strong&gt;ものにしてください。&lt;br&gt;キーファイルが無い場合は、フィールドを空のままにしてください。&lt;/p&gt;&lt;p&gt;詳しくはクリックしてください...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>キーファイルのヘルプ</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>キーファイルを選択...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>データベースファイルをキーファイルとして使用することはできません</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>データベースファイルをキーファイルとして使用することはできません。
+キーファイルが無い場合は、フィールドを空のままにしてください。</translation>
     </message>
 </context>
 <context>
@@ -1704,7 +1747,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>パスワードなしで続行</translation>
+        <translation>パスワード無しで続行</translation>
     </message>
 </context>
 <context>
@@ -1762,7 +1805,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>変更の未保存</translation>
+        <translation>未保存の変更</translation>
     </message>
     <message>
         <source>yes</source>
@@ -1839,6 +1882,10 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>パスワード長の平均値が10文字以下です。パスワードは長いほどセキュリティが向上します。</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>データベースの統計を算出しているため、しばらくお待ちください...</translation>
     </message>
 </context>
 <context>
@@ -2411,7 +2458,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>このエントリーをブラウザー拡張機能から非表示にする</translation>
+        <translation>このエントリーをブラウザー拡張機能から隠す</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
@@ -2814,7 +2861,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>消去フィールド</translation>
+        <translation>フィールドを消去</translation>
     </message>
 </context>
 <context>
@@ -2968,7 +3015,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>全ての子に適用</translation>
+        <translation>全ての子にも適用</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3210,7 +3257,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation>常にしない</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <source>Password</source>
@@ -3313,7 +3360,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Never</source>
-        <translation>常にしない</translation>
+        <translation>なし</translation>
     </message>
     <message>
         <source>[PROTECTED]</source>
@@ -4211,7 +4258,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation>メモ: 内容が変更される可能性があるファイルを使用すると、データベースのロックを解除できなくなる恐れがあります。</translation>
+        <translation>備考: 内容が変更される可能性があるファイルを使用すると、データベースのロックを解除できなくなる恐れがあります。</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4507,7 +4554,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>メモ: KeePassXC のプレリリース版を使用しています。
+        <translation>備考: KeePassXC のプレリリース版を使用しています。
 複数のバグや小さな問題点が残っている可能性があるため、このバージョンは実用的ではありません。</translation>
     </message>
     <message>
@@ -4746,15 +4793,15 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>HMAC の失敗による不正な OpData01 です</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>clearText をインプレース処理できません</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>期待される clear-text のサイズは %1 バイトですが %2 バイトしかありませんでした</translation>
     </message>
 </context>
 <context>
@@ -5984,7 +6031,7 @@ Available commands:
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>デバッグモードが無効です。</translation>
+        <translation>デバッグモードは無効です。</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
@@ -6036,7 +6083,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>パスワードの生成とプロンプトの表示は同時使用できません。</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
@@ -6132,7 +6179,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Display command help.</source>
-        <translation>コマンドヘルプを表示する</translation>
+        <translation>コマンドヘルプを表示する。</translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -6272,11 +6319,15 @@ CPU アーキテクチャー: %2
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>&apos;%1&apos; のパスワードは %2 回流出しました！</numerusform></translation>
+        <translation><numerusform>&apos;%1&apos; のパスワードは %2 回流出しています！</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>全てのオプションを適用したパスワード生成は不正です</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>クリアテキストの保護された属性を表示する。</translation>
     </message>
 </context>
 <context>
@@ -6871,7 +6922,7 @@ CPU アーキテクチャー: %2
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>メモ: これらの TOTP 設定は他の Authenticator では動作しない可能性があります。</translation>
+        <translation>備考: これらの TOTP 設定は他の Authenticator では動作しない可能性があります。</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>

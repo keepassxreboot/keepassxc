@@ -250,7 +250,7 @@
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>ภาษา:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>ย่อเล็ก</translation>
     </message>
     <message>
         <source>Drop to background</source>
@@ -445,6 +445,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>คำสั่ง Auto-Type นี้มีอาร์กิวเมนต์ซ้ำกันหลายครั้ง ต้องการดำเนินการต่อหรือไม่</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>ต้องการการอนุญาต</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -489,6 +497,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>คัดลอกรหัสผ่าน</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>ต้องการการอนุญาต</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Please select the correct database for saving credentials.</source>
         <translation>KeePassXC: คำขอกุญแจที่เชื่อมโยงใหม่</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>คุณได้รับคำร้องขอที่เกี่ยวข้องสำหรับกุญแจด้านบน
-
-ถ้าคุณต้องการอนุญาติมันให้เข้าถึงฐานข้อมูล KeePassXC database,
-โปรดให้ชื่อเฉพาะเพื่อยืนยันตัวตนและตอบรับมัน.</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>บันทึกและอนุญาติให้เข้าถึง</translation>
     </message>
@@ -860,6 +869,14 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>ไม่ต้องแสดงคำเตือนนี้อีก</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -989,7 +1006,7 @@ Would you like to migrate your existing settings now?</source>
     <name>CsvParserModel</name>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n คอลัมน์</numerusform></translation>
     </message>
     <message>
         <source>%1, %2, %3</source>
@@ -998,11 +1015,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n ไบต์</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n แถว</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1102,7 +1119,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>ไม่สามารถเปิดแฟ้มกุญแจได้: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
@@ -1110,11 +1127,11 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>ปลดล็อกฐานข้อมูล KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>ใส่รหัสผ่าน:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -1122,10 +1139,6 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter Additional Credentials:</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1150,12 +1163,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>กุญแจฮาร์ดแวร์:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1174,10 +1182,6 @@ Please consider generating a new key file.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select file...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"/>
     </message>
@@ -1190,6 +1194,40 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1828,6 +1866,10 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6263,6 +6305,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
         <translation type="unfinished"/>
     </message>
 </context>

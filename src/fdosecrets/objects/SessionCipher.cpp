@@ -44,11 +44,6 @@ namespace
 namespace FdoSecrets
 {
 
-    QVariant CipherPair::negotiationOutput() const
-    {
-        return {};
-    }
-
     DhIetf1024Sha256Aes128CbcPkcs7::DhIetf1024Sha256Aes128CbcPkcs7(const QByteArray& clientPublicKeyBytes)
         : m_valid(false)
     {

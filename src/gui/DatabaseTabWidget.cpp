@@ -156,6 +156,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
 {
     QFileInfo fileInfo(filePath);
     QString canonicalFilePath = fileInfo.canonicalFilePath();
+
     if (canonicalFilePath.isEmpty()) {
         emit messageGlobal(tr("Failed to open %1. It either does not exist or is not accessible.").arg(filePath),
                            MessageWidget::Error);
@@ -165,7 +166,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     for (int i = 0, c = count(); i < c; ++i) {
         auto* dbWidget = databaseWidgetFromIndex(i);
         Q_ASSERT(dbWidget);
-        if (dbWidget && dbWidget->database()->canonicalFilePath() == canonicalFilePath) {
+        if (dbWidget && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
             dbWidget->performUnlockDatabase(password, keyfile);
             if (!inBackground) {
                 // switch to existing tab if file is already open

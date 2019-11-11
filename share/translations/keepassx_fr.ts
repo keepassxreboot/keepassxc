@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>Cette commande de saisie automatique contient des arguments répétés très souvent. Voulez-vous vraiment continuer ?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>Autorisation nécessaire</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC nécessite la permission Accessiblité afin de pouvoir effectuer la saisie automatique sur les entrées. SI vous avez déjà donné l&apos;autorisation, vous devriez relancer KeePassXC.</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>Copier le mot de &amp;passe</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>Autorisation nécessaire</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC nécessite l&apos;autorisation d&apos;accès Accessibilité et Enregistrement d&apos;écran afin de pouvoir exécuter la saisie automatique globale. L&apos;enregistrement d&apos;écran est requis pour utiliser le titre de fenêtre lors de la recherche des entrées. Si vous avez déjà accordé cette autorisation, vous devriez relancer KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Veuillez sélectionner la base de donnée souhaitée pour enregistrer les identi
         <translation>KeePassXC : nouvelle demande d’association de touche</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>Vous avez reçu une demande d’association pour la clé ci-dessus.
-
-Si vous voulez autoriser cette clé à accéder à votre base de données KeePassXC,
-attribuez-lui un nom unique pour l’identifier et acceptez-la.</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>Enregistrer et autoriser l’accès</translation>
     </message>
@@ -860,6 +869,18 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>Ne plus afficher cet avertissement</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>Vous avez reçu une demande d&apos;association pour la base de données suivante :
+%1
+
+Attribuez à cette connexion un nom unique ou un identifiant, par exemple :
+chrome-laptop</translation>
     </message>
 </context>
 <context>
@@ -1127,10 +1148,6 @@ Veuillez envisager de générer un nouveau fichier-clé.</translation>
         <translation>Basculer l&apos;affichage du mot de passe</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>Saisir d&apos;autres identifiants :</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>Sélection du fichier-clé</translation>
     </message>
@@ -1155,12 +1172,6 @@ Veuillez envisager de générer un nouveau fichier-clé.</translation>
         <translation>Clés matérielles :</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Vous pouvez utiliser une clé de sécurité matérielle comme &lt;strong&gt;YubiKey&lt;/strong&gt; ou &lt;strong&gt;OnlyKey&lt;/strong&gt; avec des emplacements pour HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Cliquez pour plus d&apos;information...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>Aide sur les clés matérielles</translation>
     </message>
@@ -1175,10 +1186,6 @@ Veuillez envisager de générer un nouveau fichier-clé.</translation>
     <message>
         <source>Clear Key File</source>
         <translation>Effacer le fichier-clé</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>Sélectionner un fichier...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1197,6 +1204,42 @@ Afin d&apos;éviter cette erreur, vous devez réinitialiser votre mot de passe d
     <message>
         <source>Retry with empty password</source>
         <translation>Essayer à nouveau sans mot de passe</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>Saisir d&apos;autres identifiants (si définis) :</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Vous pouvez utiliser une clé de sécurité matérielle comme &lt;strong&gt;YubiKey&lt;/strong&gt; ou &lt;strong&gt;OnlyKey&lt;/strong&gt; avec des emplacements pour HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Cliquez pour plus d&apos;information...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;En plus du mot de passe maître, vous pouvez utiliser un fichier secret pour améliorer la sécurité de votre base de données. Un tel fichier peut être généré depuis les paramètres de sécurité de votre base de données.&lt;/p&gt;&lt;p&gt;Il ne s&apos;agit &lt;strong&gt;pas&lt;/strong&gt; de votre fichier de base de données *.kdbx !&lt;br&gt;Si vous n&apos;avez pas de fichier-clé, laissez le champ vide.&lt;/p&gt;&lt;p&gt;Cliquez ici pour plus d&apos;informations...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>Aide fichier-clé</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>Sélectionner le fichier-clé...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>Impossible d&apos;utiliser une base de données comme fichier-clé</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>Vous ne pouvez pas utiliser la base de données actuelle comme fichier-clé.
+Si vous n&apos;avez pas de fichier-clé, laissez le champ vide.</translation>
     </message>
 </context>
 <context>
@@ -1836,6 +1879,10 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>La longueur moyenne des mots de passe est de moins de 10 caractères. Des mots de passe plus longs offrent une meilleure sécurité.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>Veuillez patienter pendant que les statistiques de base de données sont calculées...</translation>
     </message>
 </context>
 <context>
@@ -6271,6 +6318,10 @@ Noyau : %3 %4</translation>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation>Générateur de mots de passe invalide après l&apos;application de toutes les options</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>Afficher les attributs protégés en clair.</translation>
     </message>
 </context>
 <context>

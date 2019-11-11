@@ -95,6 +95,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_groupView(new GroupView(m_db.data(), m_mainSplitter))
     , m_saveAttempts(0)
 {
+    Q_ASSERT(m_db);
+
     m_messageWidget->setHidden(true);
 
     auto* mainLayout = new QVBoxLayout();
@@ -221,7 +223,11 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     KeeShare::instance()->connectDatabase(m_db, {});
 #endif
 
-    switchToMainView();
+    if (m_db->isInitialized()) {
+        switchToMainView();
+    } else {
+        switchToOpenDatabase();
+    }
 }
 
 DatabaseWidget::DatabaseWidget(const QString& filePath, QWidget* parent)
@@ -394,7 +400,6 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     m_db = std::move(db);
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
-    processAutoOpen();
 
     // Restore the new parent group pointer, if not found default to the root group
     // this prevents data loss when merging a database while creating a new entry
@@ -413,6 +418,8 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // Keep the instance active till the end of this function
     Q_UNUSED(oldDb);
 #endif
+
+    oldDb->releaseData();
 }
 
 void DatabaseWidget::cloneEntry()
@@ -940,6 +947,7 @@ void DatabaseWidget::loadDatabase(bool accepted)
     if (accepted) {
         replaceDatabase(openWidget->database());
         switchToMainView();
+        processAutoOpen();
         m_saveAttempts = 0;
         emit databaseUnlocked();
         if (config()->get("MinimizeAfterUnlock").toBool()) {
@@ -1026,6 +1034,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
     m_entryBeforeLock = QUuid();
 
     switchToMainView();
+    processAutoOpen();
     emit databaseUnlocked();
 
     if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
@@ -1462,6 +1471,7 @@ void DatabaseWidget::reloadDatabaseFile()
         }
 
         replaceDatabase(db);
+        processAutoOpen();
         restoreGroupEntryFocus(groupBeforeReload, entryBeforeReload);
         m_blockAutoSave = false;
     } else {

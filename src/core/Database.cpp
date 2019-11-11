@@ -72,11 +72,7 @@ Database::Database(const QString& filePath)
 
 Database::~Database()
 {
-    s_uuidMap.remove(m_uuid);
-
-    if (m_modified) {
-        emit databaseDiscarded();
-    }
+    releaseData();
 }
 
 QUuid Database::uuid() const
@@ -320,7 +316,11 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
-    QByteArray oldTransformedKey = m_data.transformedMasterKey;
+    PasswordKey oldTransformedKey;
+    if (m_data.hasKey) {
+        oldTransformedKey.setHash(m_data.transformedMasterKey->rawKey());
+    }
+
     KeePass2Writer writer;
     setEmitModified(false);
     writer.writeDatabase(device, this);
@@ -333,9 +333,10 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
-    Q_ASSERT(!m_data.transformedMasterKey.isEmpty());
-    Q_ASSERT(m_data.transformedMasterKey != oldTransformedKey);
-    if (m_data.transformedMasterKey.isEmpty() || m_data.transformedMasterKey == oldTransformedKey) {
+    QByteArray newKey = m_data.transformedMasterKey->rawKey();
+    Q_ASSERT(!newKey.isEmpty());
+    Q_ASSERT(newKey != oldTransformedKey.rawKey());
+    if (newKey.isEmpty() || newKey == oldTransformedKey.rawKey()) {
         if (error) {
             *error = tr("Key not transformed. This is a bug, please report it to the developers!");
         }
@@ -376,6 +377,43 @@ bool Database::import(const QString& xmlExportPath, QString* error)
     }
 
     return true;
+}
+
+/**
+ * Release all stored group, entry, and meta data of this database.
+ *
+ * Call this method to ensure all data is cleared even if valid
+ * pointers to this Database object are still being held.
+ *
+ * A previously reparented root group will not be freed.
+ */
+
+void Database::releaseData()
+{
+    s_uuidMap.remove(m_uuid);
+    m_uuid = QUuid();
+
+    if (m_modified) {
+        emit databaseDiscarded();
+    }
+
+    m_data.clear();
+
+    if (m_rootGroup && m_rootGroup->parent() == this) {
+        delete m_rootGroup;
+    }
+    if (m_metadata) {
+        delete m_metadata;
+    }
+    if (m_fileWatcher) {
+        delete m_fileWatcher;
+    }
+
+    m_deletedObjects.clear();
+    m_commonUsernames.clear();
+
+    m_initialized = false;
+    m_modified = false;
 }
 
 /**
@@ -598,19 +636,24 @@ Database::CompressionAlgorithm Database::compressionAlgorithm() const
 
 QByteArray Database::transformedMasterKey() const
 {
-    return m_data.transformedMasterKey;
+    return m_data.transformedMasterKey->rawKey();
 }
 
 QByteArray Database::challengeResponseKey() const
 {
-    return m_data.challengeResponseKey;
+    return m_data.challengeResponseKey->rawKey();
 }
 
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
     if (m_data.key) {
-        m_data.masterSeed = masterSeed;
-        return m_data.key->challenge(masterSeed, m_data.challengeResponseKey);
+        m_data.masterSeed->setHash(masterSeed);
+        QByteArray response;
+        bool ok = m_data.key->challenge(masterSeed, response);
+        if (ok && !response.isEmpty()) {
+            m_data.challengeResponseKey->setHash(response);
+        }
+        return ok;
     }
     return false;
 }
@@ -647,7 +690,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     if (!key) {
         m_data.key.reset();
-        m_data.transformedMasterKey = {};
+        m_data.transformedMasterKey.reset(new PasswordKey());
         m_data.hasKey = false;
         return true;
     }
@@ -657,22 +700,29 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
         Q_ASSERT(!m_data.kdf->seed().isEmpty());
     }
 
-    QByteArray oldTransformedMasterKey = m_data.transformedMasterKey;
+    PasswordKey oldTransformedMasterKey;
+    if (m_data.hasKey) {
+        oldTransformedMasterKey.setHash(m_data.transformedMasterKey->rawKey());
+    }
+
     QByteArray transformedMasterKey;
+
     if (!transformKey) {
-        transformedMasterKey = oldTransformedMasterKey;
+        transformedMasterKey = QByteArray(oldTransformedMasterKey.rawKey());
     } else if (!key->transform(*m_data.kdf, transformedMasterKey)) {
         return false;
     }
 
     m_data.key = key;
-    m_data.transformedMasterKey = transformedMasterKey;
+    if (!transformedMasterKey.isEmpty()) {
+        m_data.transformedMasterKey->setHash(transformedMasterKey);
+    }
     m_data.hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(Clock::currentDateTimeUtc());
     }
 
-    if (oldTransformedMasterKey != m_data.transformedMasterKey) {
+    if (oldTransformedMasterKey.rawKey() != m_data.transformedMasterKey->rawKey()) {
         markAsModified();
     }
 
@@ -688,15 +738,15 @@ bool Database::verifyKey(const QSharedPointer<CompositeKey>& key) const
 {
     Q_ASSERT(hasKey());
 
-    if (!m_data.challengeResponseKey.isEmpty()) {
+    if (!m_data.challengeResponseKey->rawKey().isEmpty()) {
         QByteArray result;
 
-        if (!key->challenge(m_data.masterSeed, result)) {
+        if (!key->challenge(m_data.masterSeed->rawKey(), result)) {
             // challenge failed, (YubiKey?) removed?
             return false;
         }
 
-        if (m_data.challengeResponseKey != result) {
+        if (m_data.challengeResponseKey->rawKey() != result) {
             // wrong response from challenged device(s)
             return false;
         }
@@ -861,7 +911,7 @@ bool Database::changeKdf(const QSharedPointer<Kdf>& kdf)
     }
 
     setKdf(kdf);
-    m_data.transformedMasterKey = transformedMasterKey;
+    m_data.transformedMasterKey->setHash(transformedMasterKey);
     markAsModified();
 
     return true;

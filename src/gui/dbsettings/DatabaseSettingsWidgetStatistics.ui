@@ -24,13 +24,13 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="enableGroupBox">
+    <widget class="QGroupBox" name="statisticsGroupBox">
      <property name="title">
       <string>Statistics</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QTableView" name="sharedGroupsView">
+       <widget class="QTableView" name="statisticsTableView">
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
         </property>
@@ -58,7 +58,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="tipLabel">
         <property name="font">
          <font>
           <italic>true</italic>

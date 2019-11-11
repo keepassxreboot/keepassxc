@@ -24,7 +24,7 @@
 
 #include "core/Config.h"
 #include "core/Database.h"
-#include "core/EntrySearcher.h"
+#include "core/Tools.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 
@@ -233,29 +233,43 @@ namespace FdoSecrets
             }
         }
 
-        static QMap<QString, QString> attrKeyToField{
-            {EntryAttributes::TitleKey, QStringLiteral("title")},
-            {EntryAttributes::UserNameKey, QStringLiteral("user")},
-            {EntryAttributes::URLKey, QStringLiteral("url")},
-            {EntryAttributes::NotesKey, QStringLiteral("notes")},
-        };
-
-        QStringList terms;
+        QList<EntrySearcher::SearchTerm> terms;
         for (auto it = attributes.constBegin(); it != attributes.constEnd(); ++it) {
             if (it.key() == EntryAttributes::PasswordKey) {
                 continue;
             }
-            auto field = attrKeyToField.value(it.key(), QStringLiteral("_") + Item::encodeAttributeKey(it.key()));
-            terms << QStringLiteral(R"raw(+%1:"%2")raw").arg(field, it.value());
+            terms << attributeToTerm(it.key(), it.value());
         }
 
         QList<Item*> items;
-        const auto foundEntries = EntrySearcher().search(terms.join(' '), m_exposedGroup);
+        const auto foundEntries = EntrySearcher().search(terms, m_exposedGroup);
         items.reserve(foundEntries.size());
         for (const auto& entry : foundEntries) {
             items << m_entryToItem.value(entry);
         }
         return items;
+    }
+
+    EntrySearcher::SearchTerm Collection::attributeToTerm(const QString& key, const QString& value)
+    {
+        static QMap<QString, EntrySearcher::Field> attrKeyToField{
+            {EntryAttributes::TitleKey, EntrySearcher::Field::Title},
+            {EntryAttributes::UserNameKey, EntrySearcher::Field::Username},
+            {EntryAttributes::URLKey, EntrySearcher::Field::Url},
+            {EntryAttributes::NotesKey, EntrySearcher::Field::Notes},
+        };
+
+        EntrySearcher::SearchTerm term{};
+        term.field = attrKeyToField.value(key, EntrySearcher::Field::AttributeValue);
+        term.word = key;
+        term.exclude = false;
+
+        const auto useWildcards = false;
+        const auto exactMatch = true;
+        const auto caseSensitive = true;
+        term.regex = Tools::convertToRegex(value, useWildcards, exactMatch, caseSensitive);
+
+        return term;
     }
 
     DBusReturn<Item*>

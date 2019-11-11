@@ -314,7 +314,7 @@
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>启用输入时延迟（毫秒）</translation>
     </message>
 </context>
 <context>
@@ -390,19 +390,19 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>使用 DuckDuckGo 来下载网页图标</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>剪贴板清楚时间</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Touch ID 重置时间</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>数据库自动锁定秒数</translation>
     </message>
     <message>
         <source> min</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>多久后清除搜索框</translation>
     </message>
 </context>
 <context>
@@ -443,6 +443,14 @@
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>此自动输入命令包含频繁重复的参数。你真的要继续吗？</translation>
+    </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>需要权限</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC需要辅助功能权限以实现条目自动输入。如果你已经授予此权限，你可能需要重新开启KeePassXC。</translation>
     </message>
 </context>
 <context>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>复制 &amp;密码</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>需要权限</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC需要辅助功能和录制屏幕权限以实现全局自动输入。获取窗口标题寻找对应条目需要录制屏幕权限。如果你已经授予此权限，你可能需要重新开启KeePassXC。</translation>
     </message>
 </context>
 <context>
@@ -728,43 +747,43 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>返回过期的证书时注明（过期）字样</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation type="unfinished"/>
+        <translation>允许返回过期证书</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>启用浏览器集成</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>目前不支持snap安装的浏览器</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation type="unfinished"/>
+        <translation>所有连接到扩展的数据库都返回匹配证书</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>不要显示旧版 KeePassHTTP设置转移的弹出窗口</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassHTTP 设置转移时不要提示</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>自定义代理的位置字段</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>浏览自定义的代理文件</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;警告&lt;/b&gt;，没有找到 KeePassXC 的代理应用&lt;br /&gt;请检查 KeePassXC 的安装文件夹或在高级设置里确定自定义文件夹&lt;br /&gt;没有代理应用浏览器插件将【不会工作】&lt;br /&gt;可能路径：%1</translation>
     </message>
 </context>
 <context>
@@ -772,16 +791,6 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: 新的密钥关联请求</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>你已收到上述密钥的关联请求。
-
-如果你想允许它访问你的 KeePassXC 数据库，
-请为它提供一个唯一的名称来识别并接受它。</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -861,6 +870,18 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>不再显示此警告</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>你从下列数据库收到关联请求：
+%1
+
+请为它提供一个唯一的名称或ID，比如：
+Chrome笔记本电脑</translation>
     </message>
 </context>
 <context>
@@ -972,15 +993,15 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>文本验证</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>字段分隔</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>忽略开头的几行</translation>
     </message>
     <message>
         <source>CSV import preview</source>
@@ -1037,19 +1058,20 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+数据库的备份路径是</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>无法保存，数据库没有指向一个有效文件</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>无法保存，数据库为只读</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>数据库已经合并改动</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1108,39 +1130,35 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Select slot...</source>
-        <translation type="unfinished"/>
+        <translation>选择插槽...</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>解锁KeePassXC数据库</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>输入密码：</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>密码字段</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter Additional Credentials:</source>
-        <translation type="unfinished"/>
+        <translation>密码可见</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>选择密匙文件</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>选择实体 Key 的插槽</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>浏览密匙文件</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1148,24 +1166,19 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>刷新实体令牌</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>实体 Key：</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>实体 Key 帮助</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID 快速解锁</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1176,23 +1189,58 @@ Please consider generating a new key file.</source>
         <translation>清除密钥文件</translation>
     </message>
     <message>
-        <source>Select file...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>解锁失败没有收到密码</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>解锁数据库失败，你没有输入密码
+使用空密码在解锁一次？
+
+为了避免这样的错误，你应该去“数据库设置/高级”里面重置你的密码</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>使用空密码重试</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>输入附加凭证（如果有）：</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;你可以使用像&lt;strong&gt;Yubikey&lt;/strong&gt;或&lt;strong&gt;Onlykey&lt;/strong&gt;这种带有配置HMAC-SHA1槽位的硬件安全密钥。&lt;/p&gt;
+&lt;p&gt;点击此处获取更多信息……&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;你可以使用密钥文件作为处主密码之外增强数据库安全性的手段，你可以从数据库安全设置中生成这种文件。&lt;/p&gt;&lt;p&gt;这&lt;strong&gt;不能&lt;/strong&gt;是你的kdbx数据库文件！&lt;br&gt;如果你没有密钥文件，留空此字段。&lt;/p&gt;&lt;p&gt;点击查看更多……&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>密钥文件帮助</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>？</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>选择密钥文件…</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>无法使用数据库文件作为密钥</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>你不能用你的数据库作为密钥文件。
+如果你没有密钥文件，请留空这个字段。</translation>
     </message>
 </context>
 <context>
@@ -1349,11 +1397,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>存储的浏览器密钥</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>移除选择的 Key</translation>
     </message>
 </context>
 <context>
@@ -1499,54 +1547,54 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>改变现在的解密次数</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>一秒解密次数</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>数据库格式</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>加密算法</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>密钥派生函数:</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>加密次数</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>内存占用</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>平行运算</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>开放的项目</translation>
     </message>
     <message>
         <source>Don&apos;t e&amp;xpose this database</source>
-        <translation type="unfinished"/>
+        <translation>不要开放这个数据库</translation>
     </message>
     <message>
         <source>Expose entries &amp;under this group:</source>
-        <translation type="unfinished"/>
+        <translation>这个组下开放的项目</translation>
     </message>
     <message>
         <source>Enable fd.o Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>开启 fd.o 机密服务来存储这些设置</translation>
     </message>
 </context>
 <context>
@@ -1597,36 +1645,37 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>数据库名称字段</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>数据库描述字段</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>默认用户名字段</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>每个项目的最多保留几条历史记录</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>每个项目的最多保留多大的历史记录</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>清空回收站</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>确定清空回收站？
+这个动作无法逆转。</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation>（旧的）</translation>
     </message>
 </context>
 <context>
@@ -1697,7 +1746,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>不使用密码继续</translation>
     </message>
 </context>
 <context>
@@ -1712,22 +1761,22 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>数据库名称字段</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>数据库描述字段</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>统计表</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>将鼠标悬浮于错误图标上可获得更多信息。</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1739,99 +1788,103 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>数据库名称</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>描述</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>位置</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>上一次保存</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>未保存的修改</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>是</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>否</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>数据库已经被更改，但未保存到硬盘上。</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>组数</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>项目数</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>失效的项目数</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation type="unfinished"/>
+        <translation>这个数据库包含过期的项目</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>唯一密码</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>重复密码</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>超过10%的项目使用这个密码，请尽量使用不重复的密码</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>密码的最大复用数</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>部分密码已经使用过3次以上，请尽量使用不重复的密码</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>短密码的数量</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>推荐密码最少有8位</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>弱密码的数量</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>推荐使用长的、随机化的，评分是“良好”或者“优秀”的密码</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>平均密码长度</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation type="unfinished"/>
+        <translation>%1 字符</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation type="unfinished"/>
+        <translation>密码平均小于10位，更长的密码安全性更强。</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>请稍候，正在计算数据库信息……</translation>
     </message>
 </context>
 <context>
@@ -1907,27 +1960,27 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>打开 %1 失败，可能不存在或不可用</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>导出到 HTML 文件</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>HTML 文件</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>导出到 HTML 文件失败</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>导出配置</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>你将把数据导出到未加密文件，这将会直接暴露你的密码或敏感信息，确定要继续吗？</translation>
     </message>
 </context>
 <context>
@@ -2108,7 +2161,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>这个数据库通过只读模式打开，自动保存已关闭</translation>
     </message>
 </context>
 <context>
@@ -2239,7 +2292,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>你确定要删除这个 URL？</translation>
     </message>
 </context>
 <context>
@@ -2282,39 +2335,39 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>属性选择</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>属性值</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation type="unfinished"/>
+        <translation>添加新属性</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>删除所选的属性</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation type="unfinished"/>
+        <translation>编辑属性名称</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation type="unfinished"/>
+        <translation>属性保护开关</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>显示被保护的属性</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation type="unfinished"/>
+        <translation>前景色选择</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation type="unfinished"/>
+        <translation>背景色选择</translation>
     </message>
 </context>
 <context>
@@ -2353,46 +2406,46 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>自定义自动输入顺序</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation type="unfinished"/>
+        <translation>打开自动输入的帮助网页</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>现在的窗口组合</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>添加一个新的窗口组合</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>删除所选的窗口组合</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>你可以使用星号（*）来标记任何东西</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>设定窗口组合标题</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>你可以使用星号来标记任何东西</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>自定义这个窗口的自动输入顺序</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>这些设置会影响这个项目在浏览器扩展中的动作</translation>
     </message>
     <message>
         <source>General</source>
@@ -2400,15 +2453,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>跳过这个项目的自动提交功能</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>为浏览器扩展隐藏这个项目</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>额外的 URL</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2443,23 +2496,23 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>选择项目条目</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>在选定的历史记录下显示条目</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>回复到这个历史记录</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>删除这条历史记录</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>删除所以历史记录</translation>
     </message>
 </context>
 <context>
@@ -2502,59 +2555,59 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Url field</source>
-        <translation type="unfinished"/>
+        <translation>URL 字段</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>从 URL 下载 favicon</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>重复密码字段</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>密码生成器</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>密码字段</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>密码可见</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>备注可见</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>过期字段</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>预设过期时间</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>预设过期时间</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>备注字段</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>标题字段</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>用户名字段</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>启用过期</translation>
     </message>
 </context>
 <context>
@@ -2634,19 +2687,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>从代理中删除密钥的时间</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>浏览密匙文件</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>外部密匙文件</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>选择附件</translation>
     </message>
 </context>
 <context>
@@ -2748,65 +2801,66 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>同步</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation type="unfinished"/>
+        <translation>您的KeePassXC版本不支持共享您的容器类型。
+现在支持：%1。</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 已经从数据库导出</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 已经从数据库导入</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 已由不同的群组导入和导出。</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>KeeShare 未开启，你可以在设置中打开导入/导出选项</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>数据库导出被禁用</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>数据库导入被禁用</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>分享模式字段</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>打开分享文件路径</translation>
     </message>
     <message>
         <source>Browser for share file</source>
-        <translation type="unfinished"/>
+        <translation>浏览分享的文件</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>密码字段</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>密码可见</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>打开密码生成器</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation type="unfinished"/>
+        <translation>清楚字段</translation>
     </message>
 </context>
 <context>
@@ -2841,31 +2895,31 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>用户名字段</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>备注字段</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>启用过期</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>为此和子群组切换自动输入</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>过期字段</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>为此和子群组切换搜索</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>默认自动输入顺序字段</translation>
     </message>
 </context>
 <context>
@@ -2932,39 +2986,39 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>你可以在 工具-&gt;设置-&gt;安全 中选择DuckDuckGo作为网站图标来源</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>从 URL 下载 favicon</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>将选择的图标应用于子群组和条目</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
-        <translation type="unfinished"/>
+        <translation>将图标应用于… (&amp;t)</translation>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>仅应用于此项</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>也应用到子群组</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>也应用于子条目</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>也应用于所有子条目</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
+        <translation>选择的图标已经存在。</translation>
     </message>
 </context>
 <context>
@@ -3013,27 +3067,27 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation type="unfinished"/>
+        <translation>创建时日期和时间</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation type="unfinished"/>
+        <translation>修改时日期和时间</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation type="unfinished"/>
+        <translation>访问时日期和时间</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>唯一ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation type="unfinished"/>
+        <translation>插件数据</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation type="unfinished"/>
+        <translation>移除选择的插件数据</translation>
     </message>
 </context>
 <context>
@@ -3135,19 +3189,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>添加新附件</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>移除已选择的附件</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>打开选择的附件</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation type="unfinished"/>
+        <translation>将选择的附件保存到磁盘</translation>
     </message>
 </context>
 <context>
@@ -3329,7 +3383,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>显示当前TOTP验证码</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3371,26 +3425,26 @@ This may cause the affected plugins to malfunction.</source>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
+        <translation>数据库&quot;%2&quot;的条目&quot;%1&quot;正被%3使用</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation type="unfinished"/>
+        <translation>注册位于%1的DBus服务失败：另一个密钥服务正在运行。</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%n条目正被%1使用</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecretsPlugin</name>
     <message>
         <source>Fdo Secret Service: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fdo密钥服务：%1</translation>
     </message>
 </context>
 <context>
@@ -3416,7 +3470,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>下载网站图标</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3425,7 +3479,8 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>下载图标遇到问题？
+你可以在程序设置的安全选项卡中启用DuckDuckGo图标服务。</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3441,11 +3496,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>请等待，正在处理条目列表……</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>正在下载……</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3453,15 +3508,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>已经存在</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>下载失败</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>正在下载图标（%1/%2）</translation>
     </message>
 </context>
 <context>
@@ -3508,7 +3563,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>凭据无效，请重试。
+若这现象重复发生，可能你的数据库文件已损坏。</translation>
     </message>
 </context>
 <context>
@@ -3643,11 +3699,12 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>凭据无效，请重试。
+若这现象重复发生，可能你的数据库文件已损坏。</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>（HMAC不匹配）</translation>
     </message>
 </context>
 <context>
@@ -3875,7 +3932,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>导入 KeePass 1 数据库</translation>
     </message>
 </context>
 <context>
@@ -4032,18 +4089,19 @@ Line %2, column %3</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>凭据无效，请重试。
+若这现象重复发生，可能你的数据库文件已损坏。</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>无效的共享引用</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>非活动的共享%1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -4051,35 +4109,35 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation type="unfinished"/>
+        <translation>已导出至%1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation type="unfinished"/>
+        <translation>已与%1同步</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>设置中已禁用导入操作</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>设置中已禁用导出操作</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation type="unfinished"/>
+        <translation>非活动的共享</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>已从导入</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>已导出至</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>已与同步</translation>
     </message>
 </context>
 <context>
@@ -4181,7 +4239,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>选择密匙文件</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -4197,7 +4255,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation type="unfinished"/>
+        <translation>注意：不要使用会被更改的文件，否则文件被更改后不能解锁数据库！</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
@@ -4205,16 +4263,17 @@ Message: %2</source>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>你不能用当前数据库作为它本身的密钥文件。请选择不同的文件或生成一个新的密钥文件。</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>不信任的密钥文件</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation type="unfinished"/>
+        <translation>选择的密钥文件似乎是个密码库文件。密钥文件必须是不会被改变的文件，否则你会永久失去对数据库的访问。
+你确定要用这个文件继续吗？</translation>
     </message>
 </context>
 <context>
@@ -4509,27 +4568,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation>导出（&amp;E）</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>检查更新（&amp;C）</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>下载所有网站图标（&amp;A）</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>顺序排列（&amp;A）</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>逆序排列（&amp;Z）</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>密码生成器（&amp;P）</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4537,43 +4596,43 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation type="unfinished"/>
+        <translation>导出为HTML文件(&amp;E)...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>1Password保险库…</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>导入1Password保险库</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>开始使用（&amp;G）</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>打开开始使用教程PDF</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>在线帮助（&amp;O）</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>查看在线文档（浏览器打开）</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>用户手册（&amp;U）</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>打开用户手册PDF</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>键盘快捷键（&amp;K）</translation>
     </message>
 </context>
 <context>
@@ -4636,11 +4695,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>已经移除自定义数据%1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>正在添加自定义数据%1 [%2]</translation>
     </message>
 </context>
 <context>
@@ -4715,31 +4774,31 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation type="unfinished"/>
+        <translation>无效的OpData01，不包含数据头</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>没能读取全部IV，期望16字节却仅读取到%1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation type="unfinished"/>
+        <translation>未能为opdata01初始化加密：%1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation type="unfinished"/>
+        <translation>没能读取全部HMAC签名长度</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>由于HMAC失败，OpData01读取异常。</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>无法直接处理纯文本。</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>期望长%1字节的明文数据，仅仅找到%2</translation>
     </message>
 </context>
 <context>
@@ -4747,34 +4806,35 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation type="unfinished"/>
+        <translation>读取数据库没有产生实例
+%1</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>目录.opvault必须存在</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation type="unfinished"/>
+        <translation>目录.opvault必须可读</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation type="unfinished"/>
+        <translation>目录.opvault/default必须存在</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation type="unfinished"/>
+        <translation>目录.opvault/default必须存可读</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法解密主密钥：%1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation type="unfinished"/>
+        <translation>不能派生主密码：%1</translation>
     </message>
 </context>
 <context>
@@ -4880,11 +4940,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>密码不匹配</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation type="unfinished"/>
+        <translation>目前匹配的密码</translation>
     </message>
 </context>
 <context>
@@ -4915,19 +4975,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>密码字段</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>密码可见</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>重复密码字段</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>打开密码生成器</translation>
     </message>
 </context>
 <context>
@@ -5127,51 +5187,51 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Regenerate</source>
-        <translation>再生</translation>
+        <translation>重新生成</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>生成的密码</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation type="unfinished"/>
+        <translation>大写字母</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation type="unfinished"/>
+        <translation>小写字母</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation type="unfinished"/>
+        <translation>特殊字符</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation type="unfinished"/>
+        <translation>数学符号</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
+        <translation>破折号和斜线</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation type="unfinished"/>
+        <translation>排除的字符</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>十六进制密码</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>密码长度</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>字符大小写：</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation type="unfinished"/>
+        <translation>重新生成密码</translation>
     </message>
     <message>
         <source>Copy password</source>
@@ -5179,23 +5239,23 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>接受密码</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>小写</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>大写</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation type="unfinished"/>
+        <translation>首字母大小写</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>密码可见</translation>
     </message>
 </context>
 <context>
@@ -5206,7 +5266,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>统计表</translation>
     </message>
 </context>
 <context>
@@ -5245,7 +5305,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>继续</translation>
     </message>
 </context>
 <context>
@@ -5940,15 +6000,15 @@ Available commands:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>停用此数据库的密码私钥。</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>显示调试信息。</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>停用被合并数据库使用的密码私钥。</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -5968,11 +6028,11 @@ Available commands:
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>已禁用调试模式。</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>已启用调试模式。</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -6016,151 +6076,151 @@ CPU 架构：%2
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>密码学公共库：</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>无法同时生成密码和提示！</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>向数据库添加新群组。</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>要添加的群组路径。</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
+        <translation>群组%1已经存在！</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>未找到群组%1。</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
+        <translation>成功添加群组%1。</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>检查是否有密码泄露至公共网络。文件名必须是HIBP格式的、已泄露密码的SHA-1摘要清单，可以在 https://haveibeenpwned.com/Passwords 下载到。</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>文件名</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>分析密码的弱点和问题。</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>无法打开HIBP文件%1： %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
+        <translation>正通过HIBP文件评估所有数据库条目，这需要一些时间……</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>关闭当前开启的数据库。</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>显示此帮助。</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
-        <translation type="unfinished"/>
+        <translation>用于加密数据库的Yubikey槽位。</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>槽位</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的字数%1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
+        <translation>词汇表太短（少于1000项目）</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>退出交互模式。</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation type="unfinished"/>
+        <translation>导出时使用的格式。可选XML或者CSV。默认XML。</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
+        <translation>将数据库内容按照指定的格式输出至标准输出。</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
+        <translation>无法导出数据库至XML：%1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>不支持的格式%1</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>使用数字</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的密码长度%1</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>显示命令帮助。</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>可用命令：</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation type="unfinished"/>
+        <translation>导入XML数据库的内容。</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation type="unfinished"/>
+        <translation>XML数据库导出的路径。</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>新数据库的路径。</translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
-        <translation type="unfinished"/>
+        <translation>无法导入XML数据库%1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>成功导入数据库。</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>未知命令%1</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>将输出摊平位一行。</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>仅打印合并操作检测到的更改。</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>第二个数据库要使用的Yubikey槽位。</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation type="unfinished"/>
+        <translation>成功将%1合并至%2。</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
@@ -6168,99 +6228,103 @@ CPU 架构：%2
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>将条目移至新群组。</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>要移动的条目路径。</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>目标群组的路径。</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>找不到路径为 %1的群组。</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>条目已位于群组%1。</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>成功将条目%1移至群组%2。</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>打开一个数据库</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>要删除的群组的路径。</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>不能从服务器移除根群组。</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>成功回收了群组%1。</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>成功删除群组%1。</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>无法打开数据库文件%1：文件未找到</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>开启数据库文件%1失败：不是正常的文件</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>无法打开数据库文件%1：文件不可读</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>输入密码以解锁%1: </translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>无效的YubiKey槽位%1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to unlock %1</source>
-        <translation type="unfinished"/>
+        <translation>请触摸你 YubiKey 上的按键以解锁%1！</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>输入用于加密数据库的密码（可选）：</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation type="unfinished"/>
+        <translation>HIBP文件 第%1行：解析错误</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>密钥服务集成</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>%1[%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1[%2] 挑战应答 - 槽位 %3 - %4</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>‘%1’的密码泄露了%2次！</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>应用所有选项后，关闭密码生成器。</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>明文显示被保护的属性。</translation>
     </message>
 </context>
 <context>
@@ -6419,11 +6483,11 @@ CPU 架构：%2
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>选项</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation type="unfinished"/>
+        <translation>启用KeepassXC的Freedesktop.org密钥服务集成</translation>
     </message>
     <message>
         <source>General</source>
@@ -6431,23 +6495,23 @@ CPU 架构：%2
     </message>
     <message>
         <source>Show notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>当请求凭据时显示通知</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;如果数据库已启用回收站，条目会被移动到回收站；否则条目会被直接删除。&lt;/p&gt;&lt;p&gt;如果条目被其他条目引用会发出提醒。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation type="unfinished"/>
+        <translation>当客户端删除条目时不进行确认。</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>已公开的数据库群组：</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"/>
+        <translation>文件名</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6455,23 +6519,23 @@ CPU 架构：%2
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>管理</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>认证</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation type="unfinished"/>
+        <translation>现在已经连接到以下应用：</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>应用</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>断开连接</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6479,7 +6543,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>修改数据库设置</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6487,7 +6551,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>解锁数据库以显示更多信息</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6495,7 +6559,7 @@ CPU 架构：%2
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>解锁以显示</translation>
     </message>
     <message>
         <source>None</source>
@@ -6627,15 +6691,15 @@ CPU 架构：%2
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>允许KeeShare导入</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>允许KeeShare导出</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>仅显示警告和错误信息</translation>
     </message>
     <message>
         <source>Key</source>
@@ -6643,39 +6707,39 @@ CPU 架构：%2
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>签名者名字字段</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>生成新证书</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>导入已存在的证书</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>导出自己的证书</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>已知共享</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>信任选择的证书</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>每次都询问是否信任选择的证书</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>不信任选择的证书</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>移除选择的证书</translation>
     </message>
 </context>
 <context>
@@ -6903,15 +6967,15 @@ CPU 架构：%2
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>密匙 Key ：</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>密匙 Key 必须是base32 格式</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>密匙 Key 字段</translation>
     </message>
     <message>
         <source>Algorithm:</source>
@@ -6919,28 +6983,29 @@ CPU 架构：%2
     </message>
     <message>
         <source>Time step field</source>
-        <translation type="unfinished"/>
+        <translation>刷新时间字段</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation>一次性密码</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>无效的 TOTP 密匙</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>你输入了一个无效的密匙 Key ，Key必须是base32格式
+比如：JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>确认删除 TOTP 设置</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation type="unfinished"/>
+        <translation>你确定要移除这个项目的 TOTP 设置吗？</translation>
     </message>
 </context>
 <context>
@@ -7026,11 +7091,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>从 1Password 导入</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>打开最近的数据库</translation>
     </message>
 </context>
 <context>
@@ -7057,11 +7122,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>刷新实体令牌</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>选择实体 Key 的插槽</translation>
     </message>
 </context>
 </TS>

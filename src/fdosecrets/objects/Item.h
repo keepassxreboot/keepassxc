@@ -67,15 +67,6 @@ namespace FdoSecrets
     public:
         static const QSet<QString> ReadOnlyAttributes;
 
-        /**
-         * Due to the limitation in EntrySearcher, custom attr key cannot contain ':',
-         * Thus we encode the key when saving and decode it when returning.
-         * @param key
-         * @return
-         */
-        static QString encodeAttributeKey(const QString& key);
-        static QString decodeAttributeKey(const QString& key);
-
         DBusReturn<void> setProperties(const QVariantMap& properties);
 
         Entry* backend() const;

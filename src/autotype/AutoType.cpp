@@ -218,6 +218,15 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 
     if (hideWindow) {
 #if defined(Q_OS_MACOS)
+        // Check for accessibility permission
+        if (!macUtils()->enableAccessibility()) {
+            MessageBox::information(nullptr,
+                                    tr("Permission Required"),
+                                    tr("KeePassXC requires the Accessibility permission in order to perform entry "
+                                       "level Auto-Type. If you already granted permission, you may have to restart "
+                                       "KeePassXC."));
+            return;
+        }
         macUtils()->raiseLastActiveWindow();
         m_plugin->hideOwnWindow();
 #else

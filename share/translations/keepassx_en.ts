@@ -446,6 +446,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -490,6 +498,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation type="unfinished">Copy &amp;password</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1140,10 +1159,6 @@ Please consider generating a new key file.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1168,11 +1183,6 @@ Please consider generating a new key file.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1189,10 +1199,6 @@ Please consider generating a new key file.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Unlock failed and no password given</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1205,6 +1211,40 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1862,6 +1902,10 @@ Are you sure you want to continue without a password?</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6343,6 +6387,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

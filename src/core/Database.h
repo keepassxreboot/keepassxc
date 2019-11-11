@@ -23,11 +23,13 @@
 #include <QHash>
 #include <QObject>
 #include <QPointer>
+#include <QScopedPointer>
 
 #include "config-keepassx.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
+#include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
 
 class Entry;
@@ -75,6 +77,8 @@ public:
     bool saveAs(const QString& filePath, QString* error = nullptr, bool atomic = true, bool backup = false);
     bool extract(QByteArray&, QString* error = nullptr);
     bool import(const QString& xmlExportPath, QString* error = nullptr);
+
+    void releaseData();
 
     bool isInitialized() const;
     void setInitialized(bool initialized);
@@ -161,17 +165,38 @@ private:
         bool isReadOnly = false;
         QUuid cipher = KeePass2::CIPHER_AES256;
         CompressionAlgorithm compressionAlgorithm = CompressionGZip;
-        QByteArray transformedMasterKey;
-        QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
-        QSharedPointer<const CompositeKey> key;
+
+        QScopedPointer<PasswordKey> masterSeed;
+        QScopedPointer<PasswordKey> transformedMasterKey;
+        QScopedPointer<PasswordKey> challengeResponseKey;
+
         bool hasKey = false;
-        QByteArray masterSeed;
-        QByteArray challengeResponseKey;
+        QSharedPointer<const CompositeKey> key;
+        QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
+
         QVariantMap publicCustomData;
 
         DatabaseData()
+            : masterSeed(new PasswordKey())
+            , transformedMasterKey(new PasswordKey())
+            , challengeResponseKey(new PasswordKey())
         {
             kdf->randomizeSeed();
+        }
+
+        void clear()
+        {
+            filePath.clear();
+
+            masterSeed.reset();
+            transformedMasterKey.reset();
+            challengeResponseKey.reset();
+
+            hasKey = false;
+            key.reset();
+            kdf.reset();
+
+            publicCustomData.clear();
         }
     };
 
@@ -182,9 +207,9 @@ private:
     bool restoreDatabase(const QString& filePath);
     bool performSave(const QString& filePath, QString* error, bool atomic, bool backup);
 
-    Metadata* const m_metadata;
+    QPointer<Metadata> const m_metadata;
     DatabaseData m_data;
-    Group* m_rootGroup;
+    QPointer<Group> m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QPointer<QTimer> m_timer;
     QPointer<FileWatcher> m_fileWatcher;
