@@ -329,17 +329,17 @@ checkAppStreamInfo() {
 }
 
 checkSnapcraft() {
-    if [ ! -f snapcraft.yaml ]; then
-        echo "No snapcraft file found!"
+    if [ ! -f snap/snapcraft.yaml ]; then
+        echo "Could not find snap/snapcraft.yaml!"
         return
     fi
 
-    $GREP -qPzo "version: ${RELEASE_NAME}" snapcraft.yaml
+    $GREP -qPzo "version: ${RELEASE_NAME}" snap/snapcraft.yaml
     if [ $? -ne 0 ]; then
         exitError "'snapcraft.yaml' has not been updated to the '${RELEASE_NAME}' release!"
     fi
 
-    $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snapcraft.yaml
+    $GREP -qPzo "KEEPASSXC_BUILD_TYPE=Release" snap/snapcraft.yaml
     if [ $? -ne 0 ]; then
         exitError "'snapcraft.yaml' is not set for a release build!"
     fi
