@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>설정을 초기화하시겠습니까?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>모든 일반 설정과 보안 설정을 초기화하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -225,63 +225,63 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>과거 데이터베이스 기억</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>시작할 때 이전에 사용한 데이터베이스 열기</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 키 파일과 보안 동글 기억</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>프로그램을 시작할 때 1주일에 1번 업데이트 확인</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>업데이트를 확인할 때 베타 릴리스 포함</translation>
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>단추 스타일:</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>언어:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(다시 시작 후 적용됨)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 잠금 해제 후 창 최소화</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>URL을 열 때 창 최소화</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>클립보드에 복사할 때 창 숨기기</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>최소화</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>백그라운드로 전환</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>파비콘 다운로드 시간 제한:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>웹 사이트 아이콘 다운로드 시간 제한(초 단위)</translation>
     </message>
     <message>
         <source> sec</source>
@@ -290,31 +290,31 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>도구 모음 단추 스타일</translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation>메모에 고정폭 글꼴 사용</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>언어 선택</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation>기본값으로 설정 복원</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>전역 자동 입력 단축키</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>글자당 자동 입력 지연 시간(밀리초 단위)</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 시작 지연 시간(밀리초 단위)</translation>
     </message>
 </context>
 <context>
@@ -390,19 +390,19 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>웹 사이트 아이콘을 다운로드할 때 DuckDuckGo 서비스 사용</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>클립보드를 지울 시간</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>사용하지 않을 때 Touch ID 초기화</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 잠금 시간 제한(초 단위)</translation>
     </message>
     <message>
         <source> min</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>다음 시간 이후 검색어 비우기</translation>
     </message>
 </context>
 <context>
@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>자동 입력 명령에 많이 반복되는 인자가 포함되어 있습니다. 계속 진행하시겠습니까?</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>권한이 필요합니다.</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -453,11 +461,11 @@
     </message>
     <message>
         <source>Sequence</source>
-        <translation>시퀀스</translation>
+        <translation>순서</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>기본 시퀀스</translation>
+        <translation>기본 순서</translation>
     </message>
 </context>
 <context>
@@ -476,7 +484,7 @@
     </message>
     <message>
         <source>Sequence</source>
-        <translation>시퀀스</translation>
+        <translation>순서</translation>
     </message>
 </context>
 <context>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>암호 복사(&amp;P)</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>권한이 필요합니다.</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -531,11 +550,11 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>접근 허용</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>접근 거부</translation>
     </message>
 </context>
 <context>
@@ -724,47 +743,47 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation>Brave(&amp;B)</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>만료된 인증 정보도 반환합니다. 제목에 [만료됨] 문자열이 추가됩니다.</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation type="unfinished"/>
+        <translation>만료된 인증 정보 반환 허용(&amp;A)</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>브라우저 통합 활성화</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Snap으로 설치한 브라우저는 지원하지 않습니다.</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation type="unfinished"/>
+        <translation>확장 기능에 연결된 모든 데이터베이스에서 일치하는 인증 정보를 반환합니다.</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>레거시 KeePassHTTP 설정을 이전하는 대화 상자를 표시하지 않습니다.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassHTTP 설정 이전 묻지 않기(&amp;D)</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 프록시 위치 필드</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 프록시 파일 찾아보기</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;경고&lt;/b&gt;, keepassxc-proxy 프로그램을 찾을 수 없습니다!&lt;br /&gt;KeePassXC 설치 디렉터리를 확인하거나 고급 설정의 사용자 경로를 확인하십시오.&lt;br /&gt;프록시 프로그램이 없으면 브라우저 통합 기능을 사용할 수 없습니다.&lt;br /&gt;예상하는 경로: %1</translation>
     </message>
 </context>
 <context>
@@ -772,16 +791,6 @@ Please select the correct database for saving credentials.</source>
     <message>
         <source>KeePassXC: New key association request</source>
         <translation>KeePassXC: 새 키 연결 요청</translation>
-    </message>
-    <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>위에 있는 키의 연결 요청을 받았습니다.
-
-해당 키에서 KeePassXC 데이터베이스 접근을 허용하려면
-식별할 수 있는 이름을 부여한 후 수락하십시오.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -862,6 +871,14 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>더 이상 이 경고 표시하지 않기</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -973,19 +990,19 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>문자열 구분</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>필드 구분</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>무시할 머리글 줄 수</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation type="unfinished"/>
+        <translation>CSV 가져오기 미리 보기</translation>
     </message>
 </context>
 <context>
@@ -1038,19 +1055,20 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+백업 데이터베이스 위치: %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스가 올바른 파일을 가리키지 않아서 저장할 수 없습니다.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일이 읽기 전용이어서 저장할 수 없습니다.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일에 병합되지 않은 변경 사항이 있습니다.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1106,43 +1124,39 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>키 파일을 열 수 없음: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
-        <translation type="unfinished"/>
+        <translation>슬롯 선택...</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 데이터베이스 잠금 해제</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>암호 입력:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 필드</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter Additional Credentials:</source>
-        <translation type="unfinished"/>
+        <translation>암호 표시 여부 전환</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 선택</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 키 슬롯 선택</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 찾아보기</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1150,24 +1164,19 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 토큰 새로 고침</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 키:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 키 도움말</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>빠른 잠금 해제용 Touch ID</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1175,26 +1184,60 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 비우기</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>잠금 해제 실패, 지정한 암호 없음</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 잠금 해제가 실패했고 암호를 입력하지 않았습니다.
+&quot;빈&quot; 암호로 다시 시도하시겠습니까?
+
+이 오류가 표시되지 않도록 하려면 &quot;데이터베이스 설정/보안&quot;에서 암호를 초기화해야 합니다.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
+        <translation>빈 암호로 다시 시도</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>추가 인증 정보 입력(해당되는 경우):</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>키 파일 도움말</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>키 파일 선택...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>데이터베이스 파일은 키 파일로 사용할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>데이터베이스 파일을 자기 자신의 키 파일로 사용할 수 없습니다. 
+키 파일이 없는 경우, 해당 필드를 비워두십시오.</translation>
     </message>
 </context>
 <context>
@@ -1351,11 +1394,11 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>저장된 브라우저 키</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>선택한 키 삭제</translation>
     </message>
 </context>
 <context>
@@ -1501,54 +1544,54 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>기존 복호화 시간 변경</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>초 단위의 복호화 시간</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 형식</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>암호화 알고리즘</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>키 유도 함수</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>변환 횟수</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>메모리 사용</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>병렬화</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>내보낼 항목</translation>
     </message>
     <message>
         <source>Don&apos;t e&amp;xpose this database</source>
-        <translation type="unfinished"/>
+        <translation>이 데이터베이스 내보내지 않기(&amp;X)</translation>
     </message>
     <message>
         <source>Expose entries &amp;under this group:</source>
-        <translation type="unfinished"/>
+        <translation>다음 그룹의 항목 내보내기(&amp;U):</translation>
     </message>
     <message>
         <source>Enable fd.o Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>이 설정을 변경하려면 fd.o 비밀 서비스를 활성화하십시오.</translation>
     </message>
 </context>
 <context>
@@ -1599,36 +1642,37 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 이름 필드</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 설명 필드</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>기본 사용자 이름 필드</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>항목당 최대 과거 기록 개수</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>항목당 최대 과거 기록 크기</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>휴지통 지우기</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>현재 휴지통과 포함된 모든 내용을 삭제하시겠습니까?
+이 작업은 취소할 수 없습니다.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation>(이전)</translation>
     </message>
 </context>
 <context>
@@ -1699,7 +1743,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>암호 없이 계속</translation>
     </message>
 </context>
 <context>
@@ -1714,22 +1758,22 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 이름 필드</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 설명 필드</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>통계</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>오류 아이콘이 표시된 항목 위에 마우스를 올려 놓으면 자세한 정보를 표시합니다.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1741,98 +1785,102 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 이름</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>설명</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>위치</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>마지막 저장</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>저장하지 않은 변경 사항</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>예</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>아니요</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스가 수정되었지만 변경 사항을 디스크에 저장하지 않았습니다.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>그룹 개수</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>항목 개수</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>내보낸 항목 개수</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스에 만료된 항목이 포함되어 있습니다.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>중복되지 않는 암호</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>중복된 암호</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>전체 암호 중 10% 이상을 재사용하고 있습니다. 가능하다면 유일한 암호를 사용하십시오.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>최대 암호 재사용</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>일부 암호가 3곳 이상에서 재사용되고 있습니다. 가능하다면 유일한 암호를 사용하십시오.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>짧은 암호 개수</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>최소 8자 이상의 암호를 사용하십시오.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>약한 암호 개수</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>암호 강도가 &apos;좋음&apos;이나 &apos;매우 좋음&apos; 등급으로 분류된 긴 무작위 암호를 사용하는 것을 추천합니다.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>평균 암호 길이</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation type="unfinished"/>
+        <translation>%1자</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
+        <translation>평균 암호 길이가 10자 이하입니다. 긴 암호를 사용할수록 더 안전합니다.</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1909,27 +1957,27 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>%1을(를) 열 수 없습니다. 더 이상 존재하지 않거나 접근할 수 없습니다.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 HTML 파일로 내보내기</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>HTML 파일</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>HTML 파일에 쓸 수 없습니다.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>내보내기 확인</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 암호화되지 않은 파일로 내보냅니다. 암호와 기타 민감 정보를 노출시킬 수 있습니다! 계속 진행하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -2109,7 +2157,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스가 읽기 전용 모드로 열렸습니다. 자동 저장을 비활성화합니다.</translation>
     </message>
 </context>
 <context>
@@ -2236,11 +2284,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;빈 URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>이 URL을 삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -2283,39 +2331,39 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>속성 선택</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>속성 값</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation type="unfinished"/>
+        <translation>새 속성 추가</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>선택한 속성 삭제</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation type="unfinished"/>
+        <translation>속성 이름 편집</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation type="unfinished"/>
+        <translation>속성 보호 전환</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>보호된 속성 표시</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation type="unfinished"/>
+        <translation>글자색 선택</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation type="unfinished"/>
+        <translation>배경색 선택</translation>
     </message>
 </context>
 <context>
@@ -2326,11 +2374,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>그룹의 기본 자동 입력 시퀀스 사용(&amp;G)</translation>
+        <translation>그룹의 기본 자동 입력 순서 사용(&amp;G)</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
-        <translation>사용자 정의 자동 입력 시퀀스 사용(&amp;U):</translation>
+        <translation>사용자 정의 자동 입력 순서 사용(&amp;U):</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2350,50 +2398,50 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>이 조합에 지정된 시퀀스 사용:</translation>
+        <translation>이 조합에 지정된 순서 사용:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 자동 입력 순서</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation type="unfinished"/>
+        <translation>자동 입력 도움말 웹 페이지 열기</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>기존 창 연결</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>새 창 연결 추가</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>선택한 창 연결 삭제</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>모든 것과 일치하려면 별표(*)를 사용하십시오</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>창 연결 제목 설정</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>모든 것과 일치하려면 별표(*)를 사용하십시오</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>이 창의 사용자 정의 자동 입력 순서</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>이 설정은 브라우저 확장 기능에서 해당 항목을 처리하는 방법을 변경합니다.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2401,15 +2449,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>이 항목 자동 제출 건너뛰기</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>이 항목을 브라우저 확장 기능에서 숨기기</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>추가 URL</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2444,23 +2492,23 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>항목 과거 기록 선택</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>선택한 과거 기록 시점에서의 항목 표시</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>선택한 과거 기록 시점으로 항목 되돌리기</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>선택한 과거 기록 시점 삭제</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>모든 과거 기록 삭제</translation>
     </message>
 </context>
 <context>
@@ -2503,59 +2551,59 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Url field</source>
-        <translation type="unfinished"/>
+        <translation>URL 필드</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>URL의 파비콘 다운로드</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 확인 필드</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기 전환</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 필드</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>암호 표시 여부 전환</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>메모 표시 여부 전환</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>만료 필드</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>만료 사전 설정</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>만료 사전 설정</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>메모 필드</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>제목 필드</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름 필드</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>만료 여부 전환</translation>
     </message>
 </context>
 <context>
@@ -2635,19 +2683,19 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>다음 시간 이후에 에이전트에서 키 삭제</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 찾아보기</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>외부 키 파일</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>첨부 파일 선택</translation>
     </message>
 </context>
 <context>
@@ -2749,65 +2797,66 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC 현재 버전에서 현재 컨테이너 형식을 공유할 수 없습니다.
+지원하는 확장 형식: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>이 데이터베이스에서 %1을(를) 이미 내보내고 있습니다.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>이 데이터베이스에서 %1을(를) 이미 가져오고 있습니다.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation type="unfinished"/>
+        <translation>이 데이터베이스의 다른 그룹에서 %1을(를) 가져오거나 내보내고 있습니다.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>KeeShare가 비활성화되어 있습니다. 프로그램 설정에서 가져오기/내보내기를 활성화할 수 있습니다.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>프로그램 설정에서 데이터베이스 내보내기가 비활성화되어 있습니다.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>프로그램 설정에서 데이터베이스 가져오기가 비활성화되어 있습니다.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>공유 모드 필드</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>공유할 파일 경로 필드</translation>
     </message>
     <message>
         <source>Browser for share file</source>
-        <translation type="unfinished"/>
+        <translation>공유할 파일 찾아보기</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 필드</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>암호 표시 여부 전환</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기 전환</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation type="unfinished"/>
+        <translation>필드 비우기</translation>
     </message>
 </context>
 <context>
@@ -2834,7 +2883,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>&amp;Use default Auto-Type sequence of parent group</source>
-        <translation>그룹의 기본 자동 입력 시퀀스 사용(&amp;G)</translation>
+        <translation>그룹의 기본 자동 입력 순서 사용(&amp;G)</translation>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
@@ -2842,31 +2891,31 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>이름 필드</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>메모 필드</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>만료 여부 전환</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>이 그룹과 하위 그룹의 자동 입력 전환</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>만료 필드</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>이 그룹과 하위 그룹의 검색 전환</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>기본 자동 입력 순서 필드</translation>
     </message>
 </context>
 <context>
@@ -2933,39 +2982,39 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>도구 -&gt; 설정 -&gt; 보안에서 DuckDuckGo 웹 사이트 아이콘 서비스를 활성화할 수 있습니다</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>URL의 파비콘 다운로드</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>선택한 아이콘을 하위 그룹과 항목에 적용</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
-        <translation type="unfinished"/>
+        <translation>다음에 아이콘 적용(&amp;T)...</translation>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>이 항목에만 적용</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>하위 그룹에도 적용</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>하위 항목에도 적용</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>모든 하위 항목에도 적용</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
+        <translation>기존 아이콘을 선택했습니다.</translation>
     </message>
 </context>
 <context>
@@ -3014,27 +3063,27 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation type="unfinished"/>
+        <translation>만든 날짜</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation type="unfinished"/>
+        <translation>수정한 날짜</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation type="unfinished"/>
+        <translation>접근한 날짜</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>고유 ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation type="unfinished"/>
+        <translation>플러그인 데이터</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation type="unfinished"/>
+        <translation>선택한 플러그인 데이터 삭제</translation>
     </message>
 </context>
 <context>
@@ -3137,19 +3186,19 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>새 첨부 파일 추가</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>선택한 첨부 파일 삭제</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>선택한 첨부 파일 열기</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation type="unfinished"/>
+        <translation>선택한 첨부 파일 저장</translation>
     </message>
 </context>
 <context>
@@ -3290,7 +3339,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>시퀀스</translation>
+        <translation>순서</translation>
     </message>
     <message>
         <source>Searching</source>
@@ -3331,7 +3380,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>현재 TOTP 값 표시</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3373,26 +3422,26 @@ This may cause the affected plugins to malfunction.</source>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
+        <translation>%3이(가) 데이터베이스 &quot;%2&quot;의 항목 &quot;%1&quot;을(를) 사용함</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation type="unfinished"/>
+        <translation>%1의 DBus 서비스를 등록할 수 없음: 다른 비밀 서비스가 실행 중입니다.</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>%1에서 항목 %n개를 사용함</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecretsPlugin</name>
     <message>
         <source>Fdo Secret Service: %1</source>
-        <translation type="unfinished"/>
+        <translation>fd.o 비밀 서비스: %1</translation>
     </message>
 </context>
 <context>
@@ -3418,7 +3467,7 @@ This may cause the affected plugins to malfunction.</source>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>파비콘 다운로드</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3427,7 +3476,8 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>다운로드에 문제가 있나요?
+프로그램 설정의 보안 부분에서 DuckDuckGo 웹 사이트 아이콘 서비스를 활성화할 수 있습니다.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3443,11 +3493,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>기다려 주십시오. 항목 목록 처리 중...</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>다운로드 중...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3455,15 +3505,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>이미 존재함</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>다운로드 실패</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>파비콘 다운로드 중(%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -3510,7 +3560,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>인증 정보가 잘못되었습니다. 다시 시도하십시오.
+같은 오류가 계속 발생한다면 데이터베이스 파일이 손상되었을 수도 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -3645,11 +3696,12 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>인증 정보가 잘못되었습니다. 다시 시도하십시오.
+같은 오류가 계속 발생한다면 데이터베이스 파일이 손상되었을 수도 있습니다.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>(HMAC 일치하지 않음)</translation>
     </message>
 </context>
 <context>
@@ -3830,7 +3882,7 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>자동 입력 연결 창이나 시퀀스가 없음</translation>
+        <translation>자동 입력 연결 창이나 순서가 없음</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
@@ -3878,7 +3930,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass1 데이터베이스 가져오기</translation>
     </message>
 </context>
 <context>
@@ -4035,18 +4087,19 @@ Line %2, column %3</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>인증 정보가 잘못되었습니다. 다시 시도하십시오.
+같은 오류가 계속 발생한다면 데이터베이스 파일이 손상되었을 수도 있습니다.</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 공유 참조</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>비활성 공유 %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
@@ -4054,35 +4107,35 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation type="unfinished"/>
+        <translation>%1(으)로 내보냄</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation type="unfinished"/>
+        <translation>%1와(과) 동기화됨</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>설정에서 가져오기가 비활성화됨</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>설정에서 내보내기가 비활성화됨</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation type="unfinished"/>
+        <translation>비활성 공유</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>가져온 위치:</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>내보낸 위치:</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>동기화 대상:</translation>
     </message>
 </context>
 <context>
@@ -4184,11 +4237,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 선택</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>키 파일 찾아보기</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4196,28 +4249,29 @@ Message: %2</source>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
+        <translation>새 키 파일 생성</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation type="unfinished"/>
+        <translation>메모: 변경될 수 있는 파일을 사용하면 나중에 데이터베이스의 잠금을 해제하지 못할 수도 있습니다!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 키 파일</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일을 자기 자신의 키 파일로 사용할 수 없습니다. 다른 파일을 선택하거나 새 키 파일을 생성하십시오.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>의심되는 키 파일</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation type="unfinished"/>
+        <translation>선택한 키 파일이 암호 데이터베이스 파일 같습니다. 키 파일은 변경되지 않을 파일이어야 하며 파일이 변경되면 데이터베이스에 더 이상 접근할 수 없습니다.
+이 파일을 그래도 사용하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -4512,27 +4566,27 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation>내보내기(&amp;E)</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>업데이트 확인(&amp;C)...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>모든 파비콘 다운로드(&amp;A)</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>가나다순 정렬(&amp;A)</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>가나다 역순 정렬(&amp;Z)</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기(&amp;P)</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4540,43 +4594,43 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation type="unfinished"/>
+        <translation>HTML 파일로 내보내기(&amp;E)...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>1Password Vault...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password Vault 가져오기</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>시작하기(&amp;G)</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>시작하기 가이드 PDF 열기</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>온라인 도움말(&amp;O)...</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>온라인 문서 열기(웹 브라우저로)</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>사용자 가이드(&amp;U)</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>사용자 가이드 PDF 열기</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>키보드 단축키(&amp;K)</translation>
     </message>
 </context>
 <context>
@@ -4639,11 +4693,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 데이터 %1[%2] 삭제됨</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>사용자 정의 데이터 %1[%2] 추가 중</translation>
     </message>
 </context>
 <context>
@@ -4718,31 +4772,31 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 OpData01, 헤더 정보 없음</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>모든 IV 바이트를 읽을 수 없음, 16바이트가 필요하지만 %1바이트만 받음</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation type="unfinished"/>
+        <translation>opdata01의 암호화를 초기화할 수 없음: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation type="unfinished"/>
+        <translation>모든 HMAC 서명 바이트를 읽을 수 없음</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 OpData01, HMAC이 잘못됨</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>위치에서 곧바로 clearText를 처리할 수 없음</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>평문 문자열 %1바이트가 필요하지만 %2바이트를 받음</translation>
     </message>
 </context>
 <context>
@@ -4750,34 +4804,35 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 읽기 명령이 인스턴스를 반환하지 않음
+%1</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>.opvault 디렉터리가 존재해야 함</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation type="unfinished"/>
+        <translation>.opvault 디렉터리를 읽을 수 있어야 함</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation type="unfinished"/>
+        <translation>.opvault/default 디렉터리가 존재해야 함</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation type="unfinished"/>
+        <translation>.opvault/default 디렉터리를 읽을 수 있어야 함</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>masterKey를 디코드할 수 없음: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation type="unfinished"/>
+        <translation>마스터 키를 계산할 수 없음: %1</translation>
     </message>
 </context>
 <context>
@@ -4883,11 +4938,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>암호가 일치하지 않음</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation type="unfinished"/>
+        <translation>암호가 일치함</translation>
     </message>
 </context>
 <context>
@@ -4918,19 +4973,19 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 필드</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>암호 표시 여부 전환</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>암호 확인 필드</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>암호 생성기 전환</translation>
     </message>
 </context>
 <context>
@@ -5134,47 +5189,47 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>생성된 암호</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation type="unfinished"/>
+        <translation>대문자</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation type="unfinished"/>
+        <translation>소문자</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation type="unfinished"/>
+        <translation>특수문자</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation type="unfinished"/>
+        <translation>수학 기호</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
+        <translation>대시와 슬래시</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation type="unfinished"/>
+        <translation>제외할 문자</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>16진 암호</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>암호 길이</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>대소문자:</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation type="unfinished"/>
+        <translation>암호 다시 생성</translation>
     </message>
     <message>
         <source>Copy password</source>
@@ -5182,23 +5237,23 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>암호 수락</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>소문자</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>대문자</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation type="unfinished"/>
+        <translation>제목 대문자(Title Case)</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>암호 표시 여부 전환</translation>
     </message>
 </context>
 <context>
@@ -5209,7 +5264,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>통계</translation>
     </message>
 </context>
 <context>
@@ -5248,7 +5303,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>계속</translation>
     </message>
 </context>
 <context>
@@ -5659,7 +5714,7 @@ Available commands:
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation>형식: 시퀀스</translation>
+        <translation>형식: 순서</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
@@ -5695,7 +5750,7 @@ Available commands:
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>형식: 시퀀스(반복)</translation>
+        <translation>형식: 순서(반복)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
@@ -5943,23 +5998,23 @@ Available commands:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스의 암호 키를 비활성화합니다.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>디버그 정보를 표시합니다.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>합칠 데이터베이스의 암호 키를 비활성화합니다.</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation type="unfinished"/>
+        <translation>버전 %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>빌드 형식: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -5971,11 +6026,11 @@ Available commands:
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>디버그 모드가 비활성화되었습니다.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>디버그 모드가 활성화되었습니다.</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -5991,27 +6046,27 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare(서명된 공유 및 서명되지 않은 공유)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare(서명된 공유만)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare(서명되지 않은 공유만)</translation>
     </message>
     <message>
         <source>YubiKey</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey</translation>
     </message>
     <message>
         <source>TouchID</source>
-        <translation type="unfinished"/>
+        <translation>TouchID</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>없음</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -6019,151 +6074,151 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>암호화 라이브러리:</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>암호와 프롬프트를 동시에 생성할 수 없습니다!</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스에 새 그룹을 추가합니다.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>추가할 그룹의 경로입니다.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
+        <translation>그룹 %1이(가) 이미 존재합니다!</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>그룹 %1을(를) 찾을 수 없습니다.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
+        <translation>그룹 %1을(를) 추가했습니다.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>암호가 유출된 적이 있는지 검사합니다. 파일 이름에는 HIBP 형식으로 된 유출된 암호의 SHA-1 해시가 저장된 파일을 지정해야 합니다. https://haveibeenpwned.com/Passwords 사이트에서 다운로드할 수 있습니다.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>파일 이름</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>취약한 암호와 문제를 분석합니다.</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>HIBP 파일 %1을(를) 열 수 없음: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 항목과 HIBP 파일을 분석하고 있습니다. 잠시 기다려 주십시오...</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>현재 열린 데이터베이스를 닫습니다.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>이 도움말을 표시합니다.</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 암호화할 때 사용할 YubiKey 슬롯입니다.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>슬롯</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 단어 개수 %1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
+        <translation>단어 목록이 너무 작음(1000개 미만)</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>대화형 모드를 종료합니다.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation type="unfinished"/>
+        <translation>내보낼 때 사용할 형식입니다. xml과 csv 형식을 사용할 수 있으며 기본값은 xml입니다.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 내용을 지정한 형식으로 표준 출력으로 내보냅니다.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
+        <translation>XML로 데이터베이스를 내보낼 수 없음: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>지원하지 않는 형식: %1</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>숫자 사용</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 암호 길이: %1</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>명령 도움말을 표시합니다.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>사용 가능한 명령:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation type="unfinished"/>
+        <translation>XML 데이터베이스의 내용을 가져옵니다.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation type="unfinished"/>
+        <translation>XML로 데이터베이스를 내보낼 경로입니다.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>새 데이터베이스의 경로입니다.</translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
-        <translation type="unfinished"/>
+        <translation>XML 데이터베이스 내보내기 파일 %1을(를) 가져올 수 없음</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 가져왔습니다.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>알 수 없는 명령 %1</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>출력을 한 줄로 합칩니다.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>합치기 작업으로 변경할 사항만 출력합니다.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>두 번째 데이터베이스의 YubiKey 슬롯입니다.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation type="unfinished"/>
+        <translation>%1을(를) %2(으)로 합쳤습니다.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
@@ -6171,98 +6226,102 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>항목을 새 그룹으로 이동합니다.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>이동할 항목의 경로입니다.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>대상 그룹의 경로입니다.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>경로 %1에서 그룹을 찾을 수 없습니다.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>경로 %1에 항목이 이미 있습니다.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>항목 %1을(를) 그룹 %2(으)로 이동했습니다.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 엽니다.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>삭제할 그룹의 경로입니다.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 루트 그룹을 삭제할 수 없습니다.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>그룹 %1을(를) 휴지통으로 이동했습니다.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>그룹 %1을(를) 삭제했습니다.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일 %1을(를) 열 수 없음: 찾을 수 없음</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일 %1을(를) 열 수 없음: 일반 파일이 아님</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 파일 %1을(를) 열 수 없음: 읽을 수 없음</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>%1의 잠금 해제 암호 입력:</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 YubiKey 슬롯 %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to unlock %1</source>
-        <translation type="unfinished"/>
+        <translation>%1의 잠금을 해제하려면 YubiKey의 단추를 누르십시오</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스를 암호화할 암호 입력(선택 사항):</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation type="unfinished"/>
+        <translation>HIBP 파일 %1줄: 처리 오류</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>비밀 서비스 통합</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>사용자 이름</translation>
     </message>
     <message>
         <source>%1[%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1[%2] 질의 응답 - 슬롯 %3 - %4</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>&apos;%1&apos;의 암호가 %2회 유출되었습니다!</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
+        <translation>모든 옵션을 적용했을 때 암호 생성기가 잘못됨</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6422,11 +6481,11 @@ CPU 아키텍처: %2
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>옵션</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC Freedesktop.org 비밀 서비스 통합 사용</translation>
     </message>
     <message>
         <source>General</source>
@@ -6434,23 +6493,23 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Show notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>인증 정보가 필요할 때 알림 표시</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;데이터베이스의 휴지통을 활성화하면 항목을 휴지통으로 이동합니다. 그렇지 않으면 확인하지 않고 삭제합니다.&lt;/p&gt;&lt;p&gt;다른 항목에서 삭제할 항목을 참조할 때에는 계속 확인 대화상자를 표시합니다.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation type="unfinished"/>
+        <translation>클라이언트에서 항목을 삭제할 때 확인하지 않습니다.</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>내보낼 데이터베이스 그룹:</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"/>
+        <translation>파일 이름</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6458,23 +6517,23 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>관리</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>인증</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation type="unfinished"/>
+        <translation>다음 프로그램이 연결되어 있습니다:</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>프로그램</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>연결 해제</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6482,7 +6541,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 설정 편집</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6490,7 +6549,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>더 많은 정보를 보려면 데이터베이스 잠금을 해제하십시오</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6498,11 +6557,11 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>잠금 해제해서 보기</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>없음</translation>
     </message>
 </context>
 <context>
@@ -6630,15 +6689,15 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare 가져오기 허용</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare 내보내기 허용</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>경고와 오류만 표시</translation>
     </message>
     <message>
         <source>Key</source>
@@ -6646,39 +6705,39 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>서명자 이름 필드</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>새 인증서 생성</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>기존 인증서 가져오기</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>내 인증서 내보내기</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>알려진 공유</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>선택한 인증서 신뢰</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>선택한 인증서를 신뢰할지 항상 묻기</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>선택한 인증서 신뢰 해제</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>선택한 인증서 삭제</translation>
     </message>
 </context>
 <context>
@@ -6906,15 +6965,15 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>비밀 키:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>비밀 키는 Base32 형식이어야 함</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>비밀 키 필드</translation>
     </message>
     <message>
         <source>Algorithm:</source>
@@ -6922,28 +6981,29 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Time step field</source>
-        <translation type="unfinished"/>
+        <translation>시간 단계 필드</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation>자리</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 TOTP 비밀 값</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>잘못된 비밀 키를 입력했습니다. 키는 Base32 형식이어야 합니다.
+예: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>TOTP 설정 삭제 확인</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation type="unfinished"/>
+        <translation>이 항목의 TOTP 설정을 삭제하시겠습니까?</translation>
     </message>
 </context>
 <context>
@@ -7029,11 +7089,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>1Password에서 가져오기</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>최근 데이터베이스 열기</translation>
     </message>
 </context>
 <context>
@@ -7060,11 +7120,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 토큰 새로 고침</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>하드웨어 키 슬롯 선택</translation>
     </message>
 </context>
 </TS>

@@ -444,6 +444,14 @@
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
         <translation>此自動輸入命令包含頻繁重複的參數。真的要繼續嗎？</translation>
     </message>
+    <message>
+        <source>Permission Required</source>
+        <translation>需要權限</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC 需要「輔助使用」權限以執行項目層級的自動輸入。若您已授予權限，可能要重新啟動 KeePassXC。</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
@@ -488,6 +496,17 @@
     <message>
         <source>Copy &amp;password</source>
         <translation>複製密碼 (&amp;P)</translation>
+    </message>
+</context>
+<context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Permission Required</source>
+        <translation>需要權限</translation>
+    </message>
+    <message>
+        <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
+        <translation>KeePassXC 需要「輔助使用」和「螢幕錄製」權限以執行全域自動輸入。使用視窗標題尋找項目時需要螢幕錄製功能。若您已授予權限，可能要重新啟動 KeePassXC。</translation>
     </message>
 </context>
 <context>
@@ -774,16 +793,6 @@ Please select the correct database for saving credentials.</source>
         <translation>KeePassXC：新的金鑰關聯請求</translation>
     </message>
     <message>
-        <source>You have received an association request for the above key.
-
-If you would like to allow it access to your KeePassXC database,
-give it a unique name to identify and accept it.</source>
-        <translation>你已接收到上述金鑰的關聯請求。
-
-如果你允許透過此金鑰存取你的 KeePassXC 資料庫，
-請取一個唯一識別名並按下接受。</translation>
-    </message>
-    <message>
         <source>Save and allow access</source>
         <translation>儲存並允許存取</translation>
     </message>
@@ -862,6 +871,18 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Don&apos;t show this warning again</source>
         <translation>不再顯示此警告</translation>
+    </message>
+    <message>
+        <source>You have received an association request for the following database:
+%1
+
+Give the connection a unique name or ID, for example:
+chrome-laptop.</source>
+        <translation>你已接收到以下資料庫的關聯請求：
+%1
+
+請給予連線一個唯一的名稱或 ID，例如：
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -1129,10 +1150,6 @@ Please consider generating a new key file.</source>
         <translation>切換密碼可見性</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials:</source>
-        <translation>輸入額外憑證：</translation>
-    </message>
-    <message>
         <source>Key file selection</source>
         <translation>金鑰檔案選擇</translation>
     </message>
@@ -1157,12 +1174,6 @@ Please consider generating a new key file.</source>
         <translation>硬體金鑰：</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-                           &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;您可以使用實體安全金鑰如 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt;，並配合以 HMAC-SHA1 設置的插槽。&lt;/p&gt;
-                           &lt;p&gt;點此以獲得更多資訊...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Hardware key help</source>
         <translation>硬體金鑰幫助</translation>
     </message>
@@ -1177,10 +1188,6 @@ Please consider generating a new key file.</source>
     <message>
         <source>Clear Key File</source>
         <translation>清除金鑰檔案</translation>
-    </message>
-    <message>
-        <source>Select file...</source>
-        <translation>選擇檔案...</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1199,6 +1206,42 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>Retry with empty password</source>
         <translation>以空白密碼重試</translation>
+    </message>
+    <message>
+        <source>Enter Additional Credentials (if any):</source>
+        <translation>輸入額外憑證（如果有的話）：</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;您可以使用實體安全金鑰如 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt;，並配合以 HMAC-SHA1 設置的插槽。&lt;/p&gt;
+&lt;p&gt;點此以獲得更多資訊...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
+        <translation>&lt;p&gt;除了主密碼，您還可以使用一份袐密檔案來加強資料庫的安全性。此檔案可在您資料庫的安全性設定下產生。&lt;/p&gt;&lt;p&gt;這&lt;strong&gt;並不是&lt;/strong&gt;您的 *.kdbx 資料庫檔案！&lt;br&gt;若您沒有金鑰檔案，請將欄位留空。&lt;/p&gt;&lt;p&gt;點此以獲得更多資訊...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Key file help</source>
+        <translation>金鑰檔案幫助</translation>
+    </message>
+    <message>
+        <source>?</source>
+        <translation>?</translation>
+    </message>
+    <message>
+        <source>Select key file...</source>
+        <translation>選擇金鑰檔案...</translation>
+    </message>
+    <message>
+        <source>Cannot use database file as key file</source>
+        <translation>無法使用資料庫檔案作為金鑰檔案</translation>
+    </message>
+    <message>
+        <source>You cannot use your database file as a key file.
+If you do not have a key file, please leave the field empty.</source>
+        <translation>您不能使用自己的資料庫作為金鑰檔案。
+若您沒有金鑰檔案，請將欄位留空。</translation>
     </message>
 </context>
 <context>
@@ -1839,6 +1882,10 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>平均密碼長度小於 10 個字元。密碼越長，能提供的保護越多。</translation>
+    </message>
+    <message>
+        <source>Please wait, database statistics are being calculated...</source>
+        <translation>請稍等，正在計算並統計資料庫數據...</translation>
     </message>
 </context>
 <context>
@@ -6275,6 +6322,10 @@ Kernel: %3 %4</source>
     <message>
         <source>Invalid password generator after applying all options</source>
         <translation>套用所有選項的密碼產生器為無效</translation>
+    </message>
+    <message>
+        <source>Show the protected attributes in clear text.</source>
+        <translation>以明文顯示被保護的屬性。</translation>
     </message>
 </context>
 <context>
