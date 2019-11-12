@@ -179,29 +179,23 @@ void TestBrowser::testSearchEntries()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QList<QString> urls;
-    urls.push_back("https://github.com/login_page");
-    urls.push_back("https://github.com/login");
-    urls.push_back("https://github.com/");
-    urls.push_back("github.com/login");
-    urls.push_back("http://github.com");
-    urls.push_back("http://github.com/login");
-    urls.push_back("github.com");
-    urls.push_back("github.com/login");
-    urls.push_back("https://github"); // Invalid URL
-    urls.push_back("github.com");
+    QStringList urls = {
+        "https://github.com/login_page",
+        "https://github.com/login",
+        "https://github.com/",
+        "github.com/login",
+        "http://github.com",
+        "http://github.com/login",
+        "github.com",
+        "github.com/login",
+        "https://github", // Invalid URL
+        "github.com"
+    };
 
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-    }
+    createEntries(urls, root);
 
     browserSettings()->setMatchUrlScheme(false);
-    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session"); // db, url, submitUrl
 
     QCOMPARE(result.length(), 9);
     QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
@@ -213,7 +207,7 @@ void TestBrowser::testSearchEntries()
 
     // With matching there should be only 3 results + 4 without a scheme
     browserSettings()->setMatchUrlScheme(true);
-    result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 7);
     QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
     QCOMPARE(result[1]->url(), QString("https://github.com/login"));
@@ -226,22 +220,16 @@ void TestBrowser::testSearchEntriesWithPort()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QList<QString> urls;
-    urls.push_back("http://127.0.0.1:443");
-    urls.push_back("http://127.0.0.1:80");
+    QStringList urls = {
+        "http://127.0.0.1:443",
+        "http://127.0.0.1:80"
+    };
 
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-    }
+    createEntries(urls, root);
 
-    auto result = m_browserService->searchEntries(db, "127.0.0.1", "http://127.0.0.1:443"); // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "http://127.0.0.1:443", "http://127.0.0.1");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), urls[0]);
+    QCOMPARE(result[0]->url(), QString("http://127.0.0.1:443"));
 }
 
 void TestBrowser::testSearchEntriesWithAdditionalURLs()
@@ -249,70 +237,59 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QList<Entry*> entries;
-    QList<QString> urls;
-    urls.push_back("https://github.com/");
-    urls.push_back("https://www.example.com");
-    urls.push_back("http://domain.com");
+    QStringList urls = {
+        "https://github.com/",
+        "https://www.example.com",
+        "http://domain.com"
+    };
 
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-        entries.push_back(entry);
-    }
+    auto entries = createEntries(urls, root);
 
     // Add an additional URL to the first entry
     entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://keepassxc.org");
 
-    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), urls[0]);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
 
     // Search the additional URL. It should return the same entry
-    auto additionalResult = m_browserService->searchEntries(db, "keepassxc.org", "https://keepassxc.org");
+    auto additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org", "https://keepassxc.org");
     QCOMPARE(additionalResult.length(), 1);
-    QCOMPARE(additionalResult[0]->url(), urls[0]);
+    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
 void TestBrowser::testInvalidEntries()
 {
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
+    const QString url("https://github.com");
+    const QString submitUrl("https://github.com/session");
 
-    QList<QString> urls;
-    urls.push_back("https://github.com/login");
-    urls.push_back("https:///github.com/"); // Extra '/'
-    urls.push_back("http://github.com/**//*");
-    urls.push_back("http://*.github.com/login");
-    urls.push_back("//github.com"); // fromUserInput() corrects this one.
-    urls.push_back("github.com/{}<>");
-
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-    }
+    QStringList urls = {
+        "https://github.com/login",
+        "https:///github.com/", // Extra '/'
+        "http://github.com/**//*",
+        "http://*.github.com/login",
+        "//github.com", // fromUserInput() corrects this one.
+        "github.com/{}<>",
+        "http:/example.com",
+    };
+   
+    createEntries(urls, root);
 
     browserSettings()->setMatchUrlScheme(true);
-    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 2);
     QCOMPARE(result[0]->url(), QString("https://github.com/login"));
     QCOMPARE(result[1]->url(), QString("//github.com"));
 
     // Test the URL's directly
-    QCOMPARE(m_browserService->handleURL(urls[0], "github.com", "https://github.com"), true);
-    QCOMPARE(m_browserService->handleURL(urls[1], "github.com", "https://github.com"), false);
-    QCOMPARE(m_browserService->handleURL(urls[2], "github.com", "https://github.com"), false);
-    QCOMPARE(m_browserService->handleURL(urls[3], "github.com", "https://github.com"), false);
-    QCOMPARE(m_browserService->handleURL(urls[4], "github.com", "https://github.com"), true);
-    QCOMPARE(m_browserService->handleURL(urls[5], "github.com", "https://github.com"), false);
+    QCOMPARE(m_browserService->handleURL(urls[0], url, submitUrl), true);
+    QCOMPARE(m_browserService->handleURL(urls[1], url, submitUrl), false);
+    QCOMPARE(m_browserService->handleURL(urls[2], url, submitUrl), false);
+    QCOMPARE(m_browserService->handleURL(urls[3], url, submitUrl), false);
+    QCOMPARE(m_browserService->handleURL(urls[4], url, submitUrl), true);
+    QCOMPARE(m_browserService->handleURL(urls[5], url, submitUrl), false);
 }
 
 void TestBrowser::testSubdomainsAndPaths()
@@ -320,44 +297,74 @@ void TestBrowser::testSubdomainsAndPaths()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QList<QString> urls;
-    urls.push_back("https://www.github.com/login/page.xml");
-    urls.push_back("https://login.github.com/");
-    urls.push_back("https://github.com");
-    urls.push_back("http://www.github.com");
-    urls.push_back("http://login.github.com/pathtonowhere");
-    urls.push_back(".github.com"); // Invalid URL
-    urls.push_back("www.github.com/");
-    urls.push_back("https://github"); // Invalid URL
+    QStringList urls = {
+        "https://www.github.com/login/page.xml",
+        "https://login.github.com/",
+        "https://github.com",
+        "http://www.github.com",
+        "http://login.github.com/pathtonowhere",
+        ".github.com", // Invalid URL
+        "www.github.com/",
+        "https://github" // Invalid URL
+    };
 
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-    }
+    createEntries(urls, root);
 
     browserSettings()->setMatchUrlScheme(false);
-    auto result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com"));
 
-    QCOMPARE(result.length(), 6);
-    QCOMPARE(result[0]->url(), urls[0]);
-    QCOMPARE(result[1]->url(), urls[1]);
-    QCOMPARE(result[2]->url(), urls[2]);
-    QCOMPARE(result[3]->url(), urls[3]);
-    QCOMPARE(result[4]->url(), urls[4]);
-    QCOMPARE(result[5]->url(), urls[6]);
-
-    // With matching there should be only 3 results
-    browserSettings()->setMatchUrlScheme(true);
-    result = m_browserService->searchEntries(db, "github.com", "https://github.com"); // db, hostname, url
+    // With www subdomain
+    result = m_browserService->searchEntries(db, "https://www.github.com", "https://www.github.com/session");
     QCOMPARE(result.length(), 4);
-    QCOMPARE(result[0]->url(), urls[0]);
-    QCOMPARE(result[1]->url(), urls[1]);
-    QCOMPARE(result[2]->url(), urls[2]);
-    QCOMPARE(result[3]->url(), urls[6]);
+    QCOMPARE(result[0]->url(), QString("https://www.github.com/login/page.xml"));
+    QCOMPARE(result[1]->url(), QString("https://github.com")); // Accepts any subdomain
+    QCOMPARE(result[2]->url(), QString("http://www.github.com"));
+    QCOMPARE(result[3]->url(), QString("www.github.com/"));
+
+    // With scheme matching there should be only 1 result
+    browserSettings()->setMatchUrlScheme(true);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com"));
+
+    // Test site with subdomain in the site URL
+    QStringList entryURLs = {
+        "https://accounts.example.com",
+        "https://accounts.example.com/path",
+        "https://subdomain.example.com/",
+        "https://another.accounts.example.com/",
+        "https://another.subdomain.example.com/",
+        "https://example.com/",
+        "https://example" // Invalid URL
+    };
+
+    createEntries(entryURLs, root);
+
+    result = m_browserService->searchEntries(db, "https://accounts.example.com", "https://accounts.example.com");
+    QCOMPARE(result.length(), 3);
+    QCOMPARE(result[0]->url(), QString("https://accounts.example.com"));
+    QCOMPARE(result[1]->url(), QString("https://accounts.example.com/path"));
+    QCOMPARE(result[2]->url(), QString("https://example.com/")); // Accepts any subdomain
+
+    result = m_browserService->searchEntries(db, "https://another.accounts.example.com", "https://another.accounts.example.com");
+    QCOMPARE(result.length(), 4);
+    QCOMPARE(result[0]->url(), QString("https://accounts.example.com")); // Accepts any subdomain under accounts.example.com
+    QCOMPARE(result[1]->url(), QString("https://accounts.example.com/path"));
+    QCOMPARE(result[2]->url(), QString("https://another.accounts.example.com/"));
+    QCOMPARE(result[3]->url(), QString("https://example.com/")); // Accepts one or more subdomains
+
+    // Test local files. It should be a direct match.
+    QStringList localFiles = {
+        "file:///Users/testUser/tests/test.html"
+    };
+
+    createEntries(localFiles, root);
+
+    // With local files, url is always set to the file scheme + ://. Submit URL holds the actual URL.
+    result = m_browserService->searchEntries(db, "file://", "file:///Users/testUser/tests/test.html");
+    QCOMPARE(result.length(), 1);
 }
 
 void TestBrowser::testSortEntries()
@@ -365,28 +372,20 @@ void TestBrowser::testSortEntries()
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
 
-    QList<QString> urls;
-    urls.push_back("https://github.com/login_page");
-    urls.push_back("https://github.com/login");
-    urls.push_back("https://github.com/");
-    urls.push_back("github.com/login");
-    urls.push_back("http://github.com");
-    urls.push_back("http://github.com/login");
-    urls.push_back("github.com");
-    urls.push_back("github.com/login");
-    urls.push_back("https://github"); // Invalid URL
-    urls.push_back("github.com");
+    QStringList urls = {
+        "https://github.com/login_page",
+        "https://github.com/login",
+        "https://github.com/",
+        "github.com/login",
+        "http://github.com",
+        "http://github.com/login",
+        "github.com",
+        "github.com/login",
+        "https://github", // Invalid URL
+        "github.com"
+    };
 
-    QList<Entry*> entries;
-    for (int i = 0; i < urls.length(); ++i) {
-        auto entry = new Entry();
-        entry->setGroup(root);
-        entry->beginUpdate();
-        entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
-        entry->endUpdate();
-        entries.push_back(entry);
-    }
+    auto entries = createEntries(urls, root);
 
     browserSettings()->setBestMatchOnly(false);
     auto result =
@@ -457,4 +456,20 @@ void TestBrowser::testGetDatabaseGroups()
     auto lastChildren = firstOfCOS.toObject()["children"].toArray();
     auto lastChild = lastChildren.at(0);
     QCOMPARE(lastChild.toObject()["name"].toString(), QString("group2_1_1"));
+}
+
+QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
+{
+    QList<Entry*> entries;
+    for (int i = 0; i < urls.length(); ++i) {
+        auto entry = new Entry();
+        entry->setGroup(root);
+        entry->beginUpdate();
+        entry->setUrl(urls[i]);
+        entry->setUsername(QString("User %1").arg(i));
+        entry->endUpdate();
+        entries.push_back(entry);
+    }
+
+    return entries;
 }

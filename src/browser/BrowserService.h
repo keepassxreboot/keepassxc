@@ -63,8 +63,8 @@ public:
                   const QString& group,
                   const QString& groupUuid,
                   const QSharedPointer<Database>& selectedDb = {});
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url);
-    QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
+    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
+    QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
     void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
 
 public:
@@ -130,7 +130,7 @@ private:
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
-    bool handleURL(const QString& entryUrl, const QString& hostname, const QString& url);
+    bool handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl);
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
