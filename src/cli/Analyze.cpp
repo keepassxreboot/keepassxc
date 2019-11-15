@@ -55,7 +55,8 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
         return EXIT_FAILURE;
     }
 
-    outputTextStream << QObject::tr("Evaluating database entries against HIBP file, this will take a while...");
+    outputTextStream << QObject::tr("Evaluating database entries against HIBP file, this will take a while...")
+                     << endl;
 
     QList<QPair<const Entry*, int>> findings;
     QString error;
