@@ -60,6 +60,7 @@ public:
     void setLength(int length);
     void setCharClasses(const CharClasses& classes);
     void setFlags(const GeneratorFlags& flags);
+    void setAdditionalChars(const QString& chars);
     void setExcludedChars(const QString& chars);
 
     bool isValid() const;
@@ -67,6 +68,7 @@ public:
     QString generatePassword() const;
 
     static const int DefaultLength = 16;
+    static const char* DefaultAdditionalChars;
     static const char* DefaultExcludedChars;
     static constexpr bool DefaultLower = (DefaultCharset & LowerLetters) != 0;
     static constexpr bool DefaultUpper = (DefaultCharset & UpperLetters) != 0;
@@ -90,6 +92,7 @@ private:
     int m_length;
     CharClasses m_classes;
     GeneratorFlags m_flags;
+    QString m_additional;
     QString m_excluded;
 
     Q_DISABLE_COPY(PasswordGenerator)

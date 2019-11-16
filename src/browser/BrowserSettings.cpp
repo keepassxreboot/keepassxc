@@ -412,6 +412,16 @@ void BrowserSettings::setAdvancedMode(bool advancedMode)
     config()->set("generator/AdvancedMode", advancedMode);
 }
 
+QString BrowserSettings::passwordAdditionalChars()
+{
+    return config()->get("generator/AdditionalChars", PasswordGenerator::DefaultAdditionalChars).toString();
+}
+
+void BrowserSettings::setPasswordAdditionalChars(const QString& chars)
+{
+    config()->set("generator/AdditionalChars", chars);
+}
+
 QString BrowserSettings::passwordExcludedChars()
 {
     return config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString();
