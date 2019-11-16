@@ -107,6 +107,8 @@ public:
     void setPasswordUseEASCII(bool useEASCII);
     bool advancedMode();
     void setAdvancedMode(bool advancedMode);
+    QString passwordAdditionalChars();
+    void setPasswordAdditionalChars(const QString& chars);
     QString passwordExcludedChars();
     void setPasswordExcludedChars(const QString& chars);
     int passPhraseWordCount();
