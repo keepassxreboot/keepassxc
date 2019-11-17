@@ -885,8 +885,8 @@ void MainWindow::switchToPasswordGen(bool enabled)
     if (enabled) {
         m_ui->passwordGeneratorWidget->loadSettings();
         m_ui->passwordGeneratorWidget->regeneratePassword();
-        m_ui->passwordGeneratorWidget->setStandaloneMode(true);
         m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
+        m_ui->passwordGeneratorWidget->setStandaloneMode(true);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
         switchToDatabases();
