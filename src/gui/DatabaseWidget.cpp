@@ -30,6 +30,7 @@
 #include <QLineEdit>
 #include <QProcess>
 #include <QSplitter>
+#include <QTextEdit>
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
@@ -638,6 +639,14 @@ void DatabaseWidget::copyUsername()
 
 void DatabaseWidget::copyPassword()
 {
+    // QTextEdit does not properly trap Ctrl+C copy shortcut
+    // if a text edit has focus pass the copy operation to it
+    auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
+    if (textEdit) {
+        textEdit->copy();
+        return;
+    }
+
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
@@ -1564,11 +1573,6 @@ void DatabaseWidget::restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid&
 bool DatabaseWidget::isGroupSelected() const
 {
     return m_groupView->currentGroup();
-}
-
-bool DatabaseWidget::currentEntryHasFocus()
-{
-    return m_entryView->numberOfSelectedEntries() > 0 && m_entryView->hasFocus();
 }
 
 bool DatabaseWidget::currentEntryHasTitle()
