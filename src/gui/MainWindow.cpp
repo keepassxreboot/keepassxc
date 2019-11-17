@@ -644,10 +644,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
         switch (mode) {
         case DatabaseWidget::Mode::ViewMode: {
-            bool hasFocus = m_contextMenuFocusLock || menuBar()->hasFocus() || m_searchWidget->hasFocus()
-                            || dbWidget->currentEntryHasFocus();
-            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1 && hasFocus;
-            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0 && hasFocus;
+            bool singleEntrySelected = dbWidget->numberOfSelectedEntries() == 1;
+            bool entriesSelected = dbWidget->numberOfSelectedEntries() > 0;
             bool groupSelected = dbWidget->isGroupSelected();
             bool currentGroupHasChildren = dbWidget->currentGroup()->hasChildren();
             bool currentGroupHasEntries = !dbWidget->currentGroup()->entries().isEmpty();
@@ -1192,7 +1190,7 @@ void MainWindow::showEntryContextMenu(const QPoint& globalPos)
     bool entrySelected = false;
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget) {
-        entrySelected = dbWidget->currentEntryHasFocus();
+        entrySelected = dbWidget->numberOfSelectedEntries() > 0;
     }
 
     if (entrySelected) {

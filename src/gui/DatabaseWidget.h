@@ -104,7 +104,6 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(bool hide);
     void clearAllWidgets();
-    bool currentEntryHasFocus();
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
     bool currentEntryHasPassword();
