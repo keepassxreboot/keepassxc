@@ -149,6 +149,7 @@ void enterInteractiveMode(const QStringList& arguments)
         prompt += "> ";
         command = reader->readLine(prompt);
         if (reader->isFinished()) {
+            currentDatabase->releaseData();
             return;
         }
 
@@ -162,6 +163,7 @@ void enterInteractiveMode(const QStringList& arguments)
             errorTextStream << QObject::tr("Unknown command %1").arg(args[0]) << "\n";
             continue;
         } else if (cmd->name == "quit" || cmd->name == "exit") {
+            currentDatabase->releaseData();
             return;
         }
 
