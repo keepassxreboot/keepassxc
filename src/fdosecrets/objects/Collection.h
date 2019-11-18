@@ -74,7 +74,8 @@ namespace FdoSecrets
     public:
         DBusReturn<void> setProperties(const QVariantMap& properties);
 
-        bool isValid() const {
+        bool isValid() const
+        {
             return backend();
         }
 

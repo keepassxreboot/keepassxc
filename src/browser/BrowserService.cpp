@@ -604,8 +604,7 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
             // Search for additional URL's starting with KP2A_URL
             if (entry->attributes()->keys().contains(ADDITIONAL_URL)) {
                 for (const auto& key : entry->attributes()->keys()) {
-                    if (key.startsWith(ADDITIONAL_URL)
-                        && handleURL(entry->attributes()->value(key), url, submitUrl)) {
+                    if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)) {
                         entries.append(entry);
                         continue;
                     }
@@ -1032,7 +1031,8 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
     }
 
     // Match scheme
-    if (browserSettings()->matchUrlScheme() && !entryQUrl.scheme().isEmpty() && entryQUrl.scheme().compare(siteQUrl.scheme()) != 0) {
+    if (browserSettings()->matchUrlScheme() && !entryQUrl.scheme().isEmpty()
+        && entryQUrl.scheme().compare(siteQUrl.scheme()) != 0) {
         return false;
     }
 

@@ -32,7 +32,6 @@ class KeyFileEditWidget : public KeyComponentWidget
 {
     Q_OBJECT
 
-
 public:
     explicit KeyFileEditWidget(DatabaseSettingsWidget* parent);
     Q_DISABLE_COPY(KeyFileEditWidget);

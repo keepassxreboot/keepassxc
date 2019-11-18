@@ -375,9 +375,11 @@ void DatabaseOpenWidget::browseKeyFile()
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (QFileInfo(filename).canonicalFilePath() == QFileInfo(m_filename).canonicalFilePath()) {
-        MessageBox::warning(this,  tr("Cannot use database file as key file"),
-            tr("You cannot use your database file as a key file.\nIf you do not have a key file, please leave the field empty."),
-            MessageBox::Button::Ok);
+        MessageBox::warning(this,
+                            tr("Cannot use database file as key file"),
+                            tr("You cannot use your database file as a key file.\nIf you do not have a key file, "
+                               "please leave the field empty."),
+                            MessageBox::Button::Ok);
         filename = "";
     }
 

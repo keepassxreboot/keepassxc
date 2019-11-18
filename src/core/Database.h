@@ -29,8 +29,8 @@
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
-#include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 class Entry;
 enum class EntryReferenceType;
