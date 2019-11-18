@@ -21,9 +21,9 @@
 
 #include "core/EntrySearcher.h"
 #include "fdosecrets/GcryptMPI.h"
-#include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
+#include "fdosecrets/objects/SessionCipher.h"
 
 #include "crypto/Crypto.h"
 
@@ -96,8 +96,8 @@ void TestFdoSecrets::testDhIetf1024Sha256Aes128CbcPkcs7()
 
 void TestFdoSecrets::testCrazyAttributeKey()
 {
-    using FdoSecrets::Item;
     using FdoSecrets::Collection;
+    using FdoSecrets::Item;
 
     const QScopedPointer<Group> root(new Group());
     const QScopedPointer<Entry> e1(new Entry());
