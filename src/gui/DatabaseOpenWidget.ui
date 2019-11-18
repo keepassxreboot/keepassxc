@@ -132,7 +132,7 @@
             <number>15</number>
            </property>
            <item>
-            <widget class="QFrame" name="verticalFrame">
+            <widget class="QFrame" name="passwordFormFrame">
              <property name="minimumSize">
               <size>
                <width>400</width>
