@@ -201,7 +201,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
-    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
+    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
@@ -1297,6 +1297,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     // Block signals to prevent modified being set
     m_advancedUi->protectAttributeButton->blockSignals(true);
     m_advancedUi->attributesEdit->blockSignals(true);
+    m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
 
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
@@ -1348,7 +1349,7 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
     }
 }
 
-void EditEntryWidget::revealCurrentAttribute()
+void EditEntryWidget::toggleCurrentAttributeVisibility()
 {
     if (!m_advancedUi->attributesEdit->isEnabled()) {
         QModelIndex index = m_advancedUi->attributesView->currentIndex();
@@ -1359,6 +1360,10 @@ void EditEntryWidget::revealCurrentAttribute()
             m_advancedUi->attributesEdit->setEnabled(true);
             m_advancedUi->attributesEdit->blockSignals(oldBlockSignals);
         }
+        m_advancedUi->revealAttributeButton->setText(tr("Hide"));
+    } else {
+        protectCurrentAttribute(true);
+        m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
     }
 }
 
