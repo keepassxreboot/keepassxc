@@ -109,7 +109,7 @@ namespace Bootstrap
 #ifdef Q_OS_WIN
             mainWindow.showMinimized();
 #else
-			mainWindow.hideWindow();
+            mainWindow.hideWindow();
 #endif
         } else {
             mainWindow.bringToFront();
