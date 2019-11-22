@@ -85,7 +85,7 @@ protected:
         // can not call mapFromSource, which internally calls filterAcceptsRow
         auto group = groupFromSourceIndex(source_idx);
 
-        return group->uuid() != recycleBin->uuid();
+        return group && !group->isRecycled() && group->uuid() != recycleBin->uuid();
     }
 };
 
@@ -118,8 +118,13 @@ void DatabaseSettingsWidgetFdoSecrets::loadSettings(QSharedPointer<Database> db)
     m_model.reset(new GroupModelNoRecycle(m_db.data()));
     m_ui->selectGroup->setModel(m_model.data());
 
+    Group* recycleBin = nullptr;
+    if (m_db->metadata() && m_db->metadata()->recycleBin()) {
+        recycleBin = m_db->metadata()->recycleBin();
+    }
+
     auto group = m_db->rootGroup()->findGroupByUuid(FdoSecrets::settings()->exposedGroup(m_db));
-    if (!group) {
+    if (!group || group->isRecycled() || (recycleBin && group->uuid() == recycleBin->uuid())) {
         m_ui->radioDonotExpose->setChecked(true);
     } else {
         auto idx = m_model->indexFromGroup(group);

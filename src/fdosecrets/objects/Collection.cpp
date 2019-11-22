@@ -328,7 +328,11 @@ namespace FdoSecrets
 
             // when creation finishes in backend, we will already have item
             item = m_entryToItem.value(entry, nullptr);
-            Q_ASSERT(item);
+
+            if (!item) {
+                // may happen if entry somehow ends up in recycle bin
+                return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            }
         }
 
         ret = item->setProperties(properties);
@@ -439,7 +443,7 @@ namespace FdoSecrets
 
         auto newUuid = FdoSecrets::settings()->exposedGroup(m_backend->database());
         auto newGroup = m_backend->database()->rootGroup()->findGroupByUuid(newUuid);
-        if (!newGroup) {
+        if (!newGroup || inRecycleBin(newGroup)) {
             // no exposed group, delete self
             doDelete();
             return;
@@ -451,10 +455,11 @@ namespace FdoSecrets
         m_exposedGroup = newGroup;
 
         // Attach signal to update exposed group settings if the group was removed.
+        //
         // The lifetime of the connection is bound to the database object, because
-        // in Database::~Database, groups are also deleted, but we don't want to
-        // trigger this.
-        // This rely on the fact that QObject disconnects signals BEFORE deleting
+        // in Database::~Database, groups are also deleted as children, but we don't
+        // want to trigger this.
+        // This works because the fact that QObject disconnects signals BEFORE deleting
         // children.
         QPointer<Database> db = m_backend->database().data();
         connect(m_exposedGroup.data(), &Group::groupAboutToRemove, db, [db](Group* toBeRemoved) {
@@ -466,6 +471,13 @@ namespace FdoSecrets
             if (toBeRemoved == exposedGroup) {
                 // reset the exposed group to none
                 FdoSecrets::settings()->setExposedGroup(db, {});
+            }
+        });
+        // Another possibility is the group being moved to recycle bin.
+        connect(m_exposedGroup.data(), &Group::groupModified, this, [this]() {
+            if (inRecycleBin(m_exposedGroup->parentGroup())) {
+                // reset the exposed group to none
+                FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
             }
         });
 
@@ -646,17 +658,21 @@ namespace FdoSecrets
     {
         Q_ASSERT(m_backend);
 
-        if (!m_backend->database()->metadata()->recycleBin()) {
+        if (!group) {
+            // just to be safe
+            return true;
+        }
+
+        if (!m_backend->database()->metadata()) {
             return false;
         }
 
-        while (group) {
-            if (group->uuid() == m_backend->database()->metadata()->recycleBin()->uuid()) {
-                return true;
-            }
-            group = group->parentGroup();
+        auto recycleBin = m_backend->database()->metadata()->recycleBin();
+        if (!recycleBin) {
+            return false;
         }
-        return false;
+
+        return group->uuid() == recycleBin->uuid() || group->isRecycled();
     }
 
     bool Collection::inRecycleBin(Entry* entry) const
