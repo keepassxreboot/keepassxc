@@ -167,6 +167,7 @@ void EditEntryWidget::setupMain()
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
+    m_mainUi->urlEdit->enableVerifyMode();
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
@@ -270,6 +271,10 @@ void EditEntryWidget::setupBrowser()
         addPage(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"), m_browserWidget);
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
+
+        // Use a custom item delegate to align the icon to the right side
+        auto iconDelegate = new URLModelIconDelegate(m_browserUi->additionalURLsView);
+        m_browserUi->additionalURLsView->setItemDelegate(iconDelegate);
 
         // clang-format off
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
