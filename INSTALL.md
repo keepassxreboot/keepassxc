@@ -2,9 +2,7 @@ Build and Install KeePassXC
 =================
 
 This document will guide you through the steps to build and install KeePassXC from source.
-You can visit the online version of this document at the following link:
-
-https://github.com/keepassxreboot/keepassx/wiki/Install-Instruction-from-Source
+For more information, see also the [_Building KeePassXC_](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC) page on the wiki.
 
 The [KeePassXC QuickStart](./docs/QUICKSTART.md) gets you started using KeePassXC on your
 Windows, Mac, or Linux computer using the pre-built binaries.
