@@ -9,7 +9,7 @@ can connect and access the exposed database in KeePassXC.
 ## Configurable settings
 
 * The user can specify if a database is exposed on DBus, and which group is exposed.
-* Whether to show desktop notification is shown when an entry is retrived.
+* Whether to show desktop notification is shown when an entry is retrieved.
 * Whether to skip confirmation for entries deleted from DBus
 
 ## Implemented Attributes on Item Object
