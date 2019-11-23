@@ -52,7 +52,7 @@ QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
 QJsonArray* read1PasswordTextExport(QFile& f)
 {
     auto result = new QJsonArray;
-    auto current = new QJsonObject;
+    QJsonObject current;
 
     if (!f.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open your text export file for reading");
@@ -63,10 +63,10 @@ QJsonArray* read1PasswordTextExport(QFile& f)
         auto line = f.readLine(1024);
 
         if (line.size() == 1 and line[0] == '\n') {
-            if (!current->isEmpty()) {
-                result->append(*current);
+            if (!current.isEmpty()) {
+                result->append(current);
             }
-            current = new QJsonObject;
+            current = QJsonObject();
             continue;
         }
         const auto kv = split1PTextExportKV(line);
@@ -95,14 +95,14 @@ QJsonArray* read1PasswordTextExport(QFile& f)
                 }
             }
             auto v = lines.join("");
-            (*current)[k] = v;
+            current[k] = v;
         } else {
-            (*current)[k] = kv->second;
+            current[k] = kv->second;
         }
         delete kv;
     }
-    if (!current->isEmpty()) {
-        result->append(*current);
+    if (!current.isEmpty()) {
+        result->append(current);
     }
     f.close();
 
@@ -149,9 +149,9 @@ void TestOpVaultReader::testReadIntoDatabase()
 {
     QDir opVaultDir(m_opVaultPath);
 
-    auto reader = new OpVaultReader();
-    auto db = reader->readDatabase(opVaultDir, m_password);
-    QVERIFY2(!reader->hasError(), qPrintable(reader->errorString()));
+    OpVaultReader reader;
+    QScopedPointer<Database> db(reader.readDatabase(opVaultDir, m_password));
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
     QVERIFY(db);
     QVERIFY(!db->children().isEmpty());
 
@@ -240,11 +240,11 @@ void TestOpVaultReader::testKeyDerivation()
 
 void TestOpVaultReader::testBandEntry1()
 {
-    auto reader = new OpVaultReader();
+    OpVaultReader reader;
     QByteArray json(R"({"hello": "world"})");
     QJsonDocument doc = QJsonDocument::fromJson(json);
     QJsonObject data;
     QByteArray entryKey;
     QByteArray entryHmacKey;
-    QVERIFY(!reader->decryptBandEntry(doc.object(), data, entryKey, entryHmacKey));
+    QVERIFY(!reader.decryptBandEntry(doc.object(), data, entryKey, entryHmacKey));
 }

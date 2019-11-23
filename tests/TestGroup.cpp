@@ -20,6 +20,7 @@
 #include "TestGlobal.h"
 #include "mock/MockClock.h"
 
+#include <QScopedPointer>
 #include <QSignalSpy>
 
 #include "core/Metadata.h"
@@ -798,16 +799,16 @@ void TestGroup::testAddEntryWithPath()
 
 void TestGroup::testIsRecycled()
 {
-    Database* db = new Database();
-    db->metadata()->setRecycleBinEnabled(true);
+    Database db;
+    db.metadata()->setRecycleBinEnabled(true);
 
     Group* group1 = new Group();
     group1->setName("group1");
-    group1->setParent(db->rootGroup());
+    group1->setParent(db.rootGroup());
 
     Group* group2 = new Group();
     group2->setName("group2");
-    group2->setParent(db->rootGroup());
+    group2->setParent(db.rootGroup());
 
     Group* group3 = new Group();
     group3->setName("group3");
@@ -815,16 +816,16 @@ void TestGroup::testIsRecycled()
 
     Group* group4 = new Group();
     group4->setName("group4");
-    group4->setParent(db->rootGroup());
+    group4->setParent(db.rootGroup());
 
-    db->recycleGroup(group2);
+    db.recycleGroup(group2);
 
     QVERIFY(!group1->isRecycled());
     QVERIFY(group2->isRecycled());
     QVERIFY(group3->isRecycled());
     QVERIFY(!group4->isRecycled());
 
-    db->recycleGroup(group4);
+    db.recycleGroup(group4);
     QVERIFY(group4->isRecycled());
 }
 
@@ -1052,12 +1053,12 @@ void TestGroup::testChildrenSort()
 
 void TestGroup::testHierarchy()
 {
-    Group* group1 = new Group();
-    group1->setName("group1");
+    Group group1;
+    group1.setName("group1");
 
     Group* group2 = new Group();
     group2->setName("group2");
-    group2->setParent(group1);
+    group2->setParent(&group1);
 
     Group* group3 = new Group();
     group3->setName("group3");
@@ -1085,11 +1086,11 @@ void TestGroup::testHierarchy()
 void TestGroup::testApplyGroupIconRecursively()
 {
     // Create a database with two nested groups with one entry each
-    Database* database = new Database();
+    Database database;
 
     Group* subgroup = new Group();
     subgroup->setName("Subgroup");
-    subgroup->setParent(database->rootGroup());
+    subgroup->setParent(database.rootGroup());
     QVERIFY(subgroup);
 
     Group* subsubgroup = new Group();
@@ -1108,10 +1109,10 @@ void TestGroup::testApplyGroupIconRecursively()
     // Set an icon per number to the root group and apply recursively
     // -> all groups and entries have the same icon
     const int rootIconNumber = 42;
-    database->rootGroup()->setIcon(rootIconNumber);
-    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
-    database->rootGroup()->applyGroupIconToChildGroups();
-    database->rootGroup()->applyGroupIconToChildEntries();
+    database.rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database.rootGroup()->iconNumber() == rootIconNumber);
+    database.rootGroup()->applyGroupIconToChildGroups();
+    database.rootGroup()->applyGroupIconToChildEntries();
     QVERIFY(subgroup->iconNumber() == rootIconNumber);
     QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
     QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
@@ -1124,7 +1125,7 @@ void TestGroup::testApplyGroupIconRecursively()
     QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
     subsubgroup->applyGroupIconToChildGroups();
     subsubgroup->applyGroupIconToChildEntries();
-    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QVERIFY(database.rootGroup()->iconNumber() == rootIconNumber);
     QVERIFY(subgroup->iconNumber() == rootIconNumber);
     QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
     QVERIFY(subsubgroup->iconNumber() == subsubgroupIconNumber);
@@ -1135,11 +1136,11 @@ void TestGroup::testApplyGroupIconRecursively()
     const QUuid subgroupIconUuid = QUuid::createUuid();
     QImage subgroupIcon(16, 16, QImage::Format_RGB32);
     subgroupIcon.setPixel(0, 0, qRgb(255, 0, 0));
-    database->metadata()->addCustomIcon(subgroupIconUuid, subgroupIcon);
+    database.metadata()->addCustomIcon(subgroupIconUuid, subgroupIcon);
     subgroup->setIcon(subgroupIconUuid);
     subgroup->applyGroupIconToChildGroups();
     subgroup->applyGroupIconToChildEntries();
-    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
+    QVERIFY(database.rootGroup()->iconNumber() == rootIconNumber);
     QCOMPARE(subgroup->iconUuid(), subgroupIconUuid);
     QCOMPARE(subgroup->icon(), subgroupIcon);
     QCOMPARE(subgroupEntry->iconUuid(), subgroupIconUuid);
@@ -1150,10 +1151,10 @@ void TestGroup::testApplyGroupIconRecursively()
     QCOMPARE(subsubgroupEntry->icon(), subgroupIcon);
 
     // Reset all icons to root icon
-    database->rootGroup()->setIcon(rootIconNumber);
-    QVERIFY(database->rootGroup()->iconNumber() == rootIconNumber);
-    database->rootGroup()->applyGroupIconToChildGroups();
-    database->rootGroup()->applyGroupIconToChildEntries();
+    database.rootGroup()->setIcon(rootIconNumber);
+    QVERIFY(database.rootGroup()->iconNumber() == rootIconNumber);
+    database.rootGroup()->applyGroupIconToChildGroups();
+    database.rootGroup()->applyGroupIconToChildEntries();
     QVERIFY(subgroup->iconNumber() == rootIconNumber);
     QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
     QVERIFY(subsubgroup->iconNumber() == rootIconNumber);
@@ -1161,10 +1162,10 @@ void TestGroup::testApplyGroupIconRecursively()
 
     // Apply only for child groups
     const int iconForGroups = 10;
-    database->rootGroup()->setIcon(iconForGroups);
-    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
-    database->rootGroup()->applyGroupIconToChildGroups();
-    QVERIFY(database->rootGroup()->iconNumber() == iconForGroups);
+    database.rootGroup()->setIcon(iconForGroups);
+    QVERIFY(database.rootGroup()->iconNumber() == iconForGroups);
+    database.rootGroup()->applyGroupIconToChildGroups();
+    QVERIFY(database.rootGroup()->iconNumber() == iconForGroups);
     QVERIFY(subgroup->iconNumber() == iconForGroups);
     QVERIFY(subgroupEntry->iconNumber() == rootIconNumber);
     QVERIFY(subsubgroup->iconNumber() == iconForGroups);
@@ -1172,10 +1173,10 @@ void TestGroup::testApplyGroupIconRecursively()
 
     // Apply only for child entries
     const int iconForEntries = 20;
-    database->rootGroup()->setIcon(iconForEntries);
-    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
-    database->rootGroup()->applyGroupIconToChildEntries();
-    QVERIFY(database->rootGroup()->iconNumber() == iconForEntries);
+    database.rootGroup()->setIcon(iconForEntries);
+    QVERIFY(database.rootGroup()->iconNumber() == iconForEntries);
+    database.rootGroup()->applyGroupIconToChildEntries();
+    QVERIFY(database.rootGroup()->iconNumber() == iconForEntries);
     QVERIFY(subgroup->iconNumber() == iconForGroups);
     QVERIFY(subgroupEntry->iconNumber() == iconForEntries);
     QVERIFY(subsubgroup->iconNumber() == iconForGroups);
@@ -1184,15 +1185,15 @@ void TestGroup::testApplyGroupIconRecursively()
 
 void TestGroup::testUsernamesRecursive()
 {
-    Database* database = new Database();
+    Database database;
 
     // Create a subgroup
     Group* subgroup = new Group();
     subgroup->setName("Subgroup");
-    subgroup->setParent(database->rootGroup());
+    subgroup->setParent(database.rootGroup());
 
     // Generate entries in the root group and the subgroup
-    Entry* rootGroupEntry = database->rootGroup()->addEntryWithPath("Root group entry");
+    Entry* rootGroupEntry = database.rootGroup()->addEntryWithPath("Root group entry");
     rootGroupEntry->setUsername("Name1");
 
     Entry* subgroupEntry = subgroup->addEntryWithPath("Subgroup entry");
@@ -1201,7 +1202,7 @@ void TestGroup::testUsernamesRecursive()
     Entry* subgroupEntryReusingUsername = subgroup->addEntryWithPath("Another subgroup entry");
     subgroupEntryReusingUsername->setUsername("Name2");
 
-    QList<QString> usernames = database->rootGroup()->usernamesRecursive();
+    QList<QString> usernames = database.rootGroup()->usernamesRecursive();
     QCOMPARE(usernames.size(), 2);
     QVERIFY(usernames.contains("Name1"));
     QVERIFY(usernames.contains("Name2"));
