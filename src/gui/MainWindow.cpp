@@ -214,9 +214,9 @@ MainWindow::MainWindow()
     setWindowIcon(filePath()->applicationIcon());
     m_ui->globalMessageWidget->setHidden(true);
     // clang-format off
-	 connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
-	 connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
-	 connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
+    connect(m_ui->globalMessageWidget, &MessageWidget::linkActivated, &MessageWidget::openHttpUrl);
+    connect(m_ui->globalMessageWidget, SIGNAL(showAnimationStarted()), m_ui->globalMessageWidgetContainer, SLOT(show()));
+    connect(m_ui->globalMessageWidget, SIGNAL(hideAnimationFinished()), m_ui->globalMessageWidgetContainer, SLOT(hide()));
     // clang-format on
 
     m_clearHistoryAction = new QAction(tr("Clear history"), m_ui->menuFile);
@@ -483,10 +483,8 @@ MainWindow::MainWindow()
 #endif
 
     // clang-format off
-	 connect(m_ui->tabWidget,
-				SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
-				this,
-				SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
+    connect(m_ui->tabWidget, SIGNAL(messageGlobal(QString,MessageWidget::MessageType)),
+        SLOT(displayGlobalMessage(QString,MessageWidget::MessageType)));
     // clang-format on
 
     connect(m_ui->tabWidget, SIGNAL(messageDismissGlobal()), this, SLOT(hideGlobalMessage()));
@@ -1322,7 +1320,7 @@ void MainWindow::toggleWindow()
         // see https://github.com/keepassxreboot/keepassxc/issues/271
         // and https://bugreports.qt.io/browse/QTBUG-58723
         // check for !isVisible(), because isNativeMenuBar() does not work with appmenu-qt5
-        const static auto isDesktopSessionUnity = qgetenv("XDG_CURRENT_DESKTOP") == "Unity";
+        static const auto isDesktopSessionUnity = qgetenv("XDG_CURRENT_DESKTOP") == "Unity";
 
         if (isDesktopSessionUnity && Tools::qtRuntimeVersion() < QT_VERSION_CHECK(5, 9, 0)
             && !m_ui->menubar->isVisible()) {

@@ -35,6 +35,7 @@
 IconStruct::IconStruct()
     : uuid(QUuid())
     , number(0)
+    , applyTo(ApplyIconToOptions::THIS_ONLY)
 {
 }
 
