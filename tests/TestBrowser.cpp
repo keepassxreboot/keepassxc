@@ -57,7 +57,7 @@ void TestBrowser::testChangePublicKeys()
     auto response = m_browserAction->handleAction(json);
     QCOMPARE(response["action"].toString(), QString("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
-    QCOMPARE(response["success"].toString(), QString("true"));
+    QCOMPARE(response["success"].toString(), TRUE_STR);
 }
 
 void TestBrowser::testEncryptMessage()
