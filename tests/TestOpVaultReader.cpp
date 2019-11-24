@@ -34,6 +34,8 @@
 #include <QTest>
 #include <QUuid>
 
+#include <memory>
+
 QTEST_GUILESS_MAIN(TestOpVaultReader)
 
 QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
@@ -49,9 +51,9 @@ QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
     return new QPair<QString, QString>(k, v);
 }
 
-QJsonArray* read1PasswordTextExport(QFile& f)
+std::unique_ptr<QJsonArray> read1PasswordTextExport(QFile& f)
 {
-    auto result = new QJsonArray;
+    std::unique_ptr<QJsonArray> result(new QJsonArray);
     QJsonObject current;
 
     if (!f.open(QIODevice::ReadOnly)) {
@@ -120,10 +122,9 @@ void TestOpVaultReader::initTestCase()
     m_password = "freddy";
 
     QFile testData(m_opVaultTextExportPath);
-    QJsonArray* data = read1PasswordTextExport(testData);
+    auto data = read1PasswordTextExport(testData);
     QVERIFY(data);
     QCOMPARE(data->size(), 27);
-    delete data;
 
     m_categoryMap.insert("001", "Login");
     m_categoryMap.insert("002", "Credit Card");
@@ -179,7 +180,6 @@ void TestOpVaultReader::testReadIntoDatabase()
         QUuid u = Tools::hexToUuid(value["uuid"].toString());
         objectsByUuid[u] = value;
     }
-    delete testData;
     QCOMPARE(objectsByUuid.size(), 27);
 
     for (QUuid u : objectsByUuid.keys()) {
