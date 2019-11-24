@@ -98,10 +98,10 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
 
         for (uint64_t b = First; b <= Last; b <<= 1) {
             if (b & buttons) {
-                QString text = m_buttonDefs[static_cast<Button>(b)].first;
+                QString buttonText = m_buttonDefs[static_cast<Button>(b)].first;
                 QMessageBox::ButtonRole role = m_buttonDefs[static_cast<Button>(b)].second;
 
-                auto buttonPtr = msgBox.addButton(text, role);
+                auto buttonPtr = msgBox.addButton(buttonText, role);
                 m_addedButtonLookup.insert(buttonPtr, static_cast<Button>(b));
             }
         }
