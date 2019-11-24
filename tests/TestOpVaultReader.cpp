@@ -34,8 +34,6 @@
 #include <QTest>
 #include <QUuid>
 
-#include <memory>
-
 QTEST_GUILESS_MAIN(TestOpVaultReader)
 
 QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
@@ -51,15 +49,15 @@ QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
     return new QPair<QString, QString>(k, v);
 }
 
-std::unique_ptr<QJsonArray> read1PasswordTextExport(QFile& f)
+QSharedPointer<QJsonArray> read1PasswordTextExport(QFile& f)
 {
-    std::unique_ptr<QJsonArray> result(new QJsonArray);
-    QJsonObject current;
-
     if (!f.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open your text export file for reading");
         return nullptr;
     }
+
+    auto result = QSharedPointer<QJsonArray>::create();
+    QJsonObject current;
 
     while (!f.atEnd()) {
         auto line = f.readLine(1024);
