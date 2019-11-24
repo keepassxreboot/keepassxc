@@ -53,7 +53,7 @@ QSharedPointer<QJsonArray> read1PasswordTextExport(QFile& f)
 {
     if (!f.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open your text export file for reading");
-        return nullptr;
+        return {};
     }
 
     auto result = QSharedPointer<QJsonArray>::create();
