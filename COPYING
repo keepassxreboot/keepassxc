@@ -232,6 +232,42 @@ Files: src/zxcvbn/zxcvbn.*
 Copyright: 2015-2017, Tony Evans
 License: MIT
 
+Files: https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.css
+       (in src/gui/markdownviewer/MarkdownViewerDialog.cpp)
+Copyright: Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Licence: MIT
+Comment: The link above is used within the specified file. The link points to a CDN hosting
+         the file.
+
+Files: https://cdnjs.cloudflare.com/ajax/libs/marked/0.7.0/marked.js
+       (in src/gui/markdownviewer/MarkdownViewerDialog.cpp)
+Copyright 1: 2011-2018, Christopher Jeffrey (https://github.com/chjj/)
+Licence 1: MIT
+Copyright 2: 2004, John Gruber http://daringfireball.net/ All rights reserved.
+Licence 2: Redistribution and use in source and binary forms, with or without modification,
+           are permitted provided that the following conditions are met:
+            * Redistributions of source code must retain the above copyright notice, this
+              list of conditions and the following disclaimer.
+            * Redistributions in binary form must reproduce the above copyright notice, this
+              list of conditions and the following disclaimer in the documentation and/or
+              other materials provided with the distribution.
+            * Neither the name “Markdown” nor the names of its contributors may be used to
+              endorse or promote products derived from this software without specific prior
+              written permission.
+           This software is provided by the copyright holders and contributors “as is” and
+           any express or implied warranties, including, but not limited to, the implied
+           warranties of merchantability and fitness for a particular purpose are disclaimed.
+           In no event shall the copyright owner or contributors be liable for any direct,
+           indirect, incidental, special, exemplary, or consequential damages (including, but
+           not limited to, procurement of substitute goods or services; loss of use, data, or
+           profits; or business interruption) however caused and on any theory of liability,
+           whether in contract, strict liability, or tort (including negligence or otherwise)
+           arising in any way out of the use of this software, even if advised of the
+           possibility of such damage.
+Comment: The link above is used within the specified file. The link points to a CDN hosting
+         the file. Copyright 1 and Licence 1 is for Marked. Copyright 2 and Licence 2 is for
+         Markdown.
+
 Files: src/gui/KMessageWidget.h
        src/gui/KMessageWidget.cpp
 Copyright: 2011 Aurélien Gâteau <agateau@kde.org>

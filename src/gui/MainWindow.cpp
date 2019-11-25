@@ -35,9 +35,9 @@
 #include "core/InactivityTimer.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
+#include "gui/markdownviewer/MarkdownViewerDialog.h"
 #include "gui/AboutDialog.h"
 #include "gui/DatabaseWidget.h"
-#include "gui/KeyboardShortcutsDialog.h"
 #include "gui/SearchWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/FileKey.h"
@@ -426,7 +426,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionGettingStarted, SIGNAL(triggered()), SLOT(openGettingStartedGuide()));
     connect(m_ui->actionUserGuide, SIGNAL(triggered()), SLOT(openUserGuide()));
     connect(m_ui->actionOnlineHelp, SIGNAL(triggered()), SLOT(openOnlineHelp()));
-    connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(showKeyboardShortcutsDialog()));
+    connect(m_ui->actionKeyboardShortcuts, SIGNAL(triggered()), SLOT(showMarkdownViewerDialogKeyboardShortcuts()));
 
 #ifdef Q_OS_MACOS
     setUnifiedTitleAndToolBarOnMac(true);
@@ -780,10 +780,12 @@ void MainWindow::showAboutDialog()
     aboutDialog->open();
 }
 
-void MainWindow::showKeyboardShortcutsDialog()
+void MainWindow::showMarkdownViewerDialogKeyboardShortcuts()
 {
-    auto* keyboardShortcutsDialog = new KeyboardShortcutsDialog(this);
-    keyboardShortcutsDialog->open();
+#ifdef WITH_XC_NETWORKING
+    auto* markdownViewerDialog = new MarkdownViewerDialog(QUrl("https://raw.githubusercontent.com/keepassxreboot/keepassxc/develop/docs/KEYBINDS.md"), this);
+    markdownViewerDialog->open();
+#endif
 }
 
 void MainWindow::showUpdateCheckStartup()

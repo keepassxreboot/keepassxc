@@ -15,27 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEYBOARDSHORTCUTSDIALOG_H
-#define KEEPASSX_KEYBOARDSHORTCUTSDIALOG_H
+#ifndef KEEPASSXC_MARKDOWNVIEWERTRANSFEROBJECT_H
+#define KEEPASSXC_MARKDOWNVIEWERTRANSFEROBJECT_H
 
-#include <QDialog>
-#include <QScopedPointer>
+#include <QObject>
 
-namespace Ui
-{
-    class KeyboardShortcutsDialog;
-}
-
-class KeyboardShortcutsDialog : public QDialog
+class MarkdownViewerTransferObject : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QByteArray markdownProperty MEMBER m_markdown CONSTANT FINAL)
 
 public:
-    explicit KeyboardShortcutsDialog(QWidget* parent = nullptr);
-    ~KeyboardShortcutsDialog();
+    explicit MarkdownViewerTransferObject(const QByteArray& markdownContent, QObject* parent = nullptr);
 
 private:
-    QScopedPointer<Ui::KeyboardShortcutsDialog> m_ui;
+    QByteArray m_markdown;
 };
 
-#endif // KEEPASSX_KEYBOARDSHORTCUTSDIALOG_H
+#endif // KEEPASSXC_MARKDOWNVIEWERTRANSFEROBJECT_H

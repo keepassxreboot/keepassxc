@@ -85,7 +85,7 @@ private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
     void updateWindowTitle();
     void showAboutDialog();
-    void showKeyboardShortcutsDialog();
+    void showMarkdownViewerDialogKeyboardShortcuts();
     void showUpdateCheckStartup();
     void showUpdateCheckDialog();
     void focusWindowChanged(QWindow* focusWindow);

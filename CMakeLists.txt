@@ -367,7 +367,7 @@ endif()
 
 include(CLangFormat)
 
-set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
+set(QT_COMPONENTS Core Network Concurrent Gui Svg WebChannel WebEngineWidgets Widgets Test LinguistTools)
 if(UNIX AND NOT APPLE)
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
 elseif(APPLE)

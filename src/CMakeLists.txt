@@ -105,7 +105,6 @@ set(keepassx_SOURCES
         gui/Font.cpp
         gui/IconModels.cpp
         gui/KeePass1OpenWidget.cpp
-        gui/KeyboardShortcutsDialog.cpp
         gui/KMessageWidget.cpp
         gui/LineEdit.cpp
         gui/MainWindow.cpp
@@ -272,6 +271,9 @@ if(WITH_XC_NETWORKING)
     list(APPEND keepassx_SOURCES
             core/IconDownloader.cpp
             core/NetworkManager.cpp
+            gui/markdownviewer/MarkdownViewerDialog.cpp
+            gui/markdownviewer/MarkdownViewerPage.cpp
+            gui/markdownviewer/MarkdownViewerTransferObject.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloaderDialog.cpp
             updatecheck/UpdateChecker.cpp)
@@ -314,6 +316,9 @@ if(WITH_XC_SSHAGENT)
 endif()
 if(WITH_XC_KEESHARE)
   target_link_libraries(keepassx_core keeshare)
+endif()
+if(WITH_XC_NETWORKING)
+  target_link_libraries(keepassx_core Qt5::WebChannel Qt5::WebEngineWidgets)
 endif()
 
 if(APPLE)
