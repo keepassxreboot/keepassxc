@@ -318,7 +318,7 @@ if(WITH_XC_KEESHARE)
   target_link_libraries(keepassx_core keeshare)
 endif()
 if(WITH_XC_NETWORKING)
-  target_link_libraries(keepassx_core Qt5::WebChannel Qt5::WebEngineWidgets)
+  target_link_libraries(keepassx_core Qt5::WebEngineWidgets)
 endif()
 
 if(APPLE)
