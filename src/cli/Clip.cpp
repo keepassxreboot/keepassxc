@@ -17,7 +17,6 @@
 
 #include <chrono>
 #include <cstdlib>
-#include <stdio.h>
 #include <thread>
 
 #include "Clip.h"
@@ -28,14 +27,23 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 
-const QCommandLineOption Clip::TotpOption = QCommandLineOption(QStringList() << "t"
-                                                                             << "totp",
-                                                               QObject::tr("Copy the current TOTP to the clipboard."));
+const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
+    QStringList() << "a"
+                  << "attribute",
+    QObject::tr("Copy the given attribute to the clipboard. Defaults to \"password\" if not specified."),
+    "attr",
+    "password");
+
+const QCommandLineOption Clip::TotpOption =
+    QCommandLineOption(QStringList() << "t"
+                                     << "totp",
+                       QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
 Clip::Clip()
 {
     name = QString("clip");
-    description = QObject::tr("Copy an entry's password to the clipboard.");
+    description = QObject::tr("Copy an entry's attribute to the clipboard.");
+    options.append(Clip::AttributeOption);
     options.append(Clip::TotpOption);
     positionalArguments.append(
         {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
@@ -51,7 +59,6 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     if (args.size() == 3) {
         timeout = args.at(2);
     }
-    bool clipTotp = parser->isSet(Clip::TotpOption);
     TextStream errorTextStream(Utils::STDERR);
 
     int timeoutSeconds = 0;
@@ -70,16 +77,31 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
+    QString selectedAttribute = parser->value(AttributeOption);
     QString value;
-    if (clipTotp) {
+    bool found = false;
+    if (parser->isSet(TotpOption) || selectedAttribute == "totp") {
         if (!entry->hasTotp()) {
             errorTextStream << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
             return EXIT_FAILURE;
         }
 
+        found = true;
         value = entry->totp();
     } else {
-        value = entry->password();
+        for (const QString& key : entry->attributes()->keys()) {
+            if (key.compare(selectedAttribute, Qt::CaseSensitivity::CaseInsensitive) == 0) {
+                value = entry->attribute(key);
+                selectedAttribute = key;
+                found = true;
+                break;
+            }
+        }
+    }
+
+    if (!found) {
+        outputTextStream << QObject::tr("Attribute \"%1\" not found.").arg(selectedAttribute) << endl;
+        return EXIT_FAILURE;
     }
 
     int exitCode = Utils::clipText(value);
@@ -87,11 +109,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return exitCode;
     }
 
-    if (clipTotp) {
-        outputTextStream << QObject::tr("Entry's current TOTP copied to the clipboard!") << endl;
-    } else {
-        outputTextStream << QObject::tr("Entry's password copied to the clipboard!") << endl;
-    }
+    outputTextStream << QObject::tr("Entry's \"%1\" attribute copied to the clipboard!").arg(selectedAttribute) << endl;
 
     if (!timeoutSeconds) {
         return exitCode;

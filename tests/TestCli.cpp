@@ -480,7 +480,7 @@ void TestCli::testClip()
 
     QCOMPARE(clipboard->text(), QString("Password"));
     m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's password copied to the clipboard!\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
     // Quiet option
     qint64 pos = m_stdoutFile->pos();
@@ -490,6 +490,11 @@ void TestCli::testClip()
     // Output should be empty when quiet option is set.
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(clipboard->text(), QString("Password"));
+
+    // Username
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
+    QCOMPARE(clipboard->text(), "User Name");
 
     // TOTP
     Utils::Test::setNextPassword("a");
