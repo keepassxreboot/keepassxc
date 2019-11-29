@@ -400,7 +400,6 @@ void TestBrowser::testSortEntries()
     QCOMPARE(result[2]->url(), QString("https://github.com/login"));
     QCOMPARE(result[3]->username(), QString("User 3"));
     QCOMPARE(result[3]->url(), QString("github.com/login"));
-
 }
 
 void TestBrowser::testGetDatabaseGroups()
