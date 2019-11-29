@@ -43,6 +43,8 @@ public:
     explicit TextStream(QByteArray* array, QIODevice::OpenMode openMode = QIODevice::ReadWrite);
     explicit TextStream(const QByteArray& array, QIODevice::OpenMode openMode = QIODevice::ReadOnly);
 
+    void write(const char* str);
+
 private:
     void detectCodec();
 };
