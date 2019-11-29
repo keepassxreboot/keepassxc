@@ -16,18 +16,19 @@
  */
 
 #include <cstdlib>
-#include <memory>
+#include <cstring>
+#include <cerrno>
 
 #include <QCommandLineParser>
 #include <QCoreApplication>
 #include <QDir>
 #include <QScopedPointer>
+#include <QStandardPaths>
 #include <QStringList>
 
 #include "cli/TextStream.h"
 #include <cli/Command.h>
 
-#include "DatabaseCommand.h"
 #include "Open.h"
 #include "Utils.h"
 #include "config-keepassx.h"
@@ -91,6 +92,22 @@ public:
     ReadlineLineReader()
         : finished(false)
     {
+        QDir dir = QStandardPaths::writableLocation(QStandardPaths::StandardLocation::AppLocalDataLocation);
+        if (!dir.exists()) {
+            if (!QDir().mkpath(dir.absolutePath())) {
+                qWarning("Could not create application data directory %s", dir.absolutePath().toStdString().c_str());
+            }
+        }
+        historyPath = dir.absoluteFilePath("command-history");
+        if (read_history(historyPath.toStdString().c_str()) && errno != ENOENT) {
+            qWarning("Could not load command history from %s: %s", historyPath.toStdString().c_str(), std::strerror(errno));
+        }
+    }
+
+    ~ReadlineLineReader() override {
+        if (write_history(historyPath.toStdString().c_str())) {
+            qWarning("Could not write command history to %s: %s", historyPath.toStdString().c_str(), std::strerror(errno));
+        }
     }
 
     QString readLine(QString prompt) override
@@ -113,6 +130,7 @@ public:
 
 private:
     bool finished;
+    QString historyPath;
 };
 #endif
 
