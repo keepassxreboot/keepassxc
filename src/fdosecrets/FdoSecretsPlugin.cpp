@@ -60,11 +60,15 @@ void FdoSecretsPlugin::updateServiceState()
             });
             if (!m_secretService->initialize()) {
                 m_secretService.reset();
+                FdoSecrets::settings()->setEnabled(false);
+                return;
             }
+            emit secretServiceStarted();
         }
     } else {
         if (m_secretService) {
             m_secretService.reset();
+            emit secretServiceStopped();
         }
     }
 }
@@ -72,6 +76,11 @@ void FdoSecretsPlugin::updateServiceState()
 Service* FdoSecretsPlugin::serviceInstance() const
 {
     return m_secretService.data();
+}
+
+DatabaseTabWidget* FdoSecretsPlugin::dbTabs() const
+{
+    return m_dbTabs;
 }
 
 void FdoSecretsPlugin::emitRequestSwitchToDatabases()
