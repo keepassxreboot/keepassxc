@@ -59,9 +59,8 @@ namespace FdoSecrets
     bool Service::initialize()
     {
         if (!QDBusConnection::sessionBus().registerService(QStringLiteral(DBUS_SERVICE_SECRET))) {
-            qDebug() << "Another secret service is running";
-            emit error(tr("Failed to register DBus service at %1: another secret service is running.")
-                           .arg(QLatin1Literal(DBUS_SERVICE_SECRET)));
+            emit error(tr("Failed to register DBus service at %1.<br/>").arg(QLatin1String(DBUS_SERVICE_SECRET))
+                       + m_plugin->reportExistingService());
             return false;
         }
 

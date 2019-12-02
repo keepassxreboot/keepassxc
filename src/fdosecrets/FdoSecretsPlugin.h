@@ -64,6 +64,12 @@ public:
      */
     DatabaseTabWidget* dbTabs() const;
 
+    /**
+     * Check the running secret service and returns info about it
+     * @return html string suitable to be shown in the UI
+     */
+    QString reportExistingService() const;
+
 public slots:
     void emitRequestSwitchToDatabases();
     void emitRequestShowNotification(const QString& msg, const QString& title = {});
