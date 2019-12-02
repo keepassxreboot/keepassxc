@@ -21,6 +21,7 @@
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
+#include "fdosecrets/objects/Session.h"
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -284,8 +285,13 @@ namespace FdoSecrets
             return ret;
         }
 
+        if (!pathToObject<Session>(secret.session)) {
+            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+        }
+
         prompt = nullptr;
 
+        bool newlyCreated = true;
         Item* item = nullptr;
         QString itemPath;
         StringStringMap attributes;
@@ -303,6 +309,7 @@ namespace FdoSecrets
             }
             if (!existings.value().isEmpty() && replace) {
                 item = existings.value().front();
+                newlyCreated = false;
             }
         }
 
@@ -337,10 +344,16 @@ namespace FdoSecrets
 
         ret = item->setProperties(properties);
         if (ret.isError()) {
+            if (newlyCreated) {
+                item->doDelete();
+            }
             return ret;
         }
         ret = item->setSecret(secret);
         if (ret.isError()) {
+            if (newlyCreated) {
+                item->doDelete();
+            }
             return ret;
         }
 
