@@ -98,7 +98,7 @@ namespace
         {
             for (const auto* group : groups) {
                 // Don't count anything in the recycle bin
-                if (group == group->database()->metadata()->recycleBin()) {
+                if (group->isRecycled()) {
                     continue;
                 }
 
