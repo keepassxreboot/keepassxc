@@ -42,7 +42,6 @@ Database::Database()
     : m_metadata(new Metadata(this))
     , m_data()
     , m_rootGroup(nullptr)
-    , m_timer(new QTimer(this))
     , m_fileWatcher(new FileWatcher(this))
     , m_emitModified(false)
     , m_uuid(QUuid::createUuid())
@@ -50,12 +49,12 @@ Database::Database()
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
     rootGroup()->setName(tr("Root", "Root group name"));
-    m_timer->setSingleShot(true);
+    m_modifiedTimer.setSingleShot(true);
 
     s_uuidMap.insert(m_uuid, this);
 
     connect(m_metadata, SIGNAL(metadataModified()), SLOT(markAsModified()));
-    connect(m_timer, SIGNAL(timeout()), SIGNAL(databaseModified()));
+    connect(&m_modifiedTimer, SIGNAL(timeout()), SIGNAL(databaseModified()));
     connect(this, SIGNAL(databaseOpened()), SLOT(updateCommonUsernames()));
     connect(this, SIGNAL(databaseSaved()), SLOT(updateCommonUsernames()));
     connect(m_fileWatcher, SIGNAL(fileChanged()), SIGNAL(databaseFileChanged()));
@@ -229,6 +228,7 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     auto& canonicalFilePath = QFileInfo::exists(filePath) ? QFileInfo(filePath).canonicalFilePath() : filePath;
     bool ok = performSave(canonicalFilePath, error, atomic, backup);
     if (ok) {
+        markAsClean();
         setFilePath(filePath);
         m_fileWatcher->start(canonicalFilePath, 30, 1);
     } else {
@@ -343,7 +343,6 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
         return false;
     }
 
-    markAsClean();
     return true;
 }
 
@@ -832,7 +831,7 @@ void Database::emptyRecycleBin()
 void Database::setEmitModified(bool value)
 {
     if (m_emitModified && !value) {
-        m_timer->stop();
+        m_modifiedTimer.stop();
     }
 
     m_emitModified = value;
@@ -846,8 +845,9 @@ bool Database::isModified() const
 void Database::markAsModified()
 {
     m_modified = true;
-    if (m_emitModified) {
-        startModifiedTimer();
+    if (m_emitModified && !m_modifiedTimer.isActive()) {
+        // Small time delay prevents numerous consecutive saves due to repeated signals
+        m_modifiedTimer.start(150);
     }
 }
 
@@ -855,6 +855,7 @@ void Database::markAsClean()
 {
     bool emitSignal = m_modified;
     m_modified = false;
+    m_modifiedTimer.stop();
     if (emitSignal) {
         emit databaseSaved();
     }
@@ -867,18 +868,6 @@ void Database::markAsClean()
 Database* Database::databaseByUuid(const QUuid& uuid)
 {
     return s_uuidMap.value(uuid, nullptr);
-}
-
-void Database::startModifiedTimer()
-{
-    if (!m_emitModified) {
-        return;
-    }
-
-    if (m_timer->isActive()) {
-        m_timer->stop();
-    }
-    m_timer->start(150);
 }
 
 QSharedPointer<const CompositeKey> Database::key() const
