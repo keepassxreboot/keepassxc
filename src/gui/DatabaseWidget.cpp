@@ -1370,7 +1370,7 @@ bool DatabaseWidget::lock()
     if (m_db->isModified()) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
-        if (config()->get("AutoSaveOnExit").toBool()) {
+        if (config()->get("AutoSaveOnExit").toBool() || config()->get("AutoSaveAfterEveryChange").toBool()) {
             saved = save();
         }
 
