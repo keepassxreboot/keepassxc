@@ -242,6 +242,11 @@ namespace FdoSecrets
             terms << attributeToTerm(it.key(), it.value());
         }
 
+        // empty terms causes EntrySearcher returns everything
+        if (terms.isEmpty()) {
+            return QList<Item*>{};
+        }
+
         QList<Item*> items;
         const auto foundEntries = EntrySearcher().search(terms, m_exposedGroup);
         items.reserve(foundEntries.size());
