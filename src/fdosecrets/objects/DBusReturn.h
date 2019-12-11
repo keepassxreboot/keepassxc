@@ -158,6 +158,12 @@ namespace FdoSecrets
             return std::move(m_value);
         }
 
+        /**
+         * Get value or handle the error by the passed in dbus object
+         * @tparam P
+         * @param p
+         * @return
+         */
         template <typename P> T valueOrHandle(P* p) const&
         {
             if (isError()) {
@@ -169,6 +175,12 @@ namespace FdoSecrets
             return m_value;
         }
 
+        /**
+         * Get value or handle the error by the passed in dbus object
+         * @tparam P
+         * @param p
+         * @return
+         */
         template <typename P> T&& valueOrHandle(P* p) &&
         {
             if (isError()) {
