@@ -51,7 +51,7 @@ void DatabaseOpenDialog::setTargetDatabaseWidget(DatabaseWidget* dbWidget)
         disconnect(this, nullptr, m_dbWidget, nullptr);
     }
     m_dbWidget = dbWidget;
-    connect(this, SIGNAL(dialogFinished(bool)), dbWidget, SLOT(unlockDatabase(bool)));
+    connect(this, &DatabaseOpenDialog::dialogFinished, dbWidget, &DatabaseWidget::unlockDatabase);
 }
 
 void DatabaseOpenDialog::setIntent(DatabaseOpenDialog::Intent intent)
@@ -90,6 +90,6 @@ void DatabaseOpenDialog::complete(bool accepted)
     } else {
         reject();
     }
-    emit dialogFinished(accepted);
+    emit dialogFinished(accepted, m_dbWidget);
     clearForms();
 }

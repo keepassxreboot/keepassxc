@@ -50,7 +50,7 @@ public:
     void clearForms();
 
 signals:
-    void dialogFinished(bool);
+    void dialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 public slots:
     void complete(bool accepted);

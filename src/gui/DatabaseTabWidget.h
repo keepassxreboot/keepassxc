@@ -90,6 +90,7 @@ signals:
     void tabNameChanged();
     void messageGlobal(const QString&, MessageWidget::MessageType type);
     void messageDismissGlobal();
+    void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private slots:
     void toggleTabbar();

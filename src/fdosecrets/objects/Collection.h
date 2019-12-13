@@ -71,6 +71,8 @@ namespace FdoSecrets
         void aliasAdded(const QString& alias);
         void aliasRemoved(const QString& alias);
 
+        void doneUnlockCollection(bool accepted);
+
     public:
         DBusReturn<void> setProperties(const QVariantMap& properties);
 
