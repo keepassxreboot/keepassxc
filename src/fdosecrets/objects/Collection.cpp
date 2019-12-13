@@ -48,6 +48,14 @@ namespace FdoSecrets
         connect(backend, &DatabaseWidget::databaseUnlocked, this, &Collection::onDatabaseLockChanged);
         connect(backend, &DatabaseWidget::databaseLocked, this, &Collection::onDatabaseLockChanged);
 
+        // get notified whenever unlock db dialog finishes
+        connect(parent, &Service::doneUnlockDatabaseInDialog, this, [this](bool accepted, DatabaseWidget* dbWidget) {
+            if (!dbWidget || dbWidget != m_backend) {
+                return;
+            }
+            emit doneUnlockCollection(accepted);
+        });
+
         reloadBackend();
     }
 

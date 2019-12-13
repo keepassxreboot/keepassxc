@@ -98,8 +98,13 @@ namespace FdoSecrets
 
         DBusReturn<void> prompt(const QString& windowId) override;
 
+    private slots:
+        void collectionUnlockFinished(bool accepted);
+
     private:
         QList<QPointer<Collection>> m_collections;
+        QList<QDBusObjectPath> m_unlocked;
+        int m_numRejected = 0;
     };
 
     class Item;

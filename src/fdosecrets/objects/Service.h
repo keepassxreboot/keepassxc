@@ -88,6 +88,13 @@ namespace FdoSecrets
          */
         void error(const QString& msg);
 
+        /**
+         * Finish signal for async action doUnlockDatabaseInDialog
+         * @param accepted If false, the action is canceled by the user
+         * @param dbWidget The unlocked the dbWidget if succeed
+         */
+        void doneUnlockDatabaseInDialog(bool accepted, DatabaseWidget* dbWidget);
+
     public:
         /**
          * List of sessions
@@ -101,9 +108,14 @@ namespace FdoSecrets
         }
 
     public slots:
-        void doCloseDatabase(DatabaseWidget* dbWidget);
+        bool doCloseDatabase(DatabaseWidget* dbWidget);
         Collection* doNewDatabase();
         void doSwitchToChangeDatabaseSettings(DatabaseWidget* dbWidget);
+
+        /**
+         * Async, connect to signal doneUnlockDatabaseInDialog for finish notification
+         * @param dbWidget
+         */
         void doUnlockDatabaseInDialog(DatabaseWidget* dbWidget);
 
     private slots:
