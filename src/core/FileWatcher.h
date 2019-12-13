@@ -43,8 +43,7 @@ public slots:
     void resume();
 
 private slots:
-    void onWatchedFileChanged();
-    void checkFileChecksum();
+    void checkFileChanged();
 
 private:
     QByteArray calculateChecksum();
@@ -56,8 +55,8 @@ private:
     QTimer m_fileChangeDelayTimer;
     QTimer m_fileIgnoreDelayTimer;
     QTimer m_fileChecksumTimer;
-    int m_fileChecksumSizeBytes;
-    bool m_ignoreFileChange;
+    int m_fileChecksumSizeBytes = -1;
+    bool m_ignoreFileChange = false;
 };
 
 class BulkFileWatcher : public QObject

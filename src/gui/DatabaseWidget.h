@@ -81,6 +81,7 @@ public:
     bool isLocked() const;
     bool isSearchActive() const;
     bool isEntryEditActive() const;
+    bool isGroupEditActive() const;
 
     QString getCurrentSearch();
     void refreshSearch();

@@ -35,11 +35,10 @@ namespace
 
 FileWatcher::FileWatcher(QObject* parent)
     : QObject(parent)
-    , m_ignoreFileChange(false)
 {
-    connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(onWatchedFileChanged()));
+    connect(&m_fileWatcher, SIGNAL(fileChanged(QString)), SLOT(checkFileChanged()));
+    connect(&m_fileChecksumTimer, SIGNAL(timeout()), SLOT(checkFileChanged()));
     connect(&m_fileChangeDelayTimer, SIGNAL(timeout()), SIGNAL(fileChanged()));
-    connect(&m_fileChecksumTimer, SIGNAL(timeout()), SLOT(checkFileChecksum()));
     m_fileChangeDelayTimer.setSingleShot(true);
     m_fileIgnoreDelayTimer.setSingleShot(true);
 }
@@ -101,17 +100,6 @@ void FileWatcher::resume()
     }
 }
 
-void FileWatcher::onWatchedFileChanged()
-{
-    // Don't notify if we are ignoring events or already started a notification chain
-    if (shouldIgnoreChanges()) {
-        return;
-    }
-
-    m_fileChecksum = calculateChecksum();
-    m_fileChangeDelayTimer.start(0);
-}
-
 bool FileWatcher::shouldIgnoreChanges()
 {
     return m_filePath.isEmpty() || m_ignoreFileChange || m_fileIgnoreDelayTimer.isActive()
@@ -123,15 +111,23 @@ bool FileWatcher::hasSameFileChecksum()
     return calculateChecksum() == m_fileChecksum;
 }
 
-void FileWatcher::checkFileChecksum()
+void FileWatcher::checkFileChanged()
 {
     if (shouldIgnoreChanges()) {
         return;
     }
 
-    if (!hasSameFileChecksum()) {
-        onWatchedFileChanged();
+    // Prevent reentrance
+    m_ignoreFileChange = true;
+
+    // Only trigger the change notice if there is a checksum mismatch
+    auto checksum = calculateChecksum();
+    if (checksum != m_fileChecksum) {
+        m_fileChecksum = checksum;
+        m_fileChangeDelayTimer.start(0);
     }
+
+    m_ignoreFileChange = false;
 }
 
 QByteArray FileWatcher::calculateChecksum()

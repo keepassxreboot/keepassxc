@@ -105,7 +105,7 @@ void ElidedLabel::updateElidedText()
         const QFontMetrics metrix(font());
         displayText = metrix.elidedText(m_rawText, m_elideMode, width() - 2);
     }
-    
+
     bool hasUrl = !m_url.isEmpty();
     setText(hasUrl ? htmlLinkTemplate.arg(m_url.toHtmlEscaped(), displayText) : displayText);
     setOpenExternalLinks(!hasUrl);
