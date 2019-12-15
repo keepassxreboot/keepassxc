@@ -60,7 +60,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="snapWarningLabel">
          <property name="text">
           <string>Browsers installed as snaps are currently not supported.</string>
          </property>

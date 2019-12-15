@@ -68,6 +68,10 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
+#ifndef Q_OS_LINUX
+    m_ui->snapWarningLabel->setVisible(false);
+#endif
+
 #ifdef Q_OS_WIN
     // Brave uses Chrome's registry settings
     m_ui->braveSupport->setHidden(true);

@@ -204,9 +204,14 @@ void DatabaseOpenWidget::openDatabase()
 
     m_db.reset(new Database());
     QString error;
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    m_ui->passwordFormFrame->setEnabled(false);
+    QCoreApplication::processEvents();
     bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
+    m_ui->passwordFormFrame->setEnabled(true);
+
     if (!ok) {
         if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
             QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));

@@ -93,7 +93,24 @@ namespace FdoSecrets
 
     void Service::onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal)
     {
+        // The Collection will monitor the database's exposed group.
+        // When the Collection finds that no exposed group, it will delete itself.
+        // Thus the service also needs to monitor it and recreate the collection if the user changes
+        // from no exposed to exposed something.
+        if (!dbWidget->isLocked()) {
+            monitorDatabaseExposedGroup(dbWidget);
+        }
+        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [this, dbWidget]() {
+            monitorDatabaseExposedGroup(dbWidget);
+        });
+
         auto coll = new Collection(this, dbWidget);
+        // Creation may fail if the database is not exposed.
+        // This is okay, because we monitor the expose settings above
+        if (!coll->isValid()) {
+            coll->deleteLater();
+            return;
+        }
 
         m_collections << coll;
         m_dbToCollection[dbWidget] = coll;
@@ -125,15 +142,6 @@ namespace FdoSecrets
             m_collections.removeAll(coll);
             m_dbToCollection.remove(coll->backend());
             emit collectionDeleted(coll);
-        });
-
-        // a special case: the database changed from no expose to expose something.
-        // in this case, there is no collection out there monitoring it, so create a new collection
-        if (!dbWidget->isLocked()) {
-            monitorDatabaseExposedGroup(dbWidget);
-        }
-        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [this, dbWidget]() {
-            monitorDatabaseExposedGroup(dbWidget);
         });
 
         if (emitSignal) {
