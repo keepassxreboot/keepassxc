@@ -335,9 +335,7 @@ namespace FdoSecrets
     {
         switch (role) {
         case Qt::EditRole: {
-            auto v = QVariant::fromValue(sess);
-            qDebug() << v << v.type() << v.userType();
-            return v;
+            return QVariant::fromValue(sess);
         }
         default:
             return {};

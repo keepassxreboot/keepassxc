@@ -108,7 +108,7 @@ private:
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;
-    QScopedPointer<DatabaseOpenDialog> m_databaseOpenDialog;
+    QPointer<DatabaseOpenDialog> m_databaseOpenDialog;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

@@ -68,9 +68,9 @@ namespace FdoSecrets
         incomplete = false;
 
         std::unique_ptr<CipherPair> cipher{};
-        if (algorithm == QLatin1Literal("plain")) {
+        if (algorithm == QLatin1String(PlainCipher::Algorithm)) {
             cipher.reset(new PlainCipher);
-        } else if (algorithm == QLatin1Literal("dh-ietf1024-sha256-aes128-cbc-pkcs7")) {
+        } else if (algorithm == QLatin1String(DhIetf1024Sha256Aes128CbcPkcs7::Algorithm)) {
             QByteArray clientPublicKey = input.toByteArray();
             cipher.reset(new DhIetf1024Sha256Aes128CbcPkcs7(clientPublicKey));
         } else {

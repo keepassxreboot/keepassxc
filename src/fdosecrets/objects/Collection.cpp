@@ -75,6 +75,8 @@ namespace FdoSecrets
             m_registered = false;
         }
 
+        Q_ASSERT(m_backend);
+
         // make sure we have updated copy of the filepath, which is used to identify the database.
         m_backendPath = m_backend->database()->filePath();
 
@@ -310,13 +312,13 @@ namespace FdoSecrets
         QString itemPath;
         StringStringMap attributes;
 
-        // check existing item using attributes
         auto iterAttr = properties.find(QStringLiteral(DBUS_INTERFACE_SECRET_ITEM ".Attributes"));
         if (iterAttr != properties.end()) {
-            attributes = qdbus_cast<StringStringMap>(iterAttr.value().value<QDBusArgument>());
+            attributes = iterAttr.value().value<StringStringMap>();
 
             itemPath = attributes.value(ItemAttributes::PathKey);
 
+            // check existing item using attributes
             auto existings = searchItems(attributes);
             if (existings.isError()) {
                 return existings;
@@ -614,6 +616,11 @@ namespace FdoSecrets
 
     void Collection::doDelete()
     {
+        if (!m_backend) {
+            // I'm already deleted
+            return;
+        }
+
         emit collectionAboutToDelete();
 
         unregisterCurrentPath();
@@ -623,7 +630,11 @@ namespace FdoSecrets
             removeAlias(a).okOrDie();
         }
 
+        // cleanup connection on Database
         cleanupConnections();
+        // cleanup connection on Backend itself
+        m_backend->disconnect(this);
+        parent()->disconnect(this);
 
         m_exposedGroup = nullptr;
 
