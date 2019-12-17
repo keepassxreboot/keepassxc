@@ -47,7 +47,6 @@ namespace FdoSecrets
         , m_insdieEnsureDefaultAlias(false)
         , m_serviceWatcher(nullptr)
     {
-        registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this));
     }
 
     Service::~Service()
@@ -63,6 +62,8 @@ namespace FdoSecrets
                            .arg(QLatin1Literal(DBUS_SERVICE_SECRET)));
             return false;
         }
+
+        registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this));
 
         // Connect to service unregistered signal
         m_serviceWatcher.reset(new QDBusServiceWatcher());
