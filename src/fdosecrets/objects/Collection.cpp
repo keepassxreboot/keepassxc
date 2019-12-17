@@ -681,8 +681,8 @@ namespace FdoSecrets
         Q_ASSERT(m_backend);
 
         if (!group) {
-            // just to be safe
-            return true;
+            // the root group's parent is nullptr, we treat it as not in recycle bin.
+            return false;
         }
 
         if (!m_backend->database()->metadata()) {
