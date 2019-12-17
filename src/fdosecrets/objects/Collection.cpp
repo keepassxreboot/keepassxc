@@ -30,6 +30,7 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QFileInfo>
+#include <QRegularExpression>
 
 namespace FdoSecrets
 {
@@ -273,7 +274,7 @@ namespace FdoSecrets
         const auto useWildcards = false;
         const auto exactMatch = true;
         const auto caseSensitive = true;
-        term.regex = Tools::convertToRegex(value, useWildcards, exactMatch, caseSensitive);
+        term.regex = Tools::convertToRegex(QRegularExpression::escape(value), useWildcards, exactMatch, caseSensitive);
 
         return term;
     }
