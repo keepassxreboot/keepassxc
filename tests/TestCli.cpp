@@ -1918,6 +1918,16 @@ void TestCli::testShow()
              QByteArray("Sample Entry\n"
                         "http://www.somesite.com/\n"));
 
+    // Test case insensitivity
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-a", "TITLE", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "http://www.somesite.com/\n"));
+
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
@@ -1951,6 +1961,19 @@ void TestCli::testShow()
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    // Show with ambiguous attributes
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(
+        m_stderrFile->readAll(),
+        QByteArray("ERROR: attribute Testattribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
 }
 
 void TestCli::testInvalidDbFiles()

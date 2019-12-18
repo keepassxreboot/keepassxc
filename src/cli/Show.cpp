@@ -27,6 +27,8 @@
 #include "core/Global.h"
 #include "core/Group.h"
 
+#include <QLocale>
+
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
                                                                QObject::tr("Show the entry's current TOTP."));
@@ -79,25 +81,33 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // If no attributes specified, output the default attribute set.
     bool showDefaultAttributes = attributes.isEmpty() && !showTotp;
-    if (attributes.isEmpty() && !showTotp) {
+    if (showDefaultAttributes) {
         attributes = EntryAttributes::DefaultAttributes;
     }
 
     // Iterate over the attributes and output them line-by-line.
-    bool sawUnknownAttribute = false;
+    bool encounteredError = false;
     for (const QString& attributeName : asConst(attributes)) {
-        if (!entry->attributes()->contains(attributeName)) {
-            sawUnknownAttribute = true;
+        QStringList attrs = Utils::findAttributes(*entry->attributes(), attributeName);
+        if (attrs.isEmpty()) {
+            encounteredError = true;
             errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
             continue;
+        } else if (attrs.size() > 1) {
+            encounteredError = true;
+            errorTextStream << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
+                                   .arg(attributeName, QLocale().createSeparatedList(attrs))
+                            << endl;
+            continue;
         }
+        QString canonicalName = attrs[0];
         if (showDefaultAttributes) {
-            outputTextStream << attributeName << ": ";
+            outputTextStream << canonicalName << ": ";
         }
-        if (entry->attributes()->isProtected(attributeName) && showDefaultAttributes && !showProtectedAttributes) {
+        if (entry->attributes()->isProtected(canonicalName) && showDefaultAttributes && !showProtectedAttributes) {
             outputTextStream << "PROTECTED" << endl;
         } else {
-            outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attributeName)) << endl;
+            outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
         }
     }
 
@@ -105,5 +115,5 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         outputTextStream << entry->totp() << endl;
     }
 
-    return sawUnknownAttribute ? EXIT_FAILURE : EXIT_SUCCESS;
+    return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
 }
