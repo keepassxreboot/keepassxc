@@ -331,4 +331,21 @@ namespace Utils
         return result;
     }
 
+    QStringList findAttributes(const EntryAttributes& attributes, const QString& name)
+    {
+        QStringList result;
+        if (attributes.hasKey(name)) {
+            result.append(name);
+            return result;
+        }
+
+        for (const QString& key : attributes.keys()) {
+            if (key.compare(name, Qt::CaseSensitivity::CaseInsensitive) == 0) {
+                result.append(key);
+            }
+        }
+
+        return result;
+    }
+
 } // namespace Utils
