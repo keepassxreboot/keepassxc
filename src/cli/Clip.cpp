@@ -77,6 +77,11 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
+    if (parser->isSet(AttributeOption) && parser->isSet(TotpOption)) {
+        errorTextStream << QObject::tr("ERROR: Please specify one of --attribute or --totp, not both.") << endl;
+        return EXIT_FAILURE;
+    }
+
     QString selectedAttribute = parser->value(AttributeOption);
     QString value;
     bool found = false;
@@ -89,13 +94,16 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         found = true;
         value = entry->totp();
     } else {
-        for (const QString& key : entry->attributes()->keys()) {
-            if (key.compare(selectedAttribute, Qt::CaseSensitivity::CaseInsensitive) == 0) {
-                value = entry->attribute(key);
-                selectedAttribute = key;
-                found = true;
-                break;
-            }
+        QStringList attrs = Utils::findAttributes(*entry->attributes(), selectedAttribute);
+        if (attrs.size() > 1) {
+            errorTextStream << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
+                                   .arg(selectedAttribute, QLocale().createSeparatedList(attrs))
+                            << endl;
+            return EXIT_FAILURE;
+        } else if (attrs.size() == 1) {
+            found = true;
+            selectedAttribute = attrs[0];
+            value = entry->attributes()->value(selectedAttribute);
         }
     }
 

@@ -494,7 +494,7 @@ void TestCli::testClip()
     // Username
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
-    QCOMPARE(clipboard->text(), "User Name");
+    QCOMPARE(clipboard->text(), QString("User Name"));
 
     // TOTP
     Utils::Test::setNextPassword("a");
@@ -543,6 +543,20 @@ void TestCli::testClip()
     clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(
+        m_stderrFile->readAll(),
+        QByteArray("ERROR: attribute TESTAttribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: Please specify one of --attribute or --totp, not both.\n"));
 }
 
 void TestCli::testCreate()
