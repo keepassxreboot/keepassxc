@@ -164,7 +164,7 @@ endif()
 
 if(WITH_XC_CRYPTO_SSH)
     add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
-	        LIBS ${TEST_LIBRARIES})
+            LIBS ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
@@ -192,7 +192,7 @@ add_unit_test(NAME testcsvparser SOURCES TestCsvParser.cpp
         LIBS ${TEST_LIBRARIES})
 
 add_unit_test(NAME testrandomgenerator SOURCES TestRandomGenerator.cpp
-	LIBS testsupport ${TEST_LIBRARIES})
+    LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
         LIBS ${TEST_LIBRARIES})
@@ -206,7 +206,7 @@ add_unit_test(NAME testykchallengeresponsekey
 
 if(WITH_XC_KEESHARE)
     add_unit_test(NAME testsharing SOURCES TestSharing.cpp
-	    LIBS testsupport ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
