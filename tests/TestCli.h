@@ -66,6 +66,7 @@ private slots:
     void testList();
     void testLocate();
     void testMerge();
+    void testMergeWithKeys();
     void testMove();
     void testOpen();
     void testRemove();
