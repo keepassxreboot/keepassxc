@@ -57,7 +57,7 @@
   <g
      transform="translate(0.01402783,0.01402783)"
      id="g37"
-     style="fill:#ffffff;fill-rule:nonzero;stroke:#3b80ae;stroke-width:2.45880008;stroke-miterlimit:4">
+     style="fill:#ffffff;fill-rule:nonzero;stroke:#000000;stroke-width:2.45880008;stroke-miterlimit:4">
     <g
        id="g39">
       <path
@@ -68,7 +68,7 @@
       <path
          d="m 80.444,39.778 c 1.749,7.854 -1.816,13.621 -9.504,15.447 L 28.704,66.245 C 21.135,68.641 14.615,65.064 12.866,57.409 L 6.53,33.127 C 4.781,24.982 7.239,20.238 16.033,17.68 L 58.27,6.661 c 8.144,-1.826 14.089,1.363 15.838,8.835 z"
          id="path43"
-         style="fill:#3b80ae;stroke:none"
+         style="fill:#000000;stroke:none"
          inkscape:connector-curvature="0" />
     </g>
     <path

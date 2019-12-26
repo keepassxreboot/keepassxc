@@ -315,6 +315,7 @@ MainWindow::MainWindow()
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key"));
     m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "database-lock"));
     m_ui->actionQuit->setIcon(filePath()->icon("actions", "application-exit"));
+    m_ui->actionDatabaseMerge->setIcon(filePath()->icon("actions", "database-merge"));
 
     m_ui->actionEntryNew->setIcon(filePath()->icon("actions", "entry-new"));
     m_ui->actionEntryClone->setIcon(filePath()->icon("actions", "entry-clone"));
@@ -325,17 +326,26 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPassword->setIcon(filePath()->icon("actions", "password-copy"));
     m_ui->actionEntryCopyURL->setIcon(filePath()->icon("actions", "url-copy"));
     m_ui->actionEntryDownloadIcon->setIcon(filePath()->icon("actions", "favicon-download"));
+    m_ui->actionGroupSortAsc->setIcon(filePath()->icon("actions", "sort-alphabetical-ascending"));
+    m_ui->actionGroupSortDesc->setIcon(filePath()->icon("actions", "sort-alphabetical-descending"));
 
     m_ui->actionGroupNew->setIcon(filePath()->icon("actions", "group-new"));
     m_ui->actionGroupEdit->setIcon(filePath()->icon("actions", "group-edit"));
     m_ui->actionGroupDelete->setIcon(filePath()->icon("actions", "group-delete"));
     m_ui->actionGroupEmptyRecycleBin->setIcon(filePath()->icon("actions", "group-empty-trash"));
+    m_ui->actionEntryOpenUrl->setIcon(filePath()->icon("actions", "web"));
     m_ui->actionGroupDownloadFavicons->setIcon(filePath()->icon("actions", "favicon-download"));
 
     m_ui->actionSettings->setIcon(filePath()->icon("actions", "configure"));
     m_ui->actionPasswordGenerator->setIcon(filePath()->icon("actions", "password-generator"));
 
     m_ui->actionAbout->setIcon(filePath()->icon("actions", "help-about"));
+    m_ui->actionDonate->setIcon(filePath()->icon("actions", "donate"));
+    m_ui->actionBugReport->setIcon(filePath()->icon("actions", "bugreport"));
+    m_ui->actionGettingStarted->setIcon(filePath()->icon("actions", "getting-started"));
+    m_ui->actionUserGuide->setIcon(filePath()->icon("actions", "user-guide"));
+    m_ui->actionOnlineHelp->setIcon(filePath()->icon("actions", "system-help"));
+    m_ui->actionKeyboardShortcuts->setIcon(filePath()->icon("actions", "keyboard-shortcuts"));
     m_ui->actionCheckForUpdates->setIcon(filePath()->icon("actions", "system-software-update"));
 
     m_actionMultiplexer.connect(

@@ -55,28 +55,15 @@ Files: cmake/GenerateProductVersion.cmake
 Copyright: 2015 halex2005 <akharlov@gmail.com>
 License: MIT
 
-Files: share/icons/application/*/apps/keepassxc.png
-       share/icons/application/scalable/apps/keepassxc.svg
-       share/icons/application/*/apps/keepassxc-dark.png
+Files: share/icons/application/scalable/apps/keepassxc.svg
        share/icons/application/scalable/apps/keepassxc-dark.svg
-       share/icons/application/*/apps/keepassxc-locked.png
        share/icons/application/scalable/apps/keepassxc-locked.svg
-       share/icons/application/*/apps/keepassxc-unlocked.png
        share/icons/application/scalable/apps/keepassxc-unlocked.svg
-       share/icons/application/*/mimetypes/application-x-keepassxc.png
        share/icons/application/scalable/mimetypes/application-x-keepassxc.svg
 Copyright: 2016, Lorenzo Stella <lorenzo.stl@gmail.com>
 License: LGPL-2
 
-Files: share/icons/application/*/actions/auto-type.png
-       share/icons/application/*/actions/database-change-key.png
-       share/icons/application/*/actions/entry-clone.png
-       share/icons/application/*/actions/entry-edit.png
-       share/icons/application/*/actions/entry-new.png
-       share/icons/application/*/actions/group-empty-trash.png
-       share/icons/application/*/actions/help-about.png
-       share/icons/application/*/actions/password-generate.png
-       share/icons/database/C00_Password.png
+Files: share/icons/database/C00_Password.png
        share/icons/database/C01_Package_Network.png
        share/icons/database/C02_MessageBox_Warning.png
        share/icons/database/C03_Server.png
@@ -142,60 +129,65 @@ Copyright: 2003-2004, David Vignoni <david@icon-king.com>
 License: LGPL-2.1
 Comment: from Nuvola icon theme
 
-Files: share/icons/application/*/actions/entry-delete.png
-       share/icons/application/*/actions/group-delete.png
-       share/icons/application/*/actions/group-edit.png
-       share/icons/application/*/actions/group-new.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-           2012, Felix Geyer <debfx@fobos.de>
-License: LGPL-2.1
-Comment: based on Nuvola icon theme
-
-Files: share/icons/application/*/actions/favicon-download.png
-Copyright: 2003-2004, David Vignoni <david@icon-king.com>
-           2018, Kyle Kneitinger <kyle@kneit.in>
-License: LGPL-2.1
-Comment: based on Nuvola icon theme
-
-Files: share/icons/application/*/actions/application-exit.png
-       share/icons/application/*/actions/chronometer.png
-       share/icons/application/*/actions/configure.png
-       share/icons/application/*/actions/database-lock.png
-       share/icons/application/*/actions/dialog-close.png
-       share/icons/application/*/actions/dialog-ok.png
-       share/icons/application/*/actions/document-close.png
-       share/icons/application/*/actions/document-edit.png
-       share/icons/application/*/actions/document-new.png
-       share/icons/application/*/actions/document-open.png
-       share/icons/application/*/actions/document-properties.png
-       share/icons/application/*/actions/document-save.png
-       share/icons/application/*/actions/document-save-as.png
-       share/icons/application/*/actions/edit-clear-locationbar-ltr.png
-       share/icons/application/*/actions/edit-clear-locationbar-rtl.png
-       share/icons/application/*/actions/key-enter.png
-       share/icons/application/*/actions/password-generator.png
-       share/icons/application/*/actions/password-copy.png
-       share/icons/application/*/actions/password-show-*.png
-       share/icons/application/*/actions/system-search.png
-       share/icons/application/*/actions/username-copy.png
-       share/icons/application/*/actions/view-history.png
-       share/icons/application/*/apps/internet-web-browser.png
-       share/icons/application/*/apps/preferences-desktop-icons.png
-       share/icons/application/*/apps/utilities-terminal.png
-       share/icons/application/*/categories/preferences-other.png
-       share/icons/application/*/status/dialog-error.png
-       share/icons/application/*/status/dialog-information.png
-       share/icons/application/*/status/dialog-warning.png
-       share/icons/application/*/status/security-high.png
-       share/icons/svg/*.svg
-Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
-           2007, David Vignoni <david@icon-king.com>
-           2007, David Miller <miller@oxygen-icons.org>
-           2007, Johann Ollivier Lapeyre <johann@oxygen-icons.org>
-           2007, Kenneth Wimer <kwwii@bootsplash.org>
-           2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
-License: LGPL-3+
-Comment: from Oxygen icon theme (http://www.oxygen-icons.org/)
+Files: share/icons/application/scalable/categories/preferences-other.svg
+       share/icons/application/scalable/apps/keepassxc-dark.svg
+       share/icons/application/scalable/apps/preferences-system-network-sharing.svg
+       share/icons/application/scalable/apps/utilities-terminal.svg
+       share/icons/application/scalable/apps/keepassxc-locked.svg
+       share/icons/application/scalable/apps/keepassxc-unlocked.svg
+       share/icons/application/scalable/apps/keepassxc.svg
+       share/icons/application/scalable/apps/freedesktop.svg
+       share/icons/application/scalable/apps/internet-web-browser.svg
+       share/icons/application/scalable/apps/preferences-desktop-icons.svg
+       share/icons/application/scalable/status/dialog-information.svg
+       share/icons/application/scalable/status/dialog-warning.svg
+       share/icons/application/scalable/status/dialog-error.svg
+       share/icons/application/scalable/status/security-high.svg
+       share/icons/application/scalable/mimetypes/application-x-keepassxc.svg
+       share/icons/application/scalable/actions/document-close.svg
+       share/icons/application/scalable/actions/application-exit.svg
+       share/icons/application/scalable/actions/database-change-key.svg
+       share/icons/application/scalable/actions/group-new.svg
+       share/icons/application/scalable/actions/document-properties.svg
+       share/icons/application/scalable/actions/group-empty-trash.svg
+       share/icons/application/scalable/actions/statistics.svg
+       share/icons/application/scalable/actions/edit-clear-locationbar-ltr.svg
+       share/icons/application/scalable/actions/entry-delete.svg
+       share/icons/application/scalable/actions/entry-clone.svg
+       share/icons/application/scalable/actions/entry-edit.svg
+       share/icons/application/scalable/actions/password-generator.svg
+       share/icons/application/scalable/actions/dialog-ok.svg
+       share/icons/application/scalable/actions/chronometer.svg
+       share/icons/application/scalable/actions/document-new.svg
+       share/icons/application/scalable/actions/view-history.svg
+       share/icons/application/scalable/actions/group-delete.svg
+       share/icons/application/scalable/actions/dialog-close.svg
+       share/icons/application/scalable/actions/group-edit.svg
+       share/icons/application/scalable/actions/document-save.svg
+       share/icons/application/scalable/actions/password-show-on.svg
+       share/icons/application/scalable/actions/message-close.svg
+       share/icons/application/scalable/actions/entry-new.svg
+       share/icons/application/scalable/actions/url-copy.svg
+       share/icons/application/scalable/actions/username-copy.svg
+       share/icons/application/scalable/actions/auto-type.svg
+       share/icons/application/scalable/actions/password-show-off.svg
+       share/icons/application/scalable/actions/paperclip.svg
+       share/icons/application/scalable/actions/configure.svg
+       share/icons/application/scalable/actions/database-lock.svg
+       share/icons/application/scalable/actions/password-copy.svg
+       share/icons/application/scalable/actions/system-help.svg
+       share/icons/application/scalable/actions/help-about.svg
+       share/icons/application/scalable/actions/system-search.svg
+       share/icons/application/scalable/actions/key-enter.svg
+       share/icons/application/scalable/actions/document-edit.svg
+       share/icons/application/scalable/actions/edit-clear-locationbar-rtl.svg
+       share/icons/application/scalable/actions/password-generate.svg
+       share/icons/application/scalable/actions/favicon-download.svg
+       share/icons/application/scalable/actions/document-open.svg
+       share/icons/application/scalable/actions/document-save-as.svg
+Copyright: 2019 Austin Andrews <http://templarian.com/>
+License: SIL OPEN FONT LICENSE Version 1.1
+Comment: Taken from Material Design icon set (https://github.com/templarian/MaterialDesign/)
 
 Files: share/icons/database/C62_Tux.png
        share/icons/database/C63_Feather.png
@@ -245,11 +237,3 @@ License: MIT
 Files: share/icons/application/scalable/apps/freedesktop.svg
 Copyright: GPL-2+
 Comment: from Freedesktop.org website
-
-Files: share/icons/application/32x32/actions/statistics.png
-Copyright: Icon made by Freepik from https://www.flaticon.com/free-icon/bars-chart_265733
-
-Files: share/icons/application/scalable/actions/object-locked.svg
-       share/icons/application/scalable/actions/object-unlocked.svg
-License: LGPL-3
-Comment: from Breeze icon theme (https://github.com/KDE/breeze-icons)
