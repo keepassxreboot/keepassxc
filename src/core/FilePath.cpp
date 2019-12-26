@@ -143,7 +143,7 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
         return icon;
     }
 
-    if (fromTheme) {
+    if (fromTheme && !getenv("KEEPASSXC_IGNORE_ICON_THEME")) {
         icon = QIcon::fromTheme(name);
     }
 
