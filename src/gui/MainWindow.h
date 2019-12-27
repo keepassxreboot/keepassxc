@@ -122,6 +122,8 @@ private slots:
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
     void selectPreviousDatabaseTab();
+    void selectDatabaseTab(int tabIndex);
+    void selectLastDatabaseTab();
     void togglePasswordsHidden();
     void toggleUsernamesHidden();
     void obtainContextFocusLock();
