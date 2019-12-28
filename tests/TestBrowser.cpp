@@ -18,6 +18,7 @@
 #include "TestBrowser.h"
 #include "TestGlobal.h"
 #include "browser/BrowserSettings.h"
+#include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "sodium/crypto_box.h"
 #include <QString>
@@ -56,7 +57,7 @@ void TestBrowser::testChangePublicKeys()
     auto response = m_browserAction->handleAction(json);
     QCOMPARE(response["action"].toString(), QString("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
-    QCOMPARE(response["success"].toString(), QString("true"));
+    QCOMPARE(response["success"].toString(), TRUE_STR);
 }
 
 void TestBrowser::testEncryptMessage()
@@ -461,4 +462,23 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
     }
 
     return entries;
+}
+void TestBrowser::testValidURLs()
+{
+    QHash<QString, bool> urls;
+    urls["https://github.com/login"] = true;
+    urls["https:///github.com/"] = false;
+    urls["http://github.com/**//*"] = false;
+    urls["http://*.github.com/login"] = false;
+    urls["//github.com"] = true;
+    urls["github.com/{}<>"] = false;
+    urls["http:/example.com"] = false;
+    urls["cmd://C:/Toolchains/msys2/usr/bin/mintty \"ssh jon@192.168.0.1:22\""] = true;
+    urls["file:///Users/testUser/Code/test.html"] = true;
+
+    QHashIterator<QString, bool> i(urls);
+    while (i.hasNext()) {
+        i.next();
+        QCOMPARE(Tools::checkUrlValid(i.key()), i.value());
+    }
 }

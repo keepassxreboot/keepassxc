@@ -54,6 +54,7 @@ static const QString KEEPASSHTTP_GROUP_NAME = QStringLiteral("KeePassHttp Passwo
 // Extra entry related options saved in custom data
 const QString BrowserService::OPTION_SKIP_AUTO_SUBMIT = QStringLiteral("BrowserSkipAutoSubmit");
 const QString BrowserService::OPTION_HIDE_ENTRY = QStringLiteral("BrowserHideEntry");
+const QString BrowserService::OPTION_ONLY_HTTP_AUTH = QStringLiteral("BrowserOnlyHttpAuth");
 // Multiple URL's
 const QString BrowserService::ADDITIONAL_URL = QStringLiteral("KP2A_URL");
 
@@ -382,7 +383,12 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     QList<Entry*> pwEntries;
     for (auto* entry : searchEntries(url, submitUrl, keyList)) {
         if (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
-            && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == "true") {
+            && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR) {
+            continue;
+        }
+
+        if (!httpAuth && entry->customData()->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
+            && entry->customData()->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR) {
             continue;
         }
 
@@ -602,12 +608,10 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
             }
 
             // Search for additional URL's starting with KP2A_URL
-            if (entry->attributes()->keys().contains(ADDITIONAL_URL)) {
-                for (const auto& key : entry->attributes()->keys()) {
-                    if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)) {
-                        entries.append(entry);
-                        continue;
-                    }
+            for (const auto& key : entry->attributes()->keys()) {
+                if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)) {
+                    entries.append(entry);
+                    continue;
                 }
             }
 
@@ -852,7 +856,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     }
 
     if (entry->isExpired()) {
-        res["expired"] = "true";
+        res["expired"] = TRUE_STR;
     }
 
     if (entry->customData()->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {

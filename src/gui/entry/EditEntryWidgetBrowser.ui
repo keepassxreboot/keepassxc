@@ -50,6 +50,16 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="onlyHttpAuthCheckbox">
+        <property name="toolTip">
+         <string>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</string>
+        </property>
+        <property name="text">
+         <string>Use this entry only with HTTP Basic Auth</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -130,6 +140,7 @@
  <tabstops>
   <tabstop>skipAutoSubmitCheckbox</tabstop>
   <tabstop>hideEntryCheckbox</tabstop>
+  <tabstop>onlyHttpAuthCheckbox</tabstop>
   <tabstop>additionalURLsView</tabstop>
   <tabstop>addURLButton</tabstop>
   <tabstop>removeURLButton</tabstop>

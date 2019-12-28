@@ -20,11 +20,6 @@
 
 #import <AppKit/NSWorkspace.h>
 #import <CoreVideo/CVPixelBuffer.h>
-#import <Availability.h>
-
-#if __MAC_OS_X_VERSION_MAX_ALLOWED < 101200
-static const NSEventMask NSEventMaskKeyDown = NSKeyDownMask;
-#endif
 
 @implementation AppKitImpl
 

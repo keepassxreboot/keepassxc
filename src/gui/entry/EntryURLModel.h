@@ -20,8 +20,22 @@
 #define KEEPASSXC_ENTRYURLMODEL_H
 
 #include <QStandardItemModel>
+#include <QStyledItemDelegate>
 
 class EntryAttributes;
+
+class URLModelIconDelegate : public QStyledItemDelegate
+{
+public:
+    using QStyledItemDelegate::QStyledItemDelegate;
+
+protected:
+    void initStyleOption(QStyleOptionViewItem* option, const QModelIndex& index) const override
+    {
+        QStyledItemDelegate::initStyleOption(option, index);
+        option->decorationPosition = QStyleOptionViewItem::Right;
+    }
+};
 
 class EntryURLModel : public QStandardItemModel
 {
@@ -32,6 +46,7 @@ public:
     void setEntryAttributes(EntryAttributes* entryAttributes);
     void insertRow(const QString& key, const QString& value);
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+    QVariant data(const QModelIndex& index, int role) const override;
     QModelIndex indexByKey(const QString& key) const;
     QString keyByIndex(const QModelIndex& index) const;
 
@@ -41,6 +56,7 @@ private slots:
 private:
     QList<QPair<QString, QString>> m_urls;
     EntryAttributes* m_entryAttributes;
+    QIcon m_errorIcon;
 };
 
 #endif // KEEPASSXC_ENTRYURLMODEL_H

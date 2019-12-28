@@ -4,6 +4,7 @@ if(WITH_XC_FDOSECRETS)
     add_library(fdosecrets STATIC
         # app settings page
         FdoSecretsPlugin.cpp
+        widgets/SettingsModels.cpp
         widgets/SettingsWidgetFdoSecrets.cpp
 
         # per database settings page

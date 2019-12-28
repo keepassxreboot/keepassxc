@@ -42,7 +42,7 @@ QJsonObject BrowserAction::readResponse(const QJsonObject& json)
 
     bool triggerUnlock = false;
     const QString trigger = json.value("triggerUnlock").toString();
-    if (!trigger.isEmpty() && trigger.compare("true", Qt::CaseSensitive) == 0) {
+    if (!trigger.isEmpty() && trigger.compare(TRUE_STR, Qt::CaseSensitive) == 0) {
         triggerUnlock = true;
     }
 
@@ -268,7 +268,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     const QString id = decrypted.value("id").toString();
     const QString submit = decrypted.value("submitUrl").toString();
     const QString auth = decrypted.value("httpAuth").toString();
-    const bool httpAuth = auth.compare("true", Qt::CaseSensitive) == 0 ? true : false;
+    const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0 ? true : false;
     const QJsonArray users = m_browserService.findMatchingEntries(id, url, submit, "", keyList, httpAuth);
 
     if (users.isEmpty()) {
@@ -469,7 +469,7 @@ QJsonObject BrowserAction::buildMessage(const QString& nonce) const
 {
     QJsonObject message;
     message["version"] = KEEPASSXC_VERSION;
-    message["success"] = "true";
+    message["success"] = TRUE_STR;
     message["nonce"] = nonce;
     return message;
 }

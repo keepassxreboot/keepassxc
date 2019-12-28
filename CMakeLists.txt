@@ -36,6 +36,7 @@ endif (CCACHE_FOUND)
 
 # Support Visual Studio Code
 include(CMakeToolsHelpers OPTIONAL)
+include(FeatureSummary)
 
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
@@ -464,8 +465,6 @@ if(UNIX)
 endif()
 
 include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
-
-include(FeatureSummary)
 
 add_subdirectory(src)
 add_subdirectory(share)

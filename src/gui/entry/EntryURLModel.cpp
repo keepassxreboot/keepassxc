@@ -19,6 +19,7 @@
 #include "EntryURLModel.h"
 
 #include "core/Entry.h"
+#include "core/FilePath.h"
 #include "core/Tools.h"
 
 #include <algorithm>
@@ -26,6 +27,7 @@
 EntryURLModel::EntryURLModel(QObject* parent)
     : QStandardItemModel(parent)
     , m_entryAttributes(nullptr)
+    , m_errorIcon(filePath()->icon("status", "dialog-error"))
 {
 }
 
@@ -51,6 +53,33 @@ void EntryURLModel::setEntryAttributes(EntryAttributes* entryAttributes)
     }
 
     endResetModel();
+}
+
+QVariant EntryURLModel::data(const QModelIndex& index, int role) const
+{
+    if (!index.isValid()) {
+        return {};
+    }
+
+    const auto key = keyByIndex(index);
+    if (key.isEmpty()) {
+        return {};
+    }
+
+    const auto value = m_entryAttributes->value(key);
+    const auto urlValid = Tools::checkUrlValid(value);
+
+    if (role == Qt::BackgroundRole && !urlValid) {
+        return QColor(255, 125, 125);
+    } else if (role == Qt::DecorationRole && !urlValid) {
+        return m_errorIcon;
+    } else if (role == Qt::DisplayRole || role == Qt::EditRole) {
+        return value;
+    } else if (role == Qt::ToolTipRole && !urlValid) {
+        return tr("Invalid URL");
+    }
+
+    return {};
 }
 
 bool EntryURLModel::setData(const QModelIndex& index, const QVariant& value, int role)
