@@ -36,6 +36,11 @@ QFont Font::fixedFont()
         fixedFont = consolasFont;
     }
 #endif
+#ifdef Q_OS_MACOS
+    // Qt doesn't choose a monospace font correctly on macOS
+    const QFont defaultFont;
+    fixedFont = QFontDatabase().font("Menlo", defaultFont.styleName(), defaultFont.pointSize());
+#endif
 
     return fixedFont;
 }
