@@ -128,6 +128,9 @@ void BrowserOptionDialog::loadSettings()
     m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
     m_ui->torBrowserSupport->setChecked(settings->torBrowserSupport());
 #endif
+#ifndef Q_OS_LINUX
+    m_ui->snapWarningLabel->setVisible(false);
+#endif
 
 #if defined(KEEPASSXC_DIST_APPIMAGE)
     m_ui->supportBrowserProxy->setChecked(true);
