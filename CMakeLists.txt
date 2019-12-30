@@ -300,6 +300,9 @@ endif()
 
 if(WITH_DEV_BUILD)
     add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+else()
+    add_definitions(-DQT_NO_DEPRECATED_WARNINGS)
+    add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
 endif()
 
 if(MINGW)
