@@ -28,18 +28,13 @@
 #include "core/Entry.h"
 #include "core/Global.h"
 #include "core/TimeInfo.h"
+#include "core/TriState.h"
 
 class Group : public QObject
 {
     Q_OBJECT
 
 public:
-    enum TriState
-    {
-        Inherit,
-        Enable,
-        Disable
-    };
     enum MergeMode
     {
         Default, // Determine merge strategy from parent or fallback (Synchronize)
@@ -68,8 +63,8 @@ public:
         TimeInfo timeInfo;
         bool isExpanded;
         QString defaultAutoTypeSequence;
-        Group::TriState autoTypeEnabled;
-        Group::TriState searchingEnabled;
+        TriState::State autoTypeEnabled;
+        TriState::State searchingEnabled;
         Group::MergeMode mergeMode;
 
         bool operator==(const GroupData& other) const;
@@ -92,11 +87,15 @@ public:
     bool isExpanded() const;
     QString defaultAutoTypeSequence() const;
     QString effectiveAutoTypeSequence() const;
-    Group::TriState autoTypeEnabled() const;
-    Group::TriState searchingEnabled() const;
+    TriState::State autoTypeEnabled() const;
+    TriState::State searchingEnabled() const;
+    TriState::State defaultValidityPeriodEnabled() const;
+    int defaultValidityPeriod() const;
     Group::MergeMode mergeMode() const;
     bool resolveSearchingEnabled() const;
     bool resolveAutoTypeEnabled() const;
+    bool resolveDefaultValidityPeriodEnabled() const;
+    int resolveDefaultValidityPeriod() const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
     bool isRecycled() const;
@@ -111,6 +110,8 @@ public:
     static CloneFlags DefaultCloneFlags;
     static Entry::CloneFlags DefaultEntryCloneFlags;
     static const QString RootAutoTypeSequence;
+    static const QString DefaultValidityPeriodEnabled;
+    static const QString DefaultValidityPeriod;
 
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
@@ -128,8 +129,10 @@ public:
     void setTimeInfo(const TimeInfo& timeInfo);
     void setExpanded(bool expanded);
     void setDefaultAutoTypeSequence(const QString& sequence);
-    void setAutoTypeEnabled(TriState enable);
-    void setSearchingEnabled(TriState enable);
+    void setAutoTypeEnabled(TriState::State enable);
+    void setSearchingEnabled(TriState::State enable);
+    void setDefaultValidityPeriodEnabled(TriState::State enable);
+    void setDefaultValidityPeriod(int days);
     void setLastTopVisibleEntry(Entry* entry);
     void setExpires(bool value);
     void setExpiryTime(const QDateTime& dateTime);

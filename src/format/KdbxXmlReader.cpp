@@ -544,11 +544,11 @@ Group* KdbxXmlReader::parseGroup()
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Inherit);
+                group->setAutoTypeEnabled(TriState::Inherit);
             } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Enable);
+                group->setAutoTypeEnabled(TriState::Enable);
             } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setAutoTypeEnabled(Group::Disable);
+                group->setAutoTypeEnabled(TriState::Disable);
             } else {
                 raiseError(tr("Invalid EnableAutoType value"));
             }
@@ -558,11 +558,11 @@ Group* KdbxXmlReader::parseGroup()
             QString str = readString();
 
             if (str.compare("null", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Inherit);
+                group->setSearchingEnabled(TriState::Inherit);
             } else if (str.compare("true", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Enable);
+                group->setSearchingEnabled(TriState::Enable);
             } else if (str.compare("false", Qt::CaseInsensitive) == 0) {
-                group->setSearchingEnabled(Group::Disable);
+                group->setSearchingEnabled(TriState::Disable);
             } else {
                 raiseError(tr("Invalid EnableSearching value"));
             }

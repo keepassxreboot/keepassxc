@@ -39,6 +39,8 @@ public:
     int getMonths() const;
     int getYears() const;
 
+    int getTotalDays() const;
+
 private:
     int m_days;
     int m_months;

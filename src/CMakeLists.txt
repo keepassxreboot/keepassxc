@@ -64,6 +64,7 @@ set(keepassx_SOURCES
         core/TimeInfo.cpp
         core/Tools.cpp
         core/Translator.cpp
+        core/TriState.cpp
         cli/Utils.cpp
         cli/TextStream.cpp
         crypto/Crypto.cpp

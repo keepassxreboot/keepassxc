@@ -67,3 +67,8 @@ int TimeDelta::getYears() const
 {
     return m_years;
 }
+
+int TimeDelta::getTotalDays() const
+{
+    return m_days + (365 * m_months / 12) + (m_years * 365);
+}

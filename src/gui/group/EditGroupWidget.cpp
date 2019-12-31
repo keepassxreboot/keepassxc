@@ -22,6 +22,8 @@
 #include "core/Config.h"
 #include "core/Metadata.h"
 #include "core/Resources.h"
+#include "core/TimeDelta.h"
+#include "core/TriState.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
 #include "gui/MessageBox.h"
@@ -108,6 +110,8 @@ void EditGroupWidget::setupModifiedTracking()
     connect(m_mainUi->editNotes, SIGNAL(textChanged()), SLOT(setModified()));
     connect(m_mainUi->expireCheck, SIGNAL(stateChanged(int)), SLOT(setModified()));
     connect(m_mainUi->expireDatePicker, SIGNAL(dateTimeChanged(QDateTime)), SLOT(setModified()));
+    connect(m_mainUi->defaultValidityPeriodComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
+    connect(m_mainUi->defaultValidityPeriodSpinBox, SIGNAL(valueChanged(int)), SLOT(setModified()));
     connect(m_mainUi->searchComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
     connect(m_mainUi->autotypeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(setModified()));
     connect(m_mainUi->autoTypeSequenceInherit, SIGNAL(toggled(bool)), SLOT(setModified()));
@@ -135,17 +139,34 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     if (m_group->parentGroup()) {
         addTriStateItems(m_mainUi->searchComboBox, m_group->parentGroup()->resolveSearchingEnabled());
         addTriStateItems(m_mainUi->autotypeComboBox, m_group->parentGroup()->resolveAutoTypeEnabled());
+        addTriStateItems(m_mainUi->defaultValidityPeriodComboBox,
+                         m_group->parentGroup()->resolveDefaultValidityPeriodEnabled());
     } else {
         addTriStateItems(m_mainUi->searchComboBox, true);
         addTriStateItems(m_mainUi->autotypeComboBox, true);
+        addTriStateItems(m_mainUi->defaultValidityPeriodComboBox, false);
     }
+
+    m_mainUi->defaultValidityPeriodPresets->setMenu(createPresetsMenu());
+    connect(m_mainUi->defaultValidityPeriodPresets->menu(),
+            SIGNAL(triggered(QAction*)),
+            this,
+            SLOT(useValidityPeriodPreset(QAction*)));
+    m_mainUi->defaultValidityPeriodComboBox->setCurrentIndex(
+        TriState::indexFromTriState(group->defaultValidityPeriodEnabled()));
+    connect(m_mainUi->defaultValidityPeriodComboBox,
+            SIGNAL(currentIndexChanged(int)),
+            this,
+            SLOT(handleDefaultValidityPeriodTriState(int)));
+    m_mainUi->defaultValidityPeriodSpinBox->setEnabled(group->defaultValidityPeriodEnabled() == TriState::Enable);
+    m_mainUi->defaultValidityPeriodSpinBox->setValue(group->resolveDefaultValidityPeriod());
 
     m_mainUi->editName->setText(m_group->name());
     m_mainUi->editNotes->setPlainText(m_group->notes());
     m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
-    m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
-    m_mainUi->autotypeComboBox->setCurrentIndex(indexFromTriState(group->autoTypeEnabled()));
+    m_mainUi->searchComboBox->setCurrentIndex(TriState::indexFromTriState(group->searchingEnabled()));
+    m_mainUi->autotypeComboBox->setCurrentIndex(TriState::indexFromTriState(group->autoTypeEnabled()));
     if (group->defaultAutoTypeSequence().isEmpty()) {
         m_mainUi->autoTypeSequenceInherit->setChecked(true);
     } else {
@@ -194,8 +215,12 @@ void EditGroupWidget::apply()
     m_temporaryGroup->setExpires(m_mainUi->expireCheck->isChecked());
     m_temporaryGroup->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
-    m_temporaryGroup->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
-    m_temporaryGroup->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
+    m_temporaryGroup->setDefaultValidityPeriodEnabled(
+        TriState::triStateFromIndex(m_mainUi->defaultValidityPeriodComboBox->currentIndex()));
+    m_temporaryGroup->setDefaultValidityPeriod(m_mainUi->defaultValidityPeriodSpinBox->value());
+
+    m_temporaryGroup->setSearchingEnabled(TriState::triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
+    m_temporaryGroup->setAutoTypeEnabled(TriState::triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
 
     if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
         m_temporaryGroup->setDefaultAutoTypeSequence(QString());
@@ -291,32 +316,39 @@ void EditGroupWidget::addTriStateItems(QComboBox* comboBox, bool inheritDefault)
     comboBox->addItem(tr("Disable"));
 }
 
-int EditGroupWidget::indexFromTriState(Group::TriState triState)
+void EditGroupWidget::useValidityPeriodPreset(QAction* action)
 {
-    switch (triState) {
-    case Group::Inherit:
-        return 0;
-    case Group::Enable:
-        return 1;
-    case Group::Disable:
-        return 2;
-    default:
-        Q_ASSERT(false);
-        return 0;
-    }
+    m_mainUi->defaultValidityPeriodComboBox->setCurrentIndex(TriState::indexFromTriState(TriState::Enable));
+    TimeDelta delta = action->data().value<TimeDelta>();
+    m_mainUi->defaultValidityPeriodSpinBox->setValue(delta.getTotalDays());
 }
 
-Group::TriState EditGroupWidget::triStateFromIndex(int index)
+QMenu* EditGroupWidget::createPresetsMenu()
 {
-    switch (index) {
-    case 0:
-        return Group::Inherit;
-    case 1:
-        return Group::Enable;
-    case 2:
-        return Group::Disable;
-    default:
-        Q_ASSERT(false);
-        return Group::Inherit;
+    auto* expirePresetsMenu = new QMenu(this);
+    expirePresetsMenu->addAction(tr("Tomorrow"))->setData(QVariant::fromValue(TimeDelta::fromDays(1)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromDays(7)));
+    expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromDays(14)));
+    expirePresetsMenu->addAction(tr("%n week(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromDays(21)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromMonths(1)));
+    expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromMonths(3)));
+    expirePresetsMenu->addAction(tr("%n month(s)", nullptr, 6))->setData(QVariant::fromValue(TimeDelta::fromMonths(6)));
+    expirePresetsMenu->addSeparator();
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 1))->setData(QVariant::fromValue(TimeDelta::fromYears(1)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 2))->setData(QVariant::fromValue(TimeDelta::fromYears(2)));
+    expirePresetsMenu->addAction(tr("%n year(s)", nullptr, 3))->setData(QVariant::fromValue(TimeDelta::fromYears(3)));
+    return expirePresetsMenu;
+}
+
+void EditGroupWidget::handleDefaultValidityPeriodTriState(int index)
+{
+    if (index == TriState::indexFromTriState(TriState::Enable)) {
+        m_mainUi->defaultValidityPeriodSpinBox->setEnabled(true);
+    } else {
+        m_mainUi->defaultValidityPeriodSpinBox->setEnabled(false);
     }
+
+    m_mainUi->defaultValidityPeriodSpinBox->setValue(m_group->resolveDefaultValidityPeriod());
 }

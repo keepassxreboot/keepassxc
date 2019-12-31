@@ -146,8 +146,8 @@ void TestKeePass2Format::testXmlGroupRoot()
     QCOMPARE(ti.usageCount(), 52);
     QCOMPARE(ti.locationChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
     QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
-    QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
-    QCOMPARE(group->searchingEnabled(), Group::Inherit);
+    QCOMPARE(group->autoTypeEnabled(), TriState::Inherit);
+    QCOMPARE(group->searchingEnabled(), TriState::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid(),
              QUuid::fromRfc4122(QByteArray::fromBase64("+wSUOv6qf0OzW8/ZHAs2sA==")));
     QCOMPARE(group->children().size(), 3);
@@ -167,8 +167,8 @@ void TestKeePass2Format::testXmlGroup1()
     QCOMPARE(group->iconUuid(), QUuid());
     QCOMPARE(group->isExpanded(), true);
     QCOMPARE(group->defaultAutoTypeSequence(), QString("{Password}{ENTER}"));
-    QCOMPARE(group->autoTypeEnabled(), Group::Enable);
-    QCOMPARE(group->searchingEnabled(), Group::Disable);
+    QCOMPARE(group->autoTypeEnabled(), TriState::Enable);
+    QCOMPARE(group->searchingEnabled(), TriState::Disable);
     QVERIFY(!group->lastTopVisibleEntry());
 }
 

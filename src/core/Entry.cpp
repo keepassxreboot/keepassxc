@@ -35,6 +35,8 @@ const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
 const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
 const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
+const QString Entry::ValidityPeriodEnabled = QStringLiteral("ValidityPeriodEnabled");
+const QString Entry::ValidityPeriod = QStringLiteral("ValidityPeriod");
 
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
@@ -42,6 +44,7 @@ Entry::Entry()
     , m_autoTypeAssociations(new AutoTypeAssociations(this))
     , m_customData(new CustomData(this))
     , m_modifiedSinceBegin(false)
+    , m_committedToGroup(false)
     , m_updateTimeinfo(true)
 {
     m_data.iconNumber = DefaultIconNumber;
@@ -63,7 +66,9 @@ Entry::~Entry()
 {
     setUpdateTimeinfo(false);
     if (m_group) {
-        m_group->removeEntry(this);
+        if (m_group->entries().contains(this)) {
+            m_group->removeEntry(this);
+        }
 
         if (m_group->database()) {
             m_group->database()->addDeletedObject(m_uuid);
@@ -288,6 +293,72 @@ AutoTypeAssociations* Entry::autoTypeAssociations()
 const AutoTypeAssociations* Entry::autoTypeAssociations() const
 {
     return m_autoTypeAssociations;
+}
+
+TriState::State Entry::validityPeriodEnabled() const
+{
+    if (!customData()->contains(Entry::ValidityPeriodEnabled)) {
+        return TriState::Inherit;
+    }
+
+    TriState::State state = TriState::Inherit;
+    bool valid;
+
+    int stateIndex = customData()->value(Entry::ValidityPeriodEnabled).toInt(&valid);
+    if (valid && TriState::isValidIndex(stateIndex)) {
+        state = TriState::triStateFromIndex(stateIndex);
+    }
+
+    return state;
+}
+
+int Entry::validityPeriod() const
+{
+    if (!customData()->contains(Entry::ValidityPeriod)) {
+        return 0;
+    }
+
+    bool valid;
+
+    int validityPeriod = customData()->value(Entry::ValidityPeriod).toInt(&valid);
+    if (!valid) {
+        validityPeriod = 0;
+    }
+
+    return validityPeriod;
+}
+
+bool Entry::effectiveValidityPeriodEnabled() const
+{
+    switch (validityPeriodEnabled()) {
+    case TriState::Inherit:
+        if (m_group) {
+            return m_group->resolveDefaultValidityPeriodEnabled();
+        } else {
+            return false;
+        }
+        break;
+    case TriState::Enable:
+        return true;
+        break;
+    case TriState::Disable:
+        return false;
+        break;
+    default:
+        Q_ASSERT(false);
+        return false;
+        break;
+    }
+}
+
+int Entry::effectiveValidityPeriod() const
+{
+    TriState::State state = validityPeriodEnabled();
+    if (state == TriState::Inherit && m_group) {
+        return m_group->resolveDefaultValidityPeriod();
+    }
+
+    return validityPeriod();
 }
 
 QString Entry::title() const
@@ -603,6 +674,22 @@ void Entry::setDefaultAttribute(const QString& attribute, const QString& value)
     }
 
     m_attributes->set(attribute, value, m_attributes->isProtected(attribute));
+}
+
+void Entry::setValidityPeriodEnabled(const TriState::State state)
+{
+    if (state != validityPeriodEnabled()) {
+        customData()->set(Entry::ValidityPeriodEnabled, QString::number(TriState::indexFromTriState(state)));
+        emit entryModified();
+    }
+}
+
+void Entry::setValidityPeriod(int days)
+{
+    if (days != validityPeriod()) {
+        customData()->set(Entry::ValidityPeriod, QString::number(days));
+        emit entryModified();
+    }
 }
 
 void Entry::setExpires(const bool& value)
@@ -1087,11 +1174,19 @@ void Entry::moveDown()
 
 Group* Entry::group()
 {
+    if (!m_committedToGroup) {
+        return nullptr;
+    }
+
     return m_group;
 }
 
 const Group* Entry::group() const
 {
+    if (!m_committedToGroup) {
+        return nullptr;
+    }
+
     return m_group;
 }
 
@@ -1099,12 +1194,11 @@ void Entry::setGroup(Group* group)
 {
     Q_ASSERT(group);
 
-    if (m_group == group) {
-        return;
-    }
-
     if (m_group) {
-        m_group->removeEntry(this);
+        if (m_group->entries().contains(this)) {
+            m_group->removeEntry(this);
+        }
+
         if (m_group->database() && m_group->database() != group->database()) {
             m_group->database()->addDeletedObject(m_uuid);
 
@@ -1118,11 +1212,50 @@ void Entry::setGroup(Group* group)
 
     m_group = group;
     group->addEntry(this);
+    m_committedToGroup = true;
 
     QObject::setParent(group);
 
     if (m_updateTimeinfo) {
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
+    }
+}
+
+void Entry::setGroupUncommitted(Group* group)
+{
+    Q_ASSERT(group);
+
+    if (m_group == group) {
+        return;
+    }
+
+    if (m_group) {
+        if (m_group->entries().contains(this)) {
+            m_group->removeEntry(this);
+        }
+
+        if (m_group->database() && m_group->database() != group->database()) {
+            m_group->database()->addDeletedObject(m_uuid);
+
+            // copy custom icon to the new database
+            if (!iconUuid().isNull() && group->database() && m_group->database()->metadata()->hasCustomIcon(iconUuid())
+                && m_group->database()->metadata()->hasCustomIcon(iconUuid())) {
+                group->database()->metadata()->addCustomIcon(iconUuid(), icon());
+            }
+        }
+    }
+
+    m_group = group;
+    m_committedToGroup = false;
+
+    QObject::setParent(group);
+}
+
+void Entry::unsetUncommittedGroup()
+{
+    if (m_committedToGroup == false) {
+        m_group = nullptr;
+        QObject::setParent(nullptr);
     }
 }
 

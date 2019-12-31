@@ -342,7 +342,7 @@ void TestAutoType::testAutoTypeEffectiveSequences()
     // Group with autotype disabled and custom default sequence
     QPointer<Group> group3 = new Group();
     group3->setParent(group1);
-    group3->setAutoTypeEnabled(Group::Disable);
+    group3->setAutoTypeEnabled(TriState::Disable);
     group3->setDefaultAutoTypeSequence(sequenceG3);
 
     QCOMPARE(rootGroup->defaultAutoTypeSequence(), QString());

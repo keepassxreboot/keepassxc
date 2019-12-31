@@ -216,8 +216,8 @@ KeePass1Reader::readDatabase(QIODevice* device, const QString& password, QIODevi
     const QList<Group*> children = db->rootGroup()->children();
     for (Group* group : children) {
         if (group->name() == "Backup") {
-            group->setSearchingEnabled(Group::Disable);
-            group->setAutoTypeEnabled(Group::Disable);
+            group->setSearchingEnabled(TriState::Disable);
+            group->setAutoTypeEnabled(TriState::Disable);
         }
     }
 

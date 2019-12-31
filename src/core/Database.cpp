@@ -790,8 +790,8 @@ void Database::createRecycleBin()
     recycleBin->setParent(rootGroup());
     recycleBin->setName(tr("Recycle Bin"));
     recycleBin->setIcon(Group::RecycleBinIconNumber);
-    recycleBin->setSearchingEnabled(Group::Disable);
-    recycleBin->setAutoTypeEnabled(Group::Disable);
+    recycleBin->setSearchingEnabled(TriState::Disable);
+    recycleBin->setAutoTypeEnabled(TriState::Disable);
 
     m_metadata->setRecycleBin(recycleBin);
 }

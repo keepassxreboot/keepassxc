@@ -33,6 +33,7 @@
 #include "core/EntryAttributes.h"
 #include "core/Global.h"
 #include "core/TimeInfo.h"
+#include "core/TriState.h"
 
 class Database;
 class Group;
@@ -97,6 +98,10 @@ public:
     QString effectiveNewAutoTypeSequence() const;
     AutoTypeAssociations* autoTypeAssociations();
     const AutoTypeAssociations* autoTypeAssociations() const;
+    TriState::State validityPeriodEnabled() const;
+    int validityPeriod() const;
+    bool effectiveValidityPeriodEnabled() const;
+    int effectiveValidityPeriod() const;
     QString title() const;
     QString url() const;
     QString webUrl() const;
@@ -128,6 +133,8 @@ public:
     static const int ResolveMaximumDepth;
     static const QString AutoTypeSequenceUsername;
     static const QString AutoTypeSequencePassword;
+    static const QString ValidityPeriodEnabled;
+    static const QString ValidityPeriod;
 
     void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
@@ -146,6 +153,8 @@ public:
     void setPassword(const QString& password);
     void setNotes(const QString& notes);
     void setDefaultAttribute(const QString& attribute, const QString& value);
+    void setValidityPeriodEnabled(const TriState::State state);
+    void setValidityPeriod(const int days);
     void setExpires(const bool& value);
     void setExpiryTime(const QDateTime& dateTime);
     void setTotp(QSharedPointer<Totp::Settings> settings);
@@ -239,6 +248,8 @@ public:
     Group* group();
     const Group* group() const;
     void setGroup(Group* group);
+    void setGroupUncommitted(Group* group);
+    void unsetUncommittedGroup();
     const Database* database() const;
     Database* database();
 
@@ -280,6 +291,7 @@ private:
     QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;
     QPointer<Group> m_group;
+    bool m_committedToGroup;
     bool m_updateTimeinfo;
 };
 

@@ -26,13 +26,13 @@
 namespace QTest
 {
 
-    template <> inline char* toString(const Group::TriState& triState)
+    template <> inline char* toString(const TriState::State& triState)
     {
         QString value;
 
-        if (triState == Group::Inherit) {
+        if (triState == TriState::Inherit) {
             value = "null";
-        } else if (triState == Group::Enable) {
+        } else if (triState == TriState::Enable) {
             value = "true";
         } else {
             value = "false";

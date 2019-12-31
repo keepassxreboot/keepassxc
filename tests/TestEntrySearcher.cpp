@@ -62,7 +62,7 @@ void TestEntrySearcher::testSearch()
     group211->setParent(group21);
     group2111->setParent(group211);
 
-    group1->setSearchingEnabled(Group::Disable);
+    group1->setSearchingEnabled(TriState::Disable);
 
     Entry* eRoot = new Entry();
     eRoot->setTitle("test search term test");

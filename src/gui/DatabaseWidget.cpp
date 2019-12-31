@@ -1022,6 +1022,7 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 
         m_newParent = nullptr;
     } else if (m_newEntry) {
+        m_newEntry->unsetUncommittedGroup();
         if (previousDialogAccepted) {
             m_newEntry->setGroup(m_newParent);
             m_entryView->setFocus();
@@ -1068,6 +1069,7 @@ void DatabaseWidget::switchToEntryEdit(Entry* entry, bool create)
     Group* group;
     if (create) {
         group = currentGroup();
+        entry->setGroupUncommitted(currentGroup());
     } else {
         group = entry->group();
         // Ensure we have only this entry selected

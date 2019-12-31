@@ -642,9 +642,9 @@ QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& wi
     }
 
     do {
-        if (group->autoTypeEnabled() == Group::Disable) {
+        if (group->autoTypeEnabled() == TriState::Disable) {
             return sequenceList;
-        } else if (group->autoTypeEnabled() == Group::Enable) {
+        } else if (group->autoTypeEnabled() == TriState::Enable) {
             break;
         }
         group = group->parentGroup();

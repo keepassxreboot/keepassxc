@@ -35,6 +35,8 @@
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
+const QString Group::DefaultValidityPeriodEnabled = QStringLiteral("DefaultValidityPeriodEnabled");
+const QString Group::DefaultValidityPeriod = QStringLiteral("DefaultValidityPeriod");
 
 Group::CloneFlags Group::DefaultCloneFlags =
     static_cast<Group::CloneFlags>(Group::CloneNewUuid | Group::CloneResetTimeInfo | Group::CloneIncludeEntries);
@@ -47,8 +49,8 @@ Group::Group()
 {
     m_data.iconNumber = DefaultIconNumber;
     m_data.isExpanded = true;
-    m_data.autoTypeEnabled = Inherit;
-    m_data.searchingEnabled = Inherit;
+    m_data.autoTypeEnabled = TriState::Inherit;
+    m_data.searchingEnabled = TriState::Inherit;
     m_data.mergeMode = Default;
 
     connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(groupModified()));
@@ -203,7 +205,7 @@ QString Group::effectiveAutoTypeSequence() const
 
     const Group* group = this;
     do {
-        if (group->autoTypeEnabled() == Group::Disable) {
+        if (group->autoTypeEnabled() == TriState::Disable) {
             return QString();
         }
 
@@ -218,14 +220,47 @@ QString Group::effectiveAutoTypeSequence() const
     return sequence;
 }
 
-Group::TriState Group::autoTypeEnabled() const
+TriState::State Group::autoTypeEnabled() const
 {
     return m_data.autoTypeEnabled;
 }
 
-Group::TriState Group::searchingEnabled() const
+TriState::State Group::searchingEnabled() const
 {
     return m_data.searchingEnabled;
+}
+
+TriState::State Group::defaultValidityPeriodEnabled() const
+{
+    if (!customData()->contains(Group::DefaultValidityPeriodEnabled)) {
+        return TriState::Inherit;
+    }
+
+    TriState::State state = TriState::Inherit;
+    bool valid;
+
+    int stateIndex = customData()->value(Group::DefaultValidityPeriodEnabled).toInt(&valid);
+    if (valid && TriState::isValidIndex(stateIndex)) {
+        state = TriState::triStateFromIndex(stateIndex);
+    }
+
+    return state;
+}
+
+int Group::defaultValidityPeriod() const
+{
+    if (!customData()->contains(Group::DefaultValidityPeriod)) {
+        return 0;
+    }
+
+    bool valid;
+
+    int defaultValidityPeriod = customData()->value(Group::DefaultValidityPeriod).toInt(&valid);
+    if (!valid) {
+        defaultValidityPeriod = 0;
+    }
+
+    return defaultValidityPeriod;
 }
 
 Group::MergeMode Group::mergeMode() const
@@ -371,14 +406,30 @@ void Group::setDefaultAutoTypeSequence(const QString& sequence)
     set(m_data.defaultAutoTypeSequence, sequence);
 }
 
-void Group::setAutoTypeEnabled(TriState enable)
+void Group::setAutoTypeEnabled(TriState::State enable)
 {
     set(m_data.autoTypeEnabled, enable);
 }
 
-void Group::setSearchingEnabled(TriState enable)
+void Group::setSearchingEnabled(TriState::State enable)
 {
     set(m_data.searchingEnabled, enable);
+}
+
+void Group::setDefaultValidityPeriodEnabled(TriState::State enable)
+{
+    if (enable != defaultValidityPeriodEnabled()) {
+        customData()->set(Group::DefaultValidityPeriodEnabled, QString::number(TriState::indexFromTriState(enable)));
+        emit groupModified();
+    }
+}
+
+void Group::setDefaultValidityPeriod(int days)
+{
+    if (days != defaultValidityPeriod()) {
+        customData()->set(Group::DefaultValidityPeriod, QString::number(days));
+        emit groupModified();
+    }
 }
 
 void Group::setLastTopVisibleEntry(Entry* entry)
@@ -1047,15 +1098,15 @@ void Group::recCreateDelObjects()
 bool Group::resolveSearchingEnabled() const
 {
     switch (m_data.searchingEnabled) {
-    case Inherit:
+    case TriState::Inherit:
         if (!m_parent) {
             return true;
         } else {
             return m_parent->resolveSearchingEnabled();
         }
-    case Enable:
+    case TriState::Enable:
         return true;
-    case Disable:
+    case TriState::Disable:
         return false;
     default:
         Q_ASSERT(false);
@@ -1066,20 +1117,52 @@ bool Group::resolveSearchingEnabled() const
 bool Group::resolveAutoTypeEnabled() const
 {
     switch (m_data.autoTypeEnabled) {
-    case Inherit:
+    case TriState::Inherit:
         if (!m_parent) {
             return true;
         } else {
             return m_parent->resolveAutoTypeEnabled();
         }
-    case Enable:
+    case TriState::Enable:
         return true;
-    case Disable:
+    case TriState::Disable:
         return false;
     default:
         Q_ASSERT(false);
         return false;
     }
+}
+
+bool Group::resolveDefaultValidityPeriodEnabled() const
+{
+    switch (defaultValidityPeriodEnabled()) {
+    case TriState::Inherit:
+        if (m_parent) {
+            return m_parent->resolveDefaultValidityPeriodEnabled();
+        } else {
+            return false;
+        }
+    case TriState::Enable:
+        return true;
+    case TriState::Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
+
+int Group::resolveDefaultValidityPeriod() const
+{
+    int period;
+
+    if (defaultValidityPeriodEnabled() == TriState::Inherit && m_parent) {
+        period = m_parent->resolveDefaultValidityPeriod();
+    } else {
+        period = defaultValidityPeriod();
+    }
+
+    return period;
 }
 
 QStringList Group::locate(const QString& locateTerm, const QString& currentPath) const
