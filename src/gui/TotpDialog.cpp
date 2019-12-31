@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
+ *  Copyright (C) 2017 Weslly Honorato <weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     resetCounter();
     updateProgressBar();
 
-    connect(parent, SIGNAL(lockedDatabase()), SLOT(close()));
+    connect(parent, SIGNAL(databaseLocked()), SLOT(close()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
     m_totpUpdateTimer.start(m_step * 10);
