@@ -79,6 +79,10 @@ static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewD
 
 void TestGui::initTestCase()
 {
+    Application::setApplicationName("KeePassXC");
+    Application::setApplicationVersion(KEEPASSXC_VERSION);
+    QApplication::setQuitOnLastWindowClosed(false);
+
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
@@ -91,11 +95,12 @@ void TestGui::initTestCase()
     // Disable the update check first time alert
     config()->set("UpdateCheckMessageShown", true);
 
-    m_mainWindow.reset(new MainWindow());
-    Bootstrap::restoreMainWindowState(*m_mainWindow);
     Bootstrap::bootstrapApplication();
+
+    m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
     m_mainWindow->show();
+    m_mainWindow->resize(1024, 768);
 }
 
 // Every test starts with opening the temp database
@@ -176,7 +181,7 @@ void TestGui::testSettingsDefaultTabOrder()
 
 void TestGui::testCreateDatabase()
 {
-    QTimer::singleShot(0, this, SLOT(createDatabaseCallback()));
+    QTimer::singleShot(50, this, SLOT(createDatabaseCallback()));
     triggerAction("actionDatabaseNew");
 
     // there is a new empty db
@@ -1435,8 +1440,9 @@ int TestGui::addCannedEntries()
 
 void TestGui::checkDatabase(QString dbFileName)
 {
-    if (dbFileName.isEmpty())
+    if (dbFileName.isEmpty()) {
         dbFileName = m_dbFilePath;
+    }
 
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("a"));
