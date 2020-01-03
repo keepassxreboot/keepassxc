@@ -859,6 +859,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     res["password"] = entry->resolveMultiplePlaceholders(entry->password());
     res["name"] = entry->resolveMultiplePlaceholders(entry->title());
     res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
+    res["group"] = entry->resolveMultiplePlaceholders(entry->group()->name());
 
     if (entry->hasTotp()) {
         res["totp"] = entry->totp();
