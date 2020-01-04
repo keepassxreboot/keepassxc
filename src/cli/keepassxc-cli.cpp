@@ -189,6 +189,7 @@ int main(int argc, char** argv)
     Commands::setupCommands(false);
 
     TextStream out(stdout);
+    TextStream err(stderr);
     QStringList arguments;
     for (int i = 0; i < argc; ++i) {
         arguments << QString(argv[i]);
@@ -223,6 +224,7 @@ int main(int argc, char** argv)
             out << debugInfo << endl;
             return EXIT_SUCCESS;
         }
+        // showHelp exits the application immediately.
         parser.showHelp();
     }
 
@@ -234,10 +236,9 @@ int main(int argc, char** argv)
 
     auto command = Commands::getCommand(commandName);
     if (!command) {
-        qCritical("Invalid command %s.", qPrintable(commandName));
-        // showHelp exits the application immediately, so we need to set the
-        // exit code here.
-        parser.showHelp(EXIT_FAILURE);
+        err << QObject::tr("Invalid command %1.").arg(commandName) << endl;
+        err << parser.helpText();
+        return EXIT_FAILURE;
     }
 
     // Removing the first argument (keepassxc).
