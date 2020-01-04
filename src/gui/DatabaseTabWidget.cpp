@@ -63,6 +63,8 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(autoType(), SIGNAL(globalAutoTypeTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
+    connect(m_databaseOpenDialog.data(), &DatabaseOpenDialog::dialogFinished,
+            this, &DatabaseTabWidget::databaseUnlockDialogFinished);
     // clang-format on
 
 #ifdef Q_OS_MACOS

@@ -574,8 +574,8 @@ Bitte wählen Sie, ob Sie den Zugriff erlauben möchten.</translation>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>Du hast mehrere Datenbanken geöffnet.
-Bitte wähle die richtige Datenbank zum speichern der Anmeldedaten.</translation>
+        <translation>Sie haben mehrere Datenbanken geöffnet.
+Bitte wählen Sie die richtige Datenbank zum Speichern der Anmeldedaten.</translation>
     </message>
 </context>
 <context>
@@ -1070,7 +1070,7 @@ Sicherungsdatenbank bei %2</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Die Datenbankdatei hat Änderungen die noch nicht gemergt wurden.</translation>
+        <translation>Die Datenbankdatei hat Änderungen die noch nicht zusammengeführt wurden.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1217,7 +1217,7 @@ Um zu verhindern, dass dieser Fehler auftritt, müssen Sie zu &quot;Datenbankein
     </message>
     <message>
         <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Zusätzlich zu ihrem Masterpasswort können sie eine geheime Datei verwenden um die Sicherheit ihrer Datenbank zu erhöhen. Eine solche Datei kann in den Sicherheitseinstellung ihrer Datenbank generiert werden.&lt;/p&gt; &lt;p&gt;Diese Datei ist jedoch &lt;strong&gt;nicht&lt;/strong&gt; Ihre *.kdbx Datei!&lt;br&gt; Wenn sie keine Schlüsseldatei haben lassen sie das Feld leer.&lt;/p&gt; &lt;p&gt;Klicken sie hier für weitere Informationen...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Zusätzlich zu Ihrem Masterpasswort können Sie eine geheime Datei verwenden, um die Sicherheit Ihrer Datenbank zu erhöhen. Eine solche Datei kann in den Sicherheitseinstellungen Ihrer Datenbank generiert werden.&lt;/p&gt; &lt;p&gt;Diese Datei ist jedoch &lt;strong&gt;nicht&lt;/strong&gt; Ihre *.kdbx-Datei!&lt;br&gt; Wenn Sie keine Schlüsseldatei haben, lassen Sie das Feld leer.&lt;/p&gt; &lt;p&gt;Klicken Sie hier für weitere Informationen...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1331,7 +1331,7 @@ Das wird die Verbindung zum Browser-Plugin verhindern.</translation>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Möchtest du wirklich alle Browserverbindungen entfernen?
+        <translation>Möchten Sie wirklich alle Browserverbindungen entfernen?
 Das wird die Verbindung zu dem Browser-Plugin verhindern.</translation>
     </message>
     <message>
@@ -3094,7 +3094,7 @@ Dies kann dazu führen, dass die jeweiligen Plugins nicht mehr richtig funktioni
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Kopie</translation>
+        <translation>%1 - Klon</translation>
     </message>
 </context>
 <context>
@@ -3608,7 +3608,7 @@ Falls dies wiederholt passiert, dann könnte Ihre Datenbank beschädigt sein.</t
     </message>
     <message>
         <source>Invalid header field length</source>
-        <translation>Ungültiger Header-Feldlänge</translation>
+        <translation>Ungültige Header-Feldlänge</translation>
     </message>
     <message>
         <source>Invalid header data length</source>
@@ -4451,8 +4451,8 @@ Diese Version ist nicht für den Produktiveinsatz gedacht.</translation>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>WARNUNG: Deine Qt Version könnte KeePassXC mit einer Bildschirmtastatur zu abstürzen bringen!
-Wir empfehlen dir die Verwendung des auf unserer Downloadseite verfügbaren AppImage.</translation>
+        <translation>WARNUNG: Ihre Qt Version könnte KeePassXC mit einer Bildschirmtastatur zu abstürzen bringen!
+Wir empfehlen Ihnen die Verwendung des auf unserer Downloadseite verfügbaren AppImage.</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -4665,7 +4665,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Älterer Ziel-Eintrag wird auf neuere Quellen-Eintrag angewendet %1 [%2]</translation>
+        <translation>Älterer Ziel-Eintrag wird auf neueren Quellen-Eintrag angewendet %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
@@ -4758,7 +4758,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>A master key known only to you protects your database.</source>
-        <translation>Ein nur dir bekannter Schlüssel schützt die Datenbank.</translation>
+        <translation>Ein nur Ihnen bekannter Schlüssel schützt die Datenbank.</translation>
     </message>
 </context>
 <context>
@@ -5287,7 +5287,7 @@ Da sie Fehler beinhalten könnte, ist diese Version nicht für den Produktiveins
     </message>
     <message>
         <source>Empty</source>
-        <translation>Leer</translation>
+        <translation>Leeren</translation>
     </message>
     <message>
         <source>Remove</source>

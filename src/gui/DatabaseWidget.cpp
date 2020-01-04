@@ -1770,7 +1770,7 @@ void DatabaseWidget::processAutoOpen()
     }
 
     for (const auto* entry : autoopenGroup->entries()) {
-        if (entry->url().isEmpty() || entry->password().isEmpty()) {
+        if (entry->url().isEmpty() || (entry->password().isEmpty() && entry->username().isEmpty())) {
             continue;
         }
         QFileInfo filepath;

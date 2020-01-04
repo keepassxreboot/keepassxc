@@ -30,6 +30,7 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QFileInfo>
+#include <QRegularExpression>
 
 namespace FdoSecrets
 {
@@ -47,6 +48,14 @@ namespace FdoSecrets
         // also remember to clear/populate the database when lock state changes.
         connect(backend, &DatabaseWidget::databaseUnlocked, this, &Collection::onDatabaseLockChanged);
         connect(backend, &DatabaseWidget::databaseLocked, this, &Collection::onDatabaseLockChanged);
+
+        // get notified whenever unlock db dialog finishes
+        connect(parent, &Service::doneUnlockDatabaseInDialog, this, [this](bool accepted, DatabaseWidget* dbWidget) {
+            if (!dbWidget || dbWidget != m_backend) {
+                return;
+            }
+            emit doneUnlockCollection(accepted);
+        });
 
         reloadBackend();
     }
@@ -242,6 +251,11 @@ namespace FdoSecrets
             terms << attributeToTerm(it.key(), it.value());
         }
 
+        // empty terms causes EntrySearcher returns everything
+        if (terms.isEmpty()) {
+            return QList<Item*>{};
+        }
+
         QList<Item*> items;
         const auto foundEntries = EntrySearcher().search(terms, m_exposedGroup);
         items.reserve(foundEntries.size());
@@ -268,7 +282,7 @@ namespace FdoSecrets
         const auto useWildcards = false;
         const auto exactMatch = true;
         const auto caseSensitive = true;
-        term.regex = Tools::convertToRegex(value, useWildcards, exactMatch, caseSensitive);
+        term.regex = Tools::convertToRegex(QRegularExpression::escape(value), useWildcards, exactMatch, caseSensitive);
 
         return term;
     }

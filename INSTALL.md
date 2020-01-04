@@ -148,9 +148,15 @@ You can create a package to redistribute KeePassXC (zip, deb, rpm, dmg, etc..). 
 Testing
 =======
 
-You can perform test on the executable
+You can perform tests on the built executables with:
 ```
-make test
+make test ARGS+="--output-on-failure"
+```
+
+If you are not currently running on an X Server or Wayland, run the tests as follows:
+```
+make test ARGS+="-E test\(cli\|gui\) --output-on-failure"
+xvfb-run -e errors -a --server-args="-screen 0 1024x768x24" make test ARGS+="-R test\(cli\|gui\) --output-on-failure"
 ```
 
 Common parameters:

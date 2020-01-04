@@ -747,11 +747,11 @@ Selecione a base de dados correta para guardar as credenciais.</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Devolve as credenciais expiradas. Adiciona [expirada] ao título.</translation>
+        <translation>Devolve as credenciais caducadas. Adiciona [caducada] ao título.</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation>Permitir devolução de credencias expir&amp;adas</translation>
+        <translation>Permitir devolução de credencias caduc&amp;adas</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1830,11 +1830,11 @@ Tem a certeza de que deseja continuar?</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Número de entradas expiradas</translation>
+        <translation>Número de entradas caducadas</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>A base de dados contém entradas expiradas.</translation>
+        <translation>A base de dados contém entradas caducadas.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
@@ -2553,7 +2553,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>Caduca</translation>
     </message>
     <message>
         <source>Url field</source>
@@ -2585,15 +2585,15 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Campo Expira</translation>
+        <translation>Campo Caduca</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation>Predefinições de expiração</translation>
+        <translation>Predefinições de caducidade</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation>Predefinições de expiração</translation>
+        <translation>Predefinições de caducidade</translation>
     </message>
     <message>
         <source>Notes field</source>
@@ -2609,7 +2609,7 @@ Desativar salvaguardas e tentar novamente?</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Alternar expiração</translation>
+        <translation>Alternar caducidade</translation>
     </message>
 </context>
 <context>
@@ -2813,11 +2813,11 @@ As extensões suportadas são: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 já está a ser exportada para esta base de dados.</translation>
+        <translation>%1 já está a ser exportado para esta base de dados.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 já está a ser importada para esta base de dados.</translation>
+        <translation>%1 já está a ser importado para esta base de dados.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
@@ -2877,7 +2877,7 @@ As extensões suportadas são: %1.</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>Caduca</translation>
     </message>
     <message>
         <source>Search</source>
@@ -2905,7 +2905,7 @@ As extensões suportadas são: %1.</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Alternar expiração</translation>
+        <translation>Alternar caducidade</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
@@ -2913,7 +2913,7 @@ As extensões suportadas são: %1.</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Campo Expira</translation>
+        <translation>Campo Caduca</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
@@ -3271,7 +3271,7 @@ Esta ação pode implicar um funcionamento errático.</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Expira</translation>
+        <translation>Caduca</translation>
     </message>
     <message>
         <source>Created</source>
@@ -3318,7 +3318,7 @@ Esta ação pode implicar um funcionamento errático.</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Expira</translation>
+        <translation>Caducidade</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4029,7 +4029,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Tamanho de campo de tempo de expiração de grupo incorreto</translation>
+        <translation>Tamanho inválido para o campo de caducidade do grupo</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
@@ -4081,7 +4081,7 @@ Linha %2, coluna %3</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Tamanho da entrada para o campo tempo de expiração inválido</translation>
+        <translation>Tamanho inválido para o campo de caducidade da entrada</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
@@ -4181,7 +4181,7 @@ Caso isto volte a acontecer, pode ser que a base de dados esteja danificada.</tr
     <message>
         <source>%1 set, click to change or remove</source>
         <comment>Change or remove a key component</comment>
-        <translation>%1 definido, clique para alterar ou remover</translation>
+        <translation>%1 definida, clique para alterar ou remover</translation>
     </message>
 </context>
 <context>
@@ -6912,7 +6912,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Expira em &lt;b&gt;%n&lt;/b&gt; segundo</numerusform><numerusform>Expira dentro de &lt;b&gt;%n&lt;/b&gt; segundos</numerusform></translation>
+        <translation><numerusform>Caduca dentro de &lt;b&gt;%n&lt;/b&gt; segundo</numerusform><numerusform>Caduca dentro de &lt;b&gt;%n&lt;/b&gt; segundos</numerusform></translation>
     </message>
 </context>
 <context>

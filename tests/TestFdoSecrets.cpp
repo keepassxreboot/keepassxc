@@ -112,3 +112,35 @@ void TestFdoSecrets::testCrazyAttributeKey()
     const auto res = EntrySearcher().search({term}, root.data());
     QCOMPARE(res.count(), 1);
 }
+
+void TestFdoSecrets::testSpecialCharsInAttributeValue()
+{
+    using FdoSecrets::Collection;
+    using FdoSecrets::Item;
+
+    const QScopedPointer<Group> root(new Group());
+    QScopedPointer<Entry> e1(new Entry());
+    e1->setGroup(root.data());
+
+    e1->setTitle("titleA");
+    e1->attributes()->set("testAttribute", "OAuth::[test.name@gmail.com]");
+
+    QScopedPointer<Entry> e2(new Entry());
+    e2->setGroup(root.data());
+    e2->setTitle("titleB");
+    e2->attributes()->set("testAttribute", "Abc:*+.-");
+
+    // search for custom entries via programatic API
+    {
+        const auto term = Collection::attributeToTerm("testAttribute", "OAuth::[test.name@gmail.com]");
+        const auto res = EntrySearcher().search({term}, root.data());
+        QCOMPARE(res.count(), 1);
+        QCOMPARE(res[0]->title(), QStringLiteral("titleA"));
+    }
+    {
+        const auto term = Collection::attributeToTerm("testAttribute", "Abc:*+.-");
+        const auto res = EntrySearcher().search({term}, root.data());
+        QCOMPARE(res.count(), 1);
+        QCOMPARE(res[0]->title(), QStringLiteral("titleB"));
+    }
+}

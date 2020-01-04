@@ -47,6 +47,8 @@ namespace FdoSecrets
         , m_insdieEnsureDefaultAlias(false)
         , m_serviceWatcher(nullptr)
     {
+        connect(
+            m_databases, &DatabaseTabWidget::databaseUnlockDialogFinished, this, &Service::doneUnlockDatabaseInDialog);
     }
 
     Service::~Service()
@@ -447,9 +449,9 @@ namespace FdoSecrets
         return m_sessions;
     }
 
-    void Service::doCloseDatabase(DatabaseWidget* dbWidget)
+    bool Service::doCloseDatabase(DatabaseWidget* dbWidget)
     {
-        m_databases->closeDatabaseTab(dbWidget);
+        return m_databases->closeDatabaseTab(dbWidget);
     }
 
     Collection* Service::doNewDatabase()
@@ -472,11 +474,10 @@ namespace FdoSecrets
 
     void Service::doSwitchToChangeDatabaseSettings(DatabaseWidget* dbWidget)
     {
-        // switch selected to current
-        // unlock if needed
         if (dbWidget->isLocked()) {
-            m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
+            return;
         }
+        // switch selected to current
         m_databases->setCurrentWidget(dbWidget);
         m_databases->changeDatabaseSettings();
 
