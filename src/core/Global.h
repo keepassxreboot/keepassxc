@@ -20,6 +20,7 @@
 #ifndef KEEPASSX_GLOBAL_H
 #define KEEPASSX_GLOBAL_H
 
+#include <QString>
 #include <QtGlobal>
 
 #if defined(Q_OS_WIN)
@@ -41,6 +42,9 @@
 #else
 #define FILE_CASE_SENSITIVE Qt::CaseSensitive
 #endif
+
+static const auto TRUE_STR = QStringLiteral("true");
+static const auto FALSE_STR = QStringLiteral("false");
 
 template <typename T> struct AddConst
 {

@@ -63,8 +63,8 @@ public:
                   const QString& group,
                   const QString& groupUuid,
                   const QSharedPointer<Database>& selectedDb = {});
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url);
-    QList<Entry*> searchEntries(const QString& url, const StringPairList& keyList);
+    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
+    QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
     void convertAttributesToCustomData(const QSharedPointer<Database>& currentDb = {});
 
 public:
@@ -74,6 +74,7 @@ public:
     static const QString LEGACY_ASSOCIATE_KEY_PREFIX;
     static const QString OPTION_SKIP_AUTO_SUBMIT;
     static const QString OPTION_HIDE_ENTRY;
+    static const QString OPTION_ONLY_HTTP_AUTH;
     static const QString ADDITIONAL_URL;
 
 public slots:
@@ -130,7 +131,7 @@ private:
     sortPriority(const Entry* entry, const QString& host, const QString& submitUrl, const QString& baseSubmitUrl) const;
     bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
-    bool handleURL(const QString& entryUrl, const QString& hostname, const QString& url);
+    bool handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl);
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();

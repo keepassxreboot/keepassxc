@@ -48,4 +48,3 @@ const QSharedPointer<Database> DatabaseSettingsWidget::getDatabase() const
 {
     return m_db;
 }
-

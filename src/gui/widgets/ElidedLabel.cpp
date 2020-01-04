@@ -105,8 +105,10 @@ void ElidedLabel::updateElidedText()
         const QFontMetrics metrix(font());
         displayText = metrix.elidedText(m_rawText, m_elideMode, width() - 2);
     }
-    setText(m_url.isEmpty() ? displayText : htmlLinkTemplate.arg(m_url, displayText));
-    setOpenExternalLinks(!m_url.isEmpty());
+
+    bool hasUrl = !m_url.isEmpty();
+    setText(hasUrl ? htmlLinkTemplate.arg(m_url.toHtmlEscaped(), displayText) : displayText);
+    setOpenExternalLinks(!hasUrl);
 }
 
 void ElidedLabel::resizeEvent(QResizeEvent* event)

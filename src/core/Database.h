@@ -21,23 +21,22 @@
 
 #include <QDateTime>
 #include <QHash>
-#include <QObject>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QTimer>
 
 #include "config-keepassx.h"
 #include "crypto/kdf/AesKdf.h"
 #include "crypto/kdf/Kdf.h"
 #include "format/KeePass2.h"
-#include "keys/PasswordKey.h"
 #include "keys/CompositeKey.h"
+#include "keys/PasswordKey.h"
 
 class Entry;
 enum class EntryReferenceType;
 class FileWatcher;
 class Group;
 class Metadata;
-class QTimer;
 class QIODevice;
 
 struct DeletedObject
@@ -155,9 +154,6 @@ signals:
     void databaseDiscarded();
     void databaseFileChanged();
 
-private slots:
-    void startModifiedTimer();
-
 private:
     struct DatabaseData
     {
@@ -211,7 +207,7 @@ private:
     DatabaseData m_data;
     QPointer<Group> m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
-    QPointer<QTimer> m_timer;
+    QTimer m_modifiedTimer;
     QPointer<FileWatcher> m_fileWatcher;
     bool m_initialized = false;
     bool m_modified = false;

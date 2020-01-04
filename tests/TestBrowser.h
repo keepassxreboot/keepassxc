@@ -47,8 +47,11 @@ private slots:
     void testSubdomainsAndPaths();
     void testSortEntries();
     void testGetDatabaseGroups();
+    void testValidURLs();
 
 private:
+    QList<Entry*> createEntries(QStringList& urls, Group* root) const;
+
     QScopedPointer<BrowserAction> m_browserAction;
     QScopedPointer<BrowserService> m_browserService;
 };

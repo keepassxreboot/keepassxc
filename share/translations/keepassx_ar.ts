@@ -23,7 +23,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;إستكشاف المساهمين عبر GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;إستكشاف المساهمات عبر GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>شكر خاص من فريق KeePassXC يذهب إلى debfx لإنشاء KeePassX الأصلي.</translation>
+        <translation>شكر خاص من فريق KeePassXC إلى debfx لإنشاء KeePassX الأصلي.</translation>
     </message>
 </context>
 <context>
@@ -77,23 +77,23 @@
     </message>
     <message>
         <source>Icon only</source>
-        <translation type="unfinished"/>
+        <translation>الأيقونة فقط</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation type="unfinished"/>
+        <translation>الوصف بالكلمات فقط </translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation type="unfinished"/>
+        <translation>وصف حرفي بجانب الأيقونة</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation type="unfinished"/>
+        <translation>الوصف أسفل الأيقونة</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation type="unfinished"/>
+        <translation>تابع النمط</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>هل أنت متأكد من رغبتك في إعادة جميع الإعدادات العامة وإعدادات الأمن الى وضعها النمطي الأولي ؟</translation>
     </message>
 </context>
 <context>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>شغل تطبيق واحد فقط من KeePassXC</translation>
+        <translation>شغل نسخة واحدة فقط من تطبيق KeePassXC</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -132,7 +132,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>إحتفظ بنسخة من ملف قاعدة البيانات قبل الحفظ</translation>
+        <translation>عمل نسخة إحتياطية من ملف قاعدة البيانات قبل الحفظ</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -152,15 +152,15 @@
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>إدارة الإدخالات</translation>
+        <translation>إدارة ادخال البيانات</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>استخدم رمز المجموعة عند إنشاء الإدخال</translation>
+        <translation>استخدم شعار المجموعة عند إنشاء المدخلات</translation>
     </message>
     <message>
         <source>Hide the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>إخفاء إستعراض لوحة المدخلات  </translation>
     </message>
     <message>
         <source>General</source>
@@ -168,15 +168,15 @@
     </message>
     <message>
         <source>Hide toolbar (icons)</source>
-        <translation type="unfinished"/>
+        <translation>إخفاء شريط العُدد (الأيقونات)</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation type="unfinished"/>
+        <translation> تصغيرالتطبيق بدل الخروج منه </translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>اظهر أيقونة البرنامج في صينية النظام</translation>
+        <translation>اظهار أيقونة البرنامج في شريط واجهة النظام</translation>
     </message>
     <message>
         <source>Dark system tray icon</source>
@@ -188,7 +188,7 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>الطباعة التلقائية</translation>
+        <translation> نمط تلقائي</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -200,7 +200,7 @@
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>اسأل دائما قبل تنفيذ الطباعة التلقائية</translation>
+        <translation>السؤأل دائما قبل التغيير للنمط التلقائي</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut</source>
@@ -213,7 +213,7 @@
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>مل.ثانية</translation>
+        <translation>جزء الثانية</translation>
     </message>
     <message>
         <source>Auto-Type start delay</source>
@@ -221,15 +221,15 @@
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation type="unfinished"/>
+        <translation> شريط عُدد قابل للتحريك</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation> تذكُر قاعدة البيانات المستخدمة أخيراً</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation> عند بدء التشغيل إعادة فتح قواعد البيانات التي مفتوحة سابقاً</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
@@ -237,7 +237,7 @@
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation> فحص وجود تحديثات للبرامج عند بدء تشغيل التطبيق مرة واحدة  في الأسبوع </translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
@@ -249,39 +249,39 @@
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation> اللغة</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation> ( للتفعيل يرجى إعادة التشغيل ) </translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation> تصغيرنافذة التطبيق بعد فتح قاعدة البيانات</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation> تصغير البرنامج عند فتح رابط  URL  من النت </translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation> إخفاء نافذة البرنامج عند النسخ الى الحافظة </translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation> تصغير</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation> الإرجاع الى الخلفية </translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation> فوت الوقت لتنزيل أيقونة الشعارالمفضل</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation> الزمن بالثانية لفوت الإتصال لتنزيل أيقونة الموقع</translation>
     </message>
     <message>
         <source> sec</source>
@@ -290,38 +290,39 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation> نمط مفاتيح شريط العُدد </translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation> إستخدام بنط ذا مسافات أحادية في الملاحظات</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation> إختيار اللغة</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation> إعادة الإعدادات الى وضعها الأولي</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation> المختصر الى النمط-التلقائي العمومي</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation> تأخيرالطباعة لأحرف النمط-التلقائي
+ بأجزاء الثانية </translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation> تأخير بدء النمط-التلقائي بأجزاء الثانية</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>مهلة نفاد الوقت</translation>
+        <translation> نفاذ الوقت</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -334,11 +335,11 @@
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>أغلق قواعد البيانات بعد حالة عدم النشاط ل</translation>
+        <translation>أغلق قواعد البيانات بعد حالة عدم النشاط لـ</translation>
     </message>
     <message>
         <source> min</source>
-        <translation type="unfinished"/>
+        <translation> دقيقة</translation>
     </message>
     <message>
         <source>Forget TouchID after inactivity of</source>
@@ -354,7 +355,7 @@
     </message>
     <message>
         <source>Forget TouchID when session is locked or lid is closed</source>
-        <translation type="unfinished"/>
+        <translation> إنسى هوية البصمة عند قفل حصة التفاعل أو عند إغلاق الشاشة </translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
@@ -362,7 +363,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>أعد قفل قاعدة البيانات التي تم تأمينها سابقًا بعد تنفيذ الطباعة التلقائية</translation>
+        <translation>أعد قفل قاعدة البيانات التي تم تأمينها سابقًا بعدالتغيير للنمط التلقائي</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -370,15 +371,15 @@
     </message>
     <message>
         <source>Don&apos;t hide passwords when editing them</source>
-        <translation type="unfinished"/>
+        <translation> لا تخفي كلمات السر عند تعديلها </translation>
     </message>
     <message>
         <source>Don&apos;t use placeholder for empty password fields</source>
-        <translation type="unfinished"/>
+        <translation> لا تستعمل محددات أقواس أو مزدوجات لحقول كلمات السر الفارغة </translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation> اخفي كلمات السر في لوحة إستعراض المدخلات</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
@@ -390,28 +391,28 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation> استعمل خدمة  DuckDuckGo  لتنزيل أيقونات مواقع الإنترنت</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation> مسح لوحة الحفظ بالثواني</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation> المهلة الزمنية لعدم التفاعل لنسيان هوية البصمة</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation> المهلة الزنسة لقفل قواعد البيانات </translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation type="unfinished"/>
+        <translation> دقيقة</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation> مسح محددات البحث بعد مضي </translation>
     </message>
 </context>
 <context>
@@ -446,11 +447,12 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>إذن السماح مطلوب</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation> KeePassXC يطلب إذن السماح بالدخول لإنجاز التغييرات المبدئية وفق النمط-التلقائي . إذا كنت قد أعطيت الإذن بالسماح 
+ فقد يستوجب منك ذلك إعادة تشغيل  KeePassXC   </translation>
     </message>
 </context>
 <context>
@@ -491,18 +493,18 @@
     <name>AutoTypeMatchView</name>
     <message>
         <source>Copy &amp;username</source>
-        <translation>نسخ &amp;اسم المستخدم</translation>
+        <translation> نسخ و اسم المستخدم</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation type="unfinished"/>
+        <translation> نسخ و كلمة السر</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>إذن السماح مطلوب</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -513,11 +515,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>الطباعة التلقائية - KeePassXC</translation>
+        <translation>النمط التلقائي - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>حدد مدخل للطباعة التلقائية:</translation>
+        <translation>إختيار مدخلات الى  النمط التلقائي:</translation>
     </message>
     <message>
         <source>Search...</source>
@@ -550,31 +552,32 @@ Please select whether you want to allow access.</source>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation> أسمح بالدخول</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation> أمنع الدخول</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation type="unfinished"/>
+        <translation> متصفح KeePassXC  إحفظ المدخلات</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>  تمام</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>ألغ</translation>
+        <translation>ألغاء</translation>
     </message>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation type="unfinished"/>
+        <translation> لديك العديد من قواعد البيانات مفتوحة 
+الرجاء إختيار قاعدة البيانات الصحيحة لحفظ المسوغات </translation>
     </message>
 </context>
 <context>
@@ -597,19 +600,19 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Google Chrome</source>
-        <translation>&amp;Google Chrome</translation>
+        <translation>&amp;قوقل كروم</translation>
     </message>
     <message>
         <source>&amp;Firefox</source>
-        <translation>&amp;Firefox</translation>
+        <translation>&amp;فايرفوكس</translation>
     </message>
     <message>
         <source>&amp;Chromium</source>
-        <translation>&amp;Chromium</translation>
+        <translation>&amp;كروميوم</translation>
     </message>
     <message>
         <source>&amp;Vivaldi</source>
-        <translation>&amp;Vivaldi</translation>
+        <translation>&amp;فافيلادي</translation>
     </message>
     <message>
         <source>Show a &amp;notification when credentials are requested</source>
@@ -713,20 +716,20 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Tor Browser</source>
-        <translation type="unfinished"/>
+        <translation>متصفح تور</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation type="unfinished"/>
+        <translation> ملفات برامج </translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation type="unfinished"/>
+        <translation> جميع الملفات</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP &amp;Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation type="unfinished"/>
+        <translation> لا تطلب الإذن لصفحات النترنت العادية HTTP&amp; و عند الإذن الأساسي</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
@@ -742,7 +745,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation> متصفح &amp;Brave</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
@@ -3477,7 +3480,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"/>
+        <translation>  تمام</translation>
     </message>
     <message>
         <source>Already Exists</source>
@@ -4477,7 +4480,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Copy &amp;password</source>
-        <translation type="unfinished"/>
+        <translation> نسخ و كلمة السر</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>

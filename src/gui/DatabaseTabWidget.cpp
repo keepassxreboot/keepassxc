@@ -63,6 +63,8 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     connect(autoType(), SIGNAL(globalAutoTypeTriggered()), SLOT(performGlobalAutoType()));
     connect(autoType(), SIGNAL(autotypePerformed()), SLOT(relockPendingDatabase()));
     connect(autoType(), SIGNAL(autotypeRejected()), SLOT(relockPendingDatabase()));
+    connect(m_databaseOpenDialog.data(), &DatabaseOpenDialog::dialogFinished,
+            this, &DatabaseTabWidget::databaseUnlockDialogFinished);
     // clang-format on
 
 #ifdef Q_OS_MACOS
@@ -166,7 +168,8 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     for (int i = 0, c = count(); i < c; ++i) {
         auto* dbWidget = databaseWidgetFromIndex(i);
         Q_ASSERT(dbWidget);
-        if (dbWidget && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
+        if (dbWidget
+            && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
             dbWidget->performUnlockDatabase(password, keyfile);
             if (!inBackground) {
                 // switch to existing tab if file is already open

@@ -167,6 +167,7 @@ void EditEntryWidget::setupMain()
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
+    m_mainUi->urlEdit->enableVerifyMode();
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
@@ -201,7 +202,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
-    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(revealCurrentAttribute()));
+    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
@@ -271,9 +272,14 @@ void EditEntryWidget::setupBrowser()
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
 
+        // Use a custom item delegate to align the icon to the right side
+        auto iconDelegate = new URLModelIconDelegate(m_browserUi->additionalURLsView);
+        m_browserUi->additionalURLsView->setItemDelegate(iconDelegate);
+
         // clang-format off
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
+        connect(m_browserUi->onlyHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(updateBrowserModified()));
         connect(m_browserUi->addURLButton, SIGNAL(clicked()), SLOT(insertURL()));
         connect(m_browserUi->removeURLButton, SIGNAL(clicked()), SLOT(removeCurrentURL()));
         connect(m_browserUi->editURLButton, SIGNAL(clicked()), SLOT(editCurrentURL()));
@@ -300,8 +306,10 @@ void EditEntryWidget::updateBrowser()
 
     auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
     auto hide = m_browserUi->hideEntryCheckbox->isChecked();
-    m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? QString("true") : QString("false")));
-    m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? QString("true") : QString("false")));
+    auto onlyHttpAuth = m_browserUi->onlyHttpAuthCheckbox->isChecked();
+    m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? TRUE_STR : FALSE_STR));
+    m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? TRUE_STR : FALSE_STR));
+    m_customData->set(BrowserService::OPTION_ONLY_HTTP_AUTH, (onlyHttpAuth ? TRUE_STR : FALSE_STR));
 }
 
 void EditEntryWidget::insertURL()
@@ -465,6 +473,7 @@ void EditEntryWidget::setupEntryUpdate()
     if (config()->get("Browser/Enabled", false).toBool()) {
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->onlyHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->addURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->removeURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->editURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
@@ -959,16 +968,23 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #ifdef WITH_XC_BROWSER
     if (m_customData->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
         // clang-format off
-        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == "true");
+        m_browserUi->skipAutoSubmitCheckbox->setChecked(m_customData->value(BrowserService::OPTION_SKIP_AUTO_SUBMIT) == TRUE_STR);
         // clang-format on
     } else {
         m_browserUi->skipAutoSubmitCheckbox->setChecked(false);
     }
 
     if (m_customData->contains(BrowserService::OPTION_HIDE_ENTRY)) {
-        m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY) == "true");
+        m_browserUi->hideEntryCheckbox->setChecked(m_customData->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR);
     } else {
         m_browserUi->hideEntryCheckbox->setChecked(false);
+    }
+
+    if (m_customData->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)) {
+        m_browserUi->onlyHttpAuthCheckbox->setChecked(m_customData->value(BrowserService::OPTION_ONLY_HTTP_AUTH)
+                                                      == TRUE_STR);
+    } else {
+        m_browserUi->onlyHttpAuthCheckbox->setChecked(false);
     }
 
     m_browserUi->addURLButton->setEnabled(!m_history);
@@ -1297,6 +1313,7 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
     // Block signals to prevent modified being set
     m_advancedUi->protectAttributeButton->blockSignals(true);
     m_advancedUi->attributesEdit->blockSignals(true);
+    m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
 
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
@@ -1348,7 +1365,7 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
     }
 }
 
-void EditEntryWidget::revealCurrentAttribute()
+void EditEntryWidget::toggleCurrentAttributeVisibility()
 {
     if (!m_advancedUi->attributesEdit->isEnabled()) {
         QModelIndex index = m_advancedUi->attributesView->currentIndex();
@@ -1359,6 +1376,10 @@ void EditEntryWidget::revealCurrentAttribute()
             m_advancedUi->attributesEdit->setEnabled(true);
             m_advancedUi->attributesEdit->blockSignals(oldBlockSignals);
         }
+        m_advancedUi->revealAttributeButton->setText(tr("Hide"));
+    } else {
+        protectCurrentAttribute(true);
+        m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
     }
 }
 

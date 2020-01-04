@@ -21,6 +21,7 @@
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
+#include "fdosecrets/objects/Session.h"
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -29,6 +30,7 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QFileInfo>
+#include <QRegularExpression>
 
 namespace FdoSecrets
 {
@@ -46,6 +48,14 @@ namespace FdoSecrets
         // also remember to clear/populate the database when lock state changes.
         connect(backend, &DatabaseWidget::databaseUnlocked, this, &Collection::onDatabaseLockChanged);
         connect(backend, &DatabaseWidget::databaseLocked, this, &Collection::onDatabaseLockChanged);
+
+        // get notified whenever unlock db dialog finishes
+        connect(parent, &Service::doneUnlockDatabaseInDialog, this, [this](bool accepted, DatabaseWidget* dbWidget) {
+            if (!dbWidget || dbWidget != m_backend) {
+                return;
+            }
+            emit doneUnlockCollection(accepted);
+        });
 
         reloadBackend();
     }
@@ -241,6 +251,11 @@ namespace FdoSecrets
             terms << attributeToTerm(it.key(), it.value());
         }
 
+        // empty terms causes EntrySearcher returns everything
+        if (terms.isEmpty()) {
+            return QList<Item*>{};
+        }
+
         QList<Item*> items;
         const auto foundEntries = EntrySearcher().search(terms, m_exposedGroup);
         items.reserve(foundEntries.size());
@@ -267,7 +282,7 @@ namespace FdoSecrets
         const auto useWildcards = false;
         const auto exactMatch = true;
         const auto caseSensitive = true;
-        term.regex = Tools::convertToRegex(value, useWildcards, exactMatch, caseSensitive);
+        term.regex = Tools::convertToRegex(QRegularExpression::escape(value), useWildcards, exactMatch, caseSensitive);
 
         return term;
     }
@@ -284,8 +299,13 @@ namespace FdoSecrets
             return ret;
         }
 
+        if (!pathToObject<Session>(secret.session)) {
+            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+        }
+
         prompt = nullptr;
 
+        bool newlyCreated = true;
         Item* item = nullptr;
         QString itemPath;
         StringStringMap attributes;
@@ -303,6 +323,7 @@ namespace FdoSecrets
             }
             if (!existings.value().isEmpty() && replace) {
                 item = existings.value().front();
+                newlyCreated = false;
             }
         }
 
@@ -328,15 +349,25 @@ namespace FdoSecrets
 
             // when creation finishes in backend, we will already have item
             item = m_entryToItem.value(entry, nullptr);
-            Q_ASSERT(item);
+
+            if (!item) {
+                // may happen if entry somehow ends up in recycle bin
+                return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
+            }
         }
 
         ret = item->setProperties(properties);
         if (ret.isError()) {
+            if (newlyCreated) {
+                item->doDelete();
+            }
             return ret;
         }
         ret = item->setSecret(secret);
         if (ret.isError()) {
+            if (newlyCreated) {
+                item->doDelete();
+            }
             return ret;
         }
 
@@ -439,7 +470,7 @@ namespace FdoSecrets
 
         auto newUuid = FdoSecrets::settings()->exposedGroup(m_backend->database());
         auto newGroup = m_backend->database()->rootGroup()->findGroupByUuid(newUuid);
-        if (!newGroup) {
+        if (!newGroup || inRecycleBin(newGroup)) {
             // no exposed group, delete self
             doDelete();
             return;
@@ -451,14 +482,20 @@ namespace FdoSecrets
         m_exposedGroup = newGroup;
 
         // Attach signal to update exposed group settings if the group was removed.
-        // The lifetime of the connection is bound to the database object, because
-        // in Database::~Database, groups are also deleted, but we don't want to
-        // trigger this.
-        // This rely on the fact that QObject disconnects signals BEFORE deleting
-        // children.
+        //
+        // When the group object is normally deleted due to ~Database, the databaseReplaced
+        // signal should be first emitted, and we will clean up connection in reloadDatabase,
+        // so this handler won't be triggered.
         QPointer<Database> db = m_backend->database().data();
-        connect(m_exposedGroup.data(), &Group::groupAboutToRemove, db, [db](Group* toBeRemoved) {
-            if (!db) {
+        connect(m_exposedGroup.data(), &Group::groupAboutToRemove, this, [this](Group* toBeRemoved) {
+            if (backendLocked()) {
+                return;
+            }
+            auto db = m_backend->database();
+            if (toBeRemoved->database() != db) {
+                // should not happen, but anyway.
+                // somehow our current database has been changed, and the old group is being deleted
+                // possibly logic changes in replaceDatabase.
                 return;
             }
             auto uuid = FdoSecrets::settings()->exposedGroup(db);
@@ -468,10 +505,17 @@ namespace FdoSecrets
                 FdoSecrets::settings()->setExposedGroup(db, {});
             }
         });
+        // Another possibility is the group being moved to recycle bin.
+        connect(m_exposedGroup.data(), &Group::groupModified, this, [this]() {
+            if (inRecycleBin(m_exposedGroup->parentGroup())) {
+                // reset the exposed group to none
+                FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
+            }
+        });
 
         // Monitor exposed group settings
         connect(m_backend->database()->metadata()->customData(), &CustomData::customDataModified, this, [this]() {
-            if (!m_exposedGroup || !m_backend) {
+            if (!m_exposedGroup || backendLocked()) {
                 return;
             }
             if (m_exposedGroup->uuid() == FdoSecrets::settings()->exposedGroup(m_backend->database())) {
@@ -590,9 +634,13 @@ namespace FdoSecrets
 
     void Collection::cleanupConnections()
     {
+        m_backend->database()->metadata()->customData()->disconnect(this);
         if (m_exposedGroup) {
-            m_exposedGroup->disconnect(this);
+            for (const auto group : m_exposedGroup->groupsRecursive(true)) {
+                group->disconnect(this);
+            }
         }
+
         m_items.clear();
     }
 
@@ -646,17 +694,21 @@ namespace FdoSecrets
     {
         Q_ASSERT(m_backend);
 
-        if (!m_backend->database()->metadata()->recycleBin()) {
+        if (!group) {
+            // the root group's parent is nullptr, we treat it as not in recycle bin.
             return false;
         }
 
-        while (group) {
-            if (group->uuid() == m_backend->database()->metadata()->recycleBin()->uuid()) {
-                return true;
-            }
-            group = group->parentGroup();
+        if (!m_backend->database()->metadata()) {
+            return false;
         }
-        return false;
+
+        auto recycleBin = m_backend->database()->metadata()->recycleBin();
+        if (!recycleBin) {
+            return false;
+        }
+
+        return group->uuid() == recycleBin->uuid() || group->isRecycled();
     }
 
     bool Collection::inRecycleBin(Entry* entry) const

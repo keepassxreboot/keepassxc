@@ -30,8 +30,7 @@ const QCommandLineOption Merge::SameCredentialsOption =
                        QObject::tr("Use the same credentials for both database files."));
 
 const QCommandLineOption Merge::KeyFileFromOption =
-    QCommandLineOption(QStringList() << "k"
-                                     << "key-file-from",
+    QCommandLineOption(QStringList() << "key-file-from",
                        QObject::tr("Key file of the database to merge from."),
                        QObject::tr("path"));
 

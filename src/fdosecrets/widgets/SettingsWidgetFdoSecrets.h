@@ -21,7 +21,9 @@
 #include <QScopedPointer>
 #include <QWidget>
 
-class QTableWidgetItem;
+class QAbstractItemView;
+class QItemEditorCreatorBase;
+class QItemEditorFactory;
 
 namespace FdoSecrets
 {
@@ -48,28 +50,12 @@ public slots:
     void loadSettings();
     void saveSettings();
 
-private slots:
-    void populateSessions(bool enabled);
-    void populateDatabases(bool enabled);
-    void addSessionRow(FdoSecrets::Session* sess);
-    void removeSessionRow(FdoSecrets::Session* sess);
-    void addDatabaseRow(FdoSecrets::Collection* coll);
-    void removeDatabaseRow(FdoSecrets::Collection* coll);
-
-    void updateTables(bool enabled);
-
-protected:
-    void showEvent(QShowEvent* event) override;
-
-    void hideEvent(QHideEvent* event) override;
-
 private:
-    QWidget* createManageButtons(FdoSecrets::Collection* coll);
-
-    void updateExposedGroupItem(QTableWidgetItem* item, FdoSecrets::Collection* coll);
+    void setupView(QAbstractItemView* view, int manageColumn, int editorTypeId, QItemEditorCreatorBase* creator);
 
 private:
     QScopedPointer<Ui::SettingsWidgetFdoSecrets> m_ui;
+    QScopedPointer<QItemEditorFactory> m_factory;
     FdoSecretsPlugin* m_plugin;
 };
 

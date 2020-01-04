@@ -54,6 +54,7 @@ static const QString KEEPASSHTTP_GROUP_NAME = QStringLiteral("KeePassHttp Passwo
 // Extra entry related options saved in custom data
 const QString BrowserService::OPTION_SKIP_AUTO_SUBMIT = QStringLiteral("BrowserSkipAutoSubmit");
 const QString BrowserService::OPTION_HIDE_ENTRY = QStringLiteral("BrowserHideEntry");
+const QString BrowserService::OPTION_ONLY_HTTP_AUTH = QStringLiteral("BrowserOnlyHttpAuth");
 // Multiple URL's
 const QString BrowserService::ADDITIONAL_URL = QStringLiteral("KP2A_URL");
 
@@ -380,9 +381,14 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     // Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    for (auto* entry : searchEntries(url, keyList)) {
+    for (auto* entry : searchEntries(url, submitUrl, keyList)) {
         if (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
-            && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == "true") {
+            && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR) {
+            continue;
+        }
+
+        if (!httpAuth && entry->customData()->contains(BrowserService::OPTION_ONLY_HTTP_AUTH)
+            && entry->customData()->value(BrowserService::OPTION_ONLY_HTTP_AUTH) == TRUE_STR) {
             continue;
         }
 
@@ -583,7 +589,7 @@ BrowserService::ReturnValue BrowserService::updateEntry(const QString& id,
 }
 
 QList<Entry*>
-BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& hostname, const QString& url)
+BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl)
 {
     QList<Entry*> entries;
     auto* rootGroup = db->rootGroup();
@@ -601,20 +607,15 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
                 continue;
             }
 
-            auto domain = baseDomain(hostname);
-
             // Search for additional URL's starting with KP2A_URL
-            if (entry->attributes()->keys().contains(ADDITIONAL_URL)) {
-                for (const auto& key : entry->attributes()->keys()) {
-                    if (key.startsWith(ADDITIONAL_URL)
-                        && handleURL(entry->attributes()->value(key), domain, url)) {
-                        entries.append(entry);
-                        continue;
-                    }
+            for (const auto& key : entry->attributes()->keys()) {
+                if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)) {
+                    entries.append(entry);
+                    continue;
                 }
             }
 
-            if (!handleURL(entry->url(), domain, url)) {
+            if (!handleURL(entry->url(), url, submitUrl)) {
                 continue;
             }
 
@@ -625,7 +626,7 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
     return entries;
 }
 
-QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPairList& keyList)
+QList<Entry*> BrowserService::searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList)
 {
     // Check if database is connected with KeePassXC-Browser
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
@@ -662,7 +663,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const StringPair
     QList<Entry*> entries;
     do {
         for (const auto& db : databases) {
-            entries << searchEntries(db, hostname, url);
+            entries << searchEntries(db, url, submitUrl);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
 
@@ -855,7 +856,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     }
 
     if (entry->isExpired()) {
-        res["expired"] = "true";
+        res["expired"] = TRUE_STR;
     }
 
     if (entry->customData()->contains(BrowserService::OPTION_SKIP_AUTO_SUBMIT)) {
@@ -1000,7 +1001,7 @@ bool BrowserService::removeFirstDomain(QString& hostname)
     return false;
 }
 
-bool BrowserService::handleURL(const QString& entryUrl, const QString& hostname, const QString& url)
+bool BrowserService::handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl)
 {
     if (entryUrl.isEmpty()) {
         return false;
@@ -1017,31 +1018,36 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& hostname,
         }
     }
 
+    // Make a direct compare if a local file is used
+    if (url.contains("file://")) {
+        return entryUrl == submitUrl;
+    }
+
     // URL host validation fails
-    if (browserSettings()->matchUrlScheme() && entryQUrl.host().isEmpty()) {
+    if (entryQUrl.host().isEmpty()) {
         return false;
     }
 
     // Match port, if used
-    QUrl qUrl(url);
-    if (entryQUrl.port() > 0 && entryQUrl.port() != qUrl.port()) {
+    QUrl siteQUrl(url);
+    if (entryQUrl.port() > 0 && entryQUrl.port() != siteQUrl.port()) {
         return false;
     }
 
     // Match scheme
-    if (browserSettings()->matchUrlScheme() && !entryQUrl.scheme().isEmpty() && entryQUrl.scheme().compare(qUrl.scheme()) != 0) {
+    if (browserSettings()->matchUrlScheme() && !entryQUrl.scheme().isEmpty()
+        && entryQUrl.scheme().compare(siteQUrl.scheme()) != 0) {
         return false;
     }
 
     // Check for illegal characters
     QRegularExpression re("[<>\\^`{|}]");
-    auto match = re.match(entryUrl);
-    if (match.hasMatch()) {
+    if (re.match(entryUrl).hasMatch()) {
         return false;
     }
 
     // Filter to match hostname in URL field
-    if (entryQUrl.host().endsWith(hostname)) {
+    if (siteQUrl.host().endsWith(entryQUrl.host())) {
         return true;
     }
 

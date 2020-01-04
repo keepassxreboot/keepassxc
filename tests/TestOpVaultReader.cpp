@@ -49,24 +49,24 @@ QPair<QString, QString>* split1PTextExportKV(QByteArray& line)
     return new QPair<QString, QString>(k, v);
 }
 
-QJsonArray* read1PasswordTextExport(QFile& f)
+QSharedPointer<QJsonArray> read1PasswordTextExport(QFile& f)
 {
-    auto result = new QJsonArray;
-    auto current = new QJsonObject;
-
     if (!f.open(QIODevice::ReadOnly)) {
         qCritical("Unable to open your text export file for reading");
-        return nullptr;
+        return {};
     }
+
+    auto result = QSharedPointer<QJsonArray>::create();
+    QJsonObject current;
 
     while (!f.atEnd()) {
         auto line = f.readLine(1024);
 
         if (line.size() == 1 and line[0] == '\n') {
-            if (!current->isEmpty()) {
-                result->append(*current);
+            if (!current.isEmpty()) {
+                result->append(current);
             }
-            current = new QJsonObject;
+            current = QJsonObject();
             continue;
         }
         const auto kv = split1PTextExportKV(line);
@@ -95,14 +95,14 @@ QJsonArray* read1PasswordTextExport(QFile& f)
                 }
             }
             auto v = lines.join("");
-            (*current)[k] = v;
+            current[k] = v;
         } else {
-            (*current)[k] = kv->second;
+            current[k] = kv->second;
         }
         delete kv;
     }
-    if (!current->isEmpty()) {
-        result->append(*current);
+    if (!current.isEmpty()) {
+        result->append(current);
     }
     f.close();
 
@@ -120,10 +120,9 @@ void TestOpVaultReader::initTestCase()
     m_password = "freddy";
 
     QFile testData(m_opVaultTextExportPath);
-    QJsonArray* data = read1PasswordTextExport(testData);
+    auto data = read1PasswordTextExport(testData);
     QVERIFY(data);
     QCOMPARE(data->size(), 27);
-    delete data;
 
     m_categoryMap.insert("001", "Login");
     m_categoryMap.insert("002", "Credit Card");
@@ -149,9 +148,9 @@ void TestOpVaultReader::testReadIntoDatabase()
 {
     QDir opVaultDir(m_opVaultPath);
 
-    auto reader = new OpVaultReader();
-    auto db = reader->readDatabase(opVaultDir, m_password);
-    QVERIFY2(!reader->hasError(), qPrintable(reader->errorString()));
+    OpVaultReader reader;
+    QScopedPointer<Database> db(reader.readDatabase(opVaultDir, m_password));
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
     QVERIFY(db);
     QVERIFY(!db->children().isEmpty());
 
@@ -179,7 +178,6 @@ void TestOpVaultReader::testReadIntoDatabase()
         QUuid u = Tools::hexToUuid(value["uuid"].toString());
         objectsByUuid[u] = value;
     }
-    delete testData;
     QCOMPARE(objectsByUuid.size(), 27);
 
     for (QUuid u : objectsByUuid.keys()) {
@@ -240,11 +238,11 @@ void TestOpVaultReader::testKeyDerivation()
 
 void TestOpVaultReader::testBandEntry1()
 {
-    auto reader = new OpVaultReader();
+    OpVaultReader reader;
     QByteArray json(R"({"hello": "world"})");
     QJsonDocument doc = QJsonDocument::fromJson(json);
     QJsonObject data;
     QByteArray entryKey;
     QByteArray entryHmacKey;
-    QVERIFY(!reader->decryptBandEntry(doc.object(), data, entryKey, entryHmacKey));
+    QVERIFY(!reader.decryptBandEntry(doc.object(), data, entryKey, entryHmacKey));
 }

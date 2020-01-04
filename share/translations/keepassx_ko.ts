@@ -450,7 +450,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>항목별 자동 입력을 사용하려면 KeePassXC에 접근성 권한을 허용해야 합니다. 권한을 이미 허용했다면 KeePassXC를 다시 시작해 보십시오.</translation>
     </message>
 </context>
 <context>
@@ -506,7 +506,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>항목별 자동 입력을 사용하려면 KeePassXC에 접근성 및 화면 녹화 권한을 허용해야 합니다. 화면 녹화 권한은 창 제목과 항목을 찾기 위해서 필요합니다. 권한을 이미 허용했다면 KeePassXC를 다시 시작해 보십시오.</translation>
     </message>
 </context>
 <context>
@@ -878,7 +878,11 @@ Would you like to migrate your existing settings now?</source>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation type="unfinished"/>
+        <translation>다음 데이터베이스 연결 요청을 받았습니다:
+%1
+
+데이터베이스 연결을 식별할 수 있는 이름이나 ID를 입력하십시오. 예:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -1211,11 +1215,12 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;&lt;strong&gt;YubiKey&lt;/strong&gt;나 &lt;strong&gt;OnlyKey&lt;/strong&gt;와 같은 하드웨어 키의 슬롯을 HMAC-SHA1로 설정 시 사용할 수 있습니다.&lt;/p&gt;
+&lt;p&gt;더 많은 정보를 보려면 누르십시오...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;데이터베이스 보안 향상을 위하여 마스터 암호 외에도 비밀 파일을 사용할 수 있습니다. 데이터베이스 보안 설정에서 비밀 파일을 생성할 수 있습니다.&lt;/p&gt;&lt;p&gt;이 파일은 *.kdbx 데이터베이스 파일이 &lt;strong&gt;아닙니다!&lt;/strong&gt;&lt;br&gt;만약 키 파일이 없다면 이 필드를 비워 두십시오.&lt;/p&gt;&lt;p&gt;더 많은 정보를 보려면 누르십시오...&lt;/p&gt; </translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1881,7 +1886,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated...</source>
-        <translation type="unfinished"/>
+        <translation>데이터베이스 통계를 계산하는 동안 잠시 기다려 주십시오...</translation>
     </message>
 </context>
 <context>
@@ -6322,7 +6327,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>보호된 속성을 평문으로 표시합니다.</translation>
     </message>
 </context>
 <context>

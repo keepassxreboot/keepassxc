@@ -47,7 +47,8 @@ namespace FdoSecrets
         , m_insdieEnsureDefaultAlias(false)
         , m_serviceWatcher(nullptr)
     {
-        registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this));
+        connect(
+            m_databases, &DatabaseTabWidget::databaseUnlockDialogFinished, this, &Service::doneUnlockDatabaseInDialog);
     }
 
     Service::~Service()
@@ -63,6 +64,8 @@ namespace FdoSecrets
                            .arg(QLatin1Literal(DBUS_SERVICE_SECRET)));
             return false;
         }
+
+        registerWithPath(QStringLiteral(DBUS_PATH_SECRETS), new ServiceAdaptor(this));
 
         // Connect to service unregistered signal
         m_serviceWatcher.reset(new QDBusServiceWatcher());
@@ -93,7 +96,24 @@ namespace FdoSecrets
 
     void Service::onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal)
     {
+        // The Collection will monitor the database's exposed group.
+        // When the Collection finds that no exposed group, it will delete itself.
+        // Thus the service also needs to monitor it and recreate the collection if the user changes
+        // from no exposed to exposed something.
+        if (!dbWidget->isLocked()) {
+            monitorDatabaseExposedGroup(dbWidget);
+        }
+        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [this, dbWidget]() {
+            monitorDatabaseExposedGroup(dbWidget);
+        });
+
         auto coll = new Collection(this, dbWidget);
+        // Creation may fail if the database is not exposed.
+        // This is okay, because we monitor the expose settings above
+        if (!coll->isValid()) {
+            coll->deleteLater();
+            return;
+        }
 
         m_collections << coll;
         m_dbToCollection[dbWidget] = coll;
@@ -125,15 +145,6 @@ namespace FdoSecrets
             m_collections.removeAll(coll);
             m_dbToCollection.remove(coll->backend());
             emit collectionDeleted(coll);
-        });
-
-        // a special case: the database changed from no expose to expose something.
-        // in this case, there is no collection out there monitoring it, so create a new collection
-        if (!dbWidget->isLocked()) {
-            monitorDatabaseExposedGroup(dbWidget);
-        }
-        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [this, dbWidget]() {
-            monitorDatabaseExposedGroup(dbWidget);
         });
 
         if (emitSignal) {
@@ -438,9 +449,9 @@ namespace FdoSecrets
         return m_sessions;
     }
 
-    void Service::doCloseDatabase(DatabaseWidget* dbWidget)
+    bool Service::doCloseDatabase(DatabaseWidget* dbWidget)
     {
-        m_databases->closeDatabaseTab(dbWidget);
+        return m_databases->closeDatabaseTab(dbWidget);
     }
 
     Collection* Service::doNewDatabase()
@@ -463,11 +474,10 @@ namespace FdoSecrets
 
     void Service::doSwitchToChangeDatabaseSettings(DatabaseWidget* dbWidget)
     {
-        // switch selected to current
-        // unlock if needed
         if (dbWidget->isLocked()) {
-            m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
+            return;
         }
+        // switch selected to current
         m_databases->setCurrentWidget(dbWidget);
         m_databases->changeDatabaseSettings();
 

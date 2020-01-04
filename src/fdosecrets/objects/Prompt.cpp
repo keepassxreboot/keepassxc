@@ -93,9 +93,9 @@ namespace FdoSecrets
 
         MessageBox::OverrideParent override(findWindow(windowId));
         // only need to delete in backend, collection will react itself.
-        service()->doCloseDatabase(m_collection->backend());
+        auto accepted = service()->doCloseDatabase(m_collection->backend());
 
-        emit completed(false, {});
+        emit completed(!accepted, {});
 
         return {};
     }
@@ -189,17 +189,42 @@ namespace FdoSecrets
 
         MessageBox::OverrideParent override(findWindow(windowId));
 
-        QList<QDBusObjectPath> unlocked;
         for (const auto& c : asConst(m_collections)) {
             if (c) {
+                connect(c, &Collection::doneUnlockCollection, this, &UnlockCollectionsPrompt::collectionUnlockFinished);
                 c->doUnlock();
-                unlocked << c->objectPath();
             }
         }
 
-        emit completed(false, QVariant::fromValue(unlocked));
-
         return {};
+    }
+
+    void UnlockCollectionsPrompt::collectionUnlockFinished(bool accepted)
+    {
+        auto coll = qobject_cast<Collection*>(sender());
+        if (!coll) {
+            return;
+        }
+
+        if (!m_collections.contains(coll)) {
+            // should not happen
+            coll->disconnect(this);
+            return;
+        }
+
+        // one shot
+        coll->disconnect(this);
+
+        if (accepted) {
+            m_unlocked << coll->objectPath();
+        } else {
+            m_numRejected += 1;
+        }
+
+        // if we've get all
+        if (m_numRejected + m_unlocked.size() == m_collections.size()) {
+            emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
+        }
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)

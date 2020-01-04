@@ -60,7 +60,7 @@ SearchWidget::SearchWidget(QWidget* parent)
                                              .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
     m_ui->searchEdit->installEventFilter(this);
 
-    m_searchMenu = new QMenu();
+    m_searchMenu = new QMenu(this);
     m_actionCaseSensitive = m_searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);

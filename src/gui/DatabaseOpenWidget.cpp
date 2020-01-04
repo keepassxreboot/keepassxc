@@ -204,9 +204,14 @@ void DatabaseOpenWidget::openDatabase()
 
     m_db.reset(new Database());
     QString error;
+
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+    m_ui->passwordFormFrame->setEnabled(false);
+    QCoreApplication::processEvents();
     bool ok = m_db->open(m_filename, masterKey, &error, false);
     QApplication::restoreOverrideCursor();
+    m_ui->passwordFormFrame->setEnabled(true);
+
     if (!ok) {
         if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
             QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
@@ -370,9 +375,11 @@ void DatabaseOpenWidget::browseKeyFile()
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
 
     if (QFileInfo(filename).canonicalFilePath() == QFileInfo(m_filename).canonicalFilePath()) {
-        MessageBox::warning(this,  tr("Cannot use database file as key file"),
-            tr("You cannot use your database file as a key file.\nIf you do not have a key file, please leave the field empty."),
-            MessageBox::Button::Ok);
+        MessageBox::warning(this,
+                            tr("Cannot use database file as key file"),
+                            tr("You cannot use your database file as a key file.\nIf you do not have a key file, "
+                               "please leave the field empty."),
+                            MessageBox::Button::Ok);
         filename = "";
     }
 

@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Kopier til utklippstavla</translation>
+        <translation>Kopier til utklippstavle</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
@@ -97,11 +97,11 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation type="unfinished"/>
+        <translation>Tilbakestill innstillinger?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Er du sikker på at du vil tilbakestille alle generelle og sikkerhetsinnstillinger til standard?</translation>
     </message>
 </context>
 <context>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Språk:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Minimer</translation>
     </message>
     <message>
         <source>Drop to background</source>
@@ -298,7 +298,7 @@
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Valg av språk</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>Tøm søket etter</translation>
     </message>
 </context>
 <context>
@@ -446,7 +446,7 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tillatelse kreves</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -502,7 +502,7 @@
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tillatelse kreves</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
@@ -550,7 +550,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>Gi tilgang</translation>
     </message>
     <message>
         <source>Deny access</source>
@@ -743,7 +743,7 @@ Vennligst velg riktig database for å lagre legitimasjon.</translation>
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Brave</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
@@ -1124,15 +1124,15 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Låse opp KeePassXC Database</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Oppgi passord:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Passord felt</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -1191,7 +1191,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Prøv igjen med tomt passord</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
@@ -1726,7 +1726,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Fortsett uten passord</translation>
     </message>
 </context>
 <context>
@@ -2550,7 +2550,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Passord felt</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -2826,7 +2826,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Passord felt</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -4555,7 +4555,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Passord generator</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4906,7 +4906,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Passordene er ikke like</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
@@ -4941,7 +4941,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Passord felt</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
@@ -6248,7 +6248,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Skriv inn passord for å låse opp %1:</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>

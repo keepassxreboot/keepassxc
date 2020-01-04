@@ -3462,7 +3462,7 @@ Det kan få de påvirkede plugins til at svigte.</translation>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Download faviconer</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4556,27 +4556,27 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Eksportér</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Søg efter opdateringer ...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Download alle faviconer</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Sortér &amp;A-Å</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Sortér &amp;Å-A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Adgangskodegenerator</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4584,19 +4584,19 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Eksportér til HTML-fil ...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>1Password-boks ...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Importér en 1Password-boks</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kom godt i gang</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
@@ -4604,7 +4604,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Onlinehjælp ...</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
@@ -4612,7 +4612,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Brugerguide</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
@@ -4620,7 +4620,7 @@ Forvent nogle fejl og mindre problemer. Denne version er ikke beregnet til produ
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tastaturgenveje</translation>
     </message>
 </context>
 <context>
@@ -7077,7 +7077,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>Importér fra 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>

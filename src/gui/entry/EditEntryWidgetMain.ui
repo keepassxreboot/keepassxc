@@ -30,7 +30,7 @@
    <item row="5" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <item>
-      <widget class="QLineEdit" name="urlEdit">
+      <widget class="URLEdit" name="urlEdit">
        <property name="accessibleName">
         <string>Url field</string>
        </property>
@@ -254,6 +254,12 @@
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/PasswordEdit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>URLEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/URLEdit.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

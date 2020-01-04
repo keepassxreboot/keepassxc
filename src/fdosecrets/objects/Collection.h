@@ -71,8 +71,15 @@ namespace FdoSecrets
         void aliasAdded(const QString& alias);
         void aliasRemoved(const QString& alias);
 
+        void doneUnlockCollection(bool accepted);
+
     public:
         DBusReturn<void> setProperties(const QVariantMap& properties);
+
+        bool isValid() const
+        {
+            return backend();
+        }
 
         DBusReturn<void> removeAlias(QString alias);
         DBusReturn<void> addAlias(QString alias);
@@ -106,6 +113,7 @@ namespace FdoSecrets
     private slots:
         void onDatabaseLockChanged();
         void onDatabaseExposedGroupChanged();
+        // force reload info from backend, potentially delete self
         void reloadBackend();
 
     private:

@@ -36,6 +36,7 @@ endif (CCACHE_FOUND)
 
 # Support Visual Studio Code
 include(CMakeToolsHelpers OPTIONAL)
+include(FeatureSummary)
 
 include(CheckCCompilerFlag)
 include(CheckCXXCompilerFlag)
@@ -94,7 +95,7 @@ endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "5")
-set(KEEPASSXC_VERSION_PATCH "1")
+set(KEEPASSXC_VERSION_PATCH "2")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
 set(OVERRIDE_VERSION "" CACHE STRING "Override the KeePassXC Version for Snapshot builds")
 
@@ -299,6 +300,9 @@ endif()
 
 if(WITH_DEV_BUILD)
     add_definitions(-DQT_DEPRECATED_WARNINGS -DGCRYPT_NO_DEPRECATED)
+else()
+    add_definitions(-DQT_NO_DEPRECATED_WARNINGS)
+    add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
 endif()
 
 if(MINGW)
@@ -464,8 +468,6 @@ if(UNIX)
 endif()
 
 include_directories(SYSTEM ${GCRYPT_INCLUDE_DIR} ${ZLIB_INCLUDE_DIR})
-
-include(FeatureSummary)
 
 add_subdirectory(src)
 add_subdirectory(share)

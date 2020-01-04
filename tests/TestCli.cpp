@@ -23,13 +23,13 @@
 #include "core/Global.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
-#include "keys/drivers/YubiKey.h"
 #include "format/Kdbx3Reader.h"
 #include "format/Kdbx3Writer.h"
 #include "format/Kdbx4Reader.h"
 #include "format/Kdbx4Writer.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2.h"
+#include "keys/drivers/YubiKey.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
@@ -1420,6 +1420,107 @@ void TestCli::testMerge()
     mergeCmd.execute({"merge", "-q", sourceFile.fileName(), sourceFile.fileName()});
     m_stdoutFile->seek(pos);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+}
+
+void TestCli::testMergeWithKeys()
+{
+    Create createCmd;
+    QVERIFY(!createCmd.name.isEmpty());
+    QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
+
+    Merge mergeCmd;
+    QVERIFY(!mergeCmd.name.isEmpty());
+    QVERIFY(mergeCmd.getDescriptionLine().contains(mergeCmd.name));
+
+    Kdbx4Writer writer;
+    Kdbx4Reader reader;
+
+    QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+
+    QString sourceDatabaseFilename = testDir->path() + "/testSourceDatabase.kdbx";
+    QString sourceKeyfilePath = testDir->path() + "/testSourceKeyfile.txt";
+
+    QString targetDatabaseFilename = testDir->path() + "/testTargetDatabase.kdbx";
+    QString targetKeyfilePath = testDir->path() + "/testTargetKeyfile.txt";
+
+    qint64 pos = m_stdoutFile->pos();
+
+    Utils::Test::setNextPassword("a");
+    createCmd.execute({"create", sourceDatabaseFilename, "-k", sourceKeyfilePath});
+
+    Utils::Test::setNextPassword("b");
+    createCmd.execute({"create", targetDatabaseFilename, "-k", targetKeyfilePath});
+
+    Utils::Test::setNextPassword("a");
+    auto sourceDatabase = QSharedPointer<Database>(
+        Utils::unlockDatabase(sourceDatabaseFilename, true, sourceKeyfilePath, "", Utils::STDOUT));
+    QVERIFY(sourceDatabase);
+
+    Utils::Test::setNextPassword("b");
+    auto targetDatabase = QSharedPointer<Database>(
+        Utils::unlockDatabase(targetDatabaseFilename, true, targetKeyfilePath, "", Utils::STDOUT));
+    QVERIFY(targetDatabase);
+
+    auto* rootGroup = new Group();
+    rootGroup->setName("root");
+    rootGroup->setUuid(QUuid::createUuid());
+    auto* group = new Group();
+    group->setUuid(QUuid::createUuid());
+    group->setParent(rootGroup);
+    group->setName("Internet");
+
+    auto* entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("Some Website");
+    entry->setPassword("secretsecretsecret");
+    group->addEntry(entry);
+
+    sourceDatabase->setRootGroup(rootGroup);
+
+    auto* otherRootGroup = new Group();
+    otherRootGroup->setName("root");
+    otherRootGroup->setUuid(QUuid::createUuid());
+    auto* otherGroup = new Group();
+    otherGroup->setUuid(QUuid::createUuid());
+    otherGroup->setParent(otherRootGroup);
+    otherGroup->setName("Internet");
+
+    auto* otherEntry = new Entry();
+    otherEntry->setUuid(QUuid::createUuid());
+    otherEntry->setTitle("Some Website 2");
+    otherEntry->setPassword("secretsecretsecret 2");
+    otherGroup->addEntry(otherEntry);
+
+    targetDatabase->setRootGroup(otherRootGroup);
+
+    QFile sourceDatabaseFile(sourceDatabaseFilename);
+    sourceDatabaseFile.open(QIODevice::WriteOnly);
+    QVERIFY(writer.writeDatabase(&sourceDatabaseFile, sourceDatabase.data()));
+    sourceDatabaseFile.flush();
+    sourceDatabaseFile.close();
+
+    QFile targetDatabaseFile(targetDatabaseFilename);
+    targetDatabaseFile.open(QIODevice::WriteOnly);
+    QVERIFY(writer.writeDatabase(&targetDatabaseFile, targetDatabase.data()));
+    targetDatabaseFile.flush();
+    targetDatabaseFile.close();
+
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("b");
+    Utils::Test::setNextPassword("a");
+    mergeCmd.execute({"merge",
+                      "-k",
+                      targetKeyfilePath,
+                      "--key-file-from",
+                      sourceKeyfilePath,
+                      targetDatabaseFile.fileName(),
+                      sourceDatabaseFile.fileName()});
+
+    m_stdoutFile->seek(pos);
+    QList<QByteArray> lines = m_stdoutFile->readAll().split('\n');
+    QVERIFY(lines.contains(QString("Successfully merged %1 into %2.")
+                               .arg(sourceDatabaseFile.fileName(), targetDatabaseFile.fileName())
+                               .toUtf8()));
 }
 
 void TestCli::testMove()

@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2019 Aetf <aetf@unlimitedcodeworks.xyz>
+ *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,23 +16,28 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTFDOSECRETS_H
-#define KEEPASSXC_TESTFDOSECRETS_H
+#ifndef KEEPASSX_URLEDIT_H
+#define KEEPASSX_URLEDIT_H
 
-#include <QObject>
+#include <QAction>
+#include <QLineEdit>
+#include <QPointer>
 
-class TestFdoSecrets : public QObject
+class URLEdit : public QLineEdit
 {
     Q_OBJECT
 
-private slots:
-    void initTestCase();
-    void cleanupTestCase();
+public:
+    static const QColor ErrorColor;
 
-    void testGcryptMPI();
-    void testDhIetf1024Sha256Aes128CbcPkcs7();
-    void testCrazyAttributeKey();
-    void testSpecialCharsInAttributeValue();
+    explicit URLEdit(QWidget* parent = nullptr);
+    void enableVerifyMode();
+
+private slots:
+    void updateStylesheet();
+
+private:
+    QPointer<QAction> m_errorAction;
 };
 
-#endif // KEEPASSXC_TESTFDOSECRETS_H
+#endif // KEEPASSX_URLEDIT_H

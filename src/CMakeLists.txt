@@ -121,6 +121,7 @@ set(keepassx_SOURCES
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
         gui/DatabaseOpenDialog.cpp
+        gui/URLEdit.cpp
         gui/WelcomeWidget.cpp
         gui/csvImport/CsvImportWidget.cpp
         gui/csvImport/CsvImportWizard.cpp

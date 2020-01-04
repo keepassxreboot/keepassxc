@@ -83,7 +83,7 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
             }
             attrValue = query.toString(QUrl::FullyEncoded);
         }
-        entry->attributes()->set(Totp::ATTRIBUTE_SETTINGS, attrValue, true);
+        entry->setTotp(Totp::parseSettings(attrValue));
     } else if (attrName.startsWith("expir", Qt::CaseInsensitive)) {
         QDateTime expiry;
         if (kind == "date") {

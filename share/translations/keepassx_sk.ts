@@ -743,7 +743,7 @@ Prosím, vyberte správnu databázu na uloženie prihlasovacích údajov.</trans
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Odvážny</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
@@ -767,11 +767,11 @@ Prosím, vyberte správnu databázu na uloženie prihlasovacích údajov.</trans
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>Nezobrazovať okno s návrhom na migráciu starých nastavení KeePassHTTP.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nepýtať sa na migráciu nastavení KeePassHTTP.</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
@@ -878,7 +878,11 @@ Chcete teraz migrovať svoje nastavenia?</translation>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation type="unfinished"/>
+        <translation>Obdržali ste požiadavku na priradenie nasledujúcej databázy.
+%1
+
+Zadajte mu jedinečný názov alebo identifikátor, napríklad:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -2286,7 +2290,7 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;prázdna URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
@@ -2451,15 +2455,15 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Zapnúť Automatické vypĺňanie pre túto položku</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Skryť túto položku v rozšírení prehliadača</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>Ďalšie URL</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2494,19 +2498,19 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>Výber histórie položky</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť stav položky v okamžiku zvolenej histórie</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Obnoviť stav položky do okamžiku zvolenej histórie</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Vymazať zvolený stav histórie</translation>
     </message>
     <message>
         <source>Delete all history</source>
@@ -2557,7 +2561,7 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Stiahnuť ikonu URL</translation>
     </message>
     <message>
         <source>Repeat password field</source>
@@ -2597,11 +2601,11 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>Pole nadpisu</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>Pole použ. mena</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
@@ -2685,19 +2689,19 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť kľúč z agenta po zadanom počte sekúnd</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>Vybrať súbor kľúča</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>Súbor externého kľúča</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Zvoľte súbor prílohy</translation>
     </message>
 </context>
 <context>
@@ -2799,20 +2803,21 @@ Vypnúť bezpečné ukladanie a skúsiť znova?</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>Synchronizovať</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Táto verzia KeePassXC nepodporuje zdieľanie tohoto typu kontajnera.
+Podporované rozšírenia sú: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 už bolo exportované touto databázou.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 už bolo importované touto databázou.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
@@ -2821,27 +2826,27 @@ Supported extensions are: %1.</source>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>KeeShare je momentálne vypnuté. Import/export môžete zapnúť v nastaveniach aplikácie.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Export databázy je momentálne vypnutý v nastaveniach aplikácie.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Import databázy je momentálne vypnutý v nastaveniach aplikácie.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>Pole režimu zdieľania</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>Pole cesty zdieľania súboru</translation>
     </message>
     <message>
         <source>Browser for share file</source>
-        <translation type="unfinished"/>
+        <translation>Vybrať zdieľaný súbor</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2912,7 +2917,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Prepnúť hľadanie tejto a podriadených skupín</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
@@ -2979,43 +2984,43 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Táto ikona je použitá v %n položke a bude nahradená predvolenou ikonou. Naozaj ju chcete odstrániť?</numerusform><numerusform>Táto ikona je použitá v %n položkách a bude nahradená predvolenou ikonou. Naozaj ju chcete odstrániť?</numerusform><numerusform>Táto ikona je použitá v %n položkách a bude nahradená predvolenou ikonou. Naozaj ju chcete odstrániť?</numerusform><numerusform>Táto ikona je použitá v %n položkách a bude nahradená predvolenou ikonou. Naozaj ju chcete odstrániť?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Môžete zapnúť webovú službu ikon DuckDuckGo v Nástroje -&gt; Nastavenie -&gt; Bezpečnosť</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Stiahnuť ikonu URL</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>Použiť zvolenú ikonu na podskupiny a položky</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
-        <translation type="unfinished"/>
+        <translation>Použiť ikonu &amp;na …</translation>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>Použiť len na túto</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>Použiť aj na podriadené skupiny</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>Použiť aj na podriadené položky</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>Použiť na všetkých potomkov</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
+        <translation>Zvolená existujúca ikona.</translation>
     </message>
 </context>
 <context>
@@ -3178,7 +3183,11 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Nemožno otvoriť súbor:
+%1</numerusform><numerusform>Nemožno otvoriť súbory:
+%1</numerusform><numerusform>Nemožno otvoriť súbory:
+%1</numerusform><numerusform>Nemožno otvoriť súbory:
+%1</numerusform></translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3186,19 +3195,19 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>Pridať novú prílohu</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť zvolenú prílohu</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť zvolenú prílohu</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation type="unfinished"/>
+        <translation>Uložiť zvolenú prílohu na disk</translation>
     </message>
 </context>
 <context>
@@ -3380,7 +3389,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť aktuálnu hodnotu TOTP</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3429,7 +3438,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation type="unfinished"/>
+        <translation>Zlyhala registrácia služby DBus na %1: je spustená iná služba.</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
@@ -3467,7 +3476,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Stiahnuť ikony</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3476,7 +3485,8 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Máte problémy so sťahovaním ikon?
+V bezpečnostnej sekcii nastavení aplikácie môžete zapnúť webovú službu ikon.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3492,11 +3502,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>Prosím, počkajte, spracovanie zoznamu položiek…</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Sťahovanie…</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3512,7 +3522,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>Sťahovanie ikon (%1/%2)…</translation>
     </message>
 </context>
 <context>
@@ -3559,7 +3569,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Boli zadané neplatné prihlasovacie údaje, prosím skúste znova.
+Ak sa to opakuje, potom môže byť súbor databázy poškodený.</translation>
     </message>
 </context>
 <context>
@@ -3694,11 +3705,12 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Boli zadané neplatné prihlasovacie údaje, prosím skúste znova.
+Ak sa to opakuje, potom môže byť súbor databázy poškodený.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>(nezhoda HMAC)</translation>
     </message>
 </context>
 <context>
@@ -4084,7 +4096,8 @@ Riadok %2, stĺpec %3</translation>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Boli zadané neplatné prihlasovacie údaje, prosím skúste znova.
+Ak sa to opakuje, potom môže byť súbor databázy poškodený.</translation>
     </message>
 </context>
 <context>
@@ -4613,7 +4626,7 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>Prejsť na dokumentáciu on-line (otvorí prehliadač)</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -4771,7 +4784,7 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno čítať všetky bajty IV, potrebných 16, ale získaných %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
@@ -4779,7 +4792,7 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno čítať všetky bajty podpisu HMAC</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
@@ -4806,27 +4819,27 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>Adresár .opvault musí existovať</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Adresár .opvault musí byť čitateľný</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation type="unfinished"/>
+        <translation>Adresár .opvault/default musí existovať</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Adresár .opvault/default musí byť čitateľný</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno dekódovať hlavný kľúč: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno odvodiť hlavný kľúč: %1</translation>
     </message>
 </context>
 <context>
@@ -4932,11 +4945,11 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Heslá sa nezhodujú.</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation type="unfinished"/>
+        <translation>Heslá sa zhodujú až potiaľ</translation>
     </message>
 </context>
 <context>
@@ -6072,7 +6085,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno naraz generovať aj zadať heslo!</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
@@ -6096,11 +6109,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Skontrolovať, či nejaké heslo neuniklo na verejnosť. MENOSÚBORU musí byť cesta k súboru so zoznamom odtlačkov SHA-1 uniknutých hesiel vo formáte HIBP, ako je dostupný z https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>MENOSÚBORU</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
@@ -6108,7 +6121,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Zlyhalo otvorenie súboru HIBP %1: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
@@ -6120,7 +6133,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>Zobrazí tohoto pomocníka.</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
@@ -6128,11 +6141,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>slot</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
+        <translation>Neplatný počet slov %1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
@@ -6140,7 +6153,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Ukončiť interaktívny režim.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
@@ -6152,27 +6165,27 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno exportovať databázu do XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>Nepodporovaný formát: %1</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>Použiť čísla</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>Neplatná dĺžka hesla %1</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>Zobrazí pomocníka príkazu.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>Dostupné príkazy:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
@@ -6188,15 +6201,15 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno importovať databázu z exportu XML %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>Úspešne importovaná databáza.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>Neznáma príkaz %1</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
@@ -6212,7 +6225,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation type="unfinished"/>
+        <translation>Úspešne zlúčené %1 do %2.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
@@ -6220,7 +6233,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Presunie položku do novej skupiny.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
@@ -6228,7 +6241,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>Cesta cieľovej skupiny.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
@@ -6527,7 +6540,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>Odpojiť</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6535,7 +6548,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>Upraviť nastavenia databázy</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6543,7 +6556,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Odomknúť databázu na zobrazenie ďalších informácií</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6551,7 +6564,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>Odomknúť na zobrazenie</translation>
     </message>
     <message>
         <source>None</source>
@@ -6683,15 +6696,15 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť importy KeeShare</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>Povoliť exporty KeeShare</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť len upozornenia a chyby</translation>
     </message>
     <message>
         <source>Key</source>
@@ -6703,35 +6716,35 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Generovať nový certifikát</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>Importovať existujúci certifikát</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Exportuje vlastný certifikát</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>Známe zdieľania</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Dôverovať zvolenému certifikátu</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>Vždy sa spýtať, či dôverovať zvolenému certifikátu</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Zrušiť dôveru zvoleného certifikátu</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Odstrániť zvolený certifikát</translation>
     </message>
 </context>
 <context>
@@ -6900,7 +6913,7 @@ Prepis podpísaných zdieľaných kontajnerov nie je podporovaný - export sa ne
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Platnosť vyprší za % n sekundu</numerusform><numerusform>Platnosť vyprší za % n sekundy</numerusform><numerusform>Platnosť vyprší za % n sekúnd</numerusform><numerusform>Platnosť vyprší za &lt;b&gt;% n&lt;/b&gt; sekúnd</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6960,19 +6973,19 @@ Prepis podpísaných zdieľaných kontajnerov nie je podporovaný - export sa ne
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>Tajný kľúč:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>Tajný kľúč musí byť vo formáte Base32</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>Pole tajného kľúča</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation type="unfinished"/>
+        <translation>Algoritmus:</translation>
     </message>
     <message>
         <source>Time step field</source>
@@ -6980,24 +6993,25 @@ Prepis podpísaných zdieľaných kontajnerov nie je podporovaný - export sa ne
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation>číslice</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>Neplatné tajomstvo TOTP</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>Zadali ste neplatný tajný kľúč. Kľúč musí byť vo formáte Base32.
+Napríklad: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>Potvrďte odstránenie nastavení TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Naozaj chcete odstrániť nastavenia TOTP tejto položky?</translation>
     </message>
 </context>
 <context>
@@ -7087,7 +7101,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>Otvoriť nedávnu databázu</translation>
     </message>
 </context>
 <context>
