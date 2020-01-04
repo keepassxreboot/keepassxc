@@ -1,5 +1,41 @@
 # Changelog
 
+## 2.5.2 (2020-01-04)
+
+### Added
+
+- Browser: Show UI warning when entering invalid URLs [#3912]
+- Browser: Option to use an entry only for HTTP auth [#3927]
+
+### Changed
+
+- Disable the user interface when merging or saving the database [#3991]
+- Ability to hide protected attribute after reveal [#3877]
+- Remove mention of "snaps" in Windows and macOS [#3879]
+- CLI: Merge parameter for source database key file (--key-file-from) [#3961]
+- Improve GUI tests reliability on Hi-DPI displays [#4075]
+- Disable deprecation warnings to allow building with Qt 5.14+ [#4075]
+- OPVault: Use 'otp' attribute for TOTP field imports [#4075]
+
+### Fixed
+
+- Fix crashes when saving a database to cloud storage [#3991]
+- Fix crash when pressing enter twice while opening database [#3885]
+- Fix handling of HTML when displayed in the entry preview panel [#3910]
+- Fix start minimized to tray on Linux [#3899]
+- Fix Auto Open with key file only databases [#4075]
+- Fix escape key closing the standalone password generator [#3892]
+- macOS: Fix monospace font usage in password field and notes [#4075]
+- macOS: Fix building on macOS 10.9 to 10.11 [#3946]
+- Fix TOTP setup dialog not closing on database lock [#4075]
+- Browser: Fix condition where additional URLs are ignored [#4033]
+- Browser: Fix subdomain matching to return only relevant site entries [#3854]
+- Secret Service: Fix multiple crashes and incompatibilities [#3871, #4009, #4074]
+- Secret Service: Fix searching of entries [#4008, #4036]
+- Secret Service: Fix behavior when exposed group is recycled [#3914]
+- CLI: Release the database instance before exiting interactive mode [#3889]
+- Fix (most) memory leaks in tests [#3922]
+
 ## 2.5.1 (2019-11-11)
 
 ### Added

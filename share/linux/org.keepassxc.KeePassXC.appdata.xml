@@ -50,6 +50,37 @@
     </screenshots>
 
     <releases>
+        <release version="2.5.2" date="2020-01-04">
+            <description>
+                <ul>
+                    <li>Browser: Show UI warning when entering invalid URLs [#3912]</li>
+                    <li>Browser: Option to use an entry only for HTTP auth [#3927]</li>
+                    <li>Disable the user interface when merging or saving the database [#3991]</li>
+                    <li>Ability to hide protected attribute after reveal [#3877]</li>
+                    <li>Remove mention of "snaps" in Windows and macOS [#3879]</li>
+                    <li>CLI: Merge parameter for source database key file (--key-file-from) [#3961]</li>
+                    <li>Improve GUI tests reliability on Hi-DPI displays [#4075]</li>
+                    <li>Disable deprecation warnings to allow building with Qt 5.14+ [#4075]</li>
+                    <li>OPVault: Use 'otp' attribute for TOTP field imports [#4075]</li>
+                    <li>Fix crashes when saving a database to cloud storage [#3991]</li>
+                    <li>Fix crash when pressing enter twice while opening database [#3885]</li>
+                    <li>Fix handling of HTML when displayed in the entry preview panel [#3910]</li>
+                    <li>Fix start minimized to tray on Linux [#3899]</li>
+                    <li>Fix Auto Open with key file only databases [#4075]</li>
+                    <li>Fix escape key closing the standalone password generator [#3892]</li>
+                    <li>macOS: Fix monospace font usage in password field and notes [#4075]</li>
+                    <li>macOS: Fix building on macOS 10.9 to 10.11 [#3946]</li>
+                    <li>Fix TOTP setup dialog not closing on database lock [#4075]</li>
+                    <li>Browser: Fix condition where additional URLs are ignored [#4033]</li>
+                    <li>Browser: Fix subdomain matching to return only relevant site entries [#3854]</li>
+                    <li>Secret Service: Fix multiple crashes and incompatibilities [#3871, #4009, #4074]</li>
+                    <li>Secret Service: Fix searching of entries [#4008, #4036]</li>
+                    <li>Secret Service: Fix behavior when exposed group is recycled [#3914]</li>
+                    <li>CLI: Release the database instance before exiting interactive mode [#3889]</li>
+                    <li>Fix (most) memory leaks in tests [#3922]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.5.1" date="2019-11-11">
             <description>
                 <ul>
