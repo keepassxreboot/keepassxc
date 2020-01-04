@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Bidragsgivare</translation>
+        <translation>Medverkande</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
@@ -93,15 +93,15 @@
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Följstil</translation>
+        <translation>Följ stil</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Återställa inställningarna?</translation>
+        <translation>Vill du återställa inställningarna?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Är du säker på att  du vill återställa alla allmäna inställningar och säkerhetsinställningar till standardvärden?</translation>
+        <translation>Vill du verkligen återställa alla allmäna och säkerhetsinställningar till standardinställning?</translation>
     </message>
 </context>
 <context>
@@ -225,63 +225,63 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Kom ihåg tidigare använda databaser</translation>
+        <translation>Kom ihåg tidigare databaser</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Ladda tidigare använda databaser vid start</translation>
+        <translation>Läs in tidigare öppna databaser vid programstart</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Kom ihåg databasers nyckelfiler och säkerhetsdonglar </translation>
+        <translation>Kom ihåg databasnyckelfiler och säkerhetsenheter</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>Sök efter uppdateringar vid programstart, en gång per vecka</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Inkludera betaversioner vid sökning efter uppdateringar</translation>
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Knappstil:</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"/>
+        <translation>Språk:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(starta om programmet för att aktivera)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>Minimera fönstret efter upplåsning av databas</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>Minimera vid öppning av URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Dölj fönstret vid kopiering till urklipp</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation type="unfinished"/>
+        <translation>Mimimera</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>Flytta till bakgrunden</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation type="unfinished"/>
+        <translation>Tidsgräns för nerladdning av favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Tidsgräns för nerladdning av webbsideikon, i sekunder.</translation>
     </message>
     <message>
         <source> sec</source>
@@ -290,31 +290,31 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation type="unfinished"/>
+        <translation>Knappstil för verktygsfält</translation>
     </message>
     <message>
         <source>Use monospaced font for Notes</source>
-        <translation type="unfinished"/>
+        <translation>Använda teckensnitt med fast teckenbredd för anteckningar</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation type="unfinished"/>
+        <translation>Språkval</translation>
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation>Återställ inställningarna till standardinställning</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Övergripande autoskrivgenväg</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Fördröjning vid utomatisk skrivning, i millisekunder.</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation type="unfinished"/>
+        <translation>Autoskrivfördröjning i millisekunder</translation>
     </message>
 </context>
 <context>
@@ -390,19 +390,19 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>Använd DuckDuckGo för att ladda ner webbplatsikoner</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation type="unfinished"/>
+        <translation>Tidsgräns för urklippsrensing i sekunder</translation>
     </message>
     <message>
         <source>Touch ID inactivity reset</source>
-        <translation type="unfinished"/>
+        <translation>Återställning av Touch-ID vid inaktivitet</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation type="unfinished"/>
+        <translation>Tidsgräns för databaslås i sekunder</translation>
     </message>
     <message>
         <source> min</source>
@@ -411,7 +411,7 @@
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation type="unfinished"/>
+        <translation>Radera söksträng efter</translation>
     </message>
 </context>
 <context>
@@ -446,11 +446,11 @@
     </message>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tillstånd krävs</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC kräver åtkomsttillstånd för att utföra automatisk skrivning på postnivå. Om du redan har beviljat tillstånd, kanske du behöver styarta om KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -502,11 +502,11 @@
     <name>AutoTypePlatformMac</name>
     <message>
         <source>Permission Required</source>
-        <translation type="unfinished"/>
+        <translation>Tillstånd krävs</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC kräver åtkomst- och inspelningstillstånd för att utföra automatisk skrivning på övergripande nivå. Skärminspelning krävs för att använda fönstertiteln till att identifiera poster. Om du redan har beviljat tillstånd, kanske du behöver styarta om KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -517,7 +517,7 @@
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Välj post att autoskriva:</translation>
+        <translation>Välj post att skriva automatiskt:</translation>
     </message>
     <message>
         <source>Search...</source>
@@ -546,15 +546,15 @@
         <source>%1 has requested access to passwords for the following item(s).
 Please select whether you want to allow access.</source>
         <translation>%1 har begärt åtkomst till lösenorden för följande objekt.
-Välj om du vill tillåta åtkomst.</translation>
+Välj om du vill tillåta eller neka åtkomst.</translation>
     </message>
     <message>
         <source>Allow access</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt åtkomst</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>Neka åtkomst</translation>
     </message>
 </context>
 <context>
@@ -635,7 +635,7 @@ Välj rätt databas för att spara inloggningsuppgifterna.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation>&amp;Returnera bara de bäst lämpade inloggningsuppgifterna</translation>
+        <translation>&amp;Returnera bara de bäst lämpade autentiseringsuppgifterna</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
@@ -743,47 +743,47 @@ Välj rätt databas för att spara inloggningsuppgifterna.</translation>
     </message>
     <message>
         <source>&amp;Brave</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Brave</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation type="unfinished"/>
+        <translation>Returnerar förfallna autentiseringsuppgifter [Förfallen] läggs till i titeln.</translation>
     </message>
     <message>
         <source>&amp;Allow returning expired credentials.</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tillåt förfallna autentiseringsuppgifter.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera webbläsarintegration</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation type="unfinished"/>
+        <translation>Webbläsare installerade via Snap, stöds för närvarande inte.</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation type="unfinished"/>
+        <translation>Alla databaser anslutna till tillägget, kommer att returnera matchande autentiseringsuppgifter.</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation type="unfinished"/>
+        <translation>Visa inte popup-fönstret som föreslår migrering av äldre KeePassHTTP-inställningar.</translation>
     </message>
     <message>
         <source>&amp;Do not prompt for KeePassHTTP settings migration.</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Fråga inte efter inställningar för KeePassHTTP-migrering.</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation type="unfinished"/>
+        <translation>Fält för anpassad proxyplats</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation type="unfinished"/>
+        <translation>Webbläsare för anpassad proxyfil</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Varning!&lt;/b&gt; Program för keepassxc-proxy kunde inte hittas!&lt;br /&gt;Kontrollera KeePassXCs installationsmapp eller bekräfta den anpassade sökvägen i avancerade alternativ.&lt;br /&gt;Webbläsarintegration FUNGERAR INTE utan proxy-programmet.&lt;br /&gt;Förväntad sökväg: %1</translation>
     </message>
 </context>
 <context>
@@ -846,7 +846,7 @@ Flyttade %2 nycklar till anpassad data.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Inställningar för webbläsarintegrering har identifierats</translation>
+        <translation>KeePassXC: Föråldrade inställningar för webbläsarintegrering har identifierats</translation>
     </message>
     <message>
         <source>KeePassXC: Create a new group</source>
@@ -878,7 +878,11 @@ Vill du migrera dina befintliga inställningar nu?</translation>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation type="unfinished"/>
+        <translation>Du har fått en associationsbegäran för följande databas:
+%1
+
+Ge anslutningen ett unikt namn eller ID, som t.ex.:
+chrome-laptop.</translation>
     </message>
 </context>
 <context>
@@ -990,19 +994,19 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>Textkvalificering</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation type="unfinished"/>
+        <translation>Fältseparation</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation type="unfinished"/>
+        <translation>Antal rubrikrader att kassera</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation type="unfinished"/>
+        <translation>Förhandsgranskning av CSV-import</translation>
     </message>
 </context>
 <context>
@@ -1055,19 +1059,20 @@ chrome-laptop.</source>
     <message>
         <source>%1
 Backup database located at %2</source>
-        <translation type="unfinished"/>
+        <translation>%1
+Säkerhetskopierad databas hittad i %2</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte spara. Databasen pekar inte mot en giltig fil.</translation>
     </message>
     <message>
         <source>Could not save, database file is read-only.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte spara. Databasfilen är skrivskyddad.</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation type="unfinished"/>
+        <translation>Databasfilen har ändringar som inte har infogats.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1123,39 +1128,39 @@ komma att tas bort för i framtiden.
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna nyckelfil: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
-        <translation type="unfinished"/>
+        <translation>Välj plats...</translation>
     </message>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation type="unfinished"/>
+        <translation>Lås upp KeePassXC-databas</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation type="unfinished"/>
+        <translation>Ange lösenord:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordsfält</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj lösenord</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Val av nyckelfil</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Val av plats för hårdvarunyckel</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Bläddra efter nyckelfil</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1163,19 +1168,19 @@ komma att tas bort för i framtiden.
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatera hårdvarutokens</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
+        <translation>Hårdvarynyckel:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation type="unfinished"/>
+        <translation>Hjälp med hårdvarynyckel</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>TouchID för snabb upplåsning</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -1183,56 +1188,61 @@ komma att tas bort för i framtiden.
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>Töm nyckelfilen</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation type="unfinished"/>
+        <translation>Upplåsning misslyckades och lösenord saknas</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte låsa upp databasen och du angav inget lösenord.
+Vill du försöka igen, med ett &quot;tomt&quot; lösenord istället?
+
+För att förhindra att detta fel uppstår igen, måste du gå till &quot;Databasinställningar/Säkerhet&quot; och återställa dittlösenord.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation type="unfinished"/>
+        <translation>Försök med tomt lösenord</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Ange fler autentiseringsuppgifter (om det finns några):</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Du kan använda en hårdvarynyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Som tillägg till ditt huvudlösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;br&gt;Om du inte har någon nyckelfil, lämnar du fältet tomt.&lt;/p&gt;&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelfilshjälp</translation>
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>?</translation>
     </message>
     <message>
         <source>Select key file...</source>
-        <translation type="unfinished"/>
+        <translation>Välj nyckelfil...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte använda en databasfil som nyckelfil</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"/>
+        <translation>Du kan inte använda din databasfil som nyckelfil.
+Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     </message>
 </context>
 <context>
@@ -1389,11 +1399,11 @@ Detta är nödvändigt för att få kompatibilitet med webbläsartillägget.</tr
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>Lagrade webbläsarnycklar</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerad nyckel</translation>
     </message>
 </context>
 <context>
@@ -1404,11 +1414,11 @@ Detta är nödvändigt för att få kompatibilitet med webbläsartillägget.</tr
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256 Bit   (standard)</translation>
+        <translation>AES: 256 bitar   (standard)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish:  256 Bit</translation>
+        <translation>Twofish:  256 bitar</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
@@ -1539,61 +1549,61 @@ Om du behåller detta antal, kan din databas bli för lätt att hacka!</translat
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Ändra befintlig avkrypteringstid</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Avkrypteringstid i sekunder</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation type="unfinished"/>
+        <translation>Databasformat</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Krypteringsalgoritm</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelhärledningsfunktion</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation type="unfinished"/>
+        <translation>Transformeringsrundor</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Minnesanvändning</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>Parallellitet</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>Exponerade poster</translation>
     </message>
     <message>
         <source>Don&apos;t e&amp;xpose this database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Visa inte denna databas</translation>
     </message>
     <message>
         <source>Expose entries &amp;under this group:</source>
-        <translation type="unfinished"/>
+        <translation>Visa poster &amp;under denna grupp:</translation>
     </message>
     <message>
         <source>Enable fd.o Secret Service to access these settings.</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera fd.o Secret Service, för åtkomst till dessa inställningar.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Meta Data</source>
-        <translation>Databasmetadata</translation>
+        <translation>Databasens metadata</translation>
     </message>
     <message>
         <source>Database name:</source>
@@ -1637,36 +1647,37 @@ Om du behåller detta antal, kan din databas bli för lätt att hacka!</translat
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Databasens namn</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Databasens beskrivning</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation type="unfinished"/>
+        <translation>Standard användarnamn</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation type="unfinished"/>
+        <translation>Max antal historikobjekt per post</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>Max historikstorlek per post</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort papperskorgen</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation type="unfinished"/>
+        <translation>Vill du ta bort papperskorgen med allt innehåll?
+Denna åtgärd kan inte ångras.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation> (gammal)</translation>
     </message>
 </context>
 <context>
@@ -1677,7 +1688,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>Brödsmulor</translation>
+        <translation>Synlig sökväg</translation>
     </message>
     <message>
         <source>Type</source>
@@ -1723,7 +1734,7 @@ This action is not reversible.</source>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>VARNING! Du har inte angivit något lösenord. Du avråds bestämt att använda en databas utan lösenord!
+        <translation>VARNING! Du har inte angivit något lösenord. Du avråds bestämt från att använda en databas utan lösenord!
 
 Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
@@ -1737,7 +1748,7 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation type="unfinished"/>
+        <translation>Fortsätt utan lösenord</translation>
     </message>
 </context>
 <context>
@@ -1752,22 +1763,22 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation type="unfinished"/>
+        <translation>Databasnamn</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation type="unfinished"/>
+        <translation>Databasbeskrivning</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistik</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>Håll muspekaren över rader med felikoner för mer information.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1779,103 +1790,103 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>Databasnamn</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"/>
+        <translation>Plats</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>Senast sparad</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>Osparade ändringar</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>Nej</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen har ändrats, men ändringarna har ännu inte sparats till disk.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Antal grupper</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Antal poster</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Antal förfallna poster</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen innehåller poster som har förfallit.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Unika lösenord</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Icke unika lösenord</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Mer än 10% av lösenorden är återanvända. Försök använda unika lösenord om möjligt.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Max antal återanvända lösenord</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Vissa lösenord är använda mer än tre gånger. Använd unika lösenord om möjligt.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>Antal korta lösenord</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>Rekommenderad minimilängd på lösenord är minst 8 tecken.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Antal svaga lösenord</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Långa slumpartade lösenord med betyget &quot;Bra&quot; eller &quot;Utmärkt&quot; rekommenderas.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation type="unfinished"/>
+        <translation>Genomsnittlig lösenordslängd</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation type="unfinished"/>
+        <translation>%1 tecken</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation type="unfinished"/>
+        <translation>Genomsnittlig lösenordslängd är mindre än 10 tecken. Längre lösenord är säkrare.</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated...</source>
-        <translation type="unfinished"/>
+        <translation>Vänta, databasstatistiken håller på att beräknas...</translation>
     </message>
 </context>
 <context>
@@ -1951,27 +1962,27 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde öppna %1. Antingen finns den inte eller också är den inte åtkomstbar.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>Exportera databas till HTML-fil</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>HTML-fil</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte skriva HTML-filen.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation type="unfinished"/>
+        <translation>Exportbekräftelse</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Du är på väg att exportera din databas till en okrypterad fil. Detta kommer att lämna dina lösenord annan känslig information i ett sårbart skick (klartext). Vill du verkligen fortsätta?</translation>
     </message>
 </context>
 <context>
@@ -2120,7 +2131,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Posten &quot;%1&quot; har %2 referens. Vill du skriva över referensen med värden, hoppa över den här posten eller ta bort ändå?</numerusform><numerusform>Posten &quot;%1&quot; har %2 referenser. Vill du skriva över referenserna med värden, hoppa över den här posten eller ta bort ändå?</numerusform></translation>
+        <translation><numerusform>Posten &quot;%1&quot; har %2 referens. Vill du skriva över referensen med nya värden, hoppa över den här posten eller ta bort ändå?</numerusform><numerusform>Posten &quot;%1&quot; har %2 referenser. Vill du skriva över referenserna med nya värden, hoppa över den här posten eller ta bort ändå?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2148,11 +2159,11 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Kunde inte skriva databas: %1</translation>
+        <translation>Kunde inte skriva databasen: %1</translation>
     </message>
     <message>
         <source>This database is opened in read-only mode. Autosave is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Databasen är öppnad i skrivskyddat läge. Autospar är inaktiverat.</translation>
     </message>
 </context>
 <context>
@@ -2207,7 +2218,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Posthistork</translation>
+        <translation>Posthistorik</translation>
     </message>
     <message>
         <source>Add entry</source>
@@ -2279,11 +2290,11 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;tom URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen ta bort denna URL?</translation>
     </message>
 </context>
 <context>
@@ -2326,39 +2337,39 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation type="unfinished"/>
+        <translation>Attributval</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation type="unfinished"/>
+        <translation>Attributvärde</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till nytt attribut</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerade attribut</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation type="unfinished"/>
+        <translation>Redigera attributnamn</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation type="unfinished"/>
+        <translation>Attributskydd av/på</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Visa ett skyddat attribut</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation type="unfinished"/>
+        <translation>Val av förgrundsfärg</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation type="unfinished"/>
+        <translation>Val av bakgrundsfärg</translation>
     </message>
 </context>
 <context>
@@ -2369,7 +2380,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
-        <translation>Ärv standard autoskrivsekvens från &amp;gruppen</translation>
+        <translation>Hämta autoskrivsekvensstandard från &amp;gruppen</translation>
     </message>
     <message>
         <source>&amp;Use custom Auto-Type sequence:</source>
@@ -2397,46 +2408,46 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad autoskrivsekvens</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation type="unfinished"/>
+        <translation>Öppna autoskrivhjälpens hemsida</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation type="unfinished"/>
+        <translation>Befintliga fönsterassociationer</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation type="unfinished"/>
+        <translation>Lägg till ny fönsterassociation</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerad fönsterassociation</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Du kan använda en asterisk (*) för att matcha allt (jokertecken)</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation type="unfinished"/>
+        <translation>Ange fönsterassociationstitel</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation type="unfinished"/>
+        <translation>Du kan använda en asterisk som jokertecken</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad autoskrivsekvens för detta fönster</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Dessa inställningar påverkar posternas beteende i webbläsartillägget.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2444,15 +2455,15 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Undanta autoskriv för den här posten</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation type="unfinished"/>
+        <translation>Dölj den här posten från webbläsartillägget</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
+        <translation>Ytterligare URL:er</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2464,7 +2475,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Ändra</translation>
+        <translation>Redigera</translation>
     </message>
 </context>
 <context>
@@ -2487,23 +2498,23 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation type="unfinished"/>
+        <translation>Posthistorik</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Visa posten i markerad historikstatus</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Återställ posten till markerad historikstatus</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerad historikstatus</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort all historik</translation>
     </message>
 </context>
 <context>
@@ -2546,59 +2557,59 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner favicon för URL:en</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Upprepa lösenordet</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordgenerator på/av</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj lösenordet</translation>
     </message>
     <message>
         <source>Toggle notes visible</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj anteckningar</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Förfaller</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>Förinställningar för förfallodag</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation type="unfinished"/>
+        <translation>Förinställningar för förfallodag</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Anteckningar</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation type="unfinished"/>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Förfallodag av/på</translation>
     </message>
 </context>
 <context>
@@ -2621,7 +2632,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Ta bort nyckeln från agenten när databasen är stängd/låst</translation>
+        <translation>Ta bort nyckeln från bakgrundstjänsten när databasen stängs/låses</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -2629,7 +2640,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Lägg till nyckeln till agenten när databasen är öppen/upplåst</translation>
+        <translation>Lägg till nyckeln till bakgrundstjänsten när databasen öppnas/låses upp</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -2637,7 +2648,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Dekryptera</translation>
+        <translation>Avkryptera</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -2666,11 +2677,11 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Lägg till i agenten</translation>
+        <translation>Lägg till i bakgrundstjänsten</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>Ta bort från agenten</translation>
+        <translation>Ta bort från bakgrundstjänsten</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
@@ -2678,19 +2689,19 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort nyckeln från bakgrundstjänsten efter specificerat antal sekunder</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>Bläddra efter nyckelfil</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation type="unfinished"/>
+        <translation>Extern nyckelfil</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Välj bilagefil</translation>
     </message>
 </context>
 <context>
@@ -2776,7 +2787,7 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>Välj fil för import/export</translation>
+        <translation>Välj import-/exportfil</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -2792,65 +2803,66 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation type="unfinished"/>
+        <translation>Synkronisera</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation type="unfinished"/>
+        <translation>Din PassXC-version stöder inte delning av den här behållartypen.
+Filtyper som stöds är: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 exporteras redan av den här databasen.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 importeras redan av den här databasen.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation type="unfinished"/>
+        <translation>%1 importeras och exporteras av olika grupper i den här databasen.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation type="unfinished"/>
+        <translation>KeeShare är inaktiverat. Du kan aktivera import/export i programinställningarna.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Databasexport är inaktiverat av programinställningarna.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Databasimport är inaktiverat av programinställningarna.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
-        <translation type="unfinished"/>
+        <translation>Delningsläge</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till delningsfil</translation>
     </message>
     <message>
         <source>Browser for share file</source>
-        <translation type="unfinished"/>
+        <translation>Bläddra efter delningsfil</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj lösenordet</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Öppna/Stäng lösenordsgeneratorn</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation type="unfinished"/>
+        <translation>Rensa</translation>
     </message>
 </context>
 <context>
@@ -2881,35 +2893,35 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Set default Auto-Type se&amp;quence</source>
-        <translation>Anv&amp;änd standard autoskrivsekvens</translation>
+        <translation>Anv&amp;ge standard autoskrivsekvens</translation>
     </message>
     <message>
         <source>Name field</source>
-        <translation type="unfinished"/>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation type="unfinished"/>
+        <translation>Anteckningar</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation type="unfinished"/>
+        <translation>Förfallodag på/av</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Autoskriv på/av för denna grupp och undergrupper</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation type="unfinished"/>
+        <translation>Förfallodag</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Sökning på/av för denna grupp och undergrupper</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation type="unfinished"/>
+        <translation>Standard autoskrivsekvens</translation>
     </message>
 </context>
 <context>
@@ -2976,39 +2988,39 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Du kan aktivera ikontjänsten från DuckDuckGo under Verktyg -&gt; Inställningar -&gt; Säkerhet</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner favicon för URL:en</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>Använd markerad ikon till undergrupper och poster</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
-        <translation type="unfinished"/>
+        <translation>Använd ikon &amp;till...</translation>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>Använd endast till denna</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>Använd även till undergrupper</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>Använd även till underposter</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>Använd även till alla undergrupper/-poster</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation type="unfinished"/>
+        <translation>Befintlig ikon vald.</translation>
     </message>
 </context>
 <context>
@@ -3057,27 +3069,27 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation type="unfinished"/>
+        <translation>Skapad datum/tid</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation type="unfinished"/>
+        <translation>Ändrad datum/tid</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation type="unfinished"/>
+        <translation>Använd datum/tid</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>Unikt ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation type="unfinished"/>
+        <translation>Tilläggsdata</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerad tilläggsdata</translation>
     </message>
 </context>
 <context>
@@ -3180,19 +3192,19 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation type="unfinished"/>
+        <translation>Lägg tillny bilaga</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerad bilaga</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation type="unfinished"/>
+        <translation>Öppna markerad bilaga</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation type="unfinished"/>
+        <translation>Spara markerad bilaga på disk</translation>
     </message>
 </context>
 <context>
@@ -3374,7 +3386,7 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     </message>
     <message>
         <source>Display current TOTP value</source>
-        <translation type="unfinished"/>
+        <translation>Visa aktuellt TOTP-värde</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3401,7 +3413,7 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Anpassa för innehåll</translation>
+        <translation>Anpassa till innehåll</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
@@ -3416,26 +3428,26 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation type="unfinished"/>
+        <translation>Posten &quot;%1&quot; från databas &quot;%2&quot; har använts av %3</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Service</name>
     <message>
         <source>Failed to register DBus service at %1: another secret service is running.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte registrera DBus-tjänsten vid %1. En annan &quot;Secret Service&quot; körs redan.</translation>
     </message>
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n post användes av %1</numerusform><numerusform>%n poster användes av %1</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecretsPlugin</name>
     <message>
         <source>Fdo Secret Service: %1</source>
-        <translation type="unfinished"/>
+        <translation>Fd.o Secret Service: %1</translation>
     </message>
 </context>
 <context>
@@ -3450,7 +3462,7 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     <name>HostInstaller</name>
     <message>
         <source>KeePassXC: Cannot save file!</source>
-        <translation>KeePassXC: Kan inte spara fil!</translation>
+        <translation>KeePassXC: Kan inte spara filen!</translation>
     </message>
     <message>
         <source>Cannot save the native messaging script file.</source>
@@ -3461,7 +3473,7 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner faviconer</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3470,7 +3482,8 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation type="unfinished"/>
+        <translation>Har du problem att ladda ner ikoner?
+Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av programinställningarna.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3486,11 +3499,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Please wait, processing entry list...</source>
-        <translation type="unfinished"/>
+        <translation>Vänta, postlistan bearbetas...</translation>
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Laddar ner...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3498,15 +3511,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Already Exists</source>
-        <translation type="unfinished"/>
+        <translation>Finns redan</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>Nerladdning misslyckades</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation type="unfinished"/>
+        <translation>Laddar ner faviconer (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -3517,7 +3530,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Close message</source>
-        <translation>Stäng meddelande</translation>
+        <translation>Stäng meddelandet</translation>
     </message>
 </context>
 <context>
@@ -3553,7 +3566,8 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltiga autentiseringsuppgifter angavs. Försök igen.
+Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
 </context>
 <context>
@@ -3688,11 +3702,12 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltiga autentiseringsuppgifter angavs. Försök igen.
+Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation type="unfinished"/>
+        <translation>(HMAC matchningsfel)</translation>
     </message>
 </context>
 <context>
@@ -3720,7 +3735,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     <name>KdbxReader</name>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Chiffer som inte stöds</translation>
+        <translation>Chiffret stöds inte</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
@@ -3774,11 +3789,11 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig uuid-längd för chiffer: %1 (längd=%2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte tolka UUID: %1</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
@@ -3845,7 +3860,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation type="unfinished"/>
+        <translation>Historikelement i historikpost</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
@@ -3902,7 +3917,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation type="unfinished"/>
+        <translation>Kunde inte dekomprimera  binären.</translation>
     </message>
     <message>
         <source>XML error:
@@ -3915,11 +3930,11 @@ Line %2, column %3</source>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kunde inte öppna databas.</translation>
+        <translation>Kan inte öppna databasen.</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Importera KeePass1-databas</translation>
     </message>
 </context>
 <context>
@@ -4076,54 +4091,55 @@ Line %2, column %3</source>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltiga autentiseringsuppgifter angavs. Försök igen.
+Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig delningsreferens</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiv delning %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Importerad ifrån %1</translation>
+        <translation>Importerat från %1</translation>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation type="unfinished"/>
+        <translation>Exporterat till %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation type="unfinished"/>
+        <translation>Synkroniserat med %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>Import är inaktiverat i inställningarna</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation type="unfinished"/>
+        <translation>Export är inaktiverat i inställningarna</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation type="unfinished"/>
+        <translation>Inaktiv delning</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>Importerat från</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>Exporterat till</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>Synkroniserat med</translation>
     </message>
 </context>
 <context>
@@ -4224,11 +4240,11 @@ Meddelande: %2</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation type="unfinished"/>
+        <translation>Nyckelfiler</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation type="unfinished"/>
+        <translation>Bläddra efter nyckelfil</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4236,28 +4252,29 @@ Meddelande: %2</translation>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation type="unfinished"/>
+        <translation>Generera en ny nyckelfil</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
-        <translation type="unfinished"/>
+        <translation>OBS! Använd inte en fil som kanske kommer att modifieras, eftersom det kommer att förhindra upplåsning av databasen!</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig nyckelfil</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation type="unfinished"/>
+        <translation>Du kan inte använda den aktuella databasen som sin egen nyckelfil. Välj en annan fil eller generera en ny nyckelfil.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>Misstänkt nyckelfil</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation type="unfinished"/>
+        <translation>Den valda filen ser ut som en lösenordsdatabas. En nyckelfil måste vara en statisk fil som aldrig ändras, annars förlorar du åtkomst till databasen för alltid.
+Vill du verkligen fortsätta med den här filen?</translation>
     </message>
 </context>
 <context>
@@ -4535,8 +4552,8 @@ Vi rekommenderar att du använder tillgänglig AppImage, från vår nerladdnings
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC!
 Expect some bugs and minor issues, this version is not meant for production use.</source>
-        <translation>NOTIS: Du använder en förhandsversion av KeePassXC!
-Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för daglig användning.</translation>
+        <translation>OBS! Du använder en förhandsversion av KeePassXC!
+Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dagligt bruk.</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
@@ -4552,27 +4569,27 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Exportera</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sök efter uppdateringar...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>Ladda ner alla &amp;faviconer</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Sortera &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Sortera &amp;Z-A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Lösenordsgenerator</translation>
     </message>
     <message>
         <source>Download favicon</source>
@@ -4580,43 +4597,43 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Exportera till HTML-fil...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>1Password-valv...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Importera ett 1Password-valv</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kom igång</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Öppna kom-igång-manualen som PDF</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Online-hjälp...</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
-        <translation type="unfinished"/>
+        <translation>Gå till online-dokumentationen (öppnas i webbläsaren)</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Användarmanual</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Öppna användarmanualen som PDF</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Tangentbordsgenvägar</translation>
     </message>
 </context>
 <context>
@@ -4679,11 +4696,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Tog bort anpassad data %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Lägger till anpassad data %1 [%2]</translation>
     </message>
 </context>
 <context>
@@ -4751,38 +4768,38 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Fyll i visningsnamnet och en frivillig beskrivning för din nya databas.</translation>
+        <translation>Fyll i visningsnamnet och en frivillig beskrivning för din nya databas:</translation>
     </message>
 </context>
 <context>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig OpData01, innehåller inget huvud</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte läsa alla IV-byte, förväntade 16 men fick %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte initiera chiffer för opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte läsa alla byte i HMAC signatur</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation type="unfinished"/>
+        <translation>Felaktigt formaterad OpData01 på grund av en misslyckad HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte att bearbeta klartext på plats</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"/>
+        <translation>Förväntade %1 byte klartext, hittade %2</translation>
     </message>
 </context>
 <context>
@@ -4790,34 +4807,35 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation type="unfinished"/>
+        <translation>Läsning av databas producerade inte någon instans
+%1</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>Mappen .opvault måste finnas</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Mappen .opvault måste vara läsbar</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation type="unfinished"/>
+        <translation>Mappen .opvault/default måste finnas</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation type="unfinished"/>
+        <translation>Mappen .opvault/default måste vara läsbar</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte avkoda huvudnyckel: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte härleda huvudnyckel: %1</translation>
     </message>
 </context>
 <context>
@@ -4923,11 +4941,11 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     <name>PasswordEdit</name>
     <message>
         <source>Passwords do not match</source>
-        <translation type="unfinished"/>
+        <translation>Lösenorden stämmer inte överens</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation type="unfinished"/>
+        <translation>Lösenorden stämmer så långt</translation>
     </message>
 </context>
 <context>
@@ -4958,19 +4976,19 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Password field</source>
-        <translation type="unfinished"/>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj lösenordet</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation type="unfinished"/>
+        <translation>Upprepa lösenordet</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordsgenerator på/av</translation>
     </message>
 </context>
 <context>
@@ -5046,7 +5064,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropi: %1 bit</translation>
+        <translation>Entropi: %1 bitar</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -5170,75 +5188,75 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Regenerate</source>
-        <translation>Återgenerera</translation>
+        <translation>Generera om</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>Genererat lösenord</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation type="unfinished"/>
+        <translation>VERSALER</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation type="unfinished"/>
+        <translation>gemener</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation type="unfinished"/>
+        <translation>Specialtecken</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation type="unfinished"/>
+        <translation>Mattematiksymboler</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation type="unfinished"/>
+        <translation>Streck och snedstreck</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation type="unfinished"/>
+        <translation>Undantagna tecken</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Hexadecimala lösenord</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>Lösenordslängd</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>Skiftläge:</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation type="unfinished"/>
+        <translation>Generera om lösenordet</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Kopiera lösenord</translation>
+        <translation>Kopiera lösenordet</translation>
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>Acceptera lösenordet</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation type="unfinished"/>
+        <translation>gemener</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation type="unfinished"/>
+        <translation>VERSALER</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation type="unfinished"/>
+        <translation>Titelns skiftläge</translation>
     </message>
     <message>
         <source>Toggle password visibility</source>
-        <translation type="unfinished"/>
+        <translation>Visa/Dölj lösenordet</translation>
     </message>
 </context>
 <context>
@@ -5249,7 +5267,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistik</translation>
     </message>
 </context>
 <context>
@@ -5288,7 +5306,7 @@ Vissa fel och mindre problem kan uppstå. Denna version är inte ämnad för dag
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Fortsätt</translation>
     </message>
 </context>
 <context>
@@ -5500,7 +5518,7 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>Namn på posten som skall visas.</translation>
+        <translation>Visningsnamn för posten.</translation>
     </message>
     <message>
         <source>NULL device</source>
@@ -5983,15 +6001,15 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Inaktivera lösenordsnyckeln för databasen.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation type="unfinished"/>
+        <translation>Visa felsökningsinformation.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation type="unfinished"/>
+        <translation>Avaktivera lösenordsnyckel för databas som infogas ifrån.</translation>
     </message>
     <message>
         <source>Version %1</source>
@@ -5999,23 +6017,23 @@ Tillgängliga kommandon:
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation>Build Type: %1</translation>
+        <translation>Kompileringstyp: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Ändring: %1</translation>
+        <translation>Revision: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Utdelning: %1</translation>
+        <translation>Distribution: %1</translation>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation type="unfinished"/>
+        <translation>Felsökningsläget är inaktiverat.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>Felsökningsläget är aktiverat.</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -6059,151 +6077,151 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation type="unfinished"/>
+        <translation>Kryptografiska bibliotek:</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte generera lösenord och fråga på samma gång!</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>Lägger till en ny grupp i en databas.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till gruppen som läggs till.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation type="unfinished"/>
+        <translation>Gruppen %1 finns redan!</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Gruppen %1 hittades inte.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Lade till gruppen %1.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation type="unfinished"/>
+        <translation>Kontrollera om om några lösenord har läckt ut offentligt. FILNAMN måste vara sökvägen till en SHA-1-hashad fillista med läckta lösenord i HIBP-format, såsom tillgänglig från https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>FILNAMN</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation type="unfinished"/>
+        <translation>Analysera lösenord efter svagheter och problem.</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna HIBP-filen %1: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while...</source>
-        <translation type="unfinished"/>
+        <translation>Utvärderar databasposter mot HIBP-fil. Detta kommer att ta en stund...</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation type="unfinished"/>
+        <translation>Stäng den öppna databasen.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>Visa den här hjälpen.</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
-        <translation type="unfinished"/>
+        <translation>Yubikey-plats som används för att kryptera databasen.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation type="unfinished"/>
+        <translation>anslutningsplats</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt antal ord %1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"/>
+        <translation>Ordlistan är för liten (&lt;1000 objekt)</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation type="unfinished"/>
+        <translation>Avsluta interaktivt läge.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation type="unfinished"/>
+        <translation>Format att använda för export. Tillgängliga alternativ är XML eller CSV. Standard är XML.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation type="unfinished"/>
+        <translation>Exporterar innehållet i en databas till standardutdata i angivet format.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte exportera databas till XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation type="unfinished"/>
+        <translation>Formatet stöd inte, %1</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation type="unfinished"/>
+        <translation>Använd siffror</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig lösenordslängd %1</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation type="unfinished"/>
+        <translation>Visa kommandohjälp.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation type="unfinished"/>
+        <translation>Tillgängliga kommandon:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation type="unfinished"/>
+        <translation>Importera innehållet från en XML-databas.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation type="unfinished"/>
+        <translation>Målsökväg för XML-databasexport.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till den nya databasen.</translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte importera XML-databasexport %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>Databas importera.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation type="unfinished"/>
+        <translation>Okänt kommando %1</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation type="unfinished"/>
+        <translation>Slätar ut utdata till enkelrader.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation type="unfinished"/>
+        <translation>Skriv bara ut de ändringar som upptäckts av sammanfogningsoperationen.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>Yubikey-plats för den andra databasen.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation type="unfinished"/>
+        <translation>Infogade %1 i %2.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
@@ -6211,103 +6229,103 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation type="unfinished"/>
+        <translation>Flyttar en post till ny grupp.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till posten som skall flyttas.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till målgruppen.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte hitta någon grupp med sökväg %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Posten finns redan i gruppen %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>Flyttade posten %1 till gruppen %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation type="unfinished"/>
+        <translation>Öppna en databas.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Sökväg till gruppen som skall tas bort.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>Kan inte ta bort root-gruppen från databasen.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Gruppen %1 har återvunnits.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Gruppen %1 har tagits bort.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna databasfilen %1: Hittades inte</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna databasfilen %1: Ingen vanlig fil</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>Kunde inte öppna databasfilen %1: Inte läsbar</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation type="unfinished"/>
+        <translation>Ange lösenord för att låsa upp %1: </translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig YubiKey-plats %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to unlock %1</source>
-        <translation type="unfinished"/>
+        <translation>Rör vid knappen på din YubiKey för att låsa upp %1</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Ange lösenord för att avkryptera databasen (valfritt): </translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation type="unfinished"/>
+        <translation>HIBP-fil, rad %1: tolkningsfel</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation type="unfinished"/>
+        <translation>Secret Service-integration</translation>
     </message>
     <message>
         <source>User name</source>
-        <translation type="unfinished"/>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>%1[%2] Challenge Response - Slot %3 - %4</source>
-        <translation type="unfinished"/>
+        <translation>%1[%2] Challenge Response - Plats %3 - %4</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Lösenordet för &quot;%1&quot; har läckts ut %2 gång!</numerusform><numerusform>Lösenordet för &quot;%1&quot; har läckts ut %2 gånger!</numerusform></translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig lösenordsgenerator efter tillämpning av alla alternativ</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>Visa de skyddade attributen i klartext.</translation>
     </message>
 </context>
 <context>
@@ -6348,7 +6366,7 @@ Kärna: %3 %4</translation>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>Tjänstanslutning misslyckades.</translation>
+        <translation>Anslutning till tjänsten misslyckades.</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
@@ -6466,11 +6484,11 @@ Kärna: %3 %4</translation>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Alternativ</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktivera KeePassXC Secret Service-integration från Freedesktop.org</translation>
     </message>
     <message>
         <source>General</source>
@@ -6478,23 +6496,23 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Show notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>Visa avisering när autentiseringsuppgifter begärs</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Om papperskorgen är aktiverad för databasen, kommer posterna att flyttas direkt till papperskorgen. Annars kommer de att tas bort utan bekräftelse.&lt;/p&gt;&lt;p&gt;Du kommer fortfarande att tillfrågas om några poster refereras av andra.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation type="unfinished"/>
+        <translation>Be inte om bekräftelse när poster tas bort av klienter.</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>Exponerade databasgrupper:</translation>
     </message>
     <message>
         <source>File Name</source>
-        <translation type="unfinished"/>
+        <translation>Filnamn</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6502,23 +6520,23 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>Hantera</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>Auktorisation</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation type="unfinished"/>
+        <translation>Dessa program är för närvarande anslutna:</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>Program</translation>
     </message>
     <message>
         <source>Disconnect</source>
-        <translation type="unfinished"/>
+        <translation>Kopla ifrån</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -6526,15 +6544,15 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>Avsluta databasinställningar</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Lås upp databas</translation>
+        <translation>Lås upp databasen</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation type="unfinished"/>
+        <translation>Lås upp databasen för att visa mer information</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -6542,7 +6560,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Unlock to show</source>
-        <translation type="unfinished"/>
+        <translation>Lås upp för att visa</translation>
     </message>
     <message>
         <source>None</source>
@@ -6674,15 +6692,15 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt KeeShare-import</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>Tillåt KeeShare-export</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>Visa bara varningar och fel</translation>
     </message>
     <message>
         <source>Key</source>
@@ -6690,39 +6708,39 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>Undertecknarens namn</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Generera nytt certifikat</translation>
     </message>
     <message>
         <source>Import existing certificate</source>
-        <translation type="unfinished"/>
+        <translation>Importera befintligt certifikat</translation>
     </message>
     <message>
         <source>Export own certificate</source>
-        <translation type="unfinished"/>
+        <translation>Exportera eget certifikat</translation>
     </message>
     <message>
         <source>Known shares</source>
-        <translation type="unfinished"/>
+        <translation>Kända delningar</translation>
     </message>
     <message>
         <source>Trust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Lita på markerat certifikat</translation>
     </message>
     <message>
         <source>Ask whether to trust the selected certificate every time</source>
-        <translation type="unfinished"/>
+        <translation>Fråga om markerat certifikat alltid skall betraktas som pålitligt varje gång</translation>
     </message>
     <message>
         <source>Untrust selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Lita inte på markerat certifikat</translation>
     </message>
     <message>
         <source>Remove selected certificate</source>
-        <translation type="unfinished"/>
+        <translation>Ta bort markerat certifikat</translation>
     </message>
 </context>
 <context>
@@ -6906,7 +6924,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation>Det uppstod ett fel vid skapandet av QR-koden.</translation>
+        <translation>Det uppstod ett fel när QR-koden skapades.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
@@ -6950,44 +6968,45 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation type="unfinished"/>
+        <translation>Hemlig nyckel:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation type="unfinished"/>
+        <translation>En hemlig nyckel måste vara i Base32-format</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation type="unfinished"/>
+        <translation>Hemlig nyckel</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Algoritm</translation>
+        <translation>Algoritm:</translation>
     </message>
     <message>
         <source>Time step field</source>
-        <translation type="unfinished"/>
+        <translation>Tidssteg</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation type="unfinished"/>
+        <translation> siffror</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig TOTP-hemlighet</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation type="unfinished"/>
+        <translation>Du har angivit en ogiltig hemlig nyckel. Nyckeln måste vara i Base32-format.
+Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation type="unfinished"/>
+        <translation>Bekräfta borttagning av TOTP-inställningar</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation type="unfinished"/>
+        <translation>Vill du verkligen ta bort TOTP-inställningarna för den här posten?</translation>
     </message>
 </context>
 <context>
@@ -7073,11 +7092,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>Importera från 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation type="unfinished"/>
+        <translation>Öppna en tidigare databas</translation>
     </message>
 </context>
 <context>
@@ -7104,11 +7123,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation type="unfinished"/>
+        <translation>Uppdatera hårdvaru-tokens</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"/>
+        <translation>Hårdvarunyckelplats</translation>
     </message>
 </context>
 </TS>

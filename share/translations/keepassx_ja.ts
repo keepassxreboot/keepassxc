@@ -6199,7 +6199,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
-        <translation type="unfinished"/>
+        <translation>XMLデータベース %1 をインポートできません</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
