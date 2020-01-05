@@ -21,6 +21,7 @@
 
 #include <QDialog>
 #include <QScopedPointer>
+#include <QTableWidgetItem>
 
 class Entry;
 
@@ -35,13 +36,16 @@ class BrowserAccessControlDialog : public QDialog
 
 public:
     explicit BrowserAccessControlDialog(QWidget* parent = nullptr);
-    ~BrowserAccessControlDialog();
+    ~BrowserAccessControlDialog() override;
 
-    void setUrl(const QString& url);
-    void setItems(const QList<Entry*>& items);
+    void setItems(const QList<Entry*>& items, const QString& hostname, bool httpAuth);
     bool remember() const;
-    void setRemember(bool r);
-    void setHTTPAuth(bool httpAuth);
+
+    QList<QTableWidgetItem*> getSelectedEntries() const;
+    QList<QTableWidgetItem*> getNonSelectedEntries() const;
+
+signals:
+    void disableAccess(QTableWidgetItem* item);
 
 private:
     QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
