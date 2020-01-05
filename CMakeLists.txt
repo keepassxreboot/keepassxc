@@ -27,13 +27,6 @@ string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-# Use the Compiler Cache (ccache) if it is installed
-# (install with: sudo apt get ccache)
-find_program (CCACHE_FOUND ccache)
-if (CCACHE_FOUND)
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
-endif (CCACHE_FOUND)
-
 # Support Visual Studio Code
 include(CMakeToolsHelpers OPTIONAL)
 include(FeatureSummary)
@@ -48,6 +41,7 @@ option(WITH_DEV_BUILD "Use only for development. Disables/warns about deprecated
 option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
 option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
 option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
+option(WITH_CCACHE "Use ccache for build" OFF)
 
 set(WITH_XC_ALL OFF CACHE BOOL "Build in all available plugins")
 
@@ -63,6 +57,17 @@ if(UNIX AND NOT APPLE)
 endif()
 if(APPLE)
     option(WITH_XC_TOUCHID "Include TouchID support for macOS." OFF)
+endif()
+
+if(WITH_CCACHE)
+    # Use the Compiler Cache (ccache)
+    # (install with: sudo apt get ccache)
+    find_program (CCACHE_FOUND ccache)
+    if (CCACHE_FOUND)
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
+    else()
+        message(FATAL_ERROR "ccache requested but cannot be found.")
+    endif (CCACHE_FOUND)
 endif()
 
 if(WITH_XC_ALL)
