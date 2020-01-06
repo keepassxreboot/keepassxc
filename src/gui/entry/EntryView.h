@@ -63,6 +63,7 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void focusInEvent(QFocusEvent* event) override;
     void focusOutEvent(QFocusEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
@@ -75,15 +76,12 @@ private slots:
     void contextMenuShortcutPressed();
 
 private:
-    void fillRemainingWidth(bool lastColumnOnly);
     void resetFixedColumns();
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;
     bool m_inSearchMode;
-
-    QByteArray m_defaultListViewState;
-    QByteArray m_defaultSearchViewState;
+    bool m_columnsNeedRelayout = true;
 
     QMenu* m_headerMenu;
     QAction* m_hideUsernamesAction;

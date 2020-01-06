@@ -19,7 +19,6 @@
 
 #include <QDateTime>
 #include <QFont>
-#include <QFontMetrics>
 #include <QMimeData>
 #include <QPainter>
 #include <QPalette>
@@ -27,6 +26,7 @@
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
+#include "core/FilePath.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -218,9 +218,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         }
-        case Totp:
-            result = entry->hasTotp() ? tr("Yes") : "";
-            return result;
         }
     } else if (role == Qt::UserRole) { // Qt::UserRole is used as sort role, see EntryView::EntryView()
         switch (index.column()) {
@@ -240,7 +237,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Paperclip:
             // Display entries with attachments above those without when
             // sorting ascendingly (and vice versa when sorting descendingly)
-            return entry->attachments()->isEmpty() ? 1 : 0;
+            return !entry->attachments()->isEmpty();
+        case Totp:
+            return entry->hasTotp();
         default:
             // For all other columns, simply use data provided by Qt::Display-
             // Role for sorting
@@ -260,7 +259,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->iconScaledPixmap();
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
-                return m_paperClipPixmap;
+                return filePath()->icon("actions", "paperclip");
+            }
+            break;
+        case Totp:
+            if (entry->hasTotp()) {
+                return filePath()->icon("actions", "chronometer");
             }
             break;
         }
@@ -327,16 +331,47 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Accessed");
         case Attachments:
             return tr("Attachments");
-        case Totp:
-            return tr("TOTP");
         }
+
     } else if (role == Qt::DecorationRole) {
-        if (section == Paperclip) {
-            return m_paperClipPixmap;
+        switch (section) {
+        case Paperclip:
+            return filePath()->icon("actions", "paperclip");
+        case Totp:
+            return filePath()->icon("actions", "chronometer");
+        }
+    } else if (role == Qt::ToolTipRole) {
+        switch (section) {
+        case ParentGroup:
+            return tr("Group name");
+        case Title:
+            return tr("Entry title");
+        case Username:
+            return tr("Username");
+        case Password:
+            return tr("Password");
+        case Url:
+            return tr("URL");
+        case Notes:
+            return tr("Entry notes");
+        case Expires:
+            return tr("Entry expires at");
+        case Created:
+            return tr("Creation date");
+        case Modified:
+            return tr("Last modification date");
+        case Accessed:
+            return tr("Last access date");
+        case Attachments:
+            return tr("Attached files");
+        case Paperclip:
+            return tr("Has attachments");
+        case Totp:
+            return tr("Has TOTP one-time password");
         }
     }
 
-    return QVariant();
+    return {};
 }
 
 Qt::DropActions EntryModel::supportedDropActions() const
@@ -501,9 +536,4 @@ void EntryModel::setPasswordsHidden(bool hide)
     m_hidePasswords = hide;
     emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1));
     emit passwordsHiddenChanged();
-}
-
-void EntryModel::setPaperClipPixmap(const QPixmap& paperclip)
-{
-    m_paperClipPixmap = paperclip;
 }

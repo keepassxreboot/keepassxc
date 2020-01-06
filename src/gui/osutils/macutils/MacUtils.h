@@ -21,9 +21,12 @@
 
 #include "gui/osutils/OSUtilsBase.h"
 #include "AppKit.h"
-#include <QPointer>
 
-class MacUtils : public OSUtils
+#include <QPointer>
+#include <QScopedPointer>
+#include <qwindowdefs.h>
+
+class MacUtils : public OSUtilsBase
 {
     Q_OBJECT
 

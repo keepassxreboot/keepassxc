@@ -28,6 +28,7 @@
 #include "core/PasswordGenerator.h"
 #include "core/PasswordHealth.h"
 #include "gui/Clipboard.h"
+#include "gui/osutils/OSUtils.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
@@ -390,27 +391,33 @@ void PasswordGeneratorWidget::colorStrengthIndicator(const PasswordHealth& healt
     style.replace(re, "\\1 %1;");
 
     // Set the color and background based on entropy
-    // colors are taking from the KDE breeze palette
-    // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
+    QList<QString> qualityColors;
+    if (osUtils->isDarkMode()) {
+        qualityColors << QStringLiteral("#C43F31") << QStringLiteral("#DB9837") << QStringLiteral("#608A22")
+                      << QStringLiteral("#1F8023");
+    } else {
+        qualityColors << QStringLiteral("#C43F31") << QStringLiteral("#E09932") << QStringLiteral("#5EA10E")
+                      << QStringLiteral("#118f17");
+    }
     switch (health.quality()) {
     case PasswordHealth::Quality::Bad:
     case PasswordHealth::Quality::Poor:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[0]));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Weak:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[1]));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Good:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[2]));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Excellent:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[3]));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent", "Password quality")));
         break;
     }

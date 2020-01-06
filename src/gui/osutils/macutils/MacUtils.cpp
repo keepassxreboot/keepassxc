@@ -22,7 +22,7 @@
 QPointer<MacUtils> MacUtils::m_instance = nullptr;
 
 MacUtils::MacUtils(QObject* parent)
-    : OSUtils(parent)
+    : OSUtilsBase(parent)
     , m_appkit(new AppKit())
 {
     connect(m_appkit.data(), SIGNAL(lockDatabases()), SIGNAL(lockDatabases()));

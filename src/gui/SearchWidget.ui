@@ -16,7 +16,7 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,4">
+  <layout class="QHBoxLayout" name="horizontalLayout" stretch="4">
    <property name="leftMargin">
     <number>3</number>
    </property>
@@ -29,22 +29,6 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Minimum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>30</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item>
     <widget class="QLineEdit" name="searchEdit">
      <property name="sizePolicy">

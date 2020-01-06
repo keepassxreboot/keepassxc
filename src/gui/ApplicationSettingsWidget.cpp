@@ -213,6 +213,14 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get("GUI/MovableToolbar").toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get("GUI/MonospaceNotes").toBool());
 
+    m_generalUi->appThemeSelection->clear();
+    m_generalUi->appThemeSelection->addItem(tr("Automatic"), QStringLiteral("auto"));
+    m_generalUi->appThemeSelection->addItem(tr("Light"), QStringLiteral("light"));
+    m_generalUi->appThemeSelection->addItem(tr("Dark"), QStringLiteral("dark"));
+    m_generalUi->appThemeSelection->addItem(tr("Classic (Platform-native)"), QStringLiteral("classic"));
+    m_generalUi->appThemeSelection->setCurrentIndex(
+        m_generalUi->appThemeSelection->findData(config()->get("GUI/ApplicationTheme").toString()));
+
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Text only"), Qt::ToolButtonTextOnly);
@@ -303,19 +311,18 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("IgnoreGroupExpansion", m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
     config()->set("AutoTypeEntryTitleMatch", m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set("AutoTypeEntryURLMatch", m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
-    int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
     config()->set("FaviconDownloadTimeout", m_generalUi->faviconTimeoutSpinBox->value());
 
-    config()->set("GUI/Language", m_generalUi->languageComboBox->itemData(currentLangIndex).toString());
-
+    config()->set("GUI/Language", m_generalUi->languageComboBox->currentData().toString());
     config()->set("GUI/HidePreviewPanel", m_generalUi->previewHideCheckBox->isChecked());
     config()->set("GUI/HideToolbar", m_generalUi->toolbarHideCheckBox->isChecked());
     config()->set("GUI/MovableToolbar", m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set("GUI/MonospaceNotes", m_generalUi->monospaceNotesCheckBox->isChecked());
 
-    int currentToolButtonStyleIndex = m_generalUi->toolButtonStyleComboBox->currentIndex();
-    config()->set("GUI/ToolButtonStyle",
-                  m_generalUi->toolButtonStyleComboBox->itemData(currentToolButtonStyleIndex).toString());
+    QString theme = m_generalUi->appThemeSelection->currentData().toString();
+    config()->set("GUI/ApplicationTheme", theme);
+
+    config()->set("GUI/ToolButtonStyle", m_generalUi->toolButtonStyleComboBox->currentData().toString());
 
     config()->set("GUI/ShowTrayIcon", m_generalUi->systrayShowCheckBox->isChecked());
     config()->set("GUI/DarkTrayIcon", m_generalUi->systrayDarkIconCheckBox->isChecked());

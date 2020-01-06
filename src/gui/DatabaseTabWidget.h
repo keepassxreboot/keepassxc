@@ -89,6 +89,7 @@ signals:
     void databaseLocked(DatabaseWidget* dbWidget);
     void activateDatabaseChanged(DatabaseWidget* dbWidget);
     void tabNameChanged();
+    void tabVisibilityChanged(bool tabsVisible);
     void messageGlobal(const QString&, MessageWidget::MessageType type);
     void messageDismissGlobal();
     void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);

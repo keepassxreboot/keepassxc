@@ -80,8 +80,10 @@ void DatabaseTabWidget::toggleTabbar()
 {
     if (count() > 1) {
         tabBar()->show();
+        emit tabVisibilityChanged(true);
     } else {
         tabBar()->hide();
+        emit tabVisibilityChanged(false);
     }
 }
 

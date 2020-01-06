@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>684</width>
-    <height>951</height>
+    <width>499</width>
+    <height>1174</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -337,7 +337,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,1">
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
             <item>
              <widget class="QLabel" name="faviconTimeoutLabel">
               <property name="text">
@@ -349,12 +349,6 @@
              <widget class="QSpinBox" name="faviconTimeoutSpinBox">
               <property name="enabled">
                <bool>true</bool>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
               </property>
               <property name="focusPolicy">
                <enum>Qt::StrongFocus</enum>
@@ -400,6 +394,50 @@
           <string>General</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="appThemeLabel">
+              <property name="text">
+               <string>Application Theme:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="appThemeSelection">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="accessibleName">
+               <string>Application Theme Selection</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>(restart program to activate)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
           <item>
            <widget class="QCheckBox" name="toolbarHideCheckBox">
             <property name="text">
@@ -491,9 +529,6 @@
             </item>
             <item>
              <widget class="QComboBox" name="toolButtonStyleComboBox">
-              <property name="enabled">
-               <bool>true</bool>
-              </property>
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -726,7 +761,7 @@
             <item>
              <widget class="QPushButton" name="resetSettingsButton">
               <property name="text">
-               <string>Reset Settings to Default</string>
+               <string>Reset settings to default…</string>
               </property>
              </widget>
             </item>

@@ -236,6 +236,9 @@ MainWindow::MainWindow()
         autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
     }
 
+    m_ui->toolbarSeparator->setVisible(false);
+    m_showToolbarSeparator = config()->get("GUI/ApplicationTheme").toString() != "classic";
+
     m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
 
     m_inactivityTimer = new InactivityTimer(this);
@@ -389,6 +392,7 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), m_searchWidget, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
+    connect(m_ui->tabWidget, SIGNAL(tabVisibilityChanged(bool)), SLOT(adjustToTabVisibilityChange(bool)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
@@ -618,13 +622,17 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
 
     m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
-
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
+
+    if (m_showToolbarSeparator) {
+        m_ui->toolbarSeparator->setVisible(
+            (!inWelcomeWidget && inDatabaseTabWidget && !m_ui->tabWidget->tabBar()->isVisible())
+            || currentIndex == SettingsScreen);
+    }
 
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -773,6 +781,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         bool blocked = m_ui->actionSettings->blockSignals(true);
         m_ui->actionSettings->toggle();
         m_ui->actionSettings->blockSignals(blocked);
+    }
+}
+
+void MainWindow::adjustToTabVisibilityChange(bool tabsVisible)
+{
+    if (m_showToolbarSeparator) {
+        m_ui->toolbarSeparator->setVisible(!tabsVisible && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen);
     }
 }
 
@@ -1125,7 +1140,7 @@ void MainWindow::updateTrayIcon()
 
             QAction* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
-            actionToggle->setIcon(filePath()->icon("apps", "keepassxc-dark"));
+            actionToggle->setIcon(filePath()->icon("apps", "keepassxc-dark", false));
 
             menu->addAction(m_ui->actionLockDatabases);
 

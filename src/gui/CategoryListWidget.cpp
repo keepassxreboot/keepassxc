@@ -20,6 +20,7 @@
 
 #include <QListWidget>
 #include <QPainter>
+#include <QProxyStyle>
 #include <QScrollBar>
 #include <QSize>
 #include <QStyledItemDelegate>
@@ -158,9 +159,7 @@ CategoryListWidgetDelegate::CategoryListWidgetDelegate(QListWidget* parent)
     }
 }
 
-#ifdef Q_OS_WIN
-#include <QProxyStyle>
-class WindowsCorrectedStyle : public QProxyStyle
+class IconSelectionCorrectedStyle : public QProxyStyle
 {
 public:
     void drawPrimitive(PrimitiveElement element,
@@ -171,8 +170,8 @@ public:
         painter->save();
 
         if (PE_PanelItemViewItem == element) {
-            // Qt on Windows draws selection backgrounds only for the actual text/icon
-            // bounding box, not over the full width of a list item.
+            // Qt on Windows and the Fusion/Phantom base styles draw selection backgrounds only for
+            // the actual text/icon bounding box, not over the full width of a list item.
             // We therefore need to translate and stretch the painter before we can
             // tell Qt to draw its native styles.
             // Since we are scaling horizontally, we also need to move the right and left
@@ -186,7 +185,6 @@ public:
         painter->restore();
     }
 };
-#endif
 
 void CategoryListWidgetDelegate::paint(QPainter* painter,
                                        const QStyleOptionViewItem& option,
@@ -203,12 +201,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
     opt.decorationAlignment = Qt::AlignHCenter | Qt::AlignVCenter;
     opt.decorationPosition = QStyleOptionViewItem::Top;
 
-#ifdef Q_OS_WIN
-    QScopedPointer<QStyle> style(new WindowsCorrectedStyle());
-#else
-    QStyle* style = opt.widget ? opt.widget->style() : QApplication::style();
-#endif
-
+    QScopedPointer<QStyle> style(new IconSelectionCorrectedStyle());
     style->drawControl(QStyle::CE_ItemViewItem, &opt, painter, opt.widget);
 
     QRect fontRect = painter->fontMetrics().boundingRect(

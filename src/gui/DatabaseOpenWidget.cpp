@@ -90,12 +90,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->yubikeyProgress->setVisible(false);
 #endif
 
-#ifdef Q_OS_MACOS
-    // add random padding to layouts to align widgets properly
-    m_ui->dialogButtonsLayout->setContentsMargins(10, 0, 15, 0);
-    m_ui->gridLayout->setContentsMargins(10, 0, 0, 0);
-#endif
-
 #ifndef WITH_XC_TOUCHID
     m_ui->touchIDContainer->setVisible(false);
 #else

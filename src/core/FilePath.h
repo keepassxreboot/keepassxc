@@ -32,8 +32,8 @@ public:
     QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
-    QIcon icon(const QString& category, const QString& name);
-    QIcon onOffIcon(const QString& category, const QString& name);
+    QIcon icon(const QString& category, const QString& name, bool recolor = true);
+    QIcon onOffIcon(const QString& category, const QString& name, bool recolor = true);
 
     static FilePath* instance();
 
