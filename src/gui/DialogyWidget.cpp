@@ -24,6 +24,7 @@
 DialogyWidget::DialogyWidget(QWidget* parent)
     : QWidget(parent)
 {
+    setAutoFillBackground(true);
 }
 
 void DialogyWidget::keyPressEvent(QKeyEvent* e)

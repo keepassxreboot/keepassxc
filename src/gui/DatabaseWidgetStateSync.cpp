@@ -101,9 +101,7 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
  *
  * NOTE:
  * If m_listViewState is empty, the list view has been activated for the first
- * time after starting with a clean (or invalid) config. Thus, save the current
- * state. Without this, m_listViewState would remain empty until there is an
- * actual view state change (e.g. column is resized)
+ * time after starting with a clean (or invalid) config.
  */
 void DatabaseWidgetStateSync::restoreListView()
 {
@@ -112,8 +110,6 @@ void DatabaseWidgetStateSync::restoreListView()
 
     if (!m_listViewState.isEmpty()) {
         m_activeDbWidget->setEntryViewState(m_listViewState);
-    } else {
-        m_listViewState = m_activeDbWidget->entryViewState();
     }
 
     m_blockUpdates = false;

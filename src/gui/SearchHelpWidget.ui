@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>334</width>
-    <height>249</height>
+    <width>487</width>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="frameShape">
-   <enum>QFrame::Box</enum>
-  </property>
-  <property name="frameShadow">
-   <enum>QFrame::Plain</enum>
+   <enum>QFrame::StyledPanel</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -58,6 +55,9 @@
      <property name="text">
       <string>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item>
@@ -76,6 +76,9 @@
      </property>
      <property name="text">
       <string>Every search term must match (ie, logical AND)</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

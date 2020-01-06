@@ -99,7 +99,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QFrame" name="horizontalFrame">
+         <widget class="QFrame" name="loginFrame">
           <property name="minimumSize">
            <size>
             <width>550</width>
@@ -235,142 +235,6 @@
                   <property name="topMargin">
                    <number>3</number>
                   </property>
-                  <item row="1" column="3">
-                   <layout class="QGridLayout" name="gridLayout">
-                    <property name="spacing">
-                     <number>0</number>
-                    </property>
-                    <item row="1" column="2">
-                     <widget class="QProgressBar" name="yubikeyProgress">
-                      <property name="maximumSize">
-                       <size>
-                        <width>16777215</width>
-                        <height>2</height>
-                       </size>
-                      </property>
-                      <property name="minimum">
-                       <number>0</number>
-                      </property>
-                      <property name="maximum">
-                       <number>0</number>
-                      </property>
-                      <property name="value">
-                       <number>-1</number>
-                      </property>
-                      <property name="textVisible">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item row="0" column="2">
-                     <widget class="QComboBox" name="comboChallengeResponse">
-                      <property name="enabled">
-                       <bool>false</bool>
-                      </property>
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="accessibleName">
-                       <string>Hardware key slot selection</string>
-                      </property>
-                      <property name="editable">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="0" column="4">
-                   <widget class="QPushButton" name="buttonBrowseFile">
-                    <property name="toolTip">
-                     <string>Browse for key file</string>
-                    </property>
-                    <property name="accessibleName">
-                     <string>Browse for key file</string>
-                    </property>
-                    <property name="text">
-                     <string>Browse...</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="0" column="3">
-                   <layout class="QGridLayout" name="gridLayout_2">
-                    <property name="verticalSpacing">
-                     <number>0</number>
-                    </property>
-                    <item row="0" column="1">
-                     <widget class="QComboBox" name="comboKeyFile">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="accessibleName">
-                       <string>Key file selection</string>
-                      </property>
-                      <property name="editable">
-                       <bool>true</bool>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="1" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_6">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <item>
-                     <widget class="QLabel" name="hardwareKeyLabel">
-                      <property name="text">
-                       <string>Hardware Key:</string>
-                      </property>
-                      <property name="buddy">
-                       <cstring>comboChallengeResponse</cstring>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="hardwareKeyLabelHelp">
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="toolTip">
-                       <string>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information...&lt;/p&gt;</string>
-                      </property>
-                      <property name="accessibleName">
-                       <string>Hardware key help</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QToolButton {
-	border: none;
-	background: none;
-}</string>
-                      </property>
-                      <property name="text">
-                       <string notr="true">?</string>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>12</width>
-                        <height>12</height>
-                       </size>
-                      </property>
-                      <property name="popupMode">
-                       <enum>QToolButton::InstantPopup</enum>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
                   <item row="0" column="0">
                    <layout class="QHBoxLayout" name="horizontalLayout_4">
                     <property name="spacing">
@@ -419,21 +283,203 @@
                     </item>
                    </layout>
                   </item>
-                  <item row="1" column="4">
-                   <widget class="QPushButton" name="buttonRedetectYubikey">
-                    <property name="enabled">
-                     <bool>true</bool>
+                  <item row="1" column="3">
+                   <layout class="QGridLayout" name="gridLayout">
+                    <property name="spacing">
+                     <number>0</number>
                     </property>
+                    <item row="1" column="2">
+                     <widget class="QProgressBar" name="yubikeyProgress">
+                      <property name="maximumSize">
+                       <size>
+                        <width>16777215</width>
+                        <height>2</height>
+                       </size>
+                      </property>
+                      <property name="minimum">
+                       <number>0</number>
+                      </property>
+                      <property name="maximum">
+                       <number>0</number>
+                      </property>
+                      <property name="value">
+                       <number>-1</number>
+                      </property>
+                      <property name="textVisible">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item row="0" column="2">
+                     <widget class="QComboBox" name="comboChallengeResponse">
+                      <property name="enabled">
+                       <bool>false</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="accessibleName">
+                       <string>Hardware key slot selection</string>
+                      </property>
+                      <property name="editable">
+                       <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="1" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="spacing">
+                     <number>2</number>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <property name="spacing">
+                       <number>5</number>
+                      </property>
+                      <item>
+                       <widget class="QLabel" name="hardwareKeyLabel">
+                        <property name="text">
+                         <string>Hardware Key:</string>
+                        </property>
+                        <property name="buddy">
+                         <cstring>comboChallengeResponse</cstring>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QToolButton" name="hardwareKeyLabelHelp">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="toolTip">
+                         <string>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Click for more information...&lt;/p&gt;</string>
+                        </property>
+                        <property name="accessibleName">
+                         <string>Hardware key help</string>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">QToolButton {
+	border: none;
+	background: none;
+}</string>
+                        </property>
+                        <property name="text">
+                         <string notr="true">?</string>
+                        </property>
+                        <property name="iconSize">
+                         <size>
+                          <width>12</width>
+                          <height>12</height>
+                         </size>
+                        </property>
+                        <property name="popupMode">
+                         <enum>QToolButton::InstantPopup</enum>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_6">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>2</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="0" column="3">
+                   <layout class="QGridLayout" name="gridLayout_2">
+                    <property name="verticalSpacing">
+                     <number>0</number>
+                    </property>
+                    <item row="0" column="1">
+                     <widget class="QComboBox" name="comboKeyFile">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="accessibleName">
+                       <string>Key file selection</string>
+                      </property>
+                      <property name="editable">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="0" column="4">
+                   <widget class="QPushButton" name="buttonBrowseFile">
                     <property name="toolTip">
-                     <string>Refresh hardware tokens</string>
+                     <string>Browse for key file</string>
                     </property>
                     <property name="accessibleName">
-                     <string>Refresh hardware tokens</string>
+                     <string>Browse for key file</string>
                     </property>
                     <property name="text">
-                     <string>Refresh</string>
+                     <string>Browse...</string>
                     </property>
                    </widget>
+                  </item>
+                  <item row="1" column="4">
+                   <layout class="QVBoxLayout" name="verticalLayout_3">
+                    <property name="spacing">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QPushButton" name="buttonRedetectYubikey">
+                      <property name="enabled">
+                       <bool>true</bool>
+                      </property>
+                      <property name="toolTip">
+                       <string>Refresh hardware tokens</string>
+                      </property>
+                      <property name="accessibleName">
+                       <string>Refresh hardware tokens</string>
+                      </property>
+                      <property name="text">
+                       <string>Refresh</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <spacer name="verticalSpacer_5">
+                      <property name="orientation">
+                       <enum>Qt::Vertical</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Fixed</enum>
+                      </property>
+                      <property name="sizeHint" stdset="0">
+                       <size>
+                        <width>0</width>
+                        <height>2</height>
+                       </size>
+                      </property>
+                     </spacer>
+                    </item>
+                   </layout>
                   </item>
                  </layout>
                 </item>
@@ -572,7 +618,6 @@
   <tabstop>buttonBrowseFile</tabstop>
   <tabstop>hardwareKeyLabelHelp</tabstop>
   <tabstop>comboChallengeResponse</tabstop>
-  <tabstop>buttonRedetectYubikey</tabstop>
   <tabstop>checkTouchID</tabstop>
  </tabstops>
  <resources/>

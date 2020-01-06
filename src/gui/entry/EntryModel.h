@@ -68,8 +68,6 @@ public:
     bool isPasswordsHidden() const;
     void setPasswordsHidden(bool hide);
 
-    void setPaperClipPixmap(const QPixmap& paperclip);
-
 signals:
     void usernamesHiddenChanged();
     void passwordsHiddenChanged();
@@ -92,8 +90,6 @@ private:
 
     bool m_hideUsernames;
     bool m_hidePasswords;
-
-    QPixmap m_paperClipPixmap;
 
     const QString HiddenContentDisplay;
     const Qt::DateFormat DateFormat;

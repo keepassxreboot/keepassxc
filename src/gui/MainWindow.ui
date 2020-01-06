@@ -62,6 +62,16 @@
      </widget>
     </item>
     <item>
+     <widget class="Line" name="toolbarSeparator">
+      <property name="frameShadow">
+       <enum>QFrame::Plain</enum>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -195,7 +205,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="focusPolicy">
@@ -210,7 +220,7 @@
     </property>
     <widget class="QMenu" name="menuRecentDatabases">
      <property name="title">
-      <string>&amp;Recent databases</string>
+      <string>&amp;Recent Databases</string>
      </property>
     </widget>
     <widget class="QMenu" name="menuImport">
@@ -249,7 +259,6 @@
     <property name="title">
      <string>&amp;Help</string>
     </property>
-    <addaction name="actionAbout"/>
     <addaction name="separator"/>
     <addaction name="actionGettingStarted"/>
     <addaction name="actionUserGuide"/>
@@ -259,10 +268,11 @@
     <addaction name="actionCheckForUpdates"/>
     <addaction name="actionDonate"/>
     <addaction name="actionBugReport"/>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuEntries">
     <property name="title">
-     <string>E&amp;ntries</string>
+     <string>&amp;Entries</string>
     </property>
     <widget class="QMenu" name="menuEntryCopyAttribute">
      <property name="enabled">
@@ -272,7 +282,7 @@
       <string/>
      </property>
      <property name="title">
-      <string>Copy att&amp;ribute...</string>
+      <string>Copy Att&amp;ribute</string>
      </property>
      <addaction name="actionEntryCopyTitle"/>
      <addaction name="actionEntryCopyURL"/>
@@ -284,7 +294,7 @@
       <bool>false</bool>
      </property>
      <property name="title">
-      <string>TOTP...</string>
+      <string>TOTP</string>
      </property>
      <addaction name="actionEntryCopyTotp"/>
      <addaction name="actionEntryTotp"/>
@@ -311,7 +321,6 @@
      <string>&amp;Groups</string>
     </property>
     <addaction name="actionGroupNew"/>
-    <addaction name="separator"/>
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupDelete"/>
     <addaction name="actionGroupEmptyRecycleBin"/>
@@ -347,8 +356,8 @@
    </property>
    <property name="iconSize">
     <size>
-     <width>32</width>
-     <height>32</height>
+     <width>26</width>
+     <height>26</height>
     </size>
    </property>
    <attribute name="toolBarArea">
@@ -393,7 +402,7 @@
   </action>
   <action name="actionCheckForUpdates">
    <property name="text">
-    <string>&amp;Check for Updates...</string>
+    <string>&amp;Check for Updates</string>
    </property>
    <property name="menuRole">
     <enum>QAction::ApplicationSpecificRole</enum>
@@ -401,7 +410,7 @@
   </action>
   <action name="actionDatabaseOpen">
    <property name="text">
-    <string>&amp;Open database...</string>
+    <string>&amp;Open Database…</string>
    </property>
   </action>
   <action name="actionDatabaseSave">
@@ -409,7 +418,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Save database</string>
+    <string>&amp;Save Database</string>
    </property>
   </action>
   <action name="actionDatabaseClose">
@@ -417,12 +426,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Close database</string>
+    <string>&amp;Close Database</string>
    </property>
   </action>
   <action name="actionDatabaseNew">
    <property name="text">
-    <string>&amp;New database...</string>
+    <string>&amp;New Database…</string>
    </property>
    <property name="toolTip">
     <string>Create a new database</string>
@@ -430,7 +439,7 @@
   </action>
   <action name="actionDatabaseMerge">
    <property name="text">
-    <string>&amp;Merge from database...</string>
+    <string>&amp;Merge From Database…</string>
    </property>
    <property name="toolTip">
     <string>Merge from another KDBX database</string>
@@ -441,7 +450,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;New entry</string>
+    <string>&amp;New Entry…</string>
    </property>
    <property name="toolTip">
     <string>Add a new entry</string>
@@ -452,7 +461,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Edit entry</string>
+    <string>&amp;Edit Entry…</string>
    </property>
    <property name="toolTip">
     <string>View or edit entry</string>
@@ -463,7 +472,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Delete entry</string>
+    <string>&amp;Delete Entry…</string>
    </property>
   </action>
   <action name="actionGroupNew">
@@ -471,7 +480,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;New group</string>
+    <string>&amp;New Group…</string>
    </property>
    <property name="toolTip">
     <string>Add a new group</string>
@@ -482,7 +491,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Edit group</string>
+    <string>&amp;Edit Group…</string>
    </property>
   </action>
   <action name="actionGroupDelete">
@@ -490,7 +499,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Delete group</string>
+    <string>&amp;Delete Group…</string>
    </property>
   </action>
   <action name="actionGroupDownloadFavicons">
@@ -498,7 +507,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Downlo&amp;ad all favicons</string>
+    <string>Download All &amp;Favicons…</string>
    </property>
   </action>
   <action name="actionGroupSortAsc">
@@ -522,7 +531,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Sa&amp;ve database as...</string>
+    <string>Sa&amp;ve Database As…</string>
    </property>
   </action>
   <action name="actionChangeMasterKey">
@@ -530,7 +539,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Change master &amp;key...</string>
+    <string>Change Master &amp;Key…</string>
    </property>
   </action>
   <action name="actionReports">
@@ -552,7 +561,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Database settings...</string>
+    <string>&amp;Database Settings…</string>
    </property>
    <property name="toolTip">
     <string>Database settings</string>
@@ -566,7 +575,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Clone entry</string>
+    <string>&amp;Clone Entry…</string>
    </property>
   </action>
   <action name="actionEntryCopyUsername">
@@ -574,7 +583,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy &amp;username</string>
+    <string>Copy &amp;Username</string>
    </property>
    <property name="toolTip">
     <string>Copy username to clipboard</string>
@@ -585,7 +594,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Copy &amp;password</string>
+    <string>Copy &amp;Password</string>
    </property>
    <property name="toolTip">
     <string>Copy password to clipboard</string>
@@ -620,7 +629,7 @@
   </action>
   <action name="actionEntryDownloadIcon">
    <property name="text">
-    <string>Download favicon</string>
+    <string>Download &amp;Favicon</string>
    </property>
   </action>
   <action name="actionEntryOpenUrl">
@@ -636,7 +645,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Lock databases</string>
+    <string>&amp;Lock Databases</string>
    </property>
   </action>
   <action name="actionEntryCopyTitle">
@@ -677,7 +686,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Export to CSV file...</string>
+    <string>&amp;Export to CSV File…</string>
    </property>
   </action>
   <action name="actionExportHtml">
@@ -685,12 +694,12 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&amp;Export to HTML file...</string>
+    <string>&amp;Export to HTML File…</string>
    </property>
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
-    <string>KeePass 1 database...</string>
+    <string>KeePass 1 Database…</string>
    </property>
    <property name="toolTip">
     <string>Import a KeePass 1 database</string>
@@ -698,7 +707,7 @@
   </action>
   <action name="actionImportOpVault">
    <property name="text">
-    <string>1Password Vault...</string>
+    <string>1Password Vault…</string>
    </property>
    <property name="toolTip">
     <string>Import a 1Password Vault</string>
@@ -706,7 +715,7 @@
   </action>
   <action name="actionImportCsv">
    <property name="text">
-    <string>CSV file...</string>
+    <string>CSV File…</string>
    </property>
    <property name="toolTip">
     <string>Import a CSV file</string>
@@ -714,17 +723,17 @@
   </action>
   <action name="actionEntryTotp">
    <property name="text">
-    <string>Show TOTP...</string>
+    <string>Show TOTP</string>
    </property>
   </action>
   <action name="actionEntryTotpQRCode">
    <property name="text">
-    <string>Show TOTP QR Code...</string>
+    <string>Show QR Code</string>
    </property>
   </action>
   <action name="actionEntrySetupTotp">
    <property name="text">
-    <string>Set up TOTP...</string>
+    <string>Set up TOTP…</string>
    </property>
   </action>
   <action name="actionEntryCopyTotp">
@@ -747,7 +756,7 @@
   </action>
   <action name="actionBugReport">
    <property name="text">
-    <string>Report a &amp;bug</string>
+    <string>Report a &amp;Bug</string>
    </property>
   </action>
   <action name="actionGettingStarted">
@@ -760,7 +769,7 @@
   </action>
   <action name="actionOnlineHelp">
    <property name="text">
-    <string>&amp;Online Help...</string>
+    <string>&amp;Online Help</string>
    </property>
    <property name="toolTip">
     <string>Go to online documentation (opens browser)</string>

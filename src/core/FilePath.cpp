@@ -18,13 +18,15 @@
 
 #include "FilePath.h"
 
-#include <QCoreApplication>
+#include <QBitmap>
 #include <QDir>
 #include <QLibrary>
+#include <QStyle>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Global.h"
+#include "gui/MainWindow.h"
 
 FilePath* FilePath::m_instance(nullptr);
 
@@ -98,7 +100,7 @@ QIcon FilePath::applicationIcon()
 #ifdef KEEPASSXC_DIST_SNAP
     return icon("apps", "keepassxc", false);
 #else
-    return icon("apps", "keepassxc");
+    return icon("apps", "keepassxc", false);
 #endif
 }
 
@@ -109,7 +111,7 @@ QIcon FilePath::trayIcon()
 #ifdef KEEPASSXC_DIST_SNAP
     return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc", false);
 #else
-    return (darkIcon) ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc");
+    return (darkIcon) ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc", false);
 #endif
 }
 
@@ -118,7 +120,7 @@ QIcon FilePath::trayIconLocked()
 #ifdef KEEPASSXC_DIST_SNAP
     return icon("apps", "keepassxc-locked", false);
 #else
-    return icon("apps", "keepassxc-locked");
+    return icon("apps", "keepassxc-locked", false);
 #endif
 }
 
@@ -129,14 +131,13 @@ QIcon FilePath::trayIconUnlocked()
 #ifdef KEEPASSXC_DIST_SNAP
     return darkIcon ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
 #else
-    return darkIcon ? icon("apps", "keepassxc-dark") : icon("apps", "keepassxc-unlocked");
+    return darkIcon ? icon("apps", "keepassxc-dark", false) : icon("apps", "keepassxc-unlocked", false);
 #endif
 }
 
-QIcon FilePath::icon(const QString& category, const QString& name)
+QIcon FilePath::icon(const QString& category, const QString& name, bool recolor)
 {
     QString combinedName = category + "/" + name;
-
     QIcon icon = m_iconCache.value(combinedName);
 
     if (!icon.isNull()) {
@@ -154,7 +155,30 @@ QIcon FilePath::icon(const QString& category, const QString& name)
             }
         }
         filename = QString("%1/icons/application/scalable/%2.svg").arg(m_dataPath, combinedName);
-        if (QFile::exists(filename)) {
+        if (QFile::exists(filename) && getMainWindow() && recolor) {
+            QPalette palette = getMainWindow()->palette();
+
+            QFile f(filename);
+            QIcon scalable(filename);
+            QPixmap pixmap = scalable.pixmap({128, 128});
+
+            auto mask = QBitmap::fromImage(pixmap.toImage().createAlphaMask());
+            pixmap.fill(palette.color(QPalette::WindowText));
+            pixmap.setMask(mask);
+            icon.addPixmap(pixmap, QIcon::Mode::Normal);
+
+            pixmap.fill(palette.color(QPalette::HighlightedText));
+            pixmap.setMask(mask);
+            icon.addPixmap(pixmap, QIcon::Mode::Selected);
+
+            pixmap.fill(palette.color(QPalette::Disabled, QPalette::WindowText));
+            pixmap.setMask(mask);
+            icon.addPixmap(pixmap, QIcon::Mode::Disabled);
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+            icon.setIsMask(true);
+#endif
+        } else if (QFile::exists(filename)) {
             icon.addFile(filename);
         }
     }
@@ -164,7 +188,7 @@ QIcon FilePath::icon(const QString& category, const QString& name)
     return icon;
 }
 
-QIcon FilePath::onOffIcon(const QString& category, const QString& name)
+QIcon FilePath::onOffIcon(const QString& category, const QString& name, bool recolor)
 {
     QString combinedName = category + "/" + name;
     QString cacheName = "onoff/" + combinedName;
@@ -175,31 +199,17 @@ QIcon FilePath::onOffIcon(const QString& category, const QString& name)
         return icon;
     }
 
-    for (int i = 0; i < 2; i++) {
-        QIcon::State state;
-        QString stateName;
-
-        if (i == 0) {
-            state = QIcon::Off;
-            stateName = "off";
-        } else {
-            state = QIcon::On;
-            stateName = "on";
-        }
-
-        const QList<int> pngSizes = {16, 22, 24, 32, 48, 64, 128};
-        QString filename;
-        for (int size : pngSizes) {
-            filename = QString("%1/icons/application/%2x%2/%3-%4.png")
-                           .arg(m_dataPath, QString::number(size), combinedName, stateName);
-            if (QFile::exists(filename)) {
-                icon.addFile(filename, QSize(size, size), QIcon::Normal, state);
-            }
-        }
-        filename = QString("%1/icons/application/scalable/%2-%3.svg").arg(m_dataPath, combinedName, stateName);
-        if (QFile::exists(filename)) {
-            icon.addFile(filename, QSize(), QIcon::Normal, state);
-        }
+    QIcon on = FilePath::icon(category, name + "-on", recolor);
+    for (const auto& size : on.availableSizes()) {
+        icon.addPixmap(on.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::On);
+        icon.addPixmap(on.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::On);
+        icon.addPixmap(on.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::On);
+    }
+    QIcon off = FilePath::icon(category, name + "-off", recolor);
+    for (const auto& size : off.availableSizes()) {
+        icon.addPixmap(off.pixmap(size, QIcon::Mode::Normal), QIcon::Mode::Normal, QIcon::Off);
+        icon.addPixmap(off.pixmap(size, QIcon::Mode::Selected), QIcon::Mode::Selected, QIcon::Off);
+        icon.addPixmap(off.pixmap(size, QIcon::Mode::Disabled), QIcon::Mode::Disabled, QIcon::Off);
     }
 
     m_iconCache.insert(cacheName, icon);

@@ -1,0 +1,48 @@
+QPushButton:default {
+    background: palette(highlight);
+    color: palette(highlighted-text);
+}
+
+QSpinBox {
+    min-width: 90px;
+}
+
+QDialogButtonBox QPushButton {
+    min-width: 55px;
+}
+
+QCheckBox, QRadioButton {
+    spacing: 10px;
+}
+
+DatabaseWidget, GroupView {
+    background-color: palette(window);
+    border: none;
+}
+
+EntryPreviewWidget QLineEdit, EntryPreviewWidget QTextEdit {
+    background-color: palette(window);
+    border: none;
+}
+
+DatabaseOpenWidget #loginFrame {
+    border: 2px groove palette(mid);
+    background: palette(light);
+}
+
+QGroupBox {
+    margin-top: 1.4em;
+    margin-bottom: 1.4em;
+    font-weight: bold;
+}
+
+QGroupBox::title {
+    margin-top: -3.4em;
+    margin-left: -.4em;
+    subcontrol-origin: padding;
+}
+
+QToolTip {
+    border: none;
+    padding: 3px;
+}
