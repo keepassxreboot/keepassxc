@@ -28,6 +28,8 @@ public:
     Create();
     int execute(const QStringList& arguments) override;
 
+    static const QCommandLineOption DecryptionTimeOption;
+
 private:
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey);
 };

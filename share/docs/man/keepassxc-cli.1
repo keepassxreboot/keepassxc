@@ -1,4 +1,4 @@
-.TH KEEPASSXC-CLI 1 "June 15, 2019"
+.TH KEEPASSXC-CLI 1 "Jan 04, 2020"
 
 .SH NAME
 keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager.
@@ -177,6 +177,12 @@ hour or so).
 .IP "\fB-t\fP, \fB--totp\fP"
 Copies the current TOTP instead of current password to clipboard. Will report
 an error if no TOTP is configured for the entry.
+
+
+.SS "Create options"
+
+.IP "\fB-t\fP, \fB--decryption-time\fP <time>"
+Target decryption time in MS for the database.
 
 
 .SS "Show options"
