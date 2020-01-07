@@ -60,14 +60,14 @@ if(APPLE)
 endif()
 
 if(WITH_CCACHE)
-    # Use the Compiler Cache (ccache)
+    # Use the Compiler Cache (ccache) program
     # (install with: sudo apt get ccache)
     find_program (CCACHE_FOUND ccache)
-    if (CCACHE_FOUND)
+    if(CCACHE_FOUND)
         set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ccache)
     else()
         message(FATAL_ERROR "ccache requested but cannot be found.")
-    endif (CCACHE_FOUND)
+    endif()
 endif()
 
 if(WITH_XC_ALL)
