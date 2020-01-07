@@ -1286,8 +1286,8 @@ appsign() {
 
                 # osslsigncode does not succeed at signing MSI files at this time...
                 logInfo "Signing file '${f}' using Microsoft signtool..."
-                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" \
-                    -t "http://timestamp.comodoca.com/authenticode" "${f}"
+                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" -td sha256 \
+                    -fd sha256 -tr "http://timestamp.comodoca.com/authenticode" "${f}"
 
                 if [ 0 -ne $? ]; then
                     exitError "Signing failed!"
