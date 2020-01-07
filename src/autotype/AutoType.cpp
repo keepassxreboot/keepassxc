@@ -588,12 +588,12 @@ QList<AutoTypeAction*> AutoType::createActionFromTemplate(const QString& tmpl, c
 QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& windowTitle)
 {
     QList<QString> sequenceList;
+    const Group* group = entry->group();
 
-    if (!entry->autoTypeEnabled()) {
+    if (!group || !entry->autoTypeEnabled()) {
         return sequenceList;
     }
 
-    const Group* group = entry->group();
     do {
         if (group->autoTypeEnabled() == Group::Disable) {
             return sequenceList;
