@@ -605,6 +605,48 @@ void TestCli::testCreate()
     auto db3 =
         QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, "", Utils::DEVNULL));
     QVERIFY(db3);
+
+    // Invalid decryption time (format).
+    QString databaseFilename4 = testDir->path() + "/testCreate4.kdbx";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"create", databaseFilename4, "-t", "NAN"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("Invalid decryption time NAN.\n"));
+
+    // Invalid decryption time (range).
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"create", databaseFilename4, "-t", "10"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QVERIFY(m_stderrFile->readAll().contains(QByteArray("Target decryption time must be between")));
+
+    int encryptionTime = 500;
+    // Custom encryption time
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    int epochBefore = QDateTime::currentMSecsSinceEpoch();
+    createCmd.execute({"create", databaseFilename4, "-t", QString::number(encryptionTime)});
+    // Removing 100ms to make sure we account for changes in computation time.
+    QVERIFY(QDateTime::currentMSecsSinceEpoch() > (epochBefore + encryptionTime - 100));
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Benchmarking key derivation function for 500ms delay.\n"));
+    QVERIFY(m_stdoutFile->readLine().contains(QByteArray("rounds for key derivation function.\n")));
+
+    Utils::Test::setNextPassword("a");
+    auto db4 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename4, true, "", "", Utils::DEVNULL));
+    QVERIFY(db4);
 }
 
 void TestCli::testDiceware()
