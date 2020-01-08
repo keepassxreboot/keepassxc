@@ -28,8 +28,9 @@ namespace
 {
     QString PixmapToHTML(const QPixmap& pixmap)
     {
-        if (pixmap.isNull())
+        if (pixmap.isNull()) {
             return "";
+        }
 
         // Based on https://stackoverflow.com/a/6621278
         QByteArray a;

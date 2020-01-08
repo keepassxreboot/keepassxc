@@ -779,8 +779,9 @@ Entry* Entry::clone(CloneFlags flags) const
         entry->m_data.timeInfo.setLocationChanged(now);
     }
 
-    if (flags & CloneRenameTitle)
+    if (flags & CloneRenameTitle) {
         entry->setTitle(tr("%1 - Clone").arg(entry->title()));
+    }
 
     entry->setUpdateTimeinfo(true);
 
@@ -1075,8 +1076,9 @@ QString Entry::resolvePlaceholder(const QString& placeholder) const
 
 QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
 {
-    if (str.isEmpty())
+    if (str.isEmpty()) {
         return QString();
+    }
 
     const QUrl qurl(str);
     switch (placeholderType) {

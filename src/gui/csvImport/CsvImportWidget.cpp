@@ -294,27 +294,30 @@ void CsvImportWidget::setRootGroup()
 
     for (int r = 0; r < m_parserModel->rowCount(); ++r) {
         // use validity of second column as a GO/NOGO for all others fields
-        if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid())
+        if (not m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
             continue;
+        }
         groupLabel = m_parserModel->data(m_parserModel->index(r, 0)).toString();
         // check if group name is either "root", "" (empty) or some other label
         groupList = groupLabel.split("/", QString::SkipEmptyParts);
-        if (groupList.isEmpty())
+        if (groupList.isEmpty()) {
             is_empty = true;
-        else if (not groupList.first().compare("Root", Qt::CaseSensitive))
+        } else if (not groupList.first().compare("Root", Qt::CaseSensitive)) {
             is_root = true;
-        else if (not groupLabel.compare(""))
+        } else if (not groupLabel.compare("")) {
             is_empty = true;
-        else
+        } else {
             is_label = true;
+        }
 
         groupList.clear();
     }
 
-    if ((is_empty and is_root) or (is_label and not is_empty and is_root))
+    if ((is_empty and is_root) or (is_label and not is_empty and is_root)) {
         m_db->rootGroup()->setName("CSV IMPORTED");
-    else
+    } else {
         m_db->rootGroup()->setName("Root");
+    }
 }
 
 Group* CsvImportWidget::splitGroups(const QString& label)

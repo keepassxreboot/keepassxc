@@ -55,8 +55,9 @@ bool CsvParserModel::parse()
         QFile csv(m_filename);
         r = CsvParser::parse(&csv);
     }
-    for (int i = 0; i < columnCount(); ++i)
+    for (int i = 0; i < columnCount(); ++i) {
         m_columnMap.insert(i, 0);
+    }
     addEmptyColumn();
     endResetModel();
     return r;
@@ -73,13 +74,15 @@ void CsvParserModel::addEmptyColumn()
 
 void CsvParserModel::mapColumns(int csvColumn, int dbColumn)
 {
-    if ((csvColumn < 0) || (dbColumn < 0))
+    if ((csvColumn < 0) || (dbColumn < 0)) {
         return;
+    }
     beginResetModel();
-    if (csvColumn >= getCsvCols())
+    if (csvColumn >= getCsvCols()) {
         m_columnMap[dbColumn] = 0; // map to the empty column
-    else
+    } else {
         m_columnMap[dbColumn] = csvColumn;
+    }
     endResetModel();
 }
 
@@ -99,15 +102,17 @@ void CsvParserModel::setHeaderLabels(const QStringList& labels)
 
 int CsvParserModel::rowCount(const QModelIndex& parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
+    }
     return getCsvRows();
 }
 
 int CsvParserModel::columnCount(const QModelIndex& parent) const
 {
-    if (parent.isValid())
+    if (parent.isValid()) {
         return 0;
+    }
     return m_columnHeader.size();
 }
 
@@ -116,8 +121,9 @@ QVariant CsvParserModel::data(const QModelIndex& index, int role) const
     if ((index.column() >= m_columnHeader.size()) || (index.row() + m_skipped >= rowCount()) || !index.isValid()) {
         return QVariant();
     }
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole) {
         return m_table.at(index.row() + m_skipped).at(m_columnMap[index.column()]);
+    }
     return QVariant();
 }
 
@@ -125,12 +131,14 @@ QVariant CsvParserModel::headerData(int section, Qt::Orientation orientation, in
 {
     if (role == Qt::DisplayRole) {
         if (orientation == Qt::Horizontal) {
-            if ((section < 0) || (section >= m_columnHeader.size()))
+            if ((section < 0) || (section >= m_columnHeader.size())) {
                 return QVariant();
+            }
             return m_columnHeader.at(section);
         } else if (orientation == Qt::Vertical) {
-            if (section + m_skipped >= rowCount())
+            if (section + m_skipped >= rowCount()) {
                 return QVariant();
+            }
             return QString::number(section + 1);
         }
     }

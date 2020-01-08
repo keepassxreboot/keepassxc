@@ -289,14 +289,16 @@ void TestSymmetricCipher::testTwofish256CbcEncryption()
         QCOMPARE(cipher.blockSize(), 16);
         for (int j = 0; j < 5000; ++j) {
             ctCur = cipher.process(ptNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ptNext = ctPrev;
             ctPrev = ctCur;
 
             ctCur = cipher.process(ptNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ptNext = ctPrev;
             ctPrev = ctCur;
         }
@@ -342,13 +344,15 @@ void TestSymmetricCipher::testTwofish256CbcDecryption()
         QCOMPARE(cipher.blockSize(), 16);
         for (int j = 0; j < 5000; ++j) {
             ptCur = cipher.process(ctNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ctNext = ptCur;
 
             ptCur = cipher.process(ctNext, &ok);
-            if (!ok)
+            if (!ok) {
                 break;
+            }
             ctNext = ptCur;
         }
 

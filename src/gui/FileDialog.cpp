@@ -65,8 +65,9 @@ QStringList FileDialog::getOpenFileNames(QWidget* parent,
         const auto& workingDir = dir.isEmpty() ? config()->get("LastDir").toString() : dir;
         auto results = QFileDialog::getOpenFileNames(parent, caption, workingDir, filter, selectedFilter, options);
 
-        for (auto& path : results)
+        for (auto& path : results) {
             path = QDir::toNativeSeparators(path);
+        }
 
 #ifdef Q_OS_MACOS
         // on Mac OS X the focus is lost after closing the native dialog
