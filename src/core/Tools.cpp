@@ -113,8 +113,9 @@ namespace Tools
         extensions += "\n- " + QObject::tr("Secret Service Integration");
 #endif
 
-        if (extensions.isEmpty())
+        if (extensions.isEmpty()) {
             extensions = " " + QObject::tr("None");
+        }
 
         debugInfo.append(QObject::tr("Enabled extensions:").append(extensions).append("\n"));
         return debugInfo;

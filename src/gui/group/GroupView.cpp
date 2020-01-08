@@ -155,10 +155,11 @@ void GroupView::syncExpandedState(const QModelIndex& parent, int start, int end)
 
 void GroupView::setCurrentGroup(Group* group)
 {
-    if (group == nullptr)
+    if (group == nullptr) {
         setCurrentIndex(QModelIndex());
-    else
+    } else {
         setCurrentIndex(m_model->index(group));
+    }
 }
 
 void GroupView::modelReset()

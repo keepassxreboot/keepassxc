@@ -84,12 +84,14 @@ void TestYubiKeyChalResp::ykDetected(int slot, bool blocking)
 {
     Q_UNUSED(blocking);
 
-    if (slot > 0)
+    if (slot > 0) {
         m_detected++;
+    }
 
     /* Key used for later testing */
-    if (!m_key)
+    if (!m_key) {
         m_key.reset(new YkChallengeResponseKey(slot, blocking));
+    }
 }
 
 void TestYubiKeyChalResp::deinit()
