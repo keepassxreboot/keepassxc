@@ -651,6 +651,9 @@ bool Database::challengeMasterSeed(const QByteArray& masterSeed)
         bool ok = m_data.key->challenge(masterSeed, response);
         if (ok && !response.isEmpty()) {
             m_data.challengeResponseKey->setHash(response);
+        } else if (ok && response.isEmpty()) {
+            // no CR key present, make sure buffer is empty
+            m_data.challengeResponseKey.reset(new PasswordKey);
         }
         return ok;
     }
