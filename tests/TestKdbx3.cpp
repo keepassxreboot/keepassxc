@@ -31,6 +31,8 @@ QTEST_GUILESS_MAIN(TestKdbx3)
 
 void TestKdbx3::initTestCaseImpl()
 {
+    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
+    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX3)));
 }
 
 QSharedPointer<Database> TestKdbx3::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
