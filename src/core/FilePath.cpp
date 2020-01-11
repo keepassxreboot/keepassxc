@@ -133,7 +133,7 @@ QIcon FilePath::trayIconUnlocked()
 #endif
 }
 
-QIcon FilePath::icon(const QString& category, const QString& name, bool fromTheme)
+QIcon FilePath::icon(const QString& category, const QString& name)
 {
     QString combinedName = category + "/" + name;
 
@@ -141,10 +141,6 @@ QIcon FilePath::icon(const QString& category, const QString& name, bool fromThem
 
     if (!icon.isNull()) {
         return icon;
-    }
-
-    if (fromTheme && !getenv("KEEPASSXC_IGNORE_ICON_THEME")) {
-        icon = QIcon::fromTheme(name);
     }
 
     if (icon.isNull()) {

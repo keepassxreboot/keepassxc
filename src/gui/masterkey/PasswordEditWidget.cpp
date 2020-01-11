@@ -74,7 +74,7 @@ QWidget* PasswordEditWidget::componentEditWidget()
     m_compEditWidget = new QWidget();
     m_compUi->setupUi(m_compEditWidget);
     m_compUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_compUi->passwordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
+    m_compUi->passwordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
     m_compUi->repeatPasswordEdit->enableVerifyMode(m_compUi->enterPasswordEdit);
 
     connect(m_compUi->togglePasswordButton,

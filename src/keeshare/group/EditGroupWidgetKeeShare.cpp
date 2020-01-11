@@ -37,7 +37,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     m_ui->setupUi(this);
 
     m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_ui->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator", false));
+    m_ui->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
 
     m_ui->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
     m_ui->passwordGenerator->hide();

@@ -75,7 +75,7 @@ namespace
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
-            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
             connect(m_lockAct, &QAction::triggered, this, [this]() {
                 if (!m_dbWidget) {
@@ -133,14 +133,13 @@ namespace
             }
             connect(m_dbWidget, &DatabaseWidget::databaseLocked, this, [this]() {
                 m_lockAct->setText(tr("Unlock database"));
-                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
                 m_lockAct->setToolTip(tr("Unlock database to show more information"));
                 m_dbSettingsAct->setEnabled(false);
             });
             connect(m_dbWidget, &DatabaseWidget::databaseUnlocked, this, [this]() {
                 m_lockAct->setText(tr("Lock database"));
-                m_lockAct->setIcon(
-                    filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked"), false));
+                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked")));
                 m_lockAct->setToolTip(tr("Lock database"));
                 m_dbSettingsAct->setEnabled(true);
             });
