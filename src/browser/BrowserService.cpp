@@ -935,6 +935,12 @@ int BrowserService::sortPriority(const Entry* entry,
     if (url.scheme().isEmpty()) {
         url.setScheme("https");
     }
+
+    // Add the empty path to the URL if it's missing
+    if (url.path().isEmpty() && !url.hasFragment() && !url.hasQuery()) {
+        url.setPath("/");
+    }
+
     const QString entryURL = url.toString(QUrl::StripTrailingSlash);
     const QString baseEntryURL =
         url.toString(QUrl::StripTrailingSlash | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment);
