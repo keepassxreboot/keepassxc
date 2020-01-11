@@ -143,7 +143,9 @@ QByteArray FileWatcher::calculateChecksum()
             }
             return hash.result();
         }
-        return {};
+        // If we fail to open the file return the last known checksum, this
+        // prevents unnecessary merge requests on intermittent network shares
+        return m_fileChecksum;
     });
 }
 

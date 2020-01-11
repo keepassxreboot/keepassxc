@@ -20,7 +20,7 @@
 
 #include "TestKeePass2Format.h"
 
-class TestKdbx4 : public TestKeePass2Format
+class TestKdbx4Argon2 : public TestKeePass2Format
 {
     Q_OBJECT
 
@@ -51,8 +51,14 @@ protected:
                   bool& hasError,
                   QString& errorString) override;
     void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) override;
+};
 
-    QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf);
+class TestKdbx4AesKdf : public TestKdbx4Argon2
+{
+    Q_OBJECT
+
+protected:
+    void initTestCaseImpl() override;
 };
 
 #endif // KEEPASSXC_TEST_KDBX4_H
