@@ -77,8 +77,8 @@ private:
 
     const QScopedPointer<Ui::EntryPreviewWidget> m_ui;
     bool m_locked;
-    Entry* m_currentEntry;
-    Group* m_currentGroup;
+    QPointer<Entry> m_currentEntry;
+    QPointer<Group> m_currentGroup;
     QTimer m_totpTimer;
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
