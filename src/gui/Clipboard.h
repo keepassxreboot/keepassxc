@@ -32,7 +32,7 @@ class Clipboard : public QObject
     Q_OBJECT
 
 public:
-    void setText(const QString& text);
+    void setText(const QString& text, bool clear = true);
 
     static Clipboard* instance();
 

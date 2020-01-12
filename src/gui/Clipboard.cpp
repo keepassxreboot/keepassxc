@@ -44,20 +44,22 @@ Clipboard::Clipboard(QObject* parent)
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
 
-void Clipboard::setText(const QString& text)
+void Clipboard::setText(const QString& text, bool clear)
 {
-    QClipboard* clipboard = QApplication::clipboard();
+    auto* clipboard = QApplication::clipboard();
+    if (!clipboard) {
+        qWarning("Unable to access the clipboard.");
+        return;
+    }
 
-    QMimeData* mime = new QMimeData;
+    auto* mime = new QMimeData;
 #ifdef Q_OS_MACOS
     mime->setText(text);
     mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 #else
-    const QString secretStr = "secret";
-    QByteArray secretBa = secretStr.toUtf8();
     mime->setText(text);
-    mime->setData("x-kde-passwordManagerHint", secretBa);
+    mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
     clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clipboard->supportsSelection()) {
@@ -65,7 +67,7 @@ void Clipboard::setText(const QString& text)
     }
 #endif
 
-    if (config()->get("security/clearclipboard").toBool()) {
+    if (clear && config()->get("security/clearclipboard").toBool()) {
         int timeout = config()->get("security/clearclipboardtimeout").toInt();
         if (timeout > 0) {
             m_lastCopied = text;
@@ -84,19 +86,15 @@ void Clipboard::clearCopiedText()
 
 void Clipboard::clearClipboard()
 {
-    QClipboard* clipboard = QApplication::clipboard();
-
+    auto* clipboard = QApplication::clipboard();
     if (!clipboard) {
         qWarning("Unable to access the clipboard.");
         return;
     }
 
-    if (clipboard->text(QClipboard::Clipboard) == m_lastCopied) {
-        clipboard->clear(QClipboard::Clipboard);
-    }
-
-    if (clipboard->supportsSelection() && (clipboard->text(QClipboard::Selection) == m_lastCopied)) {
-        clipboard->clear(QClipboard::Selection);
+    if (m_lastCopied == clipboard->text(QClipboard::Clipboard)
+        || m_lastCopied == clipboard->text(QClipboard::Selection)) {
+        setText("", false);
     }
 
     m_lastCopied.clear();
