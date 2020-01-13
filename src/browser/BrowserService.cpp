@@ -1053,7 +1053,7 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
     }
 
     // Filter to match hostname in URL field
-    if (siteQUrl.host().endsWith(entryQUrl.host())) {
+    if (siteQUrl.host().endsWith(entryQUrl.host()) && baseDomain(siteQUrl.host()) == baseDomain(entryQUrl.host())) {
         return true;
     }
 

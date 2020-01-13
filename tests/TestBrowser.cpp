@@ -298,7 +298,8 @@ void TestBrowser::testSubdomainsAndPaths()
         "http://login.github.com/pathtonowhere",
         ".github.com", // Invalid URL
         "www.github.com/",
-        "https://github" // Invalid URL
+        "https://github", // Invalid URL
+        "https://hub.com" // Should not return
     };
 
     createEntries(urls, root);
