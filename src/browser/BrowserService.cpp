@@ -1052,8 +1052,13 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
         return false;
     }
 
-    // Filter to match hostname in URL field
-    if (siteQUrl.host().endsWith(entryQUrl.host()) && baseDomain(siteQUrl.host()) == baseDomain(entryQUrl.host())) {
+    // Match the base domain
+    if (baseDomain(siteQUrl.host()) != baseDomain(entryQUrl.host())) {
+        return false;
+    }
+
+    // Match the subdomains with the limited wildcard
+    if (siteQUrl.host().endsWith(entryQUrl.host())) {
         return true;
     }
 
