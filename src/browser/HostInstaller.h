@@ -35,7 +35,8 @@ public:
         FIREFOX = 2,
         VIVALDI = 3,
         TOR_BROWSER = 4,
-        BRAVE = 5
+        BRAVE = 5,
+        EDGE = 6
     };
 
 public:
@@ -68,6 +69,7 @@ private:
     const QString TARGET_DIR_VIVALDI;
     const QString TARGET_DIR_TOR_BROWSER;
     const QString TARGET_DIR_BRAVE;
+    const QString TARGET_DIR_EDGE;
 };
 
 #endif // HOSTINSTALLER_H

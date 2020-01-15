@@ -280,6 +280,17 @@ void BrowserSettings::setTorBrowserSupport(bool enabled)
         HostInstaller::SupportedBrowsers::TOR_BROWSER, enabled, supportBrowserProxy(), customProxyLocation());
 }
 
+bool BrowserSettings::edgeSupport()
+{
+    return m_hostInstaller.checkIfInstalled(HostInstaller::SupportedBrowsers::EDGE);
+}
+
+void BrowserSettings::setEdgeSupport(bool enabled)
+{
+    m_hostInstaller.installBrowser(
+        HostInstaller::SupportedBrowsers::EDGE, enabled, supportBrowserProxy(), customProxyLocation());
+}
+
 bool BrowserSettings::passwordUseNumbers()
 {
     return config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool();

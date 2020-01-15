@@ -80,6 +80,8 @@ public:
     void setBraveSupport(bool enabled);
     bool torBrowserSupport();
     void setTorBrowserSupport(bool enabled);
+    bool edgeSupport();
+    void setEdgeSupport(bool enabled);
 
     bool passwordUseNumbers();
     void setPasswordUseNumbers(bool useNumbers);
