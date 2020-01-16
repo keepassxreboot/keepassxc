@@ -15,118 +15,118 @@ keepassxc-cli \- command line interface for the \fBKeePassXC\fP password manager
 
 .SH COMMANDS
 
-.IP "add [options] <database> <entry>"
+.IP "\fBadd\fP [options] <database> <entry>"
 Adds a new entry to a database. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
 
-.IP "analyze [options] <database>"
+.IP "\fBanalyze\fP [options] <database>"
 Analyzes passwords in a database for weaknesses.
 
-.IP "clip [options] <database> <entry> [timeout]"
+.IP "\fBclip\fP [options] <database> <entry> [timeout]"
 Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
-.IP "close"
+.IP "\fBclose\fP"
 In interactive mode, closes the currently opened database (see \fIopen\fP).
 
-.IP "create [options] <database>"
+.IP "\fBcreate\fP [options] <database>"
 Creates a new database with a key file and/or password. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
 
-.IP "diceware [options]"
+.IP "\fBdiceware\fP [options]"
 Generates a random diceware passphrase.
 
-.IP "edit [options] <database> <entry>"
+.IP "\fBedit\fP [options] <database> <entry>"
 Edits a database entry. A password can be generated (\fI-g\fP option), or a prompt can be displayed to input the password (\fI-p\fP option).
 The same password generation options as documented for the generate command can be used when the \fI-g\fP option is set.
 
-.IP "estimate [options] [password]"
+.IP "\fBestimate\fP [options] [password]"
 Estimates the entropy of a password. The password to estimate can be provided as a positional argument, or using the standard input.
 
-.IP "exit"
+.IP "\fBexit\fP"
 Exits interactive mode. Synonymous with \fIquit\fP.
 
-.IP "export [options] <database>"
+.IP "\fBexport\fP [options] <database>"
 Exports the content of a database to standard output in the specified format (defaults to XML).
 
-.IP "generate [options]"
+.IP "\fBgenerate\fP [options]"
 Generates a random password.
 
-.IP "help [command]"
+.IP "\fBhelp\fP [command]"
 Displays a list of available commands, or detailed information about the specified command.
 
-.IP "import [options] <xml> <database>"
+.IP "\fBimport\fP [options] <xml> <database>"
 Imports the contents of an XML database to the target database.
 
-.IP "locate [options] <database> <term>"
+.IP "\fBlocate\fP [options] <database> <term>"
 Locates all the entries that match a specific search term in a database.
 
-.IP "ls [options] <database> [group]"
+.IP "\fBls\fP [options] <database> [group]"
 Lists the contents of a group in a database. If no group is specified, it will default to the root group.
 
-.IP "merge [options] <database1> <database2>"
+.IP "\fBmerge\fP [options] <database1> <database2>"
 Merges two databases together. The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge. In the case that both databases make use of the same credentials, the \fI--same-credentials\fP or \fI-s\fP option can be used.
 
-.IP "mkdir [options] <database> <group>"
+.IP "\fBmkdir\fP [options] <database> <group>"
 Adds a new group to a database.
 
-.IP "mv [options] <database> <entry> <group>"
+.IP "\fBmv\fP [options] <database> <entry> <group>"
 Moves an entry to a new group.
 
-.IP "open [options] <database>"
+.IP "\fBopen\fP [options] <database>"
 Opens the given database in a shell-style interactive mode. This is useful for performing multiple operations on a single database (e.g. \fIls\fP followed by \fIshow\fP).
 
-.IP "quit"
+.IP "\fBquit\fP"
 Exits interactive mode. Synonymous with \fIexit\fP.
 
-.IP "rm [options] <database> <entry>"
+.IP "\fBrm\fP [options] <database> <entry>"
 Removes an entry from a database. If the database has a recycle bin, the entry will be moved there. If the entry is already in the recycle bin, it will be removed permanently.
 
-.IP "rmdir [options] <database> <group>"
+.IP "\fBrmdir\fP [options] <database> <group>"
 Removes a group from a database. If the database has a recycle bin, the group will be moved there. If the group is already in the recycle bin, it will be removed permanently.
 
-.IP "show [options] <database> <entry>"
+.IP "\fBshow\fP [options] <database> <entry>"
 Shows the title, username, password, URL and notes of a database entry. Can also show the current TOTP. Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the \fIclip\fP command section also applies here.
 
 .SH OPTIONS
 
 .SS "General options"
 
-.IP "--debug-info"
+.IP "\fB--debug-info\fP"
 Displays debugging information.
 
-.IP "-k, --key-file <path>"
+.IP "\fB-k\fP, \fB--key-file\fP <path>"
 Specifies a path to a key file for unlocking the database. In a merge operation this option, is used to specify the key file path for the first database.
 
-.IP "--no-password"
+.IP "\fB--no-password\fP"
 Deactivates the password key for the database.
 
-.IP "-y, --yubikey <slot>"
+.IP "\fB-y\fP, \fB--yubikey\fP <slot>"
 Specifies a yubikey slot for unlocking the database. In a merge operation this option is used to specify the yubikey slot for the first database.
 
-.IP "-q, --quiet <path>"
+.IP "\fB-q\fP, \fB--quiet\fP <path>"
 Silences password prompt and other secondary outputs.
 
-.IP "-h, --help"
+.IP "\fB-h\fP, \fB--help\fP"
 Displays help information.
 
-.IP "-v, --version"
+.IP "\fB-v\fP, \fB--version\fP"
 Displays the program version.
 
 
 .SS "Merge options"
 
-.IP "-d, --dry-run <path>"
+.IP "\fB-d\fP, \fB--dry-run\fP <path>"
 Prints the changes detected by the merge operation without making any changes to the database.
 
-.IP "--key-file-from <path>"
+.IP "\fB--key-file-from\fP <path>"
 Sets the path of the key file for the second database.
 
-.IP "--no-password-from"
+.IP "\fB--no-password-from\fP"
 Deactivates password key for the database to merge from.
 
-.IP "--yubikey-from <slot>"
+.IP "\fB--yubikey-from\fP <slot>"
 Yubikey slot for the second database.
 
-.IP "-s, --same-credentials"
+.IP "\fB-s\fP, \fB--same-credentials\fP"
 Uses the same credentials for unlocking both databases.
 
 
@@ -134,34 +134,34 @@ Uses the same credentials for unlocking both databases.
 The same password generation options as documented for the generate command can be used
 with those 2 commands when the -g option is set.
 
-.IP "-u, --username <username>"
+.IP "\fB-u\fP, \fB--username\fP <username>"
 Specifies the username of the entry.
 
-.IP "--url <url>"
+.IP "\fB--url\fP <url>"
 Specifies the URL of the entry.
 
-.IP "-p, --password-prompt"
+.IP "\fB-p\fP, \fB--password-prompt\fP"
 Uses a password prompt for the entry's password.
 
-.IP "-g, --generate"
+.IP "\fB-g\fP, \fB--generate\fP"
 Generates a new password for the entry.
 
 
 .SS "Edit options"
 
-.IP "-t, --title <title>"
+.IP "\fB-t\fP, \fB--title\fP <title>"
 Specifies the title of the entry.
 
 
 .SS "Estimate options"
 
-.IP "-a, --advanced"
+.IP "\fB-a\fP, \fB--advanced\fP"
 Performs advanced analysis on the password.
 
 
 .SS "Analyze options"
 
-.IP "-H, --hibp <filename>"
+.IP "\fB-H\fP, \fB--hibp\fP <filename>"
 Checks if any passwords have been publicly leaked, by comparing against the given
 list of password SHA-1 hashes, which must be in "Have I Been Pwned" format. Such
 files are available from https://haveibeenpwned.com/Passwords; note that they
@@ -171,33 +171,33 @@ hour or so).
 
 .SS "Clip options"
 
-.IP "-t, --totp"
+.IP "\fB-t\fP, \fB--totp\fP"
 Copies the current TOTP instead of current password to clipboard. Will report
 an error if no TOTP is configured for the entry.
 
 
 .SS "Show options"
 
-.IP "-a, --attributes <attribute>..."
+.IP "\fB-a\fP, \fB--attributes\fP <attribute>..."
 Shows the named attributes. This option can be specified more than once,
 with each attribute shown one-per-line in the given order. If no attributes are
 specified and \fI-t\fP is not specified, a summary of the default attributes is given.
 Protected attributes will be displayed in clear text if specified explicitly by this option.
 
-.IP "-s, --show-protected"
+.IP "\fB-s\fP, \fB--show-protected\fP"
 Shows the protected attributes in clear text.
 
-.IP "-t, --totp"
+.IP "\fB-t\fP, \fB--totp\fP"
 Also shows the current TOTP, reporting an error if no TOTP is configured for
 the entry.
 
 
 .SS "Diceware options"
 
-.IP "-W, --words <count>"
+.IP "\fB-W\fP, \fB--words\fP <count>"
 Sets the desired number of words for the generated passphrase. [Default: 7]
 
-.IP "-w, --word-list <path>"
+.IP "\fB-w\fP, \fB--word-list\fP <path>"
 Sets the Path of the wordlist for the diceware generator. The wordlist must
 have > 1000 words, otherwise the program will fail. If the wordlist has < 4000
 words a warning will be printed to STDERR.
@@ -205,45 +205,45 @@ words a warning will be printed to STDERR.
 
 .SS "Export options"
 
-.IP "-f, --format"
+.IP "\fB-f\fP, \fB--format\fP"
 Format to use when exporting. Available choices are xml or csv. Defaults to xml.
 
 
 .SS "List options"
 
-.IP "-R, --recursive"
+.IP "\fB-R\fP, \fB--recursive\fP"
 Recursively lists the elements of the group.
 
-.IP "-f, --flatten"
+.IP "\fB-f\fP, \fB--flatten\fP"
 Flattens the output to single lines. When this option is enabled, subgroups and subentries will be displayed with a relative group path instead of indentation.
 
 .SS "Generate options"
 
-.IP "-L, --length <length>"
+.IP "\fB-L\fP, \fB--length\fP <length>"
 Sets the desired length for the generated password. [Default: 16]
 
-.IP "-l, --lower"
+.IP "\fB-l\fP, \fB--lower\fP"
 Uses lowercase characters for the generated password. [Default: Enabled]
 
-.IP "-U, --upper"
+.IP "\fB-U\fP, \fB--upper\fP"
 Uses uppercase characters for the generated password. [Default: Enabled]
 
-.IP "-n, --numeric"
+.IP "\fB-n\fP, \fB--numeric\fP"
 Uses numbers characters for the generated password. [Default: Enabled]
 
-.IP "-s, --special"
+.IP "\fB-s\fP, \fB--special\fP"
 Uses special characters for the generated password. [Default: Disabled]
 
-.IP "-e, --extended"
+.IP "\fB-e\fP, \fB--extended\fP"
 Uses extended ASCII characters for the generated password. [Default: Disabled]
 
-.IP "-x, --exclude <chars>"
+.IP "\fB-x\fP, \fB--exclude\fP <chars>"
 Comma-separated list of characters to exclude from the generated password. None is excluded by default.
 
-.IP "--exclude-similar"
+.IP "\fB--exclude-similar\fP"
 Exclude similar looking characters. [Default: Disabled]
 
-.IP "--every-group"
+.IP "\fB--every-group\fP"
 Include characters from every selected group. [Default: Disabled]
 
 
