@@ -154,6 +154,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_shareLabel->setVisible(false);
 #endif
 
+    m_previewView->setObjectName("previewWidget");
     m_previewView->hide();
     m_previewSplitter->addWidget(m_entryView);
     m_previewSplitter->addWidget(m_previewView);
@@ -552,6 +553,14 @@ void DatabaseWidget::deleteEntries(QList<Entry*> selectedEntries)
     }
 
     refreshSearch();
+
+    m_entryView->setFirstEntryActive();
+    auto* currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        m_previewView->setEntry(currentEntry);
+    } else {
+        m_previewView->setGroup(groupView()->currentGroup());
+    }
 }
 
 bool DatabaseWidget::confirmDeleteEntries(QList<Entry*> entries, bool permanent)

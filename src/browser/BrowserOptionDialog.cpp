@@ -44,10 +44,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
 
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2. %3")
+        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3. %4")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",
+                 "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>",
                  snapInstructions));
     // clang-format on
 
@@ -123,6 +124,7 @@ void BrowserOptionDialog::loadSettings()
     m_ui->chromeSupport->setChecked(settings->chromeSupport());
     m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
     m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
+    m_ui->edgeSupport->setChecked(settings->edgeSupport());
 #ifndef Q_OS_WIN
     m_ui->braveSupport->setChecked(settings->braveSupport());
     m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
@@ -130,6 +132,12 @@ void BrowserOptionDialog::loadSettings()
 #endif
 #ifndef Q_OS_LINUX
     m_ui->snapWarningLabel->setVisible(false);
+#endif
+
+// TODO: Enable when Linux version is released
+#ifdef Q_OS_LINUX
+    m_ui->edgeSupport->setChecked(false);
+    m_ui->edgeSupport->setEnabled(false);
 #endif
 
 #if defined(KEEPASSXC_DIST_APPIMAGE)
@@ -194,6 +202,7 @@ void BrowserOptionDialog::saveSettings()
     settings->setChromeSupport(m_ui->chromeSupport->isChecked());
     settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());
     settings->setFirefoxSupport(m_ui->firefoxSupport->isChecked());
+    settings->setEdgeSupport(m_ui->edgeSupport->isChecked());
 #ifndef Q_OS_WIN
     settings->setBraveSupport(m_ui->braveSupport->isChecked());
     settings->setVivaldiSupport(m_ui->vivaldiSupport->isChecked());

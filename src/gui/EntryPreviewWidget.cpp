@@ -145,10 +145,12 @@ void EntryPreviewWidget::setDatabaseMode(DatabaseWidget::Mode mode)
     }
 
     if (mode == DatabaseWidget::Mode::ViewMode) {
-        if (m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
+        if (m_currentGroup && m_ui->stackedWidget->currentWidget() == m_ui->pageGroup) {
             setGroup(m_currentGroup);
-        } else {
+        } else if (m_currentEntry) {
             setEntry(m_currentEntry);
+        } else {
+            hide();
         }
     }
 }

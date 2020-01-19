@@ -7052,7 +7052,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You&apos;re up-to-date!</source>
-        <translation>Version aktuel</translation>
+        <translation>Version aktuell</translation>
     </message>
     <message>
         <source>KeePassXC %1 is currently the newest version available</source>

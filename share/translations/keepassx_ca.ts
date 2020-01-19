@@ -1112,7 +1112,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Seleccioneu el fitxer de clau</translation>
+        <translation>Selecciona el fitxer de clau</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
@@ -1195,7 +1195,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"/>
+        <translation>Introduïu credencials addionals (si cal):</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
@@ -1216,7 +1216,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Select key file...</source>
-        <translation type="unfinished"/>
+        <translation>Selecciona el fitxer clau...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
@@ -2541,7 +2541,7 @@ Voleu deshabilitar el desat segur i provar-ho un altre cop?</translation>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Commuta el generador de contrasenyes</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2829,7 +2829,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Commuta el generador de contrasenyes</translation>
     </message>
     <message>
         <source>Clear fields</source>
@@ -3468,7 +3468,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Descarregant...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -3480,7 +3480,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Download Failed</source>
-        <translation type="unfinished"/>
+        <translation>La descàrrega ha fallat</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
@@ -3897,7 +3897,7 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Importa una base de dades de KeePass 1</translation>
     </message>
 </context>
 <context>
@@ -4093,7 +4093,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>Importat de</translation>
     </message>
     <message>
         <source>Exported to</source>
@@ -4195,11 +4195,11 @@ Message: %2</source>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Seleccioneu un arxiu clau</translation>
+        <translation>Selecciona un fitxer clau</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation>Selecció del fitxer clau</translation>
+        <translation>Selecciona el fitxer clau...</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -4267,7 +4267,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Sobre</translation>
+        <translation>Quant &amp;a</translation>
     </message>
     <message>
         <source>&amp;Open database...</source>
@@ -4412,7 +4412,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp; Importa</translation>
+        <translation>&amp;Importa</translation>
     </message>
     <message>
         <source>Copy att&amp;ribute...</source>
@@ -4480,7 +4480,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>Obre la &amp;URL</translation>
     </message>
     <message>
         <source>KeePass 1 database...</source>
@@ -4488,7 +4488,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation type="unfinished"/>
+        <translation>Importa una base de dades de KeePass 1</translation>
     </message>
     <message>
         <source>CSV file...</source>
@@ -4530,7 +4530,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Comprova si hi ha actualitzacions...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
@@ -4538,19 +4538,19 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Ordena &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Ordena &amp;Z-A</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Generador de contrasenyes</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Descarregua el favicon</translation>
+        <translation>Descarrega el favicon</translation>
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
@@ -4566,15 +4566,15 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>Primers passos</translation>
     </message>
     <message>
         <source>Open Getting Started Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Obre el PDF de la guia Primers passos</translation>
     </message>
     <message>
         <source>&amp;Online Help...</source>
-        <translation type="unfinished"/>
+        <translation>Ajuda &amp;online...</translation>
     </message>
     <message>
         <source>Go to online documentation (opens browser)</source>
@@ -4582,15 +4582,15 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation type="unfinished"/>
+        <translation>Guia d&apos;&amp;Usuari</translation>
     </message>
     <message>
         <source>Open User Guide PDF</source>
-        <translation type="unfinished"/>
+        <translation>Obre el PDF de la Guia d&apos;usuari</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Dreceres de teclat</translation>
     </message>
 </context>
 <context>
@@ -4944,7 +4944,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Toggle password generator</source>
-        <translation type="unfinished"/>
+        <translation>Commuta la generació de contrasenyes</translation>
     </message>
 </context>
 <context>
@@ -6151,7 +6151,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>La base de dades s&apos;ha importat correctament.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -6438,7 +6438,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation type="unfinished"/>
+        <translation>Habilita la integració amb el Freedesktop.org Secret Service</translation>
     </message>
     <message>
         <source>General</source>
@@ -6446,7 +6446,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Show notification when credentials are requested</source>
-        <translation type="unfinished"/>
+        <translation>Mostra una notificació quan es demanen credencials</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -6454,7 +6454,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation type="unfinished"/>
+        <translation>No confirmar quan les entrades són esborrades pel clients.</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
@@ -6470,19 +6470,19 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation type="unfinished"/>
+        <translation>Gestiona</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation type="unfinished"/>
+        <translation>Autorització</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation type="unfinished"/>
+        <translation>Aquestes aplicacions estan ara connectades:</translation>
     </message>
     <message>
         <source>Application</source>
-        <translation type="unfinished"/>
+        <translation>Aplicació</translation>
     </message>
     <message>
         <source>Disconnect</source>
@@ -6650,7 +6650,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>Mostra només els avisos i els errors</translation>
     </message>
     <message>
         <source>Key</source>

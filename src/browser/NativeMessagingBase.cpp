@@ -106,9 +106,9 @@ void NativeMessagingBase::readNativeMessages()
     quint32 length = 0;
     while (m_running.load() != 0 && !std::cin.eof()) {
         length = 0;
-        std::cin.read(reinterpret_cast<char*>(&length), 4);
+        std::cin.readsome(reinterpret_cast<char*>(&length), 4);
         readStdIn(length);
-        QThread::msleep(1);
+        QThread::msleep(100);
     }
 #endif
 }

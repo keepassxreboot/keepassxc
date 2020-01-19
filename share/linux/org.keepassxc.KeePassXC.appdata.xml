@@ -50,6 +50,20 @@
     </screenshots>
 
     <releases>
+        <release version="2.5.3" date="2020-01-19">
+            <description>
+                <ul>
+                    <li>Fix a possible database lockout when removing a YubiKey from a KDBX 3.1 database [#4147]</li>
+                    <li>Fix crash if Auto-Type is performed on a new entry [#4150]</li>
+                    <li>Fix crash when all entries are deleted from a group [#4156]</li>
+                    <li>Improve the reliability of clipboard clearing on Gnome [#4165]</li>
+                    <li>Do not check cmd:// URLs for valid URL syntax anymore [#4172]</li>
+                    <li>Prevent unnecessary merges for databases on network shares [#4153]</li>
+                    <li>Browser: Prevent native messaging proxy from blocking application shutdown [#4155]</li>
+                    <li>Browser: Improve website URL matching [#4134, #4177]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.5.2" date="2020-01-04">
             <description>
                 <ul>
