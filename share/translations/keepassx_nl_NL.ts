@@ -4519,7 +4519,7 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Uitvoeren &amp;Auto-Type</translation>
+        <translation>&amp;Auto-type uitvoeren</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
