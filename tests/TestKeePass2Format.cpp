@@ -22,7 +22,9 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "format/KdbxXmlReader.h"
+#include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "mock/MockChallengeResponseKey.h"
 
 #include "FailDevice.h"
 #include "config-keepassx-tests.h"
@@ -566,6 +568,168 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QCOMPARE(errorString, QString("FAILDEVICE"));
 }
 
+Q_DECLARE_METATYPE(QSharedPointer<CompositeKey>)
+
+void TestKeePass2Format::testKdbxKeyChange()
+{
+    QFETCH(QSharedPointer<CompositeKey>, key1);
+    QFETCH(QSharedPointer<CompositeKey>, key2);
+
+    bool hasError;
+    QString errorString;
+
+    // write new database
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    buffer.seek(0);
+    QSharedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(KeePass2::uuidToKdf(m_kdbxSourceDb->kdf()->uuid())));
+    db->setRootGroup(m_kdbxSourceDb->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+
+    db->setKey(key1);
+    writeKdbx(&buffer, db.data(), hasError, errorString);
+    QVERIFY(!hasError);
+
+    // read database
+    db = QSharedPointer<Database>::create();
+    buffer.seek(0);
+    readKdbx(&buffer, key1, db, hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
+    QVERIFY(db.data());
+
+    // change key
+    db->setKey(key2);
+
+    // write database
+    buffer.seek(0);
+    writeKdbx(&buffer, db.data(), hasError, errorString);
+    QVERIFY(!hasError);
+
+    // read database
+    db = QSharedPointer<Database>::create();
+    buffer.seek(0);
+    readKdbx(&buffer, key2, db, hasError, errorString);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
+    QVERIFY(db.data());
+    QVERIFY(db->rootGroup() != m_kdbxSourceDb->rootGroup());
+    QVERIFY(db->rootGroup()->uuid() == m_kdbxSourceDb->rootGroup()->uuid());
+}
+
+void TestKeePass2Format::testKdbxKeyChange_data()
+{
+    QTest::addColumn<QSharedPointer<CompositeKey>>("key1");
+    QTest::addColumn<QSharedPointer<CompositeKey>>("key2");
+
+    auto passwordKey1 = QSharedPointer<PasswordKey>::create("abc");
+    auto passwordKey2 = QSharedPointer<PasswordKey>::create("def");
+
+    QByteArray fileKeyBytes1("uvw");
+    QBuffer fileKeyBuffer1(&fileKeyBytes1);
+    fileKeyBuffer1.open(QBuffer::ReadOnly);
+    auto fileKey1 = QSharedPointer<FileKey>::create();
+    fileKey1->load(&fileKeyBuffer1);
+
+    QByteArray fileKeyBytes2("xzy");
+    QBuffer fileKeyBuffer2(&fileKeyBytes1);
+    fileKeyBuffer2.open(QBuffer::ReadOnly);
+    auto fileKey2 = QSharedPointer<FileKey>::create();
+    fileKey2->load(&fileKeyBuffer2);
+
+    auto crKey1 = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("123"));
+    auto crKey2 = QSharedPointer<MockChallengeResponseKey>::create(QByteArray("456"));
+
+    // empty key
+    auto compositeKey0 = QSharedPointer<CompositeKey>::create();
+
+    // all in
+    auto compositeKey1_1 = QSharedPointer<CompositeKey>::create();
+    compositeKey1_1->addKey(passwordKey1);
+    compositeKey1_1->addKey(fileKey1);
+    compositeKey1_1->addChallengeResponseKey(crKey1);
+    auto compositeKey1_2 = QSharedPointer<CompositeKey>::create();
+    compositeKey1_2->addKey(passwordKey2);
+    compositeKey1_2->addKey(fileKey2);
+    compositeKey1_2->addChallengeResponseKey(crKey2);
+
+    QTest::newRow("Change:  Empty Key -> Full Key") << compositeKey0 << compositeKey1_1;
+    QTest::newRow("Change:   Full Key -> Empty Key") << compositeKey1_1 << compositeKey0;
+    QTest::newRow("Change: Full Key 1 -> Full Key 2") << compositeKey1_1 << compositeKey1_2;
+
+    // only password
+    auto compositeKey2_1 = QSharedPointer<CompositeKey>::create();
+    compositeKey2_1->addKey(passwordKey1);
+    auto compositeKey2_2 = QSharedPointer<CompositeKey>::create();
+    compositeKey2_2->addKey(passwordKey2);
+
+    QTest::newRow("Change:   Password -> Empty Key") << compositeKey2_1 << compositeKey0;
+    QTest::newRow("Change:  Empty Key -> Password") << compositeKey0 << compositeKey2_1;
+    QTest::newRow("Change:   Full Key -> Password 1") << compositeKey1_1 << compositeKey2_1;
+    QTest::newRow("Change:   Full Key -> Password 2") << compositeKey1_1 << compositeKey2_2;
+    QTest::newRow("Change: Password 1 -> Full Key") << compositeKey2_1 << compositeKey1_1;
+    QTest::newRow("Change: Password 2 -> Full Key") << compositeKey2_2 << compositeKey1_1;
+    QTest::newRow("Change: Password 1 -> Password 2") << compositeKey2_1 << compositeKey2_2;
+
+    // only key file
+    auto compositeKey3_1 = QSharedPointer<CompositeKey>::create();
+    compositeKey3_1->addKey(fileKey1);
+    auto compositeKey3_2 = QSharedPointer<CompositeKey>::create();
+    compositeKey3_2->addKey(fileKey2);
+
+    QTest::newRow("Change:   Key File -> Empty Key") << compositeKey3_1 << compositeKey0;
+    QTest::newRow("Change:  Empty Key -> Key File") << compositeKey0 << compositeKey3_1;
+    QTest::newRow("Change:   Full Key -> Key File 1") << compositeKey1_1 << compositeKey3_1;
+    QTest::newRow("Change:   Full Key -> Key File 2") << compositeKey1_1 << compositeKey3_2;
+    QTest::newRow("Change: Key File 1 -> Full Key") << compositeKey3_1 << compositeKey1_1;
+    QTest::newRow("Change: Key File 2 -> Full Key") << compositeKey3_2 << compositeKey1_1;
+    QTest::newRow("Change: Key File 1 -> Key File 2") << compositeKey3_1 << compositeKey3_2;
+
+    // only cr key
+    auto compositeKey4_1 = QSharedPointer<CompositeKey>::create();
+    compositeKey4_1->addChallengeResponseKey(crKey1);
+    auto compositeKey4_2 = QSharedPointer<CompositeKey>::create();
+    compositeKey4_2->addChallengeResponseKey(crKey2);
+
+    QTest::newRow("Change:    CR Key -> Empty Key") << compositeKey4_1 << compositeKey0;
+    QTest::newRow("Change: Empty Key -> CR Key") << compositeKey0 << compositeKey4_1;
+    QTest::newRow("Change:  Full Key -> CR Key 1") << compositeKey1_1 << compositeKey4_1;
+    QTest::newRow("Change:  Full Key -> CR Key 2") << compositeKey1_1 << compositeKey4_2;
+    QTest::newRow("Change:  CR Key 1 -> Full Key") << compositeKey4_1 << compositeKey1_1;
+    QTest::newRow("Change:  CR Key 2 -> Full Key") << compositeKey4_2 << compositeKey1_1;
+    QTest::newRow("Change:  CR Key 1 -> CR Key 2") << compositeKey4_1 << compositeKey4_2;
+
+    // rotate
+    QTest::newRow("Change: Password -> Key File") << compositeKey2_1 << compositeKey3_1;
+    QTest::newRow("Change: Key File -> Password") << compositeKey3_1 << compositeKey2_1;
+    QTest::newRow("Change: Password -> Key File") << compositeKey2_1 << compositeKey3_1;
+    QTest::newRow("Change: Key File -> Password") << compositeKey3_1 << compositeKey2_1;
+    QTest::newRow("Change: Password -> CR Key") << compositeKey2_1 << compositeKey4_1;
+    QTest::newRow("Change:   CR Key -> Password") << compositeKey4_1 << compositeKey2_1;
+    QTest::newRow("Change: Key File -> CR Key") << compositeKey3_1 << compositeKey4_1;
+    QTest::newRow("Change:   CR Key -> Key File") << compositeKey4_1 << compositeKey3_1;
+
+    // leave one out
+    auto compositeKey5_1 = QSharedPointer<CompositeKey>::create();
+    compositeKey5_1->addKey(fileKey1);
+    compositeKey5_1->addChallengeResponseKey(crKey1);
+    auto compositeKey5_2 = QSharedPointer<CompositeKey>::create();
+    compositeKey5_2->addKey(passwordKey1);
+    compositeKey5_2->addChallengeResponseKey(crKey1);
+    auto compositeKey5_3 = QSharedPointer<CompositeKey>::create();
+    compositeKey5_3->addKey(passwordKey1);
+    compositeKey5_3->addKey(fileKey1);
+
+    QTest::newRow("Change:    Full Key -> No Password") << compositeKey1_1 << compositeKey5_1;
+    QTest::newRow("Change: No Password -> Full Key") << compositeKey5_1 << compositeKey1_1;
+    QTest::newRow("Change:    Full Key -> No Key File") << compositeKey1_1 << compositeKey5_2;
+    QTest::newRow("Change: No Key File -> Full Key") << compositeKey5_2 << compositeKey1_1;
+    QTest::newRow("Change:    Full Key -> No CR Key") << compositeKey1_1 << compositeKey5_3;
+    QTest::newRow("Change:   No CR Key -> Full Key") << compositeKey5_3 << compositeKey1_1;
+}
+
 /**
  * Test for catching mapping errors with duplicate attachments.
  */
@@ -636,4 +800,18 @@ void TestKeePass2Format::testDuplicateAttachments()
     QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c1"), attachment2);
     QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c2"), attachment2);
     QCOMPARE(db->rootGroup()->entries()[2]->attachments()->value("c3"), attachment3);
+}
+
+/**
+ * @return fast "dummy" KDF
+ */
+QSharedPointer<Kdf> TestKeePass2Format::fastKdf(QSharedPointer<Kdf> kdf) const
+{
+    kdf->setRounds(1);
+
+    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
+        kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
+    }
+
+    return kdf;
 }

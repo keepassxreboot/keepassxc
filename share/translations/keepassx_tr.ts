@@ -878,7 +878,11 @@ Mevcut ayarlarınızı şimdi taşımak ister misiniz?</translation>
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation type="unfinished"/>
+        <translation>Aşağıdaki veritabanı için bir ilişkilendirme isteği aldınız:
+%1
+
+Bağlantıya benzersiz bir ad veya kimlik verin, örneğin:
+linux-laptop.</translation>
     </message>
 </context>
 <context>
@@ -990,7 +994,7 @@ chrome-laptop.</source>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation type="unfinished"/>
+        <translation>Metin niteliği</translation>
     </message>
     <message>
         <source>Field separation</source>
@@ -1227,7 +1231,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı dosyası anahtar dosyası olarak kullanılamaz</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
@@ -1389,11 +1393,11 @@ Tarayıcı eklentisiyle uyumluluğu korumak için bu gereklidir.</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation type="unfinished"/>
+        <translation>Saklanan tarayıcı tuşları</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation type="unfinished"/>
+        <translation>Seçili anahtarı kaldır</translation>
     </message>
 </context>
 <context>
@@ -1539,11 +1543,11 @@ Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kır
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation type="unfinished"/>
+        <translation>Mevcut şifre çözme süresini değiştir</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Saniyede şifre çözme süresi</translation>
     </message>
     <message>
         <source>Database format</source>
@@ -1551,11 +1555,11 @@ Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kır
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Şifreleme algoritması</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar türetme işlevi</translation>
     </message>
     <message>
         <source>Transform rounds</source>
@@ -1567,14 +1571,14 @@ Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kır
     </message>
     <message>
         <source>Parallelism</source>
-        <translation type="unfinished"/>
+        <translation>Benzerlik</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation type="unfinished"/>
+        <translation>Maruz Kalan Girdiler</translation>
     </message>
     <message>
         <source>Don&apos;t e&amp;xpose this database</source>
@@ -1582,7 +1586,7 @@ Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kır
     </message>
     <message>
         <source>Expose entries &amp;under this group:</source>
-        <translation type="unfinished"/>
+        <translation>Bu kümenin &amp;altındaki girdileri göster:</translation>
     </message>
     <message>
         <source>Enable fd.o Secret Service to access these settings.</source>
@@ -1653,11 +1657,11 @@ Eğer bu sayı ile devam ederseniz, veritabanınız çok kolay çözülerek kır
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation type="unfinished"/>
+        <translation>Girdi başına azami geçmiş boyutu</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Geri Dönüşüm Kutusunu Sil</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
@@ -1767,7 +1771,7 @@ Parola olmadan devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation type="unfinished"/>
+        <translation>Daha fazla bilgi için farenizi hata simgeli satırların üzerine getirin.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1803,7 +1807,7 @@ Parola olmadan devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>hayır</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
@@ -1811,15 +1815,15 @@ Parola olmadan devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation type="unfinished"/>
+        <translation>Küme sayısı</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation type="unfinished"/>
+        <translation>Girdilerin sayısı</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Süresi dolmuş girdi sayısı</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
@@ -1827,35 +1831,35 @@ Parola olmadan devam etmek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz parolalar</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz olmayan parolalar</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Parolaların %10&apos;undan fazlası yeniden kullanılır. Mümkünse benzersiz parolalar kullanın.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation type="unfinished"/>
+        <translation>Azami parola kullanımı</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Bazı parolalar üç kereden fazla kullanılır. Mümkünse benzersiz parolalar kullanın.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation type="unfinished"/>
+        <translation>Kısa parola sayısı</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation type="unfinished"/>
+        <translation>Önerilen asgari parola uzunluğu en az 8 karakterdir.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation type="unfinished"/>
+        <translation>Zayıf parola sayısı</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
@@ -1971,7 +1975,7 @@ Bu kesinlikle bir hatadır, lütfen geliştiricilere bildirin.</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanınızı şifrelenmemiş bir dosyaya vermek üzeresiniz. Bu, parolalarınızı ve hassas bilgilerinizi savunmasız bırakacaktır! Devam etmek istediğine emin misin?</translation>
     </message>
 </context>
 <context>
@@ -2350,7 +2354,7 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation type="unfinished"/>
+        <translation>Korumalı bir özelliği göster</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
@@ -2429,7 +2433,7 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation type="unfinished"/>
+        <translation>Bu pencere için özel Otomatik Yazım sırası</translation>
     </message>
 </context>
 <context>
@@ -2578,7 +2582,7 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation type="unfinished"/>
+        <translation>Son Kullanma Önayarları</translation>
     </message>
     <message>
         <source>Expiration presets</source>
@@ -2678,11 +2682,11 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation type="unfinished"/>
+        <translation>Belirtilen saniye sonra anahtarı aracıdan kaldır</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation type="unfinished"/>
+        <translation>Anahtar dosyasına göz at</translation>
     </message>
     <message>
         <source>External key file</source>
@@ -2690,7 +2694,7 @@ Güvenli kaydetme devre dışı bırakılsın ve tekrar denensin mi?</translatio
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation type="unfinished"/>
+        <translation>Ek dosyasını seç</translation>
     </message>
 </context>
 <context>
@@ -3070,7 +3074,7 @@ Bu etkilenen eklentilerin bozulmasına neden olabilir.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>Benzersiz ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
@@ -4124,11 +4128,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>Dışa aktarıldı</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>Eşitlendi</translation>
     </message>
 </context>
 <context>
@@ -4803,7 +4807,7 @@ Bazı hatalar ve küçük sorunlar olabilir, bu sürüm şu an dağıtımda değ
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation type="unfinished"/>
+        <translation>Dizin .opvault mevcut olmalıdır</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
@@ -6069,7 +6073,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time!</source>
-        <translation type="unfinished"/>
+        <translation>Parola ve komut istemi aynı anda oluşturulamaz!</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
@@ -6117,7 +6121,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Display this help.</source>
-        <translation type="unfinished"/>
+        <translation>Bu yardımı görüntüle.</translation>
     </message>
     <message>
         <source>Yubikey slot used to encrypt the database.</source>
@@ -6189,7 +6193,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı başarıyla içe aktarıldı.</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -6245,7 +6249,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Kaldırılacak kümenin yolu.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
@@ -6285,7 +6289,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Veritabanını şifrelemek için parola gir (isteğe bağlı):</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
@@ -6496,7 +6500,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation type="unfinished"/>
+        <translation>Maruz kalan veritabanı kümeleri:</translation>
     </message>
     <message>
         <source>File Name</source>
@@ -6532,7 +6536,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation type="unfinished"/>
+        <translation>Veritabanı ayarlarını düzenle</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -6700,7 +6704,7 @@ MİB mimarisi: %2
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>Yeni sertifika oluştur</translation>
     </message>
     <message>
         <source>Import existing certificate</source>

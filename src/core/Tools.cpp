@@ -262,7 +262,7 @@ namespace Tools
 
     bool checkUrlValid(const QString& urlField)
     {
-        if (urlField.isEmpty()) {
+        if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)) {
             return true;
         }
 

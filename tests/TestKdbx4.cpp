@@ -29,15 +29,25 @@
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
 
-QTEST_GUILESS_MAIN(TestKdbx4)
+int main(int argc, char* argv[])
+{
+    QCoreApplication app(argc, argv);
+    QCoreApplication::setAttribute(Qt::AA_Use96Dpi, true);
+    QTEST_SET_MAIN_SOURCE_PATH
 
-void TestKdbx4::initTestCaseImpl()
+    TestKdbx4Argon2 argon2Test;
+    TestKdbx4AesKdf aesKdfTest;
+    return QTest::qExec(&argon2Test, argc, argv) | QTest::qExec(&aesKdfTest, argc, argv);
+}
+
+void TestKdbx4Argon2::initTestCaseImpl()
 {
     m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
     m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
 }
 
-QSharedPointer<Database> TestKdbx4::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database>
+TestKdbx4Argon2::readXml(const QString& path, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -47,7 +57,7 @@ QSharedPointer<Database> TestKdbx4::readXml(const QString& path, bool strictMode
     return db;
 }
 
-QSharedPointer<Database> TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
+QSharedPointer<Database> TestKdbx4Argon2::readXml(QBuffer* buf, bool strictMode, bool& hasError, QString& errorString)
 {
     KdbxXmlReader reader(KeePass2::FILE_VERSION_4);
     reader.setStrictMode(strictMode);
@@ -57,7 +67,7 @@ QSharedPointer<Database> TestKdbx4::readXml(QBuffer* buf, bool strictMode, bool&
     return db;
 }
 
-void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
+void TestKdbx4Argon2::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
 {
     KdbxXmlWriter writer(KeePass2::FILE_VERSION_4);
     writer.writeDatabase(buf, db);
@@ -65,11 +75,11 @@ void TestKdbx4::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& er
     errorString = writer.errorString();
 }
 
-void TestKdbx4::readKdbx(QIODevice* device,
-                         QSharedPointer<const CompositeKey> key,
-                         QSharedPointer<Database> db,
-                         bool& hasError,
-                         QString& errorString)
+void TestKdbx4Argon2::readKdbx(QIODevice* device,
+                               QSharedPointer<const CompositeKey> key,
+                               QSharedPointer<Database> db,
+                               bool& hasError,
+                               QString& errorString)
 {
     KeePass2Reader reader;
     reader.readDatabase(device, key, db.data());
@@ -80,11 +90,11 @@ void TestKdbx4::readKdbx(QIODevice* device,
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
 }
 
-void TestKdbx4::readKdbx(const QString& path,
-                         QSharedPointer<const CompositeKey> key,
-                         QSharedPointer<Database> db,
-                         bool& hasError,
-                         QString& errorString)
+void TestKdbx4Argon2::readKdbx(const QString& path,
+                               QSharedPointer<const CompositeKey> key,
+                               QSharedPointer<Database> db,
+                               bool& hasError,
+                               QString& errorString)
 {
     KeePass2Reader reader;
     reader.readDatabase(path, key, db.data());
@@ -95,7 +105,7 @@ void TestKdbx4::readKdbx(const QString& path,
     QCOMPARE(reader.version(), KeePass2::FILE_VERSION_4);
 }
 
-void TestKdbx4::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
+void TestKdbx4Argon2::writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString)
 {
     if (db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) {
         db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2)));
@@ -110,7 +120,7 @@ void TestKdbx4::writeKdbx(QIODevice* device, Database* db, bool& hasError, QStri
 }
 
 Q_DECLARE_METATYPE(QUuid)
-void TestKdbx4::testFormat400()
+void TestKdbx4Argon2::testFormat400()
 {
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/Format400.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
@@ -135,7 +145,7 @@ void TestKdbx4::testFormat400()
     QCOMPARE(entry->attachments()->value("Format400"), QByteArray("Format400\n"));
 }
 
-void TestKdbx4::testFormat400Upgrade()
+void TestKdbx4Argon2::testFormat400Upgrade()
 {
     QFETCH(QUuid, kdfUuid);
     QFETCH(QUuid, cipherUuid);
@@ -193,7 +203,7 @@ void TestKdbx4::testFormat400Upgrade()
 }
 
 // clang-format off
-void TestKdbx4::testFormat400Upgrade_data()
+void TestKdbx4Argon2::testFormat400Upgrade_data()
 {
     QTest::addColumn<QUuid>("kdfUuid");
     QTest::addColumn<QUuid>("cipherUuid");
@@ -226,7 +236,7 @@ void TestKdbx4::testFormat400Upgrade_data()
 }
 // clang-format on
 
-void TestKdbx4::testUpgradeMasterKeyIntegrity()
+void TestKdbx4Argon2::testUpgradeMasterKeyIntegrity()
 {
     QFETCH(QString, upgradeAction);
     QFETCH(quint32, expectedVersion);
@@ -249,6 +259,7 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
 
     QScopedPointer<Database> db(new Database());
     db->changeKdf(fastKdf(db->kdf()));
+    QCOMPARE(db->kdf()->uuid(), KeePass2::KDF_AES_KDBX3); // default is legacy AES-KDF
     db->setKey(compositeKey);
 
     // upgrade the database by a specific method
@@ -309,9 +320,12 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity()
         QFAIL(qPrintable(reader.errorString()));
     }
     QCOMPARE(reader.version(), expectedVersion & KeePass2::FILE_VERSION_CRITICAL_MASK);
+    if (expectedVersion != KeePass2::FILE_VERSION_3) {
+        QVERIFY(db2->kdf()->uuid() != KeePass2::KDF_AES_KDBX3);
+    }
 }
 
-void TestKdbx4::testUpgradeMasterKeyIntegrity_data()
+void TestKdbx4Argon2::testUpgradeMasterKeyIntegrity_data()
 {
     QTest::addColumn<QString>("upgradeAction");
     QTest::addColumn<quint32>("expectedVersion");
@@ -330,7 +344,7 @@ void TestKdbx4::testUpgradeMasterKeyIntegrity_data()
     QTest::newRow("Upgrade (implicit): entry-customdata") << QString("entry-customdata") << KeePass2::FILE_VERSION_4;
 }
 
-void TestKdbx4::testCustomData()
+void TestKdbx4Argon2::testCustomData()
 {
     Database db;
 
@@ -424,13 +438,8 @@ void TestKdbx4::testCustomData()
     QCOMPARE(newEntry->customData()->value(customDataKey2), customData2);
 }
 
-QSharedPointer<Kdf> TestKdbx4::fastKdf(QSharedPointer<Kdf> kdf)
+void TestKdbx4AesKdf::initTestCaseImpl()
 {
-    kdf->setRounds(1);
-
-    if (kdf->uuid() == KeePass2::KDF_ARGON2) {
-        kdf->processParameters({{KeePass2::KDFPARAM_ARGON2_MEMORY, 1024}, {KeePass2::KDFPARAM_ARGON2_PARALLELISM, 1}});
-    }
-
-    return kdf;
+    m_xmlDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4)));
+    m_kdbxSourceDb->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_AES_KDBX4)));
 }

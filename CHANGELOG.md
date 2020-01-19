@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.5.3 (2020-01-19)
+
+### Fixed
+
+- Fix a possible database lockout when removing a YubiKey from a KDBX 3.1 database [#4147]
+- Fix crash if Auto-Type is performed on a new entry [#4150]
+- Fix crash when all entries are deleted from a group [#4156]
+- Improve the reliability of clipboard clearing on Gnome [#4165]
+- Do not check cmd:// URLs for valid URL syntax anymore [#4172]
+- Prevent unnecessary merges for databases on network shares [#4153]
+- Browser: Prevent native messaging proxy from blocking application shutdown [#4155]
+- Browser: Improve website URL matching [#4134, #4177]
+
+### Added
+
+- Browser: Enable support for Chromium-based Edge Browser [#3359]
+
 ## 2.5.2 (2020-01-04)
 
 ### Added

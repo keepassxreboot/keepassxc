@@ -740,10 +740,6 @@ Please select the correct database for saving credentials.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Brave</source>
         <translation type="unfinished"></translation>
     </message>
@@ -785,6 +781,14 @@ Please select the correct database for saving credentials.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning&lt;/b&gt;, the keepassxc-proxy application was not found!&lt;br /&gt;Please check the KeePassXC installation directory or confirm the custom path in advanced options.&lt;br /&gt;Browser integration WILL NOT WORK without the proxy application.&lt;br /&gt;Expected Path: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
