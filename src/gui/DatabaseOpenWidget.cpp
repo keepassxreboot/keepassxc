@@ -164,12 +164,14 @@ void DatabaseOpenWidget::load(const QString& filename)
 
 void DatabaseOpenWidget::clearForms()
 {
-    m_ui->editPassword->setText("");
-    m_ui->comboKeyFile->clear();
-    m_ui->comboKeyFile->setEditText("");
-    m_ui->checkTouchID->setChecked(false);
-    m_ui->buttonTogglePassword->setChecked(false);
-    m_db.reset();
+    if (!m_isOpeningDatabase) {
+        m_ui->editPassword->setText("");
+        m_ui->comboKeyFile->clear();
+        m_ui->comboKeyFile->setEditText("");
+        m_ui->checkTouchID->setChecked(false);
+        m_ui->buttonTogglePassword->setChecked(false);
+        m_db.reset();
+    }
 }
 
 QSharedPointer<Database> DatabaseOpenWidget::database()
@@ -196,6 +198,7 @@ void DatabaseOpenWidget::openDatabase()
     m_ui->buttonTogglePassword->setChecked(false);
     QCoreApplication::processEvents();
 
+    m_isOpeningDatabase = true;
     m_db.reset(new Database());
     QString error;
 
@@ -206,35 +209,7 @@ void DatabaseOpenWidget::openDatabase()
     QApplication::restoreOverrideCursor();
     m_ui->passwordFormFrame->setEnabled(true);
 
-    if (!ok) {
-        if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
-            QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
-            msgBox->setIcon(QMessageBox::Critical);
-            msgBox->setWindowTitle(tr("Unlock failed and no password given"));
-            msgBox->setText(tr("Unlocking the database failed and you did not enter a password.\n"
-                               "Do you want to retry with an \"empty\" password instead?\n\n"
-                               "To prevent this error from appearing, you must go to "
-                               "\"Database Settings / Security\" and reset your password."));
-            auto btn = msgBox->addButton(tr("Retry with empty password"), QMessageBox::ButtonRole::AcceptRole);
-            msgBox->setDefaultButton(btn);
-            msgBox->addButton(QMessageBox::Cancel);
-            msgBox->exec();
-
-            if (msgBox->clickedButton() == btn) {
-                m_retryUnlockWithEmptyPassword = true;
-                openDatabase();
-                return;
-            }
-        }
-        m_retryUnlockWithEmptyPassword = false;
-        m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
-        // Focus on the password field and select the input for easy retry
-        m_ui->editPassword->selectAll();
-        m_ui->editPassword->setFocus();
-        return;
-    }
-
-    if (m_db) {
+    if (ok) {
 #ifdef WITH_XC_TOUCHID
         QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
 
@@ -256,10 +231,37 @@ void DatabaseOpenWidget::openDatabase()
         if (m_ui->messageWidget->isVisible()) {
             m_ui->messageWidget->animatedHide();
         }
+
         emit dialogFinished(true);
+        m_isOpeningDatabase = false;
+        clearForms();
     } else {
-        m_ui->messageWidget->showMessage(error, MessageWidget::Error);
-        m_ui->editPassword->setText("");
+        m_isOpeningDatabase = false;
+        if (m_ui->editPassword->text().isEmpty() && !m_retryUnlockWithEmptyPassword) {
+            QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+            msgBox->setIcon(QMessageBox::Critical);
+            msgBox->setWindowTitle(tr("Unlock failed and no password given"));
+            msgBox->setText(tr("Unlocking the database failed and you did not enter a password.\n"
+                               "Do you want to retry with an \"empty\" password instead?\n\n"
+                               "To prevent this error from appearing, you must go to "
+                               "\"Database Settings / Security\" and reset your password."));
+            auto btn = msgBox->addButton(tr("Retry with empty password"), QMessageBox::ButtonRole::AcceptRole);
+            msgBox->setDefaultButton(btn);
+            msgBox->addButton(QMessageBox::Cancel);
+            msgBox->exec();
+
+            if (msgBox->clickedButton() == btn) {
+                m_retryUnlockWithEmptyPassword = true;
+                openDatabase();
+                return;
+            }
+        }
+
+        m_retryUnlockWithEmptyPassword = false;
+        m_ui->messageWidget->showMessage(error, MessageWidget::MessageType::Error);
+        // Focus on the password field and select the input for easy retry
+        m_ui->editPassword->selectAll();
+        m_ui->editPassword->setFocus();
 
 #ifdef WITH_XC_TOUCHID
         // unable to unlock database, reset TouchID for the current database
