@@ -79,6 +79,7 @@ protected:
 private:
     bool m_yubiKeyBeingPolled = false;
     bool m_keyFileComboEdited = false;
+    bool m_isOpeningDatabase = false;
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 
