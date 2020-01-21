@@ -18,6 +18,7 @@
 #ifndef SCREENLOCKLISTENERDBUS_H
 #define SCREENLOCKLISTENERDBUS_H
 #include "ScreenLockListenerPrivate.h"
+#include <QDBusMessage>
 #include <QObject>
 #include <QWidget>
 
@@ -32,6 +33,7 @@ private slots:
     void logindPrepareForSleep(bool beforeSleep);
     void unityLocked();
     void freedesktopScreenSaver(bool status);
+    void login1SessionObjectReceived(QDBusMessage);
 };
 
 #endif // SCREENLOCKLISTENERDBUS_H

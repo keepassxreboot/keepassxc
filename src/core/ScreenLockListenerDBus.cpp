@@ -19,7 +19,9 @@
 
 #include <QDBusConnection>
 #include <QDBusInterface>
+#include <QDBusMessage>
 #include <QDBusReply>
+#include <QDebug>
 #include <QProcessEnvironment>
 
 ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
@@ -57,12 +59,14 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
                       SLOT(logindPrepareForSleep(bool)));
 
     QString sessionId = QProcessEnvironment::systemEnvironment().value("XDG_SESSION_ID");
-    systemBus.connect("", // service
-                      QString("/org/freedesktop/login1/session/") + sessionId, // path
-                      "org.freedesktop.login1.Session", // interface
-                      "Lock", // signal name
-                      this, // receiver
-                      SLOT(unityLocked()));
+    QDBusInterface loginManager("org.freedesktop.login1", // service
+                                "/org/freedesktop/login1", // path
+                                "org.freedesktop.login1.Manager", // interface
+                                systemBus);
+    if (loginManager.isValid()) {
+        QList<QVariant> args = {sessionId};
+        loginManager.callWithCallback("GetSession", args, this, SLOT(login1SessionObjectReceived(QDBusMessage)));
+    }
 
     sessionBus.connect("com.canonical.Unity", // service
                        "/com/canonical/Unity/Session", // path
@@ -70,6 +74,28 @@ ScreenLockListenerDBus::ScreenLockListenerDBus(QWidget* parent)
                        "Locked", // signal name
                        this, // receiver
                        SLOT(unityLocked()));
+}
+
+void ScreenLockListenerDBus::login1SessionObjectReceived(QDBusMessage response)
+{
+    if (response.arguments().isEmpty()) {
+        qDebug() << "org.freedesktop.login1.Manager.GetSession did not return results";
+        return;
+    }
+    QVariant arg0 = response.arguments().at(0);
+    if (!arg0.canConvert<QDBusObjectPath>()) {
+        qDebug() << "org.freedesktop.login1.Manager.GetSession did not return a QDBusObjectPath";
+        return;
+    }
+    QDBusObjectPath path = arg0.value<QDBusObjectPath>();
+    QDBusConnection systemBus = QDBusConnection::systemBus();
+
+    systemBus.connect("", // service
+                      path.path(), // path
+                      "org.freedesktop.login1.Session", // interface
+                      "Lock", // signal name
+                      this, // receiver
+                      SLOT(unityLocked()));
 }
 
 void ScreenLockListenerDBus::gnomeSessionStatusChanged(uint status)
