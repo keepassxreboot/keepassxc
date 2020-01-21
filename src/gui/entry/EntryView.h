@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_ENTRYVIEW_H
 #define KEEPASSX_ENTRYVIEW_H
 
+#include <QAbstractItemDelegate>
 #include <QTreeView>
 
 #include "gui/entry/EntryModel.h"
@@ -77,6 +78,8 @@ private slots:
 private:
     void fillRemainingWidth(bool lastColumnOnly);
     void resetFixedColumns();
+
+    QAbstractItemDelegate* m_notesColumnItemDelegate;
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;

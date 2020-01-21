@@ -20,15 +20,18 @@
 
 #include <QAccessible>
 #include <QHeaderView>
+#include <QItemDelegate>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QShortcut>
 
 #include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
+#include "gui/entry/HtmlItemDelegate.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
+    , m_notesColumnItemDelegate(new HtmlItemDelegate(this))
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
     , m_inSearchMode(false)
@@ -40,6 +43,7 @@ EntryView::EntryView(QWidget* parent)
     // Use Qt::UserRole as sort role, see EntryModel::data()
     m_sortModel->setSortRole(Qt::UserRole);
     QTreeView::setModel(m_sortModel);
+    QTreeView::setItemDelegateForColumn(EntryModel::ModelColumn::Notes, m_notesColumnItemDelegate);
 
     setUniformRowHeights(true);
     setRootIsDecorated(false);
