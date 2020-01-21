@@ -103,6 +103,7 @@ set(keepassx_SOURCES
         gui/EditWidgetProperties.cpp
         gui/FileDialog.cpp
         gui/Font.cpp
+        gui/GuiTools.cpp
         gui/IconModels.cpp
         gui/KeePass1OpenWidget.cpp
         gui/KMessageWidget.cpp
@@ -136,7 +137,7 @@ set(keepassx_SOURCES
         gui/entry/EntryHistoryModel.cpp
         gui/entry/EntryModel.cpp
         gui/entry/EntryView.cpp
-        gui/entry/HtmlItemDelegate.cpp
+        gui/entry/MarkupItemDelegate.cpp
         gui/group/EditGroupWidget.cpp
         gui/group/GroupModel.cpp
         gui/group/GroupView.cpp

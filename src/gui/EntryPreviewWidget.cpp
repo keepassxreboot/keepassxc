@@ -27,6 +27,7 @@
 #include "core/FilePath.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
+#include "gui/GuiTools.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #endif
@@ -206,7 +207,9 @@ void EntryPreviewWidget::setGroupNotesVisible(bool state)
 void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& notes, bool state)
 {
     if (state) {
-        notesWidget->setHtml(notes);
+        QTextDocument* notesDoc = new QTextDocument(notesWidget);
+        GuiTools::buildDocumentFromMarkup(notesDoc, notes);
+        notesWidget->setDocument(notesDoc);
         notesWidget->moveCursor(QTextCursor::Start);
         notesWidget->ensureCursorVisible();
     } else {

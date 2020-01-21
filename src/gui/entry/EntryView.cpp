@@ -27,11 +27,11 @@
 
 #include "core/FilePath.h"
 #include "gui/SortFilterHideProxyModel.h"
-#include "gui/entry/HtmlItemDelegate.h"
+#include "gui/entry/MarkupItemDelegate.h"
 
 EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
-    , m_notesColumnItemDelegate(new HtmlItemDelegate(this))
+    , m_notesColumnItemDelegate(new MarkupItemDelegate(this))
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
     , m_inSearchMode(false)

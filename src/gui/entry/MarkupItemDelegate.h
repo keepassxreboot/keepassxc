@@ -20,10 +20,10 @@
 
 #include <QStyledItemDelegate>
 
-class HtmlItemDelegate : public QStyledItemDelegate
+class MarkupItemDelegate : public QStyledItemDelegate
 {
 public:
-    HtmlItemDelegate(QObject* parent = nullptr);
+    MarkupItemDelegate(QObject* parent = nullptr);
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 };
 

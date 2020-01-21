@@ -15,24 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "HtmlItemDelegate.h"
+#include "MarkupItemDelegate.h"
+
+#include "gui/GuiTools.h"
 
 #include <QAbstractTextDocumentLayout>
 #include <QApplication>
 #include <QPainter>
 #include <QTextDocument>
 
-HtmlItemDelegate::HtmlItemDelegate(QObject* parent)
+MarkupItemDelegate::MarkupItemDelegate(QObject* parent)
     : QStyledItemDelegate(parent)
 {
 }
 
-void HtmlItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
+void MarkupItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     QStyleOptionViewItem opt = option;
     initStyleOption(&opt, index);
 
-    QString markdownToDisplay(opt.text);
+    QString markupToDisplay(opt.text);
 
     // Draw control without text (includes drawing background)
     opt.text = QString();
@@ -41,7 +43,7 @@ void HtmlItemDelegate::paint(QPainter* painter, const QStyleOptionViewItem& opti
 
     // Setup document
     QTextDocument doc;
-    doc.setHtml(markdownToDisplay);
+    GuiTools::buildDocumentFromMarkup(&doc, markupToDisplay);
 
     // Configure text color (should change when item is selected)
     QAbstractTextDocumentLayout::PaintContext ctx;
