@@ -2518,6 +2518,21 @@ Disable safe saves and try again?</translation>
     </message>
 </context>
 <context>
+    <name>EditMarkupWidget</name>
+    <message>
+        <source>HTML subset is supported</source>
+        <translation>HTML subset is supported</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edit</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Preview</translation>
+    </message>
+</context>
+<context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>URL:</source>

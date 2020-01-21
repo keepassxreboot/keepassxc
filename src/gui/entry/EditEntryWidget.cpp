@@ -917,7 +917,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->addItems(commonUsernames);
     m_mainUi->usernameComboBox->lineEdit()->setText(usernameToRestore);
 
-    m_mainUi->notesEdit->setPlainText(entry->notes());
+    m_mainUi->notesEdit->setMarkup(entry->notes());
 
     m_advancedUi->attachmentsWidget->setEntryAttachments(entry->attachments());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
@@ -1120,7 +1120,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
-    entry->setNotes(m_mainUi->notesEdit->toPlainText());
+    entry->setNotes(m_mainUi->notesEdit->getMarkup());
 
     if (m_advancedUi->fgColorCheckBox->isChecked() && m_advancedUi->fgColorButton->property("color").isValid()) {
         entry->setForegroundColor(QColor(m_advancedUi->fgColorButton->property("color").toString()));

@@ -131,6 +131,7 @@ set(keepassx_SOURCES
         gui/entry/AutoTypeMatchModel.cpp
         gui/entry/AutoTypeMatchView.cpp
         gui/entry/EditEntryWidget.cpp
+        gui/entry/EditMarkupWidget.cpp
         gui/entry/EntryAttachmentsModel.cpp
         gui/entry/EntryAttachmentsWidget.cpp
         gui/entry/EntryAttributesModel.cpp

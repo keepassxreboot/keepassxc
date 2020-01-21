@@ -176,7 +176,7 @@
     </layout>
    </item>
    <item row="9" column="1">
-    <widget class="QPlainTextEdit" name="notesEdit">
+    <widget class="EditMarkupWidget" name="notesEdit">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
@@ -260,6 +260,12 @@
    <class>URLEdit</class>
    <extends>QLineEdit</extends>
    <header>gui/URLEdit.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>EditMarkupWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/entry/EditMarkupWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
