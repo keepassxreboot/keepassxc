@@ -125,3 +125,8 @@ int AesKdf::benchmarkImpl(int msec) const
 
     return static_cast<int>(rounds * (static_cast<float>(msec) / timer.elapsed()));
 }
+
+QString AesKdf::toString() const
+{
+    return QObject::tr("AES (%1 rounds)").arg(QString::number(rounds()));
+}

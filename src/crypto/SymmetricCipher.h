@@ -84,6 +84,7 @@ public:
     Algorithm algorithm() const;
 
     static Algorithm cipherToAlgorithm(const QUuid& cipher);
+    static QString cipherToString(const QUuid& cipher);
     static QUuid algorithmToCipher(Algorithm algo);
     static int algorithmIvSize(Algorithm algo);
     static Mode algorithmMode(Algorithm algo);

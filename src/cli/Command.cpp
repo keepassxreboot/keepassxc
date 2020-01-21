@@ -37,6 +37,7 @@
 #include "Generate.h"
 #include "Help.h"
 #include "Import.h"
+#include "Info.h"
 #include "List.h"
 #include "Locate.h"
 #include "Merge.h"
@@ -160,7 +161,8 @@ namespace Commands
         s_commands.insert(QStringLiteral("analyze"), QSharedPointer<Command>(new Analyze()));
         s_commands.insert(QStringLiteral("clip"), QSharedPointer<Command>(new Clip()));
         s_commands.insert(QStringLiteral("close"), QSharedPointer<Command>(new Close()));
-        s_commands.insert(QStringLiteral("create"), QSharedPointer<Command>(new Create()));
+        s_commands.insert(QStringLiteral("db-create"), QSharedPointer<Command>(new Create()));
+        s_commands.insert(QStringLiteral("db-info"), QSharedPointer<Command>(new Info()));
         s_commands.insert(QStringLiteral("diceware"), QSharedPointer<Command>(new Diceware()));
         s_commands.insert(QStringLiteral("edit"), QSharedPointer<Command>(new Edit()));
         s_commands.insert(QStringLiteral("estimate"), QSharedPointer<Command>(new Estimate()));

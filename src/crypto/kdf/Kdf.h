@@ -44,6 +44,8 @@ public:
     virtual bool transform(const QByteArray& raw, QByteArray& result) const = 0;
     virtual QSharedPointer<Kdf> clone() const = 0;
 
+    virtual QString toString() const = 0;
+
     int benchmark(int msec) const;
 
 protected:
