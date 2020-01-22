@@ -176,7 +176,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         if (!u.isEmpty()) {
             item.append("<tr><th>");
             item.append(QObject::tr("User name"));
-            item.append("</t><td class=\"username\">");
+            item.append("</th><td class=\"username\">");
             item.append(entry->username().toHtmlEscaped());
             item.append("</td></tr>");
         }
