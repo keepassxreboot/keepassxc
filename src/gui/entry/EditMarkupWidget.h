@@ -39,7 +39,11 @@ public:
     QString getMarkup();
     void clear();
 
+signals:
+    void textChanged();
+
 private slots:
+    void handleTextChange();
     void updatePreview();
 
 private:

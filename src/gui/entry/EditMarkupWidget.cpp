@@ -24,6 +24,7 @@ EditMarkupWidget::EditMarkupWidget(QWidget* parent)
     , m_ui(new Ui::EditMarkupWidget)
 {
     m_ui->setupUi(this);
+    connect(m_ui->sourceEdit, SIGNAL(textChanged()), SLOT(handleTextChange()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updatePreview()));
 }
 
@@ -47,6 +48,12 @@ void EditMarkupWidget::clear()
 {
     m_ui->sourceEdit->clear();
     updatePreview();
+}
+
+void EditMarkupWidget::handleTextChange()
+{
+    updatePreview();
+    emit textChanged();
 }
 
 void EditMarkupWidget::updatePreview()
