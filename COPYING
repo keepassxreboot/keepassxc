@@ -38,11 +38,6 @@ Comment: The "KeePassXC Team" in every copyright notice is formed by the followi
            - weslly
          Every other contributor is listed on https://github.com/keepassxreboot/keepassxc/graphs/contributors
 
-Files: cmake/GNUInstallDirs.cmake
-Copyright: 2011 Nikita Krupen'ko <krnekit@gmail.com>
-           2011 Kitware, Inc.
-License: BSD-3-clause
-
 Files: cmake/CodeCoverage.cmake
 Copyright: 2012 - 2015, Lars Bilke
 License: BSD-3-clause
@@ -226,7 +221,7 @@ Copyright: 2011 Aurélien Gâteau <agateau@kde.org>
            2014 Dominik Haumann <dhaumann@kde.org>
 License: LGPL-2.1
 
-Files: share/macosx/dmg-background.tiff
+Files: share/macosx/background.tiff
 Copyright: 2008-2014, Andrey Tarantsov
 License: MIT
 
