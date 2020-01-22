@@ -141,7 +141,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     }
 
     m_mainUi->editName->setText(m_group->name());
-    m_mainUi->editNotes->setPlainText(m_group->notes());
+    m_mainUi->editNotes->setMarkup(m_group->notes());
     m_mainUi->expireCheck->setChecked(group->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(group->timeInfo().expiryTime().toLocalTime());
     m_mainUi->searchComboBox->setCurrentIndex(indexFromTriState(group->searchingEnabled()));
@@ -190,7 +190,7 @@ void EditGroupWidget::save()
 void EditGroupWidget::apply()
 {
     m_temporaryGroup->setName(m_mainUi->editName->text());
-    m_temporaryGroup->setNotes(m_mainUi->editNotes->toPlainText());
+    m_temporaryGroup->setNotes(m_mainUi->editNotes->getMarkup());
     m_temporaryGroup->setExpires(m_mainUi->expireCheck->isChecked());
     m_temporaryGroup->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 

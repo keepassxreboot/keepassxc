@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPlainTextEdit" name="editNotes">
+    <widget class="EditMarkupWidget" name="editNotes">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -176,6 +176,14 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>EditMarkupWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/entry/EditMarkupWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>editName</tabstop>
   <tabstop>editNotes</tabstop>
