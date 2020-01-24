@@ -442,6 +442,16 @@ namespace FdoSecrets
 
     QString Collection::name() const
     {
+        if (m_backendPath.isEmpty()) {
+            // This is a newly created db without saving to file.
+            // This name is also used to register dbus path.
+            // For simplicity, we don't monitor the name change.
+            // So the dbus object path is not updated if the db name
+            // changes. This should not be a problem because once the database
+            // gets saved, the dbus path will be updated to use filename and
+            // everything back to normal.
+            return m_backend->database()->metadata()->name();
+        }
         return QFileInfo(m_backendPath).baseName();
     }
 
@@ -546,8 +556,9 @@ namespace FdoSecrets
         }
 
         // repopulate
-        Q_ASSERT(!backendLocked());
-        populateContents();
+        if (!backendLocked()) {
+            populateContents();
+        }
     }
 
     void Collection::onEntryAdded(Entry* entry, bool emitSignal)
