@@ -65,7 +65,7 @@ namespace FdoSecrets
 
     DBusReturn<void> PromptBase::dismiss()
     {
-        emit completed(true, {});
+        emit completed(true, "");
         return {};
     }
 
@@ -95,7 +95,7 @@ namespace FdoSecrets
         // only need to delete in backend, collection will react itself.
         auto accepted = service()->doCloseDatabase(m_collection->backend());
 
-        emit completed(!accepted, {});
+        emit completed(!accepted, "");
 
         return {};
     }
@@ -125,8 +125,14 @@ namespace FdoSecrets
         }
 
         emit collectionCreated(coll);
-        emit completed(false, coll->objectPath().path());
+        emit completed(false, QVariant::fromValue(coll->objectPath()));
 
+        return {};
+    }
+
+    DBusReturn<void> CreateCollectionPrompt::dismiss()
+    {
+        emit completed(true, QVariant::fromValue(QDBusObjectPath{"/"}));
         return {};
     }
 
@@ -153,16 +159,23 @@ namespace FdoSecrets
 
         MessageBox::OverrideParent override(findWindow(windowId));
 
-        QList<QDBusObjectPath> locked;
         for (const auto& c : asConst(m_collections)) {
             if (c) {
-                c->doLock();
-                locked << c->objectPath();
+                if (!c->doLock()) {
+                    return dismiss();
+                }
+                m_locked << c->objectPath();
             }
         }
 
-        emit completed(false, QVariant::fromValue(locked));
+        emit completed(false, QVariant::fromValue(m_locked));
 
+        return {};
+    }
+
+    DBusReturn<void> LockCollectionsPrompt::dismiss()
+    {
+        emit completed(true, QVariant::fromValue(m_locked));
         return {};
     }
 
@@ -191,6 +204,7 @@ namespace FdoSecrets
 
         for (const auto& c : asConst(m_collections)) {
             if (c) {
+                // doUnlock is nonblocking
                 connect(c, &Collection::doneUnlockCollection, this, &UnlockCollectionsPrompt::collectionUnlockFinished);
                 c->doUnlock();
             }
@@ -226,6 +240,11 @@ namespace FdoSecrets
             emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
         }
     }
+    DBusReturn<void> UnlockCollectionsPrompt::dismiss()
+    {
+        emit completed(true, QVariant::fromValue(m_unlocked));
+        return {};
+    }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)
         : PromptBase(parent)
@@ -250,14 +269,18 @@ namespace FdoSecrets
         // delete item's backend. Item will be notified after the backend is deleted.
         if (m_item) {
             if (FdoSecrets::settings()->noConfirmDeleteItem()) {
-                MessageBox::setNextAnswer(MessageBox::Move);
+                // based on permanent or not, different button is used
+                if (m_item->isDeletePermanent()) {
+                    MessageBox::setNextAnswer(MessageBox::Delete);
+                } else {
+                    MessageBox::setNextAnswer(MessageBox::Move);
+                }
             }
             m_item->collection()->doDeleteEntries({m_item->backend()});
         }
 
-        emit completed(false, {});
+        emit completed(false, "");
 
         return {};
     }
-
 } // namespace FdoSecrets

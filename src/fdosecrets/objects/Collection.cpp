@@ -600,11 +600,11 @@ namespace FdoSecrets
         return qobject_cast<Service*>(parent());
     }
 
-    void Collection::doLock()
+    bool Collection::doLock()
     {
         Q_ASSERT(m_backend);
 
-        m_backend->lock();
+        return m_backend->lock();
     }
 
     void Collection::doUnlock()

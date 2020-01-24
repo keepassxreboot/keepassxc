@@ -102,7 +102,7 @@ namespace FdoSecrets
 
     public slots:
         // expose some methods for Prmopt to use
-        void doLock();
+        bool doLock();
         void doUnlock();
         // will remove self
         void doDelete();
