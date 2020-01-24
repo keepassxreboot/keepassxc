@@ -247,19 +247,11 @@ namespace FdoSecrets
 
         QList<EntrySearcher::SearchTerm> terms;
         for (auto it = attributes.constBegin(); it != attributes.constEnd(); ++it) {
-            if (it.key() == EntryAttributes::PasswordKey) {
-                continue;
-            }
             terms << attributeToTerm(it.key(), it.value());
         }
 
-        // empty terms causes EntrySearcher returns everything
-        if (terms.isEmpty()) {
-            return QList<Item*>{};
-        }
-
         QList<Item*> items;
-        const auto foundEntries = EntrySearcher().search(terms, m_exposedGroup);
+        const auto foundEntries = EntrySearcher(false, true).search(terms, m_exposedGroup);
         items.reserve(foundEntries.size());
         for (const auto& entry : foundEntries) {
             items << m_entryToItem.value(entry);

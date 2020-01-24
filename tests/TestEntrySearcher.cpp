@@ -23,6 +23,7 @@ QTEST_GUILESS_MAIN(TestEntrySearcher)
 void TestEntrySearcher::init()
 {
     m_rootGroup = new Group();
+    m_entrySearcher = EntrySearcher();
 }
 
 void TestEntrySearcher::cleanup()
@@ -259,6 +260,7 @@ void TestEntrySearcher::testCustomAttributesAreSearched()
     QCOMPARE(m_searchResult.count(), 2);
 
     // protected attributes are ignored
+    m_entrySearcher = EntrySearcher(false, true);
     m_searchResult = m_entrySearcher.search("_testAttribute:test _testProtected:testP2", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 }
@@ -318,4 +320,53 @@ void TestEntrySearcher::testGroup()
 
     m_searchResult = m_entrySearcher.search("g:/group1 search", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
+}
+
+void TestEntrySearcher::testSkipProtected()
+{
+    QScopedPointer<Entry> e1(new Entry());
+    e1->setGroup(m_rootGroup);
+
+    e1->attributes()->set("testAttribute", "testE1");
+    e1->attributes()->set("testProtected", "apple", true);
+
+    QScopedPointer<Entry> e2(new Entry());
+    e2->setGroup(m_rootGroup);
+    e2->attributes()->set("testAttribute", "testE2");
+    e2->attributes()->set("testProtected", "banana", true);
+
+    const QList<Entry*> expectE1{e1.data()};
+    const QList<Entry*> expectE2{e2.data()};
+    const QList<Entry*> expectBoth{e1.data(), e2.data()};
+
+    // when not skipping protected, empty term matches everything
+    m_searchResult = m_entrySearcher.search("", m_rootGroup);
+    QCOMPARE(m_searchResult, expectBoth);
+
+    // now test the searcher with skipProtected = true
+    m_entrySearcher = EntrySearcher(false, true);
+
+    // when skipping protected, empty term matches nothing
+    m_searchResult = m_entrySearcher.search("", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+
+    // having a protected entry in terms should not affect the results in anyways
+    m_searchResult = m_entrySearcher.search("_testProtected:apple", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
+    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE1", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult =
+        m_entrySearcher.search("_testProtected:apple _testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+
+    // also move the protected term around to execurise the short-circut logic
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE2 _testProtected:apple", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE1);
+    m_searchResult =
+        m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple _testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
 }
