@@ -78,7 +78,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     // If no attributes specified, output the default attribute set.
-    bool showAttributeNames = attributes.isEmpty() && !showTotp;
+    bool showDefaultAttributes = attributes.isEmpty() && !showTotp;
     if (attributes.isEmpty() && !showTotp) {
         attributes = EntryAttributes::DefaultAttributes;
     }
@@ -91,10 +91,10 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
             continue;
         }
-        if (showAttributeNames) {
+        if (showDefaultAttributes) {
             outputTextStream << attributeName << ": ";
         }
-        if (entry->attributes()->isProtected(attributeName) && showAttributeNames && !showProtectedAttributes) {
+        if (entry->attributes()->isProtected(attributeName) && showDefaultAttributes && !showProtectedAttributes) {
             outputTextStream << "PROTECTED" << endl;
         } else {
             outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(attributeName)) << endl;
@@ -102,9 +102,6 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     if (showTotp) {
-        if (showAttributeNames) {
-            outputTextStream << "TOTP: ";
-        }
         outputTextStream << entry->totp() << endl;
     }
 
