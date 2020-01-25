@@ -23,27 +23,22 @@
 
 PopupHelpWidget::PopupHelpWidget(QWidget* parent)
     : QFrame(parent)
-    , m_parentWindow(parent->window())
     , m_appWindow(getMainWindow())
     , m_offset({0, 0})
     , m_corner(Qt::BottomLeftCorner)
 {
     Q_ASSERT(parent);
 
-#ifdef Q_OS_MACOS
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Drawer);
-#else
     setWindowFlags(Qt::FramelessWindowHint | Qt::Tool);
-#endif
     hide();
 
     m_appWindow->installEventFilter(this);
-    parent->installEventFilter(this);
+    parentWidget()->installEventFilter(this);
 }
 
 PopupHelpWidget::~PopupHelpWidget()
 {
-    m_parentWindow->removeEventFilter(this);
+    m_appWindow->removeEventFilter(this);
     parentWidget()->removeEventFilter(this);
 }
 
@@ -65,10 +60,10 @@ void PopupHelpWidget::setPosition(Qt::Corner corner)
 
 bool PopupHelpWidget::eventFilter(QObject* obj, QEvent* event)
 {
-    if (obj == parentWidget() && event->type() == QEvent::FocusOut) {
-        hide();
-    } else if (obj == m_appWindow && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
-        if (isVisible()) {
+    if (isVisible()) {
+        if (obj == parentWidget() && event->type() == QEvent::FocusOut && qApp->focusWindow() != windowHandle()) {
+            hide();
+        } else if (obj == m_appWindow && (event->type() == QEvent::Move || event->type() == QEvent::Resize)) {
             alignWithParent();
         }
     }
@@ -83,21 +78,22 @@ void PopupHelpWidget::showEvent(QShowEvent* event)
 
 void PopupHelpWidget::alignWithParent()
 {
-    QPoint pos;
+    QPoint pos = m_offset;
     switch (m_corner) {
     case Qt::TopLeftCorner:
-        pos = parentWidget()->geometry().topLeft() + m_offset - QPoint(0, height());
+        pos += QPoint(0, -height());
         break;
     case Qt::TopRightCorner:
-        pos = parentWidget()->geometry().topRight() + m_offset - QPoint(width(), height());
+        pos += QPoint(parentWidget()->width(), -height());
         break;
     case Qt::BottomRightCorner:
-        pos = parentWidget()->geometry().bottomRight() + m_offset - QPoint(width(), 0);
+        pos += QPoint(parentWidget()->width(), parentWidget()->height());
         break;
+    case Qt::BottomLeftCorner:
     default:
-        pos = parentWidget()->geometry().bottomLeft() + m_offset;
+        pos += QPoint(0, parentWidget()->height());
         break;
     }
 
-    move(m_parentWindow->mapToGlobal(pos));
+    move(parentWidget()->mapToGlobal(pos));
 }
