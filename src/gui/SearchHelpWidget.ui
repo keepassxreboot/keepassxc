@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>326</height>
+    <width>397</width>
+    <height>264</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,28 +20,10 @@
    <enum>QFrame::StyledPanel</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <property name="spacing">
-    <number>6</number>
-   </property>
-   <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
-   </property>
-   <property name="leftMargin">
-    <number>5</number>
-   </property>
-   <property name="topMargin">
-    <number>5</number>
-   </property>
-   <property name="rightMargin">
-    <number>5</number>
-   </property>
-   <property name="bottomMargin">
-    <number>5</number>
-   </property>
    <item>
     <widget class="QLabel" name="label_2">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -63,7 +45,7 @@
    <item>
     <widget class="QLabel" name="label_24">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -96,24 +78,6 @@
         <string>Modifiers</string>
        </property>
        <layout class="QFormLayout" name="formLayout">
-        <property name="horizontalSpacing">
-         <number>8</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>8</number>
-        </property>
-        <property name="leftMargin">
-         <number>9</number>
-        </property>
-        <property name="topMargin">
-         <number>10</number>
-        </property>
-        <property name="rightMargin">
-         <number>9</number>
-        </property>
-        <property name="bottomMargin">
-         <number>9</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_4">
           <property name="minimumSize">
@@ -222,21 +186,6 @@
         <bool>false</bool>
        </property>
        <layout class="QGridLayout" name="gridLayout">
-        <property name="leftMargin">
-         <number>15</number>
-        </property>
-        <property name="topMargin">
-         <number>10</number>
-        </property>
-        <property name="rightMargin">
-         <number>15</number>
-        </property>
-        <property name="horizontalSpacing">
-         <number>8</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>5</number>
-        </property>
         <item row="1" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
@@ -299,12 +248,6 @@
         <string>Term Wildcards</string>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
-        <property name="horizontalSpacing">
-         <number>8</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>8</number>
-        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_18">
           <property name="minimumSize">
@@ -404,9 +347,6 @@
         <string>Examples</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="spacing">
-         <number>8</number>
-        </property>
         <item>
          <widget class="QLabel" name="label_9">
           <property name="sizePolicy">
