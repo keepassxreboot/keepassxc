@@ -21,6 +21,7 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "format/KeePass2.h"
 
 #include "Utils.h"
 
@@ -37,7 +38,11 @@ int Info::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     out << QObject::tr("UUID: ") << database->uuid().toString() << endl;
     out << QObject::tr("Name: ") << database->metadata()->name() << endl;
     out << QObject::tr("Description: ") << database->metadata()->description() << endl;
-    out << QObject::tr("Cipher: ") << SymmetricCipher::cipherToString(database->cipher()) << endl;
+    for (auto& cipher : asConst(KeePass2::CIPHERS)) {
+        if (cipher.first == database->cipher()) {
+            out << QObject::tr("Cipher: ") << cipher.second << endl;
+        }
+    }
     out << QObject::tr("KDF: ") << database->kdf()->toString() << endl;
     if (database->metadata()->recycleBinEnabled()) {
         out << QObject::tr("Recycle bin is enabled.") << endl;

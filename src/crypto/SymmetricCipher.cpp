@@ -104,20 +104,6 @@ SymmetricCipher::Algorithm SymmetricCipher::cipherToAlgorithm(const QUuid& ciphe
     return InvalidAlgorithm;
 }
 
-QString SymmetricCipher::cipherToString(const QUuid& cipher)
-{
-    if (cipher == KeePass2::CIPHER_AES256) {
-        return QString("AES 256-bit");
-    } else if (cipher == KeePass2::CIPHER_CHACHA20) {
-        return QString("Chacha20");
-    } else if (cipher == KeePass2::CIPHER_TWOFISH) {
-        return QString("Twofish 256-bit");
-    }
-
-    qWarning("SymmetricCipher::cipherToString: invalid UUID %s", cipher.toString().toLatin1().data());
-    return QString();
-}
-
 QUuid SymmetricCipher::algorithmToCipher(Algorithm algo)
 {
     switch (algo) {
