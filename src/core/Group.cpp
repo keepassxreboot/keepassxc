@@ -666,6 +666,11 @@ Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& 
             || (!entryPath.startsWith("/") && entry->title() == entryPath)) {
             return entry;
         }
+        bool found = false;
+        found = entry->uuid() == QUuid::fromRfc4122(QByteArray::fromHex(entry->uuid().toString().toLatin1()));
+        if (found) {
+            return entry;
+        }
         // clang-format on
     }
 
