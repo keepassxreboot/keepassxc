@@ -355,7 +355,11 @@ void DatabaseSettingsWidgetEncryption::memoryChanged(int value)
  */
 void DatabaseSettingsWidgetEncryption::parallelismChanged(int value)
 {
-    m_ui->parallelismSpinBox->setSuffix(tr(" thread(s)", "Threads for parallel execution (KDF settings)", value));
+    if (value == 1) {
+        m_ui->parallelismSpinBox->setSuffix(tr(" thread", "Threads for parallel execution (KDF settings)", value));
+    } else {
+        m_ui->parallelismSpinBox->setSuffix(tr(" threads", "Threads for parallel execution (KDF settings)", value));
+    }
 }
 
 void DatabaseSettingsWidgetEncryption::setAdvancedMode(bool advanced)
