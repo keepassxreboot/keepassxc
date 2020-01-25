@@ -99,6 +99,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             out << "PROTECTED" << endl;
         } else if (attributeName.compare("Uuid") == 0) {
             out << entry->uuid().toString() << endl;
+            outputTextStream << entry->uuid().toString().remove((QRegExp("[{}]"))) << endl;
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
         }
