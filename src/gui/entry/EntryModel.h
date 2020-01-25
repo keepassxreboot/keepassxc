@@ -97,6 +97,7 @@ private:
 
     const QString HiddenContentDisplay;
     const Qt::DateFormat DateFormat;
+    static QColor getColorFromString(QString colorStr);
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

@@ -271,6 +271,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
         return font;
     } else if (role == Qt::ForegroundRole) {
+        QColor foregroundColor = EntryModel::getColorFromString(entry->foregroundColor());
         if (entry->hasReferences()) {
             QPalette p;
 #ifdef Q_OS_MACOS
@@ -279,12 +280,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
 #endif
             return QVariant(p.color(QPalette::Active, QPalette::Mid));
-        } else if (entry->foregroundColor().isValid()) {
-            return QVariant(entry->foregroundColor());
+        } else if (foregroundColor.isValid()) {
+            return QVariant(foregroundColor);
         }
     } else if (role == Qt::BackgroundRole) {
-        if (entry->backgroundColor().isValid()) {
-            return QVariant(entry->backgroundColor());
+        QColor backgroundColor = EntryModel::getColorFromString(entry->backgroundColor());
+        if (backgroundColor.isValid()) {
+            return QVariant(backgroundColor);
         }
     } else if (role == Qt::TextAlignmentRole) {
         if (index.column() == Paperclip) {
@@ -293,6 +295,18 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
     }
 
     return QVariant();
+}
+
+QColor EntryModel::getColorFromString(QString colorStr)
+{
+    QColor color;
+    QString redPart = colorStr.mid(1, 2);
+    QString greenPart = colorStr.mid(3, 2);
+    QString bluePart = colorStr.mid(5, 2);
+    color.setRed(redPart.toInt(NULL, 16));
+    color.setGreen(greenPart.toInt(NULL, 16));
+    color.setBlue(bluePart.toInt(NULL, 16));
+    return color;
 }
 
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const

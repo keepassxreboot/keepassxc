@@ -83,7 +83,7 @@ protected:
     virtual QString readString(bool& isProtected, bool& protectInMemory);
     virtual bool readBool();
     virtual QDateTime readDateTime();
-    virtual QColor readColor();
+    virtual QString readColor();
     virtual int readNumber();
     virtual QUuid readUuid();
     virtual QByteArray readBinary();
