@@ -131,7 +131,7 @@ int Metadata::maintenanceHistoryDays() const
     return m_data.maintenanceHistoryDays;
 }
 
-QColor Metadata::color() const
+QString Metadata::color() const
 {
     return m_data.color;
 }
@@ -347,7 +347,7 @@ void Metadata::setMaintenanceHistoryDays(int value)
     set(m_data.maintenanceHistoryDays, value);
 }
 
-void Metadata::setColor(const QColor& value)
+void Metadata::setColor(const QString& value)
 {
     set(m_data.color, value);
 }

@@ -208,12 +208,12 @@ const QUuid& Entry::iconUuid() const
     return m_data.customIcon;
 }
 
-QColor Entry::foregroundColor() const
+QString Entry::foregroundColor() const
 {
     return m_data.foregroundColor;
 }
 
-QColor Entry::backgroundColor() const
+QString Entry::backgroundColor() const
 {
     return m_data.backgroundColor;
 }
@@ -508,14 +508,14 @@ void Entry::setIcon(const QUuid& uuid)
     }
 }
 
-void Entry::setForegroundColor(const QColor& color)
+void Entry::setForegroundColor(const QString& colorStr)
 {
-    set(m_data.foregroundColor, color);
+    set(m_data.foregroundColor, colorStr);
 }
 
-void Entry::setBackgroundColor(const QColor& color)
+void Entry::setBackgroundColor(const QString& colorStr)
 {
-    set(m_data.backgroundColor, color);
+    set(m_data.backgroundColor, colorStr);
 }
 
 void Entry::setOverrideUrl(const QString& url)

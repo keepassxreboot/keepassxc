@@ -18,7 +18,6 @@
 #ifndef KEEPASSX_METADATA_H
 #define KEEPASSX_METADATA_H
 
-#include <QColor>
 #include <QDateTime>
 #include <QHash>
 #include <QImage>
@@ -49,7 +48,7 @@ public:
         QString defaultUserName;
         QDateTime defaultUserNameChanged;
         int maintenanceHistoryDays;
-        QColor color;
+        QString color;
         bool recycleBinEnabled;
         int historyMaxItems;
         int historyMaxSize;
@@ -72,7 +71,7 @@ public:
     QDateTime defaultUserNameChanged() const;
     QDateTime settingsChanged() const;
     int maintenanceHistoryDays() const;
-    QColor color() const;
+    QString color() const;
     bool protectTitle() const;
     bool protectUsername() const;
     bool protectPassword() const;
@@ -113,7 +112,7 @@ public:
     void setDefaultUserNameChanged(const QDateTime& value);
     void setSettingsChanged(const QDateTime& value);
     void setMaintenanceHistoryDays(int value);
-    void setColor(const QColor& value);
+    void setColor(const QString& value);
     void setProtectTitle(bool value);
     void setProtectUsername(bool value);
     void setProtectPassword(bool value);
