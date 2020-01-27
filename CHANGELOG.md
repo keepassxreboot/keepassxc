@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.6 (unreleased)
+
+### Added
+- Added CLI db-info command [#4231]
+
+### Changed
+- Renamed CLI create command to db-create [#4231]
+
 ## 2.5.3 (2020-01-19)
 
 ### Fixed

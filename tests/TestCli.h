@@ -59,6 +59,7 @@ private slots:
     void testGenerate_data();
     void testGenerate();
     void testImport();
+    void testInfo();
     void testKeyFileOption();
     void testNoPasswordOption();
     void testHelp();

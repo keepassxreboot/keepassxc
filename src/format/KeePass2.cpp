@@ -48,9 +48,9 @@ const QString KeePass2::KDFPARAM_ARGON2_SECRET("K");
 const QString KeePass2::KDFPARAM_ARGON2_ASSOCDATA("A");
 
 const QList<QPair<QUuid, QString>> KeePass2::CIPHERS{
-    qMakePair(KeePass2::CIPHER_AES256, QObject::tr("AES: 256-bit")),
-    qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish: 256-bit")),
-    qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20: 256-bit"))};
+    qMakePair(KeePass2::CIPHER_AES256, QObject::tr("AES 256-bit")),
+    qMakePair(KeePass2::CIPHER_TWOFISH, QObject::tr("Twofish 256-bit")),
+    qMakePair(KeePass2::CIPHER_CHACHA20, QObject::tr("ChaCha20 256-bit"))};
 
 const QList<QPair<QUuid, QString>> KeePass2::KDFS{
     qMakePair(KeePass2::KDF_ARGON2, QObject::tr("Argon2 (KDBX 4 – recommended)")),

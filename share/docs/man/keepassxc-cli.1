@@ -28,8 +28,11 @@ Copies the password or the current TOTP (\fI-t\fP option) of a database entry to
 .IP "\fBclose\fP"
 In interactive mode, closes the currently opened database (see \fIopen\fP).
 
-.IP "\fBcreate\fP [options] <database>"
+.IP "\fBdb-create\fP [options] <database>"
 Creates a new database with a key file and/or password. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
+
+.IP "\fBdb-info\fP [options] <database>"
+Show a database's information.
 
 .IP "\fBdiceware\fP [options]"
 Generates a random diceware passphrase.

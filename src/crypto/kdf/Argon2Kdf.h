@@ -36,6 +36,7 @@ public:
     bool setMemory(quint64 kibibytes);
     quint32 parallelism() const;
     bool setParallelism(quint32 threads);
+    QString toString() const override;
 
 protected:
     int benchmarkImpl(int msec) const override;

@@ -44,6 +44,7 @@
 #include "cli/Generate.h"
 #include "cli/Help.h"
 #include "cli/Import.h"
+#include "cli/Info.h"
 #include "cli/List.h"
 #include "cli/Locate.h"
 #include "cli/Merge.h"
@@ -192,7 +193,8 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("analyze"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("db-create"));
+    QVERIFY(Commands::getCommand("db-info"));
     QVERIFY(Commands::getCommand("diceware"));
     QVERIFY(Commands::getCommand("edit"));
     QVERIFY(Commands::getCommand("estimate"));
@@ -210,7 +212,7 @@ void TestCli::testBatchCommands()
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 21);
+    QCOMPARE(Commands::getCommands().size(), 22);
 }
 
 void TestCli::testInteractiveCommands()
@@ -220,7 +222,8 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("analyze"));
     QVERIFY(Commands::getCommand("clip"));
     QVERIFY(Commands::getCommand("close"));
-    QVERIFY(Commands::getCommand("create"));
+    QVERIFY(Commands::getCommand("db-create"));
+    QVERIFY(Commands::getCommand("db-info"));
     QVERIFY(Commands::getCommand("diceware"));
     QVERIFY(Commands::getCommand("edit"));
     QVERIFY(Commands::getCommand("estimate"));
@@ -238,7 +241,7 @@ void TestCli::testInteractiveCommands()
     QVERIFY(Commands::getCommand("rmdir"));
     QVERIFY(Commands::getCommand("show"));
     QVERIFY(!Commands::getCommand("doesnotexist"));
-    QCOMPARE(Commands::getCommands().size(), 21);
+    QCOMPARE(Commands::getCommands().size(), 22);
 }
 
 void TestCli::testAdd()
@@ -548,7 +551,7 @@ void TestCli::testCreate()
     QString databaseFilename = testDir->path() + "/testCreate1.kdbx";
     // Password
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename});
+    createCmd.execute({"db-create", databaseFilename});
 
     m_stderrFile->reset();
     m_stdoutFile->reset();
@@ -563,7 +566,7 @@ void TestCli::testCreate()
     // Should refuse to create the database if it already exists.
     qint64 pos = m_stdoutFile->pos();
     qint64 errPos = m_stderrFile->pos();
-    createCmd.execute({"create", databaseFilename});
+    createCmd.execute({"db-create", databaseFilename});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
     // Output should be empty when there is an error.
@@ -577,7 +580,7 @@ void TestCli::testCreate()
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename2, "-k", keyfilePath});
+    createCmd.execute({"db-create", databaseFilename2, "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -594,7 +597,7 @@ void TestCli::testCreate()
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", databaseFilename3, "-k", keyfilePath});
+    createCmd.execute({"db-create", databaseFilename3, "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -605,6 +608,41 @@ void TestCli::testCreate()
     auto db3 =
         QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, "", Utils::DEVNULL));
     QVERIFY(db3);
+}
+
+void TestCli::testInfo()
+{
+    Info infoCmd;
+    QVERIFY(!infoCmd.name.isEmpty());
+    QVERIFY(infoCmd.getDescriptionLine().contains(infoCmd.name));
+
+    Utils::Test::setNextPassword("a");
+    infoCmd.execute({"db-info", m_dbFile->fileName()});
+    m_stdoutFile->reset();
+    m_stderrFile->reset();
+    m_stdoutFile->readLine(); // skip prompt line
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QVERIFY(m_stdoutFile->readLine().contains(QByteArray("UUID: ")));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Name: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Description: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Cipher: AES 256-bit\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("KDF: AES (6000 rounds)\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Recycle bin is enabled.\n"));
+
+    // Test with quiet option.
+    qint64 pos = m_stdoutFile->pos();
+    qint64 errPos = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    infoCmd.execute({"db-info", "-q", m_dbFile->fileName()});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
+    QVERIFY(m_stdoutFile->readLine().contains(QByteArray("UUID: ")));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Name: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Description: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Cipher: AES 256-bit\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("KDF: AES (6000 rounds)\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Recycle bin is enabled.\n"));
 }
 
 void TestCli::testDiceware()
@@ -1446,10 +1484,10 @@ void TestCli::testMergeWithKeys()
     qint64 pos = m_stdoutFile->pos();
 
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"create", sourceDatabaseFilename, "-k", sourceKeyfilePath});
+    createCmd.execute({"db-create", sourceDatabaseFilename, "-k", sourceKeyfilePath});
 
     Utils::Test::setNextPassword("b");
-    createCmd.execute({"create", targetDatabaseFilename, "-k", targetKeyfilePath});
+    createCmd.execute({"db-create", targetDatabaseFilename, "-k", targetKeyfilePath});
 
     Utils::Test::setNextPassword("a");
     auto sourceDatabase = QSharedPointer<Database>(
