@@ -1123,15 +1123,15 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
     if (m_advancedUi->fgColorCheckBox->isChecked() && m_advancedUi->fgColorButton->property("color").isValid()) {
-        entry->setForegroundColor(QColor(m_advancedUi->fgColorButton->property("color").toString()));
+        entry->setForegroundColor(m_advancedUi->fgColorButton->property("color").toString());
     } else {
-        entry->setForegroundColor(QColor());
+        entry->setForegroundColor(QString());
     }
 
     if (m_advancedUi->bgColorCheckBox->isChecked() && m_advancedUi->bgColorButton->property("color").isValid()) {
-        entry->setBackgroundColor(QColor(m_advancedUi->bgColorButton->property("color").toString()));
+        entry->setBackgroundColor(m_advancedUi->bgColorButton->property("color").toString());
     } else {
-        entry->setBackgroundColor(QColor());
+        entry->setBackgroundColor(QString());
     }
 
     IconStruct iconStruct = m_iconsWidget->state();

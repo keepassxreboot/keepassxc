@@ -271,6 +271,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
         return font;
     } else if (role == Qt::ForegroundRole) {
+        QColor foregroundColor;
+        foregroundColor.setNamedColor(entry->foregroundColor());
         if (entry->hasReferences()) {
             QPalette p;
 #ifdef Q_OS_MACOS
@@ -279,12 +281,14 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
 #endif
             return QVariant(p.color(QPalette::Active, QPalette::Mid));
-        } else if (entry->foregroundColor().isValid()) {
-            return QVariant(entry->foregroundColor());
+        } else if (foregroundColor.isValid()) {
+            return QVariant(foregroundColor);
         }
     } else if (role == Qt::BackgroundRole) {
-        if (entry->backgroundColor().isValid()) {
-            return QVariant(entry->backgroundColor());
+        QColor backgroundColor;
+        backgroundColor.setNamedColor(entry->backgroundColor());
+        if (backgroundColor.isValid()) {
+            return QVariant(backgroundColor);
         }
     } else if (role == Qt::TextAlignmentRole) {
         if (index.column() == Paperclip) {

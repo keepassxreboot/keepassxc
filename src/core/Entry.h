@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
-#include <QColor>
 #include <QImage>
 #include <QMap>
 #include <QPixmap>
@@ -57,8 +56,8 @@ struct EntryData
 {
     int iconNumber;
     QUuid customIcon;
-    QColor foregroundColor;
-    QColor backgroundColor;
+    QString foregroundColor;
+    QString backgroundColor;
     QString overrideUrl;
     QString tags;
     bool autoTypeEnabled;
@@ -86,8 +85,8 @@ public:
     QPixmap iconScaledPixmap() const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
-    QColor foregroundColor() const;
-    QColor backgroundColor() const;
+    QString foregroundColor() const;
+    QString backgroundColor() const;
     QString overrideUrl() const;
     QString tags() const;
     const TimeInfo& timeInfo() const;
@@ -132,8 +131,8 @@ public:
     void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
     void setIcon(const QUuid& uuid);
-    void setForegroundColor(const QColor& color);
-    void setBackgroundColor(const QColor& color);
+    void setForegroundColor(const QString& color);
+    void setBackgroundColor(const QString& color);
     void setOverrideUrl(const QString& url);
     void setTags(const QString& tags);
     void setTimeInfo(const TimeInfo& timeInfo);

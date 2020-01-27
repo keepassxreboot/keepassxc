@@ -432,8 +432,8 @@ void TestGui::testEditEntry()
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);
-    auto fgColor = QColor(Qt::red);
-    auto bgColor = QColor(Qt::blue);
+    auto fgColor = QString("#FF0000");
+    auto bgColor = QString("#0000FF");
     // Set foreground color
     auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
     auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
