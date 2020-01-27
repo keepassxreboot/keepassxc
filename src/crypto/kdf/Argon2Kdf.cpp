@@ -211,3 +211,8 @@ int Argon2Kdf::benchmarkImpl(int msec) const
 
     return 1;
 }
+
+QString Argon2Kdf::toString() const
+{
+    return QObject::tr("Argon2 (%1 rounds, %2 KB)").arg(QString::number(rounds()), QString::number(memory()));
+}

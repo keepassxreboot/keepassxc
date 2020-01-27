@@ -30,6 +30,7 @@ set(cli_SOURCES
         Generate.cpp
         Help.cpp
         Import.cpp
+        Info.cpp
         List.cpp
         Locate.cpp
         Merge.cpp
