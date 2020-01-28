@@ -882,6 +882,7 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QCOMPARE(searchedEntry->password(), clipboard->text());
     // Ensure Down focuses on entry view when search text is selected
+    QTest::keyClick(searchTextEdit, Qt::Key_A, Qt::ControlModifier);
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
     QCOMPARE(entryView->currentEntry(), searchedEntry);
