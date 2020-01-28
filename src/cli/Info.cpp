@@ -18,12 +18,12 @@
 #include <stdio.h>
 
 #include "Info.h"
+#include "Utils.h"
 
 #include "core/Database.h"
+#include "core/Global.h"
 #include "core/Metadata.h"
 #include "format/KeePass2.h"
-
-#include "Utils.h"
 
 Info::Info()
 {
