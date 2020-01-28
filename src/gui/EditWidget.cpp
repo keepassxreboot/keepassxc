@@ -74,7 +74,7 @@ void EditWidget::setPageHidden(QWidget* widget, bool hidden)
 
     for (int i = 0; i < m_ui->stackedWidget->count(); i++) {
         auto* scrollArea = qobject_cast<QScrollArea*>(m_ui->stackedWidget->widget(i));
-        if (scrollArea != nullptr && scrollArea->widget() == widget) {
+        if (scrollArea && scrollArea->widget() == widget) {
             index = i;
             break;
         }

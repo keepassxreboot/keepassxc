@@ -26,7 +26,7 @@
    <item>
     <widget class="QCheckBox" name="enableSSHAgentCheckBox">
      <property name="text">
-      <string>Enable SSH Agent (requires restart)</string>
+      <string>Enable SSH Agent integration</string>
      </property>
     </widget>
    </item>

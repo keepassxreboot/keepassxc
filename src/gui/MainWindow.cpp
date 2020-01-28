@@ -189,8 +189,7 @@ MainWindow::MainWindow()
 #endif
 
 #ifdef WITH_XC_SSHAGENT
-    SSHAgent::init(this);
-    connect(SSHAgent::instance(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
+    connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
 #endif
 

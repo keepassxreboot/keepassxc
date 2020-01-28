@@ -33,8 +33,7 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
 #else
     m_ui->sshAuthSockWidget->setVisible(false);
 #endif
-    auto sshAgentEnabled = config()->get("SSHAgent", false).toBool();
-    m_ui->sshAuthSockMessageWidget->setVisible(sshAgentEnabled);
+    m_ui->sshAuthSockMessageWidget->setVisible(sshAgent()->isEnabled());
     m_ui->sshAuthSockMessageWidget->setCloseButtonVisible(false);
     m_ui->sshAuthSockMessageWidget->setAutoHideTimeout(-1);
 }
@@ -45,20 +44,21 @@ AgentSettingsWidget::~AgentSettingsWidget()
 
 void AgentSettingsWidget::loadSettings()
 {
-    auto sshAgentEnabled = config()->get("SSHAgent", false).toBool();
+    auto sshAgentEnabled = sshAgent()->isEnabled();
+
     m_ui->enableSSHAgentCheckBox->setChecked(sshAgentEnabled);
 #ifdef Q_OS_WIN
-    m_ui->useOpenSSHCheckBox->setChecked(config()->get("SSHAgentOpenSSH", false).toBool());
+    m_ui->useOpenSSHCheckBox->setChecked(sshAgent()->useOpenSSH());
 #else
-    auto sshAuthSock = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
-    auto sshAuthSockOverride = config()->get("SSHAuthSockOverride", "").toString();
+    auto sshAuthSock = sshAgent()->socketPath(false);
+    auto sshAuthSockOverride = sshAgent()->authSockOverride();
     m_ui->sshAuthSockLabel->setText(sshAuthSock.isEmpty() ? tr("(empty)") : sshAuthSock);
     m_ui->sshAuthSockOverrideEdit->setText(sshAuthSockOverride);
 #endif
 
-    if (sshAgentEnabled) {
-        m_ui->sshAuthSockMessageWidget->setVisible(true);
+    m_ui->sshAuthSockMessageWidget->setVisible(sshAgentEnabled);
 
+    if (sshAgentEnabled) {
 #ifndef Q_OS_WIN
         if (sshAuthSock.isEmpty() && sshAuthSockOverride.isEmpty()) {
             m_ui->sshAuthSockMessageWidget->showMessage(
@@ -68,20 +68,21 @@ void AgentSettingsWidget::loadSettings()
             return;
         }
 #endif
-        if (SSHAgent::instance()->testConnection()) {
+        if (sshAgent()->testConnection()) {
             m_ui->sshAuthSockMessageWidget->showMessage(tr("SSH Agent connection is working!"),
                                                         MessageWidget::Positive);
         } else {
-            m_ui->sshAuthSockMessageWidget->showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
+            m_ui->sshAuthSockMessageWidget->showMessage(sshAgent()->errorString(), MessageWidget::Error);
         }
     }
 }
 
 void AgentSettingsWidget::saveSettings()
 {
-    config()->set("SSHAgent", m_ui->enableSSHAgentCheckBox->isChecked());
-    config()->set("SSHAuthSockOverride", m_ui->sshAuthSockOverrideEdit->text());
+    auto sshAuthSockOverride = m_ui->sshAuthSockOverrideEdit->text();
+    sshAgent()->setAuthSockOverride(sshAuthSockOverride);
 #ifdef Q_OS_WIN
-    config()->set("SSHAgentOpenSSH", m_ui->useOpenSSHCheckBox->isChecked());
+    sshAgent()->setUseOpenSSH(m_ui->useOpenSSHCheckBox->isChecked());
 #endif
+    sshAgent()->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
 }

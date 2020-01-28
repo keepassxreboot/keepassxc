@@ -217,9 +217,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
 
 #ifdef WITH_XC_SSHAGENT
-    if (config()->get("SSHAgent", false).toBool()) {
-        connect(this, SIGNAL(databaseLocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
-        connect(this, SIGNAL(databaseUnlocked()), SSHAgent::instance(), SLOT(databaseModeChanged()));
+    if (sshAgent()->isEnabled()) {
+        connect(this, SIGNAL(databaseLocked()), sshAgent(), SLOT(databaseModeChanged()));
+        connect(this, SIGNAL(databaseUnlocked()), sshAgent(), SLOT(databaseModeChanged()));
     }
 #endif
 
