@@ -164,7 +164,6 @@ private:
     bool m_create;
     bool m_history;
 #ifdef WITH_XC_SSHAGENT
-    bool m_sshAgentEnabled;
     KeeAgentSettings m_sshAgentSettings;
 #endif
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
