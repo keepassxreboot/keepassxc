@@ -17,7 +17,7 @@
  */
 
 #include "AutoTypeMac.h"
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #include "gui/MessageBox.h"
 
 #include <ApplicationServices/ApplicationServices.h>

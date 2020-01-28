@@ -19,7 +19,7 @@ set(EXCLUDED_DIRS
         # objective-c directories
         src/touchid/
         src/autotype/mac/
-        src/gui/macutils/)
+        src/gui/osutils/macutils/)
 
 set(EXCLUDED_FILES
         # third-party files

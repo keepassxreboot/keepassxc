@@ -19,17 +19,16 @@
 #ifndef KEEPASSXC_MACUTILS_H
 #define KEEPASSXC_MACUTILS_H
 
+#include "gui/osutils/OSUtilsBase.h"
 #include "AppKit.h"
-#include <QObject>
-#include <QWidget>
+#include <QPointer>
 
-class MacUtils : public QObject
+class MacUtils : public OSUtils
 {
     Q_OBJECT
 
 public:
     static MacUtils* instance();
-    static void createTestInstance();
 
     WId activeWindow();
     bool raiseWindow(WId pid);
@@ -37,20 +36,20 @@ public:
     bool raiseOwnWindow();
     bool hideOwnWindow();
     bool isHidden();
-    bool isDarkMode();
+    bool isDarkMode() override;
     bool enableAccessibility();
     bool enableScreenRecording();
 
 signals:
     void lockDatabases();
 
-private:
+protected:
     explicit MacUtils(QObject* parent = nullptr);
-    ~MacUtils();
+    ~MacUtils() override;
 
 private:
     QScopedPointer<AppKit> m_appkit;
-    static MacUtils* m_instance;
+    static QPointer<MacUtils> m_instance;
 
     Q_DISABLE_COPY(MacUtils)
 };

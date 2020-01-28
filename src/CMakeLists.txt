@@ -156,6 +156,7 @@ set(keepassx_SOURCES
         gui/reports/ReportsPageHealthcheck.cpp
         gui/reports/ReportsWidgetStatistics.cpp
         gui/reports/ReportsPageStatistics.cpp
+        gui/osutils/OSUtilsBase.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/PopupHelpWidget.cpp
@@ -181,20 +182,22 @@ if(APPLE)
             ${keepassx_SOURCES}
             core/ScreenLockListenerMac.cpp
             core/MacPasteboard.cpp
-            gui/macutils/MacUtils.cpp
-            gui/macutils/AppKitImpl.mm
-            gui/macutils/AppKit.h)
+            gui/osutils/macutils/MacUtils.cpp
+            gui/osutils/macutils/AppKitImpl.mm
+            gui/osutils/macutils/AppKit.h)
 endif()
 if(UNIX AND NOT APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
             core/ScreenLockListenerDBus.cpp
-            gui/MainWindowAdaptor.cpp)
+            gui/MainWindowAdaptor.cpp
+            gui/osutils/nixutils/NixUtils.cpp)
 endif()
 if(MINGW)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
-            core/ScreenLockListenerWin.cpp)
+            core/ScreenLockListenerWin.cpp
+            gui/osutils/winutils/WinUtils.cpp)
 endif()
 if(MINGW OR (UNIX AND NOT APPLE))
     set(keepassx_SOURCES

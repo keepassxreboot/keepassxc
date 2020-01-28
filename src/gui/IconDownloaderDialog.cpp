@@ -28,7 +28,7 @@
 #include "core/Tools.h"
 #include "gui/IconModels.h"
 #ifdef Q_OS_MACOS
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 #include <QMutexLocker>
