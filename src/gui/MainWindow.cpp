@@ -43,7 +43,7 @@
 #include "keys/PasswordKey.h"
 
 #ifdef Q_OS_MACOS
-#include "macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 #ifdef WITH_XC_UPDATECHECK

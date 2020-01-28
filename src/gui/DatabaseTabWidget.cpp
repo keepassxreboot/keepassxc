@@ -41,7 +41,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/GroupView.h"
 #ifdef Q_OS_MACOS
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 #include "gui/wizard/NewDatabaseWizard.h"
 

@@ -31,7 +31,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #ifdef Q_OS_MACOS
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 EntryModel::EntryModel(QObject* parent)

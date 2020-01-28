@@ -38,7 +38,7 @@
 #include "gui/MessageBox.h"
 
 #ifdef Q_OS_MAC
-#include "gui/macutils/MacUtils.h"
+#include "gui/osutils/macutils/MacUtils.h"
 #endif
 
 AutoType* AutoType::m_instance = nullptr;
