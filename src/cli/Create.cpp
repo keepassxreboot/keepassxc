@@ -38,7 +38,7 @@ const QCommandLineOption Create::DecryptionTimeOption =
 
 Create::Create()
 {
-    name = QString("create");
+    name = QString("db-create");
     description = QObject::tr("Create a new database.");
     positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
     options.append(Command::KeyFileOption);
