@@ -192,6 +192,9 @@
      <property name="accessibleName">
       <string>Notes field</string>
      </property>
+     <property name="tabChangesFocus">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item row="9" column="1">
