@@ -116,15 +116,11 @@ HealthChecker::HealthChecker(QSharedPointer<Database> db)
  * Returns the health of the password in `entry`, considering
  * password entropy, re-use, expiration, etc.
  */
-QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry)
+QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
 {
+    // Pointer sanity check
     if (!entry) {
         return {};
-    }
-
-    // Return from cache if we saw it before
-    if (m_cache.contains(entry->uuid())) {
-        return m_cache[entry->uuid()];
     }
 
     // First analyse the password itself
@@ -184,5 +180,5 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry)
     }
 
     // Return the result
-    return m_cache.insert(entry->uuid(), health).value();
+    return health;
 }
