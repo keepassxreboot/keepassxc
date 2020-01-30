@@ -32,7 +32,7 @@ public:
     QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
-    QIcon icon(const QString& category, const QString& name, bool fromTheme = true);
+    QIcon icon(const QString& category, const QString& name);
     QIcon onOffIcon(const QString& category, const QString& name);
 
     static FilePath* instance();

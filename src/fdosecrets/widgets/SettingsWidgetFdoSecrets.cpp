@@ -27,6 +27,8 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QAction>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
 #include <QHeaderView>
 #include <QItemEditorFactory>
 #include <QStyledItemDelegate>
@@ -75,7 +77,7 @@ namespace
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
-            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
             connect(m_lockAct, &QAction::triggered, this, [this]() {
                 if (!m_dbWidget) {
@@ -133,14 +135,13 @@ namespace
             }
             connect(m_dbWidget, &DatabaseWidget::databaseLocked, this, [this]() {
                 m_lockAct->setText(tr("Unlock database"));
-                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked"), false));
+                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
                 m_lockAct->setToolTip(tr("Unlock database to show more information"));
                 m_dbSettingsAct->setEnabled(false);
             });
             connect(m_dbWidget, &DatabaseWidget::databaseUnlocked, this, [this]() {
                 m_lockAct->setText(tr("Lock database"));
-                m_lockAct->setIcon(
-                    filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked"), false));
+                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked")));
                 m_lockAct->setToolTip(tr("Lock database"));
                 m_dbSettingsAct->setEnabled(true);
             });
@@ -237,6 +238,8 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     , m_plugin(plugin)
 {
     m_ui->setupUi(this);
+    m_ui->warningMsg->setHidden(true);
+    m_ui->warningMsg->setCloseButtonVisible(false);
 
     auto sessModel = new SettingsSessionModel(plugin, this);
     m_ui->tableSessions->setModel(sessModel);
@@ -263,6 +266,12 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
 
     m_ui->tabWidget->setEnabled(m_ui->enableFdoSecretService->isChecked());
     connect(m_ui->enableFdoSecretService, &QCheckBox::toggled, m_ui->tabWidget, &QTabWidget::setEnabled);
+
+    // background checking
+    m_checkTimer.setInterval(2000);
+    connect(&m_checkTimer, &QTimer::timeout, this, &SettingsWidgetFdoSecrets::checkDBusName);
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, &m_checkTimer, &QTimer::stop);
+    connect(m_plugin, SIGNAL(secretServiceStopped()), &m_checkTimer, SLOT(start()));
 }
 
 void SettingsWidgetFdoSecrets::setupView(QAbstractItemView* view,
@@ -299,6 +308,50 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
     FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+}
+
+void SettingsWidgetFdoSecrets::showMessage(const QString& text, MessageWidget::MessageType type)
+{
+    // Show error messages for a longer time to make sure the user can read them
+    if (type == MessageWidget::Error) {
+        m_ui->warningMsg->setCloseButtonVisible(true);
+        m_ui->warningMsg->showMessage(text, type, -1);
+    } else {
+        m_ui->warningMsg->setCloseButtonVisible(false);
+        m_ui->warningMsg->showMessage(text, type, 2000);
+    }
+}
+
+void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)
+{
+    QWidget::showEvent(event);
+    QTimer::singleShot(0, this, &SettingsWidgetFdoSecrets::checkDBusName);
+    m_checkTimer.start();
+}
+
+void SettingsWidgetFdoSecrets::hideEvent(QHideEvent* event)
+{
+    QWidget::hideEvent(event);
+    m_checkTimer.stop();
+}
+
+void SettingsWidgetFdoSecrets::checkDBusName()
+{
+    if (m_plugin->serviceInstance()) {
+        // only need checking if the service is not started or failed to start.
+        return;
+    }
+
+    auto reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
+    if (!reply.isValid()) {
+        showMessage(tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error);
+        return;
+    }
+    if (reply.value()) {
+        showMessage(tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning);
+        return;
+    }
+    m_ui->warningMsg->hideMessage();
 }
 
 #include "SettingsWidgetFdoSecrets.moc"

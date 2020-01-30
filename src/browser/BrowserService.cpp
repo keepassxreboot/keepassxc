@@ -417,8 +417,9 @@ QJsonArray BrowserService::findMatchingEntries(const QString& id,
     }
 
     // Confirm entries
-    if (confirmEntries(pwEntriesToConfirm, url, host, submitUrl, realm, httpAuth)) {
-        pwEntries.append(pwEntriesToConfirm);
+    QList<Entry*> selectedEntriesToConfirm = confirmEntries(pwEntriesToConfirm, url, host, submitHost, realm, httpAuth);
+    if (!selectedEntriesToConfirm.isEmpty()) {
+        pwEntries.append(selectedEntriesToConfirm);
     }
 
     if (pwEntries.isEmpty()) {
@@ -788,59 +789,66 @@ QList<Entry*> BrowserService::sortEntries(QList<Entry*>& pwEntries, const QStrin
     return results;
 }
 
-bool BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                                    const QString& url,
-                                    const QString& host,
-                                    const QString& submitUrl,
-                                    const QString& realm,
-                                    const bool httpAuth)
+QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
+                                             const QString& url,
+                                             const QString& host,
+                                             const QString& submitHost,
+                                             const QString& realm,
+                                             const bool httpAuth)
 {
     if (pwEntriesToConfirm.isEmpty() || m_dialogActive) {
-        return false;
+        return {};
     }
 
     m_dialogActive = true;
     BrowserAccessControlDialog accessControlDialog;
+
     connect(m_dbTabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), &accessControlDialog, SLOT(reject()));
-    accessControlDialog.setUrl(!submitUrl.isEmpty() ? submitUrl : url);
-    accessControlDialog.setItems(pwEntriesToConfirm);
-    accessControlDialog.setHTTPAuth(httpAuth);
+    connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
+        auto entry = pwEntriesToConfirm[item->row()];
+        BrowserEntryConfig config;
+        config.load(entry);
+        config.deny(host);
+        if (!submitHost.isEmpty() && host != submitHost) {
+            config.deny(submitHost);
+        }
+        if (!realm.isEmpty()) {
+            config.setRealm(realm);
+        }
+        config.save(entry);
+    });
+
+    accessControlDialog.setItems(pwEntriesToConfirm, !submitHost.isEmpty() ? submitHost : url, httpAuth);
 
     raiseWindow();
     accessControlDialog.show();
     accessControlDialog.activateWindow();
     accessControlDialog.raise();
 
-    const QString submitHost = QUrl(submitUrl).host();
-    int res = accessControlDialog.exec();
-    if (accessControlDialog.remember()) {
-        for (auto* entry : pwEntriesToConfirm) {
-            BrowserEntryConfig config;
-            config.load(entry);
-            if (res == QDialog::Accepted) {
+    QList<Entry*> allowedEntries;
+    if (accessControlDialog.exec() == QDialog::Accepted) {
+        const auto selectedEntries = accessControlDialog.getSelectedEntries();
+        for (auto item : accessControlDialog.getSelectedEntries()) {
+            auto entry = pwEntriesToConfirm[item->row()];
+            if (accessControlDialog.remember()) {
+                BrowserEntryConfig config;
+                config.load(entry);
                 config.allow(host);
-                if (!submitHost.isEmpty() && host != submitHost)
-                    config.allow(submitHost);
-            } else if (res == QDialog::Rejected) {
-                config.deny(host);
                 if (!submitHost.isEmpty() && host != submitHost) {
-                    config.deny(submitHost);
+                    config.allow(submitHost);
                 }
+                if (!realm.isEmpty()) {
+                    config.setRealm(realm);
+                }
+                config.save(entry);
             }
-            if (!realm.isEmpty()) {
-                config.setRealm(realm);
-            }
-            config.save(entry);
+            allowedEntries.append(entry);
         }
     }
 
     m_dialogActive = false;
     hideWindow();
-    if (res == QDialog::Accepted) {
-        return true;
-    }
-
-    return false;
+    return allowedEntries;
 }
 
 QJsonObject BrowserService::prepareEntry(const Entry* entry)

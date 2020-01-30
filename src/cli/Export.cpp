@@ -51,7 +51,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
             errorTextStream << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
             return EXIT_FAILURE;
         }
-        outputTextStream << xmlData.constData() << endl;
+        outputTextStream.write(xmlData.constData());
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         outputTextStream << csvExporter.exportDatabase(database);

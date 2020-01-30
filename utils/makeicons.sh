@@ -32,12 +32,9 @@
 # 3. Create the icons:
 #       $ bash ../../utils/makeicons.sh ~/src/MaterialDesign
 #
-# 4. Re-build KeePassXC:
+# 4. Re-build and run KeePassXC:
 #       $ cd ~/keepassxc/build
-#       $ make keepassxc
-#
-# 5. Check icons by disabling the OS icon theme:
-#       $ KEEPASSXC_IGNORE_ICON_THEME=1 src/keepassxc
+#       $ make keepassxc && src/keepassxc
 #
 # Material icons: https://materialdesignicons.com/
 

@@ -130,7 +130,7 @@ namespace FdoSecrets
             case Qt::DisplayRole:
                 return tr("Unlock to show");
             case Qt::DecorationRole:
-                return filePath()->icon(QStringLiteral("apps"), QStringLiteral("object-locked"), true);
+                return filePath()->icon(QStringLiteral("apps"), QStringLiteral("object-locked"));
             case Qt::FontRole: {
                 QFont font;
                 font.setItalic(true);
@@ -165,7 +165,7 @@ namespace FdoSecrets
             case Qt::DisplayRole:
                 return tr("None");
             case Qt::DecorationRole:
-                return filePath()->icon(QStringLiteral("apps"), QStringLiteral("paint-none"), true);
+                return filePath()->icon(QStringLiteral("apps"), QStringLiteral("paint-none"));
             default:
                 return {};
             }
