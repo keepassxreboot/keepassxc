@@ -23,7 +23,7 @@ The same password generation options as documented for the generate command can 
 Analyzes passwords in a database for weaknesses.
 
 .IP "\fBclip\fP [options] <database> <entry> [timeout]"
-Copies the password or the current TOTP (\fI-t\fP option) of a database entry to the clipboard. If multiple entries with the same name exist in different groups, only the password for the first one is going to be copied. For copying the password of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
+Copies an attribute or the current TOTP (if the \fI-t\fP option is specified) of a database entry to the clipboard. If no attribute name is specified using the \fI-a\fP option, the password is copied. If multiple entries with the same name exist in different groups, only the attribute for the first one is copied. For copying the attribute of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name. Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
 
 .IP "\fBclose\fP"
 In interactive mode, closes the currently opened database (see \fIopen\fP).
@@ -174,10 +174,14 @@ hour or so).
 
 .SS "Clip options"
 
-.IP "\fB-t\fP, \fB--totp\fP"
-Copies the current TOTP instead of current password to clipboard. Will report
-an error if no TOTP is configured for the entry.
+.IP "\fB-a\fP, \fB--attribute\fP"
+Copies the specified attribute to the clipboard. If no attribute is specified,
+the password attribute is the default. For example, "\fI-a\fP username" would
+copy the username to the clipboard. [Default: password]
 
+.IP "\fB-t\fP, \fB--totp\fP"
+Copies the current TOTP instead of the specified attribute to the clipboard.
+Will report an error if no TOTP is configured for the entry.
 
 .SS "Create options"
 

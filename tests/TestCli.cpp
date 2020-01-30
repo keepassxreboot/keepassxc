@@ -480,7 +480,7 @@ void TestCli::testClip()
 
     QCOMPARE(clipboard->text(), QString("Password"));
     m_stdoutFile->readLine(); // skip prompt line
-    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's password copied to the clipboard!\n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
     // Quiet option
     qint64 pos = m_stdoutFile->pos();
@@ -490,6 +490,11 @@ void TestCli::testClip()
     // Output should be empty when quiet option is set.
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(clipboard->text(), QString("Password"));
+
+    // Username
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
+    QCOMPARE(clipboard->text(), QString("User Name"));
 
     // TOTP
     Utils::Test::setNextPassword("a");
@@ -538,6 +543,20 @@ void TestCli::testClip()
     clipCmd.execute({"clip", m_dbFile2->fileName(), "--totp", "/Sample Entry"});
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile->fileName(), "-a", "TESTAttribute1", "/Sample Entry"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(
+        m_stderrFile->readAll(),
+        QByteArray("ERROR: attribute TESTAttribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
+
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    clipCmd.execute({"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry"});
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stderrFile->readAll(), QByteArray("ERROR: Please specify one of --attribute or --totp, not both.\n"));
 }
 
 void TestCli::testCreate()
@@ -1913,6 +1932,16 @@ void TestCli::testShow()
              QByteArray("Sample Entry\n"
                         "http://www.somesite.com/\n"));
 
+    // Test case insensitivity
+    pos = m_stdoutFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", "-a", "TITLE", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    QCOMPARE(m_stdoutFile->readAll(),
+             QByteArray("Sample Entry\n"
+                        "http://www.somesite.com/\n"));
+
     pos = m_stdoutFile->pos();
     Utils::Test::setNextPassword("a");
     showCmd.execute({"show", "-a", "DoesNotExist", m_dbFile->fileName(), "/Sample Entry"});
@@ -1946,6 +1975,19 @@ void TestCli::testShow()
     m_stderrFile->seek(posErr);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readAll(), QByteArray("Entry with path /Sample Entry has no TOTP set up.\n"));
+
+    // Show with ambiguous attributes
+    pos = m_stdoutFile->pos();
+    posErr = m_stderrFile->pos();
+    Utils::Test::setNextPassword("a");
+    showCmd.execute({"show", m_dbFile->fileName(), "-a", "Testattribute1", "/Sample Entry"});
+    m_stdoutFile->seek(pos);
+    m_stdoutFile->readLine(); // skip password prompt
+    m_stderrFile->seek(posErr);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(
+        m_stderrFile->readAll(),
+        QByteArray("ERROR: attribute Testattribute1 is ambiguous, it matches TestAttribute1 and testattribute1.\n"));
 }
 
 void TestCli::testInvalidDbFiles()

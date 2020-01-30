@@ -27,6 +27,7 @@ public:
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
+    static const QCommandLineOption AttributeOption;
     static const QCommandLineOption TotpOption;
 };
 
