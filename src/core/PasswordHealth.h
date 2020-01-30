@@ -101,12 +101,10 @@ public:
     explicit HealthChecker(QSharedPointer<Database>);
 
     // Get the health status of an entry in the database
-    QSharedPointer<PasswordHealth> evaluate(const Entry* entry);
+    QSharedPointer<PasswordHealth> evaluate(const Entry* entry) const;
 
 private:
-    // Result cache (first=entry UUID)
-    QHash<QUuid, QSharedPointer<PasswordHealth>> m_cache;
-    // first = password, second = entries that use it
+    // To determine password re-use: first = password, second = entries that use it
     QHash<QString, QStringList> m_reuse;
 };
 
