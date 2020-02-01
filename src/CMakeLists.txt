@@ -48,6 +48,7 @@ set(keepassx_SOURCES
         core/Merger.cpp
         core/Metadata.cpp
         core/PasswordGenerator.cpp
+        core/PasswordHealth.cpp
         core/PassphraseGenerator.cpp
         core/SignalMultiplexer.cpp
         core/ScreenLockListener.cpp
@@ -149,8 +150,12 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidgetMetaDataSimple.cpp
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetMasterKey.cpp
-        gui/dbsettings/DatabaseSettingsWidgetStatistics.cpp
-        gui/dbsettings/DatabaseSettingsPageStatistics.cpp
+        gui/reports/ReportsWidget.cpp
+        gui/reports/ReportsDialog.cpp
+        gui/reports/ReportsWidgetHealthcheck.cpp
+        gui/reports/ReportsPageHealthcheck.cpp
+        gui/reports/ReportsWidgetStatistics.cpp
+        gui/reports/ReportsPageStatistics.cpp
         gui/settings/SettingsWidget.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/PopupHelpWidget.cpp

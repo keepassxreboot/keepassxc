@@ -32,6 +32,7 @@ namespace Ui
 }
 
 class PasswordGenerator;
+class PasswordHealth;
 class PassphraseGenerator;
 
 class PasswordGeneratorWidget : public QWidget
@@ -77,7 +78,7 @@ private slots:
     void passwordSpinBoxChanged();
     void dicewareSliderMoved();
     void dicewareSpinBoxChanged();
-    void colorStrengthIndicator(double entropy);
+    void colorStrengthIndicator(const PasswordHealth& health);
 
     void updateGenerator();
 
