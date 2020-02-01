@@ -19,6 +19,7 @@
 
 #include "BrowserSettings.h"
 #include "core/Config.h"
+#include "core/PasswordHealth.h"
 
 BrowserSettings* BrowserSettings::m_instance(nullptr);
 
@@ -541,7 +542,7 @@ QJsonObject BrowserSettings::generatePassword()
         m_passwordGenerator.setCharClasses(passwordCharClasses());
         m_passwordGenerator.setFlags(passwordGeneratorFlags());
         const QString pw = m_passwordGenerator.generatePassword();
-        password["entropy"] = m_passwordGenerator.estimateEntropy(pw);
+        password["entropy"] = PasswordHealth(pw).entropy();
         password["password"] = pw;
     } else {
         m_passPhraseGenerator.setWordCount(passPhraseWordCount());

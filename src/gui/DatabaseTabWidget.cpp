@@ -457,6 +457,11 @@ void DatabaseTabWidget::changeMasterKey()
     currentDatabaseWidget()->switchToMasterKeyChange();
 }
 
+void DatabaseTabWidget::changeReports()
+{
+    currentDatabaseWidget()->switchToReports();
+}
+
 void DatabaseTabWidget::changeDatabaseSettings()
 {
     currentDatabaseWidget()->switchToDatabaseSettings();

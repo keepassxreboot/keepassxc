@@ -332,6 +332,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseSave->setIcon(filePath()->icon("actions", "document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(filePath()->icon("actions", "document-save-as"));
     m_ui->actionDatabaseClose->setIcon(filePath()->icon("actions", "document-close"));
+    m_ui->actionReports->setIcon(filePath()->icon("actions", "help-about"));
     m_ui->actionChangeDatabaseSettings->setIcon(filePath()->icon("actions", "document-edit"));
     m_ui->actionChangeMasterKey->setIcon(filePath()->icon("actions", "database-change-key"));
     m_ui->actionLockDatabases->setIcon(filePath()->icon("actions", "database-lock"));
@@ -403,6 +404,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
+    connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeReports()));
     connect(m_ui->actionChangeDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeDatabaseSettings()));
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
@@ -673,6 +675,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
                                                           && !recycleBinSelected);
             m_ui->actionChangeMasterKey->setEnabled(true);
+            m_ui->actionReports->setEnabled(true);
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
@@ -719,6 +722,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             }
 
             m_ui->actionChangeMasterKey->setEnabled(false);
+            m_ui->actionReports->setEnabled(false);
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
             m_ui->actionDatabaseSaveAs->setEnabled(false);
@@ -746,6 +750,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         }
 
         m_ui->actionChangeMasterKey->setEnabled(false);
+        m_ui->actionReports->setEnabled(false);
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
         m_ui->actionDatabaseSaveAs->setEnabled(false);

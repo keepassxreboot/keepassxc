@@ -19,6 +19,7 @@
 #include "cli/Utils.h"
 
 #include "cli/TextStream.h"
+#include "core/PasswordHealth.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,10 +50,9 @@ static void estimate(const char* pwd, bool advanced)
 {
     TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
 
-    double e = 0.0;
     int len = static_cast<int>(strlen(pwd));
     if (!advanced) {
-        e = ZxcvbnMatch(pwd, nullptr, nullptr);
+        const auto e = PasswordHealth(pwd).entropy();
         // clang-format off
         out << QObject::tr("Length %1").arg(len, 0) << '\t'
             << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
@@ -62,7 +62,7 @@ static void estimate(const char* pwd, bool advanced)
         int ChkLen = 0;
         ZxcMatch_t *info, *p;
         double m = 0.0;
-        e = ZxcvbnMatch(pwd, nullptr, &info);
+        const auto e = ZxcvbnMatch(pwd, nullptr, &info);
         for (p = info; p; p = p->Next) {
             m += p->Entrpy;
         }

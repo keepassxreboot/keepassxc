@@ -19,7 +19,6 @@
 #include "PasswordGenerator.h"
 
 #include "crypto/Random.h"
-#include <zxcvbn.h>
 
 const char* PasswordGenerator::DefaultExcludedChars = "";
 
@@ -29,11 +28,6 @@ PasswordGenerator::PasswordGenerator()
     , m_flags(nullptr)
     , m_excluded(PasswordGenerator::DefaultExcludedChars)
 {
-}
-
-double PasswordGenerator::estimateEntropy(const QString& password)
-{
-    return ZxcvbnMatch(password.toLatin1(), nullptr, nullptr);
 }
 
 void PasswordGenerator::setLength(int length)

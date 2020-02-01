@@ -26,6 +26,7 @@
 #include "core/Config.h"
 #include "core/FilePath.h"
 #include "core/PasswordGenerator.h"
+#include "core/PasswordHealth.h"
 #include "gui/Clipboard.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
@@ -261,21 +262,17 @@ void PasswordGeneratorWidget::updateButtonsEnabled(const QString& password)
 
 void PasswordGeneratorWidget::updatePasswordStrength(const QString& password)
 {
-    double entropy = 0.0;
-    if (m_ui->tabWidget->currentIndex() == Password) {
-        entropy = m_passwordGenerator->estimateEntropy(password);
-    } else {
-        entropy = m_dicewareGenerator->estimateEntropy();
+    PasswordHealth health(password);
+    if (m_ui->tabWidget->currentIndex() == Diceware) {
+        // Diceware estimates entropy differently
+        health = PasswordHealth(m_dicewareGenerator->estimateEntropy());
     }
 
-    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(entropy, 'f', 2)));
+    m_ui->entropyLabel->setText(tr("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2)));
 
-    if (entropy > m_ui->entropyProgressBar->maximum()) {
-        entropy = m_ui->entropyProgressBar->maximum();
-    }
-    m_ui->entropyProgressBar->setValue(entropy);
+    m_ui->entropyProgressBar->setValue(std::min(int(health.entropy()), m_ui->entropyProgressBar->maximum()));
 
-    colorStrengthIndicator(entropy);
+    colorStrengthIndicator(health);
 }
 
 void PasswordGeneratorWidget::applyPassword()
@@ -384,7 +381,7 @@ void PasswordGeneratorWidget::excludeHexChars()
     m_ui->editExcludedChars->setText("GHIJKLMNOPQRSTUVWXYZghijklmnopqrstuvwxyz");
 }
 
-void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
+void PasswordGeneratorWidget::colorStrengthIndicator(const PasswordHealth& health)
 {
     // Take the existing stylesheet and convert the text and background color to arguments
     QString style = m_ui->entropyProgressBar->styleSheet();
@@ -395,18 +392,27 @@ void PasswordGeneratorWidget::colorStrengthIndicator(double entropy)
     // Set the color and background based on entropy
     // colors are taking from the KDE breeze palette
     // <https://community.kde.org/KDE_Visual_Design_Group/HIG/Color>
-    if (entropy < 40) {
+    switch (health.quality()) {
+    case PasswordHealth::Quality::Bad:
+    case PasswordHealth::Quality::Poor:
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#c0392b"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor", "Password quality")));
-    } else if (entropy >= 40 && entropy < 65) {
+        break;
+
+    case PasswordHealth::Quality::Weak:
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#f39c1f"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak", "Password quality")));
-    } else if (entropy >= 65 && entropy < 100) {
+        break;
+
+    case PasswordHealth::Quality::Good:
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#11d116"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good", "Password quality")));
-    } else {
+        break;
+
+    case PasswordHealth::Quality::Excellent:
         m_ui->entropyProgressBar->setStyleSheet(style.arg("#27ae60"));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent", "Password quality")));
+        break;
     }
 }
 

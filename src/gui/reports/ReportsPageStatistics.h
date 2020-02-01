@@ -15,14 +15,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSPAGESTATISTICS_H
-#define KEEPASSXC_DATABASESETTINGSPAGESTATISTICS_H
+#ifndef KEEPASSXC_REPORTSPAGESTATISTICS_H
+#define KEEPASSXC_REPORTSPAGESTATISTICS_H
 
 #include <QWidget>
 
-#include "DatabaseSettingsDialog.h"
+#include "ReportsDialog.h"
 
-class DatabaseSettingsPageStatistics : public IDatabaseSettingsPage
+class ReportsPageStatistics : public IReportsPage
 {
 public:
     QString name() override;
@@ -32,4 +32,4 @@ public:
     void saveSettings(QWidget* widget) override;
 };
 
-#endif // KEEPASSXC_DATABASESETTINGSPAGESTATISTICS_H
+#endif // KEEPASSXC_REPORTSPAGESTATISTICS_H

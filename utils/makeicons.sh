@@ -99,6 +99,7 @@ map() {
         group-edit)                         echo folder-edit-outline            ;;
         group-empty-trash)                  echo trash-can-outline              ;;
         group-new)                          echo folder-plus-outline            ;;
+        health)                             echo heart-pulse                    ;;
         help-about)                         echo information-outline            ;;
         internet-web-browser)               echo web                            ;;
         key-enter)                          echo keyboard-variant               ;;

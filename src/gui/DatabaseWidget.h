@@ -34,6 +34,7 @@ class DatabaseOpenWidget;
 class KeePass1OpenWidget;
 class OpVaultOpenWidget;
 class DatabaseSettingsDialog;
+class ReportsDialog;
 class Database;
 class FileWatcher;
 class EditEntryWidget;
@@ -181,6 +182,7 @@ public slots:
     void sortGroupsAsc();
     void sortGroupsDesc();
     void switchToMasterKeyChange();
+    void switchToReports();
     void switchToDatabaseSettings();
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
@@ -251,6 +253,7 @@ private:
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;
     QPointer<EditEntryWidget> m_historyEditEntryWidget;
+    QPointer<ReportsDialog> m_reportsDialog;
     QPointer<DatabaseSettingsDialog> m_databaseSettingDialog;
     QPointer<DatabaseOpenWidget> m_databaseOpenWidget;
     QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
