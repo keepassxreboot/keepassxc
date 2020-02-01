@@ -76,7 +76,7 @@ static const QString aboutContributors = R"(
     <li>fonic (Entry Table View)</li>
     <li>kylemanna (YubiKey)</li>
     <li>c4rlo (Offline HIBP Checker)</li>
-    <li>wolframroesler (HTML Exporter)</li>
+    <li>wolframroesler (HTML Export, Statistics, Password Health)</li>
     <li>mdaniel (OpVault Importer)</li>
     <li>keithbennett (KeePassHTTP)</li>
     <li>Typz (KeePassHTTP)</li>

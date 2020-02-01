@@ -19,7 +19,6 @@
 #include "DatabaseSettingsDialog.h"
 #include "ui_DatabaseSettingsDialog.h"
 
-#include "DatabaseSettingsPageStatistics.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "DatabaseSettingsWidgetMasterKey.h"
@@ -84,8 +83,6 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
     m_securityTabWidget->addTab(m_masterKeyWidget, tr("Master Key"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
-
-    addSettingsPage(new DatabaseSettingsPageStatistics());
 
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());

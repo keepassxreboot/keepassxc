@@ -15,26 +15,32 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETSTATISTICS_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETSTATISTICS_H
+#ifndef KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
+#define KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
 
+#include "gui/entry/EntryModel.h"
+#include <QHash>
 #include <QIcon>
+#include <QPair>
 #include <QWidget>
 
 class Database;
+class Entry;
+class Group;
+class PasswordHealth;
 class QStandardItemModel;
 
 namespace Ui
 {
-    class DatabaseSettingsWidgetStatistics;
+    class ReportsWidgetHealthcheck;
 }
 
-class DatabaseSettingsWidgetStatistics : public QWidget
+class ReportsWidgetHealthcheck : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DatabaseSettingsWidgetStatistics(QWidget* parent = nullptr);
-    ~DatabaseSettingsWidgetStatistics();
+    explicit ReportsWidgetHealthcheck(QWidget* parent = nullptr);
+    ~ReportsWidgetHealthcheck();
 
     void loadSettings(QSharedPointer<Database> db);
     void saveSettings();
@@ -42,18 +48,23 @@ public:
 protected:
     void showEvent(QShowEvent* event) override;
 
-private slots:
-    void calculateStats();
+signals:
+    void entryActivated(const Group* group, Entry* entry);
+
+public slots:
+    void calculateHealth();
+    void emitEntryActivated(const QModelIndex& index);
 
 private:
-    QScopedPointer<Ui::DatabaseSettingsWidgetStatistics> m_ui;
+    void addHealthRow(QSharedPointer<PasswordHealth>, const Group*, const Entry*);
 
-    bool m_statsCalculated = false;
-    QIcon m_errIcon;
+    QScopedPointer<Ui::ReportsWidgetHealthcheck> m_ui;
+
+    bool m_healthCalculated = false;
+    QIcon m_errorIcon;
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QSharedPointer<Database> m_db;
-
-    void addStatsRow(QString name, QString value, bool bad = false, QString badMsg = "");
+    QList<QPair<const Group*, const Entry*>> m_rowToEntry;
 };
 
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETSTATISTICS_H
+#endif // KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H

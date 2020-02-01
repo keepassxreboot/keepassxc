@@ -15,15 +15,15 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DatabaseSettingsWidgetStatistics.h"
-#include "ui_DatabaseSettingsWidgetStatistics.h"
+#include "ReportsWidgetStatistics.h"
+#include "ui_ReportsWidgetStatistics.h"
 
 #include "core/AsyncTask.h"
 #include "core/Database.h"
 #include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
-#include "zxcvbn.h"
+#include "core/PasswordHealth.h"
 
 #include <QFileInfo>
 #include <QHash>
@@ -48,6 +48,7 @@ namespace
         // Ctor does all the work
         explicit Stats(QSharedPointer<Database> db)
             : modified(QFileInfo(db->filePath()).lastModified())
+            , m_db(db)
         {
             gatherStats(db->rootGroup()->groupsRecursive(true));
         }
@@ -92,19 +93,27 @@ namespace
         }
 
     private:
+        QSharedPointer<Database> m_db;
         QHash<QString, int> m_passwords;
 
         void gatherStats(const QList<Group*>& groups)
         {
+            auto checker = HealthChecker(m_db);
+
             for (const auto* group : groups) {
                 // Don't count anything in the recycle bin
-                if (group == group->database()->metadata()->recycleBin()) {
+                if (group->isRecycled()) {
                     continue;
                 }
 
                 ++nGroups;
 
                 for (const auto* entry : group->entries()) {
+                    // Don't count anything in the recycle bin
+                    if (entry->isRecycled()) {
+                        continue;
+                    }
+
                     ++nEntries;
 
                     if (entry->isExpired()) {
@@ -125,7 +134,7 @@ namespace
                         }
 
                         // Speed up Zxcvbn process by excluding very long passwords and most passphrases
-                        if (pwd.size() < 25 && ZxcvbnMatch(pwd.toLatin1(), nullptr, nullptr) < 65) {
+                        if (pwd.size() < 25 && checker.evaluate(entry)->quality() <= PasswordHealth::Quality::Weak) {
                             ++nPwdsWeak;
                         }
 
@@ -138,9 +147,9 @@ namespace
     };
 } // namespace
 
-DatabaseSettingsWidgetStatistics::DatabaseSettingsWidgetStatistics(QWidget* parent)
+ReportsWidgetStatistics::ReportsWidgetStatistics(QWidget* parent)
     : QWidget(parent)
-    , m_ui(new Ui::DatabaseSettingsWidgetStatistics())
+    , m_ui(new Ui::ReportsWidgetStatistics())
     , m_errIcon(FilePath::instance()->icon("status", "dialog-error"))
 {
     m_ui->setupUi(this);
@@ -148,14 +157,15 @@ DatabaseSettingsWidgetStatistics::DatabaseSettingsWidgetStatistics(QWidget* pare
     m_referencesModel.reset(new QStandardItemModel());
     m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Name") << tr("Value"));
     m_ui->statisticsTableView->setModel(m_referencesModel.data());
+    m_ui->statisticsTableView->setSelectionMode(QAbstractItemView::NoSelection);
     m_ui->statisticsTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-DatabaseSettingsWidgetStatistics::~DatabaseSettingsWidgetStatistics()
+ReportsWidgetStatistics::~ReportsWidgetStatistics()
 {
 }
 
-void DatabaseSettingsWidgetStatistics::addStatsRow(QString name, QString value, bool bad, QString badMsg)
+void ReportsWidgetStatistics::addStatsRow(QString name, QString value, bool bad, QString badMsg)
 {
     auto row = QList<QStandardItem*>();
     row << new QStandardItem(name);
@@ -170,7 +180,7 @@ void DatabaseSettingsWidgetStatistics::addStatsRow(QString name, QString value, 
     }
 };
 
-void DatabaseSettingsWidgetStatistics::loadSettings(QSharedPointer<Database> db)
+void ReportsWidgetStatistics::loadSettings(QSharedPointer<Database> db)
 {
     m_db = std::move(db);
     m_statsCalculated = false;
@@ -178,7 +188,7 @@ void DatabaseSettingsWidgetStatistics::loadSettings(QSharedPointer<Database> db)
     addStatsRow(tr("Please wait, database statistics are being calculated..."), "");
 }
 
-void DatabaseSettingsWidgetStatistics::showEvent(QShowEvent* event)
+void ReportsWidgetStatistics::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
 
@@ -189,9 +199,9 @@ void DatabaseSettingsWidgetStatistics::showEvent(QShowEvent* event)
     }
 }
 
-void DatabaseSettingsWidgetStatistics::calculateStats()
+void ReportsWidgetStatistics::calculateStats()
 {
-    const auto stats = AsyncTask::runAndWaitForFuture([this] { return new Stats(m_db); });
+    const QScopedPointer<Stats> stats(AsyncTask::runAndWaitForFuture([this] { return new Stats(m_db); }));
 
     m_referencesModel->clear();
     addStatsRow(tr("Database name"), m_db->metadata()->name());
@@ -231,7 +241,7 @@ void DatabaseSettingsWidgetStatistics::calculateStats()
                 tr("Average password length is less than ten characters. Longer passwords provide more security."));
 }
 
-void DatabaseSettingsWidgetStatistics::saveSettings()
+void ReportsWidgetStatistics::saveSettings()
 {
     // nothing to do - the tab is passive
 }

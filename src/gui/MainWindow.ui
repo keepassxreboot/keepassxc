@@ -236,6 +236,7 @@
     <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionChangeMasterKey"/>
+    <addaction name="actionReports"/>
     <addaction name="actionChangeDatabaseSettings"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
@@ -530,6 +531,20 @@
    </property>
    <property name="text">
     <string>Change master &amp;key...</string>
+   </property>
+  </action>
+  <action name="actionReports">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Reports...</string>
+   </property>
+   <property name="toolTip">
+    <string>Statistics, health check, etc.</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
   <action name="actionChangeDatabaseSettings">

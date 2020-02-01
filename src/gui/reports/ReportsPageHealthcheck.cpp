@@ -15,38 +15,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "DatabaseSettingsPageStatistics.h"
+#include "ReportsPageHealthcheck.h"
 
-#include "DatabaseSettingsWidgetStatistics.h"
-#include "core/Database.h"
+#include "ReportsWidgetHealthcheck.h"
 #include "core/FilePath.h"
-#include "core/Group.h"
 
 #include <QApplication>
 
-QString DatabaseSettingsPageStatistics::name()
+ReportsPageHealthcheck::ReportsPageHealthcheck()
+    : m_healthWidget(new ReportsWidgetHealthcheck())
 {
-    return QApplication::tr("Statistics");
 }
 
-QIcon DatabaseSettingsPageStatistics::icon()
+QString ReportsPageHealthcheck::name()
 {
-    return FilePath::instance()->icon("actions", "statistics");
+    return QApplication::tr("Health Check");
 }
 
-QWidget* DatabaseSettingsPageStatistics::createWidget()
+QIcon ReportsPageHealthcheck::icon()
 {
-    return new DatabaseSettingsWidgetStatistics();
+    return FilePath::instance()->icon("actions", "health");
 }
 
-void DatabaseSettingsPageStatistics::loadSettings(QWidget* widget, QSharedPointer<Database> db)
+QWidget* ReportsPageHealthcheck::createWidget()
 {
-    DatabaseSettingsWidgetStatistics* settingsWidget = reinterpret_cast<DatabaseSettingsWidgetStatistics*>(widget);
+    return m_healthWidget;
+}
+
+void ReportsPageHealthcheck::loadSettings(QWidget* widget, QSharedPointer<Database> db)
+{
+    const auto settingsWidget = reinterpret_cast<ReportsWidgetHealthcheck*>(widget);
     settingsWidget->loadSettings(db);
 }
 
-void DatabaseSettingsPageStatistics::saveSettings(QWidget* widget)
+void ReportsPageHealthcheck::saveSettings(QWidget* widget)
 {
-    DatabaseSettingsWidgetStatistics* settingsWidget = reinterpret_cast<DatabaseSettingsWidgetStatistics*>(widget);
+    const auto settingsWidget = reinterpret_cast<ReportsWidgetHealthcheck*>(widget);
     settingsWidget->saveSettings();
 }

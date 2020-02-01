@@ -78,6 +78,7 @@ public slots:
     void relockPendingDatabase();
 
     void changeMasterKey();
+    void changeReports();
     void changeDatabaseSettings();
     void performGlobalAutoType();
 
