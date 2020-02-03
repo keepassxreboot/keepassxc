@@ -40,7 +40,7 @@ namespace Utils
     extern FILE* DEVNULL;
 
     void setStdinEcho(bool enable);
-    QString getPassword(FILE* outputDescriptor = STDOUT);
+    QString getPassword(FILE* outputDescriptor = STDERR);
     QSharedPointer<PasswordKey> getPasswordFromStdin();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,

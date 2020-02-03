@@ -130,8 +130,8 @@ namespace Utils
         }
 
         if (isPasswordProtected) {
-            out << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
-            QString line = Utils::getPassword(outputDescriptor);
+            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
+            QString line = Utils::getPassword(errorDescriptor);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
             compositeKey->addKey(passwordKey);
@@ -232,9 +232,10 @@ namespace Utils
     {
         QSharedPointer<PasswordKey> passwordKey;
         QTextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+        QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
 
-        out << QObject::tr("Enter password to encrypt database (optional): ");
-        out.flush();
+        err << QObject::tr("Enter password to encrypt database (optional): ");
+        err.flush();
         auto password = Utils::getPassword();
 
         if (password.isEmpty()) {

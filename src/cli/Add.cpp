@@ -110,7 +110,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
         if (!parser->isSet(Command::QuietOption)) {
             outputTextStream << QObject::tr("Enter password for new entry: ") << flush;
         }
-        QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
+        QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDERR);
         entry->setPassword(password);
     } else if (parser->isSet(Add::GenerateOption)) {
         QString password = passwordGenerator->generatePassword();

@@ -115,7 +115,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     if (prompt) {
         outputTextStream << QObject::tr("Enter new password for entry: ") << flush;
-        QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT);
+        QString password = Utils::getPassword(parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDERR);
         entry->setPassword(password);
     } else if (generate) {
         QString password = passwordGenerator->generatePassword();
