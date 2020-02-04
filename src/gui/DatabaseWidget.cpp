@@ -1671,6 +1671,8 @@ bool DatabaseWidget::save()
     m_entryView->setDisabled(false);
     m_groupView->setDisabled(false);
 
+    m_entryView->setFocus();
+
     if (ok) {
         m_saveAttempts = 0;
         m_blockAutoSave = false;
