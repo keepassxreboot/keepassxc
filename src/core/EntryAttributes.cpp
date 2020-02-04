@@ -27,7 +27,7 @@ const QString EntryAttributes::URLKey = "URL";
 const QString EntryAttributes::NotesKey = "Notes";
 const QString EntryAttributes::UuidKey = "Uuid";
 const QStringList EntryAttributes::DefaultAttributes(QStringList() << TitleKey << UserNameKey << PasswordKey << URLKey
-                                                     << UuidKey << NotesKey);
+                                                                   << UuidKey << NotesKey);
 
 const QString EntryAttributes::WantedFieldGroupName = "WantedField";
 const QString EntryAttributes::SearchInGroupName = "SearchIn";
