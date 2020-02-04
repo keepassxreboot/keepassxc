@@ -610,9 +610,8 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
 
             // Search for additional URL's starting with KP2A_URL
             for (const auto& key : entry->attributes()->keys()) {
-                if (key.startsWith(ADDITIONAL_URL) &&
-                    handleURL(entry->attributes()->value(key), url, submitUrl) &&
-                    !entries.contains(entry)) {
+                if (key.startsWith(ADDITIONAL_URL) && handleURL(entry->attributes()->value(key), url, submitUrl)
+                    && !entries.contains(entry)) {
                     entries.append(entry);
                     continue;
                 }
