@@ -64,8 +64,12 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
-        return EXIT_FAILURE;
+        // If no entry found try find by entry UUID.
+        entry = database->rootGroup()->findEntryByUuid(entryPath);
+        if (!entry) {
+            errorTextStream << QObject::tr("Could not find entry with path or uuid %1.").arg(entryPath) << endl;
+            return EXIT_FAILURE;
+        }
     }
 
     if (showTotp && !entry->hasTotp()) {
