@@ -113,6 +113,7 @@ public:
 
     Group* findChildByName(const QString& name);
     Entry* findEntryByUuid(const QUuid& uuid, bool recursive = true) const;
+    Entry* findEntryByUuid(const QString& uuid) const;
     Entry* findEntryByPath(const QString& entryPath);
     Entry* findEntryBySearchTerm(const QString& term, EntryReferenceType referenceType);
     Group* findGroupByUuid(const QUuid& uuid);

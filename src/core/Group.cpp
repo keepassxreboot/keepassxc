@@ -595,6 +595,24 @@ Entry* Group::findEntryByUuid(const QUuid& uuid, bool recursive) const
     return nullptr;
 }
 
+Entry* Group::findEntryByUuid(const QString& uuid) const
+{
+    if (uuid.isEmpty()) {
+        return nullptr;
+    }
+
+    auto entries = m_entries;
+    entries = entriesRecursive(false);
+
+    for (auto entry : entries) {
+        if (entry->uuid().toString(QUuid::Id128) == uuid) {
+            return entry;
+        }
+    }
+
+    return nullptr;
+}
+
 Entry* Group::findEntryByPath(const QString& entryPath)
 {
     if (entryPath.isEmpty()) {
@@ -665,9 +683,6 @@ Entry* Group::findEntryByPathRecursive(const QString& entryPath, const QString& 
         // clang-format off
         if (entryPath == (basePath + entry->title())
             || (!entryPath.startsWith("/") && entry->title() == entryPath)) {
-            return entry;
-        }
-        if (entryPath == entry->uuid().toString(QUuid::Id128)) {
             return entry;
         }
         // clang-format on
