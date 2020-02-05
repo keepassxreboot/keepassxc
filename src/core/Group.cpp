@@ -31,7 +31,7 @@
 #endif
 
 #include <QtConcurrent>
-#include <quuid.h>
+#include <QUuid>
 
 const int Group::DefaultIconNumber = 48;
 const int Group::RecycleBinIconNumber = 43;

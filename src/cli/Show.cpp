@@ -21,6 +21,7 @@
 #include "core/Group.h"
 
 #include <quuid.h>
+#include <QUuid>
 
 const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
                                                                              << "totp",
