@@ -213,36 +213,6 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
 #endif
 
 /**
- * Test if connection to SSH agent is working.
- *
- * @return true on success
- */
-bool SSHAgent::testConnection()
-{
-    if (!isAgentRunning()) {
-        m_error = tr("No agent running, cannot test connection.");
-        return false;
-    }
-
-    QByteArray requestData;
-    BinaryStream request(&requestData);
-
-    request.write(SSH_AGENTC_REQUEST_IDENTITIES);
-
-    QByteArray responseData;
-    if (!sendMessage(requestData, responseData)) {
-        return false;
-    }
-
-    if (responseData.length() < 1 || static_cast<quint8>(responseData[0]) != SSH_AGENT_IDENTITIES_ANSWER) {
-        m_error = tr("Agent protocol error.");
-        return false;
-    }
-
-    return true;
-}
-
-/**
  * Add the identity to the SSH agent.
  *
  * @param key identity / key to add
@@ -326,6 +296,99 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
 
     QByteArray responseData;
     return sendMessage(requestData, responseData);
+}
+
+/**
+ * Get a list of identities from the SSH agent.
+ *
+ * @param list list of keys to append
+ * @return true on success
+ */
+bool SSHAgent::listIdentities(QList<QSharedPointer<OpenSSHKey>>& list)
+{
+    if (!isAgentRunning()) {
+        m_error = tr("No agent running, cannot list identities.");
+        return false;
+    }
+
+    QByteArray requestData;
+    BinaryStream request(&requestData);
+
+    request.write(SSH_AGENTC_REQUEST_IDENTITIES);
+
+    QByteArray responseData;
+    if (!sendMessage(requestData, responseData)) {
+        return false;
+    }
+
+    BinaryStream response(&responseData);
+
+    quint8 responseType;
+    if (!response.read(responseType) || responseType != SSH_AGENT_IDENTITIES_ANSWER) {
+        m_error = tr("Agent protocol error.");
+        return false;
+    }
+
+    quint32 nKeys;
+    if (!response.read(nKeys)) {
+        m_error = tr("Agent protocol error.");
+        return false;
+    }
+
+    for (quint32 i = 0; i < nKeys; i++) {
+        QByteArray publicData;
+        QString comment;
+
+        if (!response.readString(publicData)) {
+            m_error = tr("Agent protocol error.");
+            return false;
+        }
+
+        if (!response.readString(comment)) {
+            m_error = tr("Agent protocol error.");
+            return false;
+        }
+
+        OpenSSHKey* key = new OpenSSHKey();
+        key->setComment(comment);
+
+        list.append(QSharedPointer<OpenSSHKey>(key));
+
+        BinaryStream publicDataStream(&publicData);
+        if (!key->readPublic(publicDataStream)) {
+            m_error = key->errorString();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Check if this identity is loaded in the SSH Agent.
+ *
+ * @param key identity to remove
+ * @param loaded is the key laoded
+ * @return true on success
+ */
+bool SSHAgent::checkIdentity(OpenSSHKey& key, bool& loaded)
+{
+    QList<QSharedPointer<OpenSSHKey>> list;
+
+    if (!listIdentities(list)) {
+        return false;
+    }
+
+    loaded = false;
+
+    for (const auto it : list) {
+        if (*it == key) {
+            loaded = true;
+            break;
+        }
+    }
+
+    return true;
 }
 
 /**
