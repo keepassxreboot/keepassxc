@@ -68,7 +68,8 @@ void AgentSettingsWidget::loadSettings()
             return;
         }
 #endif
-        if (sshAgent()->testConnection()) {
+        QList<QSharedPointer<OpenSSHKey>> keys;
+        if (sshAgent()->listIdentities(keys)) {
             m_ui->sshAuthSockMessageWidget->showMessage(tr("SSH Agent connection is working!"),
                                                         MessageWidget::Positive);
         } else {
