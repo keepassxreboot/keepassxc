@@ -304,7 +304,6 @@ MainWindow::MainWindow()
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
 
 #ifdef Q_OS_MACOS
-    new QShortcut(Qt::CTRL + Qt::Key_0, this, SLOT(selectLastDatabaseTab()));
     auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_1, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(1); });
     shortcut = new QShortcut(Qt::CTRL + Qt::Key_2, this);
@@ -321,10 +320,9 @@ MainWindow::MainWindow()
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(7); });
     shortcut = new QShortcut(Qt::CTRL + Qt::Key_8, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(8); });
-    shortcut = new QShortcut(Qt::CTRL + Qt::Key_9, this);
-    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(9); });
+    new QShortcut(Qt::CTRL + Qt::Key_9, this, SLOT(selectLastDatabaseTab()));
 #else
-    new QShortcut(Qt::ALT + Qt::Key_0, this, SLOT(selectLastDatabaseTab()));
+    
     auto shortcut = new QShortcut(Qt::ALT + Qt::Key_1, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(1); });
     shortcut = new QShortcut(Qt::ALT + Qt::Key_2, this);
@@ -341,8 +339,7 @@ MainWindow::MainWindow()
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(7); });
     shortcut = new QShortcut(Qt::ALT + Qt::Key_8, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(8); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_9, this);
-    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(9); });
+    new QShortcut(Qt::ALT + Qt::Key_9, this, SLOT(selectLastDatabaseTab()));
 #endif
 
     // Toggle password and username visibility in entry view
