@@ -322,7 +322,6 @@ MainWindow::MainWindow()
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(8); });
     new QShortcut(Qt::CTRL + Qt::Key_9, this, SLOT(selectLastDatabaseTab()));
 #else
-    
     auto shortcut = new QShortcut(Qt::ALT + Qt::Key_1, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(1); });
     shortcut = new QShortcut(Qt::ALT + Qt::Key_2, this);
