@@ -302,26 +302,31 @@ MainWindow::MainWindow()
     new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
     new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
-    new QShortcut(Qt::ALT + Qt::Key_0, this, SLOT(selectLastDatabaseTab()));
 
-    auto shortcut = new QShortcut(Qt::ALT + Qt::Key_1, this);
+    // Tab selection by number, Windows uses Ctrl, macOS uses Command,
+    // and Linux uses Alt to emulate a browser-like experience
+    auto dbTabModifier = Qt::CTRL;
+#ifdef Q_OS_LINUX
+    dbTabModifier = Qt::ALT;
+#endif
+    auto shortcut = new QShortcut(dbTabModifier + Qt::Key_1, this);
+    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(0); });
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_2, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(1); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_2, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_3, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(2); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_3, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_4, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(3); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_4, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_5, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(4); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_5, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_6, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(5); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_6, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_7, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(6); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_7, this);
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_8, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(7); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_8, this);
-    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(8); });
-    shortcut = new QShortcut(Qt::ALT + Qt::Key_9, this);
-    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(9); });
+    shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
+    connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
     // Toggle password and username visibility in entry view
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
@@ -974,45 +979,38 @@ void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
     updateTrayIcon();
 }
 
-void MainWindow::selectNextDatabaseTab()
+/**
+ * Select a database tab by its index. Stays bounded to first/last tab
+ * on overflow unless wrap is true.
+ *
+ * @param tabIndex 0-based tab index selector
+ * @param wrap if true wrap around to first/last tab
+ */
+void MainWindow::selectDatabaseTab(int tabIndex, bool wrap)
 {
     if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        int index = m_ui->tabWidget->currentIndex() + 1;
-        if (index >= m_ui->tabWidget->count()) {
-            m_ui->tabWidget->setCurrentIndex(0);
+        if (wrap) {
+            if (tabIndex < 0) {
+                tabIndex = m_ui->tabWidget->count() - 1;
+            } else if (tabIndex >= m_ui->tabWidget->count()) {
+                tabIndex = 0;
+            }
         } else {
-            m_ui->tabWidget->setCurrentIndex(index);
+            tabIndex = qBound(0, tabIndex, m_ui->tabWidget->count() - 1);
         }
+
+        m_ui->tabWidget->setCurrentIndex(tabIndex);
     }
+}
+
+void MainWindow::selectNextDatabaseTab()
+{
+    selectDatabaseTab(m_ui->tabWidget->currentIndex() + 1, true);
 }
 
 void MainWindow::selectPreviousDatabaseTab()
 {
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        int index = m_ui->tabWidget->currentIndex() - 1;
-        if (index < 0) {
-            m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
-        } else {
-            m_ui->tabWidget->setCurrentIndex(index);
-        }
-    }
-}
-
-void MainWindow::selectDatabaseTab(int tabIndex)
-{
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        if (tabIndex <= m_ui->tabWidget->count()) {
-            m_ui->tabWidget->setCurrentIndex(--tabIndex);
-        }
-    }
-}
-
-void MainWindow::selectLastDatabaseTab()
-{
-    if (m_ui->stackedWidget->currentIndex() == DatabaseTabScreen) {
-        int index = m_ui->tabWidget->count() - 1;
-        m_ui->tabWidget->setCurrentIndex(index);
-    }
+    selectDatabaseTab(m_ui->tabWidget->currentIndex() - 1, true);
 }
 
 void MainWindow::databaseTabChanged(int tabIndex)
