@@ -54,6 +54,7 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(removeSharedEncryptionKeys()));
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(updateSharedKeyList()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SLOT(removeStoredPermissions()));
+    connect(m_ui->refreshDatabaseID, SIGNAL(clicked()), this, SLOT(refreshDatabaseID()));
 }
 
 DatabaseSettingsWidgetBrowser::~DatabaseSettingsWidgetBrowser()
@@ -254,6 +255,22 @@ void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
     }
 
     m_browserService.convertAttributesToCustomData(m_db);
+}
+
+void DatabaseSettingsWidgetBrowser::refreshDatabaseID()
+{
+    if (MessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Refresh database ID"),
+                                tr("Do you really want refresh the database ID?\n"
+                                   "This is only necessary if your database is a copy of another and the "
+                                   "browser extension cannot connect."),
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)) {
+        return;
+    }
+
+    m_db->rootGroup()->setUuid(QUuid::createUuid());
 }
 
 // Updates the shared key list after the list is cleared
