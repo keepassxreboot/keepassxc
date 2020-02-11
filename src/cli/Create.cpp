@@ -36,12 +36,24 @@ const QCommandLineOption Create::DecryptionTimeOption =
                        QObject::tr("Target decryption time in MS for the database."),
                        QObject::tr("time"));
 
+const QCommandLineOption Create::SetKeyFileOption =
+    QCommandLineOption(QStringList() << "k"
+                                     << "set-key-file",
+                       QObject::tr("Set the key file for the database."),
+                       QObject::tr("path"));
+
+const QCommandLineOption Create::SetPasswordOption =
+    QCommandLineOption(QStringList() << "p"
+                                     << "set-password",
+                       QObject::tr("Set a password for the database."));
+
 Create::Create()
 {
     name = QString("db-create");
     description = QObject::tr("Create a new database.");
     positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
-    options.append(Command::KeyFileOption);
+    options.append(Create::SetKeyFileOption);
+    options.append(Create::SetPasswordOption);
     options.append(Create::DecryptionTimeOption);
 }
 
@@ -97,21 +109,24 @@ int Create::execute(const QStringList& arguments)
 
     auto key = QSharedPointer<CompositeKey>::create();
 
-    auto password = Utils::getPasswordFromStdin();
-    if (!password.isNull()) {
-        key->addKey(password);
-    }
-
-    QSharedPointer<FileKey> fileKey;
-    if (parser->isSet(Command::KeyFileOption)) {
-        if (!loadFileKey(parser->value(Command::KeyFileOption), fileKey)) {
-            err << QObject::tr("Loading the key file failed") << endl;
-            return EXIT_FAILURE;
+    if (parser->isSet(Create::SetPasswordOption)) {
+        auto password = Utils::getPasswordFromStdin();
+        if (!password.isNull()) {
+            key->addKey(password);
         }
     }
 
-    if (!fileKey.isNull()) {
-        key->addKey(fileKey);
+    if (parser->isSet(Create::SetKeyFileOption)) {
+        QSharedPointer<FileKey> fileKey;
+
+        if (!loadFileKey(parser->value(Create::SetKeyFileOption), fileKey)) {
+            err << QObject::tr("Loading the key file failed") << endl;
+            return EXIT_FAILURE;
+        }
+
+        if (!fileKey.isNull()) {
+            key->addKey(fileKey);
+        }
     }
 
     if (key->isEmpty()) {

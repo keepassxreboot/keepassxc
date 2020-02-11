@@ -7,6 +7,8 @@
 
 ### Changed
 - Renamed CLI create command to db-create [#4231]
+- Added --set-password option for CLI db-create command
+- Added --set-key-file option for CLI db-create command (replacing --key-file option)
 
 ## 2.5.3 (2020-01-19)
 

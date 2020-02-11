@@ -567,11 +567,10 @@ void TestCli::testCreate()
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
 
+    // Testing password option
     QString databaseFilename = testDir->path() + "/testCreate1.kdbx";
-    // Password
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename});
-
+    createCmd.execute({"db-create", databaseFilename, "-p"});
     m_stderrFile->reset();
     m_stdoutFile->reset();
 
@@ -585,7 +584,7 @@ void TestCli::testCreate()
     // Should refuse to create the database if it already exists.
     qint64 pos = m_stdoutFile->pos();
     qint64 errPos = m_stderrFile->pos();
-    createCmd.execute({"db-create", databaseFilename});
+    createCmd.execute({"db-create", "-p", databaseFilename});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
     // Output should be empty when there is an error.
@@ -593,13 +592,23 @@ void TestCli::testCreate()
     QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
     QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
 
+    // Should refuse to create without any key provided.
+    QString databaseFilename8 = testDir->path() + "/testCreate8.kdbx";
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"db-create", databaseFilename8});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+    QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("No key is set. Aborting database creation.\n"));
+
     // Testing with keyfile creation
     QString databaseFilename2 = testDir->path() + "/testCreate2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename2, "-k", keyfilePath});
+    createCmd.execute({"db-create", databaseFilename2, "-p", "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -616,7 +625,7 @@ void TestCli::testCreate()
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename3, "-k", keyfilePath});
+    createCmd.execute({"db-create", databaseFilename3, "-p", "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -632,7 +641,7 @@ void TestCli::testCreate()
     QString databaseFilename4 = testDir->path() + "/testCreate4.kdbx";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    createCmd.execute({"create", databaseFilename4, "-t", "NAN"});
+    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", "NAN"});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -642,7 +651,7 @@ void TestCli::testCreate()
     // Invalid decryption time (range).
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    createCmd.execute({"create", databaseFilename4, "-t", "10"});
+    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", "10"});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -655,7 +664,7 @@ void TestCli::testCreate()
     errPos = m_stderrFile->pos();
     Utils::Test::setNextPassword("a");
     int epochBefore = QDateTime::currentMSecsSinceEpoch();
-    createCmd.execute({"create", databaseFilename4, "-t", QString::number(encryptionTime)});
+    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", QString::number(encryptionTime)});
     // Removing 100ms to make sure we account for changes in computation time.
     QVERIFY(QDateTime::currentMSecsSinceEpoch() > (epochBefore + encryptionTime - 100));
     m_stdoutFile->seek(pos);
@@ -1545,10 +1554,10 @@ void TestCli::testMergeWithKeys()
     qint64 pos = m_stdoutFile->pos();
 
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", sourceDatabaseFilename, "-k", sourceKeyfilePath});
+    createCmd.execute({"db-create", sourceDatabaseFilename, "-p", "-k", sourceKeyfilePath});
 
     Utils::Test::setNextPassword("b");
-    createCmd.execute({"db-create", targetDatabaseFilename, "-k", targetKeyfilePath});
+    createCmd.execute({"db-create", targetDatabaseFilename, "-p", "-k", targetKeyfilePath});
 
     Utils::Test::setNextPassword("a");
     auto sourceDatabase = QSharedPointer<Database>(
