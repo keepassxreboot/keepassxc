@@ -63,6 +63,7 @@ private slots:
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
     void convertAttributesToCustomData();
+    void refreshDatabaseID();
 
 private:
     void updateModel();
