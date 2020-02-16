@@ -142,6 +142,13 @@ QVariant GroupModel::data(const QModelIndex& index, int role) const
             font.setStrikeOut(true);
         }
         return font;
+    } else if (role == Qt::ToolTipRole) {
+        QString tooltip;
+        if (!group->parentGroup()) {
+            // only show a tooltip for the root group
+            tooltip = m_db->filePath();
+        }
+        return tooltip;
     } else {
         return QVariant();
     }
