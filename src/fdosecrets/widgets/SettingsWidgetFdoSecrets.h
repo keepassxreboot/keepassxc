@@ -55,7 +55,7 @@ public slots:
 
 private slots:
     void checkDBusName();
-    void showMessage(const QString& text, MessageWidget::MessageType type);
+    void updateServiceState();
 
 protected:
     void showEvent(QShowEvent* event) override;

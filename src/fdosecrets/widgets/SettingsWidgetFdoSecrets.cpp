@@ -264,8 +264,11 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     dbViewHeader->setSectionResizeMode(1, QHeaderView::Stretch); // group
     dbViewHeader->setSectionResizeMode(2, QHeaderView::ResizeToContents); // manage button
 
-    m_ui->tabWidget->setEnabled(m_ui->enableFdoSecretService->isChecked());
-    connect(m_ui->enableFdoSecretService, &QCheckBox::toggled, m_ui->tabWidget, &QTabWidget::setEnabled);
+    // prompt the user to save settings before the sections are enabled
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStarted, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    connect(m_plugin, &FdoSecretsPlugin::secretServiceStopped, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    connect(m_ui->enableFdoSecretService, &QCheckBox::toggled, this, &SettingsWidgetFdoSecrets::updateServiceState);
+    updateServiceState();
 
     // background checking
     m_checkTimer.setInterval(2000);
@@ -310,18 +313,6 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
 }
 
-void SettingsWidgetFdoSecrets::showMessage(const QString& text, MessageWidget::MessageType type)
-{
-    // Show error messages for a longer time to make sure the user can read them
-    if (type == MessageWidget::Error) {
-        m_ui->warningMsg->setCloseButtonVisible(true);
-        m_ui->warningMsg->showMessage(text, type, -1);
-    } else {
-        m_ui->warningMsg->setCloseButtonVisible(false);
-        m_ui->warningMsg->showMessage(text, type, 2000);
-    }
-}
-
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
@@ -344,14 +335,32 @@ void SettingsWidgetFdoSecrets::checkDBusName()
 
     auto reply = QDBusConnection::sessionBus().interface()->isServiceRegistered(QStringLiteral(DBUS_SERVICE_SECRET));
     if (!reply.isValid()) {
-        showMessage(tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error);
+        m_ui->warningMsg->showMessage(
+            tr("<b>Error:</b> Failed to connect to DBus. Please check your DBus setup."), MessageWidget::Error, -1);
+        m_ui->enableFdoSecretService->setChecked(false);
+        m_ui->enableFdoSecretService->setEnabled(false);
         return;
     }
     if (reply.value()) {
-        showMessage(tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning);
+        m_ui->warningMsg->showMessage(
+            tr("<b>Warning:</b> ") + m_plugin->reportExistingService(), MessageWidget::Warning, -1);
+        m_ui->enableFdoSecretService->setChecked(false);
+        m_ui->enableFdoSecretService->setEnabled(false);
         return;
     }
     m_ui->warningMsg->hideMessage();
+    m_ui->enableFdoSecretService->setEnabled(true);
+}
+
+void SettingsWidgetFdoSecrets::updateServiceState()
+{
+    m_ui->tabWidget->setEnabled(m_plugin->serviceInstance() != nullptr);
+    if (m_ui->enableFdoSecretService->isChecked() && !m_plugin->serviceInstance()) {
+        m_ui->tabWidget->setToolTip(
+            tr("Save current changes to activate the plugin and enable editing of this section."));
+    } else {
+        m_ui->tabWidget->setToolTip("");
+    }
 }
 
 #include "SettingsWidgetFdoSecrets.moc"
