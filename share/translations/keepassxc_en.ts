@@ -120,6 +120,14 @@
         <source>Use OpenSSH</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>SSH_SK_PROVIDER value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSH_SK_PROVIDER override</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -5472,6 +5480,14 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Decryption failed: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unexpected EOF while reading key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported key part</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordEdit</name>
@@ -7622,6 +7638,10 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
