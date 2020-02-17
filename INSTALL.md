@@ -68,7 +68,6 @@ git checkout master
 Navigate to the directory where you have downloaded KeePassXC and type these commands:
 
 ```
-cd git-project-directory
 mkdir build
 cd build
 cmake -DWITH_XC_ALL=ON ..
