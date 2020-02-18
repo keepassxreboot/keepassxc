@@ -110,9 +110,9 @@ int Create::execute(const QStringList& arguments)
     auto key = QSharedPointer<CompositeKey>::create();
 
     if (parser->isSet(Create::SetPasswordOption)) {
-        auto password = Utils::getPasswordFromStdin();
-        if (!password.isNull()) {
-            key->addKey(password);
+        auto passwordKey = Utils::getPasswordFromStdin();
+        if (!passwordKey.isNull()) {
+            key->addKey(passwordKey);
         }
     }
 
