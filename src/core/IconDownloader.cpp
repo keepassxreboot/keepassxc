@@ -126,6 +126,10 @@ void IconDownloader::setUrl(const QString& entryUrl)
 
 void IconDownloader::download()
 {
+    if (m_urlsToTry.isEmpty()) {
+        return;
+    }
+
     if (!m_timeout.isActive()) {
         int timeout = config()->get("FaviconDownloadTimeout", 10).toInt();
         m_timeout.start(timeout * 1000);
