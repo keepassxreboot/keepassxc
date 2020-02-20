@@ -142,6 +142,7 @@ void DatabaseOpenWidget::hideEvent(QHideEvent* event)
 
 void DatabaseOpenWidget::load(const QString& filename)
 {
+	clearForms();
     m_filename = filename;
     m_ui->fileNameLabel->setRawText(m_filename);
 
