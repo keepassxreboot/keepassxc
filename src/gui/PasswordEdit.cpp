@@ -110,7 +110,7 @@ void PasswordEdit::setShowPassword(bool show)
 
     if (m_repeatPasswordEdit) {
         m_repeatPasswordEdit->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-        if (config()->get("security/passwordsrepeat").toBool()) {
+        if (!config()->get("security/passwordsrepeatvisible").toBool()) {
             m_repeatPasswordEdit->setEnabled(!show);
             m_repeatPasswordEdit->setText(text());
         } else {
@@ -174,7 +174,7 @@ void PasswordEdit::updateRepeatStatus()
 
 void PasswordEdit::autocompletePassword(const QString& password)
 {
-    if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
+    if (!config()->get("security/passwordsrepeatvisible").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);
     }
 }
