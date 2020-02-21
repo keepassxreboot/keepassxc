@@ -206,7 +206,7 @@ void PasswordGeneratorWidget::reset(int length)
     }
 
     setStandaloneMode(false);
-    setPasswordVisible(config()->get("security/passwordscleartext").toBool());
+    setPasswordVisible(!config()->get("security/passwordshidden").toBool());
     updateGenerator();
 }
 

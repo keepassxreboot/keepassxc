@@ -201,7 +201,7 @@ void Config::init(const QString& fileName)
     m_defaults.insert("AutoTypeDelay", 25);
     m_defaults.insert("AutoTypeStartDelay", 500);
     m_defaults.insert("UseGroupIconOnEntryCreation", true);
-    m_defaults.insert("IgnoreGroupExpansion", true);
+    m_defaults.insert("TrackNonDataChanges", false);
     m_defaults.insert("FaviconDownloadTimeout", 10);
     m_defaults.insert("security/clearclipboard", true);
     m_defaults.insert("security/clearclipboardtimeout", 10);
@@ -211,9 +211,9 @@ void Config::init(const QString& fileName)
     m_defaults.insert("security/lockdatabaseidlesec", 240);
     m_defaults.insert("security/lockdatabaseminimize", false);
     m_defaults.insert("security/lockdatabasescreenlock", true);
-    m_defaults.insert("security/passwordsrepeat", false);
-    m_defaults.insert("security/passwordscleartext", false);
-    m_defaults.insert("security/passwordemptynodots", true);
+    m_defaults.insert("security/passwordsrepeatvisible", true);
+    m_defaults.insert("security/passwordshidden", true);
+    m_defaults.insert("security/passwordemptyplaceholder", false);
     m_defaults.insert("security/HidePasswordPreviewPanel", true);
     m_defaults.insert("security/autotypeask", true);
     m_defaults.insert("security/IconDownloadFallback", false);

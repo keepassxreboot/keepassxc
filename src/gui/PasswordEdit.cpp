@@ -66,7 +66,7 @@ void PasswordEdit::setShowPassword(bool show)
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
     // if I have a parent, I'm the child
     if (m_basePasswordEdit) {
-        if (config()->get("security/passwordsrepeat").toBool()) {
+        if (!config()->get("security/passwordsrepeatvisible").toBool()) {
             setEnabled(!show);
             setReadOnly(show);
             setText(m_basePasswordEdit->text());
@@ -115,7 +115,7 @@ void PasswordEdit::updateStylesheet()
 
 void PasswordEdit::autocompletePassword(const QString& password)
 {
-    if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
+    if (!config()->get("security/passwordsrepeatvisible").toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);
     }
 }

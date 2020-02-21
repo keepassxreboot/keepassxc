@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>951</height>
+    <height>1043</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -223,9 +223,9 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="ignoreGroupExpansionCheckBox">
+           <widget class="QCheckBox" name="trackNonDataChangesCheckBox">
             <property name="text">
-             <string>Don't mark database as modified for non-data changes (e.g., expanding groups)</string>
+             <string>Mark database as modified for non-data changes (e.g., expanding groups)</string>
             </property>
            </widget>
           </item>

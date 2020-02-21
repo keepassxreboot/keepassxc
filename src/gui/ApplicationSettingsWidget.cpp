@@ -191,7 +191,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(config()->get("UseGroupIconOnEntryCreation").toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get("AutoTypeEntryTitleMatch").toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get("AutoTypeEntryURLMatch").toBool());
-    m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get("IgnoreGroupExpansion").toBool());
+    m_generalUi->trackNonDataChangesCheckBox->setChecked(config()->get("TrackNonDataChanges").toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get("FaviconDownloadTimeout").toInt());
 
     if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
@@ -259,10 +259,10 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->relockDatabaseAutoTypeCheckBox->setChecked(config()->get("security/relockautotype").toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get("security/IconDownloadFallback").toBool());
 
-    m_secUi->passwordCleartextCheckBox->setChecked(config()->get("security/passwordscleartext").toBool());
-    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get("security/passwordemptynodots").toBool());
+    m_secUi->passwordsHiddenCheckBox->setChecked(config()->get("security/passwordshidden").toBool());
+    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get("security/passwordemptyplaceholder").toBool());
     m_secUi->passwordPreviewCleartextCheckBox->setChecked(config()->get("security/HidePasswordPreviewPanel").toBool());
-    m_secUi->passwordRepeatCheckBox->setChecked(config()->get("security/passwordsrepeat").toBool());
+    m_secUi->passwordsRepeatVisibleCheckBox->setChecked(config()->get("security/passwordsrepeatvisible").toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get("security/hidenotes").toBool());
 
     m_secUi->touchIDResetCheckBox->setChecked(config()->get("security/resettouchid").toBool());
@@ -300,7 +300,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("MinimizeOnCopy", m_generalUi->minimizeOnCopyRadioButton->isChecked());
     config()->set("DropToBackgroundOnCopy", m_generalUi->dropToBackgroundOnCopyRadioButton->isChecked());
     config()->set("UseGroupIconOnEntryCreation", m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set("IgnoreGroupExpansion", m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
+    config()->set("TrackNonDataChanges", m_generalUi->trackNonDataChangesCheckBox->isChecked());
     config()->set("AutoTypeEntryTitleMatch", m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set("AutoTypeEntryURLMatch", m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     int currentLangIndex = m_generalUi->languageComboBox->currentIndex();
@@ -346,11 +346,11 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set("security/relockautotype", m_secUi->relockDatabaseAutoTypeCheckBox->isChecked());
     config()->set("security/IconDownloadFallback", m_secUi->fallbackToSearch->isChecked());
 
-    config()->set("security/passwordscleartext", m_secUi->passwordCleartextCheckBox->isChecked());
-    config()->set("security/passwordemptynodots", m_secUi->passwordShowDotsCheckBox->isChecked());
+    config()->set("security/passwordshidden", m_secUi->passwordsHiddenCheckBox->isChecked());
+    config()->set("security/passwordemptyplaceholder", m_secUi->passwordShowDotsCheckBox->isChecked());
 
     config()->set("security/HidePasswordPreviewPanel", m_secUi->passwordPreviewCleartextCheckBox->isChecked());
-    config()->set("security/passwordsrepeat", m_secUi->passwordRepeatCheckBox->isChecked());
+    config()->set("security/passwordsrepeatvisible", m_secUi->passwordsRepeatVisibleCheckBox->isChecked());
     config()->set("security/hidenotes", m_secUi->hideNotesCheckBox->isChecked());
 
     config()->set("security/resettouchid", m_secUi->touchIDResetCheckBox->isChecked());
