@@ -1,0 +1,8 @@
+image:
+  file: .gitpod.Dockerfile
+
+# Intellisense support
+# As suggested on https://www.gitpod.io/docs/cpp-in-gitpod/
+vscode:
+  extensions:
+    - ms-vscode.cpptools@0.26.2:Pq/tmf2WN3SanVzB4xZc1g==
