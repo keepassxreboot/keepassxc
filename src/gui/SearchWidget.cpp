@@ -115,7 +115,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
                 return true;
             }
         }
-    } else if (event->type() == QEvent::FocusOut) {
+    } else if (event->type() == QEvent::FocusOut && !m_ui->searchEdit->text().isEmpty()) {
         if (config()->get("security/clearsearch").toBool()) {
             int timeout = config()->get("security/clearsearchtimeout").toInt();
             if (timeout > 0) {
@@ -124,6 +124,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
             }
         }
     } else if (event->type() == QEvent::FocusIn) {
+        // Never clear the search if we are using it
         m_clearSearchTimer->stop();
     }
 
@@ -139,6 +140,8 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
     mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
     mx.connect(SIGNAL(clearSearch()), m_ui->searchEdit, SLOT(clear()));
+    mx.connect(SIGNAL(entrySelectionChanged()), this, SLOT(resetSearchClearTimer()));
+    mx.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(resetSearchClearTimer()));
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
@@ -175,6 +178,14 @@ void SearchWidget::startSearch()
     m_ui->clearIcon->setVisible(hasText);
 
     search(m_ui->searchEdit->text());
+}
+
+void SearchWidget::resetSearchClearTimer()
+{
+    // Restart the search clear timer if it is running
+    if (m_clearSearchTimer->isActive()) {
+        m_clearSearchTimer->start();
+    }
 }
 
 void SearchWidget::updateCaseSensitive()

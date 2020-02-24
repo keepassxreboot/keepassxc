@@ -70,6 +70,7 @@ private slots:
     void searchFocus();
     void toggleHelp();
     void showSearchMenu();
+    void resetSearchClearTimer();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
