@@ -37,7 +37,7 @@ public:
 
     bool isEnabled() const;
     void setEnabled(bool enabled);
-    QString socketPath(bool allowOverride) const;
+    QString socketPath(bool allowOverride = true) const;
     QString authSockOverride() const;
     void setAuthSockOverride(QString& authSockOverride);
 #ifdef Q_OS_WIN

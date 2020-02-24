@@ -77,7 +77,7 @@ void SSHAgent::setUseOpenSSH(bool useOpenSSH)
 }
 #endif
 
-QString SSHAgent::socketPath(bool allowOverride = true) const
+QString SSHAgent::socketPath(bool allowOverride) const
 {
     QString socketPath;
 
@@ -91,6 +91,7 @@ QString SSHAgent::socketPath(bool allowOverride = true) const
         socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
     }
 #else
+    Q_UNUSED(allowOverride)
     socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
 #endif
 
