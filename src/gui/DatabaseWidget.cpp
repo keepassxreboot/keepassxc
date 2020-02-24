@@ -49,6 +49,7 @@
 #include "gui/EntryPreviewWidget.h"
 #include "gui/FileDialog.h"
 #include "gui/KeePass1OpenWidget.h"
+#include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/OpVaultOpenWidget.h"
 #include "gui/TotpDialog.h"
@@ -677,7 +678,7 @@ void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
     clipboard()->setText(text);
     if (config()->get("HideWindowOnCopy").toBool()) {
         if (config()->get("MinimizeOnCopy").toBool()) {
-            window()->showMinimized();
+            getMainWindow()->minimizeOrHide();
         } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
             window()->lower();
         }
@@ -782,7 +783,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             QProcess::startDetached(cmdString.mid(6));
 
             if (config()->get("MinimizeOnOpenUrl").toBool()) {
-                window()->showMinimized();
+                getMainWindow()->minimizeOrHide();
             }
         }
     } else {
@@ -791,7 +792,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
             QDesktopServices::openUrl(url);
 
             if (config()->get("MinimizeOnOpenUrl").toBool()) {
-                window()->showMinimized();
+                getMainWindow()->minimizeOrHide();
             }
         }
     }
@@ -972,7 +973,7 @@ void DatabaseWidget::loadDatabase(bool accepted)
         m_saveAttempts = 0;
         emit databaseUnlocked();
         if (config()->get("MinimizeAfterUnlock").toBool()) {
-            window()->showMinimized();
+            getMainWindow()->minimizeOrHide();
         }
     } else {
         if (m_databaseOpenWidget->database()) {

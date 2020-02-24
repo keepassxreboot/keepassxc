@@ -105,7 +105,7 @@ void TotpExportSettingsDialog::copyToClipboard()
     clipboard()->setText(m_totpUri);
     if (config()->get("HideWindowOnCopy").toBool()) {
         if (config()->get("MinimizeOnCopy").toBool()) {
-            getMainWindow()->showMinimized();
+            getMainWindow()->minimizeOrHide();
         } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
             getMainWindow()->lower();
             window()->lower();
