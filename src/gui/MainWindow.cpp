@@ -294,7 +294,7 @@ MainWindow::MainWindow()
     connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
     // Control window state
-    new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(showMinimized()));
+    new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(minimizeOrHide()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
     // Control database tabs
     new QShortcut(Qt::CTRL + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
@@ -1072,7 +1072,7 @@ void MainWindow::changeEvent(QEvent* event)
         if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
             && config()->get("GUI/MinimizeToTray").toBool()) {
             event->ignore();
-            QTimer::singleShot(0, this, SLOT(hide()));
+            hide();
         }
 
         if (config()->get("security/lockdatabaseminimize").toBool()) {
@@ -1245,7 +1245,7 @@ void MainWindow::applySettingsChanges()
 void MainWindow::focusWindowChanged(QWindow* focusWindow)
 {
     if (focusWindow != windowHandle()) {
-        m_lastFocusOutTime = Clock::currentSecondsSinceEpoch();
+        m_lastFocusOutTime = Clock::currentMilliSecondsSinceEpoch();
     }
 }
 
@@ -1269,9 +1269,9 @@ void MainWindow::processTrayIconTrigger()
                || m_trayIconTriggerReason == QSystemTrayIcon::MiddleClick) {
         // Toggle window if is not in front.
 #ifdef Q_OS_WIN
-        // If on Windows, check if focus switched within the last second because
+        // If on Windows, check if focus switched within the 500 milliseconds since
         // clicking the tray icon removes focus from main window.
-        if (isHidden() || (Clock::currentSecondsSinceEpoch() - m_lastFocusOutTime) <= 1) {
+        if (isHidden() || (Clock::currentMilliSecondsSinceEpoch() - m_lastFocusOutTime) <= 500) {
 #else
         // If on Linux or macOS, check if the window has focus.
         if (hasFocus() || isHidden() || windowHandle()->isActive()) {
@@ -1283,16 +1283,43 @@ void MainWindow::processTrayIconTrigger()
     }
 }
 
+void MainWindow::show()
+{
+#ifndef Q_OS_WIN
+    m_lastShowTime = Clock::currentMilliSecondsSinceEpoch();
+#endif
+    QMainWindow::show();
+}
+
+bool MainWindow::shouldHide()
+{
+#ifndef Q_OS_WIN
+    qint64 current_time = Clock::currentMilliSecondsSinceEpoch();
+
+    if (current_time - m_lastShowTime < 50) {
+        return false;
+    }
+#endif
+    return true;
+}
+
+void MainWindow::hide()
+{
+    if (shouldHide()) {
+        QMainWindow::hide();
+    }
+}
+
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
-#if !defined(Q_OS_LINUX) && !defined(Q_OS_MACOS)
-    // On some Linux systems, the window should NOT be minimized and hidden (i.e. not shown), at
-    // the same time (which would happen if both minimize on startup and minimize to tray are set)
-    // since otherwise it causes problems on restore as seen on issue #1595. Hiding it is enough.
-    // TODO: Add an explanation for why this is also not done on Mac (or remove the check)
-    setWindowState(windowState() | Qt::WindowMinimized);
-#endif
+    if (QGuiApplication::platformName() != "xcb") {
+        // In X11 the window should NOT be minimized and hidden (i.e. not
+        // shown) at the same time (which would happen if both minimize on
+        // startup and minimize to tray are set) since otherwise it causes
+        // problems on restore as seen on issue #1595. Hiding it is enough.
+        setWindowState(windowState() | Qt::WindowMinimized);
+    }
     // Only hide if tray icon is active, otherwise window will be gone forever
     if (isTrayIconEnabled()) {
         hide();
@@ -1302,6 +1329,15 @@ void MainWindow::hideWindow()
 
     if (config()->get("security/lockdatabaseminimize").toBool()) {
         m_ui->tabWidget->lockDatabases();
+    }
+}
+
+void MainWindow::minimizeOrHide()
+{
+    if (config()->get("GUI/MinimizeToTray").toBool()) {
+        hideWindow();
+    } else {
+        showMinimized();
     }
 }
 
