@@ -58,6 +58,7 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/PasswordEdit.h"
+#include "gui/PasswordGeneratorWidget.h"
 #include "gui/SearchWidget.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
@@ -652,52 +653,63 @@ void TestGui::testPasswordEntryEntropy()
     auto* passwordEdit = editEntryWidget->findChild<PasswordEdit*>();
     QVERIFY(passwordEdit);
     QTest::mouseClick(passwordEdit, Qt::LeftButton);
+
+    QTimer::singleShot(50, this, SLOT(passwordGeneratorCallback()));
     QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
+}
+
+void TestGui::passwordGeneratorCallback()
+{
+    auto* pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>();
+    QVERIFY(pwGeneratorWidget);
 
     // Type in some password
-    auto* editNewPassword = editEntryWidget->findChild<QLineEdit*>("editNewPassword");
-    auto* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
-    auto* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+    auto* generatedPassword = pwGeneratorWidget->findChild<QLineEdit*>("editNewPassword");
+    auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
+    auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "hello");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "hello");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 6.38 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "helloworld");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "helloworld");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 13.10 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "password1");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "password1");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 4.00 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "D0g..................");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "D0g..................");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 19.02 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "Tr0ub4dour&3");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "Tr0ub4dour&3");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 30.87 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Poor"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "correcthorsebatterystaple");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "correcthorsebatterystaple");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 47.98 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Weak"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "YQC3kbXbjC652dTDH");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "YQC3kbXbjC652dTDH");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 95.83 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
 
-    editNewPassword->setText("");
-    QTest::keyClicks(editNewPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
+    generatedPassword->setText("");
+    QTest::keyClicks(generatedPassword, "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km");
     QCOMPARE(entropyLabel->text(), QString("Entropy: 174.59 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Excellent"));
+
+    QTest::mouseClick(generatedPassword, Qt::LeftButton);
+    QTest::keyClick(generatedPassword, Qt::Key_Escape);
 }
 
 void TestGui::testDicewareEntryEntropy()
@@ -726,11 +738,20 @@ void TestGui::testDicewareEntryEntropy()
     auto* passwordEdit = editEntryWidget->findChild<PasswordEdit*>();
     QVERIFY(passwordEdit);
     QTest::mouseClick(passwordEdit, Qt::LeftButton);
+
+    QTimer::singleShot(50, this, SLOT(passwordGeneratorCallback()));
     QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
+}
+
+void TestGui::passphraseGeneratorCallback()
+{
+    auto* pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>();
+    QVERIFY(pwGeneratorWidget);
 
     // Select Diceware
-    auto* tabWidget = editEntryWidget->findChild<QTabWidget*>("tabWidget");
-    auto* dicewareWidget = editEntryWidget->findChild<QWidget*>("dicewareWidget");
+    auto* generatedPassword = pwGeneratorWidget->findChild<QLineEdit*>("editNewPassword");
+    auto* tabWidget = pwGeneratorWidget->findChild<QTabWidget*>("tabWidget");
+    auto* dicewareWidget = pwGeneratorWidget->findChild<QWidget*>("dicewareWidget");
     tabWidget->setCurrentWidget(dicewareWidget);
 
     auto* comboBoxWordList = dicewareWidget->findChild<QComboBox*>("comboBoxWordList");
@@ -738,12 +759,15 @@ void TestGui::testDicewareEntryEntropy()
     auto* spinBoxWordCount = dicewareWidget->findChild<QSpinBox*>("spinBoxWordCount");
     spinBoxWordCount->setValue(6);
 
-    // Type in some password
-    auto* entropyLabel = editEntryWidget->findChild<QLabel*>("entropyLabel");
-    auto* strengthLabel = editEntryWidget->findChild<QLabel*>("strengthLabel");
+    // Verify entropy and strength
+    auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
+    auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
 
     QCOMPARE(entropyLabel->text(), QString("Entropy: 77.55 bit"));
     QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+
+    QTest::mouseClick(generatedPassword, Qt::LeftButton);
+    QTest::keyClick(generatedPassword, Qt::Key_Escape);
 }
 
 void TestGui::testTotp()

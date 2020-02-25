@@ -20,7 +20,65 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="7" column="0" alignment="Qt::AlignRight">
+   <item row="8" column="1">
+    <widget class="QLabel" name="notesHint">
+     <property name="visible">
+      <bool>true</bool>
+     </property>
+     <property name="text">
+      <string>Toggle the checkbox to reveal the notes section.</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignTop</set>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QComboBox" name="usernameComboBox">
+     <property name="accessibleName">
+      <string>Username field</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="URLEdit" name="urlEdit">
+       <property name="accessibleName">
+        <string>Url field</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="fetchFaviconButton">
+       <property name="toolTip">
+        <string>Download favicon for URL</string>
+       </property>
+       <property name="accessibleName">
+        <string>Download favicon for URL</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0" alignment="Qt::AlignRight">
+    <widget class="QLabel" name="urlLabel">
+     <property name="text">
+      <string>URL:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="PasswordEdit" name="passwordEdit">
+     <property name="accessibleName">
+      <string>Password field</string>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" alignment="Qt::AlignRight">
     <widget class="QCheckBox" name="expireCheck">
      <property name="toolTip">
       <string>Toggle expiration</string>
@@ -33,7 +91,53 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
+    <widget class="QPlainTextEdit" name="notesEdit">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>1</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>100</height>
+      </size>
+     </property>
+     <property name="accessibleName">
+      <string>Notes field</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
+    <widget class="QCheckBox" name="notesEnabled">
+     <property name="toolTip">
+      <string>Toggle notes visible</string>
+     </property>
+     <property name="accessibleName">
+      <string>Toggle notes visible</string>
+     </property>
+     <property name="text">
+      <string>Notes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="titleEdit">
+     <property name="accessibleName">
+      <string>Title field</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" alignment="Qt::AlignRight">
+    <widget class="QLabel" name="passwordLabel">
+     <property name="text">
+      <string>Password:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QDateTimeEdit" name="expireDatePicker">
@@ -69,117 +173,10 @@
      </item>
     </layout>
    </item>
-   <item row="9" column="1">
-    <widget class="QPlainTextEdit" name="notesEdit">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>1</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="accessibleName">
-      <string>Notes field</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QComboBox" name="usernameComboBox">
-     <property name="accessibleName">
-      <string>Username field</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="PasswordGeneratorWidget" name="passwordGenerator" native="true"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="titleEdit">
-     <property name="accessibleName">
-      <string>Title field</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <item>
-      <widget class="URLEdit" name="urlEdit">
-       <property name="accessibleName">
-        <string>Url field</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QToolButton" name="fetchFaviconButton">
-       <property name="toolTip">
-        <string>Download favicon for URL</string>
-       </property>
-       <property name="accessibleName">
-        <string>Download favicon for URL</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="9" column="1">
-    <widget class="QLabel" name="notesHint">
-     <property name="visible">
-      <bool>true</bool>
-     </property>
-     <property name="text">
-      <string>Toggle the checkbox to reveal the notes section.</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignTop</set>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0" alignment="Qt::AlignRight">
-    <widget class="QLabel" name="urlLabel">
-     <property name="text">
-      <string>URL:</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0" alignment="Qt::AlignRight">
     <widget class="QLabel" name="usernameLabel">
      <property name="text">
       <string>Username:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="0" alignment="Qt::AlignLeft|Qt::AlignTop">
-    <widget class="QCheckBox" name="notesEnabled">
-     <property name="toolTip">
-      <string>Toggle notes visible</string>
-     </property>
-     <property name="accessibleName">
-      <string>Toggle notes visible</string>
-     </property>
-     <property name="text">
-      <string>Notes</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0" alignment="Qt::AlignRight">
-    <widget class="QLabel" name="passwordLabel">
-     <property name="text">
-      <string>Password:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="PasswordEdit" name="passwordEdit">
-     <property name="accessibleName">
-      <string>Password field</string>
-     </property>
-     <property name="echoMode">
-      <enum>QLineEdit::Password</enum>
      </property>
     </widget>
    </item>
@@ -199,12 +196,6 @@
   </widget>
  </widget>
  <customwidgets>
-  <customwidget>
-   <class>PasswordGeneratorWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/PasswordGeneratorWidget.h</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>PasswordEdit</class>
    <extends>QLineEdit</extends>

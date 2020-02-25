@@ -36,21 +36,13 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_ui->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
-
-    m_ui->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
-    m_ui->passwordGenerator->hide();
-    m_ui->passwordGenerator->reset();
-
     m_ui->messageWidget->hide();
     m_ui->messageWidget->setCloseButtonVisible(false);
     m_ui->messageWidget->setAutoHideTimeout(-1);
 
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), m_ui->passwordEdit, SLOT(setShowPassword(bool)));
-    connect(m_ui->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
+    m_ui->passwordEdit->enablePasswordGenerator();
+
     connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), SLOT(selectPassword()));
-    connect(m_ui->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
     connect(m_ui->pathEdit, SIGNAL(editingFinished()), SLOT(selectPath()));
     connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(launchPathSelectionDialog()));
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
@@ -201,10 +193,6 @@ void EditGroupWidgetKeeShare::update()
 
         showSharingState();
     }
-
-    m_ui->passwordGenerator->hide();
-    m_ui->togglePasswordGeneratorButton->setChecked(false);
-    m_ui->togglePasswordButton->setChecked(false);
 }
 
 void EditGroupWidgetKeeShare::clearInputs()
@@ -215,24 +203,6 @@ void EditGroupWidgetKeeShare::clearInputs()
     m_ui->passwordEdit->clear();
     m_ui->pathEdit->clear();
     m_ui->typeComboBox->setCurrentIndex(KeeShareSettings::Inactive);
-    m_ui->passwordGenerator->setVisible(false);
-}
-
-void EditGroupWidgetKeeShare::togglePasswordGeneratorButton(bool checked)
-{
-    m_ui->passwordGenerator->regeneratePassword();
-    m_ui->passwordGenerator->setVisible(checked);
-}
-
-void EditGroupWidgetKeeShare::setGeneratedPassword(const QString& password)
-{
-    if (!m_temporaryGroup) {
-        return;
-    }
-    auto reference = KeeShare::referenceOf(m_temporaryGroup);
-    reference.password = password;
-    KeeShare::setReferenceTo(m_temporaryGroup, reference);
-    m_ui->togglePasswordGeneratorButton->setChecked(false);
 }
 
 void EditGroupWidgetKeeShare::selectPath()

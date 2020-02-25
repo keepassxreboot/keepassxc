@@ -94,14 +94,10 @@ void PasswordEdit::setParentPasswordEdit(PasswordEdit* parent)
     m_passwordGeneratorAction->setVisible(false);
 }
 
-void PasswordEdit::enablePasswordGenerator(bool signalOnly)
+void PasswordEdit::enablePasswordGenerator()
 {
-    disconnect(m_passwordGeneratorAction);
-    m_passwordGeneratorAction->setVisible(true);
-
-    if (signalOnly) {
-        connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordEdit::togglePasswordGenerator);
-    } else {
+    if (!m_passwordGeneratorAction->isVisible()) {
+        m_passwordGeneratorAction->setVisible(true);
         connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordEdit::popupPasswordGenerator);
     }
 }
@@ -139,6 +135,7 @@ void PasswordEdit::popupPasswordGenerator()
 
     pwGenerator->setStandaloneMode(false);
     pwGenerator->setPasswordVisible(isPasswordVisible());
+    pwGenerator->setPasswordLength(text().length());
 
     connect(pwGenerator, SIGNAL(closePasswordGenerator()), &pwDialog, SLOT(close()));
     connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));

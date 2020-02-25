@@ -49,7 +49,7 @@ public:
     ~PasswordGeneratorWidget();
     void loadSettings();
     void saveSettings();
-    void reset(int length = 0);
+    void setPasswordLength(int length);
     void setStandaloneMode(bool standalone);
     QString getGeneratedPassword();
     bool isPasswordVisible() const;

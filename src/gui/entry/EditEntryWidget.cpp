@@ -128,8 +128,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     connect(m_iconsWidget, SIGNAL(messageEditEntryDismiss()), SLOT(hideMessage()));
 
-    m_mainUi->passwordGenerator->layout()->setContentsMargins(0, 0, 0, 0);
-
     m_editWidgetProperties->setCustomData(m_customData.data());
 }
 
@@ -163,14 +161,8 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
 
-    connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
-    connect(m_mainUi->passwordGenerator, SIGNAL(closePasswordGenerator()), SLOT(togglePasswordGenerator()));
-
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
-
-    m_mainUi->passwordGenerator->hide();
-    m_mainUi->passwordGenerator->reset();
 }
 
 void EditEntryWidget::setupAdvanced()
@@ -816,8 +808,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     } else {
         m_mainUi->notesEdit->setFont(Font::defaultFont());
     }
-    m_mainUi->passwordGenerator->setVisible(false);
-    m_mainUi->passwordGenerator->reset(entry->password().length());
 
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
@@ -845,12 +835,11 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordEdit->setShowPassword(config()->get("security/passwordscleartext").toBool());
     if (!m_history) {
-        m_mainUi->passwordEdit->enablePasswordGenerator(true);
+        m_mainUi->passwordEdit->enablePasswordGenerator();
     }
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
-
 
     QList<QString> commonUsernames = m_db->commonUsernames();
     m_usernameCompleterModel->setStringList(commonUsernames);
@@ -969,22 +958,6 @@ bool EditEntryWidget::commitEntry()
         emit editFinished(false);
         return true;
     }
-
-    // Ask the user to apply the generator password, if open
-    if (m_mainUi->passwordGenerator->isVisible()
-        && m_mainUi->passwordGenerator->getGeneratedPassword() != m_mainUi->passwordEdit->text()) {
-        auto answer = MessageBox::question(this,
-                                           tr("Apply generated password?"),
-                                           tr("Do you want to apply the generated password to this entry?"),
-                                           MessageBox::Yes | MessageBox::No,
-                                           MessageBox::Yes);
-        if (answer == MessageBox::Yes) {
-            m_mainUi->passwordGenerator->applyPassword();
-        }
-    }
-
-    // Hide the password generator
-    m_mainUi->passwordGenerator->setVisible(false);
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
@@ -1140,22 +1113,6 @@ void EditEntryWidget::clear()
     m_historyModel->clear();
     m_iconsWidget->reset();
     hideMessage();
-}
-
-void EditEntryWidget::togglePasswordGenerator()
-{
-    bool visible = m_mainUi->passwordGenerator->isVisible();
-    if (!visible) {
-        m_mainUi->passwordGenerator->regeneratePassword();
-        m_mainUi->passwordGenerator->setPasswordVisible(m_mainUi->passwordEdit->isPasswordVisible());
-    }
-    m_mainUi->passwordGenerator->setVisible(!visible);
-}
-
-void EditEntryWidget::setGeneratedPassword(const QString& password)
-{
-    m_mainUi->passwordEdit->setText(password);
-    m_mainUi->passwordGenerator->setVisible(false);
 }
 
 #ifdef WITH_XC_NETWORKING
