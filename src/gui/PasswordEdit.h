@@ -23,22 +23,21 @@
 #include <QLineEdit>
 #include <QPointer>
 
+class QDialog;
+
 class PasswordEdit : public QLineEdit
 {
     Q_OBJECT
 
 public:
     explicit PasswordEdit(QWidget* parent = nullptr);
-    void enablePasswordGenerator(bool signalOnly = false);
+    void enablePasswordGenerator();
     void setRepeatPartner(PasswordEdit* repeatEdit);
     bool isPasswordVisible() const;
 
 public slots:
     void setShowPassword(bool show);
     void updateRepeatStatus();
-
-signals:
-    void togglePasswordGenerator();
 
 private slots:
     void autocompletePassword(const QString& password);
