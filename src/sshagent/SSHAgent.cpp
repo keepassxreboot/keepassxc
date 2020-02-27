@@ -29,46 +29,73 @@
 #include <windows.h>
 #endif
 
-SSHAgent* SSHAgent::m_instance;
-
-SSHAgent::SSHAgent(QObject* parent)
-    : QObject(parent)
-{
-#ifndef Q_OS_WIN
-    m_socketPath = config()->get("SSHAuthSockOverride", "").toString();
-    if (m_socketPath.isEmpty()) {
-        m_socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
-    }
-#else
-    m_socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
-#endif
-}
+Q_GLOBAL_STATIC(SSHAgent, s_sshAgent);
 
 SSHAgent::~SSHAgent()
 {
-    auto it = m_addedKeys.begin();
-    while (it != m_addedKeys.end()) {
-        // Remove key if requested to remove on lock
-        if (it.value()) {
-            OpenSSHKey key = it.key();
-            removeIdentity(key);
-        }
-        it = m_addedKeys.erase(it);
-    }
+    removeAllIdentities();
 }
 
 SSHAgent* SSHAgent::instance()
 {
-    if (!m_instance) {
-        qFatal("Race condition: instance wanted before it was initialized, this is a bug.");
-    }
-
-    return m_instance;
+    return s_sshAgent;
 }
 
-void SSHAgent::init(QObject* parent)
+bool SSHAgent::isEnabled() const
 {
-    m_instance = new SSHAgent(parent);
+    return config()->get("SSHAgent").toBool();
+}
+
+void SSHAgent::setEnabled(bool enabled)
+{
+    if (isEnabled() && !enabled) {
+        removeAllIdentities();
+    }
+
+    config()->set("SSHAgent", enabled);
+}
+
+QString SSHAgent::authSockOverride() const
+{
+    return config()->get("SSHAuthSockOverride").toString();
+}
+
+void SSHAgent::setAuthSockOverride(QString& authSockOverride)
+{
+    config()->set("SSHAuthSockOverride", authSockOverride);
+}
+
+#ifdef Q_OS_WIN
+bool SSHAgent::useOpenSSH() const
+{
+    return config()->get("SSHAgentOpenSSH").toBool();
+}
+
+void SSHAgent::setUseOpenSSH(bool useOpenSSH)
+{
+    config()->set("SSHAgentOpenSSH", useOpenSSH);
+}
+#endif
+
+QString SSHAgent::socketPath(bool allowOverride) const
+{
+    QString socketPath;
+
+#ifndef Q_OS_WIN
+    if (allowOverride) {
+        socketPath = authSockOverride();
+    }
+
+    // if the overridden path is empty (no override set), default to environment
+    if (socketPath.isEmpty()) {
+        socketPath = QProcessEnvironment::systemEnvironment().value("SSH_AUTH_SOCK");
+    }
+#else
+    Q_UNUSED(allowOverride)
+    socketPath = "\\\\.\\pipe\\openssh-ssh-agent";
+#endif
+
+    return socketPath;
 }
 
 const QString SSHAgent::errorString() const
@@ -79,12 +106,13 @@ const QString SSHAgent::errorString() const
 bool SSHAgent::isAgentRunning() const
 {
 #ifndef Q_OS_WIN
-    return !m_socketPath.isEmpty();
+    QFileInfo socketFileInfo(socketPath());
+    return !socketFileInfo.path().isEmpty() && socketFileInfo.exists();
 #else
-    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+    if (!useOpenSSH()) {
         return (FindWindowA("Pageant", "Pageant") != nullptr);
     } else {
-        return WaitNamedPipe(m_socketPath.toLatin1().data(), 100);
+        return WaitNamedPipe(socketPath().toLatin1().data(), 100);
     }
 #endif
 }
@@ -92,7 +120,7 @@ bool SSHAgent::isAgentRunning() const
 bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
 {
 #ifdef Q_OS_WIN
-    if (!config()->get("SSHAgentOpenSSH").toBool()) {
+    if (!useOpenSSH()) {
         return sendMessagePageant(in, out);
     }
 #endif
@@ -100,7 +128,7 @@ bool SSHAgent::sendMessage(const QByteArray& in, QByteArray& out)
     QLocalSocket socket;
     BinaryStream stream(&socket);
 
-    socket.connectToServer(m_socketPath);
+    socket.connectToServer(socketPath());
     if (!socket.waitForConnected(500)) {
         m_error = tr("Agent connection failed.");
         return false;
@@ -298,6 +326,22 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
 
     QByteArray responseData;
     return sendMessage(requestData, responseData);
+}
+
+/**
+ * Remove all identities known to this instance
+ */
+void SSHAgent::removeAllIdentities()
+{
+    auto it = m_addedKeys.begin();
+    while (it != m_addedKeys.end()) {
+        // Remove key if requested to remove on lock
+        if (it.value()) {
+            OpenSSHKey key = it.key();
+            removeIdentity(key);
+        }
+        it = m_addedKeys.erase(it);
+    }
 }
 
 /**

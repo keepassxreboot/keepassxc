@@ -107,7 +107,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
 #ifdef WITH_XC_SSHAGENT
     setupSSHAgent();
-    m_sshAgentEnabled = config()->get("SSHAgent", false).toBool();
 #endif
 
 #ifdef WITH_XC_BROWSER
@@ -451,7 +450,7 @@ void EditEntryWidget::setupEntryUpdate()
 
 #ifdef WITH_XC_SSHAGENT
     // SSH Agent tab
-    if (config()->get("SSHAgent", false).toBool()) {
+    if (sshAgent()->isEnabled()) {
         connect(m_sshAgentUi->attachmentRadioButton, SIGNAL(toggled(bool)), this, SLOT(setModified()));
         connect(m_sshAgentUi->externalFileRadioButton, SIGNAL(toggled(bool)), this, SLOT(setModified()));
         connect(m_sshAgentUi->attachmentComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(setModified()));
@@ -628,11 +627,11 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     }
 
     // enable agent buttons only if we have an agent running
-    if (SSHAgent::instance()->isAgentRunning()) {
+    if (sshAgent()->isAgentRunning()) {
         m_sshAgentUi->addToAgentButton->setEnabled(true);
         m_sshAgentUi->removeFromAgentButton->setEnabled(true);
 
-        SSHAgent::instance()->setAutoRemoveOnLock(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
+        sshAgent()->setAutoRemoveOnLock(key, m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
     }
 }
 
@@ -700,8 +699,8 @@ void EditEntryWidget::addKeyToAgent()
     KeeAgentSettings settings;
     toKeeAgentSettings(settings);
 
-    if (!SSHAgent::instance()->addIdentity(key, settings)) {
-        showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
+    if (!sshAgent()->addIdentity(key, settings)) {
+        showMessage(sshAgent()->errorString(), MessageWidget::Error);
         return;
     }
 }
@@ -714,8 +713,8 @@ void EditEntryWidget::removeKeyFromAgent()
         return;
     }
 
-    if (!SSHAgent::instance()->removeIdentity(key)) {
-        showMessage(SSHAgent::instance()->errorString(), MessageWidget::Error);
+    if (!sshAgent()->removeIdentity(key)) {
+        showMessage(sshAgent()->errorString(), MessageWidget::Error);
         return;
     }
 }
@@ -792,6 +791,9 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     setCurrentPage(0);
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
+#ifdef WITH_XC_SSHAGENT
+    setPageHidden(m_sshAgentWidget, !sshAgent()->isEnabled());
+#endif
 
     // Force the user to Save/Discard new entries
     showApplyButton(!m_create);
@@ -903,7 +905,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     updateAutoTypeEnabled();
 
 #ifdef WITH_XC_SSHAGENT
-    if (m_sshAgentEnabled) {
+    if (sshAgent()->isEnabled()) {
         updateSSHAgent();
     }
 #endif
@@ -1090,7 +1092,7 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->autoTypeAssociations()->copyDataFrom(m_autoTypeAssoc);
 
 #ifdef WITH_XC_SSHAGENT
-    if (m_sshAgentEnabled) {
+    if (sshAgent()->isEnabled()) {
         m_sshAgentSettings.toEntry(entry);
     }
 #endif
