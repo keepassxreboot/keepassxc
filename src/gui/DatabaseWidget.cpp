@@ -1657,6 +1657,8 @@ bool DatabaseWidget::save()
     m_blockAutoSave = true;
     ++m_saveAttempts;
 
+    auto focusWidget = qApp->focusWidget();
+
     // TODO: Make this async
     // Lock out interactions
     m_entryView->setDisabled(true);
@@ -1670,6 +1672,10 @@ bool DatabaseWidget::save()
     // Return control
     m_entryView->setDisabled(false);
     m_groupView->setDisabled(false);
+
+    if (focusWidget) {
+        focusWidget->setFocus();
+    }
 
     if (ok) {
         m_saveAttempts = 0;
