@@ -120,14 +120,16 @@ void DatabaseSettingsWidgetBrowser::toggleRemoveButton(const QItemSelection& sel
 void DatabaseSettingsWidgetBrowser::updateModel()
 {
     m_customDataModel->clear();
-    m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value")});
+    m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value"), tr("Created")});
 
     for (const QString& key : customData()->keys()) {
         if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
             QString strippedKey = key;
             strippedKey.remove(BrowserService::ASSOCIATE_KEY_PREFIX);
-            m_customDataModel->appendRow(QList<QStandardItem*>() << new QStandardItem(strippedKey)
-                                                                 << new QStandardItem(customData()->value(key)));
+            auto created = customData()->value(QString("%1_%2").arg(CustomData::Created, strippedKey));
+            m_customDataModel->appendRow(QList<QStandardItem*>()
+                                         << new QStandardItem(strippedKey)
+                                         << new QStandardItem(customData()->value(key)) << new QStandardItem(created));
         }
     }
 
