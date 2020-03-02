@@ -338,6 +338,8 @@ QString BrowserService::storeKey(const QString& key)
 
     hideWindow();
     db->metadata()->customData()->set(ASSOCIATE_KEY_PREFIX + id, key);
+    db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
+                                      Clock::currentDateTime().toString(Qt::SystemLocaleShortDate));
     return id;
 }
 

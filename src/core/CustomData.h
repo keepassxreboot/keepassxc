@@ -47,6 +47,7 @@ public:
     bool operator!=(const CustomData& other) const;
 
     static const QString LastModified;
+    static const QString Created;
 
 signals:
     void customDataModified();

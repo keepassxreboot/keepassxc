@@ -20,7 +20,8 @@
 
 #include "core/Global.h"
 
-const QString CustomData::LastModified = "_LAST_MODIFIED";
+const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
+const QString CustomData::Created = QStringLiteral("_CREATED");
 
 CustomData::CustomData(QObject* parent)
     : QObject(parent)
