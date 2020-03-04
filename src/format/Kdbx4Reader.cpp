@@ -19,6 +19,7 @@
 
 #include <QBuffer>
 
+#include "core/AsyncTask.h"
 #include "core/Endian.h"
 #include "core/Group.h"
 #include "crypto/CryptoHash.h"
@@ -47,7 +48,8 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
         return false;
     }
 
-    if (!db->setKey(key, false, false)) {
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return db->setKey(key, false, false); });
+    if (!ok) {
         raiseError(tr("Unable to calculate master key"));
         return false;
     }

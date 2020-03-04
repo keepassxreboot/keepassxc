@@ -415,27 +415,26 @@ void Database::releaseData()
     // Prevent data release while saving
     QMutexLocker locker(&m_saveMutex);
 
-    s_uuidMap.remove(m_uuid);
-    m_uuid = QUuid();
-
     if (m_modified) {
         emit databaseDiscarded();
     }
 
+    setEmitModified(false);
+    m_modified = false;
+    m_modifiedTimer.stop();
+
+    s_uuidMap.remove(m_uuid);
+    m_uuid = QUuid();
+
     m_data.clear();
     m_metadata->clear();
 
-    if (m_rootGroup && m_rootGroup->parent() == this) {
-        delete m_rootGroup;
-    }
+    setRootGroup(new Group());
 
     m_fileWatcher->stop();
 
     m_deletedObjects.clear();
     m_commonUsernames.clear();
-
-    m_modified = false;
-    m_modifiedTimer.stop();
 }
 
 /**

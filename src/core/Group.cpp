@@ -967,14 +967,7 @@ void Group::removeEntry(Entry* entry)
 void Group::connectDatabaseSignalsRecursive(Database* db)
 {
     if (m_db) {
-        disconnect(SIGNAL(groupDataChanged(Group*)), m_db);
-        disconnect(SIGNAL(groupAboutToRemove(Group*)), m_db);
-        disconnect(SIGNAL(groupRemoved()), m_db);
-        disconnect(SIGNAL(groupAboutToAdd(Group*, int)), m_db);
-        disconnect(SIGNAL(groupAdded()), m_db);
-        disconnect(SIGNAL(aboutToMove(Group*, Group*, int)), m_db);
-        disconnect(SIGNAL(groupMoved()), m_db);
-        disconnect(SIGNAL(groupModified()), m_db);
+        disconnect(m_db);
     }
 
     for (Entry* entry : asConst(m_entries)) {
