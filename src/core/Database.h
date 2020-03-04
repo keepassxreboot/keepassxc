@@ -81,7 +81,6 @@ public:
     void releaseData();
 
     bool isInitialized() const;
-    void setInitialized(bool initialized);
     bool isModified() const;
     void setEmitModified(bool value);
     bool isReadOnly() const;
@@ -115,7 +114,6 @@ public:
 
     QList<QString> commonUsernames();
 
-    bool hasKey() const;
     QSharedPointer<const CompositeKey> key() const;
     bool setKey(const QSharedPointer<const CompositeKey>& key,
                 bool updateChangedTime = true,
@@ -168,7 +166,6 @@ private:
         QScopedPointer<PasswordKey> transformedMasterKey;
         QScopedPointer<PasswordKey> challengeResponseKey;
 
-        bool hasKey = false;
         QSharedPointer<const CompositeKey> key;
         QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
 
@@ -190,7 +187,6 @@ private:
             transformedMasterKey.reset();
             challengeResponseKey.reset();
 
-            hasKey = false;
             key.reset();
             kdf.reset();
 
@@ -212,7 +208,6 @@ private:
     QTimer m_modifiedTimer;
     QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
-    bool m_initialized = false;
     bool m_modified = false;
     bool m_emitModified;
 

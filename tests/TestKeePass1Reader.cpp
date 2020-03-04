@@ -106,7 +106,7 @@ void TestKeePass1Reader::testBasic()
 
 void TestKeePass1Reader::testMasterKey()
 {
-    QVERIFY(m_db->hasKey());
+    QVERIFY(m_db->isInitialized());
     QCOMPARE(m_db->kdf()->rounds(), 713);
 }
 
