@@ -671,7 +671,7 @@ void DatabaseTabWidget::relockPendingDatabase()
         return;
     }
 
-    if (m_dbWidgetPendingLock->isLocked() || !m_dbWidgetPendingLock->database()->hasKey()) {
+    if (m_dbWidgetPendingLock->isLocked() || !m_dbWidgetPendingLock->database()->isInitialized()) {
         m_dbWidgetPendingLock = nullptr;
         return;
     }

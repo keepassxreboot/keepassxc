@@ -1119,9 +1119,7 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
     for (int i = 0;; ++i) {
         auto* dbWidget = m_dbTabWidget->databaseWidgetFromIndex(i);
         // Add only open databases
-        if (dbWidget && dbWidget->database()->hasKey()
-            && (dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode
-                || dbWidget->currentMode() == DatabaseWidget::Mode::EditMode)) {
+        if (dbWidget && !dbWidget->isLocked()) {
             databaseWidgets.push_back(dbWidget);
             continue;
         }

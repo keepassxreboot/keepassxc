@@ -112,13 +112,6 @@ bool Database::open(QSharedPointer<const CompositeKey> key, QString* error, bool
  */
 bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error, bool readOnly)
 {
-    if (isInitialized() && m_modified) {
-        emit databaseDiscarded();
-    }
-
-    m_initialized = false;
-    setEmitModified(false);
-
     QFile dbFile(filePath);
     if (!dbFile.exists()) {
         if (error) {
@@ -138,6 +131,8 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
         return false;
     }
 
+    setEmitModified(false);
+
     KeePass2Reader reader;
     if (!reader.readDatabase(&dbFile, std::move(key), this)) {
         if (error) {
@@ -152,7 +147,6 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
 
     markAsClean();
 
-    m_initialized = true;
     emit databaseOpened();
     m_fileWatcher->start(canonicalFilePath(), 30, 1);
     setEmitModified(true);
@@ -220,7 +214,7 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     }
 
     // Never save an uninitialized database
-    if (!m_initialized) {
+    if (!isInitialized()) {
         if (error) {
             *error = tr("Could not save, database has not been initialized!");
         }
@@ -346,7 +340,7 @@ bool Database::writeDatabase(QIODevice* device, QString* error)
     }
 
     PasswordKey oldTransformedKey;
-    if (m_data.hasKey) {
+    if (m_data.key->isEmpty()) {
         oldTransformedKey.setHash(m_data.transformedMasterKey->rawKey());
     }
 
@@ -440,7 +434,6 @@ void Database::releaseData()
     m_deletedObjects.clear();
     m_commonUsernames.clear();
 
-    m_initialized = false;
     m_modified = false;
     m_modifiedTimer.stop();
 }
@@ -496,22 +489,14 @@ void Database::setReadOnly(bool readOnly)
 }
 
 /**
- * Returns true if database has been fully decrypted and populated, i.e. if
- * it's not just an empty default instance.
+ * Returns true if the database key exists, has subkeys, and the
+ * root group exists
  *
  * @return true if database has been fully initialized
  */
 bool Database::isInitialized() const
 {
-    return m_initialized;
-}
-
-/**
- * @param initialized true to mark database as initialized
- */
-void Database::setInitialized(bool initialized)
-{
-    m_initialized = initialized;
+    return m_data.key && !m_data.key->isEmpty() && m_rootGroup;
 }
 
 Group* Database::rootGroup()
@@ -535,7 +520,7 @@ void Database::setRootGroup(Group* group)
 {
     Q_ASSERT(group);
 
-    if (isInitialized() && m_modified) {
+    if (isInitialized() && isModified()) {
         emit databaseDiscarded();
     }
 
@@ -723,7 +708,6 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     if (!key) {
         m_data.key.reset();
         m_data.transformedMasterKey.reset(new PasswordKey());
-        m_data.hasKey = false;
         return true;
     }
 
@@ -733,7 +717,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     }
 
     PasswordKey oldTransformedMasterKey;
-    if (m_data.hasKey) {
+    if (m_data.key && !m_data.key->isEmpty()) {
         oldTransformedMasterKey.setHash(m_data.transformedMasterKey->rawKey());
     }
 
@@ -749,7 +733,6 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     if (!transformedMasterKey.isEmpty()) {
         m_data.transformedMasterKey->setHash(transformedMasterKey);
     }
-    m_data.hasKey = true;
     if (updateChangedTime) {
         m_metadata->setMasterKeyChanged(Clock::currentDateTimeUtc());
     }
@@ -761,14 +744,9 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     return true;
 }
 
-bool Database::hasKey() const
-{
-    return m_data.hasKey;
-}
-
 bool Database::verifyKey(const QSharedPointer<CompositeKey>& key) const
 {
-    Q_ASSERT(hasKey());
+    Q_ASSERT(!m_data.key->isEmpty());
 
     if (!m_data.challengeResponseKey->rawKey().isEmpty()) {
         QByteArray result;

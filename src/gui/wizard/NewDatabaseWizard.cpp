@@ -57,11 +57,7 @@ NewDatabaseWizard::~NewDatabaseWizard()
 
 bool NewDatabaseWizard::validateCurrentPage()
 {
-    bool ok = m_pages[currentId()]->validatePage();
-    if (ok && currentId() == m_pages.size() - 1) {
-        m_db->setInitialized(true);
-    }
-    return ok;
+    return m_pages[currentId()]->validatePage();
 }
 
 /**
