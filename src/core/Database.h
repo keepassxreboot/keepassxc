@@ -21,6 +21,7 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <QMutex>
 #include <QPointer>
 #include <QScopedPointer>
 #include <QTimer>
@@ -85,6 +86,7 @@ public:
     void setEmitModified(bool value);
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);
+    bool isSaving();
 
     QUuid uuid() const;
     QString filePath() const;
@@ -208,6 +210,7 @@ private:
     QPointer<Group> m_rootGroup;
     QList<DeletedObject> m_deletedObjects;
     QTimer m_modifiedTimer;
+    QMutex m_saveMutex;
     QPointer<FileWatcher> m_fileWatcher;
     bool m_initialized = false;
     bool m_modified = false;

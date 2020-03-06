@@ -18,6 +18,7 @@
 
 #include "Database.h"
 
+#include "core/AsyncTask.h"
 #include "core/Clock.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
@@ -159,6 +160,15 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
     return true;
 }
 
+bool Database::isSaving()
+{
+    bool locked = m_saveMutex.tryLock();
+    if (locked) {
+        m_saveMutex.unlock();
+    }
+    return !locked;
+}
+
 /**
  * Save the database to the current file path. It is an error to call this function
  * if no file path has been defined.
@@ -201,6 +211,25 @@ bool Database::save(QString* error, bool atomic, bool backup)
  */
 bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool backup)
 {
+    // Disallow overlapping save operations
+    if (isSaving()) {
+        if (error) {
+            *error = tr("Database save is already in progress.");
+        }
+        return false;
+    }
+
+    // Never save an uninitialized database
+    if (!m_initialized) {
+        if (error) {
+            *error = tr("Could not save, database has not been initialized!");
+        }
+        return false;
+    }
+
+    // Prevent destructive operations while saving
+    QMutexLocker locker(&m_saveMutex);
+
     if (filePath == m_data.filePath) {
         // Disallow saving to the same file if read-only
         if (m_data.isReadOnly) {
@@ -226,7 +255,7 @@ bool Database::saveAs(const QString& filePath, QString* error, bool atomic, bool
     m_fileWatcher->stop();
 
     auto& canonicalFilePath = QFileInfo::exists(filePath) ? QFileInfo(filePath).canonicalFilePath() : filePath;
-    bool ok = performSave(canonicalFilePath, error, atomic, backup);
+    bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(canonicalFilePath, error, atomic, backup); });
     if (ok) {
         markAsClean();
         setFilePath(filePath);
@@ -389,6 +418,9 @@ bool Database::import(const QString& xmlExportPath, QString* error)
 
 void Database::releaseData()
 {
+    // Prevent data release while saving
+    QMutexLocker locker(&m_saveMutex);
+
     s_uuidMap.remove(m_uuid);
     m_uuid = QUuid();
 
@@ -397,22 +429,20 @@ void Database::releaseData()
     }
 
     m_data.clear();
+    m_metadata->clear();
 
     if (m_rootGroup && m_rootGroup->parent() == this) {
         delete m_rootGroup;
     }
-    if (m_metadata) {
-        delete m_metadata;
-    }
-    if (m_fileWatcher) {
-        delete m_fileWatcher;
-    }
+
+    m_fileWatcher->stop();
 
     m_deletedObjects.clear();
     m_commonUsernames.clear();
 
     m_initialized = false;
     m_modified = false;
+    m_modifiedTimer.stop();
 }
 
 /**

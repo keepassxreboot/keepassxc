@@ -43,6 +43,11 @@ FileWatcher::FileWatcher(QObject* parent)
     m_fileIgnoreDelayTimer.setSingleShot(true);
 }
 
+FileWatcher::~FileWatcher()
+{
+    stop();
+}
+
 void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, int checksumSizeKibibytes)
 {
     stop();
@@ -120,8 +125,7 @@ void FileWatcher::checkFileChanged()
     // Prevent reentrance
     m_ignoreFileChange = true;
 
-    // Only trigger the change notice if there is a checksum mismatch
-    auto checksum = calculateChecksum();
+    auto checksum = AsyncTask::runAndWaitForFuture([this]() -> QByteArray { return calculateChecksum(); });
     if (checksum != m_fileChecksum) {
         m_fileChecksum = checksum;
         m_fileChangeDelayTimer.start(0);
@@ -132,21 +136,19 @@ void FileWatcher::checkFileChanged()
 
 QByteArray FileWatcher::calculateChecksum()
 {
-    return AsyncTask::runAndWaitForFuture([this]() -> QByteArray {
-        QFile file(m_filePath);
-        if (file.open(QFile::ReadOnly)) {
-            QCryptographicHash hash(QCryptographicHash::Sha256);
-            if (m_fileChecksumSizeBytes > 0) {
-                hash.addData(file.read(m_fileChecksumSizeBytes));
-            } else {
-                hash.addData(&file);
-            }
-            return hash.result();
+    QFile file(m_filePath);
+    if (file.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        if (m_fileChecksumSizeBytes > 0) {
+            hash.addData(file.read(m_fileChecksumSizeBytes));
+        } else {
+            hash.addData(&file);
         }
-        // If we fail to open the file return the last known checksum, this
-        // prevents unnecessary merge requests on intermittent network shares
-        return m_fileChecksum;
-    });
+        return hash.result();
+    }
+    // If we fail to open the file return the last known checksum, this
+    // prevents unnecessary merge requests on intermittent network shares
+    return m_fileChecksum;
 }
 
 BulkFileWatcher::BulkFileWatcher(QObject* parent)

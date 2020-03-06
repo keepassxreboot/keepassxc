@@ -353,13 +353,17 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
  */
 bool DatabaseTabWidget::closeAllDatabaseTabs()
 {
-    while (count() > 0) {
-        if (!closeDatabaseTab(0)) {
-            return false;
+    // Attempt to lock all databases first to prevent closing only a portion of tabs
+    if (lockDatabases()) {
+        while (count() > 0) {
+            if (!closeDatabaseTab(0)) {
+                return false;
+            }
         }
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 bool DatabaseTabWidget::saveDatabase(int index)
@@ -597,15 +601,26 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
     return qobject_cast<DatabaseWidget*>(currentWidget());
 }
 
-void DatabaseTabWidget::lockDatabases()
+/**
+ * Attempt to lock all open databases
+ *
+ * @return return true if all databases are locked
+ */
+bool DatabaseTabWidget::lockDatabases()
 {
+    int numLocked = 0;
     for (int i = 0, c = count(); i < c; ++i) {
         auto dbWidget = databaseWidgetFromIndex(i);
-        if (dbWidget->lock() && dbWidget->database()->filePath().isEmpty()) {
-            // If we locked a database without a file close the tab
-            closeDatabaseTab(dbWidget);
+        if (dbWidget->lock()) {
+            ++numLocked;
+            if (dbWidget->database()->filePath().isEmpty()) {
+                // If we locked a database without a file close the tab
+                closeDatabaseTab(dbWidget);
+            }
         }
     }
+
+    return numLocked == count();
 }
 
 /**

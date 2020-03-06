@@ -62,6 +62,9 @@ public:
         bool protectNotes;
     };
 
+    void init();
+    void clear();
+
     QString generator() const;
     QString name() const;
     QDateTime nameChanged() const;

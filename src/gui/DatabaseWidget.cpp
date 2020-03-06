@@ -255,21 +255,26 @@ QSharedPointer<Database> DatabaseWidget::database() const
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
     if (currentWidget() == nullptr) {
-        return DatabaseWidget::Mode::None;
+        return Mode::None;
     } else if (currentWidget() == m_mainWidget) {
-        return DatabaseWidget::Mode::ViewMode;
+        return Mode::ViewMode;
     } else if (currentWidget() == m_databaseOpenWidget || currentWidget() == m_keepass1OpenWidget) {
-        return DatabaseWidget::Mode::LockedMode;
+        return Mode::LockedMode;
     } else if (currentWidget() == m_csvImportWizard) {
-        return DatabaseWidget::Mode::ImportMode;
+        return Mode::ImportMode;
     } else {
-        return DatabaseWidget::Mode::EditMode;
+        return Mode::EditMode;
     }
 }
 
 bool DatabaseWidget::isLocked() const
 {
     return currentMode() == Mode::LockedMode;
+}
+
+bool DatabaseWidget::isSaving() const
+{
+    return m_db->isSaving();
 }
 
 bool DatabaseWidget::isSearchActive() const
@@ -1380,6 +1385,12 @@ bool DatabaseWidget::lock()
         return true;
     }
 
+    // Don't try to lock the database while saving, this will cause a deadlock
+    if (m_db->isSaving()) {
+        QTimer::singleShot(200, this, SLOT(lock()));
+        return false;
+    }
+
     emit databaseLockRequested();
 
     clipboard()->clearCopiedText();
@@ -1660,7 +1671,6 @@ bool DatabaseWidget::save()
 
     auto focusWidget = qApp->focusWidget();
 
-    // TODO: Make this async
     // Lock out interactions
     m_entryView->setDisabled(true);
     m_groupView->setDisabled(true);
