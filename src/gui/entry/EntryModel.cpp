@@ -283,12 +283,11 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         foregroundColor.setNamedColor(entry->foregroundColor());
         if (entry->hasReferences()) {
             QPalette p;
-#ifdef Q_OS_MACOS
-            if (macUtils()->isDarkMode()) {
-                return QVariant(p.color(QPalette::Inactive, QPalette::Dark));
-            }
-#endif
-            return QVariant(p.color(QPalette::Active, QPalette::Mid));
+            foregroundColor = p.color(QPalette::Current, QPalette::Text);
+            int lightness =
+                qMin(255, qMax(0, foregroundColor.lightness() + (foregroundColor.lightness() < 110 ? 85 : -51)));
+            foregroundColor.setHsl(foregroundColor.hue(), foregroundColor.saturation(), lightness);
+            return QVariant(foregroundColor);
         } else if (foregroundColor.isValid()) {
             return QVariant(foregroundColor);
         }
