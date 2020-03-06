@@ -1866,32 +1866,54 @@ bool DatabaseWidget::save()
  */
 bool DatabaseWidget::saveAs()
 {
-    while (true) {
-        QString oldFilePath = m_db->filePath();
-        if (!QFileInfo::exists(oldFilePath)) {
-            oldFilePath = QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
-                                                   + tr("Passwords").append(".kdbx"));
-        }
-        const QString newFilePath = fileDialog()->getSaveFileName(
-            this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
-
-        if (!newFilePath.isEmpty()) {
-            // Ensure we don't recurse back into this function
-            m_db->setReadOnly(false);
-            m_db->setFilePath(newFilePath);
-            m_saveAttempts = 0;
-
-            if (!save()) {
-                // Failed to save, try again
-                continue;
-            }
-
-            return true;
-        }
-
-        // Canceled file selection
-        return false;
+    // Never allow saving a locked database; it causes corruption
+    Q_ASSERT(!isLocked());
+    // Release build interlock
+    if (isLocked()) {
+        // We return true since a save is not required
+        return true;
     }
+
+    QString oldFilePath = m_db->filePath();
+    if (!QFileInfo::exists(oldFilePath)) {
+        oldFilePath =
+            QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/" + tr("Passwords").append(".kdbx"));
+    }
+    const QString newFilePath = fileDialog()->getSaveFileName(
+        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
+
+    bool ok = false;
+    if (!newFilePath.isEmpty()) {
+        auto focusWidget = qApp->focusWidget();
+
+        // Lock out interactions
+        m_entryView->setDisabled(true);
+        m_groupView->setDisabled(true);
+        QApplication::processEvents();
+
+        QString errorMessage;
+        ok = m_db->saveAs(newFilePath,
+                          &errorMessage,
+                          config()->get(Config::UseAtomicSaves).toBool(),
+                          config()->get(Config::BackupBeforeSave).toBool());
+
+        // Return control
+        m_entryView->setDisabled(false);
+        m_groupView->setDisabled(false);
+
+        if (focusWidget) {
+            focusWidget->setFocus();
+        }
+
+        if (!ok) {
+            showMessage(tr("Writing the database failed: %1").arg(errorMessage),
+                        MessageWidget::Error,
+                        true,
+                        MessageWidget::LongAutoHideTimeout);
+        }
+    }
+
+    return ok;
 }
 
 /**
