@@ -173,6 +173,12 @@ namespace Phantom
                 hsl.l = std::pow(Phantom::saturate(std::pow(hsl.l, 1.0 / gamma) + ld * 0.8), gamma);
                 return hsl.toQColor();
             }
+            bool hack_isLightPalette(const QPalette& pal)
+            {
+                Hsl hsl0 = Hsl::ofQColor(pal.color(QPalette::WindowText));
+                Hsl hsl1 = Hsl::ofQColor(pal.color(QPalette::Window));
+                return hsl0.l < hsl1.l;
+            }
             QColor buttonColor(const QPalette& pal)
             {
                 // temp hack
@@ -246,8 +252,11 @@ namespace Phantom
             }
             QColor indicatorColorOf(const QPalette& palette, QPalette::ColorGroup group = QPalette::Current)
             {
-                return Grad(palette.color(group, QPalette::WindowText), palette.color(group, QPalette::Button))
-                    .sample(0.45);
+                if (hack_isLightPalette(palette)) {
+                    qreal adjust = (palette.currentColorGroup() == QPalette::Disabled) ? 0.09 : 0.32;
+                    return adjustLightness(palette.color(group, QPalette::WindowText), adjust);
+                }
+                return adjustLightness(palette.color(group, QPalette::WindowText), -0.05);
             }
             QColor inactiveTabFillColorOf(const QColor& underlying)
             {
@@ -265,12 +274,6 @@ namespace Phantom
             QColor itemViewMultiSelectionCurrentBorderOf(const QPalette& pal)
             {
                 return adjustLightness(pal.color(QPalette::Highlight), -0.15);
-            }
-            bool hack_isLightPalette(const QPalette& pal)
-            {
-                Hsl hsl0 = Hsl::ofQColor(pal.color(QPalette::WindowText));
-                Hsl hsl1 = Hsl::ofQColor(pal.color(QPalette::Window));
-                return hsl0.l < hsl1.l;
             }
             QColor itemViewHeaderOnLineColorOf(const QPalette& pal)
             {
@@ -293,6 +296,7 @@ namespace Phantom
                 S_highlight,
                 S_highlightedText,
                 S_scrollbarGutter,
+                S_scrollbarSlider,
                 S_window_outline,
                 S_window_specular,
                 S_window_divider,
@@ -397,6 +401,7 @@ namespace Phantom
             colors[S_highlight] = pal.color(QPalette::Highlight);
             colors[S_highlightedText] = pal.color(QPalette::HighlightedText);
             colors[S_scrollbarGutter] = isLight ? Dc::gutterColorOf(pal) : Dc::darkGutterColorOf(pal);
+            colors[S_scrollbarSlider] = isLight ? colors[S_button] : Dc::adjustLightness(colors[S_window], 0.2);
 
             colors[S_window_outline] =
                 isLight ? Dc::adjustLightness(colors[S_window], -0.1) : Dc::adjustLightness(colors[S_window], 0.03);
@@ -422,10 +427,10 @@ namespace Phantom
                                                               : Dc::lightSpecularOf(colors[S_sliderHandle_pressed]);
 
             colors[S_base_shadow] = Dc::overhangShadowOf(colors[S_base]);
-            colors[S_base_divider] = Dc::dividerColor(colors[S_base]);
+            colors[S_base_divider] = colors[S_window_divider];
             colors[S_windowText_disabled] = pal.color(QPalette::Disabled, QPalette::WindowText);
             colors[S_highlight_outline] = isLight ? Dc::adjustLightness(colors[S_highlight], -0.02)
-                                                  : Dc::adjustLightness(colors[S_highlight], 0.02);
+                                                  : Dc::adjustLightness(colors[S_highlight], 0.05);
             colors[S_highlight_specular] = Dc::specularOf(colors[S_highlight]);
             colors[S_progressBar_outline] = Dc::progressBarOutlineColorOf(pal);
             colors[S_inactiveTabYesFrame] = Dc::inactiveTabFillColorOf(colors[S_tabFrame]);
@@ -1087,14 +1092,19 @@ namespace Phantom
         // for parts of widgets which may want to be drawn as disabled even if the
         // actual widget is not set as disabled, such as scrollbar step buttons when
         // the scrollbar has no movable range.
-        Q_NEVER_INLINE void
-        drawArrow(QPainter* painter, QRect rect, Qt::ArrowType type, const PhSwatch& swatch, bool allowEnabled = true)
+        Q_NEVER_INLINE void drawArrow(QPainter* painter,
+                                      QRect rect,
+                                      Qt::ArrowType type,
+                                      const PhSwatch& swatch,
+                                      bool allowEnabled = true,
+                                      qreal lightnessAdjustment = 0.0)
         {
             if (rect.isEmpty())
                 return;
             using namespace SwatchColors;
-            Phantom::drawArrow(
-                painter, rect, type, swatch.brush(allowEnabled ? S_indicator_current : S_indicator_disabled));
+            auto brush = swatch.brush(allowEnabled ? S_indicator_current : S_indicator_disabled);
+            brush.setColor(DeriveColors::adjustLightness(brush.color(), lightnessAdjustment));
+            Phantom::drawArrow(painter, rect, type, brush);
         }
 
         // This draws exactly within the rect provided. If you provide a square rect,
@@ -1659,10 +1669,11 @@ void BaseStyle::drawPrimitive(PrimitiveElement elem,
             return;
         QRect r = header->rect;
         QPoint offset = QPoint(Phantom::HeaderSortIndicator_HOffset, Phantom::HeaderSortIndicator_VOffset);
+        qreal lightness = Phantom::DeriveColors::hack_isLightPalette(widget->palette()) ? 0.03 : 0.0;
         if (header->sortIndicator & QStyleOptionHeader::SortUp) {
-            Ph::drawArrow(painter, r.translated(offset), Qt::DownArrow, swatch);
+            Ph::drawArrow(painter, r.translated(offset), Qt::DownArrow, swatch, true, lightness);
         } else if (header->sortIndicator & QStyleOptionHeader::SortDown) {
-            Ph::drawArrow(painter, r.translated(offset), Qt::UpArrow, swatch);
+            Ph::drawArrow(painter, r.translated(offset), Qt::UpArrow, swatch, true, lightness);
         }
         break;
     }
@@ -2091,7 +2102,7 @@ void BaseStyle::drawPrimitive(PrimitiveElement elem,
             thumbFill = S_button_pressed;
             thumbSpecular = S_button_pressed_specular;
         } else {
-            thumbFill = S_button;
+            thumbFill = S_scrollbarSlider;
             thumbSpecular = S_button_specular;
         }
         Qt::Edges edges;
@@ -3485,7 +3496,7 @@ void BaseStyle::drawComplexControl(ComplexControl control,
             qreal radius =
                 (scrollBar->orientation == Qt::Horizontal ? scrollBarSlider.height() : scrollBarSlider.width()) / 2.0;
             painter->fillRect(scrollBarSlider, swatch.color(S_window));
-            Ph::paintSolidRoundRect(painter, scrollBarSlider, radius, swatch, S_button);
+            Ph::paintSolidRoundRect(painter, scrollBarSlider, radius, swatch, S_scrollbarSlider);
         }
 
         // The SubLine (up/left) buttons

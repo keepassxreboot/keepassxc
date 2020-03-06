@@ -395,7 +395,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,1">
             <item>
              <widget class="QLabel" name="appThemeLabel">
               <property name="text">
@@ -410,6 +410,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
               </property>
               <property name="accessibleName">
                <string>Application Theme Selection</string>

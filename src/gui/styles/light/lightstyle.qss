@@ -9,10 +9,10 @@ EntryPreviewWidget QLineEdit:disabled, EntryPreviewWidget QTextEdit:disabled {
 }
 
 QGroupBox::title {
-    color: palette(highlight);
+    color: #4B7B19;
 }
 
 QToolTip {
-    color: #F7F7F7;
-    background-color: #548C1D;
+    color: #F9F9F9;
+    background-color: #4D7F1A;
 }
