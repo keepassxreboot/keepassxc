@@ -80,6 +80,7 @@ public:
 
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
+    bool isSaving() const;
     bool isSearchActive() const;
     bool isEntryEditActive() const;
     bool isGroupEditActive() const;

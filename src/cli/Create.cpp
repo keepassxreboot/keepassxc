@@ -121,6 +121,7 @@ int Create::execute(const QStringList& arguments)
 
     QSharedPointer<Database> db(new Database);
     db->setKey(key);
+    db->setInitialized(true);
 
     if (decryptionTime != 0) {
         auto kdf = db->kdf();

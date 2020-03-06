@@ -29,6 +29,7 @@ class FileWatcher : public QObject
 
 public:
     explicit FileWatcher(QObject* parent = nullptr);
+    ~FileWatcher() override;
 
     void start(const QString& path, int checksumIntervalSeconds = 0, int checksumSizeKibibytes = -1);
     void stop();

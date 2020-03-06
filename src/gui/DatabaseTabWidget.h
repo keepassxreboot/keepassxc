@@ -71,7 +71,7 @@ public slots:
     void exportToCsv();
     void exportToHtml();
 
-    void lockDatabases();
+    bool lockDatabases();
     void closeDatabaseFromSender();
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);

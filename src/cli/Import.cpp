@@ -84,6 +84,7 @@ int Import::execute(const QStringList& arguments)
     Database db;
     db.setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2));
     db.setKey(key);
+    db.setInitialized(true);
 
     if (!db.import(xmlExportPath, &errorMessage)) {
         errorTextStream << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;

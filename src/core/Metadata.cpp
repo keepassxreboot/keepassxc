@@ -31,7 +31,13 @@ Metadata::Metadata(QObject* parent)
     , m_customData(new CustomData(this))
     , m_updateDatetime(true)
 {
-    m_data.generator = "KeePassXC";
+    init();
+    connect(m_customData, SIGNAL(customDataModified()), SIGNAL(metadataModified()));
+}
+
+void Metadata::init()
+{
+    m_data.generator = QStringLiteral("KeePassXC");
     m_data.maintenanceHistoryDays = 365;
     m_data.masterKeyChangeRec = -1;
     m_data.masterKeyChangeForce = -1;
@@ -52,8 +58,17 @@ Metadata::Metadata(QObject* parent)
     m_entryTemplatesGroupChanged = now;
     m_masterKeyChanged = now;
     m_settingsChanged = now;
+}
 
-    connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(metadataModified()));
+void Metadata::clear()
+{
+    init();
+    m_customIcons.clear();
+    m_customIconCacheKeys.clear();
+    m_customIconScaledCacheKeys.clear();
+    m_customIconsOrder.clear();
+    m_customIconsHashes.clear();
+    m_customData->clear();
 }
 
 template <class P, class V> bool Metadata::set(P& property, const V& value)
