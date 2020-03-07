@@ -158,7 +158,13 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
     m_mainUi->urlEdit->enableVerifyMode();
 #endif
-    connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
+    connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
+        m_mainUi->expireDatePicker->setEnabled(enabled);
+        if (enabled) {
+            m_mainUi->expireDatePicker->setDateTime(Clock::currentDateTime());
+        }
+    });
+
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
