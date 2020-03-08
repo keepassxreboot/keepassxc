@@ -684,7 +684,7 @@ bool AutoType::checkSyntax(const QString& string)
     QString allowRepetition = "(?:\\s\\d+)?";
     // the ":" allows custom commands with syntax S:Field
     // exclude BEEP otherwise will be checked as valid
-    QString normalCommands = "(?!BEEP\\s)[A-Z:]*" + allowRepetition;
+    QString normalCommands = "(?!BEEP\\s)[A-Z:_]*" + allowRepetition;
     QString specialLiterals = "[\\^\\%\\(\\)~\\{\\}\\[\\]\\+]" + allowRepetition;
     QString functionKeys = "(?:F[1-9]" + allowRepetition + "|F1[0-2])" + allowRepetition;
     QString numpad = "NUMPAD\\d" + allowRepetition;
