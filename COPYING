@@ -180,6 +180,8 @@ Files: share/icons/application/scalable/categories/preferences-other.svg
        share/icons/application/scalable/actions/favicon-download.svg
        share/icons/application/scalable/actions/document-open.svg
        share/icons/application/scalable/actions/document-save-as.svg
+       share/icons/application/scalable/actions/refresh.svg
+       share/icons/application/scalable/actions/clipboard-text.svg
 Copyright: 2019 Austin Andrews <http://templarian.com/>
 License: SIL OPEN FONT LICENSE Version 1.1
 Comment: Taken from Material Design icon set (https://github.com/templarian/MaterialDesign/)

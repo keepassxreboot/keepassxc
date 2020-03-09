@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>DatabaseOpenWidget</class>
  <widget class="QWidget" name="DatabaseOpenWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>580</width>
+    <height>410</height>
+   </rect>
+  </property>
   <property name="accessibleName">
    <string>Unlock KeePassXC Database</string>
   </property>
@@ -157,31 +165,14 @@
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="passwordLayout">
-                <item>
-                 <widget class="PasswordEdit" name="editPassword">
-                  <property name="accessibleName">
-                   <string>Password field</string>
-                  </property>
-                  <property name="echoMode">
-                   <enum>QLineEdit::Password</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QToolButton" name="buttonTogglePassword">
-                  <property name="toolTip">
-                   <string>Toggle password visibility</string>
-                  </property>
-                  <property name="accessibleName">
-                   <string>Toggle password visibility</string>
-                  </property>
-                  <property name="checkable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
+               <widget class="PasswordEdit" name="editPassword">
+                <property name="accessibleName">
+                 <string>Password field</string>
+                </property>
+                <property name="echoMode">
+                 <enum>QLineEdit::Password</enum>
+                </property>
+               </widget>
               </item>
               <item>
                <spacer name="verticalSpacer_4">
@@ -612,8 +603,6 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>editPassword</tabstop>
-  <tabstop>buttonTogglePassword</tabstop>
   <tabstop>comboKeyFile</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
   <tabstop>hardwareKeyLabelHelp</tabstop>
