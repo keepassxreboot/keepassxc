@@ -148,8 +148,6 @@ void EditEntryWidget::setupMain()
     m_usernameCompleter->setModel(m_usernameCompleterModel);
     m_mainUi->usernameComboBox->setCompleter(m_usernameCompleter);
 
-    m_mainUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_mainUi->togglePasswordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
 #ifdef WITH_XC_NETWORKING
     m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("actions", "favicon-download"));
     m_mainUi->fetchFaviconButton->setDisabled(true);
@@ -157,8 +155,6 @@ void EditEntryWidget::setupMain()
     m_mainUi->fetchFaviconButton->setVisible(false);
 #endif
 
-    connect(m_mainUi->togglePasswordButton, SIGNAL(toggled(bool)), m_mainUi->passwordEdit, SLOT(setShowPassword(bool)));
-    connect(m_mainUi->togglePasswordGeneratorButton, SIGNAL(toggled(bool)), SLOT(togglePasswordGeneratorButton(bool)));
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->fetchFaviconButton, SIGNAL(clicked()), m_iconsWidget, SLOT(downloadFavicon()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
@@ -166,8 +162,9 @@ void EditEntryWidget::setupMain()
 #endif
     connect(m_mainUi->expireCheck, SIGNAL(toggled(bool)), m_mainUi->expireDatePicker, SLOT(setEnabled(bool)));
     connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
-    m_mainUi->passwordRepeatEdit->enableVerifyMode(m_mainUi->passwordEdit);
+
     connect(m_mainUi->passwordGenerator, SIGNAL(appliedPassword(QString)), SLOT(setGeneratedPassword(QString)));
+    connect(m_mainUi->passwordGenerator, SIGNAL(closePasswordGenerator()), SLOT(togglePasswordGenerator()));
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
@@ -417,7 +414,6 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
-    connect(m_mainUi->passwordRepeatEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
 #ifdef WITH_XC_NETWORKING
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
@@ -809,7 +805,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setReadOnly(m_history);
     m_mainUi->urlEdit->setReadOnly(m_history);
     m_mainUi->passwordEdit->setReadOnly(m_history);
-    m_mainUi->passwordRepeatEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->notesEnabled->setChecked(!config()->get("security/hidenotes").toBool());
@@ -821,8 +816,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     } else {
         m_mainUi->notesEdit->setFont(Font::defaultFont());
     }
-    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
-    m_mainUi->togglePasswordGeneratorButton->setDisabled(m_history);
+    m_mainUi->passwordGenerator->setVisible(false);
     m_mainUi->passwordGenerator->reset(entry->password().length());
 
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
@@ -849,11 +843,14 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
-    m_mainUi->passwordRepeatEdit->setText(entry->password());
+    m_mainUi->passwordEdit->setShowPassword(config()->get("security/passwordscleartext").toBool());
+    if (!m_history) {
+        m_mainUi->passwordEdit->enablePasswordGenerator(true);
+    }
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
-    m_mainUi->togglePasswordButton->setChecked(config()->get("security/passwordscleartext").toBool());
+
 
     QList<QString> commonUsernames = m_db->commonUsernames();
     m_usernameCompleterModel->setStringList(commonUsernames);
@@ -973,13 +970,8 @@ bool EditEntryWidget::commitEntry()
         return true;
     }
 
-    if (!passwordsEqual()) {
-        showMessage(tr("Different passwords supplied."), MessageWidget::Error);
-        return false;
-    }
-
     // Ask the user to apply the generator password, if open
-    if (m_mainUi->togglePasswordGeneratorButton->isChecked()
+    if (m_mainUi->passwordGenerator->isVisible()
         && m_mainUi->passwordGenerator->getGeneratedPassword() != m_mainUi->passwordEdit->text()) {
         auto answer = MessageBox::question(this,
                                            tr("Apply generated password?"),
@@ -992,7 +984,7 @@ bool EditEntryWidget::commitEntry()
     }
 
     // Hide the password generator
-    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->passwordGenerator->setVisible(false);
 
     if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
         QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
@@ -1139,7 +1131,6 @@ void EditEntryWidget::clear()
 
     m_mainUi->titleEdit->setText("");
     m_mainUi->passwordEdit->setText("");
-    m_mainUi->passwordRepeatEdit->setText("");
     m_mainUi->urlEdit->setText("");
     m_mainUi->notesEdit->clear();
 
@@ -1151,25 +1142,20 @@ void EditEntryWidget::clear()
     hideMessage();
 }
 
-void EditEntryWidget::togglePasswordGeneratorButton(bool checked)
+void EditEntryWidget::togglePasswordGenerator()
 {
-    if (checked) {
+    bool visible = m_mainUi->passwordGenerator->isVisible();
+    if (!visible) {
         m_mainUi->passwordGenerator->regeneratePassword();
+        m_mainUi->passwordGenerator->setPasswordVisible(m_mainUi->passwordEdit->isPasswordVisible());
     }
-    m_mainUi->passwordGenerator->setVisible(checked);
-}
-
-bool EditEntryWidget::passwordsEqual()
-{
-    return m_mainUi->passwordEdit->text() == m_mainUi->passwordRepeatEdit->text();
+    m_mainUi->passwordGenerator->setVisible(!visible);
 }
 
 void EditEntryWidget::setGeneratedPassword(const QString& password)
 {
     m_mainUi->passwordEdit->setText(password);
-    m_mainUi->passwordRepeatEdit->setText(password);
-
-    m_mainUi->togglePasswordGeneratorButton->setChecked(false);
+    m_mainUi->passwordGenerator->setVisible(false);
 }
 
 #ifdef WITH_XC_NETWORKING

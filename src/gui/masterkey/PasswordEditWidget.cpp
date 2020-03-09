@@ -53,7 +53,7 @@ bool PasswordEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
  */
 void PasswordEditWidget::setPasswordVisible(bool visible)
 {
-    m_compUi->togglePasswordButton->setChecked(visible);
+    m_compUi->enterPasswordEdit->setShowPassword(visible);
 }
 
 /**
@@ -61,7 +61,7 @@ void PasswordEditWidget::setPasswordVisible(bool visible)
  */
 bool PasswordEditWidget::isPasswordVisible() const
 {
-    return m_compUi->togglePasswordButton->isChecked();
+    return m_compUi->enterPasswordEdit->isPasswordVisible();
 }
 
 bool PasswordEditWidget::isEmpty() const
@@ -73,16 +73,8 @@ QWidget* PasswordEditWidget::componentEditWidget()
 {
     m_compEditWidget = new QWidget();
     m_compUi->setupUi(m_compEditWidget);
-    m_compUi->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_compUi->passwordGeneratorButton->setIcon(filePath()->icon("actions", "password-generator"));
-    m_compUi->repeatPasswordEdit->enableVerifyMode(m_compUi->enterPasswordEdit);
-
-    connect(m_compUi->togglePasswordButton,
-            SIGNAL(toggled(bool)),
-            m_compUi->enterPasswordEdit,
-            SLOT(setShowPassword(bool)));
-    connect(m_compUi->passwordGeneratorButton, SIGNAL(clicked(bool)), SLOT(showPasswordGenerator()));
-
+    m_compUi->enterPasswordEdit->enablePasswordGenerator();
+    m_compUi->enterPasswordEdit->setRepeatPartner(m_compUi->repeatPasswordEdit);
     return m_compEditWidget;
 }
 
@@ -111,26 +103,6 @@ bool PasswordEditWidget::validate(QString& errorMessage) const
     }
 
     return true;
-}
-
-void PasswordEditWidget::showPasswordGenerator()
-{
-    QDialog pwDialog;
-    pwDialog.setWindowTitle(tr("Generate master password"));
-
-    auto layout = new QVBoxLayout();
-    pwDialog.setLayout(layout);
-
-    auto pwGenerator = new PasswordGeneratorWidget(&pwDialog);
-    layout->addWidget(pwGenerator);
-
-    pwGenerator->setStandaloneMode(false);
-    connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setPassword(QString)));
-    connect(pwGenerator, SIGNAL(dialogTerminated()), &pwDialog, SLOT(close()));
-
-    pwGenerator->setPasswordVisible(isPasswordVisible());
-
-    pwDialog.exec();
 }
 
 void PasswordEditWidget::setPassword(const QString& password)

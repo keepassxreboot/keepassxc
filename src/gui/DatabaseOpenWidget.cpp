@@ -56,9 +56,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     m_ui->comboKeyFile->lineEdit()->addAction(m_ui->keyFileClearIcon, QLineEdit::TrailingPosition);
 
-    m_ui->buttonTogglePassword->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setShowPassword(bool)));
-    connect(m_ui->buttonTogglePassword, SIGNAL(toggled(bool)), m_ui->editPassword, SLOT(setFocus()));
     connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
 
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
@@ -166,10 +163,10 @@ void DatabaseOpenWidget::clearForms()
 {
     if (!m_isOpeningDatabase) {
         m_ui->editPassword->setText("");
+        m_ui->editPassword->setShowPassword(false);
         m_ui->comboKeyFile->clear();
         m_ui->comboKeyFile->setEditText("");
         m_ui->checkTouchID->setChecked(false);
-        m_ui->buttonTogglePassword->setChecked(false);
         m_db.reset();
     }
 }
@@ -195,7 +192,6 @@ void DatabaseOpenWidget::openDatabase()
     }
 
     m_ui->editPassword->setShowPassword(false);
-    m_ui->buttonTogglePassword->setChecked(false);
     QCoreApplication::processEvents();
 
     m_isOpeningDatabase = true;

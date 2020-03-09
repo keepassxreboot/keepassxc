@@ -20,14 +20,24 @@
 
 #include "core/Config.h"
 #include "core/FilePath.h"
+#include "gui/Application.h"
 #include "gui/Font.h"
+#include "gui/PasswordGeneratorWidget.h"
 
-const QColor PasswordEdit::CorrectSoFarColor = QColor(255, 205, 15);
-const QColor PasswordEdit::ErrorColor = QColor(255, 125, 125);
+#include <QDialog>
+#include <QVBoxLayout>
+
+namespace
+{
+    const QColor CorrectSoFarColor(255, 205, 15);
+    const QColor CorrectSoFarColorDark(115, 104, 46);
+    const QColor ErrorColor(255, 125, 125);
+    const QColor ErrorColorDark(128, 45, 45);
+
+} // namespace
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
-    , m_basePasswordEdit(nullptr)
 {
     const QIcon errorIcon = filePath()->icon("status", "dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
@@ -40,70 +50,122 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     m_correctAction->setToolTip(tr("Passwords match so far"));
 
     setEchoMode(QLineEdit::Password);
-    updateStylesheet();
 
     // use a monospace font for the password field
     QFont passwordFont = Font::fixedFont();
     passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
     setFont(passwordFont);
+
+    m_toggleVisibleAction = new QAction(
+        filePath()->icon("actions", "password-show-off"),
+        tr("Toggle Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_H).toString(QKeySequence::NativeText)),
+        nullptr);
+    m_toggleVisibleAction->setCheckable(true);
+    m_toggleVisibleAction->setShortcut(Qt::CTRL + Qt::Key_H);
+    m_toggleVisibleAction->setShortcutContext(Qt::WidgetShortcut);
+    addAction(m_toggleVisibleAction, QLineEdit::TrailingPosition);
+    connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordEdit::setShowPassword);
+
+    m_passwordGeneratorAction = new QAction(
+        filePath()->icon("actions", "password-generator"),
+        tr("Generate Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_G).toString(QKeySequence::NativeText)),
+        nullptr);
+    m_passwordGeneratorAction->setShortcut(Qt::CTRL + Qt::Key_G);
+    m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
+    addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
+    m_passwordGeneratorAction->setVisible(false);
 }
 
-void PasswordEdit::enableVerifyMode(PasswordEdit* basePasswordEdit)
+void PasswordEdit::setRepeatPartner(PasswordEdit* repeatEdit)
 {
-    m_basePasswordEdit = basePasswordEdit;
+    m_repeatPasswordEdit = repeatEdit;
+    m_repeatPasswordEdit->setParentPasswordEdit(this);
 
-    updateStylesheet();
+    connect(this, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(autocompletePassword(QString)));
+    connect(this, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
+    connect(m_repeatPasswordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordEdit, SLOT(updateRepeatStatus()));
+}
 
-    connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(autocompletePassword(QString)));
-    connect(m_basePasswordEdit, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
-    connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
+void PasswordEdit::setParentPasswordEdit(PasswordEdit* parent)
+{
+    m_parentPasswordEdit = parent;
+    // Hide actions
+    m_toggleVisibleAction->setVisible(false);
+    m_passwordGeneratorAction->setVisible(false);
+}
 
-    connect(m_basePasswordEdit, SIGNAL(showPasswordChanged(bool)), SLOT(setShowPassword(bool)));
+void PasswordEdit::enablePasswordGenerator(bool signalOnly)
+{
+    disconnect(m_passwordGeneratorAction);
+    m_passwordGeneratorAction->setVisible(true);
+
+    if (signalOnly) {
+        connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordEdit::togglePasswordGenerator);
+    } else {
+        connect(m_passwordGeneratorAction, &QAction::triggered, this, &PasswordEdit::popupPasswordGenerator);
+    }
 }
 
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-    // if I have a parent, I'm the child
-    if (m_basePasswordEdit) {
+    m_toggleVisibleAction->setIcon(filePath()->icon("actions", show ? "password-show-on" : "password-show-off"));
+    m_toggleVisibleAction->setChecked(show);
+
+    if (m_repeatPasswordEdit) {
+        m_repeatPasswordEdit->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
         if (config()->get("security/passwordsrepeat").toBool()) {
-            setEnabled(!show);
-            setReadOnly(show);
-            setText(m_basePasswordEdit->text());
+            m_repeatPasswordEdit->setEnabled(!show);
+            m_repeatPasswordEdit->setText(text());
         } else {
-            // This fix a bug when the QLineEdit is disabled while switching config
-            if (!isEnabled()) {
-                setEnabled(true);
-                setReadOnly(false);
-            }
+            m_repeatPasswordEdit->setEnabled(true);
         }
     }
-    updateStylesheet();
-    emit showPasswordChanged(show);
 }
 
 bool PasswordEdit::isPasswordVisible() const
 {
-    return isEnabled();
+    return echoMode() == QLineEdit::Normal;
 }
 
-bool PasswordEdit::passwordsEqual() const
+void PasswordEdit::popupPasswordGenerator()
 {
-    return text() == m_basePasswordEdit->text();
+    auto pwGenerator = new PasswordGeneratorWidget();
+    QDialog pwDialog(this);
+    pwDialog.setWindowTitle(tr("Generate Password"));
+    auto layout = new QVBoxLayout();
+    pwDialog.setLayout(layout);
+    layout->addWidget(pwGenerator);
+
+    pwGenerator->setStandaloneMode(false);
+    pwGenerator->setPasswordVisible(isPasswordVisible());
+
+    connect(pwGenerator, SIGNAL(closePasswordGenerator()), &pwDialog, SLOT(close()));
+    connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
+    if (m_repeatPasswordEdit) {
+        connect(pwGenerator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
+    }
+
+    pwDialog.exec();
 }
 
-void PasswordEdit::updateStylesheet()
+void PasswordEdit::updateRepeatStatus()
 {
-    const QString stylesheetTemplate("QLineEdit { background: %1; }");
+    static const auto stylesheetTemplate = QStringLiteral("QLineEdit { background: %1; }");
+    if (!m_parentPasswordEdit) {
+        return;
+    }
 
-    if (m_basePasswordEdit && !passwordsEqual()) {
-        bool isCorrect = true;
-        if (m_basePasswordEdit->text().startsWith(text())) {
-            setStyleSheet(stylesheetTemplate.arg(CorrectSoFarColor.name()));
-        } else {
-            setStyleSheet(stylesheetTemplate.arg(ErrorColor.name()));
-            isCorrect = false;
+    const auto otherPassword = m_parentPasswordEdit->text();
+    const auto password = text();
+    if (otherPassword != password) {
+        bool isCorrect = false;
+        QColor color = kpxcApp->isDarkTheme() ? ErrorColorDark : ErrorColor;
+        if (!password.isEmpty() && otherPassword.startsWith(password)) {
+            color = kpxcApp->isDarkTheme() ? CorrectSoFarColorDark : CorrectSoFarColor;
+            isCorrect = true;
         }
+        setStyleSheet(stylesheetTemplate.arg(color.name()));
         m_correctAction->setVisible(isCorrect);
         m_errorAction->setVisible(!isCorrect);
     } else {

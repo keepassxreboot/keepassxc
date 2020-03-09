@@ -47,7 +47,6 @@ protected:
     void hideEvent(QHideEvent* event) override;
 
 private slots:
-    void showPasswordGenerator();
     void setPassword(const QString& password);
 
 private:

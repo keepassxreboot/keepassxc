@@ -37,5 +37,5 @@ NewDatabaseWizardPageMasterKey::~NewDatabaseWizardPageMasterKey()
 void NewDatabaseWizardPageMasterKey::updateWindowSize()
 {
     // ugly workaround for QWizard not managing to react to size changes automatically
-    QApplication::activeWindow()->adjustSize();
+    window()->adjustSize();
 }

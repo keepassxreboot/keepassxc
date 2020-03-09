@@ -28,29 +28,32 @@ class PasswordEdit : public QLineEdit
     Q_OBJECT
 
 public:
-    static const QColor CorrectSoFarColor;
-    static const QColor ErrorColor;
-
     explicit PasswordEdit(QWidget* parent = nullptr);
-    void enableVerifyMode(PasswordEdit* baseEdit);
+    void enablePasswordGenerator(bool signalOnly = false);
+    void setRepeatPartner(PasswordEdit* repeatEdit);
     bool isPasswordVisible() const;
 
 public slots:
     void setShowPassword(bool show);
+    void updateRepeatStatus();
 
 signals:
-    void showPasswordChanged(bool show);
+    void togglePasswordGenerator();
 
 private slots:
-    void updateStylesheet();
     void autocompletePassword(const QString& password);
+    void popupPasswordGenerator();
+    void setParentPasswordEdit(PasswordEdit* parent);
 
 private:
-    bool passwordsEqual() const;
-
     QPointer<QAction> m_errorAction;
     QPointer<QAction> m_correctAction;
-    QPointer<PasswordEdit> m_basePasswordEdit;
+    QPointer<QAction> m_toggleVisibleAction;
+    QPointer<QAction> m_passwordGeneratorAction;
+    QPointer<PasswordEdit> m_repeatPasswordEdit;
+    QPointer<PasswordEdit> m_parentPasswordEdit;
+    bool m_sendGeneratorSignal = false;
+    bool m_isRepeatPartner = false;
 };
 
 #endif // KEEPASSX_PASSWORDEDIT_H

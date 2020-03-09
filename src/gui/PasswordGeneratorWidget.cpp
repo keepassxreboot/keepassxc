@@ -27,36 +27,38 @@
 #include "core/FilePath.h"
 #include "core/PasswordGenerator.h"
 #include "core/PasswordHealth.h"
+#include "gui/Application.h"
 #include "gui/Clipboard.h"
-#include "gui/osutils/OSUtils.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
-    , m_updatingSpinBox(false)
     , m_passwordGenerator(new PasswordGenerator())
     , m_dicewareGenerator(new PassphraseGenerator())
     , m_ui(new Ui::PasswordGeneratorWidget())
 {
     m_ui->setupUi(this);
 
-    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_ui->buttonGenerate->setIcon(filePath()->icon("actions", "refresh"));
+    m_ui->buttonGenerate->setToolTip(
+        tr("Regenerate password (%1)").arg(m_ui->buttonGenerate->shortcut().toString(QKeySequence::NativeText)));
+    m_ui->buttonCopy->setIcon(filePath()->icon("actions", "clipboard-text"));
+    m_ui->buttonClose->setShortcut(Qt::Key_Escape);
 
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updateButtonsEnabled(QString)));
     connect(m_ui->editNewPassword, SIGNAL(textChanged(QString)), SLOT(updatePasswordStrength(QString)));
-    connect(m_ui->togglePasswordButton, SIGNAL(toggled(bool)), SLOT(setPasswordVisible(bool)));
-    connect(m_ui->buttonSimpleMode, SIGNAL(clicked()), SLOT(selectSimpleMode()));
-    connect(m_ui->buttonAdvancedMode, SIGNAL(clicked()), SLOT(selectAdvancedMode()));
+    connect(m_ui->buttonAdvancedMode, SIGNAL(toggled(bool)), SLOT(setAdvancedMode(bool)));
     connect(m_ui->buttonAddHex, SIGNAL(clicked()), SLOT(excludeHexChars()));
     connect(m_ui->editExcludedChars, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
+    connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closePasswordGenerator()));
 
-    connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordSliderMoved()));
-    connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordSpinBoxChanged()));
+    connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
+    connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
 
-    connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSliderMoved()));
-    connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(dicewareSpinBoxChanged()));
+    connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(passphraseLengthChanged(int)));
+    connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(passphraseLengthChanged(int)));
 
     connect(m_ui->editWordSeparator, SIGNAL(textChanged(QString)), SLOT(updateGenerator()));
     connect(m_ui->comboBoxWordList, SIGNAL(currentIndexChanged(int)), SLOT(updateGenerator()));
@@ -100,12 +102,6 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
 }
 
-void PasswordGeneratorWidget::showEvent(QShowEvent* event)
-{
-    QWidget::showEvent(event);
-    reset();
-}
-
 void PasswordGeneratorWidget::loadSettings()
 {
     // Password config
@@ -118,19 +114,13 @@ void PasswordGeneratorWidget::loadSettings()
         config()->get("generator/SpecialChars", PasswordGenerator::DefaultSpecial).toBool());
     m_ui->checkBoxNumbersAdv->setChecked(
         config()->get("generator/Numbers", PasswordGenerator::DefaultNumbers).toBool());
-    m_ui->advancedBar->setVisible(
-        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
-    m_ui->excludedChars->setVisible(
-        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
-    m_ui->checkBoxExcludeAlike->setVisible(
-        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
-    m_ui->checkBoxEnsureEvery->setVisible(
-        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
     m_ui->editExcludedChars->setText(
         config()->get("generator/ExcludedChars", PasswordGenerator::DefaultExcludedChars).toString());
 
-    m_ui->simpleBar->setVisible(
-        !(config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool()));
+    m_ui->buttonAdvancedMode->setChecked(
+        config()->get("generator/AdvancedMode", PasswordGenerator::DefaultAdvancedMode).toBool());
+    setAdvancedMode(m_ui->buttonAdvancedMode->isChecked());
+
     m_ui->checkBoxBraces->setChecked(config()->get("generator/Braces", PasswordGenerator::DefaultBraces).toBool());
     m_ui->checkBoxQuotes->setChecked(config()->get("generator/Quotes", PasswordGenerator::DefaultQuotes).toBool());
     m_ui->checkBoxPunctuation->setChecked(
@@ -174,7 +164,7 @@ void PasswordGeneratorWidget::saveSettings()
         config()->set("generator/Numbers", m_ui->checkBoxNumbersAdv->isChecked());
         config()->set("generator/EASCII", m_ui->checkBoxExtASCIIAdv->isChecked());
     }
-    config()->set("generator/AdvancedMode", m_ui->advancedBar->isVisible());
+    config()->set("generator/AdvancedMode", m_ui->buttonAdvancedMode->isChecked());
     config()->set("generator/SpecialChars", m_ui->checkBoxSpecialChars->isChecked());
     config()->set("generator/Braces", m_ui->checkBoxBraces->isChecked());
     config()->set("generator/Punctuation", m_ui->checkBoxPunctuation->isChecked());
@@ -215,10 +205,10 @@ void PasswordGeneratorWidget::setStandaloneMode(bool standalone)
 {
     m_standalone = standalone;
     if (standalone) {
-        m_ui->buttonApply->setText(tr("Close"));
+        m_ui->buttonApply->setVisible(false);
         setPasswordVisible(true);
     } else {
-        m_ui->buttonApply->setText(tr("Accept"));
+        m_ui->buttonApply->setVisible(true);
     }
 }
 
@@ -230,7 +220,7 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 void PasswordGeneratorWidget::keyPressEvent(QKeyEvent* e)
 {
     if (e->key() == Qt::Key_Escape && m_standalone) {
-        emit dialogTerminated();
+        emit closePasswordGenerator();
     } else {
         e->ignore();
     }
@@ -280,7 +270,7 @@ void PasswordGeneratorWidget::applyPassword()
 {
     saveSettings();
     emit appliedPassword(m_ui->editNewPassword->text());
-    emit dialogTerminated();
+    emit closePasswordGenerator();
 }
 
 void PasswordGeneratorWidget::copyPassword()
@@ -288,43 +278,30 @@ void PasswordGeneratorWidget::copyPassword()
     clipboard()->setText(m_ui->editNewPassword->text());
 }
 
-void PasswordGeneratorWidget::passwordSliderMoved()
+void PasswordGeneratorWidget::passwordLengthChanged(int length)
 {
-    if (m_updatingSpinBox) {
-        return;
-    }
+    m_ui->spinBoxLength->blockSignals(true);
+    m_ui->sliderLength->blockSignals(true);
 
-    m_ui->spinBoxLength->setValue(m_ui->sliderLength->value());
+    m_ui->spinBoxLength->setValue(length);
+    m_ui->sliderLength->setValue(length);
+
+    m_ui->spinBoxLength->blockSignals(false);
+    m_ui->sliderLength->blockSignals(false);
 
     updateGenerator();
 }
 
-void PasswordGeneratorWidget::passwordSpinBoxChanged()
+void PasswordGeneratorWidget::passphraseLengthChanged(int length)
 {
-    if (m_updatingSpinBox) {
-        return;
-    }
+    m_ui->spinBoxWordCount->blockSignals(true);
+    m_ui->sliderWordCount->blockSignals(true);
 
-    // Interlock so that we don't update twice - this causes issues as the spinbox can go higher than slider
-    m_updatingSpinBox = true;
+    m_ui->spinBoxWordCount->setValue(length);
+    m_ui->sliderWordCount->setValue(length);
 
-    m_ui->sliderLength->setValue(m_ui->spinBoxLength->value());
-
-    m_updatingSpinBox = false;
-
-    updateGenerator();
-}
-
-void PasswordGeneratorWidget::dicewareSliderMoved()
-{
-    m_ui->spinBoxWordCount->setValue(m_ui->sliderWordCount->value());
-
-    updateGenerator();
-}
-
-void PasswordGeneratorWidget::dicewareSpinBoxChanged()
-{
-    m_ui->sliderWordCount->setValue(m_ui->spinBoxWordCount->value());
+    m_ui->spinBoxWordCount->blockSignals(false);
+    m_ui->sliderWordCount->blockSignals(false);
 
     updateGenerator();
 }
@@ -332,49 +309,46 @@ void PasswordGeneratorWidget::dicewareSpinBoxChanged()
 void PasswordGeneratorWidget::setPasswordVisible(bool visible)
 {
     m_ui->editNewPassword->setShowPassword(visible);
-    bool blockSignals = m_ui->togglePasswordButton->blockSignals(true);
-    m_ui->togglePasswordButton->setChecked(visible);
-    m_ui->togglePasswordButton->blockSignals(blockSignals);
 }
 
 bool PasswordGeneratorWidget::isPasswordVisible() const
 {
-    return m_ui->togglePasswordButton->isChecked();
+    return m_ui->editNewPassword->isPasswordVisible();
 }
 
-void PasswordGeneratorWidget::selectSimpleMode()
+void PasswordGeneratorWidget::setAdvancedMode(bool state)
 {
-    m_ui->advancedBar->hide();
-    m_ui->excludedChars->hide();
-    m_ui->checkBoxExcludeAlike->hide();
-    m_ui->checkBoxEnsureEvery->hide();
-    m_ui->checkBoxUpper->setChecked(m_ui->checkBoxUpperAdv->isChecked());
-    m_ui->checkBoxLower->setChecked(m_ui->checkBoxLowerAdv->isChecked());
-    m_ui->checkBoxNumbers->setChecked(m_ui->checkBoxNumbersAdv->isChecked());
-    m_ui->checkBoxSpecialChars->setChecked(m_ui->checkBoxBraces->isChecked() | m_ui->checkBoxPunctuation->isChecked()
-                                           | m_ui->checkBoxQuotes->isChecked() | m_ui->checkBoxMath->isChecked()
-                                           | m_ui->checkBoxDashes->isChecked() | m_ui->checkBoxLogograms->isChecked());
-    m_ui->checkBoxExtASCII->setChecked(m_ui->checkBoxExtASCIIAdv->isChecked());
-    m_ui->simpleBar->show();
-}
-
-void PasswordGeneratorWidget::selectAdvancedMode()
-{
-    m_ui->simpleBar->hide();
-    m_ui->checkBoxUpperAdv->setChecked(m_ui->checkBoxUpper->isChecked());
-    m_ui->checkBoxLowerAdv->setChecked(m_ui->checkBoxLower->isChecked());
-    m_ui->checkBoxNumbersAdv->setChecked(m_ui->checkBoxNumbers->isChecked());
-    m_ui->checkBoxBraces->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxPunctuation->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxQuotes->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxMath->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxDashes->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxLogograms->setChecked(m_ui->checkBoxSpecialChars->isChecked());
-    m_ui->checkBoxExtASCIIAdv->setChecked(m_ui->checkBoxExtASCII->isChecked());
-    m_ui->advancedBar->show();
-    m_ui->excludedChars->show();
-    m_ui->checkBoxExcludeAlike->show();
-    m_ui->checkBoxEnsureEvery->show();
+    if (state) {
+        m_ui->simpleBar->hide();
+        m_ui->checkBoxUpperAdv->setChecked(m_ui->checkBoxUpper->isChecked());
+        m_ui->checkBoxLowerAdv->setChecked(m_ui->checkBoxLower->isChecked());
+        m_ui->checkBoxNumbersAdv->setChecked(m_ui->checkBoxNumbers->isChecked());
+        m_ui->checkBoxBraces->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxPunctuation->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxQuotes->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxMath->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxDashes->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxLogograms->setChecked(m_ui->checkBoxSpecialChars->isChecked());
+        m_ui->checkBoxExtASCIIAdv->setChecked(m_ui->checkBoxExtASCII->isChecked());
+        m_ui->advancedBar->show();
+        m_ui->excludedChars->show();
+        m_ui->checkBoxExcludeAlike->show();
+        m_ui->checkBoxEnsureEvery->show();
+    } else {
+        m_ui->advancedBar->hide();
+        m_ui->excludedChars->hide();
+        m_ui->checkBoxExcludeAlike->hide();
+        m_ui->checkBoxEnsureEvery->hide();
+        m_ui->checkBoxUpper->setChecked(m_ui->checkBoxUpperAdv->isChecked());
+        m_ui->checkBoxLower->setChecked(m_ui->checkBoxLowerAdv->isChecked());
+        m_ui->checkBoxNumbers->setChecked(m_ui->checkBoxNumbersAdv->isChecked());
+        m_ui->checkBoxSpecialChars->setChecked(
+            m_ui->checkBoxBraces->isChecked() | m_ui->checkBoxPunctuation->isChecked()
+            | m_ui->checkBoxQuotes->isChecked() | m_ui->checkBoxMath->isChecked() | m_ui->checkBoxDashes->isChecked()
+            | m_ui->checkBoxLogograms->isChecked());
+        m_ui->checkBoxExtASCII->setChecked(m_ui->checkBoxExtASCIIAdv->isChecked());
+        m_ui->simpleBar->show();
+    }
 }
 
 void PasswordGeneratorWidget::excludeHexChars()
@@ -392,7 +366,7 @@ void PasswordGeneratorWidget::colorStrengthIndicator(const PasswordHealth& healt
 
     // Set the color and background based on entropy
     QList<QString> qualityColors;
-    if (osUtils->isDarkMode()) {
+    if (kpxcApp->isDarkTheme()) {
         qualityColors << QStringLiteral("#C43F31") << QStringLiteral("#DB9837") << QStringLiteral("#608A22")
                       << QStringLiteral("#1F8023");
     } else {
@@ -496,12 +470,14 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 {
     PasswordGenerator::GeneratorFlags flags;
 
-    if (m_ui->checkBoxExcludeAlike->isChecked()) {
-        flags |= PasswordGenerator::ExcludeLookAlike;
-    }
+    if (m_ui->buttonAdvancedMode->isChecked()) {
+        if (m_ui->checkBoxExcludeAlike->isChecked()) {
+            flags |= PasswordGenerator::ExcludeLookAlike;
+        }
 
-    if (m_ui->checkBoxEnsureEvery->isChecked()) {
-        flags |= PasswordGenerator::CharFromEveryGroup;
+        if (m_ui->checkBoxEnsureEvery->isChecked()) {
+            flags |= PasswordGenerator::CharFromEveryGroup;
+        }
     }
 
     return flags;
@@ -510,62 +486,52 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 void PasswordGeneratorWidget::updateGenerator()
 {
     if (m_ui->tabWidget->currentIndex() == Password) {
-        PasswordGenerator::CharClasses classes = charClasses();
-        PasswordGenerator::GeneratorFlags flags = generatorFlags();
+        auto classes = charClasses();
+        auto flags = generatorFlags();
 
-        int minLength = 0;
+        int length = 0;
         if (flags.testFlag(PasswordGenerator::CharFromEveryGroup)) {
             if (classes.testFlag(PasswordGenerator::LowerLetters)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::UpperLetters)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Numbers)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Braces)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Punctuation)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Quotes)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Dashes)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Math)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::Logograms)) {
-                minLength++;
+                ++length;
             }
             if (classes.testFlag(PasswordGenerator::EASCII)) {
-                minLength++;
+                ++length;
             }
         }
-        minLength = qMax(minLength, 1);
 
-        if (m_ui->spinBoxLength->value() < minLength) {
-            m_updatingSpinBox = true;
-            m_ui->spinBoxLength->setValue(minLength);
-            m_ui->sliderLength->setValue(minLength);
-            m_updatingSpinBox = false;
-        }
-
-        m_ui->spinBoxLength->setMinimum(minLength);
-        m_ui->sliderLength->setMinimum(minLength);
-
-        m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
+        length = qMax(length, m_ui->spinBoxLength->value());
+        m_passwordGenerator->setLength(length);
         m_passwordGenerator->setCharClasses(classes);
-        if (m_ui->simpleBar->isVisible()) {
-            m_passwordGenerator->setExcludedChars("");
-        } else {
-            m_passwordGenerator->setExcludedChars(m_ui->editExcludedChars->text());
-        }
         m_passwordGenerator->setFlags(flags);
+        if (m_ui->buttonAdvancedMode->isChecked()) {
+            m_passwordGenerator->setExcludedChars(m_ui->editExcludedChars->text());
+        } else {
+            m_passwordGenerator->setExcludedChars("");
+        }
 
         if (m_passwordGenerator->isValid()) {
             m_ui->buttonGenerate->setEnabled(true);
@@ -573,20 +539,8 @@ void PasswordGeneratorWidget::updateGenerator()
             m_ui->buttonGenerate->setEnabled(false);
         }
     } else {
-        int minWordCount = 1;
-
-        if (m_ui->spinBoxWordCount->value() < minWordCount) {
-            m_updatingSpinBox = true;
-            m_ui->spinBoxWordCount->setValue(minWordCount);
-            m_ui->sliderWordCount->setValue(minWordCount);
-            m_updatingSpinBox = false;
-        }
-
         m_dicewareGenerator->setWordCase(
             static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()));
-
-        m_ui->spinBoxWordCount->setMinimum(minWordCount);
-        m_ui->sliderWordCount->setMinimum(minWordCount);
 
         m_dicewareGenerator->setWordCount(m_ui->spinBoxWordCount->value());
         if (!m_ui->comboBoxWordList->currentText().isEmpty()) {

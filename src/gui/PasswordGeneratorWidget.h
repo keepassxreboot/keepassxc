@@ -54,9 +54,6 @@ public:
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
 
-protected:
-    void showEvent(QShowEvent* event) override;
-
 public slots:
     void regeneratePassword();
     void applyPassword();
@@ -65,25 +62,21 @@ public slots:
 
 signals:
     void appliedPassword(const QString& password);
-    void dialogTerminated();
+    void closePasswordGenerator();
 
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength(const QString& password);
-    void selectSimpleMode();
-    void selectAdvancedMode();
+    void setAdvancedMode(bool state);
     void excludeHexChars();
 
-    void passwordSliderMoved();
-    void passwordSpinBoxChanged();
-    void dicewareSliderMoved();
-    void dicewareSpinBoxChanged();
+    void passwordLengthChanged(int length);
+    void passphraseLengthChanged(int length);
     void colorStrengthIndicator(const PasswordHealth& health);
 
     void updateGenerator();
 
 private:
-    bool m_updatingSpinBox;
     bool m_standalone = false;
 
     PasswordGenerator::CharClasses charClasses();
