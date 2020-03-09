@@ -22,7 +22,7 @@
 #include <QPushButton>
 #include <QScrollArea>
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 EditWidget::EditWidget(QWidget* parent)
     : DialogyWidget(parent)

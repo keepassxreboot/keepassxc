@@ -25,7 +25,7 @@
 #include <QToolButton>
 
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/widgets/PopupHelpWidget.h"
 
 SearchWidget::SearchWidget(QWidget* parent)
@@ -69,13 +69,13 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionLimitGroup->setCheckable(true);
     m_actionLimitGroup->setChecked(config()->get("SearchLimitGroup", false).toBool());
 
-    m_ui->searchIcon->setIcon(filePath()->icon("actions", "system-search"));
+    m_ui->searchIcon->setIcon(resources()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
-    m_ui->helpIcon->setIcon(filePath()->icon("actions", "system-help"));
+    m_ui->helpIcon->setIcon(resources()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
 
-    m_ui->clearIcon->setIcon(filePath()->icon("actions", "edit-clear-locationbar-rtl"));
+    m_ui->clearIcon->setIcon(resources()->icon("edit-clear-locationbar-rtl"));
     m_ui->clearIcon->setVisible(false);
     m_ui->searchEdit->addAction(m_ui->clearIcon, QLineEdit::TrailingPosition);
 

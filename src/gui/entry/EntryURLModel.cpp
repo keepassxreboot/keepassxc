@@ -19,7 +19,7 @@
 #include "EntryURLModel.h"
 
 #include "core/Entry.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "core/Tools.h"
 
 #include <algorithm>
@@ -27,7 +27,7 @@
 EntryURLModel::EntryURLModel(QObject* parent)
     : QStandardItemModel(parent)
     , m_entryAttributes(nullptr)
-    , m_errorIcon(filePath()->icon("status", "dialog-error"))
+    , m_errorIcon(resources()->icon("dialog-error"))
 {
 }
 

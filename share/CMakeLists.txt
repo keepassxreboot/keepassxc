@@ -19,10 +19,6 @@ add_subdirectory(translations)
 file(GLOB wordlists_files "wordlists/*.wordlist")
 install(FILES ${wordlists_files} DESTINATION ${DATA_INSTALL_DIR}/wordlists)
 
-file(GLOB DATABASE_ICONS icons/database/*.png)
-
-install(FILES ${DATABASE_ICONS} DESTINATION ${DATA_INSTALL_DIR}/icons/database)
-
 if(UNIX AND NOT APPLE AND NOT HAIKU)
     install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
             FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"
@@ -39,12 +35,9 @@ if(APPLE)
   install(FILES macosx/keepassxc.icns DESTINATION ${DATA_INSTALL_DIR})
 endif()
 
+install(FILES icons/application/256x256/apps/keepassxc.png DESTINATION ${DATA_INSTALL_DIR}/icons/application/256x256/apps)
+
 install(DIRECTORY docs/ DESTINATION ${DATA_INSTALL_DIR}/docs FILES_MATCHING PATTERN "*.pdf")
-
-install(DIRECTORY wizard/ DESTINATION ${DATA_INSTALL_DIR}/wizard FILES_MATCHING PATTERN "*.png")
-
-install(DIRECTORY icons/application/ DESTINATION ${DATA_INSTALL_DIR}/icons/application
-        FILES_MATCHING PATTERN "*.png" PATTERN "*.svg")
 
 add_custom_target(icons
     # SVG to PNGs for KeePassXC

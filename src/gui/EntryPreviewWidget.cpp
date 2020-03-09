@@ -24,7 +24,7 @@
 #include <QDir>
 
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "entry/EntryAttachmentsModel.h"
 #include "gui/Clipboard.h"
 #if defined(WITH_XC_KEESHARE)
@@ -48,12 +48,12 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     // Entry
-    m_ui->entryTotpButton->setIcon(filePath()->icon("actions", "chronometer"));
-    m_ui->entryCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->entryTotpButton->setIcon(resources()->icon("chronometer"));
+    m_ui->entryCloseButton->setIcon(resources()->icon("dialog-close"));
     m_ui->entryPasswordLabel->setFont(Font::fixedFont());
-    m_ui->togglePasswordButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_ui->toggleEntryNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
-    m_ui->toggleGroupNotesButton->setIcon(filePath()->onOffIcon("actions", "password-show"));
+    m_ui->togglePasswordButton->setIcon(resources()->onOffIcon("password-show"));
+    m_ui->toggleEntryNotesButton->setIcon(resources()->onOffIcon("password-show"));
+    m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
     m_ui->entryAttachmentsWidget->setButtonsVisible(false);
@@ -78,7 +78,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
     // Group
-    m_ui->groupCloseButton->setIcon(filePath()->icon("actions", "dialog-close"));
+    m_ui->groupCloseButton->setIcon(resources()->icon("dialog-close"));
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 

@@ -20,10 +20,10 @@
 
 #include "core/AsyncTask.h"
 #include "core/Database.h"
-#include "core/FilePath.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
+#include "core/Resources.h"
 
 #include <QFileInfo>
 #include <QHash>
@@ -150,7 +150,7 @@ namespace
 ReportsWidgetStatistics::ReportsWidgetStatistics(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetStatistics())
-    , m_errIcon(FilePath::instance()->icon("status", "dialog-error"))
+    , m_errIcon(Resources::instance()->icon("dialog-error"))
 {
     m_ui->setupUi(this);
 

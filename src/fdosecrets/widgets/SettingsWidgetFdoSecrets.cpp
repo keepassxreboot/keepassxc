@@ -23,7 +23,7 @@
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/DatabaseWidget.h"
 
 #include <QAction>
@@ -63,7 +63,7 @@ namespace
 
             // db settings
             m_dbSettingsAct = new QAction(tr("Database settings"), this);
-            m_dbSettingsAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("document-edit")));
+            m_dbSettingsAct->setIcon(resources()->icon(QStringLiteral("document-edit")));
             m_dbSettingsAct->setToolTip(tr("Edit database settings"));
             m_dbSettingsAct->setEnabled(false);
             connect(m_dbSettingsAct, &QAction::triggered, this, [this]() {
@@ -77,7 +77,7 @@ namespace
 
             // unlock/lock
             m_lockAct = new QAction(tr("Unlock database"), this);
-            m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
+            m_lockAct->setIcon(resources()->icon(QStringLiteral("object-locked")));
             m_lockAct->setToolTip(tr("Unlock database to show more information"));
             connect(m_lockAct, &QAction::triggered, this, [this]() {
                 if (!m_dbWidget) {
@@ -135,13 +135,13 @@ namespace
             }
             connect(m_dbWidget, &DatabaseWidget::databaseLocked, this, [this]() {
                 m_lockAct->setText(tr("Unlock database"));
-                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-locked")));
+                m_lockAct->setIcon(resources()->icon(QStringLiteral("object-locked")));
                 m_lockAct->setToolTip(tr("Unlock database to show more information"));
                 m_dbSettingsAct->setEnabled(false);
             });
             connect(m_dbWidget, &DatabaseWidget::databaseUnlocked, this, [this]() {
                 m_lockAct->setText(tr("Lock database"));
-                m_lockAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("object-unlocked")));
+                m_lockAct->setIcon(resources()->icon(QStringLiteral("object-unlocked")));
                 m_lockAct->setToolTip(tr("Lock database"));
                 m_dbSettingsAct->setEnabled(true);
             });
@@ -174,7 +174,7 @@ namespace
             addWidget(spacer);
 
             m_disconnectAct = new QAction(tr("Disconnect"), this);
-            m_disconnectAct->setIcon(filePath()->icon(QStringLiteral("actions"), QStringLiteral("dialog-close")));
+            m_disconnectAct->setIcon(resources()->icon(QStringLiteral("dialog-close")));
             m_disconnectAct->setToolTip(tr("Disconnect this application"));
             connect(m_disconnectAct, &QAction::triggered, this, [this]() {
                 if (m_session) {

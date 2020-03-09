@@ -41,8 +41,8 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
-#include "core/FilePath.h"
 #include "core/Metadata.h"
+#include "core/Resources.h"
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
 #ifdef WITH_XC_SSHAGENT
@@ -138,7 +138,7 @@ EditEntryWidget::~EditEntryWidget()
 void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
-    addPage(tr("Entry"), FilePath::instance()->icon("actions", "document-edit"), m_mainWidget);
+    addPage(tr("Entry"), Resources::instance()->icon("document-edit"), m_mainWidget);
 
     m_mainUi->usernameComboBox->setEditable(true);
     m_usernameCompleter->setCompletionMode(QCompleter::InlineCompletion);
@@ -147,7 +147,7 @@ void EditEntryWidget::setupMain()
     m_mainUi->usernameComboBox->setCompleter(m_usernameCompleter);
 
 #ifdef WITH_XC_NETWORKING
-    m_mainUi->fetchFaviconButton->setIcon(filePath()->icon("actions", "favicon-download"));
+    m_mainUi->fetchFaviconButton->setIcon(resources()->icon("favicon-download"));
     m_mainUi->fetchFaviconButton->setDisabled(true);
 #else
     m_mainUi->fetchFaviconButton->setVisible(false);
@@ -168,7 +168,7 @@ void EditEntryWidget::setupMain()
 void EditEntryWidget::setupAdvanced()
 {
     m_advancedUi->setupUi(m_advancedWidget);
-    addPage(tr("Advanced"), FilePath::instance()->icon("categories", "preferences-other"), m_advancedWidget);
+    addPage(tr("Advanced"), Resources::instance()->icon("preferences-other"), m_advancedWidget);
 
     m_advancedUi->attachmentsWidget->setReadOnly(false);
     m_advancedUi->attachmentsWidget->setButtonsVisible(true);
@@ -198,7 +198,7 @@ void EditEntryWidget::setupAdvanced()
 void EditEntryWidget::setupIcon()
 {
     m_iconsWidget->setShowApplyIconToButton(false);
-    addPage(tr("Icon"), FilePath::instance()->icon("apps", "preferences-desktop-icons"), m_iconsWidget);
+    addPage(tr("Icon"), Resources::instance()->icon("preferences-desktop-icons"), m_iconsWidget);
     connect(this, SIGNAL(accepted()), m_iconsWidget, SLOT(abortRequests()));
     connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));
 }
@@ -211,9 +211,9 @@ void EditEntryWidget::openAutotypeHelp()
 void EditEntryWidget::setupAutoType()
 {
     m_autoTypeUi->setupUi(m_autoTypeWidget);
-    addPage(tr("Auto-Type"), FilePath::instance()->icon("actions", "key-enter"), m_autoTypeWidget);
+    addPage(tr("Auto-Type"), Resources::instance()->icon("key-enter"), m_autoTypeWidget);
 
-    m_autoTypeUi->openHelpButton->setIcon(filePath()->icon("actions", "system-help"));
+    m_autoTypeUi->openHelpButton->setIcon(resources()->icon("system-help"));
 
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->inheritSequenceButton);
     m_autoTypeDefaultSequenceGroup->addButton(m_autoTypeUi->customSequenceButton);
@@ -252,7 +252,7 @@ void EditEntryWidget::setupBrowser()
     m_browserUi->setupUi(m_browserWidget);
 
     if (config()->get("Browser/Enabled", false).toBool()) {
-        addPage(tr("Browser Integration"), FilePath::instance()->icon("apps", "internet-web-browser"), m_browserWidget);
+        addPage(tr("Browser Integration"), Resources::instance()->icon("internet-web-browser"), m_browserWidget);
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
 
@@ -370,13 +370,13 @@ void EditEntryWidget::updateCurrentURL()
 
 void EditEntryWidget::setupProperties()
 {
-    addPage(tr("Properties"), FilePath::instance()->icon("actions", "document-properties"), m_editWidgetProperties);
+    addPage(tr("Properties"), Resources::instance()->icon("document-properties"), m_editWidgetProperties);
 }
 
 void EditEntryWidget::setupHistory()
 {
     m_historyUi->setupUi(m_historyWidget);
-    addPage(tr("History"), FilePath::instance()->icon("actions", "view-history"), m_historyWidget);
+    addPage(tr("History"), Resources::instance()->icon("view-history"), m_historyWidget);
 
     m_sortModel->setSourceModel(m_historyModel);
     m_sortModel->setDynamicSortFilter(true);
@@ -521,7 +521,7 @@ void EditEntryWidget::setupSSHAgent()
             SIGNAL(entryAttachmentsModified()),
             SLOT(updateSSHAgentAttachments()));
 
-    addPage(tr("SSH Agent"), FilePath::instance()->icon("apps", "utilities-terminal"), m_sshAgentWidget);
+    addPage(tr("SSH Agent"), Resources::instance()->icon("utilities-terminal"), m_sshAgentWidget);
 }
 
 void EditEntryWidget::updateSSHAgent()

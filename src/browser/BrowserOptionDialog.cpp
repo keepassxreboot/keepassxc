@@ -22,7 +22,7 @@
 
 #include "BrowserSettings.h"
 #include "config-keepassx.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 #include <QFileDialog>
 

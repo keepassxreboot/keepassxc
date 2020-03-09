@@ -19,7 +19,7 @@
 #include "PasswordEdit.h"
 
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/Application.h"
 #include "gui/Font.h"
 #include "gui/PasswordGeneratorWidget.h"
@@ -39,12 +39,12 @@ namespace
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
 {
-    const QIcon errorIcon = filePath()->icon("status", "dialog-error");
+    const QIcon errorIcon = resources()->icon("dialog-error");
     m_errorAction = addAction(errorIcon, QLineEdit::TrailingPosition);
     m_errorAction->setVisible(false);
     m_errorAction->setToolTip(tr("Passwords do not match"));
 
-    const QIcon correctIcon = filePath()->icon("actions", "dialog-ok");
+    const QIcon correctIcon = resources()->icon("dialog-ok");
     m_correctAction = addAction(correctIcon, QLineEdit::TrailingPosition);
     m_correctAction->setVisible(false);
     m_correctAction->setToolTip(tr("Passwords match so far"));
@@ -57,7 +57,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     setFont(passwordFont);
 
     m_toggleVisibleAction = new QAction(
-        filePath()->icon("actions", "password-show-off"),
+        resources()->icon("password-show"),
         tr("Toggle Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_H).toString(QKeySequence::NativeText)),
         nullptr);
     m_toggleVisibleAction->setCheckable(true);
@@ -67,7 +67,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     connect(m_toggleVisibleAction, &QAction::triggered, this, &PasswordEdit::setShowPassword);
 
     m_passwordGeneratorAction = new QAction(
-        filePath()->icon("actions", "password-generator"),
+        resources()->icon("password-generator"),
         tr("Generate Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_G).toString(QKeySequence::NativeText)),
         nullptr);
     m_passwordGeneratorAction->setShortcut(Qt::CTRL + Qt::Key_G);
@@ -105,7 +105,7 @@ void PasswordEdit::enablePasswordGenerator()
 void PasswordEdit::setShowPassword(bool show)
 {
     setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-    m_toggleVisibleAction->setIcon(filePath()->icon("actions", show ? "password-show-on" : "password-show-off"));
+    m_toggleVisibleAction->setIcon(resources()->icon(show ? "password-show-on" : "password-show-off"));
     m_toggleVisibleAction->setChecked(show);
 
     if (m_repeatPasswordEdit) {

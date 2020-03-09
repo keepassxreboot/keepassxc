@@ -25,7 +25,7 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/test/AutoTypeTestInterface.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 
@@ -39,7 +39,7 @@ void TestAutoType::initTestCase()
     config()->set("security/autotypeask", false);
     AutoType::createTestInstance();
 
-    QPluginLoader loader(filePath()->pluginPath("keepassx-autotype-test"));
+    QPluginLoader loader(resources()->pluginPath("keepassx-autotype-test"));
     loader.setLoadHints(QLibrary::ResolveAllSymbolsHint);
     QVERIFY(loader.instance());
 

@@ -40,7 +40,6 @@ set(keepassx_SOURCES
         core/EntryAttachments.cpp
         core/EntryAttributes.cpp
         core/EntrySearcher.cpp
-        core/FilePath.cpp
         core/FileWatcher.cpp
         core/Group.cpp
         core/HibpOffline.cpp
@@ -50,6 +49,7 @@ set(keepassx_SOURCES
         core/PasswordGenerator.cpp
         core/PasswordHealth.cpp
         core/PassphraseGenerator.cpp
+        core/Resources.cpp
         core/SignalMultiplexer.cpp
         core/ScreenLockListener.cpp
         core/ScreenLockListenerPrivate.cpp
@@ -209,6 +209,10 @@ if(MINGW OR (UNIX AND NOT APPLE))
             ${keepassx_SOURCES}
             core/OSEventFilter.cpp)
 endif()
+
+set(keepassx_SOURCES ${keepassx_SOURCES}
+        ../share/icons/icons.qrc
+        ../share/wizard/wizard.qrc)
 
 set(keepassx_SOURCES_MAINEXE main.cpp)
 
