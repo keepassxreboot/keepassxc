@@ -18,7 +18,7 @@
 #include "ReportsPageHealthcheck.h"
 
 #include "ReportsWidgetHealthcheck.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 #include <QApplication>
 
@@ -34,7 +34,7 @@ QString ReportsPageHealthcheck::name()
 
 QIcon ReportsPageHealthcheck::icon()
 {
-    return FilePath::instance()->icon("actions", "health");
+    return Resources::instance()->icon("health");
 }
 
 QWidget* ReportsPageHealthcheck::createWidget()

@@ -94,6 +94,7 @@ map() {
         entry-edit)                         echo comment-edit-outline           ;;
         entry-new)                          echo comment-plus-outline           ;;
         favicon-download)                   echo download                       ;;
+        freedesktop)                        echo freedesktop-dot-org            ;;
         getting-started)                    echo lightbulb-on-outline           ;;
         group-delete)                       echo folder-remove-outline          ;;
         group-edit)                         echo folder-edit-outline            ;;

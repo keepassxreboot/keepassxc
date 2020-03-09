@@ -4160,8 +4160,8 @@ void BaseStyle::polish(QApplication* app)
     }
 
     Q_INIT_RESOURCE(styles);
-    QString stylesheet;
 
+    QString stylesheet;
     QFile baseStylesheetFile(":/styles/base/basestyle.qss");
     if (baseStylesheetFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
         stylesheet = baseStylesheetFile.readAll();

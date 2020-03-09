@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,14 +16,14 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FILEPATH_H
-#define KEEPASSX_FILEPATH_H
+#ifndef KEEPASSX_RESOURCES_H
+#define KEEPASSX_RESOURCES_H
 
 #include <QHash>
 #include <QIcon>
 #include <QString>
 
-class FilePath
+class Resources
 {
 public:
     QString dataPath(const QString& name);
@@ -32,27 +33,27 @@ public:
     QIcon trayIcon();
     QIcon trayIconLocked();
     QIcon trayIconUnlocked();
-    QIcon icon(const QString& category, const QString& name, bool recolor = true);
-    QIcon onOffIcon(const QString& category, const QString& name, bool recolor = true);
+    QIcon icon(const QString& name, bool recolor = true);
+    QIcon onOffIcon(const QString& name, bool recolor = true);
 
-    static FilePath* instance();
+    static Resources* instance();
 
 private:
-    FilePath();
-    bool testSetDir(const QString& dir);
+    Resources();
+    bool testResourceDir(const QString& dir);
     bool useDarkIcon();
 
-    static FilePath* m_instance;
+    static Resources* m_instance;
 
     QString m_dataPath;
     QHash<QString, QIcon> m_iconCache;
 
-    Q_DISABLE_COPY(FilePath)
+    Q_DISABLE_COPY(Resources)
 };
 
-inline FilePath* filePath()
+inline Resources* resources()
 {
-    return FilePath::instance();
+    return Resources::instance();
 }
 
-#endif // KEEPASSX_FILEPATH_H
+#endif // KEEPASSX_RESOURCES_H

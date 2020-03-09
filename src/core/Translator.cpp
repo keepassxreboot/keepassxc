@@ -27,7 +27,7 @@
 
 #include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 /**
  * Install all KeePassXC and Qt translators.
@@ -53,7 +53,7 @@ void Translator::installTranslators()
 #ifdef QT_DEBUG
         QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-        filePath()->dataPath("translations")};
+        resources()->dataPath("translations")};
 
     bool translationsLoaded = false;
     for (const QString& path : paths) {
@@ -121,7 +121,7 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
 #ifdef QT_DEBUG
         QString("%1/share/translations").arg(KEEPASSX_BINARY_DIR),
 #endif
-        filePath()->dataPath("translations")};
+        resources()->dataPath("translations")};
 
     QList<QPair<QString, QString>> languages;
     languages.append(QPair<QString, QString>("system", "System default"));

@@ -24,8 +24,8 @@
 
 #include "autotype/AutoType.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
 #include "core/Global.h"
+#include "core/Resources.h"
 #include "core/Translator.h"
 
 #include "MessageBox.h"
@@ -91,8 +91,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
-    addPage(tr("General"), FilePath::instance()->icon("categories", "preferences-other"), m_generalWidget);
-    addPage(tr("Security"), FilePath::instance()->icon("status", "security-high"), m_secWidget);
+    addPage(tr("General"), Resources::instance()->icon("preferences-other"), m_generalWidget);
+    addPage(tr("Security"), Resources::instance()->icon("security-high"), m_secWidget);
 
     if (!autoType()->isAvailable()) {
         m_generalUi->generalSettingsTabWidget->removeTab(1);

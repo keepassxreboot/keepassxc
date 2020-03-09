@@ -70,6 +70,7 @@ namespace Bootstrap
 #ifdef QT_NO_DEBUG
         disableCoreDumps();
 #endif
+
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
         Translator::installTranslators();

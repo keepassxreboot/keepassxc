@@ -18,7 +18,7 @@
 #include "PasswordEditWidget.h"
 #include "ui_PasswordEditWidget.h"
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"

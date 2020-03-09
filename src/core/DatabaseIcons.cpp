@@ -17,7 +17,7 @@
 
 #include "DatabaseIcons.h"
 
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 DatabaseIcons* DatabaseIcons::m_instance(nullptr);
 const int DatabaseIcons::IconCount(69);
@@ -103,18 +103,15 @@ QImage DatabaseIcons::icon(int index)
 {
     if (index < 0 || index >= IconCount) {
         qWarning("DatabaseIcons::icon: invalid icon index %d", index);
-        return QImage();
+        return {};
     }
 
     if (!m_iconCache[index].isNull()) {
         return m_iconCache[index];
-    } else {
-        QString iconPath = QString("icons/database/").append(m_indexToName[index]);
-        QImage icon(filePath()->dataPath(iconPath));
-
-        m_iconCache[index] = icon;
-        return icon;
     }
+    QImage icon(QStringLiteral(":/icons/database/").append(m_indexToName[index]));
+    m_iconCache[index] = icon;
+    return icon;
 }
 
 QPixmap DatabaseIcons::iconPixmap(int index)

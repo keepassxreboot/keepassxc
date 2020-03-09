@@ -20,7 +20,7 @@
 #include "ui_AboutDialog.h"
 
 #include "config-keepassx.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 
@@ -207,7 +207,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     nameLabelFont.setPointSize(nameLabelFont.pointSize() + 4);
     m_ui->nameLabel->setFont(nameLabelFont);
 
-    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(48));
+    m_ui->iconLabel->setPixmap(resources()->applicationIcon().pixmap(48));
 
     QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
     m_ui->debugInfo->setPlainText(debugInfo);

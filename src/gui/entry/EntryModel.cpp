@@ -26,10 +26,10 @@
 #include "core/Config.h"
 #include "core/DatabaseIcons.h"
 #include "core/Entry.h"
-#include "core/FilePath.h"
 #include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Resources.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -259,12 +259,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->iconScaledPixmap();
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
-                return filePath()->icon("actions", "paperclip");
+                return resources()->icon("paperclip");
             }
             break;
         case Totp:
             if (entry->hasTotp()) {
-                return filePath()->icon("actions", "chronometer");
+                return resources()->icon("chronometer");
             }
             break;
         }
@@ -336,9 +336,9 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
     } else if (role == Qt::DecorationRole) {
         switch (section) {
         case Paperclip:
-            return filePath()->icon("actions", "paperclip");
+            return resources()->icon("paperclip");
         case Totp:
-            return filePath()->icon("actions", "chronometer");
+            return resources()->icon("chronometer");
         }
     } else if (role == Qt::ToolTipRole) {
         switch (section) {

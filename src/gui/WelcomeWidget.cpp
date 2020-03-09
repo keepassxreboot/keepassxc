@@ -22,7 +22,7 @@
 
 #include "config-keepassx.h"
 #include "core/Config.h"
-#include "core/FilePath.h"
+#include "core/Resources.h"
 
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
@@ -36,7 +36,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     welcomeLabelFont.setPointSize(welcomeLabelFont.pointSize() + 4);
     m_ui->welcomeLabel->setFont(welcomeLabelFont);
 
-    m_ui->iconLabel->setPixmap(filePath()->applicationIcon().pixmap(64));
+    m_ui->iconLabel->setPixmap(resources()->applicationIcon().pixmap(64));
 
     refreshLastDatabases();
 
