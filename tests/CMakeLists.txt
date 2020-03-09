@@ -221,6 +221,9 @@ add_unit_test(NAME testdatabase SOURCES TestDatabase.cpp
 
 add_unit_test(NAME testtools SOURCES TestTools.cpp
         LIBS ${TEST_LIBRARIES})
+        
+add_unit_test(NAME testconfig SOURCES TestConfig.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
 
 if(WITH_XC_FDOSECRETS)
     add_unit_test(NAME testfdosecrets SOURCES TestFdoSecrets.cpp
