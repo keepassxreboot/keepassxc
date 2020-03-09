@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_CONFIG_H
 #define KEEPASSX_CONFIG_H
 
+#include <QPointer>
 #include <QScopedPointer>
 #include <QVariant>
 
@@ -53,7 +54,7 @@ private:
     void init(const QString& fileName);
     void upgrade();
 
-    static Config* m_instance;
+    static QPointer<Config> m_instance;
 
     QScopedPointer<QSettings> m_settings;
     QHash<QString, QVariant> m_defaults;

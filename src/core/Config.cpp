@@ -41,7 +41,7 @@ static const QMap<QString, QString> deprecationMap = {
     {QStringLiteral("security/IconDownloadFallbackToGoogle"), QStringLiteral("security/IconDownloadFallback")},
 };
 
-Config* Config::m_instance(nullptr);
+QPointer<Config> Config::m_instance(nullptr);
 
 QVariant Config::get(const QString& key)
 {
@@ -246,13 +246,17 @@ Config* Config::instance()
 
 void Config::createConfigFromFile(const QString& file)
 {
-    Q_ASSERT(!m_instance);
+    if (m_instance) {
+        delete m_instance;
+    }
     m_instance = new Config(file, qApp);
 }
 
 void Config::createTempFileInstance()
 {
-    Q_ASSERT(!m_instance);
+    if (m_instance) {
+        delete m_instance;
+    }
     auto* tmpFile = new QTemporaryFile();
     bool openResult = tmpFile->open();
     Q_ASSERT(openResult);
