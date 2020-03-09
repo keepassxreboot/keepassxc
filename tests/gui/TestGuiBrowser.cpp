@@ -47,7 +47,22 @@
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 
-QTEST_MAIN(TestGuiBrowser)
+int main(int argc, char* argv[])
+{
+#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
+    Application app(argc, argv);
+    app.setApplicationName("KeePassXC");
+    app.setApplicationVersion(KEEPASSXC_VERSION);
+    app.setQuitOnLastWindowClosed(false);
+    app.setAttribute(Qt::AA_Use96Dpi, true);
+    QTEST_DISABLE_KEYPAD_NAVIGATION
+    TestGuiBrowser tc;
+    QTEST_SET_MAIN_SOURCE_PATH
+    return QTest::qExec(&tc, argc, argv);
+}
 
 void TestGuiBrowser::initTestCase()
 {
