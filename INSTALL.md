@@ -15,6 +15,7 @@ The following tools must exist within your PATH:
 * make
 * cmake (>= 2.8.12)
 * g++ (>= 4.7) or clang++ (>= 3.0)
+* gcovr
 
 The following libraries are required:
 
