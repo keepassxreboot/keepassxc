@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.6 (unreleased)
+## 2.6.0 (unreleased)
 
 ### Added
 - Added CLI db-info command [#4231]

@@ -64,7 +64,6 @@
                 <Shortcut Id="ApplicationStartMenuShortcut" 
                     Name="KeePassXC"
                     Target="[#CM_FP_KeePassXC.exe]"
-                    Icon="ProductIcon.ico"
                     WorkingDirectory="INSTALL_ROOT"/>
                 <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
                 <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
