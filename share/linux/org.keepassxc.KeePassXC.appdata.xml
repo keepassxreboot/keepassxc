@@ -50,6 +50,11 @@
     </screenshots>
 
     <releases>
+        <release version="2.6.0" date="2020-04-01">
+            <description>
+            <ul><li>TBD</li></ul>
+            </description>
+        </release>
         <release version="2.5.3" date="2020-01-19">
             <description>
                 <ul>

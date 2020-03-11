@@ -465,9 +465,11 @@ if(MINGW)
             COMPONENT Runtime)
 
     # Use windeployqt.exe to setup Qt dependencies
-    set(WINDEPLOYQT_MODE "--release")
-    if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-        set(WINDEPLOYQT_MODE "--debug")
+    if(Qt5Core_VERSION VERSION_LESS "5.14.1")
+        set(WINDEPLOYQT_MODE "--release")
+        if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+            set(WINDEPLOYQT_MODE "--debug")
+        endif()
     endif()
 
     install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
