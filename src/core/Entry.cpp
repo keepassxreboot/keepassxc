@@ -29,8 +29,8 @@
 
 #include <QDir>
 #include <QRegularExpression>
-#include <utility>
 #include <ctime>
+#include <utility>
 
 const int Entry::DefaultIconNumber = 0;
 const int Entry::ResolveMaximumDepth = 10;
@@ -1228,8 +1228,7 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         {QStringLiteral("{DT_UTC_DAY}"), PlaceholderType::DateTimeUtcDay},
         {QStringLiteral("{DT_UTC_HOUR}"), PlaceholderType::DateTimeUtcHour},
         {QStringLiteral("{DT_UTC_MINUTE}"), PlaceholderType::DateTimeUtcMinute},
-        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond}
-    };
+        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond}};
 
     return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
