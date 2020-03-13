@@ -111,9 +111,11 @@ int Create::execute(const QStringList& arguments)
 
     if (parser->isSet(Create::SetPasswordOption)) {
         auto passwordKey = Utils::getPasswordFromStdin();
-        if (!passwordKey.isNull()) {
-            key->addKey(passwordKey);
+        if (passwordKey.isNull()) {
+            err << QObject::tr("Failed to set database password.") << endl;
+            return EXIT_FAILURE;
         }
+        key->addKey(passwordKey);
     }
 
     if (parser->isSet(Create::SetKeyFileOption)) {

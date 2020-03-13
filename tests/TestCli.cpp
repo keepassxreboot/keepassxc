@@ -566,82 +566,133 @@ void TestCli::testCreate()
     QVERIFY(createCmd.getDescriptionLine().contains(createCmd.name));
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
+    QString dbFilename;
 
-    // Testing password option
-    QString databaseFilename = testDir->path() + "/testCreate1.kdbx";
+    // Testing password option, password mismatch
+    dbFilename = testDir->path() + "/testCreate_pw.kdbx";
     Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename, "-p"});
+    Utils::Test::setNextPassword("b");
+    createCmd.execute({"db-create", dbFilename, "-p"});
     m_stderrFile->reset();
     m_stdoutFile->reset();
 
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Error: Passwords do not match.\n"));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Failed to set database password.\n"));
+
+    // Testing password option
+    Utils::Test::setNextPassword("a", true);
+    qint64 pos = m_stdoutFile->pos();
+    qint64 errPos = m_stderrFile->pos();
+    createCmd.execute({"db-create", dbFilename, "-p"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename, true, "", "", Utils::DEVNULL));
+    auto db = Utils::unlockDatabase(dbFilename, true, "", "", Utils::DEVNULL);
+    QVERIFY(db);
+
+    // Testing with empty password (deny it)
+    dbFilename = testDir->path() + "/testCreate_blankpw.kdbx";
+    Utils::Test::setNextPassword("");
+    m_stdinFile->reset();
+    m_stdinFile->write("n\n");
+    m_stdinFile->reset();
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"db-create", dbFilename, "-p"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QVERIFY(m_stdoutFile->readLine().contains("empty password"));
+    QCOMPARE(m_stderrFile->readLine(), QByteArray("Failed to set database password.\n"));
+
+    // Testing with empty password (accept it)
+    Utils::Test::setNextPassword("");
+    m_stdinFile->reset();
+    m_stdinFile->write("y\n");
+    m_stdinFile->reset();
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"db-create", dbFilename, "-p"});
+    m_stdoutFile->seek(pos);
+    m_stderrFile->seek(errPos);
+
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QVERIFY(m_stdoutFile->readLine().contains("empty password"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
+
+    Utils::Test::setNextPassword("");
+    db = Utils::unlockDatabase(dbFilename, true, "", "", Utils::DEVNULL);
     QVERIFY(db);
 
     // Should refuse to create the database if it already exists.
-    qint64 pos = m_stdoutFile->pos();
-    qint64 errPos = m_stderrFile->pos();
-    createCmd.execute({"db-create", "-p", databaseFilename});
+    pos = m_stdoutFile->pos();
+    errPos = m_stderrFile->pos();
+    createCmd.execute({"db-create", "-p", dbFilename});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
     // Output should be empty when there is an error.
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QString errorMessage = QString("File " + databaseFilename + " already exists.\n");
+    QString errorMessage = QString("File " + dbFilename + " already exists.\n");
     QCOMPARE(m_stderrFile->readAll(), errorMessage.toUtf8());
 
     // Should refuse to create without any key provided.
-    QString databaseFilename8 = testDir->path() + "/testCreate8.kdbx";
+    dbFilename = testDir->path() + "/testCreate_key.kdbx";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    createCmd.execute({"db-create", databaseFilename8});
+    createCmd.execute({"db-create", dbFilename});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
     QCOMPARE(m_stderrFile->readLine(), QByteArray("No key is set. Aborting database creation.\n"));
 
     // Testing with keyfile creation
-    QString databaseFilename2 = testDir->path() + "/testCreate2.kdbx";
+    dbFilename = testDir->path() + "/testCreate_key2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename2, "-p", "-k", keyfilePath});
+    Utils::Test::setNextPassword("a", true);
+    createCmd.execute({"db-create", dbFilename, "-p", "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db2 =
-        QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename2, true, keyfilePath, "", Utils::DEVNULL));
-    QVERIFY(db2);
+    db = Utils::unlockDatabase(dbFilename, true, keyfilePath, "", Utils::DEVNULL);
+    QVERIFY(db);
 
     // Testing with existing keyfile
-    QString databaseFilename3 = testDir->path() + "/testCreate3.kdbx";
+    dbFilename = testDir->path() + "/testCreate_key3.kdbx";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
-    createCmd.execute({"db-create", databaseFilename3, "-p", "-k", keyfilePath});
+    Utils::Test::setNextPassword("a", true);
+    createCmd.execute({"db-create", dbFilename, "-p", "-k", keyfilePath});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully created new database.\n"));
 
     Utils::Test::setNextPassword("a");
-    auto db3 =
-        QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename3, true, keyfilePath, "", Utils::DEVNULL));
-    QVERIFY(db3);
+    db = Utils::unlockDatabase(dbFilename, true, keyfilePath, "", Utils::DEVNULL);
+    QVERIFY(db);
 
     // Invalid decryption time (format).
-    QString databaseFilename4 = testDir->path() + "/testCreate4.kdbx";
+    dbFilename = testDir->path() + "/testCreate_time.kdbx";
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", "NAN"});
+    createCmd.execute({"db-create", dbFilename, "-p", "-t", "NAN"});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -651,7 +702,7 @@ void TestCli::testCreate()
     // Invalid decryption time (range).
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", "10"});
+    createCmd.execute({"db-create", dbFilename, "-p", "-t", "10"});
     m_stdoutFile->seek(pos);
     m_stderrFile->seek(errPos);
 
@@ -662,9 +713,9 @@ void TestCli::testCreate()
     // Custom encryption time
     pos = m_stdoutFile->pos();
     errPos = m_stderrFile->pos();
-    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("a", true);
     int epochBefore = QDateTime::currentMSecsSinceEpoch();
-    createCmd.execute({"db-create", databaseFilename4, "-p", "-t", QString::number(encryptionTime)});
+    createCmd.execute({"db-create", dbFilename, "-p", "-t", QString::number(encryptionTime)});
     // Removing 100ms to make sure we account for changes in computation time.
     QVERIFY(QDateTime::currentMSecsSinceEpoch() > (epochBefore + encryptionTime - 100));
     m_stdoutFile->seek(pos);
@@ -672,12 +723,13 @@ void TestCli::testCreate()
 
     QCOMPARE(m_stderrFile->readAll(), QByteArray(""));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Benchmarking key derivation function for 500ms delay.\n"));
     QVERIFY(m_stdoutFile->readLine().contains(QByteArray("rounds for key derivation function.\n")));
 
     Utils::Test::setNextPassword("a");
-    auto db4 = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilename4, true, "", "", Utils::DEVNULL));
-    QVERIFY(db4);
+    db = Utils::unlockDatabase(dbFilename, true, "", "", Utils::DEVNULL);
+    QVERIFY(db);
 }
 
 void TestCli::testInfo()
@@ -1114,13 +1166,14 @@ void TestCli::testImport()
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
     QString databaseFilename = testDir->path() + "testImport1.kdbx";
 
-    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("a", true);
     importCmd.execute({"import", m_xmlFile->fileName(), databaseFilename});
 
     m_stderrFile->reset();
     m_stdoutFile->reset();
 
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Successfully imported database.\n"));
 
     Utils::Test::setNextPassword("a");
@@ -1146,11 +1199,13 @@ void TestCli::testImport()
     QString databaseFilenameQuiet = testDirQuiet->path() + "testImport2.kdbx";
 
     pos = m_stdoutFile->pos();
-    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("a", true);
     importCmd.execute({"import", "-q", m_xmlFile->fileName(), databaseFilenameQuiet});
     m_stdoutFile->seek(pos);
 
-    QCOMPARE(m_stdoutFile->readAll(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray("Repeat password: \n"));
+    QCOMPARE(m_stdoutFile->readLine(), QByteArray());
 
     Utils::Test::setNextPassword("a");
     auto dbQuiet = QSharedPointer<Database>(Utils::unlockDatabase(databaseFilenameQuiet, true, "", "", Utils::DEVNULL));
@@ -1553,10 +1608,10 @@ void TestCli::testMergeWithKeys()
 
     qint64 pos = m_stdoutFile->pos();
 
-    Utils::Test::setNextPassword("a");
+    Utils::Test::setNextPassword("a", true);
     createCmd.execute({"db-create", sourceDatabaseFilename, "-p", "-k", sourceKeyfilePath});
 
-    Utils::Test::setNextPassword("b");
+    Utils::Test::setNextPassword("b", true);
     createCmd.execute({"db-create", targetDatabaseFilename, "-p", "-k", targetKeyfilePath});
 
     Utils::Test::setNextPassword("a");

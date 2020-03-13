@@ -62,7 +62,7 @@ namespace Utils
 
     namespace Test
     {
-        void setNextPassword(const QString& password);
+        void setNextPassword(const QString& password, bool repeat = false);
     }
 }; // namespace Utils
 

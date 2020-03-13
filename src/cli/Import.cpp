@@ -71,9 +71,11 @@ int Import::execute(const QStringList& arguments)
     auto key = QSharedPointer<CompositeKey>::create();
 
     auto passwordKey = Utils::getPasswordFromStdin();
-    if (!passwordKey.isNull()) {
-        key->addKey(passwordKey);
+    if (passwordKey.isNull()) {
+        errorTextStream << QObject::tr("Failed to set database password.") << endl;
+        return EXIT_FAILURE;
     }
+    key->addKey(passwordKey);
 
     if (key->isEmpty()) {
         errorTextStream << QObject::tr("No key is set. Aborting database creation.") << endl;

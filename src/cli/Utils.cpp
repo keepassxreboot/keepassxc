@@ -93,9 +93,12 @@ namespace Utils
          *
          * @param password password to return next
          */
-        void setNextPassword(const QString& password)
+        void setNextPassword(const QString& password, bool repeat)
         {
             nextPasswords.append(password);
+            if (repeat) {
+                nextPasswords.append(password);
+            }
         }
     } // namespace Test
 
@@ -232,10 +235,31 @@ namespace Utils
 
         out << QObject::tr("Enter password to encrypt database (optional): ");
         out.flush();
-        QString password = Utils::getPassword();
+        auto password = Utils::getPassword();
 
-        if (!password.isEmpty()) {
-            passwordKey = QSharedPointer<PasswordKey>(new PasswordKey(password));
+        if (password.isEmpty()) {
+            out << QObject::tr("Do you want to create a database with an empty password? [y/N]: ");
+            out.flush();
+            TextStream ts(STDIN, QIODevice::ReadOnly);
+            if (!ts.device()->isSequential()) {
+                // This is required for testing on macOS
+                ts.seek(0);
+            }
+            auto ans = ts.readLine();
+            if (ans.toLower().startsWith("y")) {
+                passwordKey = QSharedPointer<PasswordKey>::create("");
+            }
+            out << endl;
+        } else {
+            out << QObject::tr("Repeat password: ");
+            out.flush();
+            auto repeat = Utils::getPassword();
+
+            if (password == repeat) {
+                passwordKey = QSharedPointer<PasswordKey>::create(password);
+            } else {
+                out << QObject::tr("Error: Passwords do not match.") << endl;
+            }
         }
 
         return passwordKey;
