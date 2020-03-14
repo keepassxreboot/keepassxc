@@ -19,8 +19,10 @@
 #include "ui_ReportsDialog.h"
 
 #include "ReportsPageHealthcheck.h"
+#include "ReportsPageHibp.h"
 #include "ReportsPageStatistics.h"
 #include "ReportsWidgetHealthcheck.h"
+#include "ReportsWidgetHibp.h"
 
 #include "core/Global.h"
 #include "touchid/TouchID.h"
@@ -53,6 +55,7 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::ReportsDialog())
     , m_healthPage(new ReportsPageHealthcheck())
+    , m_hibpPage(new ReportsPageHibp())
     , m_statPage(new ReportsPageStatistics())
     , m_editEntryWidget(new EditEntryWidget(this))
 {
@@ -60,6 +63,7 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     addPage(m_healthPage);
+    addPage(m_hibpPage);
     addPage(m_statPage);
 
     m_ui->stackedWidget->setCurrentIndex(0);
@@ -71,8 +75,11 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_healthPage->m_healthWidget,
-            SIGNAL(entryActivated(const Group*, Entry*)),
-            SLOT(entryActivationSignalReceived(const Group*, Entry*)));
+            SIGNAL(entryActivated(QWidget*, const Group*, Entry*)),
+            SLOT(entryActivationSignalReceived(QWidget*, const Group*, Entry*)));
+    connect(m_hibpPage->m_hibpWidget,
+            SIGNAL(entryActivated(QWidget*, const Group*, Entry*)),
+            SLOT(entryActivationSignalReceived(QWidget*, const Group*, Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
 
@@ -113,16 +120,33 @@ void ReportsDialog::reject()
     emit editFinished(true);
 }
 
-void ReportsDialog::entryActivationSignalReceived(const Group* group, Entry* entry)
+void ReportsDialog::entryActivationSignalReceived(QWidget* sender, const Group* group, Entry* entry)
 {
+    m_sender = sender;
     m_editEntryWidget->loadEntry(entry, false, false, group->hierarchy().join(" > "), m_db);
     m_ui->stackedWidget->setCurrentWidget(m_editEntryWidget);
 }
 
 void ReportsDialog::switchToMainView(bool previousDialogAccepted)
 {
-    m_ui->stackedWidget->setCurrentWidget(m_healthPage->m_healthWidget);
-    if (previousDialogAccepted) {
-        m_healthPage->m_healthWidget->calculateHealth();
+    // Sanity check
+    if (!m_sender) {
+        return;
     }
+
+    // Return to the previous widget
+    m_ui->stackedWidget->setCurrentWidget(m_sender);
+
+    // If "OK" was clicked, and if we came from the Health Check pane,
+    // re-compute Health Check
+    if (previousDialogAccepted) {
+        if (m_sender == m_healthPage->m_healthWidget) {
+            m_healthPage->m_healthWidget->calculateHealth();
+        } else if (m_sender == m_hibpPage->m_hibpWidget) {
+            m_hibpPage->m_hibpWidget->refreshAfterEdit();
+        }
+    }
+
+    // Don't process the same sender twice
+    m_sender = nullptr;
 }
