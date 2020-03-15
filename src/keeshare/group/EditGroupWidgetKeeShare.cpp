@@ -39,6 +39,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     m_ui->messageWidget->hide();
     m_ui->messageWidget->setCloseButtonVisible(false);
     m_ui->messageWidget->setAutoHideTimeout(-1);
+    m_ui->messageWidget->setAnimate(false);
 
     m_ui->passwordEdit->enablePasswordGenerator();
 
