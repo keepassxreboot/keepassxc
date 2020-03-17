@@ -227,7 +227,7 @@ void ReportsWidgetHealthcheck::emitEntryActivated(const QModelIndex& index)
     const auto group = row.first;
     const auto entry = row.second;
     if (group && entry) {
-        emit entryActivated(this, const_cast<Entry*>(entry));
+        emit entryActivated(const_cast<Entry*>(entry));
     }
 }
 
