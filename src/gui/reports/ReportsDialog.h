@@ -69,7 +69,7 @@ signals:
 
 private slots:
     void reject();
-    void entryActivationSignalReceived(QWidget*, const Group*, Entry* entry);
+    void entryActivationSignalReceived(QWidget*, Entry* entry);
     void switchToMainView(bool previousDialogAccepted);
 
 private:

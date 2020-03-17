@@ -75,11 +75,11 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_healthPage->m_healthWidget,
-            SIGNAL(entryActivated(QWidget*, const Group*, Entry*)),
-            SLOT(entryActivationSignalReceived(QWidget*, const Group*, Entry*)));
+            SIGNAL(entryActivated(QWidget*, Entry*)),
+            SLOT(entryActivationSignalReceived(QWidget*, Entry*)));
     connect(m_hibpPage->m_hibpWidget,
-            SIGNAL(entryActivated(QWidget*, const Group*, Entry*)),
-            SLOT(entryActivationSignalReceived(QWidget*, const Group*, Entry*)));
+            SIGNAL(entryActivated(QWidget*, Entry*)),
+            SLOT(entryActivationSignalReceived(QWidget*, Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
 
@@ -120,10 +120,10 @@ void ReportsDialog::reject()
     emit editFinished(true);
 }
 
-void ReportsDialog::entryActivationSignalReceived(QWidget* sender, const Group* group, Entry* entry)
+void ReportsDialog::entryActivationSignalReceived(QWidget* sender, Entry* entry)
 {
     m_sender = sender;
-    m_editEntryWidget->loadEntry(entry, false, false, group->hierarchy().join(" > "), m_db);
+    m_editEntryWidget->loadEntry(entry, false, false, entry->group()->hierarchy().join(" > "), m_db);
     m_ui->stackedWidget->setCurrentWidget(m_editEntryWidget);
 }
 

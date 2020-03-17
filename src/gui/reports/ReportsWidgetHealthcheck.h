@@ -49,7 +49,7 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 signals:
-    void entryActivated(QWidget*, const Group*, Entry*);
+    void entryActivated(QWidget*, Entry*);
 
 public slots:
     void calculateHealth();

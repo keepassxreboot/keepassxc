@@ -296,7 +296,7 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
         // Found it, invoke entry editor
         m_edEntry = entry;
         m_edPw = entry->password();
-        emit entryActivated(this, entry->group(), const_cast<Entry*>(entry));
+        emit entryActivated(this, const_cast<Entry*>(entry));
     }
 }
 
