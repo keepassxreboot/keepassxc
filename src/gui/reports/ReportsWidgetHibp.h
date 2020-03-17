@@ -71,7 +71,7 @@ private:
     QSet<QString> m_pwQueue; // Passwords we still need to check
     QMap<QString, int> m_pwPwned; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
-    QList<QPair<const Group*, const Entry*>> m_rowToEntry; // List index is table row
+    QList<const Entry*> m_rowToEntry; // List index is table row
     const Entry* m_edEntry = nullptr; // The entry we're currently editing
     QString m_edPw; // The old password of the entry we're editing
 };

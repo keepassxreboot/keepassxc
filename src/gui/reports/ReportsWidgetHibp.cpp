@@ -138,7 +138,7 @@ void ReportsWidgetHibp::makeHibpTable()
         row[2]->setForeground(QBrush(QColor("red")));
 
         // Store entry pointer per table row (used in double click handler)
-        m_rowToEntry.append({group, entry});
+        m_rowToEntry.append(entry);
     }
 
     // If there was an error, append the error message to the table
@@ -291,14 +291,12 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
     }
 
     // Find which database entry was double-clicked
-    const auto row = m_rowToEntry[index.row()];
-    const auto group = row.first;
-    const auto entry = row.second;
-    if (group && entry) {
+    const auto entry = m_rowToEntry[index.row()];
+    if (entry) {
         // Found it, invoke entry editor
         m_edEntry = entry;
         m_edPw = entry->password();
-        emit entryActivated(this, group, const_cast<Entry*>(entry));
+        emit entryActivated(this, entry->group(), const_cast<Entry*>(entry));
     }
 }
 
