@@ -96,7 +96,6 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
  */
 void ReportsWidgetHibp::makeHibpTable()
 {
-
     // Reset the table
     m_referencesModel->clear();
     m_referencesModel->setHorizontalHeaderLabels(QStringList()
@@ -104,14 +103,14 @@ void ReportsWidgetHibp::makeHibpTable()
     m_rowToEntry.clear();
 
     // Search database for passwords that we've found so far
-    std::vector<std::tuple<const Entry*, const Group*, int>> items;
+    QVector<QPair<const Entry*, int>> items;
     for (const auto* group : m_db->rootGroup()->groupsRecursive(true)) {
         if (!group->isRecycled()) {
             for (const auto* entry : group->entries()) {
                 if (!entry->isRecycled()) {
                     const auto found = m_pwPwned.find(entry->password());
                     if (found != m_pwPwned.end()) {
-                        items.emplace_back(entry, group, *found);
+                        items += qMakePair(entry, *found);
                     }
                 }
             }
@@ -119,17 +118,17 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // Sort decending by the number the password has been exposed
-    std::sort(
+    qSort(
         items.begin(),
         items.end(),
-        [](const std::tuple<const Entry*, const Group*, int>& lhs,
-           const std::tuple<const Entry*, const Group*, int>& rhs) { return std::get<2>(lhs) > std::get<2>(rhs); });
+        [](QPair<const Entry*, int>& lhs,
+           QPair<const Entry*, int>& rhs) { return lhs.second > rhs.second; });
 
     // Build the table
     for (const auto& item : items) {
-        const auto& entry = std::get<0>(item);
-        const auto& group = std::get<1>(item);
-        const auto count = std::get<2>(item);
+        const auto entry = item.first;
+        const auto group = entry->group();
+        const auto count = item.second;
 
         auto row = QList<QStandardItem*>();
         row << new QStandardItem(entry->iconPixmap(), entry->title())
