@@ -223,8 +223,8 @@ void ReportsWidgetHibp::checkNext()
 
     // Handle the next password
     m_downloader.reset(new HibpDownloader(*m_pwQueue.begin()));
-    connect(&*m_downloader, SIGNAL(finished(const QString&, int)), this, SLOT(checkFinished(const QString&, int)));
-    connect(&*m_downloader,
+    connect(m_downloader.data(), SIGNAL(finished(const QString&, int)), this, SLOT(checkFinished(const QString&, int)));
+    connect(m_downloader.data(),
             SIGNAL(failed(const QString&, const QString&)),
             this,
             SLOT(checkFailed(const QString&, const QString&)));
