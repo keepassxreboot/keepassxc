@@ -24,6 +24,24 @@
 
 #include <QStandardItemModel>
 
+namespace {
+    /*
+     * Convert the number of times a password has been pwned into
+     * a display text for the third table column.
+     */
+    QString toDisplayText(int count) {
+        if (count==1)               return QObject::tr("once");
+        if (count <= 10)            return QObject::tr("10 times");
+        if (count <= 100)           return QObject::tr("100 times");
+        if (count <= 1000)          return QObject::tr("1000 times");
+        if (count <= 10 * 1000)     return QObject::tr("10,000 times");
+        if (count <= 100 * 1000)    return QObject::tr("100,000 times");
+        if (count <= 1000 * 1000)   return QObject::tr("a million times");
+
+        return QObject::tr("millions of times");
+    }
+}
+
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::ReportsWidgetHibp())
@@ -116,18 +134,7 @@ void ReportsWidgetHibp::makeHibpTable()
         auto row = QList<QStandardItem*>();
         row << new QStandardItem(entry->iconPixmap(), entry->title())
             << new QStandardItem(group->iconPixmap(), group->hierarchy().join("/"))
-            << new QStandardItem(
-                   count == 1 ? tr("once")
-                              : count <= 10 ? tr("10 times")
-                                            : count <= 100 ? tr("100 times")
-                                                           : count <= 1000 ? tr("1000 times")
-                                                                           : count <= 10 * 1000
-                                                                                 ? tr("10,000 times")
-                                                                                 : count <= 100 * 1000
-                                                                                       ? tr("100,000 times")
-                                                                                       : count <= 1000 * 1000
-                                                                                             ? tr("a million times")
-                                                                                             : tr("millions of times"));
+            << new QStandardItem(toDisplayText(count));
         m_referencesModel->appendRow(row);
         row[2]->setForeground(QBrush(QColor("red")));
 
