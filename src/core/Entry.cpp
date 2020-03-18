@@ -29,7 +29,6 @@
 
 #include <QDir>
 #include <QRegularExpression>
-#include <ctime>
 #include <utility>
 
 const int Entry::DefaultIconNumber = 0;
@@ -939,51 +938,52 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 
 QString Entry::resolveDateTimePlaceholder(Entry::PlaceholderType placeholderType) const
 {
-    time_t time = std::time(NULL);
-    char date_formatted[50]{};
+    QDateTime time = Clock::currentDateTime();
+    QDateTime time_utc = Clock::currentDateTimeUtc();
+    QString date_formatted{};
 
     switch (placeholderType) {
     case PlaceholderType::DateTimeSimple:
-        std::strftime(date_formatted, sizeof(date_formatted), "%Y%m%d%H%M", localtime(&time));
+        date_formatted = time.toString("yyyyMMddhhmmss");
         break;
     case PlaceholderType::DateTimeYear:
-        std::strftime(date_formatted, sizeof(date_formatted), "%Y", localtime(&time));
+        date_formatted = time.toString("yyyy");
         break;
     case PlaceholderType::DateTimeMonth:
-        std::strftime(date_formatted, sizeof(date_formatted), "%m", localtime(&time));
+        date_formatted = time.toString("MM");
         break;
     case PlaceholderType::DateTimeDay:
-        std::strftime(date_formatted, sizeof(date_formatted), "%d", localtime(&time));
+        date_formatted = time.toString("dd");
         break;
     case PlaceholderType::DateTimeHour:
-        std::strftime(date_formatted, sizeof(date_formatted), "%H", localtime(&time));
+        date_formatted = time.toString("hh");
         break;
     case PlaceholderType::DateTimeMinute:
-        std::strftime(date_formatted, sizeof(date_formatted), "%M", localtime(&time));
+        date_formatted = time.toString("mm");
         break;
     case PlaceholderType::DateTimeSecond:
-        std::strftime(date_formatted, sizeof(date_formatted), "%S", localtime(&time));
+        date_formatted = time.toString("ss");
         break;
     case PlaceholderType::DateTimeUtcSimple:
-        std::strftime(date_formatted, sizeof(date_formatted), "%Y%m%d%H%M", gmtime(&time));
+        date_formatted = time_utc.toString("yyyyMMddhhmmss");
         break;
     case PlaceholderType::DateTimeUtcYear:
-        std::strftime(date_formatted, sizeof(date_formatted), "%Y", gmtime(&time));
+        date_formatted = time_utc.toString("yyyy");
         break;
     case PlaceholderType::DateTimeUtcMonth:
-        std::strftime(date_formatted, sizeof(date_formatted), "%m", gmtime(&time));
+        date_formatted = time_utc.toString("MM");
         break;
     case PlaceholderType::DateTimeUtcDay:
-        std::strftime(date_formatted, sizeof(date_formatted), "%d", gmtime(&time));
+        date_formatted = time_utc.toString("dd");
         break;
     case PlaceholderType::DateTimeUtcHour:
-        std::strftime(date_formatted, sizeof(date_formatted), "%H", gmtime(&time));
+        date_formatted = time_utc.toString("hh");
         break;
     case PlaceholderType::DateTimeUtcMinute:
-        std::strftime(date_formatted, sizeof(date_formatted), "%M", gmtime(&time));
+        date_formatted = time_utc.toString("mm");
         break;
     case PlaceholderType::DateTimeUtcSecond:
-        std::strftime(date_formatted, sizeof(date_formatted), "%S", gmtime(&time));
+        date_formatted = time_utc.toString("ss");
         break;
     default: {
         Q_ASSERT_X(false, "Entry::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
@@ -991,7 +991,7 @@ QString Entry::resolveDateTimePlaceholder(Entry::PlaceholderType placeholderType
     }
     }
 
-    return QString(date_formatted);
+    return date_formatted;
 }
 
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
