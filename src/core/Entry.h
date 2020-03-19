@@ -190,7 +190,21 @@ public:
         UrlUserName,
         UrlPassword,
         Reference,
-        CustomAttribute
+        CustomAttribute,
+        DateTimeSimple,
+        DateTimeYear,
+        DateTimeMonth,
+        DateTimeDay,
+        DateTimeHour,
+        DateTimeMinute,
+        DateTimeSecond,
+        DateTimeUtcSimple,
+        DateTimeUtcYear,
+        DateTimeUtcMonth,
+        DateTimeUtcDay,
+        DateTimeUtcHour,
+        DateTimeUtcMinute,
+        DateTimeUtcSecond
     };
 
     /**
@@ -206,6 +220,7 @@ public:
     QString resolveMultiplePlaceholders(const QString& str) const;
     QString resolvePlaceholder(const QString& str) const;
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
+    QString resolveDateTimePlaceholder(PlaceholderType placeholderType) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 

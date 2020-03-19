@@ -916,9 +916,82 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     }
     case PlaceholderType::Reference:
         return resolveReferencePlaceholderRecursive(placeholder, maxDepth);
+    case PlaceholderType::DateTimeSimple:
+    case PlaceholderType::DateTimeYear:
+    case PlaceholderType::DateTimeMonth:
+    case PlaceholderType::DateTimeDay:
+    case PlaceholderType::DateTimeHour:
+    case PlaceholderType::DateTimeMinute:
+    case PlaceholderType::DateTimeSecond:
+    case PlaceholderType::DateTimeUtcSimple:
+    case PlaceholderType::DateTimeUtcYear:
+    case PlaceholderType::DateTimeUtcMonth:
+    case PlaceholderType::DateTimeUtcDay:
+    case PlaceholderType::DateTimeUtcHour:
+    case PlaceholderType::DateTimeUtcMinute:
+    case PlaceholderType::DateTimeUtcSecond:
+        return resolveMultiplePlaceholdersRecursive(resolveDateTimePlaceholder(typeOfPlaceholder), maxDepth - 1);
     }
 
     return placeholder;
+}
+
+QString Entry::resolveDateTimePlaceholder(Entry::PlaceholderType placeholderType) const
+{
+    QDateTime time = Clock::currentDateTime();
+    QDateTime time_utc = Clock::currentDateTimeUtc();
+    QString date_formatted{};
+
+    switch (placeholderType) {
+    case PlaceholderType::DateTimeSimple:
+        date_formatted = time.toString("yyyyMMddhhmmss");
+        break;
+    case PlaceholderType::DateTimeYear:
+        date_formatted = time.toString("yyyy");
+        break;
+    case PlaceholderType::DateTimeMonth:
+        date_formatted = time.toString("MM");
+        break;
+    case PlaceholderType::DateTimeDay:
+        date_formatted = time.toString("dd");
+        break;
+    case PlaceholderType::DateTimeHour:
+        date_formatted = time.toString("hh");
+        break;
+    case PlaceholderType::DateTimeMinute:
+        date_formatted = time.toString("mm");
+        break;
+    case PlaceholderType::DateTimeSecond:
+        date_formatted = time.toString("ss");
+        break;
+    case PlaceholderType::DateTimeUtcSimple:
+        date_formatted = time_utc.toString("yyyyMMddhhmmss");
+        break;
+    case PlaceholderType::DateTimeUtcYear:
+        date_formatted = time_utc.toString("yyyy");
+        break;
+    case PlaceholderType::DateTimeUtcMonth:
+        date_formatted = time_utc.toString("MM");
+        break;
+    case PlaceholderType::DateTimeUtcDay:
+        date_formatted = time_utc.toString("dd");
+        break;
+    case PlaceholderType::DateTimeUtcHour:
+        date_formatted = time_utc.toString("hh");
+        break;
+    case PlaceholderType::DateTimeUtcMinute:
+        date_formatted = time_utc.toString("mm");
+        break;
+    case PlaceholderType::DateTimeUtcSecond:
+        date_formatted = time_utc.toString("ss");
+        break;
+    default: {
+        Q_ASSERT_X(false, "Entry::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
+        break;
+    }
+    }
+
+    return date_formatted;
 }
 
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
@@ -1141,7 +1214,21 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         {QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment},
         {QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo},
         {QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName},
-        {QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword}};
+        {QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword},
+        {QStringLiteral("{DT_SIMPLE}"), PlaceholderType::DateTimeSimple},
+        {QStringLiteral("{DT_YEAR}"), PlaceholderType::DateTimeYear},
+        {QStringLiteral("{DT_MONTH}"), PlaceholderType::DateTimeMonth},
+        {QStringLiteral("{DT_DAY}"), PlaceholderType::DateTimeDay},
+        {QStringLiteral("{DT_HOUR}"), PlaceholderType::DateTimeHour},
+        {QStringLiteral("{DT_MINUTE}"), PlaceholderType::DateTimeMinute},
+        {QStringLiteral("{DT_SECOND}"), PlaceholderType::DateTimeSecond},
+        {QStringLiteral("{DT_UTC_SIMPLE}"), PlaceholderType::DateTimeUtcSimple},
+        {QStringLiteral("{DT_UTC_YEAR}"), PlaceholderType::DateTimeUtcYear},
+        {QStringLiteral("{DT_UTC_MONTH}"), PlaceholderType::DateTimeUtcMonth},
+        {QStringLiteral("{DT_UTC_DAY}"), PlaceholderType::DateTimeUtcDay},
+        {QStringLiteral("{DT_UTC_HOUR}"), PlaceholderType::DateTimeUtcHour},
+        {QStringLiteral("{DT_UTC_MINUTE}"), PlaceholderType::DateTimeUtcMinute},
+        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond}};
 
     return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
