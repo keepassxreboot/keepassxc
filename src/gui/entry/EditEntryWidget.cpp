@@ -667,7 +667,7 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
     KeeAgentSettings settings;
     toKeeAgentSettings(settings);
 
-    if (!settings.keyConfigured()) {
+    if (!m_entry || !settings.keyConfigured()) {
         return false;
     }
 
