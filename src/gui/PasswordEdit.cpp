@@ -57,7 +57,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     setFont(passwordFont);
 
     m_toggleVisibleAction = new QAction(
-        resources()->icon("password-show"),
+        resources()->icon("password-show-off"),
         tr("Toggle Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_H).toString(QKeySequence::NativeText)),
         nullptr);
     m_toggleVisibleAction->setCheckable(true);

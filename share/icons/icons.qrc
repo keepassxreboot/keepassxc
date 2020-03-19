@@ -9,6 +9,7 @@
         <file>application/scalable/actions/auto-type.svg</file>
         <file>application/scalable/actions/bugreport.svg</file>
         <file>application/scalable/actions/chronometer.svg</file>
+        <file>application/scalable/actions/clipboard-text.svg</file>
         <file>application/scalable/actions/configure.svg</file>
         <file>application/scalable/actions/database-change-key.svg</file>
         <file>application/scalable/actions/database-lock.svg</file>
@@ -49,6 +50,7 @@
         <file>application/scalable/actions/password-generator.svg</file>
         <file>application/scalable/actions/password-show-off.svg</file>
         <file>application/scalable/actions/password-show-on.svg</file>
+        <file>application/scalable/actions/refresh.svg</file>
         <file>application/scalable/actions/sort-alphabetical-ascending.svg</file>
         <file>application/scalable/actions/sort-alphabetical-descending.svg</file>
         <file>application/scalable/actions/statistics.svg</file>
