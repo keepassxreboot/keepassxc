@@ -29,7 +29,7 @@ Copies an attribute or the current TOTP (if the \fI-t\fP option is specified) of
 In interactive mode, closes the currently opened database (see \fIopen\fP).
 
 .IP "\fBdb-create\fP [options] <database>"
-Creates a new database with a key file and/or password. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
+Creates a new database with a password and/or a key file. The key file will be created if the file that is referred to does not exist. If both the key file and password are empty, no database will be created.
 
 .IP "\fBdb-info\fP [options] <database>"
 Show a database's information.
@@ -184,6 +184,12 @@ Copies the current TOTP instead of the specified attribute to the clipboard.
 Will report an error if no TOTP is configured for the entry.
 
 .SS "Create options"
+
+.IP "\fB-k\fP, \fB--set-key-file\fP <path>"
+Set the key file for the database.
+
+.IP "\fB-p\fP, \fB--set-password\fP"
+Set a password for the database.
 
 .IP "\fB-t\fP, \fB--decryption-time\fP <time>"
 Target decryption time in MS for the database.
