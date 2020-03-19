@@ -103,7 +103,8 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
 }
 
-PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent) {
+PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
+{
     auto pwGenerator = new PasswordGeneratorWidget(parent);
     pwGenerator->setWindowModality(Qt::ApplicationModal);
     pwGenerator->setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
