@@ -94,7 +94,7 @@ HibpDownloader::HibpDownloader(QObject* parent)
     , m_reply(nullptr)
 {
     m_timeout.setSingleShot(true);
-    connect(&m_timeout, SIGNAL(timeout()), SLOT(abortDownload()));
+    connect(&m_timeout, SIGNAL(timeout()), SLOT(abort()));
 }
 
 HibpDownloader::~HibpDownloader()
