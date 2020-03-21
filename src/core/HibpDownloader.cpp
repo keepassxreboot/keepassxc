@@ -26,7 +26,6 @@
 
 namespace
 {
-
     /*
      * Return the SHA1 hash of the specified password in upper-case hex.
      *
@@ -59,25 +58,34 @@ namespace
      */
     int pwnCount(const QString& password, const QString& hibpResult)
     {
-        const auto hash = sha1Hex(password).toStdString();
-        const auto result = hibpResult.toStdString();
-        const auto pHash = hash.c_str();
-        const auto pResult = result.c_str();
+        // The first 5 characters of the hash are in the URL already,
+        // the HIBP result contains the remainder, which is:
+        const auto hash = sha1Hex(password);
+        const auto remainder = QStringRef(&hash, 5, 35);
 
-        // The first 5 characters of the hash are in the URL. Search the
-        // rest in the HIBP result.
-        const auto p = strstr(pResult, pHash + 5);
-        if (p) {
-
-            // Found: Return the number after the next colon
-            const auto colon = strchr(p, ':');
-            return colon ? atoi(colon + 1) : 1;
-
-        } else {
-
+        // Search the remainder in the HIBP output
+        const auto pos = hibpResult.indexOf(remainder);
+        if (pos < 0) {
             // Not found
             return 0;
         }
+
+        // Found: Return the number that follows. We know that the
+        // length of remainder is 35 and that a colon follows in
+        // the HIBP result, followed by the number. So the number
+        // begins here:
+        const auto counter = hibpResult.midRef(pos+35+1);
+
+        // And where does the number end?
+        auto end = counter.indexOf('\n');
+        if (end < 0) {
+            end = counter.size();
+        }
+
+        // So extract the number. Note that toInt doesn't have
+        // a "scan until number ends, ignore whatever follows"
+        // mode like atoi.
+        return counter.left(end).toInt();
     }
 } // namespace
 
