@@ -74,12 +74,8 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     adjustSize();
 
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
-    connect(m_healthPage->m_healthWidget,
-            SIGNAL(entryActivated(Entry*)),
-            SLOT(entryActivationSignalReceived(Entry*)));
-    connect(m_hibpPage->m_hibpWidget,
-            SIGNAL(entryActivated(Entry*)),
-            SLOT(entryActivationSignalReceived(Entry*)));
+    connect(m_healthPage->m_healthWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
+    connect(m_hibpPage->m_hibpWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
 

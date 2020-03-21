@@ -42,7 +42,10 @@ public:
 
     void add(const QString& password);
     void validate();
-    int qSize() const { return m_pwdsToTry.size(); }
+    int qSize() const
+    {
+        return m_pwdsToTry.size();
+    }
 
 signals:
     void finished(const QString& password, int count);

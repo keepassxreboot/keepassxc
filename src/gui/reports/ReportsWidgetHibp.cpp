@@ -24,23 +24,32 @@
 
 #include <QStandardItemModel>
 
-namespace {
+namespace
+{
     /*
      * Convert the number of times a password has been pwned into
      * a display text for the third table column.
      */
-    QString toDisplayText(int count) {
-        if (count==1)               return QObject::tr("once");
-        if (count <= 10)            return QObject::tr("10 times");
-        if (count <= 100)           return QObject::tr("100 times");
-        if (count <= 1000)          return QObject::tr("1000 times");
-        if (count <= 10 * 1000)     return QObject::tr("10,000 times");
-        if (count <= 100 * 1000)    return QObject::tr("100,000 times");
-        if (count <= 1000 * 1000)   return QObject::tr("a million times");
+    QString toDisplayText(int count)
+    {
+        if (count == 1)
+            return QObject::tr("once");
+        if (count <= 10)
+            return QObject::tr("10 times");
+        if (count <= 100)
+            return QObject::tr("100 times");
+        if (count <= 1000)
+            return QObject::tr("1000 times");
+        if (count <= 10 * 1000)
+            return QObject::tr("10,000 times");
+        if (count <= 100 * 1000)
+            return QObject::tr("100,000 times");
+        if (count <= 1000 * 1000)
+            return QObject::tr("a million times");
 
         return QObject::tr("millions of times");
     }
-}
+} // namespace
 
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     : QWidget(parent)
@@ -85,9 +94,9 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
         if (!group->isRecycled()) {
             for (const auto* entry : group->entries()) {
                 if (!entry->isRecycled() && !entry->password().isEmpty()) {
-                    #ifdef WITH_XC_NETWORKING
-                        m_downloader.add(entry->password());
-                    #endif
+#ifdef WITH_XC_NETWORKING
+                    m_downloader.add(entry->password());
+#endif
                 }
             }
         }
@@ -128,11 +137,9 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // Sort decending by the number the password has been exposed
-    qSort(
-        items.begin(),
-        items.end(),
-        [](QPair<const Entry*, int>& lhs,
-           QPair<const Entry*, int>& rhs) { return lhs.second > rhs.second; });
+    qSort(items.begin(), items.end(), [](QPair<const Entry*, int>& lhs, QPair<const Entry*, int>& rhs) {
+        return lhs.second > rhs.second;
+    });
 
     // Build the table
     for (const auto& item : items) {
@@ -161,7 +168,7 @@ void ReportsWidgetHibp::makeHibpTable()
 
     // If we're done and everything is good, display a motivational message
 #ifdef WITH_XC_NETWORKING
-    if (m_downloader.qSize()==0 && m_pwPwned.isEmpty() && m_error.isEmpty()) {
+    if (m_downloader.qSize() == 0 && m_pwPwned.isEmpty() && m_error.isEmpty()) {
         m_referencesModel->clear();
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
     }
@@ -177,7 +184,7 @@ void ReportsWidgetHibp::checkFinished(const QString& password, int count)
 {
     // Update the progress bar
 #ifdef WITH_XC_NETWORKING
-    if (m_downloader.qSize()==0) {
+    if (m_downloader.qSize() == 0) {
         // Finished, remove the progress bar.
         // Note that we're not un-hiding the progress bar after the
         // initial pass through the password queue is done, i. e.
@@ -314,18 +321,18 @@ void ReportsWidgetHibp::refreshAfterEdit()
     // Remove the previous password from the list of findings
     m_pwPwned.remove(m_edPw);
 
-    // Is the downloader still running?
-    #ifdef WITH_XC_NETWORKING
-        const auto mustRun = m_downloader.qSize();
+// Is the downloader still running?
+#ifdef WITH_XC_NETWORKING
+    const auto mustRun = m_downloader.qSize();
 
-        // Add the entry's new password to the queue
-        m_downloader.add(m_edEntry->password());
+    // Add the entry's new password to the queue
+    m_downloader.add(m_edEntry->password());
 
-        // Restart the downloader if it's not running yet
-        if (mustRun) {
-            startValidation();
-        }
-    #endif
+    // Restart the downloader if it's not running yet
+    if (mustRun) {
+        startValidation();
+    }
+#endif
 }
 
 void ReportsWidgetHibp::saveSettings()

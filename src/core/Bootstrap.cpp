@@ -256,7 +256,7 @@ namespace Bootstrap
                                       nullptr, // do not change owner or group
                                       pACL, // DACL specified
                                       nullptr // do not change SACL
-                   );
+                      );
 
     Cleanup:
 

@@ -74,7 +74,7 @@ namespace
         // length of remainder is 35 and that a colon follows in
         // the HIBP result, followed by the number. So the number
         // begins here:
-        const auto counter = hibpResult.midRef(pos+35+1);
+        const auto counter = hibpResult.midRef(pos + 35 + 1);
 
         // And where does the number end?
         auto end = counter.indexOf('\n');
@@ -108,7 +108,7 @@ HibpDownloader::~HibpDownloader()
  * Invoke this function once for every password to check,
  * then call validate().
  */
-void HibpDownloader::add(const QString &password)
+void HibpDownloader::add(const QString& password)
 {
     if (!m_pwdsToTry.contains(password)) {
         m_pwdsToTry += password;
@@ -146,7 +146,7 @@ void HibpDownloader::abort()
 /*
  * Fetch the hash list of the specified password from HIBP.
  */
-void HibpDownloader::fetchPassword(const QString &password)
+void HibpDownloader::fetchPassword(const QString& password)
 {
     m_currentPwd = password;
 
@@ -198,7 +198,6 @@ void HibpDownloader::fetchFinished()
             msg += "\n" + m_bytesReceived;
         }
         emit failed(m_currentPwd, msg);
-
     }
 
     // Current password validated, send the result to the caller
