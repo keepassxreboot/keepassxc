@@ -320,18 +320,12 @@ void ReportsWidgetHibp::refreshAfterEdit()
 
     // Remove the previous password from the list of findings
     m_pwPwned.remove(m_edPw);
+    makeHibpTable();
 
-// Is the downloader still running?
+    // Validate the new password against HIBP
 #ifdef WITH_XC_NETWORKING
-    const auto mustRun = m_downloader.qSize();
-
-    // Add the entry's new password to the queue
     m_downloader.add(m_edEntry->password());
-
-    // Restart the downloader if it's not running yet
-    if (mustRun) {
-        startValidation();
-    }
+    startValidation();
 #endif
 }
 
