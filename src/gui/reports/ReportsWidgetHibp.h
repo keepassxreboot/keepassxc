@@ -59,16 +59,15 @@ public slots:
 
 private:
     void makeHibpTable();
-    void checkNext();
+    void startValidation();
 
     QScopedPointer<Ui::ReportsWidgetHibp> m_ui;
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QSharedPointer<Database> m_db;
 
     bool m_checkStarted = false; // Have we run the initialization already?
-    QSharedPointer<HibpDownloader> m_downloader; // This performs the actual HIBP online query
+    HibpDownloader m_downloader; // This performs the actual HIBP online query
     int m_qMax = 0; // Max number of items in the queue (for progress bar)
-    QSet<QString> m_pwQueue; // Passwords we still need to check
     QMap<QString, int> m_pwPwned; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
     QList<const Entry*> m_rowToEntry; // List index is table row

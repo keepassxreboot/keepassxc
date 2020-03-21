@@ -54,6 +54,13 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     m_ui->hibpTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
+#ifdef WITH_XC_NETWORKING
+    connect(&m_downloader, SIGNAL(finished(const QString&, int)), this, SLOT(checkFinished(const QString&, int)));
+    connect(&m_downloader,
+            SIGNAL(failed(const QString&, const QString&)),
+            this,
+            SLOT(checkFailed(const QString&, const QString&)));
+#endif
 }
 
 ReportsWidgetHibp::~ReportsWidgetHibp()
@@ -66,7 +73,6 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
     m_db = std::move(db);
     m_checkStarted = false;
     m_referencesModel->clear();
-    m_pwQueue.clear();
     m_pwPwned.clear();
     m_error.clear();
     m_rowToEntry.clear();
@@ -74,12 +80,14 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
     m_ui->progressBar->hide();
 
     // Collect all passwords in the database (unless recycled, and
-    // unless empty).
+    // unless empty) and submit them to the downloader.
     for (const auto* group : m_db->rootGroup()->groupsRecursive(true)) {
         if (!group->isRecycled()) {
             for (const auto* entry : group->entries()) {
                 if (!entry->isRecycled() && !entry->password().isEmpty()) {
-                    m_pwQueue << entry->password();
+                    #ifdef WITH_XC_NETWORKING
+                        m_downloader.add(entry->password());
+                    #endif
                 }
             }
         }
@@ -87,7 +95,9 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
 
     // Store the number of passwords we need to check for the
     // progress bar
-    m_qMax = m_pwQueue.size();
+#ifdef WITH_XC_NETWORKING
+    m_qMax = m_downloader.qSize();
+#endif
 }
 
 /*
@@ -150,10 +160,12 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // If we're done and everything is good, display a motivational message
-    if (m_pwQueue.isEmpty() && m_pwPwned.isEmpty() && m_error.isEmpty()) {
+#ifdef WITH_XC_NETWORKING
+    if (m_downloader.qSize()==0 && m_pwPwned.isEmpty() && m_error.isEmpty()) {
         m_referencesModel->clear();
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
     }
+#endif
 
     m_ui->hibpTableView->resizeRowsToContents();
 }
@@ -163,7 +175,25 @@ void ReportsWidgetHibp::makeHibpTable()
  */
 void ReportsWidgetHibp::checkFinished(const QString& password, int count)
 {
-    // If the password has been pwned:
+    // Update the progress bar
+#ifdef WITH_XC_NETWORKING
+    if (m_downloader.qSize()==0) {
+        // Finished, remove the progress bar.
+        // Note that we're not un-hiding the progress bar after the
+        // initial pass through the password queue is done, i. e.
+        // when re-validating a modified password after the user
+        // editied an entry. We want that re-validation to happen
+        // invisibly, popping the progress bar back into view would
+        // just be visually disturbing.
+        m_ui->progressBar->hide();
+    } else {
+        // Not yet finished
+        m_ui->progressBar->setValue(m_qMax - m_downloader.qSize());
+        m_ui->progressBar->setMaximum(m_qMax);
+    }
+#endif
+
+    // If this password has been pwned:
     if (count > 0) {
 
         // Add the password to the list of our findings
@@ -172,62 +202,29 @@ void ReportsWidgetHibp::checkFinished(const QString& password, int count)
         // Refresh the findings table
         makeHibpTable();
     }
-
-    // Remove this password from the to-do list
-    if (m_pwQueue.remove(password)) {
-        // Something was removed, so check the next password
-        checkNext();
-    }
 }
 
 /*
  * Invoked when a query to the HIBP server fails.
  *
- * Displays the table with the current findings and quits the online activity.
+ * Displays the table with the current findings.
  */
 void ReportsWidgetHibp::checkFailed(const QString& /*password*/, const QString& error)
 {
     m_error = error;
-
-#ifdef WITH_XC_NETWORKING
-    m_pwQueue.clear();
-    m_downloader.reset();
     m_ui->progressBar->hide();
     makeHibpTable();
-#endif
 }
 
 /*
- * Run the background validator on the next password in the queue.
+ * Start the actual online validation.
+ * The passwords to validate must previously have been added to
+ * the downloader.
  */
-void ReportsWidgetHibp::checkNext()
+void ReportsWidgetHibp::startValidation()
 {
 #ifdef WITH_XC_NETWORKING
-    // If nothing's left to do, we're done
-    if (m_pwQueue.empty()) {
-        m_downloader.reset();
-        m_ui->progressBar->hide();
-        makeHibpTable();
-        return;
-    }
-
-    // We're not set done, set up the progress bar
-    m_ui->progressBar->setValue(m_qMax - m_pwQueue.size());
-    m_ui->progressBar->setMaximum(m_qMax);
-    // Note that we're not un-hiding the progress bar after the
-    // initial pass through the password queue is done, i. e.
-    // when re-validating a modified password after the user
-    // editied an entry. We want that re-validation to happen
-    // invisibly, popping the progress bar back into view would
-    // just be visually disturbing.
-
-    // Handle the next password
-    m_downloader.reset(new HibpDownloader(*m_pwQueue.begin()));
-    connect(m_downloader.data(), SIGNAL(finished(const QString&, int)), this, SLOT(checkFinished(const QString&, int)));
-    connect(m_downloader.data(),
-            SIGNAL(failed(const QString&, const QString&)),
-            this,
-            SLOT(checkFailed(const QString&, const QString&)));
+    m_downloader.validate();
 #endif
 }
 
@@ -258,7 +255,7 @@ void ReportsWidgetHibp::showEvent(QShowEvent* event)
         // OK, do it
         m_checkStarted = true;
         m_ui->progressBar->show();
-        checkNext();
+        startValidation();
 
     } else {
 
@@ -318,15 +315,17 @@ void ReportsWidgetHibp::refreshAfterEdit()
     m_pwPwned.remove(m_edPw);
 
     // Is the downloader still running?
-    const auto mustRun = m_pwQueue.empty();
+    #ifdef WITH_XC_NETWORKING
+        const auto mustRun = m_downloader.qSize();
 
-    // Add the entry's new password to the queue
-    m_pwQueue << m_edEntry->password();
+        // Add the entry's new password to the queue
+        m_downloader.add(m_edEntry->password());
 
-    // Restart the downloader if it's not running yet
-    if (mustRun) {
-        checkNext();
-    }
+        // Restart the downloader if it's not running yet
+        if (mustRun) {
+            startValidation();
+        }
+    #endif
 }
 
 void ReportsWidgetHibp::saveSettings()

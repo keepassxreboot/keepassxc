@@ -37,8 +37,12 @@ class HibpDownloader : public QObject
     Q_OBJECT
 
 public:
-    explicit HibpDownloader(QString password, QObject* parent = nullptr);
+    explicit HibpDownloader(QObject* parent = nullptr);
     ~HibpDownloader() override;
+
+    void add(const QString& password);
+    void validate();
+    int qSize() const { return m_pwdsToTry.size(); }
 
 signals:
     void finished(const QString& password, int count);
@@ -52,7 +56,10 @@ private slots:
     void fetchReadyRead();
 
 private:
-    const QString m_password;
+    void fetchPassword(const QString& password);
+
+    QString m_currentPwd; // The password we're currently validating
+    QStringList m_pwdsToTry; // The list of remaining passwords to validate
     QNetworkReply* m_reply = nullptr;
     QTimer m_timeout;
     QByteArray m_bytesReceived;

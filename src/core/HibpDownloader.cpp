@@ -89,37 +89,48 @@ namespace
     }
 } // namespace
 
-HibpDownloader::HibpDownloader(QString password, QObject* parent)
+HibpDownloader::HibpDownloader(QObject* parent)
     : QObject(parent)
-    , m_password(password)
+    , m_reply(nullptr)
 {
-    // Set up timeout handling
     m_timeout.setSingleShot(true);
-    connect(&m_timeout, SIGNAL(timeout()), SLOT(abort()));
-    const auto sec = config()->get("HibpDownloadTimeout", 10).toInt();
-    m_timeout.start(sec * 1000);
-
-    // The URL we query is https://api.pwnedpasswords.com/range/XXXXX,
-    // where XXXXX is the first five bytes of the hex representation of
-    // the password's SHA1.
-    const auto url = QString("https://api.pwnedpasswords.com/range/") + sha1Hex(m_password).left(5);
-
-    // HIBP requires clients to specify a user agent in the request
-    // (https://haveibeenpwned.com/API/v3#UserAgent); however, in order
-    // to minimize the amount of information we expose about ourselves,
-    // we don't add the KeePassXC version number or platform.
-    auto request = QNetworkRequest(url);
-    request.setRawHeader("User-Agent", "KeePassXC");
-
-    // Finally, submit the request to HIBP.
-    m_reply = getNetMgr()->get(request);
-    connect(m_reply, &QNetworkReply::finished, this, &HibpDownloader::fetchFinished);
-    connect(m_reply, &QIODevice::readyRead, this, &HibpDownloader::fetchReadyRead);
+    connect(&m_timeout, SIGNAL(timeout()), SLOT(abortDownload()));
 }
 
 HibpDownloader::~HibpDownloader()
 {
     abort();
+}
+
+/*
+ * Add one password to the list list of passwords to check.
+ *
+ * Invoke this function once for every password to check,
+ * then call validate().
+ */
+void HibpDownloader::add(const QString &password)
+{
+    if (!m_pwdsToTry.contains(password)) {
+        m_pwdsToTry += password;
+    }
+}
+
+/*
+ * Start validating the passwords against HIBP.
+ */
+void HibpDownloader::validate()
+{
+    if (m_pwdsToTry.empty()) {
+        return;
+    }
+
+    if (!m_timeout.isActive()) {
+        int timeout = config()->get("HibpDownloadTimeout", 10).toInt();
+        m_timeout.start(timeout * 1000);
+
+        // Use the first password to start the download process.
+        fetchPassword(m_pwdsToTry.takeFirst());
+    }
 }
 
 /*
@@ -130,6 +141,32 @@ void HibpDownloader::abort()
     if (m_reply) {
         m_reply->abort();
     }
+}
+
+/*
+ * Fetch the hash list of the specified password from HIBP.
+ */
+void HibpDownloader::fetchPassword(const QString &password)
+{
+    m_currentPwd = password;
+
+    // The URL we query is https://api.pwnedpasswords.com/range/XXXXX,
+    // where XXXXX is the first five bytes of the hex representation of
+    // the password's SHA1.
+    const auto url = QString("https://api.pwnedpasswords.com/range/") + sha1Hex(m_currentPwd).left(5);
+
+    // HIBP requires clients to specify a user agent in the request
+    // (https://haveibeenpwned.com/API/v3#UserAgent); however, in order
+    // to minimize the amount of information we expose about ourselves,
+    // we don't add the KeePassXC version number or platform.
+    m_bytesReceived.clear();
+    auto request = QNetworkRequest(url);
+    request.setRawHeader("User-Agent", "KeePassXC");
+
+    // Finally, submit the request to HIBP.
+    m_reply = getNetMgr()->get(request);
+    connect(m_reply, &QNetworkReply::finished, this, &HibpDownloader::fetchFinished);
+    connect(m_reply, &QIODevice::readyRead, this, &HibpDownloader::fetchReadyRead);
 }
 
 /*
@@ -145,6 +182,7 @@ void HibpDownloader::fetchReadyRead()
  */
 void HibpDownloader::fetchFinished()
 {
+    // Get result status
     const auto ok = m_reply->error() == QNetworkReply::NoError;
     const auto err = m_reply->errorString();
 
@@ -152,13 +190,26 @@ void HibpDownloader::fetchFinished()
     m_reply = nullptr;
     m_timeout.stop();
 
-    if (ok) {
-        emit finished(m_password, pwnCount(m_password, m_bytesReceived));
-    } else {
+    // If there was an error, assume it's permanent and abort
+    // (don't process the rest of the password list).
+    if (!ok) {
         auto msg = tr("Online password validation failed") + ":\n" + err;
         if (!m_bytesReceived.isEmpty()) {
             msg += "\n" + m_bytesReceived;
         }
-        emit failed(m_password, msg);
+        emit failed(m_currentPwd, msg);
+
+    }
+
+    // Current password validated, send the result to the caller
+    emit finished(m_currentPwd, pwnCount(m_currentPwd, m_bytesReceived));
+
+    // Continue with the next password
+    if (m_pwdsToTry.empty()) {
+        // None left, we're doe
+        m_timeout.stop();
+    } else {
+        // Validate the next password in the list
+        fetchPassword(m_pwdsToTry.takeFirst());
     }
 }
