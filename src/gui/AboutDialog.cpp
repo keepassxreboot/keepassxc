@@ -218,6 +218,8 @@ AboutDialog::AboutDialog(QWidget* parent)
     setAttribute(Qt::WA_DeleteOnClose);
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
     connect(m_ui->copyToClipboard, SIGNAL(clicked()), SLOT(copyToClipboard()));
+
+    m_ui->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 }
 
 AboutDialog::~AboutDialog()
