@@ -57,6 +57,7 @@ void BrowserAccessControlDialog::setItems(const QList<Entry*>& items, const QStr
         m_ui->itemsTable->setItem(row, 0, item);
 
         auto disableButton = new QPushButton(tr("Disable for this site"));
+        disableButton->setAutoDefault(false);
         connect(disableButton, &QAbstractButton::pressed, [&, item] {
             emit disableAccess(item);
             m_ui->itemsTable->removeRow(item->row());

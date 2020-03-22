@@ -823,11 +823,6 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 
     accessControlDialog.setItems(pwEntriesToConfirm, !submitHost.isEmpty() ? submitHost : url, httpAuth);
 
-    raiseWindow();
-    accessControlDialog.show();
-    accessControlDialog.activateWindow();
-    accessControlDialog.raise();
-
     QList<Entry*> allowedEntries;
     if (accessControlDialog.exec() == QDialog::Accepted) {
         const auto selectedEntries = accessControlDialog.getSelectedEntries();

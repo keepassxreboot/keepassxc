@@ -126,24 +126,14 @@ bool PasswordEdit::isPasswordVisible() const
 
 void PasswordEdit::popupPasswordGenerator()
 {
-    auto pwGenerator = new PasswordGeneratorWidget();
-    QDialog pwDialog(this);
-    pwDialog.setWindowTitle(tr("Generate Password"));
-    auto layout = new QVBoxLayout();
-    pwDialog.setLayout(layout);
-    layout->addWidget(pwGenerator);
+    auto generator = PasswordGeneratorWidget::popupGenerator(this);
+    generator->setPasswordVisible(isPasswordVisible());
+    generator->setPasswordLength(text().length());
 
-    pwGenerator->setStandaloneMode(false);
-    pwGenerator->setPasswordVisible(isPasswordVisible());
-    pwGenerator->setPasswordLength(text().length());
-
-    connect(pwGenerator, SIGNAL(closePasswordGenerator()), &pwDialog, SLOT(close()));
-    connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
+    connect(generator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
     if (m_repeatPasswordEdit) {
-        connect(pwGenerator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
+        connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
     }
-
-    pwDialog.exec();
 }
 
 void PasswordEdit::updateRepeatStatus()

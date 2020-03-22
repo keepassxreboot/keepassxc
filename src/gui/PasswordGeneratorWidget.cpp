@@ -103,6 +103,22 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget()
 {
 }
 
+PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent) {
+    auto pwGenerator = new PasswordGeneratorWidget(parent);
+    pwGenerator->setWindowModality(Qt::ApplicationModal);
+    pwGenerator->setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+    pwGenerator->setStandaloneMode(false);
+
+    connect(pwGenerator, SIGNAL(closePasswordGenerator()), pwGenerator, SLOT(deleteLater()));
+
+    pwGenerator->show();
+    pwGenerator->raise();
+    pwGenerator->activateWindow();
+    pwGenerator->adjustSize();
+
+    return pwGenerator;
+}
+
 void PasswordGeneratorWidget::loadSettings()
 {
     // Password config
@@ -341,6 +357,9 @@ void PasswordGeneratorWidget::setAdvancedMode(bool state)
             | m_ui->checkBoxLogograms->isChecked());
         m_ui->checkBoxExtASCII->setChecked(m_ui->checkBoxExtASCIIAdv->isChecked());
     }
+
+    QApplication::processEvents();
+    adjustSize();
 }
 
 void PasswordGeneratorWidget::excludeHexChars()
