@@ -224,7 +224,7 @@ Resources* Resources::instance()
         m_instance = new Resources();
 
         Q_INIT_RESOURCE(icons);
-        QIcon::setThemeSearchPaths({":/icons"});
+        QIcon::setThemeSearchPaths(QStringList{":/icons"} << QIcon::themeSearchPaths());
         QIcon::setThemeName("application");
     }
 
