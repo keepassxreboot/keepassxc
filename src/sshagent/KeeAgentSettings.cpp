@@ -19,12 +19,6 @@
 #include "KeeAgentSettings.h"
 #include "core/Tools.h"
 
-KeeAgentSettings::KeeAgentSettings()
-    : m_lifetimeConstraintDuration(600)
-    , m_selectedType(QString("file"))
-{
-}
-
 bool KeeAgentSettings::operator==(const KeeAgentSettings& other) const
 {
     // clang-format off

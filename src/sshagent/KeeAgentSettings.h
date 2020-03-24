@@ -27,8 +27,6 @@
 class KeeAgentSettings
 {
 public:
-    KeeAgentSettings();
-
     bool operator==(const KeeAgentSettings& other) const;
     bool operator!=(const KeeAgentSettings& other) const;
     bool isDefault() const;
@@ -72,17 +70,17 @@ private:
     bool readBool(QXmlStreamReader& reader);
     int readInt(QXmlStreamReader& reader);
 
-    bool m_allowUseOfSshKey;
-    bool m_addAtDatabaseOpen;
-    bool m_removeAtDatabaseClose;
-    bool m_useConfirmConstraintWhenAdding;
-    bool m_useLifetimeConstraintWhenAdding;
-    int m_lifetimeConstraintDuration;
+    bool m_allowUseOfSshKey = false;
+    bool m_addAtDatabaseOpen = false;
+    bool m_removeAtDatabaseClose = false;
+    bool m_useConfirmConstraintWhenAdding = false;
+    bool m_useLifetimeConstraintWhenAdding = false;
+    int m_lifetimeConstraintDuration = 600;
 
     // location
-    QString m_selectedType;
+    QString m_selectedType = QString("file");
     QString m_attachmentName;
-    bool m_saveAttachmentToTempFile;
+    bool m_saveAttachmentToTempFile = false;
     QString m_fileName;
     QString m_error;
 };
