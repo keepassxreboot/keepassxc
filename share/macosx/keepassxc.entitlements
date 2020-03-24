@@ -1,33 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-	<dict>
-		<key>com.apple.application-identifier</key>
-			<string>org.keepassx.keepassxc</string>
-		<key>com.apple.developer.aps-environment</key>
-			<string>production</string>
-
-		<key>keychain-access-groups</key>
-			<array>
-				<string>org.keepassx.keepassxc</string>
-			</array>
-
-		<!-- Sandbox entitlements stub for future reference.
-		     For whatever reason, we have to set this twice.
-		     Otherwise a signed application crashes on startup -->
-		<key>com.apple.security.app-sandbox</key>
-			<false/>
-		<key>com.apple.security.app-sandbox</key>
-			<false/>
-		<!--key>com.apple.security.network.client</key>
-			<true/>
-		<key>com.apple.security.files.user-selected.read-write</key>
-			<true/>
-		<key>com.apple.security.device.usb</key>
-			<true/>
-		<key>com.apple.security.print</key>
-			<true/>
-		<key>com.apple.security.files.user-selected.read-only</key>
-			<false/-->
-	</dict>
+<dict>
+	<key>com.apple.application-identifier</key>
+	<string>G2S7P7J672.org.keepassxc.keepassxc</string>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>G2S7P7J672.org.keepassxc.keepassxc</string>
+	</array>
+</dict>
 </plist>
