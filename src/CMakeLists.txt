@@ -354,6 +354,7 @@ target_link_libraries(${PROGNAME} keepassx_core)
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
 if(APPLE AND WITH_APP_BUNDLE)
+    install(FILES ${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile DESTINATION ${BUNDLE_INSTALL_DIR})
     configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
     set_target_properties(${PROGNAME} PROPERTIES
             MACOSX_BUNDLE ON
