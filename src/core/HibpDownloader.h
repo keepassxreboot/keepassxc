@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_HIBPDOWNLOADER_H
 #define KEEPASSXC_HIBPDOWNLOADER_H
 
+#include <QHash>
 #include <QObject>
 #include <QTimer>
 
@@ -42,14 +43,12 @@ public:
 
     void add(const QString& password);
     void validate();
-    int qSize() const
-    {
-        return m_pwdsToTry.size();
-    }
+    int passwordsToValidate() const;
+    int passwordsRemaining() const;
 
 signals:
-    void finished(const QString& password, int count);
-    void failed(const QString& password, const QString& error);
+    void hibpResult(const QString& password, int count);
+    void fetchFailed(const QString& password, const QString& error);
 
 public slots:
     void abort();
@@ -61,11 +60,8 @@ private slots:
 private:
     void fetchPassword(const QString& password);
 
-    QString m_currentPwd; // The password we're currently validating
     QStringList m_pwdsToTry; // The list of remaining passwords to validate
-    QNetworkReply* m_reply = nullptr;
-    QTimer m_timeout;
-    QByteArray m_bytesReceived;
+    QHash<QNetworkReply*, QPair<QString, QByteArray>> m_replies;
 };
 
 #endif // KEEPASSXC_HIBPDOWNLOADER_H

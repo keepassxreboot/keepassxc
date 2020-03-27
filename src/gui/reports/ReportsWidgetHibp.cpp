@@ -18,38 +18,12 @@
 #include "ReportsWidgetHibp.h"
 #include "ui_ReportsWidgetHibp.h"
 
+#include "config-keepassx.h"
 #include "core/Database.h"
 #include "core/Group.h"
 #include "gui/MessageBox.h"
 
 #include <QStandardItemModel>
-
-namespace
-{
-    /*
-     * Convert the number of times a password has been pwned into
-     * a display text for the third table column.
-     */
-    QString toDisplayText(int count)
-    {
-        if (count == 1)
-            return QObject::tr("once");
-        if (count <= 10)
-            return QObject::tr("10 times");
-        if (count <= 100)
-            return QObject::tr("100 times");
-        if (count <= 1000)
-            return QObject::tr("1000 times");
-        if (count <= 10 * 1000)
-            return QObject::tr("10,000 times");
-        if (count <= 100 * 1000)
-            return QObject::tr("100,000 times");
-        if (count <= 1000 * 1000)
-            return QObject::tr("a million times");
-
-        return QObject::tr("millions of times");
-    }
-} // namespace
 
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     : QWidget(parent)
@@ -64,11 +38,10 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
 
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
 #ifdef WITH_XC_NETWORKING
-    connect(&m_downloader, SIGNAL(finished(const QString&, int)), this, SLOT(checkFinished(const QString&, int)));
-    connect(&m_downloader,
-            SIGNAL(failed(const QString&, const QString&)),
-            this,
-            SLOT(checkFailed(const QString&, const QString&)));
+    connect(&m_downloader, SIGNAL(hibpResult(QString, int)), SLOT(addHibpResult(QString, int)));
+    connect(&m_downloader, SIGNAL(fetchFailed(QString, QString)), SLOT(fetchFailed(QString, QString)));
+
+    connect(m_ui->validationButton, &QPushButton::pressed, [this] { startValidation(); });
 #endif
 }
 
@@ -80,32 +53,18 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
 {
     // Re-initialize
     m_db = std::move(db);
-    m_checkStarted = false;
     m_referencesModel->clear();
-    m_pwPwned.clear();
+    m_pwndPasswords.clear();
     m_error.clear();
     m_rowToEntry.clear();
-    m_edEntry = nullptr;
+    m_editedEntry = nullptr;
+#ifdef WITH_XC_NETWORKING
+    m_ui->stackedWidget->setCurrentIndex(0);
+    m_ui->validationButton->setEnabled(true);
     m_ui->progressBar->hide();
-
-    // Collect all passwords in the database (unless recycled, and
-    // unless empty) and submit them to the downloader.
-    for (const auto* group : m_db->rootGroup()->groupsRecursive(true)) {
-        if (!group->isRecycled()) {
-            for (const auto* entry : group->entries()) {
-                if (!entry->isRecycled() && !entry->password().isEmpty()) {
-#ifdef WITH_XC_NETWORKING
-                    m_downloader.add(entry->password());
-#endif
-                }
-            }
-        }
-    }
-
-    // Store the number of passwords we need to check for the
-    // progress bar
-#ifdef WITH_XC_NETWORKING
-    m_qMax = m_downloader.qSize();
+#else
+    // Compiled without networking, can't do anything
+    m_ui->stackedWidget->setCurrentIndex(2);
 #endif
 }
 
@@ -117,21 +76,16 @@ void ReportsWidgetHibp::makeHibpTable()
 {
     // Reset the table
     m_referencesModel->clear();
-    m_referencesModel->setHorizontalHeaderLabels(QStringList()
-                                                 << tr("Title") << tr("Path") << tr("Password exposed …"));
+    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("Password exposed…"));
     m_rowToEntry.clear();
 
     // Search database for passwords that we've found so far
-    QVector<QPair<const Entry*, int>> items;
-    for (const auto* group : m_db->rootGroup()->groupsRecursive(true)) {
-        if (!group->isRecycled()) {
-            for (const auto* entry : group->entries()) {
-                if (!entry->isRecycled()) {
-                    const auto found = m_pwPwned.find(entry->password());
-                    if (found != m_pwPwned.end()) {
-                        items += qMakePair(entry, *found);
-                    }
-                }
+    QList<QPair<const Entry*, int>> items;
+    for (const auto* entry : m_db->rootGroup()->entriesRecursive()) {
+        if (!entry->isRecycled()) {
+            const auto found = m_pwndPasswords.find(entry->password());
+            if (found != m_pwndPasswords.end()) {
+                items.append({entry, found.value()});
             }
         }
     }
@@ -150,7 +104,7 @@ void ReportsWidgetHibp::makeHibpTable()
         auto row = QList<QStandardItem*>();
         row << new QStandardItem(entry->iconPixmap(), entry->title())
             << new QStandardItem(group->iconPixmap(), group->hierarchy().join("/"))
-            << new QStandardItem(toDisplayText(count));
+            << new QStandardItem(countToText(count));
         m_referencesModel->appendRow(row);
         row[2]->setForeground(QBrush(QColor("red")));
 
@@ -168,47 +122,38 @@ void ReportsWidgetHibp::makeHibpTable()
 
     // If we're done and everything is good, display a motivational message
 #ifdef WITH_XC_NETWORKING
-    if (m_downloader.qSize() == 0 && m_pwPwned.isEmpty() && m_error.isEmpty()) {
+    if (m_downloader.passwordsRemaining() == 0 && m_pwndPasswords.isEmpty() && m_error.isEmpty()) {
         m_referencesModel->clear();
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
     }
 #endif
 
     m_ui->hibpTableView->resizeRowsToContents();
+
+    m_ui->stackedWidget->setCurrentIndex(1);
 }
 
 /*
  * Invoked when the downloader has finished checking one password.
  */
-void ReportsWidgetHibp::checkFinished(const QString& password, int count)
+void ReportsWidgetHibp::addHibpResult(const QString& password, int count)
 {
-    // Update the progress bar
-#ifdef WITH_XC_NETWORKING
-    if (m_downloader.qSize() == 0) {
-        // Finished, remove the progress bar.
-        // Note that we're not un-hiding the progress bar after the
-        // initial pass through the password queue is done, i. e.
-        // when re-validating a modified password after the user
-        // editied an entry. We want that re-validation to happen
-        // invisibly, popping the progress bar back into view would
-        // just be visually disturbing.
-        m_ui->progressBar->hide();
-    } else {
-        // Not yet finished
-        m_ui->progressBar->setValue(m_qMax - m_downloader.qSize());
-        m_ui->progressBar->setMaximum(m_qMax);
-    }
-#endif
-
-    // If this password has been pwned:
+    // Add the password to the list of our findings if it has been pwned
     if (count > 0) {
+        m_pwndPasswords[password] = count;
+    }
 
-        // Add the password to the list of our findings
-        m_pwPwned[password] = count;
-
-        // Refresh the findings table
+#ifdef WITH_XC_NETWORKING
+    // Update the progress bar
+    int remaining = m_downloader.passwordsRemaining();
+    if (remaining > 0) {
+        m_ui->progressBar->setValue(m_ui->progressBar->maximum() - remaining);
+    } else {
+        // Finished, remove the progress bar and build the table
+        m_ui->progressBar->hide();
         makeHibpTable();
     }
+#endif
 }
 
 /*
@@ -216,7 +161,7 @@ void ReportsWidgetHibp::checkFinished(const QString& password, int count)
  *
  * Displays the table with the current findings.
  */
-void ReportsWidgetHibp::checkFailed(const QString& /*password*/, const QString& error)
+void ReportsWidgetHibp::fetchFailed(const QString& error)
 {
     m_error = error;
     m_ui->progressBar->hide();
@@ -224,65 +169,51 @@ void ReportsWidgetHibp::checkFailed(const QString& /*password*/, const QString& 
 }
 
 /*
- * Start the actual online validation.
- * The passwords to validate must previously have been added to
- * the downloader.
+ * Add passwords to the downloader and start the actual online validation.
  */
 void ReportsWidgetHibp::startValidation()
 {
 #ifdef WITH_XC_NETWORKING
+    // Collect all passwords in the database (unless recycled, and
+    // unless empty) and submit them to the downloader.
+    for (const auto* entry : m_db->rootGroup()->entriesRecursive()) {
+        if (!entry->isRecycled() && !entry->password().isEmpty()) {
+            m_downloader.add(entry->password());
+        }
+    }
+
+    // Store the number of passwords we need to check for the progress bar
+    m_ui->progressBar->show();
+    m_ui->progressBar->setMaximum(m_downloader.passwordsToValidate());
+    m_ui->validationButton->setEnabled(false);
+
     m_downloader.validate();
 #endif
 }
 
-void ReportsWidgetHibp::showEvent(QShowEvent* event)
+/*
+ * Convert the number of times a password has been pwned into
+ * a display text for the third table column.
+ */
+QString ReportsWidgetHibp::countToText(int count)
 {
-    QWidget::showEvent(event);
-
-    // Do this only the first time
-    if (m_checkStarted) {
-        return;
+    if (count == 1) {
+        return tr("once");
+    } else if (count <= 10) {
+        return tr("up to 10 times");
+    } else if (count <= 100) {
+        return tr("up to 100 times");
+    } else if (count <= 1000) {
+        return tr("up to 1000 times");
+    } else if (count <= 10000) {
+        return tr("up to 10,000 times");
+    } else if (count <= 100000) {
+        return tr("up to 100,000 times");
+    } else if (count <= 1000000) {
+        return tr("up to a million times");
     }
 
-#ifdef WITH_XC_NETWORKING
-
-    const auto ans = MessageBox::question(this,
-                                          tr("Online Access Confirmation"),
-                                          tr("Your passwords are about to be validated against an online database "
-                                             "(https://haveibeenpwned.com/). Some information about your passwords "
-                                             "(first five bytes of the SHA1 hash) will be sent to an Internet service. "
-                                             "It is not possible to reconstruct your passwords from this information, "
-                                             "yet certain information (e. g. number of passwords or your IP address) "
-                                             "will be exposed. "
-                                             "Are you sure you want to continue?"),
-                                          MessageBox::Yes | MessageBox::No,
-                                          MessageBox::No);
-    if (ans == MessageBox::Yes) {
-
-        // OK, do it
-        m_checkStarted = true;
-        m_ui->progressBar->show();
-        startValidation();
-
-    } else {
-
-        // Don't do it
-        m_referencesModel->clear();
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Online validation rejected."));
-    }
-
-#else
-
-    // Compiled without networking, can't do anything
-    MessageBox::critical(this,
-                         tr("Online Access"),
-                         tr("This build of KeePassXC doesn't contain online functions."),
-                         MessageBox::Ok,
-                         MessageBox::Ok);
-    m_referencesModel->clear();
-    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Online validation not available."));
-
-#endif
+    return tr("millions of times");
 }
 
 /*
@@ -298,8 +229,8 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
     const auto entry = m_rowToEntry[index.row()];
     if (entry) {
         // Found it, invoke entry editor
-        m_edEntry = entry;
-        m_edPw = entry->password();
+        m_editedEntry = entry;
+        m_editedPassword = entry->password();
         emit entryActivated(const_cast<Entry*>(entry));
     }
 }
@@ -311,22 +242,25 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
 void ReportsWidgetHibp::refreshAfterEdit()
 {
     // Sanity check
-    if (!m_edEntry)
+    if (!m_editedEntry) {
         return;
+    }
 
     // No need to re-validate if there was no change
-    if (m_edEntry->password() == m_edPw)
+    if (m_editedEntry->password() == m_editedPassword) {
         return;
+    }
 
     // Remove the previous password from the list of findings
-    m_pwPwned.remove(m_edPw);
-    makeHibpTable();
+    m_pwndPasswords.remove(m_editedPassword);
 
     // Validate the new password against HIBP
 #ifdef WITH_XC_NETWORKING
-    m_downloader.add(m_edEntry->password());
-    startValidation();
+    m_downloader.add(m_editedEntry->password());
+    m_downloader.validate();
 #endif
+
+    m_editedEntry = nullptr;
 }
 
 void ReportsWidgetHibp::saveSettings()

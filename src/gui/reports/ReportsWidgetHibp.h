@@ -21,8 +21,9 @@
 #include "core/HibpDownloader.h"
 #include "gui/entry/EntryModel.h"
 
+#include <QMap>
 #include <QPair>
-#include <QSet>
+#include <QPointer>
 #include <QWidget>
 
 class Database;
@@ -46,33 +47,29 @@ public:
     void saveSettings();
     void refreshAfterEdit();
 
-protected:
-    void showEvent(QShowEvent* event) override;
-
 signals:
     void entryActivated(Entry*);
 
 public slots:
     void emitEntryActivated(const QModelIndex&);
-    void checkFinished(const QString&, int);
-    void checkFailed(const QString&, const QString&);
+    void addHibpResult(const QString&, int);
+    void fetchFailed(const QString&);
 
 private:
     void makeHibpTable();
     void startValidation();
+    QString countToText(int count);
 
     QScopedPointer<Ui::ReportsWidgetHibp> m_ui;
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QSharedPointer<Database> m_db;
 
-    bool m_checkStarted = false; // Have we run the initialization already?
     HibpDownloader m_downloader; // This performs the actual HIBP online query
-    int m_qMax = 0; // Max number of items in the queue (for progress bar)
-    QMap<QString, int> m_pwPwned; // Passwords we found to have been pwned (value is pwn count)
+    QMap<QString, int> m_pwndPasswords; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
     QList<const Entry*> m_rowToEntry; // List index is table row
-    const Entry* m_edEntry = nullptr; // The entry we're currently editing
-    QString m_edPw; // The old password of the entry we're editing
+    QPointer<const Entry> m_editedEntry; // The entry we're currently editing
+    QString m_editedPassword; // The old password of the entry we're editing
 };
 
 #endif // KEEPASSXC_REPORTSWIDGETHIBP_H
