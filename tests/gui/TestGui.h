@@ -48,6 +48,7 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
+    void testWelcomeScreen();
     void testSettingsDefaultTabOrder();
     void testCreateDatabase();
     void testMergeDatabase();
@@ -88,6 +89,7 @@ private:
                     QAbstractItemView* view,
                     Qt::MouseButton button,
                     Qt::KeyboardModifiers stateKey = 0);
+    bool screenshot(const QString& baseName);
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;

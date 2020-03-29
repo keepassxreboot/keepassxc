@@ -37,6 +37,9 @@
 #include <QTimer>
 #include <QToolBar>
 #include <QToolButton>
+#include <QScreen>
+#include <QDesktopWidget>
+#include <QProcessEnvironment>
 
 #include "config-keepassx-tests.h"
 #include "core/Bootstrap.h"
@@ -148,14 +151,14 @@ void TestGui::init()
 // Every test ends with closing the temp database without saving
 void TestGui::cleanup()
 {
-    // DO NOT save the database
-    m_db->markAsClean();
-    MessageBox::setNextAnswer(MessageBox::No);
-    triggerAction("actionDatabaseClose");
-    QApplication::processEvents();
-    MessageBox::setNextAnswer(MessageBox::NoButton);
-
     if (m_dbWidget) {
+        // DO NOT save the database
+        m_db->markAsClean();
+        MessageBox::setNextAnswer(MessageBox::No);
+        triggerAction("actionDatabaseClose");
+        QApplication::processEvents();
+        MessageBox::setNextAnswer(MessageBox::NoButton);
+
         delete m_dbWidget;
     }
 }
@@ -163,6 +166,12 @@ void TestGui::cleanup()
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
+}
+
+void TestGui::testWelcomeScreen()
+{
+    cleanup(); // close test database, we only want a screenshot here
+    QVERIFY(screenshot("welcome-screen"));
 }
 
 void TestGui::testSettingsDefaultTabOrder()
@@ -194,6 +203,8 @@ void TestGui::testSettingsDefaultTabOrder()
 
 void TestGui::testCreateDatabase()
 {
+    cleanup(); // close test database to have empty screenshot background
+
     QTimer::singleShot(50, this, SLOT(createDatabaseCallback()));
     triggerAction("actionDatabaseNew");
 
@@ -227,12 +238,16 @@ void TestGui::createDatabaseCallback()
     auto* wizard = m_tabWidget->findChild<NewDatabaseWizard*>();
     QVERIFY(wizard);
 
+    QVERIFY(screenshot("create-database"));
+
     QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseName"), "Test Name");
     QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseDescription"), "Test Description");
     QCOMPARE(wizard->currentId(), 0);
 
     QTest::keyClick(wizard, Qt::Key_Enter);
     QCOMPARE(wizard->currentId(), 1);
+
+    QVERIFY(screenshot("create-database-encryption"));
 
     auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
     auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
@@ -242,6 +257,8 @@ void TestGui::createDatabaseCallback()
     QTest::mouseClick(advancedToggle, Qt::MouseButton::LeftButton);
     QTRY_VERIFY(!decryptionTimeSlider->isVisible());
     QVERIFY(algorithmComboBox->isVisible());
+
+    QVERIFY(screenshot("create-database-encryption-advanced"));
 
     auto rounds = wizard->currentPage()->findChild<QSpinBox*>("transformRoundsSpinBox");
     QVERIFY(rounds);
@@ -281,11 +298,16 @@ void TestGui::createDatabaseCallback()
     QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
     QTest::keyClicks(passwordRepeatEdit, "test");
 
+    QVERIFY(screenshot("create-database-keys"));
+
     // add key file
     auto* additionalOptionsButton = wizard->currentPage()->findChild<QPushButton*>("additionalKeyOptionsToggle");
     auto* keyFileWidget = wizard->currentPage()->findChild<KeyFileEditWidget*>();
     QVERIFY(additionalOptionsButton->isVisible());
     QTest::mouseClick(additionalOptionsButton, Qt::MouseButton::LeftButton);
+
+    QVERIFY(screenshot("create-database-keys-additional"));
+
     QTRY_VERIFY(keyFileWidget->isVisible());
     QTRY_VERIFY(!additionalOptionsButton->isVisible());
     QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
@@ -393,6 +415,7 @@ void TestGui::testAutoreloadDatabase()
 
 void TestGui::testTabs()
 {
+    QVERIFY(screenshot("main-window"));
     QCOMPARE(m_tabWidget->count(), 1);
     QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), m_dbFileName);
 }
@@ -423,6 +446,9 @@ void TestGui::testEditEntry()
     // Edit the first entry ("Sample Entry")
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+
+    QVERIFY(screenshot("entry-edit"));
+
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
     QTest::keyClicks(titleEdit, "_test");
@@ -1530,4 +1556,55 @@ void TestGui::clickIndex(const QModelIndex& index,
                          Qt::KeyboardModifiers stateKey)
 {
     QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
+}
+
+bool TestGui::screenshot(const QString& baseName)
+{
+    QString screenshotDir = QProcessEnvironment::systemEnvironment().value("GUI_SCREENSHOT_DIR", "");
+
+    if (screenshotDir.isEmpty()) {
+        return true;
+    }
+
+    QFileInfo screenshotDirInfo(screenshotDir);
+
+    if (!screenshotDirInfo.exists()) {
+        qDebug() << "Screenshot directory does not exist:" << screenshotDir;
+        return false;
+    }
+
+    if (!screenshotDirInfo.isDir()) {
+        qDebug() << "Screenshot directory is not a directory:" << screenshotDir;
+        return false;
+    }
+
+    if (!screenshotDirInfo.isWritable()) {
+        qDebug() << "Screenshot directory is not writable:" << screenshotDir;
+        return false;
+    }
+
+    QString screenshotFile = screenshotDirInfo.absoluteFilePath() + "/" + baseName + ".png";
+
+    qDebug() << "Grabbing screenshot in a second...";
+
+    // try to ensure the view is rendered by Qt and X11
+    for (int i = 0; i < 10; i++) {
+        QTest::qWait(100);
+        QApplication::processEvents();
+    }
+
+    QScreen* screen = QGuiApplication::screens()[QApplication::desktop()->screenNumber()];
+    QRect geometry = m_mainWindow->geometry();
+    QRect frameGeometry = m_mainWindow->frameGeometry();
+
+    QPixmap pixmap = screen->grabWindow(
+            m_mainWindow->winId(),
+            frameGeometry.x() - geometry.x(),
+            frameGeometry.y() - geometry.y(),
+            frameGeometry.width(),
+            frameGeometry.height());
+
+    qDebug() << "Saving screenshot as " << screenshotFile;
+
+    return pixmap.save(screenshotFile, "PNG");
 }
