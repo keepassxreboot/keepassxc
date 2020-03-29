@@ -120,11 +120,14 @@ bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> 
         return false;
     }
 
-    if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
-        readOnly = true;
-    }
-
-    if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
+    // Don't autodetect read-only mode, as it triggers an upstream bug.
+    // See https://github.com/keepassxreboot/keepassxc/issues/803
+    // if (!readOnly && !dbFile.open(QIODevice::ReadWrite)) {
+    //     readOnly = true;
+    // }
+    //
+    // if (!dbFile.isOpen() && !dbFile.open(QIODevice::ReadOnly)) {
+    if (!dbFile.open(QIODevice::ReadOnly)) {
         if (error) {
             *error = tr("Unable to open file %1.").arg(filePath);
         }
