@@ -18,13 +18,17 @@
 #ifndef KEEPASSXC_REPORTSWIDGETHIBP_H
 #define KEEPASSXC_REPORTSWIDGETHIBP_H
 
-#include "core/HibpDownloader.h"
+#include "config-keepassx.h"
 #include "gui/entry/EntryModel.h"
 
 #include <QMap>
 #include <QPair>
 #include <QPointer>
 #include <QWidget>
+
+#ifdef WITH_XC_NETWORKING
+#include "core/HibpDownloader.h"
+#endif
 
 class Database;
 class Entry;
@@ -64,12 +68,15 @@ private:
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QSharedPointer<Database> m_db;
 
-    HibpDownloader m_downloader; // This performs the actual HIBP online query
     QMap<QString, int> m_pwndPasswords; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
     QList<const Entry*> m_rowToEntry; // List index is table row
     QPointer<const Entry> m_editedEntry; // The entry we're currently editing
     QString m_editedPassword; // The old password of the entry we're editing
+
+#ifdef WITH_XC_NETWORKING
+    HibpDownloader m_downloader; // This performs the actual HIBP online query
+#endif
 };
 
 #endif // KEEPASSXC_REPORTSWIDGETHIBP_H
