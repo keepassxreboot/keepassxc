@@ -181,7 +181,7 @@ void HibpDownloader::fetchFinished()
             msg += "\n" + hibpReply;
         }
         abort();
-        emit fetchFailed(password, msg);
+        emit fetchFailed(msg);
         return;
     }
 

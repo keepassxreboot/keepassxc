@@ -53,7 +53,7 @@ public:
 
 signals:
     void hibpResult(const QString& password, int count);
-    void fetchFailed(const QString& password, const QString& error);
+    void fetchFailed(const QString& error);
 
 public slots:
     void abort();

@@ -24,6 +24,9 @@
         </property>
         <widget class="QWidget" name="confirmation">
          <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>15</number>
+          </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -47,16 +50,10 @@
                </size>
               </property>
               <property name="text">
-               <string>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters sent securely to this service. Your database information remains secure and cannot be reconstituted from what is sent. However, the number of passwords you send and your IP address will be exposed.</string>
+               <string>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</string>
               </property>
               <property name="wordWrap">
                <bool>true</bool>
-              </property>
-              <property name="openExternalLinks">
-               <bool>true</bool>
-              </property>
-              <property name="textInteractionFlags">
-               <set>Qt::TextBrowserInteraction</set>
               </property>
              </widget>
             </item>

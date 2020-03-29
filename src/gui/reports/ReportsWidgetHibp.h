@@ -57,7 +57,7 @@ signals:
 public slots:
     void emitEntryActivated(const QModelIndex&);
     void addHibpResult(const QString&, int);
-    void fetchFailed(const QString&, const QString&);
+    void fetchFailed(const QString& error);
 
 private:
     void makeHibpTable();

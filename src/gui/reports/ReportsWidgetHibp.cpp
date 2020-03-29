@@ -39,7 +39,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
 #ifdef WITH_XC_NETWORKING
     connect(&m_downloader, SIGNAL(hibpResult(QString, int)), SLOT(addHibpResult(QString, int)));
-    connect(&m_downloader, SIGNAL(fetchFailed(QString, QString)), SLOT(fetchFailed(QString, QString)));
+    connect(&m_downloader, SIGNAL(fetchFailed(QString)), SLOT(fetchFailed(QString)));
 
     connect(m_ui->validationButton, &QPushButton::pressed, [this] { startValidation(); });
 #endif
@@ -161,7 +161,7 @@ void ReportsWidgetHibp::addHibpResult(const QString& password, int count)
  *
  * Displays the table with the current findings.
  */
-void ReportsWidgetHibp::fetchFailed(const QString& /*password*/, const QString& error)
+void ReportsWidgetHibp::fetchFailed(const QString& error)
 {
     m_error = error;
     m_ui->progressBar->hide();
