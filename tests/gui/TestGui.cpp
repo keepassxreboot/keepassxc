@@ -1594,15 +1594,13 @@ bool TestGui::screenshot(const QString& baseName)
     }
 
     QScreen* screen = QGuiApplication::screens()[QApplication::desktop()->screenNumber()];
-    QRect geometry = m_mainWindow->geometry();
-    QRect frameGeometry = m_mainWindow->frameGeometry();
 
     QPixmap pixmap = screen->grabWindow(
-            m_mainWindow->winId(),
-            frameGeometry.x() - geometry.x(),
-            frameGeometry.y() - geometry.y(),
-            frameGeometry.width(),
-            frameGeometry.height());
+            0,
+            m_mainWindow->x(),
+            m_mainWindow->y(),
+            m_mainWindow->frameGeometry().width(),
+            m_mainWindow->frameGeometry().height());
 
     qDebug() << "Saving screenshot as " << screenshotFile;
 
