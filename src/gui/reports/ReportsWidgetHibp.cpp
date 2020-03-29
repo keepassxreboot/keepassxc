@@ -161,7 +161,7 @@ void ReportsWidgetHibp::addHibpResult(const QString& password, int count)
  *
  * Displays the table with the current findings.
  */
-void ReportsWidgetHibp::fetchFailed(const QString& error)
+void ReportsWidgetHibp::fetchFailed(const QString& /*password*/, const QString& error)
 {
     m_error = error;
     m_ui->progressBar->hide();
