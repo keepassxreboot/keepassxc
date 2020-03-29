@@ -230,3 +230,7 @@ License: MIT
 Files: share/icons/application/scalable/apps/freedesktop.svg
 Copyright: GPL-2+
 Comment: from Freedesktop.org website
+
+Files: share/icons/application/scalable/actions/hibp.svg
+Copyright: GPL-2+
+Comment: from the Simple Icons repo (https://github.com/simple-icons/simple-icons/)

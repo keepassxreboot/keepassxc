@@ -4,6 +4,9 @@
 
 ### Added
 - Added CLI db-info command [#4231]
+- Switch application icons to Material Design [#4066]
+- Health Check report [#551]
+- HIBP report: Check passwords against the HIBP online service [#1083]
 
 ### Changed
 - Renamed CLI create command to db-create [#4231]

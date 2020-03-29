@@ -159,6 +159,8 @@ set(keepassx_SOURCES
         gui/reports/ReportsDialog.cpp
         gui/reports/ReportsWidgetHealthcheck.cpp
         gui/reports/ReportsPageHealthcheck.cpp
+        gui/reports/ReportsWidgetHibp.cpp
+        gui/reports/ReportsPageHibp.cpp
         gui/reports/ReportsWidgetStatistics.cpp
         gui/reports/ReportsPageStatistics.cpp
         gui/osutils/OSUtilsBase.cpp
@@ -287,6 +289,7 @@ endif()
 
 if(WITH_XC_NETWORKING)
     list(APPEND keepassx_SOURCES
+            core/HibpDownloader.cpp
             core/IconDownloader.cpp
             core/NetworkManager.cpp
             gui/UpdateCheckDialog.cpp
