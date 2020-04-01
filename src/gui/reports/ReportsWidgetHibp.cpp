@@ -76,8 +76,17 @@ void ReportsWidgetHibp::makeHibpTable()
 {
     // Reset the table
     m_referencesModel->clear();
-    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("Password exposed…"));
     m_rowToEntry.clear();
+
+    // If there were no findings, display a motivational message
+    if (m_pwndPasswords.isEmpty() && m_error.isEmpty()) {
+        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
+        m_ui->stackedWidget->setCurrentIndex(1);
+        return;
+    }
+
+    // Standard header labels for found issues
+    m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("Password exposed…"));
 
     // Search database for passwords that we've found so far
     QList<QPair<const Entry*, int>> items;
@@ -119,14 +128,6 @@ void ReportsWidgetHibp::makeHibpTable()
         m_referencesModel->appendRow(row);
         row[0]->setForeground(QBrush(QColor("red")));
     }
-
-    // If we're done and everything is good, display a motivational message
-#ifdef WITH_XC_NETWORKING
-    if (m_downloader.passwordsRemaining() == 0 && m_pwndPasswords.isEmpty() && m_error.isEmpty()) {
-        m_referencesModel->clear();
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
-    }
-#endif
 
     m_ui->hibpTableView->resizeRowsToContents();
 
@@ -180,6 +181,12 @@ void ReportsWidgetHibp::startValidation()
         if (!entry->isRecycled() && !entry->password().isEmpty()) {
             m_downloader.add(entry->password());
         }
+    }
+
+    // Short circuit if we didn't actually add any passwords
+    if (m_downloader.passwordsToValidate() == 0) {
+        makeHibpTable();
+        return;
     }
 
     // Store the number of passwords we need to check for the progress bar
