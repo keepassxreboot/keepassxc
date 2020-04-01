@@ -62,7 +62,7 @@ public slots:
 private:
     void makeHibpTable();
     void startValidation();
-    QString countToText(int count);
+    static QString countToText(int count);
 
     QScopedPointer<Ui::ReportsWidgetHibp> m_ui;
     QScopedPointer<QStandardItemModel> m_referencesModel;
