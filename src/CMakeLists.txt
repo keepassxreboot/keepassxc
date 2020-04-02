@@ -325,9 +325,8 @@ target_link_libraries(keepassx_core
         ${YUBIKEY_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ARGON2_LIBRARIES}
-        ${GCRYPT_LIBRARIES}
-        ${GPGERROR_LIBRARIES}
-        ${ZLIB_LIBRARIES})
+        ${ZLIB_LIBRARIES}
+	)
 
 if(WITH_XC_SSHAGENT)
   target_link_libraries(keepassx_core sshagent)
@@ -369,6 +368,7 @@ if(MINGW)
 endif()
 
 add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
+target_link_libraries(keepassx_core ${GCRYPT_LIBRARIES} ${GPGERROR_LIBRARIES})
 target_link_libraries(${PROGNAME} keepassx_core)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
