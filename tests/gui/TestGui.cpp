@@ -45,6 +45,7 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "crypto/kdf/AesKdf.h"
@@ -441,6 +442,17 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
     QCOMPARE(entry->historyItems().size(), ++editCount);
     QVERIFY(!applyButton->isEnabled());
+
+    // Test the "known bad" checkbox
+    editEntryWidget->setCurrentPage(1);
+    auto knownBadCheckBox = editEntryWidget->findChild<QCheckBox*>("knownBadCheckBox");
+    QVERIFY(knownBadCheckBox);
+    QCOMPARE(knownBadCheckBox->isChecked(), false);
+    knownBadCheckBox->setChecked(true);
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    QCOMPARE(entry->historyItems().size(), ++editCount);
+    QCOMPARE(entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD), true);
+    QCOMPARE(entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD), TRUE_STR);
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);

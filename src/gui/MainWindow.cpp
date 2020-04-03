@@ -355,7 +355,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseSave->setIcon(resources()->icon("document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(resources()->icon("document-save-as"));
     m_ui->actionDatabaseClose->setIcon(resources()->icon("document-close"));
-    m_ui->actionReports->setIcon(resources()->icon("help-about"));
+    m_ui->actionReports->setIcon(resources()->icon("reports"));
     m_ui->actionChangeDatabaseSettings->setIcon(resources()->icon("document-edit"));
     m_ui->actionChangeMasterKey->setIcon(resources()->icon("database-change-key"));
     m_ui->actionLockDatabases->setIcon(resources()->icon("database-lock"));

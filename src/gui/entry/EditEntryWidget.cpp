@@ -42,6 +42,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Metadata.h"
+#include "core/PasswordHealth.h"
 #include "core/Resources.h"
 #include "core/TimeDelta.h"
 #include "core/Tools.h"
@@ -423,6 +424,7 @@ void EditEntryWidget::setupEntryUpdate()
     // Advanced tab
     connect(m_advancedUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_advancedUi->knownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->fgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->bgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->attachmentsWidget, SIGNAL(widgetUpdated()), this, SLOT(setModified()));
@@ -827,6 +829,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         editTriggers = QAbstractItemView::DoubleClicked;
     }
     m_advancedUi->attributesView->setEditTriggers(editTriggers);
+    m_advancedUi->knownBadCheckBox->setChecked(entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
+                                               && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD)
+                                                      == TRUE_STR);
     setupColorButton(true, entry->foregroundColor());
     setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
@@ -1030,6 +1035,13 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
+
+    const auto wasKnownBad = entry->customData()->contains(PasswordHealth::OPTION_KNOWN_BAD)
+                             && entry->customData()->value(PasswordHealth::OPTION_KNOWN_BAD) == TRUE_STR;
+    const auto isKnownBad = m_advancedUi->knownBadCheckBox->isChecked();
+    if (isKnownBad != wasKnownBad) {
+        entry->customData()->set(PasswordHealth::OPTION_KNOWN_BAD, isKnownBad ? TRUE_STR : FALSE_STR);
+    }
 
     if (m_advancedUi->fgColorCheckBox->isChecked() && m_advancedUi->fgColorButton->property("color").isValid()) {
         entry->setForegroundColor(m_advancedUi->fgColorButton->property("color").toString());
