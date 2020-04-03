@@ -117,6 +117,8 @@ map() {
         preferences-other)                  echo file-document-edit-outline     ;;
         preferences-desktop-icons)          echo emoticon-happy-outline         ;;
         preferences-system-network-sharing) echo lan                            ;;
+        reports)                            echo lightbulb-on-outline           ;;
+        reports-exclude)                    echo lightbulb-off-outline          ;;
         security-high)                      echo shield-outline                 ;;
         sort-alphabetical-ascending)        echo sort-alphabetical-ascending    ;;
         sort-alphabetical-descending)       echo sort-alphabetical-descending   ;;

@@ -24,6 +24,9 @@
 #include "PasswordHealth.h"
 #include "zxcvbn.h"
 
+// Define the static member variable with the custom field name
+const QString PasswordHealth::OPTION_KNOWN_BAD = QStringLiteral("KnownBad");
+
 PasswordHealth::PasswordHealth(double entropy)
     : m_score(entropy)
     , m_entropy(entropy)
