@@ -221,8 +221,8 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
 #ifdef WITH_XC_SSHAGENT
     if (sshAgent()->isEnabled()) {
-        connect(this, SIGNAL(databaseLocked()), sshAgent(), SLOT(databaseModeChanged()));
-        connect(this, SIGNAL(databaseUnlocked()), sshAgent(), SLOT(databaseModeChanged()));
+        connect(this, SIGNAL(databaseLockRequested()), sshAgent(), SLOT(databaseLocked()));
+        connect(this, SIGNAL(databaseUnlocked()), sshAgent(), SLOT(databaseUnlocked()));
     }
 #endif
 
@@ -739,7 +739,7 @@ void DatabaseWidget::addToAgent()
 
     OpenSSHKey key;
     if (settings.toOpenSSHKey(currentEntry, key, true)) {
-        SSHAgent::instance()->addIdentity(key, settings);
+        SSHAgent::instance()->addIdentity(key, settings, database()->uuid());
     } else {
         m_messageWidget->showMessage(key.errorString(), MessageWidget::Error);
     }

@@ -218,15 +218,19 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
  * Add the identity to the SSH agent.
  *
  * @param key identity / key to add
- * @param lifetime time after which the key should expire
- * @param confirm ask for confirmation before adding the key
- * @param removeOnLock autoremove from agent when the Database is locked
+ * @param settings constraints (lifetime, confirm), remove-on-lock
+ * @param databaseUuid database that owns the key for remove-on-lock
  * @return true on success
  */
-bool SSHAgent::addIdentity(OpenSSHKey& key, KeeAgentSettings& settings)
+bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid)
 {
     if (!isAgentRunning()) {
         m_error = tr("No agent running, cannot add identity.");
+        return false;
+    }
+
+    if (m_addedKeys.contains(key) && m_addedKeys[key].first != databaseUuid) {
+        m_error = tr("Key identity ownership conflict. Refusing to add.");
         return false;
     }
 
@@ -269,7 +273,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, KeeAgentSettings& settings)
 
     OpenSSHKey keyCopy = key;
     keyCopy.clearPrivate();
-    m_addedKeys[keyCopy] = settings.removeAtDatabaseClose();
+    m_addedKeys[keyCopy] = qMakePair(databaseUuid, settings.removeAtDatabaseClose());
     return true;
 }
 
@@ -373,7 +377,7 @@ bool SSHAgent::listIdentities(QList<QSharedPointer<OpenSSHKey>>& list)
  * @param loaded is the key laoded
  * @return true on success
  */
-bool SSHAgent::checkIdentity(OpenSSHKey& key, bool& loaded)
+bool SSHAgent::checkIdentity(const OpenSSHKey& key, bool& loaded)
 {
     QList<QSharedPointer<OpenSSHKey>> list;
 
@@ -401,7 +405,7 @@ void SSHAgent::removeAllIdentities()
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
         // Remove key if requested to remove on lock
-        if (it.value()) {
+        if (it.value().second) {
             OpenSSHKey key = it.key();
             removeIdentity(key);
         }
@@ -419,33 +423,43 @@ void SSHAgent::removeAllIdentities()
 void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
 {
     if (m_addedKeys.contains(key)) {
-        m_addedKeys[key] = autoRemove;
+        m_addedKeys[key].second = autoRemove;
     }
 }
 
-void SSHAgent::databaseModeChanged()
+void SSHAgent::databaseLocked()
 {
     auto* widget = qobject_cast<DatabaseWidget*>(sender());
     if (!widget) {
         return;
     }
 
-    if (widget->isLocked()) {
-        auto it = m_addedKeys.begin();
-        while (it != m_addedKeys.end()) {
-            OpenSSHKey key = it.key();
-            if (it.value()) {
-                if (!removeIdentity(key)) {
-                    emit error(m_error);
-                }
-                it = m_addedKeys.erase(it);
-            } else {
-                // don't remove it yet
-                m_addedKeys[key] = false;
-                ++it;
-            }
-        }
+    QUuid databaseUuid = widget->database()->uuid();
 
+    auto it = m_addedKeys.begin();
+    while (it != m_addedKeys.end()) {
+        if (it.value().first != databaseUuid) {
+            ++it;
+            continue;
+        }
+        OpenSSHKey key = it.key();
+        if (it.value().second) {
+            if (!removeIdentity(key)) {
+                emit error(m_error);
+            }
+            it = m_addedKeys.erase(it);
+        } else {
+            // don't remove it yet
+            m_addedKeys[key].second = false;
+            ++it;
+        }
+    }
+}
+
+void SSHAgent::databaseUnlocked()
+{
+    auto* widget = qobject_cast<DatabaseWidget*>(sender());
+    if (!widget) {
         return;
     }
 
@@ -473,7 +487,7 @@ void SSHAgent::databaseModeChanged()
 
         // Add key to agent; ignore errors if we have previously added the key
         bool known_key = m_addedKeys.contains(key);
-        if (!addIdentity(key, settings) && !known_key) {
+        if (!addIdentity(key, settings, widget->database()->uuid()) && !known_key) {
             emit error(m_error);
         }
     }

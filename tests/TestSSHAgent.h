@@ -41,6 +41,7 @@ private:
     QString m_agentSocketFileName;
     QProcess m_agentProcess;
     OpenSSHKey m_key;
+    QUuid m_uuid;
 };
 
 #endif // TESTSSHAGENT_H
