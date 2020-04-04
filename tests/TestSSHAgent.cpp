@@ -119,8 +119,15 @@ void TestSSHAgent::testIdentity()
     bool keyInAgent;
 
     // test adding a key works
-    QVERIFY(agent.addIdentity(m_key, settings));
+    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
+
+    // test non-conflicting key ownership doesn't throw an error
+    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+
+    // test conflicting key ownership throws an error
+    QUuid secondUuid("{11111111-1111-1111-1111-111111111111}");
+    QVERIFY(!agent.addIdentity(m_key, settings, secondUuid));
 
     // test removing a key works
     QVERIFY(agent.removeIdentity(m_key));
@@ -139,7 +146,7 @@ void TestSSHAgent::testRemoveOnClose()
     bool keyInAgent;
 
     settings.setRemoveAtDatabaseClose(true);
-    QVERIFY(agent.addIdentity(m_key, settings));
+    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
     agent.setEnabled(false);
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && !keyInAgent);
@@ -160,7 +167,7 @@ void TestSSHAgent::testLifetimeConstraint()
     settings.setLifetimeConstraintDuration(2); // two seconds
 
     // identity should be in agent immediately after adding
-    QVERIFY(agent.addIdentity(m_key, settings));
+    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
 
     QElapsedTimer timer;
@@ -193,7 +200,7 @@ void TestSSHAgent::testConfirmConstraint()
 
     settings.setUseConfirmConstraintWhenAdding(true);
 
-    QVERIFY(agent.addIdentity(m_key, settings));
+    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
 
     // we can't test confirmation itself is working but we can test the agent accepts the key
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);

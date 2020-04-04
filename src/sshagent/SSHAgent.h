@@ -47,9 +47,9 @@ public:
 
     const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, KeeAgentSettings& settings);
+    bool addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid);
     bool listIdentities(QList<QSharedPointer<OpenSSHKey>>& list);
-    bool checkIdentity(OpenSSHKey& key, bool& loaded);
+    bool checkIdentity(const OpenSSHKey& key, bool& loaded);
     bool removeIdentity(OpenSSHKey& key);
     void removeAllIdentities();
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
@@ -59,7 +59,8 @@ signals:
     void enabledChanged(bool enabled);
 
 public slots:
-    void databaseModeChanged();
+    void databaseLocked();
+    void databaseUnlocked();
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;
@@ -81,7 +82,7 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QHash<OpenSSHKey, bool> m_addedKeys;
+    QHash<OpenSSHKey, QPair<QUuid, bool>> m_addedKeys;
     QString m_error;
 };
 
