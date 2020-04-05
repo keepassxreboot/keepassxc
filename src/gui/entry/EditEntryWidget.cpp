@@ -673,7 +673,11 @@ bool EditEntryWidget::getOpenSSHKey(OpenSSHKey& key, bool decrypt)
         return false;
     }
 
-    if (!settings.toOpenSSHKey(m_entry, key, decrypt)) {
+    if (!settings.toOpenSSHKey(m_mainUi->usernameComboBox->lineEdit()->text(),
+                               m_mainUi->passwordEdit->text(),
+                               m_advancedUi->attachmentsWidget->entryAttachments(),
+                               key,
+                               decrypt)) {
         showMessage(settings.errorString(), MessageWidget::Error);
         return false;
     }

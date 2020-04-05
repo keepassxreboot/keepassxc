@@ -20,6 +20,7 @@
 #define KEEAGENTSETTINGS_H
 
 #include "core/Entry.h"
+#include "core/EntryAttachments.h"
 #include "crypto/ssh/OpenSSHKey.h"
 #include <QXmlStreamReader>
 #include <QtCore>
@@ -39,6 +40,11 @@ public:
     void toEntry(Entry* entry) const;
     bool keyConfigured() const;
     bool toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt);
+    bool toOpenSSHKey(const QString& username,
+                      const QString& password,
+                      const EntryAttachments* attachments,
+                      OpenSSHKey& key,
+                      bool decrypt);
 
     const QString errorString() const;
 
