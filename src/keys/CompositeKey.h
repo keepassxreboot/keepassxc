@@ -38,9 +38,9 @@ public:
     bool isEmpty() const;
 
     QByteArray rawKey() const override;
-    QByteArray rawKey(const QByteArray* transformSeed, bool* ok = nullptr) const;
-    Q_REQUIRED_RESULT bool transform(const Kdf& kdf, QByteArray& result) const;
-    bool challenge(const QByteArray& seed, QByteArray& result) const;
+
+    Q_REQUIRED_RESULT bool transform(const Kdf& kdf, QByteArray& result, QString* error = nullptr) const;
+    bool challenge(const QByteArray& seed, QByteArray& result, QString* error = nullptr) const;
 
     void addKey(const QSharedPointer<Key>& key);
     const QList<QSharedPointer<Key>>& keys() const;
@@ -49,6 +49,8 @@ public:
     const QList<QSharedPointer<ChallengeResponseKey>>& challengeResponseKeys() const;
 
 private:
+    QByteArray rawKey(const QByteArray* transformSeed, bool* ok = nullptr, QString* error = nullptr) const;
+
     QList<QSharedPointer<Key>> m_keys;
     QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };

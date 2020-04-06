@@ -79,6 +79,8 @@ void operator delete[](void* ptr) noexcept
     ::operator delete(ptr);
 }
 
+// clang-format versions less than 10.0 refuse to put a space before "noexcept"
+// clang-format off
 /**
  * Custom insecure delete operator that does not zero out memory before
  * freeing a buffer. Can be used for better performance.
@@ -87,6 +89,7 @@ void operator delete(void* ptr, bool) noexcept
 {
     std::free(ptr);
 }
+// clang-format on
 
 void operator delete[](void* ptr, bool) noexcept
 {

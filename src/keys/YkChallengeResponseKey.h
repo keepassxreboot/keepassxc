@@ -31,32 +31,16 @@ class YkChallengeResponseKey : public QObject, public ChallengeResponseKey
 public:
     static QUuid UUID;
 
-    explicit YkChallengeResponseKey(int slot = -1, bool blocking = false);
+    explicit YkChallengeResponseKey(YubiKeySlot keySlot = {});
     ~YkChallengeResponseKey() override;
 
     QByteArray rawKey() const override;
     bool challenge(const QByteArray& challenge) override;
-    bool challenge(const QByteArray& challenge, unsigned int retries);
-    QString getName() const;
-    bool isBlocking() const;
-
-signals:
-    /**
-     * Emitted whenever user interaction is required to proceed with the challenge-response protocol.
-     * You can use this to show a helpful dialog informing the user that his assistance is required.
-     */
-    void userInteractionRequired();
-
-    /**
-     * Emitted when the user has provided their required input.
-     */
-    void userConfirmed();
 
 private:
     char* m_key = nullptr;
     std::size_t m_keySize = 0;
-    int m_slot;
-    bool m_blocking;
+    YubiKeySlot m_keySlot;
 };
 
 #endif // KEEPASSX_YK_CHALLENGERESPONSEKEY_H

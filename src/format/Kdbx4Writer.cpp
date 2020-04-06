@@ -53,7 +53,7 @@ bool Kdbx4Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (!db->setKey(db->key(), false, true)) {
-        raiseError(tr("Unable to calculate master key"));
+        raiseError(tr("Unable to calculate master key: %1").arg(db->keyError()));
         return false;
     }
 

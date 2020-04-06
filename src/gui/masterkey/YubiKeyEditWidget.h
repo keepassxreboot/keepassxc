@@ -45,14 +45,10 @@ protected:
     void initComponentEditWidget(QWidget* widget) override;
 
 private slots:
-    void yubikeyDetected(int slot, bool blocking);
-    void yubikeyDetectComplete();
-    void noYubikeyFound();
+    void hardwareKeyResponse(bool found);
     void pollYubikey();
 
 private:
-    bool createCrKey(QSharedPointer<YkChallengeResponseKey>& key, bool testChallenge = true) const;
-
     const QScopedPointer<Ui::YubiKeyEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
     bool m_isDetected = false;

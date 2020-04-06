@@ -207,9 +207,11 @@ add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
         LIBS ${TEST_LIBRARIES})
 
-add_unit_test(NAME testykchallengeresponsekey
+if(WITH_XC_YUBIKEY)
+    add_unit_test(NAME testykchallengeresponsekey
         SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
+endif()
 
 if(WITH_XC_KEESHARE)
     add_unit_test(NAME testsharing SOURCES TestSharing.cpp

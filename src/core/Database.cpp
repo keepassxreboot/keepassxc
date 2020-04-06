@@ -659,10 +659,11 @@ QByteArray Database::challengeResponseKey() const
 
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
+    m_keyError.clear();
     if (m_data.key) {
         m_data.masterSeed->setHash(masterSeed);
         QByteArray response;
-        bool ok = m_data.key->challenge(masterSeed, response);
+        bool ok = m_data.key->challenge(masterSeed, response, &m_keyError);
         if (ok && !response.isEmpty()) {
             m_data.challengeResponseKey->setHash(response);
         } else if (ok && response.isEmpty()) {
@@ -703,6 +704,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
                       bool transformKey)
 {
     Q_ASSERT(!m_data.isReadOnly);
+    m_keyError.clear();
 
     if (!key) {
         m_data.key.reset();
@@ -724,7 +726,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
 
     if (!transformKey) {
         transformedMasterKey = QByteArray(oldTransformedMasterKey.rawKey());
-    } else if (!key->transform(*m_data.kdf, transformedMasterKey)) {
+    } else if (!key->transform(*m_data.kdf, transformedMasterKey, &m_keyError)) {
         return false;
     }
 
@@ -743,25 +745,9 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     return true;
 }
 
-bool Database::verifyKey(const QSharedPointer<CompositeKey>& key) const
+QString Database::keyError()
 {
-    Q_ASSERT(!m_data.key->isEmpty());
-
-    if (!m_data.challengeResponseKey->rawKey().isEmpty()) {
-        QByteArray result;
-
-        if (!key->challenge(m_data.masterSeed->rawKey(), result)) {
-            // challenge failed, (YubiKey?) removed?
-            return false;
-        }
-
-        if (m_data.challengeResponseKey->rawKey() != result) {
-            // wrong response from challenged device(s)
-            return false;
-        }
-    }
-
-    return (m_data.key->rawKey() == key->rawKey());
+    return m_keyError;
 }
 
 QVariantMap& Database::publicCustomData()

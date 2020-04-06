@@ -51,6 +51,9 @@
 
 #include <QClipboard>
 #include <QFuture>
+#include <QSet>
+#include <QSignalSpy>
+#include <QTextStream>
 #include <QtConcurrent>
 
 QTEST_MAIN(TestCli)
@@ -1711,26 +1714,46 @@ void TestCli::testInvalidDbFiles()
 /**
  * Secret key for the YubiKey slot used by the unit test is
  * 1c e3 0f d7 8d 20 dc fa 40 b5 0c 18 77 9a fb 0f 02 28 8d b7
- * This secret should be configured at slot 2, and the slot
- * should be configured as passive.
+ * This secret can be on either slot but must be passive.
  */
 void TestCli::testYubiKeyOption()
 {
-    if (!YubiKey::instance()->init()) {
-        QSKIP("Unable to connect to YubiKey");
+    if (!YubiKey::instance()->isInitialized()) {
+        QSKIP("Unable to initialize YubiKey interface.");
     }
 
-    QString errorMessage;
-    bool isBlocking = YubiKey::instance()->checkSlotIsBlocking(2, errorMessage);
-    if (isBlocking && errorMessage.isEmpty()) {
-        QSKIP("Skipping YubiKey in press mode.");
+    YubiKey::instance()->findValidKeys();
+
+    // Wait for the hardware to respond
+    QSignalSpy detected(YubiKey::instance(), SIGNAL(detectComplete(bool)));
+    QTRY_VERIFY_WITH_TIMEOUT(detected.count() > 0, 2000);
+
+    auto keys = YubiKey::instance()->foundKeys();
+    if (keys.isEmpty()) {
+        QSKIP("No YubiKey devices were detected.");
     }
 
+    bool wouldBlock = false;
     QByteArray challenge("CLITest");
     QByteArray response;
-    YubiKey::instance()->challenge(2, false, challenge, response);
     QByteArray expected("\xA2\x3B\x94\x00\xBE\x47\x9A\x30\xA9\xEB\x50\x9B\x85\x56\x5B\x6B\x30\x25\xB4\x8E", 20);
-    QVERIFY2(response == expected, "YubiKey Slot 2 is not configured with correct secret key.");
+
+    // Find a key that as configured for this test
+    YubiKeySlot pKey(0, 0);
+    for (auto key : keys) {
+        if (YubiKey::instance()->testChallenge(key, &wouldBlock) && !wouldBlock) {
+            YubiKey::instance()->challenge(key, challenge, response);
+            if (response == expected) {
+                pKey = key;
+                break;
+            }
+            Tools::wait(100);
+        }
+    }
+
+    if (pKey.first == 0 && pKey.second == 0) {
+        QSKIP("No YubiKey is properly configured to perform this test.");
+    }
 
     List listCmd;
     Add addCmd;

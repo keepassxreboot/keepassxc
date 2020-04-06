@@ -42,7 +42,7 @@ bool Kdbx3Writer::writeDatabase(QIODevice* device, Database* db)
     QByteArray endOfHeader = "\r\n\r\n";
 
     if (!db->challengeMasterSeed(masterSeed)) {
-        raiseError(tr("Unable to issue challenge-response."));
+        raiseError(tr("Unable to issue challenge-response: %1").arg(db->keyError()));
         return false;
     }
 

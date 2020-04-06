@@ -40,12 +40,10 @@ public:
     explicit DatabaseOpenWidget(QWidget* parent = nullptr);
     ~DatabaseOpenWidget();
     void load(const QString& filename);
+    QString filename();
     void clearForms();
     void enterKey(const QString& pw, const QString& keyFile);
     QSharedPointer<Database> database();
-
-public slots:
-    void pollYubikey();
 
 signals:
     void dialogFinished(bool accepted);
@@ -64,9 +62,8 @@ private slots:
     void clearKeyFileEdit();
     void handleKeyFileComboEdited();
     void handleKeyFileComboChanged();
-    void yubikeyDetected(int slot, bool blocking);
-    void yubikeyDetectComplete();
-    void noYubikeyFound();
+    void pollHardwareKey();
+    void hardwareKeyResponse(bool found);
     void openHardwareKeyHelp();
     void openKeyFileHelp();
 
@@ -77,7 +74,7 @@ protected:
     bool m_retryUnlockWithEmptyPassword = false;
 
 private:
-    bool m_yubiKeyBeingPolled = false;
+    bool m_pollingHardwareKey = false;
     bool m_keyFileComboEdited = false;
     bool m_isOpeningDatabase = false;
     Q_DISABLE_COPY(DatabaseOpenWidget)

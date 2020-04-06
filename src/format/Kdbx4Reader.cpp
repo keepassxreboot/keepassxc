@@ -50,7 +50,7 @@ bool Kdbx4Reader::readDatabaseImpl(QIODevice* device,
 
     bool ok = AsyncTask::runAndWaitForFuture([&] { return db->setKey(key, false, false); });
     if (!ok) {
-        raiseError(tr("Unable to calculate master key"));
+        raiseError(tr("Unable to calculate master key: %1").arg(db->keyError()));
         return false;
     }
 
