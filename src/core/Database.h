@@ -119,9 +119,9 @@ public:
                 bool updateChangedTime = true,
                 bool updateTransformSalt = false,
                 bool transformKey = true);
+    QString keyError();
     QByteArray challengeResponseKey() const;
     bool challengeMasterSeed(const QByteArray& masterSeed);
-    bool verifyKey(const QSharedPointer<CompositeKey>& key) const;
     const QUuid& cipher() const;
     void setCipher(const QUuid& cipher);
     Database::CompressionAlgorithm compressionAlgorithm() const;
@@ -210,6 +210,7 @@ private:
     QPointer<FileWatcher> m_fileWatcher;
     bool m_modified = false;
     bool m_emitModified;
+    QString m_keyError;
 
     QList<QString> m_commonUsernames;
 

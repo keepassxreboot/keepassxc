@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>580</width>
-    <height>410</height>
+    <width>588</width>
+    <height>448</height>
    </rect>
   </property>
   <property name="accessibleName">
@@ -280,7 +280,7 @@
                      <number>0</number>
                     </property>
                     <item row="1" column="2">
-                     <widget class="QProgressBar" name="yubikeyProgress">
+                     <widget class="QProgressBar" name="hardwareKeyProgress">
                       <property name="maximumSize">
                        <size>
                         <width>16777215</width>
@@ -302,7 +302,7 @@
                      </widget>
                     </item>
                     <item row="0" column="2">
-                     <widget class="QComboBox" name="comboChallengeResponse">
+                     <widget class="QComboBox" name="challengeResponseCombo">
                       <property name="enabled">
                        <bool>false</bool>
                       </property>
@@ -338,7 +338,7 @@
                          <string>Hardware Key:</string>
                         </property>
                         <property name="buddy">
-                         <cstring>comboChallengeResponse</cstring>
+                         <cstring>challengeResponseCombo</cstring>
                         </property>
                        </widget>
                       </item>
@@ -606,7 +606,7 @@
   <tabstop>comboKeyFile</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
   <tabstop>hardwareKeyLabelHelp</tabstop>
-  <tabstop>comboChallengeResponse</tabstop>
+  <tabstop>challengeResponseCombo</tabstop>
   <tabstop>checkTouchID</tabstop>
  </tabstops>
  <resources/>

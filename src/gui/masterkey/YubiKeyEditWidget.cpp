@@ -19,12 +19,11 @@
 #include "ui_YubiKeyEditWidget.h"
 
 #include "config-keepassx.h"
+#include "core/AsyncTask.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "keys/CompositeKey.h"
 #include "keys/YkChallengeResponseKey.h"
-
-#include <QtConcurrent>
 
 YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
@@ -36,6 +35,8 @@ YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
            "for additional security.</p><p>The YubiKey requires one of its slots to be programmed as "
            "<a href=\"https://www.yubico.com/products/services-software/personalization-tools/challenge-response/\">"
            "HMAC-SHA1 Challenge-Response</a>.</p>"));
+
+    connect(YubiKey::instance(), SIGNAL(detectComplete(bool)), SLOT(hardwareKeyResponse(bool)), Qt::QueuedConnection);
 }
 
 YubiKeyEditWidget::~YubiKeyEditWidget()
@@ -44,24 +45,31 @@ YubiKeyEditWidget::~YubiKeyEditWidget()
 
 bool YubiKeyEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {
-    QSharedPointer<YkChallengeResponseKey> keyPtr;
-    if (!createCrKey(keyPtr, false)) {
+    if (!m_isDetected || !m_compEditWidget) {
         return false;
     }
-    key->addChallengeResponseKey(keyPtr);
 
+    int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
+    auto slot = m_compUi->comboChallengeResponse->itemData(selectionIndex).value<YubiKeySlot>();
+    key->addChallengeResponseKey(QSharedPointer<YkChallengeResponseKey>::create(slot));
     return true;
 }
 
 bool YubiKeyEditWidget::validate(QString& errorMessage) const
 {
-    QSharedPointer<YkChallengeResponseKey> keyPtr;
-    if (!createCrKey(keyPtr)) {
-        errorMessage = tr("No YubiKey detected, please ensure it's plugged in.");
+    if (!m_isDetected) {
+        errorMessage = tr("Could not find any hardware keys!");
         return false;
     }
 
-    return true;
+    // Perform a test challenge response
+    int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
+    auto slot = m_compUi->comboChallengeResponse->itemData(selectionIndex).value<YubiKeySlot>();
+    bool valid = AsyncTask::runAndWaitForFuture([&slot] { return YubiKey::instance()->testChallenge(slot); });
+    if (!valid) {
+        errorMessage = tr("Selected hardware key slot does not support challenge-response!");
+    }
+    return valid;
 }
 
 QWidget* YubiKeyEditWidget::componentEditWidget()
@@ -76,13 +84,6 @@ QWidget* YubiKeyEditWidget::componentEditWidget()
 
 #ifdef WITH_XC_YUBIKEY
     connect(m_compUi->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
-
-    // clang-format off
-    connect(YubiKey::instance(), SIGNAL(detected(int,bool)), SLOT(yubikeyDetected(int,bool)), Qt::QueuedConnection);
-    connect(YubiKey::instance(), SIGNAL(detectComplete()), SLOT(yubikeyDetectComplete()), Qt::QueuedConnection);
-    connect(YubiKey::instance(), SIGNAL(notFound()), SLOT(noYubikeyFound()), Qt::QueuedConnection);
-    // clang-format on
-
     pollYubikey();
 #endif
 
@@ -105,72 +106,36 @@ void YubiKeyEditWidget::pollYubikey()
 
     m_isDetected = false;
     m_compUi->comboChallengeResponse->clear();
+    m_compUi->comboChallengeResponse->addItem(tr("Detecting hardware keys…"));
     m_compUi->buttonRedetectYubikey->setEnabled(false);
     m_compUi->comboChallengeResponse->setEnabled(false);
     m_compUi->yubikeyProgress->setVisible(true);
 
-    // YubiKey init is slow, detect asynchronously to not block the UI
-    QtConcurrent::run(YubiKey::instance(), &YubiKey::detect);
+    YubiKey::instance()->findValidKeys();
 #endif
 }
 
-void YubiKeyEditWidget::yubikeyDetected(int slot, bool blocking)
+void YubiKeyEditWidget::hardwareKeyResponse(bool found)
 {
-#ifdef WITH_XC_YUBIKEY
     if (!m_compEditWidget) {
         return;
     }
-    YkChallengeResponseKey yk(slot, blocking);
-    // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
-    m_compUi->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1u) | blocking));
-    m_isDetected = true;
-#else
-    Q_UNUSED(slot);
-    Q_UNUSED(blocking);
-#endif
-}
 
-void YubiKeyEditWidget::yubikeyDetectComplete()
-{
-    m_compUi->comboChallengeResponse->setEnabled(true);
-    m_compUi->buttonRedetectYubikey->setEnabled(true);
-    m_compUi->yubikeyProgress->setVisible(false);
-}
-
-void YubiKeyEditWidget::noYubikeyFound()
-{
-#ifdef WITH_XC_YUBIKEY
-    if (!m_compEditWidget) {
-        return;
-    }
     m_compUi->comboChallengeResponse->clear();
-    m_compUi->comboChallengeResponse->setEnabled(false);
-    m_compUi->comboChallengeResponse->addItem(tr("No YubiKey inserted."));
     m_compUi->buttonRedetectYubikey->setEnabled(true);
     m_compUi->yubikeyProgress->setVisible(false);
-    m_isDetected = false;
-#endif
-}
 
-bool YubiKeyEditWidget::createCrKey(QSharedPointer<YkChallengeResponseKey>& key, bool testChallenge) const
-{
-    Q_ASSERT(m_compEditWidget);
-    if (!m_isDetected || !m_compEditWidget) {
-        return false;
+    if (!found) {
+        m_compUi->comboChallengeResponse->addItem(tr("No hardware keys detected"));
+        m_isDetected = false;
+        return;
     }
 
-    int selectionIndex = m_compUi->comboChallengeResponse->currentIndex();
-    int comboPayload = m_compUi->comboChallengeResponse->itemData(selectionIndex).toInt();
-
-    if (0 == comboPayload) {
-        return false;
+    for (auto& slot : YubiKey::instance()->foundKeys()) {
+        // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
+        m_compUi->comboChallengeResponse->addItem(YubiKey::instance()->getDisplayName(slot), QVariant::fromValue(slot));
     }
 
-    auto blocking = static_cast<bool>(comboPayload & 1u);
-    int slot = comboPayload >> 1u;
-    key.reset(new YkChallengeResponseKey(slot, blocking));
-    if (testChallenge) {
-        return key->challenge(QByteArray("0000"));
-    }
-    return true;
+    m_isDetected = true;
+    m_compUi->comboChallengeResponse->setEnabled(true);
 }

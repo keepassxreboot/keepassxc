@@ -19,6 +19,7 @@
 #include <cstdlib>
 #include <utility>
 
+#include <QFileInfo>
 #include <QMap>
 
 #include "Command.h"
@@ -72,8 +73,8 @@ const QCommandLineOption Command::NoPasswordOption =
 const QCommandLineOption Command::YubiKeyOption =
     QCommandLineOption(QStringList() << "y"
                                      << "yubikey",
-                       QObject::tr("Yubikey slot used to encrypt the database."),
-                       QObject::tr("slot"));
+                       QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
+                       QObject::tr("slot[:serial]"));
 
 namespace
 {
@@ -121,7 +122,15 @@ QString Command::getDescriptionLine()
 
 QString Command::getHelpText()
 {
-    return buildParser(this)->helpText().replace("[options]", name + " [options]");
+    auto help = buildParser(this)->helpText();
+    // Fix spacing of options parameter
+    help.replace(QStringLiteral("[options]"), name + QStringLiteral(" [options]"));
+    // Remove application directory from command line example
+    auto appname = QFileInfo(QCoreApplication::applicationFilePath()).fileName();
+    auto regex = QRegularExpression(QStringLiteral(" .*%1").arg(QRegularExpression::escape(appname)));
+    help.replace(regex, appname.prepend(" "));
+
+    return help;
 }
 
 QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringList& arguments)

@@ -1183,7 +1183,9 @@ void DatabaseWidget::switchToDatabaseSettings()
 
 void DatabaseWidget::switchToOpenDatabase()
 {
-    switchToOpenDatabase(m_db->filePath());
+    if (currentWidget() != m_databaseOpenWidget || m_databaseOpenWidget->filename() != m_db->filePath()) {
+        switchToOpenDatabase(m_db->filePath());
+    }
 }
 
 void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
