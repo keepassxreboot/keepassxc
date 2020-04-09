@@ -50,6 +50,16 @@
     </screenshots>
 
     <releases>
+        <release version="2.5.4" date="2020-04-09">
+            <description>
+                <ul>
+                    <li>Return keyboard focus after saving database edits [#4287]</li>
+                    <li>Windows: Use bare minimum settings in portable version [#4131]</li>
+                    <li>Windows: Use SHA256 code signing [#4129]</li>
+                    <li>macOS: Fix code signing incompatibility in latest macOS release [#4564]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.5.3" date="2020-01-19">
             <description>
                 <ul>
