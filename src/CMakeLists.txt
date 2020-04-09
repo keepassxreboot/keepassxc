@@ -487,8 +487,16 @@ if(MINGW)
     install(FILES ${Qt5_PREFIX}/ssl/certs/ca-bundle.crt DESTINATION "ssl/certs")
     # install OpenSSL library
     if(WITH_XC_NETWORKING)
-        find_library(OPENSSL_DLL NAMES libssl-1_1.dll libssl-1_1-x64.dll PATH_SUFFIXES bin)
-        find_library(CRYPTO_DLL NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll PATH_SUFFIXES bin)
+        find_file(OPENSSL_DLL NAMES libssl-1_1.dll libssl-1_1-x64.dll)
+        if (NOT OPENSSL_DLL)
+            message(FATAL_ERROR "Cannot find libssl dll, ensure openssl is properly installed.")
+        endif()
+
+        find_file(CRYPTO_DLL NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll)
+        if (NOT OPENSSL_DLL)
+            message(FATAL_ERROR "Cannot find libcrypto dll, ensure libgcrypt is properly installed.")
+        endif()
+
         install(FILES ${OPENSSL_DLL} ${CRYPTO_DLL} DESTINATION ".")
     endif()
 endif()
