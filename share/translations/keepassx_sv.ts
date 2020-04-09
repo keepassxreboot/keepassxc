@@ -1172,11 +1172,11 @@ komma att tas bort för i framtiden.
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation>Hårdvarynyckel:</translation>
+        <translation>Hårdvarunyckel:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation>Hjälp med hårdvarynyckel</translation>
+        <translation>Hjälp med hårdvarunyckel</translation>
     </message>
     <message>
         <source>TouchID for Quick Unlock</source>
@@ -1215,7 +1215,7 @@ För att förhindra att detta fel uppstår igen, måste du gå till &quot;Databa
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Du kan använda en hårdvarynyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
+        <translation>&lt;p&gt;Du kan använda en hårdvarunyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
     </message>
     <message>
@@ -3755,7 +3755,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på transformeringsrundor</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
@@ -3812,23 +3812,23 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation type="unfinished"/>
+        <translation>Saknar uuid eller data för ikon</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation type="unfinished"/>
+        <translation>Anpassad datanyckel eller värde saknas</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation type="unfinished"/>
+        <translation>Flera gruppelement</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation type="unfinished"/>
+        <translation>uuid för grupp är null</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt gruppnummer för ikon</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
@@ -3840,7 +3840,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation type="unfinished"/>
+        <translation>Inget grupp-uuid hittades</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
@@ -3864,27 +3864,27 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation type="unfinished"/>
+        <translation>Inget post-uuid hittades</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation type="unfinished"/>
+        <translation>Historikelement med annat uuid</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation type="unfinished"/>
+        <translation>Duplicerat anpassat attribut hittades</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Postens text-nyckel eller värde saknas</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
-        <translation type="unfinished"/>
+        <translation>Duplicerad bilaga hittades</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation type="unfinished"/>
+        <translation>Postens binär-nyckel eller värde saknas</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -3892,19 +3892,19 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt bool värde</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt datum-/tidsvärde</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt färgvärde</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt färg rgb del</translation>
     </message>
     <message>
         <source>Invalid number value</source>
@@ -3912,7 +3912,7 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt uuid-värde</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
@@ -3923,7 +3923,9 @@ Detta är en envägsmigrering. Du kommer inte att kunna öppna den importerade d
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation type="unfinished"/>
+        <translation>XML-fel:
+%1
+Rad %2, kolumn: %3</translation>
     </message>
 </context>
 <context>
@@ -4030,19 +4032,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig gruppikonstorlek</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig gruppnivåstorlek</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig grupptyp</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation type="unfinished"/>
+        <translation>Grupp-ID eller nivå saknas</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
@@ -4082,11 +4084,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig posttyp</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation type="unfinished"/>
+        <translation>kunde inte söka till innehållets position</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.

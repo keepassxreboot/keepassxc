@@ -739,7 +739,7 @@ Selecione a base de dados correta para guardar as credenciais.</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2. %3</source>
-        <translation>Necessita de KeePassXC-Browser para que a integração funcione corretamente.&lt;br /&gt;Pode descarregar para %1 e para %2. %3</translation>
+        <translation>Necessita de KeePassXC-Browser para que a integração funcione corretamente.&lt;br /&gt;Disponível para %1 e para %2. %3</translation>
     </message>
     <message>
         <source>&amp;Brave</source>

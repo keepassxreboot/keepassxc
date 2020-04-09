@@ -225,27 +225,27 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation type="unfinished"/>
+        <translation>Husk tidligere brukte databaser</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation type="unfinished"/>
+        <translation>Last tidligere åpne databaser ved oppstart</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation type="unfinished"/>
+        <translation>Husk database nøkkelfiler og sikkerhetsdongler</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation type="unfinished"/>
+        <translation>Se etter oppdateringer ved oppstart av applikasjonen en gang per uke</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation type="unfinished"/>
+        <translation>Ta med betaversjoner når du ser etter oppdateringer</translation>
     </message>
     <message>
         <source>Button style:</source>
-        <translation type="unfinished"/>
+        <translation>Knappestil:</translation>
     </message>
     <message>
         <source>Language:</source>
@@ -253,19 +253,19 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation type="unfinished"/>
+        <translation>(start programmet på nytt for å aktivere)</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation type="unfinished"/>
+        <translation>Minimer vinduet etter at du har låst opp database</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation type="unfinished"/>
+        <translation>Minimer når du åpner en URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Skjul vindu når du kopierer til utklippstavle</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Drop to background</source>
-        <translation type="unfinished"/>
+        <translation>Slipp til bakgrunnen</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
@@ -302,7 +302,7 @@
     </message>
     <message>
         <source>Reset Settings to Default</source>
-        <translation type="unfinished"/>
+        <translation>Tilbakestill innstillinger til standard</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -390,7 +390,7 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation type="unfinished"/>
+        <translation>Bruk DuckDuckGo-tjenesten for å laste ned nettstedikoner</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -554,7 +554,7 @@ Velg om du vil gi tilgang eller ikke.</translation>
     </message>
     <message>
         <source>Deny access</source>
-        <translation type="unfinished"/>
+        <translation>Nekte adgang</translation>
     </message>
 </context>
 <context>
@@ -755,7 +755,7 @@ Vennligst velg riktig database for å lagre legitimasjon.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation type="unfinished"/>
+        <translation>Aktiver nettleser integrasjon</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
@@ -837,11 +837,11 @@ Moved %2 keys to custom data.</source>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Ingen oppføringer med KeePassHTTP-attributter funnet!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation type="unfinished"/>
+        <translation>Den aktiv database inneholder ikke en oppføring med KeePassHTTP-attributter.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
@@ -1116,7 +1116,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke åpne nøkkelfil: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
@@ -1160,7 +1160,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation type="unfinished"/>
+        <translation>Maskinvarenøkkel:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1176,7 +1176,7 @@ Vurder å opprette en ny nøkkelfil.</translation>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation type="unfinished"/>
+        <translation>Tøm nøkkelfil</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1212,15 +1212,15 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>?</source>
-        <translation type="unfinished"/>
+        <translation>?</translation>
     </message>
     <message>
         <source>Select key file...</source>
-        <translation type="unfinished"/>
+        <translation>Velge nøkkelfil...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation type="unfinished"/>
+        <translation>Kan ikke bruke database fil som nøkkelfil</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
@@ -1532,7 +1532,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation type="unfinished"/>
+        <translation>Dekrypteringstid i sekunder</translation>
     </message>
     <message>
         <source>Database format</source>
@@ -1540,7 +1540,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation type="unfinished"/>
+        <translation>Kryptering algoritme</translation>
     </message>
     <message>
         <source>Key derivation function</source>
@@ -1552,7 +1552,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Memory usage</source>
-        <translation type="unfinished"/>
+        <translation>Minnebruk</translation>
     </message>
     <message>
         <source>Parallelism</source>
@@ -1646,7 +1646,7 @@ Dersom du beholder dette antallet så kan databasen være for lett å knekke!</t
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Slett søppelbøtte</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
@@ -1655,7 +1655,7 @@ This action is not reversible.</source>
     </message>
     <message>
         <source> (old)</source>
-        <translation type="unfinished"/>
+        <translation>(gammel)</translation>
     </message>
 </context>
 <context>
@@ -1752,7 +1752,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     <name>DatabaseSettingsWidgetStatistics</name>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistikk</translation>
     </message>
     <message>
         <source>Hover over lines with error icons for further information.</source>
@@ -1768,11 +1768,11 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation type="unfinished"/>
+        <translation>Database navn</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"/>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Location</source>
@@ -1780,7 +1780,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>Sist lagret</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
@@ -1788,11 +1788,11 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"/>
+        <translation>ja</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"/>
+        <translation>nei</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
@@ -1816,7 +1816,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation type="unfinished"/>
+        <translation>Unike passord</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
@@ -1824,7 +1824,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Mer enn 10% av passordene brukes på nytt. Bruk unike passord når det er mulig.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
@@ -1832,7 +1832,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation type="unfinished"/>
+        <translation>Noen passord brukes mer enn tre ganger. Bruk unike passord når det er mulig.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
@@ -1848,7 +1848,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>Anbefaler å bruke lange, tilfeldige passord med en vurdering av &apos;bra&apos; eller &apos;utmerket&apos;.</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -1864,7 +1864,7 @@ Er du sikker på at du vil fortsette uten passord?</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated...</source>
-        <translation type="unfinished"/>
+        <translation>Vent, database statistikk blir beregnet...</translation>
     </message>
 </context>
 <context>
@@ -1936,19 +1936,19 @@ Dette er definitivt en feil, rapporter det til utviklerne.</translation>
     <message>
         <source>%1 [Read-only]</source>
         <comment>Database tab name modifier</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [Skrivebeskyttet]</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation type="unfinished"/>
+        <translation>Kunne ikke åpne %1. Enten eksisterer den ikke eller er ikke tilgjengelig.</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation type="unfinished"/>
+        <translation>Eksporter database til HTML-fil</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation type="unfinished"/>
+        <translation>HTML-fil</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
@@ -2267,11 +2267,11 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;empty URL&gt;</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation type="unfinished"/>
+        <translation>Er du sikker på at du vil fjerne denne URL-en?</translation>
     </message>
 </context>
 <context>
@@ -2452,7 +2452,7 @@ Deaktivere sikker lagring og prøve igjen?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"/>
+        <translation>Endring</translation>
     </message>
 </context>
 <context>
@@ -2964,7 +2964,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>Du kan aktivere DuckDuckGo-ikonetjenesten under Verktøy -&gt; Innstillinger -&gt; Sikkerhet</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
@@ -3057,7 +3057,7 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation type="unfinished"/>
+        <translation>Unik ID</translation>
     </message>
     <message>
         <source>Plugin data</source>
@@ -3477,7 +3477,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading...</source>
-        <translation type="unfinished"/>
+        <translation>Laster ned...</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4102,15 +4102,15 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Imported from</source>
-        <translation type="unfinished"/>
+        <translation>Importert fra</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation type="unfinished"/>
+        <translation>Eksportert til</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation type="unfinished"/>
+        <translation>Synkronisert med</translation>
     </message>
 </context>
 <context>
@@ -4228,7 +4228,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation type="unfinished"/>
+        <translation>Ugyldig nøkkelfil</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
@@ -4236,7 +4236,7 @@ Message: %2</source>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation type="unfinished"/>
+        <translation>Mistenkelig nøkkelfil</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
@@ -4466,7 +4466,7 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssiden.
     </message>
     <message>
         <source>&amp;New group</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ny gruppe</translation>
     </message>
     <message>
         <source>Add a new group</source>
@@ -4539,7 +4539,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Se etter oppdateringer...</translation>
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
@@ -4567,7 +4567,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>1Password Hvelv...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
@@ -4701,7 +4701,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation type="unfinished"/>
+        <translation>Enkle innstillinger</translation>
     </message>
 </context>
 <context>
@@ -5133,7 +5133,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Do not include:</source>
-        <translation type="unfinished"/>
+        <translation>Ikke ta med:</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
@@ -5157,7 +5157,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>Generert passord</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
@@ -5189,7 +5189,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Password length</source>
-        <translation type="unfinished"/>
+        <translation>Passord lengde</translation>
     </message>
     <message>
         <source>Word Case:</source>
@@ -5201,11 +5201,11 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Copy password</source>
-        <translation type="unfinished"/>
+        <translation>Kopier passord</translation>
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>Godta passord</translation>
     </message>
     <message>
         <source>lower case</source>
@@ -5232,7 +5232,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistikk</translation>
     </message>
 </context>
 <context>
@@ -5251,7 +5251,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Empty</source>
-        <translation type="unfinished"/>
+        <translation>Tom</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -5271,7 +5271,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished"/>
+        <translation>Fortsett</translation>
     </message>
 </context>
 <context>
@@ -6060,7 +6060,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation type="unfinished"/>
+        <translation>Gruppe %1 ikke funnet.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
@@ -6072,7 +6072,7 @@ Kjerne: %3 %4</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation type="unfinished"/>
+        <translation>FILNAVN</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
@@ -6436,7 +6436,7 @@ Kjerne: %3 %4</translation>
     <message>
         <source>Search (%1)...</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <translation>Søk (%1)...</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -6447,7 +6447,7 @@ Kjerne: %3 %4</translation>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation type="unfinished"/>
+        <translation>Alternativer</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
@@ -7054,7 +7054,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>Importer fra 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>

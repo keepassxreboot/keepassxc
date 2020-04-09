@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Vigadest teatamise koht: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation type="unfinished"/>
+        <translation>Avada saab ainult ühe KeePassXC protsessi</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -144,11 +144,11 @@
     </message>
     <message>
         <source>Don&apos;t mark database as modified for non-data changes (e.g., expanding groups)</source>
-        <translation type="unfinished"/>
+        <translation>Andmeid mittepuudutavaid muudatusi (nt gruppide laiendamist) ei loeta andmebaasi muutmiseks</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaas laaditakse automaatselt uuesti, kui seda väljastpoolt (nt teise programmiga) muudetakse</translation>
     </message>
     <message>
         <source>Entry Management</source>
@@ -418,7 +418,7 @@
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation type="unfinished"/>
+        <translation>Sellisele aknatiitlile vastavat automaatsisestuse kirjet ei leitud:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
@@ -619,11 +619,11 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
     </message>
     <message>
         <source>Re&amp;quest to unlock the database if it is locked</source>
-        <translation type="unfinished"/>
+        <translation>Kui an&amp;dmebaas on lukus, küsitakse luku avamist</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, ...) are returned.</source>
-        <translation>Kui see ruut on märgitud, tagastatakse ainult kirjed, mille URL-il on sama skeem (http, https vms) nagu aktiivsel veebilehel.</translation>
+        <translation>Kui see ruut on märgitud, tagastatakse ainult kirjed, mille URL-il on sama skeem (http, https, ...) nagu aktiivsel veebilehel.</translation>
     </message>
     <message>
         <source>&amp;Match URL scheme (e.g., https://...)</source>
@@ -631,11 +631,11 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation type="unfinished"/>
+        <translation>Märkimisel tagastatakse ainult konkreetse URL-i kohta käivad vasted, mitte kõik kirjed, mille URL-i domeeniosa klapib.</translation>
     </message>
     <message>
         <source>&amp;Return only best-matching credentials</source>
-        <translation type="unfinished"/>
+        <translation>Tagastatakse vaid kõige paremini &amp;sobivad tunnused</translation>
     </message>
     <message>
         <source>Sort &amp;matching credentials by title</source>
@@ -672,15 +672,15 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
     </message>
     <message>
         <source>&amp;Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation type="unfinished"/>
+        <translation>Tagastatakse ka lisa&amp;stringiväljad, mille alguses on &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation type="unfinished"/>
+        <translation>Märkimisel uuendatakse käivitusel programmiomase teatevahetuse skriptides automaatselt KeePassXC või keepassxc-proxy binaarfaili asukohta.</translation>
     </message>
     <message>
         <source>Update &amp;native messaging manifest files at startup</source>
-        <translation type="unfinished"/>
+        <translation>Käivitusel uuendatakse programmiomase teatevahetuse &amp;manifestifaile</translation>
     </message>
     <message>
         <source>Support a proxy application between KeePassXC and browser extension.</source>
@@ -1449,7 +1449,7 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation type="unfinished"/>
+        <translation>Mida suurem väärtus, seda kaitstum on andmebaas, kuid seda kauem võtab ka selle avamine.</translation>
     </message>
     <message>
         <source>Database format:</source>
@@ -1675,7 +1675,7 @@ Seda toimingut ei saa tagasi võtta.</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation type="unfinished"/>
+        <translation>Jälglink</translation>
     </message>
     <message>
         <source>Type</source>
@@ -1721,7 +1721,9 @@ Seda toimingut ei saa tagasi võtta.</translation>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation type="unfinished"/>
+        <translation>HOIATUS! Sa ei määranud parooli. Andmebaasi kasutamine ilma paroolita on äärmiselt ebasoovitatav!
+
+Kas oled kindel, et soovid jätkata ilma paroolita?</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -2017,7 +2019,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>No Results</source>
-        <translation type="unfinished"/>
+        <translation>Tulemusi pole</translation>
     </message>
     <message>
         <source>File has changed</source>
@@ -2436,7 +2438,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation type="unfinished"/>
+        <translation>Automaatsaatmine jäetakse selle kirje puhul vahele</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
@@ -2752,11 +2754,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>KeeShare unsigned container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare&apos;i allkirjastamata ümbrik</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare&apos;i allkirjastatud ümbrik</translation>
     </message>
     <message>
         <source>Select import source</source>
@@ -2768,7 +2770,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation type="unfinished"/>
+        <translation>Imporditava/eksporditava faili valimine</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -2964,7 +2966,7 @@ Supported extensions are: %1.</source>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>See ikoon on kasutusel %n kirjes, kus see asendataks vaikeikooniga. Kas oled kindel, et soovid selle ikooni kustutada?</numerusform><numerusform>See ikoon on kasutusel %n kirjes, kus see asendataks vaikeikooniga. Kas oled kindel, et soovid selle ikooni kustutada?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -2976,7 +2978,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation type="unfinished"/>
+        <translation>Vali, kas rakendada valitud ikoon ainult grupile endale või ka selle alamkirjetele</translation>
     </message>
     <message>
         <source>Apply icon &amp;to ...</source>
@@ -2984,19 +2986,19 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Apply to this only</source>
-        <translation type="unfinished"/>
+        <translation>Rakendatakse ainult grupile endale</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation type="unfinished"/>
+        <translation>Rakendatakse ka alamgruppidele</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation type="unfinished"/>
+        <translation>Rakendatakse ka alamkirjetele</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation type="unfinished"/>
+        <translation>Rakendatakse ka alamgruppidele ja nende kirjetele</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3117,7 +3119,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Kas oled kindel, et soovid eemaldada %n manuse?</numerusform><numerusform>Kas oled kindel, et soovid eemaldada %n manust?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3130,7 +3132,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation type="unfinished"/>
+        <translation>Kas oled kindel, et soovid juba olemasoleva faili &quot;%1&quot; selle manusega üle kirjutada?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -4121,7 +4123,7 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation type="unfinished"/>
+        <translation>Võtmekomponent</translation>
     </message>
     <message>
         <source>Key Component Description</source>
@@ -4133,22 +4135,22 @@ Kui probleem püsib, võib andmebaasifail olla rikutud.</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation type="unfinished"/>
+        <translation>Võtmekomponent on määratud, muutmiseks või eemaldamiseks klõpsa vastavat nuppu</translation>
     </message>
     <message>
         <source>Add %1</source>
         <comment>Add a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Lisa: %1</translation>
     </message>
     <message>
         <source>Change %1</source>
         <comment>Change a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Muuda: %1</translation>
     </message>
     <message>
         <source>Remove %1</source>
         <comment>Remove a key component</comment>
-        <translation type="unfinished"/>
+        <translation>Eemalda: %1</translation>
     </message>
     <message>
         <source>%1 set, click to change or remove</source>
@@ -5156,7 +5158,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Regenerate</source>
-        <translation>Genereeri uuesti</translation>
+        <translation>Genereeri uus</translation>
     </message>
     <message>
         <source>Generated password</source>
@@ -5196,7 +5198,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Word Case:</source>
-        <translation type="unfinished"/>
+        <translation>Täheregister:</translation>
     </message>
     <message>
         <source>Regenerate password</source>
@@ -5208,7 +5210,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Accept password</source>
-        <translation type="unfinished"/>
+        <translation>Kasuta seda parooli</translation>
     </message>
     <message>
         <source>lower case</source>
@@ -5242,7 +5244,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation type="unfinished"/>
+        <translation>Kirjuta üle</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -5250,7 +5252,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"/>
+        <translation>Viska</translation>
     </message>
     <message>
         <source>Empty</source>
@@ -5976,11 +5978,11 @@ Võimalikud käsud:
     </message>
     <message>
         <source>Version %1</source>
-        <translation>Versioon %1</translation>
+        <translation>versioon %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation type="unfinished"/>
+        <translation>Järgu tüüp: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
@@ -6012,15 +6014,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>KeeShare (signed and unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (allkirjastatud ja allkirjastamata)</translation>
     </message>
     <message>
         <source>KeeShare (only signed sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (ainult allkirjastatud)</translation>
     </message>
     <message>
         <source>KeeShare (only unsigned sharing)</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare (ainult allkirjastamata)</translation>
     </message>
     <message>
         <source>YubiKey</source>
@@ -6032,7 +6034,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Puudub</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
@@ -6368,7 +6370,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation type="unfinished"/>
+        <translation>Otsingusõnade süntaks on järgmine: [modifikaatorid][väli:][&quot;]otsitav[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
@@ -6519,7 +6521,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation type="unfinished"/>
+        <translation>Lukusta andmebaas</translation>
     </message>
     <message>
         <source>Unlock to show</source>
@@ -6527,14 +6529,14 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"/>
+        <translation>Puudub</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation type="unfinished"/>
+        <translation>Aktiveerimine</translation>
     </message>
     <message>
         <source>Allow export</source>
@@ -6655,15 +6657,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation type="unfinished"/>
+        <translation>Märkimisel lubatakse KeeShare&apos;i importimine</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation type="unfinished"/>
+        <translation>Märkimisel lubatakse KeeShare&apos;i eksportimine</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation type="unfinished"/>
+        <translation>Kuvatakse ainult hoiatused ja veateated</translation>
     </message>
     <message>
         <source>Key</source>

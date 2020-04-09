@@ -1599,11 +1599,11 @@ If you keep this number, your database may be too easy to crack!</source>
     </message>
     <message>
         <source>Max. history items:</source>
-        <translation>N. max. d&apos;elements al historial:</translation>
+        <translation>Nombre màxim d&apos;elements a l&apos;historial:</translation>
     </message>
     <message>
         <source>Max. history size:</source>
-        <translation>Mida màx. del historial:</translation>
+        <translation>Mida màxima de l&apos;historial:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -4351,7 +4351,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Export to CSV file...</source>
-        <translation>&amp;Exporta a fitxer CSV.</translation>
+        <translation>&amp;Exporta a un fitxer CSV...</translation>
     </message>
     <message>
         <source>Set up TOTP...</source>
@@ -4534,7 +4534,7 @@ Podeu esperar alguns errors i incidències menors. Aquesta versió no està pens
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation type="unfinished"/>
+        <translation>Descarreg&amp;a tots els favicons</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5436,7 +5436,7 @@ Available commands:
     </message>
     <message>
         <source>Search term.</source>
-        <translation type="unfinished"/>
+        <translation>Terme de cerca.</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
@@ -6103,7 +6103,7 @@ Nucli: %3 %4</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation>Format a utilitzar en l&apos;exportació. Les opcions disponibles són XML o CSV. Per defect s&apos;usa XML.</translation>
+        <translation>Format a utilitzar en l&apos;exportació. Les opcions disponibles són XML o CSV. Per defecte s&apos;usa XML.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6423,7 +6423,7 @@ Nucli: %3 %4</translation>
     <message>
         <source>Search (%1)...</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation type="unfinished"/>
+        <translation>Cerca (%1)...</translation>
     </message>
     <message>
         <source>Case sensitive</source>
@@ -6858,7 +6858,7 @@ Nucli: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Caduca en &lt;b&gt;% n&lt;/b&gt; segon (s)</numerusform><numerusform>Caduca en &lt;b&gt;% n&lt;/b&gt; segon(s)</numerusform></translation>
+        <translation><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segon</numerusform><numerusform>Caduca en &lt;b&gt;%n&lt;/b&gt; segons</numerusform></translation>
     </message>
 </context>
 <context>
