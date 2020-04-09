@@ -56,7 +56,15 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->toggleGroupNotesButton->setIcon(resources()->onOffIcon("password-show"));
 
     m_ui->entryAttachmentsWidget->setReadOnly(true);
-    m_ui->entryAttachmentsWidget->setButtonsVisible(false);
+    m_ui->entryAttachmentsWidget->setButtonsVisible(true);
+
+    QPushButton* removeButton = m_ui->entryAttachmentsWidget->findChild<QPushButton*>("removeAttachmentButton");
+    QPushButton* addButton = m_ui->entryAttachmentsWidget->findChild<QPushButton*>("addAttachmentButton");
+    QPushButton* openButton = m_ui->entryAttachmentsWidget->findChild<QPushButton*>("openAttachmentButton");
+    removeButton->setVisible(false);
+    addButton->setVisible(false);
+    openButton->setVisible(false);
+
 
     // Match background of read-only text edit fields with the window
     m_ui->entryPasswordLabel->setBackgroundRole(QPalette::Window);
