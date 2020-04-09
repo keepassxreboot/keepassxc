@@ -3443,7 +3443,7 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>%n položka bola použitá v %1</numerusform><numerusform>%n položky boli použité v %1</numerusform><numerusform>%n položiek bolo použitých v %1</numerusform><numerusform>%n položky bolo použitých v %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4104,7 +4104,7 @@ Ak sa to opakuje, potom môže byť súbor databázy poškodený.</translation>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation type="unfinished"/>
+        <translation>Neplatný odkaz zdieľania</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
@@ -4606,11 +4606,11 @@ Očakávajte chyby a menšie problémy, táto verzia nie je určená na produkč
     </message>
     <message>
         <source>1Password Vault...</source>
-        <translation type="unfinished"/>
+        <translation>Úložisko 1Password...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Importovať z úložiska 1Password</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
@@ -6197,7 +6197,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation type="unfinished"/>
+        <translation>Cesta k novej databáze.</translation>
     </message>
     <message>
         <source>Unable to import XML database export %1</source>
@@ -6221,7 +6221,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation type="unfinished"/>
+        <translation>Slot Yubikey pre druhú databázu.</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -6237,7 +6237,7 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation type="unfinished"/>
+        <translation>Cesta položky na presun.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
@@ -6245,15 +6245,15 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno nájsť skupinu s cestou %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Položka už je v skupine %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation type="unfinished"/>
+        <translation>Položka %1 úspešne presunutá do skupiny %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
@@ -6261,31 +6261,31 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation type="unfinished"/>
+        <translation>Cesta skupiny na odstránenie.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>Nemožno odstrániť koreňovú skupinu z databázy.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Skupina %1 bola úspešne recyklovaná.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>Úspešne odstránená skupina %1.</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation type="unfinished"/>
+        <translation>Zlyhalo otvorenie súboru databázy %1: nenájdené</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation type="unfinished"/>
+        <translation>Zlyhalo otvorenie súboru databázy %1: nie je súbor</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation type="unfinished"/>
+        <translation>Zlyhalo otvorenie súboru databázy %1: nie je čitateľné</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
@@ -6293,15 +6293,15 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation type="unfinished"/>
+        <translation>Neplatný slot Yubikey %1</translation>
     </message>
     <message>
         <source>Please touch the button on your YubiKey to unlock %1</source>
-        <translation type="unfinished"/>
+        <translation>Prosím, stlačte tlačidlo svojho YubiKey na odomknutie %1</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation type="unfinished"/>
+        <translation>Zadajte heslo na zašifrovanie databázy (voliteľné):</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
@@ -6325,11 +6325,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation type="unfinished"/>
+        <translation>Neplatný generátor hesla po aplikovaní všetkých volieb</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>Zobraziť chránené atribúty ako prostý text.</translation>
     </message>
 </context>
 <context>
@@ -6504,11 +6504,11 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If recycle bin is enabled for the database, entries will be moved to recycle bin directly. Otherwise, they will be deleted without confirmation.&lt;/p&gt;&lt;p&gt;You will still be prompted if any entries are referenced by others.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ak je pre databázu zapnutý kôš, položky budú presunuté priamo do koša. V opačnom prípade budú odstránené bez potvrdenia.&lt;/p&gt;&lt;p&gt;Potvrdenie bude vyžadované, len ak sú položky odkazované inými.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t confirm when entries are deleted by clients.</source>
-        <translation type="unfinished"/>
+        <translation>Nepotvrdzovať pri odstránení položiek klientmi.</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
@@ -7097,7 +7097,7 @@ Napríklad: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation type="unfinished"/>
+        <translation>Importovať z 1Password</translation>
     </message>
     <message>
         <source>Open a recent database</source>

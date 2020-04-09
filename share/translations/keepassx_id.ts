@@ -4656,11 +4656,11 @@ Jangan kaget jika ada masalah dan bug, versi ini tidak ditujukan untuk penggunaa
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Menyinkronkan dengan sumber yang lebih baru %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation type="unfinished"/>
+        <translation>Menyinkronkan dengan sumber yang lebih lama %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>

@@ -1200,9 +1200,14 @@ appsign() {
                     exitError "Unpacking failed!"
                 fi
 
-                logInfo "Signing app..."
-                xcrun codesign --sign "${key}" --verbose --deep --entitlements \
-                    "${real_src_dir}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app
+                logInfo "Signing app bundle..."
+                xcrun codesign --sign "${key}" --verbose --deep --options runtime ./app/KeePassXC.app
+
+                # Sign main binary and libraries independently so we can keep using the convenient --deep
+                # option while avoiding adding entitlements recursively
+                logInfo "Signing main binary..."
+                xcrun codesign --sign "${key}" --verbose --force --options runtime --entitlements \
+                    "${real_src_dir}/share/macosx/keepassxc.entitlements" ./app/KeePassXC.app/Contents/MacOS/KeePassXC
 
                 if [ 0 -ne $? ]; then
                     cd "${orig_dir}"
@@ -1286,8 +1291,8 @@ appsign() {
 
                 # osslsigncode does not succeed at signing MSI files at this time...
                 logInfo "Signing file '${f}' using Microsoft signtool..."
-                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" \
-                    -t "http://timestamp.comodoca.com/authenticode" "${f}"
+                signtool sign -f "${key}" -p "${password}" -d "KeePassXC" -td sha256 \
+                    -fd sha256 -tr "http://timestamp.comodoca.com/authenticode" "${f}"
 
                 if [ 0 -ne $? ]; then
                     exitError "Signing failed!"
