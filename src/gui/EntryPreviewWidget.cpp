@@ -59,7 +59,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryAttachmentsWidget->setButtonsVisible(true);
 
     m_ui->entryAttachmentsWidget->findChild<QPushButton*>("removeAttachmentButton")->setVisible(false);
-    m_ui->entryAttachmentsWidget->findChild<QPushButton*>("addAttachmentButton")->setVisible(false)
+    m_ui->entryAttachmentsWidget->findChild<QPushButton*>("addAttachmentButton")->setVisible(false);
     m_ui->entryAttachmentsWidget->findChild<QPushButton*>("openAttachmentButton")->setVisible(false);
 
 
