@@ -13,6 +13,15 @@
 - Added --set-password option for CLI db-create command
 - Added --set-key-file option for CLI db-create command (replacing --key-file option)
 
+## 2.5.4 (2020-04-09)
+
+### Fixed
+
+- Return keyboard focus after saving database edits [#4287]
+- Windows: Use bare minimum settings in portable version [#4131]
+- Windows: Use SHA256 code signing [#4129]
+- macOS: Fix code signing incompatibility in latest macOS release [#4564] 
+
 ## 2.5.3 (2020-01-19)
 
 ### Fixed

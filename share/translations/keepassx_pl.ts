@@ -6290,7 +6290,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>Wprowadź hasło odblokowujące %1:</translation>
+        <translation>Wprowadź hasło, aby odblokować %1: </translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
@@ -6302,7 +6302,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Wprowadź hasło do szyfrowania bazy danych (opcjonalnie):</translation>
+        <translation>Wprowadź hasło do szyfrowania bazy danych (opcjonalnie): </translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
@@ -6993,7 +6993,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation>cyfry</translation>
+        <translation> cyfry</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>

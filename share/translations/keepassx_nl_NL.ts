@@ -1213,12 +1213,12 @@ Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Je kunt een hardwarebeveiligingssleutel gebruiken, zoals een &lt;strong&gt;YubiKey&lt;/strong&gt; of &lt;strong&gt;OnlyKey&lt;/strong&gt; met slots geconfigureerd voor HMAC-SHA1.&lt;/p&gt;
+        <translation>&lt;p&gt;Je kunt een hardwarebeveiligingssleutel gebruiken, zoals een &lt;strong&gt;YubiKey&lt;/strong&gt; of &lt;strong&gt;OnlyKey&lt;/strong&gt; met posities (&quot;slots&quot;) geconfigureerd voor HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Klik voor meer informatie...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>U kunt de beveiliging van uw database vergroten door naast het hoofdwachtwoord en geheim bestand te gebruiken. Dit bestand kan worden gegenereerd vanuit de beveiligingsinstellingen van uw database. Het betreft hier niet uw *.kdbx bestand! Als u geen sleutenbestand heeft, kunt u het vakje leeg laten. Klik hier voor meer informatie...</translation>
+        <translation>&lt;p&gt;Je kunt de beveiliging van uw database vergroten door naast het hoofdwachtwoord een geheim bestand te gebruiken. Zo een bestand kan worden gegenereerd vanuit de beveiligingsinstellingen van uw database.&lt;/p&gt;&lt;p&gt;Dit is &lt;strong&gt;niet&lt;/strong&gt; je *.kdbx database bestand!&lt;br&gt;Als je geen sleutelbestand hebt, kun je het veld leeg laten.&lt;/p&gt;&lt;p&gt;Klik hier voor meer informatie...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1240,7 +1240,7 @@ Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
         <translation>Je kunt je database niet als sleutelbestand gebruiken.
-Als je geen sleutelbestand hebt, laat het veld leeg.</translation>
+Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
     </message>
 </context>
 <context>
@@ -2064,7 +2064,7 @@ Wil je de wijzigingen samenvoegen?</translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Verwijderen entry(s)?</numerusform><numerusform>Verwijderen entry(s)?</numerusform></translation>
+        <translation><numerusform>Verwijderen entry(s)?</numerusform><numerusform>Item(s) verwijderen?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
@@ -2223,7 +2223,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Item wijzigen</translation>
+        <translation>Item bewerken</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -2350,7 +2350,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation>Wijzig kenmerknaam</translation>
+        <translation>Kenmerknaam bewerken</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
@@ -2472,7 +2472,7 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Wijzigen</translation>
+        <translation>Bewerken</translation>
     </message>
 </context>
 <context>
@@ -4491,11 +4491,11 @@ Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downlo
     </message>
     <message>
         <source>&amp;Edit entry</source>
-        <translation>&amp;Edit item</translation>
+        <translation>Item b&amp;ewerken</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>Bekijk/bewerk item</translation>
+        <translation>Item bekijken/bewerken</translation>
     </message>
     <message>
         <source>&amp;New group</source>
@@ -5426,7 +5426,7 @@ Verwacht een aantal bugs en kleine problemen, deze versie is niet bedoeld voor p
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Naam voor deze entry.</translation>
+        <translation>Naam voor dit item.</translation>
     </message>
     <message>
         <source>title</source>
@@ -6008,7 +6008,7 @@ Beschikbare opdrachten:
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Deactiveer de wachtwoordsleutel voor de database waaruit u wilt samenvoegen.</translation>
+        <translation>Deactiveer de wachtwoordsleutel voor de database waaruit je wil samenvoegen.</translation>
     </message>
     <message>
         <source>Version %1</source>
