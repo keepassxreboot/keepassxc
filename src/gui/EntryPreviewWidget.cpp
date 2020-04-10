@@ -62,7 +62,6 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryAttachmentsWidget->findChild<QPushButton*>("addAttachmentButton")->setVisible(false);
     m_ui->entryAttachmentsWidget->findChild<QPushButton*>("openAttachmentButton")->setVisible(false);
 
-
     // Match background of read-only text edit fields with the window
     m_ui->entryPasswordLabel->setBackgroundRole(QPalette::Window);
     m_ui->entryUsernameLabel->setBackgroundRole(QPalette::Window);
