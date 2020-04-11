@@ -20,19 +20,15 @@
 
 #include "core/Config.h"
 #include "core/Resources.h"
-#include "gui/Application.h"
 #include "gui/Font.h"
 #include "gui/PasswordGeneratorWidget.h"
+#include "gui/styles/StateColorPalette.h"
 
 #include <QDialog>
 #include <QVBoxLayout>
 
 namespace
 {
-    const QColor CorrectSoFarColor(255, 205, 15);
-    const QColor CorrectSoFarColorDark(115, 104, 46);
-    const QColor ErrorColor(255, 125, 125);
-    const QColor ErrorColorDark(128, 45, 45);
 
 } // namespace
 
@@ -147,9 +143,10 @@ void PasswordEdit::updateRepeatStatus()
     const auto password = text();
     if (otherPassword != password) {
         bool isCorrect = false;
-        QColor color = kpxcApp->isDarkTheme() ? ErrorColorDark : ErrorColor;
+        StateColorPalette statePalette;
+        QColor color = statePalette.color(StateColorPalette::ColorRole::Error);
         if (!password.isEmpty() && otherPassword.startsWith(password)) {
-            color = kpxcApp->isDarkTheme() ? CorrectSoFarColorDark : CorrectSoFarColor;
+            color = statePalette.color(StateColorPalette::ColorRole::Incomplete);
             isCorrect = true;
         }
         setStyleSheet(stylesheetTemplate.arg(color.name()));

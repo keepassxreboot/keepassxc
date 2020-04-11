@@ -88,6 +88,7 @@ set(keepassx_SOURCES
         format/OpVaultReaderBandEntry.cpp
         format/OpVaultReaderSections.cpp
         gui/styles/styles.qrc
+        gui/styles/StateColorPalette.cpp
         gui/styles/base/phantomcolor.cpp
         gui/styles/base/BaseStyle.cpp
         gui/styles/dark/DarkStyle.cpp
