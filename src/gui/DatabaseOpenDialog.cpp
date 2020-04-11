@@ -31,7 +31,10 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::ForeignWindow);
 #endif
     connect(m_view, SIGNAL(dialogFinished(bool)), this, SLOT(complete(bool)));
-    setLayout(m_view->layout());
+    auto* layout = new QVBoxLayout();
+    layout->setMargin(0);
+    setLayout(layout);
+    layout->addWidget(m_view);
     setMinimumWidth(700);
 }
 

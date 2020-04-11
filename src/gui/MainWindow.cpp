@@ -811,9 +811,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
 void MainWindow::adjustToTabVisibilityChange(bool tabsVisible)
 {
-    if (m_showToolbarSeparator) {
-        m_ui->toolbarSeparator->setVisible(!tabsVisible && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen);
-    }
+    m_ui->toolbarSeparator->setVisible(m_showToolbarSeparator && !tabsVisible
+                                       && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen);
 }
 
 void MainWindow::updateWindowTitle()
