@@ -23,10 +23,10 @@
 #include "core/Group.h"
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
+#include "gui/styles/StateColorPalette.h"
 
 #include <QSharedPointer>
 #include <QStandardItemModel>
-#include <QVector>
 
 namespace
 {
@@ -124,29 +124,30 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
 {
     QString descr, tip;
     QColor qualityColor;
+    StateColorPalette statePalette;
     const auto quality = health->quality();
     switch (quality) {
     case PasswordHealth::Quality::Bad:
         descr = tr("Bad", "Password quality");
         tip = tr("Bad — password must be changed");
-        qualityColor.setNamedColor("red");
+        qualityColor = statePalette.color(StateColorPalette::HealthCritical);
         break;
 
     case PasswordHealth::Quality::Poor:
         descr = tr("Poor", "Password quality");
         tip = tr("Poor — password should be changed");
-        qualityColor.setNamedColor("orange");
+        qualityColor = statePalette.color(StateColorPalette::HealthBad);
         break;
 
     case PasswordHealth::Quality::Weak:
         descr = tr("Weak", "Password quality");
         tip = tr("Weak — consider changing the password");
-        qualityColor.setNamedColor("yellow");
+        qualityColor = statePalette.color(StateColorPalette::HealthWeak);
         break;
 
     case PasswordHealth::Quality::Good:
     case PasswordHealth::Quality::Excellent:
-        qualityColor.setNamedColor("green");
+        qualityColor = statePalette.color(StateColorPalette::HealthOk);
         break;
     }
 

@@ -27,8 +27,8 @@
 #include "core/PasswordGenerator.h"
 #include "core/PasswordHealth.h"
 #include "core/Resources.h"
-#include "gui/Application.h"
 #include "gui/Clipboard.h"
+#include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     : QWidget(parent)
@@ -376,34 +376,28 @@ void PasswordGeneratorWidget::colorStrengthIndicator(const PasswordHealth& healt
                           QRegularExpression::CaseInsensitiveOption | QRegularExpression::DotMatchesEverythingOption);
     style.replace(re, "\\1 %1;");
 
-    // Set the color and background based on entropy
-    QList<QString> qualityColors;
-    if (kpxcApp->isDarkTheme()) {
-        qualityColors << QStringLiteral("#C43F31") << QStringLiteral("#DB9837") << QStringLiteral("#608A22")
-                      << QStringLiteral("#1F8023");
-    } else {
-        qualityColors << QStringLiteral("#C43F31") << QStringLiteral("#E09932") << QStringLiteral("#5EA10E")
-                      << QStringLiteral("#118f17");
-    }
+    StateColorPalette statePalette;
     switch (health.quality()) {
     case PasswordHealth::Quality::Bad:
     case PasswordHealth::Quality::Poor:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[0]));
+        m_ui->entropyProgressBar->setStyleSheet(
+            style.arg(statePalette.color(StateColorPalette::HealthCritical).name()));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Poor", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Weak:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[1]));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(statePalette.color(StateColorPalette::HealthBad).name()));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Weak", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Good:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[2]));
+        m_ui->entropyProgressBar->setStyleSheet(style.arg(statePalette.color(StateColorPalette::HealthOk).name()));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Good", "Password quality")));
         break;
 
     case PasswordHealth::Quality::Excellent:
-        m_ui->entropyProgressBar->setStyleSheet(style.arg(qualityColors[3]));
+        m_ui->entropyProgressBar->setStyleSheet(
+            style.arg(statePalette.color(StateColorPalette::HealthExcellent).name()));
         m_ui->strengthLabel->setText(tr("Password Quality: %1").arg(tr("Excellent", "Password quality")));
         break;
     }
