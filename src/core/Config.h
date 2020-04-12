@@ -134,6 +134,9 @@ public:
         Browser_SearchInAllDatabases,
         Browser_SupportKphFields,
         Browser_NoMigrationPrompt,
+#ifdef QT_DEBUG
+        Browser_CustomExtensionId,
+#endif
 
         SSHAgent_Enabled,
         SSHAgent_UseOpenSSH,

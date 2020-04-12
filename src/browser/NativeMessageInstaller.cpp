@@ -276,6 +276,12 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
         for (const QString& origin : ALLOWED_ORIGINS) {
             arr.append(origin);
         }
+#ifdef QT_DEBUG
+        auto customId = browserSettings()->customExtensionId();
+        if (!customId.isEmpty()) {
+            arr.append(QString("chrome-extension://%1/").arg(customId));
+        }
+#endif
         script["allowed_origins"] = arr;
     }
 

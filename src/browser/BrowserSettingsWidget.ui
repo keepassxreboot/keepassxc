@@ -379,6 +379,33 @@
         </layout>
        </item>
        <item>
+        <layout class="QHBoxLayout" name="customExtensionBox">
+         <property name="topMargin">
+          <number>20</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="customExtensionLabel">
+           <property name="text">
+            <string>Custom extension ID:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="customExtensionId">
+           <property name="accessibleName">
+            <string>Custom extension ID</string>
+           </property>
+           <property name="maxLength">
+            <number>999</number>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <spacer name="verticalSpacer_5">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

@@ -187,6 +187,18 @@ QString BrowserSettings::proxyLocation()
     return m_nativeMessageInstaller.getProxyPath();
 }
 
+#ifdef QT_DEBUG
+QString BrowserSettings::customExtensionId()
+{
+    return config()->get(Config::Browser_CustomExtensionId).toString();
+}
+
+void BrowserSettings::setCustomExtensionId(const QString& id)
+{
+    config()->set(Config::Browser_CustomExtensionId, id);
+}
+#endif
+
 bool BrowserSettings::updateBinaryPath()
 {
     return config()->get(Config::Browser_UpdateBinaryPath).toBool();

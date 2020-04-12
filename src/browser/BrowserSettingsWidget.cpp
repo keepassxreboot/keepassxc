@@ -80,6 +80,11 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->firefoxSupport->setText("Firefox and Tor Browser");
 #endif
     m_ui->browserGlobalWarningWidget->setVisible(false);
+
+#ifndef QT_DEBUG
+    m_ui->customExtensionId->setVisible(false);
+    m_ui->customExtensionLabel->setVisible(false);
+#endif
 }
 
 BrowserSettingsWidget::~BrowserSettingsWidget()
@@ -152,6 +157,10 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
 
+#ifdef QT_DEBUG
+    m_ui->customExtensionId->setText(settings->customExtensionId());
+#endif
+
     validateCustomProxyLocation();
 }
 
@@ -189,6 +198,10 @@ void BrowserSettingsWidget::saveSettings()
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
     settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
+
+#ifdef QT_DEBUG
+    settings->setCustomExtensionId(m_ui->customExtensionId->text());
+#endif
 
     settings->setBrowserSupport(BrowserShared::CHROME, m_ui->chromeSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::CHROMIUM, m_ui->chromiumSupport->isChecked());
