@@ -64,6 +64,8 @@ private slots:
     void removeStoredPermissions();
     void convertAttributesToCustomData();
     void refreshDatabaseID();
+    void editIndex(const QModelIndex& index);
+    void editFinished(QStandardItem* item);
 
 private:
     void updateModel();
@@ -77,6 +79,7 @@ protected:
 private:
     QPointer<CustomData> m_customData;
     QPointer<QStandardItemModel> m_customDataModel;
+    QString m_valueInEdit;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H

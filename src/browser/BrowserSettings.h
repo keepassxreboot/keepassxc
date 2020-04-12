@@ -64,6 +64,10 @@ public:
     QString customProxyLocation();
     void setCustomProxyLocation(const QString& location);
     QString proxyLocation();
+#ifdef QT_DEBUG
+    QString customExtensionId();
+    void setCustomExtensionId(const QString& id);
+#endif
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
     bool allowExpiredCredentials();

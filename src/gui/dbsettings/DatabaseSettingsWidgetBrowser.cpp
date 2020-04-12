@@ -45,6 +45,8 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     connect(m_ui->customDataTable->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
+    connect(m_ui->customDataTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(editIndex(QModelIndex)));
+    connect(m_customDataModel, SIGNAL(itemChanged(QStandardItem*)), SLOT(editFinished(QStandardItem*)));
     // clang-format on
 
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedKey()));
@@ -127,9 +129,11 @@ void DatabaseSettingsWidgetBrowser::updateModel()
             QString strippedKey = key;
             strippedKey.remove(BrowserService::ASSOCIATE_KEY_PREFIX);
             auto created = customData()->value(QString("%1_%2").arg(CustomData::Created, strippedKey));
+            auto createdItem = new QStandardItem(created);
+            createdItem->setEditable(false);
             m_customDataModel->appendRow(QList<QStandardItem*>()
                                          << new QStandardItem(strippedKey)
-                                         << new QStandardItem(customData()->value(key)) << new QStandardItem(created));
+                                         << new QStandardItem(customData()->value(key)) << createdItem);
         }
     }
 
@@ -270,6 +274,52 @@ void DatabaseSettingsWidgetBrowser::refreshDatabaseID()
     }
 
     m_db->rootGroup()->setUuid(QUuid::createUuid());
+}
+
+void DatabaseSettingsWidgetBrowser::editIndex(const QModelIndex& index)
+{
+    Q_ASSERT(index.isValid());
+    if (!index.isValid()) {
+        return;
+    }
+
+    m_valueInEdit = index.data().toString();
+    m_ui->customDataTable->edit(index);
+}
+
+void DatabaseSettingsWidgetBrowser::editFinished(QStandardItem* item)
+{
+    const QItemSelectionModel* itemSelectionModel = m_ui->customDataTable->selectionModel();
+
+    if (itemSelectionModel) {
+        auto indexList = itemSelectionModel->selectedRows(item->column());
+        if (indexList.length() > 0) {
+            QString newValue = item->index().data().toString();
+
+            // The key is edited
+            if (item->column() == 0) {
+                // Get the old key/value pair, remove it and replace it
+                m_valueInEdit.insert(0, BrowserService::ASSOCIATE_KEY_PREFIX);
+                auto tempValue = customData()->value(m_valueInEdit);
+                newValue.insert(0, BrowserService::ASSOCIATE_KEY_PREFIX);
+
+                m_db->metadata()->customData()->remove(m_valueInEdit);
+                m_db->metadata()->customData()->set(newValue, tempValue);
+            } else {
+                // Replace just the value
+                for (const QString& key : m_db->metadata()->customData()->keys()) {
+                    if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
+                        if (m_valueInEdit == m_db->metadata()->customData()->value(key)) {
+                            m_db->metadata()->customData()->set(key, newValue);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            updateModel();
+        }
+    }
 }
 
 // Updates the shared key list after the list is cleared
