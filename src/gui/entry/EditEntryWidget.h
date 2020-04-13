@@ -111,6 +111,7 @@ private slots:
     void pickColor();
 #ifdef WITH_XC_SSHAGENT
     void toKeeAgentSettings(KeeAgentSettings& settings) const;
+    void setSSHAgentSettings();
     void updateSSHAgent();
     void updateSSHAgentAttachment();
     void updateSSHAgentAttachments();

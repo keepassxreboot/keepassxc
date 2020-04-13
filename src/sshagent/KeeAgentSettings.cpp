@@ -19,6 +19,11 @@
 #include "KeeAgentSettings.h"
 #include "core/Tools.h"
 
+KeeAgentSettings::KeeAgentSettings()
+{
+    reset();
+}
+
 bool KeeAgentSettings::operator==(const KeeAgentSettings& other) const
 {
     // clang-format off
@@ -48,6 +53,25 @@ bool KeeAgentSettings::isDefault() const
 {
     KeeAgentSettings defaultSettings;
     return (*this == defaultSettings);
+}
+
+/**
+ * Reset this instance to default settings
+ */
+void KeeAgentSettings::reset()
+{
+    m_allowUseOfSshKey = false;
+    m_addAtDatabaseOpen = false;
+    m_removeAtDatabaseClose = false;
+    m_useConfirmConstraintWhenAdding = false;
+    m_useLifetimeConstraintWhenAdding = false;
+    m_lifetimeConstraintDuration = 600;
+
+    m_selectedType = QStringLiteral("file");
+    m_attachmentName.clear();
+    m_saveAttachmentToTempFile = false;
+    m_fileName.clear();
+    m_error.clear();
 }
 
 /**
@@ -300,14 +324,14 @@ QByteArray KeeAgentSettings::toXml() const
 }
 
 /**
- * Check if an entry has KeeAgent settings configured
+ * Check if entry attachments have KeeAgent settings configured
  *
- * @param entry Entry to check the attachment
+ * @param attachments EntryAttachments to check the key
  * @return true if XML document exists
  */
-bool KeeAgentSettings::inEntry(const Entry* entry)
+bool KeeAgentSettings::inEntryAttachments(const EntryAttachments* attachments)
 {
-    return entry->attachments()->hasKey("KeeAgent.settings");
+    return attachments->hasKey("KeeAgent.settings");
 }
 
 /**
