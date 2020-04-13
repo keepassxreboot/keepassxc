@@ -1758,7 +1758,7 @@ bool DatabaseWidget::currentEntryHasSshKey()
         return false;
     }
 
-    return KeeAgentSettings::inEntry(currentEntry);
+    return KeeAgentSettings::inEntryAttachments(currentEntry->attachments());
 }
 #endif
 

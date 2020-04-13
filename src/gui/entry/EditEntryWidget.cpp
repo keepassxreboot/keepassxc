@@ -532,22 +532,24 @@ void EditEntryWidget::setupSSHAgent()
     addPage(tr("SSH Agent"), Resources::instance()->icon("utilities-terminal"), m_sshAgentWidget);
 }
 
-void EditEntryWidget::updateSSHAgent()
+void EditEntryWidget::setSSHAgentSettings()
 {
-    KeeAgentSettings settings;
-    settings.fromEntry(m_entry);
-
-    m_sshAgentUi->addKeyToAgentCheckBox->setChecked(settings.addAtDatabaseOpen());
-    m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(settings.removeAtDatabaseClose());
-    m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(settings.useConfirmConstraintWhenAdding());
-    m_sshAgentUi->lifetimeCheckBox->setChecked(settings.useLifetimeConstraintWhenAdding());
-    m_sshAgentUi->lifetimeSpinBox->setValue(settings.lifetimeConstraintDuration());
+    m_sshAgentUi->addKeyToAgentCheckBox->setChecked(m_sshAgentSettings.addAtDatabaseOpen());
+    m_sshAgentUi->removeKeyFromAgentCheckBox->setChecked(m_sshAgentSettings.removeAtDatabaseClose());
+    m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(m_sshAgentSettings.useConfirmConstraintWhenAdding());
+    m_sshAgentUi->lifetimeCheckBox->setChecked(m_sshAgentSettings.useLifetimeConstraintWhenAdding());
+    m_sshAgentUi->lifetimeSpinBox->setValue(m_sshAgentSettings.lifetimeConstraintDuration());
     m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
+}
 
-    m_sshAgentSettings = settings;
+void EditEntryWidget::updateSSHAgent()
+{
+    m_sshAgentSettings.reset();
+    m_sshAgentSettings.fromEntry(m_entry);
+    setSSHAgentSettings();
 
     updateSSHAgentAttachments();
 }
@@ -560,6 +562,13 @@ void EditEntryWidget::updateSSHAgentAttachment()
 
 void EditEntryWidget::updateSSHAgentAttachments()
 {
+    // detect if KeeAgent.settings was removed by hand and reset settings
+    if (m_entry && KeeAgentSettings::inEntryAttachments(m_entry->attachments())
+        && !KeeAgentSettings::inEntryAttachments(m_advancedUi->attachmentsWidget->entryAttachments())) {
+        m_sshAgentSettings.reset();
+        setSSHAgentSettings();
+    }
+
     m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->attachmentComboBox->addItem("");
 
