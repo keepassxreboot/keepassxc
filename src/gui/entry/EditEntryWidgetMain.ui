@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>329</width>
+    <width>430</width>
     <height>381</height>
    </rect>
   </property>
@@ -46,6 +46,9 @@
       <widget class="URLEdit" name="urlEdit">
        <property name="accessibleName">
         <string>Url field</string>
+       </property>
+       <property name="placeholderText">
+        <string>https://example.com</string>
        </property>
       </widget>
      </item>
