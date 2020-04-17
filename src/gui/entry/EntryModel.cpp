@@ -129,7 +129,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 13;
+    return 14;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -222,6 +222,22 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             }
             return result;
         }
+        case Size: {
+            const int unitsSize = 4;
+            QString units[unitsSize] = {"B", "KiB", "MiB", "GiB"};
+            float resultInt = entry->size();
+
+            for (int i = 0; i < unitsSize; i++) {
+                if (resultInt < 1024 || i == unitsSize - 1) {
+                    resultInt = qRound(resultInt * 100) / 100.0;
+                    result = QString::number(resultInt) + " " + units[i];
+                    break;
+                }
+                resultInt /= 1024.0;
+            }
+
+            return result;
+        }
         }
     } else if (role == Qt::UserRole) { // Qt::UserRole is used as sort role, see EntryView::EntryView()
         switch (index.column()) {
@@ -244,6 +260,8 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return !entry->attachments()->isEmpty();
         case Totp:
             return entry->hasTotp();
+        case Size:
+            return entry->size();
         default:
             // For all other columns, simply use data provided by Qt::Display-
             // Role for sorting
@@ -335,6 +353,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Accessed");
         case Attachments:
             return tr("Attachments");
+        case Size:
+            return tr("Size");
         }
 
     } else if (role == Qt::DecorationRole) {
@@ -368,6 +388,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Last access date");
         case Attachments:
             return tr("Attached files");
+        case Size:
+            return tr("Entry size");
         case Paperclip:
             return tr("Has attachments");
         case Totp:

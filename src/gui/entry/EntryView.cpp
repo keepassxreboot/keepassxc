@@ -72,7 +72,7 @@ EntryView::EntryView(QWidget* parent)
     resetViewToDefaults();
 
     // Actions to toggle column visibility, each carrying the corresponding
-    // colummn index as data
+    // column index as data
     m_columnActions = new QActionGroup(this);
     m_columnActions->setExclusive(false);
     for (int visualIndex = 1; visualIndex < header()->count(); ++visualIndex) {
@@ -451,6 +451,7 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::Created);
     header()->hideSection(EntryModel::Accessed);
     header()->hideSection(EntryModel::Attachments);
+    header()->hideSection(EntryModel::Size);
 
     // Reset column order to logical indices
     for (int i = 0; i < header()->count(); ++i) {
