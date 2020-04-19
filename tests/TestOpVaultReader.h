@@ -28,8 +28,6 @@ class TestOpVaultReader : public QObject
 private slots:
     void initTestCase();
     void testReadIntoDatabase();
-    void testBandEntry1();
-    void testKeyDerivation();
 
 private:
     // absolute path to the .opvault directory
@@ -41,8 +39,7 @@ private:
      * except for multi-line strings.
      */
     QString m_opVaultTextExportPath;
-    QString m_password;
-    QMap<QString, QString> m_categoryMap;
+    QStringList m_categories;
 };
 
 #endif /* TEST_OPVAULT_READER_H_ */
