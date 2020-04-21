@@ -191,6 +191,12 @@ namespace Utils
      */
     QString getPassword(bool quiet)
     {
+#ifdef __AFL_COMPILER
+        // Fuzz test build takes password from environment variable to
+        // allow non-interactive operation
+        const auto env = getenv("KEYPASSXC_AFL_PASSWORD");
+        return env ? env : "";
+#else
         auto& in = STDIN;
         auto& out = quiet ? DEVNULL : STDERR;
 
@@ -200,6 +206,7 @@ namespace Utils
         out << endl;
 
         return line;
+#endif // __AFL_COMPILER
     }
 
     /**
