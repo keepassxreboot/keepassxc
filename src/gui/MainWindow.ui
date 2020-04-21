@@ -79,9 +79,6 @@
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <property name="focusPolicy">
-       <enum>Qt::TabFocus</enum>
-      </property>
       <property name="currentIndex">
        <number>2</number>
       </property>
@@ -129,11 +126,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true">
-          <property name="focusPolicy">
-           <enum>Qt::TabFocus</enum>
-          </property>
-         </widget>
+         <widget class="ApplicationSettingsWidget" name="settingsWidget" native="true"/>
         </item>
        </layout>
       </widget>
@@ -158,11 +151,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="WelcomeWidget" name="welcomeWidget" native="true">
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-           </widget>
+           <widget class="WelcomeWidget" name="welcomeWidget" native="true"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_2">
@@ -209,11 +198,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="PasswordGeneratorWidget" name="passwordGeneratorWidget" native="true">
-          <property name="focusPolicy">
-           <enum>Qt::TabFocus</enum>
-          </property>
-         </widget>
+         <widget class="PasswordGeneratorWidget" name="passwordGeneratorWidget" native="true"/>
         </item>
         <item>
          <spacer name="verticalSpacer">
@@ -240,11 +225,8 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
-   </property>
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
    </property>
    <property name="contextMenuPolicy">
     <enum>Qt::PreventContextMenu</enum>
@@ -383,9 +365,6 @@
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
-   <property name="focusPolicy">
-    <enum>Qt::NoFocus</enum>
-   </property>
    <property name="contextMenuPolicy">
     <enum>Qt::PreventContextMenu</enum>
    </property>

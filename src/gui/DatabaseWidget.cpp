@@ -193,8 +193,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_previewView, SIGNAL(errorOccurred(QString)), SLOT(showErrorMessage(QString)));
     connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
-    connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SLOT(onGroupChanged(Group*)));
-    connect(m_groupView, SIGNAL(groupSelectionChanged(Group*)), SIGNAL(groupChanged()));
+    connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
+    connect(m_groupView, SIGNAL(groupSelectionChanged()), SIGNAL(groupChanged()));
+    connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
     connect(m_entryView, SIGNAL(entryActivated(Entry*,EntryModel::ModelColumn)),
         SLOT(entryActivationSignalReceived(Entry*,EntryModel::ModelColumn)));
     connect(m_entryView, SIGNAL(entrySelectionChanged(Entry*)), SLOT(onEntryChanged(Entry*)));
@@ -281,6 +282,11 @@ bool DatabaseWidget::isSaving() const
 bool DatabaseWidget::isSearchActive() const
 {
     return m_entryView->inSearchMode();
+}
+
+bool DatabaseWidget::isEntryViewActive() const
+{
+    return currentWidget() == m_mainWidget;
 }
 
 bool DatabaseWidget::isEntryEditActive() const
@@ -616,9 +622,27 @@ bool DatabaseWidget::confirmDeleteEntries(QList<Entry*> entries, bool permanent)
     }
 }
 
-void DatabaseWidget::setFocus()
+void DatabaseWidget::setFocus(Qt::FocusReason reason)
 {
-    m_entryView->setFocus();
+    if (reason == Qt::BacktabFocusReason) {
+        m_previewView->setFocus();
+    } else {
+        m_groupView->setFocus();
+    }
+}
+
+void DatabaseWidget::focusOnEntries()
+{
+    if (isEntryViewActive()) {
+        m_entryView->setFocus();
+    }
+}
+
+void DatabaseWidget::focusOnGroups()
+{
+    if (isEntryViewActive()) {
+        m_groupView->setFocus();
+    }
 }
 
 void DatabaseWidget::copyTitle()
@@ -925,6 +949,8 @@ int DatabaseWidget::addChildWidget(QWidget* w)
 
 void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 {
+    setCurrentWidget(m_mainWidget);
+
     if (m_newGroup) {
         if (previousDialogAccepted) {
             m_newGroup->setParent(m_newParent);
@@ -950,12 +976,10 @@ void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
         m_entryView->setFocus();
     }
 
-    setCurrentWidget(m_mainWidget);
-
     if (sender() == m_entryView || sender() == m_editEntryWidget) {
         onEntryChanged(m_entryView->currentEntry());
     } else if (sender() == m_groupView || sender() == m_editGroupWidget) {
-        onGroupChanged(m_groupView->currentGroup());
+        onGroupChanged();
     }
 }
 
@@ -1323,8 +1347,10 @@ void DatabaseWidget::setSearchLimitGroup(bool state)
     refreshSearch();
 }
 
-void DatabaseWidget::onGroupChanged(Group* group)
+void DatabaseWidget::onGroupChanged()
 {
+    auto group = m_groupView->currentGroup();
+
     // Intercept group changes if in search mode
     if (isSearchActive() && m_searchLimitGroup) {
         search(m_lastSearchText);
@@ -1365,13 +1391,11 @@ QString DatabaseWidget::getCurrentSearch()
 void DatabaseWidget::endSearch()
 {
     if (isSearchActive()) {
-        emit listModeAboutToActivate();
-
         // Show the normal entry view of the current group
+        emit listModeAboutToActivate();
         m_entryView->displayGroup(currentGroup());
-        onGroupChanged(currentGroup());
-
         emit listModeActivated();
+        m_entryView->setFirstEntryActive();
     }
 
     m_searchingLabel->setVisible(false);
@@ -1430,6 +1454,31 @@ void DatabaseWidget::showEvent(QShowEvent* event)
     }
 
     event->accept();
+}
+
+bool DatabaseWidget::focusNextPrevChild(bool next)
+{
+    // [parent] <-> GroupView <-> EntryView <-> EntryPreview <-> [parent]
+    if (next) {
+        if (m_groupView->hasFocus()) {
+            m_entryView->setFocus();
+            return true;
+        } else if (m_entryView->hasFocus()) {
+            m_previewView->setFocus();
+            return true;
+        }
+    } else {
+        if (m_previewView->hasFocus()) {
+            m_entryView->setFocus();
+            return true;
+        } else if (m_entryView->hasFocus()) {
+            m_groupView->setFocus();
+            return true;
+        }
+    }
+
+    // Defer to the parent widget to make a decision
+    return QStackedWidget::focusNextPrevChild(next);
 }
 
 bool DatabaseWidget::lock()

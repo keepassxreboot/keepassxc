@@ -76,12 +76,15 @@ public:
     explicit DatabaseWidget(const QString& filePath, QWidget* parent = nullptr);
     ~DatabaseWidget();
 
+    void setFocus(Qt::FocusReason reason);
+
     QSharedPointer<Database> database() const;
 
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
     bool isSaving() const;
     bool isSearchActive() const;
+    bool isEntryViewActive() const;
     bool isEntryEditActive() const;
     bool isGroupEditActive() const;
 
@@ -161,7 +164,8 @@ public slots:
     void cloneEntry();
     void deleteSelectedEntries();
     void deleteEntries(QList<Entry*> entries);
-    void setFocus();
+    void focusOnEntries();
+    void focusOnGroups();
     void copyTitle();
     void copyUsername();
     void copyPassword();
@@ -217,6 +221,7 @@ public slots:
 protected:
     void closeEvent(QCloseEvent* event) override;
     void showEvent(QShowEvent* event) override;
+    bool focusNextPrevChild(bool next) override;
 
 private slots:
     void entryActivationSignalReceived(Entry* entry, EntryModel::ModelColumn column);
@@ -228,7 +233,7 @@ private slots:
     void emitGroupContextMenuRequested(const QPoint& pos);
     void emitEntryContextMenuRequested(const QPoint& pos);
     void onEntryChanged(Entry* entry);
-    void onGroupChanged(Group* group);
+    void onGroupChanged();
     void onDatabaseModified();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);

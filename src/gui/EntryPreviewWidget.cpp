@@ -82,6 +82,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->groupCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->groupTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
 
+    setFocusProxy(m_ui->entryTabWidget);
+
 #if !defined(WITH_XC_KEESHARE)
     removeTab(m_ui->groupTabWidget, m_ui->groupShareTab);
 #endif

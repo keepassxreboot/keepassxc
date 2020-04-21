@@ -137,10 +137,11 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(copyPressed()), SLOT(copyPassword()));
-    mx.connect(this, SIGNAL(downPressed()), SLOT(setFocus()));
+    mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
     mx.connect(SIGNAL(clearSearch()), m_ui->searchEdit, SLOT(clear()));
     mx.connect(SIGNAL(entrySelectionChanged()), this, SLOT(resetSearchClearTimer()));
     mx.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(resetSearchClearTimer()));
+    mx.connect(SIGNAL(databaseUnlocked()), this, SLOT(searchFocus()));
     mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
 }
 
@@ -149,8 +150,6 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
     if (dbWidget != nullptr) {
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
-        // Keyboard focus on search widget at database unlocking
-        connect(dbWidget, SIGNAL(databaseUnlocked()), this, SLOT(searchFocus()));
         // Enforce search policy
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
