@@ -901,8 +901,8 @@ void TestGui::testSearch()
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
     QTRY_VERIFY(entryView->hasFocus());
     auto* searchedEntry = entryView->currentEntry();
-    // Restore focus and search text selection
-    QTest::keyClick(m_mainWindow.data(), Qt::Key_F, Qt::ControlModifier);
+    // Restore focus using F1 key and search text selection
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_F1);
     QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
     QTRY_VERIFY(searchTextEdit->hasFocus());
 
@@ -965,12 +965,14 @@ void TestGui::testSearch()
     searchWidget->setLimitGroup(false);
     clickIndex(rootGroupIndex, groupView, Qt::LeftButton);
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
+    QVERIFY(!m_dbWidget->isSearchActive());
 
     // Try to edit the first entry from the search view
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QVERIFY(m_dbWidget->isSearchActive());
+    QTest::keyClicks(searchTextEdit, "someTHING");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
 
     QModelIndex item = entryView->model()->index(0, 1);
     Entry* entry = entryView->entryFromIndex(item);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>566</width>
-    <height>169</height>
+    <height>206</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -106,9 +106,6 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryTotpButton">
-           <property name="focusPolicy">
-            <enum>Qt::TabFocus</enum>
-           </property>
            <property name="toolTip">
             <string>Display current TOTP value</string>
            </property>
@@ -122,9 +119,6 @@
          </item>
          <item>
           <widget class="QToolButton" name="entryCloseButton">
-           <property name="focusPolicy">
-            <enum>Qt::TabFocus</enum>
-           </property>
            <property name="toolTip">
             <string>Close</string>
            </property>
@@ -137,9 +131,6 @@
        </item>
        <item>
         <widget class="QTabWidget" name="entryTabWidget">
-         <property name="focusPolicy">
-          <enum>Qt::ClickFocus</enum>
-         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -1147,12 +1138,13 @@
  </customwidgets>
  <tabstops>
   <tabstop>entryCloseButton</tabstop>
-  <tabstop>entryTotpButton</tabstop>
+  <tabstop>entryTabWidget</tabstop>
   <tabstop>togglePasswordButton</tabstop>
   <tabstop>toggleEntryNotesButton</tabstop>
-  <tabstop>entryAutotypeTree</tabstop>
   <tabstop>groupCloseButton</tabstop>
   <tabstop>groupTabWidget</tabstop>
+  <tabstop>toggleGroupNotesButton</tabstop>
+  <tabstop>entryTotpButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

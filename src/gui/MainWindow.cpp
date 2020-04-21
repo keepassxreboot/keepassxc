@@ -308,6 +308,14 @@ MainWindow::MainWindow()
     shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
+    // Allow for direct focus of search, group view, and entry view
+    shortcut = new QShortcut(Qt::Key_F1, this);
+    connect(shortcut, SIGNAL(activated()), m_searchWidget, SLOT(searchFocus()));
+    shortcut = new QShortcut(Qt::Key_F2, this);
+    m_actionMultiplexer.connect(shortcut, SIGNAL(activated()), SLOT(focusOnGroups()));
+    shortcut = new QShortcut(Qt::Key_F3, this);
+    m_actionMultiplexer.connect(shortcut, SIGNAL(activated()), SLOT(focusOnEntries()));
+
     // Toggle password and username visibility in entry view
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_C, this, SLOT(togglePasswordsHidden()));
     new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(toggleUsernamesHidden()));
@@ -1102,6 +1110,36 @@ void MainWindow::changeEvent(QEvent* event)
     } else {
         QMainWindow::changeEvent(event);
     }
+}
+
+bool MainWindow::focusNextPrevChild(bool next)
+{
+    // Only navigate around the main window if the database widget is showing the entry view
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget && dbWidget->isVisible() && dbWidget->isEntryViewActive()) {
+        // Search Widget <-> Tab Widget <-> DbWidget
+        if (next) {
+            if (m_searchWidget->hasFocus()) {
+                m_ui->tabWidget->setFocus(Qt::TabFocusReason);
+            } else if (m_ui->tabWidget->hasFocus()) {
+                dbWidget->setFocus(Qt::TabFocusReason);
+            } else {
+                m_searchWidget->setFocus(Qt::TabFocusReason);
+            }
+        } else {
+            if (m_searchWidget->hasFocus()) {
+                dbWidget->setFocus(Qt::BacktabFocusReason);
+            } else if (m_ui->tabWidget->hasFocus()) {
+                m_searchWidget->setFocus(Qt::BacktabFocusReason);
+            } else {
+                m_ui->tabWidget->setFocus(Qt::BacktabFocusReason);
+            }
+        }
+        return true;
+    }
+
+    // Defer to Qt to make a decision, this maintains normal behavior
+    return QMainWindow::focusNextPrevChild(next);
 }
 
 void MainWindow::saveWindowInformation()
