@@ -839,14 +839,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
-    m_mainUi->passwordEdit->setShowPassword(config()->get("security/passwordscleartext").toBool());
+    m_mainUi->passwordEdit->setShowPassword(!config()->get("security/passwordshidden").toBool());
     if (!m_history) {
         m_mainUi->passwordEdit->enablePasswordGenerator();
     }
     m_mainUi->expireCheck->setChecked(entry->timeInfo().expires());
     m_mainUi->expireDatePicker->setDateTime(entry->timeInfo().expiryTime().toLocalTime());
     m_mainUi->expirePresets->setEnabled(!m_history);
-    m_mainUi->togglePasswordButton->setChecked(!config()->get("security/passwordshidden").toBool());
 
     QList<QString> commonUsernames = m_db->commonUsernames();
     m_usernameCompleterModel->setStringList(commonUsernames);

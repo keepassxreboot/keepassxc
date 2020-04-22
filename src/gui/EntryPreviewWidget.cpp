@@ -212,6 +212,8 @@ void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& 
     } else {
         if (!notes.isEmpty()) {
             notesWidget->setPlainText(QString("\u25cf").repeated(6));
+        } else {
+            notesWidget->clear();
         }
     }
 }
@@ -235,12 +237,12 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     }
 
     if (config()->get("security/hidenotes").toBool()) {
-        setEntryNotesVisible(false);
-        m_ui->toggleEntryNotesButton->setVisible(!m_ui->entryNotesTextEdit->toPlainText().isEmpty());
+        m_ui->toggleEntryNotesButton->setVisible(!m_currentEntry->notes().isEmpty());
         m_ui->toggleEntryNotesButton->setChecked(false);
+        setEntryNotesVisible(false);
     } else {
-        setEntryNotesVisible(true);
         m_ui->toggleEntryNotesButton->setVisible(false);
+        setEntryNotesVisible(true);
     }
 
     if (config()->get("GUI/MonospaceNotes", false).toBool()) {
@@ -331,12 +333,12 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     m_ui->groupExpirationLabel->setText(expiresText);
 
     if (config()->get("security/hidenotes").toBool()) {
-        setGroupNotesVisible(false);
-        m_ui->toggleGroupNotesButton->setVisible(!m_ui->groupNotesTextEdit->toPlainText().isEmpty());
+        m_ui->toggleGroupNotesButton->setVisible(!m_currentGroup->notes().isEmpty());
         m_ui->toggleGroupNotesButton->setChecked(false);
+        setGroupNotesVisible(false);
     } else {
-        setGroupNotesVisible(true);
         m_ui->toggleGroupNotesButton->setVisible(false);
+        setGroupNotesVisible(true);
     }
 
     if (config()->get("GUI/MonospaceNotes", false).toBool()) {
