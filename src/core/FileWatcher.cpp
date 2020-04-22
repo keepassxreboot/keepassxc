@@ -87,6 +87,7 @@ void FileWatcher::stop()
     }
     m_filePath.clear();
     m_fileChecksum.clear();
+    m_fileChecksumTimer.stop();
     m_fileChangeDelayTimer.stop();
 }
 
