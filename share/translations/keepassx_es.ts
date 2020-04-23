@@ -152,15 +152,15 @@
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Gestión de la entrada</translation>
+        <translation>Gestión del apunte</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Utilizar icono del grupo en la creación de entrada</translation>
+        <translation>Utilizar icono del grupo en la creación del apunte</translation>
     </message>
     <message>
         <source>Hide the entry preview panel</source>
-        <translation>Ocultar entrada del panel de vista previa</translation>
+        <translation>Ocultar apunte del panel de vista previa</translation>
     </message>
     <message>
         <source>General</source>
@@ -188,15 +188,15 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Autotecleo</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Utilizar título de la entrada para emparejar ventanas en autoescritura global</translation>
+        <translation>Utilizar título del apunte para emparejar ventanas en autoescritura global</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Utilizar URL de la entrada para emparejar ventanas en autoescritura global</translation>
+        <translation>Utilizar URL del apunte para emparejar ventanas en autoescritura global</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -233,7 +233,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Recordar las últimas cerraduras y los «dongle» de seguridad</translation>
+        <translation>Recordar las últimos ficheros claves y los «dongle» de seguridad</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -277,7 +277,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Tiempo de espera de descarga de favicon:</translation>
+        <translation>Tiempo de espera de descarga de icono:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -362,7 +362,7 @@
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Rebloquear la base de datos tras realizar un autoescritura</translation>
+        <translation>Rebloquear la base de datos tras realizar autoescritura</translation>
     </message>
     <message>
         <source>Don&apos;t require password repeat when it is visible</source>
@@ -378,11 +378,11 @@
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>Ocultar contraseñas en la entrada del panel de vista previa</translation>
+        <translation>Ocultar contraseñas en el panel de vista previa del apunte</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Ocultar notas de la entrada por defecto</translation>
+        <translation>Ocultar notas del apunte por defecto</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -418,31 +418,31 @@
     <name>AutoType</name>
     <message>
         <source>Couldn&apos;t find an entry that matches the window title:</source>
-        <translation>No se puede encontrar una entrada que corresponda al título de la ventana:</translation>
+        <translation>No se puede encontrar un apunte que corresponda al título de la ventana:</translation>
     </message>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-teclear - KeePassXC</translation>
+        <translation>Autoescritura - KeePassXC</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-Teclear</translation>
+        <translation>Autoescritura</translation>
     </message>
     <message>
         <source>The Syntax of your Auto-Type statement is incorrect!</source>
-        <translation>¡La sintaxis de la sentencia de su auto-tecleo es incorrecta!</translation>
+        <translation>¡La sintaxis de la sentencia de su autoescritura es incorrecta!</translation>
     </message>
     <message>
         <source>This Auto-Type command contains a very long delay. Do you really want to proceed?</source>
-        <translation>Este mandato de auto-tecleo contiene un retraso muy largo. ¿Desea continuar?</translation>
+        <translation>Este mandato de autoescritura contiene un retraso muy largo. ¿Desea continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains very slow key presses. Do you really want to proceed?</source>
-        <translation>Este mandato de auto-tecleo contiene pulsaciones de teclas muy lentas. ¿Desea continuar?</translation>
+        <translation>Este mandato de autoescritura contiene pulsaciones de teclas muy lentas. ¿Desea continuar?</translation>
     </message>
     <message>
         <source>This Auto-Type command contains arguments which are repeated very often. Do you really want to proceed?</source>
-        <translation>Este mandato de auto-tecleo contiene argumentos que se repiten muy a menudo. ¿Desea continuar?</translation>
+        <translation>Este mandato de autoescritura contiene argumentos que se repiten muy a menudo. ¿Desea continuar?</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -450,7 +450,7 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC requiere el permiso de Accesibilidad para realizar la autoescritura en el campo de entrada. Si ya al concedido este permiso, quizá deba reiniciar KeePassXC.</translation>
+        <translation>KeePassXC requiere el permiso de Accesibilidad para realizar la autoescritura en el campo del apunte. Si ya al concedido este permiso, quizá deba reiniciar KeePassXC.</translation>
     </message>
 </context>
 <context>
@@ -513,11 +513,11 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-Tecleo - KeePassXC</translation>
+        <translation>Autoescritura - KeePassXC</translation>
     </message>
     <message>
         <source>Select entry to Auto-Type:</source>
-        <translation>Seleccionar apunte para auto-teclear:</translation>
+        <translation>Seleccionar apunte para autoescritura:</translation>
     </message>
     <message>
         <source>Search...</source>
@@ -561,7 +561,7 @@ Seleccione si desea autorizar su acceso.</translation>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser Guardar Entrada</translation>
+        <translation>Guarda apunte KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -808,7 +808,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: actualizar entrada</translation>
+        <translation>KeePassXC: actualizar apunte</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
@@ -830,7 +830,7 @@ Do you want to overwrite it?</source>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
         <translation>Atributos correctamente convertidos desde %1 apunte(s).
-Movió %2 claves a datos personalizados.</translation>
+Movidas %2 claves a datos personalizados.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
@@ -838,11 +838,11 @@ Movió %2 claves a datos personalizados.</translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: ¡no se encontró una entrada con los atributos KeePassHTTP!</translation>
+        <translation>KeePassXC: ¡no se encontró un apunte con los atributos KeePassHTTP!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>La base de datos activa no contiene una entrada con atributos de KeePassHTTP.</translation>
+        <translation>La base de datos activa no contiene un apunte con atributos de KeePassHTTP.</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
@@ -1090,7 +1090,7 @@ Copiar de seguridad de base de datos ubicada en %2</translation>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Key File:</source>
-        <translation>Archivo clave:</translation>
+        <translation>Fichero clave:</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1098,14 +1098,14 @@ Copiar de seguridad de base de datos ubicada en %2</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Formato de archivo clave heredado</translation>
+        <translation>Formato de fichero clave heredado</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>Está utilizando un formato de archivo clave heredado que puede convertirse
+        <translation>Está utilizando un formato de fichero clave heredado que puede convertirse
 en no soportado en el futuro.
 
 Considere generar un nuevo archivo llave.</translation>
@@ -1120,15 +1120,15 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Archivos clave</translation>
+        <translation>Ficheros clave</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Seleccionar archivo clave</translation>
+        <translation>Seleccionar fichero clave</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation>Fallo al abrir archivo clave: %1</translation>
+        <translation>Fallo al abrir fichero clave: %1</translation>
     </message>
     <message>
         <source>Select slot...</source>
@@ -1152,7 +1152,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation>Selección de archivo clave </translation>
+        <translation>Selección de fichero clave</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
@@ -1160,7 +1160,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Explorar para un archivo clave</translation>
+        <translation>Explorar para un fichero clave</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -1188,7 +1188,7 @@ Considere generar un nuevo archivo llave.</translation>
     </message>
     <message>
         <source>Clear Key File</source>
-        <translation>Limpiar archivo clave</translation>
+        <translation>Limpiar fichero clave</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1220,11 +1220,11 @@ Para prevenir que aparezca este error, debe ir a «Configuración de base de dat
     </message>
     <message>
         <source>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Adicionalmente a su contraseña maestra, puede usar un archivo secreto para mejorar la seguridad de su base de datos. Dicho archivo puede ser generado en la configuración de seguridad de su base de datos.&lt;/p&gt;&lt;p&gt;Este no es su archivo de base de datos *.kdbx. &lt;br&gt;Si no tiene un archivo clave, deje el campo vacío.&lt;/p&gt;&lt;p&gt;Clic para más información...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Adicionalmente a su contraseña maestra, puede usar un archivo secreto para mejorar la seguridad de su base de datos. Dicho archivo puede ser generado en la configuración de seguridad de su base de datos.&lt;/p&gt;&lt;p&gt;Este no es su archivo de base de datos *.kdbx. &lt;br&gt;Si no tiene un fichero clave, deje el campo vacío.&lt;/p&gt;&lt;p&gt;Clic para más información...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation>Ayuda de archivo clave</translation>
+        <translation>Ayuda de fichero clave</translation>
     </message>
     <message>
         <source>?</source>
@@ -1232,17 +1232,17 @@ Para prevenir que aparezca este error, debe ir a «Configuración de base de dat
     </message>
     <message>
         <source>Select key file...</source>
-        <translation>Seleccionar archivo clave...</translation>
+        <translation>Seleccionar fichero clave...</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>No se puede usar una base de datos como archivo clave</translation>
+        <translation>No se puede usar una base de datos como fichero clave</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>No puede usar una base de datos como archivo clave.
-Si no tiene un archivo clave, deje el campo vacío.</translation>
+        <translation>No puede usar una base de datos como fichero clave.
+Si no tiene un fichero clave, deje el campo vacío.</translation>
     </message>
 </context>
 <context>
@@ -1360,8 +1360,8 @@ Esto puede impedir la conexión con el complemento del explorador.</translation>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>¿Desea olvidar todas las configuraciones específicas del sitio en cada entrada?
-Los permisos para acceder a las entradas serán revocados.</translation>
+        <translation>¿Desea olvidar todas las configuraciones específicas del sitio en cada apunte?
+Los permisos para acceder a los apuntes serán revocados.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
@@ -1377,15 +1377,15 @@ Los permisos para acceder a las entradas serán revocados.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Eliminados con éxito permisos de %n entrada.</numerusform><numerusform>Eliminados con éxito permisos de %n entradas.</numerusform></translation>
+        <translation><numerusform>Eliminados con éxito permisos de %n apunte.</numerusform><numerusform>Eliminados con éxito permisos de %n apuntes.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: ¡no se encontró ninguna entrada con permisos!</translation>
+        <translation>KeePassXC: ¡no se encontró ningún apunte con permisos!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>La base de datos activa no contiene una entrada con permisos.</translation>
+        <translation>La base de datos activa no contiene un apunte con permisos.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
@@ -1659,11 +1659,11 @@ Si conserva este número, ¡su base de datos puede ser muy fácil de descifrar!<
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Número máximo de elementos de historial por entrada</translation>
+        <translation>Número máximo de elementos de historial por apunte</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation>Tamaño máximo de historial por entrada</translation>
+        <translation>Tamaño máximo de historial por apunte</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
@@ -1993,15 +1993,15 @@ Esto es definitivamente un defecto, por favor infórmelo a los desarrolladores.<
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>¿Desea eliminar la entrada «%1» de forma definitiva?</translation>
+        <translation>¿Desea eliminar el apunte «%1» de forma definitiva?</translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>¿Desea mover la entrada «%1» a la papelera de reciclaje?</translation>
+        <translation>¿Desea mover el apunte «%1» a la papelera de reciclaje?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>¿Desea mover %n entrada a la papelera de reciclaje?</numerusform><numerusform>¿Desea mover %n entradas a la papelera de reciclaje?</numerusform></translation>
+        <translation><numerusform>¿Desea mover %n entrada a la papelera de reciclaje?</numerusform><numerusform>¿Desea mover %n apuntes a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Execute command?</source>
@@ -2062,15 +2062,15 @@ Do you want to merge your changes?</source>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>¿Desea eliminar %n entrada para siempre?</numerusform><numerusform>¿Desea eliminar %n entradas para siempre?</numerusform></translation>
+        <translation><numerusform>¿Desea eliminar %n entrada para siempre?</numerusform><numerusform>¿Desea eliminar %n apuntes para siempre?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>¿Eliminar entrada?</numerusform><numerusform>¿Eliminar entradas?</numerusform></translation>
+        <translation><numerusform>¿Eliminar entrada?</numerusform><numerusform>¿Eliminar apuntes?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>¿Mover entrada a la papelera de reciclaje?</numerusform><numerusform>¿Mover entradas a la papelera de reciclaje?</numerusform></translation>
+        <translation><numerusform>¿Mover entrada a la papelera de reciclaje?</numerusform><numerusform>¿Mover apuntes a la papelera de reciclaje?</numerusform></translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2078,7 +2078,7 @@ Do you want to merge your changes?</source>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>Estás editando una entrada. ¿Descartar los cambios y bloquear de todos modos?</translation>
+        <translation>Estás editando un apunte. ¿Descartar los cambios y bloquear de todos modos?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
@@ -2126,11 +2126,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>¿Reemplazar las referencias a la entrada?</translation>
+        <translation>¿Reemplazar las referencias al apunte?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>La entrada «%1» tiene %2 referencia. ¿Desea sobrescribir la referencia con el valor, omitir esta entrada o eliminarla de todos modos?</numerusform><numerusform>La entrada «%1» tiene %2 referencias. ¿Desea sobrescribir las referencias con los valores, omitir esta entrada o eliminarla de todos modos?</numerusform></translation>
+        <translation><numerusform>La entrada «%1» tiene %2 referencia. ¿Desea sobrescribir la referencia con el valor, omitir esta entrada o eliminarla de todos modos?</numerusform><numerusform>El apunte «%1» tiene %2 referencias. ¿Desea sobrescribir las referencias con los valores, omitir este apunte o eliminarlo de todos modos?</numerusform></translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2169,7 +2169,7 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Entrada</translation>
+        <translation>Apunte</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -2209,7 +2209,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Archivo demasiado grande para ser una llave privada</translation>
+        <translation>Archivo demasiado grande para ser una clave privada</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
@@ -2217,15 +2217,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Historial de entradas</translation>
+        <translation>Historial de apuntes</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Añadir entrada</translation>
+        <translation>Añadir apunte</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Editar entrada</translation>
+        <translation>Editar apunte</translation>
     </message>
     <message>
         <source>Different passwords supplied.</source>
@@ -2257,15 +2257,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you want to apply the generated password to this entry?</source>
-        <translation>¿Desea aplicar la contraseña generada en esta entrada?</translation>
+        <translation>¿Desea aplicar la contraseña generada en este apunte?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Entrada actualizada.</translation>
+        <translation>Apunte actualizado.</translation>
     </message>
     <message>
         <source>Entry has unsaved changes</source>
-        <translation>La entrada tiene cambios sin guardar</translation>
+        <translation>El apunte tiene cambios sin guardar</translation>
     </message>
     <message>
         <source>New attribute %1</source>
@@ -2375,7 +2375,7 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Activar autoescritura para esta entrada</translation>
+        <translation>Activar autoescritura para este apunte</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the &amp;group</source>
@@ -2446,7 +2446,7 @@ Disable safe saves and try again?</source>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Esta configuración afecta al comportamiento de esta entrada con la extensión del explorador.</translation>
+        <translation>Esta configuración afecta al comportamiento de este apunte con la extensión del explorador.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2454,11 +2454,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Descartar autoenvío para esta entrada</translation>
+        <translation>Descartar autoenvío para este apunte</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>Ocultar esta entrada de la extensión del explorador</translation>
+        <translation>Ocultar est apunte de la extensión del explorador</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
@@ -2497,15 +2497,15 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry history selection</source>
-        <translation>Selección de entrada de historial</translation>
+        <translation>Selección de apunte del historial</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Mostrar entrada en historial seleccionado</translation>
+        <translation>Mostrar apunte en historial seleccionado</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Restaurar entrada al estado historial seleccionado</translation>
+        <translation>Restaurar de apunte al estado de historial seleccionado</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
@@ -2560,7 +2560,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Descargar favicon para URL</translation>
+        <translation>Descargar icono para la URL</translation>
     </message>
     <message>
         <source>Repeat password field</source>
@@ -2692,11 +2692,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation>Explorar para archivo clave</translation>
+        <translation>Explorar para fichero clave</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>Archivo clave externa</translation>
+        <translation>Fichero clave externo</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -2739,7 +2739,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Entry has unsaved changes</source>
-        <translation>La entrada tiene cambios sin guardar</translation>
+        <translation>El apunte tiene cambios sin guardar</translation>
     </message>
 </context>
 <context>
@@ -2943,11 +2943,11 @@ Las extensiones soportadas son: %1.</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Descargar favicon</translation>
+        <translation>Descargar icono</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>No se pudo descargar el favicon.</translation>
+        <translation>No se pudo descargar el icono.</translation>
     </message>
     <message>
         <source>Images</source>
@@ -2983,7 +2983,7 @@ Las extensiones soportadas son: %1.</translation>
     </message>
     <message numerus="yes">
         <source>This icon is used by %n entry(s), and will be replaced by the default icon. Are you sure you want to delete it?</source>
-        <translation><numerusform>Este icono se utiliza en %n entrada, y será remplazado por el icono por defecto. ¿Desea eliminarlo?</numerusform><numerusform>Este icono se utiliza en %n entradas, y será remplazado por el icono por defecto. ¿Desea eliminarlo?</numerusform></translation>
+        <translation><numerusform>Este icono se utiliza en %n entrada, y será remplazado por el icono por defecto. ¿Desea eliminarlo?</numerusform><numerusform>Este icono se utiliza en %n apuntes, y será remplazado por el icono por defecto. ¿Desea eliminarlo?</numerusform></translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
@@ -2991,7 +2991,7 @@ Las extensiones soportadas son: %1.</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Descargar favicon para URL</translation>
+        <translation>Descargar icono para la URL</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
@@ -3428,7 +3428,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Entrada «%1» de la base de datos «%2» fue usada por %3</translation>
+        <translation>Apunte «%1» de la base de datos «%2» fue usado por %3</translation>
     </message>
 </context>
 <context>
@@ -3440,7 +3440,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n entrada fue usada por %1</numerusform><numerusform>%n apunte(s) fueron usado(s) por %1</numerusform></translation>
+        <translation><numerusform>%n apunte fue usado por %1</numerusform><numerusform>%n apuntes fueron usados por %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3473,7 +3473,7 @@ Esto puede causar un mal funcionamiento de los complementos afectados.</translat
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Descargar favicons</translation>
+        <translation>Descargar iconos</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3519,7 +3519,7 @@ Puede habilitar el servicio de iconos del sitio web DuckDuckGo en la sección se
     </message>
     <message>
         <source>Downloading favicons (%1/%2)...</source>
-        <translation>Descargando favicons (%1%2)...</translation>
+        <translation>Descargando iconos (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -3647,52 +3647,52 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del nombre de la entrada del mapa de variante inválida</translation>
+        <translation>Longitud del nombre del apunte del mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Datos del nombre de la entrada de mapa de variante inválida</translation>
+        <translation>Datos del nombre del apunte de mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del valor de la entrada del mapa de variante inválida</translation>
+        <translation>Longitud del valor del apunte del mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Datos del valor de la entrada de mapa de variante inválida</translation>
+        <translation>Datos del valor del apunte de mapa de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Longitud del valor de la entrada del mapa booleano de variante inválida</translation>
+        <translation>Longitud del valor del apunte del mapa booleano de variante inválida</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de la entrada Int32 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de apunte Int32 de mapeo de variante</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt32 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de apunte UInt32 de mapeo de variante</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada Int64 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de apunte Int64 de mapeo de variante</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Largo inválido en valor de entrada UInt64 de mapeo de variante</translation>
+        <translation>Largo inválido en valor de apunte UInt64 de mapeo de variante</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Tipo de entrada inválida de mapeo devariante</translation>
+        <translation>Tipo de apunte inválido de mapeo de variante</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
@@ -3852,19 +3852,19 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Uuid de entrada nulo</translation>
+        <translation>Uuid de apunte nulo</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Número de ícono de entrada inválido</translation>
+        <translation>Número de ícono de apunte inválido</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Elemento del historial en la entrada del historial</translation>
+        <translation>Elemento del historial en el apunte del historial</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>No uuid de entrada encontrado</translation>
+        <translation>No se ha encontrado uuid del apunte</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
@@ -3876,7 +3876,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Falta clave de la entrada de texto o valor</translation>
+        <translation>Falta clave del apunte de texto o valor</translation>
     </message>
     <message>
         <source>Duplicate attachment found</source>
@@ -3884,7 +3884,7 @@ Esta migración es en único sentido. No podrá abrir la base de datos importada
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Falta clave de entrada binaria o valor</translation>
+        <translation>Falta clave del apunte binario o valor</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -3943,7 +3943,7 @@ Línea %2, columna %3</translation>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Incapaz de leer el archivo</translation>
+        <translation>Incapaz de leer el fichero clave</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -4048,43 +4048,43 @@ Línea %2, columna %3</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Entrada de tipo número en campo faltante</translation>
+        <translation>Apunte de tipo número en campo faltante</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Tamaño de la entrada para el campo inválido</translation>
+        <translation>Tamaño del apunte para el campo inválido</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>Datos de campo de entrada no coinciden en tamaño</translation>
+        <translation>Datos de campo de apunte no coinciden en tamaño</translation>
     </message>
     <message>
         <source>Invalid entry uuid field size</source>
-        <translation>Tamaño de la entrada para el campo uuid inválido</translation>
+        <translation>Tamaño del apunte para el campo uuid inválido</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Tamaño de la entrada para el campo identificador de grupo inválido</translation>
+        <translation>Tamaño del apunte para el campo identificador de grupo inválido</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Tamaño de la entrada para el campo icono inválido</translation>
+        <translation>Tamaño del apunte para el campo icono inválido</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de creación inválido</translation>
+        <translation>Tamaño del apunte para el campo tiempo de creación inválido</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de modificación inválido</translation>
+        <translation>Tamaño del apunte para el campo tiempo de modificación inválido</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Tamaño de la entrada para el campo tiempo de expiración inválido</translation>
+        <translation>Tamaño del apunte para el campo tiempo de expiración inválido</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Tipo de la entrada para el campo inválido</translation>
+        <translation>Tipo de apunte para el campo inválido</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
@@ -4191,35 +4191,35 @@ Si ocurre nuevamente entonces su archivo de base de datos puede estar corrupto.<
     </message>
     <message>
         <source>Key File</source>
-        <translation>Archivo clave</translation>
+        <translation>Fichero clave</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out!&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Puede añadir un archivo clave que contiene bytes aleatorios para seguridad adicional.&lt;/p&gt;&lt;p&gt;¡Debes mantenerlo en secreto y nunca perderlo o te bloquearán!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Puede añadir un fichero clave que contiene bytes aleatorios para seguridad adicional.&lt;/p&gt;&lt;p&gt;¡Debes mantenerlo en secreto y nunca perderlo o te bloquearán!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Legacy key file format</source>
-        <translation>Formato de archivo clave heredado</translation>
+        <translation>Formato de fichero clave heredado</translation>
     </message>
     <message>
         <source>You are using a legacy key file format which may become
 unsupported in the future.
 
 Please go to the master key settings and generate a new key file.</source>
-        <translation>Está utilizando un formato de archivo clave heredado que puede convertirse
+        <translation>Está utilizando un formato de fichero clave heredado que puede convertirse
 sin soporte en el futuro.
 
-Vaya a la configuración de la clave maestra y genere un nuevo archivo clave.</translation>
+Vaya a la configuración de la clave maestra y genere un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>Error al cargar el archivo clave «%1»
+        <translation>Error al cargar el fichero clave «%1»
 Mensaje: %2</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Archivos clave</translation>
+        <translation>Ficheros clave</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4227,27 +4227,27 @@ Mensaje: %2</translation>
     </message>
     <message>
         <source>Create Key File...</source>
-        <translation>Crear un archivo clave...</translation>
+        <translation>Crear un fichero clave...</translation>
     </message>
     <message>
         <source>Error creating key file</source>
-        <translation>Error al crear el archivo clave</translation>
+        <translation>Error al crear el fichero clave</translation>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>No se puede crear el archivo clave: %1</translation>
+        <translation>No se puede crear el fichero clave: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Seleccione un archivo clave</translation>
+        <translation>Seleccione un fichero clave</translation>
     </message>
     <message>
         <source>Key file selection</source>
-        <translation>Selección de archivo clave </translation>
+        <translation>Selección de fichero clave</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Explorar para un archivo clave</translation>
+        <translation>Explorar para un fichero clave</translation>
     </message>
     <message>
         <source>Browse...</source>
@@ -4255,7 +4255,7 @@ Mensaje: %2</translation>
     </message>
     <message>
         <source>Generate a new key file</source>
-        <translation>Generar un nuevo archivo clave</translation>
+        <translation>Generar un nuevo fichero clave</translation>
     </message>
     <message>
         <source>Note: Do not use a file that may change as that will prevent you from unlocking your database!</source>
@@ -4263,20 +4263,20 @@ Mensaje: %2</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation>Archivo clave inválido</translation>
+        <translation>Fichero clave inválido</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>No puede usar la base de datos actual como su propio archivo clave. Seleccione un archivo diferente o genere un nuevo archivo clave.</translation>
+        <translation>No puede usar la base de datos actual como su propio fichero clave. Seleccione un fichero diferente o genere un nuevo fichero clave.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>Archivo clave sospechoso</translation>
+        <translation>Fichero clave sospechoso</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>El archivo clave seleccionado parece una base de datos de contraseñas. Un archivo clave debe ser un fichero estático que nunca cambie o perderá el acceso a su base de datos para siempre.
+        <translation>El fichero clave seleccionado parece una base de datos de contraseñas. Un fichero clave debe ser un fichero estático que nunca cambie o perderá el acceso a su base de datos para siempre.
 ¿Desea continuar con este archivo?</translation>
     </message>
 </context>
@@ -4284,7 +4284,7 @@ Are you sure you want to continue with this file?</source>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>Base de &amp;datos</translation>
+        <translation>&amp;Base de datos</translation>
     </message>
     <message>
         <source>&amp;Recent databases</source>
@@ -4296,7 +4296,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>E&amp;ntries</source>
-        <translation>E&amp;ntradas</translation>
+        <translation>&amp;Apuntes</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -4312,7 +4312,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>Acerca &amp;de</translation>
+        <translation>&amp;Acerca de</translation>
     </message>
     <message>
         <source>&amp;Open database...</source>
@@ -4328,7 +4328,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Delete entry</source>
-        <translation>&amp;Eliminar entrada</translation>
+        <translation>&amp;Eliminar apunte</translation>
     </message>
     <message>
         <source>&amp;Edit group</source>
@@ -4348,7 +4348,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Clone entry</source>
-        <translation>&amp;Clonar entrada</translation>
+        <translation>&amp;Clonar apunte</translation>
     </message>
     <message>
         <source>Copy &amp;username</source>
@@ -4448,7 +4448,7 @@ Esta versión no es para uso de producción.</translation>
     </message>
     <message>
         <source>Report a &amp;bug</source>
-        <translation>Informar de un &amp;defecto</translation>
+        <translation>&amp;Informar de un defecto</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!
@@ -4462,7 +4462,7 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>Copy att&amp;ribute...</source>
-        <translation>Copiar at&amp;ributo...</translation>
+        <translation>Copiar &amp;atributo...</translation>
     </message>
     <message>
         <source>TOTP...</source>
@@ -4486,19 +4486,19 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>&amp;New entry</source>
-        <translation>&amp;Nueva entrada</translation>
+        <translation>&amp;Nuevo apunte</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation>Añadir una nueva entrada</translation>
+        <translation>Añadir un nuevo apunte</translation>
     </message>
     <message>
         <source>&amp;Edit entry</source>
-        <translation>&amp;Editar entrada</translation>
+        <translation>&amp;Editar apunte</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>Ver o editar entrada</translation>
+        <translation>Ver o editar apunte</translation>
     </message>
     <message>
         <source>&amp;New group</source>
@@ -4514,7 +4514,7 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>&amp;Database settings...</source>
-        <translation>Configuración de la base de &amp;datos</translation>
+        <translation>Con&amp;figuración de la base de datos</translation>
     </message>
     <message>
         <source>Copy &amp;password</source>
@@ -4522,7 +4522,7 @@ Le recomendamos que utilice la AppImage disponible en nuestra página de descarg
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Realizar &amp;autoescritura</translation>
+        <translation>Realizar au&amp;toescritura</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -4580,7 +4580,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Downlo&amp;ad all favicons</source>
-        <translation>Descarg&amp;ar todos los favicons</translation>
+        <translation>&amp;Descargar todos los iconos</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -4596,7 +4596,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Descargar favicon</translation>
+        <translation>Descargar icono</translation>
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
@@ -4655,7 +4655,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>la entrada más antigua se combinó a la base de datos «%1»</translation>
+        <translation>el apunte más antiguo se combinó a la base de datos «%1»</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
@@ -4667,11 +4667,11 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Volver a aplicar una entrada de destino más antigua sobre la tipografía más nueva %1 [%2]</translation>
+        <translation>Volver a aplicar un apunte de destino más antiguo sobre la tipografía más nueva %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Volver a aplicar una entrada de origen anterior sobre el objetivo más nuevo %1 [%2]</translation>
+        <translation>Volver a aplicar un apunte de origen anterior sobre el objetivo más nuevo %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
@@ -4845,7 +4845,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Archivo clave no válido, esperando una llave de OpenSSH</translation>
+        <translation>Fichero clave no válido, esperando una llave de OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
@@ -4857,11 +4857,11 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Archivo clave demasiado pequeño.</translation>
+        <translation>Fichero clave demasiado pequeño.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Id de encabezado mágico del archivo clave inválido</translation>
+        <translation>Id de encabezado mágico del fichero clave inválido</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -4873,7 +4873,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Archivo clave corrupto, no se pudo leer la clave privada</translation>
+        <translation>Fichero clave corrupto, no se pudo leer la clave privada</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
@@ -4889,7 +4889,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Key derivation failed, key file corrupted?</source>
-        <translation>La derivación de la clave falló, ¿archivo clave dañado?</translation>
+        <translation>La derivación de la clave falló, ¿fichero clave dañado?</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -5247,11 +5247,11 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>lower case</source>
-        <translation>minúsculas</translation>
+        <translation>Minúsculas</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation>MAYÚSCULAS</translation>
+        <translation>Mayúsculas</translation>
     </message>
     <message>
         <source>Title Case</source>
@@ -5364,7 +5364,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Añadir una nueva entrada a una base de datos.</translation>
+        <translation>Añadir un nuevo apunte a una base de datos.</translation>
     </message>
     <message>
         <source>Path of the database.</source>
@@ -5372,7 +5372,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Archivo clave de la base de datos.</translation>
+        <translation>Fichero clave de la base de datos.</translation>
     </message>
     <message>
         <source>path</source>
@@ -5380,7 +5380,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Usuario para la entrada.</translation>
+        <translation>Usuario para el apunte.</translation>
     </message>
     <message>
         <source>username</source>
@@ -5388,7 +5388,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>URL de la entrada.</translation>
+        <translation>URL del apunte.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -5396,11 +5396,11 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Solicitar contraseña de la entrada.</translation>
+        <translation>Solicitar contraseña del apunte.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Generar una contraseña para la entrada.</translation>
+        <translation>Generar una contraseña para el apunte.</translation>
     </message>
     <message>
         <source>length</source>
@@ -5408,16 +5408,16 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Ruta de la entrada para añadir.</translation>
+        <translation>Ruta del apunte para añadir.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s password to the clipboard.</source>
-        <translation>Copiar la contraseña de una entrada en el portapapeles.</translation>
+        <translation>Copiar la contraseña de un apunte en el portapapeles.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>Ruta de la entrada para copiar.</translation>
+        <translation>Ruta del apunte a copiar.</translation>
     </message>
     <message>
         <source>Timeout in seconds before clearing the clipboard.</source>
@@ -5425,11 +5425,11 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>Editar una entrada</translation>
+        <translation>Editar un apunte</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Título para la entrada</translation>
+        <translation>Título para el apunte</translation>
     </message>
     <message>
         <source>title</source>
@@ -5437,7 +5437,7 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Ruta de la entrada para editar.</translation>
+        <translation>Ruta del apunte a editar.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
@@ -5456,10 +5456,10 @@ Espere algunos defectos y problemas menores, esta versión no está destinada pa
 unsupported in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ADVERTENCIA: Está usando un archivo clave con un formato antiguo que puede ser
+        <translation>ADVERTENCIA: Está usando un fichero clave con un formato antiguo que puede ser
 incompatible en el futuro.
 
-Por favor, considere generar un nuevo archivo.</translation>
+Por favor, considere generar un nuevo fichero.</translation>
     </message>
     <message>
         <source>
@@ -5505,11 +5505,11 @@ Comandos disponibles:
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>Archivo clave de la base de datos desde la cual desea combinar.</translation>
+        <translation>Fichero clave de la base de datos desde la cual desea combinar.</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>Muestra información de una entrada.</translation>
+        <translation>Muestra información de un apunte.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
@@ -5521,7 +5521,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>Nombre de la entrada para mostrar.</translation>
+        <translation>Nombre del apunte para mostrar.</translation>
     </message>
     <message>
         <source>NULL device</source>
@@ -5603,11 +5603,11 @@ Comandos disponibles:
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation>No pudo crearse la entrada con ruta %1.</translation>
+        <translation>No pudo crearse el apunte con ruta %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>Introduzca la contraseña para la nueva entrada:</translation>
+        <translation>Introduzca la contraseña para el nuevo apunte:</translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
@@ -5615,7 +5615,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>La entrada %1 se añadió correctamente.</translation>
+        <translation>El apunte %1 se añadió correctamente.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard.</source>
@@ -5627,19 +5627,19 @@ Comandos disponibles:
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>No se encontró la entrada %1.</translation>
+        <translation>No se encontró el apunte %1.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation>La entrada con ruta %1 no tiene un TOTP configurado.</translation>
+        <translation>El apunte con ruta %1 no tiene un TOTP configurado.</translation>
     </message>
     <message>
         <source>Entry&apos;s current TOTP copied to the clipboard!</source>
-        <translation>¡El TOTP de la entrada actual se ha copiado al portapapeles!</translation>
+        <translation>¡El TOTP del apunte actual se ha copiado al portapapeles!</translation>
     </message>
     <message>
         <source>Entry&apos;s password copied to the clipboard!</source>
-        <translation>¡La contraseña de la entrada actual se ha copiado al portapapeles!</translation>
+        <translation>¡La contraseña del apunte actual se ha copiado al portapapeles!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
@@ -5660,15 +5660,15 @@ Comandos disponibles:
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation>No se pudo encontrar la entrada con la ruta %1.</translation>
+        <translation>No se pudo encontrar el apunte con la ruta %1.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation>No cambiar cualquier campo de la entrada de 1%.</translation>
+        <translation>No cambiar cualquier campo del apunte 1%.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>Introduzca una nueva contraseña para la entrada:</translation>
+        <translation>Introduzca una nueva contraseña para el apunte:</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
@@ -5676,7 +5676,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation>Entrada %1 editada correctamente.</translation>
+        <translation>Apunte %1 editado correctamente.</translation>
     </message>
     <message>
         <source>Length %1</source>
@@ -5780,7 +5780,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation>Error al cargar el archivo clave %1: %2</translation>
+        <translation>Error al cargar el fichero clave %1: %2</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
@@ -5842,15 +5842,15 @@ Comandos disponibles:
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>Entrada %1 reciclada correctamente.</translation>
+        <translation>Apunte %1 reciclado correctamente.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>Se eliminó correctamente la entrada %1.</translation>
+        <translation>Apunte %1 eliminado correctamente.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>Muestra la entrada actual del TOTP.</translation>
+        <translation>Muestra el apunte actual del TOTP.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
@@ -5924,7 +5924,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>La carga del archivo clave falló</translation>
+        <translation>La carga del fichero clave falló</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
@@ -5940,15 +5940,15 @@ Comandos disponibles:
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation>Error al crear el archivo clave %1: %2</translation>
+        <translation>Error al crear el fichero clave %1: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>Error al cargar el archivo clave %1: %2</translation>
+        <translation>Error al cargar el fichero clave %1: %2</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>Ruta de la entrada a eliminar.</translation>
+        <translation>Ruta del apunte a eliminar.</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -5972,7 +5972,7 @@ Comandos disponibles:
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>archivo clave de la base de datos</translation>
+        <translation>fichero clave de la base de datos</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
@@ -6232,11 +6232,11 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation>Mueve una entrada a un nuevo grupo.</translation>
+        <translation>Mueve un apunte a un nuevo grupo.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation>Ruta de la entrada a mover.</translation>
+        <translation>Ruta del apunte a mover.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
@@ -6248,11 +6248,11 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation>La entrada ya está en el grupo %1.</translation>
+        <translation>El apunte ya está en el grupo %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation>Entrada %1 movida al grupo %2 correctamente.</translation>
+        <translation>Apunte %1 movido al grupo %2 correctamente.</translation>
     </message>
     <message>
         <source>Open a database.</source>
@@ -6671,7 +6671,7 @@ Núcleo: %3 %4</translation>
     </message>
     <message>
         <source>KeeShare key file</source>
-        <translation>Archivo clave de KeeShare</translation>
+        <translation>Fichero clave de KeeShare</translation>
     </message>
     <message>
         <source>All files</source>
@@ -7009,7 +7009,7 @@ Ejemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>¿Desea eliminar la configuración TOTP para esta entrada?</translation>
+        <translation>¿Desea eliminar la configuración TOTP para este apunte?</translation>
     </message>
 </context>
 <context>

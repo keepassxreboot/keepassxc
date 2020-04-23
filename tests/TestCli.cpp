@@ -473,6 +473,10 @@ void TestCli::testClip()
     m_stdoutFile->reset();
     QString errorOutput(m_stderrFile->readAll());
 
+    if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+        QSKIP("Clip test skipped due to QClipboard and Wayland issues");
+    }
+
     if (errorOutput.contains("Unable to start program")
         || errorOutput.contains("No program defined for clipboard manipulation")) {
         QSKIP("Clip test skipped due to missing clipboard tool");

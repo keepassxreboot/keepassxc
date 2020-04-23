@@ -706,7 +706,7 @@ void BrowserService::convertAttributesToCustomData(const QSharedPointer<Database
 
         if (entry->title() == KEEPASSHTTP_NAME || entry->title().contains(KEEPASSXCBROWSER_NAME, Qt::CaseInsensitive)) {
             keyCounter += moveKeysToCustomData(entry, db);
-            delete entry;
+            db->recycleEntry(entry);
         }
 
         progress.setValue(progress.value() + 1);

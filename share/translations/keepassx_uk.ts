@@ -989,7 +989,7 @@ chrome-на-ноутбуці.</translation>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation>Імпорт CSV: помилки записувача:
+        <translation>Імпортування CSV: помилки записувача:
 %1</translation>
     </message>
     <message>
@@ -1921,7 +1921,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Експортувати сховище у файл CSV</translation>
+        <translation>Експортувати сховище до файлу CSV</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
@@ -1966,7 +1966,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Експортувати сховище в HTML</translation>
+        <translation>Експортувати сховище до файлу HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
@@ -1978,7 +1978,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Схвалення експорту</translation>
+        <translation>Схвалення експортування</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
@@ -2783,7 +2783,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>Вибрати ціль експорту</translation>
+        <translation>Вибрати ціль експортування</translation>
     </message>
     <message>
         <source>Select import/export file</source>
@@ -2795,11 +2795,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Import</source>
-        <translation>Імпорт</translation>
+        <translation>Імпортування</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Експорт</translation>
+        <translation>Експортування</translation>
     </message>
     <message>
         <source>Synchronize</source>
@@ -2826,15 +2826,15 @@ Supported extensions are: %1.</source>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare наразі вимкнено. Ви можете ввімкнути імпорт та експорт у налаштуванні застосунку.</translation>
+        <translation>KeeShare наразі вимкнено. Ви можете ввімкнути імпортування та експортування у параметрах застосунку.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Експорт сховища наразі вимкнено в налаштуванні застосунку.</translation>
+        <translation>Експортування сховища наразі вимкнено в параметрах застосунку.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Імпорт сховища наразі вимкнено в налаштуванні застосунку.</translation>
+        <translation>Імпортування сховища наразі вимкнено в параметрах застосунку.</translation>
     </message>
     <message>
         <source>Sharing mode field</source>
@@ -3782,7 +3782,7 @@ You can import it by clicking on Database &gt; 'Import KeePass 1 database...'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>Вибраний файл є старим сховищем для KeePass 1 (.kdb).
 
-Щоб імпортувати його, виберіть пункт меню «Сховище &gt; Імпортувати сховище KeePass 1…».
+Щоб імпортувати його, виберіть пункт меню «Сховище &gt; Імпортувати &gt; Сховище KeePass 1…».
 Перетворення можливе лише в одному напрямку. Ви не зможете відкрити імпортоване сховище старою версією KeePassX 0.4.</translation>
     </message>
     <message>
@@ -4123,11 +4123,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>Імпорт вимкнено у параметрах</translation>
+        <translation>Імпортування вимкнено у параметрах</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Експорт вимкнено у параметрах</translation>
+        <translation>Експортування вимкнено у параметрах</translation>
     </message>
     <message>
         <source>Inactive share</source>
@@ -4573,7 +4573,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Експорт</translation>
+        <translation>&amp;Експортувати</translation>
     </message>
     <message>
         <source>&amp;Check for Updates...</source>
@@ -4601,7 +4601,7 @@ Expect some bugs and minor issues, this version is not meant for production use.
     </message>
     <message>
         <source>&amp;Export to HTML file...</source>
-        <translation>Експортувати у файл HTML...</translation>
+        <translation>Експортувати до файлу HTML...</translation>
     </message>
     <message>
         <source>1Password Vault...</source>
@@ -6157,7 +6157,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are xml or csv. Defaults to xml.</source>
-        <translation>Формат для експорту. Можливі формати: xml або csv. Типовий формат — xml.</translation>
+        <translation>Формат для експортування. Можливі формати: xml або csv. Типовий формат — xml.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6193,7 +6193,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation>Шлях для експорту сховища XML.</translation>
+        <translation>Шлях для експортування сховища XML.</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
@@ -6579,11 +6579,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Дозволити експорт</translation>
+        <translation>Дозволити експортування</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Дозволити імпорт</translation>
+        <translation>Дозволити імпортування</translation>
     </message>
     <message>
         <source>Own certificate</source>
@@ -6611,11 +6611,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Import</source>
-        <translation>Імпорт</translation>
+        <translation>Імпортування</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Експорт</translation>
+        <translation>Експортування</translation>
     </message>
     <message>
         <source>Imported certificates</source>
@@ -6696,11 +6696,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Дозволити імпорт KeeShare</translation>
+        <translation>Дозволити імпортування KeeShare</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Дозволити експорт KeeShare</translation>
+        <translation>Дозволити експортування KeeShare</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
@@ -6779,7 +6779,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Could not write export container</source>
-        <translation>Неможливо записати експортну оболонку</translation>
+        <translation>Неможливо записати експортовану оболонку</translation>
     </message>
     <message>
         <source>Unexpected export error occurred</source>
@@ -6885,7 +6885,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation>Експортування %1</translation>
+        <translation>Експортування до %1</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
@@ -6893,7 +6893,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Суперечливий шлях для експорту %1 у %2</translation>
+        <translation>Суперечливий шлях для експортування %1 до %2</translation>
     </message>
 </context>
 <context>

@@ -1732,6 +1732,7 @@ bool DatabaseWidget::save()
 
     auto focusWidget = qApp->focusWidget();
 
+    // TODO: Make this async
     // Lock out interactions
     m_entryView->setDisabled(true);
     m_groupView->setDisabled(true);

@@ -273,48 +273,63 @@ namespace Utils
     {
         TextStream err(Utils::STDERR);
 
-        QString programName = "";
-        QStringList arguments;
+        // List of programs and their arguments
+        QList<QPair<QString, QString>> clipPrograms;
 
 #ifdef Q_OS_UNIX
-        programName = "xclip";
-        arguments << "-i"
-                  << "-selection"
-                  << "clipboard";
+        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+            clipPrograms << qMakePair(QStringLiteral("wl-copy"), QStringLiteral(""));
+        } else {
+            clipPrograms << qMakePair(QStringLiteral("xclip"), QStringLiteral("-selection clipboard -i"));
+        }
 #endif
 
 #ifdef Q_OS_MACOS
-        programName = "pbcopy";
+        clipPrograms << qMakePair(QStringLiteral("pbcopy"), QStringLiteral(""));
 #endif
 
 #ifdef Q_OS_WIN
-        programName = "clip";
+        clipPrograms << qMakePair(QStringLiteral("clip"), QStringLiteral(""));
 #endif
 
-        if (programName.isEmpty()) {
+        if (clipPrograms.isEmpty()) {
             err << QObject::tr("No program defined for clipboard manipulation");
             err.flush();
             return EXIT_FAILURE;
         }
 
-        QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
-        clipProcess->start(programName, arguments);
-        clipProcess->waitForStarted();
+        QStringList failedProgramNames;
 
-        if (clipProcess->state() != QProcess::Running) {
-            err << QObject::tr("Unable to start program %1").arg(programName);
-            err.flush();
-            return EXIT_FAILURE;
+        for (auto prog : clipPrograms) {
+            QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
+
+            // Skip empty parts, otherwise the program may clip the empty string
+            QStringList progArgs = prog.second.split(" ", QString::SkipEmptyParts);
+
+            clipProcess->start(prog.first, progArgs);
+            clipProcess->waitForStarted();
+
+            if (clipProcess->state() != QProcess::Running) {
+                failedProgramNames.append(prog.first);
+                continue;
+            }
+
+            if (clipProcess->write(text.toLatin1()) == -1) {
+                qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
+            }
+            clipProcess->waitForBytesWritten();
+            clipProcess->closeWriteChannel();
+            clipProcess->waitForFinished();
+
+            if (clipProcess->exitCode() == EXIT_SUCCESS) {
+                return EXIT_SUCCESS;
+            }
         }
 
-        if (clipProcess->write(text.toLatin1()) == -1) {
-            qDebug("Unable to write to process : %s", qPrintable(clipProcess->errorString()));
-        }
-        clipProcess->waitForBytesWritten();
-        clipProcess->closeWriteChannel();
-        clipProcess->waitForFinished();
-
-        return clipProcess->exitCode();
+        // No clipping program worked
+        err << QObject::tr("All clipping programs failed. Tried %1\n").arg(failedProgramNames.join(", "));
+        err.flush();
+        return EXIT_FAILURE;
     }
 
     /**
