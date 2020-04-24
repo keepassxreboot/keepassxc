@@ -755,9 +755,12 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     }
 
     m_dialogActive = true;
+    bool wasAppActive = qApp->activeWindow() == getMainWindow()->window();
     BrowserAccessControlDialog accessControlDialog;
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLocked()), &accessControlDialog, SLOT(reject()));
+    connect(this, SIGNAL(activeDatabaseChanged()), &accessControlDialog, SLOT(reject()));
+
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];
         BrowserEntryConfig config;
@@ -795,8 +798,18 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         }
     }
 
+#ifdef Q_OS_MAC
+    // Re-hide the application if it wasn't visible before
+    // only affects macOS because dialogs force the main window to show
+    if (!wasAppActive) {
+        hideWindow();
+    }
+#else
+    Q_UNUSED(wasAppActive);
+#endif
+
     m_dialogActive = false;
-    hideWindow();
+
     return allowedEntries;
 }
 
@@ -1238,14 +1251,16 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
 
 void BrowserService::activeDatabaseChanged(DatabaseWidget* dbWidget)
 {
-    m_currentDatabaseWidget = dbWidget;
-    if (dbWidget) {
+    // Only emit these signals when we are not searching in all databases
+    if (dbWidget && !browserSettings()->searchInAllDatabases()) {
         if (dbWidget->isLocked()) {
             databaseLocked(dbWidget);
         } else {
             databaseUnlocked(dbWidget);
         }
     }
+
+    m_currentDatabaseWidget = dbWidget;
 }
 
 void BrowserService::processClientMessage(const QJsonObject& message)
