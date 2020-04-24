@@ -34,7 +34,6 @@ enum
     max_length = 16 * 1024
 };
 
-class DatabaseTabWidget;
 class DatabaseWidget;
 class BrowserHost;
 class BrowserAction;
