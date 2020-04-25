@@ -257,7 +257,7 @@ void EditEntryWidget::setupBrowser()
 {
     m_browserUi->setupUi(m_browserWidget);
 
-    if (config()->get("Browser/Enabled", false).toBool()) {
+    if (config()->get(Config::Browser_Enabled).toBool()) {
         addPage(tr("Browser Integration"), Resources::instance()->icon("internet-web-browser"), m_browserWidget);
         m_additionalURLsDataModel->setEntryAttributes(m_entryAttributes);
         m_browserUi->additionalURLsView->setModel(m_additionalURLsDataModel);
@@ -459,7 +459,7 @@ void EditEntryWidget::setupEntryUpdate()
 #endif
 
 #ifdef WITH_XC_BROWSER
-    if (config()->get("Browser/Enabled", false).toBool()) {
+    if (config()->get(Config::Browser_Enabled).toBool()) {
         connect(m_browserUi->skipAutoSubmitCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->hideEntryCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->onlyHttpAuthCheckbox, SIGNAL(toggled(bool)), SLOT(setModified()));
@@ -805,11 +805,11 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->passwordEdit->setReadOnly(m_history);
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->notesEnabled->setChecked(!config()->get("security/hidenotes").toBool());
+    m_mainUi->notesEnabled->setChecked(!config()->get(Config::Security_HideNotes).toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
-    m_mainUi->notesEdit->setVisible(!config()->get("security/hidenotes").toBool());
-    m_mainUi->notesHint->setVisible(config()->get("security/hidenotes").toBool());
-    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+    m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
+    m_mainUi->notesHint->setVisible(config()->get(Config::Security_HideNotes).toBool());
+    if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->notesEdit->setFont(Font::fixedFont());
     } else {
         m_mainUi->notesEdit->setFont(Font::defaultFont());
@@ -839,7 +839,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
-    m_mainUi->passwordEdit->setShowPassword(config()->get("security/passwordscleartext").toBool());
+    m_mainUi->passwordEdit->setShowPassword(config()->get(Config::Security_PasswordsCleartext).toBool());
     if (!m_history) {
         m_mainUi->passwordEdit->enablePasswordGenerator();
     }
@@ -984,7 +984,7 @@ bool EditEntryWidget::commitEntry()
 #endif
 
 #ifdef WITH_XC_BROWSER
-    if (config()->get("Browser/Enabled", false).toBool()) {
+    if (config()->get(Config::Browser_Enabled).toBool()) {
         updateBrowser();
     }
 #endif

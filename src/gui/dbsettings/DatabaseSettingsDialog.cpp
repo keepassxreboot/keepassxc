@@ -123,7 +123,7 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings(db);
     }
-    m_ui->advancedSettingsToggle->setChecked(config()->get("GUI/AdvancedSettings", false).toBool());
+    m_ui->advancedSettingsToggle->setChecked(config()->get(Config::GUI_AdvancedSettings).toBool());
     m_db = db;
 }
 
@@ -206,5 +206,5 @@ void DatabaseSettingsDialog::toggleAdvancedMode(bool advanced)
         m_encryptionWidget->setAdvancedMode(advanced);
     }
 
-    config()->set("GUI/AdvancedSettings", advanced);
+    config()->set(Config::GUI_AdvancedSettings, advanced);
 }

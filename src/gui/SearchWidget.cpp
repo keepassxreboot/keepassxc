@@ -67,7 +67,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionLimitGroup = m_searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
     m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
     m_actionLimitGroup->setCheckable(true);
-    m_actionLimitGroup->setChecked(config()->get("SearchLimitGroup", false).toBool());
+    m_actionLimitGroup->setChecked(config()->get(Config::SearchLimitGroup).toBool());
 
     m_ui->searchIcon->setIcon(resources()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
@@ -115,8 +115,8 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
             }
         }
     } else if (event->type() == QEvent::FocusOut && !m_ui->searchEdit->text().isEmpty()) {
-        if (config()->get("security/clearsearch").toBool()) {
-            int timeout = config()->get("security/clearsearchtimeout").toInt();
+        if (config()->get(Config::Security_ClearSearch).toBool()) {
+            int timeout = config()->get(Config::Security_ClearSearchTimeout).toInt();
             if (timeout > 0) {
                 // Auto-clear search after set timeout (5 minutes by default)
                 m_clearSearchTimer->start(timeout * 60000); // 60 sec * 1000 ms
@@ -200,7 +200,7 @@ void SearchWidget::setCaseSensitive(bool state)
 
 void SearchWidget::updateLimitGroup()
 {
-    config()->set("SearchLimitGroup", m_actionLimitGroup->isChecked());
+    config()->set(Config::SearchLimitGroup, m_actionLimitGroup->isChecked());
     emit limitGroupChanged(m_actionLimitGroup->isChecked());
 }
 

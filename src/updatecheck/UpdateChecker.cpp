@@ -42,7 +42,7 @@ UpdateChecker::~UpdateChecker()
 
 void UpdateChecker::checkForUpdates(bool manuallyRequested)
 {
-    auto nextCheck = config()->get("GUI/CheckForUpdatesNextCheck", 0).toULongLong();
+    auto nextCheck = config()->get(Config::GUI_CheckForUpdatesNextCheck).toULongLong();
     m_isManuallyRequested = manuallyRequested;
 
     if (m_isManuallyRequested || Clock::currentSecondsSinceEpoch() >= nextCheck) {
@@ -50,7 +50,7 @@ void UpdateChecker::checkForUpdates(bool manuallyRequested)
 
         QString apiUrlStr = QString("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
 
-        if (!config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
+        if (!config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool()) {
             apiUrlStr += "/latest";
         }
 
@@ -85,7 +85,7 @@ void UpdateChecker::fetchFinished()
         QJsonDocument jsonResponse = QJsonDocument::fromJson(m_bytesReceived);
         QJsonObject jsonObject = jsonResponse.object();
 
-        if (config()->get("GUI/CheckForUpdatesIncludeBetas", false).toBool()) {
+        if (config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool()) {
             QJsonArray jsonArray = jsonResponse.array();
             jsonObject = jsonArray.at(0).toObject();
         }
@@ -97,7 +97,7 @@ void UpdateChecker::fetchFinished()
 
         // Check again in 7 days
         // TODO: change to toSecsSinceEpoch() when min Qt >= 5.8
-        config()->set("GUI/CheckForUpdatesNextCheck", Clock::currentDateTime().addDays(7).toTime_t());
+        config()->set(Config::GUI_CheckForUpdatesNextCheck, Clock::currentDateTime().addDays(7).toTime_t());
     } else {
         version = "error";
     }

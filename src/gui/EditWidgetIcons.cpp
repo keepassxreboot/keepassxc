@@ -203,7 +203,7 @@ void EditWidgetIcons::iconReceived(const QString& url, const QImage& icon)
     Q_UNUSED(url);
     if (icon.isNull()) {
         QString message(tr("Unable to fetch favicon."));
-        if (!config()->get("security/IconDownloadFallback", false).toBool()) {
+        if (!config()->get(Config::Security_IconDownloadFallback).toBool()) {
             message.append("\n").append(
                 tr("You can enable the DuckDuckGo website icon service under Tools -> Settings -> Security"));
         }

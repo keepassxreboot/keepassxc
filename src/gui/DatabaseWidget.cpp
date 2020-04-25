@@ -216,7 +216,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_blockAutoSave = false;
 
     m_EntrySearcher = new EntrySearcher(false);
-    m_searchLimitGroup = config()->get("SearchLimitGroup", false).toBool();
+    m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
 #ifdef WITH_XC_SSHAGENT
     if (sshAgent()->isEnabled()) {
@@ -690,10 +690,10 @@ void DatabaseWidget::showTotpKeyQrCode()
 void DatabaseWidget::setClipboardTextAndMinimize(const QString& text)
 {
     clipboard()->setText(text);
-    if (config()->get("HideWindowOnCopy").toBool()) {
-        if (config()->get("MinimizeOnCopy").toBool()) {
+    if (config()->get(Config::HideWindowOnCopy).toBool()) {
+        if (config()->get(Config::MinimizeOnCopy).toBool()) {
             getMainWindow()->minimizeOrHide();
-        } else if (config()->get("DropToBackgroundOnCopy").toBool()) {
+        } else if (config()->get(Config::DropToBackgroundOnCopy).toBool()) {
             window()->lower();
         }
     }
@@ -840,7 +840,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         if (launch) {
             QProcess::startDetached(cmdString.mid(6));
 
-            if (config()->get("MinimizeOnOpenUrl").toBool()) {
+            if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
             }
         }
@@ -849,7 +849,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         if (!url.isEmpty()) {
             QDesktopServices::openUrl(url);
 
-            if (config()->get("MinimizeOnOpenUrl").toBool()) {
+            if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
             }
         }
@@ -1030,7 +1030,7 @@ void DatabaseWidget::loadDatabase(bool accepted)
         processAutoOpen();
         m_saveAttempts = 0;
         emit databaseUnlocked();
-        if (config()->get("MinimizeAfterUnlock").toBool()) {
+        if (config()->get(Config::MinimizeAfterUnlock).toBool()) {
             getMainWindow()->minimizeOrHide();
         }
     } else {
@@ -1349,7 +1349,7 @@ void DatabaseWidget::onGroupChanged(Group* group)
 
 void DatabaseWidget::onDatabaseModified()
 {
-    if (!m_blockAutoSave && config()->get("AutoSaveAfterEveryChange").toBool() && !m_db->isReadOnly()) {
+    if (!m_blockAutoSave && config()->get(Config::AutoSaveAfterEveryChange).toBool() && !m_db->isReadOnly()) {
         save();
     } else {
         // Only block once, then reset
@@ -1462,7 +1462,8 @@ bool DatabaseWidget::lock()
     if (m_db->isModified()) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
-        if (config()->get("AutoSaveOnExit").toBool() || config()->get("AutoSaveAfterEveryChange").toBool()) {
+        if (config()->get(Config::AutoSaveOnExit).toBool()
+            || config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
             saved = save();
         }
 
@@ -1520,7 +1521,7 @@ void DatabaseWidget::reloadDatabaseFile()
 
     m_blockAutoSave = true;
 
-    if (!config()->get("AutoReloadOnChange").toBool()) {
+    if (!config()->get(Config::AutoReloadOnChange).toBool()) {
         // Ask if we want to reload the db
         auto result = MessageBox::question(this,
                                            tr("File has changed"),
@@ -1738,9 +1739,9 @@ bool DatabaseWidget::save()
     m_groupView->setDisabled(true);
     QApplication::processEvents();
 
-    bool useAtomicSaves = config()->get("UseAtomicSaves", true).toBool();
+    bool useAtomicSaves = config()->get(Config::UseAtomicSaves).toBool();
     QString errorMessage;
-    bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get("BackupBeforeSave").toBool());
+    bool ok = m_db->save(&errorMessage, useAtomicSaves, config()->get(Config::BackupBeforeSave).toBool());
 
     // Return control
     m_entryView->setDisabled(false);
@@ -1766,7 +1767,7 @@ bool DatabaseWidget::save()
                                            MessageBox::Disable | MessageBox::Cancel,
                                            MessageBox::Disable);
         if (result == MessageBox::Disable) {
-            config()->set("UseAtomicSaves", false);
+            config()->set(Config::UseAtomicSaves, false);
             return save();
         }
     }
@@ -1789,7 +1790,7 @@ bool DatabaseWidget::saveAs()
     while (true) {
         QString oldFilePath = m_db->filePath();
         if (!QFileInfo::exists(oldFilePath)) {
-            oldFilePath = QDir::toNativeSeparators(config()->get("LastDir", QDir::homePath()).toString() + "/"
+            oldFilePath = QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
                                                    + tr("Passwords").append(".kdbx"));
         }
         const QString newFilePath = fileDialog()->getSaveFileName(

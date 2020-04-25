@@ -217,7 +217,7 @@ bool Resources::testResourceDir(const QString& dir)
 
 bool Resources::useDarkIcon()
 {
-    return config()->get("GUI/DarkTrayIcon").toBool();
+    return config()->get(Config::GUI_DarkTrayIcon).toBool();
 }
 
 Resources* Resources::instance()
