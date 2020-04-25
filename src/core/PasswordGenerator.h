@@ -67,23 +67,9 @@ public:
 
     QString generatePassword() const;
 
-    static const int DefaultLength = 16;
+    static const int DefaultLength = 32;
     static const char* DefaultAdditionalChars;
     static const char* DefaultExcludedChars;
-    static constexpr bool DefaultLower = (DefaultCharset & LowerLetters) != 0;
-    static constexpr bool DefaultUpper = (DefaultCharset & UpperLetters) != 0;
-    static constexpr bool DefaultNumbers = (DefaultCharset & Numbers) != 0;
-    static constexpr bool DefaultSpecial = (DefaultCharset & SpecialCharacters) != 0;
-    static constexpr bool DefaultAdvancedMode = (DefaultFlags & AdvancedMode) != 0;
-    static constexpr bool DefaultBraces = (DefaultCharset & Braces) != 0;
-    static constexpr bool DefaultPunctuation = (DefaultCharset & Punctuation) != 0;
-    static constexpr bool DefaultQuotes = (DefaultCharset & Quotes) != 0;
-    static constexpr bool DefaultDashes = (DefaultCharset & Dashes) != 0;
-    static constexpr bool DefaultMath = (DefaultCharset & Math) != 0;
-    static constexpr bool DefaultLogograms = (DefaultCharset & Logograms) != 0;
-    static constexpr bool DefaultEASCII = (DefaultCharset & EASCII) != 0;
-    static constexpr bool DefaultLookAlike = (DefaultFlags & ExcludeLookAlike) != 0;
-    static constexpr bool DefaultFromEveryGroup = (DefaultFlags & CharFromEveryGroup) != 0;
 
 private:
     QVector<PasswordGroup> passwordGroups() const;

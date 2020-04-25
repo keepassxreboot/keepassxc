@@ -103,7 +103,7 @@ void IconDownloader::setUrl(const QString& entryUrl)
     }
 
     // Start with the "fallback" url (if enabled) to try to get the best favicon
-    if (config()->get("security/IconDownloadFallback", false).toBool()) {
+    if (config()->get(Config::Security_IconDownloadFallback).toBool()) {
         QUrl fallbackUrl = QUrl("https://icons.duckduckgo.com");
         fallbackUrl.setPath("/ip3/" + QUrl::toPercentEncoding(fullyQualifiedDomain) + ".ico");
         m_urlsToTry.append(fallbackUrl);
@@ -131,7 +131,7 @@ void IconDownloader::download()
     }
 
     if (!m_timeout.isActive()) {
-        int timeout = config()->get("FaviconDownloadTimeout", 10).toInt();
+        int timeout = config()->get(Config::FaviconDownloadTimeout).toInt();
         m_timeout.start(timeout * 1000);
 
         // Use the first URL to start the download process

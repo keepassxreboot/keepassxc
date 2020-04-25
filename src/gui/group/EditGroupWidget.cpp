@@ -153,7 +153,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
     }
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
 
-    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+    if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->editNotes->setFont(Font::fixedFont());
     } else {
         m_mainUi->editNotes->setFont(Font::defaultFont());

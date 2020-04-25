@@ -16,7 +16,6 @@
  */
 
 #include "KeeShare.h"
-#include "core/Config.h"
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/DatabaseIcons.h"
@@ -33,10 +32,7 @@
 namespace
 {
     static const QString KeeShare_Reference("KeeShare/Reference");
-    static const QString KeeShare_Own("KeeShare/Settings.own");
-    static const QString KeeShare_Foreign("KeeShare/Settings.foreign");
-    static const QString KeeShare_Active("KeeShare/Settings.active");
-} // namespace
+}
 
 KeeShare* KeeShare::m_instance = nullptr;
 
@@ -52,7 +48,7 @@ KeeShare* KeeShare::instance()
 KeeShare::KeeShare(QObject* parent)
     : QObject(parent)
 {
-    connect(config(), SIGNAL(changed(QString)), SLOT(handleSettingsChanged(QString)));
+    connect(config(), SIGNAL(changed(Config::ConfigKey)), SLOT(handleSettingsChanged(Config::ConfigKey)));
 }
 
 void KeeShare::init(QObject* parent)
@@ -63,32 +59,32 @@ void KeeShare::init(QObject* parent)
 
 KeeShareSettings::Own KeeShare::own()
 {
-    return KeeShareSettings::Own::deserialize(config()->get(KeeShare_Own).toString());
+    return KeeShareSettings::Own::deserialize(config()->get(Config::KeeShare_Own).toString());
 }
 
 KeeShareSettings::Active KeeShare::active()
 {
-    return KeeShareSettings::Active::deserialize(config()->get(KeeShare_Active).toString());
+    return KeeShareSettings::Active::deserialize(config()->get(Config::KeeShare_Active).toString());
 }
 
 KeeShareSettings::Foreign KeeShare::foreign()
 {
-    return KeeShareSettings::Foreign::deserialize(config()->get(KeeShare_Foreign).toString());
+    return KeeShareSettings::Foreign::deserialize(config()->get(Config::KeeShare_Foreign).toString());
 }
 
 void KeeShare::setForeign(const KeeShareSettings::Foreign& foreign)
 {
-    config()->set(KeeShare_Foreign, KeeShareSettings::Foreign::serialize(foreign));
+    config()->set(Config::KeeShare_Foreign, KeeShareSettings::Foreign::serialize(foreign));
 }
 
 void KeeShare::setActive(const KeeShareSettings::Active& active)
 {
-    config()->set(KeeShare_Active, KeeShareSettings::Active::serialize(active));
+    config()->set(Config::KeeShare_Active, KeeShareSettings::Active::serialize(active));
 }
 
 void KeeShare::setOwn(const KeeShareSettings::Own& own)
 {
-    config()->set(KeeShare_Own, KeeShareSettings::Own::serialize(own));
+    config()->set(Config::KeeShare_Own, KeeShareSettings::Own::serialize(own));
 }
 
 bool KeeShare::isShared(const Group* group)
@@ -122,7 +118,6 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
     }
     const auto serialized = KeeShareSettings::Reference::serialize(reference);
     const auto encoded = serialized.toUtf8().toBase64();
-    customData->set(KeeShare_Reference, encoded);
 }
 
 bool KeeShare::isEnabled(const Group* group)
@@ -263,9 +258,9 @@ bool KeeShare::isContainerType(const QFileInfo& fileInfo, const QString type)
     return fileInfo.fileName().endsWith(type, Qt::CaseInsensitive);
 }
 
-void KeeShare::handleSettingsChanged(const QString& key)
+void KeeShare::handleSettingsChanged(Config::ConfigKey key)
 {
-    if (key == KeeShare_Active) {
+    if (key == Config::KeeShare_Active) {
         emit activeChanged();
     }
 }

@@ -68,7 +68,7 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
-    QString appTheme = config()->get("GUI/ApplicationTheme").toString();
+    QString appTheme = config()->get(Config::GUI_ApplicationTheme).toString();
     if (appTheme == "auto") {
         if (osUtils->isDarkMode()) {
             setStyle(new DarkStyle);
@@ -119,7 +119,7 @@ Application::Application(int& argc, char** argv)
         m_lockServer.listen(m_socketName);
         break;
     case QLockFile::LockFailedError: {
-        if (config()->get("SingleInstance").toBool()) {
+        if (config()->get(Config::SingleInstance).toBool()) {
             // Attempt to connect to the existing instance
             QLocalSocket client;
             for (int i = 0; i < 3; ++i) {
@@ -280,7 +280,7 @@ bool Application::isAlreadyRunning() const
     // In DEBUG mode we can run unlimited instances
     return false;
 #endif
-    return config()->get("SingleInstance").toBool() && m_alreadyRunning;
+    return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
 bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)

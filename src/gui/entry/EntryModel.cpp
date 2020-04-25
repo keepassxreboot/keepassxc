@@ -174,7 +174,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (attr->isReference(EntryAttributes::PasswordKey)) {
                 result.prepend(tr("Ref: ", "Reference abbreviation"));
             }
-            if (entry->password().isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
+            if (entry->password().isEmpty() && config()->get(Config::Security_PasswordEmptyNoDots).toBool()) {
                 result = "";
             }
             return result;
@@ -186,7 +186,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return result;
         case Notes:
             // Display only first line of notes in simplified format if not hidden
-            if (config()->get("security/hidenotes").toBool()) {
+            if (config()->get(Config::Security_HideNotes).toBool()) {
                 result = EntryModel::HiddenContentDisplay;
             } else {
                 result = entry->notes().section("\n", 0, 0).simplified();

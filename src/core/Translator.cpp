@@ -35,7 +35,7 @@
 void Translator::installTranslators()
 {
     QStringList languages;
-    QString languageSetting = config()->get("GUI/Language").toString();
+    QString languageSetting = config()->get(Config::GUI_Language).toString();
     if (languageSetting.isEmpty() || languageSetting == "system") {
         // NOTE: this is a workaround for the terrible way Qt loads languages
         // using the QLocale::uiLanguages() approach. Instead, we search each

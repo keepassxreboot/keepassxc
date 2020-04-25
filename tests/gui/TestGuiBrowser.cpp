@@ -69,14 +69,14 @@ void TestGuiBrowser::initTestCase()
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
-    config()->set("AutoSaveAfterEveryChange", false);
-    config()->set("AutoSaveOnExit", false);
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+    config()->set(Config::AutoSaveOnExit, false);
     // Enable the tray icon so we can test hiding/restoring the windowQByteArray
-    config()->set("GUI/ShowTrayIcon", true);
+    config()->set(Config::GUI_ShowTrayIcon, true);
     // Disable advanced settings mode (activate within individual tests to test advanced settings)
-    config()->set("GUI/AdvancedSettings", false);
+    config()->set(Config::GUI_AdvancedSettings, false);
     // Disable the update check first time alert
-    config()->set("UpdateCheckMessageShown", true);
+    config()->set(Config::UpdateCheckMessageShown, true);
 
     m_mainWindow.reset(new MainWindow());
     Bootstrap::restoreMainWindowState(*m_mainWindow);
@@ -146,7 +146,7 @@ void TestGuiBrowser::cleanupTestCase()
 void TestGuiBrowser::testEntrySettings()
 {
     // Enable the Browser Integration
-    config()->set("Browser/Enabled", true);
+    config()->set(Config::Browser_Enabled, true);
 
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
