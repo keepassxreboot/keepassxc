@@ -4511,6 +4511,22 @@ QStyle::SubControl BaseStyle::hitTestComplexControl(ComplexControl cc,
 
 QPixmap BaseStyle::generatedIconPixmap(QIcon::Mode iconMode, const QPixmap& pixmap, const QStyleOption* opt) const
 {
+    // Default icon highlight is way too subtle
+    if (iconMode == QIcon::Selected) {
+        QImage img = pixmap.toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
+        QPainter painter(&img);
+
+        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
+
+        QColor color =
+            Phantom::DeriveColors::adjustLightness(opt->palette.color(QPalette::Normal, QPalette::Highlight), .25);
+        color.setAlphaF(0.25);
+        painter.fillRect(0, 0, img.width(), img.height(), color);
+
+        painter.end();
+
+        return QPixmap::fromImage(img);
+    }
     return QCommonStyle::generatedIconPixmap(iconMode, pixmap, opt);
 }
 

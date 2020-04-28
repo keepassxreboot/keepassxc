@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>437</width>
-    <height>300</height>
+    <height>316</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -48,10 +48,10 @@
       <enum>QListView::Adjust</enum>
      </property>
      <property name="spacing">
-      <number>8</number>
+      <number>4</number>
      </property>
      <property name="viewMode">
-      <enum>QListView::IconMode</enum>
+      <enum>QListView::ListMode</enum>
      </property>
     </widget>
    </item>
@@ -80,10 +80,10 @@
       <enum>QListView::Adjust</enum>
      </property>
      <property name="spacing">
-      <number>8</number>
+      <number>4</number>
      </property>
      <property name="viewMode">
-      <enum>QListView::IconMode</enum>
+      <enum>QListView::ListMode</enum>
      </property>
     </widget>
    </item>
