@@ -27,6 +27,7 @@
 #include "core/Global.h"
 #include "core/Resources.h"
 #include "core/Translator.h"
+#include "gui/osutils/OSUtils.h"
 
 #include "MessageBox.h"
 #include "touchid/TouchID.h"
@@ -173,8 +174,10 @@ void ApplicationSettingsWidget::loadSettings()
 
 #ifdef QT_DEBUG
     m_generalUi->singleInstanceCheckBox->setEnabled(false);
+    m_generalUi->launchAtStartup->setEnabled(false);
 #endif
     m_generalUi->singleInstanceCheckBox->setChecked(config()->get(Config::SingleInstance).toBool());
+    m_generalUi->launchAtStartup->setChecked(osUtils->isLaunchAtStartupEnabled());
     m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get(Config::RememberLastDatabases).toBool());
     m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get(Config::RememberLastKeyFiles).toBool());
     m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
@@ -298,6 +301,10 @@ void ApplicationSettingsWidget::saveSettings()
         // the config file.
         return;
     }
+
+#ifndef QT_DEBUG
+    osUtils->setLaunchAtStartup(m_generalUi->launchAtStartup->isChecked());
+#endif
 
     config()->set(Config::SingleInstance, m_generalUi->singleInstanceCheckBox->isChecked());
     config()->set(Config::RememberLastDatabases, m_generalUi->rememberLastDatabasesCheckBox->isChecked());
