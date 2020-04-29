@@ -18,6 +18,10 @@
 
 #include "MacUtils.h"
 #include <QApplication>
+#include <QDir>
+#include <QFile>
+#include <QSettings>
+#include <QStandardPaths>
 
 #include <CoreGraphics/CGEventSource.h>
 
@@ -74,11 +78,6 @@ bool MacUtils::isHidden()
     return m_appkit->isHidden(m_appkit->ownProcessId());
 }
 
-bool MacUtils::isDarkMode()
-{
-    return m_appkit->isDarkMode();
-}
-
 bool MacUtils::enableAccessibility()
 {
     return m_appkit->enableAccessibility();
@@ -87,6 +86,37 @@ bool MacUtils::enableAccessibility()
 bool MacUtils::enableScreenRecording()
 {
     return m_appkit->enableScreenRecording();
+}
+
+bool MacUtils::isDarkMode() const
+{
+    return m_appkit->isDarkMode();
+}
+
+QString MacUtils::getLaunchAgentFilename() const
+{
+    auto launchAgentDir = QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QStringLiteral("/../LaunchAgents"));
+    return QFile(launchAgentDir.absoluteFilePath(
+        qApp->property("KPXC_QUALIFIED_APPNAME").toString().append(".plist"))).fileName();
+}
+
+bool MacUtils::isLaunchAtStartupEnabled() const
+{
+    return QFile::exists(getLaunchAgentFilename());
+}
+
+void MacUtils::setLaunchAtStartup(bool enable)
+{
+    if (enable) {
+        QSettings agent(getLaunchAgentFilename(), QSettings::NativeFormat);
+        agent.setValue("Label", qApp->property("KPXC_QUALIFIED_APPNAME").toString());
+        agent.setValue("ProgramArguments", QStringList() << QApplication::applicationFilePath());
+        agent.setValue("RunAtLoad", true);
+        agent.setValue("StandardErrorPath", "/dev/null");
+        agent.setValue("StandardOutPath", "/dev/null");
+    } else if (isLaunchAtStartupEnabled()) {
+        QFile::remove(getLaunchAgentFilename());
+    }
 }
 
 bool MacUtils::isCapslockEnabled()

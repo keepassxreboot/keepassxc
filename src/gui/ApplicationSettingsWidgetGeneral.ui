@@ -6,8 +6,6 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>499</width>
-    <height>1174</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -46,6 +44,13 @@
             </property>
             <property name="checked">
              <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="launchAtStartup">
+            <property name="text">
+             <string>Automatically launch KeePassXC at system startup</string>
             </property>
            </widget>
           </item>

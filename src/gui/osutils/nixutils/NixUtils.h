@@ -28,7 +28,9 @@ class NixUtils : public OSUtilsBase
 public:
     static NixUtils* instance();
 
-    bool isDarkMode() override;
+    bool isDarkMode() const override;
+    bool isLaunchAtStartupEnabled() const override;
+    void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
 
 private:
@@ -36,6 +38,8 @@ private:
     ~NixUtils() override;
 
 private:
+    QString getAutostartDesktopFilename(bool createDirs = false) const;
+
     static QPointer<NixUtils> m_instance;
 
     Q_DISABLE_COPY(NixUtils)
