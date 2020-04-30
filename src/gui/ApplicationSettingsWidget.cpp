@@ -125,6 +125,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
     m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->appThemeSelection->installEventFilter(mouseWheelFilter);
 
 #ifdef WITH_XC_UPDATECHECK
     connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));

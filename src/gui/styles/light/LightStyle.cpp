@@ -49,31 +49,31 @@ void LightStyle::polish(QPalette& palette)
     palette.setColor(QPalette::Disabled, QPalette::BrightText, QStringLiteral("#E4E5E7"));
 
     palette.setColor(QPalette::Active, QPalette::Base, QStringLiteral("#F9F9F9"));
-    palette.setColor(QPalette::Inactive, QPalette::Base, QStringLiteral("#F5F5F4"));
+    palette.setColor(QPalette::Inactive, QPalette::Base, QStringLiteral("#FCFCFC"));
     palette.setColor(QPalette::Disabled, QPalette::Base, QStringLiteral("#EFEFF2"));
 
     palette.setColor(QPalette::Active, QPalette::AlternateBase, QStringLiteral("#ECF3E8"));
-    palette.setColor(QPalette::Inactive, QPalette::AlternateBase, QStringLiteral("#EAF2E6"));
+    palette.setColor(QPalette::Inactive, QPalette::AlternateBase, QStringLiteral("#F1F6EE"));
     palette.setColor(QPalette::Disabled, QPalette::AlternateBase, QStringLiteral("#E1E9DD"));
 
-    palette.setColor(QPalette::All, QPalette::ToolTipBase, QStringLiteral("#548C1D"));
-    palette.setColor(QPalette::All, QPalette::ToolTipText, QStringLiteral("#F7F7F7"));
+    palette.setColor(QPalette::All, QPalette::ToolTipBase, QStringLiteral("#4D7F1A"));
+    palette.setColor(QPalette::All, QPalette::ToolTipText, QStringLiteral("#F9F9F9"));
 
     palette.setColor(QPalette::Active, QPalette::Button, QStringLiteral("#D4D5DD"));
     palette.setColor(QPalette::Inactive, QPalette::Button, QStringLiteral("#DCDCE0"));
     palette.setColor(QPalette::Disabled, QPalette::Button, QStringLiteral("#E5E5E6"));
 
     palette.setColor(QPalette::Active, QPalette::ButtonText, QStringLiteral("#181A18"));
-    palette.setColor(QPalette::Inactive, QPalette::ButtonText, QStringLiteral("#5F6671"));
+    palette.setColor(QPalette::Inactive, QPalette::ButtonText, QStringLiteral("#454A54"));
     palette.setColor(QPalette::Disabled, QPalette::ButtonText, QStringLiteral("#97979B"));
 
-    palette.setColor(QPalette::Active, QPalette::Highlight, QStringLiteral("#549712"));
-    palette.setColor(QPalette::Inactive, QPalette::Highlight, QStringLiteral("#528D16"));
-    palette.setColor(QPalette::Disabled, QPalette::Highlight, QStringLiteral("#6F9847"));
+    palette.setColor(QPalette::Active, QPalette::Highlight, QStringLiteral("#507F1F"));
+    palette.setColor(QPalette::Inactive, QPalette::Highlight, QStringLiteral("#A6BE8E"));
+    palette.setColor(QPalette::Disabled, QPalette::Highlight, QStringLiteral("#C3D5B4"));
 
-    palette.setColor(QPalette::Active, QPalette::HighlightedText, QStringLiteral("#FCFCFC"));
-    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QStringLiteral("#F2F2F2"));
-    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QStringLiteral("#D9D9D9"));
+    palette.setColor(QPalette::Active, QPalette::HighlightedText, QStringLiteral("#FFFFFF"));
+    palette.setColor(QPalette::Inactive, QPalette::HighlightedText, QStringLiteral("#252528"));
+    palette.setColor(QPalette::Disabled, QPalette::HighlightedText, QStringLiteral("#8C8C92"));
 
     palette.setColor(QPalette::All, QPalette::Light, QStringLiteral("#F9F9F9"));
     palette.setColor(QPalette::All, QPalette::Midlight, QStringLiteral("#E9E9EB"));
@@ -81,10 +81,10 @@ void LightStyle::polish(QPalette& palette)
     palette.setColor(QPalette::All, QPalette::Dark, QStringLiteral("#BBBBC2"));
     palette.setColor(QPalette::All, QPalette::Shadow, QStringLiteral("#6C6D79"));
 
-    palette.setColor(QPalette::All, QPalette::Link, QStringLiteral("#429F14"));
-    palette.setColor(QPalette::Disabled, QPalette::Link, QStringLiteral("#949F8F"));
-    palette.setColor(QPalette::All, QPalette::LinkVisited, QStringLiteral("#3F8C17"));
-    palette.setColor(QPalette::Disabled, QPalette::LinkVisited, QStringLiteral("#838C7E"));
+    palette.setColor(QPalette::All, QPalette::Link, QStringLiteral("#4B7B19"));
+    palette.setColor(QPalette::Disabled, QPalette::Link, QStringLiteral("#4F6935"));
+    palette.setColor(QPalette::All, QPalette::LinkVisited, QStringLiteral("#507826"));
+    palette.setColor(QPalette::Disabled, QPalette::LinkVisited, QStringLiteral("#506935"));
 }
 
 QString LightStyle::getAppStyleSheet() const

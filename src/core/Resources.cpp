@@ -21,6 +21,7 @@
 #include <QBitmap>
 #include <QDir>
 #include <QLibrary>
+#include <QPainter>
 #include <QStyle>
 
 #include "config-keepassx.h"
@@ -124,23 +125,24 @@ QIcon Resources::icon(const QString& name, bool recolor)
 
     icon = QIcon::fromTheme(name);
     if (getMainWindow() && recolor) {
-        QPixmap pixmap = icon.pixmap(128, 128);
+        QImage img = icon.pixmap(128, 128).toImage().convertToFormat(QImage::Format_ARGB32_Premultiplied);
         icon = {};
 
         QPalette palette = getMainWindow()->palette();
+        QPainter painter(&img);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceAtop);
 
-        auto mask = QBitmap::fromImage(pixmap.toImage().createAlphaMask());
-        pixmap.fill(palette.color(QPalette::WindowText));
-        pixmap.setMask(mask);
-        icon.addPixmap(pixmap, QIcon::Mode::Normal);
+        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Normal, QPalette::WindowText));
+        icon.addPixmap(QPixmap::fromImage(img), QIcon::Normal);
 
-        pixmap.fill(palette.color(QPalette::HighlightedText));
-        pixmap.setMask(mask);
-        icon.addPixmap(pixmap, QIcon::Mode::Selected);
+        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::ButtonText));
+        icon.addPixmap(QPixmap::fromImage(img), QIcon::Active);
 
-        pixmap.fill(palette.color(QPalette::Disabled, QPalette::WindowText));
-        pixmap.setMask(mask);
-        icon.addPixmap(pixmap, QIcon::Mode::Disabled);
+        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Active, QPalette::HighlightedText));
+        icon.addPixmap(QPixmap::fromImage(img), QIcon::Selected);
+
+        painter.fillRect(0, 0, img.width(), img.height(), palette.color(QPalette::Disabled, QPalette::WindowText));
+        icon.addPixmap(QPixmap::fromImage(img), QIcon::Disabled);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
@@ -224,7 +226,7 @@ Resources* Resources::instance()
         m_instance = new Resources();
 
         Q_INIT_RESOURCE(icons);
-        QIcon::setThemeSearchPaths({":/icons"});
+        QIcon::setThemeSearchPaths(QStringList{":/icons"} << QIcon::themeSearchPaths());
         QIcon::setThemeName("application");
     }
 

@@ -26,6 +26,8 @@
 #include "core/Resources.h"
 #include "format/KeePass2.h"
 
+#include <QFrame>
+#include <QPalette>
 #include <QVBoxLayout>
 
 NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
@@ -50,6 +52,19 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
 
     Q_INIT_RESOURCE(wizard);
     setPixmap(QWizard::BackgroundPixmap, QPixmap(":/wizard/background-pixmap.png"));
+
+    // Fix MacStyle QWizard page frame too bright in dark mode (QTBUG-70346, QTBUG-71696)
+    QPalette defaultPalette;
+    auto windowColor = defaultPalette.color(QPalette::Window);
+    windowColor.setAlpha(153);
+    auto baseColor = defaultPalette.color(QPalette::Base);
+    baseColor.setAlpha(153);
+
+    auto* pageFrame = findChildren<QFrame*>()[0];
+    auto framePalette = pageFrame->palette();
+    framePalette.setBrush(QPalette::Window, windowColor.lighter(120));
+    framePalette.setBrush(QPalette::Base, baseColor.lighter(120));
+    pageFrame->setPalette(framePalette);
 }
 
 NewDatabaseWizard::~NewDatabaseWizard()

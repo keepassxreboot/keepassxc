@@ -24,6 +24,7 @@
 #include <QPixmap>
 #include <QPixmapCache>
 #include <QPointer>
+#include <QSize>
 #include <QUuid>
 
 #include "core/CustomData.h"
@@ -82,12 +83,12 @@ public:
     bool protectNotes() const;
     QImage customIcon(const QUuid& uuid) const;
     QPixmap customIconPixmap(const QUuid& uuid) const;
-    QPixmap customIconScaledPixmap(const QUuid& uuid) const;
+    QPixmap customIconScaledPixmap(const QUuid& uuid, const QSize& size = {16, 16}) const;
     bool containsCustomIcon(const QUuid& uuid) const;
     QHash<QUuid, QImage> customIcons() const;
     QList<QUuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
-    QHash<QUuid, QPixmap> customIconsScaledPixmaps() const;
+    QHash<QUuid, QPixmap> customIconsScaledPixmaps(const QSize& size = {16, 16}) const;
     Group* recycleBin();
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
