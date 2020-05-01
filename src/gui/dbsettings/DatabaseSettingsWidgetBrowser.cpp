@@ -107,7 +107,7 @@ void DatabaseSettingsWidgetBrowser::removeSelectedKey()
     if (itemSelectionModel) {
         for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
             QString key = index.data().toString();
-            key.insert(0, BrowserService::ASSOCIATE_KEY_PREFIX);
+            key.insert(0, CustomData::BrowserKeyPrefix);
             customData()->remove(key);
         }
         updateModel();
@@ -125,9 +125,9 @@ void DatabaseSettingsWidgetBrowser::updateModel()
     m_customDataModel->setHorizontalHeaderLabels({tr("Key"), tr("Value"), tr("Created")});
 
     for (const QString& key : customData()->keys()) {
-        if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
+        if (key.startsWith(CustomData::BrowserKeyPrefix)) {
             QString strippedKey = key;
-            strippedKey.remove(BrowserService::ASSOCIATE_KEY_PREFIX);
+            strippedKey.remove(CustomData::BrowserKeyPrefix);
             auto created = customData()->value(QString("%1_%2").arg(CustomData::Created, strippedKey));
             auto createdItem = new QStandardItem(created);
             createdItem->setEditable(false);
@@ -174,7 +174,7 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
 
     QStringList keysToRemove;
     for (const QString& key : m_db->metadata()->customData()->keys()) {
-        if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
+        if (key.startsWith(CustomData::BrowserKeyPrefix)) {
             keysToRemove << key;
         }
     }
@@ -299,16 +299,16 @@ void DatabaseSettingsWidgetBrowser::editFinished(QStandardItem* item)
             // The key is edited
             if (item->column() == 0) {
                 // Get the old key/value pair, remove it and replace it
-                m_valueInEdit.insert(0, BrowserService::ASSOCIATE_KEY_PREFIX);
+                m_valueInEdit.insert(0, CustomData::BrowserKeyPrefix);
                 auto tempValue = customData()->value(m_valueInEdit);
-                newValue.insert(0, BrowserService::ASSOCIATE_KEY_PREFIX);
+                newValue.insert(0, CustomData::BrowserKeyPrefix);
 
                 m_db->metadata()->customData()->remove(m_valueInEdit);
                 m_db->metadata()->customData()->set(newValue, tempValue);
             } else {
                 // Replace just the value
                 for (const QString& key : m_db->metadata()->customData()->keys()) {
-                    if (key.startsWith(BrowserService::ASSOCIATE_KEY_PREFIX)) {
+                    if (key.startsWith(CustomData::BrowserKeyPrefix)) {
                         if (m_valueInEdit == m_db->metadata()->customData()->value(key)) {
                             m_db->metadata()->customData()->set(key, newValue);
                             break;
