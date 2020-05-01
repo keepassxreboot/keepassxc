@@ -19,6 +19,8 @@
 #include "core/PassphraseGenerator.h"
 #include "crypto/Crypto.h"
 
+#include "config-keepassx-tests.h"
+
 #include <QRegularExpression>
 #include <QTest>
 
@@ -31,7 +33,8 @@ void TestPassphraseGenerator::initTestCase()
 
 void TestPassphraseGenerator::testWordCase()
 {
-    PassphraseGenerator generator;
+    QFile wordlist(QString(KEEPASSX_TEST_SHARE_DIR).append("/wordlists/eff_large.wordlist"));
+    PassphraseGenerator generator(wordlist.fileName());
     generator.setWordSeparator(" ");
     QVERIFY(generator.isValid());
 

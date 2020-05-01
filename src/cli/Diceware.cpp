@@ -42,6 +42,16 @@ Diceware::Diceware()
     description = QObject::tr("Generate a new random diceware passphrase.");
     options.append(Diceware::WordCountOption);
     options.append(Diceware::WordListOption);
+    m_wordlistFile = "";
+}
+
+Diceware::Diceware(const QString& wordlistFile)
+{
+    name = QString("diceware");
+    description = QObject::tr("Generate a new random diceware passphrase.");
+    options.append(Diceware::WordCountOption);
+    options.append(Diceware::WordListOption);
+    m_wordlistFile = wordlistFile;
 }
 
 int Diceware::execute(const QStringList& arguments)
@@ -54,7 +64,7 @@ int Diceware::execute(const QStringList& arguments)
     TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
     TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
 
-    PassphraseGenerator dicewareGenerator;
+    PassphraseGenerator dicewareGenerator(m_wordlistFile);
 
     QString wordCount = parser->value(Diceware::WordCountOption);
     if (wordCount.isEmpty()) {

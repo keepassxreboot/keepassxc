@@ -482,7 +482,7 @@ void TestCli::testClip()
         QSKIP("Clip test skipped due to missing clipboard tool");
     }
 
-    QCOMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 100);
     m_stdoutFile->readLine(); // skip prompt line
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
@@ -773,7 +773,8 @@ void TestCli::testInfo()
 
 void TestCli::testDiceware()
 {
-    Diceware dicewareCmd;
+    QFile wordlist(QString(KEEPASSX_TEST_SHARE_DIR).append("/wordlists/eff_large.wordlist"));
+    Diceware dicewareCmd(wordlist.fileName());
     QVERIFY(!dicewareCmd.name.isEmpty());
     QVERIFY(dicewareCmd.getDescriptionLine().contains(dicewareCmd.name));
 

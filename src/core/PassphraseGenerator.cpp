@@ -31,6 +31,16 @@ PassphraseGenerator::PassphraseGenerator()
     : m_wordCount(DefaultWordCount)
     , m_wordCase(LOWERCASE)
     , m_separator(DefaultSeparator)
+    , m_wordlistFile("")
+{
+    setDefaultWordList();
+}
+
+PassphraseGenerator::PassphraseGenerator(const QString& wordlistFile)
+    : m_wordCount(DefaultWordCount)
+    , m_wordCase(LOWERCASE)
+    , m_separator(DefaultSeparator)
+    , m_wordlistFile(wordlistFile)
 {
     setDefaultWordList();
 }
@@ -80,8 +90,12 @@ void PassphraseGenerator::setWordList(const QString& path)
 
 void PassphraseGenerator::setDefaultWordList()
 {
-    const QString path = resources()->wordlistPath(PassphraseGenerator::DefaultWordList);
-    setWordList(path);
+    if (m_wordlistFile == "") {
+        const QString path = resources()->wordlistPath(PassphraseGenerator::DefaultWordList);
+	setWordList(path);
+    } else {
+	setWordList(m_wordlistFile);
+    }
 }
 
 void PassphraseGenerator::setWordSeparator(const QString& separator)

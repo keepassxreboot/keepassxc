@@ -26,6 +26,7 @@ class PassphraseGenerator
 {
 public:
     PassphraseGenerator();
+    PassphraseGenerator(const QString& wordlistFile);
     Q_DISABLE_COPY(PassphraseGenerator)
 
     enum PassphraseWordCase
@@ -54,6 +55,7 @@ private:
     PassphraseWordCase m_wordCase;
     QString m_separator;
     QVector<QString> m_wordlist;
+    QString m_wordlistFile;
 };
 
 #endif // KEEPASSX_PASSPHRASEGENERATOR_H

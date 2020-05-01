@@ -24,11 +24,15 @@ class Diceware : public Command
 {
 public:
     Diceware();
+    Diceware(const QString& wordlistFile);
 
     int execute(const QStringList& arguments) override;
 
     static const QCommandLineOption WordCountOption;
     static const QCommandLineOption WordListOption;
+    
+private:
+    QString m_wordlistFile;
 };
 
 #endif // KEEPASSXC_DICEWARE_H
