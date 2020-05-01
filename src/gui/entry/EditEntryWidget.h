@@ -150,6 +150,7 @@ private:
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
+    bool checkLargeDbSize();
 #ifdef WITH_XC_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
 #endif

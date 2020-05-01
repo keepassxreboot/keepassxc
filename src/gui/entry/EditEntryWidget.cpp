@@ -41,6 +41,7 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/Resources.h"
 #include "core/TimeDelta.h"
@@ -958,6 +959,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
  */
 bool EditEntryWidget::commitEntry()
 {
+    if (!checkLargeDbSize()) {
+        return false;
+    }
     if (m_history) {
         clear();
         hideMessage();
@@ -1067,6 +1071,33 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
         m_sshAgentSettings.toEntry(entry);
     }
 #endif
+}
+
+bool EditEntryWidget::checkLargeDbSize()
+{
+    const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(false);
+    int currentEntryAttachmentsSize = m_advancedUi->attachmentsWidget->entryAttachments()->attachmentsSize();
+    if (currentEntryAttachmentsSize > 50 * 1024 * 1024) {
+        int collectiveSizeOfAttachments = currentEntryAttachmentsSize;
+        for (Entry* entry : allEntries) {
+            if (entry != m_entry) {
+                collectiveSizeOfAttachments += entry->attachments()->attachmentsSize();
+                ;
+            }
+        }
+        const QString dbSize(tr("Current entry has a total of %1 MB of attachments.\n\n"
+                                "Also, the total size of all the attachments in your database is %2 MB.\n\n"
+                                "This might slow down loading of the main menu.\n\n"
+                                "Do you want to continue?"));
+        auto result = MessageBox::question(this,
+                                           tr("Database size growing large"),
+                                           dbSize.arg(float(currentEntryAttachmentsSize) / (1024 * 1024))
+                                               .arg(float(collectiveSizeOfAttachments) / (1024 * 1024)),
+                                           MessageBox::Yes | MessageBox::No,
+                                           MessageBox::No);
+        return result == MessageBox::Yes;
+    }
+    return true;
 }
 
 void EditEntryWidget::cancel()
