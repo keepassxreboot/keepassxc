@@ -86,8 +86,6 @@ public:
 
     static const QString KEEPASSXCBROWSER_NAME;
     static const QString KEEPASSXCBROWSER_OLD_NAME;
-    static const QString ASSOCIATE_KEY_PREFIX;
-    static const QString LEGACY_ASSOCIATE_KEY_PREFIX;
     static const QString OPTION_SKIP_AUTO_SUBMIT;
     static const QString OPTION_HIDE_ENTRY;
     static const QString OPTION_ONLY_HTTP_AUTH;

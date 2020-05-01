@@ -46,11 +46,9 @@
 
 const QString BrowserService::KEEPASSXCBROWSER_NAME = QStringLiteral("KeePassXC-Browser Settings");
 const QString BrowserService::KEEPASSXCBROWSER_OLD_NAME = QStringLiteral("keepassxc-browser Settings");
-const QString BrowserService::ASSOCIATE_KEY_PREFIX = QStringLiteral("KPXC_BROWSER_");
 static const QString KEEPASSXCBROWSER_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passwords");
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 // These are for the settings and password conversion
-const QString BrowserService::LEGACY_ASSOCIATE_KEY_PREFIX = QStringLiteral("Public Key: ");
 static const QString KEEPASSHTTP_NAME = QStringLiteral("KeePassHttp Settings");
 static const QString KEEPASSHTTP_GROUP_NAME = QStringLiteral("KeePassHttp Passwords");
 // Extra entry related options saved in custom data
@@ -318,7 +316,7 @@ QString BrowserService::storeKey(const QString& key)
             return {};
         }
 
-        contains = db->metadata()->customData()->contains(ASSOCIATE_KEY_PREFIX + id);
+        contains = db->metadata()->customData()->contains(CustomData::BrowserKeyPrefix + id);
         if (contains) {
             dialogResult = MessageBox::warning(nullptr,
                                                tr("KeePassXC: Overwrite existing key?"),
@@ -331,7 +329,7 @@ QString BrowserService::storeKey(const QString& key)
     } while (contains && dialogResult == MessageBox::Cancel);
 
     hideWindow();
-    db->metadata()->customData()->set(ASSOCIATE_KEY_PREFIX + id, key);
+    db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + id, key);
     db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
                                       Clock::currentDateTime().toString(Qt::SystemLocaleShortDate));
     return id;
@@ -344,7 +342,7 @@ QString BrowserService::getKey(const QString& id)
         return {};
     }
 
-    return db->metadata()->customData()->value(ASSOCIATE_KEY_PREFIX + id);
+    return db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
 }
 
 QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
@@ -590,7 +588,7 @@ QList<Entry*> BrowserService::searchEntries(const QString& url, const QString& s
     // Check if database is connected with KeePassXC-Browser
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
         for (const StringPair& keyPair : keyList) {
-            QString key = db->metadata()->customData()->value(ASSOCIATE_KEY_PREFIX + keyPair.first);
+            QString key = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + keyPair.first);
             if (!key.isEmpty() && keyPair.second == key) {
                 return true;
             }
@@ -1121,13 +1119,14 @@ int BrowserService::moveKeysToCustomData(Entry* entry, QSharedPointer<Database> 
 {
     int keyCounter = 0;
     for (const auto& key : entry->attributes()->keys()) {
-        if (key.contains(LEGACY_ASSOCIATE_KEY_PREFIX)) {
+        if (key.contains(CustomData::BrowserLegacyKeyPrefix)) {
             QString publicKey = key;
-            publicKey.remove(LEGACY_ASSOCIATE_KEY_PREFIX);
+            publicKey.remove(CustomData::BrowserLegacyKeyPrefix);
 
             // Add key to database custom data
-            if (db && !db->metadata()->customData()->contains(ASSOCIATE_KEY_PREFIX + publicKey)) {
-                db->metadata()->customData()->set(ASSOCIATE_KEY_PREFIX + publicKey, entry->attributes()->value(key));
+            if (db && !db->metadata()->customData()->contains(CustomData::BrowserKeyPrefix + publicKey)) {
+                db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + publicKey,
+                                                  entry->attributes()->value(key));
                 ++keyCounter;
             }
         }

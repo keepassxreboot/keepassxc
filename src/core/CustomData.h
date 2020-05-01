@@ -43,11 +43,14 @@ public:
     int dataSize() const;
     void copyDataFrom(const CustomData* other);
     QDateTime getLastModified() const;
+    bool isProtectedCustomData(const QString& key) const;
     bool operator==(const CustomData& other) const;
     bool operator!=(const CustomData& other) const;
 
     static const QString LastModified;
     static const QString Created;
+    static const QString BrowserKeyPrefix;
+    static const QString BrowserLegacyKeyPrefix;
 
 signals:
     void customDataModified();

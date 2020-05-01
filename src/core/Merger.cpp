@@ -632,7 +632,9 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
 
         // Check missing keys from source. Remove those from target
         for (const auto& key : targetCustomDataKeys) {
-            if (!sourceMetadata->customData()->contains(key)) {
+            // Do not remove protected custom data
+            if (!sourceMetadata->customData()->contains(key)
+                && !sourceMetadata->customData()->isProtectedCustomData(key)) {
                 auto value = targetMetadata->customData()->value(key);
                 targetMetadata->customData()->remove(key);
                 changes << tr("Removed custom data %1 [%2]").arg(key, value);
