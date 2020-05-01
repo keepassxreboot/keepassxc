@@ -141,15 +141,17 @@ void EntryAttachmentsWidget::insertAttachments()
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
     }
 
-    const QStringList filenames = fileDialog()->getOpenFileNames(this, tr("Select files"), defaultDirPath);
+    const auto filenames = fileDialog()->getOpenFileNames(this, tr("Select files"), defaultDirPath);
     if (filenames.isEmpty()) {
         return;
     }
-
+    const auto confirmedFileNames = confirmLargeAttachments(filenames);
+    if (confirmedFileNames.isEmpty()) {
+        return;
+    }
     config()->set(Config::LastAttachmentDir, QFileInfo(filenames.first()).absolutePath());
-
     QString errorMessage;
-    if (!insertAttachments(filenames, errorMessage)) {
+    if (!insertAttachments(confirmedFileNames, errorMessage)) {
         errorOccurred(errorMessage);
     }
     emit widgetUpdated();
@@ -351,6 +353,33 @@ bool EntryAttachmentsWidget::openAttachment(const QModelIndex& index, QString& e
     // take ownership of the tmpFile pointer
     tmpFile.take();
     return true;
+}
+
+QStringList EntryAttachmentsWidget::confirmLargeAttachments(const QStringList& filenames)
+{
+    const QString confirmation(tr("%1 is a big file (%2 MB).\nYour database may get very large and reduce "
+                                  "performance.\n\nAre you sure to add this file?"));
+    QStringList confirmedFileNames;
+    for (const auto& file : filenames) {
+        QFileInfo fileInfo(file);
+        double size = fileInfo.size() / (1024.0 * 1024.0);
+        // Ask for confirmation before adding files over 5 MB in size
+        if (size > 5.0) {
+            auto fileName = fileInfo.fileName();
+            auto result = MessageBox::question(this,
+                                               tr("Confirm Attachment"),
+                                               confirmation.arg(fileName, QString::number(size, 'f', 1)),
+                                               MessageBox::Yes | MessageBox::No,
+                                               MessageBox::No);
+            if (result == MessageBox::Yes) {
+                confirmedFileNames << file;
+            }
+        } else {
+            confirmedFileNames << file;
+        }
+    }
+
+    return confirmedFileNames;
 }
 
 bool EntryAttachmentsWidget::eventFilter(QObject* watched, QEvent* e)
