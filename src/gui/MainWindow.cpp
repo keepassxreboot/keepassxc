@@ -408,14 +408,15 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), m_searchWidget, SLOT(databaseChanged()));
 
     connect(m_ui->tabWidget, SIGNAL(tabNameChanged()), SLOT(updateWindowTitle()));
-    connect(m_ui->tabWidget, SIGNAL(tabVisibilityChanged(bool)), SLOT(adjustToTabVisibilityChange(bool)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
+    connect(m_ui->tabWidget, SIGNAL(tabVisibilityChanged(bool)), SLOT(updateToolbarSeparatorVisibility()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
     connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
+    connect(m_ui->stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateToolbarSeparatorVisibility()));
     connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(applySettingsChanges()));
     connect(m_ui->settingsWidget, SIGNAL(settingsReset()), SLOT(applySettingsChanges()));
     connect(m_ui->settingsWidget, SIGNAL(accepted()), SLOT(switchToDatabases()));
@@ -648,12 +649,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionLockDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
 
-    if (m_showToolbarSeparator) {
-        m_ui->toolbarSeparator->setVisible(
-            (!inWelcomeWidget && inDatabaseTabWidget && !m_ui->tabWidget->tabBar()->isVisible())
-            || currentIndex == SettingsScreen);
-    }
-
     if (inDatabaseTabWidget && m_ui->tabWidget->currentIndex() != -1) {
         DatabaseWidget* dbWidget = m_ui->tabWidget->currentDatabaseWidget();
         Q_ASSERT(dbWidget);
@@ -810,10 +805,24 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     }
 }
 
-void MainWindow::adjustToTabVisibilityChange(bool tabsVisible)
+void MainWindow::updateToolbarSeparatorVisibility()
 {
-    m_ui->toolbarSeparator->setVisible(m_showToolbarSeparator && !tabsVisible
-                                       && m_ui->stackedWidget->currentIndex() == DatabaseTabScreen);
+    if (!m_showToolbarSeparator) {
+        m_ui->toolbarSeparator->setVisible(false);
+        return;
+    }
+
+    switch (m_ui->stackedWidget->currentIndex()) {
+    case DatabaseTabScreen:
+        m_ui->toolbarSeparator->setVisible(!m_ui->tabWidget->tabBar()->isVisible()
+                                           && m_ui->tabWidget->tabBar()->count() == 1);
+        break;
+    case SettingsScreen:
+        m_ui->toolbarSeparator->setVisible(true);
+        break;
+    default:
+        m_ui->toolbarSeparator->setVisible(false);
+    }
 }
 
 void MainWindow::updateWindowTitle()
