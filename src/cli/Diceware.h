@@ -30,7 +30,7 @@ public:
 
     static const QCommandLineOption WordCountOption;
     static const QCommandLineOption WordListOption;
-    
+
 private:
     QString m_wordlistFile;
 };

@@ -92,9 +92,9 @@ void PassphraseGenerator::setDefaultWordList()
 {
     if (m_wordlistFile == "") {
         const QString path = resources()->wordlistPath(PassphraseGenerator::DefaultWordList);
-	setWordList(path);
+        setWordList(path);
     } else {
-	setWordList(m_wordlistFile);
+        setWordList(m_wordlistFile);
     }
 }
 
