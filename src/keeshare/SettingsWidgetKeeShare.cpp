@@ -120,7 +120,7 @@ void SettingsWidgetKeeShare::saveSettings()
     KeeShare::setForeign(m_foreign);
     KeeShare::setActive(active);
 
-    config()->set("KeeShare/QuietSuccess", m_ui->quietSuccessCheckBox->isChecked());
+    config()->set(Config::KeeShare_QuietSuccess, m_ui->quietSuccessCheckBox->isChecked());
 }
 
 void SettingsWidgetKeeShare::setVerificationExporter(const QString& signer)
@@ -140,7 +140,7 @@ void SettingsWidgetKeeShare::generateCertificate()
 
 void SettingsWidgetKeeShare::importCertificate()
 {
-    QString defaultDirPath = config()->get("KeeShare/LastKeyDir").toString();
+    QString defaultDirPath = config()->get(Config::KeeShare_LastKeyDir).toString();
     const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
@@ -157,7 +157,7 @@ void SettingsWidgetKeeShare::importCertificate()
     QTextStream stream(&file);
     m_own = KeeShareSettings::Own::deserialize(stream.readAll());
     file.close();
-    config()->set("KeeShare/LastKeyDir", QFileInfo(filename).absolutePath());
+    config()->set(Config::KeeShare_LastKeyDir, QFileInfo(filename).absolutePath());
 
     updateOwnCertificate();
 }
@@ -178,7 +178,7 @@ void SettingsWidgetKeeShare::exportCertificate()
             return;
         }
     }
-    QString defaultDirPath = config()->get("KeeShare/LastKeyDir").toString();
+    QString defaultDirPath = config()->get(Config::KeeShare_LastKeyDir).toString();
     const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
@@ -197,7 +197,7 @@ void SettingsWidgetKeeShare::exportCertificate()
     stream << KeeShareSettings::Own::serialize(m_own);
     stream.flush();
     file.close();
-    config()->set("KeeShare/LastKeyDir", QFileInfo(filename).absolutePath());
+    config()->set(Config::KeeShare_LastKeyDir, QFileInfo(filename).absolutePath());
 }
 
 void SettingsWidgetKeeShare::trustSelectedCertificates()

@@ -88,6 +88,7 @@ set(keepassx_SOURCES
         format/OpVaultReaderBandEntry.cpp
         format/OpVaultReaderSections.cpp
         gui/styles/styles.qrc
+        gui/styles/StateColorPalette.cpp
         gui/styles/base/phantomcolor.cpp
         gui/styles/base/BaseStyle.cpp
         gui/styles/dark/DarkStyle.cpp
@@ -349,7 +350,8 @@ if(HAIKU)
     target_link_libraries(keepassx_core network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus)
+    target_link_libraries(keepassx_core Qt5::DBus X11)
+    include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(MINGW)
     target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)

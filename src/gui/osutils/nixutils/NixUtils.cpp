@@ -18,8 +18,16 @@
 #include "NixUtils.h"
 #include <QApplication>
 #include <QColor>
+#include <QGuiApplication>
 #include <QPalette>
 #include <QStyle>
+
+#include <qpa/qplatformnativeinterface.h>
+// namespace required to avoid name clashes with declarations in XKBlib.h
+namespace X11
+{
+#include <X11/XKBlib.h>
+}
 
 QPointer<NixUtils> NixUtils::m_instance = nullptr;
 
@@ -47,4 +55,25 @@ bool NixUtils::isDarkMode()
         return false;
     }
     return qApp->style()->standardPalette().color(QPalette::Window).toHsl().lightness() < 110;
+}
+
+bool NixUtils::isCapslockEnabled()
+{
+    QPlatformNativeInterface* native = QGuiApplication::platformNativeInterface();
+    auto* display = native->nativeResourceForWindow("display", nullptr);
+    if (!display) {
+        return false;
+    }
+
+    QString platform = QGuiApplication::platformName();
+    if (platform == "xcb") {
+        unsigned state = 0;
+        if (X11::XkbGetIndicatorState(reinterpret_cast<X11::Display*>(display), XkbUseCoreKbd, &state) == Success) {
+            return ((state & 1u) != 0);
+        }
+    }
+
+    // TODO: Wayland
+
+    return false;
 }

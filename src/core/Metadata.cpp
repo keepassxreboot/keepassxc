@@ -193,13 +193,13 @@ QPixmap Metadata::customIconPixmap(const QUuid& uuid) const
 
     if (!QPixmapCache::find(cacheKey, &pixmap)) {
         pixmap = QPixmap::fromImage(m_customIcons.value(uuid));
-        cacheKey = QPixmapCache::insert(pixmap);
+        QPixmapCache::insert(pixmap);
     }
 
     return pixmap;
 }
 
-QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid) const
+QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid, const QSize& size) const
 {
     QPixmap pixmap;
 
@@ -207,13 +207,8 @@ QPixmap Metadata::customIconScaledPixmap(const QUuid& uuid) const
         return pixmap;
     }
 
-    QPixmapCache::Key& cacheKey = m_customIconScaledCacheKeys[uuid];
-
-    if (!QPixmapCache::find(cacheKey, &pixmap)) {
-        QImage image = m_customIcons.value(uuid).scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        pixmap = QPixmap::fromImage(image);
-        cacheKey = QPixmapCache::insert(pixmap);
-    }
+    QImage image = m_customIcons.value(uuid).scaled(size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    pixmap = QPixmap::fromImage(image);
 
     return pixmap;
 }
@@ -228,12 +223,12 @@ QHash<QUuid, QImage> Metadata::customIcons() const
     return m_customIcons;
 }
 
-QHash<QUuid, QPixmap> Metadata::customIconsScaledPixmaps() const
+QHash<QUuid, QPixmap> Metadata::customIconsScaledPixmaps(const QSize& size) const
 {
     QHash<QUuid, QPixmap> result;
 
     for (const QUuid& uuid : m_customIconsOrder) {
-        result.insert(uuid, customIconScaledPixmap(uuid));
+        result.insert(uuid, customIconScaledPixmap(uuid, size));
     }
 
     return result;

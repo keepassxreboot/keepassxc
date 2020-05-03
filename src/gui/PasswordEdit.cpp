@@ -20,21 +20,15 @@
 
 #include "core/Config.h"
 #include "core/Resources.h"
-#include "gui/Application.h"
 #include "gui/Font.h"
 #include "gui/PasswordGeneratorWidget.h"
+#include "gui/osutils/OSUtils.h"
+#include "gui/styles/StateColorPalette.h"
 
 #include <QDialog>
+#include <QTimer>
+#include <QToolTip>
 #include <QVBoxLayout>
-
-namespace
-{
-    const QColor CorrectSoFarColor(255, 205, 15);
-    const QColor CorrectSoFarColorDark(115, 104, 46);
-    const QColor ErrorColor(255, 125, 125);
-    const QColor ErrorColorDark(128, 45, 45);
-
-} // namespace
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
@@ -57,7 +51,7 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     setFont(passwordFont);
 
     m_toggleVisibleAction = new QAction(
-        resources()->icon("password-show"),
+        resources()->icon("password-show-off"),
         tr("Toggle Password (%1)").arg(QKeySequence(Qt::CTRL + Qt::Key_H).toString(QKeySequence::NativeText)),
         nullptr);
     m_toggleVisibleAction->setCheckable(true);
@@ -74,6 +68,13 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
     addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
+
+    m_capslockAction =
+        new QAction(resources()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
+                    tr("Warning: Caps Lock enabled!"),
+                    nullptr);
+    addAction(m_capslockAction, QLineEdit::LeadingPosition);
+    m_capslockAction->setVisible(false);
 }
 
 void PasswordEdit::setRepeatPartner(PasswordEdit* repeatEdit)
@@ -110,7 +111,7 @@ void PasswordEdit::setShowPassword(bool show)
 
     if (m_repeatPasswordEdit) {
         m_repeatPasswordEdit->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-        if (config()->get("security/passwordsrepeat").toBool()) {
+        if (config()->get(Config::Security_PasswordsRepeat).toBool()) {
             m_repeatPasswordEdit->setEnabled(!show);
             m_repeatPasswordEdit->setText(text());
         } else {
@@ -126,24 +127,14 @@ bool PasswordEdit::isPasswordVisible() const
 
 void PasswordEdit::popupPasswordGenerator()
 {
-    auto pwGenerator = new PasswordGeneratorWidget();
-    QDialog pwDialog(this);
-    pwDialog.setWindowTitle(tr("Generate Password"));
-    auto layout = new QVBoxLayout();
-    pwDialog.setLayout(layout);
-    layout->addWidget(pwGenerator);
+    auto generator = PasswordGeneratorWidget::popupGenerator(this);
+    generator->setPasswordVisible(isPasswordVisible());
+    generator->setPasswordLength(text().length());
 
-    pwGenerator->setStandaloneMode(false);
-    pwGenerator->setPasswordVisible(isPasswordVisible());
-    pwGenerator->setPasswordLength(text().length());
-
-    connect(pwGenerator, SIGNAL(closePasswordGenerator()), &pwDialog, SLOT(close()));
-    connect(pwGenerator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
+    connect(generator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
     if (m_repeatPasswordEdit) {
-        connect(pwGenerator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
+        connect(generator, SIGNAL(appliedPassword(QString)), m_repeatPasswordEdit, SLOT(setText(QString)));
     }
-
-    pwDialog.exec();
 }
 
 void PasswordEdit::updateRepeatStatus()
@@ -157,9 +148,10 @@ void PasswordEdit::updateRepeatStatus()
     const auto password = text();
     if (otherPassword != password) {
         bool isCorrect = false;
-        QColor color = kpxcApp->isDarkTheme() ? ErrorColorDark : ErrorColor;
+        StateColorPalette statePalette;
+        QColor color = statePalette.color(StateColorPalette::ColorRole::Error);
         if (!password.isEmpty() && otherPassword.startsWith(password)) {
-            color = kpxcApp->isDarkTheme() ? CorrectSoFarColorDark : CorrectSoFarColor;
+            color = statePalette.color(StateColorPalette::ColorRole::Incomplete);
             isCorrect = true;
         }
         setStyleSheet(stylesheetTemplate.arg(color.name()));
@@ -174,7 +166,38 @@ void PasswordEdit::updateRepeatStatus()
 
 void PasswordEdit::autocompletePassword(const QString& password)
 {
-    if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
+    if (config()->get(Config::Security_PasswordsRepeat).toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);
+    }
+}
+
+bool PasswordEdit::event(QEvent* event)
+{
+    if (isVisible()) {
+        checkCapslockState();
+    }
+    return QLineEdit::event(event);
+}
+
+void PasswordEdit::checkCapslockState()
+{
+    if (m_parentPasswordEdit) {
+        return;
+    }
+
+    bool newCapslockState = osUtils->isCapslockEnabled();
+    if (newCapslockState != m_capslockState) {
+        m_capslockState = newCapslockState;
+        m_capslockAction->setVisible(newCapslockState);
+
+        // Force repaint to avoid rendering glitches of QLineEdit contents
+        repaint();
+
+        emit capslockToggled(m_capslockState);
+
+        if (newCapslockState) {
+            QTimer::singleShot(
+                150, [this]() { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
+        }
     }
 }

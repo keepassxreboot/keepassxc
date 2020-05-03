@@ -54,6 +54,8 @@ public:
     QString getGeneratedPassword();
     bool isPasswordVisible() const;
 
+    static PasswordGeneratorWidget* popupGenerator(QWidget* parent = nullptr);
+
 public slots:
     void regeneratePassword();
     void applyPassword();

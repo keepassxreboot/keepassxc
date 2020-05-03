@@ -101,7 +101,6 @@ QModelIndex CustomIconModel::indexFromUuid(const QUuid& uuid) const
     int idx = m_iconsOrder.indexOf(uuid);
     if (idx > -1) {
         return index(idx, 0);
-    } else {
-        return QModelIndex();
     }
+    return {};
 }

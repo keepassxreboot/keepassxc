@@ -56,7 +56,7 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
 #else
     QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
 #endif
-    QSize size = config()->get("GUI/AutoTypeSelectDialogSize", QSize(600, 250)).toSize();
+    QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));
     resize(size);
@@ -111,7 +111,7 @@ void AutoTypeSelectDialog::setMatchList(const QList<AutoTypeMatch>& matchList)
 
 void AutoTypeSelectDialog::done(int r)
 {
-    config()->set("GUI/AutoTypeSelectDialogSize", size());
+    config()->set(Config::GUI_AutoTypeSelectDialogSize, size());
 
     QDialog::done(r);
 }

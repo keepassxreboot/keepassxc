@@ -31,6 +31,7 @@ class OSUtilsBase : public QObject
 
 public:
     virtual bool isDarkMode() = 0;
+    virtual bool isCapslockEnabled() = 0;
 
 protected:
     explicit OSUtilsBase(QObject* parent = nullptr);

@@ -86,7 +86,7 @@ protected:
 
 private slots:
     void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
-    void adjustToTabVisibilityChange(bool tabsVisible);
+    void updateToolbarSeparatorVisibility();
     void updateWindowTitle();
     void showAboutDialog();
     void showUpdateCheckStartup();

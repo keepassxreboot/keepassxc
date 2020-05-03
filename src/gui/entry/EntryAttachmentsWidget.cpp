@@ -135,7 +135,7 @@ void EntryAttachmentsWidget::insertAttachments()
         return;
     }
 
-    QString defaultDirPath = config()->get("LastAttachmentDir").toString();
+    QString defaultDirPath = config()->get(Config::LastAttachmentDir).toString();
     const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
@@ -146,7 +146,7 @@ void EntryAttachmentsWidget::insertAttachments()
         return;
     }
 
-    config()->set("LastAttachmentDir", QFileInfo(filenames.first()).absolutePath());
+    config()->set(Config::LastAttachmentDir, QFileInfo(filenames.first()).absolutePath());
 
     QString errorMessage;
     if (!insertAttachments(filenames, errorMessage)) {
@@ -190,7 +190,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         return;
     }
 
-    QString defaultDirPath = config()->get("LastAttachmentDir").toString();
+    QString defaultDirPath = config()->get(Config::LastAttachmentDir).toString();
     const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
@@ -208,7 +208,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
             return;
         }
     }
-    config()->set("LastAttachmentDir", QFileInfo(saveDir.absolutePath()).absolutePath());
+    config()->set(Config::LastAttachmentDir, QFileInfo(saveDir.absolutePath()).absolutePath());
 
     QStringList errors;
     for (const QModelIndex& index : indexes) {

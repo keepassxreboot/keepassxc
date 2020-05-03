@@ -234,7 +234,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry, QWidget* hideWindow, c
 #endif
     }
 
-    Tools::wait(qMax(100, config()->get("AutoTypeStartDelay", 500).toInt()));
+    Tools::wait(qMax(100, config()->get(Config::AutoTypeStartDelay).toInt()));
 
     // Used only for selected entry auto-type
     if (!window) {
@@ -339,7 +339,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
 
         m_inGlobalAutoTypeDialog.unlock();
         emit autotypeRejected();
-    } else if ((matchList.size() == 1) && !config()->get("security/autotypeask").toBool()) {
+    } else if ((matchList.size() == 1) && !config()->get(Config::Security_AutoTypeAsk).toBool()) {
         executeAutoTypeActions(matchList.first().entry, nullptr, matchList.first().sequence, m_windowForGlobal);
         m_inGlobalAutoTypeDialog.unlock();
     } else {
@@ -390,7 +390,7 @@ bool AutoType::parseActions(const QString& actionSequence, const Entry* entry, Q
 {
     QString tmpl;
     bool inTmpl = false;
-    m_autoTypeDelay = qMax(config()->get("AutoTypeDelay").toInt(), 0);
+    m_autoTypeDelay = qMax(config()->get(Config::AutoTypeDelay).toInt(), 0);
 
     QString sequence = actionSequence;
     sequence.replace("{{}", "{LEFTBRACE}");
@@ -617,12 +617,12 @@ QList<QString> AutoType::autoTypeSequences(const Entry* entry, const QString& wi
             }
         }
 
-        if (config()->get("AutoTypeEntryTitleMatch").toBool()
+        if (config()->get(Config::AutoTypeEntryTitleMatch).toBool()
             && windowMatchesTitle(windowTitle, entry->resolvePlaceholder(entry->title()))) {
             sequenceList.append(entry->effectiveAutoTypeSequence());
         }
 
-        if (config()->get("AutoTypeEntryURLMatch").toBool()
+        if (config()->get(Config::AutoTypeEntryURLMatch).toBool()
             && windowMatchesUrl(windowTitle, entry->resolvePlaceholder(entry->url()))) {
             sequenceList.append(entry->effectiveAutoTypeSequence());
         }

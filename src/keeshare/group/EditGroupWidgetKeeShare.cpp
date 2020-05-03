@@ -221,7 +221,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     if (!m_temporaryGroup) {
         return;
     }
-    QString defaultDirPath = config()->get("KeeShare/LastShareDir").toString();
+    QString defaultDirPath = config()->get(Config::KeeShare_LastShareDir).toString();
     const bool dirExists = !defaultDirPath.isEmpty() && QDir(defaultDirPath).exists();
     if (!dirExists) {
         defaultDirPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).first();
@@ -285,7 +285,7 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
 
     m_ui->pathEdit->setText(filename);
     selectPath();
-    config()->set("KeeShare/LastShareDir", QFileInfo(filename).absolutePath());
+    config()->set(Config::KeeShare_LastShareDir, QFileInfo(filename).absolutePath());
 }
 
 void EditGroupWidgetKeeShare::selectPassword()
