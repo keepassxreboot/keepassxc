@@ -230,7 +230,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             for (int i = 0; i < unitsSize; i++) {
                 if (resultInt < 1024 || i == unitsSize - 1) {
                     resultInt = qRound(resultInt * 100) / 100.0;
-                    result = QString::number(resultInt) + " " + units[i];
+                    result = QStringLiteral("%1 %2").arg(QString::number(resultInt), units[i]);
                     break;
                 }
                 resultInt /= 1024.0;
