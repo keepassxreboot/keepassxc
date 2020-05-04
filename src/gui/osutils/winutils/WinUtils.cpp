@@ -83,3 +83,8 @@ bool WinUtils::isDarkMode()
                        QSettings::NativeFormat);
     return settings.value("AppsUseLightTheme", 1).toInt() == 0;
 }
+
+bool WinUtils::isCapslockEnabled()
+{
+    return GetKeyState(VK_CAPITAL) == 1;
+}

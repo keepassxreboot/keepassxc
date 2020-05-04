@@ -147,15 +147,15 @@ void DatabaseOpenWidget::load(const QString& filename)
     m_ui->keyFileClearIcon->setVisible(false);
     m_keyFileComboEdited = false;
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        QHash<QString, QVariant> lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
         if (lastKeyFiles.contains(m_filename)) {
             m_ui->comboKeyFile->addItem(lastKeyFiles[m_filename].toString());
             m_ui->comboKeyFile->setCurrentIndex(1);
         }
     }
 
-    QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+    QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
     m_ui->checkTouchID->setChecked(useTouchID.value(m_filename, false).toBool());
 }
 
@@ -207,7 +207,7 @@ void DatabaseOpenWidget::openDatabase()
 
     if (ok) {
 #ifdef WITH_XC_TOUCHID
-        QHash<QString, QVariant> useTouchID = config()->get("UseTouchID").toHash();
+        QHash<QString, QVariant> useTouchID = config()->get(Config::UseTouchID).toHash();
 
         // check if TouchID can & should be used to unlock the database next time
         if (m_ui->checkTouchID->isChecked() && TouchID::getInstance().isAvailable()) {
@@ -221,7 +221,7 @@ void DatabaseOpenWidget::openDatabase()
             useTouchID.insert(m_filename, false);
         }
 
-        config()->set("UseTouchID", useTouchID);
+        config()->set(Config::UseTouchID, useTouchID);
 #endif
 
         if (m_ui->messageWidget->isVisible()) {
@@ -293,7 +293,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
     }
 #endif
 
-    QHash<QString, QVariant> lastKeyFiles = config()->get("LastKeyFiles").toHash();
+    QHash<QString, QVariant> lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
     lastKeyFiles.remove(m_filename);
 
     auto key = QSharedPointer<FileKey>::create();
@@ -304,7 +304,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             m_ui->messageWidget->showMessage(tr("Failed to open key file: %1").arg(errorMsg), MessageWidget::Error);
             return {};
         }
-        if (key->type() != FileKey::Hashed && !config()->get("Messages/NoLegacyKeyFileWarning").toBool()) {
+        if (key->type() != FileKey::Hashed && !config()->get(Config::Messages_NoLegacyKeyFileWarning).toBool()) {
             QMessageBox legacyWarning;
             legacyWarning.setWindowTitle(tr("Legacy key file format"));
             legacyWarning.setText(tr("You are using a legacy key file format which may become\n"
@@ -316,7 +316,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
             legacyWarning.setCheckBox(new QCheckBox(tr("Don't show this warning again")));
 
             connect(legacyWarning.checkBox(), &QCheckBox::stateChanged, [](int state) {
-                config()->set("Messages/NoLegacyKeyFileWarning", state == Qt::CheckState::Checked);
+                config()->set(Config::Messages_NoLegacyKeyFileWarning, state == Qt::CheckState::Checked);
             });
 
             legacyWarning.exec();
@@ -325,12 +325,12 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         lastKeyFiles[m_filename] = keyFilename;
     }
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        config()->set("LastKeyFiles", lastKeyFiles);
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        config()->set(Config::LastKeyFiles, lastKeyFiles);
     }
 
 #ifdef WITH_XC_YUBIKEY
-    QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
+    QHash<QString, QVariant> lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
     lastChallengeResponse.remove(m_filename);
 
     int selectionIndex = m_ui->comboChallengeResponse->currentIndex();
@@ -345,8 +345,8 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::databaseKey()
         lastChallengeResponse[m_filename] = true;
     }
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        config()->set("LastChallengeResponse", lastChallengeResponse);
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        config()->set(Config::LastChallengeResponse, lastChallengeResponse);
     }
 #endif
 
@@ -361,7 +361,7 @@ void DatabaseOpenWidget::reject()
 void DatabaseOpenWidget::browseKeyFile()
 {
     QString filters = QString("%1 (*);;%2 (*.key)").arg(tr("All files"), tr("Key files"));
-    if (!config()->get("RememberLastKeyFiles").toBool()) {
+    if (!config()->get(Config::RememberLastKeyFiles).toBool()) {
         fileDialog()->setNextForgetDialog();
     }
     QString filename = fileDialog()->getOpenFileName(this, tr("Select key file"), QString(), filters);
@@ -418,8 +418,8 @@ void DatabaseOpenWidget::yubikeyDetected(int slot, bool blocking)
     // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
     m_ui->comboChallengeResponse->addItem(yk.getName(), QVariant((slot << 1) | blocking));
 
-    if (config()->get("RememberLastKeyFiles").toBool()) {
-        QHash<QString, QVariant> lastChallengeResponse = config()->get("LastChallengeResponse").toHash();
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        QHash<QString, QVariant> lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
         if (lastChallengeResponse.contains(m_filename)) {
             m_ui->comboChallengeResponse->setCurrentIndex(1);
         }

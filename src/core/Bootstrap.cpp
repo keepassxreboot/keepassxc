@@ -100,7 +100,7 @@ namespace Bootstrap
     void restoreMainWindowState(MainWindow& mainWindow)
     {
         // start minimized if configured
-        if (config()->get("GUI/MinimizeOnStartup").toBool()) {
+        if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
 #ifdef Q_OS_WIN
             mainWindow.showMinimized();
 #else
@@ -110,14 +110,14 @@ namespace Bootstrap
             mainWindow.bringToFront();
         }
 
-        if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
-            const QStringList fileNames = config()->get("LastOpenedDatabases").toStringList();
+        if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
+            const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
             for (const QString& filename : fileNames) {
                 if (!filename.isEmpty() && QFile::exists(filename)) {
                     mainWindow.openDatabase(filename);
                 }
             }
-            auto lastActiveFile = config()->get("LastActiveDatabase").toString();
+            auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
             if (!lastActiveFile.isEmpty()) {
                 mainWindow.openDatabase(lastActiveFile);
             }

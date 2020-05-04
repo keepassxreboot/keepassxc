@@ -99,14 +99,14 @@ void TestGui::initTestCase()
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
     // Disable autosave so we can test the modified file indicator
-    config()->set("AutoSaveAfterEveryChange", false);
-    config()->set("AutoSaveOnExit", false);
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+    config()->set(Config::AutoSaveOnExit, false);
     // Enable the tray icon so we can test hiding/restoring the windowQByteArray
-    config()->set("GUI/ShowTrayIcon", true);
+    config()->set(Config::GUI_ShowTrayIcon, true);
     // Disable advanced settings mode (activate within individual tests to test advanced settings)
-    config()->set("GUI/AdvancedSettings", false);
+    config()->set(Config::GUI_AdvancedSettings, false);
     // Disable the update check first time alert
-    config()->set("UpdateCheckMessageShown", true);
+    config()->set(Config::UpdateCheckMessageShown, true);
 
     Bootstrap::bootstrapApplication();
 
@@ -342,7 +342,7 @@ void TestGui::testMergeDatabase()
 
 void TestGui::testAutoreloadDatabase()
 {
-    config()->set("AutoReloadOnChange", false);
+    config()->set(Config::AutoReloadOnChange, false);
 
     // Test accepting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::Yes);
@@ -375,7 +375,7 @@ void TestGui::testAutoreloadDatabase()
 
     // Test accepting a merge of edits into autoreload
     // Turn on autoload so we only get one messagebox (for the merge)
-    config()->set("AutoReloadOnChange", true);
+    config()->set(Config::AutoReloadOnChange, true);
     // Modify some entries
     testEditEntry();
 

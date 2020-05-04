@@ -154,7 +154,7 @@ void ShareObserver::notifyAbout(const QStringList& success, const QStringList& w
 {
     QStringList messages;
     MessageWidget::MessageType type = MessageWidget::Positive;
-    if (!(success.isEmpty() || config()->get("KeeShare/QuietSuccess", true).toBool())) {
+    if (!(success.isEmpty() || config()->get(Config::KeeShare_QuietSuccess).toBool())) {
         messages += success;
     }
     if (!warning.isEmpty()) {

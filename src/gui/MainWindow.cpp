@@ -182,8 +182,8 @@ MainWindow::MainWindow()
     m_entryNewContextMenu = new QMenu(this);
     m_entryNewContextMenu->addAction(m_ui->actionEntryNew);
 
-    restoreGeometry(config()->get("GUI/MainWindowGeometry").toByteArray());
-    restoreState(config()->get("GUI/MainWindowState").toByteArray());
+    restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
+    restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
 #endif
@@ -240,15 +240,15 @@ MainWindow::MainWindow()
         m_copyAdditionalAttributeActions, SIGNAL(triggered(QAction*)), SLOT(copyAttribute(QAction*)));
     connect(m_ui->menuEntryCopyAttribute, SIGNAL(aboutToShow()), this, SLOT(updateCopyAttributesMenu()));
 
-    Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get("GlobalAutoTypeKey").toInt());
+    Qt::Key globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
     Qt::KeyboardModifiers globalAutoTypeModifiers =
-        static_cast<Qt::KeyboardModifiers>(config()->get("GlobalAutoTypeModifiers").toInt());
+        static_cast<Qt::KeyboardModifiers>(config()->get(Config::GlobalAutoTypeModifiers).toInt());
     if (globalAutoTypeKey > 0 && globalAutoTypeModifiers > 0) {
         autoType()->registerGlobalShortcut(globalAutoTypeKey, globalAutoTypeModifiers);
     }
 
     m_ui->toolbarSeparator->setVisible(false);
-    m_showToolbarSeparator = config()->get("GUI/ApplicationTheme").toString() != "classic";
+    m_showToolbarSeparator = config()->get(Config::GUI_ApplicationTheme).toString() != "classic";
 
     m_ui->actionEntryAutoType->setVisible(autoType()->isAvailable());
 
@@ -549,13 +549,13 @@ MainWindow::MainWindow()
         MessageWidget::Information,
         15000);
 #elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
-    if (!config()->get("QtErrorMessageShown", false).toBool()) {
+    if (!config()->get(Config::Messages_Qt55CompatibilityWarning).toBool()) {
         m_ui->globalMessageWidget->showMessage(
             tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard!\n"
                "We recommend you use the AppImage available on our downloads page."),
             MessageWidget::Warning,
             -1);
-        config()->set("QtErrorMessageShown", true);
+        config()->set(Config::Messages_Qt55CompatibilityWarning, true);
     }
 #endif
 }
@@ -579,7 +579,7 @@ void MainWindow::updateLastDatabasesMenu()
 {
     m_ui->menuRecentDatabases->clear();
 
-    const QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+    const QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
     for (const QString& database : lastDatabases) {
         QAction* action = m_ui->menuRecentDatabases->addAction(database);
         action->setData(database);
@@ -620,7 +620,7 @@ void MainWindow::openRecentDatabase(QAction* action)
 
 void MainWindow::clearLastDatabases()
 {
-    config()->set("LastDatabases", QVariant());
+    config()->remove(Config::LastDatabases);
     bool inWelcomeWidget = (m_ui->stackedWidget->currentIndex() == 2);
 
     if (inWelcomeWidget) {
@@ -868,7 +868,7 @@ void MainWindow::showAboutDialog()
 void MainWindow::showUpdateCheckStartup()
 {
 #ifdef WITH_XC_UPDATECHECK
-    if (!config()->get("UpdateCheckMessageShown", false).toBool()) {
+    if (!config()->get(Config::UpdateCheckMessageShown).toBool()) {
         auto result =
             MessageBox::question(this,
                                  tr("Check for updates on startup?"),
@@ -877,11 +877,11 @@ void MainWindow::showUpdateCheckStartup()
                                  MessageBox::Yes | MessageBox::No,
                                  MessageBox::Yes);
 
-        config()->set("GUI/CheckForUpdates", (result == MessageBox::Yes));
-        config()->set("UpdateCheckMessageShown", true);
+        config()->set(Config::GUI_CheckForUpdates, (result == MessageBox::Yes));
+        config()->set(Config::UpdateCheckMessageShown, true);
     }
 
-    if (config()->get("GUI/CheckForUpdates", false).toBool()) {
+    if (config()->get(Config::GUI_CheckForUpdates).toBool()) {
         updateCheck()->checkForUpdates(false);
     }
 
@@ -1096,7 +1096,8 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
     // Ignore event and hide to tray if this is not an actual close
     // request by the system's session manager.
-    if (config()->get("GUI/MinimizeOnClose").toBool() && !m_appExitCalled && !isHidden() && !qApp->isSavingSession()) {
+    if (config()->get(Config::GUI_MinimizeOnClose).toBool() && !m_appExitCalled && !isHidden()
+        && !qApp->isSavingSession()) {
         event->ignore();
         hideWindow();
         return;
@@ -1118,12 +1119,12 @@ void MainWindow::changeEvent(QEvent* event)
 {
     if ((event->type() == QEvent::WindowStateChange) && isMinimized()) {
         if (isTrayIconEnabled() && m_trayIcon && m_trayIcon->isVisible()
-            && config()->get("GUI/MinimizeToTray").toBool()) {
+            && config()->get(Config::GUI_MinimizeToTray).toBool()) {
             event->ignore();
             hide();
         }
 
-        if (config()->get("security/lockdatabaseminimize").toBool()) {
+        if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
             m_ui->tabWidget->lockDatabases();
         }
     } else {
@@ -1134,19 +1135,19 @@ void MainWindow::changeEvent(QEvent* event)
 void MainWindow::saveWindowInformation()
 {
     if (isVisible()) {
-        config()->set("GUI/MainWindowGeometry", saveGeometry());
-        config()->set("GUI/MainWindowState", saveState());
+        config()->set(Config::GUI_MainWindowGeometry, saveGeometry());
+        config()->set(Config::GUI_MainWindowState, saveState());
     }
 }
 
 bool MainWindow::saveLastDatabases()
 {
-    if (config()->get("OpenPreviousDatabasesOnStartup").toBool()) {
+    if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         auto currentDbWidget = m_ui->tabWidget->currentDatabaseWidget();
         if (currentDbWidget) {
-            config()->set("LastActiveDatabase", currentDbWidget->database()->filePath());
+            config()->set(Config::LastActiveDatabase, currentDbWidget->database()->filePath());
         } else {
-            config()->set("LastActiveDatabase", {});
+            config()->remove(Config::LastActiveDatabase);
         }
 
         QStringList openDatabases;
@@ -1155,10 +1156,10 @@ bool MainWindow::saveLastDatabases()
             openDatabases.append(dbWidget->database()->filePath());
         }
 
-        config()->set("LastOpenedDatabases", openDatabases);
+        config()->set(Config::LastOpenedDatabases, openDatabases);
     } else {
-        config()->set("LastActiveDatabase", {});
-        config()->set("LastOpenedDatabases", {});
+        config()->remove(Config::LastActiveDatabase);
+        config()->remove(Config::LastOpenedDatabases);
     }
 
     return m_ui->tabWidget->closeAllDatabaseTabs();
@@ -1169,9 +1170,9 @@ void MainWindow::updateTrayIcon()
     if (isTrayIconEnabled()) {
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
-            QMenu* menu = new QMenu(this);
+            auto* menu = new QMenu(this);
 
-            QAction* actionToggle = new QAction(tr("Toggle window"), menu);
+            auto* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
             actionToggle->setIcon(resources()->icon("keepassxc-dark", false));
 
@@ -1257,13 +1258,13 @@ void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard
 
 void MainWindow::applySettingsChanges()
 {
-    int timeout = config()->get("security/lockdatabaseidlesec").toInt() * 1000;
+    int timeout = config()->get(Config::Security_LockDatabaseIdleSeconds).toInt() * 1000;
     if (timeout <= 0) {
         timeout = 60;
     }
 
     m_inactivityTimer->setInactivityTimeout(timeout);
-    if (config()->get("security/lockdatabaseidle").toBool()) {
+    if (config()->get(Config::Security_LockDatabaseIdle).toBool()) {
         m_inactivityTimer->activate();
     } else {
         m_inactivityTimer->deactivate();
@@ -1271,24 +1272,25 @@ void MainWindow::applySettingsChanges()
 
 #ifdef WITH_XC_TOUCHID
     // forget TouchID (in minutes)
-    timeout = config()->get("security/resettouchidtimeout").toInt() * 60 * 1000;
+    timeout = config()->get(Config::Security_ResetTouchIdTimeout).toInt() * 60 * 1000;
     if (timeout <= 0) {
         timeout = 30 * 60 * 1000;
     }
 
     m_touchIDinactivityTimer->setInactivityTimeout(timeout);
-    if (config()->get("security/resettouchid").toBool()) {
+    if (config()->get(Config::Security_ResetTouchIdTimeout).toBool()) {
         m_touchIDinactivityTimer->activate();
     } else {
         m_touchIDinactivityTimer->deactivate();
     }
 #endif
 
-    m_ui->toolBar->setHidden(config()->get("GUI/HideToolbar").toBool());
-    m_ui->toolBar->setMovable(config()->get("GUI/MovableToolbar").toBool());
+    m_ui->toolBar->setHidden(config()->get(Config::GUI_HideToolbar).toBool());
+    m_ui->toolBar->setMovable(config()->get(Config::GUI_MovableToolbar).toBool());
 
     bool isOk = false;
-    const auto toolButtonStyle = static_cast<Qt::ToolButtonStyle>(config()->get("GUI/ToolButtonStyle").toInt(&isOk));
+    const auto toolButtonStyle =
+        static_cast<Qt::ToolButtonStyle>(config()->get(Config::GUI_ToolButtonStyle).toInt(&isOk));
     if (isOk) {
         m_ui->toolBar->setToolButtonStyle(toolButtonStyle);
     }
@@ -1381,14 +1383,14 @@ void MainWindow::hideWindow()
         showMinimized();
     }
 
-    if (config()->get("security/lockdatabaseminimize").toBool()) {
+    if (config()->get(Config::Security_LockDatabaseMinimize).toBool()) {
         m_ui->tabWidget->lockDatabases();
     }
 }
 
 void MainWindow::minimizeOrHide()
 {
-    if (config()->get("GUI/MinimizeToTray").toBool()) {
+    if (config()->get(Config::GUI_MinimizeToTray).toBool()) {
         hideWindow();
     } else {
         showMinimized();
@@ -1444,7 +1446,7 @@ void MainWindow::forgetTouchIDAfterInactivity()
 
 bool MainWindow::isTrayIconEnabled() const
 {
-    return config()->get("GUI/ShowTrayIcon").toBool() && QSystemTrayIcon::isSystemTrayAvailable();
+    return config()->get(Config::GUI_ShowTrayIcon).toBool() && QSystemTrayIcon::isSystemTrayAvailable();
 }
 
 void MainWindow::displayGlobalMessage(const QString& text,
@@ -1495,12 +1497,12 @@ void MainWindow::bringToFront()
 
 void MainWindow::handleScreenLock()
 {
-    if (config()->get("security/lockdatabasescreenlock").toBool()) {
+    if (config()->get(Config::Security_LockDatabaseScreenLock).toBool()) {
         lockDatabasesAfterInactivity();
     }
 
 #ifdef WITH_XC_TOUCHID
-    if (config()->get("security/resettouchidscreenlock").toBool()) {
+    if (config()->get(Config::Security_ResetTouchIdScreenlock).toBool()) {
         forgetTouchIDAfterInactivity();
     }
 #endif

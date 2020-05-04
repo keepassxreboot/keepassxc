@@ -22,15 +22,13 @@
 #include "core/Resources.h"
 #include "gui/Font.h"
 #include "gui/PasswordGeneratorWidget.h"
+#include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QDialog>
+#include <QTimer>
+#include <QToolTip>
 #include <QVBoxLayout>
-
-namespace
-{
-
-} // namespace
 
 PasswordEdit::PasswordEdit(QWidget* parent)
     : QLineEdit(parent)
@@ -70,6 +68,13 @@ PasswordEdit::PasswordEdit(QWidget* parent)
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
     addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
+
+    m_capslockAction =
+        new QAction(resources()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
+                    tr("Warning: Caps Lock enabled!"),
+                    nullptr);
+    addAction(m_capslockAction, QLineEdit::LeadingPosition);
+    m_capslockAction->setVisible(false);
 }
 
 void PasswordEdit::setRepeatPartner(PasswordEdit* repeatEdit)
@@ -106,7 +111,7 @@ void PasswordEdit::setShowPassword(bool show)
 
     if (m_repeatPasswordEdit) {
         m_repeatPasswordEdit->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-        if (config()->get("security/passwordsrepeat").toBool()) {
+        if (config()->get(Config::Security_PasswordsRepeat).toBool()) {
             m_repeatPasswordEdit->setEnabled(!show);
             m_repeatPasswordEdit->setText(text());
         } else {
@@ -161,7 +166,38 @@ void PasswordEdit::updateRepeatStatus()
 
 void PasswordEdit::autocompletePassword(const QString& password)
 {
-    if (config()->get("security/passwordsrepeat").toBool() && echoMode() == QLineEdit::Normal) {
+    if (config()->get(Config::Security_PasswordsRepeat).toBool() && echoMode() == QLineEdit::Normal) {
         setText(password);
+    }
+}
+
+bool PasswordEdit::event(QEvent* event)
+{
+    if (isVisible()) {
+        checkCapslockState();
+    }
+    return QLineEdit::event(event);
+}
+
+void PasswordEdit::checkCapslockState()
+{
+    if (m_parentPasswordEdit) {
+        return;
+    }
+
+    bool newCapslockState = osUtils->isCapslockEnabled();
+    if (newCapslockState != m_capslockState) {
+        m_capslockState = newCapslockState;
+        m_capslockAction->setVisible(newCapslockState);
+
+        // Force repaint to avoid rendering glitches of QLineEdit contents
+        repaint();
+
+        emit capslockToggled(m_capslockState);
+
+        if (newCapslockState) {
+            QTimer::singleShot(
+                150, [this]() { QToolTip::showText(mapToGlobal(rect().bottomLeft()), m_capslockAction->text()); });
+        }
     }
 }

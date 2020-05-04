@@ -107,7 +107,7 @@ namespace Phantom
         constexpr qreal MenuItem_LeftMarginFontRatio = 1.0 / 2.0;
         constexpr qreal MenuItem_RightMarginForTextFontRatio = 1.0 / 1.5;
         constexpr qreal MenuItem_RightMarginForArrowFontRatio = 1.0 / 4.0;
-        constexpr qreal MenuItem_VerticalMarginsFontRatio = 1.0 / 8.0;
+        constexpr qreal MenuItem_VerticalMarginsFontRatio = 1.0 / 5.0;
         // Number that's multiplied with a font's height to get the space between a
         // menu item's checkbox (or other sign) and its text (or icon).
         constexpr qreal MenuItem_CheckRightSpaceFontRatio = 1.0 / 4.0;

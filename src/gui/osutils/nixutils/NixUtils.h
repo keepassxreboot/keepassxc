@@ -29,6 +29,7 @@ public:
     static NixUtils* instance();
 
     bool isDarkMode() override;
+    bool isCapslockEnabled() override;
 
 private:
     explicit NixUtils(QObject* parent = nullptr);
