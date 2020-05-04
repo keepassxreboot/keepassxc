@@ -33,13 +33,15 @@ class MacUtils : public OSUtilsBase
 public:
     static MacUtils* instance();
 
+    bool isDarkMode() override;
+    bool isCapslockEnabled() override;
+
     WId activeWindow();
     bool raiseWindow(WId pid);
     bool raiseLastActiveWindow();
     bool raiseOwnWindow();
     bool hideOwnWindow();
     bool isHidden();
-    bool isDarkMode() override;
     bool enableAccessibility();
     bool enableScreenRecording();
 

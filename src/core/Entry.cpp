@@ -336,6 +336,23 @@ QString Entry::attribute(const QString& key) const
     return m_attributes->value(key);
 }
 
+int Entry::size() const
+{
+    int size = 0;
+    const QRegularExpression delimiter(",|:|;");
+
+    size += this->attributes()->attributesSize();
+    size += this->autoTypeAssociations()->associationsSize();
+    size += this->attachments()->attachmentsSize();
+    size += this->customData()->dataSize();
+    const QStringList tags = this->tags().split(delimiter, QString::SkipEmptyParts);
+    for (const QString& tag : tags) {
+        size += tag.toUtf8().size();
+    }
+
+    return size;
+}
+
 bool Entry::isExpired() const
 {
     return m_data.timeInfo.expires() && m_data.timeInfo.expiryTime() < Clock::currentDateTimeUtc();
@@ -672,20 +689,12 @@ void Entry::truncateHistory()
 
         QMutableListIterator<Entry*> i(m_history);
         i.toBack();
-        const QRegularExpression delimiter(",|:|;");
         while (i.hasPrevious()) {
             Entry* historyItem = i.previous();
 
             // don't calculate size if it's already above the maximum
             if (size <= histMaxSize) {
-                size += historyItem->attributes()->attributesSize();
-                size += historyItem->autoTypeAssociations()->associationsSize();
-                size += historyItem->attachments()->attachmentsSize();
-                size += historyItem->customData()->dataSize();
-                const QStringList tags = historyItem->tags().split(delimiter, QString::SkipEmptyParts);
-                for (const QString& tag : tags) {
-                    size += tag.toUtf8().size();
-                }
+                size += historyItem->size();
                 foundAttachments += historyItem->attachments()->values();
             }
 

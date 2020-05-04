@@ -43,7 +43,7 @@ SSHAgent* SSHAgent::instance()
 
 bool SSHAgent::isEnabled() const
 {
-    return config()->get("SSHAgent").toBool();
+    return config()->get(Config::SSHAgent_Enabled).toBool();
 }
 
 void SSHAgent::setEnabled(bool enabled)
@@ -52,30 +52,30 @@ void SSHAgent::setEnabled(bool enabled)
         removeAllIdentities();
     }
 
-    config()->set("SSHAgent", enabled);
+    config()->set(Config::SSHAgent_Enabled, enabled);
 
     emit enabledChanged(enabled);
 }
 
 QString SSHAgent::authSockOverride() const
 {
-    return config()->get("SSHAuthSockOverride").toString();
+    return config()->get(Config::SSHAgent_AuthSockOverride).toString();
 }
 
 void SSHAgent::setAuthSockOverride(QString& authSockOverride)
 {
-    config()->set("SSHAuthSockOverride", authSockOverride);
+    config()->set(Config::SSHAgent_AuthSockOverride, authSockOverride);
 }
 
 #ifdef Q_OS_WIN
 bool SSHAgent::useOpenSSH() const
 {
-    return config()->get("SSHAgentOpenSSH").toBool();
+    return config()->get(Config::SSHAgent_UseOpenSSH).toBool();
 }
 
 void SSHAgent::setUseOpenSSH(bool useOpenSSH)
 {
-    config()->set("SSHAgentOpenSSH", useOpenSSH);
+    config()->set(Config::SSHAgent_UseOpenSSH, useOpenSSH);
 }
 #endif
 

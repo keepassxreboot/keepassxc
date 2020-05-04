@@ -107,6 +107,7 @@ public:
     QString attribute(const QString& key) const;
     QString totp() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
+    int size() const;
 
     bool hasTotp() const;
     bool isExpired() const;

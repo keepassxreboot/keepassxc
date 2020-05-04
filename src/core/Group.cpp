@@ -364,7 +364,7 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        if (config()->get("IgnoreGroupExpansion").toBool()) {
+        if (config()->get(Config::IgnoreGroupExpansion).toBool()) {
             updateTimeinfo();
             return;
         }
@@ -1112,7 +1112,7 @@ void Group::applyGroupIconOnCreateTo(Entry* entry)
 {
     Q_ASSERT(entry);
 
-    if (!config()->get("UseGroupIconOnEntryCreation").toBool()) {
+    if (!config()->get(Config::UseGroupIconOnEntryCreation).toBool()) {
         return;
     }
 

@@ -667,7 +667,7 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
  */
 void DatabaseTabWidget::relockPendingDatabase()
 {
-    if (!m_dbWidgetPendingLock || !config()->get("security/relockautotype").toBool()) {
+    if (!m_dbWidgetPendingLock || !config()->get(Config::Security_RelockAutoType).toBool()) {
         return;
     }
 
@@ -682,17 +682,17 @@ void DatabaseTabWidget::relockPendingDatabase()
 
 void DatabaseTabWidget::updateLastDatabases(const QString& filename)
 {
-    if (!config()->get("RememberLastDatabases").toBool()) {
-        config()->set("LastDatabases", QVariant());
+    if (!config()->get(Config::RememberLastDatabases).toBool()) {
+        config()->remove(Config::LastDatabases);
     } else {
-        QStringList lastDatabases = config()->get("LastDatabases", QVariant()).toStringList();
+        QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
         lastDatabases.prepend(filename);
         lastDatabases.removeDuplicates();
 
-        while (lastDatabases.count() > config()->get("NumberOfRememberedLastDatabases").toInt()) {
+        while (lastDatabases.count() > config()->get(Config::NumberOfRememberedLastDatabases).toInt()) {
             lastDatabases.removeLast();
         }
-        config()->set("LastDatabases", lastDatabases);
+        config()->set(Config::LastDatabases, lastDatabases);
     }
 }
 
@@ -731,7 +731,7 @@ void DatabaseTabWidget::performGlobalAutoType()
     if (!unlockedDatabases.isEmpty()) {
         autoType()->performGlobalAutoType(unlockedDatabases);
     } else if (count() > 0) {
-        if (config()->get("security/relockautotype").toBool()) {
+        if (config()->get(Config::Security_RelockAutoType).toBool()) {
             m_dbWidgetPendingLock = currentDatabaseWidget();
         }
         unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::AutoType);

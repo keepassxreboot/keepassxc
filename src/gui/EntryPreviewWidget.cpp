@@ -106,7 +106,7 @@ void EntryPreviewWidget::setEntry(Entry* selectedEntry)
     updateEntryAdvancedTab();
     updateEntryAutotypeTab();
 
-    setVisible(!config()->get("GUI/HidePreviewPanel").toBool());
+    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageEntry);
     const int tabIndex = m_ui->entryTabWidget->isTabEnabled(m_selectedTabEntry) ? m_selectedTabEntry : GeneralTabIndex;
@@ -129,7 +129,7 @@ void EntryPreviewWidget::setGroup(Group* selectedGroup)
     updateGroupSharingTab();
 #endif
 
-    setVisible(!config()->get("GUI/HidePreviewPanel").toBool());
+    setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
 
     m_ui->stackedWidget->setCurrentWidget(m_ui->pageGroup);
     const int tabIndex = m_ui->groupTabWidget->isTabEnabled(m_selectedTabGroup) ? m_selectedTabGroup : GeneralTabIndex;
@@ -186,7 +186,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     if (state) {
         m_ui->entryPasswordLabel->setText(password);
         m_ui->entryPasswordLabel->setCursorPosition(0);
-    } else if (password.isEmpty() && config()->get("security/passwordemptynodots").toBool()) {
+    } else if (password.isEmpty() && config()->get(Config::Security_PasswordEmptyNoDots).toBool()) {
         m_ui->entryPasswordLabel->setText("");
     } else {
         m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
@@ -222,7 +222,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     m_ui->entryUsernameLabel->setText(m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->username()));
     m_ui->entryUsernameLabel->setCursorPosition(0);
 
-    if (config()->get("security/HidePasswordPreviewPanel").toBool()) {
+    if (config()->get(Config::Security_HidePasswordPreviewPanel).toBool()) {
         // Hide password
         setPasswordVisible(false);
         // Show the password toggle button if there are dots in the label
@@ -234,7 +234,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         m_ui->togglePasswordButton->setVisible(false);
     }
 
-    if (config()->get("security/hidenotes").toBool()) {
+    if (config()->get(Config::Security_HideNotes).toBool()) {
         setEntryNotesVisible(false);
         m_ui->toggleEntryNotesButton->setVisible(!m_ui->entryNotesTextEdit->toPlainText().isEmpty());
         m_ui->toggleEntryNotesButton->setChecked(false);
@@ -243,7 +243,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         m_ui->toggleEntryNotesButton->setVisible(false);
     }
 
-    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+    if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_ui->entryNotesTextEdit->setFont(Font::fixedFont());
     } else {
         m_ui->entryNotesTextEdit->setFont(Font::defaultFont());
@@ -330,7 +330,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
         groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 
-    if (config()->get("security/hidenotes").toBool()) {
+    if (config()->get(Config::Security_HideNotes).toBool()) {
         setGroupNotesVisible(false);
         m_ui->toggleGroupNotesButton->setVisible(!m_ui->groupNotesTextEdit->toPlainText().isEmpty());
         m_ui->toggleGroupNotesButton->setChecked(false);
@@ -339,7 +339,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
         m_ui->toggleGroupNotesButton->setVisible(false);
     }
 
-    if (config()->get("GUI/MonospaceNotes", false).toBool()) {
+    if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_ui->groupNotesTextEdit->setFont(Font::fixedFont());
     } else {
         m_ui->groupNotesTextEdit->setFont(Font::defaultFont());
