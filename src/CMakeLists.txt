@@ -461,9 +461,14 @@ if(MINGW)
     set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
     set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/share/windows/wix-banner.bmp")
     set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/share/windows/wix-dialog.bmp")
+    set(CPACK_WIX_UI_REF "KPXC_InstallDir")
     set(CPACK_WIX_TEMPLATE "${CMAKE_SOURCE_DIR}/share/windows/wix-template.xml")
     set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/share/windows/wix-patch.xml")
-    set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://keepassxc.org")
+    set(CPACK_WIX_EXTRA_SOURCES
+            "${CMAKE_SOURCE_DIR}/share/windows/KPXC_InstallDir.wxs"
+            "${CMAKE_SOURCE_DIR}/share/windows/KPXC_InstallDirDlg.wxs"
+            "${CMAKE_SOURCE_DIR}/share/windows/KPXC_ExitDlg.wxs")
+    set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT  "https://keepassxc.org")
     set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
     include(CPack)
 
