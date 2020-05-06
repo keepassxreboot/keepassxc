@@ -77,11 +77,28 @@ bool WinUtils::DWMEventFilter::nativeEventFilter(const QByteArray& eventType, vo
     return false;
 }
 
-bool WinUtils::isDarkMode()
+bool WinUtils::isDarkMode() const
 {
     QSettings settings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize)",
                        QSettings::NativeFormat);
     return settings.value("AppsUseLightTheme", 1).toInt() == 0;
+}
+
+bool WinUtils::isLaunchAtStartupEnabled() const
+{
+    return QSettings(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat)
+        .contains(qAppName());
+    ;
+}
+
+void WinUtils::setLaunchAtStartup(bool enable)
+{
+    QSettings reg(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat);
+    if (enable) {
+        reg.setValue(qAppName(), QApplication::applicationFilePath());
+    } else {
+        reg.remove(qAppName());
+    }
 }
 
 bool WinUtils::isCapslockEnabled()

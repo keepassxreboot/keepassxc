@@ -33,7 +33,9 @@ class MacUtils : public OSUtilsBase
 public:
     static MacUtils* instance();
 
-    bool isDarkMode() override;
+    bool isDarkMode() const override;
+    bool isLaunchAtStartupEnabled() const override;
+    void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
 
     WId activeWindow();
@@ -53,6 +55,8 @@ protected:
     ~MacUtils() override;
 
 private:
+    QString getLaunchAgentFilename() const;
+
     QScopedPointer<AppKit> m_appkit;
     static QPointer<MacUtils> m_instance;
 

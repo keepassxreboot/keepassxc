@@ -32,7 +32,9 @@ public:
     static WinUtils* instance();
     static void registerEventFilters();
 
-    bool isDarkMode() override;
+    bool isDarkMode() const override;
+    bool isLaunchAtStartupEnabled() const override;
+    void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
 
 protected:
