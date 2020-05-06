@@ -482,7 +482,7 @@ void TestCli::testClip()
         QSKIP("Clip test skipped due to missing clipboard tool");
     }
 
-    QCOMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
     m_stdoutFile->readLine(); // skip prompt line
     QCOMPARE(m_stdoutFile->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
@@ -493,18 +493,18 @@ void TestCli::testClip()
     m_stdoutFile->seek(pos);
     // Output should be empty when quiet option is set.
     QCOMPARE(m_stdoutFile->readAll(), QByteArray(""));
-    QCOMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
 
     // Username
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "-a", "username"});
-    QCOMPARE(clipboard->text(), QString("User Name"));
+    QTRY_COMPARE(clipboard->text(), QString("User Name"));
 
     // TOTP
     Utils::Test::setNextPassword("a");
     clipCmd.execute({"clip", m_dbFile->fileName(), "/Sample Entry", "--totp"});
 
-    QVERIFY(isTOTP(clipboard->text()));
+    QTRY_VERIFY(isTOTP(clipboard->text()));
 
     // Password with timeout
     Utils::Test::setNextPassword("a");
@@ -514,8 +514,8 @@ void TestCli::testClip()
                                              QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
 
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString("Password"), 500);
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
+    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
 
     future.waitForFinished();
 
@@ -525,8 +525,8 @@ void TestCli::testClip()
                                static_cast<int (Clip::*)(const QStringList&)>(&DatabaseCommand::execute),
                                QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
-    QTRY_VERIFY_WITH_TIMEOUT(isTOTP(clipboard->text()), 500);
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 1500);
+    QTRY_VERIFY(isTOTP(clipboard->text()));
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 2000);
 
     future.waitForFinished();
 
