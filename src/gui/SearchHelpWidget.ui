@@ -235,6 +235,13 @@
           </property>
          </widget>
         </item>
+        <item row="3" column="1">
+         <widget class="QLabel" name="label_16">
+          <property name="text">
+           <string notr="true">group (g)</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
      </item>
