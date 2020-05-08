@@ -38,7 +38,8 @@ public:
         Notes,
         AttributeKV,
         Attachment,
-        AttributeValue
+        AttributeValue,
+        Group
     };
 
     struct SearchTerm
@@ -64,7 +65,7 @@ public:
     bool isCaseSensitive();
 
 private:
-    bool searchEntryImpl(Entry* entry);
+    bool searchEntryImpl(const Entry* entry);
     void parseSearchTerms(const QString& searchString);
 
     bool m_caseSensitive;

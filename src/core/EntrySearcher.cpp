@@ -54,7 +54,6 @@ QList<Entry*> EntrySearcher::search(const QList<SearchTerm>& searchTerms, const 
 QList<Entry*> EntrySearcher::search(const QString& searchString, const Group* baseGroup, bool forceSearch)
 {
     Q_ASSERT(baseGroup);
-
     parseSearchTerms(searchString);
     return repeat(baseGroup, forceSearch);
 }
@@ -73,7 +72,7 @@ QList<Entry*> EntrySearcher::repeat(const Group* baseGroup, bool forceSearch)
     QList<Entry*> results;
     for (const auto group : baseGroup->groupsRecursive(true)) {
         if (forceSearch || group->resolveSearchingEnabled()) {
-            for (auto* entry : group->entries()) {
+            for (const auto entry : group->entries()) {
                 if (searchEntryImpl(entry)) {
                     results.append(entry);
                 }
@@ -142,12 +141,14 @@ bool EntrySearcher::isCaseSensitive()
     return m_caseSensitive;
 }
 
-bool EntrySearcher::searchEntryImpl(Entry* entry)
+bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
     auto attributes_keys = entry->attributes()->customKeys();
     auto attributes = QStringList(attributes_keys + entry->attributes()->values(attributes_keys));
     auto attachments = QStringList(entry->attachments()->keys());
+    // Build a group hierarchy to allow searching for e.g. /group1/subgroup*
+    auto hierarchy = entry->group()->hierarchy().join('/').prepend("/");
 
     bool found;
     for (const auto& term : m_searchTerms) {
@@ -181,6 +182,14 @@ bool EntrySearcher::searchEntryImpl(Entry* entry)
             found = entry->attributes()->contains(term.word)
                     && term.regex.match(entry->attributes()->value(term.word)).hasMatch();
             break;
+        case Field::Group:
+            // Match against the full hierarchy if the word contains a '/' otherwise just the group name
+            if (term.word.contains('/')) {
+                found = term.regex.match(hierarchy).hasMatch();
+            } else {
+                found = term.regex.match(entry->group()->name()).hasMatch();
+            }
+            break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
@@ -209,7 +218,8 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("title"), Field::Title},
         {QStringLiteral("u"), Field::Username}, // u: stands for username rather than url
         {QStringLiteral("url"), Field::Url},
-        {QStringLiteral("username"), Field::Username}};
+        {QStringLiteral("username"), Field::Username},
+        {QStringLiteral("group"), Field::Group}};
 
     m_searchTerms.clear();
     auto results = m_termParser.globalMatch(searchString);

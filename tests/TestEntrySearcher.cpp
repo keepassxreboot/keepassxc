@@ -262,3 +262,60 @@ void TestEntrySearcher::testCustomAttributesAreSearched()
     m_searchResult = m_entrySearcher.search("_testAttribute:test _testProtected:testP2", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 }
+
+void TestEntrySearcher::testGroup()
+{
+    /**
+     * Root
+     * - group1 (1 entry)
+     *   - subgroup1 (2 entries)
+     * - group2
+     *   - subgroup2 (1 entry)
+     */
+    Group* group1 = new Group();
+    Group* group2 = new Group();
+
+    group1->setParent(m_rootGroup);
+    group1->setName("group1");
+    group2->setParent(m_rootGroup);
+    group2->setName("group2");
+
+    Group* subgroup1 = new Group();
+    subgroup1->setName("subgroup1");
+    subgroup1->setParent(group1);
+
+    Group* subgroup2 = new Group();
+    subgroup2->setName("subgroup2");
+    subgroup2->setParent(group2);
+
+    Entry* eGroup1 = new Entry();
+    eGroup1->setTitle("Entry Group 1");
+    eGroup1->setGroup(group1);
+
+    Entry* eSub1 = new Entry();
+    eSub1->setTitle("test search term test");
+    eSub1->setGroup(subgroup1);
+
+    Entry* eSub2 = new Entry();
+    eSub2->setNotes("test test");
+    eSub2->setGroup(subgroup1);
+
+    Entry* eSub3 = new Entry();
+    eSub3->setNotes("test term test");
+    eSub3->setGroup(subgroup2);
+
+    m_searchResult = m_entrySearcher.search("group:subgroup", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+
+    m_searchResult = m_entrySearcher.search("g:subgroup1", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    m_searchResult = m_entrySearcher.search("g:subgroup1 search", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("g:*1/sub*1", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    m_searchResult = m_entrySearcher.search("g:/group1 search", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+}
