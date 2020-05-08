@@ -174,7 +174,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             if (attr->isReference(EntryAttributes::PasswordKey)) {
                 result.prepend(tr("Ref: ", "Reference abbreviation"));
             }
-            if (entry->password().isEmpty() && config()->get(Config::Security_PasswordEmptyNoDots).toBool()) {
+            if (entry->password().isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
                 result = "";
             }
             return result;

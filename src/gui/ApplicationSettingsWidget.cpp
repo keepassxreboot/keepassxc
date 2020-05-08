@@ -196,7 +196,7 @@ void ApplicationSettingsWidget::loadSettings()
         config()->get(Config::UseGroupIconOnEntryCreation).toBool());
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryTitleMatch).toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
-    m_generalUi->ignoreGroupExpansionCheckBox->setChecked(config()->get(Config::IgnoreGroupExpansion).toBool());
+    m_generalUi->trackNonDataChangesCheckBox->setChecked(config()->get(Config::TrackNonDataChanges).toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
 
     if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
@@ -274,11 +274,12 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->relockDatabaseAutoTypeCheckBox->setChecked(config()->get(Config::Security_RelockAutoType).toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
 
-    m_secUi->passwordCleartextCheckBox->setChecked(config()->get(Config::Security_PasswordsCleartext).toBool());
-    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get(Config::Security_PasswordEmptyNoDots).toBool());
+    m_secUi->passwordsHiddenCheckBox->setChecked(config()->get(Config::Security_PasswordsHidden).toBool());
+    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get(Config::Security_PasswordEmptyPlaceholder).toBool());
     m_secUi->passwordPreviewCleartextCheckBox->setChecked(
         config()->get(Config::Security_HidePasswordPreviewPanel).toBool());
-    m_secUi->passwordRepeatCheckBox->setChecked(config()->get(Config::Security_PasswordsRepeat).toBool());
+    m_secUi->passwordsRepeatVisibleCheckBox->setChecked(
+        config()->get(Config::Security_PasswordsRepeatVisible).toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get(Config::Security_HideNotes).toBool());
 
     m_secUi->touchIDResetCheckBox->setChecked(config()->get(Config::Security_ResetTouchId).toBool());
@@ -322,7 +323,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::MinimizeOnCopy, m_generalUi->minimizeOnCopyRadioButton->isChecked());
     config()->set(Config::DropToBackgroundOnCopy, m_generalUi->dropToBackgroundOnCopyRadioButton->isChecked());
     config()->set(Config::UseGroupIconOnEntryCreation, m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set(Config::IgnoreGroupExpansion, m_generalUi->ignoreGroupExpansionCheckBox->isChecked());
+    config()->set(Config::TrackNonDataChanges, m_generalUi->trackNonDataChangesCheckBox->isChecked());
     config()->set(Config::AutoTypeEntryTitleMatch, m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
@@ -369,11 +370,11 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_RelockAutoType, m_secUi->relockDatabaseAutoTypeCheckBox->isChecked());
     config()->set(Config::Security_IconDownloadFallback, m_secUi->fallbackToSearch->isChecked());
 
-    config()->set(Config::Security_PasswordsCleartext, m_secUi->passwordCleartextCheckBox->isChecked());
-    config()->set(Config::Security_PasswordEmptyNoDots, m_secUi->passwordShowDotsCheckBox->isChecked());
+    config()->set(Config::Security_PasswordsHidden, m_secUi->passwordsHiddenCheckBox->isChecked());
+    config()->set(Config::Security_PasswordEmptyPlaceholder, m_secUi->passwordShowDotsCheckBox->isChecked());
 
     config()->set(Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox->isChecked());
-    config()->set(Config::Security_PasswordsRepeat, m_secUi->passwordRepeatCheckBox->isChecked());
+    config()->set(Config::Security_PasswordsRepeatVisible, m_secUi->passwordsRepeatVisibleCheckBox->isChecked());
     config()->set(Config::Security_HideNotes, m_secUi->hideNotesCheckBox->isChecked());
 
     config()->set(Config::Security_ResetTouchId, m_secUi->touchIDResetCheckBox->isChecked());
