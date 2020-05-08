@@ -42,6 +42,5 @@ void TestConfig::testUpgrade()
     QVERIFY(!config()->get(Config::Security_PasswordsHidden).toBool());
     QVERIFY(config()->get(Config::Security_PasswordEmptyPlaceholder).toBool());
 
-
     tempFile.remove();
 }
