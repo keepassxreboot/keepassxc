@@ -324,6 +324,7 @@ MainWindow::MainWindow()
     m_ui->actionDatabaseOpen->setIcon(resources()->icon("document-open"));
     m_ui->actionDatabaseSave->setIcon(resources()->icon("document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(resources()->icon("document-save-as"));
+    m_ui->actionDatabaseSaveBackup->setIcon(resources()->icon("document-save-copy"));
     m_ui->actionDatabaseClose->setIcon(resources()->icon("document-close"));
     m_ui->actionReports->setIcon(resources()->icon("reports"));
     m_ui->actionChangeDatabaseSettings->setIcon(resources()->icon("document-edit"));
@@ -396,6 +397,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
+    connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
     connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionChangeMasterKey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(changeMasterKey()));
@@ -681,6 +683,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionChangeDatabaseSettings->setEnabled(true);
             m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
             m_ui->actionDatabaseSaveAs->setEnabled(true);
+            m_ui->actionDatabaseSaveBackup->setEnabled(true);
             m_ui->menuExport->setEnabled(true);
             m_ui->actionExportCsv->setEnabled(true);
             m_ui->actionExportHtml->setEnabled(true);
@@ -736,6 +739,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionChangeDatabaseSettings->setEnabled(false);
             m_ui->actionDatabaseSave->setEnabled(false);
             m_ui->actionDatabaseSaveAs->setEnabled(false);
+            m_ui->actionDatabaseSaveBackup->setEnabled(false);
             m_ui->menuExport->setEnabled(false);
             m_ui->actionExportCsv->setEnabled(false);
             m_ui->actionExportHtml->setEnabled(false);
@@ -764,6 +768,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionChangeDatabaseSettings->setEnabled(false);
         m_ui->actionDatabaseSave->setEnabled(false);
         m_ui->actionDatabaseSaveAs->setEnabled(false);
+        m_ui->actionDatabaseSaveBackup->setEnabled(false);
         m_ui->actionDatabaseClose->setEnabled(false);
         m_ui->menuExport->setEnabled(false);
         m_ui->actionExportCsv->setEnabled(false);

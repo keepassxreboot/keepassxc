@@ -1866,6 +1866,53 @@ bool DatabaseWidget::saveAs()
     }
 }
 
+/**
+ * Save copy of database under a new user-selected filename.
+ *
+ * @return true on success
+ */
+bool DatabaseWidget::saveBackup()
+{
+    while (true) {
+        QString oldFilePath = m_db->filePath();
+        if (!QFileInfo::exists(oldFilePath)) {
+            oldFilePath = QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
+                                                   + tr("Passwords").append(".kdbx"));
+        }
+        const QString newFilePath = fileDialog()->getSaveFileName(this,
+                                                                  tr("Save database backup"),
+                                                                  oldFilePath,
+                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"),
+                                                                  nullptr,
+                                                                  nullptr);
+
+        if (!newFilePath.isEmpty()) {
+            // Ensure we don't recurse back into this function
+            m_db->setReadOnly(false);
+            m_db->setFilePath(newFilePath);
+            m_saveAttempts = 0;
+
+            bool modified = m_db->isModified();
+
+            if (!save()) {
+                // Failed to save, try again
+                m_db->setFilePath(oldFilePath);
+                continue;
+            }
+
+            m_db->setFilePath(oldFilePath);
+            if (modified) {
+                // Source database is marked as clean when copy is saved, even if source has unsaved changes
+                m_db->markAsModified();
+            }
+            return true;
+        }
+
+        // Canceled file selection
+        return false;
+    }
+}
+
 void DatabaseWidget::showMessage(const QString& text,
                                  MessageWidget::MessageType type,
                                  bool showClosebutton,

@@ -1212,6 +1212,35 @@ void TestGui::testSaveAs()
     tmpFile.remove();
 }
 
+void TestGui::testSaveBackup()
+{
+    m_db->metadata()->setName("testSaveBackup");
+
+    QFileInfo fileInfo(m_dbFilePath);
+    QDateTime lastModified = fileInfo.lastModified();
+
+    // open temporary file so it creates a filename
+    TemporaryFile tmpFile;
+    QVERIFY(tmpFile.open());
+    QString tmpFileName = tmpFile.fileName();
+    tmpFile.remove();
+
+    // wait for modified timer
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+
+    fileDialog()->setNextFileName(tmpFileName);
+
+    triggerAction("actionDatabaseSaveBackup");
+
+    QCOMPARE(m_tabWidget->tabName(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+
+    checkDatabase(tmpFileName);
+
+    fileInfo.refresh();
+    QCOMPARE(fileInfo.lastModified(), lastModified);
+    tmpFile.remove();
+}
+
 void TestGui::testSave()
 {
     m_db->metadata()->setName("testSave");

@@ -393,6 +393,20 @@ bool DatabaseTabWidget::saveDatabaseAs(int index)
     return ok;
 }
 
+bool DatabaseTabWidget::saveDatabaseBackup(int index)
+{
+    if (index == -1) {
+        index = currentIndex();
+    }
+
+    auto* dbWidget = databaseWidgetFromIndex(index);
+    bool ok = dbWidget->saveBackup();
+    if (ok) {
+        updateLastDatabases(dbWidget->database()->filePath());
+    }
+    return ok;
+}
+
 void DatabaseTabWidget::closeDatabaseFromSender()
 {
     auto* dbWidget = qobject_cast<DatabaseWidget*>(sender());
