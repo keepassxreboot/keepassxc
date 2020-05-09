@@ -68,6 +68,7 @@ public slots:
     void importOpVaultDatabase();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
+    bool saveDatabaseBackup(int index = -1);
     void exportToCsv();
     void exportToHtml();
 

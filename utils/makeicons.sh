@@ -86,6 +86,7 @@ map() {
         document-properties)                echo file-edit-outline              ;;
         document-save)                      echo content-save-outline           ;;
         document-save-as)                   echo content-save-all-outline       ;;
+        document-save-copy)                 echo content-save-move-outline      ;;
         donate)                             echo gift-outline                   ;;
         edit-clear-locationbar-ltr)         echo backspace-reverse-outline      ;;
         edit-clear-locationbar-rtl)         echo backspace-outline              ;;

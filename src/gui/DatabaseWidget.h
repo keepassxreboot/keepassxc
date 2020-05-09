@@ -158,6 +158,7 @@ public slots:
     bool lock();
     bool save();
     bool saveAs();
+    bool saveBackup();
 
     void replaceDatabase(QSharedPointer<Database> db);
     void createEntry();

@@ -260,6 +260,7 @@
     <addaction name="menuRecentDatabases"/>
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
+    <addaction name="actionDatabaseSaveBackup"/>
     <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionChangeMasterKey"/>
@@ -332,9 +333,6 @@
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
-    <addaction name="separator"/>
-    <addaction name="actionEntryAddToAgent"/>
-    <addaction name="actionEntryRemoveFromAgent"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -806,6 +804,14 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+/</string>
+   </property>
+  </action>
+  <action name="actionDatabaseSaveBackup">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Save Database Backup...</string>
    </property>
   </action>
   <action name="actionEntryAddToAgent">

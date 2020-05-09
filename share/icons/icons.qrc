@@ -23,6 +23,7 @@
         <file>application/scalable/actions/document-properties.svg</file>
         <file>application/scalable/actions/document-save.svg</file>
         <file>application/scalable/actions/document-save-as.svg</file>
+        <file>application/scalable/actions/document-save-copy.svg</file>
         <file>application/scalable/actions/donate.svg</file>
         <file>application/scalable/actions/edit-clear-locationbar-ltr.svg</file>
         <file>application/scalable/actions/edit-clear-locationbar-rtl.svg</file>
