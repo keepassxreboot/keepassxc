@@ -37,13 +37,6 @@ public:
                                  QString* selectedFilter = nullptr,
                                  const QFileDialog::Options options = {});
 
-    QString getFileName(QWidget* parent = nullptr,
-                        const QString& caption = QString(),
-                        const QString& dir = QString(),
-                        const QString& filter = QString(),
-                        QString* selectedFilter = nullptr,
-                        const QFileDialog::Options options = {});
-
     QString getSaveFileName(QWidget* parent = nullptr,
                             const QString& caption = QString(),
                             const QString& dir = QString(),
