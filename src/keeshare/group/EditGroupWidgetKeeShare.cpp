@@ -49,7 +49,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
     connect(m_ui->clearButton, SIGNAL(clicked(bool)), SLOT(clearInputs()));
 
-    connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(showSharingState()));
+    connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(updateSharingState()));
 
     const auto types = QList<KeeShareSettings::Type>()
                        << KeeShareSettings::Inactive << KeeShareSettings::ImportFrom << KeeShareSettings::ExportTo
@@ -94,9 +94,16 @@ void EditGroupWidgetKeeShare::setGroup(Group* temporaryGroup, QSharedPointer<Dat
     update();
 }
 
-void EditGroupWidgetKeeShare::showSharingState()
+void EditGroupWidgetKeeShare::updateSharingState()
 {
-    if (!m_temporaryGroup) {
+    // Only enable controls if we are active
+    bool isEnabled = m_ui->typeComboBox->currentData().toInt() > KeeShareSettings::Inactive;
+    m_ui->pathEdit->setEnabled(isEnabled);
+    m_ui->pathSelectionButton->setEnabled(isEnabled);
+    m_ui->passwordEdit->setEnabled(isEnabled);
+
+    if (!m_temporaryGroup || !isEnabled) {
+        m_ui->messageWidget->hideMessage();
         return;
     }
 
@@ -107,6 +114,8 @@ void EditGroupWidgetKeeShare::showSharingState()
 #if defined(WITH_XC_KEESHARE_SECURE)
     supportedExtensions << KeeShare::signedContainerFileType();
 #endif
+
+    // Custom message for active KeeShare reference
     const auto reference = KeeShare::referenceOf(m_temporaryGroup);
     if (!reference.path.isEmpty()) {
         bool supported = false;
@@ -157,26 +166,23 @@ void EditGroupWidgetKeeShare::showSharingState()
                 MessageWidget::Warning);
             return;
         }
-
-        m_ui->messageWidget->hide();
     }
+
+    // Standard message for state of KeeShare service
     const auto active = KeeShare::active();
     if (!active.in && !active.out) {
         m_ui->messageWidget->showMessage(
             tr("KeeShare is currently disabled. You can enable import/export in the application settings.",
                "KeeShare is a proper noun"),
             MessageWidget::Information);
-        return;
-    }
-    if (active.in && !active.out) {
+    } else if (active.in && !active.out) {
         m_ui->messageWidget->showMessage(tr("Database export is currently disabled by application settings."),
                                          MessageWidget::Information);
-        return;
-    }
-    if (!active.in && active.out) {
+    } else if (!active.in && active.out) {
         m_ui->messageWidget->showMessage(tr("Database import is currently disabled by application settings."),
                                          MessageWidget::Information);
-        return;
+    } else {
+        m_ui->messageWidget->hideMessage();
     }
 }
 
@@ -191,9 +197,9 @@ void EditGroupWidgetKeeShare::update()
         m_ui->typeComboBox->setCurrentIndex(reference.type);
         m_ui->passwordEdit->setText(reference.password);
         m_ui->pathEdit->setText(reference.path);
-
-        showSharingState();
     }
+
+    updateSharingState();
 }
 
 void EditGroupWidgetKeeShare::clearInputs()
@@ -204,6 +210,7 @@ void EditGroupWidgetKeeShare::clearInputs()
     m_ui->passwordEdit->clear();
     m_ui->pathEdit->clear();
     m_ui->typeComboBox->setCurrentIndex(KeeShareSettings::Inactive);
+    updateSharingState();
 }
 
 void EditGroupWidgetKeeShare::selectPath()
@@ -255,17 +262,14 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     }
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
-        filename = fileDialog()->getFileName(
-            this, tr("Select import source"), defaultDirPath, filters, nullptr, QFileDialog::DontConfirmOverwrite);
+        filename = fileDialog()->getOpenFileName(this, tr("Select import source"), defaultDirPath, filters);
         break;
     case KeeShareSettings::ExportTo:
-        filename = fileDialog()->getFileName(
-            this, tr("Select export target"), defaultDirPath, filters, nullptr, QFileDialog::Option(0));
+        filename = fileDialog()->getSaveFileName(this, tr("Select export target"), defaultDirPath, filters);
         break;
     case KeeShareSettings::SynchronizeWith:
     case KeeShareSettings::Inactive:
-        filename = fileDialog()->getFileName(
-            this, tr("Select import/export file"), defaultDirPath, filters, nullptr, QFileDialog::Option(0));
+        filename = fileDialog()->getSaveFileName(this, tr("Select import/export file"), defaultDirPath, filters);
         break;
     }
 
@@ -286,6 +290,8 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     m_ui->pathEdit->setText(filename);
     selectPath();
     config()->set(Config::KeeShare_LastShareDir, QFileInfo(filename).absolutePath());
+
+    updateSharingState();
 }
 
 void EditGroupWidgetKeeShare::selectPassword()
@@ -306,4 +312,6 @@ void EditGroupWidgetKeeShare::selectType()
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
     reference.type = static_cast<KeeShareSettings::Type>(m_ui->typeComboBox->currentData().toInt());
     KeeShare::setReferenceTo(m_temporaryGroup, reference);
+
+    updateSharingState();
 }

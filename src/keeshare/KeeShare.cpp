@@ -48,7 +48,7 @@ KeeShare* KeeShare::instance()
 KeeShare::KeeShare(QObject* parent)
     : QObject(parent)
 {
-    connect(config(), SIGNAL(changed(Config::ConfigKey)), SLOT(handleSettingsChanged(Config::ConfigKey)));
+    connect(config(), &Config::changed, this, &KeeShare::handleSettingsChanged);
 }
 
 void KeeShare::init(QObject* parent)
@@ -117,7 +117,7 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
         return;
     }
     const auto serialized = KeeShareSettings::Reference::serialize(reference);
-    const auto encoded = serialized.toUtf8().toBase64();
+    customData->set(KeeShare_Reference, serialized.toUtf8().toBase64());
 }
 
 bool KeeShare::isEnabled(const Group* group)

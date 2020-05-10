@@ -40,7 +40,7 @@ public:
     void setGroup(Group* temporaryGroup, QSharedPointer<Database> database);
 
 private slots:
-    void showSharingState();
+    void updateSharingState();
 
 private slots:
     void update();
