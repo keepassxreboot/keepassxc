@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,32 +15,39 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NATIVEMESSAGINGHOST_H
-#define NATIVEMESSAGINGHOST_H
+#ifndef NATIVEMESSAGINGPROXY_H
+#define NATIVEMESSAGINGPROXY_H
 
-#include "NativeMessagingBase.h"
+#include <QLocalSocket>
+#include <QObject>
+#include <QScopedPointer>
 
-class NativeMessagingHost : public NativeMessagingBase
+class QWinEventNotifier;
+class QSocketNotifier;
+
+class NativeMessagingProxy : public QObject
 {
     Q_OBJECT
 public:
-    NativeMessagingHost();
-    ~NativeMessagingHost() override;
+    NativeMessagingProxy();
+    ~NativeMessagingProxy() override = default;
+
+signals:
+    void stdinMessage(QString msg);
 
 public slots:
-    void newLocalMessage();
-    void deleteSocket();
-    void socketStateChanged(QLocalSocket::LocalSocketState socketState);
+    void transferSocketMessage();
+    void transferStdinMessage(const QString& msg);
+    void socketDisconnected();
 
 private:
-    void readNativeMessages() override;
-    void readLength() override;
-    bool readStdIn(const quint32 length) override;
+    void setupStandardInput();
+    void setupLocalSocket();
 
 private:
-    QLocalSocket* m_localSocket;
+    QScopedPointer<QLocalSocket> m_localSocket;
 
-    Q_DISABLE_COPY(NativeMessagingHost)
+    Q_DISABLE_COPY(NativeMessagingProxy)
 };
 
-#endif // NATIVEMESSAGINGHOST_H
+#endif // NATIVEMESSAGINGPROXY_H

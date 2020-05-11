@@ -45,6 +45,7 @@ private slots:
 
     void testEntrySettings();
     void testAdditionalURLs();
+    void testGetDatabaseGroups();
 
 private:
     void triggerAction(const QString& name);
@@ -57,10 +58,7 @@ private:
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;
     QSharedPointer<Database> m_db;
-    QByteArray m_dbData;
     QScopedPointer<TemporaryFile> m_dbFile;
-    QString m_dbFileName;
-    QString m_dbFilePath;
 };
 
 #endif // KEEPASSXC_TESTGUIBROWSER_H

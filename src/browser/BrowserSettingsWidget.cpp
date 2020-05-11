@@ -1,7 +1,5 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "BrowserOptionDialog.h"
-#include "ui_BrowserOptionDialog.h"
+#include "BrowserSettingsWidget.h"
+#include "ui_BrowserSettingsWidget.h"
 
 #include "BrowserSettings.h"
 #include "config-keepassx.h"
@@ -26,9 +24,9 @@
 
 #include <QFileDialog>
 
-BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
+BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     : QWidget(parent)
-    , m_ui(new Ui::BrowserOptionDialog())
+    , m_ui(new Ui::BrowserSettingsWidget())
 {
     m_ui->setupUi(this);
 
@@ -52,13 +50,9 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
                  snapInstructions));
     // clang-format on
 
-    m_ui->scriptWarningWidget->setVisible(false);
-    m_ui->scriptWarningWidget->setAutoHideTimeout(-1);
-
-    m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
-                                     MessageWidget::Warning);
     m_ui->warningWidget->setCloseButtonVisible(false);
     m_ui->warningWidget->setAutoHideTimeout(-1);
+    m_ui->warningWidget->setAnimate(false);
 
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
@@ -67,6 +61,8 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     m_ui->customProxyLocationBrowseButton->setEnabled(m_ui->useCustomProxy->isChecked());
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocation, SLOT(setEnabled(bool)));
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
+    connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), SLOT(validateCustomProxyLocation()));
+    connect(m_ui->customProxyLocation, SIGNAL(editingFinished()), SLOT(validateCustomProxyLocation()));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
 #ifndef Q_OS_LINUX
@@ -86,11 +82,11 @@ BrowserOptionDialog::BrowserOptionDialog(QWidget* parent)
     m_ui->browserGlobalWarningWidget->setVisible(false);
 }
 
-BrowserOptionDialog::~BrowserOptionDialog()
+BrowserSettingsWidget::~BrowserSettingsWidget()
 {
 }
 
-void BrowserOptionDialog::loadSettings()
+void BrowserSettingsWidget::loadSettings()
 {
     auto settings = browserSettings();
     m_ui->enableBrowserSupport->setChecked(settings->isEnabled());
@@ -116,43 +112,39 @@ void BrowserOptionDialog::loadSettings()
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
     m_ui->noMigrationPrompt->setChecked(settings->noMigrationPrompt());
-    m_ui->supportBrowserProxy->setChecked(settings->supportBrowserProxy());
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->customProxyLocation());
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
     m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
-    m_ui->chromeSupport->setChecked(settings->chromeSupport());
-    m_ui->chromiumSupport->setChecked(settings->chromiumSupport());
-    m_ui->firefoxSupport->setChecked(settings->firefoxSupport());
-    m_ui->edgeSupport->setChecked(settings->edgeSupport());
+    m_ui->chromeSupport->setChecked(settings->browserSupport(BrowserShared::CHROME));
+    m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
+    m_ui->firefoxSupport->setChecked(settings->browserSupport(BrowserShared::FIREFOX));
+    m_ui->edgeSupport->setChecked(settings->browserSupport(BrowserShared::EDGE));
 #ifndef Q_OS_WIN
-    m_ui->braveSupport->setChecked(settings->braveSupport());
-    m_ui->vivaldiSupport->setChecked(settings->vivaldiSupport());
-    m_ui->torBrowserSupport->setChecked(settings->torBrowserSupport());
+    m_ui->braveSupport->setChecked(settings->browserSupport(BrowserShared::BRAVE));
+    m_ui->vivaldiSupport->setChecked(settings->browserSupport(BrowserShared::VIVALDI));
+    m_ui->torBrowserSupport->setChecked(settings->browserSupport(BrowserShared::TOR_BROWSER));
 #endif
 #ifndef Q_OS_LINUX
     m_ui->snapWarningLabel->setVisible(false);
 #endif
 
-// TODO: Enable when Linux version is released
+// TODO: Enable Edge support when Linux version is released
 #ifdef Q_OS_LINUX
     m_ui->edgeSupport->setChecked(false);
     m_ui->edgeSupport->setEnabled(false);
 #endif
 
-#if defined(KEEPASSXC_DIST_APPIMAGE)
-    m_ui->supportBrowserProxy->setChecked(true);
-    m_ui->supportBrowserProxy->setEnabled(false);
-#elif defined(KEEPASSXC_DIST_SNAP)
+#ifdef KEEPASSXC_DIST_SNAP
     // Disable settings that will not work
-    m_ui->supportBrowserProxy->setChecked(true);
-    m_ui->supportBrowserProxy->setEnabled(false);
     m_ui->useCustomProxy->setChecked(false);
-    m_ui->useCustomProxy->setEnabled(false);
+    m_ui->useCustomProxy->setVisible(false);
+    m_ui->customProxyLocation->setVisible(false);
+    m_ui->customProxyLocationBrowseButton->setVisible(false);
     m_ui->browsersGroupBox->setVisible(false);
     m_ui->browsersGroupBox->setEnabled(false);
     m_ui->updateBinaryPath->setChecked(false);
-    m_ui->updateBinaryPath->setEnabled(false);
+    m_ui->updateBinaryPath->setVisible(false);
     // Show notice to user
     m_ui->browserGlobalWarningWidget->showMessage(tr("Please see special instructions for browser extension use below"),
                                                   MessageWidget::Warning);
@@ -160,23 +152,23 @@ void BrowserOptionDialog::loadSettings()
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
 
-    // Check for native messaging host location errors
-    QString path;
-    if (!settings->checkIfProxyExists(path)) {
-        auto text =
-            tr("<b>Warning</b>, the keepassxc-proxy application was not found!"
-               "<br />Please check the KeePassXC installation directory or confirm the custom path in advanced options."
-               "<br />Browser integration WILL NOT WORK without the proxy application."
-               "<br />Expected Path: %1")
-                .arg(path);
-        m_ui->scriptWarningWidget->showMessage(text, MessageWidget::Warning);
-        m_ui->scriptWarningWidget->setVisible(true);
+    validateCustomProxyLocation();
+}
+
+void BrowserSettingsWidget::validateCustomProxyLocation()
+{
+    auto path = m_ui->customProxyLocation->text();
+    if (m_ui->useCustomProxy->isChecked() && !QFile::exists(path)) {
+        m_ui->warningWidget->showMessage(tr("<b>Error:</b> The custom proxy location cannot be found!"
+                                            "<br/>Browser integration WILL NOT WORK without the proxy application."),
+                                         MessageWidget::Error);
     } else {
-        m_ui->scriptWarningWidget->setVisible(false);
+        m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
+                                         MessageWidget::Warning);
     }
 }
 
-void BrowserOptionDialog::saveSettings()
+void BrowserSettingsWidget::saveSettings()
 {
     auto settings = browserSettings();
     settings->setEnabled(m_ui->enableBrowserSupport->isChecked());
@@ -186,7 +178,6 @@ void BrowserOptionDialog::saveSettings()
     settings->setMatchUrlScheme(m_ui->matchUrlScheme->isChecked());
     settings->setSortByUsername(m_ui->sortByUsername->isChecked());
 
-    settings->setSupportBrowserProxy(m_ui->supportBrowserProxy->isChecked());
     settings->setUseCustomProxy(m_ui->useCustomProxy->isChecked());
     settings->setCustomProxyLocation(m_ui->customProxyLocation->text());
 
@@ -199,18 +190,18 @@ void BrowserOptionDialog::saveSettings()
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
     settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
 
-    settings->setChromeSupport(m_ui->chromeSupport->isChecked());
-    settings->setChromiumSupport(m_ui->chromiumSupport->isChecked());
-    settings->setFirefoxSupport(m_ui->firefoxSupport->isChecked());
-    settings->setEdgeSupport(m_ui->edgeSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::CHROME, m_ui->chromeSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::CHROMIUM, m_ui->chromiumSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::FIREFOX, m_ui->firefoxSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::EDGE, m_ui->edgeSupport->isChecked());
 #ifndef Q_OS_WIN
-    settings->setBraveSupport(m_ui->braveSupport->isChecked());
-    settings->setVivaldiSupport(m_ui->vivaldiSupport->isChecked());
-    settings->setTorBrowserSupport(m_ui->torBrowserSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::BRAVE, m_ui->braveSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::VIVALDI, m_ui->vivaldiSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::TOR_BROWSER, m_ui->torBrowserSupport->isChecked());
 #endif
 }
 
-void BrowserOptionDialog::showProxyLocationFileDialog()
+void BrowserSettingsWidget::showProxyLocationFileDialog()
 {
 #ifdef Q_OS_WIN
     QString fileTypeFilter(QString("%1 (*.exe);;%2 (*.*)").arg(tr("Executable Files"), tr("All Files")));
@@ -222,4 +213,5 @@ void BrowserOptionDialog::showProxyLocationFileDialog()
                                                       QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
                                                       fileTypeFilter);
     m_ui->customProxyLocation->setText(proxyLocation);
+    validateCustomProxyLocation();
 }

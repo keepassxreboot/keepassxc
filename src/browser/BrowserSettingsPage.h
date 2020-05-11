@@ -1,11 +1,10 @@
 /*
- *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 or (at your option)
- *  version 3 of the License.
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,25 +15,22 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AGENTSETTINGSPAGE_H
-#define AGENTSETTINGSPAGE_H
+#ifndef KEEPASSXC_BROWSERSETTINGSPAGE_H
+#define KEEPASSXC_BROWSERSETTINGSPAGE_H
 
 #include "gui/ApplicationSettingsWidget.h"
-#include "gui/DatabaseTabWidget.h"
 
-class AgentSettingsPage : public ISettingsPage
+class BrowserSettingsPage : public ISettingsPage
 {
 public:
-    AgentSettingsPage() = default;
-    ~AgentSettingsPage() override = default;
+    explicit BrowserSettingsPage() = default;
+    ~BrowserSettingsPage() override = default;
 
     QString name() override;
     QIcon icon() override;
     QWidget* createWidget() override;
     void loadSettings(QWidget* widget) override;
     void saveSettings(QWidget* widget) override;
-
-private:
 };
 
-#endif // AGENTSETTINGSPAGE_H
+#endif // KEEPASSXC_BROWSERSETTINGSPAGE_H

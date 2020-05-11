@@ -1,7 +1,5 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSEROPTIONDIALOG_H
-#define BROWSEROPTIONDIALOG_H
+#ifndef BROWSERSETTINGSWIDGET_H
+#define BROWSERSETTINGSWIDGET_H
 
 #include <QPointer>
 #include <QScopedPointer>
@@ -26,16 +24,16 @@
 
 namespace Ui
 {
-    class BrowserOptionDialog;
+    class BrowserSettingsWidget;
 }
 
-class BrowserOptionDialog : public QWidget
+class BrowserSettingsWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit BrowserOptionDialog(QWidget* parent = nullptr);
-    ~BrowserOptionDialog();
+    explicit BrowserSettingsWidget(QWidget* parent = nullptr);
+    ~BrowserSettingsWidget();
 
 public slots:
     void loadSettings();
@@ -43,9 +41,10 @@ public slots:
 
 private slots:
     void showProxyLocationFileDialog();
+    void validateCustomProxyLocation();
 
 private:
-    QScopedPointer<Ui::BrowserOptionDialog> m_ui;
+    QScopedPointer<Ui::BrowserSettingsWidget> m_ui;
 };
 
-#endif // BROWSEROPTIONDIALOG_H
+#endif // BROWSERSETTINGSWIDGET_H

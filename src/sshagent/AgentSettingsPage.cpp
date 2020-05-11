@@ -20,15 +20,6 @@
 #include "AgentSettingsWidget.h"
 #include "core/Resources.h"
 
-AgentSettingsPage::AgentSettingsPage(DatabaseTabWidget* tabWidget)
-{
-    Q_UNUSED(tabWidget);
-}
-
-AgentSettingsPage::~AgentSettingsPage()
-{
-}
-
 QString AgentSettingsPage::name()
 {
     return QObject::tr("SSH Agent");

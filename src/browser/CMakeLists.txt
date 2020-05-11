@@ -20,15 +20,15 @@ if(WITH_XC_BROWSER)
     set(keepassxcbrowser_SOURCES
             BrowserAccessControlDialog.cpp
             BrowserAction.cpp
-            BrowserClients.cpp
             BrowserEntryConfig.cpp
             BrowserEntrySaveDialog.cpp
-            BrowserOptionDialog.cpp
+            BrowserHost.cpp
+            BrowserSettingsPage.cpp
+            BrowserSettingsWidget.cpp
             BrowserService.cpp
             BrowserSettings.cpp
-            HostInstaller.cpp
-            NativeMessagingBase.cpp
-            NativeMessagingHost.cpp
+            BrowserShared.cpp
+            NativeMessageInstaller.cpp
             Variant.cpp)
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})
