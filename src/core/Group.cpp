@@ -364,7 +364,7 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        if (config()->get(Config::IgnoreGroupExpansion).toBool()) {
+        if (!config()->get(Config::TrackNonDataChanges).toBool()) {
             updateTimeinfo();
             return;
         }

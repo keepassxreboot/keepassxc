@@ -73,7 +73,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::AutoTypeStartDelay,{QS("AutoTypeStartDelay"), Roaming, 500}},
     {Config::GlobalAutoTypeKey,{QS("GlobalAutoTypeKey"), Roaming, 0}},
     {Config::GlobalAutoTypeModifiers,{QS("GlobalAutoTypeModifiers"), Roaming, 0}},
-    {Config::IgnoreGroupExpansion,{QS("IgnoreGroupExpansion"), Roaming, true}},
+    {Config::TrackNonDataChanges,{QS("TrackNonDataChanges"), Roaming, false}},
     {Config::FaviconDownloadTimeout,{QS("FaviconDownloadTimeout"), Roaming, 10}},
     {Config::UpdateCheckMessageShown,{QS("UpdateCheckMessageShown"), Roaming, true}},
     {Config::UseTouchID,{QS("UseTouchID"), Roaming, false}},
@@ -125,9 +125,9 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Security_LockDatabaseMinimize, {QS("Security/LockDatabaseMinimize"), Roaming, false}},
     {Config::Security_LockDatabaseScreenLock, {QS("Security/LockDatabaseScreenLock"), Roaming, true}},
     {Config::Security_RelockAutoType, {QS("Security/RelockAutoType"), Roaming, false}},
-    {Config::Security_PasswordsRepeat, {QS("Security/PasswordsRepeat"), Roaming, false}},
-    {Config::Security_PasswordsCleartext, {QS("Security/PasswordsCleartext"), Roaming, false}},
-    {Config::Security_PasswordEmptyNoDots, {QS("Security/PasswordEmptyNoDots"), Roaming, true}},
+    {Config::Security_PasswordsRepeatVisible, {QS("Security/PasswordsRepeatVisible"), Roaming, true}},
+    {Config::Security_PasswordsHidden, {QS("Security/PasswordsHidden"), Roaming, true}},
+    {Config::Security_PasswordEmptyPlaceholder, {QS("Security/PasswordEmptyPlaceholder"), Roaming, false}},
     {Config::Security_HidePasswordPreviewPanel, {QS("Security/HidePasswordPreviewPanel"), Roaming, true}},
     {Config::Security_AutoTypeAsk, {QS("Security/AutotypeAsk"), Roaming, true}},
     {Config::Security_IconDownloadFallback, {QS("Security/IconDownloadFallback"), Roaming, false}},
@@ -290,6 +290,7 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("security/IconDownloadFallbackToGoogle"), Config::Security_IconDownloadFallback},
 
     // 2.6.0
+    {QS("IgnoreGroupExpansion"), Config::TrackNonDataChanges},
     {QS("security/autotypeask"), Config::Security_AutoTypeAsk},
     {QS("security/clearclipboard"), Config::Security_ClearClipboard},
     {QS("security/clearclipboardtimeout"), Config::Security_ClearClipboardTimeout},
@@ -301,10 +302,10 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("security/lockdatabasescreenlock"), Config::Security_LockDatabaseScreenLock},
     {QS("security/relockautotype"), Config::Security_RelockAutoType},
     {QS("security/IconDownloadFallback"), Config::Security_IconDownloadFallback},
-    {QS("security/passwordscleartext"), Config::Security_PasswordsCleartext},
-    {QS("security/passwordemptynodots"), Config::Security_PasswordEmptyNoDots},
+    {QS("security/passwordscleartext"), Config::Security_PasswordsHidden},
+    {QS("security/passwordemptynodots"), Config::Security_PasswordEmptyPlaceholder},
     {QS("security/HidePasswordPreviewPanel"), Config::Security_HidePasswordPreviewPanel},
-    {QS("security/passwordsrepeat"), Config::Security_PasswordsRepeat},
+    {QS("security/passwordsrepeat"), Config::Security_PasswordsRepeatVisible},
     {QS("security/hidenotes"), Config::Security_HideNotes},
     {QS("security/resettouchid"), Config::Security_ResetTouchId},
     {QS("security/resettouchidtimeout"), Config::Security_ResetTouchIdTimeout},
@@ -353,7 +354,13 @@ void Config::migrate()
     for (const auto& setting : deprecationMap.keys()) {
         QVariant value;
         if (m_settings->contains(setting)) {
-            value = m_settings->value(setting);
+            if (setting == QS("IgnoreGroupExpansion") || setting == QS("security/passwordsrepeat")
+                || setting == QS("security/passwordscleartext") || setting == QS("security/passwordemptynodots")) {
+                // Keep user's original setting for boolean settings whose meanings were reversed
+                value = !m_settings->value(setting).toBool();
+            } else {
+                value = m_settings->value(setting);
+            }
             m_settings->remove(setting);
         } else if (m_localSettings && m_localSettings->contains(setting)) {
             value = m_localSettings->value(setting);

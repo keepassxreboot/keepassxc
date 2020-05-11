@@ -186,7 +186,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     if (state) {
         m_ui->entryPasswordLabel->setText(password);
         m_ui->entryPasswordLabel->setCursorPosition(0);
-    } else if (password.isEmpty() && config()->get(Config::Security_PasswordEmptyNoDots).toBool()) {
+    } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setText("");
     } else {
         m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
