@@ -48,7 +48,7 @@ Estimate::Estimate()
 
 static void estimate(const char* pwd, bool advanced)
 {
-    TextStream out(Utils::STDOUT, QIODevice::WriteOnly);
+    auto& out = Utils::STDOUT;
 
     int len = static_cast<int>(strlen(pwd));
     if (!advanced) {
@@ -163,14 +163,14 @@ int Estimate::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    TextStream inputTextStream(Utils::STDIN, QIODevice::ReadOnly);
+    auto& in = Utils::STDIN;
     const QStringList args = parser->positionalArguments();
 
     QString password;
     if (args.size() == 1) {
         password = args.at(0);
     } else {
-        password = inputTextStream.readLine();
+        password = in.readLine();
     }
 
     estimate(password.toLatin1(), parser->isSet(Estimate::AdvancedOption));

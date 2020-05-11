@@ -126,24 +126,24 @@ QString Command::getHelpText()
 
 QSharedPointer<QCommandLineParser> Command::getCommandLineParser(const QStringList& arguments)
 {
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    auto& err = Utils::STDERR;
     QSharedPointer<QCommandLineParser> parser = buildParser(this);
 
     if (!parser->parse(arguments)) {
-        errorTextStream << parser->errorText() << "\n\n";
-        errorTextStream << getHelpText();
+        err << parser->errorText() << "\n\n";
+        err << getHelpText();
         return {};
     }
     if (parser->positionalArguments().size() < positionalArguments.size()) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     if (parser->positionalArguments().size() > (positionalArguments.size() + optionalArguments.size())) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     if (parser->isSet(HelpOption)) {
-        errorTextStream << getHelpText();
+        err << getHelpText();
         return {};
     }
     return parser;

@@ -34,21 +34,22 @@
 
 namespace Utils
 {
-    extern FILE* STDOUT;
-    extern FILE* STDERR;
-    extern FILE* STDIN;
-    extern FILE* DEVNULL;
+    extern QTextStream STDOUT;
+    extern QTextStream STDERR;
+    extern QTextStream STDIN;
+    extern QTextStream DEVNULL;
+
+    void setDefaultTextStreams();
 
     void setStdinEcho(bool enable);
-    QString getPassword(FILE* outputDescriptor = STDOUT);
-    QSharedPointer<PasswordKey> getPasswordFromStdin();
+    QString getPassword(bool quiet = false);
+    QSharedPointer<PasswordKey> getConfirmedPassword();
     int clipText(const QString& text);
     QSharedPointer<Database> unlockDatabase(const QString& databaseFilename,
                                             const bool isPasswordProtected = true,
                                             const QString& keyFilename = {},
                                             const QString& yubiKeySlot = {},
-                                            FILE* outputDescriptor = STDOUT,
-                                            FILE* errorDescriptor = STDERR);
+                                            bool quiet = false);
 
     QStringList splitCommandString(const QString& command);
 
@@ -59,11 +60,6 @@ namespace Utils
      * (case-insensitive).
      */
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name);
-
-    namespace Test
-    {
-        void setNextPassword(const QString& password, bool repeat = false);
-    }
 }; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H

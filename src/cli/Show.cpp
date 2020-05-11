@@ -59,8 +59,8 @@ Show::Show()
 
 int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {
-    TextStream outputTextStream(Utils::STDOUT, QIODevice::WriteOnly);
-    TextStream errorTextStream(Utils::STDERR, QIODevice::WriteOnly);
+    auto& out = Utils::STDOUT;
+    auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
     const QString& entryPath = args.at(1);
@@ -70,12 +70,12 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        errorTextStream << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
     if (showTotp && !entry->hasTotp()) {
-        errorTextStream << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
         return EXIT_FAILURE;
     }
 
@@ -91,28 +91,28 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         QStringList attrs = Utils::findAttributes(*entry->attributes(), attributeName);
         if (attrs.isEmpty()) {
             encounteredError = true;
-            errorTextStream << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
+            err << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
             continue;
         } else if (attrs.size() > 1) {
             encounteredError = true;
-            errorTextStream << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
-                                   .arg(attributeName, QLocale().createSeparatedList(attrs))
-                            << endl;
+            err << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
+                       .arg(attributeName, QLocale().createSeparatedList(attrs))
+                << endl;
             continue;
         }
         QString canonicalName = attrs[0];
         if (showDefaultAttributes) {
-            outputTextStream << canonicalName << ": ";
+            out << canonicalName << ": ";
         }
         if (entry->attributes()->isProtected(canonicalName) && showDefaultAttributes && !showProtectedAttributes) {
-            outputTextStream << "PROTECTED" << endl;
+            out << "PROTECTED" << endl;
         } else {
-            outputTextStream << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
+            out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
         }
     }
 
     if (showTotp) {
-        outputTextStream << entry->totp() << endl;
+        out << entry->totp() << endl;
     }
 
     return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
