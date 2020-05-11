@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>BrowserOptionDialog</class>
- <widget class="QWidget" name="BrowserOptionDialog">
+ <class>BrowserSettingsWidget</class>
+ <widget class="QWidget" name="BrowserSettingsWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -49,16 +49,6 @@
        <string>General</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
-       <item>
-        <widget class="MessageWidget" name="scriptWarningWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QLabel" name="snapWarningLabel">
          <property name="text">
@@ -348,16 +338,6 @@
          </property>
          <property name="text">
           <string>Update native messaging manifest files at startup</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="supportBrowserProxy">
-         <property name="toolTip">
-          <string>Support a proxy application between KeePassXC and browser extension.</string>
-         </property>
-         <property name="text">
-          <string>Use a proxy application between KeePassXC and browser extension</string>
          </property>
         </widget>
        </item>

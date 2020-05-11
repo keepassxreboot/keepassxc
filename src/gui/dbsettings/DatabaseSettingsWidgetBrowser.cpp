@@ -34,7 +34,6 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     , m_ui(new Ui::DatabaseSettingsWidgetBrowser())
     , m_customData(new CustomData(this))
     , m_customDataModel(new QStandardItemModel(this))
-    , m_browserService(nullptr)
 {
     m_ui->setupUi(this);
     m_ui->removeCustomDataButton->setEnabled(false);
@@ -254,7 +253,7 @@ void DatabaseSettingsWidgetBrowser::convertAttributesToCustomData()
         return;
     }
 
-    m_browserService.convertAttributesToCustomData(m_db);
+    BrowserService::convertAttributesToCustomData(m_db);
 }
 
 void DatabaseSettingsWidgetBrowser::refreshDatabaseID()

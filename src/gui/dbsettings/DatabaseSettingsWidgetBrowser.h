@@ -77,7 +77,6 @@ protected:
 private:
     QPointer<CustomData> m_customData;
     QPointer<QStandardItemModel> m_customDataModel;
-    BrowserService m_browserService;
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H

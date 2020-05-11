@@ -16,11 +16,13 @@
  */
 
 #include "TestBrowser.h"
+
 #include "TestGlobal.h"
 #include "browser/BrowserSettings.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "sodium/crypto_box.h"
+
 #include <QString>
 
 QTEST_GUILESS_MAIN(TestBrowser)
@@ -35,12 +37,12 @@ const QString CLIENTID = "testClient";
 void TestBrowser::initTestCase()
 {
     QVERIFY(Crypto::init());
-    m_browserService.reset(new BrowserService(nullptr));
-    m_browserAction.reset(new BrowserAction(*m_browserService.data()));
+    m_browserService = browserService();
 }
 
-void TestBrowser::cleanupTestCase()
+void TestBrowser::init()
 {
+    m_browserAction.reset(new BrowserAction());
 }
 
 /**
@@ -54,7 +56,7 @@ void TestBrowser::testChangePublicKeys()
     json["publicKey"] = PUBLICKEY;
     json["nonce"] = NONCE;
 
-    auto response = m_browserAction->handleAction(json);
+    auto response = m_browserAction->processClientMessage(json);
     QCOMPARE(response["action"].toString(), QString("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
     QCOMPARE(response["success"].toString(), TRUE_STR);
@@ -391,62 +393,6 @@ void TestBrowser::testSortEntries()
     QCOMPARE(result[2]->url(), QString("https://github.com/login"));
     QCOMPARE(result[3]->username(), QString("User 3"));
     QCOMPARE(result[3]->url(), QString("github.com/login"));
-}
-
-void TestBrowser::testGetDatabaseGroups()
-{
-    auto db = QSharedPointer<Database>::create();
-    auto* root = db->rootGroup();
-
-    QScopedPointer<Group> group1(new Group());
-    group1->setParent(root);
-    group1->setName("group1");
-
-    QScopedPointer<Group> group2(new Group());
-    group2->setParent(root);
-    group2->setName("group2");
-
-    QScopedPointer<Group> group3(new Group());
-    group3->setParent(root);
-    group3->setName("group3");
-
-    QScopedPointer<Group> group2_1(new Group());
-    group2_1->setParent(group2.data());
-    group2_1->setName("group2_1");
-
-    QScopedPointer<Group> group2_2(new Group());
-    group2_2->setParent(group2.data());
-    group2_2->setName("group2_2");
-
-    QScopedPointer<Group> group2_1_1(new Group());
-    group2_1_1->setParent(group2_1.data());
-    group2_1_1->setName("group2_1_1");
-
-    auto result = m_browserService->getDatabaseGroups(db);
-    QCOMPARE(result.length(), 1);
-
-    auto groups = result["groups"].toArray();
-    auto first = groups.at(0);
-    auto children = first.toObject()["children"].toArray();
-    QCOMPARE(first.toObject()["name"].toString(), QString("Root"));
-    QCOMPARE(children.size(), 3);
-
-    auto firstChild = children.at(0);
-    auto secondChild = children.at(1);
-    auto thirdChild = children.at(2);
-    QCOMPARE(firstChild.toObject()["name"].toString(), QString("group1"));
-    QCOMPARE(secondChild.toObject()["name"].toString(), QString("group2"));
-    QCOMPARE(thirdChild.toObject()["name"].toString(), QString("group3"));
-
-    auto childrenOfSecond = secondChild.toObject()["children"].toArray();
-    auto firstOfCOS = childrenOfSecond.at(0);
-    auto secondOfCOS = childrenOfSecond.at(1);
-    QCOMPARE(firstOfCOS.toObject()["name"].toString(), QString("group2_1"));
-    QCOMPARE(secondOfCOS.toObject()["name"].toString(), QString("group2_2"));
-
-    auto lastChildren = firstOfCOS.toObject()["children"].toArray();
-    auto lastChild = lastChildren.at(0);
-    QCOMPARE(lastChild.toObject()["name"].toString(), QString("group2_1_1"));
 }
 
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const

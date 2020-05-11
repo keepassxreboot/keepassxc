@@ -48,6 +48,8 @@ public:
     MainWindow();
     ~MainWindow();
 
+    QList<DatabaseWidget*> getOpenDatabases();
+
     enum StackedWidgetIndex
     {
         DatabaseTabScreen = 0,

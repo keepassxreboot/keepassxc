@@ -44,6 +44,9 @@
 
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
+#ifdef WITH_XC_TOUCHID
+#include "touchid/TouchID.h"
+#endif
 #endif
 
 #ifdef WITH_XC_UPDATECHECK
@@ -56,7 +59,7 @@
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
 #endif
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsPageKeeShare.h"
 #endif
@@ -66,70 +69,14 @@
 #endif
 
 #ifdef WITH_XC_BROWSER
-#include "browser/BrowserOptionDialog.h"
-#include "browser/BrowserSettings.h"
-#include "browser/NativeMessagingHost.h"
+#include "browser/BrowserService.h"
+#include "browser/BrowserSettingsPage.h"
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
 #include "gui/MainWindowAdaptor.h"
 #include <QList>
 #include <QtDBus/QtDBus>
-#endif
-
-#include "gui/ApplicationSettingsWidget.h"
-#include "gui/PasswordGeneratorWidget.h"
-
-#include "touchid/TouchID.h"
-
-#ifdef WITH_XC_BROWSER
-class BrowserPlugin : public ISettingsPage
-{
-public:
-    explicit BrowserPlugin(DatabaseTabWidget* tabWidget)
-    {
-        m_nativeMessagingHost =
-            QSharedPointer<NativeMessagingHost>(new NativeMessagingHost(tabWidget, browserSettings()->isEnabled()));
-    }
-
-    ~BrowserPlugin()
-    {
-    }
-
-    QString name() override
-    {
-        return QObject::tr("Browser Integration");
-    }
-
-    QIcon icon() override
-    {
-        return Resources::instance()->icon("internet-web-browser");
-    }
-
-    QWidget* createWidget() override
-    {
-        BrowserOptionDialog* dlg = new BrowserOptionDialog();
-        return dlg;
-    }
-
-    void loadSettings(QWidget* widget) override
-    {
-        qobject_cast<BrowserOptionDialog*>(widget)->loadSettings();
-    }
-
-    void saveSettings(QWidget* widget) override
-    {
-        qobject_cast<BrowserOptionDialog*>(widget)->saveSettings();
-        if (browserSettings()->isEnabled()) {
-            m_nativeMessagingHost->run();
-        } else {
-            m_nativeMessagingHost->stop();
-        }
-    }
-
-private:
-    QSharedPointer<NativeMessagingHost> m_nativeMessagingHost;
-};
 #endif
 
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
@@ -186,13 +133,19 @@ MainWindow::MainWindow()
     restoreGeometry(config()->get(Config::GUI_MainWindowGeometry).toByteArray());
     restoreState(config()->get(Config::GUI_MainWindowState).toByteArray());
 #ifdef WITH_XC_BROWSER
-    m_ui->settingsWidget->addSettingsPage(new BrowserPlugin(m_ui->tabWidget));
+    m_ui->settingsWidget->addSettingsPage(new BrowserSettingsPage());
+    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseLocked, browserService(), &BrowserService::databaseLocked);
+    connect(m_ui->tabWidget, &DatabaseTabWidget::databaseUnlocked, browserService(), &BrowserService::databaseUnlocked);
+    connect(m_ui->tabWidget,
+            &DatabaseTabWidget::activateDatabaseChanged,
+            browserService(),
+            &BrowserService::activeDatabaseChanged);
 #endif
 
 #ifdef WITH_XC_SSHAGENT
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
-    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage(m_ui->tabWidget));
+    m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
 
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
@@ -563,6 +516,15 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
+}
+
+QList<DatabaseWidget*> MainWindow::getOpenDatabases()
+{
+    QList<DatabaseWidget*> dbWidgets;
+    for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
+        dbWidgets << m_ui->tabWidget->databaseWidgetFromIndex(i);
+    }
+    return dbWidgets;
 }
 
 void MainWindow::showErrorMessage(const QString& message)
