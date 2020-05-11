@@ -77,10 +77,8 @@ int Create::execute(const QStringList& arguments)
         return EXIT_FAILURE;
     }
 
-    bool quiet = parser->isSet(Command::QuietOption);
-
-    QTextStream out(quiet ? Utils::DEVNULL : Utils::STDOUT, QIODevice::WriteOnly);
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
+    auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
+    auto& err = Utils::STDERR;
 
     const QStringList args = parser->positionalArguments();
 
@@ -110,7 +108,7 @@ int Create::execute(const QStringList& arguments)
     auto key = QSharedPointer<CompositeKey>::create();
 
     if (parser->isSet(Create::SetPasswordOption)) {
-        auto passwordKey = Utils::getPasswordFromStdin();
+        auto passwordKey = Utils::getConfirmedPassword();
         if (passwordKey.isNull()) {
             err << QObject::tr("Failed to set database password.") << endl;
             return EXIT_FAILURE;
@@ -151,7 +149,7 @@ int Create::execute(const QStringList& arguments)
         bool ok = db->changeKdf(kdf);
 
         if (!ok) {
-            err << QObject::tr("Error while setting database key derivation settings.") << endl;
+            err << QObject::tr("error while setting database key derivation settings.") << endl;
             return EXIT_FAILURE;
         }
     }
@@ -180,8 +178,7 @@ int Create::execute(const QStringList& arguments)
  */
 bool Create::loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
 {
-    QTextStream err(Utils::STDERR, QIODevice::WriteOnly);
-
+    auto& err = Utils::STDERR;
     QString error;
     fileKey = QSharedPointer<FileKey>(new FileKey());
 

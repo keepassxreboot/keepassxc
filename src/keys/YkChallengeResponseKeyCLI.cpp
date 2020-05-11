@@ -30,13 +30,13 @@ QUuid YkChallengeResponseKeyCLI::UUID("e2be77c0-c810-417a-8437-32f41d00bd1d");
 YkChallengeResponseKeyCLI::YkChallengeResponseKeyCLI(int slot,
                                                      bool blocking,
                                                      QString messageInteraction,
-                                                     FILE* outputDescriptor)
+                                                     QIODevice* out)
     : ChallengeResponseKey(UUID)
     , m_slot(slot)
     , m_blocking(blocking)
     , m_messageInteraction(messageInteraction)
-    , m_out(outputDescriptor)
 {
+    m_out.setDevice(out);
 }
 
 QByteArray YkChallengeResponseKeyCLI::rawKey() const
@@ -54,12 +54,11 @@ bool YkChallengeResponseKeyCLI::challenge(const QByteArray& c)
 
 bool YkChallengeResponseKeyCLI::challenge(const QByteArray& challenge, unsigned int retries)
 {
-    QTextStream out(m_out, QIODevice::WriteOnly);
     do {
         --retries;
 
         if (m_blocking) {
-            out << m_messageInteraction << endl;
+            m_out << m_messageInteraction << endl;
         }
         YubiKey::ChallengeResult result = YubiKey::instance()->challenge(m_slot, m_blocking, challenge, m_key);
         if (result == YubiKey::SUCCESS) {
