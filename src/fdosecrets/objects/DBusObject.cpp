@@ -19,6 +19,7 @@
 
 #include <QDBusAbstractAdaptor>
 #include <QFile>
+#include <QFileInfo>
 #include <QRegularExpression>
 #include <QTextStream>
 #include <QUrl>
@@ -44,15 +45,14 @@ namespace FdoSecrets
         Q_ASSERT(ok);
     }
 
-    QString DBusObject::callingPeerName() const
+    QString DBusObject::peerName(uint pid) const
     {
-        auto pid = callingPeerPid();
-        QFile proc(QStringLiteral("/proc/%1/comm").arg(pid));
-        if (!proc.open(QFile::ReadOnly)) {
-            return callingPeer();
+        QFileInfo info(QStringLiteral("/proc/%1/exe").arg(pid));
+        if (info.exists()) {
+            return info.canonicalFilePath();
+        } else {
+            return QStringLiteral("Unknown");
         }
-        QTextStream stream(&proc);
-        return stream.readAll().trimmed();
     }
 
     QString encodePath(const QString& value)

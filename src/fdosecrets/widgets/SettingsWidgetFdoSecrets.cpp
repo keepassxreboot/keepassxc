@@ -20,7 +20,8 @@
 
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
-#include "fdosecrets/objects/Session.h"
+#include "fdosecrets/objects/Connection.h"
+#include "fdosecrets/objects/Service.h"
 #include "fdosecrets/widgets/SettingsModels.h"
 
 #include "core/Resources.h"
@@ -35,9 +36,9 @@
 #include <QToolBar>
 #include <QVariant>
 
-using FdoSecrets::Session;
+using FdoSecrets::Connection;
+using FdoSecrets::SettingsConnectionModel;
 using FdoSecrets::SettingsDatabaseModel;
-using FdoSecrets::SettingsSessionModel;
 
 namespace
 {
@@ -154,14 +155,14 @@ namespace
         QAction* m_lockAct = nullptr;
     };
 
-    class ManageSession : public QToolBar
+    class ManageConnection : public QToolBar
     {
         Q_OBJECT
 
-        Q_PROPERTY(Session* session READ session WRITE setSession USER true)
+        Q_PROPERTY(Connection* connection READ connection WRITE setConnection USER true)
 
     public:
-        explicit ManageSession(FdoSecretsPlugin*, QWidget* parent = nullptr)
+        explicit ManageConnection(FdoSecretsPlugin*, QWidget* parent = nullptr)
             : QToolBar(parent)
         {
             setFloatable(false);
@@ -177,8 +178,8 @@ namespace
             m_disconnectAct->setIcon(resources()->icon(QStringLiteral("dialog-close")));
             m_disconnectAct->setToolTip(tr("Disconnect this application"));
             connect(m_disconnectAct, &QAction::triggered, this, [this]() {
-                if (m_session) {
-                    m_session->close();
+                if (m_connection) {
+                    m_connection->disconnectDBus();
                 }
             });
             addAction(m_disconnectAct);
@@ -190,18 +191,18 @@ namespace
             addWidget(spacer);
         }
 
-        Session* session()
+        Connection* connection()
         {
-            return m_session;
+            return m_connection;
         }
 
-        void setSession(Session* sess)
+        void setConnection(Connection* conn)
         {
-            m_session = sess;
+            m_connection = conn;
         }
 
     private:
-        Session* m_session = nullptr;
+        Connection* m_connection = nullptr;
         QAction* m_disconnectAct = nullptr;
     };
 
@@ -241,12 +242,12 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto sessModel = new SettingsSessionModel(plugin, this);
-    m_ui->tableSessions->setModel(sessModel);
-    setupView(m_ui->tableSessions, 1, qMetaTypeId<Session*>(), new Creator<ManageSession>(m_plugin));
+    auto connModel = new SettingsConnectionModel(plugin, this);
+    m_ui->tableConnections->setModel(connModel);
+    setupView(m_ui->tableConnections, 1, qMetaTypeId<Connection*>(), new Creator<ManageConnection>(m_plugin));
 
     // config header after setting model, otherwise the header doesn't have enough sections
-    auto sessViewHeader = m_ui->tableSessions->horizontalHeader();
+    auto sessViewHeader = m_ui->tableConnections->horizontalHeader();
     sessViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     sessViewHeader->setSectionsClickable(false);
     sessViewHeader->setSectionResizeMode(0, QHeaderView::Stretch); // application
@@ -304,6 +305,7 @@ void SettingsWidgetFdoSecrets::loadSettings()
     m_ui->enableFdoSecretService->setChecked(FdoSecrets::settings()->isEnabled());
     m_ui->showNotification->setChecked(FdoSecrets::settings()->showNotification());
     m_ui->noConfirmDeleteItem->setChecked(FdoSecrets::settings()->noConfirmDeleteItem());
+    m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
 }
 
 void SettingsWidgetFdoSecrets::saveSettings()
@@ -311,6 +313,7 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setEnabled(m_ui->enableFdoSecretService->isChecked());
     FdoSecrets::settings()->setShowNotification(m_ui->showNotification->isChecked());
     FdoSecrets::settings()->setNoConfirmDeleteItem(m_ui->noConfirmDeleteItem->isChecked());
+    FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
 }
 
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)

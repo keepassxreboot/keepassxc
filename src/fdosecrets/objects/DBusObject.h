@@ -66,6 +66,13 @@ namespace FdoSecrets
             m_objectPath.setPath(QStringLiteral("/"));
         }
 
+        uint peerPid(const QString& service) const
+        {
+            return connection().interface()->servicePid(service);
+        }
+
+        QString peerName(uint pid) const;
+
         QString callingPeer() const
         {
             Q_ASSERT(calledFromDBus());
@@ -74,10 +81,13 @@ namespace FdoSecrets
 
         uint callingPeerPid() const
         {
-            return connection().interface()->servicePid(callingPeer());
+            return peerPid(callingPeer());
         }
 
-        QString callingPeerName() const;
+        QString callingPeerName() const
+        {
+            return peerName(callingPeerPid());
+        }
 
         DBusObject* p() const
         {

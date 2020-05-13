@@ -39,6 +39,7 @@ namespace FdoSecrets
 {
 
     class Collection;
+    class Connection;
     class Item;
     class PromptBase;
     class ServiceAdaptor;
@@ -79,8 +80,8 @@ namespace FdoSecrets
         void collectionDeleted(Collection* collection);
         void collectionChanged(Collection* collection);
 
-        void sessionOpened(Session* sess);
-        void sessionClosed(Session* sess);
+        void connectionOpened(Connection* conn);
+        void connectionClosed(Connection* conn);
 
         /**
          * Report error message to the GUI
@@ -97,10 +98,18 @@ namespace FdoSecrets
 
     public:
         /**
-         * List of sessions
-         * @return
+         * Get connection state for a client.
+         *
+         * @param peer The DBus address of the peer
+         * @param create Create connection object if the peer is not known yet
+         * @return Connection object or nullptr if it does not exist and @a create is false
          */
-        const QList<Session*> sessions() const;
+        Connection* connection(const QString& peer, bool create = true);
+
+        /**
+         * Get all active connections.
+         */
+        const QList<Connection*> connections() const;
 
         FdoSecretsPlugin* plugin() const
         {
@@ -153,8 +162,7 @@ namespace FdoSecrets
         QList<Collection*> m_collections;
         QHash<const DatabaseWidget*, Collection*> m_dbToCollection;
 
-        QList<Session*> m_sessions;
-        QHash<QString, Session*> m_peerToSession;
+        QHash<QString, Connection*> m_connections;
 
         bool m_insdieEnsureDefaultAlias;
 

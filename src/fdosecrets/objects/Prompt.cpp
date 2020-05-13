@@ -19,6 +19,7 @@
 
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Connection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
 
@@ -26,6 +27,7 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/MessageBox.h"
 
+#include <QCheckBox>
 #include <QThread>
 #include <QWindow>
 
@@ -179,12 +181,20 @@ namespace FdoSecrets
         return {};
     }
 
-    UnlockCollectionsPrompt::UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& colls)
+    UnlockCollectionsPrompt::UnlockCollectionsPrompt(Service* parent,
+                                                     Connection* conn,
+                                                     const QSet<Collection*>& colls,
+                                                     const QSet<Item*>& items)
         : PromptBase(parent)
+        , m_conn(conn)
     {
         m_collections.reserve(colls.size());
         for (const auto& c : asConst(colls)) {
             m_collections << c;
+        }
+        m_items.reserve(items.size());
+        for (const auto& i : items) {
+            m_items << i;
         }
     }
 
@@ -202,12 +212,19 @@ namespace FdoSecrets
 
         MessageBox::OverrideParent override(findWindow(windowId));
 
+        // This only initiates the unlock but does not block. Items are unlocked after all collections have been
+        // unlocked to prevent multiple simultaneous dialogues.
         for (const auto& c : asConst(m_collections)) {
             if (c) {
                 // doUnlock is nonblocking
                 connect(c, &Collection::doneUnlockCollection, this, &UnlockCollectionsPrompt::collectionUnlockFinished);
                 c->doUnlock();
             }
+        }
+
+        // Directly handle items if no collections need to be unlocked.
+        if (m_collections.isEmpty()) {
+            unlockItems();
         }
 
         return {};
@@ -237,13 +254,69 @@ namespace FdoSecrets
 
         // if we've get all
         if (m_numRejected + m_unlocked.size() == m_collections.size()) {
-            emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
+            if (m_unlocked.isEmpty()) {
+                emit completed(true, QVariant::fromValue(m_unlocked));
+            } else {
+                unlockItems();
+            }
         }
     }
     DBusReturn<void> UnlockCollectionsPrompt::dismiss()
     {
         emit completed(true, QVariant::fromValue(m_unlocked));
         return {};
+    }
+
+    void UnlockCollectionsPrompt::unlockItems()
+    {
+        if (m_conn && m_conn->connected() && !m_items.empty()) {
+            QString q =
+                tr("The application '%1' requested access to the following entries:\n\n").arg(m_conn->peerName());
+            for (const auto& i : m_items) {
+                if (i) {
+                    q += QStringLiteral("%1 %2\n").arg(QChar(0x2022)).arg(i->backend()->title());
+                }
+            }
+            q += tr("\nAttention: the authenticity of the application name cannot be guaranteed!\n\n");
+            q += tr("Do you allow access to these entries only, all entries or deny the access?");
+
+            auto* checkbox = new QCheckBox(tr("Always request confirmations when applications access secrets"));
+            checkbox->setChecked(true);
+            checkbox->setToolTip(tr("You can change this setting from \"Settings\" -> \"Secret-Service-Integration\" "
+                                    "-> \"Confirm when passwords are retrieved by clients\" too."));
+            QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+                FdoSecrets::settings()->setConfirmAccessItem(static_cast<Qt::CheckState>(state)
+                                                             == Qt::CheckState::Checked);
+            });
+            auto dialogResult = MessageBox::question(nullptr,
+                                                     tr("KeePassXC: Secret-service access requested"),
+                                                     q,
+                                                     MessageBox::Yes | MessageBox::YesToAll | MessageBox::No,
+                                                     MessageBox::NoButton,
+                                                     MessageBox::Raise,
+                                                     checkbox);
+
+            if (m_conn && m_conn->connected()) {
+                if (dialogResult == MessageBox::Yes) {
+                    for (const auto& i : m_items) {
+                        if (i) {
+                            m_conn->setAuthorizedItem(i->backend()->uuid());
+                            m_unlocked << i->objectPath();
+                        }
+                    }
+                } else if (dialogResult == MessageBox::YesToAll) {
+                    m_conn->setAuthorizedAll();
+                    for (const auto& i : m_items) {
+                        if (i) {
+                            m_unlocked << i->objectPath();
+                        }
+                    }
+                }
+            }
+        }
+
+        // if we've get all
+        emit completed(m_unlocked.isEmpty(), QVariant::fromValue(m_unlocked));
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)
@@ -283,4 +356,88 @@ namespace FdoSecrets
 
         return {};
     }
+
+    OverwritePrompt::OverwritePrompt(Service* parent,
+                                     Connection* conn,
+                                     Item* item,
+                                     const QVariantMap& properties,
+                                     const SecretStruct& secret)
+        : PromptBase(parent)
+        , m_conn(conn)
+        , m_item(item)
+        , m_properties(properties)
+        , m_secret(secret)
+    {
+    }
+
+    DBusReturn<void> OverwritePrompt::prompt(const QString& windowId)
+    {
+        if (thread() != QThread::currentThread()) {
+            DBusReturn<void> ret;
+            QMetaObject::invokeMethod(this,
+                                      "prompt",
+                                      Qt::BlockingQueuedConnection,
+                                      Q_ARG(QString, windowId),
+                                      Q_RETURN_ARG(DBusReturn<void>, ret));
+            return ret;
+        }
+
+        MessageBox::OverrideParent override(findWindow(windowId));
+
+        bool dismissed;
+        if (m_conn && m_conn->connected() && m_item) {
+            auto l = m_item->locked(m_conn);
+            if (l.isError()) {
+                dismissed = true;
+            } else if (!l.value()) {
+                // not locked anymore
+                dismissed = false;
+            } else {
+                QString q = tr("An application wants to the update the following entry: %1\n\n")
+                                .arg(m_item->backend()->title());
+                q += tr("\nApplication: %1\n\n").arg(m_conn->peerName());
+                q += tr("Do you allow access to this entry only, all entries or deny the access?");
+
+                auto* checkbox = new QCheckBox(tr("Always request confirmations when applications access secrets"));
+                checkbox->setChecked(true);
+                checkbox->setToolTip(
+                    tr("You can change this setting from \"Settings\" -> \"Secret-Service-Integration\" -> \"Confirm "
+                       "when passwords are retrieved by clients\" too."));
+                QObject::connect(checkbox, &QCheckBox::stateChanged, [&](int state) {
+                    FdoSecrets::settings()->setConfirmAccessItem(static_cast<Qt::CheckState>(state)
+                                                                 == Qt::CheckState::Checked);
+                });
+                auto dialogResult = MessageBox::question(nullptr,
+                                                         tr("KeePassXC: Secret-service access requested"),
+                                                         q,
+                                                         MessageBox::Yes | MessageBox::YesToAll | MessageBox::No,
+                                                         MessageBox::NoButton,
+                                                         MessageBox::Raise,
+                                                         checkbox);
+
+                if (dialogResult == MessageBox::Yes) {
+                    m_conn->setAuthorizedItem(m_item->backend()->uuid());
+                    dismissed = false;
+                } else if (dialogResult == MessageBox::YesToAll) {
+                    m_conn->setAuthorizedAll();
+                    dismissed = false;
+                } else {
+                    dismissed = true;
+                }
+
+                if (!dismissed) {
+                    dismissed = m_item->setSecret(m_secret, m_conn).isError();
+                }
+                if (!dismissed) {
+                    dismissed = m_item->setProperties(m_properties).isError();
+                }
+            }
+        } else {
+            dismissed = true;
+        }
+
+        emit completed(dismissed, dismissed ? QVariant() : QVariant::fromValue(objectPathSafe(m_item.data())));
+        return {};
+    }
+
 } // namespace FdoSecrets

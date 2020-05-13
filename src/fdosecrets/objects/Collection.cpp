@@ -18,6 +18,7 @@
 #include "Collection.h"
 
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/objects/Connection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
@@ -298,6 +299,10 @@ namespace FdoSecrets
         }
 
         prompt = nullptr;
+        auto conn = service()->connection(callingPeer());
+        if (!conn->connected()) {
+            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
+        }
 
         bool newlyCreated = true;
         Item* item = nullptr;
@@ -348,6 +353,15 @@ namespace FdoSecrets
                 // may happen if entry somehow ends up in recycle bin
                 return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SUCH_OBJECT));
             }
+
+            // the item was just created so there is no point in having it locked
+            conn->setAuthorizedItem(entry->uuid());
+        }
+
+        auto l = item->locked(conn);
+        if (l.isError() || l.value()) {
+            prompt = new OverwritePrompt(service(), conn, item, properties, secret);
+            return {};
         }
 
         ret = item->setProperties(properties);
@@ -357,7 +371,7 @@ namespace FdoSecrets
             }
             return ret;
         }
-        ret = item->setSecret(secret);
+        ret = item->setSecret(secret, conn);
         if (ret.isError()) {
             if (newlyCreated) {
                 item->doDelete();

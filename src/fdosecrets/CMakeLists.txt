@@ -18,6 +18,7 @@ if(WITH_XC_FDOSECRETS)
         GcryptMPI.cpp
 
         # dbus objects
+        objects/Connection.cpp
         objects/DBusObject.cpp
         objects/Service.cpp
         objects/Session.cpp

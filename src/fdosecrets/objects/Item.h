@@ -34,6 +34,7 @@ namespace FdoSecrets
         constexpr const auto PathKey = "Path";
     } // namespace ItemAttributes
 
+    class Connection;
     class Session;
     class Collection;
     class PromptBase;
@@ -45,6 +46,7 @@ namespace FdoSecrets
         explicit Item(Collection* parent, Entry* backend);
 
         DBusReturn<bool> locked() const;
+        DBusReturn<bool> locked(Connection* conn) const;
 
         DBusReturn<const StringStringMap> attributes() const;
         DBusReturn<void> setAttributes(const StringStringMap& attrs);
@@ -57,8 +59,8 @@ namespace FdoSecrets
         DBusReturn<qulonglong> modified() const;
 
         DBusReturn<PromptBase*> deleteItem();
-        DBusReturn<SecretStruct> getSecret(Session* session);
-        DBusReturn<void> setSecret(const SecretStruct& secret);
+        DBusReturn<SecretStruct> getSecret(Session* session, Connection* connection = nullptr);
+        DBusReturn<void> setSecret(const SecretStruct& secret, Connection* connection = nullptr);
 
     signals:
         void itemChanged();

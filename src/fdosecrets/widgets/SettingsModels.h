@@ -59,13 +59,13 @@ namespace FdoSecrets
     };
 
     class Service;
-    class Session;
+    class Connection;
 
-    class SettingsSessionModel : public QAbstractTableModel
+    class SettingsConnectionModel : public QAbstractTableModel
     {
         Q_OBJECT
     public:
-        explicit SettingsSessionModel(FdoSecretsPlugin* plugin, QObject* parent = nullptr);
+        explicit SettingsConnectionModel(FdoSecretsPlugin* plugin, QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent) const override;
         int columnCount(const QModelIndex& parent) const override;
@@ -75,20 +75,20 @@ namespace FdoSecrets
     private:
         void setService(Service* service);
 
-        QVariant dataForApplication(Session* sess, int role) const;
-        QVariant dataForManage(Session* sess, int role) const;
+        QVariant dataForApplication(Connection* conn, int role) const;
+        QVariant dataForManage(Connection* conn, int role) const;
 
     private slots:
         void populateModel();
-        void sessionAdded(Session* sess, bool emitSignals);
-        void sessionRemoved(Session* sess);
+        void connectionAdded(Connection* conn, bool emitSignals);
+        void connectionRemoved(Connection* conn);
 
     private:
         // source
         QPointer<Service> m_service;
 
         // internal copy, so we can emit with changed index
-        QList<Session*> m_sessions;
+        QList<Connection*> m_connections;
     };
 
 } // namespace FdoSecrets

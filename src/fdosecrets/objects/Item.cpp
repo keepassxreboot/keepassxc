@@ -18,7 +18,9 @@
 #include "Item.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Connection.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
@@ -60,13 +62,36 @@ namespace FdoSecrets
         connect(m_backend.data(), &Entry::entryModified, this, &Item::itemChanged);
     }
 
+    /**
+     * Return locked state of item without knowing who is asking.
+     *
+     * The Qt DBus bindings hide the caller information when a property is
+     * accessed.
+     */
     DBusReturn<bool> Item::locked() const
+    {
+        return locked(nullptr);
+    }
+
+    /**
+     * Return locked state for a known caller.
+     */
+    DBusReturn<bool> Item::locked(Connection* conn) const
     {
         auto ret = ensureBackend();
         if (ret.isError()) {
             return ret;
         }
-        return collection()->locked();
+
+        auto locked = collection()->locked();
+        if (locked.isError()) {
+            return locked;
+        }
+        if (locked.value()) {
+            return true;
+        }
+
+        return conn ? !conn->authorized(m_backend->uuid()) : FdoSecrets::settings()->confirmAccessItem();
     }
 
     DBusReturn<const StringStringMap> Item::attributes() const
@@ -210,15 +235,17 @@ namespace FdoSecrets
         return prompt;
     }
 
-    DBusReturn<SecretStruct> Item::getSecret(Session* session)
+    DBusReturn<SecretStruct> Item::getSecret(Session* session, Connection* connection)
     {
-        auto ret = ensureBackend();
-        if (ret.isError()) {
-            return ret;
+        if (!connection) {
+            connection = service()->connection(callingPeer());
         }
-        ret = ensureUnlocked();
-        if (ret.isError()) {
-            return ret;
+        auto l = locked(connection);
+        if (l.isError()) {
+            return l;
+        }
+        if (l.value()) {
+            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
 
         if (!session) {
@@ -234,12 +261,12 @@ namespace FdoSecrets
         if (calledFromDBus()) {
             service()->plugin()->emitRequestShowNotification(
                 tr(R"(Entry "%1" from database "%2" was used by %3)")
-                    .arg(m_backend->title(), collection()->name(), callingPeerName()));
+                    .arg(m_backend->title(), collection()->name(), connection->peerName()));
         }
         return secret;
     }
 
-    DBusReturn<void> Item::setSecret(const SecretStruct& secret)
+    DBusReturn<void> Item::setSecret(const SecretStruct& secret, Connection* connection)
     {
         auto ret = ensureBackend();
         if (ret.isError()) {
@@ -248,6 +275,13 @@ namespace FdoSecrets
         ret = ensureUnlocked();
         if (ret.isError()) {
             return ret;
+        }
+        auto l = locked(connection ?: service()->connection(callingPeer()));
+        if (l.isError()) {
+            return l;
+        }
+        if (l.value()) {
+            return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
         }
 
         auto session = pathToObject<Session>(secret.session);

@@ -51,6 +51,8 @@ namespace FdoSecrets
     };
 
     class Collection;
+    class Item;
+    class Connection;
 
     class DeleteCollectionPrompt : public PromptBase
     {
@@ -97,7 +99,10 @@ namespace FdoSecrets
     {
         Q_OBJECT
     public:
-        explicit UnlockCollectionsPrompt(Service* parent, const QList<Collection*>& coll);
+        explicit UnlockCollectionsPrompt(Service* parent,
+                                         Connection* conn,
+                                         const QSet<Collection*>& colls,
+                                         const QSet<Item*>& items);
 
         DBusReturn<void> prompt(const QString& windowId) override;
         DBusReturn<void> dismiss() override;
@@ -106,7 +111,10 @@ namespace FdoSecrets
         void collectionUnlockFinished(bool accepted);
 
     private:
+        void unlockItems();
+        QPointer<Connection> m_conn;
         QList<QPointer<Collection>> m_collections;
+        QList<QPointer<Item>> m_items;
         QList<QDBusObjectPath> m_unlocked;
         int m_numRejected = 0;
     };
@@ -123,6 +131,25 @@ namespace FdoSecrets
 
     private:
         QPointer<Item> m_item;
+    };
+
+    class OverwritePrompt : public PromptBase
+    {
+        Q_OBJECT
+    public:
+        OverwritePrompt(Service* parent,
+                        Connection* conn,
+                        Item* item,
+                        const QVariantMap& properties,
+                        const SecretStruct& secret);
+
+        DBusReturn<void> prompt(const QString& windowId) override;
+
+    private:
+        QPointer<Connection> m_conn;
+        QPointer<Item> m_item;
+        QVariantMap m_properties;
+        SecretStruct m_secret;
     };
 
 } // namespace FdoSecrets

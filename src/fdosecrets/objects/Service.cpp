@@ -20,6 +20,7 @@
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
+#include "fdosecrets/objects/Connection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Session.h"
@@ -187,10 +188,10 @@ namespace FdoSecrets
         Q_UNUSED(removed);
         Q_ASSERT(removed);
 
-        Session::CleanupNegotiation(service);
-        auto sess = m_peerToSession.value(service, nullptr);
-        if (sess) {
-            sess->close().okOrDie();
+        auto conn = connection(service, false);
+        if (conn) {
+            delete conn;
+            m_connections.remove(service);
         }
     }
 
@@ -199,15 +200,26 @@ namespace FdoSecrets
         return m_collections;
     }
 
+    Connection* Service::connection(const QString& peer, bool create)
+    {
+        Connection* conn = m_connections.value(peer, nullptr);
+        if (!conn && create) {
+            // watch for service unregister to cleanup
+            Q_ASSERT(m_serviceWatcher);
+            m_serviceWatcher->addWatchedService(peer);
+
+            m_connections[peer] = conn = new Connection(this, peerName(peerPid(peer)));
+            connect(conn, &Connection::disconnectedDBus, this, [this, conn]() { emit connectionClosed(conn); });
+            emit connectionOpened(conn);
+        }
+        return conn;
+    }
+
     DBusReturn<QVariant> Service::openSession(const QString& algorithm, const QVariant& input, Session*& result)
     {
         QVariant output;
         bool incomplete = false;
         auto peer = callingPeer();
-
-        // watch for service unregister to cleanup
-        Q_ASSERT(m_serviceWatcher);
-        m_serviceWatcher->addWatchedService(peer);
 
         // negotiate cipher
         auto ciphers = Session::CreateCiphers(peer, algorithm, input, output, incomplete);
@@ -218,16 +230,9 @@ namespace FdoSecrets
         if (!ciphers) {
             return DBusReturn<>::Error(QDBusError::NotSupported);
         }
-        result = new Session(std::move(ciphers), callingPeerName(), this);
 
-        m_sessions.append(result);
-        m_peerToSession[peer] = result;
-        connect(result, &Session::aboutToClose, this, [this, peer, result]() {
-            emit sessionClosed(result);
-            m_sessions.removeAll(result);
-            m_peerToSession.remove(peer);
-        });
-        emit sessionOpened(result);
+        result = new Session(std::move(ciphers), peer, this);
+        connection(peer)->addSession(result);
 
         return output;
     }
@@ -257,6 +262,11 @@ namespace FdoSecrets
 
     DBusReturn<const QList<Item*>> Service::searchItems(const StringStringMap& attributes, QList<Item*>& locked)
     {
+        auto conn = connection(callingPeer());
+        if (!conn->connected()) {
+            return {};
+        }
+
         auto ret = collections();
         if (ret.isError()) {
             return ret;
@@ -275,7 +285,17 @@ namespace FdoSecrets
             if (l.value()) {
                 locked.append(items.value());
             } else {
-                unlocked.append(items.value());
+                for (const auto& item : items.value()) {
+                    l = item->locked(conn);
+                    if (l.isError()) {
+                        return l;
+                    }
+                    if (l.value()) {
+                        locked.append(item);
+                    } else {
+                        unlocked.append(item);
+                    }
+                }
             }
         }
         return unlocked;
@@ -283,38 +303,47 @@ namespace FdoSecrets
 
     DBusReturn<const QList<DBusObject*>> Service::unlock(const QList<DBusObject*>& objects, PromptBase*& prompt)
     {
-        QSet<Collection*> needUnlock;
-        needUnlock.reserve(objects.size());
-        for (const auto& obj : asConst(objects)) {
-            auto coll = qobject_cast<Collection*>(obj);
-            if (coll) {
-                needUnlock << coll;
-            } else {
-                auto item = qobject_cast<Item*>(obj);
-                if (!item) {
-                    continue;
-                }
-                // we lock the whole collection for item
-                needUnlock << item->collection();
-            }
-        }
-
-        // return anything already unlocked
+        QSet<Collection*> needUnlockCollections;
+        QSet<Item*> needUnlockItems;
+        needUnlockCollections.reserve(objects.size());
+        needUnlockItems.reserve(objects.size());
         QList<DBusObject*> unlocked;
-        QList<Collection*> toUnlock;
-        for (const auto& coll : asConst(needUnlock)) {
+
+        auto conn = connection(callingPeer());
+        for (const auto& obj : asConst(objects)) {
+            auto item = qobject_cast<Item*>(obj);
+            auto coll = item ? item->collection() : qobject_cast<Collection*>(obj);
+            if (!coll) {
+                continue;
+            }
+
             auto l = coll->locked();
             if (l.isError()) {
                 return l;
             }
-            if (!l.value()) {
-                unlocked << coll;
-            } else {
-                toUnlock << coll;
+            bool needUnlock = l.value();
+            if (needUnlock) {
+                needUnlockCollections << coll;
+            }
+
+            if (item) {
+                l = item->locked(conn);
+                if (l.isError()) {
+                    return l;
+                }
+                if (l.value()) {
+                    needUnlockItems << item;
+                    needUnlock = true;
+                }
+            }
+
+            if (!needUnlock) {
+                unlocked << obj;
             }
         }
-        if (!toUnlock.isEmpty()) {
-            prompt = new UnlockCollectionsPrompt(this, toUnlock);
+
+        if (!needUnlockCollections.isEmpty() || !needUnlockItems.isEmpty()) {
+            prompt = new UnlockCollectionsPrompt(this, conn, needUnlockCollections, needUnlockItems);
         }
         return unlocked;
     }
@@ -363,20 +392,24 @@ namespace FdoSecrets
             return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_NO_SESSION));
         }
 
+        auto conn = connection(callingPeer());
         QHash<Item*, SecretStruct> res;
-
         for (const auto& item : asConst(items)) {
-            auto ret = item->getSecret(session);
+            auto l = item->locked(conn);
+            if (l.isError()) {
+                return l;
+            }
+            if (l.value()) {
+                return DBusReturn<>::Error(QStringLiteral(DBUS_ERROR_SECRET_IS_LOCKED));
+            }
+            auto ret = item->getSecret(session, conn);
             if (ret.isError()) {
                 return ret;
             }
             res[item] = std::move(ret).value();
         }
-        if (calledFromDBus()) {
-            plugin()->emitRequestShowNotification(
-                tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", res.size())
-                    .arg(callingPeerName()));
-        }
+        plugin()->emitRequestShowNotification(
+            tr(R"(%n Entry(s) was used by %1)", "%1 is the name of an application", res.size()).arg(callingPeerName()));
         return res;
     }
 
@@ -443,9 +476,15 @@ namespace FdoSecrets
         return m_dbToCollection.value(db, nullptr);
     }
 
-    const QList<Session*> Service::sessions() const
+    const QList<Connection*> Service::connections() const
     {
-        return m_sessions;
+        QList<Connection*> ret;
+        for (const auto& conn : m_connections) {
+            if (conn->connected()) {
+                ret.append(conn);
+            }
+        }
+        return ret;
     }
 
     bool Service::doCloseDatabase(DatabaseWidget* dbWidget)

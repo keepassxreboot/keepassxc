@@ -23,8 +23,6 @@
 namespace FdoSecrets
 {
 
-    QHash<QString, QVariant> Session::negoniationState;
-
     Session::Session(std::unique_ptr<CipherPair>&& cipher, const QString& peer, Service* parent)
         : DBusObject(parent)
         , m_cipher(std::move(cipher))
@@ -33,11 +31,6 @@ namespace FdoSecrets
     {
         registerWithPath(QStringLiteral(DBUS_PATH_TEMPLATE_SESSION).arg(p()->objectPath().path(), id()),
                          new SessionAdaptor(this));
-    }
-
-    void Session::CleanupNegotiation(const QString& peer)
-    {
-        negoniationState.remove(peer);
     }
 
     DBusReturn<void> Session::close()

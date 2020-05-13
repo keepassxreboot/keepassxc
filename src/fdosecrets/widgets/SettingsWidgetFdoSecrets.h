@@ -31,7 +31,7 @@ class QItemEditorFactory;
 namespace FdoSecrets
 {
 
-    class Session;
+    class Connection;
     class Collection;
 
 } // namespace FdoSecrets
