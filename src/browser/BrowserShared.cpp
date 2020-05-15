@@ -27,8 +27,7 @@ namespace BrowserShared
 {
     QString localServerPath()
     {
-        const auto appName = qApp->property("KPXC_QUALIFIED_APPNAME").toString();
-        const auto serverName = QStringLiteral("/%1.BrowserServer").arg(appName);
+        const auto serverName = QStringLiteral("/org.keepassxc.KeePassXC.BrowserServer");
 #if defined(KEEPASSXC_DIST_SNAP)
         return QProcessEnvironment::systemEnvironment().value("SNAP_USER_COMMON") + serverName;
 #elif defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
