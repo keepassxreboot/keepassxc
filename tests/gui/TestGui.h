@@ -37,11 +37,6 @@ class TestGui : public QObject
 {
     Q_OBJECT
 
-protected slots:
-    void createDatabaseCallback();
-    void passwordGeneratorCallback();
-    void passphraseGeneratorCallback();
-
 private slots:
     void initTestCase();
     void init();
