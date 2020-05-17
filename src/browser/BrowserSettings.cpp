@@ -182,6 +182,36 @@ void BrowserSettings::setCustomProxyLocation(const QString& location)
     config()->set(Config::Browser_CustomProxyLocation, location);
 }
 
+bool BrowserSettings::customBrowserSupport()
+{
+    return config()->get(Config::Browser_UseCustomBrowser).toBool();
+}
+
+void BrowserSettings::setCustomBrowserSupport(bool enabled)
+{
+    config()->set(Config::Browser_UseCustomBrowser, enabled);
+}
+
+int BrowserSettings::customBrowserType()
+{
+    return config()->get(Config::Browser_CustomBrowserType).toInt();
+}
+
+void BrowserSettings::setCustomBrowserType(int type)
+{
+    config()->set(Config::Browser_CustomBrowserType, type);
+}
+
+QString BrowserSettings::customBrowserLocation()
+{
+    return config()->get(Config::Browser_CustomBrowserLocation).toString();
+}
+
+void BrowserSettings::setCustomBrowserLocation(const QString& location)
+{
+    config()->set(Config::Browser_CustomBrowserLocation, location);
+}
+
 QString BrowserSettings::proxyLocation()
 {
     return m_nativeMessageInstaller.getProxyPath();

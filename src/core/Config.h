@@ -133,6 +133,9 @@ public:
         Browser_SearchInAllDatabases,
         Browser_SupportKphFields,
         Browser_NoMigrationPrompt,
+        Browser_UseCustomBrowser,
+        Browser_CustomBrowserType,
+        Browser_CustomBrowserLocation,
 #ifdef QT_DEBUG
         Browser_CustomExtensionId,
 #endif

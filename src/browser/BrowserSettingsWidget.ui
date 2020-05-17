@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>523</width>
-    <height>456</height>
+    <width>584</width>
+    <height>467</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,23 +84,20 @@
           <property name="horizontalSpacing">
            <number>40</number>
           </property>
-          <item row="0" column="3">
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>179</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="chromeSupport">
+          <item row="1" column="1">
+           <widget class="QCheckBox" name="vivaldiSupport">
             <property name="text">
-             <string>Google Chrome</string>
+             <string>Vivaldi</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QCheckBox" name="edgeSupport">
+            <property name="text">
+             <string>&amp;Edge</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -111,26 +108,6 @@
            <widget class="QCheckBox" name="firefoxSupport">
             <property name="text">
              <string>Firefox</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="chromiumSupport">
-            <property name="text">
-             <string>Chromium</string>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QCheckBox" name="vivaldiSupport">
-            <property name="text">
-             <string>Vivaldi</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -157,15 +134,38 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="3">
-           <widget class="QCheckBox" name="edgeSupport">
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="chromeSupport">
             <property name="text">
-             <string>&amp;Edge</string>
+             <string>Google Chrome</string>
             </property>
             <property name="checked">
              <bool>false</bool>
             </property>
            </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="chromiumSupport">
+            <property name="text">
+             <string>Chromium</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <spacer name="horizontalSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -237,6 +237,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="searchInAllDatabases">
+         <property name="toolTip">
+          <string>All databases connected to the extension will return matching credentials.</string>
+         </property>
+         <property name="text">
+          <string extracomment="Credentials mean login data requested via browser extension">Search in all opened databases for matching credentials</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QRadioButton" name="sortByTitle">
          <property name="text">
           <string extracomment="Credentials mean login data requested via browser extension">Sort matching credentials by title</string>
@@ -302,16 +312,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="searchInAllDatabases">
-         <property name="toolTip">
-          <string>All databases connected to the extension will return matching credentials.</string>
-         </property>
-         <property name="text">
-          <string extracomment="Credentials mean login data requested via browser extension">Search in all opened databases for matching credentials</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="supportKphFields">
          <property name="toolTip">
           <string>Automatically creating or updating string fields is not supported.</string>
@@ -347,14 +347,42 @@
           <string>Use a custom proxy location if you installed a proxy manually.</string>
          </property>
          <property name="text">
-          <string comment="Meant is the proxy for KeePassXC-Browser">Use a custom proxy location</string>
+          <string comment="Meant is the proxy for KeePassXC-Browser">Use a custom proxy location:</string>
          </property>
         </widget>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>15</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <widget class="QLineEdit" name="customProxyLocation">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>450</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="accessibleName">
             <string>Custom proxy location field</string>
            </property>
@@ -376,34 +404,203 @@
            </property>
           </widget>
          </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="customExtensionBox">
-         <property name="topMargin">
-          <number>20</number>
+        <widget class="QCheckBox" name="customBrowserSupport">
+         <property name="text">
+          <string>Use a custom browser configuration location:</string>
          </property>
-         <item>
-          <widget class="QLabel" name="customExtensionLabel">
-           <property name="text">
-            <string>Custom extension ID:</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="customExtensionId">
-           <property name="accessibleName">
-            <string>Custom extension ID</string>
-           </property>
-           <property name="maxLength">
-            <number>999</number>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="customBrowserGroupBox">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="customBrowserLabel">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 5px</string>
+              </property>
+              <property name="text">
+               <string>Browser type:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="browserTypeComboBox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::StrongFocus</enum>
+              </property>
+              <property name="accessibleName">
+               <string>Toolbar button style</string>
+              </property>
+              <property name="sizeAdjustPolicy">
+               <enum>QComboBox::AdjustToContents</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="customBrowserLabel_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 5px</string>
+              </property>
+              <property name="text">
+               <string>Config Location:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="customBrowserLocation">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>350</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="accessibleName">
+               <string>Custom browser location field</string>
+              </property>
+              <property name="maxLength">
+               <number>999</number>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="placeholderText">
+               <string>~/.custom/config/Mozilla/native-messaging-hosts/</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="customBrowserLocationBrowseButton">
+              <property name="accessibleName">
+               <string>Browse for custom browser path</string>
+              </property>
+              <property name="text">
+               <string extracomment="Button for opening file dialog">Browse...</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="customExtensionIdContainer" native="true">
+         <layout class="QHBoxLayout" name="customExtensionBox" stretch="0,0,1">
+          <property name="topMargin">
+           <number>6</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="customExtensionLabel">
+            <property name="text">
+             <string>Custom extension ID:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="customExtensionId">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="accessibleName">
+             <string>Custom extension ID</string>
+            </property>
+            <property name="maxLength">
+             <number>999</number>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <spacer name="verticalSpacer_5">
