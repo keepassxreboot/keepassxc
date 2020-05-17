@@ -42,6 +42,7 @@ public slots:
 private slots:
     void showProxyLocationFileDialog();
     void validateCustomProxyLocation();
+    void showCustomBrowserLocationFileDialog();
 
 private:
     QScopedPointer<Ui::BrowserSettingsWidget> m_ui;

@@ -33,6 +33,7 @@ namespace BrowserShared
         TOR_BROWSER,
         BRAVE,
         EDGE,
+        CUSTOM,
         MAX_SUPPORTED
     };
 

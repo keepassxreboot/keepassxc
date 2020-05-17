@@ -152,6 +152,9 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Browser_SearchInAllDatabases, {QS("Browser/SearchInAllDatabases"), Roaming, false}},
     {Config::Browser_SupportKphFields, {QS("Browser/SupportKphFields"), Roaming, true}},
     {Config::Browser_NoMigrationPrompt, {QS("Browser/NoMigrationPrompt"), Roaming, false}},
+    {Config::Browser_UseCustomBrowser, {QS("Browser/UseCustomBrowser"), Local, false}},
+    {Config::Browser_CustomBrowserType, {QS("Browser/CustomBrowserType"), Local, -1}},
+    {Config::Browser_CustomBrowserLocation, {QS("Browser/CustomBrowserLocation"), Local, {}}},
 #ifdef QT_DEBUG
     {Config::Browser_CustomExtensionId, {QS("Browser/CustomExtensionId"), Local, {}}},
 #endif

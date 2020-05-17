@@ -57,8 +57,20 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
 
+    // Custom Browser option
+#ifdef Q_OS_WIN
+    // TODO: Custom browser is disabled on Windows
+    m_ui->customBrowserSupport->setVisible(false);
+    m_ui->customBrowserGroupBox->setVisible(false);
+#else
+    connect(m_ui->customBrowserLocationBrowseButton, SIGNAL(clicked()), SLOT(showCustomBrowserLocationFileDialog()));
+    connect(m_ui->customBrowserSupport, SIGNAL(toggled(bool)), m_ui->customBrowserGroupBox, SLOT(setEnabled(bool)));
+#endif
+
+    // Custom Proxy option
     m_ui->customProxyLocation->setEnabled(m_ui->useCustomProxy->isChecked());
     m_ui->customProxyLocationBrowseButton->setEnabled(m_ui->useCustomProxy->isChecked());
+
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocation, SLOT(setEnabled(bool)));
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), m_ui->customProxyLocationBrowseButton, SLOT(setEnabled(bool)));
     connect(m_ui->useCustomProxy, SIGNAL(toggled(bool)), SLOT(validateCustomProxyLocation()));
@@ -150,12 +162,27 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->browsersGroupBox->setEnabled(false);
     m_ui->updateBinaryPath->setChecked(false);
     m_ui->updateBinaryPath->setVisible(false);
+    // No custom browser for snaps
+    m_ui->customBrowserSupport->setVisible(false);
+    m_ui->customBrowserGroupBox->setVisible(false);
     // Show notice to user
     m_ui->browserGlobalWarningWidget->showMessage(tr("Please see special instructions for browser extension use below"),
                                                   MessageWidget::Warning);
     m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
+
+    const auto customBrowserSet = settings->customBrowserSupport();
+    m_ui->customBrowserSupport->setChecked(customBrowserSet);
+    m_ui->customBrowserGroupBox->setEnabled(customBrowserSet);
+    m_ui->browserTypeComboBox->clear();
+    m_ui->browserTypeComboBox->addItem(tr("Firefox"), BrowserShared::SupportedBrowsers::FIREFOX);
+    m_ui->browserTypeComboBox->addItem(tr("Chromium"), BrowserShared::SupportedBrowsers::CHROMIUM);
+    auto typeIndex = m_ui->browserTypeComboBox->findData(settings->customBrowserType());
+    if (typeIndex >= 0) {
+        m_ui->browserTypeComboBox->setCurrentIndex(typeIndex);
+    }
+    m_ui->customBrowserLocation->setText(settings->customBrowserLocation());
 
 #ifdef QT_DEBUG
     m_ui->customExtensionId->setText(settings->customExtensionId());
@@ -211,6 +238,18 @@ void BrowserSettingsWidget::saveSettings()
     settings->setBrowserSupport(BrowserShared::BRAVE, m_ui->braveSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::VIVALDI, m_ui->vivaldiSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::TOR_BROWSER, m_ui->torBrowserSupport->isChecked());
+
+    // Custom browser settings
+    bool customBrowserEnabled = m_ui->customBrowserSupport->isChecked();
+    settings->setCustomBrowserType(m_ui->browserTypeComboBox->currentData().toInt());
+    settings->setCustomBrowserLocation(m_ui->customBrowserLocation->text());
+    settings->setCustomBrowserSupport(customBrowserEnabled);
+    settings->setBrowserSupport(BrowserShared::CUSTOM, customBrowserEnabled);
+
+    // If we disabled the custom browser support make sure to clear variables
+    if (!customBrowserEnabled) {
+        settings->setCustomBrowserLocation("");
+    }
 #endif
 }
 
@@ -227,4 +266,14 @@ void BrowserSettingsWidget::showProxyLocationFileDialog()
                                                       fileTypeFilter);
     m_ui->customProxyLocation->setText(proxyLocation);
     validateCustomProxyLocation();
+}
+
+void BrowserSettingsWidget::showCustomBrowserLocationFileDialog()
+{
+    auto location = QFileDialog::getExistingDirectory(this,
+                                                      tr("Select native messaging host folder location"),
+                                                      QFileInfo(QCoreApplication::applicationDirPath()).filePath());
+    if (!location.isEmpty()) {
+        m_ui->customBrowserLocation->setText(location);
+    }
 }

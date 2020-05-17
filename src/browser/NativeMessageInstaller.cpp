@@ -114,7 +114,7 @@ void NativeMessageInstaller::setBrowserEnabled(SupportedBrowsers browser, bool e
         }
     } else {
         // Remove the script file
-        QString fileName = getNativeMessagePath(browser);
+        const QString fileName = getNativeMessagePath(browser);
         QFile::remove(fileName);
 #ifdef Q_OS_WIN
         // Remove the registry entry
@@ -159,6 +159,8 @@ QString NativeMessageInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_BRAVE;
     case SupportedBrowsers::EDGE:
         return TARGET_DIR_EDGE;
+    case SupportedBrowsers::CUSTOM:
+        return browserSettings()->customBrowserLocation();
     default:
         return {};
     }
@@ -188,6 +190,8 @@ QString NativeMessageInstaller::getBrowserName(SupportedBrowsers browser) const
         return QStringLiteral("brave");
     case SupportedBrowsers::EDGE:
         return QStringLiteral("edge");
+    case SupportedBrowsers::CUSTOM:
+        return QStringLiteral("custom");
     default:
         return {};
     }
@@ -223,6 +227,10 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
 #else
     basePath = QDir::homePath();
 #endif
+    if (browser == SupportedBrowsers::CUSTOM) {
+        return QString("%1/%2.json").arg(getTargetPath(browser), HOST_NAME);
+    }
+
     return QStringLiteral("%1%2/%3.json").arg(basePath, getTargetPath(browser), HOST_NAME);
 }
 
@@ -267,7 +275,9 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
     script["type"] = QStringLiteral("stdio");
 
     QJsonArray arr;
-    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER) {
+    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
+        || (browser == SupportedBrowsers::CUSTOM
+            && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)) {
         for (const QString& extension : ALLOWED_EXTENSIONS) {
             arr.append(extension);
         }

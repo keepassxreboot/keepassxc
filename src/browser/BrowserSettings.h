@@ -75,7 +75,12 @@ public:
 
     bool browserSupport(BrowserShared::SupportedBrowsers browser);
     void setBrowserSupport(BrowserShared::SupportedBrowsers browser, bool enabled);
-
+    bool customBrowserSupport();
+    void setCustomBrowserSupport(bool enabled);
+    int customBrowserType();
+    void setCustomBrowserType(int type);
+    QString customBrowserLocation();
+    void setCustomBrowserLocation(const QString& location);
     bool passwordUseNumbers();
     void setPasswordUseNumbers(bool useNumbers);
     bool passwordUseLowercase();
