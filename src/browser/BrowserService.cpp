@@ -558,8 +558,7 @@ bool BrowserService::updateEntry(const QString& dbid,
     return result;
 }
 
-Entry*
-BrowserService::searchEntry(const QSharedPointer<Database>& db, const QUuid& uuid)
+Entry* BrowserService::searchEntry(const QSharedPointer<Database>& db, const QUuid& uuid)
 {
     auto* rootGroup = db->rootGroup();
     if (!rootGroup) {

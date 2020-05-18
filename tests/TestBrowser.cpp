@@ -259,11 +259,13 @@ void TestBrowser::testSearchEntryByUUID()
     auto* root = db->rootGroup();
 
     /* Create some dummy entries */
-    QStringList urls = {"https://github.com/login_page",
-                        "https://github.com/login",
-                        "https://github.com/",
-                        "http://github.com",
-                        "http://github.com/login",};
+    QStringList urls = {
+        "https://github.com/login_page",
+        "https://github.com/login",
+        "https://github.com/",
+        "http://github.com",
+        "http://github.com/login",
+    };
     auto entries = createEntries(urls, root);
 
     for (Entry* entry : entries) {
@@ -271,7 +273,7 @@ void TestBrowser::testSearchEntryByUUID()
         auto result = m_browserService->searchEntry(db, entry.uuidToHex());
         QCOMPARE(result, entry);
     }
-    
+
     /* Test for entries that don't exist */
     QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000000"), NULL);
     QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000001"), NULL);
