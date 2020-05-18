@@ -66,6 +66,7 @@ QJsonObject BrowserAction::processClientMessage(const QJsonObject& json)
     }
 
     const QString action = json.value("action").toString();
+    qDebug() << "BrowserAction: '" << action << "'";
     if (action.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
