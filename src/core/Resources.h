@@ -41,7 +41,7 @@ public:
 
 private:
     Resources();
-    bool testResourceDir(const QString& dir);
+    bool trySetResourceDir(const QString& path);
     bool useDarkIcon();
 
     static Resources* m_instance;

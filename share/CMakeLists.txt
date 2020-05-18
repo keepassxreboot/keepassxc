@@ -19,6 +19,9 @@ add_subdirectory(translations)
 file(GLOB wordlists_files "wordlists/*.wordlist")
 install(FILES ${wordlists_files} DESTINATION ${DATA_INSTALL_DIR}/wordlists)
 
+# Copy wordlists to build dir for use in tests
+file(COPY "wordlists" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 if(UNIX AND NOT APPLE AND NOT HAIKU)
     install(DIRECTORY icons/application/ DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor
             FILES_MATCHING PATTERN "keepassx*.png" PATTERN "keepassx*.svg"

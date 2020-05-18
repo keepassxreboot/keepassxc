@@ -194,19 +194,19 @@ Resources::Resources()
 {
     const QString appDirPath = QCoreApplication::applicationDirPath();
 #if defined(Q_OS_UNIX) && !(defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE))
-    testResourceDir(KEEPASSX_DATA_DIR) || testResourceDir(QStringLiteral("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))
-        || testResourceDir(QStringLiteral("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR));
+    trySetResourceDir(KEEPASSX_DATA_DIR)
+        || trySetResourceDir(QStringLiteral("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))
+        || trySetResourceDir(QStringLiteral("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR));
 #elif defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
-    testResourceDir(appDirPath + QStringLiteral("/../Resources"));
+    trySetResourceDir(appDirPath + QStringLiteral("/../Resources"));
 #elif defined(Q_OS_WIN)
-    testResourceDir(appDirPath + QStringLiteral("/share"));
+    trySetResourceDir(appDirPath + QStringLiteral("/share"));
 #endif
 
     if (m_dataPath.isEmpty()) {
         // Last ditch check if we are running from inside the src or test build directory
-        testResourceDir(appDirPath + QStringLiteral("/../../share"))
-            || testResourceDir(appDirPath + QStringLiteral("/../share"))
-            || testResourceDir(appDirPath + QStringLiteral("/../../../share"));
+        trySetResourceDir(appDirPath + QStringLiteral("/../share"))
+            || trySetResourceDir(appDirPath + QStringLiteral("/../../share"));
     }
 
     if (m_dataPath.isEmpty()) {
@@ -214,10 +214,11 @@ Resources::Resources()
     }
 }
 
-bool Resources::testResourceDir(const QString& dir)
+bool Resources::trySetResourceDir(const QString& path)
 {
-    if (QFile::exists(dir + QStringLiteral("/icons/application/256x256/apps/keepassxc.png"))) {
-        m_dataPath = QDir::cleanPath(dir);
+    QDir dir(path);
+    if (dir.exists()) {
+        m_dataPath = dir.canonicalPath();
         return true;
     }
     return false;
