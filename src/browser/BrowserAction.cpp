@@ -332,9 +332,6 @@ QJsonObject BrowserAction::handleGetLoginExact(const QJsonObject& json, const QS
     }
 
     const QString id = decrypted.value("id").toString();
-    const QString submit = decrypted.value("submitUrl").toString();
-    const QString auth = decrypted.value("httpAuth").toString();
-    const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0 ? true : false;
     const QJsonObject entry = browserService()->findEntry(id, uuidHex);
 
     if (entry.isEmpty()) {

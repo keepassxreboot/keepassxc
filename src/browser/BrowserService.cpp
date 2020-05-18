@@ -562,7 +562,7 @@ Entry* BrowserService::searchEntry(const QSharedPointer<Database>& db, const QUu
 {
     auto* rootGroup = db->rootGroup();
     if (!rootGroup) {
-        return NULL;
+        return nullptr;
     }
 
     for (const auto& group : rootGroup->groupsRecursive(true)) {
@@ -581,7 +581,7 @@ Entry* BrowserService::searchEntry(const QSharedPointer<Database>& db, const QUu
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 QList<Entry*>

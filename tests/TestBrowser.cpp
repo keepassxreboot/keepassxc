@@ -270,17 +270,18 @@ void TestBrowser::testSearchEntryByUUID()
 
     for (Entry* entry : entries) {
         /* Look for an entry with that UUID */
-        auto result = m_browserService->searchEntry(db, entry.uuidToHex());
+        auto result = m_browserService->searchEntry(db, entry->uuidToHex());
         QCOMPARE(result, entry);
     }
 
     /* Test for entries that don't exist */
-    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000000"), NULL);
-    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000001"), NULL);
-    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000002"), NULL);
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000000"), static_cast<Entry*>(nullptr));
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000001"), static_cast<Entry*>(nullptr));
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000002"), static_cast<Entry*>(nullptr));
     /* Test for invalid UUIDs */
-    QCOMPARE(m_browserService->searchEntry(db, "invalid uuid"), NULL);
-    QCOMPARE(m_browserService->searchEntry(db, "000000000000000000000000000000000000000"), NULL);
+    QCOMPARE(m_browserService->searchEntry(db, "invalid uuid"), static_cast<Entry*>(nullptr));
+    QCOMPARE(m_browserService->searchEntry(db, "000000000000000000000000000000000000000"),
+             static_cast<Entry*>(nullptr));
 }
 
 void TestBrowser::testInvalidEntries()
