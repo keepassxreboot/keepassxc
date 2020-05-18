@@ -423,6 +423,20 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     return result;
 }
 
+QJsonObject BrowserService::findEntry(const QString& dbid, const QString& uuidHex)
+{
+    Q_UNUSED(dbid);
+    const auto& db = getDatabase();
+
+    const QUuid uuid = Tools::hexToUuid(uuidHex);
+    const Entry* entry = searchEntry(db, uuid);
+    if (entry) {
+        return prepareEntry(entry);
+    } else {
+        return QJsonObject();
+    }
+}
+
 void BrowserService::addEntry(const QString& dbid,
                               const QString& login,
                               const QString& password,
@@ -542,6 +556,33 @@ bool BrowserService::updateEntry(const QString& dbid,
     }
 
     return result;
+}
+
+Entry*
+BrowserService::searchEntry(const QSharedPointer<Database>& db, const QUuid& uuid)
+{
+    auto* rootGroup = db->rootGroup();
+    if (!rootGroup) {
+        return NULL;
+    }
+
+    for (const auto& group : rootGroup->groupsRecursive(true)) {
+        if (group->isRecycled() || !group->resolveSearchingEnabled()) {
+            continue;
+        }
+
+        for (auto* entry : group->entries()) {
+            if (entry->isRecycled()) {
+                continue;
+            }
+
+            if (entry->uuid() == uuid) {
+                return entry;
+            }
+        }
+    }
+
+    return NULL;
 }
 
 QList<Entry*>

@@ -48,7 +48,8 @@ namespace
         ERROR_KEEPASS_NO_URL_PROVIDED = 14,
         ERROR_KEEPASS_NO_LOGINS_FOUND = 15,
         ERROR_KEEPASS_NO_GROUPS_FOUND = 16,
-        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17
+        ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP = 17,
+        ERROR_KEEPASS_NO_UUID_PROVIDED = 18,
     };
 }
 
@@ -97,6 +98,8 @@ QJsonObject BrowserAction::handleAction(const QJsonObject& json)
         return handleTestAssociate(json, action);
     } else if (action.compare("get-logins", Qt::CaseSensitive) == 0) {
         return handleGetLogins(json, action);
+    } else if (action.compare("get-exact-login", Qt::CaseSensitive) == 0) {
+        return handleGetLoginExact(json, action);
     } else if (action.compare("generate-password", Qt::CaseSensitive) == 0) {
         return handleGeneratePassword(json, action);
     } else if (action.compare("set-login", Qt::CaseSensitive) == 0) {
@@ -293,6 +296,54 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     QJsonObject message = buildMessage(newNonce);
     message["count"] = users.count();
     message["entries"] = users;
+    message["hash"] = hash;
+    message["id"] = id;
+
+    return buildResponse(action, message, newNonce);
+}
+
+QJsonObject BrowserAction::handleGetLoginExact(const QJsonObject& json, const QString& action)
+{
+    const QString hash = browserService()->getDatabaseHash();
+    const QString nonce = json.value("nonce").toString();
+    const QString encrypted = json.value("message").toString();
+
+    if (!m_associated) {
+        return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
+    }
+
+    const QJsonObject decrypted = decryptMessage(encrypted, nonce);
+    if (decrypted.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_DECRYPT_MESSAGE);
+    }
+
+    const QString uuidHex = decrypted.value("uuid").toString();
+    if (uuidHex.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_UUID_PROVIDED);
+    }
+
+    const QJsonArray keys = decrypted.value("keys").toArray();
+
+    StringPairList keyList;
+    for (const QJsonValue val : keys) {
+        const QJsonObject keyObject = val.toObject();
+        keyList.push_back(qMakePair(keyObject.value("id").toString(), keyObject.value("key").toString()));
+    }
+
+    const QString id = decrypted.value("id").toString();
+    const QString submit = decrypted.value("submitUrl").toString();
+    const QString auth = decrypted.value("httpAuth").toString();
+    const bool httpAuth = auth.compare(TRUE_STR, Qt::CaseSensitive) == 0 ? true : false;
+    const QJsonObject entry = browserService()->findEntry(id, uuidHex);
+
+    if (entry.isEmpty()) {
+        return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
+    }
+
+    const QString newNonce = incrementNonce(nonce);
+
+    QJsonObject message = buildMessage(newNonce);
+    message["entry"] = entry;
     message["hash"] = hash;
     message["id"] = id;
 
@@ -528,6 +579,8 @@ QString BrowserAction::getErrorMessage(const int errorCode) const
         return QObject::tr("No groups found");
     case ERROR_KEEPASS_CANNOT_CREATE_NEW_GROUP:
         return QObject::tr("Cannot create new group");
+    case ERROR_KEEPASS_NO_UUID_PROVIDED:
+        return QObject::tr("No uuid provided");
     default:
         return QObject::tr("Unknown error");
     }

@@ -81,6 +81,7 @@ public:
                                    const QString& realm,
                                    const StringPairList& keyList,
                                    const bool httpAuth = false);
+    QJsonObject findEntry(const QString& dbid, const QString& uuidHex);
 
     static void convertAttributesToCustomData(QSharedPointer<Database> db);
 
@@ -114,6 +115,7 @@ private:
         Hidden
     };
 
+    Entry* searchEntry(const QSharedPointer<Database>& db, const QUuid& uuid);
     QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& url, const QString& submitUrl);
     QList<Entry*> searchEntries(const QString& url, const QString& submitUrl, const StringPairList& keyList);
     QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& host, const QString& submitUrl);
