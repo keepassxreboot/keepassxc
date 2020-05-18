@@ -43,6 +43,7 @@ private slots:
     void testSearchEntries();
     void testSearchEntriesWithPort();
     void testSearchEntriesWithAdditionalURLs();
+    void testSearchEntryByUUID();
     void testInvalidEntries();
     void testSubdomainsAndPaths();
     void testSortEntries();

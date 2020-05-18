@@ -253,6 +253,34 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
 }
 
+void TestBrowser::testSearchEntryByUUID()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    /* Create some dummy entries */
+    QStringList urls = {"https://github.com/login_page",
+                        "https://github.com/login",
+                        "https://github.com/",
+                        "http://github.com",
+                        "http://github.com/login",};
+    auto entries = createEntries(urls, root);
+
+    for (Entry* entry : entries) {
+        /* Look for an entry with that UUID */
+        auto result = m_browserService->searchEntry(db, entry.uuidToHex());
+        QCOMPARE(result, entry);
+    }
+    
+    /* Test for entries that don't exist */
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000000"), NULL);
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000001"), NULL);
+    QCOMPARE(m_browserService->searchEntry(db, "00000000000000000000000000000002"), NULL);
+    /* Test for invalid UUIDs */
+    QCOMPARE(m_browserService->searchEntry(db, "invalid uuid"), NULL);
+    QCOMPARE(m_browserService->searchEntry(db, "000000000000000000000000000000000000000"), NULL);
+}
+
 void TestBrowser::testInvalidEntries()
 {
     auto db = QSharedPointer<Database>::create();
