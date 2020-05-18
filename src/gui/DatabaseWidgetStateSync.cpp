@@ -30,7 +30,7 @@ DatabaseWidgetStateSync::DatabaseWidgetStateSync(QObject* parent)
     m_mainSplitterSizes = variantToIntList(config()->get(Config::GUI_SplitterState));
     m_previewSplitterSizes = variantToIntList(config()->get(Config::GUI_PreviewSplitterState));
     m_hideUsernames = config()->get(Config::GUI_HideUsernames).toBool();
-    m_hidePasswords = config()->get(Config::GUI_HidePasswords).toBool();
+    m_hidePasswords = true;
     m_listViewState = config()->get(Config::GUI_ListViewState).toByteArray();
     m_searchViewState = config()->get(Config::GUI_SearchViewState).toByteArray();
 
@@ -49,7 +49,6 @@ void DatabaseWidgetStateSync::sync()
     config()->set(Config::GUI_SplitterState, intListToVariant(m_mainSplitterSizes));
     config()->set(Config::GUI_PreviewSplitterState, intListToVariant(m_previewSplitterSizes));
     config()->set(Config::GUI_HideUsernames, m_hideUsernames);
-    config()->set(Config::GUI_HidePasswords, m_hidePasswords);
     config()->set(Config::GUI_ListViewState, m_listViewState);
     config()->set(Config::GUI_SearchViewState, m_searchViewState);
     config()->sync();
