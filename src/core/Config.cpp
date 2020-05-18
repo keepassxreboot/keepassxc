@@ -98,7 +98,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_MinimizeOnStartup, {QS("GUI/MinimizeOnStartup"), Roaming, false}},
     {Config::GUI_MinimizeOnClose, {QS("GUI/MinimizeOnClose"), Roaming, false}},
     {Config::GUI_HideUsernames, {QS("GUI/HideUsernames"), Roaming, false}},
-    {Config::GUI_HidePasswords, {QS("GUI/HidePasswords"), Roaming, true}},
     {Config::GUI_AdvancedSettings, {QS("GUI/AdvancedSettings"), Roaming, false}},
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
@@ -342,7 +341,8 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("generator/WordList"), Config::PasswordGenerator_WordList},
     {QS("generator/WordCase"), Config::PasswordGenerator_WordCase},
     {QS("generator/Type"), Config::PasswordGenerator_Type},
-    {QS("QtErrorMessageShown"), Config::Messages_Qt55CompatibilityWarning}};
+    {QS("QtErrorMessageShown"), Config::Messages_Qt55CompatibilityWarning},
+    {QS("GUI/HidePasswords"), Config::Deleted}};
 
 /**
  * Migrate settings from previous versions.
@@ -381,13 +381,14 @@ void Config::migrate()
     }
 
     // Move local settings to separate file
-    if (m_localSettings)
+    if (m_localSettings) {
         for (const auto& setting : asConst(configStrings)) {
             if (setting.type == Local && m_settings->contains(setting.name)) {
                 m_localSettings->setValue(setting.name, m_settings->value(setting.name));
                 m_settings->remove(setting.name);
             }
         }
+    }
 
     // Detailed version migrations
 
