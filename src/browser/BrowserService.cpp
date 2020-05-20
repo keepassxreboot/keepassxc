@@ -597,7 +597,7 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
                 }
             }
 
-            if (!handleURL(entry->url(), url, submitUrl)) {
+            if (!handleEntry(entry, url, submitUrl)) {
                 continue;
             }
 
@@ -1004,6 +1004,17 @@ bool BrowserService::removeFirstDomain(QString& hostname)
     return false;
 }
 
+/* Test if a search URL matches a custom entry. If the URL has the schema "keepassxc", some special checks will be made.
+ * Otherwise, this simply delegates to handleURL(). */
+bool BrowserService::handleEntry(Entry* entry, const QString& url, const QString& submitUrl)
+{
+    // Use this special scheme to find entries by UUID
+    if (url.startsWith("keepassxc://")) {
+        return ("keepassxc://by-uuid/" + entry->uuidToHex()) == url;
+    }
+    return handleURL(entry->url(), url, submitUrl);
+}
+
 bool BrowserService::handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl)
 {
     if (entryUrl.isEmpty()) {
@@ -1022,7 +1033,7 @@ bool BrowserService::handleURL(const QString& entryUrl, const QString& url, cons
     }
 
     // Make a direct compare if a local file is used
-    if (url.contains("file://")) {
+    if (url.startsWith("file://")) {
         return entryUrl == submitUrl;
     }
 
