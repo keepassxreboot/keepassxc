@@ -139,6 +139,7 @@ private:
                      const QString& fullUrl) const;
     bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
+    bool handleEntry(Entry* entry, const QString& url, const QString& submitUrl);
     bool handleURL(const QString& entryUrl, const QString& url, const QString& submitUrl);
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();

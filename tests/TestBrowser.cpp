@@ -223,6 +223,55 @@ void TestBrowser::testSearchEntries()
     QCOMPARE(result[3]->url(), QString("github.com/login"));
 }
 
+void TestBrowser::testSearchEntriesByUUID()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    /* The URLs don't really matter for this test, we just need some entries */
+    QStringList urls = {"https://github.com/login_page",
+                        "https://github.com/login",
+                        "https://github.com/",
+                        "github.com/login",
+                        "http://github.com",
+                        "http://github.com/login",
+                        "github.com",
+                        "github.com/login",
+                        "https://github",
+                        "github.com",
+                        "",
+                        "not an URL"};
+    auto entries = createEntries(urls, root);
+
+    for (Entry* entry : entries) {
+        QString testUrl = "keepassxc://by-uuid/" + entry->uuidToHex();
+        /* Look for an entry with that UUID. First using handleEntry, then through the search */
+        QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), true);
+        auto result = m_browserService->searchEntries(db, testUrl, "");
+        QCOMPARE(result.length(), 1);
+        QCOMPARE(result[0], entry);
+    }
+
+    /* Test for entries that don't exist */
+    QStringList uuids = {"00000000000000000000000000000000",
+                         "00000000000000000000000000000001",
+                         "00000000000000000000000000000002/",
+                         "invalid uuid",
+                         "000000000000000000000000000000000000000"
+                         "00000000000000000000000"};
+
+    for (QString uuid : uuids) {
+        QString testUrl = "keepassxc://by-uuid/" + uuid;
+
+        for (Entry* entry : entries) {
+            QCOMPARE(m_browserService->handleEntry(entry, testUrl, ""), false);
+        }
+
+        auto result = m_browserService->searchEntries(db, testUrl, "");
+        QCOMPARE(result.length(), 0);
+    }
+}
+
 void TestBrowser::testSearchEntriesWithPort()
 {
     auto db = QSharedPointer<Database>::create();
@@ -419,6 +468,7 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
         entry->beginUpdate();
         entry->setUrl(urls[i]);
         entry->setUsername(QString("User %1").arg(i));
+        entry->setUuid(QUuid::createUuid());
         entry->endUpdate();
         entries.push_back(entry);
     }

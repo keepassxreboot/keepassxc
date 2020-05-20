@@ -41,6 +41,7 @@ private slots:
     void testBaseDomain();
     void testSortPriority();
     void testSearchEntries();
+    void testSearchEntriesByUUID();
     void testSearchEntriesWithPort();
     void testSearchEntriesWithAdditionalURLs();
     void testInvalidEntries();
