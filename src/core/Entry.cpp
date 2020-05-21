@@ -903,6 +903,10 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
             return url();
         }
         return resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
+    case PlaceholderType::DbDir: {
+        QFileInfo fileInfo(database()->filePath());
+        return fileInfo.absoluteDir().absolutePath();
+    }
     case PlaceholderType::UrlWithoutScheme:
     case PlaceholderType::UrlScheme:
     case PlaceholderType::UrlHost:
@@ -1237,7 +1241,8 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         {QStringLiteral("{DT_UTC_DAY}"), PlaceholderType::DateTimeUtcDay},
         {QStringLiteral("{DT_UTC_HOUR}"), PlaceholderType::DateTimeUtcHour},
         {QStringLiteral("{DT_UTC_MINUTE}"), PlaceholderType::DateTimeUtcMinute},
-        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond}};
+        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond},
+        {QStringLiteral("{DB_DIR}"), PlaceholderType::DbDir}};
 
     return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
