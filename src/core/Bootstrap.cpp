@@ -73,7 +73,6 @@ namespace Bootstrap
 
         setupSearchPaths();
         applyEarlyQNetworkAccessManagerWorkaround();
-        Translator::installTranslators();
     }
 
     /**
@@ -84,6 +83,15 @@ namespace Bootstrap
     void bootstrapApplication()
     {
         bootstrap();
+        Translator::installTranslators();
+
+#ifdef Q_OS_WIN
+        // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
+        // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
+        // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
+        QApplication::setFont(QApplication::font("QMessageBox"));
+#endif
+
         MessageBox::initializeButtonDefs();
 
 #ifdef Q_OS_MACOS
