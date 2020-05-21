@@ -1973,15 +1973,16 @@ void DatabaseWidget::processAutoOpen()
         }
         QFileInfo filepath;
         QFileInfo keyfile;
+        QString databaseUrl = entry->resolveMultiplePlaceholders(entry->url());
 
-        if (entry->url().startsWith("file://")) {
-            QUrl url(entry->url());
+        if (databaseUrl.startsWith("file://")) {
+            QUrl url(databaseUrl);
             filepath.setFile(url.toLocalFile());
         } else {
-            filepath.setFile(entry->url());
+            filepath.setFile(databaseUrl);
             if (filepath.isRelative()) {
                 QFileInfo currentpath(m_db->filePath());
-                filepath.setFile(currentpath.absoluteDir(), entry->url());
+                filepath.setFile(currentpath.absoluteDir(), databaseUrl);
             }
         }
 

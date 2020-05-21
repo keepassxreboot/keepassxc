@@ -205,7 +205,8 @@ public:
         DateTimeUtcDay,
         DateTimeUtcHour,
         DateTimeUtcMinute,
-        DateTimeUtcSecond
+        DateTimeUtcSecond,
+        DbDir
     };
 
     /**
