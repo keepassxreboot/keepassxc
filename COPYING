@@ -155,6 +155,8 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/help-about.svg
        share/icons/application/scalable/actions/key-enter.svg
        share/icons/application/scalable/actions/message-close.svg
+       share/icons/application/scalable/actions/move-down.svg
+       share/icons/application/scalable/actions/move-up.svg
        share/icons/application/scalable/actions/paperclip.svg
        share/icons/application/scalable/actions/password-copy.svg
        share/icons/application/scalable/actions/password-generate.svg

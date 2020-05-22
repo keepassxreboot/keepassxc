@@ -107,6 +107,8 @@ map() {
         key-enter)                          echo keyboard-variant               ;;
         keyboard-shortcuts)                 echo apple-keyboard-command         ;;
         message-close)                      echo close                          ;;
+        move-down)                          echo chevron-double-down            ;;
+        move-up)                            echo chevron-double-up              ;;
         object-locked)                      echo lock-outline                   ;;
         object-unlocked)                    echo lock-open-variant-outline      ;;
         paperclip)                          echo paperclip                      ;;

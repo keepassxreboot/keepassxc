@@ -233,6 +233,9 @@ public:
     void beginUpdate();
     bool endUpdate();
 
+    void moveUp();
+    void moveDown();
+
     Group* group();
     const Group* group() const;
     void setGroup(Group* group);

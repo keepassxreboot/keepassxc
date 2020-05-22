@@ -81,7 +81,7 @@ public:
     void releaseData();
 
     bool isInitialized() const;
-    bool isModified() const;
+    bool isModified(bool includeNonDataChanges = false) const;
     void setEmitModified(bool value);
     bool isReadOnly() const;
     void setReadOnly(bool readOnly);
@@ -138,6 +138,7 @@ public slots:
     void markAsModified();
     void markAsClean();
     void updateCommonUsernames(int topN = 10);
+    void markNonDataChange();
 
 signals:
     void filePathChanged(const QString& oldPath, const QString& newPath);
@@ -210,6 +211,7 @@ private:
     QPointer<FileWatcher> m_fileWatcher;
     bool m_modified = false;
     bool m_emitModified;
+    bool m_hasNonDataChange = false;
     QString m_keyError;
 
     QList<QString> m_commonUsernames;

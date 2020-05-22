@@ -128,6 +128,9 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryDelete);
     m_entryContextMenu->addAction(m_ui->actionEntryNew);
     m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryMoveUp);
+    m_entryContextMenu->addAction(m_ui->actionEntryMoveDown);
+    m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
     m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
 
@@ -236,6 +239,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
     m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
+    m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Up);
+    m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
     m_ui->actionEntryAutoType->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
@@ -254,6 +259,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryTotp->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryDownloadIcon->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyTotp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryMoveUp->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryMoveDown->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyUsername->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAutoType->setShortcutVisibleInContextMenu(true);
@@ -336,6 +343,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryEdit->setIcon(resources()->icon("entry-edit"));
     m_ui->actionEntryDelete->setIcon(resources()->icon("entry-delete"));
     m_ui->actionEntryAutoType->setIcon(resources()->icon("auto-type"));
+    m_ui->actionEntryMoveUp->setIcon(resources()->icon("move-up"));
+    m_ui->actionEntryMoveDown->setIcon(resources()->icon("move-down"));
     m_ui->actionEntryCopyUsername->setIcon(resources()->icon("username-copy"));
     m_ui->actionEntryCopyPassword->setIcon(resources()->icon("password-copy"));
     m_ui->actionEntryCopyURL->setIcon(resources()->icon("url-copy"));
@@ -420,6 +429,8 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTotp, SIGNAL(triggered()), SLOT(copyTotp()));
     m_actionMultiplexer.connect(m_ui->actionEntryTotpQRCode, SIGNAL(triggered()), SLOT(showTotpKeyQrCode()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyTitle, SIGNAL(triggered()), SLOT(copyTitle()));
+    m_actionMultiplexer.connect(m_ui->actionEntryMoveUp, SIGNAL(triggered()), SLOT(moveEntryUp()));
+    m_actionMultiplexer.connect(m_ui->actionEntryMoveDown, SIGNAL(triggered()), SLOT(moveEntryDown()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyUsername, SIGNAL(triggered()), SLOT(copyUsername()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyPassword, SIGNAL(triggered()), SLOT(copyPassword()));
     m_actionMultiplexer.connect(m_ui->actionEntryCopyURL, SIGNAL(triggered()), SLOT(copyURL()));
@@ -662,11 +673,19 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             bool currentGroupHasChildren = dbWidget->currentGroup()->hasChildren();
             bool currentGroupHasEntries = !dbWidget->currentGroup()->entries().isEmpty();
             bool recycleBinSelected = dbWidget->isRecycleBinSelected();
+            bool sorted = dbWidget->isSorted();
+            int entryIndex = dbWidget->currentEntryIndex();
+            int numEntries = dbWidget->currentGroup()->entries().size();
 
             m_ui->actionEntryNew->setEnabled(true);
             m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
+            m_ui->actionEntryMoveUp->setVisible(!sorted);
+            m_ui->actionEntryMoveDown->setVisible(!sorted);
+            m_ui->actionEntryMoveUp->setEnabled(singleEntrySelected && !sorted && entryIndex > 0);
+            m_ui->actionEntryMoveDown->setEnabled(singleEntrySelected && !sorted && entryIndex >= 0
+                                                  && entryIndex < numEntries - 1);
             m_ui->actionEntryCopyTitle->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTitle());
             m_ui->actionEntryCopyUsername->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUsername());
             // NOTE: Copy password is enabled even if the selected entry's password is blank to prevent Ctrl+C

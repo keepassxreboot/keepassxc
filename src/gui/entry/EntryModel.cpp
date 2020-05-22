@@ -497,8 +497,39 @@ void EntryModel::entryRemoved()
     if (m_group) {
         m_entries = m_group->entries();
     }
-
     endRemoveRows();
+}
+
+void EntryModel::entryAboutToMoveUp(int row)
+{
+    beginMoveRows(QModelIndex(), row, row, QModelIndex(), row - 1);
+    if (m_group) {
+        m_entries.move(row, row - 1);
+    }
+}
+
+void EntryModel::entryMovedUp()
+{
+    if (m_group) {
+        m_entries = m_group->entries();
+    }
+    endMoveRows();
+}
+
+void EntryModel::entryAboutToMoveDown(int row)
+{
+    beginMoveRows(QModelIndex(), row, row, QModelIndex(), row + 2);
+    if (m_group) {
+        m_entries.move(row, row + 1);
+    }
+}
+
+void EntryModel::entryMovedDown()
+{
+    if (m_group) {
+        m_entries = m_group->entries();
+    }
+    endMoveRows();
 }
 
 void EntryModel::entryDataChanged(Entry* entry)
@@ -524,6 +555,10 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAdded(Entry*)), SLOT(entryAdded(Entry*)));
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
     connect(group, SIGNAL(entryRemoved(Entry*)), SLOT(entryRemoved()));
+    connect(group, SIGNAL(entryAboutToMoveUp(int)), SLOT(entryAboutToMoveUp(int)));
+    connect(group, SIGNAL(entryMovedUp()), SLOT(entryMovedUp()));
+    connect(group, SIGNAL(entryAboutToMoveDown(int)), SLOT(entryAboutToMoveDown(int)));
+    connect(group, SIGNAL(entryMovedDown()), SLOT(entryMovedDown()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
 }
 

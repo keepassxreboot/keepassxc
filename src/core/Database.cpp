@@ -836,9 +836,9 @@ void Database::setEmitModified(bool value)
     m_emitModified = value;
 }
 
-bool Database::isModified() const
+bool Database::isModified(bool includeNonDataChanges) const
 {
-    return m_modified;
+    return m_modified || (includeNonDataChanges && m_hasNonDataChange);
 }
 
 void Database::markAsModified()
@@ -855,9 +855,15 @@ void Database::markAsClean()
     bool emitSignal = m_modified;
     m_modified = false;
     m_modifiedTimer.stop();
+    m_hasNonDataChange = false;
     if (emitSignal) {
         emit databaseSaved();
     }
+}
+
+void Database::markNonDataChange()
+{
+    m_hasNonDataChange = true;
 }
 
 /**

@@ -309,6 +309,9 @@
     <addaction name="actionEntryClone"/>
     <addaction name="actionEntryDelete"/>
     <addaction name="separator"/>
+    <addaction name="actionEntryMoveUp"/>
+    <addaction name="actionEntryMoveDown"/>
+    <addaction name="separator"/>
     <addaction name="actionEntryCopyUsername"/>
     <addaction name="actionEntryCopyPassword"/>
     <addaction name="menuEntryCopyAttribute"/>
@@ -576,6 +579,28 @@
    </property>
    <property name="text">
     <string>&amp;Clone Entry…</string>
+   </property>
+  </action>
+  <action name="actionEntryMoveUp">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Move u&amp;p</string>
+   </property>
+   <property name="toolTip">
+    <string>Move entry one step up</string>
+   </property>
+  </action>
+  <action name="actionEntryMoveDown">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Move do&amp;wn</string>
+   </property>
+   <property name="toolTip">
+    <string>Move entry one step down</string>
    </property>
   </action>
   <action name="actionEntryCopyUsername">

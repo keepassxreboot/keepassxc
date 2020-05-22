@@ -48,6 +48,7 @@ Group::Group()
 
     connect(m_customData, SIGNAL(customDataModified()), this, SIGNAL(groupModified()));
     connect(this, SIGNAL(groupModified()), SLOT(updateTimeinfo()));
+    connect(this, SIGNAL(groupNonDataChange()), SLOT(updateTimeinfo()));
 }
 
 Group::~Group()
@@ -364,11 +365,11 @@ void Group::setExpanded(bool expanded)
 {
     if (m_data.isExpanded != expanded) {
         m_data.isExpanded = expanded;
-        if (!config()->get(Config::TrackNonDataChanges).toBool()) {
-            updateTimeinfo();
-            return;
+        if (config()->get(Config::TrackNonDataChanges).toBool()) {
+            emit groupModified();
+        } else {
+            emit groupNonDataChange();
         }
-        emit groupModified();
     }
 }
 
@@ -964,6 +965,40 @@ void Group::removeEntry(Entry* entry)
     emit entryRemoved(entry);
 }
 
+void Group::moveEntryUp(Entry* entry)
+{
+    int row = m_entries.indexOf(entry);
+    if (row <= 0) {
+        return;
+    }
+
+    emit entryAboutToMoveUp(row);
+    m_entries.move(row, row - 1);
+    emit entryMovedUp();
+    if (config()->get(Config::TrackNonDataChanges).toBool()) {
+        emit groupModified();
+    } else {
+        emit groupNonDataChange();
+    }
+}
+
+void Group::moveEntryDown(Entry* entry)
+{
+    int row = m_entries.indexOf(entry);
+    if (row >= m_entries.size() - 1) {
+        return;
+    }
+
+    emit entryAboutToMoveDown(row);
+    m_entries.move(row, row + 1);
+    emit entryMovedDown();
+    if (config()->get(Config::TrackNonDataChanges).toBool()) {
+        emit groupModified();
+    } else {
+        emit groupNonDataChange();
+    }
+}
+
 void Group::connectDatabaseSignalsRecursive(Database* db)
 {
     if (m_db) {
@@ -989,6 +1024,7 @@ void Group::connectDatabaseSignalsRecursive(Database* db)
         connect(this, SIGNAL(aboutToMove(Group*,Group*,int)), db, SIGNAL(groupAboutToMove(Group*,Group*,int)));
         connect(this, SIGNAL(groupMoved()), db, SIGNAL(groupMoved()));
         connect(this, SIGNAL(groupModified()), db, SLOT(markAsModified()));
+        connect(this, SIGNAL(groupNonDataChange()), db, SLOT(markNonDataChange()));
         // clang-format on
     }
 
