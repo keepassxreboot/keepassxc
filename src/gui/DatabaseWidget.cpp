@@ -279,6 +279,11 @@ bool DatabaseWidget::isSaving() const
     return m_db->isSaving();
 }
 
+bool DatabaseWidget::isSorted() const
+{
+    return m_entryView->isSorted();
+}
+
 bool DatabaseWidget::isSearchActive() const
 {
     return m_entryView->inSearchMode();
@@ -642,6 +647,24 @@ void DatabaseWidget::focusOnGroups()
 {
     if (isEntryViewActive()) {
         m_groupView->setFocus();
+    }
+}
+
+void DatabaseWidget::moveEntryUp()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        currentEntry->moveUp();
+        m_entryView->setCurrentEntry(currentEntry);
+    }
+}
+
+void DatabaseWidget::moveEntryDown()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (currentEntry) {
+        currentEntry->moveDown();
+        m_entryView->setCurrentEntry(currentEntry);
     }
 }
 
@@ -1510,7 +1533,7 @@ bool DatabaseWidget::lock()
         }
     }
 
-    if (m_db->isModified()) {
+    if (m_db->isModified(true)) {
         bool saved = false;
         // Attempt to save on exit, but don't block locking if it fails
         if (config()->get(Config::AutoSaveOnExit).toBool()
@@ -1594,7 +1617,7 @@ void DatabaseWidget::reloadDatabaseFile()
     QString error;
     auto db = QSharedPointer<Database>::create(m_db->filePath());
     if (db->open(database()->key(), &error)) {
-        if (m_db->isModified()) {
+        if (m_db->isModified(true)) {
             // Ask if we want to merge changes into new database
             auto result = MessageBox::question(
                 this,
@@ -1639,6 +1662,11 @@ void DatabaseWidget::reloadDatabaseFile()
 int DatabaseWidget::numberOfSelectedEntries() const
 {
     return m_entryView->numberOfSelectedEntries();
+}
+
+int DatabaseWidget::currentEntryIndex() const
+{
+    return m_entryView->currentEntryIndex();
 }
 
 QStringList DatabaseWidget::customEntryAttributes() const

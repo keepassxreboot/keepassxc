@@ -167,6 +167,8 @@ public:
 
     void addEntry(Entry* entry);
     void removeEntry(Entry* entry);
+    void moveEntryUp(Entry* entry);
+    void moveEntryDown(Entry* entry);
 
     void applyGroupIconOnCreateTo(Entry* entry);
     void applyGroupIconTo(Entry* entry);
@@ -185,10 +187,15 @@ signals:
     void aboutToMove(Group* group, Group* toGroup, int index);
     void groupMoved();
     void groupModified();
+    void groupNonDataChange();
     void entryAboutToAdd(Entry* entry);
     void entryAdded(Entry* entry);
     void entryAboutToRemove(Entry* entry);
     void entryRemoved(Entry* entry);
+    void entryAboutToMoveUp(int row);
+    void entryMovedUp();
+    void entryAboutToMoveDown(int row);
+    void entryMovedDown();
     void entryDataChanged(Entry* entry);
 
 private slots:

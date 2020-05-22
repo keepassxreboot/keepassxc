@@ -1066,6 +1066,20 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
     return QString();
 }
 
+void Entry::moveUp()
+{
+    if (m_group) {
+        m_group->moveEntryUp(this);
+    }
+}
+
+void Entry::moveDown()
+{
+    if (m_group) {
+        m_group->moveEntryDown(this);
+    }
+}
+
 Group* Entry::group()
 {
     return m_group;

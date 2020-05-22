@@ -83,6 +83,7 @@ public:
     DatabaseWidget::Mode currentMode() const;
     bool isLocked() const;
     bool isSaving() const;
+    bool isSorted() const;
     bool isSearchActive() const;
     bool isEntryViewActive() const;
     bool isEntryEditActive() const;
@@ -99,6 +100,7 @@ public:
     bool isGroupSelected() const;
     bool isRecycleBinSelected() const;
     int numberOfSelectedEntries() const;
+    int currentEntryIndex() const;
 
     QStringList customEntryAttributes() const;
     bool isEditWidgetModified() const;
@@ -167,6 +169,8 @@ public slots:
     void deleteEntries(QList<Entry*> entries);
     void focusOnEntries();
     void focusOnGroups();
+    void moveEntryUp();
+    void moveEntryDown();
     void copyTitle();
     void copyUsername();
     void copyPassword();

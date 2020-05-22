@@ -49,6 +49,7 @@ private slots:
     void testHierarchy();
     void testApplyGroupIconRecursively();
     void testUsernamesRecursive();
+    void testMove();
 };
 
 #endif // KEEPASSX_TESTGROUP_H

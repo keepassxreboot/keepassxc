@@ -30,6 +30,8 @@ EntryView::EntryView(QWidget* parent)
     : QTreeView(parent)
     , m_model(new EntryModel(this))
     , m_sortModel(new SortFilterHideProxyModel(this))
+    , m_lastIndex(-1)
+    , m_lastOrder(Qt::AscendingOrder)
     , m_inSearchMode(false)
 {
     m_sortModel->setSourceModel(m_model);
@@ -120,7 +122,7 @@ EntryView::EntryView(QWidget* parent)
     // clang-format on
 
     // clang-format off
-    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SIGNAL(viewStateChanged()));
+    connect(header(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), SLOT(sortIndicatorChanged(int,Qt::SortOrder)));
     // clang-format on
 }
 
@@ -129,6 +131,31 @@ void EntryView::contextMenuShortcutPressed()
     auto index = currentIndex();
     if (hasFocus() && index.isValid()) {
         emit customContextMenuRequested(visualRect(index).bottomLeft());
+    }
+}
+
+void EntryView::sortIndicatorChanged(int logicalIndex, Qt::SortOrder order)
+{
+    int oldIndex = m_lastIndex;
+    m_lastIndex = logicalIndex;
+    Qt::SortOrder oldOrder = m_lastOrder;
+    m_lastOrder = order;
+
+    if (oldIndex == logicalIndex // same index
+        && oldOrder == Qt::DescendingOrder // old order is descending
+        && order == Qt::AscendingOrder) // new order is ascending
+    {
+        // a change from descending to ascending on the same column occurred
+        // this sets the header into no sort order
+        header()->setSortIndicator(-1, Qt::AscendingOrder);
+        // do not emit any signals,  header()->setSortIndicator recursively calls this
+        // function and the signals are emitted in the else part
+    } else {
+        // call emitEntrySelectionChanged even though the selection did not really change
+        // this triggers the evaluation of the menu activation and anyway, the position
+        // of the selected entry within the widget did change
+        emitEntrySelectionChanged();
+        emit viewStateChanged();
     }
 }
 
@@ -211,6 +238,11 @@ bool EntryView::inSearchMode()
     return m_inSearchMode;
 }
 
+bool EntryView::isSorted()
+{
+    return header()->sortIndicatorSection() != -1;
+}
+
 void EntryView::emitEntryActivated(const QModelIndex& index)
 {
     Entry* entry = entryFromIndex(index);
@@ -255,6 +287,17 @@ Entry* EntryView::entryFromIndex(const QModelIndex& index)
         return m_model->entryFromIndex(m_sortModel->mapToSource(index));
     } else {
         return nullptr;
+    }
+}
+
+int EntryView::currentEntryIndex()
+{
+    QModelIndexList list = selectionModel()->selectedRows();
+    if (list.size() == 1) {
+        auto index = m_sortModel->mapToSource(list.first());
+        return index.row();
+    } else {
+        return -1;
     }
 }
 

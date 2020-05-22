@@ -55,6 +55,9 @@ void TestEntryModel::test()
 
     EntryModel* model = new EntryModel(this);
 
+    QSignalSpy spyAboutToBeMoved(model, SIGNAL(rowsAboutToBeMoved(QModelIndex, int, int, QModelIndex, int)));
+    QSignalSpy spyMoved(model, SIGNAL(rowsMoved(QModelIndex, int, int, QModelIndex, int)));
+
     ModelTest* modelTest = new ModelTest(model, this);
 
     model->setGroup(group1);
@@ -78,6 +81,29 @@ void TestEntryModel::test()
 
     Entry* entry3 = new Entry();
     entry3->setGroup(group1);
+
+    QCOMPARE(spyAboutToBeMoved.count(), 0);
+    QCOMPARE(spyMoved.count(), 0);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 1);
+    QCOMPARE(spyMoved.count(), 1);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    entry1->moveDown();
+    QCOMPARE(spyAboutToBeMoved.count(), 2);
+    QCOMPARE(spyMoved.count(), 2);
+
+    entry3->moveUp();
+    QCOMPARE(spyAboutToBeMoved.count(), 3);
+    QCOMPARE(spyMoved.count(), 3);
+
+    entry3->moveUp();
+    QCOMPARE(spyAboutToBeMoved.count(), 3);
+    QCOMPARE(spyMoved.count(), 3);
 
     QCOMPARE(spyAboutToAdd.count(), 1);
     QCOMPARE(spyAdded.count(), 1);
