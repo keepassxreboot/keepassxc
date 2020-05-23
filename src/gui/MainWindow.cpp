@@ -327,6 +327,7 @@ MainWindow::MainWindow()
 
     m_ui->actionDatabaseNew->setIcon(resources()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(resources()->icon("document-open"));
+    m_ui->menuRecentDatabases->setIcon(resources()->icon("document-open-recent"));
     m_ui->actionDatabaseSave->setIcon(resources()->icon("document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(resources()->icon("document-save-as"));
     m_ui->actionDatabaseSaveBackup->setIcon(resources()->icon("document-save-copy"));
@@ -337,6 +338,8 @@ MainWindow::MainWindow()
     m_ui->actionLockDatabases->setIcon(resources()->icon("database-lock"));
     m_ui->actionQuit->setIcon(resources()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(resources()->icon("database-merge"));
+    m_ui->menuImport->setIcon(resources()->icon("document-import"));
+    m_ui->menuExport->setIcon(resources()->icon("document-export"));
 
     m_ui->actionEntryNew->setIcon(resources()->icon("entry-new"));
     m_ui->actionEntryClone->setIcon(resources()->icon("entry-clone"));

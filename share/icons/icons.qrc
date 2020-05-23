@@ -18,8 +18,11 @@
         <file>application/scalable/actions/dialog-ok.svg</file>
         <file>application/scalable/actions/document-close.svg</file>
         <file>application/scalable/actions/document-edit.svg</file>
+        <file>application/scalable/actions/document-export.svg</file>
+        <file>application/scalable/actions/document-import.svg</file>
         <file>application/scalable/actions/document-new.svg</file>
         <file>application/scalable/actions/document-open.svg</file>
+        <file>application/scalable/actions/document-open-recent.svg</file>
         <file>application/scalable/actions/document-properties.svg</file>
         <file>application/scalable/actions/document-save.svg</file>
         <file>application/scalable/actions/document-save-as.svg</file>
@@ -53,7 +56,7 @@
         <file>application/scalable/actions/password-generator.svg</file>
         <file>application/scalable/actions/password-show-off.svg</file>
         <file>application/scalable/actions/password-show-on.svg</file>
-	<file>application/scalable/actions/refresh.svg</file>
+	    <file>application/scalable/actions/refresh.svg</file>
         <file>application/scalable/actions/reports.svg</file>
         <file>application/scalable/actions/reports-exclude.svg</file>
         <file>application/scalable/actions/sort-alphabetical-ascending.svg</file>

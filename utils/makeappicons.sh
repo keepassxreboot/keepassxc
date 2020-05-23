@@ -38,22 +38,27 @@
 #
 # Material icons: https://materialdesignicons.com/
 
+NC='\033[0m'
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+
 if [ $# != 1 ];then
     echo "Usage: $0 MATERIAL"
-    echo "MATERIAL is the check-out directory of the material icons repository"
+    echo "MATERIAL is the directory containing the material icons repository"
     echo "(git clone https://github.com/Templarian/MaterialDesign.git)".
     exit
 fi
 
 MATERIAL="$1"
 if [ ! -d "$MATERIAL" ];then
-    echo "Material check-out directory doesn't exist: $MATERIAL"
+    echo -e "${RED}Material Icons directory does not exist: ${MATERIAL}${NC}"
     exit 1
 fi
 
-if [ ! -d application ];then
-    echo "Please run this script from within the share/icons directory"
-    echo "of the KeePassXC source distribution."
+# Check destination dir
+DSTDIR=share/icons/application
+if [ ! -d "$DSTDIR" ];then
+    echo -e "${RED}Please invoke this script from the KeePassXC source root directory.${NC}"
     exit 1
 fi
 
@@ -65,24 +70,28 @@ fi
 # If the icon name is unknown, outputs nothing.
 map() {
     case "$1" in
-        application-exit)                   echo exit-to-app                    ;;
+        application-exit)                   echo exit-run                       ;;
         auto-type)                          echo keyboard-variant               ;;
         bugreport)                          echo bug-outline                    ;;
         chronometer)                        echo clock-outline                  ;;
-        configure)                          echo settings-outline               ;;
+        clipboard-text)                     echo clipboard-text-outline         ;;
+        configure)                          echo cog-outline                    ;;
         database-change-key)                echo key                            ;;
         database-close)                     echo close                          ;;
         database-lock)                      echo lock-outline                   ;;
         database-merge)                     echo merge                          ;;
         dialog-close)                       echo close                          ;;
-        dialog-error)                       echo alert-octagon                  ;;
+        dialog-error)                       echo alert-circle-outline           ;;
         dialog-information)                 echo information-outline            ;;
         dialog-ok)                          echo checkbox-marked-circle         ;;
         dialog-warning)                     echo alert-outline                  ;;
         document-close)                     echo close                          ;;
         document-edit)                      echo pencil                         ;;
+        document-export)                    echo export                         ;;
+        document-import)                    echo import                         ;;
         document-new)                       echo plus                           ;;
         document-open)                      echo folder-open-outline            ;;
+        document-open-recent)               echo folder-clock-outline           ;;
         document-properties)                echo file-edit-outline              ;;
         document-save)                      echo content-save-outline           ;;
         document-save-as)                   echo content-save-all-outline       ;;
@@ -90,12 +99,11 @@ map() {
         donate)                             echo gift-outline                   ;;
         edit-clear-locationbar-ltr)         echo backspace-reverse-outline      ;;
         edit-clear-locationbar-rtl)         echo backspace-outline              ;;
-        entry-clone)                        echo comment-multiple-outline       ;;
-        entry-delete)                       echo comment-remove-outline         ;;
-        entry-edit)                         echo comment-edit-outline           ;;
-        entry-new)                          echo comment-plus-outline           ;;
+        entry-clone)                        echo plus-circle-multiple-outline   ;;
+        entry-delete)                       echo close-circle-outline           ;;
+        entry-edit)                         echo pencil-circle-outline          ;;
+        entry-new)                          echo plus-circle-outline            ;;
         favicon-download)                   echo download                       ;;
-        freedesktop)                        echo freedesktop-dot-org            ;;
         getting-started)                    echo lightbulb-on-outline           ;;
         group-delete)                       echo folder-remove-outline          ;;
         group-edit)                         echo folder-edit-outline            ;;
@@ -104,8 +112,8 @@ map() {
         health)                             echo heart-pulse                    ;;
         help-about)                         echo information-outline            ;;
         internet-web-browser)               echo web                            ;;
-        key-enter)                          echo keyboard-variant               ;;
         keyboard-shortcuts)                 echo apple-keyboard-command         ;;
+        key-enter)                          echo keyboard-variant               ;;
         message-close)                      echo close                          ;;
         move-down)                          echo chevron-double-down            ;;
         move-up)                            echo chevron-double-up              ;;
@@ -117,9 +125,10 @@ map() {
         password-generator)                 echo dice-3-outline                 ;;
         password-show-off)                  echo eye-off-outline                ;;
         password-show-on)                   echo eye-outline                    ;;
-        preferences-other)                  echo file-document-edit-outline     ;;
         preferences-desktop-icons)          echo emoticon-happy-outline         ;;
+        preferences-other)                  echo file-document-edit-outline     ;;
         preferences-system-network-sharing) echo lan                            ;;
+        refresh)                            echo refresh                        ;;
         reports)                            echo lightbulb-on-outline           ;;
         reports-exclude)                    echo lightbulb-off-outline          ;;
         security-high)                      echo shield-outline                 ;;
@@ -139,7 +148,7 @@ map() {
 }
 
 # Now do the actual work
-find application -type f -name "*.svg" | while read -r DST;do
+find $DSTDIR -type f -name "*.svg" | while read -r DST;do
 
     # Find the icon name (base name without extender)
     NAME=$(basename $DST .svg)
@@ -147,18 +156,19 @@ find application -type f -name "*.svg" | while read -r DST;do
     # Find the base name of the svg file for this icon
     MAT=$(map $NAME)
     if [[ -z $MAT ]];then
-        echo "Warning: Don't know about $NAME"
+        echo -e "${YELLOW}Warning: No MaterialDesign mapping for ${NAME}${NC}"
         continue
     fi
 
     # So the source file is:
     SRC="$MATERIAL/svg/$MAT.svg"
     if [ ! -f "$SRC" ];then
-        echo "Error: Source for $NAME doesn't exist: $SRC"
-        exit 1
+        echo -e "${RED}Error: Source for ${NAME} doesn't exist: ${SRC}${NC}"
+        continue
     fi
 
     # Replace the icon file with the source file
     cp "$SRC" "$DST" || exit
+    echo "Copied icon for ${NAME}"
 
 done
