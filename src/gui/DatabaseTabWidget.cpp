@@ -627,7 +627,8 @@ DatabaseWidget* DatabaseTabWidget::currentDatabaseWidget()
 bool DatabaseTabWidget::lockDatabases()
 {
     int numLocked = 0;
-    for (int i = 0, c = count(); i < c; ++i) {
+    int c = count();
+    for (int i = 0; i < c; ++i) {
         auto dbWidget = databaseWidgetFromIndex(i);
         if (dbWidget->lock()) {
             ++numLocked;
@@ -638,7 +639,7 @@ bool DatabaseTabWidget::lockDatabases()
         }
     }
 
-    return numLocked == count();
+    return numLocked == c;
 }
 
 /**
