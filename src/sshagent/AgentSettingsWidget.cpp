@@ -36,6 +36,7 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
     m_ui->sshAuthSockMessageWidget->setVisible(sshAgent()->isEnabled());
     m_ui->sshAuthSockMessageWidget->setCloseButtonVisible(false);
     m_ui->sshAuthSockMessageWidget->setAutoHideTimeout(-1);
+    connect(m_ui->enableSSHAgentCheckBox, SIGNAL(stateChanged(int)), SLOT(toggleSettingsEnabled()));
 }
 
 AgentSettingsWidget::~AgentSettingsWidget()
@@ -76,6 +77,8 @@ void AgentSettingsWidget::loadSettings()
             m_ui->sshAuthSockMessageWidget->showMessage(sshAgent()->errorString(), MessageWidget::Error);
         }
     }
+
+    toggleSettingsEnabled();
 }
 
 void AgentSettingsWidget::saveSettings()
@@ -86,4 +89,9 @@ void AgentSettingsWidget::saveSettings()
     sshAgent()->setUseOpenSSH(m_ui->useOpenSSHCheckBox->isChecked());
 #endif
     sshAgent()->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
+}
+
+void AgentSettingsWidget::toggleSettingsEnabled()
+{
+    m_ui->agentConfigPageBody->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
 }

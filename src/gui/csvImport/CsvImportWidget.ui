@@ -497,6 +497,16 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>comboBoxCodec</tabstop>
+  <tabstop>comboBoxTextQualifier</tabstop>
+  <tabstop>comboBoxFieldSeparator</tabstop>
+  <tabstop>comboBoxComment</tabstop>
+  <tabstop>checkBoxFieldNames</tabstop>
+  <tabstop>spinBoxSkip</tabstop>
+  <tabstop>checkBoxBackslash</tabstop>
+  <tabstop>tableViewFields</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

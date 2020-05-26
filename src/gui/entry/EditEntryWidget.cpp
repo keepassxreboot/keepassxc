@@ -786,12 +786,12 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 > %2").arg(parentName, tr("Entry history")));
+        setHeadline(QString("%1 \u2B29 %2").arg(parentName, tr("Entry history")));
     } else {
         if (create) {
-            setHeadline(QString("%1 > %2").arg(parentName, tr("Add entry")));
+            setHeadline(QString("%1 \u2B29 %2").arg(parentName, tr("Add entry")));
         } else {
-            setHeadline(QString("%1 > %2 > %3").arg(parentName, entry->title(), tr("Edit entry")));
+            setHeadline(QString("%1 \u2B29 %2 \u2B29 %3").arg(parentName, entry->title(), tr("Edit entry")));
         }
     }
 

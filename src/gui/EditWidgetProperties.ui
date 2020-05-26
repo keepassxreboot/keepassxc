@@ -6,11 +6,11 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>328</height>
+    <width>364</width>
+    <height>408</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
    <property name="spacing">
     <number>5</number>
    </property>
@@ -27,18 +27,21 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QFormLayout" name="formLayout_2">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="verticalSpacing">
+      <number>8</number>
      </property>
-     <item row="1" column="0">
+     <item row="0" column="0">
       <widget class="QLabel" name="labelCreated">
        <property name="text">
         <string>Created:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="createdEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -54,14 +57,17 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="labelModfied">
        <property name="text">
         <string>Modified:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="QLineEdit" name="modifiedEdit">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -77,14 +83,17 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="labelAccessed">
        <property name="text">
         <string>Accessed:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <widget class="QLineEdit" name="accessedEdit">
        <property name="accessibleName">
         <string>Datetime accessed</string>
@@ -94,14 +103,17 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="labelUuid">
        <property name="text">
         <string>Uuid:</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="3" column="1">
       <widget class="QLineEdit" name="uuidEdit">
        <property name="accessibleName">
         <string>Unique ID</string>
@@ -112,6 +124,22 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>10</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item>
     <widget class="QGroupBox" name="groupBox">

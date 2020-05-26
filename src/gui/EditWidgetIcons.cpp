@@ -163,7 +163,7 @@ void EditWidgetIcons::setShowApplyIconToButton(bool state)
 QMenu* EditWidgetIcons::createApplyIconToMenu()
 {
     auto* applyIconToMenu = new QMenu(this);
-    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this only"));
+    QAction* defaultAction = applyIconToMenu->addAction(tr("Apply to this group only"));
     defaultAction->setData(QVariant::fromValue(ApplyIconToOptions::THIS_ONLY));
     applyIconToMenu->setDefaultAction(defaultAction);
     applyIconToMenu->addSeparator();

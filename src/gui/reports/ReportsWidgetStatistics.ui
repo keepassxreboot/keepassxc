@@ -65,6 +65,9 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>statisticsTableView</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

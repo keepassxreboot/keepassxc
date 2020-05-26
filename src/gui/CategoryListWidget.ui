@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>182</width>
+    <width>256</width>
     <height>418</height>
    </rect>
   </property>
@@ -113,8 +113,8 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>categoryList</tabstop>
   <tabstop>scrollUp</tabstop>
+  <tabstop>categoryList</tabstop>
   <tabstop>scrollDown</tabstop>
  </tabstops>
  <resources/>

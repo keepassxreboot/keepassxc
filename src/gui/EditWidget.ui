@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>612</width>
-    <height>255</height>
+    <width>527</width>
+    <height>391</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -15,11 +15,27 @@
     <widget class="MessageWidget" name="messageWidget" native="true"/>
    </item>
    <item>
-    <widget class="QLabel" name="headerLabel">
-     <property name="text">
-      <string/>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <property name="leftMargin">
+      <number>2</number>
      </property>
-    </widget>
+     <property name="topMargin">
+      <number>2</number>
+     </property>
+     <property name="rightMargin">
+      <number>2</number>
+     </property>
+     <property name="bottomMargin">
+      <number>2</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="headerLabel">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <spacer name="verticalSpacer">
@@ -39,6 +55,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+     <property name="spacing">
+      <number>18</number>
+     </property>
      <item>
       <widget class="CategoryListWidget" name="categoryList" native="true">
        <property name="sizePolicy">

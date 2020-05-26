@@ -190,6 +190,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->minimizeAfterUnlockCheckBox->setChecked(config()->get(Config::MinimizeAfterUnlock).toBool());
     m_generalUi->minimizeOnOpenUrlCheckBox->setChecked(config()->get(Config::MinimizeOnOpenUrl).toBool());
     m_generalUi->hideWindowOnCopyCheckBox->setChecked(config()->get(Config::HideWindowOnCopy).toBool());
+    hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
     m_generalUi->minimizeOnCopyRadioButton->setChecked(config()->get(Config::MinimizeOnCopy).toBool());
     m_generalUi->dropToBackgroundOnCopyRadioButton->setChecked(config()->get(Config::DropToBackgroundOnCopy).toBool());
     m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(
@@ -198,10 +199,6 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
     m_generalUi->trackNonDataChangesCheckBox->setChecked(config()->get(Config::TrackNonDataChanges).toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
-
-    if (!m_generalUi->hideWindowOnCopyCheckBox->isChecked()) {
-        hideWindowOnCopyCheckBoxToggled(false);
-    }
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString>> languages = Translator::availableLanguages();
@@ -215,6 +212,7 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_generalUi->previewHideCheckBox->setChecked(config()->get(Config::GUI_HidePreviewPanel).toBool());
     m_generalUi->toolbarHideCheckBox->setChecked(config()->get(Config::GUI_HideToolbar).toBool());
+    toolbarSettingsToggled(m_generalUi->toolbarHideCheckBox->isChecked());
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
 
@@ -239,13 +237,16 @@ void ApplicationSettingsWidget::loadSettings()
     }
 
     m_generalUi->systrayShowCheckBox->setChecked(config()->get(Config::GUI_ShowTrayIcon).toBool());
+    systrayToggled(m_generalUi->systrayShowCheckBox->isChecked());
     m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get(Config::GUI_DarkTrayIcon).toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get(Config::GUI_MinimizeToTray).toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get(Config::GUI_MinimizeOnClose).toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get(Config::GUI_MinimizeOnStartup).toBool());
     m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get(Config::GUI_CheckForUpdates).toBool());
+    checkUpdatesToggled(m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
     m_generalUi->checkForUpdatesIncludeBetasCheckBox->setChecked(
         config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool());
+
     m_generalUi->autoTypeAskCheckBox->setChecked(config()->get(Config::Security_AutoTypeAsk).toBool());
 
     if (autoType()->isAvailable()) {

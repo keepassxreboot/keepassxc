@@ -401,9 +401,6 @@ void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, b
 
 QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)
 {
-    const QString separator("] > [");
-    QStringList hierarchy = group->hierarchy();
-    QString groupList = QString("[%1]").arg(hierarchy.join(separator));
-
-    return title.isEmpty() ? groupList : QString("%1 > %2").arg(groupList, title);
+    QString groupList = QString("%1").arg(group->hierarchy().join(" / "));
+    return title.isEmpty() ? groupList : QStringLiteral("%1 / %2").arg(groupList, title);
 }
