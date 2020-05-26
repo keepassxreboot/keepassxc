@@ -123,3 +123,14 @@ bool MacUtils::isCapslockEnabled()
 {
     return (CGEventSourceFlagsState(kCGEventSourceStateHIDSystemState) & kCGEventFlagMaskAlphaShift) != 0;
 }
+
+/**
+ * Toggle application state between foreground app and UIElement app.
+ * Foreground apps have dock icons, UIElement apps do not.
+ *
+ * @param foreground whether app is foreground app
+ */
+void MacUtils::toggleForegroundApp(bool foreground)
+{
+    m_appkit->toggleForegroundApp(foreground);
+}

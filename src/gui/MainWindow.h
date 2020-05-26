@@ -141,7 +141,6 @@ private:
 
     static const QString BaseWindowTitle;
 
-    bool shouldHide();
     void saveWindowInformation();
     bool saveLastDatabases();
     void updateTrayIcon();

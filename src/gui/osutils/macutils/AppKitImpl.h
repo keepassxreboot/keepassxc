@@ -38,5 +38,6 @@
 - (void) userSwitchHandler:(NSNotification*) notification;
 - (bool) enableAccessibility;
 - (bool) enableScreenRecording;
+- (void) toggleForegroundApp:(bool) foreground;
 
 @end

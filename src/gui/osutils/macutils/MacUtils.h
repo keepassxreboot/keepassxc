@@ -46,6 +46,7 @@ public:
     bool isHidden();
     bool enableAccessibility();
     bool enableScreenRecording();
+    void toggleForegroundApp(bool foreground);
 
 signals:
     void lockDatabases();
