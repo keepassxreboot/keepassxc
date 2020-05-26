@@ -39,6 +39,7 @@ public:
     bool isDarkMode();
     bool enableAccessibility();
     bool enableScreenRecording();
+    void toggleForegroundApp(bool foreground);
 
 signals:
     void lockDatabases();

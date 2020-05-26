@@ -154,6 +154,16 @@
     return YES;
 }
 
+- (void) toggleForegroundApp:(bool) foreground
+{
+    ProcessSerialNumber psn = {0, kCurrentProcess};
+    if (foreground) {
+        TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+    } else {
+        TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+    }
+}
+
 @end
 
 //
@@ -214,4 +224,9 @@ bool AppKit::enableAccessibility()
 bool AppKit::enableScreenRecording()
 {
     return [static_cast<id>(self) enableScreenRecording];
+}
+
+void AppKit::toggleForegroundApp(bool foreground)
+{
+    [static_cast<id>(self) toggleForegroundApp:foreground];
 }

@@ -1368,6 +1368,16 @@ void MainWindow::trayIconTriggered(QSystemTrayIcon::ActivationReason reason)
 
 void MainWindow::processTrayIconTrigger()
 {
+#ifdef Q_OS_MACOS
+    // Do not toggle the window on macOS and just show the context menu instead.
+    // Right click detection doesn't seem to be working anyway
+    // and anything else will only trigger the context menu AND
+    // toggle the window at the same time, which is confusing at best.
+    // Showing only a context menu for tray icons seems to be best
+    // practice on macOS anyway, so this is probably fine.
+    return;
+#endif
+
     if (m_trayIconTriggerReason == QSystemTrayIcon::DoubleClick) {
         // Always toggle window on double click
         toggleWindow();
@@ -1379,7 +1389,7 @@ void MainWindow::processTrayIconTrigger()
         // clicking the tray icon removes focus from main window.
         if (isHidden() || (Clock::currentMilliSecondsSinceEpoch() - m_lastFocusOutTime) <= 500) {
 #else
-        // If on Linux or macOS, check if the window has focus.
+        // If on Linux, check if the window has focus.
         if (hasFocus() || isHidden() || windowHandle()->isActive()) {
 #endif
             toggleWindow();
@@ -1394,40 +1404,39 @@ void MainWindow::show()
 #ifndef Q_OS_WIN
     m_lastShowTime = Clock::currentMilliSecondsSinceEpoch();
 #endif
-    QMainWindow::show();
-}
-
-bool MainWindow::shouldHide()
-{
-#ifndef Q_OS_WIN
-    qint64 current_time = Clock::currentMilliSecondsSinceEpoch();
-
-    if (current_time - m_lastShowTime < 50) {
-        return false;
-    }
+#ifdef Q_OS_MACOS
+    // Unset minimize state to avoid weird fly-in effects
+    setWindowState(windowState() & ~Qt::WindowMinimized);
+    macUtils()->toggleForegroundApp(true);
 #endif
-    return true;
+    QMainWindow::show();
 }
 
 void MainWindow::hide()
 {
-    if (shouldHide()) {
-        QMainWindow::hide();
+#ifndef Q_OS_WIN
+    qint64 current_time = Clock::currentMilliSecondsSinceEpoch();
+    if (current_time - m_lastShowTime < 50) {
+        return;
     }
+#endif
+    QMainWindow::hide();
+#ifdef Q_OS_MACOS
+    macUtils()->toggleForegroundApp(false);
+#endif
 }
 
 void MainWindow::hideWindow()
 {
     saveWindowInformation();
-    if (QGuiApplication::platformName() != "xcb") {
-        // In X11 the window should NOT be minimized and hidden (i.e. not
-        // shown) at the same time (which would happen if both minimize on
-        // startup and minimize to tray are set) since otherwise it causes
-        // problems on restore as seen on issue #1595. Hiding it is enough.
-        setWindowState(windowState() | Qt::WindowMinimized);
-    }
+
     // Only hide if tray icon is active, otherwise window will be gone forever
     if (isTrayIconEnabled()) {
+        // On X11, the window should NOT be minimized and hidden at the same time. See issue #1595.
+        // On macOS, we are skipping minimization as well to avoid playing the magic lamp animation.
+        if (QGuiApplication::platformName() != "xcb" && QGuiApplication::platformName() != "cocoa") {
+            setWindowState(windowState() | Qt::WindowMinimized);
+        }
         hide();
     } else {
         showMinimized();
