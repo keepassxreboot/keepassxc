@@ -297,6 +297,11 @@
  <tabstops>
   <tabstop>clearClipboardCheckBox</tabstop>
   <tabstop>clearClipboardSpinBox</tabstop>
+  <tabstop>lockDatabaseIdleCheckBox</tabstop>
+  <tabstop>lockDatabaseIdleSpinBox</tabstop>
+  <tabstop>clearSearchCheckBox</tabstop>
+  <tabstop>clearSearchSpinBox</tabstop>
+  <tabstop>touchIDResetCheckBox</tabstop>
   <tabstop>touchIDResetSpinBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>touchIDResetOnScreenLockCheckBox</tabstop>

@@ -246,6 +246,9 @@
                       <property name="cursor">
                        <cursorShape>PointingHandCursor</cursorShape>
                       </property>
+                      <property name="focusPolicy">
+                       <enum>Qt::ClickFocus</enum>
+                      </property>
                       <property name="toolTip">
                        <string>&lt;p&gt;In addition to your master password, you can use a secret file to enhance the security of your database. Such a file can be generated in your database's security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave the field empty.&lt;/p&gt;&lt;p&gt;Click for more information...&lt;/p&gt;</string>
                       </property>
@@ -346,6 +349,9 @@
                        <widget class="QToolButton" name="hardwareKeyLabelHelp">
                         <property name="cursor">
                          <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="focusPolicy">
+                         <enum>Qt::ClickFocus</enum>
                         </property>
                         <property name="toolTip">
                          <string>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
@@ -586,11 +592,6 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>PasswordEdit</class>
-   <extends>QLineEdit</extends>
-   <header>gui/PasswordEdit.h</header>
-  </customwidget>
-  <customwidget>
    <class>MessageWidget</class>
    <extends>QWidget</extends>
    <header>gui/MessageWidget.h</header>
@@ -601,12 +602,18 @@
    <extends>QLabel</extends>
    <header>gui/widgets/ElidedLabel.h</header>
   </customwidget>
+  <customwidget>
+   <class>PasswordEdit</class>
+   <extends>QLineEdit</extends>
+   <header>gui/PasswordEdit.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>editPassword</tabstop>
   <tabstop>comboKeyFile</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
-  <tabstop>hardwareKeyLabelHelp</tabstop>
   <tabstop>challengeResponseCombo</tabstop>
+  <tabstop>buttonRedetectYubikey</tabstop>
   <tabstop>checkTouchID</tabstop>
  </tabstops>
  <resources/>

@@ -180,6 +180,14 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>removeSharedEncryptionKeys</tabstop>
+  <tabstop>removeStoredPermissions</tabstop>
+  <tabstop>convertToCustomData</tabstop>
+  <tabstop>refreshDatabaseID</tabstop>
+  <tabstop>customDataTable</tabstop>
+  <tabstop>removeCustomDataButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

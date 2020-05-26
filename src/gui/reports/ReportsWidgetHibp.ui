@@ -227,6 +227,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>hibpTableView</tabstop>
+  <tabstop>showKnownBadCheckBox</tabstop>
+  <tabstop>validationButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

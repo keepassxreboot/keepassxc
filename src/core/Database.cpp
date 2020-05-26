@@ -49,7 +49,7 @@ Database::Database()
 {
     setRootGroup(new Group());
     rootGroup()->setUuid(QUuid::createUuid());
-    rootGroup()->setName(tr("Root", "Root group name"));
+    rootGroup()->setName(tr("Passwords", "Root group name"));
     m_modifiedTimer.setSingleShot(true);
 
     s_uuidMap.insert(m_uuid, this);

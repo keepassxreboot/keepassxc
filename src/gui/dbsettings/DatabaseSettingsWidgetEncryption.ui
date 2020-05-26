@@ -420,6 +420,17 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>activateChangeDecryptionTimeButton</tabstop>
+  <tabstop>decryptionTimeSlider</tabstop>
+  <tabstop>compatibilitySelection</tabstop>
+  <tabstop>algorithmComboBox</tabstop>
+  <tabstop>kdfComboBox</tabstop>
+  <tabstop>transformRoundsSpinBox</tabstop>
+  <tabstop>transformBenchmarkButton</tabstop>
+  <tabstop>memorySpinBox</tabstop>
+  <tabstop>parallelismSpinBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -231,7 +231,7 @@
             <x>0</x>
             <y>0</y>
             <width>466</width>
-            <height>246</height>
+            <height>242</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -336,6 +336,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>debugInfo</tabstop>
+  <tabstop>copyToClipboard</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

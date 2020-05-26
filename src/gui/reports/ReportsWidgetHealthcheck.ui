@@ -75,6 +75,10 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>healthcheckTableView</tabstop>
+  <tabstop>showKnownBadCheckBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
