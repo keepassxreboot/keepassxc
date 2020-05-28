@@ -419,10 +419,6 @@ install(TARGETS ${PROGNAME}
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
-if(APPLE OR UNIX)
-    install(FILES ../share/docs/man/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
-endif()
-
 if(MINGW)
     if(${CMAKE_SIZEOF_VOID_P} EQUAL "8")
         set(OUTPUT_FILE_POSTFIX "Win64")
