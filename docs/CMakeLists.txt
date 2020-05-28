@@ -20,27 +20,46 @@ else()
     message(STATUS "Using asciidoctor: ${ASCIIDOCTOR_EXE}")
 endif()
 
+set(DOC_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(OUT_DIR ${CMAKE_CURRENT_BINARY_DIR})
+
 # Build html documentation on all platforms
 add_custom_command(OUTPUT KeePassXC_GettingStarted.html
-    COMMAND ${ASCIIDOCTOR_EXE} -D ${CMAKE_CURRENT_BINARY_DIR} -o KeePassXC_GettingStarted.html GettingStarted.adoc
-    DEPENDS topics/* styles/* images/* GettingStarted.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -o KeePassXC_GettingStarted.html ${DOC_DIR}/GettingStarted.adoc
+    DEPENDS ${DOC_DIR}/topics/* ${DOC_DIR}/styles/* ${DOC_DIR}/images/* ${DOC_DIR}/GettingStarted.adoc
     VERBATIM)
 add_custom_command(OUTPUT KeePassXC_UserGuide.html
-    COMMAND ${ASCIIDOCTOR_EXE} -D ${CMAKE_CURRENT_BINARY_DIR} -o KeePassXC_UserGuide.html UserGuide.adoc
-    DEPENDS topics/* styles/* images/* UserGuide.adoc
+    COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -o KeePassXC_UserGuide.html ${DOC_DIR}/UserGuide.adoc
+    DEPENDS ${DOC_DIR}/topics/* ${DOC_DIR}/styles/* ${DOC_DIR}/images/* ${DOC_DIR}/UserGuide.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     VERBATIM)
 add_custom_command(OUTPUT KeePassXC_KeyboardShortcuts.html
-    COMMAND ${ASCIIDOCTOR_EXE} -D ${CMAKE_CURRENT_BINARY_DIR} -o KeePassXC_KeyboardShortcuts.html topics/KeyboardShortcuts.adoc
-    DEPENDS topics/KeyboardShortcuts.adoc styles/*
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -o KeePassXC_KeyboardShortcuts.html ${DOC_DIR}/topics/KeyboardShortcuts.adoc
+    DEPENDS ${DOC_DIR}/topics/KeyboardShortcuts.adoc ${DOC_DIR}/styles/*
     VERBATIM)
 
 add_custom_target(docs ALL DEPENDS KeePassXC_GettingStarted.html KeePassXC_UserGuide.html KeePassXC_KeyboardShortcuts.html)
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/KeePassXC_GettingStarted.html
-    ${CMAKE_CURRENT_BINARY_DIR}/KeePassXC_UserGuide.html
-    ${CMAKE_CURRENT_BINARY_DIR}/KeePassXC_KeyboardShortcuts.html
+    ${OUT_DIR}/KeePassXC_GettingStarted.html
+    ${OUT_DIR}/KeePassXC_UserGuide.html
+    ${OUT_DIR}/KeePassXC_KeyboardShortcuts.html
     DESTINATION ${DATA_INSTALL_DIR}/docs)
+
+# Build Man Pages on Linux and macOS
+if(APPLE OR UNIX)
+    add_custom_command(OUTPUT keepassxc.1
+        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage ${DOC_DIR}/man/keepassxc.1.adoc
+        DEPENDS ${DOC_DIR}/man/*
+        VERBATIM)
+    add_custom_command(OUTPUT keepassxc-cli.1
+        COMMAND ${ASCIIDOCTOR_EXE} -D ${OUT_DIR} -b manpage ${DOC_DIR}/man/keepassxc-cli.1.adoc
+        DEPENDS ${DOC_DIR}/man/*
+        VERBATIM)
+    add_custom_target(manpages ALL DEPENDS keepassxc.1 keepassxc-cli.1)
+
+    install(FILES 
+        ${OUT_DIR}/keepassxc.1
+        ${OUT_DIR}/keepassxc-cli.1
+        DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
+endif()

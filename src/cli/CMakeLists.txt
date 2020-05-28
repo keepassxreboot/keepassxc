@@ -118,7 +118,3 @@ if(APPLE AND WITH_APP_BUNDLE)
                        COMMAND ${CMAKE_COMMAND} -E copy keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
                        COMMENT "Copying keepassxc-cli inside the application")
 endif()
-
-if(APPLE OR UNIX)
-    install(FILES ../../share/docs/man/keepassxc-cli.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
-endif()
