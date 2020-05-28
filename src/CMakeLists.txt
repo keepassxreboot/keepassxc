@@ -413,6 +413,11 @@ install(TARGETS ${PROGNAME}
         RUNTIME DESTINATION ${BIN_INSTALL_DIR} COMPONENT Runtime)
 
 if(APPLE OR UNIX)
+    find_program(ASCIIDOCTOR_EXE asciidoctor ENV PATH)
+    if(NOT ASCIIDOCTOR_EXE)
+        message(FATAL_ERROR "asciidoctor is required to build man page")
+    endif()
+    execute_process(COMMAND ${ASCIIDOCTOR_EXE} -b manpage ${CMAKE_SOURCE_DIR}/share/docs/man/keepassxc.1.adoc)
     install(FILES ../share/docs/man/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1/)
 endif()
 

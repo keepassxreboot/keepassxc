@@ -23,7 +23,7 @@ so please check out your distribution's package list to see if KeePassXC is avai
 - YubiKey challenge-response support
 - TOTP generation
 - CSV import
-- A [Command Line Interface (keepassxc-cli)](./share/docs/man/keepassxc-cli.1)
+- A [Command Line Interface (keepassxc-cli)](./share/docs/man/keepassxc-cli.1.adoc)
 - DEP and ASLR hardening
 - Stand-alone password and passphrase generator
 - Password strength meter

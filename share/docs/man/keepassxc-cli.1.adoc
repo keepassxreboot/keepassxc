@@ -1,0 +1,282 @@
+= keepassxc-cli(1)
+:docdate: 2020-01-04
+:doctype: manpage
+:manmanual: General Commands Manual
+
+== NAME
+keepassxc-cli - command line interface for the KeePassXC password manager.
+
+== SYNOPSIS
+*keepassxc-cli* _command_ [_options_]
+
+== DESCRIPTION
+*keepassxc-cli* is the command line interface for the *KeePassXC* password manager.
+It provides the ability to query and modify the entries of a KeePass database, directly from the command line.
+
+== COMMANDS
+*add* [_options_] <__database__> <__entry__>::
+  Adds a new entry to a database.
+  A password can be generated (_-g_ option), or a prompt can be displayed to input the password (_-p_ option).
+  The same password generation options as documented for the generate command can be used when the _-g_ option is set.
+
+*analyze* [_options_] <__database__>::
+  Analyzes passwords in a database for weaknesses.
+
+*clip* [_options_] <__database__> <__entry__> [_timeout_]::
+  Copies an attribute or the current TOTP (if the _-t_ option is specified) of a database entry to the clipboard.
+  If no attribute name is specified using the _-a_ option, the password is copied.
+  If multiple entries with the same name exist in different groups, only the attribute for the first one is copied.
+  For copying the attribute of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name.
+  Optionally, a timeout in seconds can be specified to automatically clear the clipboard.
+
+*close*::
+  In interactive mode, closes the currently opened database (see _open_).
+
+*db-create* [_options_] <__database__>::
+  Creates a new database with a password and/or a key file.
+  The key file will be created if the file that is referred to does not exist.
+  If both the key file and password are empty, no database will be created.
+
+*db-info* [_options_] <__database__>::
+  Show a database's information.
+
+*diceware* [_options_]::
+  Generates a random diceware passphrase.
+
+*edit* [_options_] <__database__> <__entry__>::
+  Edits a database entry.
+  A password can be generated (_-g_ option), or a prompt can be displayed to input the password (_-p_ option).
+  The same password generation options as documented for the generate command can be used when the _-g_ option is set.
+
+*estimate* [_options_] [_password_]::
+  Estimates the entropy of a password.
+  The password to estimate can be provided as a positional argument, or using the standard input.
+
+*exit*::
+  Exits interactive mode.
+  Synonymous with _quit_.
+
+*export* [_options_] <__database__>::
+  Exports the content of a database to standard output in the specified format (defaults to XML).
+
+*generate* [_options_]::
+  Generates a random password.
+
+*help* [_command_]::
+  Displays a list of available commands, or detailed information about the specified command.
+
+*import* [_options_] <__xml__> <__database__>::
+  Imports the contents of an XML database to the target database.
+
+*locate* [_options_] <__database__> <__term__>::
+  Locates all the entries that match a specific search term in a database.
+
+*ls* [_options_] <__database__> [_group_]::
+  Lists the contents of a group in a database.
+  If no group is specified, it will default to the root group.
+
+*merge* [_options_] <__database1__> <__database2__>::
+  Merges two databases together.
+  The first database file is going to be replaced by the result of the merge, for that reason it is advisable to keep a backup of the two database files before attempting a merge.
+  In the case that both databases make use of the same credentials, the _--same-credentials_ or _-s_ option can be used.
+
+*mkdir* [_options_] <__database__> <__group__>::
+  Adds a new group to a database.
+
+*mv* [_options_] <__database__> <__entry__> <__group__>::
+  Moves an entry to a new group.
+
+*open* [_options_] <__database__>::
+  Opens the given database in a shell-style interactive mode.
+  This is useful for performing multiple operations on a single database (e.g. _ls_ followed by _show_).
+
+*quit*::
+  Exits interactive mode.
+  Synonymous with _exit_.
+
+*rm* [_options_] <__database__> <__entry__>::
+  Removes an entry from a database.
+  If the database has a recycle bin, the entry will be moved there.
+  If the entry is already in the recycle bin, it will be removed permanently.
+
+*rmdir* [_options_] <__database__> <__group__>::
+  Removes a group from a database.
+  If the database has a recycle bin, the group will be moved there.
+  If the group is already in the recycle bin, it will be removed permanently.
+
+*show* [_options_] <__database__> <__entry__>::
+  Shows the title, username, password, URL and notes of a database entry.
+  Can also show the current TOTP.
+  Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the _clip_ command section also applies here.
+
+== OPTIONS
+=== General options
+*--debug-info*::
+  Displays debugging information.
+
+*-k*, *--key-file* <__path__>::
+  Specifies a path to a key file for unlocking the database.
+  In a merge operation this option, is used to specify the key file path for the first database.
+
+*--no-password*::
+  Deactivates the password key for the database.
+
+*-y*, *--yubikey* <__slot__>::
+  Specifies a yubikey slot for unlocking the database.
+  In a merge operation this option is used to specify the yubikey slot for the first database.
+
+*-q*, *--quiet* <__path__>::
+  Silences password prompt and other secondary outputs.
+
+*-h*, *--help*::
+  Displays help information.
+
+*-v*, *--version*::
+  Displays the program version.
+
+=== Merge options
+*-d*, *--dry-run* <__path__>::
+  Prints the changes detected by the merge operation without making any changes to the database.
+
+*--key-file-from* <__path__>::
+  Sets the path of the key file for the second database.
+
+*--no-password-from*::
+  Deactivates password key for the database to merge from.
+
+*--yubikey-from* <__slot__>::
+  Yubikey slot for the second database.
+
+*-s*, *--same-credentials*::
+  Uses the same credentials for unlocking both databases.
+
+=== Add and edit options
+The same password generation options as documented for the generate command can be used with those 2 commands when the -g option is set.
+
+*-u*, *--username* <__username__>::
+  Specifies the username of the entry.
+
+*--url* <__url__>::
+  Specifies the URL of the entry.
+
+*-p*, *--password-prompt*::
+  Uses a password prompt for the entry's password.
+
+*-g*, *--generate*::
+  Generates a new password for the entry.
+
+=== Edit options
+*-t*, *--title* <__title__>::
+  Specifies the title of the entry.
+
+=== Estimate options
+*-a*, *--advanced*::
+  Performs advanced analysis on the password.
+
+=== Analyze options
+*-H*, *--hibp* <__filename__>::
+  Checks if any passwords have been publicly leaked, by comparing against the given list of password SHA-1 hashes, which must be in "Have I Been Pwned" format.
+  Such files are available from https://haveibeenpwned.com/Passwords;
+  note that they are large, and so this operation typically takes some time (minutes up to an hour or so).
+
+=== Clip options
+*-a*, *--attribute*::
+  Copies the specified attribute to the clipboard.
+  If no attribute is specified, the password attribute is the default.
+  For example, "_-a_ username" would copy the username to the clipboard.
+  [Default: password]
+
+*-t*, *--totp*::
+  Copies the current TOTP instead of the specified attribute to the clipboard.
+  Will report an error if no TOTP is configured for the entry.
+
+=== Create options
+*-k*, *--set-key-file* <__path__>::
+  Set the key file for the database.
+
+*-p*, *--set-password*::
+  Set a password for the database.
+
+*-t*, *--decryption-time* <__time__>::
+  Target decryption time in MS for the database.
+
+=== Show options
+*-a*, *--attributes* <__attribute__>...::
+  Shows the named attributes.
+  This option can be specified more than once, with each attribute shown one-per-line in the given order.
+  If no attributes are specified and _-t_ is not specified, a summary of the default attributes is given.
+  Protected attributes will be displayed in clear text if specified explicitly by this option.
+
+*-s*, *--show-protected*::
+  Shows the protected attributes in clear text.
+
+*-t*, *--totp*::
+  Also shows the current TOTP, reporting an error if no TOTP is configured for the entry.
+
+=== Diceware options
+*-W*, *--words* <__count__>::
+  Sets the desired number of words for the generated passphrase.
+  [Default: 7]
+
+*-w*, *--word-list* <__path__>::
+  Sets the Path of the wordlist for the diceware generator.
+  The wordlist must have > 1000 words, otherwise the program will fail.
+  If the wordlist has < 4000 words a warning will be printed to STDERR.
+
+=== Export options
+*-f*, *--format*::
+  Format to use when exporting.
+  Available choices are xml or csv.
+  Defaults to xml.
+
+=== List options
+*-R*, *--recursive*::
+  Recursively lists the elements of the group.
+
+*-f*, *--flatten*::
+  Flattens the output to single lines.
+  When this option is enabled, subgroups and subentries will be displayed with a relative group path instead of indentation.
+
+=== Generate options
+*-L*, *--length* <__length__>::
+  Sets the desired length for the generated password.
+  [Default: 16]
+
+*-l*, *--lower*::
+  Uses lowercase characters for the generated password.
+  [Default: Enabled]
+
+*-U*, *--upper*::
+  Uses uppercase characters for the generated password.
+  [Default: Enabled]
+
+*-n*, *--numeric*::
+  Uses numbers characters for the generated password.
+  [Default: Enabled]
+
+*-s*, *--special*::
+  Uses special characters for the generated password.
+  [Default: Disabled]
+
+*-e*, *--extended*::
+  Uses extended ASCII characters for the generated password.
+  [Default: Disabled]
+
+*-x*, *--exclude* <__chars__>::
+  Comma-separated list of characters to exclude from the generated password.
+  None is excluded by default.
+
+*--exclude-similar*::
+  Exclude similar looking characters.
+  [Default: Disabled]
+
+*--every-group*::
+  Include characters from every selected group.
+  [Default: Disabled]
+
+== REPORTING BUGS
+Bugs and feature requests can be reported on GitHub at https://github.com/keepassxreboot/keepassxc/issues.
+
+== AUTHOR
+This manual page was originally written by Manolis Agkopian <m.agkopian@gmail.com>,
+and is maintained by the KeePassXC Team <team@keepassxc.org>.

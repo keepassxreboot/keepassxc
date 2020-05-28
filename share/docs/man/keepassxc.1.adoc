@@ -1,0 +1,41 @@
+= keepassxc(1)
+:docdate: 2019-10-25
+:doctype: manpage
+:manmanual: General Commands Manual
+
+== NAME
+keepassxc - password manager
+
+== SYNOPSIS
+*keepassxc* [_options_] [_filename(s)_]
+
+== DESCRIPTION
+*KeePassXC* is a free/open-source password manager or safe which helps you to manage your passwords in a secure way.
+The complete database is always encrypted with the industry-standard AES (alias Rijndael) encryption algorithm using a 256 bit key.
+KeePassXC uses a database format that is compatible with KeePass Password Safe.
+Your wallet works offline and requires no Internet connection.
+
+== OPTIONS
+*-h*, *--help*::
+  Displays this help.
+
+*-v*, *--version*::
+  Displays version information.
+
+*--config* <__config__>::
+  Path to a custom config file
+
+*--keyfile* <__keyfile__>::
+  Key file of the database
+
+*--pw-stdin*::
+  Read password of the database from stdin
+
+*--pw*, *--parent-window* <__handle__>::
+  Parent window handle
+
+*--debug-info*::
+  Displays debugging information.
+
+== AUTHOR
+This manual page is maintained by the KeePassXC Team <team@keepassxc.org>.
