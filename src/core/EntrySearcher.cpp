@@ -21,8 +21,9 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-EntrySearcher::EntrySearcher(bool caseSensitive)
+EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
     : m_caseSensitive(caseSensitive)
+    , m_skipProtected(skipProtected)
     , m_termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re")
 // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
 {
@@ -136,7 +137,7 @@ void EntrySearcher::setCaseSensitive(bool state)
     m_caseSensitive = state;
 }
 
-bool EntrySearcher::isCaseSensitive()
+bool EntrySearcher::isCaseSensitive() const
 {
     return m_caseSensitive;
 }
@@ -150,7 +151,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
     // Build a group hierarchy to allow searching for e.g. /group1/subgroup*
     auto hierarchy = entry->group()->hierarchy().join('/').prepend("/");
 
-    bool found;
+    // By default, empty term matches every entry.
+    // However when skipping protected fields, we will recject everything instead
+    bool found = !m_skipProtected;
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
         case Field::Title:
@@ -160,6 +163,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch();
             break;
         case Field::Password:
+            if (m_skipProtected) {
+                continue;
+            }
             found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
             break;
         case Field::Url:
@@ -175,8 +181,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = !attachments.filter(term.regex).empty();
             break;
         case Field::AttributeValue:
-            // skip protected attributes
-            if (entry->attributes()->isProtected(term.word)) {
+            if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
                 continue;
             }
             found = entry->attributes()->contains(term.word)
@@ -198,13 +203,18 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                     || term.regex.match(entry->notes()).hasMatch();
         }
 
-        // Short circuit if we failed to match or we matched and are excluding this term
-        if ((!found && !term.exclude) || (found && term.exclude)) {
+        // negate the result if exclude:
+        // * if found and not excluding, the entry matches
+        // * if didn't found but excluding, the entry also matches
+        found = (found && !term.exclude) || (!found && term.exclude);
+
+        // short circuit if we failed the match
+        if (!found) {
             return false;
         }
     }
 
-    return true;
+    return found;
 }
 
 void EntrySearcher::parseSearchTerms(const QString& searchString)

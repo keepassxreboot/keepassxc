@@ -57,8 +57,9 @@ macro(parse_arguments prefix arg_names option_names)
 endmacro(parse_arguments)
 
 macro(add_unit_test)
-    parse_arguments(TEST "NAME;SOURCES;LIBS" "" ${ARGN})
+    parse_arguments(TEST "NAME;SOURCES;LIBS;LAUNCHER" "" ${ARGN})
     set(_test_NAME ${TEST_NAME})
+    set(_test_LAUNCHER ${TEST_LAUNCHER})
     set(_srcList ${TEST_SOURCES})
     add_executable(${_test_NAME} ${_srcList})
     target_link_libraries(${_test_NAME} ${TEST_LIBS})
@@ -69,9 +70,9 @@ macro(add_unit_test)
     set(TEST_OUTPUT ${TEST_OUTPUT} CACHE STRING "The output to generate when running the QTest unit tests")
 
     if(KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test(${_test_NAME} ${_test_NAME} -xml -o ${_test_NAME}.tml)
+        add_test(${_test_NAME} ${_test_LAUNCHER} ${_test_NAME} -xml -o ${_test_NAME}.tml)
     else(KDE4_TEST_OUTPUT STREQUAL "xml")
-        add_test(${_test_NAME} ${_test_NAME})
+        add_test(${_test_NAME} ${_test_LAUNCHER} ${_test_NAME})
     endif(KDE4_TEST_OUTPUT STREQUAL "xml")
 
     if(NOT MSVC_IDE)   #not needed for the ide

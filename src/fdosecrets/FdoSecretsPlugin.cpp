@@ -31,7 +31,8 @@
 using FdoSecrets::Service;
 
 FdoSecretsPlugin::FdoSecretsPlugin(DatabaseTabWidget* tabWidget)
-    : m_dbTabs(tabWidget)
+    : QObject(tabWidget)
+    , m_dbTabs(tabWidget)
 {
     FdoSecrets::registerDBusTypes();
 }

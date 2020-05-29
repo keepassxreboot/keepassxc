@@ -51,6 +51,11 @@ namespace FdoSecrets
             return m_objectPath;
         }
 
+        QDBusAbstractAdaptor& dbusAdaptor() const
+        {
+            return *m_dbusAdaptor;
+        }
+
     protected:
         void registerWithPath(const QString& path, QDBusAbstractAdaptor* adaptor);
 
@@ -73,11 +78,6 @@ namespace FdoSecrets
         }
 
         QString callingPeerName() const;
-
-        template <typename Adaptor> Adaptor& dbusAdaptor() const
-        {
-            return *static_cast<Adaptor*>(m_dbusAdaptor);
-        }
 
         DBusObject* p() const
         {

@@ -43,6 +43,9 @@ namespace
 
 namespace FdoSecrets
 {
+    // XXX: remove the redundant definitions once we are at C++17
+    constexpr char PlainCipher::Algorithm[];
+    constexpr char DhIetf1024Sha256Aes128CbcPkcs7::Algorithm[];
 
     DhIetf1024Sha256Aes128CbcPkcs7::DhIetf1024Sha256Aes128CbcPkcs7(const QByteArray& clientPublicKeyBytes)
         : m_valid(false)
@@ -51,13 +54,24 @@ namespace FdoSecrets
         auto clientPub = MpiFromBytes(clientPublicKeyBytes, false);
 
         // generate server side private, 128 bytes
-        GcryptMPI serverPrivate(gcry_mpi_snew(KEY_SIZE_BYTES * 8));
-        gcry_mpi_randomize(serverPrivate.get(), KEY_SIZE_BYTES * 8, GCRY_STRONG_RANDOM);
+        GcryptMPI serverPrivate = nullptr;
+        if (NextPrivKey) {
+            serverPrivate = std::move(NextPrivKey);
+        } else {
+            serverPrivate.reset(gcry_mpi_snew(KEY_SIZE_BYTES * 8));
+            gcry_mpi_randomize(serverPrivate.get(), KEY_SIZE_BYTES * 8, GCRY_STRONG_RANDOM);
+        }
 
         // generate server side public key
-        GcryptMPI serverPublic(gcry_mpi_snew(KEY_SIZE_BYTES * 8));
-        // the generator of Second Oakley Group is 2
-        gcry_mpi_powm(serverPublic.get(), GCRYMPI_CONST_TWO, serverPrivate.get(), IETF1024_SECOND_OAKLEY_GROUP_P.get());
+        GcryptMPI serverPublic = nullptr;
+        if (NextPubKey) {
+            serverPublic = std::move(NextPubKey);
+        } else {
+            serverPublic.reset(gcry_mpi_snew(KEY_SIZE_BYTES * 8));
+            // the generator of Second Oakley Group is 2
+            gcry_mpi_powm(
+                serverPublic.get(), GCRYMPI_CONST_TWO, serverPrivate.get(), IETF1024_SECOND_OAKLEY_GROUP_P.get());
+        }
 
         initialize(std::move(clientPub), std::move(serverPublic), std::move(serverPrivate));
     }
@@ -215,5 +229,14 @@ namespace FdoSecrets
     {
         return m_publicKey;
     }
+
+    void DhIetf1024Sha256Aes128CbcPkcs7::fixNextServerKeys(GcryptMPI priv, GcryptMPI pub)
+    {
+        NextPrivKey = std::move(priv);
+        NextPubKey = std::move(pub);
+    }
+
+    GcryptMPI DhIetf1024Sha256Aes128CbcPkcs7::NextPrivKey = nullptr;
+    GcryptMPI DhIetf1024Sha256Aes128CbcPkcs7::NextPubKey = nullptr;
 
 } // namespace FdoSecrets
