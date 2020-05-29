@@ -162,7 +162,7 @@ void EntryPreviewWidget::updateEntryHeaderLine()
     Q_ASSERT(m_currentEntry);
     const QString title = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->title());
     m_ui->entryTitleLabel->setRawText(hierarchy(m_currentEntry->group(), title));
-    m_ui->entryIcon->setPixmap(preparePixmap(m_currentEntry->iconPixmap(), 16));
+    m_ui->entryIcon->setPixmap(m_currentEntry->iconPixmap(IconSize::Large));
 }
 
 void EntryPreviewWidget::updateEntryTotp()
@@ -315,7 +315,7 @@ void EntryPreviewWidget::updateGroupHeaderLine()
 {
     Q_ASSERT(m_currentGroup);
     m_ui->groupTitleLabel->setRawText(hierarchy(m_currentGroup, {}));
-    m_ui->groupIcon->setPixmap(preparePixmap(m_currentGroup->iconPixmap(), 32));
+    m_ui->groupIcon->setPixmap(m_currentGroup->iconPixmap(IconSize::Large));
 }
 
 void EntryPreviewWidget::updateGroupGeneralTab()
@@ -397,14 +397,6 @@ void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, b
     const int tabIndex = tabWidget->indexOf(widget);
     Q_ASSERT(tabIndex != -1);
     tabWidget->setTabEnabled(tabIndex, enabled);
-}
-
-QPixmap EntryPreviewWidget::preparePixmap(const QPixmap& pixmap, int size)
-{
-    if (pixmap.width() > size || pixmap.height() > size) {
-        return pixmap.scaled(size, size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    }
-    return pixmap;
 }
 
 QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)

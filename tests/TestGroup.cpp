@@ -336,12 +336,12 @@ void TestGroup::testCopyCustomIcon()
     QScopedPointer<Database> dbTarget(new Database());
 
     group->setParent(dbTarget->rootGroup());
-    QVERIFY(dbTarget->metadata()->containsCustomIcon(groupIconUuid));
+    QVERIFY(dbTarget->metadata()->hasCustomIcon(groupIconUuid));
     QCOMPARE(dbTarget->metadata()->customIcon(groupIconUuid), groupIcon);
     QCOMPARE(group->icon(), groupIcon);
 
     entry->setGroup(dbTarget->rootGroup());
-    QVERIFY(dbTarget->metadata()->containsCustomIcon(entryIconUuid));
+    QVERIFY(dbTarget->metadata()->hasCustomIcon(entryIconUuid));
     QCOMPARE(dbTarget->metadata()->customIcon(entryIconUuid), entryIcon);
     QCOMPARE(entry->icon(), entryIcon);
 }
@@ -462,11 +462,11 @@ void TestGroup::testCopyCustomIcons()
 
     Metadata* metaTarget = dbTarget->metadata();
 
-    QCOMPARE(metaTarget->customIcons().size(), 4);
-    QVERIFY(metaTarget->containsCustomIcon(group1Icon));
-    QVERIFY(metaTarget->containsCustomIcon(group2Icon));
-    QVERIFY(metaTarget->containsCustomIcon(entry1IconOld));
-    QVERIFY(metaTarget->containsCustomIcon(entry1IconNew));
+    QCOMPARE(metaTarget->customIconsOrder().size(), 4);
+    QVERIFY(metaTarget->hasCustomIcon(group1Icon));
+    QVERIFY(metaTarget->hasCustomIcon(group2Icon));
+    QVERIFY(metaTarget->hasCustomIcon(entry1IconOld));
+    QVERIFY(metaTarget->hasCustomIcon(entry1IconNew));
 
     QCOMPARE(metaTarget->customIcon(group1Icon).pixel(0, 0), qRgb(1, 2, 3));
     QCOMPARE(metaTarget->customIcon(group2Icon).pixel(0, 0), qRgb(4, 5, 6));

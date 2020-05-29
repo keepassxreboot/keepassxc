@@ -21,6 +21,7 @@
 #include <QFile>
 
 #include "core/Database.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 
@@ -142,7 +143,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
 
         // Header line
         auto header = QString("<hr><h2>");
-        header.append(PixmapToHTML(group.iconScaledPixmap()));
+        header.append(PixmapToHTML(group.iconPixmap(IconSize::Medium)));
         header.append("&nbsp;");
         header.append(path);
         header.append("</h2>\n");
@@ -166,7 +167,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
         auto item = QString("<div class=\"entry\"><h3>");
 
         // Begin formatting this item into HTML
-        item.append(PixmapToHTML(entry->iconScaledPixmap()));
+        item.append(PixmapToHTML(entry->iconPixmap(IconSize::Medium)));
         item.append("&nbsp;");
         item.append(entry->title().toHtmlEscaped());
         item.append("</h3>\n"

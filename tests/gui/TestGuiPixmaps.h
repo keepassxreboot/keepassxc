@@ -31,9 +31,6 @@ private slots:
     void testDatabaseIcons();
     void testEntryIcons();
     void testGroupIcons();
-
-private:
-    void compareImages(const QPixmap& pixmap, const QImage& image);
 };
 
 #endif // KEEPASSX_TESTGUIPIXMAPS_H

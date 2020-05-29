@@ -190,15 +190,11 @@ QPixmap KeeShare::indicatorBadge(const Group* group, QPixmap pixmap)
     if (!isShared(group)) {
         return pixmap;
     }
-    const QPixmap badge = isEnabled(group) ? databaseIcons()->iconPixmap(DatabaseIcons::SharedIconIndex)
-                                           : databaseIcons()->iconPixmap(DatabaseIcons::UnsharedIconIndex);
-    QImage canvas = pixmap.toImage();
-    const QRectF target(canvas.width() * 0.4, canvas.height() * 0.4, canvas.width() * 0.6, canvas.height() * 0.6);
-    QPainter painter(&canvas);
-    painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-    painter.drawPixmap(target, badge, badge.rect());
-    pixmap.convertFromImage(canvas);
-    return pixmap;
+
+    if (isEnabled(group)) {
+        return databaseIcons()->applyBadge(pixmap, DatabaseIcons::Badges::ShareActive);
+    }
+    return databaseIcons()->applyBadge(pixmap, DatabaseIcons::Badges::ShareInactive);
 }
 
 QString KeeShare::referenceTypeLabel(const KeeShareSettings::Reference& reference)

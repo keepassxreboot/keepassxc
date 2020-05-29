@@ -236,7 +236,7 @@ void EditGroupWidget::apply()
 
 void EditGroupWidget::cancel()
 {
-    if (!m_group->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_group->iconUuid())) {
+    if (!m_group->iconUuid().isNull() && !m_db->metadata()->hasCustomIcon(m_group->iconUuid())) {
         m_group->setIcon(Entry::DefaultIconNumber);
     }
 

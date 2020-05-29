@@ -31,6 +31,7 @@
 #include "core/CustomData.h"
 #include "core/EntryAttachments.h"
 #include "core/EntryAttributes.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 
 class Database;
@@ -81,8 +82,7 @@ public:
     const QUuid& uuid() const;
     const QString uuidToHex() const;
     QImage icon() const;
-    QPixmap iconPixmap() const;
-    QPixmap iconScaledPixmap() const;
+    QPixmap iconPixmap(IconSize size = IconSize::Default) const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     QString foregroundColor() const;

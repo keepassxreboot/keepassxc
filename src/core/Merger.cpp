@@ -612,12 +612,11 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     auto* sourceMetadata = context.m_sourceDb->metadata();
     auto* targetMetadata = context.m_targetDb->metadata();
 
-    const auto keys = sourceMetadata->customIcons().keys();
-    for (QUuid customIconId : keys) {
-        if (!targetMetadata->containsCustomIcon(customIconId)) {
-            QImage customIcon = sourceMetadata->customIcon(customIconId);
-            targetMetadata->addCustomIcon(customIconId, customIcon);
-            changes << tr("Adding missing icon %1").arg(QString::fromLatin1(customIconId.toRfc4122().toHex()));
+    for (const auto& iconUuid : sourceMetadata->customIconsOrder()) {
+        if (!targetMetadata->hasCustomIcon(iconUuid)) {
+            QImage customIcon = sourceMetadata->customIcon(iconUuid);
+            targetMetadata->addCustomIcon(iconUuid, customIcon);
+            changes << tr("Adding missing icon %1").arg(QString::fromLatin1(iconUuid.toRfc4122().toHex()));
         }
     }
 
