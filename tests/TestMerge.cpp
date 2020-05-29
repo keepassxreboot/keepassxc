@@ -1117,14 +1117,14 @@ void TestMerge::testMergeCustomIcons()
 
     dbSource->metadata()->addCustomIcon(customIconId, customIcon);
     // Sanity check.
-    QVERIFY(dbSource->metadata()->containsCustomIcon(customIconId));
+    QVERIFY(dbSource->metadata()->hasCustomIcon(customIconId));
 
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
     merger.merge();
 
-    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
+    QVERIFY(dbDestination->metadata()->hasCustomIcon(customIconId));
 }
 
 /**
@@ -1143,16 +1143,16 @@ void TestMerge::testMergeDuplicateCustomIcons()
     dbSource->metadata()->addCustomIcon(customIconId, customIcon);
     dbDestination->metadata()->addCustomIcon(customIconId, customIcon);
     // Sanity check.
-    QVERIFY(dbSource->metadata()->containsCustomIcon(customIconId));
-    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
+    QVERIFY(dbSource->metadata()->hasCustomIcon(customIconId));
+    QVERIFY(dbDestination->metadata()->hasCustomIcon(customIconId));
 
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
     merger.merge();
 
-    QVERIFY(dbDestination->metadata()->containsCustomIcon(customIconId));
-    QCOMPARE(dbDestination->metadata()->customIcons().count(), 1);
+    QVERIFY(dbDestination->metadata()->hasCustomIcon(customIconId));
+    QCOMPARE(dbDestination->metadata()->customIconsOrder().count(), 1);
 }
 
 void TestMerge::testMetadata()

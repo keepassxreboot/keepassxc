@@ -21,12 +21,12 @@
 
 #include <QImage>
 #include <QPixmap>
-#include <QPixmapCache>
 #include <QPointer>
 
 #include "core/CustomData.h"
 #include "core/Database.h"
 #include "core/Entry.h"
+#include "core/Global.h"
 #include "core/TimeInfo.h"
 
 class Group : public QObject
@@ -85,8 +85,7 @@ public:
     QString name() const;
     QString notes() const;
     QImage icon() const;
-    QPixmap iconPixmap() const;
-    QPixmap iconScaledPixmap() const;
+    QPixmap iconPixmap(IconSize size = IconSize::Default) const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     const TimeInfo& timeInfo() const;

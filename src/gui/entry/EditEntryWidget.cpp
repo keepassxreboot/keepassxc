@@ -1103,7 +1103,7 @@ void EditEntryWidget::cancel()
         return;
     }
 
-    if (!m_entry->iconUuid().isNull() && !m_db->metadata()->containsCustomIcon(m_entry->iconUuid())) {
+    if (!m_entry->iconUuid().isNull() && !m_db->metadata()->hasCustomIcon(m_entry->iconUuid())) {
         m_entry->setIcon(Entry::DefaultIconNumber);
     }
 

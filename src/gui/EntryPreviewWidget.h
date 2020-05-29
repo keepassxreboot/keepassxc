@@ -72,7 +72,6 @@ private:
     void removeTab(QTabWidget* tabWidget, QWidget* widget);
     void setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled);
 
-    static QPixmap preparePixmap(const QPixmap& pixmap, int size);
     static QString hierarchy(const Group* group, const QString& title);
 
     const QScopedPointer<Ui::EntryPreviewWidget> m_ui;

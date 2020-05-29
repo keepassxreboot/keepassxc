@@ -118,15 +118,11 @@ QVariant AutoTypeMatchModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case ParentGroup:
             if (match.entry->group()) {
-                return match.entry->group()->iconScaledPixmap();
+                return match.entry->group()->iconPixmap();
             }
             break;
         case Title:
-            if (match.entry->isExpired()) {
-                return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-            } else {
-                return match.entry->iconScaledPixmap();
-            }
+            return match.entry->iconPixmap();
         }
     } else if (role == Qt::FontRole) {
         QFont font;

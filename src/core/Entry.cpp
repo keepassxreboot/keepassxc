@@ -163,7 +163,7 @@ const QString Entry::uuidToHex() const
 QImage Entry::icon() const
 {
     if (m_data.customIcon.isNull()) {
-        return databaseIcons()->icon(m_data.iconNumber);
+        return databaseIcons()->icon(m_data.iconNumber).toImage();
     } else {
         Q_ASSERT(database());
 
@@ -175,27 +175,23 @@ QImage Entry::icon() const
     }
 }
 
-QPixmap Entry::iconPixmap() const
+QPixmap Entry::iconPixmap(IconSize size) const
 {
+    QPixmap icon(size, size);
     if (m_data.customIcon.isNull()) {
-        return databaseIcons()->iconPixmap(m_data.iconNumber);
+        icon = databaseIcons()->icon(m_data.iconNumber, size);
+    } else {
+        Q_ASSERT(database());
+        if (database()) {
+            icon = database()->metadata()->customIconPixmap(m_data.customIcon, size);
+        }
     }
 
-    Q_ASSERT(database());
-    if (database()) {
-        return database()->metadata()->customIconPixmap(m_data.customIcon);
+    if (isExpired()) {
+        icon = databaseIcons()->applyBadge(icon, DatabaseIcons::Badges::Expired);
     }
-    return QPixmap();
-}
 
-QPixmap Entry::iconScaledPixmap() const
-{
-    if (m_data.customIcon.isNull()) {
-        // built-in icons are 16x16 so don't need to be scaled
-        return databaseIcons()->iconPixmap(m_data.iconNumber);
-    }
-    Q_ASSERT(database());
-    return database()->metadata()->customIconScaledPixmap(m_data.customIcon);
+    return icon;
 }
 
 int Entry::iconNumber() const
@@ -1104,9 +1100,8 @@ void Entry::setGroup(Group* group)
             m_group->database()->addDeletedObject(m_uuid);
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && group->database()
-                && m_group->database()->metadata()->containsCustomIcon(iconUuid())
-                && !group->database()->metadata()->containsCustomIcon(iconUuid())) {
+            if (!iconUuid().isNull() && group->database() && m_group->database()->metadata()->hasCustomIcon(iconUuid())
+                && !group->database()->metadata()->hasCustomIcon(iconUuid())) {
                 group->database()->metadata()->addCustomIcon(iconUuid(), icon());
             }
         }

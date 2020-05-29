@@ -20,6 +20,7 @@
 
 #include <QDateTime>
 #include <QHash>
+#include <QIcon>
 #include <QImage>
 #include <QPixmap>
 #include <QPixmapCache>
@@ -28,6 +29,7 @@
 #include <QUuid>
 
 #include "core/CustomData.h"
+#include "core/Global.h"
 
 class Database;
 class Group;
@@ -82,13 +84,11 @@ public:
     bool protectUrl() const;
     bool protectNotes() const;
     QImage customIcon(const QUuid& uuid) const;
-    QPixmap customIconPixmap(const QUuid& uuid) const;
-    QPixmap customIconScaledPixmap(const QUuid& uuid, const QSize& size = {16, 16}) const;
-    bool containsCustomIcon(const QUuid& uuid) const;
-    QHash<QUuid, QImage> customIcons() const;
+    bool hasCustomIcon(const QUuid& uuid) const;
+    QPixmap customIconPixmap(const QUuid& uuid, IconSize size = IconSize::Default) const;
+    QHash<QUuid, QPixmap> customIconsPixmaps(IconSize size = IconSize::Default) const;
     QList<QUuid> customIconsOrder() const;
     bool recycleBinEnabled() const;
-    QHash<QUuid, QPixmap> customIconsScaledPixmaps(const QSize& size = {16, 16}) const;
     Group* recycleBin();
     const Group* recycleBin() const;
     QDateTime recycleBinChanged() const;
@@ -122,8 +122,7 @@ public:
     void setProtectPassword(bool value);
     void setProtectUrl(bool value);
     void setProtectNotes(bool value);
-    void addCustomIcon(const QUuid& uuid, const QImage& icon);
-    void addCustomIconScaled(const QUuid& uuid, const QImage& icon);
+    void addCustomIcon(const QUuid& uuid, const QImage& image);
     void removeCustomIcon(const QUuid& uuid);
     void copyCustomIcons(const QSet<QUuid>& iconList, const Metadata* otherMetadata);
     QUuid findCustomIcon(const QImage& candidate);
@@ -161,9 +160,8 @@ private:
 
     MetadataData m_data;
 
-    QHash<QUuid, QImage> m_customIcons;
-    mutable QHash<QUuid, QPixmapCache::Key> m_customIconCacheKeys;
-    mutable QHash<QUuid, QPixmapCache::Key> m_customIconScaledCacheKeys;
+    QHash<QUuid, QIcon> m_customIcons;
+    QHash<QUuid, QImage> m_customIconsRaw;
     QList<QUuid> m_customIconsOrder;
     QHash<QByteArray, QUuid> m_customIconsHashes;
 

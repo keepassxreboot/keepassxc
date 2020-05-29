@@ -77,7 +77,7 @@ namespace
             targetEntry->setGroup(targetRoot);
             targetEntry->setUpdateTimeinfo(updateTimeinfo);
             const auto iconUuid = targetEntry->iconUuid();
-            if (!iconUuid.isNull() && !targetMetadata->containsCustomIcon(iconUuid)) {
+            if (!iconUuid.isNull() && !targetMetadata->hasCustomIcon(iconUuid)) {
                 targetMetadata->addCustomIcon(iconUuid, sourceEntry->icon());
             }
         }

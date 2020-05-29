@@ -271,14 +271,11 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case ParentGroup:
             if (entry->group()) {
-                return entry->group()->iconScaledPixmap();
+                return entry->group()->iconPixmap();
             }
             break;
         case Title:
-            if (entry->isExpired()) {
-                return databaseIcons()->iconPixmap(DatabaseIcons::ExpiredIconIndex);
-            }
-            return entry->iconScaledPixmap();
+            return entry->iconPixmap();
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
                 return resources()->icon("paperclip");

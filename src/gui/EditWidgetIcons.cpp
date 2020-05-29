@@ -132,7 +132,7 @@ void EditWidgetIcons::load(const QUuid& currentUuid,
     m_currentUuid = currentUuid;
     setUrl(url);
 
-    m_customIconModel->setIcons(database->metadata()->customIconsScaledPixmaps({24, 24}),
+    m_customIconModel->setIcons(database->metadata()->customIconsPixmaps(IconSize::Default),
                                 database->metadata()->customIconsOrder());
 
     QUuid iconUuid = iconStruct.uuid;
@@ -294,7 +294,7 @@ bool EditWidgetIcons::addCustomIcon(const QImage& icon)
         if (uuid.isNull()) {
             uuid = QUuid::createUuid();
             m_db->metadata()->addCustomIcon(uuid, scaledicon);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps({24, 24}),
+            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
                                         m_db->metadata()->customIconsOrder());
             added = true;
         }
@@ -378,7 +378,7 @@ void EditWidgetIcons::removeCustomIcon()
 
             // Remove the icon from the database
             m_db->metadata()->removeCustomIcon(iconUuid);
-            m_customIconModel->setIcons(m_db->metadata()->customIconsScaledPixmaps({24, 24}),
+            m_customIconModel->setIcons(m_db->metadata()->customIconsPixmaps(IconSize::Default),
                                         m_db->metadata()->customIconsOrder());
 
             // Reset the current icon view

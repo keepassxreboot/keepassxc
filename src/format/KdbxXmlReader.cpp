@@ -368,7 +368,7 @@ void KdbxXmlReader::parseIcon()
 
     if (uuidSet && iconSet) {
         // Check for duplicate UUID (corruption)
-        if (m_meta->containsCustomIcon(uuid)) {
+        if (m_meta->hasCustomIcon(uuid)) {
             uuid = QUuid::createUuid();
         }
         m_meta->addCustomIcon(uuid, icon);
@@ -513,9 +513,9 @@ Group* KdbxXmlReader::parseGroup()
                     raiseError(tr("Invalid group icon number"));
                 }
                 iconId = 0;
-            } else if (iconId >= DatabaseIcons::IconCount) {
+            } else if (iconId >= databaseIcons()->count()) {
                 qWarning("KdbxXmlReader::parseGroup: icon id \"%d\" not supported", iconId);
-                iconId = DatabaseIcons::IconCount - 1;
+                iconId = databaseIcons()->count() - 1;
             }
 
             group->setIcon(iconId);

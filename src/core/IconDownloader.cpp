@@ -20,6 +20,7 @@
 #include "core/NetworkManager.h"
 
 #include <QHostInfo>
+#include <QImageReader>
 #include <QtNetwork>
 
 #define MAX_REDIRECTS 5
@@ -188,7 +189,7 @@ void IconDownloader::fetchFinished()
             }
         } else {
             // No redirect, and we theoretically have some icon data now.
-            image.loadFromData(m_bytesReceived);
+            image = parseImage(m_bytesReceived);
         }
     }
 
@@ -205,4 +206,34 @@ void IconDownloader::fetchFinished()
         m_timeout.stop();
         emit finished(url, image);
     }
+}
+
+/**
+ * Parse fetched image bytes.
+ *
+ * Parses the given byte array into a QImage. Unlike QImage::loadFromData(), this method
+ * tries to extract the highest resolution image from .ICO files.
+ *
+ * @param imageBytes raw image bytes
+ * @return parsed image
+ */
+QImage IconDownloader::parseImage(QByteArray& imageBytes) const
+{
+    QBuffer buff(&imageBytes);
+    buff.open(QIODevice::ReadOnly);
+    QImageReader reader(&buff);
+
+    if (reader.imageCount() <= 0) {
+        return reader.read();
+    }
+
+    QImage img;
+    for (int i = 0; i < reader.imageCount(); ++i) {
+        if (img.isNull() || reader.size().width() > img.size().width()) {
+            img = reader.read();
+        }
+        reader.jumpToNextImage();
+    }
+
+    return img;
 }
