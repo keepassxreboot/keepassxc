@@ -93,7 +93,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_HidePreviewPanel, {QS("GUI/HidePreviewPanel"), Roaming, false}},
     {Config::GUI_ToolButtonStyle, {QS("GUI/ToolButtonStyle"), Roaming, Qt::ToolButtonIconOnly}},
     {Config::GUI_ShowTrayIcon, {QS("GUI/ShowTrayIcon"), Roaming, false}},
-    {Config::GUI_DarkTrayIcon, {QS("GUI/DarkTrayIcon"), Roaming, false}},
+    {Config::GUI_TrayIconAppearance, {QS("GUI/TrayIconAppearance"), Roaming, {}}},
     {Config::GUI_MinimizeToTray, {QS("GUI/MinimizeToTray"), Roaming, false}},
     {Config::GUI_MinimizeOnStartup, {QS("GUI/MinimizeOnStartup"), Roaming, false}},
     {Config::GUI_MinimizeOnClose, {QS("GUI/MinimizeOnClose"), Roaming, false}},
@@ -345,7 +345,8 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("generator/WordCase"), Config::PasswordGenerator_WordCase},
     {QS("generator/Type"), Config::PasswordGenerator_Type},
     {QS("QtErrorMessageShown"), Config::Messages_Qt55CompatibilityWarning},
-    {QS("GUI/HidePasswords"), Config::Deleted}};
+    {QS("GUI/HidePasswords"), Config::Deleted},
+    {QS("GUI/DarkTrayIcon"), Config::Deleted}};
 
 /**
  * Migrate settings from previous versions.

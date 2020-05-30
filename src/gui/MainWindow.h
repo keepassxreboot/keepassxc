@@ -136,6 +136,9 @@ private slots:
     void releaseContextFocusLock();
     void agentEnabled(bool enabled);
 
+private slots:
+    void updateTrayIcon();
+
 private:
     static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
 
@@ -143,7 +146,6 @@ private:
 
     void saveWindowInformation();
     bool saveLastDatabases();
-    void updateTrayIcon();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
 

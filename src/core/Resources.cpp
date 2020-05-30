@@ -28,6 +28,7 @@
 #include "core/Config.h"
 #include "core/Global.h"
 #include "gui/MainWindow.h"
+#include "gui/osutils/OSUtils.h"
 
 Resources* Resources::m_instance(nullptr);
 
@@ -100,19 +101,48 @@ QIcon Resources::applicationIcon()
     return icon("keepassxc", false);
 }
 
+QString Resources::getTrayIconAppearance() const
+{
+    auto iconAppearance = config()->get(Config::GUI_TrayIconAppearance).toString();
+    if (iconAppearance.isNull()) {
+#ifdef Q_OS_MACOS
+        iconAppearance = osUtils->isDarkMode() ? "monochrome-light" : "monochrome-dark";
+#else
+        iconAppearance = "monochrome-light";
+#endif
+    }
+    return iconAppearance;
+}
+
 QIcon Resources::trayIcon()
 {
-    return useDarkIcon() ? icon("keepassxc-dark", false) : icon("keepassxc", false);
+    return trayIconUnlocked();
 }
 
 QIcon Resources::trayIconLocked()
 {
+    auto iconApperance = getTrayIconAppearance();
+
+    if (iconApperance == "monochrome-light") {
+        return icon("keepassxc-monochrome-light-locked", false);
+    }
+    if (iconApperance == "monochrome-dark") {
+        return icon("keepassxc-monochrome-dark-locked", false);
+    }
     return icon("keepassxc-locked", false);
 }
 
 QIcon Resources::trayIconUnlocked()
 {
-    return useDarkIcon() ? icon("keepassxc-dark", false) : icon("keepassxc-unlocked", false);
+    auto iconApperance = getTrayIconAppearance();
+
+    if (iconApperance == "monochrome-light") {
+        return icon("keepassxc-monochrome-light", false);
+    }
+    if (iconApperance == "monochrome-dark") {
+        return icon("keepassxc-monochrome-dark", false);
+    }
+    return icon("keepassxc", false);
 }
 
 QIcon Resources::icon(const QString& name, bool recolor, const QColor& overrideColor)
@@ -221,11 +251,6 @@ bool Resources::testResourceDir(const QString& dir)
         return true;
     }
     return false;
-}
-
-bool Resources::useDarkIcon()
-{
-    return config()->get(Config::GUI_DarkTrayIcon).toBool();
 }
 
 Resources* Resources::instance()

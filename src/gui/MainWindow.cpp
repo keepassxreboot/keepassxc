@@ -392,6 +392,7 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateWindowTitle()));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(databaseTabChanged(int)));
     connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(setMenuActionState()));
+    connect(m_ui->tabWidget, SIGNAL(currentChanged(int)), SLOT(updateTrayIcon()));
     connect(m_ui->tabWidget, SIGNAL(databaseLocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(databaseUnlocked(DatabaseWidget*)), SLOT(databaseStatusChanged(DatabaseWidget*)));
     connect(m_ui->tabWidget, SIGNAL(tabVisibilityChanged(bool)), SLOT(updateToolbarSeparatorVisibility()));
@@ -1227,7 +1228,7 @@ void MainWindow::updateTrayIcon()
 
             auto* actionToggle = new QAction(tr("Toggle window"), menu);
             menu->addAction(actionToggle);
-            actionToggle->setIcon(resources()->icon("keepassxc-dark", false));
+            actionToggle->setIcon(resources()->icon("keepassxc-monochrome-dark"));
 
             menu->addAction(m_ui->actionLockDatabases);
 
@@ -1250,7 +1251,10 @@ void MainWindow::updateTrayIcon()
             m_trayIcon->setIcon(resources()->trayIcon());
             m_trayIcon->show();
         }
-        if (m_ui->tabWidget->hasLockableDatabases()) {
+
+        if (m_ui->tabWidget->count() == 0) {
+            m_trayIcon->setIcon(resources()->trayIcon());
+        } else if (m_ui->tabWidget->hasLockableDatabases()) {
             m_trayIcon->setIcon(resources()->trayIconUnlocked());
         } else {
             m_trayIcon->setIcon(resources()->trayIconLocked());
@@ -1259,7 +1263,6 @@ void MainWindow::updateTrayIcon()
         if (m_trayIcon) {
             m_trayIcon->hide();
             delete m_trayIcon;
-            m_trayIcon = nullptr;
         }
     }
 }
