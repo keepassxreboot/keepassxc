@@ -40,9 +40,9 @@ public:
     static Resources* instance();
 
 private:
+    QString getTrayIconAppearance() const;
     Resources();
     bool testResourceDir(const QString& dir);
-    bool useDarkIcon();
 
     static Resources* m_instance;
 

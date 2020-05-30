@@ -76,7 +76,7 @@ public:
         GUI_HidePreviewPanel,
         GUI_ToolButtonStyle,
         GUI_ShowTrayIcon,
-        GUI_DarkTrayIcon,
+        GUI_TrayIconAppearance,
         GUI_MinimizeToTray,
         GUI_MinimizeOnStartup,
         GUI_MinimizeOnClose,

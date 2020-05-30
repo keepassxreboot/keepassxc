@@ -238,7 +238,6 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_generalUi->systrayShowCheckBox->setChecked(config()->get(Config::GUI_ShowTrayIcon).toBool());
     systrayToggled(m_generalUi->systrayShowCheckBox->isChecked());
-    m_generalUi->systrayDarkIconCheckBox->setChecked(config()->get(Config::GUI_DarkTrayIcon).toBool());
     m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get(Config::GUI_MinimizeToTray).toBool());
     m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get(Config::GUI_MinimizeOnClose).toBool());
     m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get(Config::GUI_MinimizeOnStartup).toBool());
@@ -259,6 +258,15 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->autoTypeShortcutWidget->setAttribute(Qt::WA_MacShowFocusRect, true);
         m_generalUi->autoTypeDelaySpinBox->setValue(config()->get(Config::AutoTypeDelay).toInt());
         m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get(Config::AutoTypeStartDelay).toInt());
+    }
+
+    m_generalUi->trayIconAppearance->clear();
+    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), QStringLiteral("monochrome-light"));
+    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), QStringLiteral("monochrome-dark"));
+    m_generalUi->trayIconAppearance->addItem(tr("Colored"), QStringLiteral("colored"));
+    int trayIconIndex = m_generalUi->trayIconAppearance->findData(config()->get(Config::GUI_TrayIconAppearance));
+    if (trayIconIndex > 0) {
+        m_generalUi->trayIconAppearance->setCurrentIndex(trayIconIndex);
     }
 
     m_secUi->clearClipboardCheckBox->setChecked(config()->get(Config::Security_ClearClipboard).toBool());
@@ -341,7 +349,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox->currentData().toString());
 
     config()->set(Config::GUI_ShowTrayIcon, m_generalUi->systrayShowCheckBox->isChecked());
-    config()->set(Config::GUI_DarkTrayIcon, m_generalUi->systrayDarkIconCheckBox->isChecked());
+    config()->set(Config::GUI_TrayIconAppearance, m_generalUi->trayIconAppearance->currentData().toString());
     config()->set(Config::GUI_MinimizeToTray, m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
     config()->set(Config::GUI_MinimizeOnClose, m_generalUi->minimizeOnCloseCheckBox->isChecked());
     config()->set(Config::GUI_MinimizeOnStartup, m_generalUi->systrayMinimizeOnStartup->isChecked());
@@ -468,7 +476,8 @@ void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)
 {
-    m_generalUi->systrayDarkIconCheckBox->setEnabled(checked);
+    m_generalUi->trayIconAppearance->setEnabled(checked);
+    m_generalUi->trayIconAppearanceLabel->setEnabled(checked);
     m_generalUi->systrayMinimizeToTrayCheckBox->setEnabled(checked);
 }
 

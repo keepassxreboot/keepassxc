@@ -74,7 +74,10 @@
         <file>application/scalable/apps/freedesktop.svg</file>
         <file>application/scalable/apps/internet-web-browser.svg</file>
         <file>application/scalable/apps/keepassxc.svg</file>
-        <file>application/scalable/apps/keepassxc-dark.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-dark.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-dark-locked.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-light.svg</file>
+        <file>application/scalable/apps/keepassxc-monochrome-light-locked.svg</file>
         <file>application/scalable/apps/keepassxc-locked.svg</file>
         <file>application/scalable/apps/keepassxc-unlocked.svg</file>
         <file>application/scalable/apps/preferences-desktop-icons.svg</file>

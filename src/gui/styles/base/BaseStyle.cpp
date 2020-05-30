@@ -32,6 +32,7 @@
 #include <QMainWindow>
 #include <QMenu>
 #include <QPainter>
+#include <QPainterPath>
 #include <QPoint>
 #include <QPolygon>
 #include <QPushButton>

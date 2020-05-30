@@ -401,6 +401,9 @@
                   <property name="text">
                    <string>Favicon download timeout:</string>
                   </property>
+                  <property name="buddy">
+                   <cstring>faviconTimeoutSpinBox</cstring>
+                  </property>
                  </widget>
                 </item>
                 <item>
@@ -508,6 +511,9 @@
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
+                  <property name="buddy">
+                   <cstring>appThemeSelection</cstring>
+                  </property>
                  </widget>
                 </item>
                 <item row="1" column="1">
@@ -540,6 +546,9 @@
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                   </property>
+                  <property name="buddy">
+                   <cstring>languageComboBox</cstring>
+                  </property>
                  </widget>
                 </item>
                 <item row="2" column="0">
@@ -561,6 +570,9 @@
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="buddy">
+                   <cstring>toolButtonStyleComboBox</cstring>
                   </property>
                  </widget>
                 </item>
@@ -646,14 +658,14 @@
                </widget>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_4">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
+               <layout class="QGridLayout" name="gridLayout_2">
                 <property name="sizeConstraint">
                  <enum>QLayout::SetMaximumSize</enum>
                 </property>
-                <item>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
                  <spacer name="horizontalSpacer_3">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -669,15 +681,60 @@
                   </property>
                  </spacer>
                 </item>
-                <item>
-                 <widget class="QCheckBox" name="systrayDarkIconCheckBox">
+                <item row="0" column="3">
+                 <widget class="QComboBox" name="trayIconAppearance">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLabel" name="trayIconAppearanceLabel">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Dark system tray icon</string>
+                   <string>Tray icon type:</string>
+                  </property>
+                  <property name="buddy">
+                   <cstring>trayIconAppearance</cstring>
                   </property>
                  </widget>
+                </item>
+                <item row="0" column="4">
+                 <spacer name="horizontalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item row="0" column="2">
+                 <spacer name="verticalSpacer_6">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>6</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </spacer>
                 </item>
                </layout>
               </item>
@@ -885,6 +942,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="buddy">
+            <cstring>autoTypeDelaySpinBox</cstring>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -964,6 +1024,9 @@
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
            </property>
+           <property name="buddy">
+            <cstring>autoTypeShortcutWidget</cstring>
+           </property>
           </widget>
          </item>
          <item row="1" column="0">
@@ -973,6 +1036,9 @@
            </property>
            <property name="alignment">
             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>autoTypeStartDelaySpinBox</cstring>
            </property>
           </widget>
          </item>
@@ -1050,7 +1116,6 @@
   <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
   <tabstop>systrayShowCheckBox</tabstop>
-  <tabstop>systrayDarkIconCheckBox</tabstop>
   <tabstop>systrayMinimizeToTrayCheckBox</tabstop>
   <tabstop>resetSettingsButton</tabstop>
   <tabstop>autoTypeEntryTitleMatchCheckBox</tabstop>
