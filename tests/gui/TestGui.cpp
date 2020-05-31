@@ -499,9 +499,9 @@ void TestGui::testEditEntry()
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     QCOMPARE(entry->title(), QString("Sample Entry_test"));
-    QCOMPARE(entry->foregroundColor(), fgColor);
+    QCOMPARE(entry->foregroundColor().toUpper(), fgColor.toUpper());
     QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
-    QCOMPARE(entry->backgroundColor(), bgColor);
+    QCOMPARE(entry->backgroundColor().toUpper(), bgColor.toUpper());
     QCOMPARE(entryItem.data(Qt::BackgroundRole), QVariant(bgColor));
     QCOMPARE(entry->historyItems().size(), ++editCount);
 

@@ -24,6 +24,7 @@
 #include <QModelIndex>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QTimer>
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
@@ -198,6 +199,7 @@ private:
     QButtonGroup* const m_autoTypeWindowSequenceGroup;
     QCompleter* const m_usernameCompleter;
     QStringListModel* const m_usernameCompleterModel;
+    QTimer m_entryModifiedTimer;
 
     Q_DISABLE_COPY(EditEntryWidget)
 };

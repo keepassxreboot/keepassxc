@@ -118,6 +118,14 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     setupHistory();
     setupEntryUpdate();
 
+    m_entryModifiedTimer.setSingleShot(true);
+    m_entryModifiedTimer.setInterval(0);
+    connect(&m_entryModifiedTimer, &QTimer::timeout, this, [this] {
+        if (isVisible() && m_entry) {
+            setForms(m_entry);
+        }
+    });
+
     connect(this, SIGNAL(accepted()), SLOT(acceptEntry()));
     connect(this, SIGNAL(rejected()), SLOT(cancel()));
     connect(this, SIGNAL(apply()), SLOT(commitEntry()));
@@ -785,6 +793,8 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_create = create;
     m_history = history;
 
+    connect(m_entry, &Entry::entryModified, this, [this] { m_entryModifiedTimer.start(); });
+
     if (history) {
         setHeadline(QString("%1 \u2B29 %2").arg(parentName, tr("Entry history")));
     } else {
@@ -1130,6 +1140,10 @@ void EditEntryWidget::cancel()
 
 void EditEntryWidget::clear()
 {
+    if (m_entry) {
+        m_entry->disconnect(this);
+    }
+
     m_entry = nullptr;
     m_db.reset();
 

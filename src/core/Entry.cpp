@@ -663,6 +663,7 @@ void Entry::truncateHistory()
         return;
     }
 
+    bool changed = false;
     int histMaxItems = db->metadata()->historyMaxItems();
     if (histMaxItems > -1) {
         int historyCount = 0;
@@ -674,6 +675,7 @@ void Entry::truncateHistory()
             if (historyCount > histMaxItems) {
                 delete entry;
                 i.remove();
+                changed = true;
             }
         }
     }
@@ -697,8 +699,13 @@ void Entry::truncateHistory()
             if (size > histMaxSize) {
                 delete historyItem;
                 i.remove();
+                changed = true;
             }
         }
+    }
+
+    if (changed) {
+        emit entryModified();
     }
 }
 
