@@ -32,7 +32,7 @@
 
 Resources* Resources::m_instance(nullptr);
 
-QString Resources::dataPath(const QString& name)
+QString Resources::dataPath(const QString& name) const
 {
     if (name.isEmpty() || name.startsWith('/')) {
         return m_dataPath + name;
@@ -40,7 +40,7 @@ QString Resources::dataPath(const QString& name)
     return m_dataPath + "/" + name;
 }
 
-QString Resources::pluginPath(const QString& name)
+QString Resources::pluginPath(const QString& name) const
 {
     QStringList pluginPaths;
 
@@ -91,7 +91,7 @@ QString Resources::pluginPath(const QString& name)
     return {};
 }
 
-QString Resources::wordlistPath(const QString& name)
+QString Resources::wordlistPath(const QString& name) const
 {
     return dataPath(QStringLiteral("wordlists/%1").arg(name));
 }
@@ -101,7 +101,7 @@ QIcon Resources::applicationIcon()
     return icon("keepassxc", false);
 }
 
-QString Resources::getTrayIconAppearance() const
+QString Resources::trayIconAppearance() const
 {
     auto iconAppearance = config()->get(Config::GUI_TrayIconAppearance).toString();
     if (iconAppearance.isNull()) {
@@ -121,7 +121,7 @@ QIcon Resources::trayIcon()
 
 QIcon Resources::trayIconLocked()
 {
-    auto iconApperance = getTrayIconAppearance();
+    auto iconApperance = trayIconAppearance();
 
     if (iconApperance == "monochrome-light") {
         return icon("keepassxc-monochrome-light-locked", false);
@@ -134,7 +134,7 @@ QIcon Resources::trayIconLocked()
 
 QIcon Resources::trayIconUnlocked()
 {
-    auto iconApperance = getTrayIconAppearance();
+    auto iconApperance = trayIconAppearance();
 
     if (iconApperance == "monochrome-light") {
         return icon("keepassxc-monochrome-light", false);

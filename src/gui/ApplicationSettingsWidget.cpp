@@ -217,10 +217,10 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
 
     m_generalUi->appThemeSelection->clear();
-    m_generalUi->appThemeSelection->addItem(tr("Automatic"), QStringLiteral("auto"));
-    m_generalUi->appThemeSelection->addItem(tr("Light"), QStringLiteral("light"));
-    m_generalUi->appThemeSelection->addItem(tr("Dark"), QStringLiteral("dark"));
-    m_generalUi->appThemeSelection->addItem(tr("Classic (Platform-native)"), QStringLiteral("classic"));
+    m_generalUi->appThemeSelection->addItem(tr("Automatic"), "auto");
+    m_generalUi->appThemeSelection->addItem(tr("Light"), "light");
+    m_generalUi->appThemeSelection->addItem(tr("Dark"), "dark");
+    m_generalUi->appThemeSelection->addItem(tr("Classic (Platform-native)"), "classic");
     m_generalUi->appThemeSelection->setCurrentIndex(
         m_generalUi->appThemeSelection->findData(config()->get(Config::GUI_ApplicationTheme).toString()));
 
@@ -261,10 +261,10 @@ void ApplicationSettingsWidget::loadSettings()
     }
 
     m_generalUi->trayIconAppearance->clear();
-    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), QStringLiteral("monochrome-light"));
-    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), QStringLiteral("monochrome-dark"));
-    m_generalUi->trayIconAppearance->addItem(tr("Colored"), QStringLiteral("colored"));
-    int trayIconIndex = m_generalUi->trayIconAppearance->findData(config()->get(Config::GUI_TrayIconAppearance));
+    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
+    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), "monochrome-dark");
+    m_generalUi->trayIconAppearance->addItem(tr("Colorful"), "colorful");
+    int trayIconIndex = m_generalUi->trayIconAppearance->findData(resources()->trayIconAppearance());
     if (trayIconIndex > 0) {
         m_generalUi->trayIconAppearance->setCurrentIndex(trayIconIndex);
     }
