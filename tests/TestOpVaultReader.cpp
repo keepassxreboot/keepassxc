@@ -68,7 +68,7 @@ void TestOpVaultReader::testReadIntoDatabase()
     QDir opVaultDir(m_opVaultPath);
 
     OpVaultReader reader;
-    auto db = reader.readDatabase(opVaultDir, "a");
+    QScopedPointer<Database> db(reader.readDatabase(opVaultDir, "a"));
     QVERIFY(db);
     QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
 
