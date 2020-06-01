@@ -490,7 +490,6 @@ namespace FdoSecrets
         // When the group object is normally deleted due to ~Database, the databaseReplaced
         // signal should be first emitted, and we will clean up connection in reloadDatabase,
         // so this handler won't be triggered.
-        QPointer<Database> db = m_backend->database().data();
         connect(m_exposedGroup.data(), &Group::groupAboutToRemove, this, [this](Group* toBeRemoved) {
             if (backendLocked()) {
                 return;

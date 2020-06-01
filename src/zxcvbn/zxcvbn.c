@@ -684,22 +684,22 @@ static void DoDictMatch(const uint8_t *Passwd, int Start, int MaxLen, DictWork_t
                     if (r)
                     {
                         /* valid conversion from leet */
-                        DictWork_t w;
-                        w = *Wrk;
-                        w.StartLoc = NodeLoc;
-                        w.Ordinal = Ord;
-                        w.PwdLength += Len;
-                        w.Caps = Caps;
-                        w.Lower = Lower;
-                        w.First = *r;
-                        w.NumPossChrs = NumPossChrs;
-                        memcpy(w.PossChars, PossChars, sizeof w.PossChars);
+                        DictWork_t dw;
+                        dw = *Wrk;
+                        dw.StartLoc = NodeLoc;
+                        dw.Ordinal = Ord;
+                        dw.PwdLength += Len;
+                        dw.Caps = Caps;
+                        dw.Lower = Lower;
+                        dw.First = *r;
+                        dw.NumPossChrs = NumPossChrs;
+                        memcpy(dw.PossChars, PossChars, sizeof dw.PossChars);
                         if (j)
                         {
-                            w.LeetCnv[i] = *r;
-                            AddLeetChr(*r, -1, w.Leeted, w.UnLeet);
+                            dw.LeetCnv[i] = *r;
+                            AddLeetChr(*r, -1, dw.Leeted, dw.UnLeet);
                         }
-                        DoDictMatch(Pwd, Passwd - Pwd, MaxLen - Len, &w, Result, Extra, Lev+1);
+                        DoDictMatch(Pwd, Passwd - Pwd, MaxLen - Len, &dw, Result, Extra, Lev+1);
                     }
                 }
                 return;
@@ -1335,7 +1335,7 @@ static void DateMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, int
         {
             /* String matched the date, store result */
             double e;
-            ZxcMatch_t *p = AllocMatch();
+            ZxcMatch_t *mat = AllocMatch();
 
             if (Len <= 4)
                 e = log(MAX_YEAR - MIN_YEAR + 1.0);
@@ -1345,12 +1345,12 @@ static void DateMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, int
                 e = log(31 * 12 * 100.0);
             if (Sep)
                 e += log(4.0);  /* Extra 2 bits for separator */
-            p->Entrpy = e;
-            p->Type = DATE_MATCH;
-            p->Length = Len;
-            p->Begin = Start;
-            AddMatchRepeats(Result, p, Passwd, MaxLen);
-            AddResult(Result, p, MaxLen);
+            mat->Entrpy = e;
+            mat->Type = DATE_MATCH;
+            mat->Length = Len;
+            mat->Begin = Start;
+            AddMatchRepeats(Result, mat, Passwd, MaxLen);
+            AddResult(Result, mat, MaxLen);
             PrevLen = Len;
         }
     }
@@ -1405,9 +1405,9 @@ static void RepeatMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, i
             if (strncmp((const char *)Passwd, (const char *)Rpt, Len) == 0)
             {
                 /* Found a repeat */
-                int c = Cardinality(Passwd, Len);
+                int card = Cardinality(Passwd, Len);
                 ZxcMatch_t *p = AllocMatch();
-                p->Entrpy = log((double)c) * Len + log(RepeatCount);
+                p->Entrpy = log((double)card) * Len + log(RepeatCount);
                 p->Type = (ZxcTypeMatch_t)(BRUTE_MATCH + MULTIPLE_MATCH);
                 p->Length = Len * RepeatCount;
                 p->Begin = Start;
@@ -1643,18 +1643,18 @@ double ZxcvbnMatch(const char *Pwd, const char *UserDict[], ZxcMatch_t **Info)
     for(i = 0; i < Len; ++i)
     {
         int MaxLen = Len - i;
-        int j;
+        int jj;
         if (!RevPwd[i])
             continue;
-        for(j = i+1; j <= Len; ++j)
+        for(jj = i+1; jj <= Len; ++jj)
         {
-            if (RevPwd[j])
+            if (RevPwd[jj])
             {
                 Zp = AllocMatch();
                 Zp->Type = BRUTE_MATCH;
                 Zp->Begin = i;
-                Zp->Length = j - i;
-                Zp->Entrpy = e * (j - i);
+                Zp->Length = jj - i;
+                Zp->Entrpy = e * (jj - i);
                 AddResult(&(Nodes[i].Paths), Zp, MaxLen);
             }
         }
@@ -1667,15 +1667,15 @@ double ZxcvbnMatch(const char *Pwd, const char *UserDict[], ZxcMatch_t **Info)
     /* Reduce the paths using Dijkstra's algorithm */
     for(i = 0; i < Len; ++i)
     {
-        int j;
+        int jj;
         double MinDist = DBL_MAX;
         int MinIdx = 0;
         /* Find the unvisited node with minimum distance or entropy */
-        for(Np = Nodes, j = 0; j < Len; ++j, ++Np)
+        for(Np = Nodes, jj = 0; jj < Len; ++jj, ++Np)
         {
             if (!Np->Visit && (Np->Dist < MinDist))
             {
-                MinIdx = j;
+                MinIdx = jj;
                 MinDist = Np->Dist;
             }
         }
